@@ -66,8 +66,8 @@ func TestPathAnswersAsGosPathPackage(test *testing.T) {
 		want.WriteString(path.Clean(each) + "\t" + path.Base(each) + "\t" + path.Dir(each) + "\n")
 	}
 	pathsFile := filepath.Join(test.TempDir(), "paths.txt")
-	if err := os.WriteFile(pathsFile, []byte(input.String()), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(pathsFile, []byte(input.String()), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	sweep := func(test *testing.T, mutant pathMutant) (run, run, run) {
 		test.Helper()
@@ -178,9 +178,9 @@ func sweepDirectory(test *testing.T, from string, to string) string {
 	test.Helper()
 	directory := test.TempDir()
 	for _, name := range []string{"path.ts", "pathsweep.ts"} {
-		contents, err := os.ReadFile(name)
-		if err != nil {
-			test.Fatal(err)
+		contents, readError := os.ReadFile(name)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		source := string(contents)
 		if from != "" && name == "path.ts" {
@@ -189,8 +189,8 @@ func sweepDirectory(test *testing.T, from string, to string) string {
 			}
 			source = strings.Replace(source, from, to, 1)
 		}
-		if err := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	return directory

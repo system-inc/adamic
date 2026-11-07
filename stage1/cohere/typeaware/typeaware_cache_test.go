@@ -95,8 +95,8 @@ func TestTypeAwareKeysNameTheBuildsCompiler(test *testing.T) {
 		}},
 	}
 	test.Setenv("CC", "")
-	if err := os.Unsetenv("CC"); err != nil {
-		test.Fatal(err)
+	if unsetenvError := os.Unsetenv("CC"); unsetenvError != nil {
+		test.Fatal(unsetenvError)
 	}
 	unset := make([]buildcache.Inputs, len(keys))
 	for i, key := range keys {
@@ -131,41 +131,41 @@ func TestTypeAwareKeysNameTheBuildsCompiler(test *testing.T) {
 func cachedTypeAwareProduct(key string, build func(string) (string, error)) (string, error) {
 	return sharedProduct("cached "+key, func(_ string) (string, error) {
 		inputs := typeAwareSharedInputs(key)
-		directory, err := buildcache.Get(inputs, func(directory string) error {
-			value, err := build(directory)
-			if err != nil {
-				return err
+		directory, getError := buildcache.Get(inputs, func(directory string) error {
+			value, buildError := build(directory)
+			if buildError != nil {
+				return buildError
 			}
 			record := struct {
 				Value string
 				File  bool
 			}{Value: value}
 			if filepath.IsAbs(value) {
-				relative, err := filepath.Rel(directory, value)
-				if err != nil {
-					return err
+				relative, relativePathError := filepath.Rel(directory, value)
+				if relativePathError != nil {
+					return relativePathError
 				}
 				record.Value, record.File = relative, true
 			}
-			data, err := json.Marshal(record)
-			if err != nil {
-				return err
+			data, encodeError := json.Marshal(record)
+			if encodeError != nil {
+				return encodeError
 			}
 			return os.WriteFile(filepath.Join(directory, "product.json"), data, 0644)
 		})
-		if err != nil {
-			return "", err
+		if getError != nil {
+			return "", getError
 		}
-		data, err := os.ReadFile(filepath.Join(directory, "product.json"))
-		if err != nil {
-			return "", err
+		data, readError := os.ReadFile(filepath.Join(directory, "product.json"))
+		if readError != nil {
+			return "", readError
 		}
 		var record struct {
 			Value string
 			File  bool
 		}
-		if err := json.Unmarshal(data, &record); err != nil {
-			return "", err
+		if decodeError := json.Unmarshal(data, &record); decodeError != nil {
+			return "", decodeError
 		}
 		if record.File {
 			return filepath.Join(directory, record.Value), nil

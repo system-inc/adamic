@@ -16,9 +16,9 @@ import (
 // Not parallel: shared markdownMemory configuration; existing helper controls parallel execution.
 func TestFrontMatterStage(test *testing.T) {
 	parallelMarkdown(test)
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	inputs, files := auditCorpus(test, root)
 	// This file sweep is small beside the mandatory generated and fixed checks.
@@ -141,9 +141,9 @@ func TestFrontMatterStage(test *testing.T) {
 	goBinary := frontMatterGoOracle(test)
 	want := execute(test, nil, goBinary, cases)
 	clean(test, "Go front matter", want)
-	main, err := filepath.Abs("testdata/frontmatter_probe.ts")
-	if err != nil {
-		test.Fatal(err)
+	main, absolutePathError := filepath.Abs("testdata/frontmatter_probe.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	program := lowered(test, main)
 	binary := filepath.Join(probeNative(test, frontMatterProbe, native.Options{Sanitize: true}), "port")
@@ -166,19 +166,19 @@ func TestFrontMatterStage(test *testing.T) {
 		fork = filepath.Join(cohere, "internal/format/prettier/bundles")
 	}
 	for _, name := range []string{"standalone.js", "plugins/markdown.js"} {
-		original, err := os.ReadFile(filepath.Join(cohere, "internal/format/prettier/bundles", name))
-		if err != nil {
-			test.Fatal(err)
+		original, readError := os.ReadFile(filepath.Join(cohere, "internal/format/prettier/bundles", name))
+		if readError != nil {
+			test.Fatal(readError)
 		}
-		installed, err := os.ReadFile(filepath.Join(fork, name))
-		if err != nil {
-			test.Fatal(err)
+		installed, readError := os.ReadFile(filepath.Join(fork, name))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		equal(test, "pinned parser "+name, installed, original)
 	}
-	script, err := filepath.Abs("testdata/frontmatter_library.mjs")
-	if err != nil {
-		test.Fatal(err)
+	script, absolutePathError := filepath.Abs("testdata/frontmatter_library.mjs")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	library := execute(test, nil, "node", script, fork, cases)
 	clean(test, "original parser front matter", library)
@@ -191,9 +191,9 @@ func TestFrontMatterStage(test *testing.T) {
 		test.Run(mutation.name, func(test *testing.T) {
 			scratch := test.TempDir()
 			for _, name := range []string{"frontmatter.ts", "codec.ts"} {
-				source, err := os.ReadFile(name)
-				if err != nil {
-					test.Fatal(err)
+				source, readError := os.ReadFile(name)
+				if readError != nil {
+					test.Fatal(readError)
 				}
 				if name == "frontmatter.ts" {
 					if strings.Count(string(source), mutation.from) != 1 {
@@ -203,12 +203,12 @@ func TestFrontMatterStage(test *testing.T) {
 				}
 				write(test, filepath.Join(scratch, name), source)
 			}
-			if err := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); err != nil {
-				test.Fatal(err)
+			if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
-			source, err := os.ReadFile(main)
-			if err != nil {
-				test.Fatal(err)
+			source, readError := os.ReadFile(main)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			mutantMain := filepath.Join(scratch, "testdata/frontmatter_probe.ts")
 			write(test, mutantMain, source)
@@ -223,9 +223,9 @@ func TestFrontMatterStage(test *testing.T) {
 		})
 	}
 	fast := filepath.Join(probeNative(test, frontMatterProbe, native.Options{}), "port")
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	for _, side := range []struct {
 		name, command string

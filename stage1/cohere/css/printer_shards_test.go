@@ -73,28 +73,28 @@ func cssPrinterProduct(test *testing.T, variant int) cssExecutable {
 				mutation = &printerMutants[variant]
 			}
 			original := portDirectory(test, mutation)
-			if err := moveTree(filepath.Dir(original), filepath.Join(dir, "sources")); err != nil {
-				return err
+			if moveTreeError := moveTree(filepath.Dir(original), filepath.Join(dir, "sources")); moveTreeError != nil {
+				return moveTreeError
 			}
 			source := filepath.Join(dir, "sources/css/print_main.ts")
-			checked, err := load.Load([]string{source})
-			if err != nil {
-				return err
+			checked, loadError := load.Load([]string{source})
+			if loadError != nil {
+				return loadError
 			}
-			program, err := lower.Lower(test.Context(), checked)
-			if err != nil {
-				return err
+			program, lowerError := lower.Lower(test.Context(), checked)
+			if lowerError != nil {
+				return lowerError
 			}
 			code := native.C(program)
-			if err := os.WriteFile(filepath.Join(dir, "main.c"), []byte(code), 0644); err != nil {
-				return err
+			if writeError := os.WriteFile(filepath.Join(dir, "main.c"), []byte(code), 0644); writeError != nil {
+				return writeError
 			}
-			if err := os.WriteFile(
+			if writeError := os.WriteFile(
 				filepath.Join(dir, "main.mjs"),
 				[]byte(javascript.JavaScript(program)),
 				0644,
-			); err != nil {
-				return err
+			); writeError != nil {
+				return writeError
 			}
 			return native.Build(code, filepath.Join(dir, "native"), native.Options{Sanitize: sanitize})
 		})
@@ -115,13 +115,13 @@ func cssPrinterProduct(test *testing.T, variant int) cssExecutable {
 
 func cssOracleRun(t *testing.T, binary, test string, request any) {
 	t.Helper()
-	data, err := json.Marshal(request)
-	if err != nil {
-		t.Fatal(err)
+	data, encodeError := json.Marshal(request)
+	if encodeError != nil {
+		t.Fatal(encodeError)
 	}
 	path := filepath.Join(t.TempDir(), "request.json")
-	if err := os.WriteFile(path, data, 0644); err != nil {
-		t.Fatal(err)
+	if writeError := os.WriteFile(path, data, 0644); writeError != nil {
+		t.Fatal(writeError)
 	}
 	cmd := bounded(t, binary, "-test.run=^"+test+"$", "-test.timeout=0", "-test.v")
 	repo, _ := filepath.Abs(repository)
@@ -130,9 +130,9 @@ func cssOracleRun(t *testing.T, binary, test string, request any) {
 		cmd.Dir = filepath.Join(cmd.Dir, "postcss")
 	}
 	cmd.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+path)
-	output, err := childguard.CombinedOutput(cmd, childguard.Options{Stall: oracles.ChildStallLimit})
-	if err != nil {
-		t.Fatalf("oracle: %v %s", err, output)
+	output, combinedOutputError := childguard.CombinedOutput(cmd, childguard.Options{Stall: oracles.ChildStallLimit})
+	if combinedOutputError != nil {
+		t.Fatalf("oracle: %v %s", combinedOutputError, output)
 	}
 	t.Logf("%s", output)
 }
@@ -162,9 +162,9 @@ func cssPrinterAnswers(test *testing.T, oracle, cases, mode string) string {
 		"TestAdamicPrinterCases",
 		map[string]string{"Cases": cases, "Answers": answers, "Mode": mode},
 	)
-	data, err := os.ReadFile(answers)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(answers)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return string(data)
 }
@@ -220,9 +220,9 @@ func cssUnion(lines []string, shards [][]cssCase, count int) error {
 
 func cssShards(test *testing.T, cases string, count int) [][]cssCase {
 	test.Helper()
-	data, err := os.ReadFile(cases)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(cases)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	lines := strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")
 	for id, line := range lines {
@@ -231,8 +231,8 @@ func cssShards(test *testing.T, cases string, count int) [][]cssCase {
 		}
 	}
 	shards := cssPartition(lines, count)
-	if err := cssUnion(lines, shards, count); err != nil {
-		test.Fatal(err)
+	if cssUnionError := cssUnion(lines, shards, count); cssUnionError != nil {
+		test.Fatal(cssUnionError)
 	}
 	test.Logf("union: %d unique case ids, %d shards, unsplit SHA256=%x", len(lines), count, sha256.Sum256(data))
 	return shards
@@ -246,8 +246,8 @@ func cssShardFile(test *testing.T, cases []cssCase) string {
 		b.WriteByte('\n')
 	}
 	path := filepath.Join(test.TempDir(), "cases.txt")
-	if err := os.WriteFile(path, []byte(b.String()), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(b.String()), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return path
 }
@@ -353,8 +353,12 @@ func cssModeUnion(lines []string, plan []cssModeShard, witnesses [][][]int) erro
 		}
 		units = append(units, unit.cases)
 	}
-	if err := cssUnion(append(append([]string{}, lines...), lines...), units, 2*cssPrinterPartitions); err != nil {
-		return err
+	if cssUnionError := cssUnion(
+		append(append([]string{}, lines...), lines...),
+		units,
+		2*cssPrinterPartitions,
+	); cssUnionError != nil {
+		return cssUnionError
 	}
 	for offset, unit := range plan[2*cssPrinterPartitions:] {
 		index := 2*cssPrinterPartitions + offset
@@ -414,8 +418,8 @@ func TestCSSPrinterShardingCatchesDisagreement(test *testing.T) {
 	lines := cssPrinterCorpusLines(test)
 	witnesses := cssPrinterAllWitnesses(test)
 	plan := cssModePlan(lines, witnesses)
-	if err := cssModeUnion(lines, plan, witnesses); err != nil {
-		test.Fatal(err)
+	if cssModeUnionError := cssModeUnion(lines, plan, witnesses); cssModeUnionError != nil {
+		test.Fatal(cssModeUnionError)
 	}
 	planted := 0
 	var caught []string
@@ -463,12 +467,12 @@ func TestCSSPrinterShardingCatchesDisagreement(test *testing.T) {
 		}
 	}
 	empty := [][][]int{witnesses[0], witnesses[1], {{}, witnesses[2][1]}}
-	if err := cssModeUnion(
+	if cssModeUnionError := cssModeUnion(
 		lines,
 		cssModePlan(lines, empty),
 		empty,
-	); err == nil || !strings.Contains(err.Error(), "differs from Go nowhere") {
-		test.Fatalf("an empty witness set read as %v", err)
+	); cssModeUnionError == nil || !strings.Contains(cssModeUnionError.Error(), "differs from Go nowhere") {
+		test.Fatalf("an empty witness set read as %v", cssModeUnionError)
 	}
 }
 
@@ -477,35 +481,35 @@ func TestCSSPrinterShardingCatchesDisagreement(test *testing.T) {
 // with "invalid cross-device link". There it copies the tree instead, files, directories and symbolic
 // links alike.
 func moveTree(source, destination string) error {
-	if err := os.Rename(source, destination); err == nil {
+	if renameError := os.Rename(source, destination); renameError == nil {
 		return nil
 	}
-	return filepath.WalkDir(source, func(path string, entry fs.DirEntry, walkErr error) error {
-		if walkErr != nil {
-			return walkErr
+	return filepath.WalkDir(source, func(path string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
-		relative, err := filepath.Rel(source, path)
-		if err != nil {
-			return err
+		relative, relativePathError := filepath.Rel(source, path)
+		if relativePathError != nil {
+			return relativePathError
 		}
 		target := filepath.Join(destination, relative)
-		info, err := entry.Info()
-		if err != nil {
-			return err
+		info, infoError := entry.Info()
+		if infoError != nil {
+			return infoError
 		}
 		switch {
 		case entry.IsDir():
 			return os.MkdirAll(target, info.Mode().Perm())
 		case entry.Type()&fs.ModeSymlink != 0:
-			link, err := os.Readlink(path)
-			if err != nil {
-				return err
+			link, readLinkError := os.Readlink(path)
+			if readLinkError != nil {
+				return readLinkError
 			}
 			return os.Symlink(link, target)
 		default:
-			data, err := os.ReadFile(path)
-			if err != nil {
-				return err
+			data, readError := os.ReadFile(path)
+			if readError != nil {
+				return readError
 			}
 			return os.WriteFile(target, data, info.Mode().Perm())
 		}

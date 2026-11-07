@@ -104,12 +104,12 @@ func TestGenericVoidReadsAreRefused(test *testing.T) {
 		for _, extension := range []string{".a", ".ts"} {
 			test.Run(probe.name+extension, func(test *testing.T) {
 				test.Parallel()
-				_, err := lowerVoidProbe(test, extension, voidContainerMark+"\n"+probe.source)
+				_, lowerVoidProbeError := lowerVoidProbe(test, extension, voidContainerMark+"\n"+probe.source)
 				var refused *Refused
-				if !errors.As(err, &refused) ||
+				if !errors.As(lowerVoidProbeError, &refused) ||
 					!strings.HasPrefix(refused.What, "a generic instantiated at void whose body reads the value") ||
 					!strings.Contains(refused.What, probe.role) {
-					test.Fatalf("want a generic void read refused %s, got %v", probe.role, err)
+					test.Fatalf("want a generic void read refused %s, got %v", probe.role, lowerVoidProbeError)
 				}
 			})
 		}
@@ -160,7 +160,11 @@ func TestGenericVoidAsValueStops(test *testing.T) {
 		for _, extension := range []string{".a", ".ts"} {
 			test.Run(probe.name+extension, func(test *testing.T) {
 				test.Parallel()
-				if _, err := lowerVoidProbe(test, extension, voidContainerMark+"\n"+probe.source); err == nil {
+				if _, lowerVoidProbeError := lowerVoidProbe(
+					test,
+					extension,
+					voidContainerMark+"\n"+probe.source,
+				); lowerVoidProbeError == nil {
 					test.Fatalf("want it stopped before it runs, and it lowered")
 				}
 			})
@@ -177,13 +181,16 @@ func TestGenericVoidMethodSaysWhereItReads(test *testing.T) {
 	for _, extension := range []string{".a", ".ts"} {
 		test.Run(extension, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerVoidProbe(test, extension, source)
+			_, lowerVoidProbeError := lowerVoidProbe(test, extension, source)
 			var refused *Refused
-			if !errors.As(err, &refused) || !strings.Contains(
+			if !errors.As(lowerVoidProbeError, &refused) || !strings.Contains(
 				refused.What,
 				"through show: Cell<void> holds void in its type argument 1 (void), and show reads it at ",
 			) || !strings.HasSuffix(refused.What, "as a template literal part") {
-				test.Fatalf("want show refused naming what holds the void and where show reads it, got %v", err)
+				test.Fatalf(
+					"want show refused naming what holds the void and where show reads it, got %v",
+					lowerVoidProbeError,
+				)
 			}
 		})
 	}
@@ -208,10 +215,11 @@ func TestGenericVoidMethodThatCallsItselfEnds(test *testing.T) {
 		for _, extension := range []string{".a", ".ts"} {
 			test.Run(probe.name+extension, func(test *testing.T) {
 				test.Parallel()
-				_, err := lowerVoidProbe(test, extension, voidContainerMark+"\n"+probe.source)
+				_, lowerVoidProbeError := lowerVoidProbe(test, extension, voidContainerMark+"\n"+probe.source)
 				var refused *Refused
-				if !errors.As(err, &refused) || !strings.Contains(refused.What, "holds void in its type argument 1") {
-					test.Fatalf("want the method refused naming what holds the void, got %v", err)
+				if !errors.As(lowerVoidProbeError, &refused) ||
+					!strings.Contains(refused.What, "holds void in its type argument 1") {
+					test.Fatalf("want the method refused naming what holds the void, got %v", lowerVoidProbeError)
 				}
 			})
 		}

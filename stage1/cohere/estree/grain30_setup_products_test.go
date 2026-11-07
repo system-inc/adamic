@@ -16,9 +16,9 @@ func TestProduct_EstreeFindsGoOracle(test *testing.T) { test.Parallel(); goOracl
 
 func estreeMainPath(test *testing.T) string {
 	test.Helper()
-	main, err := filepath.Abs("main.ts")
-	if err != nil {
-		test.Fatal(err)
+	main, absolutePathError := filepath.Abs("main.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return main
 }
@@ -53,9 +53,9 @@ func estreeInterfaceControlPath(test *testing.T) string {
 		"stage1/cohere/estree/grain30_setup_products_test.go",
 	}, Toolchain: []string{runtime.Version()}}
 	directory := buildcache.Product(test, inputs, func(directory string) error {
-		source, err := os.ReadFile("gaps/interfaceTypeMethod.ts")
-		if err != nil {
-			return err
+		source, readError := os.ReadFile("gaps/interfaceTypeMethod.ts")
+		if readError != nil {
+			return readError
 		}
 		control := strings.Replace(
 			strings.Replace(
@@ -74,9 +74,9 @@ func estreeInterfaceControlPath(test *testing.T) string {
 }
 func estreeGapPath(test *testing.T, name string) string {
 	test.Helper()
-	path, err := filepath.Abs("gaps/" + name)
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("gaps/" + name)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return path
 }

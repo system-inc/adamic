@@ -30,9 +30,9 @@ func TestViewArrayLiteralIsNotAnObject(test *testing.T) {
 	} {
 		test.Run(stop.name, func(test *testing.T) {
 			test.Parallel()
-			program, err := lowered(test, filepath.Join(repository, directory+stop.name))
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, filepath.Join(repository, directory+stop.name))
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			want := run{
 				exitCode: 70,

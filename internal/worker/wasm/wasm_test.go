@@ -16,14 +16,14 @@ import (
 func workersWASMProduct(test *testing.T) string {
 	test.Helper()
 	return buildcache.Product(test, integrationInputs(test, "workersWASMProduct"), func(directory string) error {
-		root, err := filepath.Abs("../../..")
-		if err != nil {
-			test.Fatal(err)
+		root, absolutePathError := filepath.Abs("../../..")
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		write := func(path, text string) {
 			test.Helper()
-			if err := os.WriteFile(path, []byte(text), 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, []byte(text), 0644); writeError != nil {
+				test.Fatal(writeError)
 			}
 		}
 		run := commandRunner(test, root)
@@ -53,9 +53,9 @@ func workersWASMProduct(test *testing.T) string {
 		for index := range requests {
 			requests[index] = inputs[index%len(inputs)]
 		}
-		data, err := json.Marshal(requests)
-		if err != nil {
-			test.Fatal(err)
+		data, encodeError := json.Marshal(requests)
+		if encodeError != nil {
+			test.Fatal(encodeError)
 		}
 		write(filepath.Join(directory, "requests.json"), string(data))
 		run(
@@ -88,19 +88,19 @@ func workersWASMProduct(test *testing.T) string {
 		)
 		generated := filepath.Join(directory, "generated")
 		run("node", "internal/worker/wasm/generate.mjs", generated)
-		binary, err := os.ReadFile(filepath.Join(directory, "panic.wasm"))
-		if err != nil {
-			test.Fatal(err)
+		binary, readError := os.ReadFile(filepath.Join(directory, "panic.wasm"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
-		if err := os.WriteFile(filepath.Join(generated, "handler.wasm"), binary, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(generated, "handler.wasm"), binary, 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 
 		// The oracle helper scripts name this build directory; only their JSON
 		// observations are portable inputs to the fresh harness.
 		for _, name := range []string{"expected.json.mjs", "grow-expected.json.mjs"} {
-			if err := os.Remove(filepath.Join(directory, name)); err != nil {
-				return err
+			if removeError := os.Remove(filepath.Join(directory, name)); removeError != nil {
+				return removeError
 			}
 		}
 		return nil
@@ -112,20 +112,20 @@ func TestProduct_WorkersWASMInputs(test *testing.T) { workersWASMProduct(test) }
 
 func TestWorkersWASM(test *testing.T) {
 	test.Parallel()
-	root, err := filepath.Abs("../../..")
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs("../../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	product := workersWASMProduct(test)
 	directory := test.TempDir()
-	if err := os.CopyFS(directory, os.DirFS(product)); err != nil {
-		test.Fatal(err)
+	if copyFsError := os.CopyFS(directory, os.DirFS(product)); copyFsError != nil {
+		test.Fatal(copyFsError)
 	}
 	run := commandRunner(test, root)
 	write := func(path, text string) {
 		test.Helper()
-		if err := os.WriteFile(path, []byte(text), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(text), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	// A small real Wasm trap probe observes recreation independently of proc_exit.
@@ -198,9 +198,9 @@ __attribute__((export_name("adamic_release"))) void release(void *value) { (void
 		test.Run(mutant.name, func(test *testing.T) {
 			scratch := test.TempDir()
 			for _, name := range []string{"harness.mjs", "host.mjs", "wasi.mjs", "bridge.mjs"} {
-				data, err := os.ReadFile(filepath.Join(root, "internal/worker/wasm", name))
-				if err != nil {
-					test.Fatal(err)
+				data, readError := os.ReadFile(filepath.Join(root, "internal/worker/wasm", name))
+				if readError != nil {
+					test.Fatal(readError)
 				}
 				source := string(data)
 				if name == mutant.file {
@@ -222,9 +222,9 @@ __attribute__((export_name("adamic_release"))) void release(void *value) { (void
 			ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 			defer cancel()
 			command := exec.CommandContext(ctx, "node", filepath.Join(scratch, "harness.mjs"), directory, mutant.mode)
-			output, err := command.CombinedOutput()
-			if err == nil || ctx.Err() != nil || !strings.Contains(string(output), mutant.diagnosis) {
-				test.Fatalf("mutant must fail its intended check: %v\n%s", err, output)
+			output, combinedOutputError := command.CombinedOutput()
+			if combinedOutputError == nil || ctx.Err() != nil || !strings.Contains(string(output), mutant.diagnosis) {
+				test.Fatalf("mutant must fail its intended check: %v\n%s", combinedOutputError, output)
 			}
 			test.Logf("caught %s: %s", mutant.name, mutant.diagnosis)
 		})

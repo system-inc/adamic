@@ -52,8 +52,8 @@ func processExitSafeInteger(test *testing.T, shard int) {
 			value,
 		)
 		path := filepath.Join(test.TempDir(), "main.a")
-		if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 		truth := onNodeWith(test, inputRun{}, path)
 		if truth.exitCode != 0 ||
@@ -90,9 +90,9 @@ func processExitSafeInteger(test *testing.T, shard int) {
 			processExitSafeIntegerAgreement(test, program, truth, shard, value)
 			continue
 		}
-		data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/process.c"))
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(filepath.Join(repository, "internal/native/runtime/process.c"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		before, after := "bool range = integer && fabs(code.number) > 9007199254740991.0;", "bool range = false;"
 		if shard == 4 {
@@ -119,8 +119,12 @@ func processExitSafeInteger(test *testing.T, shard int) {
 			code = strings.ReplaceAll(code, name+"(", "safe_mutant_"+name+"(")
 		}
 		binary := filepath.Join(test.TempDir(), "mutant")
-		if err := native.Build(implementation+"\n"+code, binary, native.Options{Sanitize: true}); err != nil {
-			test.Fatal(err)
+		if buildError := native.Build(
+			implementation+"\n"+code,
+			binary,
+			native.Options{Sanitize: true},
+		); buildError != nil {
+			test.Fatal(buildError)
 		}
 		got := execute(test, binary)
 		if got.exitCode != 0 || len(got.stderr) != 0 || disagreement(truth, got) != "stdout differs" {

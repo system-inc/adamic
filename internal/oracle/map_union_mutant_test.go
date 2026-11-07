@@ -18,17 +18,17 @@ func checkMapUnionLayout(test *testing.T, name string) {
 	fixture := "map_union_value_" + name + ".a"
 	checkRuntimeWitness(test, fixture)
 	path := "internal/oracle/testdata/" + fixture
-	absolute, err := filepath.Abs(filepath.Join(repository, path))
-	if err != nil {
-		test.Fatal(err)
+	absolute, absolutePathError := filepath.Abs(filepath.Join(repository, path))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	want := onNode(test, absolute)
 	if want.exitCode != 0 {
 		test.Fatalf("Node did not finish: %s", want.stderr)
 	}
-	program, err := lowered(test, absolute)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, absolute)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	source := native.C(program)
 	old := "adamic_map_new(true, true)"
@@ -37,8 +37,8 @@ func checkMapUnionLayout(test *testing.T, name string) {
 	}
 	mutant := strings.ReplaceAll(source, old, "adamic_map_new(true, false)")
 	binary := filepath.Join(test.TempDir(), "mutant")
-	if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatalf("layout mutant must compile: %v", err)
+	if buildError := native.Build(mutant, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatalf("layout mutant must compile: %v", buildError)
 	}
 	got := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
 	difference := disagreement(want, got)
@@ -50,8 +50,8 @@ func checkMapUnionLayout(test *testing.T, name string) {
 		// Conservative leak scans may keep the mutant's stale pointers reachable.
 		// The counted ownership ledger must still see the references the Map lost.
 		countedBinary := filepath.Join(test.TempDir(), "mutant-counted")
-		if err := native.Build(mutant, countedBinary, native.Options{Count: true}); err != nil {
-			test.Fatalf("counted layout mutant must compile: %v", err)
+		if buildError := native.Build(mutant, countedBinary, native.Options{Count: true}); buildError != nil {
+			test.Fatalf("counted layout mutant must compile: %v", buildError)
 		}
 		command, arguments := pinnedStack(countedBinary)
 		counted := execute(test, command, arguments...)
@@ -74,9 +74,9 @@ func checkMapUnionLayout(test *testing.T, name string) {
 	if *updateCounts {
 		measuredCounts.Store(path, row)
 	} else {
-		rows, err := recordedCounts()
-		if err != nil {
-			test.Fatal(err)
+		rows, recordedCountsError := recordedCounts()
+		if recordedCountsError != nil {
+			test.Fatal(recordedCountsError)
 		}
 		if row != rows[path] {
 			test.Fatalf("counts changed: got %s; recorded %s", row, rows[path])
@@ -119,14 +119,16 @@ func TestMapUnionValuePaths(test *testing.T) { test.Parallel(); checkMapUnionLay
 // slot. The mutant keeps C types valid while storing raw numeric bits instead.
 func TestMapUnionConstructorBoxingMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/map_union_value_paths.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/map_union_value_paths.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	want := onNode(test, path)
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	constructors := 0
 	for _, statement := range program.Main {
@@ -167,8 +169,8 @@ func TestMapUnionConstructorBoxingMutant(test *testing.T) {
 	)
 	for _, options := range []native.Options{{}, {Sanitize: true}} {
 		binary := filepath.Join(test.TempDir(), "mutant")
-		if err := native.Build(mutant, binary, options); err != nil {
-			test.Fatalf("mutant must compile: %v", err)
+		if buildError := native.Build(mutant, binary, options); buildError != nil {
+			test.Fatalf("mutant must compile: %v", buildError)
 		}
 		got := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
 		if got.exitCode == 0 || disagreement(want, got) == "" {
@@ -186,18 +188,24 @@ func TestMapUnionConstructorBoxingMutant(test *testing.T) {
 func TestMapUnionEntriesRecordAlias(test *testing.T) {
 	test.Parallel()
 	checkRuntimeWitness(test, "entries_record_alias.a")
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/entries_record_alias.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/entries_record_alias.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	want := onNode(test, path)
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	binary := filepath.Join(test.TempDir(), "split")
-	if err := native.Build(native.C(program), binary, native.Options{Split: true, Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(
+		native.C(program),
+		binary,
+		native.Options{Split: true, Sanitize: true},
+	); buildError != nil {
+		test.Fatal(buildError)
 	}
 	got := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
 	if diff := disagreement(want, got); diff != "" {

@@ -23,25 +23,25 @@ func TestAStoreHostResolvedByTheCallerIsNeverLookedUp(test *testing.T) {
 	_, port, _ := net.SplitHostPort(strings.TrimPrefix(served.URL, "http://"))
 	address := "http://store.invalid:" + port + "/blobs/x"
 	get := func() (string, error) {
-		response, err := (&http.Client{Transport: storeTransport()}).Get(address)
-		if err != nil {
-			return "", err
+		response, getError := (&http.Client{Transport: storeTransport()}).Get(address)
+		if getError != nil {
+			return "", getError
 		}
 		defer response.Body.Close()
-		body, err := io.ReadAll(response.Body)
-		return string(body), err
+		body, readError := io.ReadAll(response.Body)
+		return string(body), readError
 	}
 	test.Setenv(storeResolved, "")
-	if _, err := get(); err == nil {
+	if _, getError := get(); getError == nil {
 		test.Fatal("store.invalid answered with nothing naming its address: the test can't tell a lookup from none")
 	}
 	test.Setenv(storeResolved, "elsewhere.invalid=192.0.2.1 store.invalid=not-an-address,127.0.0.1")
-	if body, err := get(); err != nil || body != "held" {
-		test.Fatalf("a host the variable names, dialed at its address: %q, %v", body, err)
+	if body, getError := get(); getError != nil || body != "held" {
+		test.Fatalf("a host the variable names, dialed at its address: %q, %v", body, getError)
 	}
 	test.Setenv(storeResolved, "store.invalid=not-an-address")
-	if _, err := get(); err == nil || !strings.Contains(err.Error(), "isn't an address") {
-		test.Fatalf("an address that isn't one: %v", err)
+	if _, getError := get(); getError == nil || !strings.Contains(getError.Error(), "isn't an address") {
+		test.Fatalf("an address that isn't one: %v", getError)
 	}
 }
 

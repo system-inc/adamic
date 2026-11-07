@@ -14,7 +14,11 @@ type V8DivergenceError struct {
 }
 
 func (e *V8DivergenceError) Error() string {
-	return fmt.Sprintf("RegExp refused: V8 %s departs from ECMA-262 %s; native and JavaScript must agree", e.Behavior, e.Section)
+	return fmt.Sprintf(
+		"RegExp refused: V8 %s departs from ECMA-262 %s; native and JavaScript must agree",
+		e.Behavior,
+		e.Section,
+	)
 }
 
 // NativeCompatibility also gates stage 0's JavaScript backend, which lowers
@@ -43,8 +47,8 @@ func v8Divergence(tree *Pattern, properties PropertyProvider) error {
 			for index, alternative := range node.Alternatives {
 				legacyAlternative = outerAlternative || index != 0
 				for _, term := range alternative.Terms {
-					if err := visit(term, flags); err != nil {
-						return err
+					if visitError := visit(term, flags); visitError != nil {
+						return visitError
 					}
 				}
 			}
@@ -55,9 +59,9 @@ func v8Divergence(tree *Pattern, properties PropertyProvider) error {
 			parserFlags = flags
 			return visit(node.Body, flags)
 		case *CharacterClass:
-			set, err := compileClass(node.Expr, flags, properties)
-			if err != nil {
-				return err
+			set, compileClassError := compileClass(node.Expr, flags, properties)
+			if compileClassError != nil {
+				return compileClassError
 			}
 			// In legacy mode V8 loses an enabled scoped i when compiling
 			// a negated class on a later alternative. The first branch and
@@ -65,12 +69,15 @@ func v8Divergence(tree *Pattern, properties PropertyProvider) error {
 			if !unicodeMode(flags) && flags.IgnoreCase && !tree.Flags.IgnoreCase && legacyAlternative && node.Negated {
 				actualFlags := flags
 				actualFlags.IgnoreCase = false
-				actual, err := compileClass(node.Expr, actualFlags, properties)
-				if err != nil {
-					return err
+				actual, compileClassError := compileClass(node.Expr, actualFlags, properties)
+				if compileClassError != nil {
+					return compileClassError
 				}
 				if !sameCharacterSets(matchedCharacters(set, flags), actual) {
-					return &V8DivergenceError{"drops scoped i on a later alternative's negated legacy class", "22.2.2.7 CompileAtom and 22.2.2.7.4 UpdateModifiers"}
+					return &V8DivergenceError{
+						"drops scoped i on a later alternative's negated legacy class",
+						"22.2.2.7 CompileAtom and 22.2.2.7.4 UpdateModifiers",
+					}
 				}
 			}
 			if flags.UnicodeSets {
@@ -78,12 +85,17 @@ func v8Divergence(tree *Pattern, properties PropertyProvider) error {
 				// path when an empty match is advanced into a surrogate pair.
 				// Direct exec ordering agrees with 22.2.2.7; do not call it a
 				// demonstrated ordering bug. Refuse the ruled-on mixed shape.
-				if len(set.ranges) > 0 && slices.ContainsFunc(set.strings, func(s []rune) bool { return len(s) == 0 }) && slices.ContainsFunc(set.strings, func(s []rune) bool { return len(s) > 1 }) {
-					return &V8DivergenceError{"can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives", "22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex"}
+				if len(set.ranges) > 0 &&
+					slices.ContainsFunc(set.strings, func(s []rune) bool { return len(s) == 0 }) &&
+					slices.ContainsFunc(set.strings, func(s []rune) bool { return len(s) > 1 }) {
+					return &V8DivergenceError{
+						"can repeat an earlier empty match and hang replacement for mixed-length \\q alternatives",
+						"22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex",
+					}
 				}
-				actual, err := v8Class(node.Expr, parserFlags, properties)
-				if err != nil {
-					return err
+				actual, v8ClassError := v8Class(node.Expr, parserFlags, properties)
+				if v8ClassError != nil {
+					return v8ClassError
 				}
 				// V8 parses class strings with its stale flags, but the
 				// string matcher uses the builder's correctly scoped flags.
@@ -98,12 +110,17 @@ func v8Divergence(tree *Pattern, properties PropertyProvider) error {
 					if parserFlags.IgnoreCase != flags.IgnoreCase {
 						return modifierDivergence()
 					}
-					return &V8DivergenceError{"does not case-fold singleton \\q class strings under iv", "22.2.2.9 CompileToCharSet and 22.2.2.10 CompileClassSetString"}
+					return &V8DivergenceError{
+						"does not case-fold singleton \\q class strings under iv",
+						"22.2.2.9 CompileToCharSet and 22.2.2.10 CompileClassSetString",
+					}
 				}
-			} else if flags.Unicode && parserFlags.IgnoreCase != flags.IgnoreCase && classWordEscape(node.Expr, !parserFlags.IgnoreCase) {
-				actual, err := v8UnicodeClass(node.Expr, flags, parserFlags, properties)
-				if err != nil {
-					return err
+			} else if flags.Unicode &&
+				parserFlags.IgnoreCase != flags.IgnoreCase &&
+				classWordEscape(node.Expr, !parserFlags.IgnoreCase) {
+				actual, v8UnicodeClassError := v8UnicodeClass(node.Expr, flags, parserFlags, properties)
+				if v8UnicodeClassError != nil {
+					return v8UnicodeClassError
 				}
 				actual = foldSet(actual, flags)
 				if node.Negated {
@@ -117,18 +134,19 @@ func v8Divergence(tree *Pattern, properties PropertyProvider) error {
 		case *Character:
 			if unicodeMode(flags) && parserFlags.IgnoreCase != flags.IgnoreCase {
 				if flags.UnicodeSets && node.Kind == PropertyEscape {
-					expected, err := compileCharacter(node, flags, properties)
-					if err != nil {
-						return err
+					expected, compileCharacterError := compileCharacter(node, flags, properties)
+					if compileCharacterError != nil {
+						return compileCharacterError
 					}
-					actual, err := compileCharacter(node, parserFlags, properties)
-					if err != nil {
-						return err
+					actual, compileCharacterError := compileCharacter(node, parserFlags, properties)
+					if compileCharacterError != nil {
+						return compileCharacterError
 					}
 					if !sameCharacterSets(matchedCharacters(expected, flags), matchedCharacters(actual, parserFlags)) {
 						return modifierDivergence()
 					}
-				} else if node.Kind == ClassEscape && (node.Raw == `\W` || parserFlags.IgnoreCase && strings.EqualFold(node.Raw, `\w`)) {
+				} else if node.Kind == ClassEscape &&
+					(node.Raw == `\W` || parserFlags.IgnoreCase && strings.EqualFold(node.Raw, `\w`)) {
 					return modifierDivergence()
 				}
 			}
@@ -148,27 +166,30 @@ func v8UnicodeClass(expr ClassExpression, flags, parserFlags Flags, properties P
 		if expr.Character.Kind == ClassEscape && strings.EqualFold(expr.Character.Raw, `\w`) {
 			operandFlags = parserFlags
 		}
-		set, err := compileCharacter(expr.Character, operandFlags, properties)
-		return matchedCharacters(set, operandFlags), err
+		set, compileCharacterError := compileCharacter(expr.Character, operandFlags, properties)
+		return matchedCharacters(set, operandFlags), compileCharacterError
 	case *ClassUnion:
 		var result characterSet
 		for _, operand := range expr.Operands {
-			set, err := v8UnicodeClass(operand, flags, parserFlags, properties)
-			if err != nil {
-				return result, err
+			set, v8UnicodeClassError := v8UnicodeClass(operand, flags, parserFlags, properties)
+			if v8UnicodeClassError != nil {
+				return result, v8UnicodeClassError
 			}
 			result.ranges = append(result.ranges, set.ranges...)
 		}
 		result.ranges = normalizeRanges(result.ranges)
 		return result, nil
 	default:
-		set, err := compileClass(expr, flags, properties)
-		return matchedCharacters(set, flags), err
+		set, compileClassError := compileClass(expr, flags, properties)
+		return matchedCharacters(set, flags), compileClassError
 	}
 }
 
 func modifierDivergence() error {
-	return &V8DivergenceError{"leaks or drops a scoped i modifier in a later Unicode class or word escape", "22.2.2.7 CompileAtom and 22.2.2.7.4 UpdateModifiers"}
+	return &V8DivergenceError{
+		"leaks or drops a scoped i modifier in a later Unicode class or word escape",
+		"22.2.2.7 CompileAtom and 22.2.2.7.4 UpdateModifiers",
+	}
 }
 
 // Convert canonical-domain ranges into the actual code points accepted by a
@@ -211,9 +232,9 @@ func v8Class(expr ClassExpression, flags Flags, properties PropertyProvider) (ch
 	case *ClassUnion:
 		var result characterSet
 		for _, operand := range expr.Operands {
-			set, err := v8Class(operand, flags, properties)
-			if err != nil {
-				return result, err
+			set, v8ClassError := v8Class(operand, flags, properties)
+			if v8ClassError != nil {
+				return result, v8ClassError
 			}
 			result.ranges = append(result.ranges, set.ranges...)
 			result.strings = append(result.strings, set.strings...)
@@ -221,35 +242,39 @@ func v8Class(expr ClassExpression, flags Flags, properties PropertyProvider) (ch
 		result.ranges = normalizeRanges(result.ranges)
 		return result, nil
 	case *ClassIntersection:
-		a, err := v8Class(expr.Left, flags, properties)
-		if err != nil {
-			return a, err
+		a, v8ClassError := v8Class(expr.Left, flags, properties)
+		if v8ClassError != nil {
+			return a, v8ClassError
 		}
-		b, err := v8Class(expr.Right, flags, properties)
-		return combineSets(a, b, true), err
+		b, v8ClassError := v8Class(expr.Right, flags, properties)
+		return combineSets(a, b, true), v8ClassError
 	case *ClassSubtraction:
-		a, err := v8Class(expr.Left, flags, properties)
-		if err != nil {
-			return a, err
+		a, v8ClassError := v8Class(expr.Left, flags, properties)
+		if v8ClassError != nil {
+			return a, v8ClassError
 		}
-		b, err := v8Class(expr.Right, flags, properties)
-		return combineSets(a, b, false), err
+		b, v8ClassError := v8Class(expr.Right, flags, properties)
+		return combineSets(a, b, false), v8ClassError
 	case *ClassNegation:
-		set, err := v8Class(expr.Operand, flags, properties)
+		set, v8ClassError := v8Class(expr.Operand, flags, properties)
 		set.ranges = subtractRanges([]RuneRange{{0, maxCharacter(flags)}}, set.ranges)
-		return set, err
+		return set, v8ClassError
 	default:
-		set, err := compileClass(expr, flags, properties)
-		return matchedCharacters(set, flags), err
+		set, compileClassError := compileClass(expr, flags, properties)
+		return matchedCharacters(set, flags), compileClassError
 	}
 }
 
 func classWordEscape(expr ClassExpression, uppercaseOnly bool) bool {
 	switch expr := expr.(type) {
 	case *ClassCharacter:
-		return expr.Character.Kind == ClassEscape && (expr.Character.Raw == `\W` || !uppercaseOnly && expr.Character.Raw == `\w`)
+		return expr.Character.Kind == ClassEscape &&
+			(expr.Character.Raw == `\W` || !uppercaseOnly && expr.Character.Raw == `\w`)
 	case *ClassUnion:
-		return slices.ContainsFunc(expr.Operands, func(e ClassExpression) bool { return classWordEscape(e, uppercaseOnly) })
+		return slices.ContainsFunc(
+			expr.Operands,
+			func(e ClassExpression) bool { return classWordEscape(e, uppercaseOnly) },
+		)
 	case *ClassNegation:
 		return classWordEscape(expr.Operand, uppercaseOnly)
 	}

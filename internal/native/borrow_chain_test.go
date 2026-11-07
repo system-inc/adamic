@@ -12,13 +12,13 @@ import (
 func TestBorrowChainDeclarations(test *testing.T) {
 	test.Parallel()
 	for _, fixture := range []string{"walk", "write", "reassigned", "capture"} {
-		loaded, err := load.Load([]string{"../oracle/testdata/borrow_chain_" + fixture + ".a"})
-		if err != nil {
-			test.Fatal(err)
+		loaded, loadError := load.Load([]string{"../oracle/testdata/borrow_chain_" + fixture + ".a"})
+		if loadError != nil {
+			test.Fatal(loadError)
 		}
-		program, err := lower.Lower(context.Background(), loaded)
-		if err != nil {
-			test.Fatal(err)
+		program, lowerError := lower.Lower(context.Background(), loaded)
+		if lowerError != nil {
+			test.Fatal(lowerError)
 		}
 		plan, _ := planElementBorrows(program)
 		found := map[string]bool{}

@@ -24,8 +24,8 @@ func TestExecuteCPUHelper(test *testing.T) {
 	runtime.GOMAXPROCS(1)
 	cpu := func() time.Duration {
 		var usage syscall.Rusage
-		if err := syscall.Getrusage(syscall.RUSAGE_SELF, &usage); err != nil {
-			panic(err)
+		if getrusageError := syscall.Getrusage(syscall.RUSAGE_SELF, &usage); getrusageError != nil {
+			panic(getrusageError)
 		}
 		return time.Duration(usage.Utime.Sec+usage.Stime.Sec)*time.Second +
 			time.Duration(usage.Utime.Usec+usage.Stime.Usec)*time.Microsecond
@@ -40,9 +40,9 @@ func TestExecuteCPUHelper(test *testing.T) {
 
 func TestExecuteCPULimit(test *testing.T) {
 	test.Parallel()
-	executable, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	executable, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
 	test.Run("infinite", func(test *testing.T) {
 		test.Parallel()
@@ -75,8 +75,8 @@ func TestExecuteCPULimit(test *testing.T) {
 		// Twice the unit's CPUs (GOMAXPROCS), never the host's cores.
 		for i := 0; i < 2*runtime.GOMAXPROCS(0); i++ {
 			worker := exec.Command("/bin/sh", "-c", "while :; do :; done")
-			if err := worker.Start(); err != nil {
-				test.Fatal(err)
+			if startError := worker.Start(); startError != nil {
+				test.Fatal(startError)
 			}
 			test.Cleanup(func() {
 				_ = worker.Process.Kill()
@@ -122,12 +122,12 @@ func TestExecuteCPULimit(test *testing.T) {
 func TestExecuteRunsTheToolchainsNode(test *testing.T) {
 	tools, onPath := test.TempDir(), test.TempDir()
 	for directory, which := range map[string]string{filepath.Join(tools, "bin"): "toolchain", onPath: "path"} {
-		if err := os.MkdirAll(directory, 0o755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(directory, 0o755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 		script := "#!/bin/sh\necho " + which + " \"${ADAMIC_FUZZ_STRAY:-}\"\n"
-		if err := os.WriteFile(filepath.Join(directory, "node"), []byte(script), 0o755); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, "node"), []byte(script), 0o755); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	test.Setenv("ADAMIC_TOOLS", tools)
@@ -155,8 +155,8 @@ func TestExecuteCapturesWholeOutput(test *testing.T) {
 			pidFile := filepath.Join(directory, "descendant")
 			test.Cleanup(func() {
 				// Also clean up when testing the old runner, which leaves this child alive.
-				if data, err := os.ReadFile(pidFile); err == nil {
-					if pid, err := strconv.Atoi(strings.TrimSpace(string(data))); err == nil {
+				if data, readError := os.ReadFile(pidFile); readError == nil {
+					if pid, parseError := strconv.Atoi(strings.TrimSpace(string(data))); parseError == nil {
 						_ = syscall.Kill(pid, syscall.SIGKILL)
 					}
 				}
@@ -209,8 +209,8 @@ func TestExecutePreservesPWD(test *testing.T) {
 	// The CPU-limit shell can repair a wrong PWD to the physical directory.
 	// A symlink distinguishes that repair from preserving the caller's spelling.
 	directory := filepath.Join(test.TempDir(), "logical")
-	if err := os.Symlink(test.TempDir(), directory); err != nil {
-		test.Fatal(err)
+	if symlinkError := os.Symlink(test.TempDir(), directory); symlinkError != nil {
+		test.Fatal(symlinkError)
 	}
 	run := executeIsolated(directory, []string{"PWD=/wrong"}, time.Second, "/usr/bin/env")
 	if run.ExitCode != 0 || run.TimedOut || string(run.Stdout) != "PWD="+directory+"\n" || len(run.Stderr) != 0 {

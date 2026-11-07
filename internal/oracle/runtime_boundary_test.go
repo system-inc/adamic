@@ -11,25 +11,25 @@ import (
 
 func checkBoundaryRefusal(test *testing.T, fixture, output, reason string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	result := onNode(test, path)
 	if result.exitCode != 0 || string(result.stdout) != output || len(result.stderr) != 0 {
 		test.Fatalf("Node: exit %d stdout %q stderr %q", result.exitCode, result.stdout, result.stderr)
 	}
-	_, err = lowered(test, path)
+	_, loweredError := lowered(test, path)
 	var notYet *lower.NotYet
 	var refused *lower.Refused
-	wantKind := errors.As(err, &notYet)
+	wantKind := errors.As(loweredError, &notYet)
 	if runtimeBoundaryViewFixture(fixture) {
-		wantKind = errors.As(err, &refused)
+		wantKind = errors.As(loweredError, &refused)
 	}
-	if !wantKind || !strings.Contains(err.Error(), reason) {
-		test.Fatalf("want current lowering boundary %q, got %v", reason, err)
+	if !wantKind || !strings.Contains(loweredError.Error(), reason) {
+		test.Fatalf("want current lowering boundary %q, got %v", reason, loweredError)
 	}
-	test.Logf("Node stdout %q; %v", result.stdout, err)
+	test.Logf("Node stdout %q; %v", result.stdout, loweredError)
 }
 
 func TestRuntimeBoundaryNormalizeLong(test *testing.T) {
@@ -129,13 +129,13 @@ func TestRuntimeBoundaryCoverageViewString(test *testing.T) {
 
 // assertRuntimeBoundaryViewRefusal holds an empty-view spread fixture to lowering's refusal, its fix unchanged, in
 // every backend's runner: a refusal is a different promise from NotYet, so the table's lowers=false never covers it.
-func assertRuntimeBoundaryViewRefusal(test *testing.T, err error) {
+func assertRuntimeBoundaryViewRefusal(test *testing.T, loweredError error) {
 	test.Helper()
 	var refused *lower.Refused
-	if !errors.As(err, &refused) ||
+	if !errors.As(loweredError, &refused) ||
 		refused.What != "an object spread through a view that may hold library class Array (its internal fields are not own enumerable properties)" ||
 		refused.Fix != "copy the fields you mean by name" {
-		test.Fatalf("want library view spread refusal, got %v", err)
+		test.Fatalf("want library view spread refusal, got %v", loweredError)
 	}
 }
 

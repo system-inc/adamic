@@ -13,24 +13,30 @@ func (l *lowering) optionalIndex(node *ast.Node, base ir.Expression) (ir.Express
 		function = l.functionIndex
 	}
 	local := len(l.result.Locals)
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: "optional_index_base", Type: base.Type(), Function: function, ExpressionAssigned: true})
+	l.result.Locals = append(
+		l.result.Locals,
+		ir.Local{Name: "optional_index_base", Type: base.Type(), Function: function, ExpressionAssigned: true},
+	)
 	read := ir.Read{Local: local, Of: base.Type()}
-	value, err := l.optionalIndexValue(node, read)
-	if err != nil {
-		return nil, err
+	value, optionalIndexValueError := l.optionalIndexValue(node, read)
+	if optionalIndexValueError != nil {
+		return nil, optionalIndexValueError
 	}
 	of := value.Type()
 	return ir.Effects{Body: []ir.Statement{ir.Declare{Local: local, Value: base}}, Result: ir.Conditional{
-		Condition: ir.Unary{Operator: ir.Not, Operand: ir.Binary{Operator: ir.Or, Left: ir.IsUndefined{Value: read}, Right: ir.IsNull{Value: read}}},
-		WhenTrue:  value, WhenNot: fit(ir.Undefined{}, of), Of: of,
+		Condition: ir.Unary{
+			Operator: ir.Not,
+			Operand:  ir.Binary{Operator: ir.Or, Left: ir.IsUndefined{Value: read}, Right: ir.IsNull{Value: read}},
+		},
+		WhenTrue: value, WhenNot: fit(ir.Undefined{}, of), Of: of,
 	}}, nil
 }
 
 func (l *lowering) optionalIndexValue(node *ast.Node, base ir.Expression) (ir.Expression, error) {
 	access := node.AsElementAccessExpression()
-	index, err := l.expression(access.ArgumentExpression)
-	if err != nil {
-		return nil, err
+	index, expressionError := l.expression(access.ArgumentExpression)
+	if expressionError != nil {
+		return nil, expressionError
 	}
 	if index.Type() != ir.Number {
 		return nil, l.notYet(node, "an optional index that isn't a number")
@@ -41,9 +47,10 @@ func (l *lowering) optionalIndexValue(node *ast.Node, base ir.Expression) (ir.Ex
 	} else {
 		element := ir.Number
 		if !base.Type().IsTypedArray() {
-			element, err = l.elementType(access.Expression)
-			if err != nil {
-				return nil, err
+			var elementTypeError error
+			element, elementTypeError = l.elementType(access.Expression)
+			if elementTypeError != nil {
+				return nil, elementTypeError
 			}
 		}
 		value = ir.ArrayIndex{Array: base, Index: index, Element: element}

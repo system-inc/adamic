@@ -20,7 +20,8 @@ var cssParserTopSetup struct {
 // Not parallel: owns package-wide shared build-input lifetime and cleanup.
 func TestMain(m *testing.M) {
 	code := m.Run()
-	if err := oracles.CleanupTemporaryDirectories(); err != nil && code == 0 {
+	if cleanupTemporaryDirectoriesError := oracles.CleanupTemporaryDirectories(); cleanupTemporaryDirectoriesError != nil &&
+		code == 0 {
 		code = 1
 	}
 	os.Exit(code)
@@ -30,8 +31,8 @@ func cssParserTopPortDirectory(test *testing.T, applied *mutant) string {
 	test.Helper()
 	original := portDirectory(test, applied)
 	destination := filepath.Join(oracles.TemporaryDirectory(test), "sources")
-	if err := os.Rename(filepath.Dir(original), destination); err != nil {
-		test.Fatal(err)
+	if renameError := os.Rename(filepath.Dir(original), destination); renameError != nil {
+		test.Fatal(renameError)
 	}
 	return filepath.Join(destination, "css")
 }

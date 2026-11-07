@@ -32,9 +32,9 @@ func jsonSanitizedMemory() (*jsonMemoryBudget, error) {
 			units = int(limit / jsonMemoryUnitBytes)
 		}
 		if value, set := os.LookupEnv("ADAMIC_JSON_MEMORY_UNITS"); set {
-			var err error
-			units, err = strconv.Atoi(value)
-			if err != nil || units < jsonMemoryParentWeight+jsonMemorySanitizedWeight {
+			var parseError error
+			units, parseError = strconv.Atoi(value)
+			if parseError != nil || units < jsonMemoryParentWeight+jsonMemorySanitizedWeight {
 				jsonMemoryError = fmt.Errorf(
 					"ADAMIC_JSON_MEMORY_UNITS=%q: need at least %d (512 MiB units, including parent reserve)",
 					value,

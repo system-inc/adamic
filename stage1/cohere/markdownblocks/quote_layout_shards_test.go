@@ -46,9 +46,9 @@ func quoteLayoutSetup(test *testing.T) quoteLayoutProducts {
 	quoteLayoutOnce.Do(func() {
 		started := time.Now()
 		// Shared setup has no deadline; Loom bounds the whole unit.
-		root, err := filepath.Abs(repository)
-		if err != nil {
-			test.Fatal(err)
+		root, absolutePathError := filepath.Abs(repository)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		quoteLayoutShared = quoteLayoutBuild(test, root)
 		test.Logf("TestMarkdownQuoteLayout (setup): %.3fs", time.Since(started).Seconds())
@@ -124,9 +124,9 @@ func quoteLayoutReady(test *testing.T) quoteLayoutProducts {
 }
 
 func quoteLayoutEnumerate(test *testing.T) ([]auditInput, [testMarkdownQuoteLayoutShards][]int) {
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	inputs, _ := blockCorpus(test, root, "whitespace")
 	var shards [testMarkdownQuoteLayoutShards][]int
@@ -215,9 +215,9 @@ func quoteLayoutBuild(test *testing.T, root string) quoteLayoutProducts {
 }
 
 func quoteLayoutBuildProduct(test *testing.T, root, target string) quoteLayoutProducts {
-	main, err := filepath.Abs("testdata/list_probe.ts")
-	if err != nil {
-		test.Fatal(err)
+	main, absolutePathError := filepath.Abs("testdata/list_probe.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	inputs := buildcache.Inputs{
 		Name: "markdown-quote-layout-lowered",
@@ -228,22 +228,26 @@ func quoteLayoutBuildProduct(test *testing.T, root, target string) quoteLayoutPr
 		Toolchain: []string{runtime.Version()},
 	}
 	loweredDir := buildcache.Product(test, inputs, func(dir string) error {
-		program, err := loweredResult(main)
-		if err != nil {
-			return err
+		program, loweredResultError := loweredResult(main)
+		if loweredResultError != nil {
+			return loweredResultError
 		}
-		if err := os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(program)), 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(
+			filepath.Join(dir, "program.c"),
+			[]byte(native.C(program)),
+			0644,
+		); writeError != nil {
+			return writeError
 		}
 		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
 	})
-	source, err := os.ReadFile(filepath.Join(loweredDir, "program.c"))
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(filepath.Join(loweredDir, "program.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	backend, err := os.ReadFile(filepath.Join(loweredDir, "program.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	backend, readError := os.ReadFile(filepath.Join(loweredDir, "program.mjs"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	products := quoteLayoutProducts{backend: backend, source: string(source), inputs: inputs}
 	if target == "lowered" {
@@ -264,16 +268,19 @@ func quoteLayoutMutants(test *testing.T, fixture *layoutFixture) {
 	}
 	for _, mutation := range mutations {
 		scratch := test.TempDir()
-		if err := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.Mkdir(filepath.Join(scratch, "markdowninline"), 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.Mkdir(
+			filepath.Join(scratch, "markdowninline"),
+			0755,
+		); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 		for _, name := range []string{"inline.ts", "classes.ts"} {
-			content, err := os.ReadFile(filepath.Join("../markdowninline", name))
-			if err != nil {
-				test.Fatal(err)
+			content, readError := os.ReadFile(filepath.Join("../markdowninline", name))
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			write(test, filepath.Join(scratch, "markdowninline", name), content)
 		}
@@ -301,9 +308,9 @@ func quoteLayoutMutants(test *testing.T, fixture *layoutFixture) {
 			"whitespace.ts",
 			"whitespaceCodec.ts",
 		} {
-			content, err := os.ReadFile(name)
-			if err != nil {
-				test.Fatal(err)
+			content, readError := os.ReadFile(name)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			if name == "leaves.ts" {
 				content = []byte(
@@ -318,9 +325,9 @@ func quoteLayoutMutants(test *testing.T, fixture *layoutFixture) {
 			}
 			write(test, filepath.Join(scratch, name), content)
 		}
-		content, err := os.ReadFile(main)
-		if err != nil {
-			test.Fatal(err)
+		content, readError := os.ReadFile(main)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		content = []byte(
 			strings.Replace(string(content), "../../markdowninline/inline.ts", "../markdowninline/inline.ts", 1),
@@ -348,19 +355,19 @@ func quoteLayoutFixture(test *testing.T, inputs []auditInput, products quoteLayo
 	defer workers.Wait()
 	// This last cumulative corpus contains every earlier layout milestone's inputs.
 
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	dir := test.TempDir()
-	if err := os.MkdirAll(dir, 0755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(dir, 0755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	var batch bytes.Buffer
 	encoder := json.NewEncoder(&batch)
 	for _, input := range inputs {
-		if err := encoder.Encode(input); err != nil {
-			test.Fatal(err)
+		if encodeError := encoder.Encode(input); encodeError != nil {
+			test.Fatal(encodeError)
 		}
 	}
 	cases := filepath.Join(dir, "cases.jsonl")
@@ -371,21 +378,21 @@ func quoteLayoutFixture(test *testing.T, inputs []auditInput, products quoteLayo
 		return quoteLayoutExecuteResult(test, nil, goBinary, cases, nativeCases, canonicalCases)
 	})
 	goLayout := products.goLayout
-	main, err := filepath.Abs("testdata/list_probe.ts")
-	if err != nil {
-		test.Fatal(err)
+	main, absolutePathError := filepath.Abs("testdata/list_probe.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	fork := os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")
 	if fork == "" {
 		fork = filepath.Join(root, "cohere/internal/format/prettier/bundles")
 	}
-	script, err := filepath.Abs("testdata/document_library.mjs")
-	if err != nil {
-		test.Fatal(err)
+	script, absolutePathError := filepath.Abs("testdata/document_library.mjs")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	markdownScript, err := filepath.Abs("testdata/library.mjs")
-	if err != nil {
-		test.Fatal(err)
+	markdownScript, absolutePathError := filepath.Abs("testdata/library.mjs")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	libraryTask := startFixtureTask(&workers, func() (run, error) {
 		return quoteLayoutExecuteResult(test, nil, "node", markdownScript, fork, cases, "fork", "off-only")
@@ -396,9 +403,9 @@ func quoteLayoutFixture(test *testing.T, inputs []auditInput, products quoteLayo
 	// Poison every text-width field in the native protocol to prove no oracle service remains.
 	protocolPaths := []string{nativeCases}
 	for _, protocolPath := range protocolPaths {
-		raw, err := os.ReadFile(protocolPath)
-		if err != nil {
-			test.Fatal(err)
+		raw, readError := os.ReadFile(protocolPath)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		lines := strings.Split(string(raw), "\n")
 		for index, line := range lines {
@@ -435,15 +442,15 @@ func quoteLayoutFixture(test *testing.T, inputs []auditInput, products quoteLayo
 		write(test, protocolPath, []byte(strings.Join(lines, "\n")))
 	}
 	if keep := os.Getenv("ADAMIC_MARKDOWNLISTS_KEEP"); keep != "" {
-		if err := os.MkdirAll(keep, 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(keep, 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 		write(test, filepath.Join(keep, "cases.jsonl"), batch.Bytes())
 		write(test, filepath.Join(keep, "want.txt"), want.stdout)
 		for _, name := range []string{"native.txt", "canonical.txt"} {
-			value, err := os.ReadFile(filepath.Join(dir, name))
-			if err != nil {
-				test.Fatal(err)
+			value, readError := os.ReadFile(filepath.Join(dir, name))
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			write(test, filepath.Join(keep, name), value)
 		}
@@ -534,9 +541,9 @@ func quoteLayoutFixture(test *testing.T, inputs []auditInput, products quoteLayo
 	// Repeat timings only on request; all corpus and mutant comparisons ran above.
 	if os.Getenv("ADAMIC_MARKDOWN_BENCH") != "" {
 		fast := products.release
-		runner, err := filepath.Abs(filepath.Join(root, "oracle/node.mjs"))
-		if err != nil {
-			test.Fatal(err)
+		runner, absolutePathError := filepath.Abs(filepath.Join(root, "oracle/node.mjs"))
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		for _, side := range []struct {
 			name, command string
@@ -600,11 +607,11 @@ func quoteLayoutContextCommand(ctx context.Context, name string, arguments ...st
 		if command.Process == nil {
 			return os.ErrProcessDone
 		}
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
+		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if errors.Is(killError, syscall.ESRCH) {
 			return os.ErrProcessDone
 		}
-		return err
+		return killError
 	}
 	return command
 }
@@ -618,28 +625,28 @@ func quoteLayoutExecuteResult(test *testing.T, environment []string, name string
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	var exitError *exec.ExitError
-	if err != nil && !errors.As(err, &exitError) {
-		return run{}, fmt.Errorf("running %s: %w", name, err)
+	if captureError != nil && !errors.As(captureError, &exitError) {
+		return run{}, fmt.Errorf("running %s: %w", name, captureError)
 	}
 	return run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}, nil
 }
 
 func quoteLayoutExecute(test *testing.T, environment []string, name string, arguments ...string) run {
 	test.Helper()
-	result, err := quoteLayoutExecuteResult(test, environment, name, arguments...)
-	if err != nil {
-		test.Fatal(err)
+	result, quoteLayoutExecuteResultError := quoteLayoutExecuteResult(test, environment, name, arguments...)
+	if quoteLayoutExecuteResultError != nil {
+		test.Fatal(quoteLayoutExecuteResultError)
 	}
 	return result
 }
 
 func quoteLayoutOnNodeResult(test *testing.T, path string, arguments ...string) (run, error) {
 	test.Helper()
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
-	if err != nil {
-		return run{}, err
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
+	if absolutePathError != nil {
+		return run{}, absolutePathError
 	}
 	return quoteLayoutExecuteResult(
 		test,
@@ -651,9 +658,9 @@ func quoteLayoutOnNodeResult(test *testing.T, path string, arguments ...string) 
 
 func quoteLayoutOnNode(test *testing.T, path string, arguments ...string) run {
 	test.Helper()
-	result, err := quoteLayoutOnNodeResult(test, path, arguments...)
-	if err != nil {
-		test.Fatal(err)
+	result, quoteLayoutOnNodeResultError := quoteLayoutOnNodeResult(test, path, arguments...)
+	if quoteLayoutOnNodeResultError != nil {
+		test.Fatal(quoteLayoutOnNodeResultError)
 	}
 	return result
 }

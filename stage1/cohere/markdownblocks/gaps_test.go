@@ -19,41 +19,41 @@ func TestParserRepresentationProbes(test *testing.T) {
 	// the last one did (346 s on the house at 8 CPUs).
 	for _, gap := range representationProbes {
 		test.Run(gap.path, func(test *testing.T) {
-			path, err := filepath.Abs(gap.path)
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(gap.path)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			source := onNode(test, path)
 			clean(test, "Node probe", source)
 			equal(test, "Node probe", source.stdout, []byte(gap.stdout))
-			program, err := load.Load([]string{path})
-			if err != nil {
-				test.Fatal(err)
+			program, loadError := load.Load([]string{path})
+			if loadError != nil {
+				test.Fatal(loadError)
 			}
-			lowered, err := lower.Lower(context.Background(), program)
+			lowered, lowerError := lower.Lower(context.Background(), program)
 			if gap.notYet != "" {
 				var notYet *lower.NotYet
-				if !errors.As(err, &notYet) || notYet.What != gap.notYet {
-					test.Fatalf("NotYet gap changed: %v; update GAPS.md", err)
+				if !errors.As(lowerError, &notYet) || notYet.What != gap.notYet {
+					test.Fatalf("NotYet gap changed: %v; update GAPS.md", lowerError)
 				}
 				return
 			}
 			if gap.refusedExact != "" {
 				var refused *lower.Refused
-				if !errors.As(err, &refused) || err.Error() != path+gap.refusedExact {
-					test.Fatalf("Exact refusal changed: %v; update GAPS.md", err)
+				if !errors.As(lowerError, &refused) || lowerError.Error() != path+gap.refusedExact {
+					test.Fatalf("Exact refusal changed: %v; update GAPS.md", lowerError)
 				}
 				return
 			}
 			if gap.refused != "" {
 				var refused *lower.Refused
-				if !errors.As(err, &refused) || !strings.Contains(refused.What, gap.refused) {
-					test.Fatalf("Refused shape changed: %v; update GAPS.md", err)
+				if !errors.As(lowerError, &refused) || !strings.Contains(refused.What, gap.refused) {
+					test.Fatalf("Refused shape changed: %v; update GAPS.md", lowerError)
 				}
 				return
 			}
-			if err != nil {
-				test.Fatal(err)
+			if lowerError != nil {
+				test.Fatal(lowerError)
 			}
 			binary := filepath.Join(gapSanitized(test, gap.path), "port")
 			native := sanitizedRun(test, binary)

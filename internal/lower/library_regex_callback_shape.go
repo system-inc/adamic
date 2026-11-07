@@ -29,18 +29,21 @@ func (l *lowering) regexCallbackNoCaptures(node *ast.Node, depth int) bool {
 			return false
 		}
 		declaration := symbol.Declarations[0]
-		if declaration.Kind != ast.KindVariableDeclaration || declaration.Parent.Flags&ast.NodeFlagsConst == 0 || declaration.AsVariableDeclaration().Initializer == nil {
+		if declaration.Kind != ast.KindVariableDeclaration ||
+			declaration.Parent.Flags&ast.NodeFlagsConst == 0 ||
+			declaration.AsVariableDeclaration().Initializer == nil {
 			return false
 		}
 		return l.regexCallbackNoCaptures(declaration.AsVariableDeclaration().Initializer, depth+1)
 	case ast.KindConditionalExpression:
 		conditional := node.AsConditionalExpression()
-		return l.regexCallbackNoCaptures(conditional.WhenTrue, depth+1) && l.regexCallbackNoCaptures(conditional.WhenFalse, depth+1)
+		return l.regexCallbackNoCaptures(conditional.WhenTrue, depth+1) &&
+			l.regexCallbackNoCaptures(conditional.WhenFalse, depth+1)
 	default:
 		return false
 	}
-	parsed, err := regex.Parse(pattern, flags)
-	if err != nil {
+	parsed, parseError := regex.Parse(pattern, flags)
+	if parseError != nil {
 		return false
 	}
 	var present func(regex.Node) bool
@@ -86,10 +89,12 @@ func (l *lowering) regexCallbackIntrinsicView(node *ast.Node) bool {
 	if access.Name().Text() != "replace" && access.Name().Text() != "replaceAll" {
 		return false
 	}
-	if l.checker.GetTypeAtLocation(access.Expression).Flags()&checker.TypeFlagsStringLike == 0 || !l.libraryMember(callee) {
+	if l.checker.GetTypeAtLocation(access.Expression).Flags()&checker.TypeFlagsStringLike == 0 ||
+		!l.libraryMember(callee) {
 		return false
 	}
-	if !l.isLibraryType(l.checker.GetTypeAtLocation(call.Arguments.Nodes[0]), "RegExp") || !l.regexCallbackNoCaptures(call.Arguments.Nodes[0], 0) {
+	if !l.isLibraryType(l.checker.GetTypeAtLocation(call.Arguments.Nodes[0]), "RegExp") ||
+		!l.regexCallbackNoCaptures(call.Arguments.Nodes[0], 0) {
 		return false
 	}
 	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node), checker.SignatureKindCall)

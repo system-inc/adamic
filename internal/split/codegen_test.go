@@ -38,39 +38,39 @@ func runCodegenSnapshot(test *testing.T, shard int) {
 func snapshotOracleFixture(test *testing.T, directory, path string) {
 	test.Helper()
 	err := func() error {
-		relative, err := filepath.Rel("../oracle/testdata", path)
-		if err != nil {
-			return err
+		relative, relativePathError := filepath.Rel("../oracle/testdata", path)
+		if relativePathError != nil {
+			return relativePathError
 		}
 		output := filepath.Join(directory, relative)
-		if err := os.MkdirAll(filepath.Dir(output), 0755); err != nil {
-			return err
+		if createDirectoryError := os.MkdirAll(filepath.Dir(output), 0755); createDirectoryError != nil {
+			return createDirectoryError
 		}
 		loaded, problem := load.Load([]string{path})
 		status := "ok"
 		if problem == nil {
-			sources, err := lower.DecodeJsonSources(context.Background(), loaded)
+			sources, decodeJsonSourcesError := lower.DecodeJsonSources(context.Background(), loaded)
 			descriptor := any(sources)
-			if err != nil {
-				descriptor = err.Error()
+			if decodeJsonSourcesError != nil {
+				descriptor = decodeJsonSourcesError.Error()
 			}
-			encoded, err := json.Marshal(descriptor)
-			if err != nil {
-				return err
+			encoded, encodeError := json.Marshal(descriptor)
+			if encodeError != nil {
+				return encodeError
 			}
-			if err := os.WriteFile(output+".oracle.json", encoded, 0644); err != nil {
-				return err
+			if writeError := os.WriteFile(output+".oracle.json", encoded, 0644); writeError != nil {
+				return writeError
 			}
-			program, err := lower.Lower(context.Background(), loaded)
-			problem = err
-			if err == nil {
+			program, lowerError := lower.Lower(context.Background(), loaded)
+			problem = lowerError
+			if lowerError == nil {
 				test.Logf("emitting %s", path)
 				for extension, source := range map[string]string{
 					".c":   native.C(program),
 					".mjs": javascript.JavaScript(program),
 				} {
-					if err := os.WriteFile(output+extension, []byte(source), 0644); err != nil {
-						return err
+					if writeError := os.WriteFile(output+extension, []byte(source), 0644); writeError != nil {
+						return writeError
 					}
 				}
 			}
@@ -78,8 +78,8 @@ func snapshotOracleFixture(test *testing.T, directory, path string) {
 		if problem != nil {
 			return problem
 		}
-		if err := os.WriteFile(output+".status", []byte(status), 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(output+".status", []byte(status), 0644); writeError != nil {
+			return writeError
 		}
 		return nil
 	}()
@@ -95,20 +95,20 @@ func snapshotOracleFixture(test *testing.T, directory, path string) {
 func runAnalyzeOracleFixtures(test *testing.T, shard int) {
 	count := 0
 	// Reads: internal/oracle/testdata/*
-	err := filepath.WalkDir("../oracle/testdata", func(path string, entry os.DirEntry, err error) error {
-		if err != nil {
-			return err
+	walkError := filepath.WalkDir("../oracle/testdata", func(path string, entry os.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
 		source := filepath.Ext(path) == ".a" || (filepath.Ext(path) == ".ts" && !strings.HasSuffix(path, ".d.ts"))
 		if entry.IsDir() || !source || oracleFixtureShard(path) != shard {
 			return nil
 		}
-		loaded, err := load.Load([]string{path})
-		if err != nil {
+		loaded, loadError := load.Load([]string{path})
+		if loadError != nil {
 			return nil
 		}
-		program, err := lower.Lower(context.Background(), loaded)
-		if err != nil {
+		program, lowerError := lower.Lower(context.Background(), loaded)
+		if lowerError != nil {
 			return nil
 		}
 		if decisions := split.Analyze(program); len(decisions) != len(program.Functions) {
@@ -117,8 +117,8 @@ func runAnalyzeOracleFixtures(test *testing.T, shard int) {
 		count++
 		return nil
 	})
-	if err != nil {
-		test.Fatal(err)
+	if walkError != nil {
+		test.Fatal(walkError)
 	}
 	test.Logf("%d compilable oracle programs analyzed", count)
 }

@@ -60,10 +60,10 @@ func TestUnknownReflectionRefusals(test *testing.T) {
 	} {
 		test.Run(probe.reason+probe.source, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.reason) {
-				test.Fatalf("got %v, want NotYet explaining %q", err, probe.reason)
+			if !errors.As(lowerSourceError, &notYet) || !strings.Contains(lowerSourceError.Error(), probe.reason) {
+				test.Fatalf("got %v, want NotYet explaining %q", lowerSourceError, probe.reason)
 			}
 		})
 	}

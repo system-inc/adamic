@@ -30,8 +30,8 @@ func TestInspectorUnavailableIsNodes(test *testing.T) {
  try { require(name); console.log('unexpected success'); }
  catch (error) { console.log([error.name,error.code,error.message,String(error),Object.keys(error).join(',')].join('\n')); }
  }`
-	if err := os.WriteFile(probe, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(probe, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	actual := executeWith(test, []string{"NODE_PATH="}, binary, probe)
 	row := strings.Join([]string{
@@ -60,9 +60,9 @@ func TestInspectorUnavailableBackends(test *testing.T) {
 		test.Run("node_inspector_unavailable"+suffix, func(test *testing.T) {
 			fixture := "internal/oracle/testdata/node_inspector_unavailable" + suffix + ".a"
 			path := filepath.Join(repository, fixture)
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			truth := onSliceNode(test, path)
 			actual, _ := nativelyUncached(test, program)

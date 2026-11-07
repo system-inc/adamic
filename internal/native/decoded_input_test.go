@@ -42,13 +42,13 @@ int main(int argc, char **argv) {
 func decodedReadProduct(test *testing.T) string {
 	test.Helper()
 	options := Options{Sanitize: true, Count: true}
-	files, flags, compiler, version, err := runtimeInputs("", options, nil)
-	if err != nil {
-		test.Fatal(err)
+	files, flags, compiler, version, runtimeInputsError := runtimeInputs("", options, nil)
+	if runtimeInputsError != nil {
+		test.Fatal(runtimeInputsError)
 	}
-	headers, err := headersRead(files, flags, compiler)
-	if err != nil {
-		test.Fatal(err)
+	headers, headersReadError := headersRead(files, flags, compiler)
+	if headersReadError != nil {
+		test.Fatal(headersReadError)
 	}
 	inputs := buildcache.Inputs{
 		Name: "decoded-input-read",
@@ -68,13 +68,13 @@ func decodedReadProduct(test *testing.T) string {
 		},
 	}
 	return buildcache.Product(test, inputs, func(directory string) error {
-		cache, err := cacheDirectory("decoded-input-read")
-		if err != nil {
-			return err
+		cache, cacheDirectoryError := cacheDirectory("decoded-input-read")
+		if cacheDirectoryError != nil {
+			return cacheDirectoryError
 		}
-		library, err := cachedRuntime(files, flags, compiler, version, cache)
-		if err != nil {
-			return err
+		library, cachedRuntimeError := cachedRuntime(files, flags, compiler, version, cache)
+		if cachedRuntimeError != nil {
+			return cachedRuntimeError
 		}
 		return BuildWithRuntime(decodedReadProbe, filepath.Join(directory, "probe"), options, library)
 	})
@@ -84,9 +84,9 @@ func TestProduct_DecodedInputReads(test *testing.T) { test.Parallel(); decodedRe
 // Keep the emitted native and JavaScript read paths on the same source fixture.
 func decodedBackendProduct(test *testing.T) string {
 	test.Helper()
-	inputs, err := buildcache.GoInputs("decoded-input-backends", "./cmd/adamic", nil, nil)
-	if err != nil {
-		test.Fatal(err)
+	inputs, goInputsError := buildcache.GoInputs("decoded-input-backends", "./cmd/adamic", nil, nil)
+	if goInputsError != nil {
+		test.Fatal(goInputsError)
 	}
 	inputs.Name = "decoded-input-backends"
 	inputs.Files = append(
@@ -100,26 +100,26 @@ func decodedBackendProduct(test *testing.T) string {
 		buildcache.Tool("node", "--version"),
 	)
 	return buildcache.Product(test, inputs, func(directory string) error {
-		entry, err := filepath.Abs("testdata/decoded_input.a")
-		if err != nil {
-			return err
+		entry, absolutePathError := filepath.Abs("testdata/decoded_input.a")
+		if absolutePathError != nil {
+			return absolutePathError
 		}
-		program, err := load.Load([]string{entry})
-		if err != nil {
-			return err
+		program, loadError := load.Load([]string{entry})
+		if loadError != nil {
+			return loadError
 		}
 		ctx, cancel := context.WithTimeout(context.Background(), 50*time.Second)
 		defer cancel()
-		lowered, err := lower.Lower(ctx, program)
-		if err != nil {
-			return err
+		lowered, lowerError := lower.Lower(ctx, program)
+		if lowerError != nil {
+			return lowerError
 		}
-		if err := os.WriteFile(
+		if writeError := os.WriteFile(
 			filepath.Join(directory, "program.mjs"),
 			[]byte(javascript.JavaScript(lowered)),
 			0644,
-		); err != nil {
-			return err
+		); writeError != nil {
+			return writeError
 		}
 		return Build(C(lowered), filepath.Join(directory, "program"), Options{Sanitize: true, Count: true, Jobs: 1})
 	})
@@ -129,28 +129,28 @@ func TestProduct_DecodedInputBackends(test *testing.T) { test.Parallel(); decode
 func checkDecodedInput(test *testing.T, data []byte) {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "source.a")
-	if err := os.WriteFile(path, data, 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, data, 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	script := `const fs=require('node:fs');const s=fs.readFileSync(process.argv[1],'utf8');console.log([s.length,...Array.from({length:s.length},(_,i)=>s.charCodeAt(i))].join(' '));`
 	node, release := boundedrun.Command(10*time.Second, "node", "-e", script, path)
-	truth, err := node.CombinedOutput()
+	truth, combinedOutputError := node.CombinedOutput()
 	release()
-	if err != nil {
-		test.Fatalf("Node: %v %s", err, truth)
+	if combinedOutputError != nil {
+		test.Fatalf("Node: %v %s", combinedOutputError, truth)
 	}
 	command, release := boundedrun.Command(10*time.Second, filepath.Join(decodedReadProduct(test), "probe"), path)
 	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1:halt_on_error=1", "UBSAN_OPTIONS=halt_on_error=1")
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
-	err = command.Run()
+	runError := command.Run()
 	release()
-	if err != nil || !bytes.Equal(stdout.Bytes(), truth) {
-		test.Fatalf("Node %q, native %q, error %v: %s", truth, stdout.Bytes(), err, stderr.String())
+	if runError != nil || !bytes.Equal(stdout.Bytes(), truth) {
+		test.Fatalf("Node %q, native %q, error %v: %s", truth, stdout.Bytes(), runError, stderr.String())
 	}
 	var allocations, frees, retains, releases, peak, regions uint64
-	n, err := fmt.Sscanf(
+	n, scanError := fmt.Sscanf(
 		stderr.String(),
 		"adamic: counts: allocations %d frees %d retains %d releases %d peak %d regions %d",
 		&allocations,
@@ -160,7 +160,7 @@ func checkDecodedInput(test *testing.T, data []byte) {
 		&peak,
 		&regions,
 	)
-	if err != nil || n != 6 || allocations != frees+regions {
+	if scanError != nil || n != 6 || allocations != frees+regions {
 		test.Fatalf("unbalanced read: %s", stderr.String())
 	}
 	directory := decodedBackendProduct(test)
@@ -185,13 +185,13 @@ func checkDecodedInput(test *testing.T, data []byte) {
 		stderr.Reset()
 		run.Stdout = &stdout
 		run.Stderr = &stderr
-		err := run.Run()
+		runError := run.Run()
 		release()
-		if err != nil || !bytes.Equal(stdout.Bytes(), truth) {
-			test.Fatalf("%s: Node %q, got %q, error %v: %s", backend, truth, stdout.Bytes(), err, stderr.String())
+		if runError != nil || !bytes.Equal(stdout.Bytes(), truth) {
+			test.Fatalf("%s: Node %q, got %q, error %v: %s", backend, truth, stdout.Bytes(), runError, stderr.String())
 		}
 		if backend == "native" {
-			n, err := fmt.Sscanf(
+			n, scanError := fmt.Sscanf(
 				stderr.String(),
 				"adamic: counts: allocations %d frees %d retains %d releases %d peak %d regions %d",
 				&allocations,
@@ -201,7 +201,7 @@ func checkDecodedInput(test *testing.T, data []byte) {
 				&peak,
 				&regions,
 			)
-			if err != nil || n != 6 || allocations != frees+regions {
+			if scanError != nil || n != 6 || allocations != frees+regions {
 				test.Fatalf("unbalanced emitted read: %s", stderr.String())
 			}
 		}

@@ -69,28 +69,28 @@ func TestNodeFSRmOptionsValidation(test *testing.T) {
 				// declared legal, so it must reach a named NotYet instead of a default.
 				path := filepath.Join(test.TempDir(), "main.a")
 				source := "import {rmSync} from 'node:fs'; rmSync(" + strconv.Quote(directory) + "," + options + ");"
-				if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-					test.Fatal(err)
+				if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+					test.Fatal(writeError)
 				}
-				checked, err := load.Load([]string{path})
-				if err != nil {
+				checked, loadError := load.Load([]string{path})
+				if loadError != nil {
 					if value == "undefined" || value == "-1" || value == "0.5" {
-						test.Fatalf("expected declared options to reach lowering: %v", err)
+						test.Fatalf("expected declared options to reach lowering: %v", loadError)
 					}
-					if !strings.Contains(err.Error(), "not assignable") {
-						test.Fatalf("want a type mismatch, not an unrelated checker failure: %v", err)
+					if !strings.Contains(loadError.Error(), "not assignable") {
+						test.Fatalf("want a type mismatch, not an unrelated checker failure: %v", loadError)
 					}
 					test.Logf("Node %s %s; checker rejects wrong type", class, codeName)
 					return
 				}
-				_, err = lower.Lower(context.Background(), checked)
+				_, lowerError := lower.Lower(context.Background(), checked)
 				var missing *lower.NotYet
-				if !errors.As(err, &missing) || !strings.Contains(missing.What, "rmSync") {
-					test.Fatalf("Node %s %s: want named rmSync NotYet, got %v", class, codeName, err)
+				if !errors.As(lowerError, &missing) || !strings.Contains(missing.What, "rmSync") {
+					test.Fatalf("Node %s %s: want named rmSync NotYet, got %v", class, codeName, lowerError)
 				}
 				if value == "undefined" && (!strings.Contains(missing.What, "options."+key) ||
 					!strings.Contains(missing.What, "ERR_INVALID_ARG_TYPE")) {
-					test.Fatalf("want present-undefined refusal naming %s and Node's code, got %v", key, err)
+					test.Fatalf("want present-undefined refusal naming %s and Node's code, got %v", key, lowerError)
 				}
 				test.Logf("Node %s %s; %s", class, codeName, missing.What)
 			})
@@ -109,13 +109,13 @@ func TestNodeFSRmOptionsUndefinedBinding(test *testing.T) {
 				"import {rmSync} from 'node:fs'; const options=%s; rmSync('missing',options);",
 				options,
 			)
-			if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+				test.Fatal(writeError)
 			}
-			_, err := lowered(test, path)
+			_, loweredError := lowered(test, path)
 			var missing *lower.NotYet
-			if !errors.As(err, &missing) || !strings.Contains(missing.What, "rmSync") {
-				test.Fatalf("want named rmSync refusal, got %v", err)
+			if !errors.As(loweredError, &missing) || !strings.Contains(missing.What, "rmSync") {
+				test.Fatalf("want named rmSync refusal, got %v", loweredError)
 			}
 		})
 	}
@@ -124,10 +124,10 @@ func TestNodeFSRmOptionsUndefinedBinding(test *testing.T) {
 func TestNodeFSRmForceUndefinedReproducer(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(repository, "internal/oracle/testdata/fs_rm_refused/oct9_native_p32_fs_rm_force_undefined.a")
-	_, err := lowered(test, path)
+	_, loweredError := lowered(test, path)
 	var missing *lower.NotYet
-	if !errors.As(err, &missing) || !strings.Contains(missing.What, "options.force present as undefined") {
-		test.Fatalf("want force undefined refusal, got %v", err)
+	if !errors.As(loweredError, &missing) || !strings.Contains(missing.What, "options.force present as undefined") {
+		test.Fatalf("want force undefined refusal, got %v", loweredError)
 	}
 	root := test.TempDir()
 	result := onNodeWith(test, inputRun{arguments: []string{root}}, path)
@@ -137,9 +137,9 @@ func TestNodeFSRmForceUndefinedReproducer(test *testing.T) {
 		!strings.Contains(string(result.stderr), "Received undefined") {
 		test.Fatalf("Node reproducer: exit %d stdout %q stderr %q", result.exitCode, result.stdout, result.stderr)
 	}
-	entries, err := os.ReadDir(root)
-	if err != nil || len(entries) != 1 || !entries[0].IsDir() {
-		test.Fatalf("Node must retain directory: entries=%v error=%v", entries, err)
+	entries, readDirectoryError := os.ReadDir(root)
+	if readDirectoryError != nil || len(entries) != 1 || !entries[0].IsDir() {
+		test.Fatalf("Node must retain directory: entries=%v error=%v", entries, readDirectoryError)
 	}
 	test.Log("recreated oct9 reproducer: Node rejects before removal; lowering refuses before either backend")
 }
@@ -149,9 +149,9 @@ func TestNodeFSRmOptionsCounts(test *testing.T) {
 	_, measure := counted(test, rmOptionsFixture, false, nil, false, false)
 	row := measure()
 	test.Log(row)
-	recorded, err := recordedCounts()
-	if err != nil {
-		test.Fatal(err)
+	recorded, recordedCountsError := recordedCounts()
+	if recordedCountsError != nil {
+		test.Fatal(recordedCountsError)
 	}
 	if recorded[rmOptionsFixture] != row {
 		test.Fatalf("rm options counts not recorded: %s", row)
@@ -160,13 +160,13 @@ func TestNodeFSRmOptionsCounts(test *testing.T) {
 
 func TestNodeFSRmOptionsAgreesWithNode(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, rmOptionsFixture))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, rmOptionsFixture))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	truth := onNode(test, path)
 	want := "no-recursive=false\nno-force=false\nno-retries=false\nno-delay=false\nempty-options=false\nno-options=false\nError\nSystemError\nremoved\n"

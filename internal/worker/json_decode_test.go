@@ -20,22 +20,22 @@ func runWorkerDecodeJSONShard(test *testing.T, shard int) {
 		return
 	}
 	for _, tool := range []string{"go", "clang", "node"} {
-		if _, err := exec.LookPath(tool); err != nil {
-			test.Fatalf("missing %s: %v", tool, err)
+		if _, lookPathError := exec.LookPath(tool); lookPathError != nil {
+			test.Fatalf("missing %s: %v", tool, lookPathError)
 		}
 	}
-	if err := exec.Command(
+	if runError := exec.Command(
 		"node",
 		"--input-type=module",
 		"-e",
 		"import {stripTypeScriptTypes,registerHooks} from 'node:module'; if(typeof stripTypeScriptTypes !== 'function'||typeof registerHooks !== 'function') process.exit(1)",
-	).Run(); err != nil {
-		test.Fatalf("missing Node 24 type stripping and module hooks: %v", err)
+	).Run(); runError != nil {
+		test.Fatalf("missing Node 24 type stripping and module hooks: %v", runError)
 	}
 	// Reads: internal/oracle/testdata/json_*.a
-	root, err := filepath.Abs("../..")
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs("../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	jsonTypesPath := ""
 	run := func(name string, args ...string) []byte {
@@ -57,14 +57,14 @@ func runWorkerDecodeJSONShard(test *testing.T, shard int) {
 		var stdout, stderr bytes.Buffer
 		cmd.Stdout = &stdout
 		cmd.Stderr = &stderr
-		if err := cmd.Run(); err != nil {
-			test.Fatalf("%s %v: %v\nstdout: %s\nstderr: %s", name, args, err, &stdout, &stderr)
+		if runError := cmd.Run(); runError != nil {
+			test.Fatalf("%s %v: %v\nstdout: %s\nstderr: %s", name, args, runError, &stdout, &stderr)
 		}
 		return stdout.Bytes()
 	}
-	fixtures, err := filepath.Glob(filepath.Join(root, "internal/oracle/testdata/json_decode_*.a"))
-	if err != nil {
-		test.Fatal(err)
+	fixtures, globError := filepath.Glob(filepath.Join(root, "internal/oracle/testdata/json_decode_*.a"))
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	if len(fixtures) == 0 {
 		test.Fatal("no decodeJson fixtures selected")
@@ -76,9 +76,9 @@ func runWorkerDecodeJSONShard(test *testing.T, shard int) {
 		}
 		test.Run(filepath.Base(fixture), func(test *testing.T) {
 			directory := test.TempDir()
-			source, err := os.ReadFile(fixture)
-			if err != nil {
-				test.Fatal(err)
+			source, readError := os.ReadFile(fixture)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			entry := filepath.Join(directory, "entry.a")
 			write(test, entry, string(source)+
@@ -96,10 +96,15 @@ func runWorkerDecodeJSONShard(test *testing.T, shard int) {
 				} {
 					command := exec.Command(compiler, args...)
 					command.Dir = root
-					output, err := command.CombinedOutput()
-					if err == nil ||
+					output, combinedOutputError := command.CombinedOutput()
+					if combinedOutputError == nil ||
 						!bytes.Contains(output, []byte("stage 0 can't lower Object.keys on a non-object yet")) {
-						test.Fatalf("want main's empty-object enumeration NotYet for %v: %v\n%s", args, err, output)
+						test.Fatalf(
+							"want main's empty-object enumeration NotYet for %v: %v\n%s",
+							args,
+							combinedOutputError,
+							output,
+						)
 					}
 				}
 				test.Log("Worker and native retain main's empty-object enumeration NotYet")
@@ -107,8 +112,8 @@ func runWorkerDecodeJSONShard(test *testing.T, shard int) {
 			}
 			product := workerJSONProduct(test, "decode/"+filepath.Base(fixture), false)
 			generated = filepath.Join(directory, "generated")
-			if err := os.CopyFS(generated, os.DirFS(filepath.Join(product, "worker"))); err != nil {
-				test.Fatal(err)
+			if copyFsError := os.CopyFS(generated, os.DirFS(filepath.Join(product, "worker"))); copyFsError != nil {
+				test.Fatal(copyFsError)
 			}
 			native := filepath.Join(product, "native")
 			expected := run(native)
@@ -120,9 +125,9 @@ func runWorkerDecodeJSONShard(test *testing.T, shard int) {
 			if filepath.Base(fixture) == "fast_risks.a" {
 				// Exercise the same explicit risks through the original parser too.
 				runtimePath := filepath.Join(generated, "adamic.mjs")
-				runtime, err := os.ReadFile(runtimePath)
-				if err != nil {
-					test.Fatal(err)
+				runtime, readError := os.ReadFile(runtimePath)
+				if readError != nil {
+					test.Fatal(readError)
 				}
 				before := "const value = parseWorkerJsonFast(text);"
 				if strings.Count(string(runtime), before) != 1 {
@@ -179,8 +184,8 @@ func runWorkerDecodeJSONShard(test *testing.T, shard int) {
 				expected = append([]byte("planted wrong case\n"), expected...)
 			}
 			observations := filepath.Join(test.TempDir(), "expected.txt")
-			if err := os.WriteFile(observations, expected, 0600); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(observations, expected, 0600); writeError != nil {
+				test.Fatal(writeError)
 			}
 			test.Log(string(run(
 				"node",
@@ -200,13 +205,13 @@ func runWorkerDecodeJSONShard(test *testing.T, shard int) {
 		}
 		test.Run(mutant.name, func(test *testing.T) {
 			generated := filepath.Join(test.TempDir(), "worker")
-			if err := os.CopyFS(generated, os.DirFS(filepath.Join(product, "worker"))); err != nil {
-				test.Fatal(err)
+			if copyFsError := os.CopyFS(generated, os.DirFS(filepath.Join(product, "worker"))); copyFsError != nil {
+				test.Fatal(copyFsError)
 			}
 			runtimePath := filepath.Join(generated, "adamic.mjs")
-			original, err := os.ReadFile(runtimePath)
-			if err != nil {
-				test.Fatal(err)
+			original, readError := os.ReadFile(runtimePath)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 
 			if !strings.Contains(string(original), mutant.before) {
@@ -244,8 +249,8 @@ func runWorkerDecodeJSONShard(test *testing.T, shard int) {
 					expected = append(expected, run(native, part, strconv.Itoa(original))...)
 				}
 				observations := filepath.Join(test.TempDir(), "expected.txt")
-				if err := os.WriteFile(observations, expected, 0600); err != nil {
-					test.Fatal(err)
+				if writeError := os.WriteFile(observations, expected, 0600); writeError != nil {
+					test.Fatal(writeError)
 				}
 				command := exec.CommandContext(
 					test.Context(),
@@ -256,11 +261,11 @@ func runWorkerDecodeJSONShard(test *testing.T, shard int) {
 					observations,
 					offset,
 				)
-				var err error
-				output, err = command.CombinedOutput()
-				if err != nil {
+				var combinedOutputError error
+				output, combinedOutputError = command.CombinedOutput()
+				if combinedOutputError != nil {
 					if !bytes.Contains(output, []byte("native disagreement")) {
-						test.Fatalf("mutant failed outside its native comparison: %v\n%s", err, output)
+						test.Fatalf("mutant failed outside its native comparison: %v\n%s", combinedOutputError, output)
 					}
 					caught = true
 					break

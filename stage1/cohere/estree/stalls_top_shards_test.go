@@ -98,9 +98,9 @@ func TestPortStallControlUnion(test *testing.T) {
 
 func estreeScopedIndexes(test *testing.T, count int, ids []string, shard int) []int {
 	test.Helper()
-	plan, err := miscPlan(ids, count)
-	if err != nil {
-		test.Fatal(err)
+	plan, miscPlanError := miscPlan(ids, count)
+	if miscPlanError != nil {
+		test.Fatal(miscPlanError)
 	}
 	if shard < 0 || shard >= len(plan) {
 		test.Fatalf("invalid shard index %d", shard)
@@ -110,9 +110,9 @@ func estreeScopedIndexes(test *testing.T, count int, ids []string, shard int) []
 		if len(parts) != 2 {
 			test.Fatalf("invalid ADAMIC_TEST_SHARD %q", value)
 		}
-		selected, err := strconv.Atoi(parts[0])
+		selected, parseError := strconv.Atoi(parts[0])
 		boxes, other := strconv.Atoi(parts[1])
-		if err != nil || other != nil || boxes < 1 || boxes > count || selected < 0 || selected >= boxes {
+		if parseError != nil || other != nil || boxes < 1 || boxes > count || selected < 0 || selected >= boxes {
 			test.Fatalf("invalid ADAMIC_TEST_SHARD %q", value)
 		}
 		if shard%boxes != selected {
@@ -127,13 +127,13 @@ func estreeTopUnion(test *testing.T, root string, count int, ids []string) {
 	test.Helper()
 	// miscPlan checks every live case is covered exactly once. Listing the actual
 	// executable also catches a missing, repeated or extra top-level shard function.
-	if _, err := miscPlan(ids, count); err != nil {
-		test.Fatal(err)
+	if _, miscPlanError := miscPlan(ids, count); miscPlanError != nil {
+		test.Fatal(miscPlanError)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	// Read through childguard.Capture for estreeScopedCommand's reason, stdout then stderr as one listing.
-	stdout, stderr, err := childguard.Capture(
+	stdout, stderr, captureError := childguard.Capture(
 		ctx,
 		estreeScopedCommand(ctx, os.Args[0], "-test.list=^"+root+"_[0-9]{3}$"),
 	)
@@ -141,8 +141,8 @@ func estreeTopUnion(test *testing.T, root string, count int, ids []string) {
 	if ctx.Err() != nil {
 		test.Fatal("cooked: listing top-level units exceeded 90 seconds")
 	}
-	if err != nil {
-		test.Fatalf("list units: %v\n%s", err, output)
+	if captureError != nil {
+		test.Fatalf("list units: %v\n%s", captureError, output)
 	}
 	names := strings.Fields(string(output))
 	if len(names) != count {
@@ -191,8 +191,8 @@ func estreeScopedProof(test *testing.T, root string, ids []string, indexes []int
 
 func estreeTopPlantedProof(test *testing.T, root string, count int, ids []string) {
 	test.Helper()
-	if _, err := miscPlan(ids, count); err != nil {
-		test.Fatal(err)
+	if _, miscPlanError := miscPlan(ids, count); miscPlanError != nil {
+		test.Fatal(miscPlanError)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
@@ -204,16 +204,16 @@ func estreeTopPlantedProof(test *testing.T, root string, count int, ids []string
 	}
 	command.Env = append(command.Env, "ADAMIC_ESTREE_TOP_PROOF="+root)
 	// Read through childguard.Capture for estreeScopedCommand's reason, stdout then stderr.
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	output := append(stdout, stderr...)
 	if ctx.Err() != nil {
 		test.Fatal("cooked: planted proof exceeded 90 seconds")
 	}
 	name := fmt.Sprintf("%s_%03d", root, miscShard(ids[len(ids)-1], count))
-	if err == nil ||
+	if captureError == nil ||
 		bytes.Count(output, []byte("--- FAIL: "+root+"_")) != 1 ||
 		!bytes.Contains(output, []byte("--- FAIL: "+name+" ")) {
-		test.Fatalf("planted failure must be caught only by %s: exit=%v\n%s", name, err, output)
+		test.Fatalf("planted failure must be caught only by %s: exit=%v\n%s", name, captureError, output)
 	}
 	test.Logf("planted case %s caught only by %s", ids[len(ids)-1], name)
 }

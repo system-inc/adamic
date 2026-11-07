@@ -44,13 +44,13 @@ func oracleCommand(ctx context.Context, binary string, args ...string) ([]byte, 
 	command := toolchain.CommandContextIn(ctx, "", binary, args...)
 	// The built program inherits the same environment as the original command.
 	command.Env = nil
-	var out, errOut bytes.Buffer
-	command.Stdout, command.Stderr = &out, &errOut
-	if err := childguard.Run(command, childguard.Options{Unbounded: true}); err != nil {
-		return nil, fmt.Errorf("%s: %w\n%s", binary, err, errOut.Bytes())
+	var out, outError bytes.Buffer
+	command.Stdout, command.Stderr = &out, &outError
+	if runError := childguard.Run(command, childguard.Options{Unbounded: true}); runError != nil {
+		return nil, fmt.Errorf("%s: %w\n%s", binary, runError, outError.Bytes())
 	}
-	if errOut.Len() != 0 {
-		return nil, fmt.Errorf("%s stderr: %s", binary, errOut.Bytes())
+	if outError.Len() != 0 {
+		return nil, fmt.Errorf("%s stderr: %s", binary, outError.Bytes())
 	}
 	return out.Bytes(), nil
 }
@@ -94,9 +94,9 @@ var lexCorpus = []struct {
 // LexicalCases enumerates the unchanged comparison corpus.
 func LexicalCases(test *testing.T) (string, int, int) {
 	test.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	var texts []string
 	files := 0
@@ -110,9 +110,9 @@ func LexicalCases(test *testing.T) (string, int, int) {
 	}
 	sort.Strings(paths)
 	for _, path := range paths {
-		data, err := os.ReadFile(path)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(path)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		if !utf8.Valid(data) {
 			test.Fatalf("invalid UTF-8: %s", path)
@@ -185,8 +185,8 @@ func LexicalCases(test *testing.T) (string, int, int) {
 		}
 	}
 	path := filepath.Join(test.TempDir(), "cases.txt")
-	if err := os.WriteFile(path, []byte(source.String()), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source.String()), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return path, files, cases
 }
@@ -194,9 +194,9 @@ func LexicalCases(test *testing.T) (string, int, int) {
 // CompositionCases enumerates the unchanged comparison corpus.
 func CompositionCases(test *testing.T) (string, int, int) {
 	path, files, count := LexicalCases(test)
-	data, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	escape := strings.NewReplacer("\\", "\\\\", "\n", "\\n", "\r", "\\r", "\t", "\\t")
 	var extra strings.Builder
@@ -246,8 +246,8 @@ func CompositionCases(test *testing.T) (string, int, int) {
 		count++
 	}
 	target := filepath.Join(test.TempDir(), "compose-cases.txt")
-	if err := os.WriteFile(target, append(data, []byte(extra.String())...), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(target, append(data, []byte(extra.String())...), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return target, files, count
 }
@@ -255,9 +255,9 @@ func CompositionCases(test *testing.T) (string, int, int) {
 // FormatterCases enumerates the unchanged comparison corpus.
 func FormatterCases(test *testing.T) (string, int, int) {
 	path, files, count := CompositionCases(test)
-	data, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	escape := strings.NewReplacer("\\", "\\\\", "\n", "\\n", "\r", "\\r", "\t", "\\t")
 	var extra strings.Builder
@@ -313,8 +313,8 @@ func FormatterCases(test *testing.T) (string, int, int) {
 		add(text)
 	}
 	target := filepath.Join(test.TempDir(), "format-cases.txt")
-	if err := os.WriteFile(target, append(data, []byte(extra.String())...), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(target, append(data, []byte(extra.String())...), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return target, files, count
 }
@@ -387,36 +387,36 @@ func Composition(test *testing.T) string {
 
 func formatterComparisonBuild(test *testing.T, output, adapter string, mutations []buildcache.Mutation) string {
 	test.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	source, err := filepath.Abs(filepath.Join("testdata", adapter))
-	if err != nil {
-		test.Fatal(err)
+	source, absolutePathError := filepath.Abs(filepath.Join("testdata", adapter))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	overlay, err := json.Marshal(map[string]any{
+	overlay, encodeError := json.Marshal(map[string]any{
 		"Replace": map[string]string{filepath.Join(root, "cohere/command/formatter_comparison/main.go"): source},
 	})
-	if err != nil {
-		test.Fatal(err)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	path := filepath.Join(test.TempDir(), "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, overlay, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	arguments := []string{"-overlay=" + path}
 	output += "-oracle-owner-v1"
 	if !oracleProducer {
-		inputs, err := buildcache.GoBuildInInputs(
+		inputs, goBuildInInputsError := buildcache.GoBuildInInputs(
 			"cohere",
 			output,
 			"./command/formatter_comparison",
 			arguments,
 			mutations,
 		)
-		if err != nil {
-			test.Fatal(err)
+		if goBuildInInputsError != nil {
+			test.Fatal(goBuildInInputsError)
 		}
 		directory := buildcache.BuiltElsewhere(
 			test,
@@ -436,13 +436,13 @@ func formatterComparisonBuild(test *testing.T, output, adapter string, mutations
 func numbersExports(test *testing.T, imports, exports string) []buildcache.Mutation {
 	test.Helper()
 	const numbers = "cohere/internal/format/yaml/compose/numbers.go"
-	original, err := os.ReadFile(filepath.Join(repository, numbers))
-	if err != nil {
-		test.Fatal(err)
+	original, readError := os.ReadFile(filepath.Join(repository, numbers))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	appended, err := os.ReadFile(filepath.Join("testdata", exports))
-	if err != nil {
-		test.Fatal(err)
+	appended, readError := os.ReadFile(filepath.Join("testdata", exports))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	last := strings.LastIndex(string(original), "\nfunc ")
 	if last < 0 {
@@ -476,9 +476,9 @@ func formatterComparison(test *testing.T, output, adapter string, mutations ...b
 
 func formatterMutantsSetupInputs(test *testing.T, oracle string) buildcache.Inputs {
 	test.Helper()
-	binary, err := os.ReadFile(oracle)
-	if err != nil {
-		test.Fatal(err)
+	binary, readError := os.ReadFile(oracle)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	files := []string{"internal/corpusfiles", "stage1/cohere/yaml", "go.mod", "go.work"}
 	for _, corpus := range lexCorpus {
@@ -503,19 +503,19 @@ func FormatterMutantAnswers(test *testing.T) string {
 		oracle := Formatter(test)
 		product := oracleProduct(test, formatterMutantsSetupInputs(test, oracle), func(directory string) error {
 			cases, _, count := FormatterCases(test)
-			data, err := os.ReadFile(cases)
-			if err != nil {
-				return err
+			data, readError := os.ReadFile(cases)
+			if readError != nil {
+				return readError
 			}
 			if len(strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")) != count {
 				return fmt.Errorf("corpus count disagrees with live enumeration")
 			}
-			expected, err := oracleCommand(ctx, oracle, "--cases", cases)
-			if err != nil {
-				return err
+			expected, oracleCommandError := oracleCommand(ctx, oracle, "--cases", cases)
+			if oracleCommandError != nil {
+				return oracleCommandError
 			}
-			if err := os.WriteFile(filepath.Join(directory, "cases.txt"), data, 0644); err != nil {
-				return err
+			if writeError := os.WriteFile(filepath.Join(directory, "cases.txt"), data, 0644); writeError != nil {
+				return writeError
 			}
 			return os.WriteFile(filepath.Join(directory, "expected.txt"), expected, 0644)
 		})

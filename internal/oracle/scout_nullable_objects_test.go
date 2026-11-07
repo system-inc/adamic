@@ -36,21 +36,21 @@ func init() {
 
 func TestNullableObjectMapKeepsArrayStorageViewNotYet(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(
+	path, absolutePathError := filepath.Abs(
 		filepath.Join(repository, "internal/oracle/testdata/scout_nullable_storage_refused/array_callback.a"),
 	)
-	if err != nil {
-		test.Fatal(err)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	node := onNode(test, path)
 	if node.exitCode != 0 || string(node.stdout) != "null\n" || len(node.stderr) != 0 {
 		test.Fatalf("Node: exit=%d stdout=%q stderr=%q", node.exitCode, node.stdout, node.stderr)
 	}
-	_, err = lowered(test, path)
+	_, loweredError := lowered(test, path)
 	var pending *lower.NotYet
-	if !errors.As(err, &pending) ||
-		!strings.Contains(err.Error(), "sharing nullable object storage with different null/undefined tags") {
-		test.Fatalf("want shared-storage NotYet, got %v", err)
+	if !errors.As(loweredError, &pending) ||
+		!strings.Contains(loweredError.Error(), "sharing nullable object storage with different null/undefined tags") {
+		test.Fatalf("want shared-storage NotYet, got %v", loweredError)
 	}
 }
 
@@ -58,20 +58,20 @@ func TestNullableObjectMapKeepsArrayStorageViewNotYet(test *testing.T) {
 // viewing the receiver's storage with different nullable tags still stops.
 func TestNullableObjectSearchKeepsArrayStorageViewNotYet(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(
+	path, absolutePathError := filepath.Abs(
 		filepath.Join(repository, "internal/oracle/testdata/scout_nullable_storage_refused/search_callback.a"),
 	)
-	if err != nil {
-		test.Fatal(err)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	node := onNode(test, path)
 	if node.exitCode != 0 || string(node.stdout) != "0\n" || len(node.stderr) != 0 {
 		test.Fatalf("Node: exit=%d stdout=%q stderr=%q", node.exitCode, node.stdout, node.stderr)
 	}
-	_, err = lowered(test, path)
+	_, loweredError := lowered(test, path)
 	var pending *lower.NotYet
-	if !errors.As(err, &pending) ||
-		!strings.Contains(err.Error(), "sharing nullable object storage with different null/undefined tags") {
-		test.Fatalf("want shared-storage NotYet, got %v", err)
+	if !errors.As(loweredError, &pending) ||
+		!strings.Contains(loweredError.Error(), "sharing nullable object storage with different null/undefined tags") {
+		test.Fatalf("want shared-storage NotYet, got %v", loweredError)
 	}
 }

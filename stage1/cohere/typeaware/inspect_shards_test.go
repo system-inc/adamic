@@ -16,18 +16,18 @@ const testInspectRequestRefusalsShards = 6
 // Not parallel: refusal controls share checker setup and build resources.
 func TestInspectRequestRefusals(test *testing.T) {
 	started := time.Now()
-	repository, err := filepath.Abs("../../..")
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs("../../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	directory := test.TempDir()
 	if path := os.Getenv("ADAMIC_SIX_REQUEST_ARTIFACTS"); path != "" {
-		directory, err = filepath.Abs(path)
-		if err != nil {
-			test.Fatal(err)
+		directory, absolutePathError = filepath.Abs(path)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
-		if err = os.MkdirAll(directory, 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 	}
 	h := &harness{t: test, repository: repository, directory: directory, sixBuilds: true, setupStarted: started}

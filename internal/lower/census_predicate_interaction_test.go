@@ -13,9 +13,9 @@ import (
 // contract before considering the callback's representation.
 func TestCensusPredicateInteractionBoundary(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("testdata/census_marker_live_boundary.a")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("testdata/census_marker_live_boundary.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	// This is a refusal row, so acceptance agreement would fail before running Node.
 	// Use the shared bounded source runner and retain the independent declaration check.
@@ -25,16 +25,16 @@ func TestCensusPredicateInteractionBoundary(test *testing.T) {
 		len(observation.stderr) != 0 {
 		test.Fatalf("Node: stdout %q, stderr %q, exit %d", observation.stdout, observation.stderr, observation.code)
 	}
-	source, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	_, err = lowerSource(test, string(source))
+	_, lowerSourceError := lowerSource(test, string(source))
 	var refused *Refused
-	if !errors.As(err, &refused) ||
+	if !errors.As(lowerSourceError, &refused) ||
 		refused.What != "a type predicate whose return is not proven (there is no body proving this parameter)" ||
 		!strings.Contains(refused.Fix, "adamic/no-type-predicate") {
-		test.Fatalf("want marker proof boundary diagnostic, got %v", err)
+		test.Fatalf("want marker proof boundary diagnostic, got %v", lowerSourceError)
 	}
 }
 
@@ -53,10 +53,11 @@ func TestCensusPredicateInteractionEscapes(test *testing.T) {
 	} {
 		test.Run([]string{"function alias", "callback escape", "exported function"}[index], func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, source)
+			_, lowerSourceError := lowerSource(test, source)
 			var refused *Refused
-			if !errors.As(err, &refused) || !strings.Contains(refused.What, "there is no body proving this parameter") {
-				test.Fatalf("want unproven live callback refused, got %v", err)
+			if !errors.As(lowerSourceError, &refused) ||
+				!strings.Contains(refused.What, "there is no body proving this parameter") {
+				test.Fatalf("want unproven live callback refused, got %v", lowerSourceError)
 			}
 		})
 	}

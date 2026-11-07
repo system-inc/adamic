@@ -22,10 +22,14 @@ func TestNodeProcessTTYRefusals(test *testing.T) {
 		for _, expression := range []string{one.expression, strings.Split(one.expression, " ?? ")[0]} {
 			for _, extension := range []string{".a", ".ts"} {
 				test.Run(expression+extension, func(test *testing.T) {
-					_, err := lowerSourceAs(test, "import 'node:process'; console.log("+expression+");", extension)
+					_, lowerSourceAsError := lowerSourceAs(
+						test,
+						"import 'node:process'; console.log("+expression+");",
+						extension,
+					)
 					var refused *NotYet
-					if !errors.As(err, &refused) || refused.What != one.reason {
-						test.Fatalf("want exact guarded TTY refusal %q, got %v", one.reason, err)
+					if !errors.As(lowerSourceAsError, &refused) || refused.What != one.reason {
+						test.Fatalf("want exact guarded TTY refusal %q, got %v", one.reason, lowerSourceAsError)
 					}
 				})
 			}

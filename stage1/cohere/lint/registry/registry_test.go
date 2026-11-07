@@ -15,13 +15,13 @@ func copyRules(test *testing.T) string {
 	test.Helper()
 	root := test.TempDir()
 	// Reads: stage1/cohere/lint/rules/*
-	err := filepath.WalkDir("../rules", func(path string, entry os.DirEntry, err error) error {
-		if err != nil {
-			return err
+	walkError := filepath.WalkDir("../rules", func(path string, entry os.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
-		relative, err := filepath.Rel("..", path)
-		if err != nil {
-			return err
+		relative, relativePathError := filepath.Rel("..", path)
+		if relativePathError != nil {
+			return relativePathError
 		}
 		target := filepath.Join(root, relative)
 		if entry.IsDir() {
@@ -30,14 +30,14 @@ func copyRules(test *testing.T) string {
 			}
 			return os.MkdirAll(target, 0755)
 		}
-		data, err := os.ReadFile(path)
-		if err != nil {
-			return err
+		data, readError := os.ReadFile(path)
+		if readError != nil {
+			return readError
 		}
 		return os.WriteFile(target, data, 0644)
 	})
-	if err != nil {
-		test.Fatal(err)
+	if walkError != nil {
+		test.Fatal(walkError)
 	}
 	return root
 }
@@ -64,27 +64,27 @@ func TestDescriptorRejections(test *testing.T) {
 			test.Parallel()
 			root := copyRules(test)
 			path := filepath.Join(root, "rules/no-debugger/rule.json")
-			data, err := os.ReadFile(path)
-			if err != nil {
-				test.Fatal(err)
+			data, readError := os.ReadFile(path)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			var d map[string]any
-			if err := json.Unmarshal(data, &d); err != nil {
-				test.Fatal(err)
+			if decodeError := json.Unmarshal(data, &d); decodeError != nil {
+				test.Fatal(decodeError)
 			}
 			change.mutate(d)
-			data, err = json.Marshal(d)
-			if err != nil {
-				test.Fatal(err)
+			data, encodeError := json.Marshal(d)
+			if encodeError != nil {
+				test.Fatal(encodeError)
 			}
-			if err := os.WriteFile(path, data, 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, data, 0644); writeError != nil {
+				test.Fatal(writeError)
 			}
-			_, err = Generate(root)
-			if err == nil || !strings.Contains(err.Error(), change.want) {
-				test.Fatalf("mutant survived or wrong failure: %v", err)
+			_, generateError := Generate(root)
+			if generateError == nil || !strings.Contains(generateError.Error(), change.want) {
+				test.Fatalf("mutant survived or wrong failure: %v", generateError)
 			}
-			test.Logf("mutant rejected: %v", err)
+			test.Logf("mutant rejected: %v", generateError)
 		})
 	}
 }
@@ -93,56 +93,65 @@ func TestDuplicateOracleAdapter(test *testing.T) {
 	test.Parallel()
 	root := copyRules(test)
 	path := filepath.Join(root, "rules/no-empty/oracle.go")
-	data, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		path,
 		bytes.ReplaceAll(data, []byte("oracleNoEmpty"), []byte("oracleNoDebugger")),
 		0644,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
 	path = filepath.Join(root, "rules/no-empty/rule.json")
-	data, err = os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	data, readError = os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		path,
 		bytes.ReplaceAll(data, []byte("oracleNoEmpty"), []byte("oracleNoDebugger")),
 		0644,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
-	_, err = Generate(root)
-	if err == nil || !strings.Contains(err.Error(), "duplicate oracle adapter") {
-		test.Fatalf("duplicate adapter mutant survived: %v", err)
+	_, generateError := Generate(root)
+	if generateError == nil || !strings.Contains(generateError.Error(), "duplicate oracle adapter") {
+		test.Fatalf("duplicate adapter mutant survived: %v", generateError)
 	}
-	test.Logf("mutant rejected: %v", err)
+	test.Logf("mutant rejected: %v", generateError)
 }
 
 func TestAdamicRuleModule(test *testing.T) {
 	test.Parallel()
 	root := copyRules(test)
 	directory := filepath.Join(root, "rules/no-debugger")
-	if err := os.Rename(filepath.Join(directory, "rule.ts"), filepath.Join(directory, "rule.a")); err != nil {
-		test.Fatal(err)
+	if renameError := os.Rename(
+		filepath.Join(directory, "rule.ts"),
+		filepath.Join(directory, "rule.a"),
+	); renameError != nil {
+		test.Fatal(renameError)
 	}
-	descriptors, err := Generate(root)
-	if err != nil {
-		test.Fatal(err)
+	descriptors, generateError := Generate(root)
+	if generateError != nil {
+		test.Fatal(generateError)
 	}
 	ts, _ := Render(descriptors)
 	if !bytes.Contains(ts, []byte("no-debugger/rule.a")) {
 		test.Fatal(".a entry not registered")
 	}
-	if err := os.WriteFile(filepath.Join(directory, "rule.ts"), []byte("stale rename"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(
+		filepath.Join(directory, "rule.ts"),
+		[]byte("stale rename"),
+		0644,
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if _, err := Generate(root); err == nil || !strings.Contains(err.Error(), "ambiguous") {
-		test.Fatalf("ambiguous module survived: %v", err)
+	if _, generateError := Generate(
+		root,
+	); generateError == nil || !strings.Contains(generateError.Error(), "ambiguous") {
+		test.Fatalf("ambiguous module survived: %v", generateError)
 	}
 	test.Log("stale .ts alongside .a rejected")
 }
@@ -152,25 +161,26 @@ func TestAdamicRuleModule(test *testing.T) {
 func TestEveryRuleHasAWitness(test *testing.T) {
 	test.Parallel()
 	// Reads: stage1/cohere/lint/rules/*
-	descriptors, err := Discover("..")
-	if err != nil {
-		test.Fatal(err)
+	descriptors, discoverError := Discover("..")
+	if discoverError != nil {
+		test.Fatal(discoverError)
 	}
 	// Reads: stage1/cohere/lint/rules/*
-	if err := CheckWitnesses("..", descriptors); err != nil {
-		test.Fatal(err)
+	if checkWitnessesError := CheckWitnesses("..", descriptors); checkWitnessesError != nil {
+		test.Fatal(checkWitnessesError)
 	}
 	root := copyRules(test)
-	if err := os.RemoveAll(filepath.Join(root, "rules/no-debugger/testdata")); err != nil {
-		test.Fatal(err)
+	if removeError := os.RemoveAll(filepath.Join(root, "rules/no-debugger/testdata")); removeError != nil {
+		test.Fatal(removeError)
 	}
-	descriptors, err = Discover(root)
-	if err != nil {
-		test.Fatal(err)
+	descriptors, discoverError = Discover(root)
+	if discoverError != nil {
+		test.Fatal(discoverError)
 	}
-	err = CheckWitnesses(root, descriptors)
-	if err == nil || !strings.Contains(err.Error(), "no-debugger/rule.json: missing witness") {
-		test.Fatalf("a rule without witnesses survived: %v", err)
+	checkWitnessesError := CheckWitnesses(root, descriptors)
+	if checkWitnessesError == nil ||
+		!strings.Contains(checkWitnessesError.Error(), "no-debugger/rule.json: missing witness") {
+		test.Fatalf("a rule without witnesses survived: %v", checkWitnessesError)
 	}
-	test.Logf("%d rules with witnesses; a rule without one refused: %v", len(descriptors), err)
+	test.Logf("%d rules with witnesses; a rule without one refused: %v", len(descriptors), checkWitnessesError)
 }

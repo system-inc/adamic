@@ -19,8 +19,8 @@ func writeProgram(test *testing.T, files ...[2]string) []string {
 	paths := make([]string, 0, len(files))
 	for _, file := range files {
 		path := filepath.Join(directory, file[0])
-		if err := os.WriteFile(path, []byte(file[1]), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(file[1]), 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		paths = append(paths, path)
 	}
@@ -30,9 +30,9 @@ func writeProgram(test *testing.T, files ...[2]string) []string {
 // declarationsByName loads a program and indexes what it proved, failing the test if it doesn't load.
 func declarationsByName(test *testing.T, paths []string) map[string]Declaration {
 	test.Helper()
-	program, err := Load(paths)
-	if err != nil {
-		test.Fatalf("Load: %v", err)
+	program, loadError := Load(paths)
+	if loadError != nil {
+		test.Fatalf("Load: %v", loadError)
 	}
 	byName := map[string]Declaration{}
 	for _, declaration := range program.Declarations(context.Background()) {
@@ -44,10 +44,10 @@ func declarationsByName(test *testing.T, paths []string) map[string]Declaration 
 // checkErrors loads a program the checker should reject and returns what it said.
 func checkErrors(test *testing.T, paths []string) []string {
 	test.Helper()
-	_, err := Load(paths)
+	_, loadError := Load(paths)
 	var checkError *CheckError
-	if !errors.As(err, &checkError) {
-		test.Fatalf("Load: want a CheckError, got %v", err)
+	if !errors.As(loadError, &checkError) {
+		test.Fatalf("Load: want a CheckError, got %v", loadError)
 	}
 	return checkError.Diagnostics
 }
@@ -144,8 +144,8 @@ func TestEveryFileIsAModule(test *testing.T) {
 		[2]string{"first.a", "const name = 'first';\n"},
 		[2]string{"second.a", "const name = 'second';\nconst console = 'mine';\n"},
 	)
-	if _, err := Load(paths); err != nil {
-		test.Errorf("Load: %v", err)
+	if _, loadError := Load(paths); loadError != nil {
+		test.Errorf("Load: %v", loadError)
 	}
 }
 
@@ -211,13 +211,13 @@ func TestLoadRefusesWhatIsNotAdamic(test *testing.T) {
 			if len(paths) == 0 {
 				paths = []string{filepath.Join(test.TempDir(), "missing.a")}
 			}
-			_, err := Load(paths[:1])
-			if err == nil || !strings.Contains(err.Error(), probe.want) {
-				test.Errorf("got %v, want an error containing %q", err, probe.want)
+			_, loadError := Load(paths[:1])
+			if loadError == nil || !strings.Contains(loadError.Error(), probe.want) {
+				test.Errorf("got %v, want an error containing %q", loadError, probe.want)
 			}
 		})
 	}
-	if _, err := Load(nil); err == nil {
+	if _, loadError := Load(nil); loadError == nil {
 		test.Error("Load(nil): want an error, got none")
 	}
 }
@@ -228,25 +228,25 @@ func TestLoadRefusesWhatIsNotAdamic(test *testing.T) {
 func TestTheProgramsInTheSpecLoad(test *testing.T) {
 	test.Parallel()
 	for _, group := range []string{"compile", "refuse"} {
-		entries, err := os.ReadDir(filepath.Join("testdata", "0.1", group))
-		if err != nil {
-			test.Fatal(err)
+		entries, readDirectoryError := os.ReadDir(filepath.Join("testdata", "0.1", group))
+		if readDirectoryError != nil {
+			test.Fatal(readDirectoryError)
 		}
 		if len(entries) == 0 {
 			test.Fatalf("testdata/0.1/%s is empty", group)
 		}
 		for _, entry := range entries {
-			path, err := filepath.Abs(filepath.Join("testdata", "0.1", group, entry.Name()))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(filepath.Join("testdata", "0.1", group, entry.Name()))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			if entry.IsDir() {
 				path = filepath.Join(path, "main.ts")
 			}
 			test.Run(group+"/"+entry.Name(), func(test *testing.T) {
 				test.Parallel()
-				if _, err := Load([]string{path}); err != nil {
-					test.Errorf("Load: %v", err)
+				if _, loadError := Load([]string{path}); loadError != nil {
+					test.Errorf("Load: %v", loadError)
 				}
 			})
 		}
@@ -260,8 +260,11 @@ func TestOverlayPrecedesDiskForAdamicAliases(test *testing.T) {
 			test.Parallel()
 			paths := writeProgram(test, [2]string{"main" + extension, "const value: number = 'disk';"})
 			replacement := "const value: number = 42;"
-			if _, err := LoadOverlay(paths, map[string]string{paths[0]: replacement}); err != nil {
-				test.Fatalf("overlay not checked: %v", err)
+			if _, loadOverlayError := LoadOverlay(
+				paths,
+				map[string]string{paths[0]: replacement},
+			); loadOverlayError != nil {
+				test.Fatalf("overlay not checked: %v", loadOverlayError)
 			}
 			diagnostics := checkErrors(test, paths)
 			if len(diagnostics) != 1 || !strings.Contains(diagnostics[0], "TS2322") {
@@ -280,8 +283,8 @@ func TestHouseStyleOptionsDoNotRejectValidControlFlow(test *testing.T) {
 	} {
 		test.Run(source, func(test *testing.T) {
 			test.Parallel()
-			if _, err := Load(writeProgram(test, [2]string{"main.a", source})); err != nil {
-				test.Fatal(err)
+			if _, loadError := Load(writeProgram(test, [2]string{"main.a", source})); loadError != nil {
+				test.Fatal(loadError)
 			}
 		})
 	}
@@ -307,9 +310,9 @@ func TestALoadedProgramNamesItsFilesAsDisplayed(test *testing.T) {
 		[2]string{"helper.ts", "export function half(value: number): number {\n\treturn value / 2;\n}\n"})
 	directory := filepath.Dir(paths[0])
 	display := func(name string) string { return strings.Replace(name, directory, "<build cache>/product", 1) }
-	program, err := LoadDisplayed(paths[:1], display)
-	if err != nil {
-		test.Fatal(err)
+	program, loadDisplayedError := LoadDisplayed(paths[:1], display)
+	if loadDisplayedError != nil {
+		test.Fatal(loadDisplayedError)
 	}
 	if got := program.FileName(program.Files()[0]); got != "<build cache>/product/main.ts" {
 		test.Errorf("the file is named %q", got)
@@ -321,15 +324,15 @@ func TestALoadedProgramNamesItsFilesAsDisplayed(test *testing.T) {
 		}
 	}
 	broken := writeProgram(test, [2]string{"main.ts", "const broken: number = 'x';\n"})
-	_, err = LoadDisplayed(
+	_, loadDisplayedError = LoadDisplayed(
 		broken,
 		func(name string) string { return strings.Replace(name, filepath.Dir(broken[0]), "<repository>", 1) },
 	)
 	var rejected *CheckError
-	if !errors.As(err, &rejected) ||
+	if !errors.As(loadDisplayedError, &rejected) ||
 		len(rejected.Diagnostics) != 1 ||
 		!strings.HasPrefix(rejected.Diagnostics[0], "<repository>/main.ts:1:7: ") {
-		test.Errorf("the diagnostic reads %v", err)
+		test.Errorf("the diagnostic reads %v", loadDisplayedError)
 	}
 }
 
@@ -341,12 +344,12 @@ func TestLoadLogsItsPhaseOnce(test *testing.T) {
 	paths := writeProgram(test, [2]string{"main.ts", "console.log('phase');\n"})
 	log := filepath.Join(test.TempDir(), "build.log")
 	test.Setenv("ADAMIC_BUILD_LOG", log)
-	if _, err := Load(paths); err != nil {
-		test.Fatal(err)
+	if _, loadError := Load(paths); loadError != nil {
+		test.Fatal(loadError)
 	}
-	written, err := os.ReadFile(log)
-	if err != nil {
-		test.Fatal(err)
+	written, readError := os.ReadFile(log)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if !regexp.MustCompile(`^phase load - off [0-9]+\.[0-9]{3}\n$`).Match(written) {
 		test.Fatalf("wrote %q, want one load phase line", written)

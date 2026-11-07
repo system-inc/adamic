@@ -25,12 +25,12 @@ func TestHostConfigurationReaderUsesDeclaredNode(test *testing.T) {
 				Stdout string `json:"stdout"`
 			} `json:"node"`
 		}
-		data, err := os.ReadFile(input)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(input)
+		if readError != nil {
+			test.Fatal(readError)
 		}
-		if err := json.Unmarshal(data, &row); err != nil {
-			test.Fatal(err)
+		if decodeError := json.Unmarshal(data, &row); decodeError != nil {
+			test.Fatal(decodeError)
 		}
 		if why := Skip(1, row.Configuration); why != "" {
 			test.Skipf(
@@ -39,45 +39,50 @@ func TestHostConfigurationReaderUsesDeclaredNode(test *testing.T) {
 			)
 		}
 		node := Require(test, 1, row.Configuration)
-		fixture, err := filepath.Abs("testdata/configuration.a")
-		if err != nil {
-			test.Fatal(err)
+		fixture, absolutePathError := filepath.Abs("testdata/configuration.a")
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
-		runner, err := filepath.Abs("../../oracle/node.mjs")
-		if err != nil {
-			test.Fatal(err)
+		runner, absolutePathError := filepath.Abs("../../oracle/node.mjs")
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
-		out, err := exec.Command(node, "--disable-warning=ExperimentalWarning", runner, fixture).CombinedOutput()
-		if err != nil || string(out) != row.Node.Stdout {
-			test.Fatalf("configured Node mismatch: %v: got %q want %q", err, out, row.Node.Stdout)
+		out, combinedOutputError := exec.Command(
+			node,
+			"--disable-warning=ExperimentalWarning",
+			runner,
+			fixture,
+		).CombinedOutput()
+		if combinedOutputError != nil || string(out) != row.Node.Stdout {
+			test.Fatalf("configured Node mismatch: %v: got %q want %q", combinedOutputError, out, row.Node.Stdout)
 		}
 		return
 	}
-	node, err := exec.LookPath("node")
-	if err != nil {
-		test.Fatal(err)
+	node, lookPathError := exec.LookPath("node")
+	if lookPathError != nil {
+		test.Fatal(lookPathError)
 	}
-	binary, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	binary, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
-	data, err := os.ReadFile("testdata/status.json")
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile("testdata/status.json")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var rows []map[string]any
-	if err := json.Unmarshal(data, &rows); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &rows); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	invoke := func(label string, row map[string]any, selected string) (string, error) {
 		test.Helper()
-		raw, err := json.Marshal(row)
-		if err != nil {
-			test.Fatal(err)
+		raw, encodeError := json.Marshal(row)
+		if encodeError != nil {
+			test.Fatal(encodeError)
 		}
 		input := filepath.Join(test.TempDir(), "status.json")
-		if err := os.WriteFile(input, raw, 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(input, raw, 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 		command := exec.Command(
 			binary,
@@ -87,9 +92,9 @@ func TestHostConfigurationReaderUsesDeclaredNode(test *testing.T) {
 			"-test.timeout=15s",
 		)
 		command.Env = append(os.Environ(), "ADAMIC_HOST_CONFIGURATION_PROBE="+input, switchName+"="+selected)
-		out, err := command.CombinedOutput()
+		out, combinedOutputError := command.CombinedOutput()
 		test.Logf("%s: %s", label, out)
-		return string(out), err
+		return string(out), combinedOutputError
 	}
 	// A stock-Node launcher labels the test input, not an inspector implementation.
 	// Removing the field selects stock Node and the real byte comparison must fail.
@@ -98,35 +103,35 @@ func TestHostConfigurationReaderUsesDeclaredNode(test *testing.T) {
 		"configuration": rows[0]["configuration"],
 		"node":          map[string]string{"stdout": "configured\n"},
 	}
-	out, err := invoke("labelled Node selected", configured, launcher)
-	if err != nil {
-		test.Fatalf("configured control: %v\n%s", err, out)
+	out, invokeError := invoke("labelled Node selected", configured, launcher)
+	if invokeError != nil {
+		test.Fatalf("configured control: %v\n%s", invokeError, out)
 	}
 	delete(configured, "configuration")
-	out, err = invoke("configuration field deleted", configured, launcher)
-	if err == nil ||
+	out, invokeError = invoke("configuration field deleted", configured, launcher)
+	if invokeError == nil ||
 		!strings.Contains(out, "configured Node mismatch") ||
 		!strings.Contains(out, `got "stock\n" want "configured\n"`) {
-		test.Fatalf("deleted-field mutant survived: %v\n%s", err, out)
+		test.Fatalf("deleted-field mutant survived: %v\n%s", invokeError, out)
 	}
-	out, err = invoke("unset", rows[0], "")
-	if err != nil || !strings.Contains(
+	out, invokeError = invoke("unset", rows[0], "")
+	if invokeError != nil || !strings.Contains(
 		out,
 		"configuration reader row 1: the node step needs node-without-inspector; set "+switchName,
 	) || !strings.Contains(out, "--- SKIP:") {
-		test.Fatalf("want named skip: %v\n%s", err, out)
+		test.Fatalf("want named skip: %v\n%s", invokeError, out)
 	}
-	out, err = invoke("verified stub selected", rows[0], nodeStub(test, node, ""))
-	if err != nil || !strings.Contains(out, "--- PASS:") {
-		test.Fatalf("selected Node: %v\n%s", err, out)
+	out, invokeError = invoke("verified stub selected", rows[0], nodeStub(test, node, ""))
+	if invokeError != nil || !strings.Contains(out, "--- PASS:") {
+		test.Fatalf("selected Node: %v\n%s", invokeError, out)
 	}
 	bad := map[string]any{
 		"configuration": map[string]any{"name": "unknown"},
 		"node":          map[string]string{"stdout": "stock\n"},
 	}
-	out, err = invoke("unknown", bad, node)
-	if err == nil || !strings.Contains(out, "unknown host configuration") {
-		test.Fatalf("unknown recipe silently accepted: %v\n%s", err, out)
+	out, invokeError = invoke("unknown", bad, node)
+	if invokeError == nil || !strings.Contains(out, "unknown host configuration") {
+		test.Fatalf("unknown recipe silently accepted: %v\n%s", invokeError, out)
 	}
 
 	// Skip must never turn metadata errors or a wrong binary into a passing skip.
@@ -144,9 +149,9 @@ func TestHostConfigurationReaderUsesDeclaredNode(test *testing.T) {
 		{"metadata without binary", wrongMetadata, "", "invalid metadata"},
 		{"stock binary", rows[0], node, "v24.19.0 true"},
 	} {
-		out, err := invoke(failure.name, failure.row, failure.binary)
-		if err == nil || !strings.Contains(out, failure.want) || strings.Contains(out, "--- SKIP:") {
-			test.Fatalf("%s must fail, never skip: %v\n%s", failure.name, err, out)
+		out, invokeError := invoke(failure.name, failure.row, failure.binary)
+		if invokeError == nil || !strings.Contains(out, failure.want) || strings.Contains(out, "--- SKIP:") {
+			test.Fatalf("%s must fail, never skip: %v\n%s", failure.name, invokeError, out)
 		}
 	}
 
@@ -154,9 +159,9 @@ func TestHostConfigurationReaderUsesDeclaredNode(test *testing.T) {
 
 func TestHostConfigurationResolversAgree(test *testing.T) {
 	test.Parallel()
-	data, err := os.ReadFile("testdata/status.json")
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile("testdata/status.json")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	for _, script := range []struct {
 		program   string
@@ -175,9 +180,10 @@ func TestHostConfigurationResolversAgree(test *testing.T) {
 		cmd := exec.Command(script.program, script.arguments...)
 		cmd.Stdin = bytes.NewReader(data)
 		cmd.Env = append(os.Environ(), switchName+"=")
-		out, err := cmd.CombinedOutput()
-		if err != nil || !strings.Contains(string(out), "SKIP: row 1 needs node-without-inspector; set "+switchName) {
-			test.Fatalf("%s: %v %s", script.program, err, out)
+		out, combinedOutputError := cmd.CombinedOutput()
+		if combinedOutputError != nil ||
+			!strings.Contains(string(out), "SKIP: row 1 needs node-without-inspector; set "+switchName) {
+			test.Fatalf("%s: %v %s", script.program, combinedOutputError, out)
 		}
 	}
 }
@@ -193,20 +199,20 @@ func TestHostConfigurationScriptReaders(test *testing.T) {
 			cmd := exec.CommandContext(ctx, command[0], command[1:]...)
 			if command[0] == "node" {
 				// setup.sh pins tsc and its adjacent API; no npm install lives in a runner's tree.
-				tsc, err := exec.LookPath("tsc")
-				if err != nil {
-					test.Fatal(err)
+				tsc, lookPathError := exec.LookPath("tsc")
+				if lookPathError != nil {
+					test.Fatal(lookPathError)
 				}
-				tsc, err = filepath.EvalSymlinks(tsc)
-				if err != nil {
-					test.Fatal(err)
+				tsc, resolveSymlinksError := filepath.EvalSymlinks(tsc)
+				if resolveSymlinksError != nil {
+					test.Fatal(resolveSymlinksError)
 				}
 				api := filepath.Join(filepath.Dir(tsc), "../lib/typescript.js")
 				cmd.Env = append(os.Environ(), "CENSUS_TYPESCRIPT="+api)
 			}
-			out, err := cmd.CombinedOutput()
-			if err != nil {
-				test.Fatalf("reader proofs: %v\n%s", err, out)
+			out, combinedOutputError := cmd.CombinedOutput()
+			if combinedOutputError != nil {
+				test.Fatalf("reader proofs: %v\n%s", combinedOutputError, out)
 			}
 			test.Logf("%s", out)
 		})
@@ -229,9 +235,9 @@ func nodeStub(test *testing.T, node, label string) string {
 
 func TestHostConfigurationRejectsStockNode(test *testing.T) {
 	test.Parallel()
-	node, err := exec.LookPath("node")
-	if err != nil {
-		test.Fatal(err)
+	node, lookPathError := exec.LookPath("node")
+	if lookPathError != nil {
+		test.Fatal(lookPathError)
 	}
 	cfg := &Configuration{
 		Name:      "node-without-inspector",
@@ -239,14 +245,14 @@ func TestHostConfigurationRejectsStockNode(test *testing.T) {
 		Configure: "--without-inspector",
 		Ruling:    "#cn4yapb",
 	}
-	_, _, err = Resolve(1, cfg, func(string) string { return node })
-	if err == nil ||
-		!strings.Contains(err.Error(), node) ||
-		!strings.Contains(err.Error(), "v24.19.0 true") ||
-		!strings.Contains(err.Error(), "v24.19.0 false") {
-		test.Fatalf("stock Node must fail its capability probe: %v", err)
+	_, _, resolveError := Resolve(1, cfg, func(string) string { return node })
+	if resolveError == nil ||
+		!strings.Contains(resolveError.Error(), node) ||
+		!strings.Contains(resolveError.Error(), "v24.19.0 true") ||
+		!strings.Contains(resolveError.Error(), "v24.19.0 false") {
+		test.Fatalf("stock Node must fail its capability probe: %v", resolveError)
 	}
-	test.Log(err)
+	test.Log(resolveError)
 }
 
 func TestHostConfigurationProbeIsCached(test *testing.T) {
@@ -264,14 +270,14 @@ func TestHostConfigurationProbeIsCached(test *testing.T) {
 		text := fmt.Sprintf("#!/bin/sh\necho probe >> '%s'\necho '%s'\n", calls, line)
 		writeExecutable(test, binary, text)
 		for i := 0; i < 2; i++ {
-			_, _, err := Resolve(i+1, cfg, func(string) string { return binary })
-			if (err == nil) != (line == "v24.19.0 false") {
-				test.Fatal(err)
+			_, _, resolveError := Resolve(i+1, cfg, func(string) string { return binary })
+			if (resolveError == nil) != (line == "v24.19.0 false") {
+				test.Fatal(resolveError)
 			}
 		}
-		data, err := os.ReadFile(calls)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(calls)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		if string(data) != "probe\n" {
 			test.Fatalf("probe wasn't cached: %q", data)
@@ -281,13 +287,13 @@ func TestHostConfigurationProbeIsCached(test *testing.T) {
 
 func TestHostConfigurationScriptProbes(test *testing.T) {
 	test.Parallel()
-	data, err := os.ReadFile("testdata/status.json")
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile("testdata/status.json")
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	node, err := exec.LookPath("node")
-	if err != nil {
-		test.Fatal(err)
+	node, lookPathError := exec.LookPath("node")
+	if lookPathError != nil {
+		test.Fatal(lookPathError)
 	}
 	scripts := []struct {
 		binary string
@@ -324,21 +330,21 @@ for i in range(2):
 				cmd := exec.Command(script.binary, script.args...)
 				cmd.Stdin = bytes.NewReader(data)
 				cmd.Env = append(os.Environ(), switchName+"="+selected, "PROBE_TEST_MODE="+mode)
-				out, err := cmd.CombinedOutput()
+				out, combinedOutputError := cmd.CombinedOutput()
 				if mode == "stock" {
-					if err == nil ||
+					if combinedOutputError == nil ||
 						!strings.Contains(string(out), "v24.19.0 true") ||
 						!strings.Contains(string(out), "v24.19.0 false") {
-						test.Fatalf("stock Node wasn't rejected: %v %s", err, out)
+						test.Fatalf("stock Node wasn't rejected: %v %s", combinedOutputError, out)
 					}
 					return
 				}
-				if err != nil {
-					test.Fatalf("probe test: %v %s", err, out)
+				if combinedOutputError != nil {
+					test.Fatalf("probe test: %v %s", combinedOutputError, out)
 				}
-				contents, err := os.ReadFile(calls)
-				if err != nil {
-					test.Fatal(err)
+				contents, readError := os.ReadFile(calls)
+				if readError != nil {
+					test.Fatal(readError)
 				}
 				if string(contents) != "probe\n" {
 					test.Fatalf("probe not cached: %q", contents)
@@ -366,25 +372,25 @@ func writeExecutable(test *testing.T, path, script string) {
 	func() {
 		syscall.ForkLock.Lock()
 		defer syscall.ForkLock.Unlock()
-		file, err := os.CreateTemp(filepath.Dir(path), ".executable-*")
-		if err != nil {
-			test.Fatal(err)
+		file, temporaryFileError := os.CreateTemp(filepath.Dir(path), ".executable-*")
+		if temporaryFileError != nil {
+			test.Fatal(temporaryFileError)
 		}
 		temporary = file.Name()
-		if _, err := file.WriteString(script); err != nil {
+		if _, writeStringError := file.WriteString(script); writeStringError != nil {
 			file.Close()
-			test.Fatal(err)
+			test.Fatal(writeStringError)
 		}
-		if err := file.Chmod(0700); err != nil {
+		if chmodError := file.Chmod(0700); chmodError != nil {
 			file.Close()
-			test.Fatal(err)
+			test.Fatal(chmodError)
 		}
-		if err := file.Close(); err != nil {
-			test.Fatal(err)
+		if closeError := file.Close(); closeError != nil {
+			test.Fatal(closeError)
 		}
 	}()
-	if err := os.Rename(temporary, path); err != nil {
-		test.Fatal(err)
+	if renameError := os.Rename(temporary, path); renameError != nil {
+		test.Fatal(renameError)
 	}
 	temporary = ""
 }

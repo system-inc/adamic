@@ -18,12 +18,12 @@ func TestOptionalPositionCountsUTF16Surrogates(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "main.a")
 	const source = "const glyph='😀'; const items: string[]=[]; const item:string=items[0];"
-	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, _, err := optionalProgram([]string{path}, nil)
-	if err != nil {
-		test.Fatal(err)
+	program, _, optionalProgramError := optionalProgram([]string{path}, nil)
+	if optionalProgramError != nil {
+		test.Fatal(optionalProgramError)
 	}
 	var file *ast.SourceFile
 	for _, candidate := range program.GetSourceFiles() {
@@ -49,16 +49,16 @@ func TestOptionalResolverPreservesUncheckedIndexDiagnostic(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "main.a")
 	const source = "const items: string[] = []; const item: string = items[0];"
-	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	_, before := load.Load([]string{path})
 	if diagnosticCount(before, "2322") != 1 {
 		test.Fatalf("authoritative loader must reject the required string assignment: %v", before)
 	}
-	program, _, err := optionalProgram([]string{path}, nil)
-	if err != nil {
-		test.Fatal(err)
+	program, _, optionalProgramError := optionalProgram([]string{path}, nil)
+	if optionalProgramError != nil {
+		test.Fatal(optionalProgramError)
 	}
 	diagnostics := program.GetSemanticDiagnostics(context.Background(), nil)
 	if len(diagnostics) != 1 || diagnostics[0].Code() != 2322 {
@@ -79,22 +79,27 @@ func TestReturnAdaptationRewritesTS7030AndPreservesBehavior(test *testing.T) {
 	path := filepath.Join(test.TempDir(), "main.a")
 	const source = "function f(flag: boolean, undefined: number): number | undefined { if (flag) return 1; }"
 	const want = "function f(flag: boolean, undefined: number): number | undefined { if (flag) return 1; \nreturn void 0;\n}"
-	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	before := meterReturnDiagnostics(test, []string{path}, nil)
 	if diagnosticCount(before, "7030") != 1 {
 		test.Fatalf("strict return checker must produce one TS7030: %v", before)
 	}
-	overlay, changed, err := returnAdaptations([]string{path}, nil, before)
-	if err != nil || changed != 1 || len(overlay) != 1 {
-		test.Fatalf("TS7030 rewrite count=%d overlay=%#v err=%v, want one rewrite", changed, overlay, err)
+	overlay, changed, returnAdaptationsError := returnAdaptations([]string{path}, nil, before)
+	if returnAdaptationsError != nil || changed != 1 || len(overlay) != 1 {
+		test.Fatalf(
+			"TS7030 rewrite count=%d overlay=%#v err=%v, want one rewrite",
+			changed,
+			overlay,
+			returnAdaptationsError,
+		)
 	}
 	if overlay[path] != want {
 		test.Fatalf("rewritten source = %q, want %q", overlay[path], want)
 	}
-	if _, err := load.LoadOverlay([]string{path}, overlay); err != nil {
-		test.Fatal(err)
+	if _, loadOverlayError := load.LoadOverlay([]string{path}, overlay); loadOverlayError != nil {
+		test.Fatal(loadOverlayError)
 	}
 	if after := meterReturnDiagnostics(test, []string{path}, overlay); after != nil {
 		test.Fatalf("strict return diagnostic remains after adaptation: %v", after)
@@ -105,13 +110,13 @@ func TestReturnAdaptationRewritesTS7030AndPreservesBehavior(test *testing.T) {
 			test.Fatalf("%s Node output = %q, want 1 undefined", label, output)
 		}
 	}
-	disk, err := os.ReadFile(path)
-	if err != nil || string(disk) != source {
-		test.Fatalf("return adaptation changed disk source: %q, %v", disk, err)
+	disk, readError := os.ReadFile(path)
+	if readError != nil || string(disk) != source {
+		test.Fatalf("return adaptation changed disk source: %q, %v", disk, readError)
 	}
-	next, changed, err := returnAdaptations([]string{path}, overlay, nil)
-	if err != nil || changed != 0 || next[path] != want {
-		test.Fatalf("return adaptation is not idempotent: %d %#v %v", changed, next, err)
+	next, changed, returnAdaptationsError := returnAdaptations([]string{path}, overlay, nil)
+	if returnAdaptationsError != nil || changed != 0 || next[path] != want {
+		test.Fatalf("return adaptation is not idempotent: %d %#v %v", changed, next, returnAdaptationsError)
 	}
 }
 
@@ -120,9 +125,9 @@ func TestReturnAdaptationRewritesTS7030AndPreservesBehavior(test *testing.T) {
 // the adaptation's TS7030 input contract without inventing a diagnostic.
 func meterReturnDiagnostics(test *testing.T, paths []string, overlay map[string]string) error {
 	test.Helper()
-	program, _, err := optionalProgram(paths, overlay)
-	if err != nil {
-		test.Fatal(err)
+	program, _, optionalProgramError := optionalProgram(paths, overlay)
+	if optionalProgramError != nil {
+		test.Fatal(optionalProgramError)
 	}
 	var diagnostics []string
 	for _, diagnostic := range program.GetSemanticDiagnostics(context.Background(), nil) {

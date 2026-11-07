@@ -66,12 +66,12 @@ func oracleInputs(test *testing.T, name string) buildcache.Inputs {
 // run had no stall guard to lose (Unbounded), and test.Context() and the unit's own ceiling bound it.
 func oracleExecute(test *testing.T, oracle string, arguments ...string) []byte {
 	test.Helper()
-	stdout, stderr, err := childguard.Capture(
+	stdout, stderr, captureError := childguard.Capture(
 		test.Context(),
 		toolchain.CommandContextIn(test.Context(), "", oracle, arguments...),
 	)
-	if err != nil || len(stderr) != 0 {
-		test.Fatalf("oracle %v: %v\n%s", arguments, err, stderr)
+	if captureError != nil || len(stderr) != 0 {
+		test.Fatalf("oracle %v: %v\n%s", arguments, captureError, stderr)
 	}
 	return stdout
 }
@@ -148,14 +148,14 @@ func BoundedCases(test *testing.T) []ComparisonInput {
 		{"stage1/cohere/estree/stalls_test.go:0:eof-interface", "interface I {", "input.ts", false},
 		{"stage1/cohere/estree/stalls_test.go:0:eof-method", "type X = { m(a: string): void;", "input.ts", false},
 	}
-	fixtures, err := filepath.Glob("validation/followup/stalls/*.input")
-	if err != nil || len(fixtures) == 0 {
-		test.Fatalf("stall fixtures: %d %v", len(fixtures), err)
+	fixtures, globError := filepath.Glob("validation/followup/stalls/*.input")
+	if globError != nil || len(fixtures) == 0 {
+		test.Fatalf("stall fixtures: %d %v", len(fixtures), globError)
 	}
 	for _, fixture := range fixtures {
-		body, err := os.ReadFile(fixture)
-		if err != nil {
-			test.Fatal(err)
+		body, readError := os.ReadFile(fixture)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		cases = append(cases, ComparisonInput{
 			"stage1/cohere/estree/" + filepath.ToSlash(fixture) + ":0:audit",
@@ -169,9 +169,9 @@ func BoundedCases(test *testing.T) []ComparisonInput {
 
 func root(test *testing.T) string {
 	test.Helper()
-	path, err := filepath.Abs("../../..")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("../../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return path
 }
@@ -182,23 +182,23 @@ func manifest(test *testing.T, cases []string) string {
 	var listing strings.Builder
 	for index, text := range cases {
 		path := filepath.Join(dir, fmt.Sprintf("%04d.ts", index))
-		if err := os.WriteFile(path, []byte(text), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(text), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		listing.WriteString(path + "\n")
 	}
 	path := filepath.Join(dir, "manifest")
-	if err := os.WriteFile(path, []byte(listing.String()), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(listing.String()), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return path
 }
 
 func miscDigest(test *testing.T, path string) string {
 	test.Helper()
-	data, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return fmt.Sprintf("%x", sha256.Sum256(data))
 }
@@ -225,18 +225,18 @@ func ParserOracle(test *testing.T) string {
 func estreeGoOracleBuild(test *testing.T, dir string) string {
 	test.Helper()
 	repo := root(test)
-	source, err := filepath.Abs("testdata/oracle.go")
-	if err != nil {
-		test.Fatal(err)
+	source, absolutePathError := filepath.Abs("testdata/oracle.go")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	virtual := filepath.Join(repo, "cohere/adamic_estree_oracle.go")
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source}})
-	if err != nil {
-		test.Fatal(err)
+	overlay, encodeError := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source}})
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	path := filepath.Join(dir, "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, overlay, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 	defer os.Remove(path)
@@ -250,8 +250,8 @@ func estreeGoOracleBuild(test *testing.T, dir string) string {
 	)...)
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
-	if err := childguard.Run(command, childguard.Options{Unbounded: true}); err != nil || stderr.Len() != 0 {
-		test.Fatalf("go build %s: %v\n%s", virtual, err, &stderr)
+	if runError := childguard.Run(command, childguard.Options{Unbounded: true}); runError != nil || stderr.Len() != 0 {
+		test.Fatalf("go build %s: %v\n%s", virtual, runError, &stderr)
 	}
 	return binary
 }
@@ -272,9 +272,9 @@ func AcceptanceMutantsOracle(test *testing.T) string {
 		directory := oracleProduct(test, inputs, func(directory string) error {
 			// Keep this copy product distinct from the underlying parser oracle.
 			binary := ParserOracle(test)
-			data, err := os.ReadFile(binary)
-			if err != nil {
-				return err
+			data, readError := os.ReadFile(binary)
+			if readError != nil {
+				return readError
 			}
 			return os.WriteFile(filepath.Join(directory, "oracle"), data, 0755)
 		})
@@ -295,13 +295,13 @@ func ScalarEdgesOracle(test *testing.T) string {
 		Flags:     []string{"go build " + strings.Join(buildcache.ReproducibleGoFlags(), " ") + " overlay oracle"},
 		Toolchain: []string{buildcache.Tool("go", "version")},
 	}, func(dir string) error {
-		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source}})
-		if err != nil {
-			return err
+		overlay, encodeError := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source}})
+		if encodeError != nil {
+			return encodeError
 		}
 		path := filepath.Join(dir, "overlay.json")
-		if err := os.WriteFile(path, overlay, 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(path, overlay, 0644); writeError != nil {
+			return writeError
 		}
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 		defer os.Remove(path)
@@ -312,9 +312,9 @@ func ScalarEdgesOracle(test *testing.T) string {
 			filepath.Join(dir, "oracle"),
 			virtual,
 		)...)
-		output, err := childguard.CombinedOutput(command, childguard.Options{Unbounded: true})
-		if err != nil {
-			return fmt.Errorf("oracle: %w\n%s", err, output)
+		output, combinedOutputError := childguard.CombinedOutput(command, childguard.Options{Unbounded: true})
+		if combinedOutputError != nil {
+			return fmt.Errorf("oracle: %w\n%s", combinedOutputError, output)
 		}
 		return nil
 	})
@@ -328,9 +328,9 @@ func SyntaxMutantsOracle(test *testing.T) string {
 	inputs.Name = "syntax-mutants-go-oracle-v1"
 	inputs.Flags = append(inputs.Flags, "go build "+strings.Join(buildcache.ReproducibleGoFlags(), " "))
 	return oracleProduct(test, inputs, func(dir string) error {
-		data, err := os.ReadFile(ParserOracle(test))
-		if err != nil {
-			return err
+		data, readError := os.ReadFile(ParserOracle(test))
+		if readError != nil {
+			return readError
 		}
 		return os.WriteFile(filepath.Join(dir, "oracle"), data, 0755)
 	})
@@ -344,13 +344,13 @@ func ThreePortMutantsOracle(test *testing.T) string {
 		repo := root(test)
 		source := filepath.Join(repo, "stage1/cohere/estree/testdata/oracle.go")
 		virtual := filepath.Join(repo, "cohere/adamic_estree_oracle.go")
-		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source}})
-		if err != nil {
-			return err
+		overlay, encodeError := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source}})
+		if encodeError != nil {
+			return encodeError
 		}
 		path := filepath.Join(dir, "overlay.json")
-		if err := os.WriteFile(path, overlay, 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(path, overlay, 0644); writeError != nil {
+			return writeError
 		}
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 		defer os.Remove(path)
@@ -367,10 +367,10 @@ func ThreePortMutantsOracle(test *testing.T) string {
 		command.Env = append(command.Env, "PWD="+command.Dir)
 		// Read through childguard.Capture for oracleExecute's reason: a WaitDelay could fail a build that had
 		// finished. The build had no stall guard to lose, and the product unit's ceiling bounds it.
-		stdout, stderr, err := childguard.Capture(ctx, command)
+		stdout, stderr, captureError := childguard.Capture(ctx, command)
 		output := append(stdout, stderr...)
-		if err != nil {
-			return fmt.Errorf("Go oracle: %w\n%s", err, output)
+		if captureError != nil {
+			return fmt.Errorf("Go oracle: %w\n%s", captureError, output)
 		}
 		return nil
 	})
@@ -413,9 +413,9 @@ var deepMutantsFixturePrepared struct {
 
 func CachedComparisonAnswers(test *testing.T, oracle string, cases []ComparisonInput) []ComparisonAnswer {
 	test.Helper()
-	encoded, err := json.Marshal(casesToInputs(cases))
-	if err != nil {
-		test.Fatal(err)
+	encoded, encodeError := json.Marshal(casesToInputs(cases))
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	inputs := buildcache.Inputs{
 		Name:      "estree-misc-oracle-answers",
@@ -427,52 +427,52 @@ func CachedComparisonAnswers(test *testing.T, oracle string, cases []ComparisonI
 		answers := make([]ComparisonAnswer, len(cases))
 		for i, item := range cases {
 			subdir := filepath.Join(directory, fmt.Sprintf("case-%03d", i))
-			if err := os.Mkdir(subdir, 0755); err != nil {
-				return err
+			if createDirectoryError := os.Mkdir(subdir, 0755); createDirectoryError != nil {
+				return createDirectoryError
 			}
 			path := filepath.Join(subdir, item.Filename)
-			if err := os.WriteFile(path, []byte(item.Text), 0644); err != nil {
-				return err
+			if writeError := os.WriteFile(path, []byte(item.Text), 0644); writeError != nil {
+				return writeError
 			}
 			if item.Audit {
 				list := filepath.Join(subdir, "manifest")
-				if err := os.WriteFile(list, []byte(path+"\n"), 0644); err != nil {
-					return err
+				if writeError := os.WriteFile(list, []byte(path+"\n"), 0644); writeError != nil {
+					return writeError
 				}
-				output, err := miscReferenceCommand(test, oracle, "--audit", list, subdir)
-				if err != nil {
-					return err
+				output, miscReferenceCommandError := miscReferenceCommand(test, oracle, "--audit", list, subdir)
+				if miscReferenceCommandError != nil {
+					return miscReferenceCommandError
 				}
-				if err := json.Unmarshal(output, &answers[i]); err != nil {
-					return err
+				if decodeError := json.Unmarshal(output, &answers[i]); decodeError != nil {
+					return decodeError
 				}
 			} else {
 				answers[i].Status = "ok"
 			}
 			if answers[i].Status == "ok" {
-				output, err := miscReferenceCommand(test, oracle, path)
-				if err != nil {
-					return err
+				output, miscReferenceCommandError := miscReferenceCommand(test, oracle, path)
+				if miscReferenceCommandError != nil {
+					return miscReferenceCommandError
 				}
 				answers[i].Data = output
 			}
-			if err := os.RemoveAll(subdir); err != nil {
-				return err
+			if removeError := os.RemoveAll(subdir); removeError != nil {
+				return removeError
 			}
 		}
-		data, err := json.Marshal(answers)
-		if err != nil {
-			return err
+		data, encodeError := json.Marshal(answers)
+		if encodeError != nil {
+			return encodeError
 		}
 		return os.WriteFile(filepath.Join(directory, "answers.json"), data, 0644)
 	})
-	data, err := os.ReadFile(filepath.Join(directory, "answers.json"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(directory, "answers.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var answers []ComparisonAnswer
-	if err := json.Unmarshal(data, &answers); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &answers); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if len(answers) != len(cases) {
 		test.Fatal("oracle answer enumeration differs")
@@ -494,10 +494,10 @@ func miscReferenceCommand(test *testing.T, oracle string, args ...string) ([]byt
 	command.Stderr = &stderr
 	var stdout bytes.Buffer
 	command.Stdout = &stdout
-	err := childguard.Run(command, childguard.Options{Unbounded: true})
+	runError := childguard.Run(command, childguard.Options{Unbounded: true})
 	output := stdout.Bytes()
-	if err != nil || stderr.Len() != 0 {
-		return nil, fmt.Errorf("oracle %v: %v\n%s", args, err, &stderr)
+	if runError != nil || stderr.Len() != 0 {
+		return nil, fmt.Errorf("oracle %v: %v\n%s", args, runError, &stderr)
 	}
 	return output, nil
 }
@@ -508,13 +508,13 @@ func CachedRecoveryAnswer(test *testing.T, oracle, list, mode string) []byte {
 	if mode != "--manifest" && mode != "--audit" {
 		test.Fatalf("unsupported recovery oracle mode %q", mode)
 	}
-	binary, err := os.ReadFile(oracle)
-	if err != nil {
-		test.Fatal(err)
+	binary, readError := os.ReadFile(oracle)
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	manifestBytes, err := os.ReadFile(list)
-	if err != nil {
-		test.Fatal(err)
+	manifestBytes, readError := os.ReadFile(list)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var sources []string
 	flags := []string{mode, fmt.Sprintf("oracle-sha256=%x", sha256.Sum256(binary))}
@@ -522,9 +522,9 @@ func CachedRecoveryAnswer(test *testing.T, oracle, list, mode string) []byte {
 		if path == "" {
 			continue
 		}
-		content, err := os.ReadFile(path)
-		if err != nil {
-			test.Fatal(err)
+		content, readError := os.ReadFile(path)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		sources = append(sources, string(content))
 		flags = append(flags, string(content))
@@ -537,24 +537,24 @@ func CachedRecoveryAnswer(test *testing.T, oracle, list, mode string) []byte {
 	}
 	directory := oracleProduct(test, inputs, func(directory string) error {
 		work := filepath.Join(directory, "run")
-		if err := os.MkdirAll(work, 0755); err != nil {
-			return err
+		if createDirectoryError := os.MkdirAll(work, 0755); createDirectoryError != nil {
+			return createDirectoryError
 		}
 		defer os.RemoveAll(work)
 		var names []string
 		for i, source := range sources {
 			name := fmt.Sprintf("input-%06d.ts", i)
-			if err := os.WriteFile(filepath.Join(work, name), []byte(source), 0644); err != nil {
-				return err
+			if writeError := os.WriteFile(filepath.Join(work, name), []byte(source), 0644); writeError != nil {
+				return writeError
 			}
 			names = append(names, name)
 		}
-		if err := os.WriteFile(
+		if writeError := os.WriteFile(
 			filepath.Join(work, "manifest"),
 			[]byte(strings.Join(names, "\n")+"\n"),
 			0644,
-		); err != nil {
-			return err
+		); writeError != nil {
+			return writeError
 		}
 		args := []string{mode, "manifest"}
 		if mode == "--audit" {
@@ -567,17 +567,17 @@ func CachedRecoveryAnswer(test *testing.T, oracle, list, mode string) []byte {
 		cold := time.Now()
 		var stdout bytes.Buffer
 		command.Stdout = &stdout
-		err := childguard.Run(command, childguard.Options{Unbounded: true})
+		runError := childguard.Run(command, childguard.Options{Unbounded: true})
 		answer := stdout.Bytes()
 		test.Logf("BUILD estree-oracle-answer cold wall=%.6fs", time.Since(cold).Seconds())
-		if err != nil || stderr.Len() != 0 {
-			return fmt.Errorf("oracle answer: %v: %s", err, &stderr)
+		if runError != nil || stderr.Len() != 0 {
+			return fmt.Errorf("oracle answer: %v: %s", runError, &stderr)
 		}
 		return os.WriteFile(filepath.Join(directory, "answer"), answer, 0644)
 	})
-	answer, err := os.ReadFile(filepath.Join(directory, "answer"))
-	if err != nil {
-		test.Fatal(err)
+	answer, readError := os.ReadFile(filepath.Join(directory, "answer"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return answer
 }

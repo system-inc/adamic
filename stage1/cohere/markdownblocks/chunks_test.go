@@ -19,9 +19,9 @@ import (
 // Not parallel: shared markdownMemory configuration; existing helper controls parallel execution.
 func TestMicromarkInputChunks(test *testing.T) {
 	parallelMarkdownMemory(test, 1)
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	corpus, files := blockCorpus(test, root, "whitespace")
 	inputs := [][]uint16{{}}
@@ -86,18 +86,18 @@ func TestMicromarkInputChunks(test *testing.T) {
 	if fork == "" {
 		fork = filepath.Join(cohere, "internal/format/prettier/bundles")
 	}
-	installed, err := os.ReadFile(filepath.Join(fork, "plugins/markdown.js"))
-	if err != nil {
-		test.Fatal(err)
+	installed, readError := os.ReadFile(filepath.Join(fork, "plugins/markdown.js"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	pinned, err := os.ReadFile(filepath.Join(cohere, "internal/format/prettier/bundles/plugins/markdown.js"))
-	if err != nil {
-		test.Fatal(err)
+	pinned, readError := os.ReadFile(filepath.Join(cohere, "internal/format/prettier/bundles/plugins/markdown.js"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	equal(test, "pinned bundle", installed, pinned)
-	main, err := filepath.Abs("testdata/chunks_probe.ts")
-	if err != nil {
-		test.Fatal(err)
+	main, absolutePathError := filepath.Abs("testdata/chunks_probe.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	emitted := filepath.Join(probeEmitted(test, chunksProbe), "port.mjs")
 	binary := filepath.Join(probeNative(test, chunksProbe, native.Options{Sanitize: true}), "port")
@@ -133,13 +133,13 @@ func TestMicromarkInputChunks(test *testing.T) {
 		test.Run(m.name, func(test *testing.T) {
 			cases, want, names := fullCases, fullWant, fullNames
 			scratch := test.TempDir()
-			if err := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); err != nil {
-				test.Fatal(err)
+			if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
 			for _, file := range []string{"inputChunks.ts", "testdata/chunks_probe.ts"} {
-				data, err := os.ReadFile(file)
-				if err != nil {
-					test.Fatal(err)
+				data, readError := os.ReadFile(file)
+				if readError != nil {
+					test.Fatal(readError)
 				}
 				if file == "inputChunks.ts" {
 					if strings.Count(string(data), m.from) != 1 {

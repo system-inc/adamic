@@ -39,9 +39,9 @@ func TestEachGapStandsWhereGapsMdSaysItDoes(test *testing.T) {
 	for _, gap := range gaps {
 		test.Run(gap.path, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(gap.path)
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(gap.path)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			// What the program means, whatever stage 0 makes of it.
 			nodeRun := onNode(test, path)
@@ -54,20 +54,20 @@ func TestEachGapStandsWhereGapsMdSaysItDoes(test *testing.T) {
 				)
 			}
 
-			program, err := load.Load([]string{path})
-			if err != nil {
-				test.Fatalf("Load: %v", err)
+			program, loadError := load.Load([]string{path})
+			if loadError != nil {
+				test.Fatalf("Load: %v", loadError)
 			}
-			lowered, err := lower.Lower(context.Background(), program)
+			lowered, lowerError := lower.Lower(context.Background(), program)
 			if gap.notYet != "" {
-				if err == nil {
+				if lowerError == nil {
 					test.Fatalf(
 						"this gap lowers now: mark it closed here and in GAPS.md, and undo the port's workaround for it (grep -n 'gap N' *.ts)",
 					)
 				}
 				var notYet *lower.NotYet
-				if !errors.As(err, &notYet) {
-					test.Fatalf("stage 0 refuses another way now: %v", err)
+				if !errors.As(lowerError, &notYet) {
+					test.Fatalf("stage 0 refuses another way now: %v", lowerError)
 				}
 				if notYet.What != gap.notYet {
 					test.Fatalf("stage 0 refuses with %q now, where GAPS.md records %q", notYet.What, gap.notYet)
@@ -75,39 +75,39 @@ func TestEachGapStandsWhereGapsMdSaysItDoes(test *testing.T) {
 				return
 			}
 			if gap.refused != "" {
-				if err == nil {
+				if lowerError == nil {
 					test.Fatalf(
 						"0.1 accepts this program now: mark the gap closed here and in GAPS.md, and undo the port's workaround for it (grep -n 'gap N' *.ts)",
 					)
 				}
 				var refused *lower.Refused
-				if !errors.As(err, &refused) {
-					test.Fatalf("stage 0 refuses another way now: %v", err)
+				if !errors.As(lowerError, &refused) {
+					test.Fatalf("stage 0 refuses another way now: %v", lowerError)
 				}
 				if refused.What != gap.refused {
 					test.Fatalf("stage 0 refuses with %q now, where GAPS.md records %q", refused.What, gap.refused)
 				}
 				return
 			}
-			if err != nil {
+			if lowerError != nil {
 				test.Fatalf(
 					"stage 0 refuses this gap now (%v): record that in GAPS.md, where it says the program lowers",
-					err,
+					lowerError,
 				)
 			}
 			if gap.badC != "" {
-				buildErr := native.Build(
+				buildError := native.Build(
 					native.C(lowered),
 					filepath.Join(test.TempDir(), "gap"),
 					native.Options{Sanitize: true},
 				)
-				if buildErr == nil {
+				if buildError == nil {
 					test.Fatalf(
 						"clang compiles this gap's C now: mark it closed here and in GAPS.md, and undo the port's workaround for it (grep -n 'gap N' *.ts)",
 					)
 				}
-				if !strings.Contains(buildErr.Error(), gap.badC) {
-					test.Fatalf("clang refuses this gap's C another way now: %v", buildErr)
+				if !strings.Contains(buildError.Error(), gap.badC) {
+					test.Fatalf("clang refuses this gap's C another way now: %v", buildError)
 				}
 				return
 			}

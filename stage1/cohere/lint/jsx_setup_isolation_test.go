@@ -15,9 +15,9 @@ import (
 // builds alone from an empty cache is what its TestProduct_ proves on Workshop.
 func TestJsxLintTreesSetupIsolation(test *testing.T) {
 	test.Parallel()
-	executable, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	executable, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
 	command := exec.CommandContext(
 		context.Background(),
@@ -27,9 +27,9 @@ func TestJsxLintTreesSetupIsolation(test *testing.T) {
 		"-test.skip=^TestProduct_",
 	)
 	command.Env = append(os.Environ(), "ADAMIC_TEST_SHARD=", "ADAMIC_JSX_SHARD_CHILD=")
-	output, err := command.CombinedOutput()
-	if err != nil {
-		test.Fatalf("standalone shard failed: %v\n%s", err, output)
+	output, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("standalone shard failed: %v\n%s", combinedOutputError, output)
 	}
 	// The child looks up the tree setup itself. The parser and membership oracles are its build's inputs, so the
 	// child looks them up only when the setup misses: a runner, and any warm cache, finds the setup and never needs

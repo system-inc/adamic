@@ -114,8 +114,8 @@ func fixtureHookInputsEnvironment(test testing.TB, repository string, environmen
 		test.Fatalf("oracle product input discovery: %s%s", result.Stdout, result.Stderr)
 	}
 	var inputs buildcache.Inputs
-	if err := json.Unmarshal([]byte(result.Stdout), &inputs); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal([]byte(result.Stdout), &inputs); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	return inputs
 }
@@ -149,34 +149,34 @@ func fixtureOracleHook(test testing.TB, repository string) string {
 		// Save the content-addressed executable name. The helper's action
 		// manifest includes GOCACHE paths and must not be consulted on fetch.
 		name := filepath.Base(strings.TrimSpace(result.Stdout))
-		if err := os.Rename(filepath.Join(store, name), filepath.Join(directory, name)); err != nil {
-			return err
+		if renameError := os.Rename(filepath.Join(store, name), filepath.Join(directory, name)); renameError != nil {
+			return renameError
 		}
-		entries, err := os.ReadDir(store)
-		if err != nil {
-			return err
+		entries, readDirectoryError := os.ReadDir(store)
+		if readDirectoryError != nil {
+			return readDirectoryError
 		}
 		for _, entry := range entries {
-			if err := os.Remove(filepath.Join(store, entry.Name())); err != nil {
-				return err
+			if removeError := os.Remove(filepath.Join(store, entry.Name())); removeError != nil {
+				return removeError
 			}
 		}
-		if err := os.Remove(store); err != nil {
-			return err
+		if removeError := os.Remove(store); removeError != nil {
+			return removeError
 		}
 		return os.WriteFile(filepath.Join(directory, "product-name"), []byte(name), 0644)
 	})
-	name, err := os.ReadFile(filepath.Join(directory, "product-name"))
-	if err != nil {
-		test.Fatal(err)
+	name, readError := os.ReadFile(filepath.Join(directory, "product-name"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if len(name) != 64 || strings.ContainsAny(string(name), "/\\") {
 		test.Fatal("invalid oracle product name")
 	}
 	binary := filepath.Join(directory, string(name))
-	data, err := os.ReadFile(binary)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(binary)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if fmt.Sprintf("%x", sha256.Sum256(data)) != string(name) {
 		test.Fatal("oracle build product hash mismatch")
@@ -186,16 +186,16 @@ func fixtureOracleHook(test testing.TB, repository string) string {
 
 func TestProduct_FixtureOracleHook(test *testing.T) {
 	test.Parallel()
-	repository, err := filepath.Abs("../..")
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs("../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	binary := fixtureOracleHook(test, repository)
 	// The product holds the executable and its name, nothing named by the helper's placeful action key. Mutant: prepare
 	// into the product directory itself (<key>.json, <key>.build.log, <key>.lock beside the executable).
-	entries, err := os.ReadDir(filepath.Dir(binary))
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(filepath.Dir(binary))
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	var names []string
 	for _, entry := range entries {
@@ -229,41 +229,41 @@ func TestProduct_FixtureRuntimesSanitized2(test *testing.T) {
 
 func TestFixtureOracleProductTracksInputs(test *testing.T) {
 	test.Parallel()
-	repository, err := filepath.Abs("../..")
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs("../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	inputs := fixtureHookInputs(test, repository)
 	scratch := test.TempDir()
 	for _, name := range inputs.Files {
-		data, err := os.ReadFile(filepath.Join(repository, name))
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(filepath.Join(repository, name))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		path := filepath.Join(scratch, name)
-		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.WriteFile(path, data, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, data, 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
-	before, err := buildcache.Key(scratch, inputs)
-	if err != nil {
-		test.Fatal(err)
+	before, keyError := buildcache.Key(scratch, inputs)
+	if keyError != nil {
+		test.Fatal(keyError)
 	}
 	// Changing the build helper is a changed recipe, even if the Go sources did
 	// not change. Dropping this input must serve the old key and fail this check.
 	helper := filepath.Join(scratch, "stage3/fixtures/build-hook.py")
-	if err := os.MkdirAll(filepath.Dir(helper), 0755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(filepath.Dir(helper), 0755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	if err := os.WriteFile(helper, []byte("# changed oracle build recipe\n"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(helper, []byte("# changed oracle build recipe\n"), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	after, err := buildcache.Key(scratch, inputs)
-	if err != nil {
-		test.Fatal(err)
+	after, keyError := buildcache.Key(scratch, inputs)
+	if keyError != nil {
+		test.Fatal(keyError)
 	}
 	if after == before {
 		test.Fatal("changed oracle build helper reused the same product key")
@@ -272,13 +272,13 @@ func TestFixtureOracleProductTracksInputs(test *testing.T) {
 
 func TestFixtureOracleProductIgnoresGoCacheLocation(test *testing.T) {
 	test.Parallel()
-	repository, err := filepath.Abs("../..")
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs("../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	goTool, err := toolchain.Path("go")
-	if err != nil {
-		test.Fatal(err)
+	goTool, pathError := toolchain.Path("go")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
 	var keys []string
 	for _, name := range []string{"first", "second"} {
@@ -292,9 +292,9 @@ func TestFixtureOracleProductIgnoresGoCacheLocation(test *testing.T) {
 			)
 		}
 		inputs := fixtureHookInputsEnvironment(test, repository, environment)
-		key, err := buildcache.Key(repository, inputs)
-		if err != nil {
-			test.Fatal(err)
+		key, keyError := buildcache.Key(repository, inputs)
+		if keyError != nil {
+			test.Fatal(keyError)
 		}
 		keys = append(keys, key)
 	}
@@ -308,21 +308,24 @@ func TestFixtureOracleProductIgnoresGoCacheLocation(test *testing.T) {
 // Mutant: hookPython without -B (stage3/__pycache__/caches.cpython-*.pyc).
 func TestTheFixtureOracleHookWritesNoBytecode(test *testing.T) {
 	test.Parallel()
-	repository, err := filepath.Abs("../..")
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs("../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	scratch := test.TempDir()
 	for _, name := range []string{"stage3/caches.py", "stage3/fixtures/build-hook.py"} {
-		data, err := os.ReadFile(filepath.Join(repository, name))
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(filepath.Join(repository, name))
+		if readError != nil {
+			test.Fatal(readError)
 		}
-		if err := os.MkdirAll(filepath.Dir(filepath.Join(scratch, name)), 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(
+			filepath.Dir(filepath.Join(scratch, name)),
+			0755,
+		); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.WriteFile(filepath.Join(scratch, name), data, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(scratch, name), data, 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	// Empty is unset, as python reads it; --help stops once the imports have run.
@@ -331,8 +334,8 @@ func TestTheFixtureOracleHookWritesNoBytecode(test *testing.T) {
 		test.Fatalf("build-hook.py --help: %s%s", result.Stdout, result.Stderr)
 	}
 	for _, directory := range []string{"stage3/__pycache__", "stage3/fixtures/__pycache__"} {
-		if _, err := os.Stat(filepath.Join(scratch, directory)); !errors.Is(err, fs.ErrNotExist) {
-			test.Errorf("the hook's python wrote %s (%v)", directory, err)
+		if _, statError := os.Stat(filepath.Join(scratch, directory)); !errors.Is(statError, fs.ErrNotExist) {
+			test.Errorf("the hook's python wrote %s (%v)", directory, statError)
 		}
 	}
 }
@@ -358,8 +361,8 @@ func TestTheFixtureOracleHooksPythonReadsNoSiteDirectory(test *testing.T) {
 		Site      bool     `json:"site"`
 		Directory string   `json:"directory"`
 	}
-	if err := json.Unmarshal([]byte(result.Stdout), &observed); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal([]byte(result.Stdout), &observed); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if observed.Isolated != 1 || observed.NoSite != 1 || observed.Site {
 		test.Errorf(

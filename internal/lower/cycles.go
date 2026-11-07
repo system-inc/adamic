@@ -115,12 +115,17 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 				// type: it's seen as the type it's written into, or kept in a variable whose type
 				// is used where it's declared.
 				finder.shape(l.checker.GetTypeAtLocation(node), node)
-			case node.Kind == ast.KindArrayLiteralExpression || node.Kind == ast.KindCallExpression || node.Kind == ast.KindNewExpression:
+			case node.Kind == ast.KindArrayLiteralExpression ||
+				node.Kind == ast.KindCallExpression ||
+				node.Kind == ast.KindNewExpression:
 				// A value just made, by a literal, a call or new, is written through only once it's
 				// kept somewhere, and where it's kept has a type of its own, used there. Until then
 				// it's what a value may really be.
 				finder.made(l.checker.GetTypeAtLocation(node), node)
-			case ast.IsIdentifier(node) || node.Kind == ast.KindThisKeyword || node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression:
+			case ast.IsIdentifier(node) ||
+				node.Kind == ast.KindThisKeyword ||
+				node.Kind == ast.KindPropertyAccessExpression ||
+				node.Kind == ast.KindElementAccessExpression:
 				// Where a value is named or reached, and so where a write can go through its type.
 				if ast.IsIdentifier(node) && !ast.IsDeclarationName(node) && !ast.IsExpressionNode(node) {
 					break
@@ -137,8 +142,8 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 		finder.use(proven, l.classNodeFor(proven))
 	}
 	// Program membership changes ownership only after every ordinary graph check passes.
-	if err := finder.graphTypes(modules); err != nil {
-		return err
+	if graphTypesError := finder.graphTypes(modules); graphTypesError != nil {
+		return graphTypesError
 	}
 	if l.programDiscovery {
 		l.resolveCountTypes(modules)
@@ -146,11 +151,11 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 		return l.checkLazyViewReads()
 	}
 	l.resolveCountTypes(modules)
-	if err := l.nodeProcessStorageABI(modules); err != nil {
-		return err
+	if nodeProcessStorageAbiError := l.nodeProcessStorageABI(modules); nodeProcessStorageAbiError != nil {
+		return nodeProcessStorageAbiError
 	}
-	if err := l.nodeFSDirectoryClosureABI(); err != nil {
-		return err
+	if nodeFsDirectoryClosureAbiError := l.nodeFSDirectoryClosureABI(); nodeFsDirectoryClosureAbiError != nil {
+		return nodeFsDirectoryClosureAbiError
 	}
 	return l.checkLazyViewReads()
 }
@@ -168,7 +173,9 @@ func (f *cycleFinder) made(proven *checker.Type, where *ast.Node) {
 		f.use(proven, where)
 	case f.l.recordElement(proven) != nil:
 		f.use(f.l.recordElement(proven), where)
-	case f.l.isArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
+	case f.l.isArrayType(proven) ||
+		checker.IsTupleType(proven) ||
+		f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
 		for _, argument := range f.l.checker.GetTypeArguments(proven) {
 			f.use(argument, where)
 		}
@@ -232,8 +239,10 @@ func (f *cycleFinder) scalarShapeKey(proven *checker.Type, where *ast.Node) (str
 		value := f.l.checker.GetTypeOfSymbol(field)
 		// Exact checker identities retain distinct scalar literal values.
 		flags := value.Flags()
-		boolean := flags&checker.TypeFlagsBoolean != 0 && flags & ^(checker.TypeFlagsBoolean|checker.TypeFlagsUnion) == 0
-		if !boolean && flags & ^(checker.TypeFlagsNumber|checker.TypeFlagsString|checker.TypeFlagsBooleanLiteral|checker.TypeFlagsNumberLiteral|checker.TypeFlagsStringLiteral|checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
+		boolean := flags&checker.TypeFlagsBoolean != 0 &&
+			flags & ^(checker.TypeFlagsBoolean|checker.TypeFlagsUnion) == 0
+		if !boolean &&
+			flags & ^(checker.TypeFlagsNumber|checker.TypeFlagsString|checker.TypeFlagsBooleanLiteral|checker.TypeFlagsNumberLiteral|checker.TypeFlagsStringLiteral|checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
 			return "", false
 		}
 		key.WriteString(strconv.Itoa(len(field.Name)))
@@ -279,7 +288,9 @@ func (f *cycleFinder) use(proven *checker.Type, where *ast.Node) {
 		f.use(element, where)
 		return
 	}
-	if f.l.isArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise") {
+	if f.l.isArrayType(proven) ||
+		checker.IsTupleType(proven) ||
+		f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise") {
 		for _, argument := range f.l.checker.GetTypeArguments(proven) {
 			f.use(argument, where)
 		}
@@ -368,7 +379,8 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 	name := l.checker.TypeToString(holder)
 	switch {
 	case l.isArrayType(holder) || checker.IsTupleType(holder):
-		if l.isLibraryType(holder, "ReadonlyArray") || (checker.IsTupleType(holder) && holder.TargetTupleType().IsReadonly()) {
+		if l.isLibraryType(holder, "ReadonlyArray") ||
+			(checker.IsTupleType(holder) && holder.TargetTupleType().IsReadonly()) {
 			return nil
 		}
 		for _, element := range l.checker.GetTypeArguments(holder) {
@@ -383,15 +395,32 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 			return &Refused{
 				cycle: true,
 				Where: l.program.Where(f.where[holder]),
-				What:  name + ", an array whose elements can reach back to an array like it: a cycle reference counting can't free, and " + f.writtenAt(write) + " may close one (" + write.Why + ")",
-				Fix:   "declare the elements weak, Weak<" + target + ">[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly " + target + "[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)",
+				What: name +
+					", an array whose elements can reach back to an array like it: a cycle reference counting can't free, and " +
+					f.writtenAt(write) +
+					" may close one (" +
+					write.Why +
+					")",
+				Fix: "declare the elements weak, Weak<" +
+					target +
+					">[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly " +
+					target +
+					"[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)",
 			}
 		}
 	case l.recordElement(holder) != nil:
 		element := l.recordElement(holder)
 		if !f.weak(element) && f.reaches(element, cycleNode{proven: holder}) {
 			if write := f.cycleUnproven(fresh.WriteMapEntry, holder, ""); write != nil {
-				return &Refused{cycle: true, Where: l.program.Where(f.where[holder]), What: name + ", a record whose values can reach back to its holder: a cycle reference counting cannot free, and " + f.writtenAt(write) + " may close one", Fix: "use weak links or write only values proven unable to reach the record (adamic/cycle-capable)"}
+				return &Refused{
+					cycle: true,
+					Where: l.program.Where(f.where[holder]),
+					What: name +
+						", a record whose values can reach back to its holder: a cycle reference counting cannot free, and " +
+						f.writtenAt(write) +
+						" may close one",
+					Fix: "use weak links or write only values proven unable to reach the record (adamic/cycle-capable)",
+				}
 			}
 		}
 	case l.isLibraryType(holder, "ReadonlyMap"), l.isLibraryType(holder, "ReadonlySet"):
@@ -402,8 +431,13 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 				return &Refused{
 					cycle: true,
 					Where: l.program.Where(f.where[holder]),
-					What:  name + ", a set whose elements can reach back to a set like it: a cycle reference counting can't free, and " + f.writtenAt(write) + " may close one (" + write.Why + ")",
-					Fix:   "make it a ReadonlySet, built whole when it's made; or add to such a set only values this function made, or only to one it made (adamic/cycle-capable)",
+					What: name +
+						", a set whose elements can reach back to a set like it: a cycle reference counting can't free, and " +
+						f.writtenAt(write) +
+						" may close one (" +
+						write.Why +
+						")",
+					Fix: "make it a ReadonlySet, built whole when it's made; or add to such a set only values this function made, or only to one it made (adamic/cycle-capable)",
 				}
 			}
 		}
@@ -414,8 +448,13 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 				return &Refused{
 					cycle: true,
 					Where: l.program.Where(f.where[holder]),
-					What:  name + ", a map whose keys can reach back to a map like it: a cycle reference counting can't free, and " + f.writtenAt(write) + " may close one (" + write.Why + ")",
-					Fix:   "make it a ReadonlyMap, built whole when it's made; or set in such a map only keys this function made, or only in one it made (adamic/cycle-capable)",
+					What: name +
+						", a map whose keys can reach back to a map like it: a cycle reference counting can't free, and " +
+						f.writtenAt(write) +
+						" may close one (" +
+						write.Why +
+						")",
+					Fix: "make it a ReadonlyMap, built whole when it's made; or set in such a map only keys this function made, or only in one it made (adamic/cycle-capable)",
 				}
 			}
 		}
@@ -424,8 +463,17 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 				return &Refused{
 					cycle: true,
 					Where: l.program.Where(f.where[holder]),
-					What:  name + ", a map whose values can reach back to a map like it: a cycle reference counting can't free, and " + f.writtenAt(write) + " may close one (" + write.Why + ")",
-					Fix:   "declare the values weak, Map<" + l.checker.TypeToString(arguments[0]) + ", Weak<" + f.present(arguments[1]) + ">> (import type { Weak } from 'adamic'), or make it a ReadonlyMap; or set in such a map only values this function made, or only in one it made (adamic/cycle-capable)",
+					What: name +
+						", a map whose values can reach back to a map like it: a cycle reference counting can't free, and " +
+						f.writtenAt(write) +
+						" may close one (" +
+						write.Why +
+						")",
+					Fix: "declare the values weak, Map<" +
+						l.checker.TypeToString(arguments[0]) +
+						", Weak<" +
+						f.present(arguments[1]) +
+						">> (import type { Weak } from 'adamic'), or make it a ReadonlyMap; or set in such a map only values this function made, or only in one it made (adamic/cycle-capable)",
 				}
 			}
 		}
@@ -456,8 +504,27 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 			return &Refused{
 				cycle: true,
 				Where: l.program.Where(where),
-				What:  name + "." + l.cycleFieldName(field) + ", " + kind + " of type " + target + ", which can reach back to the " + name + " holding it: a cycle reference counting can't free, and " + f.writtenAt(write) + " may close one (" + write.Why + ")",
-				Fix:   "declare it " + l.cycleFieldName(field) + ": Weak<" + f.present(proven) + "> (import type { Weak } from 'adamic'), which doesn't count and reads undefined once what it points to is freed" + orReadonly + "; or write into it only values this function made, or only into what it made (adamic/cycle-capable)",
+				What: name +
+					"." +
+					l.cycleFieldName(field) +
+					", " +
+					kind +
+					" of type " +
+					target +
+					", which can reach back to the " +
+					name +
+					" holding it: a cycle reference counting can't free, and " +
+					f.writtenAt(write) +
+					" may close one (" +
+					write.Why +
+					")",
+				Fix: "declare it " +
+					l.cycleFieldName(field) +
+					": Weak<" +
+					f.present(proven) +
+					"> (import type { Weak } from 'adamic'), which doesn't count and reads undefined once what it points to is freed" +
+					orReadonly +
+					"; or write into it only values this function made, or only into what it made (adamic/cycle-capable)",
 			}
 		}
 	}
@@ -490,7 +557,12 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 			continue
 		}
 		visited[node] = true
-		if (node.cell != 0 && node == target) || (node.proven != nil && !f.weak(node.proven) && !f.template(node.proven) && node.proven.Flags()&checker.TypeFlagsObject != 0 && target.proven != nil && f.related(node.proven, target.proven)) {
+		if (node.cell != 0 && node == target) || (node.proven != nil &&
+			!f.weak(node.proven) &&
+			!f.template(node.proven) &&
+			node.proven.Flags()&checker.TypeFlagsObject != 0 &&
+			target.proven != nil &&
+			f.related(node.proven, target.proven)) {
 			f.reachCache[key] = true
 			return true
 		}
@@ -563,7 +635,9 @@ func (f *cycleFinder) deriveTemplate(proven *checker.Type) bool {
 func (f *cycleFinder) deriveFields(proven *checker.Type) []*ast.Symbol {
 	fields := []*ast.Symbol{}
 	for _, property := range f.l.checker.GetPropertiesOfType(proven) {
-		if (property.Flags&ast.SymbolFlagsMethod == 0 || literalMethod(property)) && !accessorSymbol(property) && !(f.l.isStaticType(proven) && property.Name == "prototype") {
+		if (property.Flags&ast.SymbolFlagsMethod == 0 || literalMethod(property)) &&
+			!accessorSymbol(property) &&
+			!(f.l.isStaticType(proven) && property.Name == "prototype") {
 			fields = append(fields, property)
 		}
 	}
@@ -573,7 +647,11 @@ func (f *cycleFinder) deriveFields(proven *checker.Type) []*ast.Symbol {
 func (f *cycleFinder) deriveIsFunction(proven *checker.Type) bool {
 	// The library Function interface has no call or construct signatures. Keep
 	// the scanner's explicit classification so its caller field is not an owned edge.
-	return f.l.isLibraryType(proven, "Function") || len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) > 0 || (len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 && (!f.l.isStaticType(proven) || len(f.l.staticGlobals) == 0))
+	return f.l.isLibraryType(proven, "Function") ||
+		len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) > 0 ||
+		(len(
+			f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct),
+		) > 0 && (!f.l.isStaticType(proven) || len(f.l.staticGlobals) == 0))
 }
 
 func (f *cycleFinder) deriveWeak(proven *checker.Type) bool {
@@ -632,7 +710,8 @@ func (f *cycleFinder) reachLinks(node cycleNode) []cycleNode {
 		links = append(links, f.libraryIteratorCaptures(proven)...)
 	case f.isFunction(proven):
 		// Construct signatures can hide constructor objects behind an interface.
-		if f.l.isLibraryType(proven, "Function") || len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 {
+		if f.l.isLibraryType(proven, "Function") ||
+			len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 {
 			for symbol := range f.l.statics {
 				actual := f.l.checker.GetTypeOfSymbol(symbol)
 				if f.l.checker.IsTypeAssignableTo(actual, proven) {
@@ -652,7 +731,9 @@ func (f *cycleFinder) reachLinks(node cycleNode) []cycleNode {
 		}
 	case f.l.recordElement(proven) != nil:
 		links = append(links, cycleNode{proven: f.l.recordElement(proven)})
-	case f.l.isArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
+	case f.l.isArrayType(proven) ||
+		checker.IsTupleType(proven) ||
+		f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
 		for _, argument := range f.l.checker.GetTypeArguments(proven) {
 			links = append(links, cycleNode{proven: argument})
 		}
@@ -728,7 +809,10 @@ func (f *cycleFinder) literalType(proven *checker.Type) *checker.Type {
 		f.literalTypes = map[*checker.Type]*checker.Type{}
 	}
 	actual := proven
-	if proven.Flags()&checker.TypeFlagsObject != 0 && proven.ObjectFlags()&checker.ObjectFlagsObjectLiteral != 0 && !f.isFunction(proven) && len(f.l.checker.GetIndexInfosOfType(proven)) == 0 {
+	if proven.Flags()&checker.TypeFlagsObject != 0 &&
+		proven.ObjectFlags()&checker.ObjectFlagsObjectLiteral != 0 &&
+		!f.isFunction(proven) &&
+		len(f.l.checker.GetIndexInfosOfType(proven)) == 0 {
 		properties := f.l.checker.GetPropertiesOfType(proven)
 		// A paired setter can have a write type different from its getter's read
 		// type. Keep accessor identities rather than reducing them to read slots.
@@ -741,8 +825,9 @@ func (f *cycleFinder) literalType(proven *checker.Type) *checker.Type {
 		trie := &f.literalSlots
 		for _, property := range properties {
 			key := cycleSlotKey{
-				flags:    property.Flags,
-				held:     (property.Flags&ast.SymbolFlagsMethod == 0 || literalMethod(property)) && !accessorSymbol(property),
+				flags: property.Flags,
+				held: (property.Flags&ast.SymbolFlagsMethod == 0 || literalMethod(property)) &&
+					!accessorSymbol(property),
 				name:     property.Name,
 				proven:   f.l.checker.GetTypeOfSymbol(property),
 				optional: property.Flags&ast.SymbolFlagsOptional != 0,

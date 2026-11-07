@@ -43,9 +43,9 @@ func expressionSource(test *testing.T, index int) string {
 		for _, name := range portFiles {
 			files = append(files, "stage1/typescript/parser/"+name)
 		}
-		scanner, err := filepath.Abs("../scanner/scanner.ts")
-		if err != nil {
-			test.Fatal(err)
+		scanner, absolutePathError := filepath.Abs("../scanner/scanner.ts")
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		variant.source = buildcache.Product(test, buildcache.Inputs{
 			Name:  fmt.Sprintf("expression-source-%03d", index),
@@ -74,12 +74,12 @@ func expressionSource(test *testing.T, index int) string {
 				test.Fatalf("unknown expression variant %d", index)
 			}
 			for _, name := range portFiles {
-				data, err := os.ReadFile(filepath.Join(source, name))
-				if err != nil {
-					return err
+				data, readError := os.ReadFile(filepath.Join(source, name))
+				if readError != nil {
+					return readError
 				}
-				if err := os.WriteFile(filepath.Join(dir, name), data, 0644); err != nil {
-					return err
+				if writeError := os.WriteFile(filepath.Join(dir, name), data, 0644); writeError != nil {
+					return writeError
 				}
 			}
 			// copyPort's scanner import names this checkout; the product names it <repository> (#tqrqx60).
@@ -87,9 +87,9 @@ func expressionSource(test *testing.T, index int) string {
 		})
 	})
 	// Node and the loader read the port, so callers get the copy whose imports name this checkout.
-	directory, err := buildcache.Resolved(variant.source)
-	if err != nil {
-		test.Fatal(err)
+	directory, resolvedError := buildcache.Resolved(variant.source)
+	if resolvedError != nil {
+		test.Fatal(resolvedError)
 	}
 	return directory
 }
@@ -122,31 +122,31 @@ func expressionExecute(test *testing.T, ctx context.Context, directory, name str
 	test.Helper()
 	command := exec.CommandContext(ctx, name, args...)
 	command.Dir = directory
-	output, err := os.CreateTemp(test.TempDir(), "stdout-")
-	if err != nil {
-		test.Fatal(err)
+	output, temporaryFileError := os.CreateTemp(test.TempDir(), "stdout-")
+	if temporaryFileError != nil {
+		test.Fatal(temporaryFileError)
 	}
 	defer output.Close()
 	command.Stdout = output
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
 	started := time.Now()
-	err = command.Run()
+	runError := command.Run()
 	duration := time.Since(started)
-	if err != nil || stderr.Len() != 0 {
-		test.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
+	if runError != nil || stderr.Len() != 0 {
+		test.Fatalf("%s %v: %v\n%s", name, args, runError, &stderr)
 	}
-	data, err := os.ReadFile(output.Name())
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(output.Name())
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return execution{data, duration}
 }
 func expressionNode(test *testing.T, ctx context.Context, directory, manifest string, count bool) execution {
 	test.Helper()
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	args := []string{
 		"--disable-warning=ExperimentalWarning",
@@ -262,20 +262,20 @@ func TestExpressionsAgree(test *testing.T) {
 	var manifest strings.Builder
 	for i, s := range cases {
 		path := filepath.Join(dir, fmt.Sprintf("case-%d.ts", i))
-		if err := os.WriteFile(path, []byte(s), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(s), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		manifest.WriteString(path + "\n")
 	}
 	path := filepath.Join(dir, "manifest")
-	if err := os.WriteFile(path, []byte(manifest.String()), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(manifest.String()), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	oracle := products.oracle
 	want := expressionExecute(test, ctx, "", oracle, "--manifest", path)
-	absolute, err := filepath.Abs(".")
-	if err != nil {
-		test.Fatal(err)
+	absolute, absolutePathError := filepath.Abs(".")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	nativeRun := expressionExecute(test, ctx, "", products.binary[0], "--manifest", path)
 	nodeRun := expressionNode(test, ctx, absolute, path, false)

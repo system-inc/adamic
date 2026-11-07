@@ -25,9 +25,9 @@ func init() {
 }
 func parserSpeculationPath(test *testing.T, name string) string {
 	test.Helper()
-	p, err := filepath.Abs(filepath.Join(repository, "stage3/parser-next/speculation", name+".a"))
-	if err != nil {
-		test.Fatal(err)
+	p, absolutePathError := filepath.Abs(filepath.Join(repository, "stage3/parser-next/speculation", name+".a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return p
 }
@@ -59,9 +59,9 @@ func assertParserSpeculationSource(test *testing.T, name string) {
 	if truth.exitCode != 0 || len(truth.stderr) != 0 {
 		test.Fatalf("Node %+v", truth)
 	}
-	program, err := loweredParser(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredParserError := loweredParser(test, path)
+	if loweredParserError != nil {
+		test.Fatal(loweredParserError)
 	}
 	actual, binary := nativelyUncached(test, program)
 	for backend, got := range map[string]run{"native": actual, "JavaScript": onSliceJavaScript(test, program)} {
@@ -82,9 +82,9 @@ func TestParserSpeculationMisfit(test *testing.T) {
 	if truth.exitCode != 0 || string(truth.stdout) != "wrong\n" {
 		test.Fatalf("Node %+v", truth)
 	}
-	program, err := loweredParser(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredParserError := loweredParser(test, path)
+	if loweredParserError != nil {
+		test.Fatal(loweredParserError)
 	}
 	message := "adamic: panic: speculative result failed: callback misfit at " +
 		parserDisplayedPath(test, path) +
@@ -100,9 +100,9 @@ func TestParserSpeculationRewindMutant(test *testing.T) {
 	test.Parallel()
 	path := parserSpeculationPath(test, "truthiness-rewind")
 	truth := onSliceNode(test, path)
-	program, err := loweredParser(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredParserError := loweredParser(test, path)
+	if loweredParserError != nil {
+		test.Fatal(loweredParserError)
 	}
 	changed := 0
 	for i := range program.Functions {

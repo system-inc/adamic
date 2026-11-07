@@ -80,9 +80,9 @@ func mutantNativeBuildFiles(test *testing.T) []string {
 		// Reads: stage1/typescript/scanner/scanner.ts
 		// Reads: stage1/typescript/scanner/tokens.ts
 		// Reads: stage1/typescript/parser/*
-		entries, err := os.ReadDir(filepath.Join(oracles.Repository, directory))
-		if err != nil {
-			test.Fatal(err)
+		entries, readDirectoryError := os.ReadDir(filepath.Join(oracles.Repository, directory))
+		if readDirectoryError != nil {
+			test.Fatal(readDirectoryError)
 		}
 		for _, entry := range entries {
 			if !entry.IsDir() && strings.HasSuffix(entry.Name(), ".ts") {
@@ -103,9 +103,9 @@ func mutantNativeBuildFiles(test *testing.T) []string {
 // the build files (the scanner the parser imports goes unkeyed); a compiler input dropped (a gap the guard names).
 func TestMutantNativeInputsCoverWhatItReads(test *testing.T) {
 	test.Parallel()
-	root, err := filepath.Abs(oracles.Repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(oracles.Repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	// toolchain's go, under its environment, in the repository root with PWD set to it, so go.work resolves there.
 	command := toolchain.CommandIn(
@@ -119,15 +119,15 @@ func TestMutantNativeInputsCoverWhatItReads(test *testing.T) {
 		"./internal/lower",
 		"./internal/native",
 	)
-	listing, err := combinedOutput(command)
-	if err != nil {
-		test.Fatalf("go list: %v\n%s", err, listing)
+	listing, combinedOutputError := combinedOutput(command)
+	if combinedOutputError != nil {
+		test.Fatalf("go list: %v\n%s", combinedOutputError, listing)
 	}
 	inside := func(path string) (string, bool) {
-		relative, err := filepath.Rel(root, path)
+		relative, relativePathError := filepath.Rel(root, path)
 		return filepath.ToSlash(
 			relative,
-		), err == nil && relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator))
+		), relativePathError == nil && relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator))
 	}
 	needed := map[string]bool{"go.work": true}
 	for _, line := range strings.Split(strings.TrimSpace(string(listing)), "\n") {
@@ -137,7 +137,7 @@ func TestMutantNativeInputsCoverWhatItReads(test *testing.T) {
 		}
 		if relative, ok := inside(goMod); ok && goMod != "" {
 			needed[relative] = true
-			if _, err := os.Stat(filepath.Join(filepath.Dir(goMod), "go.sum")); err == nil {
+			if _, statError := os.Stat(filepath.Join(filepath.Dir(goMod), "go.sum")); statError == nil {
 				needed[filepath.ToSlash(filepath.Join(filepath.Dir(relative), "go.sum"))] = true
 			}
 		}
@@ -168,9 +168,9 @@ func TestMutantNativeInputsCoverWhatItReads(test *testing.T) {
 			continue
 		}
 		read[change.Entry] = true
-		program, err := load.Load([]string{filepath.Join(root, "stage1/cohere/tsprinter", change.Entry)})
-		if err != nil {
-			test.Fatalf("%s: %v", change.Entry, err)
+		program, loadError := load.Load([]string{filepath.Join(root, "stage1/cohere/tsprinter", change.Entry)})
+		if loadError != nil {
+			test.Fatalf("%s: %v", change.Entry, loadError)
 		}
 		// Every source the checked program holds, its imports' imports included. A bundled library (bundled:///libs/...)
 		// and the prelude (/adamic-prelude, internal/load's go:embed) are compiled into the binary, so the compiler
@@ -219,11 +219,11 @@ func TestMutantNativeKeyMovesWithTheScanner(test *testing.T) {
 	write := func(name, content string) {
 		test.Helper()
 		path := filepath.Join(root, filepath.FromSlash(name))
-		if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0o755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.WriteFile(path, []byte(content), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(content), 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	declared := mutantNativeBuildFiles(test)
@@ -245,9 +245,9 @@ func TestMutantNativeKeyMovesWithTheScanner(test *testing.T) {
 	write("cohere/TypeScript/README.md", "submodule")
 	key := func() string {
 		test.Helper()
-		key, err := buildcache.Key(root, buildcache.Inputs{Name: "mutant native probe", Files: declared})
-		if err != nil {
-			test.Fatal(err)
+		key, keyError := buildcache.Key(root, buildcache.Inputs{Name: "mutant native probe", Files: declared})
+		if keyError != nil {
+			test.Fatal(keyError)
 		}
 		return key
 	}

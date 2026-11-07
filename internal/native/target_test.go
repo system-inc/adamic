@@ -43,18 +43,20 @@ func TestWASIRefusesUnsupportedOptions(test *testing.T) {
 		{Options{Target: "wasm32-wasi", Debug: true}, "debug builds are not supported for wasm32-wasi"},
 		{Options{Target: "wasm32-wasi", cpu: "native"}, "native CPU selection is not supported for wasm32-wasi"},
 	} {
-		if err := ValidateOptions(refusal.options); err == nil || !strings.Contains(err.Error(), refusal.want) {
-			test.Fatalf("%+v: got %v, want %q", refusal.options, err, refusal.want)
+		if validateOptionsError := ValidateOptions(
+			refusal.options,
+		); validateOptionsError == nil || !strings.Contains(validateOptionsError.Error(), refusal.want) {
+			test.Fatalf("%+v: got %v, want %q", refusal.options, validateOptionsError, refusal.want)
 		}
 	}
 	test.Setenv("WASI_SYSROOT", "")
-	if err := ValidateOptions(
+	if validateOptionsError := ValidateOptions(
 		Options{Target: "wasm32-wasi"},
-	); err == nil || !strings.Contains(err.Error(), "requires WASI_SYSROOT") {
-		test.Fatalf("missing sysroot: %v", err)
+	); validateOptionsError == nil || !strings.Contains(validateOptionsError.Error(), "requires WASI_SYSROOT") {
+		test.Fatalf("missing sysroot: %v", validateOptionsError)
 	}
 	test.Setenv("WASI_SYSROOT", filepath.Join(test.TempDir(), "absent"))
-	if err := ValidateOptions(Options{Target: "wasm32-wasi"}); err == nil {
+	if validateOptionsError := ValidateOptions(Options{Target: "wasm32-wasi"}); validateOptionsError == nil {
 		test.Fatal("accepted nonexistent sysroot")
 	}
 }

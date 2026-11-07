@@ -40,9 +40,10 @@ type closurePackage struct {
 // closureModule is the module go list reports a package in.
 type closureModule struct{ Path, Version, GoMod, Dir string }
 
-// A closure is a set of packages and the inputs that key them: the files in the repository, by their path from its root,
-// and each file outside it (go's module cache) as an external= flag, by module, version and its path in the module,
-// never by where this machine keeps the cache (estree's loom_family_products_test.go keys its closure the same way).
+// A closure is a set of packages and the inputs that key them: the files in the repository, by their path from its
+// root, and each file outside it (go's module cache) as an external= flag, by module, version and its path in the
+// module, never by where this machine keeps the cache (estree's loom_family_products_test.go keys its closure the same
+// way).
 type closure struct {
 	packages []closurePackage
 	files    []string
@@ -59,19 +60,19 @@ var stage1 struct {
 // loweringClosure is stage 1's closure: go list -deps of the lowering's packages, and this package's own files.
 func loweringClosure() (closure, error) {
 	stage1.once.Do(func() {
-		root, err := repositoryRoot()
-		if err != nil {
-			stage1.err = err
+		root, repositoryRootError := repositoryRoot()
+		if repositoryRootError != nil {
+			stage1.err = repositoryRootError
 			return
 		}
-		packages, err := listed(root, nil, true, loweringEntry...)
-		if err != nil {
-			stage1.err = err
+		packages, listedError := listed(root, nil, true, loweringEntry...)
+		if listedError != nil {
+			stage1.err = listedError
 			return
 		}
-		own, err := listed(root, nil, false, ownPackage)
-		if err != nil {
-			stage1.err = err
+		own, listedError := listed(root, nil, false, ownPackage)
+		if listedError != nil {
+			stage1.err = listedError
 			return
 		}
 		stage1.closure, stage1.err = closureOf(root, append(packages, own...))
@@ -90,18 +91,18 @@ func listed(root string, extra []string, deps bool, patterns ...string) ([]closu
 	command.Env = append(command.Env, extra...)
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
-	output, err := command.Output()
-	if err != nil {
-		return nil, fmt.Errorf("go list %s: %v\n%s", strings.Join(patterns, " "), err, stderr.Bytes())
+	output, outputError := command.Output()
+	if outputError != nil {
+		return nil, fmt.Errorf("go list %s: %v\n%s", strings.Join(patterns, " "), outputError, stderr.Bytes())
 	}
 	var packages []closurePackage
 	decoder := json.NewDecoder(bytes.NewReader(output))
 	for {
 		var item closurePackage
-		if err := decoder.Decode(&item); errors.Is(err, io.EOF) {
+		if decodeError := decoder.Decode(&item); errors.Is(decodeError, io.EOF) {
 			return packages, nil
-		} else if err != nil {
-			return nil, err
+		} else if decodeError != nil {
+			return nil, decodeError
 		}
 		if item.Error != nil {
 			return nil, fmt.Errorf("go list %s: %s", item.ImportPath, item.Error.Err)
@@ -119,23 +120,23 @@ func closureOf(root string, packages []closurePackage) (closure, error) {
 	files := map[string]bool{"go.mod": true, "go.work": true}
 	external := map[string]bool{}
 	add := func(path string, module *closureModule) error {
-		relative, err := filepath.Rel(root, path)
-		if err != nil {
-			return err
+		relative, relativePathError := filepath.Rel(root, path)
+		if relativePathError != nil {
+			return relativePathError
 		}
 		if relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
 			files[filepath.ToSlash(relative)] = true
 			return nil
 		}
-		data, err := os.ReadFile(path)
-		if err != nil {
-			return err
+		data, readError := os.ReadFile(path)
+		if readError != nil {
+			return readError
 		}
 		name := path
 		if module != nil && module.Dir != "" {
-			inside, err := filepath.Rel(module.Dir, path)
-			if err != nil {
-				return err
+			inside, relativePathError := filepath.Rel(module.Dir, path)
+			if relativePathError != nil {
+				return relativePathError
 			}
 			name = module.Path + "@" + module.Version + "/" + filepath.ToSlash(inside)
 		}
@@ -143,23 +144,32 @@ func closureOf(root string, packages []closurePackage) (closure, error) {
 		return nil
 	}
 	for _, item := range packages {
-		for _, group := range [][]string{item.GoFiles, item.CgoFiles, item.CFiles, item.CXXFiles, item.HFiles, item.SFiles, item.SysoFiles, item.EmbedFiles} {
+		for _, group := range [][]string{
+			item.GoFiles,
+			item.CgoFiles,
+			item.CFiles,
+			item.CXXFiles,
+			item.HFiles,
+			item.SFiles,
+			item.SysoFiles,
+			item.EmbedFiles,
+		} {
 			for _, file := range group {
-				if err := add(filepath.Join(item.Dir, file), item.Module); err != nil {
-					return closure{}, err
+				if addError := add(filepath.Join(item.Dir, file), item.Module); addError != nil {
+					return closure{}, addError
 				}
 			}
 		}
 		if item.Module == nil || item.Module.GoMod == "" {
 			continue
 		}
-		if err := add(item.Module.GoMod, item.Module); err != nil {
-			return closure{}, err
+		if addError := add(item.Module.GoMod, item.Module); addError != nil {
+			return closure{}, addError
 		}
 		sum := filepath.Join(filepath.Dir(item.Module.GoMod), "go.sum")
-		if _, err := os.Stat(sum); err == nil {
-			if err := add(sum, item.Module); err != nil {
-				return closure{}, err
+		if _, statError := os.Stat(sum); statError == nil {
+			if addError := add(sum, item.Module); addError != nil {
+				return closure{}, addError
 			}
 		}
 	}
@@ -184,14 +194,14 @@ var repository struct {
 // repositoryRoot is the nearest directory at or above the working directory whose go.mod is the repository's module.
 func repositoryRoot() (string, error) {
 	repository.once.Do(func() {
-		directory, err := os.Getwd()
-		if err != nil {
-			repository.err = err
+		directory, workingDirectoryError := os.Getwd()
+		if workingDirectoryError != nil {
+			repository.err = workingDirectoryError
 			return
 		}
 		for {
-			content, err := os.ReadFile(filepath.Join(directory, "go.mod"))
-			if err == nil && strings.HasPrefix(string(content), "module "+modulePath+"\n") {
+			content, readError := os.ReadFile(filepath.Join(directory, "go.mod"))
+			if readError == nil && strings.HasPrefix(string(content), "module "+modulePath+"\n") {
 				repository.directory = directory
 				return
 			}

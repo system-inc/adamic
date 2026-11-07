@@ -19,9 +19,9 @@ import (
 
 func expressionSelection(test *testing.T, count int) []bool {
 	test.Helper()
-	selected, err := selectExpressionUnits(os.Getenv("ADAMIC_TEST_SHARD"), count)
-	if err != nil {
-		test.Fatal(err)
+	selected, selectExpressionUnitsError := selectExpressionUnits(os.Getenv("ADAMIC_TEST_SHARD"), count)
+	if selectExpressionUnitsError != nil {
+		test.Fatal(selectExpressionUnitsError)
 	}
 	return selected
 }
@@ -33,13 +33,13 @@ func selectExpressionUnits(value string, count int) ([]bool, error) {
 		if len(parts) != 2 {
 			return nil, fmt.Errorf("ADAMIC_TEST_SHARD=%q: want i/n", value)
 		}
-		var err error
-		index, err = strconv.Atoi(parts[0])
-		if err != nil {
-			return nil, err
+		var parseError error
+		index, parseError = strconv.Atoi(parts[0])
+		if parseError != nil {
+			return nil, parseError
 		}
-		boxes, err = strconv.Atoi(parts[1])
-		if err != nil || boxes <= 0 || index < 0 || index >= boxes {
+		boxes, parseError = strconv.Atoi(parts[1])
+		if parseError != nil || boxes <= 0 || index < 0 || index >= boxes {
 			return nil, fmt.Errorf("ADAMIC_TEST_SHARD=%q: require 0 <= i < n", value)
 		}
 	}
@@ -55,12 +55,12 @@ func TestExpressionUnitBoxSelection(test *testing.T) {
 	for _, boxes := range []int{1, 2, 7, 65, 100} {
 		seen := make([]int, oracles.ExpressionsAgainstGoAndPrettierShards)
 		for box := 0; box < boxes; box++ {
-			selected, err := selectExpressionUnits(
+			selected, selectExpressionUnitsError := selectExpressionUnits(
 				fmt.Sprintf("%d/%d", box, boxes),
 				oracles.ExpressionsAgainstGoAndPrettierShards,
 			)
-			if err != nil {
-				test.Fatal(err)
+			if selectExpressionUnitsError != nil {
+				test.Fatal(selectExpressionUnitsError)
 			}
 			for unit, runs := range selected {
 				if runs {
@@ -75,13 +75,16 @@ func TestExpressionUnitBoxSelection(test *testing.T) {
 		}
 	}
 	for _, value := range []string{"1", "x/2", "0/0", "-1/2", "2/2", "0/x"} {
-		if _, err := selectExpressionUnits(value, oracles.ExpressionsAgainstGoAndPrettierShards); err == nil {
+		if _, selectExpressionUnitsError := selectExpressionUnits(
+			value,
+			oracles.ExpressionsAgainstGoAndPrettierShards,
+		); selectExpressionUnitsError == nil {
 			test.Fatalf("invalid selector accepted: %s", value)
 		}
 	}
-	selected, err := selectExpressionUnits("", oracles.ExpressionsAgainstGoAndPrettierShards)
-	if err != nil {
-		test.Fatal(err)
+	selected, selectExpressionUnitsError := selectExpressionUnits("", oracles.ExpressionsAgainstGoAndPrettierShards)
+	if selectExpressionUnitsError != nil {
+		test.Fatal(selectExpressionUnitsError)
 	}
 	for unit, runs := range selected {
 		if !runs {
@@ -132,13 +135,13 @@ func TestExpressionUnitPlantedDisagreement(test *testing.T) {
 		}
 		encoded, _ := json.Marshal(actual.String())
 		result := executeOne(test, nil, "node", "-e", "process.stdout.write("+string(encoded)+")")
-		err := expressionDisagreement(plan, number, []byte(want.String()), result)
-		if err != nil {
+		expressionDisagreementError := expressionDisagreement(plan, number, []byte(want.String()), result)
+		if expressionDisagreementError != nil {
 			catches++
-			if !strings.Contains(err.Error(), "shard-000 case-2") {
-				test.Fatal(err)
+			if !strings.Contains(expressionDisagreementError.Error(), "shard-000 case-2") {
+				test.Fatal(expressionDisagreementError)
 			}
-			test.Logf("planted disagreement caught: %v", err)
+			test.Logf("planted disagreement caught: %v", expressionDisagreementError)
 		}
 	}
 	if catches != 1 {
@@ -161,18 +164,18 @@ func TestExpressionUnitUnionRejectsMissingAndRepeated(test *testing.T) {
 func expressionInputFiles(test *testing.T, roots ...string) []string {
 	test.Helper()
 	seen := map[string]bool{}
-	tree, err := filepath.Abs(oracles.Repository)
-	if err != nil {
-		test.Fatal(err)
+	tree, absolutePathError := filepath.Abs(oracles.Repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	for _, root := range roots {
-		absolute, err := filepath.Abs(root)
-		if err != nil {
-			test.Fatal(err)
+		absolute, absolutePathError := filepath.Abs(root)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
-		err = filepath.WalkDir(absolute, func(path string, entry fs.DirEntry, err error) error {
-			if err != nil {
-				return err
+		walkError := filepath.WalkDir(absolute, func(path string, entry fs.DirEntry, pathError error) error {
+			if pathError != nil {
+				return pathError
 			}
 			// Only what the tree carries: a checkout's untracked files aren't in a runner's source (#smkk3et).
 			if entry.Name() == ".git" || path != absolute && !buildcache.Tracked(tree, path, entry.IsDir()) {
@@ -192,8 +195,8 @@ func expressionInputFiles(test *testing.T, roots ...string) []string {
 			}
 			return nil
 		})
-		if err != nil {
-			test.Fatal(err)
+		if walkError != nil {
+			test.Fatal(walkError)
 		}
 	}
 	files := make([]string, 0, len(seen))

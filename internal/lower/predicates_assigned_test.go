@@ -24,13 +24,13 @@ func TestAssignedSymbolAnswersAsAFreshLowering(test *testing.T) {
 		first:  "let assignedHere = 1; assignedHere = 2; const readHere = 3; console.log((assignedHere + readHere).toString());\n",
 		second: "let assignedThere = 1; assignedThere += 1; const readThere = 4; console.log((assignedThere + readThere).toString());\n",
 	} {
-		if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
-	program, err := load.Load([]string{first, second})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{first, second})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	if len(program.Files()) < 2 {
 		test.Fatalf("the program holds %d files, want both roots", len(program.Files()))

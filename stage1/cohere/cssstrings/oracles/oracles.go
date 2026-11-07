@@ -86,8 +86,8 @@ func AnswerProductInputs(name, identity, tool string, files []string, cases []An
 	}
 }
 func runOracle(test *testing.T, binary string, args []string, input []byte, path string, bounded bool) ([]byte, error) {
-	if err := os.WriteFile(path, input, 0644); err != nil {
-		return nil, err
+	if writeError := os.WriteFile(path, input, 0644); writeError != nil {
+		return nil, writeError
 	}
 	defer os.Remove(path)
 	var ctx context.Context
@@ -135,15 +135,15 @@ func FullAnswers(test *testing.T, binary string, args []string, data []byte, ide
 		if !oracleProducer {
 			return fmt.Errorf("settle the Go full-answer owner first")
 		}
-		out, err := runOracle(test, binary, args, data, filepath.Join(dir, "input.txt"), false)
-		if err != nil {
-			return err
+		out, runOracleError := runOracle(test, binary, args, data, filepath.Join(dir, "input.txt"), false)
+		if runOracleError != nil {
+			return runOracleError
 		}
 		return os.WriteFile(filepath.Join(dir, "answers.txt"), out, 0644)
 	})
-	out, err := os.ReadFile(filepath.Join(dir, "answers.txt"))
-	if err != nil {
-		test.Fatal(err)
+	out, readError := os.ReadFile(filepath.Join(dir, "answers.txt"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return out
 }
@@ -211,9 +211,9 @@ type stringsCorpus struct{ texts, paths, raw []string }
 
 func enumerateStrings(test *testing.T) stringsCorpus {
 	test.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	var texts []string
 	paths := corpusfiles.Upstream(
@@ -224,9 +224,9 @@ func enumerateStrings(test *testing.T) stringsCorpus {
 		[]string{"*.css", "*.scss", "*.less"},
 	)
 	for _, path := range paths {
-		data, err := os.ReadFile(path)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(path)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		texts = append(texts, string(data))
 	}
@@ -256,39 +256,39 @@ func enumerateStrings(test *testing.T) stringsCorpus {
 
 func Printer(test *testing.T) string {
 	test.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	bridge, err := filepath.Abs("testdata/bridge.go")
-	if err != nil {
-		test.Fatal(err)
+	bridge, absolutePathError := filepath.Abs("testdata/bridge.go")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	driver, err := filepath.Abs("testdata/go_driver.go")
-	if err != nil {
-		test.Fatal(err)
+	driver, absolutePathError := filepath.Abs("testdata/go_driver.go")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	cohere := filepath.Join(root, "cohere")
 	mainPath := filepath.Join(cohere, "cmd/adamic_stage_one/main.go")
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{
+	overlay, encodeError := json.Marshal(map[string]any{"Replace": map[string]string{
 		filepath.Join(cohere, "internal/format/css/adamic_stage_one.go"): bridge,
 		mainPath: driver,
 	}})
-	if err != nil {
-		test.Fatal(err)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	overlayPath := filepath.Join(test.TempDir(), "overlay.json")
-	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(overlayPath, overlay, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	const output = "go-printer-oracle-owner-v1"
 	args := []string{"-overlay=" + overlayPath}
 	if oracleProducer {
 		return buildcache.GoBuildIn(test, "cohere", output, mainPath, args)
 	}
-	inputs, err := buildcache.GoBuildInInputs("cohere", output, mainPath, args, nil)
-	if err != nil {
-		test.Fatal(err)
+	inputs, goBuildInInputsError := buildcache.GoBuildInInputs("cohere", output, mainPath, args, nil)
+	if goBuildInInputsError != nil {
+		test.Fatal(goBuildInInputsError)
 	}
 	directory := buildcache.BuiltElsewhere(
 		test,
@@ -314,9 +314,9 @@ var stringsEncode = strings.NewReplacer(`\`, `\\`, "\n", `\n`, "\r", `\r`, "\t",
 
 func CacheInputs(test *testing.T, inputs Inputs) buildcache.Inputs {
 	test.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	keyed := buildcache.Inputs{
 		Name:      "cssstrings " + inputs.Name,
@@ -331,18 +331,18 @@ func CacheInputs(test *testing.T, inputs Inputs) buildcache.Inputs {
 	keyed.Flags = append(keyed.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 
 	for _, name := range inputs.Files {
-		absolute, err := filepath.Abs(name)
-		if err != nil {
-			test.Fatal(err)
+		absolute, absolutePathError := filepath.Abs(name)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
-		relative, err := filepath.Rel(root, absolute)
-		if err != nil {
-			test.Fatal(err)
+		relative, relativePathError := filepath.Rel(root, absolute)
+		if relativePathError != nil {
+			test.Fatal(relativePathError)
 		}
 		if relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
-			content, err := os.ReadFile(name)
-			if err != nil {
-				test.Fatal(err)
+			content, readError := os.ReadFile(name)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			logical := filepath.Base(name)
 			if filepath.Ext(name) == ".ts" {
@@ -370,9 +370,9 @@ type Inputs struct {
 func Identity(test *testing.T, path string) string {
 	test.Helper()
 	hash := sha256.New()
-	err := filepath.WalkDir(path, func(name string, entry os.DirEntry, err error) error {
-		if err != nil {
-			return err
+	walkError := filepath.WalkDir(path, func(name string, entry os.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
 		if entry.IsDir() {
 			if entry.Name() == ".git" {
@@ -380,19 +380,19 @@ func Identity(test *testing.T, path string) string {
 			}
 			return nil
 		}
-		content, err := os.ReadFile(name)
-		if err != nil {
-			return err
+		content, readError := os.ReadFile(name)
+		if readError != nil {
+			return readError
 		}
-		relative, err := filepath.Rel(path, name)
-		if err != nil {
-			return err
+		relative, relativePathError := filepath.Rel(path, name)
+		if relativePathError != nil {
+			return relativePathError
 		}
 		fmt.Fprintf(hash, "%s\x00%x\n", filepath.ToSlash(relative), sha256.Sum256(content))
 		return nil
 	})
-	if err != nil {
-		test.Fatal(err)
+	if walkError != nil {
+		test.Fatal(walkError)
 	}
 	return fmt.Sprintf("oracle-content-sha256=%x", hash.Sum(nil))
 }

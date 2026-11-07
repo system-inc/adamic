@@ -74,20 +74,20 @@ func TestNodeProcessOSNamespace(test *testing.T) {
 	if bad.exitCode != 0 || len(bad.stderr) != 0 || disagreement(truth, bad) != "stdout differs" {
 		test.Fatal("namespace EOL mutant not caught only by Node bytes")
 	}
-	data, err := os.ReadFile(script)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(script)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if !strings.Contains(string(data), `"\n"`) {
 		test.Fatal("JavaScript EOL mutant anchor changed")
 	}
 	javascriptMutant := filepath.Join(test.TempDir(), "namespace-mutant.mjs")
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		javascriptMutant,
 		[]byte(strings.ReplaceAll(string(data), `"\n"`, `"\r\n"`)),
 		0600,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
 	bad = onNode(test, javascriptMutant)
 	if bad.exitCode != 0 || len(bad.stderr) != 0 || disagreement(truth, bad) != "stdout differs" {

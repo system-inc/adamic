@@ -21,16 +21,16 @@ func TestNoSlotTheIteratorArmWalksHoldsAGenerator(test *testing.T) {
 	test.Parallel()
 	iteratorLocals := func(path string) int {
 		test.Helper()
-		loaded, err := load.Load([]string{path})
-		if err != nil {
-			test.Fatal(err)
+		loaded, loadError := load.Load([]string{path})
+		if loadError != nil {
+			test.Fatal(loadError)
 		}
 		entry := loaded.Files()[0]
 		check, release := loaded.Checker(context.Background(), entry)
 		defer release()
-		lowered, err := lowerChecked(loaded, check, entry, nil, false, false)
-		if err != nil {
-			test.Fatal(err)
+		lowered, lowerCheckedError := lowerChecked(loaded, check, entry, nil, false, false)
+		if lowerCheckedError != nil {
+			test.Fatal(lowerCheckedError)
 		}
 		found := 0
 		for _, proven := range lowered.localTypes {

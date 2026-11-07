@@ -71,42 +71,46 @@ func runWASIUnit(test *testing.T, unit int) {
 		test.Skip("WASI toolchain missing: WASI_SYSROOT is not set")
 	}
 	for _, tool := range []string{wasiCompiler(), "node", "go"} {
-		if _, err := toolchain.Path(tool); err != nil {
+		if _, pathError := toolchain.Path(tool); pathError != nil {
 			if toolchain.Sandboxed() {
-				test.Fatal(err)
+				test.Fatal(pathError)
 			}
-			test.Skipf("WASI toolchain missing: %s: %v", tool, err)
+			test.Skipf("WASI toolchain missing: %s: %v", tool, pathError)
 		}
 	}
 	// The toolchain is pinned: a clang other than wasi-sdk 27's fails here, by name, rather than skipping.
-	if _, err := WASIClang(); err != nil {
-		test.Fatal(err)
+	if _, wasiClangError := WASIClang(); wasiClangError != nil {
+		test.Fatal(wasiClangError)
 	}
 	phase := time.Now()
 	directory := test.TempDir()
-	repository, err := filepath.Abs("../..")
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs("../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	flags := wasiFlags(sysroot)
 	probe := filepath.Join(directory, "probe.c")
 	writeWASIFile(test, probe, "#include <stdlib.h>\nint main(void) { void *p = malloc(16); free(p); return 0; }\n")
-	if output, err := toolchain.Command(
+	if output, combinedOutputError := toolchain.Command(
 		wasiCompiler(),
 		append(append([]string{}, flags...), probe, "-o", filepath.Join(directory, "probe.wasm"))...,
-	).CombinedOutput(); err != nil {
-		test.Skipf("WASI toolchain missing or unusable (sysroot, linker, builtins): %v\n%s", err, output)
+	).CombinedOutput(); combinedOutputError != nil {
+		test.Skipf(
+			"WASI toolchain missing or unusable (sysroot, linker, builtins): %v\n%s",
+			combinedOutputError,
+			output,
+		)
 	}
-	if output, err := toolchain.Command(
+	if output, combinedOutputError := toolchain.Command(
 		"node",
 		"--disable-warning=ExperimentalWarning",
 		"--input-type=module",
 		"-e",
 		"import {WASI} from 'node:wasi'; import {registerHooks} from 'node:module'; new WASI({version:'preview1'}); if (!registerHooks || Number(process.versions.node.split('.')[0]) < 24) process.exit(1)",
-	).CombinedOutput(); err != nil {
+	).CombinedOutput(); combinedOutputError != nil {
 		test.Skipf(
 			"WASI toolchain missing: Node 24 with node:wasi and source oracle hooks required: %v\n%s",
-			err,
+			combinedOutputError,
 			output,
 		)
 	}
@@ -157,8 +161,8 @@ func runWASIUnit(test *testing.T, unit int) {
 		arguments = append(arguments, objects...)
 		arguments = append(arguments, "-lm")
 		command := toolchain.CommandIn(repository, wasiCompiler(), arguments...)
-		if data, err := command.CombinedOutput(); err != nil {
-			test.Fatalf("WASI link: %v\n%s", err, data)
+		if data, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+			test.Fatalf("WASI link: %v\n%s", combinedOutputError, data)
 		}
 	}
 
@@ -180,8 +184,11 @@ func runWASIUnit(test *testing.T, unit int) {
 			}
 			if strings.HasSuffix(fixture, "wasm/io.a") {
 				working = scratch
-				if err := os.Mkdir(filepath.Join(scratch, "files"), 0o755); err != nil {
-					test.Fatal(err)
+				if createDirectoryError := os.Mkdir(
+					filepath.Join(scratch, "files"),
+					0o755,
+				); createDirectoryError != nil {
+					test.Fatal(createDirectoryError)
 				}
 				writeWASIFile(test, filepath.Join(scratch, "files/input.txt"), "héllo 世界\n")
 			}
@@ -262,12 +269,12 @@ func runWASIUnit(test *testing.T, unit int) {
 		)
 		test.Logf("request benchmark: %s", output)
 		if destination := os.Getenv("ADAMIC_WASI_ARTIFACT"); destination != "" {
-			contents, err := os.ReadFile(module)
-			if err != nil {
-				test.Fatal(err)
+			contents, readError := os.ReadFile(module)
+			if readError != nil {
+				test.Fatal(readError)
 			}
-			if err := os.WriteFile(destination, contents, 0o644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(destination, contents, 0o644); writeError != nil {
+				test.Fatal(writeError)
 			}
 		}
 	})
@@ -275,8 +282,8 @@ func runWASIUnit(test *testing.T, unit int) {
 
 func writeWASIFile(test *testing.T, path, contents string) {
 	test.Helper()
-	if err := os.WriteFile(path, []byte(contents), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(contents), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 }
 
@@ -285,9 +292,9 @@ func wasiCommand(test *testing.T, directory, name string, arguments ...string) [
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 	defer cancel()
 	command := programCommand(ctx, directory, name, arguments...)
-	output, err := command.CombinedOutput()
-	if err != nil {
-		test.Fatalf("%s %v: %v\n%s", name, arguments, err, output)
+	output, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("%s %v: %v\n%s", name, arguments, combinedOutputError, output)
 	}
 	return output
 }
@@ -304,12 +311,12 @@ func observeWASI(test *testing.T, directory, name string, arguments ...string) w
 	command := programCommand(ctx, directory, name, arguments...)
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
-	err := command.Run()
+	runError := command.Run()
 	exit := 0
-	if err != nil {
+	if runError != nil {
 		var failed *exec.ExitError
-		if !errors.As(err, &failed) || ctx.Err() != nil {
-			test.Fatalf("%s %v: %v", name, arguments, err)
+		if !errors.As(runError, &failed) || ctx.Err() != nil {
+			test.Fatalf("%s %v: %v", name, arguments, runError)
 		}
 		exit = failed.ExitCode()
 	}
@@ -356,8 +363,8 @@ func strictWASIRuntime(test *testing.T) string {
 		test.Fatal("WASI_SYSROOT missing")
 	}
 	// The runtime compiles only with wasi-sdk 27's clang, refused by name otherwise, and its version keys the product.
-	if _, err := WASIClang(); err != nil {
-		test.Fatal(err)
+	if _, wasiClangError := WASIClang(); wasiClangError != nil {
+		test.Fatal(wasiClangError)
 	}
 	flags := wasiFlags(sysroot)
 	variants := slices.Sorted(maps.Keys(strictWASIRuntimeVariants))
@@ -378,15 +385,15 @@ func strictWASIRuntime(test *testing.T) string {
 			fmt.Sprintf("variant %s %s", variant, strings.Join(strictWASIRuntimeVariants[variant], " ")),
 		)
 	}
-	files, err := readRuntime(runtime, "runtime")
-	if err != nil {
-		test.Fatal(err)
+	files, readRuntimeError := readRuntime(runtime, "runtime")
+	if readRuntimeError != nil {
+		test.Fatal(readRuntimeError)
 	}
 	// A planted runtime (ADAMIC_WASI_RUNTIME, for isolated mutants) lies outside the tree, so its content keys the
 	// product. It is built for this machine alone.
 	if alternate := os.Getenv("ADAMIC_WASI_RUNTIME"); alternate != "" {
-		if files, err = readRuntime(os.DirFS(alternate), "."); err != nil {
-			test.Fatal(err)
+		if files, readRuntimeError = readRuntime(os.DirFS(alternate), "."); readRuntimeError != nil {
+			test.Fatal(readRuntimeError)
 		}
 		for _, file := range files {
 			inputs.Flags = append(inputs.Flags, fmt.Sprintf("runtime %s %x", file.name, sha256.Sum256(file.contents)))
@@ -395,13 +402,17 @@ func strictWASIRuntime(test *testing.T) string {
 	return buildcache.Product(test, inputs, func(directory string) error {
 		for _, variant := range variants {
 			destination := filepath.Join(directory, variant)
-			if err := os.Mkdir(destination, 0o755); err != nil {
-				return err
+			if createDirectoryError := os.Mkdir(destination, 0o755); createDirectoryError != nil {
+				return createDirectoryError
 			}
 			var sources []string
 			for _, file := range files {
-				if err := os.WriteFile(filepath.Join(destination, file.name), file.contents, 0o644); err != nil {
-					return err
+				if writeError := os.WriteFile(
+					filepath.Join(destination, file.name),
+					file.contents,
+					0o644,
+				); writeError != nil {
+					return writeError
 				}
 				if strings.HasSuffix(file.name, ".c") {
 					sources = append(sources, file.name)
@@ -412,18 +423,18 @@ func strictWASIRuntime(test *testing.T) string {
 				append(slices.Clone(flags), strictWASIRuntimeVariants[variant]...),
 				prefixMaps(destination, "/adamic-runtime")...,
 			)
-			if err := eachInParallel(len(sources), func(index int) error {
+			if eachInParallelError := eachInParallel(len(sources), func(index int) error {
 				command := toolchain.CommandIn(
 					destination,
 					wasiCompiler(),
 					append(slices.Clone(compileFlags), "-c", sources[index], "-o", sources[index]+".o")...,
 				)
-				if output, err := command.CombinedOutput(); err != nil {
-					return fmt.Errorf("compile %s %s: %w\n%s", variant, sources[index], err, output)
+				if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+					return fmt.Errorf("compile %s %s: %w\n%s", variant, sources[index], combinedOutputError, output)
 				}
 				return nil
-			}); err != nil {
-				return err
+			}); eachInParallelError != nil {
+				return eachInParallelError
 			}
 		}
 		return nil
@@ -438,9 +449,9 @@ func strictWASIRuntimeVariant(test *testing.T, product, variant string) (string,
 		test.Fatalf("no strict WASI runtime variant %q", variant)
 	}
 	directory := filepath.Join(product, variant)
-	objects, err := filepath.Glob(filepath.Join(directory, "*.c.o"))
-	if err != nil {
-		test.Fatal(err)
+	objects, globError := filepath.Glob(filepath.Join(directory, "*.c.o"))
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	if len(objects) == 0 {
 		test.Fatalf("strict WASI runtime %s holds no objects", variant)
@@ -647,9 +658,9 @@ func TestWASIUnit35(test *testing.T) {
 func TestTheWASIBuildsNameNoBareClang(test *testing.T) {
 	test.Parallel()
 	files := token.NewFileSet()
-	parsed, err := parser.ParseFile(files, "wasm_test.go", nil, parser.SkipObjectResolution)
-	if err != nil {
-		test.Fatal(err)
+	parsed, parseFileError := parser.ParseFile(files, "wasm_test.go", nil, parser.SkipObjectResolution)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	ast.Inspect(parsed, func(node ast.Node) bool {
 		if literal, ok := node.(*ast.BasicLit); ok && literal.Kind == token.STRING && literal.Value == `"clang"` {

@@ -35,8 +35,8 @@ func init() {
 // exercises the compiler-source frontend without weakening .a's promises.
 func rulingProgram(test *testing.T, file string, typescript bool) (*ir.Program, error) {
 	test.Helper()
-	program, _, err := rulingProgramAt(test, file, typescript)
-	return program, err
+	program, _, rulingProgramAtError := rulingProgramAt(test, file, typescript)
+	return program, rulingProgramAtError
 }
 
 // Keep the physical frontend copy's path available for main's portable count digest.
@@ -44,25 +44,25 @@ func rulingProgramAt(test *testing.T, file string, typescript bool) (*ir.Program
 	test.Helper()
 	path := filepath.Join(repository, refusalFixtureRoot, file)
 	if typescript {
-		source, err := os.ReadFile(path)
-		if err != nil {
-			test.Fatal(err)
+		source, readError := os.ReadFile(path)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		path = filepath.Join(test.TempDir(), strings.TrimSuffix(file, ".a")+".ts")
-		if err := os.WriteFile(path, source, 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, source, 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
-	program, err := lowered(test, path)
-	return program, path, err
+	program, loweredError := lowered(test, path)
+	return program, path, loweredError
 }
 
 func rulingRefusal(test *testing.T, file string, typescript bool, diagnostic string) {
 	test.Helper()
-	_, err := rulingProgram(test, file, typescript)
+	_, rulingProgramError := rulingProgram(test, file, typescript)
 	var refused *lower.Refused
-	if !errors.As(err, &refused) {
-		test.Fatalf("want Refused, got %v", err)
+	if !errors.As(rulingProgramError, &refused) {
+		test.Fatalf("want Refused, got %v", rulingProgramError)
 	}
 	name := file
 	if typescript {
@@ -77,7 +77,7 @@ func rulingRefusal(test *testing.T, file string, typescript bool, diagnostic str
 		positions[file] = "2:10"
 	}
 	if !strings.HasSuffix(refused.Where, name+":"+positions[file]) || refused.What+"; "+refused.Fix != diagnostic {
-		test.Fatalf("un-pinned refusal: %v", err)
+		test.Fatalf("un-pinned refusal: %v", rulingProgramError)
 	}
 	result := rulingNode(test, file)
 	if result.exitCode != 0 || len(result.stderr) != 0 {
@@ -87,9 +87,9 @@ func rulingRefusal(test *testing.T, file string, typescript bool, diagnostic str
 
 func rulingAgrees(test *testing.T, file string, typescript bool) {
 	test.Helper()
-	program, err := rulingProgram(test, file, typescript)
-	if err != nil {
-		test.Fatal(err)
+	program, rulingProgramError := rulingProgram(test, file, typescript)
+	if rulingProgramError != nil {
+		test.Fatal(rulingProgramError)
 	}
 	expected := rulingNode(test, file)
 	js := onJavaScriptBackend(test, program)
@@ -148,9 +148,9 @@ func TestFunctionCallSignatureAgreesWithNode(test *testing.T) {
 
 func rulingCount(test *testing.T, file string, typescript bool) (string, func() string) {
 	test.Helper()
-	program, path, err := rulingProgramAt(test, file, typescript)
-	if err != nil {
-		test.Fatal(err)
+	program, path, rulingProgramAtError := rulingProgramAt(test, file, typescript)
+	if rulingProgramAtError != nil {
+		test.Fatal(rulingProgramAtError)
 	}
 	source := native.C(program)
 	return fmt.Sprintf("typescript %v\n%s", typescript, countPortable(test, source, path)), func() string {
@@ -161,8 +161,8 @@ func rulingCount(test *testing.T, file string, typescript bool) (string, func() 
 func rulingCountRun(test *testing.T, file string, typescript bool, source string) string {
 	test.Helper()
 	binary := filepath.Join(test.TempDir(), "counted")
-	if err := native.Build(source, binary, native.Options{Count: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(source, binary, native.Options{Count: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	name, args := pinnedStack(binary)
 	result := execute(test, name, args...)
@@ -184,9 +184,9 @@ func rulingCountRun(test *testing.T, file string, typescript bool, source string
 
 func rulingNode(test *testing.T, file string) run {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, refusalFixtureRoot, file))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, refusalFixtureRoot, file))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return onNode(test, path)
 }

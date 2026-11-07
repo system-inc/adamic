@@ -24,12 +24,12 @@ static int adamic_next(void);
 static int adamic_next(void) { return ++adamic_state; }
 int main(void) { int first = adamic_next(); int second = adamic_next(); printf("%d %d %d\n", first, second, adamic_state); return first == 1 && second == 2 && adamic_state == 2 ? 0 : 1; }
 `
-	header, units, err := splitC(source)
-	if err != nil {
-		test.Fatal(err)
+	header, units, splitCError := splitC(source)
+	if splitCError != nil {
+		test.Fatal(splitCError)
 	}
-	nextHeader, nextUnits, err := splitC(source)
-	if err != nil || header != nextHeader || len(units) != len(nextUnits) {
+	nextHeader, nextUnits, splitCError := splitC(source)
+	if splitCError != nil || header != nextHeader || len(units) != len(nextUnits) {
 		test.Fatal("split is not deterministic")
 	}
 	for index := range units {
@@ -40,11 +40,13 @@ int main(void) { int first = adamic_next(); int second = adamic_next(); printf("
 	for _, uncached := range []string{"0", "1"} {
 		test.Setenv("ADAMIC_GATE_UNCACHED", uncached)
 		binary := filepath.Join(test.TempDir(), "program")
-		if err := Build(source, binary, Options{Split: true, Sanitize: true, Jobs: 2}); err != nil {
-			test.Fatal(err)
+		if buildError := Build(source, binary, Options{Split: true, Sanitize: true, Jobs: 2}); buildError != nil {
+			test.Fatal(buildError)
 		}
-		if output, err := exec.Command(binary).CombinedOutput(); err != nil || string(output) != "1 2 2\n" {
-			test.Fatalf("shared state (uncached=%s): %v\n%s", uncached, err, output)
+		if output, combinedOutputError := exec.Command(
+			binary,
+		).CombinedOutput(); combinedOutputError != nil || string(output) != "1 2 2\n" {
+			test.Fatalf("shared state (uncached=%s): %v\n%s", uncached, combinedOutputError, output)
 		}
 	}
 }
@@ -53,9 +55,9 @@ int main(void) { int first = adamic_next(); int second = adamic_next(); printf("
 // release object and loses UBSan's check, while linking and executing normally. No warning kills it.
 func TestUnitCacheFlagsHoldSanitizer(test *testing.T) {
 	test.Parallel()
-	compiler, err := toolchain.Path("clang")
-	if err != nil {
-		test.Fatal(err)
+	compiler, pathError := toolchain.Path("clang")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
 	directory := test.TempDir()
 	cache := filepath.Join(directory, "cache")
@@ -65,13 +67,13 @@ func TestUnitCacheFlagsHoldSanitizer(test *testing.T) {
 		flags := Flags(options)
 		sanitized := options.Sanitize || options.ThreadSanitize
 		test.Helper()
-		keying, err := newUnitKeying(unit.source, nil, flags, compiler, toolchain.Env(), sanitized)
-		if err != nil {
-			test.Fatal(err)
+		keying, newUnitKeyingError := newUnitKeying(unit.source, nil, flags, compiler, toolchain.Env(), sanitized)
+		if newUnitKeyingError != nil {
+			test.Fatal(newUnitKeyingError)
 		}
-		object, err := compileUnit(unit, nil, flags, compiler, keying, cache, directory, nil, sanitized)
-		if err != nil {
-			test.Fatal(err)
+		object, compileUnitError := compileUnit(unit, nil, flags, compiler, keying, cache, directory, nil, sanitized)
+		if compileUnitError != nil {
+			test.Fatal(compileUnitError)
 		}
 		return object
 	}
@@ -80,19 +82,22 @@ func TestUnitCacheFlagsHoldSanitizer(test *testing.T) {
 	// Do not assert that paths differ: the runtime sanitizer observation is the proof.
 	_ = release
 	main := filepath.Join(directory, "main.c")
-	if err := os.WriteFile(main, []byte(
+	if writeError := os.WriteFile(main, []byte(
 		`int adamic_probe(int); int main(void) { volatile int input = 1; volatile int result = adamic_probe(input); (void)result; return 0; }`+"\n",
-	), 0644); err != nil {
-		test.Fatal(err)
+	), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	binary := filepath.Join(directory, "probe")
 	args := append(Flags(Options{Sanitize: true}), main, sanitized, "-o", binary)
-	if output, err := toolchain.Command(compiler, args...).CombinedOutput(); err != nil {
-		test.Fatalf("link: %v\n%s", err, output)
+	if output, combinedOutputError := toolchain.Command(
+		compiler,
+		args...,
+	).CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("link: %v\n%s", combinedOutputError, output)
 	}
-	output, err := exec.Command(binary).CombinedOutput()
-	if err == nil || !bytes.Contains(output, []byte("signed integer overflow")) {
-		test.Fatalf("sanitized rebuild reused uninstrumented object: exit=%v output=%s", err, output)
+	output, combinedOutputError := exec.Command(binary).CombinedOutput()
+	if combinedOutputError == nil || !bytes.Contains(output, []byte("signed integer overflow")) {
+		test.Fatalf("sanitized rebuild reused uninstrumented object: exit=%v output=%s", combinedOutputError, output)
 	}
 	test.Log("release then sanitized: UBSan caught signed integer overflow")
 }
@@ -100,9 +105,9 @@ func TestUnitCacheFlagsHoldSanitizer(test *testing.T) {
 func TestSplitTokensDoNotRewriteLiterals(test *testing.T) {
 	test.Parallel()
 	source := "#include \"adamic.h\"\nstatic int adamic_x = 1;\nstatic int adamic_f(void) { /* } ; */ const char *s = \"adamic_x } ; \\\"\"; (void)s; return adamic_x; }\nint main(void) { return adamic_f()-1; }\n"
-	_, units, err := splitC(source)
-	if err != nil {
-		test.Fatal(err)
+	_, units, splitCError := splitC(source)
+	if splitCError != nil {
+		test.Fatal(splitCError)
 	}
 	if !strings.Contains(units[1].source, `"adamic_x } ; \""`) {
 		test.Fatal("literal changed")
@@ -117,9 +122,9 @@ func TestSplitTokensDoNotRewriteLiterals(test *testing.T) {
 func TestSplitNamesAttributedDeclarations(test *testing.T) {
 	test.Parallel()
 	source := "#include \"adamic.h\"\nstatic const int adamic_a __attribute__((aligned(64))) = 1;\nstatic const int adamic_b __attribute__((aligned(64))) = 2;\nint main(void) { return adamic_a + adamic_b - 3; }\n"
-	header, units, err := splitC(source)
-	if err != nil {
-		test.Fatal(err)
+	header, units, splitCError := splitC(source)
+	if splitCError != nil {
+		test.Fatal(splitCError)
 	}
 	for _, name := range []string{"adamic_unit_adamic_a", "adamic_unit_adamic_b"} {
 		if !strings.Contains(header, "extern const int "+name+" __attribute__((aligned(64)));") {
@@ -140,9 +145,9 @@ func TestSplitNamesAttributedDeclarations(test *testing.T) {
 
 // Not parallel: this check deliberately mutates a header between cache lookups.
 func TestUnitSystemHeaderProvenance(test *testing.T) {
-	compiler, err := toolchain.Path("clang")
-	if err != nil {
-		test.Fatal(err)
+	compiler, pathError := toolchain.Path("clang")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
 	directory := test.TempDir()
 	cache := filepath.Join(directory, "cache")
@@ -158,34 +163,43 @@ func TestUnitSystemHeaderProvenance(test *testing.T) {
 		files := []runtimeFile{{"probe-system.h", []byte(header)}}
 		var keying *unitKeying
 		if !uncached {
-			var err error
-			if keying, err = newUnitKeying(firstLine, files, flags, compiler, toolchain.Env(), false); err != nil {
-				test.Fatal(err)
+			var newUnitKeyingError error
+			if keying, newUnitKeyingError = newUnitKeying(
+				firstLine,
+				files,
+				flags,
+				compiler,
+				toolchain.Env(),
+				false,
+			); newUnitKeyingError != nil {
+				test.Fatal(newUnitKeyingError)
 			}
 		}
-		object, err := compileUnit(unit, files, flags, compiler, keying, cache, directory, nil, false)
-		if err != nil {
-			test.Fatalf("system-header provenance lost: %v", err)
+		object, compileUnitError := compileUnit(unit, files, flags, compiler, keying, cache, directory, nil, false)
+		if compileUnitError != nil {
+			test.Fatalf("system-header provenance lost: %v", compileUnitError)
 		}
 		return object
 	}
 	observe := func(object string, expected string) {
 		test.Helper()
 		main := filepath.Join(directory, "main.c")
-		if err := os.WriteFile(main, []byte(
+		if writeError := os.WriteFile(main, []byte(
 			"#include <stdio.h>\nint adamic_probe(void); int main(void) { printf(\"%d\\n\", adamic_probe()); return 0; }\n",
-		), 0644); err != nil {
-			test.Fatal(err)
+		), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		binary := filepath.Join(directory, "probe")
-		if output, err := toolchain.Command(
+		if output, combinedOutputError := toolchain.Command(
 			compiler,
 			append(append([]string{}, flags...), main, object, "-o", binary)...,
-		).CombinedOutput(); err != nil {
-			test.Fatalf("link: %v\n%s", err, output)
+		).CombinedOutput(); combinedOutputError != nil {
+			test.Fatalf("link: %v\n%s", combinedOutputError, output)
 		}
-		if output, err := exec.Command(binary).CombinedOutput(); err != nil || string(output) != expected {
-			test.Fatalf("header observation: exit=%v output=%q want=%q", err, output, expected)
+		if output, combinedOutputError := exec.Command(
+			binary,
+		).CombinedOutput(); combinedOutputError != nil || string(output) != expected {
+			test.Fatalf("header observation: exit=%v output=%q want=%q", combinedOutputError, output, expected)
 		}
 	}
 	first := compile(header, false)
@@ -200,7 +214,7 @@ func TestUnitSystemHeaderProvenance(test *testing.T) {
 	// provenance by disabling nullability or pedantic diagnostics for the whole unit.
 	userHeader := strings.TrimPrefix(header, "#pragma clang system_header\n")
 	files := []runtimeFile{{"probe-system.h", []byte(userHeader)}}
-	if _, err := compileUnit(
+	if _, compileUnitError := compileUnit(
 		unit,
 		files,
 		flags,
@@ -210,8 +224,8 @@ func TestUnitSystemHeaderProvenance(test *testing.T) {
 		directory,
 		nil,
 		false,
-	); err == nil || !strings.Contains(err.Error(), "-Wnullability-extension") {
-		test.Fatalf("user-header extension must be rejected: %v", err)
+	); compileUnitError == nil || !strings.Contains(compileUnitError.Error(), "-Wnullability-extension") {
+		test.Fatalf("user-header extension must be rejected: %v", compileUnitError)
 	}
 	test.Log(
 		"system-header extension accepted; changed header observed cached and uncached; user-header extension rejected",
@@ -229,9 +243,9 @@ func TestSplitAttributedBindingsAgreeWithNode(test *testing.T) {
 		cmd := exec.CommandContext(ctx, command, args...)
 		var stderr strings.Builder
 		cmd.Stderr = &stderr
-		output, err := cmd.Output()
-		if err != nil || stderr.Len() != 0 {
-			test.Fatalf("execution: %v stderr=%s", err, &stderr)
+		output, outputError := cmd.Output()
+		if outputError != nil || stderr.Len() != 0 {
+			test.Fatalf("execution: %v stderr=%s", outputError, &stderr)
 		}
 		return string(output)
 	}
@@ -242,9 +256,9 @@ static const int adamic_a __attribute__((aligned(64))) = 1;
 static const int adamic_b __attribute__((aligned(64))) = 2;
 int main(void) { printf("%d\n", 10 * adamic_a + adamic_b); return 0; }
 `
-	header, units, err := splitC(source)
-	if err != nil {
-		test.Fatal(err)
+	header, units, splitCError := splitC(source)
+	if splitCError != nil {
+		test.Fatal(splitCError)
 	}
 	var joined strings.Builder
 	joined.WriteString(header)
@@ -275,8 +289,8 @@ int main(void) { printf("%d\n", 10 * adamic_a + adamic_b); return 0; }
 				if target == "wasm32-wasi" {
 					options = Options{Target: target}
 				}
-				if err := Build(code, binary, options); err != nil {
-					test.Fatal(err)
+				if buildError := Build(code, binary, options); buildError != nil {
+					test.Fatal(buildError)
 				}
 				actual := ""
 				if target == "native" {
@@ -303,9 +317,9 @@ adamic_array *adamic_object_values_checked(adamic_object *, int, const char *, b
 static int adamic_probe(void) { return 0; }
 int main(void) { return adamic_probe(); }
 `
-	header, units, err := splitC(source)
-	if err != nil {
-		test.Fatal(err)
+	header, units, splitCError := splitC(source)
+	if splitCError != nil {
+		test.Fatal(splitCError)
 	}
 	if !strings.Contains(header, "adamic_array *adamic_object_values_checked(") ||
 		strings.Contains(header, "adamic_unit_adamic_object_values_checked") {
@@ -321,16 +335,18 @@ int main(void) { return adamic_probe(); }
 		"adamic_array *adamic_external = NULL;\n",
 		"adamic_array *adamic_external(void) { return NULL; }\n",
 	} {
-		if _, _, err := splitC(rejected); err == nil {
+		if _, _, splitCError := splitC(rejected); splitCError == nil {
 			test.Fatalf("accepted non-static definition: %s", rejected)
 		}
 	}
 	binary := filepath.Join(test.TempDir(), "split")
-	if err := Build(source, binary, Options{Split: true, Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(source, binary, Options{Split: true, Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
-	if output, err := exec.Command(binary).CombinedOutput(); err != nil || len(output) != 0 {
-		test.Fatalf("split runtime prototype: %v %s", err, output)
+	if output, combinedOutputError := exec.Command(
+		binary,
+	).CombinedOutput(); combinedOutputError != nil || len(output) != 0 {
+		test.Fatalf("split runtime prototype: %v %s", combinedOutputError, output)
 	}
 }
 
@@ -367,19 +383,19 @@ func TestSplitMixesHitsAndMisses(test *testing.T) {
 		test.Setenv("ADAMIC_BUILD_LOG", log)
 		test.Setenv("ADAMIC_GATE_UNCACHED", uncached)
 		binary := filepath.Join(directory, name, "program")
-		if err := os.MkdirAll(filepath.Dir(binary), 0o755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(filepath.Dir(binary), 0o755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := Build(source, binary, Options{Split: true, Jobs: 2}); err != nil {
-			test.Fatal(err)
+		if buildError := Build(source, binary, Options{Split: true, Jobs: 2}); buildError != nil {
+			test.Fatal(buildError)
 		}
-		output, err := exec.Command(binary).CombinedOutput()
-		if err != nil {
-			test.Fatalf("%s: %v\n%s", name, err, output)
+		output, combinedOutputError := exec.Command(binary).CombinedOutput()
+		if combinedOutputError != nil {
+			test.Fatalf("%s: %v\n%s", name, combinedOutputError, output)
 		}
-		written, err := os.ReadFile(log)
-		if err != nil {
-			test.Fatal(err)
+		written, readError := os.ReadFile(log)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		outcomes := map[string]string{}
 		for _, line := range strings.Split(strings.TrimSuffix(string(written), "\n"), "\n") {
@@ -389,9 +405,9 @@ func TestSplitMixesHitsAndMisses(test *testing.T) {
 				outcomes[match[2]] = match[4]
 			}
 		}
-		contents, err := os.ReadFile(binary)
-		if err != nil {
-			test.Fatal(err)
+		contents, readError := os.ReadFile(binary)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		return append(output, contents...), outcomes
 	}

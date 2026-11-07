@@ -52,9 +52,9 @@ func runWithInput(test *testing.T, input string, name string, arguments ...strin
 	}
 	command.Stdin = strings.NewReader(input)
 	// Each stream read to its end, with no timer deciding when (childguard.Capture, #n3gk22h).
-	stdout, stderr, err := childguard.Capture(ctx, command)
-	if err != nil {
-		test.Fatalf("%s: %v\n%s", name, err, stderr)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
+	if captureError != nil {
+		test.Fatalf("%s: %v\n%s", name, captureError, stderr)
 	}
 	return string(stdout)
 }

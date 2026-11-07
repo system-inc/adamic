@@ -14,11 +14,11 @@ import (
 // executableAt writes a script that prints what it is at path.
 func executableAt(test *testing.T, path string) {
 	test.Helper()
-	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	if err := os.WriteFile(path, []byte("#!/bin/sh\necho "+path+"\n"), 0o755); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte("#!/bin/sh\necho "+path+"\n"), 0o755); writeError != nil {
+		test.Fatal(writeError)
 	}
 }
 
@@ -43,29 +43,37 @@ func TestAToolIsFoundUnderTheToolsDirectoryAndOnlyThereInASandbox(test *testing.
 		"adamic-fake-other": filepath.Join(elsewhere, "adamic-fake-other"),
 		"/bin/sh":           "/bin/sh",
 	} {
-		if got, err := Path(name); err != nil || got != want {
-			test.Errorf("Path(%q) = %q, %v; want %q", name, got, err, want)
+		if got, pathError := Path(name); pathError != nil || got != want {
+			test.Errorf("Path(%q) = %q, %v; want %q", name, got, pathError, want)
 		}
 	}
 	test.Setenv("ADAMIC_SANDBOX", "1")
-	if got, err := Path("adamic-fake-tool"); err != nil || got != filepath.Join(tools, "bin", "adamic-fake-tool") {
-		test.Errorf("in a sandbox, Path(adamic-fake-tool) = %q, %v", got, err)
+	if got, pathError := Path(
+		"adamic-fake-tool",
+	); pathError != nil || got != filepath.Join(tools, "bin", "adamic-fake-tool") {
+		test.Errorf("in a sandbox, Path(adamic-fake-tool) = %q, %v", got, pathError)
 	}
-	if got, err := Path(
+	if got, pathError := Path(
 		"adamic-fake-other",
-	); err == nil || !strings.Contains(err.Error(), filepath.Join(tools, "bin")) {
-		test.Errorf("in a sandbox, a tool only on PATH resolved: %q, %v", got, err)
+	); pathError == nil || !strings.Contains(pathError.Error(), filepath.Join(tools, "bin")) {
+		test.Errorf("in a sandbox, a tool only on PATH resolved: %q, %v", got, pathError)
 	}
-	if err := Command("adamic-fake-other").Run(); err == nil || !strings.Contains(err.Error(), "ADAMIC_SANDBOX=1") {
-		test.Errorf("in a sandbox, a command for a tool only on PATH ran: %v", err)
+	if runError := Command(
+		"adamic-fake-other",
+	).Run(); runError == nil || !strings.Contains(runError.Error(), "ADAMIC_SANDBOX=1") {
+		test.Errorf("in a sandbox, a command for a tool only on PATH ran: %v", runError)
 	}
 	test.Setenv("ADAMIC_TOOLS", "")
-	if got, err := Path("adamic-fake-tool"); err == nil || !strings.Contains(err.Error(), "ADAMIC_TOOLS is unset") {
-		test.Errorf("in a sandbox with no tools directory, Path(adamic-fake-tool) = %q, %v", got, err)
+	if got, pathError := Path(
+		"adamic-fake-tool",
+	); pathError == nil || !strings.Contains(pathError.Error(), "ADAMIC_TOOLS is unset") {
+		test.Errorf("in a sandbox with no tools directory, Path(adamic-fake-tool) = %q, %v", got, pathError)
 	}
 	test.Setenv("ADAMIC_SANDBOX", "")
-	if got, err := Path("adamic-fake-tool"); err != nil || got != filepath.Join(elsewhere, "adamic-fake-tool") {
-		test.Errorf("with no tools directory, Path(adamic-fake-tool) = %q, %v; want PATH's", got, err)
+	if got, pathError := Path(
+		"adamic-fake-tool",
+	); pathError != nil || got != filepath.Join(elsewhere, "adamic-fake-tool") {
+		test.Errorf("with no tools directory, Path(adamic-fake-tool) = %q, %v; want PATH's", got, pathError)
 	}
 }
 
@@ -85,8 +93,8 @@ func values(environment []string) map[string]string {
 // Not parallel: test.Setenv.
 func TestAToolsEnvironmentIsWhatTheKeyReadsAndNothingElse(test *testing.T) {
 	tools := test.TempDir()
-	if err := os.MkdirAll(filepath.Join(tools, "bin"), 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(filepath.Join(tools, "bin"), 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	test.Setenv("ADAMIC_TOOLS", tools)
 	test.Setenv(
@@ -188,13 +196,13 @@ func TestACommandRunInADirectoryIsToldItStandsThere(test *testing.T) {
 	directory := test.TempDir()
 	test.Setenv("PWD", "/somewhere/else")
 	test.Setenv("ADAMIC_SANDBOX", "")
-	if got, err := CommandIn(
+	if got, outputError := CommandIn(
 		directory,
 		"sh",
 		"-c",
 		`printf %s "$PWD"`,
-	).Output(); err != nil || string(got) != directory {
-		test.Errorf("CommandIn ran with PWD %q (%v), want %q", got, err, directory)
+	).Output(); outputError != nil || string(got) != directory {
+		test.Errorf("CommandIn ran with PWD %q (%v), want %q", got, outputError, directory)
 	}
 	if command := GitCommandIn(
 		directory,
@@ -203,13 +211,13 @@ func TestACommandRunInADirectoryIsToldItStandsThere(test *testing.T) {
 		test.Errorf("GitCommandIn's Dir %q and environment %v (%v)", command.Dir, command.Env, command.Err)
 	}
 	test.Chdir(filepath.Dir(directory))
-	if got, err := CommandIn(
+	if got, outputError := CommandIn(
 		filepath.Base(directory),
 		"sh",
 		"-c",
 		`printf %s "$PWD"`,
-	).Output(); err != nil || string(got) != directory {
-		test.Errorf("a relative directory ran with PWD %q (%v), want %q", got, err, directory)
+	).Output(); outputError != nil || string(got) != directory {
+		test.Errorf("a relative directory ran with PWD %q (%v), want %q", got, outputError, directory)
 	}
 }
 
@@ -226,13 +234,13 @@ func TestAToolsCompilersAreClangUnlessTheCallerNamesOne(test *testing.T) {
 	if environment["CC"] != "clang" || environment["CXX"] != "clang++" {
 		test.Fatalf("with no compiler named, CC=%q and CXX=%q", environment["CC"], environment["CXX"])
 	}
-	if output, err := Command(
+	if output, outputError := Command(
 		"go",
 		"env",
 		"CC",
 		"CXX",
-	).Output(); err != nil || strings.Fields(string(output))[0] != "clang" {
-		test.Fatalf("go under Env reports %q (%v)", output, err)
+	).Output(); outputError != nil || strings.Fields(string(output))[0] != "clang" {
+		test.Fatalf("go under Env reports %q (%v)", output, outputError)
 	}
 	test.Setenv("CC", "/usr/bin/cc")
 	if environment := values(Env("CXX=g++")); environment["CC"] != "/usr/bin/cc" || environment["CXX"] != "g++" {
@@ -253,12 +261,12 @@ func TestAToolKeepsItsCallersTimeZone(test *testing.T) {
 	test.Setenv("TZ", "UTC")
 	command := exec.Command(os.Args[0], "-test.run=^TestAToolKeepsItsCallersTimeZone$")
 	command.Env = append(Env(), "ADAMIC_TOOLCHAIN_ZONE=print")
-	output, err := command.Output()
-	if err != nil || !strings.HasPrefix(string(output), "UTC") {
+	output, outputError := command.Output()
+	if outputError != nil || !strings.HasPrefix(string(output), "UTC") {
 		test.Fatalf(
 			"a tool under a caller's TZ=UTC named its zone %q (%v): it read the machine's zone file",
 			output,
-			err,
+			outputError,
 		)
 	}
 }

@@ -55,13 +55,15 @@ func TestOct6InheritanceMutants(test *testing.T) {
 		}},
 	} {
 		test.Run(mutant.name, func(test *testing.T) {
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/class_oct6_deep.a"))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/class_oct6_deep.a"),
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			p, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			p, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			want := onNode(test, path)
 			mutant.mutate(test, p)
@@ -81,13 +83,13 @@ func TestOct6InheritanceMutants(test *testing.T) {
 // no invalid access occurs, and compilation must succeed under -Werror.
 func TestOct6ReleaseMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/class_oct6_release.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/class_oct6_release.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	p, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	p, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	code := native.C(p)
 	mutated := strings.ReplaceAll(code, "adamic_release(", "(void)(")
@@ -95,8 +97,12 @@ func TestOct6ReleaseMutant(test *testing.T) {
 		test.Fatal("mutant changed no releases")
 	}
 	binary := filepath.Join(test.TempDir(), "mutant")
-	if err := native.Build(mutated, binary, native.Options{Sanitize: runtime.GOOS == "linux"}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(
+		mutated,
+		binary,
+		native.Options{Sanitize: runtime.GOOS == "linux"},
+	); buildError != nil {
+		test.Fatal(buildError)
 	}
 	want := onNode(test, path)
 	got := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary)

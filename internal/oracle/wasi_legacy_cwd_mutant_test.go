@@ -15,16 +15,16 @@ func TestWASILegacyFileCwdNodeMutant(test *testing.T) {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
 	directory := test.TempDir()
-	if err := os.WriteFile(filepath.Join(directory, "marker"), []byte("present"), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(directory, "marker"), []byte("present"), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	path := filepath.Join(directory, "main.a")
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		path,
 		[]byte(`import {readTextFile} from 'adamic'; console.log(readTextFile('marker').kind);`),
 		0600,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
 	truth := onNodeWith(test, inputRun{directory: directory}, path)
 	code := `#include "adamic.h"
@@ -39,14 +39,14 @@ int main(void) {
  return 0;
 }
 `
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/wasi.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/wasi.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	observe := func(source string) run {
 		binary := filepath.Join(test.TempDir(), "legacy.wasm")
-		if err := native.Build(source, binary, native.Options{Target: "wasm32-wasi"}); err != nil {
-			test.Fatal(err)
+		if buildError := native.Build(source, binary, native.Options{Target: "wasm32-wasi"}); buildError != nil {
+			test.Fatal(buildError)
 		}
 		return executeInput(
 			test,
@@ -62,9 +62,9 @@ int main(void) {
 	if difference := disagreement(truth, control); difference != "" {
 		test.Fatalf("%s: Node %+v, WASI %+v", difference, truth, control)
 	}
-	data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/input.c"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(repository, "internal/native/runtime/input.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	implementation := string(data)
 	const anchor = "adamic_node_wasi_cwd();"

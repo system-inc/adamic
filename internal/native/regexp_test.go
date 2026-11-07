@@ -269,19 +269,19 @@ func runRegExpTest262Bucket(test *testing.T, name string) {
 	if !ok {
 		test.Fatalf("no test262 bucket %q", name)
 	}
-	file, err := os.Open("../regexp/testdata/matches.json.gz")
-	if err != nil {
-		test.Fatal(err)
+	file, openError := os.Open("../regexp/testdata/matches.json.gz")
+	if openError != nil {
+		test.Fatal(openError)
 	}
 	defer file.Close()
-	compressed, err := gzip.NewReader(file)
-	if err != nil {
-		test.Fatal(err)
+	compressed, gzipError := gzip.NewReader(file)
+	if gzipError != nil {
+		test.Fatal(gzipError)
 	}
 	defer compressed.Close()
 	var cases []regexCase
-	if err = json.NewDecoder(compressed).Decode(&cases); err != nil {
-		test.Fatal(err)
+	if decodeError := json.NewDecoder(compressed).Decode(&cases); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	var owned []regexCase
 	for _, c := range cases {
@@ -369,9 +369,9 @@ func regexWitnessRuntime(test testing.TB, request RuntimeRequest, part int) stri
 
 func regexWitnessRequest(test testing.TB, options Options, part int) RuntimeRequest {
 	test.Helper()
-	files, flags, compiler, version, err := runtimeInputs("", options, nil)
-	if err != nil {
-		test.Fatal(err)
+	files, flags, compiler, version, runtimeInputsError := runtimeInputs("", options, nil)
+	if runtimeInputsError != nil {
+		test.Fatal(runtimeInputsError)
 	}
 	// Both products snapshot all headers, but their C members are disjoint.
 	// Splitting dependency discovery too keeps its traced cost in each unit.
@@ -389,9 +389,9 @@ func regexWitnessRequest(test testing.TB, options Options, part int) RuntimeRequ
 			index++
 		}
 	}
-	request, err := runtimeRequest(kept, flags, compiler, version, options)
-	if err != nil {
-		test.Fatal(err)
+	request, runtimeRequestError := runtimeRequest(kept, flags, compiler, version, options)
+	if runtimeRequestError != nil {
+		test.Fatal(runtimeRequestError)
 	}
 	return request
 }
@@ -416,14 +416,14 @@ func buildRegexWitness(test *testing.T, source, binary string, options Options) 
 	runtime0 := regexWitnessRuntime(test, request, 0)
 	runtime1 := regexWitnessRuntime(test, regexWitnessRequest(test, options, 1), 1)
 	directory := test.TempDir()
-	if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if err := os.Symlink(runtime0, filepath.Join(directory, "runtime")); err != nil {
-		test.Fatal(err)
+	if symlinkError := os.Symlink(runtime0, filepath.Join(directory, "runtime")); symlinkError != nil {
+		test.Fatal(symlinkError)
 	}
-	if err := os.Symlink(runtime1, filepath.Join(directory, "runtime-part1")); err != nil {
-		test.Fatal(err)
+	if symlinkError := os.Symlink(runtime1, filepath.Join(directory, "runtime-part1")); symlinkError != nil {
+		test.Fatal(symlinkError)
 	}
 	arguments := append(flags, prefixMaps(directory, "/adamic-build")...)
 	arguments = append(arguments, "-I", "runtime", "main.c", "-o", binary)
@@ -431,9 +431,9 @@ func buildRegexWitness(test *testing.T, source, binary string, options Options) 
 	arguments = append(arguments, RuntimeLinkFlags(archive)...)
 	arguments = append(arguments, RuntimeLinkFlags(filepath.Join("runtime-part1", "runtime.a"))...)
 	arguments = append(arguments, "-lm")
-	output, err := toolchain.CommandIn(directory, compiler, arguments...).CombinedOutput()
-	if err != nil {
-		test.Fatalf("regex witness: %v\n%s", err, output)
+	output, combinedOutputError := toolchain.CommandIn(directory, compiler, arguments...).CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("regex witness: %v\n%s", combinedOutputError, output)
 	}
 }
 
@@ -471,9 +471,9 @@ func runRegexCasesForTarget(test *testing.T, cases []regexCase, wasmOnly bool) {
 			if err != nil {
 				test.Fatalf("case %d compile: %v", index, err)
 			}
-			text, err := p.NativeDeclarations(fmt.Sprintf("regex_%d", id))
-			if err != nil {
-				test.Fatalf("case %d encode: %v", index, err)
+			text, nativeDeclarationsError := p.NativeDeclarations(fmt.Sprintf("regex_%d", id))
+			if nativeDeclarationsError != nil {
+				test.Fatalf("case %d encode: %v", index, nativeDeclarationsError)
 			}
 			source.WriteString(text)
 		}
@@ -569,9 +569,9 @@ int main(int argc,char **argv) {
 		for _, arguments := range [][]string{nil, {"unlimited"}, {"unlimited", "vm"}} {
 			command := exec.CommandContext(ctx, binary, arguments...)
 			command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1")
-			output, err := command.CombinedOutput()
-			if err != nil {
-				test.Fatalf("native regex oracle (%v): %v\n%s", arguments, err, output)
+			output, combinedOutputError := command.CombinedOutput()
+			if combinedOutputError != nil {
+				test.Fatalf("native regex oracle (%v): %v\n%s", arguments, combinedOutputError, output)
 			}
 			if !bytes.Contains(output, []byte("0 disagreements")) {
 				test.Fatalf("native regex oracle missing totals: %s", output)
@@ -581,8 +581,8 @@ int main(int argc,char **argv) {
 	}
 	if wasmOnly {
 		wasm := filepath.Join(test.TempDir(), "regex-probes.wasm")
-		if err := Build(source.String(), wasm, Options{Target: "wasm32-wasi"}); err != nil {
-			test.Fatal(err)
+		if buildError := Build(source.String(), wasm, Options{Target: "wasm32-wasi"}); buildError != nil {
+			test.Fatal(buildError)
 		}
 		for _, arguments := range [][]string{nil, {"unlimited"}, {"unlimited", "vm"}} {
 			ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
@@ -590,10 +590,10 @@ int main(int argc,char **argv) {
 				[]string{"--disable-warning=ExperimentalWarning", "../../oracle/wasi.mjs", wasm},
 				arguments...,
 			)
-			output, err := exec.CommandContext(ctx, "node", args...).CombinedOutput()
+			output, combinedOutputError := exec.CommandContext(ctx, "node", args...).CombinedOutput()
 			cancel()
-			if err != nil || !bytes.Contains(output, []byte("0 disagreements")) {
-				test.Fatalf("wasm32 regex oracle (%v): %v\n%s", arguments, err, output)
+			if combinedOutputError != nil || !bytes.Contains(output, []byte("0 disagreements")) {
+				test.Fatalf("wasm32 regex oracle (%v): %v\n%s", arguments, combinedOutputError, output)
 			}
 			test.Logf("wasm32 mode=%v %s", arguments, output)
 		}
@@ -646,7 +646,7 @@ func runRegExpBytecodeRandomNodeShard(test *testing.T, unit int) {
 			}
 			pattern += atom + quantifiers[random.Intn(len(quantifiers))]
 		}
-		if _, err := regex.Parse(pattern, flag); err != nil {
+		if _, parseError := regex.Parse(pattern, flag); parseError != nil {
 			continue
 		}
 		var input []rune
@@ -658,9 +658,9 @@ func runRegExpBytecodeRandomNodeShard(test *testing.T, unit int) {
 			regexCase{Pattern: pattern, Flags: flag, Input: utf16.Encode(input), LastIndex: uint64(random.Intn(5))},
 		)
 	}
-	data, err := json.Marshal(cases)
-	if err != nil {
-		test.Fatal(err)
+	data, encodeError := json.Marshal(cases)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
@@ -675,12 +675,12 @@ for(const c of cases) {
 }
 process.stdout.write(JSON.stringify(cases));`)
 	command.Stdin = bytes.NewReader(data)
-	output, err := command.CombinedOutput()
-	if err != nil {
-		test.Fatalf("Node oracle: %v\\n%s", err, output)
+	output, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("Node oracle: %v\\n%s", combinedOutputError, output)
 	}
-	if err = json.Unmarshal(output, &cases); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(output, &cases); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if len(cases) != randomRegexCases {
 		test.Fatalf("random regex corpus: got %d, want %d", len(cases), randomRegexCases)
@@ -709,8 +709,8 @@ int main(int argc, char **argv) {
 }
 `
 	binary := filepath.Join(test.TempDir(), "boundary")
-	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(source, binary, Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	for index, steps := range []int{2, 4} {
 		for _, limit := range []int{steps, steps - 1} {
@@ -720,28 +720,28 @@ int main(int argc, char **argv) {
 			if limit < steps {
 				command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
 			}
-			output, err := command.CombinedOutput()
+			output, combinedOutputError := command.CombinedOutput()
 			cancel()
 			if limit == steps {
-				if err != nil || string(output) != "matched 1\n" {
+				if combinedOutputError != nil || string(output) != "matched 1\n" {
 					test.Errorf(
 						"%d instructions at limit %d: want matched 1, got exit=%v output=%q",
 						steps,
 						limit,
-						err,
+						combinedOutputError,
 						output,
 					)
 				}
 			} else {
 				var exit *exec.ExitError
-				if !errors.As(err, &exit) ||
+				if !errors.As(combinedOutputError, &exit) ||
 					exit.ExitCode() != 70 ||
 					string(output) != "adamic: panic: regexp: instruction step limit exceeded\n" {
 					test.Errorf(
 						"%d instructions at limit %d: want exit 70 and step-limit diagnostic, got exit=%v output=%q",
 						steps,
 						limit,
-						err,
+						combinedOutputError,
 						output,
 					)
 				}
@@ -773,12 +773,12 @@ int main(int argc,char **argv) {
 }
 `
 	binary := filepath.Join(test.TempDir(), "iterator-shape")
-	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(source, binary, Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
-	output, err := exec.Command(binary).CombinedOutput()
-	if err != nil {
-		test.Fatalf("iterator result shape: %v\n%s", err, output)
+	output, combinedOutputError := exec.Command(binary).CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("iterator result shape: %v\n%s", combinedOutputError, output)
 	}
 }
 

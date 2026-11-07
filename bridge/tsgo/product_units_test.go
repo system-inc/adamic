@@ -7,9 +7,9 @@ import (
 
 func bridgeRepository(test testing.TB) string {
 	test.Helper()
-	repository, err := filepath.Abs("../..")
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs("../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return repository
 }

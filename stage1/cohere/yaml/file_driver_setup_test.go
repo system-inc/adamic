@@ -78,25 +78,25 @@ func fileDriverPublish(test *testing.T, state *fileDriverState) {
 	if path == "" {
 		test.Fatal("setup must run through the TestMain preflight")
 	}
-	data, err := json.Marshal(
+	data, encodeError := json.Marshal(
 		fileDriverManifest{state.inputs, state.expected, state.binary, state.emitted, state.runner, state.entry},
 	)
-	if err != nil {
-		test.Fatal(err)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
-	if err := os.WriteFile(path, data, 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, data, 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 }
 
 func fileDriverReadState(path string) error {
-	data, err := os.ReadFile(path)
-	if err != nil {
-		return err
+	data, readError := os.ReadFile(path)
+	if readError != nil {
+		return readError
 	}
 	var manifest fileDriverManifest
-	if err := json.Unmarshal(data, &manifest); err != nil {
-		return err
+	if decodeError := json.Unmarshal(data, &manifest); decodeError != nil {
+		return decodeError
 	}
 	fileDriverShared = &fileDriverState{
 		manifest.Inputs,

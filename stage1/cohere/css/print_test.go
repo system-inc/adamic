@@ -41,8 +41,8 @@ func printerAnswers(test *testing.T, cases, mode string) string {
 	answers := filepath.Join(directory, "answers.txt")
 	request, _ := json.Marshal(map[string]string{"Cases": cases, "Answers": answers, "Mode": mode})
 	requestPath := filepath.Join(directory, "request.json")
-	if err := os.WriteFile(requestPath, request, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(requestPath, request, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	// The Go printer is css-printer-oracle-1, cohere's css package with testdata/print_side_test.go laid over it, built
 	// ahead; the unit only runs it, in the package's directory (#5qykzj5).
@@ -56,14 +56,14 @@ func printerAnswers(test *testing.T, cases, mode string) string {
 	)
 	cmd.Dir = filepath.Join(repo, "cohere", "internal", "format", "css")
 	cmd.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
-	output, err := childguard.CombinedOutput(cmd, childguard.Options{Stall: oracles.ChildStallLimit})
-	if err != nil {
-		test.Fatalf("Go printer: %v\n%s", err, output)
+	output, combinedOutputError := childguard.CombinedOutput(cmd, childguard.Options{Stall: oracles.ChildStallLimit})
+	if combinedOutputError != nil {
+		test.Fatalf("Go printer: %v\n%s", combinedOutputError, output)
 	}
 	test.Logf("%s", output)
-	data, err := os.ReadFile(answers)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(answers)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return string(data)
 }
@@ -105,9 +105,9 @@ func comparePrinterLibrary(test *testing.T, cases, expected, library, mode, vari
 	if output.exitCode != 0 || len(output.stderr) != 0 {
 		test.Fatalf("Prettier %s: %d %s", variant, output.exitCode, output.stderr)
 	}
-	data, err := os.ReadFile(cases)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(cases)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	inputs := strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")
 	goLines := strings.Split(strings.TrimSuffix(expected, "\n"), "\n")
@@ -115,13 +115,13 @@ func comparePrinterLibrary(test *testing.T, cases, expected, library, mode, vari
 	if len(goLines) != len(jsLines) || len(goLines) != len(inputs)*2 {
 		test.Fatal("original formatter returned a different number of cases")
 	}
-	data, err = os.ReadFile("testdata/printer_library_gaps.json")
-	if err != nil {
-		test.Fatal(err)
+	data, readError = os.ReadFile("testdata/printer_library_gaps.json")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var recorded []printerGap
-	if err := json.Unmarshal(data, &recorded); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &recorded); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	agrees, refuses, gaps := 0, 0, 0
 	classes := map[string]int{}

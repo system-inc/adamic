@@ -109,9 +109,9 @@ func TestThePortParsesAsGoCohereDoes(test *testing.T) {
 				"set ADAMIC_MEDIA_QUERY_LIBRARY to a directory where `npm install postcss-media-query-parser@0.2.3` ran, to compare with the library itself",
 			)
 		}
-		script, err := filepath.Abs(filepath.Join("testdata", "library.mjs"))
-		if err != nil {
-			test.Fatal(err)
+		script, absolutePathError := filepath.Abs(filepath.Join("testdata", "library.mjs"))
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		libraryRun := execute(test, nil, "node", script, library, casesPath)
 		if libraryRun.exitCode != 0 || len(libraryRun.stderr) > 0 {
@@ -252,33 +252,33 @@ var mutants = []mutant{
 func askedCases(test *testing.T) (string, string) {
 	test.Helper()
 	seed := int64(generatedSeed)
-	var err error
+	var parseError error
 	if value := os.Getenv("COHERE_MEDIAQUERY_SEED"); value != "" {
-		if seed, err = strconv.ParseInt(value, 10, 64); err != nil {
-			test.Fatal(err)
+		if seed, parseError = strconv.ParseInt(value, 10, 64); parseError != nil {
+			test.Fatal(parseError)
 		}
 	}
 	generated := 4000
 	if value := os.Getenv("COHERE_MEDIAQUERY_GENERATED"); value != "" {
-		if generated, err = strconv.Atoi(value); err != nil {
-			test.Fatal(err)
+		if generated, parseError = strconv.Atoi(value); parseError != nil {
+			test.Fatal(parseError)
 		}
 	}
 	directory := test.TempDir()
 	casesPath := filepath.Join(directory, "cases.txt")
 	answersPath := filepath.Join(directory, "answers.txt")
 	cohereSide(test, map[string]any{"seed": seed, "generated": generated, "cases": casesPath, "answers": answersPath})
-	answers, err := os.ReadFile(answersPath)
-	if err != nil {
-		test.Fatal(err)
+	answers, readError := os.ReadFile(answersPath)
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	cases, err := os.ReadFile(casesPath)
-	if err != nil {
-		test.Fatal(err)
+	cases, readError := os.ReadFile(casesPath)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if keep := os.Getenv("ADAMIC_MEDIAQUERY_KEEP"); keep != "" {
-		if err := os.WriteFile(keep, cases, 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(keep, cases, 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	test.Logf("seed %d, %d generated params", seed, generated)
@@ -291,20 +291,23 @@ func cohereSide(test *testing.T, request map[string]any) {
 	test.Helper()
 	directory := test.TempDir()
 	requestPath := filepath.Join(directory, "request.json")
-	encoded, err := json.Marshal(request)
-	if err != nil {
-		test.Fatal(err)
+	encoded, encodeError := json.Marshal(request)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
-	if err := os.WriteFile(requestPath, encoded, 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(requestPath, encoded, 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	// The child guard owns hang detection.
 	binary, packageDirectory := cohereSideOracle(test)
 	command := bounded(test, binary, "-test.timeout=0", "-test.run=^TestAdamicPortCases$")
 	command.Dir = packageDirectory
 	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
-	if output, err := childguard.CombinedOutput(command, childguard.Options{}); err != nil {
-		test.Fatalf("cohere's side: %v\n%s", err, output)
+	if output, combinedOutputError := childguard.CombinedOutput(
+		command,
+		childguard.Options{},
+	); combinedOutputError != nil {
+		test.Fatalf("cohere's side: %v\n%s", combinedOutputError, output)
 	}
 }
 
@@ -313,9 +316,9 @@ func portDirectory(test *testing.T, applied *mutant) string {
 	test.Helper()
 	directory := test.TempDir()
 	for _, name := range portFiles {
-		contents, err := os.ReadFile(name)
-		if err != nil {
-			test.Fatal(err)
+		contents, readError := os.ReadFile(name)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		source := string(contents)
 		if applied != nil && applied.file == name {
@@ -324,8 +327,8 @@ func portDirectory(test *testing.T, applied *mutant) string {
 			}
 			source = strings.Replace(source, applied.from, applied.to, 1)
 		}
-		if err := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	return directory
@@ -355,13 +358,13 @@ func firstDifference(got string, want string) string {
 // lowered checks and lowers a program, failing the test with stage 0's refusal if it can't.
 func lowered(test *testing.T, path string) *ir.Program {
 	test.Helper()
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatalf("Load: %v", err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatalf("Load: %v", loadError)
 	}
-	result, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		test.Fatalf("Lower: %v", err)
+	result, lowerError := lower.Lower(context.Background(), program)
+	if lowerError != nil {
+		test.Fatalf("Lower: %v", lowerError)
 	}
 	return result
 }
@@ -389,10 +392,10 @@ func execute(test *testing.T, environment []string, name string, arguments ...st
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
-	err := childguard.Run(command, childguard.Options{})
+	runError := childguard.Run(command, childguard.Options{})
 	var exitError *exec.ExitError
-	if err != nil && !errors.As(err, &exitError) {
-		test.Fatalf("running %s: %v", name, err)
+	if runError != nil && !errors.As(runError, &exitError) {
+		test.Fatalf("running %s: %v", name, runError)
 	}
 	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
 }
@@ -400,9 +403,9 @@ func execute(test *testing.T, environment []string, name string, arguments ...st
 // onNode runs a program's source on Node, through the oracle's runner, with its arguments.
 func onNode(test *testing.T, path string, arguments ...string) run {
 	test.Helper()
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return execute(
 		test,
@@ -416,8 +419,8 @@ func onNode(test *testing.T, path string, arguments ...string) run {
 func onJavaScriptBackend(test *testing.T, program *ir.Program, arguments ...string) run {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "program.mjs")
-	if err := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return onNode(test, path, arguments...)
 }
@@ -430,8 +433,8 @@ func leaks(test *testing.T, program *ir.Program, sanitized string, arguments ...
 	switch runtime.GOOS {
 	case "darwin":
 		binary := filepath.Join(test.TempDir(), "port")
-		if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
-			test.Fatal(err)
+		if buildError := native.Build(native.C(program), binary, native.Options{}); buildError != nil {
+			test.Fatal(buildError)
 		}
 		report := execute(test, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
 		if report.exitCode == 0 {

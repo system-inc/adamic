@@ -13,10 +13,10 @@ func TestFunctionValueUnionViewsStayNotYet(test *testing.T) {
 		"function number(): number { return 7; }\nconst mixed: () => string | number = number;\nconsole.log(`${mixed()}`);\n",
 		"function show(value: string | number): string { return `${value}`; }\nconst original = { show };\nconst holder: { readonly show: (value: number) => string } = original;\nconsole.log(holder.show(7));\n",
 	} {
-		_, err := lowerSource(test, source)
+		_, lowerSourceError := lowerSource(test, source)
 		var notYet *NotYet
-		if !errors.As(err, &notYet) {
-			test.Errorf("callable view requires a union slot adapter, got %v", err)
+		if !errors.As(lowerSourceError, &notYet) {
+			test.Errorf("callable view requires a union slot adapter, got %v", lowerSourceError)
 		}
 	}
 }

@@ -12,16 +12,16 @@ func predicateCountKeys() ([]string, error) {
 	var keys []string
 	for _, extension := range []string{"a", "ts"} {
 		// Reads: internal/lower/testdata/*
-		paths, err := filepath.Glob(
+		paths, globError := filepath.Glob(
 			filepath.Join(repository, "internal/lower/testdata/predicates/overload_*."+extension),
 		)
-		if err != nil {
-			return nil, err
+		if globError != nil {
+			return nil, globError
 		}
 		for _, path := range paths {
-			relative, err := filepath.Rel(repository, path)
-			if err != nil {
-				return nil, err
+			relative, relativePathError := filepath.Rel(repository, path)
+			if relativePathError != nil {
+				return nil, relativePathError
 			}
 			keys = append(keys, filepath.ToSlash(relative))
 		}
@@ -35,25 +35,25 @@ func predicateCountKeys() ([]string, error) {
 
 func predicateCountsTable(test *testing.T) map[string]string {
 	test.Helper()
-	keys, err := predicateCountKeys()
-	if err != nil {
-		test.Fatal(err)
+	keys, predicateCountKeysError := predicateCountKeys()
+	if predicateCountKeysError != nil {
+		test.Fatal(predicateCountKeysError)
 	}
 	table := map[string]string{}
 	for _, relative := range keys {
 		path := filepath.Join(repository, relative)
 
-		source, err := os.ReadFile(path)
-		if err != nil {
-			test.Fatal(err)
+		source, readError := os.ReadFile(path)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		checkedPath := filepath.Join(test.TempDir(), "main.ts")
-		if err = os.WriteFile(checkedPath, source, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(checkedPath, source, 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
-		program, err := lowered(test, checkedPath)
-		if err != nil {
-			test.Fatalf("%s: %v", path, err)
+		program, loweredError := lowered(test, checkedPath)
+		if loweredError != nil {
+			test.Fatalf("%s: %v", path, loweredError)
 		}
 		counts := program.PredicateChecks
 		proven, checked, unobservable := 0, 0, 0
@@ -110,9 +110,9 @@ func TestPredicateDirectionCountsAreRecorded(test *testing.T) {
 		return
 	}
 	for key, got := range predicateCountsTable(test) {
-		want, err := readCountRow(countsDirectory, "predicates", key)
-		if err != nil {
-			test.Fatal(err)
+		want, readCountRowError := readCountRow(countsDirectory, "predicates", key)
+		if readCountRowError != nil {
+			test.Fatal(readCountRowError)
 		}
 		if got != want {
 			test.Errorf(

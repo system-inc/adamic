@@ -27,17 +27,17 @@ func stableSplitProduct(test *testing.T, name string) string {
 		Toolchain: []string{buildcache.Tool("clang", "--version")},
 	}
 	return buildcache.Product(test, inputs, func(directory string) error {
-		absolute, err := filepath.Abs(filepath.Join("../..", path))
-		if err != nil {
-			return err
+		absolute, absolutePathError := filepath.Abs(filepath.Join("../..", path))
+		if absolutePathError != nil {
+			return absolutePathError
 		}
-		checked, err := load.Load([]string{absolute})
-		if err != nil {
-			return err
+		checked, loadError := load.Load([]string{absolute})
+		if loadError != nil {
+			return loadError
 		}
-		program, err := lower.Lower(context.Background(), checked)
-		if err != nil {
-			return err
+		program, lowerError := lower.Lower(context.Background(), checked)
+		if lowerError != nil {
+			return lowerError
 		}
 		if name == "async_methods" {
 			found := false
@@ -70,15 +70,15 @@ func stableSplitProduct(test *testing.T, name string) string {
 			}
 		}
 		code := native.C(program)
-		if err := os.WriteFile(filepath.Join(directory, "program.c"), []byte(code), 0600); err != nil {
-			return err
+		if writeError := os.WriteFile(filepath.Join(directory, "program.c"), []byte(code), 0600); writeError != nil {
+			return writeError
 		}
-		if err := os.WriteFile(
+		if writeError := os.WriteFile(
 			filepath.Join(directory, "program.mjs"),
 			[]byte(javascript.JavaScript(program)),
 			0600,
-		); err != nil {
-			return err
+		); writeError != nil {
+			return writeError
 		}
 		return native.Build(
 			code,
@@ -97,15 +97,15 @@ func stableSplitWitness(test *testing.T, name string) {
 		defer cancel()
 		cmd := exec.CommandContext(ctx, command, arguments...)
 		cmd.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1")
-		output, err := cmd.Output()
-		if err != nil {
-			test.Fatalf("%s: %v", command, err)
+		output, outputError := cmd.Output()
+		if outputError != nil {
+			test.Fatalf("%s: %v", command, outputError)
 		}
 		return output
 	}
-	entry, err := filepath.Abs("../oracle/testdata/" + name + ".a")
-	if err != nil {
-		test.Fatal(err)
+	entry, absolutePathError := filepath.Abs("../oracle/testdata/" + name + ".a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := run("node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", entry)
 	for _, actual := range [][]byte{run(
@@ -118,9 +118,9 @@ func stableSplitWitness(test *testing.T, name string) {
 			test.Fatalf("split/backend output %q, Node %q", actual, truth)
 		}
 	}
-	code, err := os.ReadFile(filepath.Join(directory, "program.c"))
-	if err != nil {
-		test.Fatal(err)
+	code, readError := os.ReadFile(filepath.Join(directory, "program.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if report := leakcheck.Report(test, string(code), filepath.Join(directory, "program")); report != "" {
 		test.Fatal(report)

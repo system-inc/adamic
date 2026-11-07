@@ -284,9 +284,9 @@ func TestEveryOperandIsClassedForViews(test *testing.T) {
 func irOperandHolders(test *testing.T) map[string]bool {
 	test.Helper()
 	// Reads: internal/ir/*.go
-	paths, err := filepath.Glob("../ir/*.go")
-	if err != nil {
-		test.Fatal(err)
+	paths, globError := filepath.Glob("../ir/*.go")
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	files := token.NewFileSet()
 	var expressions []string
@@ -295,9 +295,9 @@ func irOperandHolders(test *testing.T) map[string]bool {
 		if strings.HasSuffix(path, "_test.go") {
 			continue
 		}
-		file, err := parser.ParseFile(files, path, nil, 0)
-		if err != nil {
-			test.Fatal(err)
+		file, parseFileError := parser.ParseFile(files, path, nil, 0)
+		if parseFileError != nil {
+			test.Fatal(parseFileError)
 		}
 		ast.Inspect(file, func(node ast.Node) bool {
 			switch node := node.(type) {
@@ -434,21 +434,21 @@ func TestViewReadReasonsArePinned(test *testing.T) {
 			if !named[file] {
 				test.Fatalf("%s pins no reason", file)
 			}
-			source, err := os.ReadFile(filepath.Join("../oracle/testdata/reland_refused", file))
-			if err != nil {
-				test.Fatal(err)
+			source, readError := os.ReadFile(filepath.Join("../oracle/testdata/reland_refused", file))
+			if readError != nil {
+				test.Fatal(readError)
 			}
-			program, err := lowerSourceAs(test, string(source), ".ts")
+			program, lowerSourceAsError := lowerSourceAs(test, string(source), ".ts")
 			if pin.checked == "" {
-				if err == nil ||
-					!strings.Contains(err.Error(), "main.ts:"+pin.at+":") ||
-					!strings.Contains(err.Error(), pin.stops) {
-					test.Fatalf("want it stopped at %s by %q, got %v", pin.at, pin.stops, err)
+				if lowerSourceAsError == nil ||
+					!strings.Contains(lowerSourceAsError.Error(), "main.ts:"+pin.at+":") ||
+					!strings.Contains(lowerSourceAsError.Error(), pin.stops) {
+					test.Fatalf("want it stopped at %s by %q, got %v", pin.at, pin.stops, lowerSourceAsError)
 				}
 				return
 			}
-			if err != nil {
-				test.Fatalf("want it lowered to a checked Object.%s, got %v", pin.checked, err)
+			if lowerSourceAsError != nil {
+				test.Fatalf("want it lowered to a checked Object.%s, got %v", pin.checked, lowerSourceAsError)
 			}
 			checked := false
 			inspect := func(node any) bool {

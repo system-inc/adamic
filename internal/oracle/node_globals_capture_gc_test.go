@@ -40,9 +40,9 @@ func init() {
 func TestNodeGlobalsCaptureGCRefusals(test *testing.T) {
 	test.Parallel()
 	directory := "internal/oracle/testdata/node_globals_capture_gc_refused"
-	entries, err := os.ReadDir(filepath.Join(repository, directory))
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(filepath.Join(repository, directory))
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -56,21 +56,21 @@ func TestNodeGlobalsCaptureGCRefusals(test *testing.T) {
 		path := directory + "/" + name
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			absolute, err := filepath.Abs(filepath.Join(repository, path))
-			if err != nil {
-				test.Fatal(err)
+			absolute, absolutePathError := filepath.Abs(filepath.Join(repository, path))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			expected, err := os.ReadFile(strings.TrimSuffix(absolute, extension) + ".stopped")
-			if err != nil {
-				test.Fatal(err)
+			expected, readError := os.ReadFile(strings.TrimSuffix(absolute, extension) + ".stopped")
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			truth := onNode(test, absolute)
 			if truth.exitCode != 0 || len(truth.stderr) != 0 || len(truth.stdout) == 0 {
 				test.Fatalf("Node: %+v", truth)
 			}
-			program, err := load.Load([]string{absolute})
-			if err != nil {
-				test.Fatalf("Load: %v", err)
+			program, loadError := load.Load([]string{absolute})
+			if loadError != nil {
+				test.Fatalf("Load: %v", loadError)
 			}
 			_, stopped := lower.Lower(context.Background(), program)
 			var notYet *lower.NotYet

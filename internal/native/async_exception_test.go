@@ -17,14 +17,14 @@ func TestAsyncUnexpectedExceptionStops(test *testing.T) {
 		e.out.String() +
 		"return 0; }\n"
 	binary := filepath.Join(test.TempDir(), "unexpected-exception")
-	if err := Build(source, binary, Options{}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(source, binary, Options{}); buildError != nil {
+		test.Fatal(buildError)
 	}
-	output, err := exec.Command(binary).CombinedOutput()
-	exit, ok := err.(*exec.ExitError)
+	output, combinedOutputError := exec.Command(binary).CombinedOutput()
+	exit, ok := combinedOutputError.(*exec.ExitError)
 	if !ok ||
 		exit.ExitCode() != 70 ||
 		!strings.Contains(string(output), "proved_safe: exception where the flow graph proved none") {
-		test.Fatalf("want named exit 70, got %v: %s", err, output)
+		test.Fatalf("want named exit 70, got %v: %s", combinedOutputError, output)
 	}
 }

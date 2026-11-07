@@ -75,9 +75,14 @@ func TestApplyProofShardPython(test *testing.T) {
 func TestApplyPythonGroupsCoverEveryTestOnce(test *testing.T) {
 	test.Parallel()
 	root := repositoryRoot(test)
-	parsed, err := parser.ParseFile(token.NewFileSet(), filepath.Join(root, "stage3/lane/python_test.go"), nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	parsed, parseFileError := parser.ParseFile(
+		token.NewFileSet(),
+		filepath.Join(root, "stage3/lane/python_test.go"),
+		nil,
+		0,
+	)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	active := map[string]bool{}
 	for _, declaration := range parsed.Decls {
@@ -129,13 +134,13 @@ def names(suite):
             yield test.id()
 print(json.dumps(sorted(names(unittest.defaultTestLoader.loadTestsFromModule(test_apply)))))
 `)
-	output, err := command.CombinedOutput()
-	if err != nil {
-		test.Fatalf("discover apply tests: %v\n%s", err, output)
+	output, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("discover apply tests: %v\n%s", combinedOutputError, output)
 	}
 	var discovered []string
-	if err := json.Unmarshal(output, &discovered); err != nil {
-		test.Fatalf("decode apply tests: %v\n%s", err, output)
+	if decodeError := json.Unmarshal(output, &discovered); decodeError != nil {
+		test.Fatalf("decode apply tests: %v\n%s", decodeError, output)
 	}
 	for _, name := range discovered {
 		if counts[name] != 1 {
@@ -249,9 +254,14 @@ func TestLaneGenerateApiInsertFieldRejectionsPython(test *testing.T) {
 func TestLaneGenerateApiPythonGroupsCoverEveryTestOnce(test *testing.T) {
 	test.Parallel()
 	root := repositoryRoot(test)
-	parsed, err := parser.ParseFile(token.NewFileSet(), filepath.Join(root, "stage3/lane/python_test.go"), nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	parsed, parseFileError := parser.ParseFile(
+		token.NewFileSet(),
+		filepath.Join(root, "stage3/lane/python_test.go"),
+		nil,
+		0,
+	)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	active := map[string]bool{}
 	for _, declaration := range parsed.Decls {
@@ -312,13 +322,13 @@ def names(suite):
 print(json.dumps(list(names(unittest.defaultTestLoader.loadTestsFromModule(test_generate_api)))))
 `,
 	)
-	output, err := command.CombinedOutput()
-	if err != nil {
-		test.Fatalf("discover generator tests: %v\n%s", err, output)
+	output, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("discover generator tests: %v\n%s", combinedOutputError, output)
 	}
 	var discovered []string
-	if err := json.Unmarshal(output, &discovered); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(output, &discovered); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	for _, name := range discovered {
 		if counts[name] != 1 {
@@ -446,7 +456,7 @@ func runPythonCommand(test *testing.T, directory string, environment []string, a
 	if source, ok := os.LookupEnv("ADAMIC_TYPESCRIPT_SOURCE"); ok {
 		command.Env = append(command.Env, "ADAMIC_TYPESCRIPT_SOURCE="+source)
 	}
-	if output, err := command.CombinedOutput(); err != nil {
-		test.Fatalf("%s in %s: %v\n%s", command, directory, err, output)
+	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("%s in %s: %v\n%s", command, directory, combinedOutputError, output)
 	}
 }

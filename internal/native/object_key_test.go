@@ -55,12 +55,12 @@ func objectKeyBuild(
 	between func(keying *objectKeying),
 ) objectKeyed {
 	test.Helper()
-	jobserver, err := defaultJobserver()
-	if err != nil {
-		test.Fatal(err)
+	jobserver, defaultJobserverError := defaultJobserver()
+	if defaultJobserverError != nil {
+		test.Fatal(defaultJobserverError)
 	}
-	if err := os.Mkdir(directory, 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.Mkdir(directory, 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	var keyed objectKeyed
 	keyObject := func(
@@ -73,27 +73,27 @@ func objectKeyBuild(
 		if prepare != nil {
 			prepare(compile)
 		}
-		keying, err := newObjectKeying(compile, source, compileFlags, program, jobserver)
-		if errors.Is(err, errUncachedObject) {
-			keyed.refusal = err
-			_, err := compileMain(compile, jobserver)
-			return err
+		keying, newObjectKeyingError := newObjectKeying(compile, source, compileFlags, program, jobserver)
+		if errors.Is(newObjectKeyingError, errorUncachedObject) {
+			keyed.refusal = newObjectKeyingError
+			_, compileMainError := compileMain(compile, jobserver)
+			return compileMainError
 		}
-		if err != nil {
-			return err
+		if newObjectKeyingError != nil {
+			return newObjectKeyingError
 		}
 		keyed.keying = keying
 		if between != nil {
 			between(keying)
 		}
-		if _, err := compileMain(compile, jobserver); err != nil {
-			return err
+		if _, compileMainError := compileMain(compile, jobserver); compileMainError != nil {
+			return compileMainError
 		}
 		keyed.differs = keying.recheck(jobserver)
 		return nil
 	}
 	output := directory + ".program"
-	if err := linkOne(
+	if linkOneError := linkOne(
 		directory,
 		compiler,
 		source,
@@ -107,8 +107,8 @@ func objectKeyBuild(
 		},
 		keyObject,
 		false,
-	); err != nil {
-		test.Fatal(err)
+	); linkOneError != nil {
+		test.Fatal(linkOneError)
 	}
 	return keyed
 }
@@ -117,23 +117,23 @@ func objectKeyBuild(
 // adamic.h when it isn't nil, and is the copy's archive.
 func objectKeyRuntime(test *testing.T, library string, directory string, edit func(header []byte) []byte) string {
 	test.Helper()
-	if err := os.Mkdir(directory, 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.Mkdir(directory, 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	entries, err := os.ReadDir(filepath.Dir(library))
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(filepath.Dir(library))
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	for _, entry := range entries {
-		contents, err := os.ReadFile(filepath.Join(filepath.Dir(library), entry.Name()))
-		if err != nil {
-			test.Fatal(err)
+		contents, readError := os.ReadFile(filepath.Join(filepath.Dir(library), entry.Name()))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		if entry.Name() == "adamic.h" && edit != nil {
 			contents = edit(contents)
 		}
-		if err := os.WriteFile(filepath.Join(directory, entry.Name()), contents, 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, entry.Name()), contents, 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	return filepath.Join(directory, filepath.Base(library))
@@ -155,9 +155,9 @@ var objectKeyLine = regexp.MustCompile(`^(cCompile|cPreprocess|cRecheck) main\.c
 // cPreprocess's and cRecheck's where it was keyed; cCompile's outcome is under "outcome".
 func objectKeyLogged(test *testing.T, path string) map[string][]string {
 	test.Helper()
-	contents, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	contents, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	logged := map[string][]string{}
 	scanner := bufio.NewScanner(bytes.NewReader(contents))
@@ -194,14 +194,14 @@ func TestObjectKeyIsTheSameFromAnyDirectory(test *testing.T) {
 			filepath.Join(root, build.name, "first"),
 			filepath.Join(root, build.name, "second", "deeper"),
 		} {
-			if err := os.MkdirAll(temporary, 0o755); err != nil {
-				test.Fatal(err)
+			if createDirectoryError := os.MkdirAll(temporary, 0o755); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
 			test.Setenv("TMPDIR", temporary)
 			log := filepath.Join(temporary, "build.log")
 			test.Setenv("ADAMIC_BUILD_LOG", log)
-			if err := Build(source, filepath.Join(temporary, "program"), build.options); err != nil {
-				test.Fatalf("%s: %v", build.name, err)
+			if buildError := Build(source, filepath.Join(temporary, "program"), build.options); buildError != nil {
+				test.Fatalf("%s: %v", build.name, buildError)
 			}
 			logged := objectKeyLogged(test, log)
 			// A hit, the second build's when the first stored its object, runs no recheck.
@@ -228,13 +228,13 @@ func TestObjectKeyIsTheSameFromAnyDirectory(test *testing.T) {
 func TestObjectKeyMovesWithEachInput(test *testing.T) {
 	test.Parallel()
 	source := splitCorpusSource(test, "arguments.a")
-	library, err := RuntimeLibraryForSource("", source, Options{})
-	if err != nil {
-		test.Fatal(err)
+	library, runtimeLibraryForSourceError := RuntimeLibraryForSource("", source, Options{})
+	if runtimeLibraryForSourceError != nil {
+		test.Fatal(runtimeLibraryForSourceError)
 	}
-	compiler, err := toolchain.Path("clang")
-	if err != nil {
-		test.Fatal(err)
+	compiler, pathError := toolchain.Path("clang")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
 	root := test.TempDir()
 	// Every row builds from a copy of the runtime's directory under root, never the runtime cache's own: prefixMaps
@@ -252,14 +252,18 @@ func TestObjectKeyMovesWithEachInput(test *testing.T) {
 	// clang by a link beside a config file of its own, which says nothing: what the compile runs is the same program,
 	// but clang reads another set of files to decide its compile.
 	configured := filepath.Join(root, "configured")
-	if err := os.Mkdir(configured, 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.Mkdir(configured, 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	if err := os.Symlink(compiler, filepath.Join(configured, "clang")); err != nil {
-		test.Fatal(err)
+	if symlinkError := os.Symlink(compiler, filepath.Join(configured, "clang")); symlinkError != nil {
+		test.Fatal(symlinkError)
 	}
-	if err := os.WriteFile(filepath.Join(configured, "clang.cfg"), []byte("# says nothing\n"), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(
+		filepath.Join(configured, "clang.cfg"),
+		[]byte("# says nothing\n"),
+		0o644,
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
 	flags := Flags(Options{})
 	lowered := slices.Clone(flags)
@@ -340,29 +344,29 @@ func TestObjectKeyMovesWithEachInput(test *testing.T) {
 // the build goes on and passes, and nothing is preprocessed for it. Mutant, red: the refusal dropped.
 func TestObjectKeyRefusesTheTimeOfTheCompile(test *testing.T) {
 	test.Parallel()
-	compiler, err := toolchain.Path("clang")
-	if err != nil {
-		test.Fatal(err)
+	compiler, pathError := toolchain.Path("clang")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
 	root := test.TempDir()
 	for _, macro := range []string{"__DATE__", "__TIME__", "__TIMESTAMP__"} {
 		test.Run(macro, func(test *testing.T) {
 			test.Parallel()
 			source := strings.Replace(objectKeySource, "return 0;", "return "+macro+"[0] == 0;", 1)
-			library, err := RuntimeLibraryForSource("", source, Options{})
-			if err != nil {
-				test.Fatal(err)
+			library, runtimeLibraryForSourceError := RuntimeLibraryForSource("", source, Options{})
+			if runtimeLibraryForSourceError != nil {
+				test.Fatal(runtimeLibraryForSourceError)
 			}
 			directory := filepath.Join(root, strings.Trim(macro, "_"))
 			keyed := objectKeyBuild(test, directory, compiler, source, Options{}, Flags(Options{}), library, nil, nil)
-			if keyed.keying != nil || !errors.Is(keyed.refusal, errUncachedObject) {
+			if keyed.keying != nil || !errors.Is(keyed.refusal, errorUncachedObject) {
 				test.Fatalf("keyed: %v, refused: %v", keyed.keying != nil, keyed.refusal)
 			}
 			if want := "native: main.c compiles uncached: main.c reads " + macro; keyed.refusal.Error() != want {
 				test.Errorf("refused as %q, want %q", keyed.refusal, want)
 			}
-			if _, err := os.Stat(filepath.Join(directory, "main.i")); !errors.Is(err, os.ErrNotExist) {
-				test.Errorf("a refused source was preprocessed: %v", err)
+			if _, statError := os.Stat(filepath.Join(directory, "main.i")); !errors.Is(statError, os.ErrNotExist) {
+				test.Errorf("a refused source was preprocessed: %v", statError)
 			}
 		})
 	}
@@ -374,13 +378,13 @@ func TestObjectKeyRefusesTheTimeOfTheCompile(test *testing.T) {
 // Mutants, each red: the second preprocessing skipped, and the change times not looked at again.
 func TestObjectKeyRecheckSeesWhatMovedUnderTheCompile(test *testing.T) {
 	test.Parallel()
-	library, err := RuntimeLibraryForSource("", objectKeySource, Options{})
-	if err != nil {
-		test.Fatal(err)
+	library, runtimeLibraryForSourceError := RuntimeLibraryForSource("", objectKeySource, Options{})
+	if runtimeLibraryForSourceError != nil {
+		test.Fatal(runtimeLibraryForSourceError)
 	}
-	compiler, err := toolchain.Path("clang")
-	if err != nil {
-		test.Fatal(err)
+	compiler, pathError := toolchain.Path("clang")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
 	root := test.TempDir()
 	for index, row := range []struct {
@@ -394,24 +398,24 @@ func TestObjectKeyRecheckSeesWhatMovedUnderTheCompile(test *testing.T) {
 		{"untouched", nil, nil},
 		{"adamic.h rewritten with the same bytes", func(test *testing.T, directory string) {
 			header := filepath.Join(directory, "runtime", "adamic.h")
-			contents, err := os.ReadFile(header)
-			if err != nil {
-				test.Fatal(err)
+			contents, readError := os.ReadFile(header)
+			if readError != nil {
+				test.Fatal(readError)
 			}
-			if err := os.WriteFile(header, contents, 0o644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(header, contents, 0o644); writeError != nil {
+				test.Fatal(writeError)
 			}
 		}, []string{"runtime/adamic.h changed between main.c's key and its recheck"}},
 		{
 			"adamic.h with one byte changed",
 			func(test *testing.T, directory string) {
 				header := filepath.Join(directory, "runtime", "adamic.h")
-				contents, err := os.ReadFile(header)
-				if err != nil {
-					test.Fatal(err)
+				contents, readError := os.ReadFile(header)
+				if readError != nil {
+					test.Fatal(readError)
 				}
-				if err := os.WriteFile(header, objectKeyEdited(test, contents), 0o644); err != nil {
-					test.Fatal(err)
+				if writeError := os.WriteFile(header, objectKeyEdited(test, contents), 0o644); writeError != nil {
+					test.Fatal(writeError)
 				}
 			},
 			[]string{
@@ -420,12 +424,12 @@ func TestObjectKeyRecheckSeesWhatMovedUnderTheCompile(test *testing.T) {
 			},
 		},
 		{"a header planted", func(test *testing.T, directory string) {
-			if err := os.WriteFile(
+			if writeError := os.WriteFile(
 				filepath.Join(directory, "object_key_late.h"),
 				[]byte("#define ADAMIC_OBJECT_KEY_LATE 1\n"),
 				0o644,
-			); err != nil {
-				test.Fatal(err)
+			); writeError != nil {
+				test.Fatal(writeError)
 			}
 		}, []string{"main.c preprocessed to other bytes"}},
 	} {
@@ -536,13 +540,13 @@ func TestObjectKeyOffRunsNoPreprocessing(test *testing.T) {
 	if objectKeyer() != nil {
 		test.Error("with no trust, a build keys main.c")
 	}
-	library, err := RuntimeLibraryForSource("", objectKeySource, Options{})
-	if err != nil {
-		test.Fatal(err)
+	library, runtimeLibraryForSourceError := RuntimeLibraryForSource("", objectKeySource, Options{})
+	if runtimeLibraryForSourceError != nil {
+		test.Fatal(runtimeLibraryForSourceError)
 	}
-	jobserver, err := defaultJobserver()
-	if err != nil {
-		test.Fatal(err)
+	jobserver, defaultJobserverError := defaultJobserver()
+	if defaultJobserverError != nil {
+		test.Fatal(defaultJobserverError)
 	}
 	root := test.TempDir()
 	for _, trust := range []string{"", "anything", "candidate"} {
@@ -564,10 +568,10 @@ func TestObjectKeyOffRunsNoPreprocessing(test *testing.T) {
 		log := filepath.Join(root, "build-"+trust+".log")
 		test.Setenv("ADAMIC_BUILD_LOG", log)
 		directory := filepath.Join(root, "build-"+trust)
-		if err := os.Mkdir(directory, 0o755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.Mkdir(directory, 0o755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := linkOne(
+		if linkOneError := linkOne(
 			directory,
 			"clang",
 			objectKeySource,
@@ -579,12 +583,12 @@ func TestObjectKeyOffRunsNoPreprocessing(test *testing.T) {
 			nil,
 			compileObject,
 			false,
-		); err != nil {
-			test.Fatal(err)
+		); linkOneError != nil {
+			test.Fatal(linkOneError)
 		}
 		var written []string
 		for _, name := range []string{"main.i", "main.d", "main.recheck.i"} {
-			if _, err := os.Stat(filepath.Join(directory, name)); err == nil {
+			if _, statError := os.Stat(filepath.Join(directory, name)); statError == nil {
 				written = append(written, name)
 			}
 		}
@@ -610,9 +614,9 @@ func TestObjectKeyOffRunsNoPreprocessing(test *testing.T) {
 // its bytes. Mutant, red: the files' hashes left out of the key.
 func TestObjectKeyHoldsEveryColumn(test *testing.T) {
 	test.Parallel()
-	compiler, err := toolchain.Path("clang")
-	if err != nil {
-		test.Fatal(err)
+	compiler, pathError := toolchain.Path("clang")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
 	root := test.TempDir()
 	spaced := strings.Replace(objectKeySource, "return 0;", "return  0;", 1)
@@ -622,9 +626,9 @@ func TestObjectKeyHoldsEveryColumn(test *testing.T) {
 	}{{"release", Options{}}, {"debug", Options{Debug: true}}} {
 		// One build at a time, for MovesWithEachInput's reason.
 		test.Run(build.name, func(test *testing.T) {
-			library, err := RuntimeLibraryForSource("", objectKeySource, build.options)
-			if err != nil {
-				test.Fatal(err)
+			library, runtimeLibraryForSourceError := RuntimeLibraryForSource("", objectKeySource, build.options)
+			if runtimeLibraryForSourceError != nil {
+				test.Fatal(runtimeLibraryForSourceError)
 			}
 			var keyed [2]objectKeyed
 			for index, source := range []string{objectKeySource, spaced} {
@@ -691,13 +695,13 @@ func objectCacheBuild(
 	between func(directory string),
 ) ([]byte, string) {
 	test.Helper()
-	jobserver, err := defaultJobserver()
-	if err != nil {
-		test.Fatal(err)
+	jobserver, defaultJobserverError := defaultJobserver()
+	if defaultJobserverError != nil {
+		test.Fatal(defaultJobserverError)
 	}
 	directory := filepath.Join(root, name)
-	if err := os.Mkdir(directory, 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.Mkdir(directory, 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	log := directory + ".log"
 	test.Setenv("ADAMIC_BUILD_LOG", log)
@@ -716,9 +720,9 @@ func objectCacheBuild(
 			program string,
 			jobserver *Jobserver,
 		) error {
-			keying, err := newObjectKeying(compile, source, compileFlags, program, jobserver)
-			if err != nil {
-				return err
+			keying, newObjectKeyingError := newObjectKeying(compile, source, compileFlags, program, jobserver)
+			if newObjectKeyingError != nil {
+				return newObjectKeyingError
 			}
 			if between != nil {
 				between(directory)
@@ -727,7 +731,7 @@ func objectCacheBuild(
 		}
 	}
 	output := directory + ".program"
-	if err := linkOne(
+	if linkOneError := linkOne(
 		directory,
 		"clang",
 		source,
@@ -739,12 +743,12 @@ func objectCacheBuild(
 		nil,
 		compileObject,
 		false,
-	); err != nil {
-		test.Fatal(err)
+	); linkOneError != nil {
+		test.Fatal(linkOneError)
 	}
-	binary, err := os.ReadFile(output)
-	if err != nil {
-		test.Fatal(err)
+	binary, readError := os.ReadFile(output)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	logged := objectKeyLogged(test, log)
 	if len(logged["outcome"]) != 1 {
@@ -756,16 +760,16 @@ func objectCacheBuild(
 // objectEntries are the keys a cache directory holds an object under.
 func objectEntries(test *testing.T, directory string) []string {
 	test.Helper()
-	entries, err := os.ReadDir(directory)
-	if errors.Is(err, os.ErrNotExist) {
+	entries, readDirectoryError := os.ReadDir(directory)
+	if errors.Is(readDirectoryError, os.ErrNotExist) {
 		return nil
 	}
-	if err != nil {
-		test.Fatal(err)
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	var keys []string
 	for _, entry := range entries {
-		if _, err := os.Stat(filepath.Join(directory, entry.Name(), "main.o")); err == nil {
+		if _, statError := os.Stat(filepath.Join(directory, entry.Name(), "main.o")); statError == nil {
 			keys = append(keys, entry.Name())
 		}
 	}
@@ -781,9 +785,9 @@ func TestObjectCacheHitIsTheUncachedBinary(test *testing.T) {
 		options Options
 	}{{"release", Options{}}, {"debug", Options{Debug: true}}, {"sanitized", Options{Sanitize: true}}} {
 		test.Run(build.name, func(test *testing.T) {
-			library, err := RuntimeLibraryForSource("", objectKeySource, build.options)
-			if err != nil {
-				test.Fatal(err)
+			library, runtimeLibraryForSourceError := RuntimeLibraryForSource("", objectKeySource, build.options)
+			if runtimeLibraryForSourceError != nil {
+				test.Fatal(runtimeLibraryForSourceError)
 			}
 			root := test.TempDir()
 			cache := objectCaches(test, root, "candidate")
@@ -827,9 +831,9 @@ func TestObjectCacheHitIsTheUncachedBinary(test *testing.T) {
 // a candidate writing main's directory, and main reading the candidate's.
 // Not parallel: each build names its log with test.Setenv (objectCacheBuild), which a parallel test may not.
 func TestObjectCacheTrust(test *testing.T) {
-	library, err := RuntimeLibraryForSource("", objectKeySource, Options{})
-	if err != nil {
-		test.Fatal(err)
+	library, runtimeLibraryForSourceError := RuntimeLibraryForSource("", objectKeySource, Options{})
+	if runtimeLibraryForSourceError != nil {
+		test.Fatal(runtimeLibraryForSourceError)
 	}
 	root := test.TempDir()
 	main, candidate := objectCaches(test, root, "main"), objectCaches(test, root, "candidate")
@@ -867,8 +871,11 @@ func TestObjectCacheTrust(test *testing.T) {
 		test.Fatalf("main's directory holds %v", held)
 	}
 	// With main's object stored, a candidate whose own directory holds nothing reads main's.
-	if err := os.Rename(filepath.Join(root, "candidate"), filepath.Join(root, "candidate-moved")); err != nil {
-		test.Fatal(err)
+	if renameError := os.Rename(
+		filepath.Join(root, "candidate"),
+		filepath.Join(root, "candidate-moved"),
+	); renameError != nil {
+		test.Fatal(renameError)
 	}
 	if _, outcome := objectCacheBuild(
 		test,
@@ -889,9 +896,9 @@ func TestObjectCacheTrust(test *testing.T) {
 // failed recheck.
 // Not parallel: each build names its log with test.Setenv (objectCacheBuild), which a parallel test may not.
 func TestObjectCacheRecheckFailureStoresNothing(test *testing.T) {
-	library, err := RuntimeLibraryForSource("", objectKeySource, Options{})
-	if err != nil {
-		test.Fatal(err)
+	library, runtimeLibraryForSourceError := RuntimeLibraryForSource("", objectKeySource, Options{})
+	if runtimeLibraryForSourceError != nil {
+		test.Fatal(runtimeLibraryForSourceError)
 	}
 	root := test.TempDir()
 	copied := objectKeyRuntime(test, library, filepath.Join(root, "runtime"), nil)
@@ -900,12 +907,12 @@ func TestObjectCacheRecheckFailureStoresNothing(test *testing.T) {
 		directory string,
 	) {
 		header := filepath.Join(directory, "runtime", "adamic.h")
-		contents, err := os.ReadFile(header)
-		if err != nil {
-			test.Fatal(err)
+		contents, readError := os.ReadFile(header)
+		if readError != nil {
+			test.Fatal(readError)
 		}
-		if err := os.WriteFile(header, contents, 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(header, contents, 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}); outcome != "miss" {
 		test.Fatalf("the build says %s", outcome)
@@ -933,9 +940,9 @@ func TestObjectCacheRecheckFailureStoresNothing(test *testing.T) {
 // forced check skipped.
 // Not parallel: each build names its log with test.Setenv (objectCacheBuild), which a parallel test may not.
 func TestObjectCacheForcedCheckCatchesAPlantedObject(test *testing.T) {
-	library, err := RuntimeLibraryForSource("", objectKeySource, Options{})
-	if err != nil {
-		test.Fatal(err)
+	library, runtimeLibraryForSourceError := RuntimeLibraryForSource("", objectKeySource, Options{})
+	if runtimeLibraryForSourceError != nil {
+		test.Fatal(runtimeLibraryForSourceError)
 	}
 	root := test.TempDir()
 	cache := objectCaches(test, root, "main")
@@ -958,15 +965,15 @@ func TestObjectCacheForcedCheckCatchesAPlantedObject(test *testing.T) {
 	}
 	// Planted whole, its sum beside it, so the sum check passes it and only the forced check can catch it.
 	planted := []byte("not an object\n")
-	if err := os.WriteFile(filepath.Join(root, "main", held[0], "main.o"), planted, 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(root, "main", held[0], "main.o"), planted, 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		filepath.Join(root, "main", held[0], objectSumName),
 		fmt.Appendf(nil, "%x\n", sha256.Sum256(planted)),
 		0o644,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
 	test.Setenv(unitCheckVariable, "every")
 	binary, outcome := objectCacheBuild(test, root, "checked", &cache, objectKeySource, Options{}, library, nil)
@@ -976,9 +983,9 @@ func TestObjectCacheForcedCheckCatchesAPlantedObject(test *testing.T) {
 	if !bytes.Equal(binary, uncached) {
 		test.Error("the checked build didn't link the cold object")
 	}
-	log, err := os.ReadFile(filepath.Join(root, "checked.log"))
-	if err != nil {
-		test.Fatal(err)
+	log, readError := os.ReadFile(filepath.Join(root, "checked.log"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if want := regexp.MustCompile(`(?m)^` +
 		regexp.QuoteMeta(UnitMismatchPrefix) +
@@ -1000,9 +1007,9 @@ func TestObjectCacheForcedCheckCatchesAPlantedObject(test *testing.T) {
 // check dropped, which links the torn object.
 // Not parallel: each build names its log with test.Setenv (objectCacheBuild), which a parallel test may not.
 func TestObjectCacheNeverLinksATornEntry(test *testing.T) {
-	library, err := RuntimeLibraryForSource("", objectKeySource, Options{})
-	if err != nil {
-		test.Fatal(err)
+	library, runtimeLibraryForSourceError := RuntimeLibraryForSource("", objectKeySource, Options{})
+	if runtimeLibraryForSourceError != nil {
+		test.Fatal(runtimeLibraryForSourceError)
 	}
 	root := test.TempDir()
 	cache := objectCaches(test, root, "main")
@@ -1029,26 +1036,30 @@ func TestObjectCacheNeverLinksATornEntry(test *testing.T) {
 		tear func(object []byte)
 	}{
 		{"truncated", func(object []byte) {
-			if err := os.WriteFile(filepath.Join(entry, "main.o"), object[:len(object)/2], 0o644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(
+				filepath.Join(entry, "main.o"),
+				object[:len(object)/2],
+				0o644,
+			); writeError != nil {
+				test.Fatal(writeError)
 			}
 		}},
 		{"a byte flipped", func(object []byte) {
 			flipped := slices.Clone(object)
 			flipped[len(flipped)/2] ^= 0xff
-			if err := os.WriteFile(filepath.Join(entry, "main.o"), flipped, 0o644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(filepath.Join(entry, "main.o"), flipped, 0o644); writeError != nil {
+				test.Fatal(writeError)
 			}
 		}},
 		{"its sum gone", func([]byte) {
-			if err := os.Remove(filepath.Join(entry, objectSumName)); err != nil {
-				test.Fatal(err)
+			if removeError := os.Remove(filepath.Join(entry, objectSumName)); removeError != nil {
+				test.Fatal(removeError)
 			}
 		}},
 	} {
-		object, err := os.ReadFile(filepath.Join(entry, "main.o"))
-		if err != nil {
-			test.Fatal(err)
+		object, readError := os.ReadFile(filepath.Join(entry, "main.o"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		tear.tear(object)
 		binary, outcome := objectCacheBuild(

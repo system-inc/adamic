@@ -94,23 +94,23 @@ func buildOneCallAndSplitWith(
 	flags []string,
 ) (splitBuilt, splitBuilt) {
 	test.Helper()
-	library, err := RuntimeLibraryForSource("", source, options)
-	if err != nil {
-		test.Fatal(err)
+	library, runtimeLibraryForSourceError := RuntimeLibraryForSource("", source, options)
+	if runtimeLibraryForSourceError != nil {
+		test.Fatal(runtimeLibraryForSourceError)
 	}
-	jobserver, err := defaultJobserver()
-	if err != nil {
-		test.Fatal(err)
+	jobserver, defaultJobserverError := defaultJobserver()
+	if defaultJobserverError != nil {
+		test.Fatal(defaultJobserverError)
 	}
 	root := test.TempDir()
 	directory, output := filepath.Join(root, "build"), filepath.Join(root, "program")
 	build := func(oneCall bool) splitBuilt {
-		if err := os.Mkdir(directory, 0o755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.Mkdir(directory, 0o755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 		defer os.RemoveAll(directory)
 		defer os.Remove(output)
-		err := linkOne(
+		linkOneError := linkOne(
 			directory,
 			compilerName(options),
 			source,
@@ -125,25 +125,25 @@ func buildOneCallAndSplitWith(
 			objectKeyer(),
 			oneCall,
 		)
-		return splitResult(test, output, err)
+		return splitResult(test, output, linkOneError)
 	}
 	return build(true), build(false)
 }
 
 // splitResult reads what a build at output made, or the failure it returned.
-func splitResult(test *testing.T, output string, err error) splitBuilt {
+func splitResult(test *testing.T, output string, sourceError error) splitBuilt {
 	test.Helper()
-	if err != nil {
-		built := splitBuilt{failure: err.Error(), exitCode: -1}
+	if sourceError != nil {
+		built := splitBuilt{failure: sourceError.Error(), exitCode: -1}
 		var exit *exec.ExitError
-		if errors.As(err, &exit) {
+		if errors.As(sourceError, &exit) {
 			built.exitCode = exit.ExitCode()
 		}
 		return built
 	}
-	binary, err := os.ReadFile(output)
-	if err != nil {
-		test.Fatal(err)
+	binary, readError := os.ReadFile(output)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return splitBuilt{binary: binary}
 }
@@ -184,22 +184,22 @@ func splitDifference(oneCall, split splitBuilt) string {
 // splitCorpusSource is the C of the oracle program named name.
 func splitCorpusSource(test *testing.T, name string) string {
 	test.Helper()
-	source, err := splitCorpusLowered(name)
-	if err != nil {
-		test.Fatal(err)
+	source, splitCorpusLoweredError := splitCorpusLowered(name)
+	if splitCorpusLoweredError != nil {
+		test.Fatal(splitCorpusLoweredError)
 	}
 	return source
 }
 
 // splitCorpusLowered is the C of the oracle program named name, or why it couldn't be made.
 func splitCorpusLowered(name string) (string, error) {
-	checked, err := load.Load([]string{filepath.Join("..", "oracle", "testdata", name)})
-	if err != nil {
-		return "", err
+	checked, loadError := load.Load([]string{filepath.Join("..", "oracle", "testdata", name)})
+	if loadError != nil {
+		return "", loadError
 	}
-	program, err := lower.Lower(context.Background(), checked)
-	if err != nil {
-		return "", err
+	program, lowerError := lower.Lower(context.Background(), checked)
+	if lowerError != nil {
+		return "", lowerError
 	}
 	return C(program), nil
 }
@@ -209,9 +209,9 @@ func splitCorpusLowered(name string) (string, error) {
 var splitCorpusSources = sync.OnceValues(func() ([][2]string, error) {
 	programs := [][2]string{}
 	for _, name := range splitCorpus {
-		source, err := splitCorpusLowered(name)
-		if err != nil {
-			return nil, fmt.Errorf("%s: %w", name, err)
+		source, splitCorpusLoweredError := splitCorpusLowered(name)
+		if splitCorpusLoweredError != nil {
+			return nil, fmt.Errorf("%s: %w", name, splitCorpusLoweredError)
 		}
 		programs = append(programs, [2]string{name, source})
 	}
@@ -240,9 +240,9 @@ var splitCorpusSources = sync.OnceValues(func() ([][2]string, error) {
 // testSplitCorpus holds the programs of the corpus from first up to last, built as build says, split to the one call's
 // binary byte for byte. A last past the corpus's end is its end.
 func testSplitCorpus(test *testing.T, build Options, first, last int) {
-	programs, err := splitCorpusSources()
-	if err != nil {
-		test.Fatal(err)
+	programs, splitCorpusSourcesError := splitCorpusSources()
+	if splitCorpusSourcesError != nil {
+		test.Fatal(splitCorpusSourcesError)
 	}
 	for _, program := range programs[first:min(last, len(programs))] {
 		test.Run(program[0], func(test *testing.T) {
@@ -390,14 +390,18 @@ func compiledThenLinkedCheckerIsTheOneCall(test *testing.T, index int) {
 			stubs.WriteString("void " + match[1] + "(void) {}\n")
 		}
 	}
-	if err := os.WriteFile(filepath.Join(directory, "stubs.c"), []byte(stubs.String()), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(
+		filepath.Join(directory, "stubs.c"),
+		[]byte(stubs.String()),
+		0o644,
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
-	compiler, err := toolchain.Path("clang")
-	if err != nil {
-		test.Fatal(err)
+	compiler, pathError := toolchain.Path("clang")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
-	if output, err := toolchain.CommandIn(
+	if output, combinedOutputError := toolchain.CommandIn(
 		directory,
 		compiler,
 		"-g",
@@ -405,17 +409,17 @@ func compiledThenLinkedCheckerIsTheOneCall(test *testing.T, index int) {
 		"stubs.c",
 		"-o",
 		"stubs.o",
-	).CombinedOutput(); err != nil {
-		test.Fatalf("stubs: %v\n%s", err, output)
+	).CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("stubs: %v\n%s", combinedOutputError, output)
 	}
-	if output, err := toolchain.CommandIn(
+	if output, combinedOutputError := toolchain.CommandIn(
 		directory,
 		archiverName(compiler),
 		"rcs",
 		"checker.a",
 		"stubs.o",
-	).CombinedOutput(); err != nil {
-		test.Fatalf("archive: %v\n%s", err, output)
+	).CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("archive: %v\n%s", combinedOutputError, output)
 	}
 	output := filepath.Join(directory, "checker")
 	build := splitBuilds[index]

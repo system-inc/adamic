@@ -37,8 +37,8 @@ func TestAProgramIsTheSameBytesEveryTimeGobWritesIt(test *testing.T) {
 	var last []byte
 	for range 32 {
 		var encoded bytes.Buffer
-		if err := gob.NewEncoder(&encoded).Encode(program); err != nil {
-			test.Fatal(err)
+		if encodeError := gob.NewEncoder(&encoded).Encode(program); encodeError != nil {
+			test.Fatal(encodeError)
 		}
 		encodings[sha256.Sum256(encoded.Bytes())] = true
 		last = encoded.Bytes()
@@ -47,8 +47,8 @@ func TestAProgramIsTheSameBytesEveryTimeGobWritesIt(test *testing.T) {
 		test.Fatalf("one program, %d encodings in 32", len(encodings))
 	}
 	var read Program
-	if err := gob.NewDecoder(bytes.NewReader(last)).Decode(&read); err != nil {
-		test.Fatal(err)
+	if decodeError := gob.NewDecoder(bytes.NewReader(last)).Decode(&read); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if !reflect.DeepEqual(read.MethodTargets, program.MethodTargets) ||
 		!reflect.DeepEqual(read.Functions[0].OptionalParameters, function.OptionalParameters) ||
@@ -65,11 +65,11 @@ func TestASortedMapIsNilWhereAPlainMapIs(test *testing.T) {
 	type sorted struct{ Field SortedMap[int, bool] }
 	for name, value := range map[string]map[int]bool{"nil": nil, "empty": {}, "held": {1: true}} {
 		var plainBytes, sortedBytes bytes.Buffer
-		if err := gob.NewEncoder(&plainBytes).Encode(plain{value}); err != nil {
-			test.Fatal(err)
+		if encodeError := gob.NewEncoder(&plainBytes).Encode(plain{value}); encodeError != nil {
+			test.Fatal(encodeError)
 		}
-		if err := gob.NewEncoder(&sortedBytes).Encode(sorted{value}); err != nil {
-			test.Fatal(err)
+		if encodeError := gob.NewEncoder(&sortedBytes).Encode(sorted{value}); encodeError != nil {
+			test.Fatal(encodeError)
 		}
 		var plainRead plain
 		var sortedRead sorted

@@ -16,12 +16,14 @@ func (l *lowering) debugSourceLine(node *ast.Node) ir.SourceLine {
 // file instead; keep this rule separate from runtime declaration identities.
 func (l *lowering) debugModulePath(file *ast.SourceFile) string {
 	identity := l.modulePath(file)
-	if file == l.entry || strings.HasPrefix(identity, "bundled://") || strings.HasPrefix(identity, "adamic-prelude://") {
+	if file == l.entry ||
+		strings.HasPrefix(identity, "bundled://") ||
+		strings.HasPrefix(identity, "adamic-prelude://") {
 		return identity
 	}
-	path, err := filepath.Rel(filepath.Dir(l.program.FileName(l.entry)), l.program.FileName(file))
-	if err != nil {
-		panic("lower: relative debug source path: " + err.Error())
+	path, relativePathError := filepath.Rel(filepath.Dir(l.program.FileName(l.entry)), l.program.FileName(file))
+	if relativePathError != nil {
+		panic("lower: relative debug source path: " + relativePathError.Error())
 	}
 	return filepath.ToSlash(path)
 }

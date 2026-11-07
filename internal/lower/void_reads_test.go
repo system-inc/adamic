@@ -71,13 +71,13 @@ func TestVoidReadsAreRefused(test *testing.T) {
 		for _, extension := range []string{".a", ".ts"} {
 			test.Run(probe.name+extension, func(test *testing.T) {
 				test.Parallel()
-				_, err := lowerVoidProbe(test, extension, voidReadMake+"\n"+probe.source)
+				_, lowerVoidProbeError := lowerVoidProbe(test, extension, voidReadMake+"\n"+probe.source)
 				var refused *Refused
-				if !errors.As(err, &refused) ||
+				if !errors.As(lowerVoidProbeError, &refused) ||
 					!strings.HasPrefix(refused.What, "a read of a void value") ||
 					!strings.Contains(refused.What, probe.role) ||
 					!strings.Contains(refused.Fix, "call it as a statement, or give the function a return type") {
-					test.Fatalf("want a void read refused %s, got %v", probe.role, err)
+					test.Fatalf("want a void read refused %s, got %v", probe.role, lowerVoidProbeError)
 				}
 			})
 		}
@@ -147,10 +147,13 @@ func TestVoidUnderAWrapperStatementIsNoRead(test *testing.T) {
 	for _, statement := range []string{`make() as unknown;`, `make() satisfies void;`, `make()!;`} {
 		test.Run(statement, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerTypeScriptAssertionSource(test, voidReadMake+"\n"+statement+"\nconsole.log(\"done\");")
+			_, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(
+				test,
+				voidReadMake+"\n"+statement+"\nconsole.log(\"done\");",
+			)
 			var refused *Refused
-			if errors.As(err, &refused) {
-				test.Fatalf("want no refusal for a discarded void value, got %v", err)
+			if errors.As(lowerTypeScriptAssertionSourceError, &refused) {
+				test.Fatalf("want no refusal for a discarded void value, got %v", lowerTypeScriptAssertionSourceError)
 			}
 		})
 	}
@@ -160,10 +163,15 @@ func TestVoidUnderAWrapperStatementIsNoRead(test *testing.T) {
 // assertion; .a refuses ! itself.
 func TestVoidReadThroughNonNullIsRefused(test *testing.T) {
 	test.Parallel()
-	_, err := lowerVoidProbe(test, ".ts", voidReadMake+"\n"+`const kept: unknown = make()!; console.log(typeof kept);`)
+	_, lowerVoidProbeError := lowerVoidProbe(
+		test,
+		".ts",
+		voidReadMake+"\n"+`const kept: unknown = make()!; console.log(typeof kept);`,
+	)
 	var refused *Refused
-	if !errors.As(err, &refused) || refused.What != "a read of a void value, as a binding's initializer" {
-		test.Fatalf("want a void read refused as a binding's initializer, got %v", err)
+	if !errors.As(lowerVoidProbeError, &refused) ||
+		refused.What != "a read of a void value, as a binding's initializer" {
+		test.Fatalf("want a void read refused as a binding's initializer, got %v", lowerVoidProbeError)
 	}
 }
 
@@ -185,13 +193,14 @@ func TestVoidIntersectionReads(test *testing.T) {
 		for _, extension := range []string{".a", ".ts"} {
 			test.Run(probe.name+extension, func(test *testing.T) {
 				test.Parallel()
-				_, err := lowerVoidProbe(test, extension, both+
+				_, lowerVoidProbeError := lowerVoidProbe(test, extension, both+
 					"function show(x: "+
 					probe.parameter+
 					"): void { console.log(typeof x); }\nconsole.log(\"done\");")
 				var refused *Refused
-				if !errors.As(err, &refused) || refused.What != "a read of a void value, as typeof's operand" {
-					test.Fatalf("want a void read refused as typeof's operand, got %v", err)
+				if !errors.As(lowerVoidProbeError, &refused) ||
+					refused.What != "a read of a void value, as typeof's operand" {
+					test.Fatalf("want a void read refused as typeof's operand, got %v", lowerVoidProbeError)
 				}
 			})
 		}
@@ -247,10 +256,10 @@ func TestVoidBrandArmIsReachedOnlyByAHeldCast(test *testing.T) {
 		for _, extension := range []string{".a", ".ts"} {
 			test.Run(road.name+extension, func(test *testing.T) {
 				test.Parallel()
-				_, err := lowerVoidProbe(test, extension, road.source)
+				_, lowerVoidProbeError := lowerVoidProbe(test, extension, road.source)
 				var refused *Refused
-				if !errors.As(err, &refused) || !strings.Contains(refused.What, road.what) {
-					test.Fatalf("want refused with %q, got %v", road.what, err)
+				if !errors.As(lowerVoidProbeError, &refused) || !strings.Contains(refused.What, road.what) {
+					test.Fatalf("want refused with %q, got %v", road.what, lowerVoidProbeError)
 				}
 			})
 		}

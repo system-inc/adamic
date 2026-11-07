@@ -39,18 +39,18 @@ func TestRuntimeReferenceNode(test *testing.T) {
 		`console.log(JSON.stringify(JSON.parse(require('fs').readFileSync(0,'utf8')).map(x=>{try{new RegExp(x.Pattern,x.Flags);return true}catch(e){if(!(e instanceof SyntaxError))throw e;return false}})))`,
 	)
 	command.Stdin = bytes.NewReader(input)
-	output, err := command.CombinedOutput()
-	if err != nil {
-		test.Fatalf("Node: %v %s", err, output)
+	output, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("Node: %v %s", combinedOutputError, output)
 	}
 	var valid []bool
-	if err := json.Unmarshal(output, &valid); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(output, &valid); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	for i, c := range cases {
-		_, err := Parse(c.Pattern, c.Flags)
-		if valid[i] != c.Valid || (err == nil) != valid[i] {
-			test.Errorf("%q: Go=%v Node=%v want=%v", c.Pattern, err, valid[i], c.Valid)
+		_, parseError := Parse(c.Pattern, c.Flags)
+		if valid[i] != c.Valid || (parseError == nil) != valid[i] {
+			test.Errorf("%q: Go=%v Node=%v want=%v", c.Pattern, parseError, valid[i], c.Valid)
 		}
 	}
 	for _, pattern := range []string{
@@ -58,10 +58,10 @@ func TestRuntimeReferenceNode(test *testing.T) {
 		"a{2147483648,2147483647}",
 		"a{2147483649,2147483648}",
 	} {
-		_, err := Parse(pattern, "")
+		_, parseError := Parse(pattern, "")
 		var divergence *V8DivergenceError
-		if !errors.As(err, &divergence) {
-			test.Errorf("%s: must refuse with V8DivergenceError, got %T %v", pattern, err, err)
+		if !errors.As(parseError, &divergence) {
+			test.Errorf("%s: must refuse with V8DivergenceError, got %T %v", pattern, parseError, parseError)
 			continue
 		}
 		if divergence.Behavior != "clamps quantifier bounds above 2^31-1 before the min > max check" ||
@@ -69,15 +69,15 @@ func TestRuntimeReferenceNode(test *testing.T) {
 			test.Errorf("wrong ruling: %+v", divergence)
 		}
 		command := exec.Command("node", "-e", "new RegExp(process.argv[1]);", pattern)
-		if output, err := command.CombinedOutput(); err != nil {
-			test.Errorf("Node no longer accepts %s: %v %s", pattern, err, output)
+		if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+			test.Errorf("Node no longer accepts %s: %v %s", pattern, combinedOutputError, output)
 		}
 	}
 	for _, pattern := range []string{"a{3,2}", "a{2147483648,2147483646}"} {
-		_, err := Parse(pattern, "")
+		_, parseError := Parse(pattern, "")
 		var syntax *SyntaxError
-		if !errors.As(err, &syntax) {
-			test.Errorf("control %s: want SyntaxError got %v", pattern, err)
+		if !errors.As(parseError, &syntax) {
+			test.Errorf("control %s: want SyntaxError got %v", pattern, parseError)
 		}
 	}
 }
@@ -86,13 +86,15 @@ func TestRuntimeReferenceNode(test *testing.T) {
 // and must fail the Node comparison or the exact divergence-type assertion.
 func runRuntimeReferenceMutant(test *testing.T, index int) {
 	test.Helper()
-	source, err := os.ReadFile("parser.go")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("parser.go")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	mutants := runtimeReferenceMutantShards(test, string(source))
-	if err := checkRuntimeReferenceMutantCoverage(mutants); err != nil {
-		test.Fatal(err)
+	if checkRuntimeReferenceMutantCoverageError := checkRuntimeReferenceMutantCoverage(
+		mutants,
+	); checkRuntimeReferenceMutantCoverageError != nil {
+		test.Fatal(checkRuntimeReferenceMutantCoverageError)
 	}
 	mutant := mutants[index]
 	command := exec.Command(
@@ -101,13 +103,13 @@ func runRuntimeReferenceMutant(test *testing.T, index int) {
 		"-test.count=1",
 		"-test.timeout=90s",
 	)
-	output, err := command.CombinedOutput()
-	if err == nil {
+	output, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError == nil {
 		test.Fatal("mutant survived")
 	}
 	if bytes.Contains(output, []byte("build failed")) ||
 		!bytes.Contains(output, []byte("--- FAIL: TestRuntimeReferenceNode")) {
-		test.Fatalf("mutant did not reach its assertion: %v %s", err, output)
+		test.Fatalf("mutant did not reach its assertion: %v %s", combinedOutputError, output)
 	}
 	test.Logf("caught %s: %s", mutant.name, output)
 }
@@ -189,9 +191,9 @@ func TestRuntimeReferenceMutant6(test *testing.T) {
 
 func runtimeReferenceMutantProduct(test testing.TB, index int) string {
 	test.Helper()
-	source, err := os.ReadFile("parser.go")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("parser.go")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	mutant := runtimeReferenceMutantShards(test, string(source))[index]
 	return buildcache.GoTestMutated(

@@ -59,67 +59,67 @@ func TestProduct_SyntaxMutantsSetup_002(test *testing.T) {
 // remain stable for Node execution.
 func estreeFamilyLowerCheckpoint(dir string, snapshot map[string][]byte) error {
 	source := filepath.Join(dir, "source")
-	if err := os.Mkdir(source, 0755); err != nil {
-		return err
+	if createDirectoryError := os.Mkdir(source, 0755); createDirectoryError != nil {
+		return createDirectoryError
 	}
 	for name, data := range snapshot {
-		if err := os.WriteFile(filepath.Join(source, name), data, 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(filepath.Join(source, name), data, 0644); writeError != nil {
+			return writeError
 		}
 	}
 	// Named placelessly: the IR's positions would otherwise carry this build directory, random per build (#tqrqx60).
-	program, err := load.LoadDisplayed([]string{filepath.Join(source, "main.ts")}, buildcache.Relative)
-	if err != nil {
-		return err
+	program, loadDisplayedError := load.LoadDisplayed([]string{filepath.Join(source, "main.ts")}, buildcache.Relative)
+	if loadDisplayedError != nil {
+		return loadDisplayedError
 	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		return err
+	lowered, lowerError := lower.Lower(context.Background(), program)
+	if lowerError != nil {
+		return lowerError
 	}
 	ir.RegisterGob()
-	file, err := os.Create(filepath.Join(dir, "program.gob"))
-	if err != nil {
-		return err
+	file, createError := os.Create(filepath.Join(dir, "program.gob"))
+	if createError != nil {
+		return createError
 	}
-	err = gob.NewEncoder(file).Encode(lowered)
-	closeErr := file.Close()
-	if err != nil {
-		return fmt.Errorf("encode checked IR: %w", err)
+	encodeError := gob.NewEncoder(file).Encode(lowered)
+	closeError := file.Close()
+	if encodeError != nil {
+		return fmt.Errorf("encode checked IR: %w", encodeError)
 	}
-	if closeErr != nil {
-		return closeErr
+	if closeError != nil {
+		return closeError
 	}
 	// The source's imports name this checkout for the lowering above; the product names it <repository> (#tqrqx60).
 	return buildcache.RelativeFiles(source)
 }
 func estreeFamilyReadCheckpoint(dir string) (*ir.Program, error) {
 	ir.RegisterGob()
-	file, err := os.Open(filepath.Join(dir, "program.gob"))
-	if err != nil {
-		return nil, err
+	file, openError := os.Open(filepath.Join(dir, "program.gob"))
+	if openError != nil {
+		return nil, openError
 	}
 	defer file.Close()
 	var program ir.Program
-	if err := gob.NewDecoder(file).Decode(&program); err != nil {
-		return nil, err
+	if decodeError := gob.NewDecoder(file).Decode(&program); decodeError != nil {
+		return nil, decodeError
 	}
 	return &program, nil
 }
 func estreeFamilyCopySource(from, to string) error {
-	if err := os.Mkdir(filepath.Join(to, "source"), 0755); err != nil {
-		return err
+	if createDirectoryError := os.Mkdir(filepath.Join(to, "source"), 0755); createDirectoryError != nil {
+		return createDirectoryError
 	}
-	files, err := filepath.Glob(filepath.Join(from, "source", "*.ts"))
-	if err != nil {
-		return err
+	files, globError := filepath.Glob(filepath.Join(from, "source", "*.ts"))
+	if globError != nil {
+		return globError
 	}
 	for _, file := range files {
-		data, err := os.ReadFile(file)
-		if err != nil {
-			return err
+		data, readError := os.ReadFile(file)
+		if readError != nil {
+			return readError
 		}
-		if err := os.WriteFile(filepath.Join(to, "source", filepath.Base(file)), data, 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(filepath.Join(to, "source", filepath.Base(file)), data, 0644); writeError != nil {
+			return writeError
 		}
 	}
 	return nil
@@ -162,9 +162,9 @@ func estreeFamilyDependencyFiles(test *testing.T) []string {
 			"./internal/javascript",
 			"github.com/system-inc/cohere/internal/format/estree",
 		)
-		output, err := command.Output()
-		if err != nil {
-			estreeFamilyDependencies.err = fmt.Errorf("Go dependencies: %w", err)
+		output, outputError := command.Output()
+		if outputError != nil {
+			estreeFamilyDependencies.err = fmt.Errorf("Go dependencies: %w", outputError)
 			return
 		}
 		decoder := json.NewDecoder(bytes.NewReader(output))
@@ -179,20 +179,20 @@ func estreeFamilyDependencyFiles(test *testing.T) []string {
 		// Loom runner's is /tmp/loom-sources/<blob>-modcache, and an absolute path keyed the Go oracle apart from
 		// Workshop's (landable-10's run).
 		add := func(path string, module *estreeModule) error {
-			relative, err := filepath.Rel(repo, path)
-			if err != nil {
-				return err
+			relative, relativePathError := filepath.Rel(repo, path)
+			if relativePathError != nil {
+				return relativePathError
 			}
 			if relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
-				data, err := os.ReadFile(path)
-				if err != nil {
-					return err
+				data, readError := os.ReadFile(path)
+				if readError != nil {
+					return readError
 				}
 				name := path
 				if module != nil && module.Dir != "" {
-					inside, err := filepath.Rel(module.Dir, path)
-					if err != nil {
-						return err
+					inside, relativePathError := filepath.Rel(module.Dir, path)
+					if relativePathError != nil {
+						return relativePathError
 					}
 					name = module.Path + "@" + module.Version + "/" + filepath.ToSlash(inside)
 				}
@@ -213,10 +213,10 @@ func estreeFamilyDependencyFiles(test *testing.T) []string {
 				Module                                                                     *estreeModule
 				Error                                                                      *struct{ Err string }
 			}
-			if err := decoder.Decode(&item); err == io.EOF {
+			if decodeError := decoder.Decode(&item); decodeError == io.EOF {
 				break
-			} else if err != nil {
-				estreeFamilyDependencies.err = err
+			} else if decodeError != nil {
+				estreeFamilyDependencies.err = decodeError
 				return
 			}
 			if item.Error != nil {
@@ -237,21 +237,21 @@ func estreeFamilyDependencyFiles(test *testing.T) []string {
 				item.EmbedFiles,
 			} {
 				for _, name := range group {
-					if err := add(filepath.Join(item.Dir, name), item.Module); err != nil {
-						estreeFamilyDependencies.err = err
+					if addError := add(filepath.Join(item.Dir, name), item.Module); addError != nil {
+						estreeFamilyDependencies.err = addError
 						return
 					}
 				}
 			}
 			if item.Module != nil && item.Module.GoMod != "" {
-				if err := add(item.Module.GoMod, item.Module); err != nil {
-					estreeFamilyDependencies.err = err
+				if addError := add(item.Module.GoMod, item.Module); addError != nil {
+					estreeFamilyDependencies.err = addError
 					return
 				}
 				sum := filepath.Join(filepath.Dir(item.Module.GoMod), "go.sum")
-				if _, err := os.Stat(sum); err == nil {
-					if err := add(sum, item.Module); err != nil {
-						estreeFamilyDependencies.err = err
+				if _, statError := os.Stat(sum); statError == nil {
+					if addError := add(sum, item.Module); addError != nil {
+						estreeFamilyDependencies.err = addError
 						return
 					}
 				}

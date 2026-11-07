@@ -20,20 +20,20 @@ func TestOverloadContractRulings(test *testing.T) {
 	} {
 		test.Run(testCase.name, func(test *testing.T) {
 			test.Parallel()
-			path, pathErr := filepath.Abs(
+			path, pathError := filepath.Abs(
 				filepath.Join(repository, "internal/oracle/testdata/overload_contracts/"+testCase.name+".a"),
 			)
-			if pathErr != nil {
-				test.Fatal(pathErr)
+			if pathError != nil {
+				test.Fatal(pathError)
 			}
 			observed := onNode(test, path)
 			if observed.exitCode != 0 || string(observed.stdout) != testCase.output {
 				test.Fatalf("Node: exit %d, stdout %q, stderr %q", observed.exitCode, observed.stdout, observed.stderr)
 			}
-			_, err := lowered(test, path)
+			_, loweredError := lowered(test, path)
 			var refused *lower.Refused
-			if !errors.As(err, &refused) || !strings.Contains(refused.What, testCase.refusal) {
-				test.Fatalf("want refusal %q, got %v", testCase.refusal, err)
+			if !errors.As(loweredError, &refused) || !strings.Contains(refused.What, testCase.refusal) {
+				test.Fatalf("want refusal %q, got %v", testCase.refusal, loweredError)
 			}
 		})
 	}

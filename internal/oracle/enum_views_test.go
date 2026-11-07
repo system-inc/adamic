@@ -28,9 +28,9 @@ func init() {
 
 func enumViewFixture(test *testing.T, name string) string {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/enum_views", name))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/enum_views", name))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return path
 }
@@ -49,11 +49,13 @@ func TestEnumViewCastStops(test *testing.T) {
 	} {
 		test.Run(probe.file, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowered(test, enumViewFixture(test, probe.file))
-			if err == nil || !strings.Contains(err.Error(), probe.at) || !strings.Contains(err.Error(), probe.what) {
-				test.Fatalf("want a stop at %s naming %q, got %v", probe.at, probe.what, err)
+			_, loweredError := lowered(test, enumViewFixture(test, probe.file))
+			if loweredError == nil ||
+				!strings.Contains(loweredError.Error(), probe.at) ||
+				!strings.Contains(loweredError.Error(), probe.what) {
+				test.Fatalf("want a stop at %s naming %q, got %v", probe.at, probe.what, loweredError)
 			}
-			test.Logf("stop: %v", err)
+			test.Logf("stop: %v", loweredError)
 		})
 	}
 }
@@ -75,10 +77,10 @@ func TestEnumViewCastsTscRefuses(test *testing.T) {
 	} {
 		test.Run(file, func(test *testing.T) {
 			test.Parallel()
-			_, err := load.Load([]string{enumViewFixture(test, file)})
+			_, loadError := load.Load([]string{enumViewFixture(test, file)})
 			var checked *load.CheckError
-			if !errors.As(err, &checked) || !strings.Contains(err.Error(), "error TS2352") {
-				test.Fatalf("want tsc's TS2352, got %v", err)
+			if !errors.As(loadError, &checked) || !strings.Contains(loadError.Error(), "error TS2352") {
+				test.Fatalf("want tsc's TS2352, got %v", loadError)
 			}
 		})
 	}
@@ -104,12 +106,12 @@ func TestEnumViewKeyedReadGetterStops(test *testing.T) {
 	} {
 		test.Run(probe.file, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowered(test, enumViewFixture(test, probe.file))
+			_, loweredError := lowered(test, enumViewFixture(test, probe.file))
 			var notYet *lower.NotYet
-			if !errors.As(err, &notYet) ||
-				!strings.Contains(err.Error(), probe.at) ||
-				!strings.Contains(err.Error(), probe.what) {
-				test.Fatalf("want NotYet at %s naming %q, got %v", probe.at, probe.what, err)
+			if !errors.As(loweredError, &notYet) ||
+				!strings.Contains(loweredError.Error(), probe.at) ||
+				!strings.Contains(loweredError.Error(), probe.what) {
+				test.Fatalf("want NotYet at %s naming %q, got %v", probe.at, probe.what, loweredError)
 			}
 		})
 	}
@@ -134,9 +136,9 @@ func TestEnumViewKeyedReadStopsAlike(test *testing.T) {
 	} {
 		test.Run(probe.file, func(test *testing.T) {
 			test.Parallel()
-			program, err := lowered(test, enumViewFixture(test, probe.file))
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, enumViewFixture(test, probe.file))
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			want := run{stdout: []byte(probe.stdout), stderr: []byte(probe.stderr), exitCode: 70}
 			compiled, _ := natively(test, program)
@@ -171,9 +173,9 @@ func TestEnumViewReverseKeysMutant(test *testing.T) {
 		test.Run(probe.file, func(test *testing.T) {
 			test.Parallel()
 			truth := onNode(test, enumViewFixture(test, probe.file))
-			program, err := lowered(test, enumViewFixture(test, probe.file))
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, enumViewFixture(test, probe.file))
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			dropped := 0
 			for position, statement := range program.Main {
@@ -184,7 +186,7 @@ func TestEnumViewReverseKeysMutant(test *testing.T) {
 				}
 				kept := []ir.Field{}
 				for _, field := range literal.Fields {
-					if _, err := strconv.ParseFloat(field.Name, 64); err == nil {
+					if _, parseError := strconv.ParseFloat(field.Name, 64); parseError == nil {
 						dropped++
 						continue
 					}
@@ -222,9 +224,9 @@ func TestEnumViewReverseKeysMutant(test *testing.T) {
 // reach, and ConstKind's binding appears (TestConstEnumErasesRuntimeObject goes red with it).
 func TestEnumViewConstBuiltOnlyWhereReached(test *testing.T) {
 	test.Parallel()
-	program, err := lowered(test, enumViewFixture(test, "const.a"))
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, enumViewFixture(test, "const.a"))
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	built := map[string]int{}
 	for _, statement := range program.Main {
@@ -248,9 +250,9 @@ func TestEnumViewConstBuiltOnlyWhereReached(test *testing.T) {
 func TestEnumViewFormatConstAgrees(test *testing.T) {
 	test.Parallel()
 	path := enumViewFixture(test, "format_const.a")
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	built := 0
 	for _, statement := range program.Main {
@@ -290,9 +292,9 @@ func TestEnumViewFormatConstAgrees(test *testing.T) {
 func TestEnumViewConstUnbuiltAgrees(test *testing.T) {
 	test.Parallel()
 	path := enumViewFixture(test, "stop_const_unbuilt.a")
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	for _, statement := range program.Main {
 		if declaration, ok := statement.(ir.Declare); ok {
@@ -324,9 +326,9 @@ func TestEnumViewConstUnbuiltAgrees(test *testing.T) {
 // because tsc refuses it (TS2476), so reach needn't count it as a value read.
 func TestEnumViewConstKeyUnionTscRefuses(test *testing.T) {
 	test.Parallel()
-	_, err := load.Load([]string{enumViewFixture(test, "stop_const_key_union.a")})
+	_, loadError := load.Load([]string{enumViewFixture(test, "stop_const_key_union.a")})
 	var checked *load.CheckError
-	if !errors.As(err, &checked) || !strings.Contains(err.Error(), "error TS2476") {
-		test.Fatalf("want tsc's TS2476, got %v", err)
+	if !errors.As(loadError, &checked) || !strings.Contains(loadError.Error(), "error TS2476") {
+		test.Fatalf("want tsc's TS2476, got %v", loadError)
 	}
 }

@@ -15,23 +15,23 @@ import (
 func TestInstalledLayoutIsNodes(test *testing.T) {
 	test.Parallel()
 	library := filepath.Join(test.TempDir(), "typescript", "lib")
-	if err := os.MkdirAll(library, 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(library, 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	// The package's own package.json, without a type, as npm installs it: _tsc.js is CommonJS whatever
 	// a directory above the temporary one says.
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		filepath.Join(library, "..", "package.json"),
 		[]byte(`{"name": "typescript", "version": "6.0.3"}`+"\n"),
 		0o644,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
 	tsc := filepath.Join(library, "_tsc.js")
 	script := `try { require("source-map-support"); console.log("installed"); } catch (e) { const lines = e.message.split("\n"); console.log([e.name, e.code, lines[0], lines[1], Object.keys(e).join(",")].join("\n")); }` +
 		"\n"
-	if err := os.WriteFile(tsc, []byte(script), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(tsc, []byte(script), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	// NODE_PATH would add a directory to where Node looks, which the installed layout doesn't have.
 	measured := executeWith(test, []string{"NODE_PATH="}, "node", tsc)

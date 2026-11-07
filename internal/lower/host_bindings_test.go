@@ -58,9 +58,9 @@ func TestHostBindingAbsentLowersUnderItsGuard(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			program, err := lowerModules(test, profilerModules(probe.body))
-			if err != nil {
-				test.Fatalf("want it to lower, got %v", err)
+			program, lowerModulesError := lowerModules(test, profilerModules(probe.body))
+			if lowerModulesError != nil {
+				test.Fatalf("want it to lower, got %v", lowerModulesError)
 			}
 			if !slices.Contains(program.Strings, profilerDeadRead) {
 				test.Errorf(
@@ -72,9 +72,12 @@ func TestHostBindingAbsentLowersUnderItsGuard(test *testing.T) {
 	}
 	test.Run("typeof alone", func(test *testing.T) {
 		test.Parallel()
-		program, err := lowerModules(test, profilerModules("\tconsole.log(typeof onProfilerEvent + name);\n"))
-		if err != nil {
-			test.Fatalf("want it to lower, got %v", err)
+		program, lowerModulesError := lowerModules(
+			test,
+			profilerModules("\tconsole.log(typeof onProfilerEvent + name);\n"),
+		)
+		if lowerModulesError != nil {
+			test.Fatalf("want it to lower, got %v", lowerModulesError)
 		}
 		if !slices.Contains(program.Strings, "undefined") {
 			test.Errorf("typeof isn't the constant \"undefined\": strings %q", program.Strings)
@@ -119,10 +122,11 @@ func TestHostBindingReadsOutsideTheirGuardAreNotYet(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerModules(test, profilerModules(probe.body))
+			_, lowerModulesError := lowerModules(test, profilerModules(probe.body))
 			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.HasSuffix(err.Error(), probe.where+": "+stop) {
-				test.Errorf("got %v, want %s: %s", err, probe.where, stop)
+			if !errors.As(lowerModulesError, &notYet) ||
+				!strings.HasSuffix(lowerModulesError.Error(), probe.where+": "+stop) {
+				test.Errorf("got %v, want %s: %s", lowerModulesError, probe.where, stop)
 			}
 		})
 	}
@@ -136,13 +140,13 @@ func TestHostBindingShadowingLocalIsTheLocal(test *testing.T) {
 	test.Parallel()
 	test.Run("a parameter named onProfilerEvent beside the declaration", func(test *testing.T) {
 		test.Parallel()
-		program, err := lowerModules(test, map[string]string{
+		program, lowerModulesError := lowerModules(test, map[string]string{
 			"performance.ts": profilerDeclaration +
 				"export function run(onProfilerEvent: ((eventName: string) => void) | undefined, name: string): void {\n\tif (typeof onProfilerEvent === \"function\") {\n\t\tonProfilerEvent(name);\n\t}\n}\n",
 			"main.ts": "import { run } from './performance.ts';\nrun((eventName: string): void => {\n\tconsole.log(eventName);\n}, 'fired');\n",
 		})
-		if err != nil {
-			test.Fatalf("want it to lower, got %v", err)
+		if lowerModulesError != nil {
+			test.Fatalf("want it to lower, got %v", lowerModulesError)
 		}
 		if slices.Contains(program.Strings, profilerDeadRead) {
 			test.Error("the parameter's guarded call lowered as the host binding's unreachable placeholder")
@@ -150,10 +154,10 @@ func TestHostBindingShadowingLocalIsTheLocal(test *testing.T) {
 	})
 	test.Run("a local named performance", func(test *testing.T) {
 		test.Parallel()
-		if _, err := lowerModules(test, map[string]string{
+		if _, lowerModulesError := lowerModules(test, map[string]string{
 			"main.ts": "const performance = { now(): number { return 1; } };\nconsole.log(String(typeof performance === \"object\" && performance.now() > 0));\n",
-		}); err != nil {
-			test.Fatalf("want it to lower as the local, got %v", err)
+		}); lowerModulesError != nil {
+			test.Fatalf("want it to lower as the local, got %v", lowerModulesError)
 		}
 	})
 }
@@ -221,10 +225,10 @@ func TestHostBindingWritesAreRefused(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerModules(test, probe.modules)
+			_, lowerModulesError := lowerModules(test, probe.modules)
 			var refused *Refused
-			if !errors.As(err, &refused) || !strings.HasSuffix(err.Error(), probe.want) {
-				test.Errorf("got %v, want %s", err, probe.want)
+			if !errors.As(lowerModulesError, &refused) || !strings.HasSuffix(lowerModulesError.Error(), probe.want) {
+				test.Errorf("got %v, want %s", lowerModulesError, probe.want)
 			}
 		})
 	}
@@ -232,17 +236,17 @@ func TestHostBindingWritesAreRefused(test *testing.T) {
 	// module (load.go's ModuleDetection), so a declare let is the module's, never a property of globalThis.
 	directory := test.TempDir()
 	main := filepath.Join(directory, "performance.ts")
-	if err := os.WriteFile(main, []byte(
+	if writeError := os.WriteFile(main, []byte(
 		profilerDeclaration+
 			"globalThis.onProfilerEvent = (eventName: string): void => {\n\tconsole.log(eventName);\n};\n",
-	), 0o644); err != nil {
-		test.Fatal(err)
+	), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if _, err := load.Load([]string{main}); err == nil || !strings.Contains(
-		err.Error(),
+	if _, loadError := load.Load([]string{main}); loadError == nil || !strings.Contains(
+		loadError.Error(),
 		"performance.ts:2:12: error TS7017: Element implicitly has an 'any' type because type 'typeof globalThis' has no index signature.",
 	) {
-		test.Errorf("Load: got %v, want the checker's error that globalThis has no onProfilerEvent", err)
+		test.Errorf("Load: got %v, want the checker's error that globalThis has no onProfilerEvent", loadError)
 	}
 }
 
@@ -275,10 +279,11 @@ func TestHostBindingUnmatchedDeclarationIsRefused(test *testing.T) {
 			if probe.file != "main.ts" {
 				modules["main.ts"] = "import './" + probe.file + "';\n"
 			}
-			_, err := lowerModules(test, modules)
+			_, lowerModulesError := lowerModules(test, modules)
 			var refused *Refused
-			if !errors.As(err, &refused) || !strings.HasSuffix(err.Error(), probe.file+":1:1: "+refusal) {
-				test.Errorf("got %v, want %s:1:1: %s", err, probe.file, refusal)
+			if !errors.As(lowerModulesError, &refused) ||
+				!strings.HasSuffix(lowerModulesError.Error(), probe.file+":1:1: "+refusal) {
+				test.Errorf("got %v, want %s:1:1: %s", lowerModulesError, probe.file, refusal)
 			}
 		})
 	}
@@ -306,13 +311,13 @@ func TestHostBindingPendingRowsAreNotYet(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerModules(
+			_, lowerModulesError := lowerModules(
 				test,
 				map[string]string{probe.file: probe.source, "main.ts": "import './" + probe.file + "';\n"},
 			)
 			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.HasSuffix(err.Error(), probe.want) {
-				test.Errorf("got %v, want %s", err, probe.want)
+			if !errors.As(lowerModulesError, &notYet) || !strings.HasSuffix(lowerModulesError.Error(), probe.want) {
+				test.Errorf("got %v, want %s", lowerModulesError, probe.want)
 			}
 		})
 	}

@@ -179,12 +179,13 @@ func TestGlobalObjectAsAValueIsNotYet(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerModules(test, map[string]string{
+			_, lowerModulesError := lowerModules(test, map[string]string{
 				"performance.ts": probe.imports + profilerDeclaration + handler + probe.definition + guarded,
 				"main.ts":        "import { run } from './performance.ts';\nrun('one');\n",
 			})
-			if err == nil || !strings.HasSuffix(err.Error(), "performance.ts:"+probe.where+": "+stop) {
-				test.Errorf("got %v, want performance.ts:%s: %s", err, probe.where, stop)
+			if lowerModulesError == nil ||
+				!strings.HasSuffix(lowerModulesError.Error(), "performance.ts:"+probe.where+": "+stop) {
+				test.Errorf("got %v, want performance.ts:%s: %s", lowerModulesError, probe.where, stop)
 			}
 		})
 	}
@@ -199,10 +200,10 @@ func TestGlobalObjectAsAReceiverIsAdmitted(test *testing.T) {
 	test.Parallel()
 	test.Run("global.gc read and called", func(test *testing.T) {
 		test.Parallel()
-		if _, err := lowerModules(test, map[string]string{
+		if _, lowerModulesError := lowerModules(test, map[string]string{
 			"main.ts": "import 'node:process';\nif (global.gc) {\n\tglobal.gc();\n}\nconsole.log(String(!!global.gc));\n",
-		}); err != nil {
-			test.Fatalf("want it to lower, got %v", err)
+		}); lowerModulesError != nil {
+			test.Fatalf("want it to lower, got %v", lowerModulesError)
 		}
 	})
 	for _, probe := range []struct{ name, source, want string }{
@@ -235,9 +236,9 @@ func TestGlobalObjectAsAReceiverIsAdmitted(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerModules(test, map[string]string{"main.ts": probe.source})
-			if err == nil || !strings.HasSuffix(err.Error(), probe.want) {
-				test.Errorf("got %v, want %s", err, probe.want)
+			_, lowerModulesError := lowerModules(test, map[string]string{"main.ts": probe.source})
+			if lowerModulesError == nil || !strings.HasSuffix(lowerModulesError.Error(), probe.want) {
+				test.Errorf("got %v, want %s", lowerModulesError, probe.want)
 			}
 		})
 	}
@@ -249,16 +250,16 @@ func loadedOrLowered(test *testing.T, modules map[string]string) error {
 	test.Helper()
 	directory := test.TempDir()
 	for name, source := range modules {
-		if err := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
-	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-	if err != nil {
-		return err
+	program, loadError := load.Load([]string{filepath.Join(directory, "main.ts")})
+	if loadError != nil {
+		return loadError
 	}
-	_, err = Lower(context.Background(), program)
-	return err
+	_, lowerError := Lower(context.Background(), program)
+	return lowerError
 }
 
 // A host binding's name read through an admitted receiver of the global object never lowers to a
@@ -307,9 +308,12 @@ func TestGlobalObjectReceiverReadsOfAHostBinding(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			err := loadedOrLowered(test, map[string]string{"main.ts": probe.main, "performance.ts": performance})
-			if err == nil || !strings.Contains(err.Error(), probe.want) {
-				test.Errorf("got %v, want %s", err, probe.want)
+			loadedOrLoweredError := loadedOrLowered(
+				test,
+				map[string]string{"main.ts": probe.main, "performance.ts": performance},
+			)
+			if loadedOrLoweredError == nil || !strings.Contains(loadedOrLoweredError.Error(), probe.want) {
+				test.Errorf("got %v, want %s", loadedOrLoweredError, probe.want)
 			}
 		})
 	}
@@ -341,9 +345,9 @@ func TestGlobalObjectTopLevelThis(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			err := loadedOrLowered(test, map[string]string{"main.ts": probe.main})
-			if err == nil || !strings.HasSuffix(err.Error(), probe.want) {
-				test.Errorf("got %v, want %s", err, probe.want)
+			loadedOrLoweredError := loadedOrLowered(test, map[string]string{"main.ts": probe.main})
+			if loadedOrLoweredError == nil || !strings.HasSuffix(loadedOrLoweredError.Error(), probe.want) {
+				test.Errorf("got %v, want %s", loadedOrLoweredError, probe.want)
 			}
 		})
 	}

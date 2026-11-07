@@ -32,23 +32,23 @@ func execute(test *testing.T, directory, name string, args ...string) execution 
 	test.Helper()
 	command := exec.Command(name, args...)
 	command.Dir = directory
-	output, err := os.CreateTemp(test.TempDir(), "stdout-")
-	if err != nil {
-		test.Fatal(err)
+	output, temporaryFileError := os.CreateTemp(test.TempDir(), "stdout-")
+	if temporaryFileError != nil {
+		test.Fatal(temporaryFileError)
 	}
 	defer output.Close()
 	command.Stdout = output
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
 	started := time.Now()
-	err = childguard.Run(command, childguard.Options{})
+	runError := childguard.Run(command, childguard.Options{})
 	duration := time.Since(started)
-	if err != nil || stderr.Len() != 0 {
-		test.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
+	if runError != nil || stderr.Len() != 0 {
+		test.Fatalf("%s %v: %v\n%s", name, args, runError, &stderr)
 	}
-	data, err := os.ReadFile(output.Name())
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(output.Name())
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return execution{data, duration}
 }
@@ -67,9 +67,9 @@ func copyPort(test *testing.T, file, from, to string) string {
 	test.Helper()
 	directory := test.TempDir()
 	for _, name := range portFiles {
-		data, err := os.ReadFile(name)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(name)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		source := string(data)
 		if name == file {
@@ -78,8 +78,8 @@ func copyPort(test *testing.T, file, from, to string) string {
 			}
 			source = strings.Replace(source, from, to, 1)
 		}
-		if err := os.WriteFile(filepath.Join(directory, name), []byte(source), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, name), []byte(source), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	return directory
@@ -87,9 +87,9 @@ func copyPort(test *testing.T, file, from, to string) string {
 
 func node(test *testing.T, directory, manifest string, count bool) execution {
 	test.Helper()
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	args := []string{
 		"--disable-warning=ExperimentalWarning",
@@ -140,25 +140,25 @@ func compilerSource(test *testing.T) string {
 			"https://github.com/microsoft/TypeScript.git",
 			directory,
 		)
-		output, err := command.CombinedOutput()
-		if err != nil {
-			test.Fatalf("clone pinned corpus: %v\n%s", err, output)
+		output, combinedOutputError := command.CombinedOutput()
+		if combinedOutputError != nil {
+			test.Fatalf("clone pinned corpus: %v\n%s", combinedOutputError, output)
 		}
 	}
 	// An environment override must be the same pinned checkout, not merely a directory with .ts files.
 	command := toolchain.GitCommand("-C", directory, "rev-parse", "HEAD")
-	output, err := command.Output()
-	if err != nil || strings.TrimSpace(string(output)) != compilerCommit {
-		test.Fatalf("TypeScript corpus must be v6.0.3 at %s, got %q (%v)", compilerCommit, output, err)
+	output, outputError := command.Output()
+	if outputError != nil || strings.TrimSpace(string(output)) != compilerCommit {
+		test.Fatalf("TypeScript corpus must be v6.0.3 at %s, got %q (%v)", compilerCommit, output, outputError)
 	}
 	return filepath.Join(directory, "src/compiler")
 }
 
 func sourceFiles(test *testing.T, directory string) []string {
 	test.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	if filepath.Clean(directory) == filepath.Join(root, "stage1") ||
 		filepath.Clean(directory) == filepath.Clean(filepath.Join(repository, "stage1")) {
@@ -195,14 +195,14 @@ func askedCorpus(test *testing.T) corpus {
 	add := func(mode, text string) {
 		path := filepath.Join(directory, fmt.Sprintf("edge-%05d.ts", generated))
 		generated++
-		if err := os.WriteFile(path, []byte(text), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(text), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		fmt.Fprintf(&edges, "%s\t%s\n", mode, path)
 	}
-	tokens, err := os.ReadFile(filepath.Join(repository, "cohere/TypeScript/tsc/internal/scanner/scanner.go"))
-	if err != nil {
-		test.Fatal(err)
+	tokens, readError := os.ReadFile(filepath.Join(repository, "cohere/TypeScript/tsc/internal/scanner/scanner.go"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	// The oracle's table determines coverage, independently of the port's table.
 	spellings := regexp.MustCompile(`"([^"\\]*(?:\\.[^"\\]*)*)":\s+ast.Kind(\w+)`).FindAllStringSubmatch(
@@ -213,9 +213,9 @@ func askedCorpus(test *testing.T) corpus {
 		test.Fatal("oracle token table was not found")
 	}
 	for _, fields := range spellings {
-		spelling, err := strconv.Unquote(`"` + fields[1] + `"`)
-		if err != nil {
-			test.Fatal(err)
+		spelling, unquoteError := strconv.Unquote(`"` + fields[1] + `"`)
+		if unquoteError != nil {
+			test.Fatal(unquoteError)
 		}
 		add("scan", spelling)
 		if strings.Contains(fields[2], "Token") {
@@ -361,11 +361,11 @@ func askedCorpus(test *testing.T) corpus {
 		add("scan", text)
 	}
 	// Every Unicode identifier range's two ends, one before and one after, and one stride.
-	table, err := os.ReadFile(
+	table, readError := os.ReadFile(
 		filepath.Join(repository, "cohere/TypeScript/tsc/internal/stringutil/identifier_parts_generated.go"),
 	)
-	if err != nil {
-		test.Fatal(err)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	ranges := regexp.MustCompile(`\{(0x[0-9A-Fa-f]+), (0x[0-9A-Fa-f]+), (\d+)\}`).FindAllStringSubmatch(
 		string(table),
@@ -376,17 +376,17 @@ func askedCorpus(test *testing.T) corpus {
 	}
 	for _, match := range ranges {
 		fields := match[1:]
-		low, err := strconv.ParseInt(fields[0], 0, 32)
-		if err != nil {
-			test.Fatal(err)
+		low, parseError := strconv.ParseInt(fields[0], 0, 32)
+		if parseError != nil {
+			test.Fatal(parseError)
 		}
-		high, err := strconv.ParseInt(fields[1], 0, 32)
-		if err != nil {
-			test.Fatal(err)
+		high, parseError := strconv.ParseInt(fields[1], 0, 32)
+		if parseError != nil {
+			test.Fatal(parseError)
 		}
-		stride, err := strconv.Atoi(strings.TrimSuffix(fields[2], ","))
-		if err != nil {
-			test.Fatal(err)
+		stride, parseError := strconv.Atoi(strings.TrimSuffix(fields[2], ","))
+		if parseError != nil {
+			test.Fatal(parseError)
 		}
 		for _, point := range []int64{low - 1, low, low + int64(stride), high, high + 1} {
 			if point < 0 || point > 0x10ffff || point >= 0xd800 && point <= 0xdfff {
@@ -444,8 +444,8 @@ func askedCorpus(test *testing.T) corpus {
 	all.WriteString(edges.String())
 	write := func(name, text string) string {
 		path := filepath.Join(directory, name)
-		if err := os.WriteFile(path, []byte(text), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(text), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		return path
 	}
@@ -469,9 +469,9 @@ func TestPerformance(test *testing.T) {
 	directory := copyPort(test, "", "", "")
 	binary := buildPort(test, directory, false)
 	want := execute(test, "", oracle, "--manifest", asked.compiler, "--count").output
-	tokens, err := strconv.Atoi(strings.TrimSpace(string(want)))
-	if err != nil {
-		test.Fatal(err)
+	tokens, parseError := strconv.Atoi(strings.TrimSpace(string(want)))
+	if parseError != nil {
+		test.Fatal(parseError)
 	}
 	best := map[string]time.Duration{}
 	for round := 0; round < 5; round++ {

@@ -9,17 +9,17 @@ import (
 
 func TestProcessEnvironmentPrototypeKeysMatchNode(test *testing.T) {
 	test.Parallel()
-	data, err := exec.Command(
+	data, combinedOutputError := exec.Command(
 		"node",
 		"-p",
 		"JSON.stringify(Object.getOwnPropertyNames(Object.prototype))",
 	).CombinedOutput()
-	if err != nil {
-		test.Fatalf("Node prototype inventory: %v: %s", err, data)
+	if combinedOutputError != nil {
+		test.Fatalf("Node prototype inventory: %v: %s", combinedOutputError, data)
 	}
 	var keys []string
-	if err := json.Unmarshal(data, &keys); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &keys); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if !slices.Equal(keys, NodeEnvironmentPrototypeKeys[:]) {
 		test.Fatalf(

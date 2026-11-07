@@ -44,26 +44,26 @@ func witnessScriptKindLoweredProduct(test *testing.T) string {
 			return fmt.Errorf("no-debugger descriptor count: %d", len(selected))
 		}
 		ts, _ := registry.Render(selected)
-		if err := os.WriteFile(filepath.Join(source, ".generated/registry.ts"), ts, 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(filepath.Join(source, ".generated/registry.ts"), ts, 0644); writeError != nil {
+			return writeError
 		}
-		program, err := load.Load([]string{filepath.Join(source, "main.ts")})
-		if err != nil {
-			return err
+		program, loadError := load.Load([]string{filepath.Join(source, "main.ts")})
+		if loadError != nil {
+			return loadError
 		}
-		result, err := lower.Lower(context.Background(), program)
-		if err != nil {
-			return err
+		result, lowerError := lower.Lower(context.Background(), program)
+		if lowerError != nil {
+			return lowerError
 		}
-		if err := os.WriteFile(filepath.Join(out, "main.c"), []byte(native.C(result)), 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(filepath.Join(out, "main.c"), []byte(native.C(result)), 0644); writeError != nil {
+			return writeError
 		}
-		if err := os.WriteFile(
+		if writeError := os.WriteFile(
 			filepath.Join(out, "lint.mjs"),
 			[]byte(javascript.JavaScript(result)),
 			0644,
-		); err != nil {
-			return err
+		); writeError != nil {
+			return writeError
 		}
 		// The source's imports name this checkout for the lowering above; the product names it <repository> (#tqrqx60).
 		return buildcache.RelativeFiles(out)
@@ -79,9 +79,9 @@ func witnessScriptKindNativeProduct(test *testing.T) string {
 	inputs.Flags = append(native.Flags(options), "Split=true")
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
 	return buildcache.Product(test, inputs, func(out string) error {
-		data, err := os.ReadFile(filepath.Join(lowered, "main.c"))
-		if err != nil {
-			return err
+		data, readError := os.ReadFile(filepath.Join(lowered, "main.c"))
+		if readError != nil {
+			return readError
 		}
 		return native.Build(string(data), filepath.Join(out, "scanner"), options)
 	})

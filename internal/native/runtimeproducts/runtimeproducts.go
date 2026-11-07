@@ -139,15 +139,15 @@ const Groups = 3
 // Supply gives native the archive a build asks for from its product: built here the first time on a machine that
 // builds (one unit at a time, as a test waits on it), never on a runner, which reads it or fails as not built.
 func Supply(request native.RuntimeRequest) (string, error) {
-	if err := Declared(request); err != nil {
-		return "", err
+	if declaredError := Declared(request); declaredError != nil {
+		return "", declaredError
 	}
 	// Lean (#mmpt615): an archive's build takes nothing but its request, made from the runtime's files Inputs names, so
 	// a test that asks for it mid-run never keys it by what that test read before. Its compiles are bounded by the
 	// process's jobserver, handed to the build as a value (#yzwm4rj).
-	jobserver, err := ccjobserver.Process()
-	if err != nil {
-		return "", err
+	jobserver, processError := ccjobserver.Process()
+	if processError != nil {
+		return "", processError
 	}
 	return buildcache.LeanGet(
 		Inputs(request),
@@ -218,13 +218,13 @@ func Build(test *testing.T, name string, group int) {
 		if index%Groups != group {
 			continue
 		}
-		request, err := native.RuntimeRequestFor(variant.Options, set.Features...)
-		if err != nil {
-			test.Fatal(err)
+		request, runtimeRequestForError := native.RuntimeRequestFor(variant.Options, set.Features...)
+		if runtimeRequestForError != nil {
+			test.Fatal(runtimeRequestForError)
 		}
-		jobserver, err := ccjobserver.Process()
-		if err != nil {
-			test.Fatal(err)
+		jobserver, processError := ccjobserver.Process()
+		if processError != nil {
+			test.Fatal(processError)
 		}
 		buildcache.LeanProduct(
 			test,
@@ -245,13 +245,13 @@ func Find(test *testing.T, name string, group int, owner string) {
 		if index%Groups != group {
 			continue
 		}
-		request, err := native.RuntimeRequestFor(variant.Options, set.Features...)
-		if err != nil {
-			test.Fatal(err)
+		request, runtimeRequestForError := native.RuntimeRequestFor(variant.Options, set.Features...)
+		if runtimeRequestForError != nil {
+			test.Fatal(runtimeRequestForError)
 		}
-		jobserver, err := ccjobserver.Process()
-		if err != nil {
-			test.Fatal(err)
+		jobserver, processError := ccjobserver.Process()
+		if processError != nil {
+			test.Fatal(processError)
 		}
 		what := fmt.Sprintf("the %s runtime archive for %v", variant.Name, set.Features)
 		buildcache.BuiltElsewhere(
@@ -292,13 +292,13 @@ func Archive(test testing.TB, name string, features []string, owners string, gro
 			index%Groups,
 		)
 	}
-	request, err := native.RuntimeRequestFor(variant.Options, Sets[index].Features...)
-	if err != nil {
-		test.Fatal(err)
+	request, runtimeRequestForError := native.RuntimeRequestFor(variant.Options, Sets[index].Features...)
+	if runtimeRequestForError != nil {
+		test.Fatal(runtimeRequestForError)
 	}
-	jobserver, err := ccjobserver.Process()
-	if err != nil {
-		test.Fatal(err)
+	jobserver, processError := ccjobserver.Process()
+	if processError != nil {
+		test.Fatal(processError)
 	}
 	what := fmt.Sprintf("the %s runtime archive for %v", variant.Name, features)
 	return buildcache.BuiltElsewhere(
@@ -354,13 +354,13 @@ func leanArchive(
 		test.Fatalf("runtimeproducts: undeclared %s runtime options: %+v: add them to %s", kind, options, list)
 	}
 	skipUnlessSet(test, variants[index])
-	request, err := native.RuntimeRequestFor(options, features...)
-	if err != nil {
-		test.Fatal(err)
+	request, runtimeRequestForError := native.RuntimeRequestFor(options, features...)
+	if runtimeRequestForError != nil {
+		test.Fatal(runtimeRequestForError)
 	}
-	jobserver, err := ccjobserver.Process()
-	if err != nil {
-		test.Fatal(err)
+	jobserver, processError := ccjobserver.Process()
+	if processError != nil {
+		test.Fatal(processError)
 	}
 	return buildcache.LeanProduct(
 		test,

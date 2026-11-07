@@ -67,12 +67,12 @@ func TestCacheAtomicBytes(test *testing.T) {
 	if calls.Load() != 1 {
 		test.Fatalf("executed %d times", calls.Load())
 	}
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		filepath.Join(cache.directory, "same.json"),
 		[]byte(`{"Key":"same","Digest":"wrong","Value":{}}`),
 		0600,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
 	cache.reuse("same", func() (execution, bool) { calls.Add(1); return want, true })
 	if calls.Load() != 2 {
@@ -98,7 +98,7 @@ func TestCacheBypass(test *testing.T) {
 		for range 2 {
 			cache.observe("transient", func() (execution, bool) { return result, true })
 		}
-		if _, err := os.Stat(filepath.Join(cache.directory, "transient.json")); !os.IsNotExist(err) {
+		if _, statError := os.Stat(filepath.Join(cache.directory, "transient.json")); !os.IsNotExist(statError) {
 			test.Fatal("transient failure cached")
 		}
 	}
@@ -106,16 +106,16 @@ func TestCacheBypass(test *testing.T) {
 
 func TestParallelCachedMatchesSerial(test *testing.T) {
 	test.Parallel()
-	e, err := prepare(test, "testdata/mini", test.TempDir())
-	if err != nil {
-		test.Fatal(err)
+	e, prepareError := prepare(test, "testdata/mini", test.TempDir())
+	if prepareError != nil {
+		test.Fatal(prepareError)
 	}
 	e.cache = &resultCache{directory: test.TempDir()}
 	// Prime the passed program, then prove that the uncached serial run
 	// executes it again instead of consuming that observation.
-	text, err := os.ReadFile("testdata/mini/test/pass/pad.js")
-	if err != nil {
-		test.Fatal(err)
+	text, readError := os.ReadFile("testdata/mini/test/pass/pad.js")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if got := e.attempt(classify("pass/pad.js", string(text), false)); got.Kind != outcomePass {
 		test.Fatal(got)
@@ -125,9 +125,9 @@ func TestParallelCachedMatchesSerial(test *testing.T) {
 	var serialLog bytes.Buffer
 	e.log = &serialLog
 	e.jobs = 1
-	serial, err := e.runFilter("", 0, false)
-	if err != nil {
-		test.Fatal(err)
+	serial, runFilterError := e.runFilter("", 0, false)
+	if runFilterError != nil {
+		test.Fatal(runFilterError)
 	}
 	if serial.Pass == 0 || serial.Refused == 0 || serial.Skipped == 0 || serial.Fail == 0 || serial.Crashed == 0 {
 		test.Fatalf("fixture lacks verdict coverage: %+v", serial)
@@ -135,8 +135,8 @@ func TestParallelCachedMatchesSerial(test *testing.T) {
 	assertFreshCacheProfile(test, e.profile)
 	document := reportDocument{Filters: []filterReport{serial}}
 	var serialJSON, serialTable bytes.Buffer
-	if err := writeJSON(&serialJSON, document); err != nil {
-		test.Fatal(err)
+	if writeJsonError := writeJSON(&serialJSON, document); writeJsonError != nil {
+		test.Fatal(writeJsonError)
 	}
 	printTables(&serialTable, document)
 	e.cache.bypass = false
@@ -146,9 +146,9 @@ func TestParallelCachedMatchesSerial(test *testing.T) {
 		e.profile = newRunProfile()
 		var log, encoded, table bytes.Buffer
 		e.log = &log
-		parallel, err := e.runFilter("", 0, false)
-		if err != nil {
-			test.Fatal(err)
+		parallel, runFilterError := e.runFilter("", 0, false)
+		if runFilterError != nil {
+			test.Fatal(runFilterError)
 		}
 		if round == 1 {
 			hit := false
@@ -164,8 +164,8 @@ func TestParallelCachedMatchesSerial(test *testing.T) {
 			}
 		}
 		document.Filters = []filterReport{parallel}
-		if err := writeJSON(&encoded, document); err != nil {
-			test.Fatal(err)
+		if writeJsonError := writeJSON(&encoded, document); writeJsonError != nil {
+			test.Fatal(writeJsonError)
 		}
 		printTables(&table, document)
 		if !bytes.Equal(serialJSON.Bytes(), encoded.Bytes()) ||
@@ -178,14 +178,14 @@ func TestParallelCachedMatchesSerial(test *testing.T) {
 	e.jobs = 1
 	var log bytes.Buffer
 	e.log = &log
-	limited, err := e.runFilter("", 1, false)
-	if err != nil {
-		test.Fatal(err)
+	limited, runFilterError := e.runFilter("", 1, false)
+	if runFilterError != nil {
+		test.Fatal(runFilterError)
 	}
 	e.jobs = 4
-	parallel, err := e.runFilter("", 1, false)
-	if err != nil {
-		test.Fatal(err)
+	parallel, runFilterError := e.runFilter("", 1, false)
+	if runFilterError != nil {
+		test.Fatal(runFilterError)
 	}
 	if !reflect.DeepEqual(limited, parallel) {
 		test.Fatal("parallel limit selected different tests")
@@ -196,36 +196,40 @@ func TestOrderedProgress(test *testing.T) {
 	test.Parallel()
 	corpus := test.TempDir()
 	directory := filepath.Join(corpus, "test")
-	if err := os.MkdirAll(directory, 0700); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(directory, 0700); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	skipped, err := os.ReadFile("testdata/mini/test/skip/negative.js")
-	if err != nil {
-		test.Fatal(err)
+	skipped, readError := os.ReadFile("testdata/mini/test/skip/negative.js")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	for index := 0; index < 50; index++ {
-		if err := os.WriteFile(filepath.Join(directory, fmt.Sprintf("%02d.js", index)), skipped, 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(
+			filepath.Join(directory, fmt.Sprintf("%02d.js", index)),
+			skipped,
+			0600,
+		); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
-	passed, err := os.ReadFile("testdata/mini/test/pass/pad.js")
-	if err != nil {
-		test.Fatal(err)
+	passed, readError := os.ReadFile("testdata/mini/test/pass/pad.js")
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	if err := os.WriteFile(filepath.Join(directory, "50.js"), passed, 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(directory, "50.js"), passed, 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	e, err := prepare(test, corpus, test.TempDir())
-	if err != nil {
-		test.Fatal(err)
+	e, prepareError := prepare(test, corpus, test.TempDir())
+	if prepareError != nil {
+		test.Fatal(prepareError)
 	}
 	e.inProcess = true
 	e.jobs = 4
 	var log bytes.Buffer
 	e.log = &log
-	report, err := e.runFilter("", 0, false)
-	if err != nil {
-		test.Fatal(err)
+	report, runFilterError := e.runFilter("", 0, false)
+	if runFilterError != nil {
+		test.Fatal(runFilterError)
 	}
 	want := " 50/51 pass=0 fail=0 refused=0 crashed=0 skipped=50\n 51/51 pass=1 fail=0 refused=0 crashed=0 skipped=50\n"
 	if log.String() != want || report.Pass != 1 || report.Skipped != 50 {
@@ -235,18 +239,18 @@ func TestOrderedProgress(test *testing.T) {
 
 func TestUnavailableCacheStillRuns(test *testing.T) {
 	test.Parallel()
-	e, err := prepare(test, "testdata/mini", test.TempDir())
-	if err != nil {
-		test.Fatal(err)
+	e, prepareError := prepare(test, "testdata/mini", test.TempDir())
+	if prepareError != nil {
+		test.Fatal(prepareError)
 	}
 	path := filepath.Join(test.TempDir(), "not-a-directory")
-	if err := os.WriteFile(path, []byte("file"), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte("file"), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	e.cache = &resultCache{directory: path}
-	source, err := os.ReadFile("testdata/mini/test/pass/pad.js")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("testdata/mini/test/pass/pad.js")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	result := e.attempt(classify("pass/pad.js", string(source), false))
 	if result.Kind != outcomePass {
@@ -256,9 +260,9 @@ func TestUnavailableCacheStillRuns(test *testing.T) {
 
 func TestImportedInputsRunFresh(t *testing.T) {
 	t.Parallel()
-	e, err := prepare(t, "testdata/mini", t.TempDir())
-	if err != nil {
-		t.Fatal(err)
+	e, prepareError := prepare(t, "testdata/mini", t.TempDir())
+	if prepareError != nil {
+		t.Fatal(prepareError)
 	}
 	e.cache = &resultCache{directory: t.TempDir()}
 	input := filepath.Join(t.TempDir(), "input")
@@ -269,8 +273,8 @@ func TestImportedInputsRunFresh(t *testing.T) {
 	test := classify("input.js", source, false)
 	var reasons []string
 	for _, word := range []string{"before", "after"} {
-		if err := os.WriteFile(input, []byte(word), 0600); err != nil {
-			t.Fatal(err)
+		if writeError := os.WriteFile(input, []byte(word), 0600); writeError != nil {
+			t.Fatal(writeError)
 		}
 		result := e.attempt(test)
 		if result.Kind != outcomeFail {
@@ -289,8 +293,8 @@ func TestCompilerCacheProgram(test *testing.T) {
 	path := filepath.Join(test.TempDir(), "program.a")
 	for _, word := range []string{"before", "after"} {
 		source := program(fmt.Sprintf("console.log(%q);", word))
-		if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 		key := compilerResultKey(source, "compiler", path, "context")
 		compiled := cache.reuse(key, func() (execution, bool) {
@@ -301,8 +305,8 @@ func TestCompilerCacheProgram(test *testing.T) {
 			return value, true
 		})
 		binary := filepath.Join(test.TempDir(), "program")
-		if err := native.Build(compiled.Stdout, binary, native.Options{}); err != nil {
-			test.Fatal(err)
+		if buildError := native.Build(compiled.Stdout, binary, native.Options{}); buildError != nil {
+			test.Fatal(buildError)
 		}
 		result := runCommand(15*time.Second, nil, binary)
 		if result.Stdout != word+"\n" {
@@ -330,16 +334,16 @@ func TestCompilerCacheProgram(test *testing.T) {
 
 func TestCompilerCacheAcrossScratchDirectories(t *testing.T) {
 	t.Parallel()
-	e, err := prepare(t, "testdata/mini", t.TempDir())
-	if err != nil {
-		t.Fatal(err)
+	e, prepareError := prepare(t, "testdata/mini", t.TempDir())
+	if prepareError != nil {
+		t.Fatal(prepareError)
 	}
 	e.cache = &resultCache{directory: t.TempDir()}
 	e.compiler = &compilerWorker{}
 	defer e.compiler.close()
-	source, err := os.ReadFile("testdata/mini/test/pass/pad.js")
-	if err != nil {
-		t.Fatal(err)
+	source, readError := os.ReadFile("testdata/mini/test/pass/pad.js")
+	if readError != nil {
+		t.Fatal(readError)
 	}
 	test := classify("pass/pad.js", string(source), false)
 	if result := e.attempt(test); result.Kind != outcomePass {
@@ -361,18 +365,18 @@ func TestCompilerCacheAcrossScratchDirectories(t *testing.T) {
 
 func TestCacheBypassPreservesIdentity(test *testing.T) {
 	test.Parallel()
-	tools, err := resolveTools()
-	if err != nil {
-		test.Fatal(err)
+	tools, resolveToolsError := resolveTools()
+	if resolveToolsError != nil {
+		test.Fatal(resolveToolsError)
 	}
-	before, versionBefore, contextBefore, err := prepareCache("../..", tools)
-	if err != nil {
-		test.Fatal(err)
+	before, versionBefore, contextBefore, prepareCacheError := prepareCache("../..", tools)
+	if prepareCacheError != nil {
+		test.Fatal(prepareCacheError)
 	}
 	before.bypass = false
-	after, versionAfter, contextAfter, err := prepareCache("../..", tools)
-	if err != nil {
-		test.Fatal(err)
+	after, versionAfter, contextAfter, prepareCacheError := prepareCache("../..", tools)
+	if prepareCacheError != nil {
+		test.Fatal(prepareCacheError)
 	}
 	after.bypass = true
 	if contextBefore != contextAfter || before.nodeContext != after.nodeContext {
@@ -404,17 +408,17 @@ func TestCacheBypassPreservesIdentity(test *testing.T) {
 // derived. A child process, because the working directory and environment are the process's own.
 func runnerContext(test *testing.T, directory string, root string, environment []string) string {
 	test.Helper()
-	executable, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	executable, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
 	command := exec.Command(executable, "-test.run=^TestRunnerLocationHelper$")
 	command.Dir = directory
 	command.Env = append(append([]string{}, environment...),
 		"PWD="+directory, "ADAMIC_TEST262_CONTEXT_HELPER=1", "ADAMIC_TEST262_CONTEXT_ROOT="+root)
-	output, err := command.CombinedOutput()
-	if err != nil {
-		test.Fatalf("helper: %v: %s", err, output)
+	output, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("helper: %v: %s", combinedOutputError, output)
 	}
 	return string(output)
 }
@@ -427,8 +431,8 @@ func TestContextIgnoresCheckoutLocation(test *testing.T) {
 	var packages []string
 	for _, checkout := range []string{"a/adamic", "bb/cc/adamic"} {
 		directory := filepath.Join(scratch, filepath.FromSlash(checkout), "cmd", "adamic-test262")
-		if err := os.MkdirAll(directory, 0700); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(directory, 0700); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 		packages = append(packages, directory)
 	}
@@ -447,9 +451,9 @@ func TestContextIgnoresCheckoutLocation(test *testing.T) {
 // A variable no child reads leaves the context alone; one that changes what Node prints does not.
 func TestContextEnvironment(test *testing.T) {
 	test.Parallel()
-	directory, err := os.Getwd()
-	if err != nil {
-		test.Fatal(err)
+	directory, workingDirectoryError := os.Getwd()
+	if workingDirectoryError != nil {
+		test.Fatal(workingDirectoryError)
 	}
 	var environment []string
 	for _, variable := range os.Environ() {
@@ -536,16 +540,16 @@ func TestChildrenSeeOnlyWhatTheKeyNames(test *testing.T) {
 
 func TestCacheBypassProcessDefault(test *testing.T) {
 	test.Parallel()
-	executable, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	executable, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
 	for _, value := range []string{"0", "1"} {
 		command := exec.Command(executable, "-test.run=^TestCacheBypassProcessDefaultHelper$")
 		command.Env = append(os.Environ(), "ADAMIC_TEST262_CACHE_BYPASS_HELPER=1", "ADAMIC_GATE_UNCACHED="+value)
-		output, err := command.CombinedOutput()
-		if err != nil {
-			test.Fatalf("process default %s: %v: %s", value, err, output)
+		output, combinedOutputError := command.CombinedOutput()
+		if combinedOutputError != nil {
+			test.Fatalf("process default %s: %v: %s", value, combinedOutputError, output)
 		}
 	}
 }
@@ -555,13 +559,13 @@ func TestCacheBypassProcessDefaultHelper(test *testing.T) {
 	if os.Getenv("ADAMIC_TEST262_CACHE_BYPASS_HELPER") != "1" {
 		return
 	}
-	tools, err := resolveTools()
-	if err != nil {
-		test.Fatal(err)
+	tools, resolveToolsError := resolveTools()
+	if resolveToolsError != nil {
+		test.Fatal(resolveToolsError)
 	}
-	cache, _, _, err := prepareCache("../..", tools)
-	if err != nil {
-		test.Fatal(err)
+	cache, _, _, prepareCacheError := prepareCache("../..", tools)
+	if prepareCacheError != nil {
+		test.Fatal(prepareCacheError)
 	}
 	want := os.Getenv("ADAMIC_GATE_UNCACHED") == "1"
 	if cache.bypass != want {
@@ -572,8 +576,8 @@ func TestCacheBypassProcessDefaultHelper(test *testing.T) {
 	if want {
 		next = "0"
 	}
-	if err := os.Setenv("ADAMIC_GATE_UNCACHED", next); err != nil {
-		test.Fatal(err)
+	if setenvError := os.Setenv("ADAMIC_GATE_UNCACHED", next); setenvError != nil {
+		test.Fatal(setenvError)
 	}
 	cache.directory = test.TempDir()
 	calls := 0

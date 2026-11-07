@@ -16,9 +16,9 @@ func jsonEncoderSource(test *testing.T) string {
 		"internal/native/runtime/json_stringify.c",
 		"internal/oracle/testdata/json_encoder_contract/runtime.c",
 	} {
-		data, err := os.ReadFile(filepath.Join(repository, path))
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(filepath.Join(repository, path))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		code.Write(data)
 		code.WriteByte('\n')
@@ -32,17 +32,19 @@ func jsonEncoderSource(test *testing.T) string {
 }
 
 func jsonEncoderContract(test *testing.T, backend int) {
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/json_encoder_contract/contract.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/json_encoder_contract/contract.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	want := onNodeWith(test, inputRun{}, path)
 	code := jsonEncoderSource(test)
 	if backend == 0 {
 		test.Run("release", func(test *testing.T) {
 			binary := filepath.Join(test.TempDir(), "probe")
-			if err := native.Build(code, binary, native.Options{}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(code, binary, native.Options{}); buildError != nil {
+				test.Fatal(buildError)
 			}
 			if difference := disagreement(want, execute(test, binary)); difference != "" {
 				test.Fatal(difference)
@@ -93,8 +95,8 @@ func jsonEncoderContract(test *testing.T, backend int) {
 				}
 			}
 			binary := filepath.Join(test.TempDir(), "probe")
-			if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(source, binary, native.Options{Sanitize: true}); buildError != nil {
+				test.Fatal(buildError)
 			}
 			actual := executeWith(
 				test,

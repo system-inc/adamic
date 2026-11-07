@@ -27,9 +27,9 @@ func wholeMutantsShard(test *testing.T, index int) {
 	}
 	mutation := mutations[index]
 	manifest := wholeManifest(test, []string{`for (const x of xs) f(x); import type {X} from "x"; type T = keyof X;`})
-	directory, err := filepath.Abs(".")
-	if err != nil {
-		test.Fatal(err)
+	directory, absolutePathError := filepath.Abs(".")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	productStarted := time.Now()
 	oracle := wholeMutantOracleProduct(test)

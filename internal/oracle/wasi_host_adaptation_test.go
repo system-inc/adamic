@@ -60,8 +60,8 @@ func wasiFileAdapter(test *testing.T, index int, wasm bool) {
 	probe := wasiFileAdapters[index]
 	path := filepath.Join(test.TempDir(), "main.a")
 	source := `import * as fs from 'node:fs'; try {` + probe.node + `} catch(error) {console.log(error.code);}`
-	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	truth := onNodeWith(test, inputRun{}, path)
 	code := fmt.Sprintf(`#include "adamic.h"
@@ -84,8 +84,8 @@ int main(void) {
 	}
 	observe := func(code string) run {
 		binary := filepath.Join(test.TempDir(), "program")
-		if err := native.Build(code, binary, options); err != nil {
-			test.Fatal(err)
+		if buildError := native.Build(code, binary, options); buildError != nil {
+			test.Fatal(buildError)
 		}
 		if wasm {
 			return execute(
@@ -104,9 +104,9 @@ int main(void) {
 	if !wasm {
 		return
 	}
-	data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/node_fs_file.c"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(repository, "internal/native/runtime/node_fs_file.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	implementation := wasiFileMutantImplementation(test, data)
 	if strings.Count(implementation, probe.before) != 1 {
@@ -129,23 +129,27 @@ func TestWASIHostBuildBoundaryNodeMutant(test *testing.T) {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
 	path := filepath.Join(test.TempDir(), "main.a")
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		path,
 		[]byte(`import process from 'node:process'; console.log(process.pid > 0 ? "true" : "false");`),
 		0600,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
 	truth := onNodeWith(test, inputRun{}, path)
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	code := native.C(program)
 	var refused *native.TargetRefused
-	err = native.Build(code, filepath.Join(test.TempDir(), "refused.wasm"), native.Options{Target: "wasm32-wasi"})
-	if !errors.As(err, &refused) || refused.Member != "process.pid" {
-		test.Fatalf("want pid target refusal: %v", err)
+	buildError := native.Build(
+		code,
+		filepath.Join(test.TempDir(), "refused.wasm"),
+		native.Options{Target: "wasm32-wasi"},
+	)
+	if !errors.As(buildError, &refused) || refused.Member != "process.pid" {
+		test.Fatalf("want pid target refusal: %v", buildError)
 	}
 	if strings.Count(code, "adamic_node_pid()") != 1 {
 		test.Fatal("pid mutant anchor changed")
@@ -187,10 +191,10 @@ func TestWASIHostTimestampPrecisionNodeMutant(test *testing.T) {
 	directory := test.TempDir()
 	file := filepath.Join(directory, "timestamp")
 	path := filepath.Join(directory, "main.a")
-	if err := os.WriteFile(path, []byte(
+	if writeError := os.WriteFile(path, []byte(
 		`import * as fs from 'node:fs'; const path=process.argv[2]; fs.writeFileSync(path,''); fs.utimesSync(path,1000.5,1000.5); console.log(fs.statSync(path).mtimeMs === 1000500 ? 'true' : 'false');`,
-	), 0600); err != nil {
-		test.Fatal(err)
+	), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	truth := onNodeWith(test, inputRun{arguments: []string{file}}, path)
 	source := fmt.Sprintf(`#include "adamic.h"
@@ -205,8 +209,8 @@ int main(void) {
 `, file)
 	// The control must refuse the unsupported precision, never round it silently.
 	binary := filepath.Join(directory, "control.wasm")
-	if err := native.Build(source, binary, native.Options{Target: "wasm32-wasi"}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(source, binary, native.Options{Target: "wasm32-wasi"}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	actual := execute(
 		test,
@@ -219,9 +223,9 @@ int main(void) {
 		wasiRefusalReason(actual) != "fs.utimesSync timestamp precision or range is unavailable" {
 		test.Fatalf("want precision refusal: %+v", actual)
 	}
-	data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/node_fs_file.c"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(repository, "internal/native/runtime/node_fs_file.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	implementation := wasiFileMutantImplementation(test, data)
 	base := strings.Index(implementation, "static double fs_utimes")
@@ -252,9 +256,9 @@ func wasiFileMutantImplementation(test *testing.T, data []byte) string {
 	if strings.Count(string(data), include) != 1 {
 		test.Fatal("watch implementation include changed")
 	}
-	header, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/node_watch_file_impl.h"))
-	if err != nil {
-		test.Fatal(err)
+	header, readError := os.ReadFile(filepath.Join(repository, "internal/native/runtime/node_watch_file_impl.h"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return strings.Replace(string(data), include, string(header), 1)
 }

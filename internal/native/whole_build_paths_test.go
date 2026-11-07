@@ -17,12 +17,12 @@ import (
 func TestAWholeBuildNamesNoTemporaryObject(test *testing.T) {
 	test.Parallel()
 	binary := filepath.Join(test.TempDir(), "whole")
-	if err := Build(splitProbe, binary, Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(splitProbe, binary, Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
-	content, err := os.ReadFile(binary)
-	if err != nil {
-		test.Fatal(err)
+	content, readError := os.ReadFile(binary)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if temporary := regexp.MustCompile(`main-[0-9A-Za-z]+\.o`).Find(content); temporary != nil {
 		test.Errorf("the binary names clang's temporary object %s", temporary)

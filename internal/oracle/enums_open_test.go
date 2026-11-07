@@ -61,13 +61,15 @@ func TestNumericEnumNeverPathsPinned_index(test *testing.T) {
 // numericEnumNeverPathPinned holds enums_open_never_<name>.a to its output on the native and JavaScript backends.
 func numericEnumNeverPathPinned(test *testing.T, name string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/enums_open_never_"+name+".a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/enums_open_never_"+name+".a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	stdout := "before\n"
 	if name == "implicit" {
@@ -88,13 +90,13 @@ func numericEnumNeverPathPinned(test *testing.T, name string) {
 
 func TestNumericEnumNeverPinned(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/enums_open_never.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/enums_open_never.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	want := run{
 		stdout:   []byte("before\n"),

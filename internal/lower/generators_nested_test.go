@@ -21,7 +21,7 @@ import (
 // dropped, and every consumer stops as a value road instead.
 func TestNestedGeneratorsLower(test *testing.T) {
 	test.Parallel()
-	program, err := lowerSource(test, `function consume(items: Iterable<string>): string {
+	program, lowerSourceError := lowerSource(test, `function consume(items: Iterable<string>): string {
 	let joined = '';
 	for (const item of items) {
 		joined += item;
@@ -54,8 +54,8 @@ function host(seed: string): string {
 }
 console.log(host('s'));
 `)
-	if err != nil {
-		test.Fatal(err)
+	if lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
 	generator := -1
 	for index, function := range program.Functions {
@@ -138,8 +138,8 @@ console.log(host('s'));
 			carriers,
 		)
 	}
-	if err := checkGeneratorRoads(program); err != nil {
-		test.Errorf("the lowered program's roads: %v", err)
+	if checkGeneratorRoadsError := checkGeneratorRoads(program); checkGeneratorRoadsError != nil {
+		test.Errorf("the lowered program's roads: %v", checkGeneratorRoadsError)
 	}
 	// A sibling's write to a captured local is the sibling's own, which the generator's next step
 	// reads; and a plain nested function* infers a void TReturn, which a one-read Iterable<T>
@@ -151,8 +151,8 @@ console.log(host('s'));
 		"a sibling writes a captured local":                      "function host(): void {\nlet count = 0;\nfunction bump(): void { count++; }\nfunction* counted(): Generator<number, void, undefined> { bump(); yield count; bump(); yield count; }\nfor (const value of counted()) console.log(String(value));\n}\nhost();\n",
 		"a plain nested function* into an Iterable<T> parameter": "function consume(items: Iterable<number>): number { let total = 0; for (const item of items) { total += item; } return total; }\nfunction host(): void {\nfunction* numbers() { yield 1; yield 2; }\nconsole.log(String(consume(numbers())));\n}\nhost();\n",
 	} {
-		if _, err := lowerSource(test, source); err != nil {
-			test.Errorf("%s: %v", name, err)
+		if _, lowerSourceError := lowerSource(test, source); lowerSourceError != nil {
+			test.Errorf("%s: %v", name, lowerSourceError)
 		}
 	}
 }
@@ -271,22 +271,25 @@ func TestNestedGeneratorRoadsAreNotYet(test *testing.T) {
 	for _, probe := range probes {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var gap *NotYet
-			if !errors.As(err, &gap) || !strings.Contains(gap.What, probe.reason) {
-				test.Fatalf("got %v, want a NotYet saying %q", err, probe.reason)
+			if !errors.As(lowerSourceError, &gap) || !strings.Contains(gap.What, probe.reason) {
+				test.Fatalf("got %v, want a NotYet saying %q", lowerSourceError, probe.reason)
 			}
 		})
 	}
 	// A plain function* infers a void TReturn, which destructuring reads: adamic/no-void-read refuses
 	// it before lowering, for a nested generator's call as for a module one's.
-	_, err := lowerSource(
+	_, lowerSourceError := lowerSource(
 		test,
 		host("function* plain() { yield 1; }\nconst [first] = plain();\nconsole.log(String(first));"),
 	)
 	var refused *Refused
-	if !errors.As(err, &refused) || !strings.Contains(refused.Error(), "adamic/no-void-read") {
-		test.Errorf("destructuring a plain nested function*: got %v, want adamic/no-void-read's refusal", err)
+	if !errors.As(lowerSourceError, &refused) || !strings.Contains(refused.Error(), "adamic/no-void-read") {
+		test.Errorf(
+			"destructuring a plain nested function*: got %v, want adamic/no-void-read's refusal",
+			lowerSourceError,
+		)
 	}
 }
 
@@ -303,9 +306,9 @@ func TestNoCapturedOrEnvironmentLocalCanHoldAGenerator(test *testing.T) {
 	test.Parallel()
 	var paths []string
 	for _, pattern := range []string{"../oracle/testdata/generators/*.a", "../oracle/testdata/iterable_views/*.a"} {
-		matches, err := filepath.Glob(pattern)
-		if err != nil {
-			test.Fatal(err)
+		matches, globError := filepath.Glob(pattern)
+		if globError != nil {
+			test.Fatal(globError)
 		}
 		paths = append(paths, matches...)
 	}
@@ -314,13 +317,13 @@ func TestNoCapturedOrEnvironmentLocalCanHoldAGenerator(test *testing.T) {
 	}
 	var nested *ir.Program
 	for _, path := range paths {
-		loaded, err := load.Load([]string{path})
-		if err != nil {
-			test.Fatalf("%s: Load: %v", path, err)
+		loaded, loadError := load.Load([]string{path})
+		if loadError != nil {
+			test.Fatalf("%s: Load: %v", path, loadError)
 		}
-		program, err := Lower(context.Background(), loaded)
-		if err != nil {
-			test.Fatalf("%s: %v", path, err)
+		program, lowerError := Lower(context.Background(), loaded)
+		if lowerError != nil {
+			test.Fatalf("%s: %v", path, lowerError)
 		}
 		for _, offense := range capturedGenerators(program) {
 			test.Errorf("%s: %s", path, offense)

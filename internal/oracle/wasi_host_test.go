@@ -12,12 +12,12 @@ import (
 
 func buildWASI(test *testing.T, source, binary string) string {
 	test.Helper()
-	if err := native.Build(source, binary, native.Options{Target: "wasm32-wasi"}); err != nil {
+	if buildError := native.Build(source, binary, native.Options{Target: "wasm32-wasi"}); buildError != nil {
 		var refused *native.TargetRefused
-		if errors.As(err, &refused) {
+		if errors.As(buildError, &refused) {
 			return refused.Error()
 		}
-		test.Fatal(err)
+		test.Fatal(buildError)
 	}
 	return ""
 }
@@ -102,19 +102,21 @@ func wasiFileAgreesWithNode(test *testing.T, index int) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/wasi.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/wasi.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	for _, fixture := range fsFileFixtures[index : index+1] {
 		test.Run(fixture, func(test *testing.T) {
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_fs_file_"+fixture+".a"))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/node_fs_file_"+fixture+".a"),
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			shared := sharedDirectory(test)
 			binary := filepath.Join(shared, "program.wasm")

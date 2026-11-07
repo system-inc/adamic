@@ -44,13 +44,13 @@ type assignmentProofRecord struct {
 
 func assignmentProofExpectation(test *testing.T, file string) assignmentProofRecord {
 	test.Helper()
-	data, err := os.ReadFile(filepath.Join(repository, assignmentProofBucket, "expectations.json"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(repository, assignmentProofBucket, "expectations.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var contract struct{ Records []assignmentProofRecord }
-	if err := json.Unmarshal(data, &contract); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &contract); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	for _, record := range contract.Records {
 		if record.File == file {
@@ -63,9 +63,9 @@ func assignmentProofExpectation(test *testing.T, file string) assignmentProofRec
 
 func assignmentProofPath(test *testing.T, file string) string {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, assignmentProofBucket, file))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, assignmentProofBucket, file))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return path
 }
@@ -74,9 +74,9 @@ func assignmentProofTypecheck(test *testing.T, path string) {
 	test.Helper()
 	command := exec.Command("node", filepath.Join(repository, assignmentProofBucket, "check-types.cjs"), path)
 	command.Env = append(os.Environ(), "NODE_PATH="+filepath.Join(repository, "stage3/api/node_modules"))
-	output, err := command.CombinedOutput()
-	if err != nil || string(output) != "PASS stock TypeScript 6.0.3, zero diagnostics\n" {
-		test.Fatalf("stock TypeScript: %v, %s", err, output)
+	output, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError != nil || string(output) != "PASS stock TypeScript 6.0.3, zero diagnostics\n" {
+		test.Fatalf("stock TypeScript: %v, %s", combinedOutputError, output)
 	}
 }
 
@@ -86,9 +86,9 @@ func assignmentProofExecution(test *testing.T, path string) run {
 	test.Helper()
 	assignmentProofTypecheck(test, path)
 	truth := onNode(test, path)
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	js := onJavaScriptBackend(test, program)
 	sanitized, binary := natively(test, program)
@@ -125,17 +125,17 @@ func assignmentProofOracle(test *testing.T, file string) {
 func assignmentProofMutant(test *testing.T, file string) {
 	test.Helper()
 	record := assignmentProofExpectation(test, file)
-	source, err := os.ReadFile(assignmentProofPath(test, file))
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(assignmentProofPath(test, file))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if strings.Count(string(source), record.Mutant.Replace) != 1 {
 		test.Fatal("mutation does not identify exactly one source expression")
 	}
 	path := filepath.Join(test.TempDir(), file)
 	changed := strings.Replace(string(source), record.Mutant.Replace, record.Mutant.With, 1)
-	if err := os.WriteFile(path, []byte(changed), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(changed), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	truth := assignmentProofExecution(test, path)
 	if truth.exitCode != record.Node.Exit || string(truth.stderr) != record.Node.Stderr {

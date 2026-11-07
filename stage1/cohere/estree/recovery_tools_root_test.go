@@ -16,13 +16,13 @@ import (
 // directories up. Mutant: recoveryClang returning toolchain.CommandIn(work, "clang", args...), red.
 func TestRecoveryClangMapsTheToolsRoot(test *testing.T) {
 	test.Parallel()
-	compiler, err := toolchain.Path("clang")
-	if err != nil {
-		test.Fatal(err)
+	compiler, pathError := toolchain.Path("clang")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
-	real, err := filepath.EvalSymlinks(compiler)
-	if err != nil {
-		test.Fatal(err)
+	real, resolveSymlinksError := filepath.EvalSymlinks(compiler)
+	if resolveSymlinksError != nil {
+		test.Fatal(resolveSymlinksError)
 	}
 	installation := filepath.Dir(filepath.Dir(real))
 	if installation == filepath.Dir(installation) {

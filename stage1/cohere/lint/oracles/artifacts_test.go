@@ -29,8 +29,8 @@ func requireOracleExecutable(test *testing.T, binary string, args ...string) {
 func requireManifestOracle(test *testing.T, binary string) {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "empty-manifest")
-	if err := os.WriteFile(path, nil, 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, nil, 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	requireOracleExecutable(test, binary, "--manifest", path)
 }
@@ -40,11 +40,11 @@ func requireMembershipOracle(test *testing.T, binary string) {
 	test.Helper()
 	directory := test.TempDir()
 	source, manifest := filepath.Join(directory, "probe.tsx"), filepath.Join(directory, "manifest")
-	if err := os.WriteFile(source, []byte("const value = <div />;\n"), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(source, []byte("const value = <div />;\n"), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if err := os.WriteFile(manifest, []byte(source+"\n"), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(manifest, []byte(source+"\n"), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	requireOracleExecutable(test, binary, manifest)
 }
@@ -53,13 +53,13 @@ func requireCheckerAnswer(test *testing.T) {
 	test.Helper()
 	prepareCheckerAnswer(test)
 	path := filepath.Join(repository, "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts")
-	oracle, err := os.ReadFile(lintGoOracleProduct(test))
-	if err != nil {
-		test.Fatal(err)
+	oracle, readError := os.ReadFile(lintGoOracleProduct(test))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	source, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	inputs := compilerAgreementCheckerAllInputs(
 		oracle,
@@ -79,13 +79,13 @@ func requireProfileAnswers(test *testing.T) {
 	path := manifest(test, []string{sourcePath + "\tno-var"})
 	oraclePath := lintGoOracleProduct(test)
 	compilationOracleOutputs(test, oraclePath, path)
-	binary, err := os.ReadFile(oraclePath)
-	if err != nil {
-		test.Fatal(err)
+	binary, readError := os.ReadFile(oraclePath)
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	source, err := os.ReadFile(sourcePath)
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(sourcePath)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	inputs := compilationOracleInputs(test, binary, source)
 	requireOracleArtifacts(test, oracleProductDirectory(test, inputs, nil), "wire", "count")

@@ -64,9 +64,9 @@ func weakDifferential(test *testing.T, name, output, shape string) {
 	if shape == "view" || shape == "callback" {
 		directory += "_refused"
 	}
-	path, err := filepath.Abs(filepath.Join(repository, directory, name+".a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, directory, name+".a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	node := onNode(test, path)
 	expected := run{stdout: []byte(output)}
@@ -74,7 +74,7 @@ func weakDifferential(test *testing.T, name, output, shape string) {
 		test.Fatalf("source Node: %s: exit=%d stdout=%q stderr=%q", difference, node.exitCode, node.stdout, node.stderr)
 	}
 	test.Logf("Node: exit=%d stdout=%q stderr=%q", node.exitCode, node.stdout, node.stderr)
-	program, err := lowered(test, path)
+	program, loweredError := lowered(test, path)
 	if shape != "weak" && shape != "control" {
 		diagnostic := "a StrongTaker seen as a WeakTaker (one keeps something weakly that the other keeps strongly)"
 		location := ":19:27:"
@@ -102,21 +102,26 @@ func weakDifferential(test *testing.T, name, output, shape string) {
 				"9984394_narrowed_sort":   ":10:2:",
 			}[name]
 		}
-		if err != nil {
+		if loweredError != nil {
 			var pending *lower.NotYet
 			want := path + location + " stage 0 can't lower " + diagnostic + " yet"
-			if !errors.As(err, &pending) || err.Error() != want || program != nil {
-				test.Fatalf("both backends must stop at %q NotYet, got program=%v error=%v", want, program != nil, err)
+			if !errors.As(loweredError, &pending) || loweredError.Error() != want || program != nil {
+				test.Fatalf(
+					"both backends must stop at %q NotYet, got program=%v error=%v",
+					want,
+					program != nil,
+					loweredError,
+				)
 			}
-			test.Logf("both backends: %v", err)
+			test.Logf("both backends: %v", loweredError)
 			return
 		}
 		// Run an accidentally admitted program too. The revert mutants must
 		// recover the old runtime fault or wrong output, not a build warning.
 		test.Errorf("both backends unexpectedly admit the pinned %s NotYet", shape)
 	}
-	if err != nil {
-		test.Fatal(err)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	js := onJavaScriptBackend(test, program)
 	release := released(test, program)
@@ -217,9 +222,11 @@ func init() {
 // be held independently without weakening the explicit Weak stop witnesses.
 func checkWeakControlBackend(test *testing.T, name, want, backend string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/weak_miscompiles", name+".a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/weak_miscompiles", name+".a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	node := onNode(test, path)
 	if diff := disagreement(run{stdout: []byte(want)}, node); diff != "" {
@@ -230,9 +237,9 @@ func checkWeakControlBackend(test *testing.T, name, want, backend string) {
 
 func checkCallbackControlBackend(test *testing.T, path string, node run, backend string) {
 	test.Helper()
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	var got run
 	switch backend {

@@ -132,8 +132,8 @@ func searchShrinkOnNode(test *testing.T, path string) run {
 func searchShrinkJavaScript(test *testing.T, script string) run {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "program.mjs")
-	if err := os.WriteFile(path, []byte(script), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(script), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return searchShrinkOnNode(test, path)
 }
@@ -141,17 +141,17 @@ func searchShrinkJavaScript(test *testing.T, script string) run {
 func checkSearchShrink(test *testing.T, index int) {
 	test.Helper()
 	fixture := searchShrinkFixtures[index]
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture.name))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture.name))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := searchShrinkOnNode(test, path)
 	if truth.exitCode != 0 {
 		test.Fatalf("Node: %+v", truth)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	want := truth
 	if fixture.element != "" {
@@ -200,14 +200,14 @@ func checkSearchShrinkMutant(test *testing.T, mutant string) {
 	if mutant == "old-stop" {
 		name = "047cb0d_f_maybe.a"
 	}
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", name))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", name))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := searchShrinkOnNode(test, path)
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	source := native.C(program)
 	script := javascript.JavaScript(program)
@@ -235,13 +235,13 @@ func checkSearchShrinkMutant(test *testing.T, mutant string) {
 		test.Fatal("mutant changed nothing")
 	}
 	binary := filepath.Join(test.TempDir(), "mutant")
-	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(source, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	nativeRun := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
 	jsPath := filepath.Join(test.TempDir(), "mutant.mjs")
-	if err := os.WriteFile(jsPath, []byte(script), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(jsPath, []byte(script), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	for backend, got := range map[string]run{"native": nativeRun, "javascript": searchShrinkOnNode(test, jsPath)} {
 		if mutant == "skip-check" {

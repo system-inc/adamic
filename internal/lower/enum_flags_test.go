@@ -80,10 +80,10 @@ func TestFlagEnumsOpen(test *testing.T) {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
 			if probe.name == "narrowed_member" || probe.name == "member_slot" {
-				_, err := lowerSource(test, probe.source)
+				_, lowerSourceError := lowerSource(test, probe.source)
 				var refused *Refused
-				if !errors.As(err, &refused) {
-					test.Fatalf("want literal promise refusal, got %v", err)
+				if !errors.As(lowerSourceError, &refused) {
+					test.Fatalf("want literal promise refusal, got %v", lowerSourceError)
 				}
 			} else {
 				observations := map[string]string{
@@ -235,10 +235,10 @@ func TestFlagEnumAliasBoundaries(test *testing.T) {
 			"interface Node { flags: Flags } type Mutable<T> = { -readonly [K in keyof T]: T[K] }; function set<T extends Node>(node: T, flags: Flags): void { (node as Mutable<T>).flags = flags; }",
 	} {
 		if strings.Contains(source, "Mutable<T>") || strings.Contains(source, "flags: Flags.A") {
-			_, err := lowerSource(test, source)
+			_, lowerSourceError := lowerSource(test, source)
 			var refused *Refused
-			if !errors.As(err, &refused) {
-				test.Fatalf("want Refused, got %v for %s", err, source)
+			if !errors.As(lowerSourceError, &refused) {
+				test.Fatalf("want Refused, got %v for %s", lowerSourceError, source)
 			}
 		} else {
 			lowersAndAgreesWithNode(test, source+"console.log(`${Flags.A}/${Flags[Flags.A]}`);")

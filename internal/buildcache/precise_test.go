@@ -43,9 +43,9 @@ type rig struct {
 // Not parallel: the rig changes the working directory, repositoryRoot and the build environment.
 func newRig(test *testing.T) *rig {
 	test.Helper()
-	root, err := filepath.EvalSymlinks(test.TempDir())
-	if err != nil {
-		test.Fatal(err)
+	root, resolveSymlinksError := filepath.EvalSymlinks(test.TempDir())
+	if resolveSymlinksError != nil {
+		test.Fatal(resolveSymlinksError)
 	}
 	for name, content := range map[string]string{
 		"go.mod":      "module github.com/system-inc/adamic\n\ngo 1.27\n",
@@ -65,8 +65,8 @@ func newRig(test *testing.T) *rig {
 	cache, _ = filepath.EvalSymlinks(cache)
 	test.Setenv("ADAMIC_BUILD_CACHE_DIR", cache)
 	trace := filepath.Join(test.TempDir(), fmt.Sprintf("trace-%s", strings.ReplaceAll(test.Name(), "/", "-")))
-	if err := os.MkdirAll(trace, 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(trace, 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	test.Setenv("ADAMIC_BUILD_TRACE", trace)
 	original, originalLean := recipeFor, leanRecipeFor
@@ -94,11 +94,11 @@ func linkDeclaredTools(test *testing.T, bin string) {
 		entries, _ := os.ReadDir(directory)
 		for _, entry := range entries {
 			link := filepath.Join(bin, entry.Name())
-			if _, err := os.Lstat(link); err == nil {
+			if _, statError := os.Lstat(link); statError == nil {
 				continue
 			}
-			if err := os.Symlink(filepath.Join(directory, entry.Name()), link); err != nil {
-				test.Fatal(err)
+			if symlinkError := os.Symlink(filepath.Join(directory, entry.Name()), link); symlinkError != nil {
+				test.Fatal(symlinkError)
 			}
 		}
 	}
@@ -123,8 +123,8 @@ func gitIn(test *testing.T, directory string, arguments ...string) {
 		"-c",
 		"maintenance.auto=false",
 	}, arguments...)...)
-	if output, err := command.CombinedOutput(); err != nil {
-		test.Fatalf("git %v: %v\n%s", arguments, err, output)
+	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("git %v: %v\n%s", arguments, combinedOutputError, output)
 	}
 }
 
@@ -175,9 +175,9 @@ func (r *rig) marker(pid int, event, id string) {
 // built is every build the run journaled, by product name.
 func (r *rig) built(test *testing.T) map[string]journalEntry {
 	test.Helper()
-	entries, err := readJournal(r.trace)
-	if err != nil {
-		test.Fatal(err)
+	entries, readJournalError := readJournal(r.trace)
+	if readJournalError != nil {
+		test.Fatal(readJournalError)
 	}
 	found := map[string]journalEntry{}
 	for _, entry := range entries {
@@ -200,14 +200,14 @@ func (r *rig) settle(test *testing.T) Settlement {
 	test.Chdir(r.root)
 	before := r.before
 	if before == "" {
-		var err error
-		if before, err = TreeState(); err != nil {
-			test.Fatal(err)
+		var treeStateError error
+		if before, treeStateError = TreeState(); treeStateError != nil {
+			test.Fatal(treeStateError)
 		}
 	}
-	settlement, err := Settle(r.trace, strings.NewReader(strings.Join(r.lines, "\n")+"\n"), before)
-	if err != nil {
-		test.Fatal(err)
+	settlement, settleError := Settle(r.trace, strings.NewReader(strings.Join(r.lines, "\n")+"\n"), before)
+	if settleError != nil {
+		test.Fatal(settleError)
 	}
 	r.lines = nil
 	return settlement
@@ -259,12 +259,12 @@ func TestATracedBuildIsKeyedByWhatItRead(test *testing.T) {
 	if !strings.Contains(settlement.Settled[0], "declared Files: 0 reads undeclared, 1 declared unread") {
 		test.Fatalf("the drift isn't reported: %s", settlement.Settled[0])
 	}
-	if _, err := os.Stat(pending); err == nil {
+	if _, statError := os.Stat(pending); statError == nil {
 		test.Fatal("the pending product stayed after it was settled")
 	}
-	file, err := loadReads(r.cache, build.NameKey)
-	if err != nil || len(file.Sets) != 1 {
-		test.Fatalf("read sets: %+v, %v", file, err)
+	file, loadReadsError := loadReads(r.cache, build.NameKey)
+	if loadReadsError != nil || len(file.Sets) != 1 {
+		test.Fatalf("read sets: %+v, %v", file, loadReadsError)
 	}
 	var kinds []string
 	for _, entry := range file.Sets[0].Entries {
@@ -279,9 +279,9 @@ func TestATracedBuildIsKeyedByWhatItRead(test *testing.T) {
 	}; !slices.Equal(kinds, want) {
 		test.Fatalf("the read set is %q, want %q", kinds, want)
 	}
-	product, err := reading(test, port)
-	if err != nil || product != filepath.Join(r.cache, file.Sets[0].Key) {
-		test.Fatalf("a runner found %q, %v; want %s", product, err, file.Sets[0].Key)
+	product, readingError := reading(test, port)
+	if readingError != nil || product != filepath.Join(r.cache, file.Sets[0].Key) {
+		test.Fatalf("a runner found %q, %v; want %s", product, readingError, file.Sets[0].Key)
 	}
 	if content, _ := os.ReadFile(filepath.Join(product, "product")); string(content) != "built" {
 		test.Fatalf("the product reads %q", content)
@@ -295,8 +295,8 @@ func TestATracedBuildIsKeyedByWhatItRead(test *testing.T) {
 		func() { write(test, r.root, "include/missing.h", "untracked\n") },
 	} {
 		change()
-		if found, err := reading(test, port); err != nil || found != product {
-			test.Fatalf("a change outside the read set missed: %q, %v", found, err)
+		if found, readingError := reading(test, port); readingError != nil || found != product {
+			test.Fatalf("a change outside the read set missed: %q, %v", found, readingError)
 		}
 	}
 	// Inside it: the content of a file it read, a name in a directory it listed, a tracked file where it missed.
@@ -318,17 +318,17 @@ func TestATracedBuildIsKeyedByWhatItRead(test *testing.T) {
 		gitIn(test, r.root, "reset", "-q", "--hard")
 		gitIn(test, r.root, "clean", "-q", "-f", "-d")
 		forgetTracked()
-		if found, err := reading(test, port); err != nil || found != product {
-			test.Fatalf("%s: the tree before the change missed: %q, %v", change.name, found, err)
+		if found, readingError := reading(test, port); readingError != nil || found != product {
+			test.Fatalf("%s: the tree before the change missed: %q, %v", change.name, found, readingError)
 		}
 		change.change()
 		forgetTracked()
-		_, err := reading(test, port)
-		if !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), change.named) {
+		_, readingError := reading(test, port)
+		if !errors.Is(readingError, ErrNotBuilt) || !strings.Contains(readingError.Error(), change.named) {
 			test.Fatalf(
 				"%s: a change in the read set read as %v; want a miss naming %q",
 				change.name,
-				err,
+				readingError,
 				change.named,
 			)
 		}
@@ -408,7 +408,7 @@ func TestAReadNoKeyCanNameIsRefused(test *testing.T) {
 			if len(store.writes) != 0 {
 				test.Fatalf("a refused build wrote to the store: %q", store.writes)
 			}
-			if _, err := os.Stat(pending); err == nil {
+			if _, statError := os.Stat(pending); statError == nil {
 				test.Fatal("a refused product stayed in the cache")
 			}
 			if file, _ := loadReads(r.cache, build.NameKey); len(file.Sets) != 0 {
@@ -437,13 +437,13 @@ func TestTheFileSystemsCaseProbeIsKeyedNotRefused(test *testing.T) {
 	journalProcess = sync.Once{}
 	Product(test, port, building("built"))
 	build := r.built(test)["port"]
-	executable, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	executable, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
-	directory, err := filepath.EvalSymlinks(test.TempDir())
-	if err != nil {
-		test.Fatal(err)
+	directory, resolveSymlinksError := filepath.EvalSymlinks(test.TempDir())
+	if resolveSymlinksError != nil {
+		test.Fatal(resolveSymlinksError)
 	}
 	program := filepath.Join(directory, "oracle")
 	r.window(build.Build, func() {
@@ -461,15 +461,18 @@ func TestTheFileSystemsCaseProbeIsKeyedNotRefused(test *testing.T) {
 			settlement.Refused,
 		)
 	}
-	file, err := loadReads(r.cache, build.NameKey)
-	if err != nil || len(file.Sets) != 1 || !slices.ContainsFunc(
+	file, loadReadsError := loadReads(r.cache, build.NameKey)
+	if loadReadsError != nil || len(file.Sets) != 1 || !slices.ContainsFunc(
 		file.Sets[0].Entries,
 		func(entry readEntry) bool { return entry.Kind == "filesystem" && entry.Path == "case" },
 	) {
-		test.Fatalf("the read set doesn't name the file system's case: %+v, %v", file.Sets, err)
+		test.Fatalf("the read set doesn't name the file system's case: %+v, %v", file.Sets, loadReadsError)
 	}
-	if found, err := reading(test, port); err != nil || found != filepath.Join(r.cache, file.Sets[0].Key) {
-		test.Fatalf("a runner on the same machine found %q, %v", found, err)
+	if found, readingError := reading(
+		test,
+		port,
+	); readingError != nil || found != filepath.Join(r.cache, file.Sets[0].Key) {
+		test.Fatalf("a runner on the same machine found %q, %v", found, readingError)
 	}
 
 	r = newRig(test)
@@ -494,7 +497,7 @@ func TestTheFileSystemsCaseProbeIsKeyedNotRefused(test *testing.T) {
 	probe := filepath.Join(directory, "Probe")
 	write(test, directory, "Probe", "")
 	want := "sensitive"
-	if _, err := os.Stat(swapCase(probe)); err == nil {
+	if _, statError := os.Stat(swapCase(probe)); statError == nil {
 		want = "insensitive"
 	}
 	if got := caseSensitivity(); got != want {
@@ -518,9 +521,9 @@ func TestTheFileSystemsCaseProbeIsKeyedNotRefused(test *testing.T) {
 // telemetry directory not classed; the walk down to it not classed (its lookups keyed as home entries).
 // Not parallel: newRig.
 func TestGosTelemetryIsGosOwnBookkeeping(test *testing.T) {
-	configuration, err := os.UserConfigDir()
-	if err != nil {
-		test.Skip("no configuration directory here:", err)
+	configuration, userConfigurationDirectoryError := os.UserConfigDir()
+	if userConfigurationDirectoryError != nil {
+		test.Skip("no configuration directory here:", userConfigurationDirectoryError)
 	}
 	telemetry := filepath.Join(configuration, "go", "telemetry")
 	r := newRig(test)
@@ -540,9 +543,9 @@ func TestGosTelemetryIsGosOwnBookkeeping(test *testing.T) {
 			settlement.Refused,
 		)
 	}
-	file, err := loadReads(r.cache, build.NameKey)
-	if err != nil || len(file.Sets) != 1 {
-		test.Fatalf("read sets: %+v, %v", file, err)
+	file, loadReadsError := loadReads(r.cache, build.NameKey)
+	if loadReadsError != nil || len(file.Sets) != 1 {
+		test.Fatalf("read sets: %+v, %v", file, loadReadsError)
 	}
 	for _, entry := range file.Sets[0].Entries {
 		if entry.Kind == "home" {
@@ -571,24 +574,24 @@ func TestGosTelemetryIsGosOwnBookkeeping(test *testing.T) {
 // paths outside every place refused; links not resolved; a temporary directory's open read as content.
 // Not parallel: newRig.
 func TestWhatABuildOnlyLooksForOrRunsThroughALinkIsKeyed(test *testing.T) {
-	tools, err := filepath.EvalSymlinks(test.TempDir())
-	if err != nil {
-		test.Fatal(err)
+	tools, resolveSymlinksError := filepath.EvalSymlinks(test.TempDir())
+	if resolveSymlinksError != nil {
+		test.Fatal(resolveSymlinksError)
 	}
 	write(test, tools, "bin/clang", "#!/bin/sh\necho clang version 20.1.8\n")
-	if err := os.Chmod(filepath.Join(tools, "bin", "clang"), 0o755); err != nil {
-		test.Fatal(err)
+	if changeModeError := os.Chmod(filepath.Join(tools, "bin", "clang"), 0o755); changeModeError != nil {
+		test.Fatal(changeModeError)
 	}
 	// The rig's git, and the key's, are toolchain's, found where they were before this tools directory took over.
 	linkDeclaredTools(test, filepath.Join(tools, "bin"))
 	test.Setenv("ADAMIC_TOOLS", tools)
-	scratch, err := filepath.EvalSymlinks(test.TempDir())
-	if err != nil {
-		test.Fatal(err)
+	scratch, resolveSymlinksError := filepath.EvalSymlinks(test.TempDir())
+	if resolveSymlinksError != nil {
+		test.Fatal(resolveSymlinksError)
 	}
 	dotted := filepath.Join(scratch, ".adamic-tools")
-	if err := os.Symlink(tools, dotted); err != nil {
-		test.Fatal(err)
+	if symlinkError := os.Symlink(tools, dotted); symlinkError != nil {
+		test.Fatal(symlinkError)
 	}
 	r := newRig(test)
 	Product(test, port, building("built"))
@@ -604,9 +607,9 @@ func TestWhatABuildOnlyLooksForOrRunsThroughALinkIsKeyed(test *testing.T) {
 	if len(settlement.Settled) != 1 || len(settlement.Refused) != 0 {
 		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	file, err := loadReads(r.cache, build.NameKey)
-	if err != nil || len(file.Sets) != 1 {
-		test.Fatalf("read sets: %+v, %v", file, err)
+	file, loadReadsError := loadReads(r.cache, build.NameKey)
+	if loadReadsError != nil || len(file.Sets) != 1 {
+		test.Fatalf("read sets: %+v, %v", file, loadReadsError)
 	}
 	for _, want := range []readEntry{
 		{Kind: "absolute", Path: "/adamic-prelude/package.json"},
@@ -617,8 +620,11 @@ func TestWhatABuildOnlyLooksForOrRunsThroughALinkIsKeyed(test *testing.T) {
 			test.Fatalf("the read set doesn't hold %+v: %+v", want, file.Sets[0].Entries)
 		}
 	}
-	if found, err := reading(test, port); err != nil || found != filepath.Join(r.cache, file.Sets[0].Key) {
-		test.Fatalf("a runner on the same machine found %q, %v", found, err)
+	if found, readingError := reading(
+		test,
+		port,
+	); readingError != nil || found != filepath.Join(r.cache, file.Sets[0].Key) {
+		test.Fatalf("a runner on the same machine found %q, %v", found, readingError)
 	}
 
 	r = newRig(test)
@@ -639,9 +645,9 @@ func TestWhatABuildOnlyLooksForOrRunsThroughALinkIsKeyed(test *testing.T) {
 // Mutants: the runtime cache not classed; the walk down to it not classed.
 // Not parallel: newRig.
 func TestTheNativeRuntimeCacheIsAddressedByWhatItsCompileRead(test *testing.T) {
-	user, err := os.UserCacheDir()
-	if err != nil {
-		test.Skip("no user cache directory here:", err)
+	user, userCacheDirectoryError := os.UserCacheDir()
+	if userCacheDirectoryError != nil {
+		test.Skip("no user cache directory here:", userCacheDirectoryError)
 	}
 	runtimes := filepath.Join(user, "adamic", "runtime")
 	runtime := filepath.Join(runtimes, strings.Repeat("ab", 32))
@@ -662,9 +668,9 @@ func TestTheNativeRuntimeCacheIsAddressedByWhatItsCompileRead(test *testing.T) {
 			settlement.Refused,
 		)
 	}
-	file, err := loadReads(r.cache, build.NameKey)
-	if err != nil || len(file.Sets) != 1 {
-		test.Fatalf("read sets: %+v, %v", file, err)
+	file, loadReadsError := loadReads(r.cache, build.NameKey)
+	if loadReadsError != nil || len(file.Sets) != 1 {
+		test.Fatalf("read sets: %+v, %v", file, loadReadsError)
 	}
 	for _, entry := range file.Sets[0].Entries {
 		if entry.Kind == "home" || entry.Kind == "absolute" {
@@ -778,9 +784,9 @@ func TestAProductReadingAnotherIsKeyedByItsKey(test *testing.T) {
 	header := Inputs{Name: "header", Files: []string{"include"}}
 	headerProduct := Product(test, header, building("header"))
 	Product(test, port, func(directory string) error {
-		content, err := os.ReadFile(filepath.Join(headerProduct, "product"))
-		if err != nil {
-			return err
+		content, readError := os.ReadFile(filepath.Join(headerProduct, "product"))
+		if readError != nil {
+			return readError
 		}
 		return os.WriteFile(filepath.Join(directory, "product"), append(content, " and port"...), 0o644)
 	})
@@ -805,13 +811,14 @@ func TestAProductReadingAnotherIsKeyedByItsKey(test *testing.T) {
 	) {
 		test.Fatalf("port's read set doesn't name header's product: %+v", file.Sets[0].Entries)
 	}
-	if _, err := reading(test, port); err != nil {
-		test.Fatalf("port before the change: %v", err)
+	if _, readingError := reading(test, port); readingError != nil {
+		test.Fatalf("port before the change: %v", readingError)
 	}
 	write(test, r.root, "include/x.h", "#define X 2\n")
-	_, err := reading(test, port)
-	if !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "reads product "+built["header"].NameKey[:12]) {
-		test.Fatalf("a change header read left port %v", err)
+	_, readingError := reading(test, port)
+	if !errors.Is(readingError, ErrNotBuilt) ||
+		!strings.Contains(readingError.Error(), "reads product "+built["header"].NameKey[:12]) {
+		test.Fatalf("a change header read left port %v", readingError)
 	}
 	// header rebuilt on the new tree has a new key, so port, built from the old header, still misses.
 	r.retrace(test, "header")
@@ -820,14 +827,15 @@ func TestAProductReadingAnotherIsKeyedByItsKey(test *testing.T) {
 	if settlement := r.settle(test); len(settlement.Settled) != 1 {
 		test.Fatalf("header's rebuild: settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	if _, err := reading(test, header); err != nil {
-		test.Fatalf("header after its rebuild: %v", err)
+	if _, readingError := reading(test, header); readingError != nil {
+		test.Fatalf("header after its rebuild: %v", readingError)
 	}
-	if _, err = reading(
+	if _, readingError = reading(
 		test,
 		port,
-	); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "product "+built["header"].NameKey) {
-		test.Fatalf("port, built from the old header, read as %v", err)
+	); !errors.Is(readingError, ErrNotBuilt) ||
+		!strings.Contains(readingError.Error(), "product "+built["header"].NameKey) {
+		test.Fatalf("port, built from the old header, read as %v", readingError)
 	}
 }
 
@@ -848,20 +856,20 @@ func TestAnUntracedMachineBuildsOnlyForItself(test *testing.T) {
 		if again := Product(test, port, never); again != local {
 			test.Fatalf("a local hit found %s, want %s", again, local)
 		}
-		if _, err := reading(
+		if _, readingError := reading(
 			test,
 			port,
-		); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "no traced build") {
-			test.Fatalf("read mode found a local product: %v", err)
+		); !errors.Is(readingError, ErrNotBuilt) || !strings.Contains(readingError.Error(), "no traced build") {
+			test.Fatalf("read mode found a local product: %v", readingError)
 		}
 	}
 	test.Setenv("ADAMIC_BUILD_STORE", "traced=http://127.0.0.1:1")
 	test.Setenv("ADAMIC_BUILD_CACHE_DIR", test.TempDir())
-	if _, err := Get(
+	if _, getError := Get(
 		port,
 		func(string) error { test.Fatal("the tree builder built untraced"); return nil },
-	); !errors.Is(err, ErrUntraced) {
-		test.Fatalf("the tree builder outside a trace: %v, want ErrUntraced", err)
+	); !errors.Is(getError, ErrUntraced) {
+		test.Fatalf("the tree builder outside a trace: %v, want ErrUntraced", getError)
 	}
 }
 
@@ -939,8 +947,8 @@ func TestTheRecipeIsTheSameWhereverGosBuildCacheSits(test *testing.T) {
 func (r *rig) retrace(test *testing.T, name string) {
 	test.Helper()
 	r.trace = filepath.Join(filepath.Dir(r.trace), filepath.Base(r.trace)+"-"+name)
-	if err := os.MkdirAll(r.trace, 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(r.trace, 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	test.Setenv("ADAMIC_BUILD_TRACE", r.trace)
 	test.Setenv("ADAMIC_BUILD_CACHE", "")
@@ -948,9 +956,9 @@ func (r *rig) retrace(test *testing.T, name string) {
 
 func (r *rig) entries(test *testing.T, nameKey string) []string {
 	test.Helper()
-	file, err := loadReads(r.cache, nameKey)
-	if err != nil || len(file.Sets) == 0 {
-		test.Fatalf("no read set for %s: %v", nameKey[:12], err)
+	file, loadReadsError := loadReads(r.cache, nameKey)
+	if loadReadsError != nil || len(file.Sets) == 0 {
+		test.Fatalf("no read set for %s: %v", nameKey[:12], loadReadsError)
 	}
 	var found []string
 	for _, entry := range file.Sets[0].Entries {
@@ -997,17 +1005,20 @@ func TestAReadThroughASymbolicLinkKeysTheLinkAndItsTarget(test *testing.T) {
 		test.Fatalf("a symbolic link to a directory values %q", value)
 	}
 	write(test, r.root, "source/a.c", "int a2;\n")
-	if _, err := reading(
+	if _, readingError := reading(
 		test,
 		port,
-	); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "content source/a.c") {
-		test.Fatalf("a changed link target read as %v", err)
+	); !errors.Is(readingError, ErrNotBuilt) || !strings.Contains(readingError.Error(), "content source/a.c") {
+		test.Fatalf("a changed link target read as %v", readingError)
 	}
 	gitIn(test, r.root, "checkout", "-q", "--", "source/a.c")
 	os.Remove(filepath.Join(r.root, "alias.c"))
 	os.Symlink("source/b.c", filepath.Join(r.root, "alias.c"))
-	if _, err := reading(test, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "link alias.c") {
-		test.Fatalf("a repointed link read as %v", err)
+	if _, readingError := reading(
+		test,
+		port,
+	); !errors.Is(readingError, ErrNotBuilt) || !strings.Contains(readingError.Error(), "link alias.c") {
+		test.Fatalf("a repointed link read as %v", readingError)
 	}
 
 	// A link out of the tree lands where no key can name.
@@ -1060,17 +1071,20 @@ func TestAnExecOfATrackedLinkKeysTheProgramItRuns(test *testing.T) {
 		test.Fatalf("the read set %q lacks the link or the program it runs", got)
 	}
 	write(test, r.root, "tools/run.sh", "#!/bin/sh\necho two\n")
-	if _, err := reading(test, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "tools/run.sh") {
-		test.Fatalf("an edited program behind the link read as %v", err)
+	if _, readingError := reading(
+		test,
+		port,
+	); !errors.Is(readingError, ErrNotBuilt) || !strings.Contains(readingError.Error(), "tools/run.sh") {
+		test.Fatalf("an edited program behind the link read as %v", readingError)
 	}
 	gitIn(test, r.root, "checkout", "-q", "--", "tools/run.sh")
 	os.Remove(filepath.Join(r.root, "tools", "link-to-run"))
 	os.Symlink("other.sh", filepath.Join(r.root, "tools", "link-to-run"))
-	if _, err := reading(
+	if _, readingError := reading(
 		test,
 		port,
-	); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "link tools/link-to-run") {
-		test.Fatalf("a repointed link read as %v", err)
+	); !errors.Is(readingError, ErrNotBuilt) || !strings.Contains(readingError.Error(), "link tools/link-to-run") {
+		test.Fatalf("a repointed link read as %v", readingError)
 	}
 }
 
@@ -1170,29 +1184,29 @@ func TestAReadThatDependsOnAnotherRebuildsTracedAndKeepsBothSets(test *testing.T
 		}
 	}
 	reads("a.c")
-	first, err := reading(test, port)
-	if err != nil {
-		test.Fatal(err)
+	first, readingError := reading(test, port)
+	if readingError != nil {
+		test.Fatal(readingError)
 	}
 	write(test, r.root, "selector.txt", "b\n")
-	if _, err := reading(
+	if _, readingError := reading(
 		test,
 		port,
-	); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "content selector.txt") {
-		test.Fatalf("a changed selector read as %v", err)
+	); !errors.Is(readingError, ErrNotBuilt) || !strings.Contains(readingError.Error(), "content selector.txt") {
+		test.Fatalf("a changed selector read as %v", readingError)
 	}
 	r.retrace(test, "b")
 	reads("b.c")
-	second, err := reading(test, port)
-	if err != nil || second == first {
-		test.Fatalf("after the traced rebuild: %q, %v (the first was %q)", second, err, first)
+	second, readingError := reading(test, port)
+	if readingError != nil || second == first {
+		test.Fatalf("after the traced rebuild: %q, %v (the first was %q)", second, readingError, first)
 	}
 	if content, _ := os.ReadFile(filepath.Join(second, "product")); string(content) != "built from b.c" {
 		test.Fatalf("the rebuilt product reads %q", content)
 	}
 	write(test, r.root, "selector.txt", "a\n")
-	if found, err := reading(test, port); err != nil || found != first {
-		test.Fatalf("back on the first tree: %q, %v; want %q", found, err, first)
+	if found, readingError := reading(test, port); readingError != nil || found != first {
+		test.Fatalf("back on the first tree: %q, %v; want %q", found, readingError, first)
 	}
 }
 
@@ -1277,13 +1291,13 @@ func TestSettlementsOfOneProductKeepEveryRead(test *testing.T) {
 	done := make(chan error, len(names))
 	for _, name := range names {
 		go func() {
-			_, _, _, err := recordUnion(r.root, r.cache, nameKey, "port", readSet{
+			_, _, _, recordUnionError := recordUnion(r.root, r.cache, nameKey, "port", readSet{
 				Entries: []readEntry{{Kind: "content", Path: name}},
 			}, func(key string) string {
 				os.MkdirAll(filepath.Join(r.cache, key), 0o755)
 				return filepath.Join(r.cache, key)
 			})
-			done <- err
+			done <- recordUnionError
 		}()
 	}
 	for range names {
@@ -1298,11 +1312,11 @@ func TestSettlementsOfOneProductKeepEveryRead(test *testing.T) {
 	for _, name := range names[:4] {
 		before, _ := os.ReadFile(filepath.Join(r.root, name))
 		write(test, r.root, name, "changed\n")
-		if _, err := reading(
+		if _, readingError := reading(
 			test,
 			port,
-		); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "content "+name) {
-			test.Fatalf("a change to %s read as %v", name, err)
+		); !errors.Is(readingError, ErrNotBuilt) || !strings.Contains(readingError.Error(), "content "+name) {
+			test.Fatalf("a change to %s read as %v", name, readingError)
 		}
 		write(test, r.root, name, string(before))
 	}
@@ -1325,28 +1339,28 @@ func TestAFileIsValuedByItsGitObject(test *testing.T) {
 	}
 	gitIn(test, r.root, "update-index", "--refresh", "-q")
 	forgetTracked()
-	inCheckout, err := evaluate(r.root, r.cache, nameKey, set, 0, nil)
-	if err != nil {
-		test.Fatal(err)
+	inCheckout, evaluateError := evaluate(r.root, r.cache, nameKey, set, 0, nil)
+	if evaluateError != nil {
+		test.Fatal(evaluateError)
 	}
-	object, err := toolchain.GitCommand("-C", r.root, "rev-parse", "HEAD:source/a.c").Output()
-	if err != nil || inCheckout.values[0] != "file false "+strings.TrimSpace(string(object)) {
-		test.Fatalf("source/a.c values %q, git names it %q (%v)", inCheckout.values[0], object, err)
+	object, outputError := toolchain.GitCommand("-C", r.root, "rev-parse", "HEAD:source/a.c").Output()
+	if outputError != nil || inCheckout.values[0] != "file false "+strings.TrimSpace(string(object)) {
+		test.Fatalf("source/a.c values %q, git names it %q (%v)", inCheckout.values[0], object, outputError)
 	}
 	unpacked := test.TempDir()
 	for _, name := range []string{"source/a.c", "source/b.c", "go.mod"} {
 		content, _ := os.ReadFile(filepath.Join(r.root, name))
 		write(test, unpacked, name, string(content))
 	}
-	if inSource, err := evaluate(
+	if inSource, evaluateError := evaluate(
 		unpacked,
 		r.cache,
 		nameKey,
 		set,
 		0,
 		nil,
-	); err != nil || inSource.key != inCheckout.key {
-		test.Fatalf("a checkout keyed %s, its unpacked source %s (%v)", inCheckout.key, inSource.key, err)
+	); evaluateError != nil || inSource.key != inCheckout.key {
+		test.Fatalf("a checkout keyed %s, its unpacked source %s (%v)", inCheckout.key, inSource.key, evaluateError)
 	}
 	// Changed after git was asked, with git's answer still held: hashed, so the key moves. Valued by a new process: the
 	// rig's trace makes this one hold what it valued for its life, and a traced run whose tree changed is refused
@@ -1387,12 +1401,12 @@ func TestASiblingsProductIsAnInput(test *testing.T) {
 	if got := r.entries(test, built["port"].NameKey); !slices.Contains(got, "product "+built["header"].NameKey) {
 		test.Fatalf("port's read set %q doesn't name header's product", got)
 	}
-	if _, err := reading(test, port); err != nil {
-		test.Fatal(err)
+	if _, readingError := reading(test, port); readingError != nil {
+		test.Fatal(readingError)
 	}
 	write(test, r.root, "include/x.h", "#define X 2\n")
-	if _, err := reading(test, port); !errors.Is(err, ErrNotBuilt) {
-		test.Fatalf("header's input changed and port read as %v", err)
+	if _, readingError := reading(test, port); !errors.Is(readingError, ErrNotBuilt) {
+		test.Fatalf("header's input changed and port read as %v", readingError)
 	}
 }
 
@@ -1450,16 +1464,19 @@ func TestASetThatWouldReadItselfBackIsRefused(test *testing.T) {
 		record := func(nameKey string, entries ...readEntry) {
 			test.Helper()
 			set := readSet{Entries: sortedEntries(append([]readEntry{{Kind: "content", Path: "go.mod"}}, entries...))}
-			evaluated, err := evaluate(r.root, r.cache, nameKey, set, 0, nil)
-			if err != nil {
-				test.Fatal(err)
+			evaluated, evaluateError := evaluate(r.root, r.cache, nameKey, set, 0, nil)
+			if evaluateError != nil {
+				test.Fatal(evaluateError)
 			}
 			set.Key = evaluated.key
-			if err := recordReads(r.cache, nameKey, nameKey[62:], set); err != nil {
-				test.Fatal(err)
+			if recordReadsError := recordReads(r.cache, nameKey, nameKey[62:], set); recordReadsError != nil {
+				test.Fatal(recordReadsError)
 			}
-			if err := os.MkdirAll(filepath.Join(r.cache, evaluated.key), 0o755); err != nil {
-				test.Fatal(err)
+			if createDirectoryError := os.MkdirAll(
+				filepath.Join(r.cache, evaluated.key),
+				0o755,
+			); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
 		}
 		// native-true's own test's set, which reads nothing of native-false's.
@@ -1469,27 +1486,27 @@ func TestASetThatWouldReadItselfBackIsRefused(test *testing.T) {
 		}
 		// native-false as the manifest recorded it: reading native-true.
 		record(nativeFalse, readEntry{Kind: "product", Path: nativeTrue})
-		before, err := loadReads(r.cache, nativeTrue)
-		if err != nil {
-			test.Fatal(err)
+		before, loadReadsError := loadReads(r.cache, nativeTrue)
+		if loadReadsError != nil {
+			test.Fatal(loadReadsError)
 		}
 		for _, read := range []string{nativeFalse, nativeTrue} {
 			set := readSet{
 				Entries: sortedEntries([]readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "product", Path: read}}),
 			}
-			_, evaluated, _, err := recordUnion(r.root, r.cache, nativeTrue, "native-true", set, func(
+			_, evaluated, _, recordUnionError := recordUnion(r.root, r.cache, nativeTrue, "native-true", set, func(
 				key string,
 			) string {
 				os.MkdirAll(filepath.Join(r.cache, key), 0o755)
 				return filepath.Join(r.cache, key)
 			})
-			if err == nil || !strings.Contains(err.Error(), "cycle") {
+			if recordUnionError == nil || !strings.Contains(recordUnionError.Error(), "cycle") {
 				test.Fatalf(
 					"older upstream %v: native-true reading %s, which reads it back: recorded %s, %v",
 					olderUpstream,
 					read[62:],
 					evaluated.key,
-					err,
+					recordUnionError,
 				)
 			}
 			after, _ := loadReads(r.cache, nativeTrue)
@@ -1503,18 +1520,18 @@ func TestASetThatWouldReadItselfBackIsRefused(test *testing.T) {
 			}
 		}
 		// A runner is a fresh process: nothing this one held answers for it.
-		if found, err := productFor(
+		if found, productForError := productFor(
 			r.root,
 			r.cache,
 			nativeTrue,
 			0,
 			productMemo{freshLookups: &productLookup{done: true}},
-		); err != nil || found.key != before.Sets[0].Key {
+		); productForError != nil || found.key != before.Sets[0].Key {
 			test.Fatalf(
 				"older upstream %v: a runner looking up native-true found %+v, %v; its own test's set is %s",
 				olderUpstream,
 				found,
-				err,
+				productForError,
 				before.Sets[0].Key,
 			)
 		}
@@ -1532,13 +1549,13 @@ func TestTwoProductsRecordedAtOnceMakeNoRing(test *testing.T) {
 	first, second := fmt.Sprintf("%064x", 0x90), fmt.Sprintf("%064x", 0xa0)
 	for _, nameKey := range []string{first, second} {
 		set := readSet{Entries: []readEntry{{Kind: "content", Path: "go.mod"}}}
-		evaluated, err := evaluate(r.root, r.cache, nameKey, set, 0, nil)
-		if err != nil {
-			test.Fatal(err)
+		evaluated, evaluateError := evaluate(r.root, r.cache, nameKey, set, 0, nil)
+		if evaluateError != nil {
+			test.Fatal(evaluateError)
 		}
 		set.Key = evaluated.key
-		if err := recordReads(r.cache, nameKey, nameKey[60:], set); err != nil {
-			test.Fatal(err)
+		if recordReadsError := recordReads(r.cache, nameKey, nameKey[60:], set); recordReadsError != nil {
+			test.Fatal(recordReadsError)
 		}
 		write(test, filepath.Join(r.cache, evaluated.key), "out", nameKey)
 	}
@@ -1619,19 +1636,22 @@ func TestAReachThroughAFileThatWontReadIsRefused(test *testing.T) {
 		},
 	} {
 		r := newRig(test)
-		reaching, err := json.Marshal(readsFile{
+		reaching, encodeError := json.Marshal(readsFile{
 			Version: readsVersion,
 			Name:    "upstream",
 			Sets:    []readSet{{Key: fmt.Sprintf("%064x", 1), Entries: []readEntry{{Kind: "product", Path: beyond}}}},
 		})
-		if err != nil {
-			test.Fatal(err)
+		if encodeError != nil {
+			test.Fatal(encodeError)
 		}
 		write(test, r.cache, upstream+".reads", string(reaching))
 		if testCase.beyond != "" {
 			write(test, r.cache, beyond+".reads", testCase.beyond)
-			if err := os.Chmod(filepath.Join(r.cache, beyond+".reads"), testCase.mode); err != nil {
-				test.Fatal(err)
+			if changeModeError := os.Chmod(
+				filepath.Join(r.cache, beyond+".reads"),
+				testCase.mode,
+			); changeModeError != nil {
+				test.Fatal(changeModeError)
 			}
 		}
 		if testCase.mode == 0 && testCase.beyond != "" && os.Getuid() == 0 {
@@ -1642,15 +1662,16 @@ func TestAReachThroughAFileThatWontReadIsRefused(test *testing.T) {
 		set := readSet{
 			Entries: sortedEntries([]readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "product", Path: upstream}}),
 		}
-		_, _, _, err = recordUnion(r.root, r.cache, reader, "reader", set, func(key string) string {
+		_, _, _, recordUnionError := recordUnion(r.root, r.cache, reader, "reader", set, func(key string) string {
 			os.MkdirAll(filepath.Join(r.cache, key), 0o755)
 			return filepath.Join(r.cache, key)
 		})
-		refused := err != nil &&
-			strings.Contains(err.Error(), "can't be read") &&
-			strings.Contains(err.Error(), beyond[:12])
-		if refused != testCase.refused || !testCase.refused && err != nil && strings.Contains(err.Error(), "cycle") {
-			test.Errorf("%s: %v, want refused as a reach back %v", testCase.name, err, testCase.refused)
+		refused := recordUnionError != nil &&
+			strings.Contains(recordUnionError.Error(), "can't be read") &&
+			strings.Contains(recordUnionError.Error(), beyond[:12])
+		if refused != testCase.refused ||
+			!testCase.refused && recordUnionError != nil && strings.Contains(recordUnionError.Error(), "cycle") {
+			test.Errorf("%s: %v, want refused as a reach back %v", testCase.name, recordUnionError, testCase.refused)
 		}
 		if file, _ := loadReads(r.cache, reader); testCase.refused && len(file.Sets) != 0 {
 			test.Errorf("%s: a refused set was recorded: %+v", testCase.name, file.Sets)
@@ -1672,23 +1693,23 @@ func TestAnUpstreamChangedUnderTheValuationIsRefused(test *testing.T) {
 		test.Helper()
 		forgetHeldForLife()
 		set := readSet{Entries: sortedEntries(append([]readEntry{{Kind: "content", Path: "go.mod"}}, entries...))}
-		evaluated, err := evaluate(r.root, r.cache, nameKey, set, 0, nil)
-		if err != nil {
-			test.Fatal(err)
+		evaluated, evaluateError := evaluate(r.root, r.cache, nameKey, set, 0, nil)
+		if evaluateError != nil {
+			test.Fatal(evaluateError)
 		}
 		set.Key = evaluated.key
 		write(test, filepath.Join(r.cache, evaluated.key), "out", nameKey+" "+evaluated.key)
 		return set
 	}
 	for _, nameKey := range []string{reader, upstream} {
-		if err := recordReads(r.cache, nameKey, nameKey[60:], keyed(nameKey)); err != nil {
-			test.Fatal(err)
+		if recordReadsError := recordReads(r.cache, nameKey, nameKey[60:], keyed(nameKey)); recordReadsError != nil {
+			test.Fatal(recordReadsError)
 		}
 	}
 	readingBack := keyed(upstream, readEntry{Kind: "product", Path: reader})
-	before, err := loadReads(r.cache, reader)
-	if err != nil {
-		test.Fatal(err)
+	before, loadReadsError := loadReads(r.cache, reader)
+	if loadReadsError != nil {
+		test.Fatal(loadReadsError)
 	}
 	original := reachBackChecked
 	test.Cleanup(func() { reachBackChecked = original })
@@ -1696,24 +1717,28 @@ func TestAnUpstreamChangedUnderTheValuationIsRefused(test *testing.T) {
 		if nameKey != reader {
 			return
 		}
-		if err := withReads(
+		if withReadsError := withReads(
 			r.cache,
 			upstream,
 			func(file *readsFile) error { file.Sets = []readSet{readingBack}; return nil },
-		); err != nil {
-			test.Error(err)
+		); withReadsError != nil {
+			test.Error(withReadsError)
 		}
 	}
 	forgetHeldForLife()
 	set := readSet{
 		Entries: sortedEntries([]readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "product", Path: upstream}}),
 	}
-	_, evaluated, _, err := recordUnion(r.root, r.cache, reader, "reader", set, func(key string) string {
+	_, evaluated, _, recordUnionError := recordUnion(r.root, r.cache, reader, "reader", set, func(key string) string {
 		os.MkdirAll(filepath.Join(r.cache, key), 0o755)
 		return filepath.Join(r.cache, key)
 	})
-	if err == nil || !strings.Contains(err.Error(), "cycle") {
-		test.Fatalf("reader's set, whose upstream reads it back by its valuation: recorded %s, %v", evaluated.key, err)
+	if recordUnionError == nil || !strings.Contains(recordUnionError.Error(), "cycle") {
+		test.Fatalf(
+			"reader's set, whose upstream reads it back by its valuation: recorded %s, %v",
+			evaluated.key,
+			recordUnionError,
+		)
 	}
 	if after, _ := loadReads(
 		r.cache,
@@ -1745,12 +1770,12 @@ func TestAProductsAnswerIsTheSameInAnyOrder(test *testing.T) {
 			test.Helper()
 			forgetHeldForLife()
 			set := readSet{Entries: sortedEntries(append([]readEntry{{Kind: "content", Path: "go.mod"}}, entries...))}
-			evaluated, err := evaluate(r.root, r.cache, nameKey, set, 0, nil)
+			evaluated, evaluateError := evaluate(r.root, r.cache, nameKey, set, 0, nil)
 			set.Key = evaluated.key
-			if err := recordReads(r.cache, nameKey, nameKey[60:], set); err != nil {
-				test.Fatal(err)
+			if recordReadsError := recordReads(r.cache, nameKey, nameKey[60:], set); recordReadsError != nil {
+				test.Fatal(recordReadsError)
 			}
-			if content != "" && err == nil {
+			if content != "" && evaluateError == nil {
 				write(test, filepath.Join(r.cache, evaluated.key), "out", content)
 			}
 			return evaluated.key
@@ -1777,15 +1802,15 @@ func TestAProductsAnswerIsTheSameInAnyOrder(test *testing.T) {
 		alone := map[string]string{}
 		for _, nameKey := range []string{lowered, canary, shared} {
 			forgetHeldForLife()
-			looked, err := productFor(r.root, r.cache, nameKey, 0, nil)
-			if err != nil || looked.key != expected[nameKey] {
+			looked, productForError := productFor(r.root, r.cache, nameKey, 0, nil)
+			if productForError != nil || looked.key != expected[nameKey] {
 				test.Fatalf(
 					"older canary matching %v: %s alone gave %q (%s), %v; the rule gives %q",
 					olderCanaryMatches,
 					nameKey[60:],
 					looked.key,
 					looked.why,
-					err,
+					productForError,
 					expected[nameKey],
 				)
 			}
@@ -1798,8 +1823,8 @@ func TestAProductsAnswerIsTheSameInAnyOrder(test *testing.T) {
 			forgetHeldForLife()
 			known := productMemo{}
 			for _, nameKey := range order {
-				looked, err := productFor(r.root, r.cache, nameKey, 0, known)
-				if err != nil || looked.key != alone[nameKey] {
+				looked, productForError := productFor(r.root, r.cache, nameKey, 0, known)
+				if productForError != nil || looked.key != alone[nameKey] {
 					test.Errorf(
 						"older canary matching %v, order %s: %s gave %q (%s), %v; alone it gives %q",
 						olderCanaryMatches,
@@ -1807,7 +1832,7 @@ func TestAProductsAnswerIsTheSameInAnyOrder(test *testing.T) {
 						nameKey[60:],
 						looked.key,
 						looked.why,
-						err,
+						productForError,
 						alone[nameKey],
 					)
 				}
@@ -1830,13 +1855,13 @@ func TestARingOfProductsIsOneComponent(test *testing.T) {
 		test.Helper()
 		forgetHeldForLife()
 		set := readSet{Entries: sortedEntries(append([]readEntry{{Kind: "content", Path: "go.mod"}}, entries...))}
-		evaluated, err := evaluate(r.root, r.cache, nameKey, set, 0, nil)
-		if err != nil {
-			test.Fatal(err)
+		evaluated, evaluateError := evaluate(r.root, r.cache, nameKey, set, 0, nil)
+		if evaluateError != nil {
+			test.Fatal(evaluateError)
 		}
 		set.Key = evaluated.key
-		if err := recordReads(r.cache, nameKey, nameKey[60:], set); err != nil {
-			test.Fatal(err)
+		if recordReadsError := recordReads(r.cache, nameKey, nameKey[60:], set); recordReadsError != nil {
+			test.Fatal(recordReadsError)
 		}
 		write(test, filepath.Join(r.cache, evaluated.key), "out", content)
 		return evaluated.key
@@ -1850,23 +1875,23 @@ func TestARingOfProductsIsOneComponent(test *testing.T) {
 	}
 	expected[reader] = record(reader, "reader", readEntry{Kind: "product", Path: ring[0]})
 	expected[itself] = record(itself, "plain itself")
-	if err := recordReads(r.cache, itself, "itself", readSet{
+	if recordReadsError := recordReads(r.cache, itself, "itself", readSet{
 		Entries: sortedEntries([]readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "product", Path: itself}}),
-	}); err != nil {
-		test.Fatal(err)
+	}); recordReadsError != nil {
+		test.Fatal(recordReadsError)
 	}
 	all := append(slices.Clone(ring), reader)
 	alone := map[string]string{}
 	for _, nameKey := range append(slices.Clone(all), itself) {
 		forgetHeldForLife()
-		looked, err := productFor(r.root, r.cache, nameKey, 0, nil)
-		if err != nil || looked.key != expected[nameKey] {
+		looked, productForError := productFor(r.root, r.cache, nameKey, 0, nil)
+		if productForError != nil || looked.key != expected[nameKey] {
 			test.Fatalf(
 				"%s alone gave %q (%s), %v; the rule gives %q",
 				nameKey[60:],
 				looked.key,
 				looked.why,
-				err,
+				productForError,
 				expected[nameKey],
 			)
 		}
@@ -1891,15 +1916,15 @@ func TestARingOfProductsIsOneComponent(test *testing.T) {
 		forgetHeldForLife()
 		known := productMemo{}
 		for _, nameKey := range order {
-			looked, err := productFor(r.root, r.cache, nameKey, 0, known)
-			if err != nil || looked.key != alone[nameKey] {
+			looked, productForError := productFor(r.root, r.cache, nameKey, 0, known)
+			if productForError != nil || looked.key != alone[nameKey] {
 				test.Errorf(
 					"order %s: %s gave %q (%s), %v; alone it gives %q",
 					orderNames(order),
 					nameKey[60:],
 					looked.key,
 					looked.why,
-					err,
+					productForError,
 					alone[nameKey],
 				)
 			}
@@ -1923,13 +1948,13 @@ func TestALowerAgreementRingIsDecidedFromEveryStart(test *testing.T) {
 		test.Helper()
 		forgetHeldForLife()
 		set := readSet{Entries: sortedEntries(append([]readEntry{{Kind: "content", Path: "go.mod"}}, entries...))}
-		evaluated, err := evaluate(r.root, r.cache, nameKey, set, 0, nil)
-		if err != nil {
-			test.Fatal(err)
+		evaluated, evaluateError := evaluate(r.root, r.cache, nameKey, set, 0, nil)
+		if evaluateError != nil {
+			test.Fatal(evaluateError)
 		}
 		set.Key = evaluated.key
-		if err := recordReads(r.cache, nameKey, nameKey[60:], set); err != nil {
-			test.Fatal(err)
+		if recordReadsError := recordReads(r.cache, nameKey, nameKey[60:], set); recordReadsError != nil {
+			test.Fatal(recordReadsError)
 		}
 		write(test, filepath.Join(r.cache, evaluated.key), "out", content)
 		return evaluated.key
@@ -1950,15 +1975,15 @@ func TestALowerAgreementRingIsDecidedFromEveryStart(test *testing.T) {
 		known := productMemo{}
 		for step := range ring {
 			nameKey := ring[(start+step)%len(ring)]
-			looked, err := productFor(r.root, r.cache, nameKey, 0, known)
-			if err != nil || looked.key != plain[nameKey] {
+			looked, productForError := productFor(r.root, r.cache, nameKey, 0, known)
+			if productForError != nil || looked.key != plain[nameKey] {
 				test.Errorf(
 					"from %s, %s gave %q (%s), %v; its older set's key is %q",
 					ring[start][60:],
 					nameKey[60:],
 					looked.key,
 					looked.why,
-					err,
+					productForError,
 					plain[nameKey],
 				)
 			}
@@ -1974,16 +1999,16 @@ func TestALowerAgreementRingIsDecidedFromEveryStart(test *testing.T) {
 		forgetHeldForLife()
 		known := productMemo{}
 		for _, nameKey := range order {
-			looked, err := productFor(r.root, r.cache, nameKey, 0, known)
+			looked, productForError := productFor(r.root, r.cache, nameKey, 0, known)
 			want := map[string]string{head: headPlain, follower: ""}[nameKey]
-			if err != nil || looked.key != want || nameKey == follower && looked.directory != "" {
+			if productForError != nil || looked.key != want || nameKey == follower && looked.directory != "" {
 				test.Errorf(
 					"order %s: %s gave %q (%s), %v; want %q",
 					orderNames(order),
 					nameKey[60:],
 					looked.key,
 					looked.why,
-					err,
+					productForError,
 					want,
 				)
 			}
@@ -2019,28 +2044,31 @@ func TestAProductIsValuedOncePerPass(test *testing.T) {
 				}
 			}
 			set.Entries = sortedEntries(set.Entries)
-			evaluated, err := evaluate(r.root, r.cache, nameKeyOf(layer, index), set, 0, nil)
-			if err != nil {
-				test.Fatal(err)
+			evaluated, evaluateError := evaluate(r.root, r.cache, nameKeyOf(layer, index), set, 0, nil)
+			if evaluateError != nil {
+				test.Fatal(evaluateError)
 			}
 			set.Key = evaluated.key
-			if err := recordReads(
+			if recordReadsError := recordReads(
 				r.cache,
 				nameKeyOf(layer, index),
 				fmt.Sprintf("layer %d product %d", layer, index),
 				set,
-			); err != nil {
-				test.Fatal(err)
+			); recordReadsError != nil {
+				test.Fatal(recordReadsError)
 			}
-			if err := os.MkdirAll(filepath.Join(r.cache, evaluated.key), 0o755); err != nil {
-				test.Fatal(err)
+			if createDirectoryError := os.MkdirAll(
+				filepath.Join(r.cache, evaluated.key),
+				0o755,
+			); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
 		}
 	}
 	started := time.Now()
-	top, err := productFor(r.root, r.cache, nameKeyOf(11, 0), 0, nil)
-	if err != nil || top.directory == "" {
-		test.Fatalf("the top of the graph: %+v, %v", top, err)
+	top, productForError := productFor(r.root, r.cache, nameKeyOf(11, 0), 0, nil)
+	if productForError != nil || top.directory == "" {
+		test.Fatalf("the top of the graph: %+v, %v", top, productForError)
 	}
 	if took := time.Since(started); took > 5*time.Second {
 		test.Fatalf("valuing 36 products took %v", took)
@@ -2050,16 +2078,16 @@ func TestAProductIsValuedOncePerPass(test *testing.T) {
 		set := readSet{
 			Entries: sortedEntries([]readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "product", Path: to}}),
 		}
-		if err := recordReads(r.cache, from, "cycle "+from[:4], set); err != nil {
-			test.Fatal(err)
+		if recordReadsError := recordReads(r.cache, from, "cycle "+from[:4], set); recordReadsError != nil {
+			test.Fatal(recordReadsError)
 		}
 	}
 	first, second := strings.Repeat("e", 64), strings.Repeat("f", 64)
 	cycle(first, second)
 	cycle(second, first)
-	looked, err := productFor(r.root, r.cache, first, 0, nil)
-	if err != nil || looked.directory != "" || !strings.Contains(looked.why, "cycle") {
-		test.Fatalf("two products reading each other: %+v, %v", looked, err)
+	looked, productForError := productFor(r.root, r.cache, first, 0, nil)
+	if productForError != nil || looked.directory != "" || !strings.Contains(looked.why, "cycle") {
+		test.Fatalf("two products reading each other: %+v, %v", looked, productForError)
 	}
 }
 
@@ -2143,9 +2171,9 @@ func TestATreeThatChangedDuringTheRunRefusesIt(test *testing.T) {
 				run.before(r)
 				forgetTracked()
 			}
-			before, err := TreeState()
-			if err != nil {
-				test.Fatal(err)
+			before, treeStateError := TreeState()
+			if treeStateError != nil {
+				test.Fatal(treeStateError)
 			}
 			r.before = before
 			Product(test, port, building("built"))
@@ -2166,9 +2194,9 @@ func TestATreeThatChangedDuringTheRunRefusesIt(test *testing.T) {
 func TestWhatABuildReadsOfTheMachineIsKeyed(test *testing.T) {
 	unhanded(test)
 	r := newRig(test)
-	machine, err := filepath.EvalSymlinks(test.TempDir())
-	if err != nil {
-		test.Fatal(err)
+	machine, resolveSymlinksError := filepath.EvalSymlinks(test.TempDir())
+	if resolveSymlinksError != nil {
+		test.Fatal(resolveSymlinksError)
 	}
 	system := filepath.Join(machine, "usr")
 	dpkg := filepath.Join(machine, "dpkg")
@@ -2239,26 +2267,35 @@ func TestWhatABuildReadsOfTheMachineIsKeyed(test *testing.T) {
 	if value := systemValue(stdio); value != "package libc6-dev:amd64 version 2.39-0ubuntu8" {
 		test.Fatalf("a file dpkg installed values %q", value)
 	}
-	if _, err := reading(test, port); err != nil {
-		test.Fatal(err)
+	if _, readingError := reading(test, port); readingError != nil {
+		test.Fatal(readingError)
 	}
 	status("2.39-0ubuntu9")
-	if _, err := reading(test, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "system "+stdio) {
-		test.Fatalf("libc6-dev upgraded and port read as %v", err)
+	if _, readingError := reading(
+		test,
+		port,
+	); !errors.Is(readingError, ErrNotBuilt) || !strings.Contains(readingError.Error(), "system "+stdio) {
+		test.Fatalf("libc6-dev upgraded and port read as %v", readingError)
 	}
 	status("2.39-0ubuntu8")
 	// Edited in place, the package's version unchanged: dpkg's md5 no longer matches, so it is keyed by its content.
 	write(test, system, "include/stdio.h", "int printf(const char *, ...); /* patched */")
-	if _, err := reading(test, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "system "+stdio) {
-		test.Fatalf("an installed file edited in place, port read as %v", err)
+	if _, readingError := reading(
+		test,
+		port,
+	); !errors.Is(readingError, ErrNotBuilt) || !strings.Contains(readingError.Error(), "system "+stdio) {
+		test.Fatalf("an installed file edited in place, port read as %v", readingError)
 	}
 	write(test, system, "include/stdio.h", installed[stdio])
-	if _, err := reading(test, port); err != nil {
-		test.Fatalf("the file restored: %v", err)
+	if _, readingError := reading(test, port); readingError != nil {
+		test.Fatalf("the file restored: %v", readingError)
 	}
 	write(test, system, "lib/gcc/crtbegin.o", "another object")
-	if _, err := reading(test, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "system "+crt) {
-		test.Fatalf("an unowned file changed and port read as %v", err)
+	if _, readingError := reading(
+		test,
+		port,
+	); !errors.Is(readingError, ErrNotBuilt) || !strings.Contains(readingError.Error(), "system "+crt) {
+		test.Fatalf("an unowned file changed and port read as %v", readingError)
 	}
 }
 
@@ -2299,16 +2336,16 @@ func TestTheBinarysBuildSettingsKeyItsProducts(test *testing.T) {
 	if settlement := r.settle(test); len(settlement.Settled) != 1 {
 		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	if _, err := reading(test, port); err != nil {
-		test.Fatal(err)
+	if _, readingError := reading(test, port); readingError != nil {
+		test.Fatal(readingError)
 	}
 	settingsOverride = binarySettings() + "\n-race=true"
 	test.Cleanup(func() { settingsOverride = "" })
-	if _, err := reading(
+	if _, readingError := reading(
 		test,
 		port,
-	); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "settings binary") {
-		test.Fatalf("a binary built with -race read as %v", err)
+	); !errors.Is(readingError, ErrNotBuilt) || !strings.Contains(readingError.Error(), "settings binary") {
+		test.Fatalf("a binary built with -race read as %v", readingError)
 	}
 }
 
@@ -2320,8 +2357,8 @@ func TestAReadSetFileOfAnotherVersionIsIgnored(test *testing.T) {
 	write(test, r.cache, nameKey+".reads", `{"version": "buildcache reads v2", "name": "port", "sets": [{"key": "`+
 		strings.Repeat("a", 64)+
 		`", "entries": [{"kind": "package", "path": "libc6-dev:amd64"}]}]}`)
-	if file, err := loadReads(r.cache, nameKey); err != nil || len(file.Sets) != 0 {
-		test.Fatalf("a v2 read set file loaded as %+v, %v", file, err)
+	if file, loadReadsError := loadReads(r.cache, nameKey); loadReadsError != nil || len(file.Sets) != 0 {
+		test.Fatalf("a v2 read set file loaded as %+v, %v", file, loadReadsError)
 	}
 }
 
@@ -2359,18 +2396,18 @@ func TestTheReportNamesEachProductsOutcome(test *testing.T) {
 	lines := func(test *testing.T, reports []Report) []map[string]any {
 		test.Helper()
 		file := filepath.Join(test.TempDir(), "report.jsonl")
-		if err := WriteReport(file, reports); err != nil {
-			test.Fatal(err)
+		if writeReportError := WriteReport(file, reports); writeReportError != nil {
+			test.Fatal(writeReportError)
 		}
-		content, err := os.ReadFile(file)
-		if err != nil {
-			test.Fatal(err)
+		content, readError := os.ReadFile(file)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		var found []map[string]any
 		for _, line := range strings.Split(strings.TrimSuffix(string(content), "\n"), "\n") {
 			var fields map[string]any
-			if err := json.Unmarshal([]byte(line), &fields); err != nil {
-				test.Fatalf("a report line isn't JSON: %q: %v", line, err)
+			if decodeError := json.Unmarshal([]byte(line), &fields); decodeError != nil {
+				test.Fatalf("a report line isn't JSON: %q: %v", line, decodeError)
 			}
 			found = append(found, fields)
 		}
@@ -2392,9 +2429,9 @@ func TestTheReportNamesEachProductsOutcome(test *testing.T) {
 	if len(got) != 2 {
 		test.Fatalf("the report is %v; want header settled and port refused", got)
 	}
-	file, err := loadReads(r.cache, built["header"].NameKey)
-	if err != nil || len(file.Sets) != 1 {
-		test.Fatalf("header's read sets: %+v, %v", file, err)
+	file, loadReadsError := loadReads(r.cache, built["header"].NameKey)
+	if loadReadsError != nil || len(file.Sets) != 1 {
+		test.Fatalf("header's read sets: %+v, %v", file, loadReadsError)
 	}
 	settled := map[string]any{
 		"name":    "header",
@@ -2495,7 +2532,7 @@ func TestAPathStraceEscapesIsReadAsItsBytes(test *testing.T) {
 // tree). Mutant: the decoded target recorded for a machine file too, refused as other.
 // Not parallel: newRig.
 func TestAMachineFileThroughALinkIsKeyedAsItself(test *testing.T) {
-	if _, err := os.Stat("/etc/resolv.conf"); err != nil {
+	if _, statError := os.Stat("/etc/resolv.conf"); statError != nil {
 		test.Skip("no /etc/resolv.conf here")
 	}
 	r := newRig(test)
@@ -2865,9 +2902,9 @@ func TestAReaderOutlivesItsInputsKeyMoving(test *testing.T) {
 	header := Inputs{Name: "header", Files: []string{"include"}}
 	headerProduct := Product(test, header, building("header"))
 	Product(test, port, func(directory string) error {
-		content, err := os.ReadFile(filepath.Join(headerProduct, "product"))
-		if err != nil {
-			return err
+		content, readError := os.ReadFile(filepath.Join(headerProduct, "product"))
+		if readError != nil {
+			return readError
 		}
 		return os.WriteFile(filepath.Join(directory, "product"), append(content, " and port"...), 0o644)
 	})
@@ -2883,12 +2920,12 @@ func TestAReaderOutlivesItsInputsKeyMoving(test *testing.T) {
 	if settlement := r.settle(test); len(settlement.Settled) != 2 {
 		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	before, err := reading(test, header)
-	if err != nil {
-		test.Fatal(err)
+	before, readingError := reading(test, header)
+	if readingError != nil {
+		test.Fatal(readingError)
 	}
-	if _, err := reading(test, port); err != nil {
-		test.Fatalf("port before header's key moved: %v", err)
+	if _, readingError := reading(test, port); readingError != nil {
+		test.Fatalf("port before header's key moved: %v", readingError)
 	}
 	// Another settlement of header that also read notes.txt: the union of the two sets, under a new key, the same
 	// bytes.
@@ -2898,28 +2935,28 @@ func TestAReaderOutlivesItsInputsKeyMoving(test *testing.T) {
 		{Kind: "content", Path: "go.mod"},
 		{Kind: "settings", Path: "binary"},
 	})}
-	_, evaluated, _, err := recordUnion(r.root, r.cache, built["header"].NameKey, "header", set, func(
+	_, evaluated, _, recordUnionError := recordUnion(r.root, r.cache, built["header"].NameKey, "header", set, func(
 		key string,
 	) string {
 		moved := filepath.Join(r.cache, key)
-		if err := os.MkdirAll(moved, 0o755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(moved, 0o755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 		content, _ := os.ReadFile(filepath.Join(before, "product"))
 		write(test, moved, "product", string(content))
 		return moved
 	})
-	if err != nil {
-		test.Fatal(err)
+	if recordUnionError != nil {
+		test.Fatal(recordUnionError)
 	}
-	if after, err := reading(
+	if after, readingError := reading(
 		test,
 		header,
-	); err != nil || after == before || after != filepath.Join(r.cache, evaluated.key) {
-		test.Fatalf("header's key didn't move: %s, then %s (%v)", before, after, err)
+	); readingError != nil || after == before || after != filepath.Join(r.cache, evaluated.key) {
+		test.Fatalf("header's key didn't move: %s, then %s (%v)", before, after, readingError)
 	}
-	if _, err := reading(test, port); err != nil {
-		test.Fatalf("port, whose header's key moved and bytes didn't, read as %v", err)
+	if _, readingError := reading(test, port); readingError != nil {
+		test.Fatalf("port, whose header's key moved and bytes didn't, read as %v", readingError)
 	}
 }
 
@@ -2936,19 +2973,19 @@ func TestAProductsDigestIsItsBytes(test *testing.T) {
 		if executable {
 			mode = 0o755
 		}
-		if err := os.Chmod(filepath.Join(directory, "bin/tool"), mode); err != nil {
-			test.Fatal(err)
+		if changeModeError := os.Chmod(filepath.Join(directory, "bin/tool"), mode); changeModeError != nil {
+			test.Fatal(changeModeError)
 		}
-		if err := os.Symlink(target, filepath.Join(directory, "current")); err != nil {
-			test.Fatal(err)
+		if symlinkError := os.Symlink(target, filepath.Join(directory, "current")); symlinkError != nil {
+			test.Fatal(symlinkError)
 		}
 		return directory
 	}
 	digest := func(directory string) string {
 		test.Helper()
-		value, err := productDigest(directory)
-		if err != nil {
-			test.Fatal(err)
+		value, productDigestError := productDigest(directory)
+		if productDigestError != nil {
+			test.Fatal(productDigestError)
 		}
 		return value
 	}
@@ -2968,8 +3005,8 @@ func TestAProductsDigestIsItsBytes(test *testing.T) {
 	kept := product(true, "tool", "bin/tool")
 	digest(kept)
 	productDigests.Delete(kept)
-	if err := os.WriteFile(kept+".digest", []byte(strings.Repeat("c", 64)), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(kept+".digest", []byte(strings.Repeat("c", 64)), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	if got := digest(kept); got != strings.Repeat("c", 64) {
 		test.Fatalf("a later process hashed again rather than read %s.digest: %s", filepath.Base(kept), got)
@@ -2977,8 +3014,8 @@ func TestAProductsDigestIsItsBytes(test *testing.T) {
 	// A product reached through a link, as a runner's unit cache links one from the box's shared products, digests as
 	// its bytes. Mutant: the link walked as itself.
 	linked := filepath.Join(test.TempDir(), strings.Repeat("ab", 32))
-	if err := os.Symlink(product(true, "tool", "bin/tool"), linked); err != nil {
-		test.Fatal(err)
+	if symlinkError := os.Symlink(product(true, "tool", "bin/tool"), linked); symlinkError != nil {
+		test.Fatal(symlinkError)
 	}
 	if got := digest(linked); got != base {
 		test.Fatalf("a product reached through a link digests %s, its bytes %s", got, base)
@@ -2998,9 +3035,9 @@ func TestTheReportNamesWhatTheRunFound(test *testing.T) {
 	if settlement := r.settle(test); len(settlement.Settled) != 1 {
 		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	file, err := loadReads(r.cache, NameKey(r.root, header))
-	if err != nil || len(file.Sets) == 0 {
-		test.Fatalf("header's read sets: %+v, %v", file, err)
+	file, loadReadsError := loadReads(r.cache, NameKey(r.root, header))
+	if loadReadsError != nil || len(file.Sets) == 0 {
+		test.Fatalf("header's read sets: %+v, %v", file, loadReadsError)
 	}
 	r.retrace(test, "found")
 	Product(test, header, building("never built: found"))
@@ -3037,9 +3074,9 @@ func TestARunThatFindsAProductNamesWhatItsSetReads(test *testing.T) {
 	header := Inputs{Name: "header", Files: []string{"include"}}
 	reading := func(upstream string) func(string) error {
 		return func(directory string) error {
-			content, err := os.ReadFile(filepath.Join(upstream, "product"))
-			if err != nil {
-				return err
+			content, readError := os.ReadFile(filepath.Join(upstream, "product"))
+			if readError != nil {
+				return readError
 			}
 			return os.WriteFile(filepath.Join(directory, "product"), append(content, " and more"...), 0o644)
 		}
@@ -3077,9 +3114,9 @@ func TestARunThatFindsAProductNamesWhatItsSetReads(test *testing.T) {
 	}
 	keys := map[string]string{}
 	for _, name := range []string{"base", "header"} {
-		file, err := loadReads(r.cache, built[name].NameKey)
-		if err != nil || len(file.Sets) == 0 {
-			test.Fatalf("%s's read sets: %+v, %v", name, file, err)
+		file, loadReadsError := loadReads(r.cache, built[name].NameKey)
+		if loadReadsError != nil || len(file.Sets) == 0 {
+			test.Fatalf("%s's read sets: %+v, %v", name, file, loadReadsError)
 		}
 		keys[name] = file.Sets[0].Key
 	}
@@ -3109,8 +3146,11 @@ func TestARunThatFindsAProductNamesWhatItsSetReads(test *testing.T) {
 	}
 	// Fetched from the store under the key its set gives, the same: that set's upstreams are named.
 	portKey := found[built["port"].NameKey]
-	if err := os.Rename(filepath.Join(r.cache, portKey), filepath.Join(test.TempDir(), portKey)); err != nil {
-		test.Fatal(err)
+	if renameError := os.Rename(
+		filepath.Join(r.cache, portKey),
+		filepath.Join(test.TempDir(), portKey),
+	); renameError != nil {
+		test.Fatal(renameError)
 	}
 	store := &fakeStore{objects: map[string][]byte{}}
 	server := httptest.NewServer(store)
@@ -3175,9 +3215,9 @@ func TestLocalReplacementsAreTheMainModulesAndTheWorkspaces(test *testing.T) {
 	)
 	write(test, root, "shim/go.mod", "module example.com/shim\n\ngo 1.22\n")
 	write(test, root, "go.work", "go 1.22\n\nuse .\n\nreplace example.com/tool => ./tool\n")
-	directories, err := localReplacements(root, root)
-	if err != nil {
-		test.Fatal(err)
+	directories, localReplacementsError := localReplacements(root, root)
+	if localReplacementsError != nil {
+		test.Fatal(localReplacementsError)
 	}
 	want := []string{filepath.Join(root, "shim"), filepath.Join(root, "tool")}
 	if !slices.Equal(directories, want) {
@@ -3229,9 +3269,9 @@ func TestAMissCountsEveryDifferingEntryByKind(test *testing.T) {
 // test's ignored test files dropped.
 // Not parallel: go list runs in the module.
 func TestARecipeKeepsADependencysIgnoredFilesButNotItsIgnoredTests(test *testing.T) {
-	root, err := filepath.EvalSymlinks(test.TempDir())
-	if err != nil {
-		test.Fatal(err)
+	root, resolveSymlinksError := filepath.EvalSymlinks(test.TempDir())
+	if resolveSymlinksError != nil {
+		test.Fatal(resolveSymlinksError)
 	}
 	other := "windows"
 	if runtime.GOOS == "windows" {
@@ -3457,8 +3497,8 @@ func handedBuildsIn(test *testing.T, root string) []string {
 		set  *token.FileSet
 	}
 	packages := map[string][]parsed{}
-	filepath.WalkDir(root, func(name string, entry os.DirEntry, err error) error {
-		if err != nil {
+	filepath.WalkDir(root, func(name string, entry os.DirEntry, pathError error) error {
+		if pathError != nil {
 			return nil
 		}
 		if entry.IsDir() &&
@@ -3468,14 +3508,14 @@ func handedBuildsIn(test *testing.T, root string) []string {
 		if entry.IsDir() || !strings.HasSuffix(name, ".go") {
 			return nil
 		}
-		content, err := os.ReadFile(name)
-		if err != nil ||
+		content, readError := os.ReadFile(name)
+		if readError != nil ||
 			!strings.Contains(string(content), "LeanProductOf") && !strings.Contains(string(content), importPath) {
 			return nil
 		}
 		set := token.NewFileSet()
-		file, err := parser.ParseFile(set, name, content, parser.SkipObjectResolution)
-		if err != nil {
+		file, parseFileError := parser.ParseFile(set, name, content, parser.SkipObjectResolution)
+		if parseFileError != nil {
 			return nil
 		}
 		packages[filepath.Dir(name)] = append(packages[filepath.Dir(name)], parsed{name, file, set})
@@ -3530,8 +3570,8 @@ func leanCallersIn(test *testing.T, root string) []string {
 	test.Helper()
 	const importPath = "github.com/system-inc/adamic/internal/buildcache"
 	found := map[string]bool{}
-	filepath.WalkDir(root, func(name string, entry os.DirEntry, err error) error {
-		if err != nil {
+	filepath.WalkDir(root, func(name string, entry os.DirEntry, pathError error) error {
+		if pathError != nil {
 			return nil
 		}
 		if entry.IsDir() &&
@@ -3543,13 +3583,13 @@ func leanCallersIn(test *testing.T, root string) []string {
 			filepath.Dir(name) == filepath.Join(root, "internal", "buildcache") {
 			return nil
 		}
-		content, err := os.ReadFile(name)
-		if err != nil || !strings.Contains(string(content), importPath) {
+		content, readError := os.ReadFile(name)
+		if readError != nil || !strings.Contains(string(content), importPath) {
 			return nil
 		}
-		file, err := parser.ParseFile(token.NewFileSet(), name, content, parser.SkipObjectResolution)
-		if err != nil {
-			test.Errorf("%s: %v", name, err)
+		file, parseFileError := parser.ParseFile(token.NewFileSet(), name, content, parser.SkipObjectResolution)
+		if parseFileError != nil {
+			test.Errorf("%s: %v", name, parseFileError)
 			return nil
 		}
 		local := ""
@@ -3753,8 +3793,8 @@ func TestALeanBuildsDeclaredPathItCantReadWholeRefusesIt(test *testing.T) {
 		test.Skip("root reads a directory whatever its mode")
 	}
 	seal := func(test *testing.T, directory string) {
-		if err := os.Chmod(directory, 0); err != nil {
-			test.Fatal(err)
+		if changeModeError := os.Chmod(directory, 0); changeModeError != nil {
+			test.Fatal(changeModeError)
 		}
 		test.Cleanup(func() { os.Chmod(directory, 0o755) })
 	}
@@ -4128,9 +4168,9 @@ func TestEveryLeanCallersCensusIsATestOfItsPackage(test *testing.T) {
 // a _test.go file of pkg's directory that go builds there.
 func censusMissing(root, pkg, test string) string {
 	directory := filepath.Join(root, filepath.FromSlash(pkg))
-	entries, err := os.ReadDir(directory)
-	if err != nil {
-		return "is in no package there: " + err.Error()
+	entries, readDirectoryError := os.ReadDir(directory)
+	if readDirectoryError != nil {
+		return "is in no package there: " + readDirectoryError.Error()
 	}
 	if !strings.HasPrefix(test, "Test") {
 		return "isn't named as a test"
@@ -4141,17 +4181,17 @@ func censusMissing(root, pkg, test string) string {
 		if entry.IsDir() || !strings.HasSuffix(entry.Name(), "_test.go") {
 			continue
 		}
-		if matched, err := line.MatchFile(directory, entry.Name()); err != nil || !matched {
+		if matched, matchFileError := line.MatchFile(directory, entry.Name()); matchFileError != nil || !matched {
 			continue
 		}
-		file, err := parser.ParseFile(
+		file, parseFileError := parser.ParseFile(
 			token.NewFileSet(),
 			filepath.Join(directory, entry.Name()),
 			nil,
 			parser.SkipObjectResolution,
 		)
-		if err != nil {
-			return "can't be read: " + err.Error()
+		if parseFileError != nil {
+			return "can't be read: " + parseFileError.Error()
 		}
 		for _, declaration := range file.Decls {
 			function, ok := declaration.(*ast.FuncDecl)
@@ -4293,27 +4333,27 @@ func TestAListedProductIsRebuiltAndComparedOnItsLocalHit(test *testing.T) {
 		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 	test.Setenv("ADAMIC_BUILD_TRACE", "")
-	temporary, err := filepath.EvalSymlinks(test.TempDir())
-	if err != nil {
-		test.Fatal(err)
+	temporary, resolveSymlinksError := filepath.EvalSymlinks(test.TempDir())
+	if resolveSymlinksError != nil {
+		test.Fatal(resolveSymlinksError)
 	}
 	test.Setenv("TMPDIR", temporary)
 	look := func(listed string, content string) string {
 		test.Helper()
 		forgetHeldForLife()
 		keys := filepath.Join(test.TempDir(), "keys")
-		if err := os.WriteFile(keys, []byte(listed+"\n"), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(keys, []byte(listed+"\n"), 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		test.Setenv("ADAMIC_BUILD_AUDIT_KEYS", keys)
 		log := filepath.Join(test.TempDir(), "builds.log")
 		test.Setenv("ADAMIC_BUILD_LOG", log)
 		var rebuilt []string
-		if _, err := Get(port, func(directory string) error {
+		if _, getError := Get(port, func(directory string) error {
 			rebuilt = append(rebuilt, directory)
 			return building(content)(directory)
-		}); err != nil {
-			test.Fatal(err)
+		}); getError != nil {
+			test.Fatal(getError)
 		}
 		for _, directory := range rebuilt {
 			if !strings.HasPrefix(directory, temporary+string(filepath.Separator)) {
@@ -4336,8 +4376,10 @@ func TestAListedProductIsRebuiltAndComparedOnItsLocalHit(test *testing.T) {
 	if match == nil || match[1] == match[2] {
 		test.Fatalf("a listed product rebuilt otherwise: census %q, want a mismatch audit line", lines)
 	}
-	if kept, err := os.ReadFile(filepath.Join(match[3], "product")); err != nil || string(kept) != "built differently" {
-		test.Errorf("the rebuilt copy isn't kept at %s: %q, %v", match[3], kept, err)
+	if kept, readError := os.ReadFile(
+		filepath.Join(match[3], "product"),
+	); readError != nil || string(kept) != "built differently" {
+		test.Errorf("the rebuilt copy isn't kept at %s: %q, %v", match[3], kept, readError)
 	}
 	if lines := look(strings.Repeat("0", 64), "built differently"); strings.Contains(lines, "audit ") {
 		test.Errorf("an unlisted product was audited: census %q", lines)
@@ -4346,8 +4388,8 @@ func TestAListedProductIsRebuiltAndComparedOnItsLocalHit(test *testing.T) {
 	forgetHeldForLife()
 	missing := filepath.Join(test.TempDir(), "no-such-list")
 	test.Setenv("ADAMIC_BUILD_AUDIT_KEYS", missing)
-	if _, err := Get(port, building("built")); err == nil || !strings.Contains(err.Error(), missing) {
-		test.Errorf("a lookup under an unreadable audit list: %v, want an error naming %s", err, missing)
+	if _, getError := Get(port, building("built")); getError == nil || !strings.Contains(getError.Error(), missing) {
+		test.Errorf("a lookup under an unreadable audit list: %v, want an error naming %s", getError, missing)
 	}
 }
 
@@ -4408,9 +4450,9 @@ func TestAGoProductIsntLeanWhileLoomTurnsLeanOff(test *testing.T) {
 // another way (a variable's address) gets past it. Mutant: goProduct handing product &leanBuild{} or new(leanBuild).
 func TestOnlyLeanBuildOfMakesALeanBuild(test *testing.T) {
 	test.Parallel()
-	entries, err := os.ReadDir(".")
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(".")
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	var made []string
 	for _, entry := range entries {
@@ -4419,9 +4461,9 @@ func TestOnlyLeanBuildOfMakesALeanBuild(test *testing.T) {
 			continue
 		}
 		fileSet := token.NewFileSet()
-		file, err := parser.ParseFile(fileSet, name, nil, parser.SkipObjectResolution)
-		if err != nil {
-			test.Fatal(err)
+		file, parseFileError := parser.ParseFile(fileSet, name, nil, parser.SkipObjectResolution)
+		if parseFileError != nil {
+			test.Fatal(parseFileError)
 		}
 		for _, declaration := range file.Decls {
 			function, ok := declaration.(*ast.FuncDecl)
@@ -4469,11 +4511,11 @@ func TestALeanReadSetIsNeverMatchedWhileLoomTurnsLeanOff(test *testing.T) {
 		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 	var key string
-	if err := withReads(r.cache, build.NameKey, func(file *readsFile) error {
+	if withReadsError := withReads(r.cache, build.NameKey, func(file *readsFile) error {
 		file.Sets[0].Lean, key = true, file.Sets[0].Key
 		return nil
-	}); err != nil {
-		test.Fatal(err)
+	}); withReadsError != nil {
+		test.Fatal(withReadsError)
 	}
 	if !leanSet(r.cache, build.NameKey, key) || leanSet(r.cache, build.NameKey, strings.Repeat("0", 64)) {
 		test.Fatalf(
@@ -4485,8 +4527,8 @@ func TestALeanReadSetIsNeverMatchedWhileLoomTurnsLeanOff(test *testing.T) {
 	}
 	// A traced run that finds it reports it lean.
 	forgetHeldForLife()
-	if _, err := Get(port, func(string) error { return errors.New("found, never built") }); err != nil {
-		test.Fatal(err)
+	if _, getError := Get(port, func(string) error { return errors.New("found, never built") }); getError != nil {
+		test.Fatal(getError)
 	}
 	foundLean := false
 	for _, report := range r.settle(test).Reports {
@@ -4502,11 +4544,11 @@ func TestALeanReadSetIsNeverMatchedWhileLoomTurnsLeanOff(test *testing.T) {
 		test.Helper()
 		forgetHeldForLife()
 		builds := 0
-		if _, err := Get(port, func(directory string) error {
+		if _, getError := Get(port, func(directory string) error {
 			builds++
 			return building("built")(directory)
-		}); err != nil {
-			test.Fatal(err)
+		}); getError != nil {
+			test.Fatal(getError)
 		}
 		return builds
 	}
@@ -4531,13 +4573,13 @@ func TestAUnionIsLeanOnlyWhenEverySetInItIs(test *testing.T) {
 	if settlement := r.settle(test); len(settlement.Settled) != 1 {
 		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	file, err := loadReads(r.cache, build.NameKey)
-	if err != nil || len(file.Sets) != 1 || file.Sets[0].Lean {
-		test.Fatalf("the settled whole set: %+v (%v)", file.Sets, err)
+	file, loadReadsError := loadReads(r.cache, build.NameKey)
+	if loadReadsError != nil || len(file.Sets) != 1 || file.Sets[0].Lean {
+		test.Fatalf("the settled whole set: %+v (%v)", file.Sets, loadReadsError)
 	}
 	union := func() bool {
 		test.Helper()
-		set, _, _, err := recordUnion(
+		set, _, _, recordUnionError := recordUnion(
 			r.root,
 			r.cache,
 			build.NameKey,
@@ -4545,19 +4587,19 @@ func TestAUnionIsLeanOnlyWhenEverySetInItIs(test *testing.T) {
 			readSet{Entries: slices.Clone(file.Sets[0].Entries), Lean: true},
 			func(string) string { return "" },
 		)
-		if err != nil {
-			test.Fatal(err)
+		if recordUnionError != nil {
+			test.Fatal(recordUnionError)
 		}
 		return set.Lean
 	}
 	if union() {
 		test.Fatal("a lean set folded with a whole one is lean")
 	}
-	if err := withReads(r.cache, build.NameKey, func(file *readsFile) error {
+	if withReadsError := withReads(r.cache, build.NameKey, func(file *readsFile) error {
 		file.Sets[0].Lean = true
 		return nil
-	}); err != nil {
-		test.Fatal(err)
+	}); withReadsError != nil {
+		test.Fatal(withReadsError)
 	}
 	if !union() {
 		test.Fatal("a lean set folded with a lean one isn't lean")
@@ -4654,9 +4696,9 @@ func handedBuilding(_ Handed, directory string) error {
 // Not parallel: newRig.
 func TestAHandedBuildsAbsoluteReadUnderItsPathsRefusesIt(test *testing.T) {
 	outside := "/var/lib/adamic-handed-zb9268t"
-	home, err := os.UserHomeDir()
-	if err != nil {
-		test.Fatal(err)
+	home, homeDirectoryError := os.UserHomeDir()
+	if homeDirectoryError != nil {
+		test.Fatal(homeDirectoryError)
 	}
 	inHome := filepath.Join(home, "adamic-handed-zb9268t")
 	for _, each := range []struct {
@@ -4749,19 +4791,19 @@ func TestAHandedBuildsUndeclaredReadIsKeyedByItsWindow(test *testing.T) {
 	if entries := r.entries(test, build.NameKey); !slices.Contains(entries, "content notes.txt") {
 		test.Fatalf("the set of a handed build whose child read notes.txt lacks it: %q", entries)
 	}
-	product, err := reading(test, port)
-	if err != nil {
-		test.Fatalf("a runner didn't find the settled product: %v", err)
+	product, readingError := reading(test, port)
+	if readingError != nil {
+		test.Fatalf("a runner didn't find the settled product: %v", readingError)
 	}
 	write(test, r.root, "notes.txt", "another note\n")
-	if found, err := reading(
+	if found, readingError := reading(
 		test,
 		port,
-	); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "content notes.txt") {
+	); !errors.Is(readingError, ErrNotBuilt) || !strings.Contains(readingError.Error(), "content notes.txt") {
 		test.Fatalf(
 			"an edit to the undeclared file it read found %q, %v; want a miss naming content notes.txt (it was %s)",
 			found,
-			err,
+			readingError,
 			product,
 		)
 	}
@@ -4776,13 +4818,13 @@ func TestAHandedBuildsUndeclaredReadIsKeyedByItsWindow(test *testing.T) {
 // unexpanded; only absolute entries checked.
 func TestAHandedBuildRefusesAReadKeyedBySpellingUnderItsPathsHoweverItsSpelled(test *testing.T) {
 	test.Parallel()
-	real, err := filepath.EvalSymlinks(test.TempDir())
-	if err != nil {
-		test.Fatal(err)
+	real, resolveSymlinksError := filepath.EvalSymlinks(test.TempDir())
+	if resolveSymlinksError != nil {
+		test.Fatal(resolveSymlinksError)
 	}
 	link := filepath.Join(test.TempDir(), "link")
-	if err := os.Symlink(real, link); err != nil {
-		test.Fatal(err)
+	if symlinkError := os.Symlink(real, link); symlinkError != nil {
+		test.Fatal(symlinkError)
 	}
 	home := "/home/adamic-handed-zb9268t"
 	install := home + "/loom-builder/node/abc"
@@ -4893,7 +4935,7 @@ func TestAReaderStillFindsTheUpstreamBuildItRead(test *testing.T) {
 	built, reader := strings.Repeat("a", 64), strings.Repeat("d", 64)
 	settle := func(nameKey string, entries []readEntry, content string) string {
 		test.Helper()
-		_, evaluated, _, err := recordUnion(r.root, r.cache, nameKey, nameKey[:1], readSet{
+		_, evaluated, _, recordUnionError := recordUnion(r.root, r.cache, nameKey, nameKey[:1], readSet{
 			Entries: entries,
 		}, func(key string) string {
 			directory := filepath.Join(r.cache, key)
@@ -4901,8 +4943,8 @@ func TestAReaderStillFindsTheUpstreamBuildItRead(test *testing.T) {
 			os.WriteFile(filepath.Join(directory, "out"), []byte(content), 0o644)
 			return directory
 		})
-		if err != nil {
-			test.Fatal(err)
+		if recordUnionError != nil {
+			test.Fatal(recordUnionError)
 		}
 		return evaluated.key
 	}
@@ -4919,13 +4961,20 @@ func TestAReaderStillFindsTheUpstreamBuildItRead(test *testing.T) {
 	test.Setenv("ADAMIC_BUILD_TRACE", "")
 	readProducts.Clear()
 	elsewhere := filepath.Join(test.TempDir(), "cache")
-	if err := os.CopyFS(elsewhere, os.DirFS(r.cache)); err != nil {
-		test.Fatal(err)
+	if copyFsError := os.CopyFS(elsewhere, os.DirFS(r.cache)); copyFsError != nil {
+		test.Fatal(copyFsError)
 	}
 	for _, cache := range []string{r.cache, elsewhere} {
-		found, err := productFor(r.root, cache, reader, 0, nil)
-		if err != nil || found.key != read {
-			test.Fatalf("in %s the reader is found under %q (%v, %s), want %s", cache, found.key, err, found.why, read)
+		found, productForError := productFor(r.root, cache, reader, 0, nil)
+		if productForError != nil || found.key != read {
+			test.Fatalf(
+				"in %s the reader is found under %q (%v, %s), want %s",
+				cache,
+				found.key,
+				productForError,
+				found.why,
+				read,
+			)
 		}
 		if !slices.ContainsFunc(
 			found.upstreams,
@@ -4951,7 +5000,7 @@ func TestAReRecordInTheTreeKeepsTheSetAReaderNames(test *testing.T) {
 	built, reader := strings.Repeat("a", 64), strings.Repeat("d", 64)
 	settle := func(nameKey string, entries []readEntry, content string) string {
 		test.Helper()
-		_, evaluated, _, err := recordUnion(r.root, r.cache, nameKey, nameKey[:1], readSet{
+		_, evaluated, _, recordUnionError := recordUnion(r.root, r.cache, nameKey, nameKey[:1], readSet{
 			Entries: entries,
 		}, func(key string) string {
 			directory := filepath.Join(r.cache, key)
@@ -4959,8 +5008,8 @@ func TestAReRecordInTheTreeKeepsTheSetAReaderNames(test *testing.T) {
 			os.WriteFile(filepath.Join(directory, "out"), []byte(content), 0o644)
 			return directory
 		})
-		if err != nil {
-			test.Fatal(err)
+		if recordUnionError != nil {
+			test.Fatal(recordUnionError)
 		}
 		return evaluated.key
 	}
@@ -4973,13 +5022,13 @@ func TestAReRecordInTheTreeKeepsTheSetAReaderNames(test *testing.T) {
 	}
 	rerecords = append(rerecords, []readEntry{{Kind: "content", Path: "source/a.c", Value: "another build's"}})
 	for index, entries := range rerecords {
-		if err := recordReads(
+		if recordReadsError := recordReads(
 			r.cache,
 			built,
 			"a",
 			readSet{Recorded: now(), Key: fmt.Sprintf("%064x", index+1), Entries: entries},
-		); err != nil {
-			test.Fatal(err)
+		); recordReadsError != nil {
+			test.Fatal(recordReadsError)
 		}
 	}
 	// And U settles once more in the tree with other bytes, its product here, so the newest set with a product present
@@ -4991,9 +5040,9 @@ func TestAReRecordInTheTreeKeepsTheSetAReaderNames(test *testing.T) {
 	); later == first {
 		test.Fatalf("U's later build kept the first's key %s", first)
 	}
-	file, err := loadReads(r.cache, built)
-	if err != nil {
-		test.Fatal(err)
+	file, loadReadsError := loadReads(r.cache, built)
+	if loadReadsError != nil {
+		test.Fatal(loadReadsError)
 	}
 	if len(rerecords)-1 <= keptSets ||
 		!slices.ContainsFunc(file.Sets, func(set readSet) bool { return set.Key == first }) {
@@ -5006,9 +5055,9 @@ func TestAReRecordInTheTreeKeepsTheSetAReaderNames(test *testing.T) {
 	}
 	test.Setenv("ADAMIC_BUILD_TRACE", "")
 	readProducts.Clear()
-	found, err := productFor(r.root, r.cache, reader, 0, nil)
-	if err != nil || found.key != read {
-		test.Fatalf("the reader is found under %q (%v, %s), want %s", found.key, err, found.why, read)
+	found, productForError := productFor(r.root, r.cache, reader, 0, nil)
+	if productForError != nil || found.key != read {
+		test.Fatalf("the reader is found under %q (%v, %s), want %s", found.key, productForError, found.why, read)
 	}
 	if !slices.ContainsFunc(
 		found.upstreams,
@@ -5029,14 +5078,16 @@ func TestAReaderIsNeverValuedThroughASetTheLookupRefuses(test *testing.T) {
 	built, reader := strings.Repeat("a", 64), strings.Repeat("d", 64)
 	settle := func(nameKey string, set readSet, content string) string {
 		test.Helper()
-		_, evaluated, _, err := recordUnion(r.root, r.cache, nameKey, nameKey[:1], set, func(key string) string {
+		_, evaluated, _, recordUnionError := recordUnion(r.root, r.cache, nameKey, nameKey[:1], set, func(
+			key string,
+		) string {
 			directory := filepath.Join(r.cache, key)
 			os.MkdirAll(directory, 0o755)
 			os.WriteFile(filepath.Join(directory, "out"), []byte(content), 0o644)
 			return directory
 		})
-		if err != nil {
-			test.Fatal(err)
+		if recordUnionError != nil {
+			test.Fatal(recordUnionError)
 		}
 		return evaluated.key
 	}
@@ -5055,22 +5106,34 @@ func TestAReaderIsNeverValuedThroughASetTheLookupRefuses(test *testing.T) {
 	}
 	test.Setenv("ADAMIC_BUILD_TRACE", "")
 	readProducts.Clear()
-	if found, err := productFor(r.root, r.cache, reader, 0, nil); err != nil || found.key != read {
+	if found, productForError := productFor(
+		r.root,
+		r.cache,
+		reader,
+		0,
+		nil,
+	); productForError != nil || found.key != read {
 		test.Fatalf(
 			"with lean keys on the reader is found under %q (%v, %s), want %s by U's first build",
 			found.key,
-			err,
+			productForError,
 			found.why,
 			read,
 		)
 	}
 	test.Setenv("ADAMIC_BUILD_LEAN", "off")
 	readProducts.Clear()
-	if found, err := productFor(r.root, r.cache, reader, 0, nil); err != nil || found.key == read {
+	if found, productForError := productFor(
+		r.root,
+		r.cache,
+		reader,
+		0,
+		nil,
+	); productForError != nil || found.key == read {
 		test.Fatalf(
 			"with lean keys off the reader is found under %q (%v), valued through U's lean set %s",
 			found.key,
-			err,
+			productForError,
 			first,
 		)
 	}
@@ -5087,7 +5150,7 @@ func TestAnOlderSetIsTakenAtTheKeyItEvaluatesToHere(test *testing.T) {
 	built, reader := strings.Repeat("a", 64), strings.Repeat("d", 64)
 	settle := func(nameKey string, entries []readEntry, content string) string {
 		test.Helper()
-		_, evaluated, _, err := recordUnion(r.root, r.cache, nameKey, nameKey[:1], readSet{
+		_, evaluated, _, recordUnionError := recordUnion(r.root, r.cache, nameKey, nameKey[:1], readSet{
 			Entries: entries,
 		}, func(key string) string {
 			directory := filepath.Join(r.cache, key)
@@ -5095,8 +5158,8 @@ func TestAnOlderSetIsTakenAtTheKeyItEvaluatesToHere(test *testing.T) {
 			os.WriteFile(filepath.Join(directory, "out"), []byte(content), 0o644)
 			return directory
 		})
-		if err != nil {
-			test.Fatal(err)
+		if recordUnionError != nil {
+			test.Fatal(recordUnionError)
 		}
 		return evaluated.key
 	}
@@ -5105,11 +5168,17 @@ func TestAnOlderSetIsTakenAtTheKeyItEvaluatesToHere(test *testing.T) {
 	later := settle(built, []readEntry{{Kind: "content", Path: "include/x.h"}}, "later")
 	test.Setenv("ADAMIC_BUILD_TRACE", "")
 	forgetHeldForLife()
-	if found, err := productFor(r.root, r.cache, reader, 0, nil); err != nil || found.key != read {
+	if found, productForError := productFor(
+		r.root,
+		r.cache,
+		reader,
+		0,
+		nil,
+	); productForError != nil || found.key != read {
 		test.Fatalf(
 			"before a.c changes the reader is found under %q (%v, %s), want %s by U's first build",
 			found.key,
-			err,
+			productForError,
 			found.why,
 			read,
 		)
@@ -5118,20 +5187,32 @@ func TestAnOlderSetIsTakenAtTheKeyItEvaluatesToHere(test *testing.T) {
 	gitIn(test, r.root, "commit", "-q", "-am", "a.c changes")
 	forgetTracked()
 	forgetHeldForLife()
-	if found, err := productFor(r.root, r.cache, built, 0, nil); err != nil || found.key != later {
+	if found, productForError := productFor(
+		r.root,
+		r.cache,
+		built,
+		0,
+		nil,
+	); productForError != nil || found.key != later {
 		test.Fatalf(
 			"after a.c changes U is found under %q (%v, %s), want its later build %s",
 			found.key,
-			err,
+			productForError,
 			found.why,
 			later,
 		)
 	}
-	if found, err := productFor(r.root, r.cache, reader, 0, nil); err != nil || found.key == read {
+	if found, productForError := productFor(
+		r.root,
+		r.cache,
+		reader,
+		0,
+		nil,
+	); productForError != nil || found.key == read {
 		test.Fatalf(
 			"after a.c changes the reader is found under %q (%v), valued by U's first build %s at its stored key",
 			found.key,
-			err,
+			productForError,
 			first,
 		)
 	}
@@ -5145,7 +5226,7 @@ func pinnedChain(test *testing.T, r *rig, depth int) (string, string) {
 	test.Helper()
 	settle := func(nameKey string, entries []readEntry, content string) string {
 		test.Helper()
-		_, evaluated, _, err := recordUnion(r.root, r.cache, nameKey, nameKey[:1], readSet{
+		_, evaluated, _, recordUnionError := recordUnion(r.root, r.cache, nameKey, nameKey[:1], readSet{
 			Entries: entries,
 		}, func(key string) string {
 			directory := filepath.Join(r.cache, key)
@@ -5153,8 +5234,8 @@ func pinnedChain(test *testing.T, r *rig, depth int) (string, string) {
 			os.WriteFile(filepath.Join(directory, "out"), []byte(content), 0o644)
 			return directory
 		})
-		if err != nil {
-			test.Fatal(err)
+		if recordUnionError != nil {
+			test.Fatal(recordUnionError)
 		}
 		return evaluated.key
 	}
@@ -5187,12 +5268,12 @@ func TestAPassWalksEachUpstreamsSetsOnce(test *testing.T) {
 	test.Setenv("ADAMIC_BUILD_TRACE", "")
 	forgetHeldForLife()
 	evaluatedBefore, walkedBefore := fallbackEvaluations.Load(), fallbacksWalked.Load()
-	found, err := productFor(r.root, r.cache, top, 0, nil)
-	if err != nil || found.key != read {
+	found, productForError := productFor(r.root, r.cache, top, 0, nil)
+	if productForError != nil || found.key != read {
 		test.Fatalf(
 			"the top reader is found under %q (%v, %s), want %s by every level's first build",
 			found.key,
-			err,
+			productForError,
 			found.why,
 			read,
 		)
@@ -5222,9 +5303,13 @@ func TestAPassesFallbacksStopAtTheirBound(test *testing.T) {
 	test.Cleanup(func() { fallbackBound = original })
 	forgetHeldForLife()
 	before := fallbackEvaluations.Load()
-	found, err := productFor(r.root, r.cache, top, 0, nil)
-	if err != nil || found.key == read {
-		test.Fatalf("with the bound spent the top reader is found under %q (%v), valued past the bound", found.key, err)
+	found, productForError := productFor(r.root, r.cache, top, 0, nil)
+	if productForError != nil || found.key == read {
+		test.Fatalf(
+			"with the bound spent the top reader is found under %q (%v), valued past the bound",
+			found.key,
+			productForError,
+		)
 	}
 	if evaluated := fallbackEvaluations.Load() - before; evaluated > int64(fallbackBound) {
 		test.Fatalf("one lookup's fallbacks evaluated %d sets, past their bound of %d", evaluated, fallbackBound)

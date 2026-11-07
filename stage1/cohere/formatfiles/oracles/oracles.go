@@ -16,23 +16,23 @@ var producer bool
 func GoOracle(test *testing.T) (string, string) {
 	test.Helper()
 	directory := test.TempDir()
-	cohere, err := filepath.Abs(filepath.Join("../../..", "cohere"))
-	if err != nil {
-		test.Fatal(err)
+	cohere, absolutePathError := filepath.Abs(filepath.Join("../../..", "cohere"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	side, err := filepath.Abs(filepath.Join("testdata", "cohere_side_test.go"))
-	if err != nil {
-		test.Fatal(err)
+	side, absolutePathError := filepath.Abs(filepath.Join("testdata", "cohere_side_test.go"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	packageDirectory := filepath.Join(cohere, "internal", "format", "formatfiles")
 	replace := map[string]string{filepath.Join(packageDirectory, "adamic_port_side_test.go"): side}
-	overlay, err := json.Marshal(map[string]any{"Replace": replace})
-	if err != nil {
-		test.Fatal(err)
+	overlay, encodeError := json.Marshal(map[string]any{"Replace": replace})
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	overlayPath := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(overlayPath, overlay, 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(overlayPath, overlay, 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	binary := stockOracle(test, []string{"-overlay=" + overlayPath})
 	return binary, packageDirectory
@@ -47,9 +47,9 @@ func stockOracle(test *testing.T, arguments []string) string {
 	if producer {
 		return buildcache.GoTest(test, module, output, pkg, arguments)
 	}
-	inputs, err := buildcache.GoTestInputs(module, output, pkg, arguments, nil)
-	if err != nil {
-		test.Fatal(err)
+	inputs, goTestInputsError := buildcache.GoTestInputs(module, output, pkg, arguments, nil)
+	if goTestInputsError != nil {
+		test.Fatal(goTestInputsError)
 	}
 	directory := buildcache.BuiltElsewhere(
 		test,

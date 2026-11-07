@@ -115,8 +115,9 @@ func runtimeBytecodeIdentity(test *testing.T, wasi bool, mutant string) {
 		}
 		var wire []byte
 		if status == 0 {
-			wire, err = p.NativeBytecodeSnapshot()
-			if err != nil {
+			var nativeBytecodeSnapshotError error
+			wire, nativeBytecodeSnapshotError = p.NativeBytecodeSnapshot()
+			if nativeBytecodeSnapshotError != nil {
 				status = 4
 			} else {
 				accepted++
@@ -152,16 +153,16 @@ func runtimeBytecodeIdentity(test *testing.T, wasi bool, mutant string) {
 	}
 	dir := test.TempDir()
 	main := filepath.Join(dir, "main.c")
-	if err := os.WriteFile(main, []byte(source.String()), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(main, []byte(source.String()), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	runtimeDirectory, _ := filepath.Abs("runtime")
 	bytecode := filepath.Join(runtimeDirectory, "regexp_compile_bytecode.c")
 	parser := filepath.Join(runtimeDirectory, "regexp_compile_parser.c")
 	if mutant == "set opcode" {
-		data, err := os.ReadFile(bytecode)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(bytecode)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		old := "base.op=1;base.ranges"
 		if bytes.Count(data, []byte(old)) != 1 {
@@ -169,14 +170,14 @@ func runtimeBytecodeIdentity(test *testing.T, wasi bool, mutant string) {
 		}
 		changed := bytes.Replace(data, []byte(old), []byte("base.op=5;base.ranges"), 1)
 		bytecode = filepath.Join(dir, "mutant.c")
-		if err := os.WriteFile(bytecode, changed, 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(bytecode, changed, 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	if mutant == "accept syntax" {
-		data, err := os.ReadFile(parser)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(parser)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		old := `if (regex_parse_in(byte, "*+?")) return regex_parse_fail(p, p->position, "nothing to repeat", "Nothing to repeat");`
 		if bytes.Count(data, []byte(old)) != 1 {
@@ -189,15 +190,15 @@ func runtimeBytecodeIdentity(test *testing.T, wasi bool, mutant string) {
 			1,
 		)
 		parser = filepath.Join(dir, "parser-mutant.c")
-		if err := os.WriteFile(parser, changed, 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(parser, changed, 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	v8 := filepath.Join(runtimeDirectory, "regexp_compile_v8.c")
 	if mutant == "v8 bypass" {
-		data, err := os.ReadFile(v8)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(v8)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		old := []byte("!adamic_regex_compile_v8_check(result)")
 		if bytes.Count(data, old) != 1 {
@@ -205,8 +206,8 @@ func runtimeBytecodeIdentity(test *testing.T, wasi bool, mutant string) {
 		}
 		data = bytes.Replace(data, old, []byte("false"), 1)
 		v8 = filepath.Join(dir, "v8-mutant.c")
-		if err := os.WriteFile(v8, data, 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(v8, data, 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	binaryPath := filepath.Join(dir, "check")
@@ -257,13 +258,13 @@ func runtimeBytecodeIdentity(test *testing.T, wasi bool, mutant string) {
 		args = filtered
 	}
 	command := exec.Command(compiler, args...)
-	if output, err := command.CombinedOutput(); err != nil {
-		test.Fatalf("compile: %v %s", err, output)
+	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("compile: %v %s", combinedOutputError, output)
 	}
 	outputFile := filepath.Join(dir, "actual.bin")
-	out, err := os.Create(outputFile)
-	if err != nil {
-		test.Fatal(err)
+	out, createError := os.Create(outputFile)
+	if createError != nil {
+		test.Fatal(createError)
 	}
 	command = exec.Command(binaryPath)
 	if wasi {
@@ -279,21 +280,21 @@ func runtimeBytecodeIdentity(test *testing.T, wasi bool, mutant string) {
 	var diagnostics bytes.Buffer
 	command.Stdout = out
 	command.Stderr = &diagnostics
-	err = command.Run()
+	runError := command.Run()
 	out.Close()
-	if err != nil {
-		test.Fatalf("execution: %v %s", err, diagnostics.Bytes())
+	if runError != nil {
+		test.Fatalf("execution: %v %s", runError, diagnostics.Bytes())
 	}
-	actual, err := os.Open(outputFile)
-	if err != nil {
-		test.Fatal(err)
+	actual, openError := os.Open(outputFile)
+	if openError != nil {
+		test.Fatal(openError)
 	}
 	defer actual.Close()
 	mismatch := ""
 	for i, want := range expected {
 		got := make([]byte, len(want))
-		if _, err := io.ReadFull(actual, got); err != nil {
-			mismatch = fmt.Sprintf("case %d %q/%s truncated: %v", i, cases[i][0], cases[i][1], err)
+		if _, readError := io.ReadFull(actual, got); readError != nil {
+			mismatch = fmt.Sprintf("case %d %q/%s truncated: %v", i, cases[i][0], cases[i][1], readError)
 			break
 		}
 		if !bytes.Equal(want, got) {
@@ -324,7 +325,7 @@ func runtimeBytecodeIdentity(test *testing.T, wasi bool, mutant string) {
 		test.Fatal(mismatch)
 	}
 	var extra [1]byte
-	if n, err := actual.Read(extra[:]); n != 0 || err != io.EOF {
+	if n, readError := actual.Read(extra[:]); n != 0 || readError != io.EOF {
 		test.Fatal("extra C bytecode output")
 	}
 	test.Logf("byte-identical: %d programs, %d syntax/refusal cases (WASI=%v)", accepted, refused, wasi)

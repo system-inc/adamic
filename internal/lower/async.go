@@ -12,9 +12,9 @@ func (l *lowering) awaitExpression(node *ast.Node) (ir.Expression, error) {
 	if l.function == nil && ast.GetSourceFileOfNode(node).AsSourceFile() != l.entry {
 		return nil, l.notYet(node, "top-level await outside the entry module (asynchronous module evaluation)")
 	}
-	value, err := l.expression(node.AsAwaitExpression().Expression)
-	if err != nil {
-		return nil, err
+	value, expressionError := l.expression(node.AsAwaitExpression().Expression)
+	if expressionError != nil {
+		return nil, expressionError
 	}
 	proven := l.checker.GetTypeAtLocation(node)
 	var of ir.Type
@@ -26,11 +26,17 @@ func (l *lowering) awaitExpression(node *ast.Node) (ir.Expression, error) {
 		}
 	}
 	if value.Type() != ir.Promise {
-		if l.checker.GetPropertyOfType(l.checker.GetTypeAtLocation(node.AsAwaitExpression().Expression), "then") != nil {
+		if l.checker.GetPropertyOfType(
+			l.checker.GetTypeAtLocation(node.AsAwaitExpression().Expression),
+			"then",
+		) != nil {
 			return nil, l.notYet(node, "await of thenables")
 		}
 		if !l.asyncPayload(node.AsAwaitExpression().Expression) {
-			l.asyncPayloadFailures = append(l.asyncPayloadFailures, l.notYet(node, "await of a non-primitive structurally typed value (hidden thenable)"))
+			l.asyncPayloadFailures = append(
+				l.asyncPayloadFailures,
+				l.notYet(node, "await of a non-primitive structurally typed value (hidden thenable)"),
+			)
 		}
 		value = ir.PromiseValue{Value: value}
 	}
@@ -40,7 +46,8 @@ func (l *lowering) awaitExpression(node *ast.Node) (ir.Expression, error) {
 func (l *lowering) promiseValue(node *ast.Node) (ir.Expression, bool, error) {
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
-	if callee.Kind != ast.KindPropertyAccessExpression || !l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Promise") {
+	if callee.Kind != ast.KindPropertyAccessExpression ||
+		!l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Promise") {
 		return nil, false, nil
 	}
 	name := callee.Name().Text()
@@ -49,10 +56,10 @@ func (l *lowering) promiseValue(node *ast.Node) (ir.Expression, bool, error) {
 	}
 	var value ir.Expression
 	if len(call.Arguments.Nodes) == 1 {
-		var err error
-		value, err = l.expression(call.Arguments.Nodes[0])
-		if err != nil {
-			return nil, true, err
+		var expressionError error
+		value, expressionError = l.expression(call.Arguments.Nodes[0])
+		if expressionError != nil {
+			return nil, true, expressionError
 		}
 		if l.checker.GetPropertyOfType(l.checker.GetTypeAtLocation(call.Arguments.Nodes[0]), "then") != nil {
 			return nil, true, l.notYet(node, "Promise thenables")
@@ -61,7 +68,10 @@ func (l *lowering) promiseValue(node *ast.Node) (ir.Expression, bool, error) {
 			return nil, true, l.notYet(node, "Promise adoption")
 		}
 		if name == "resolve" && !l.asyncPayload(call.Arguments.Nodes[0]) {
-			l.asyncPayloadFailures = append(l.asyncPayloadFailures, l.notYet(node, "Promise.resolve of a non-primitive structurally typed value (hidden thenable)"))
+			l.asyncPayloadFailures = append(
+				l.asyncPayloadFailures,
+				l.notYet(node, "Promise.resolve of a non-primitive structurally typed value (hidden thenable)"),
+			)
 		}
 		if name == "reject" && !l.isLibraryType(l.checker.GetTypeAtLocation(call.Arguments.Nodes[0]), "Error") {
 			return nil, true, l.notYet(node, "Promise rejection with a non-Error")
@@ -92,7 +102,10 @@ func (l *lowering) checkAsyncReturn(node *ast.Node, value ir.Expression) error {
 		return l.notYet(node, "return of thenables (thenable adoption)")
 	}
 	if !l.asyncPayload(node) {
-		l.asyncPayloadFailures = append(l.asyncPayloadFailures, l.notYet(node, "async return of a non-primitive structurally typed value (hidden thenable)"))
+		l.asyncPayloadFailures = append(
+			l.asyncPayloadFailures,
+			l.notYet(node, "async return of a non-primitive structurally typed value (hidden thenable)"),
+		)
 	}
 	return nil
 }
@@ -163,7 +176,10 @@ func (l *lowering) asyncPayload(node *ast.Node) bool {
 		// such a class stops earlier, at the index signature's own NotYet (indexSignatureStorageGap), so
 		// this holds the boundary for the day classes may carry one.
 		symbol := l.symbol(callee)
-		return symbol != nil && len(symbol.Declarations) == 1 && symbol.Declarations[0].Kind == ast.KindClassDeclaration && len(l.checker.GetIndexInfosOfType(proven)) == 0
+		return symbol != nil &&
+			len(symbol.Declarations) == 1 &&
+			symbol.Declarations[0].Kind == ast.KindClassDeclaration &&
+			len(l.checker.GetIndexInfosOfType(proven)) == 0
 	case ast.KindAwaitExpression:
 		// The library Promise's producers are independently checked at resolve/return.
 		return l.isLibraryType(l.checker.GetTypeAtLocation(node.AsAwaitExpression().Expression), "Promise")

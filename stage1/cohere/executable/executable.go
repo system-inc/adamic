@@ -21,18 +21,18 @@ func Write(path string, data []byte) error {
 	err := func() error {
 		syscall.ForkLock.Lock()
 		defer syscall.ForkLock.Unlock()
-		file, err := os.CreateTemp(filepath.Dir(path), ".executable-*")
-		if err != nil {
-			return err
+		file, temporaryFileError := os.CreateTemp(filepath.Dir(path), ".executable-*")
+		if temporaryFileError != nil {
+			return temporaryFileError
 		}
 		temporary = file.Name()
-		if _, err := file.Write(data); err != nil {
+		if _, writeError := file.Write(data); writeError != nil {
 			file.Close()
-			return err
+			return writeError
 		}
-		if err := file.Chmod(0755); err != nil {
+		if chmodError := file.Chmod(0755); chmodError != nil {
 			file.Close()
-			return err
+			return chmodError
 		}
 		return file.Close()
 	}()

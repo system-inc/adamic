@@ -17,16 +17,16 @@ func goFormat(test *testing.T, cases string) []byte {
 	if artifacts := os.Getenv("ADAMIC_YAML_ARTIFACTS"); artifacts != "" {
 		yamlArtifacts.Lock()
 		defer yamlArtifacts.Unlock()
-		if err := os.MkdirAll(artifacts, 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(artifacts, 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		executable, err := os.ReadFile(goBinary)
-		if err != nil {
-			test.Fatal(err)
+		executable, readError := os.ReadFile(goBinary)
+		if readError != nil {
+			test.Fatal(readError)
 		}
-		inputs, err := os.ReadFile(cases)
-		if err != nil {
-			test.Fatal(err)
+		inputs, readError := os.ReadFile(cases)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		for _, file := range []struct {
 			name string
@@ -37,8 +37,12 @@ func goFormat(test *testing.T, cases string) []byte {
 			{"format-cases.txt", inputs, 0644},
 			{"format-expected.txt", expected, 0644},
 		} {
-			if err := os.WriteFile(filepath.Join(artifacts, file.name), file.data, file.mode); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(
+				filepath.Join(artifacts, file.name),
+				file.data,
+				file.mode,
+			); writeError != nil {
+				test.Fatal(writeError)
 			}
 		}
 	}
@@ -79,8 +83,8 @@ func TestFormatterMatchesGoUnion(test *testing.T) {
 	test.Parallel()
 	cases := formatterMatchesGo.union(test)
 	path := filepath.Join(test.TempDir(), "format-cases.txt")
-	if err := os.WriteFile(path, []byte(strings.Join(cases, "\n")+"\n"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(strings.Join(cases, "\n")+"\n"), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	expected := goFormat(test, path)
 	if answers := len(bytes.Split(bytes.TrimSuffix(expected, []byte("\n")), []byte("\n"))); answers != len(cases) {

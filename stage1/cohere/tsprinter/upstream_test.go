@@ -25,18 +25,18 @@ func TestStatementUpstreamDifferences(test *testing.T) {
 	)
 	command.Dir = root + "/cohere/internal/format/javascript"
 	command.Env = append(os.Environ(), "ADAMIC_TS_STATEMENT_UPSTREAM="+recordsPath)
-	if output, err := combinedOutput(command); err != nil {
-		test.Fatalf("Go: %v %s", err, output)
+	if output, combinedOutputError := combinedOutput(command); combinedOutputError != nil {
+		test.Fatalf("Go: %v %s", combinedOutputError, output)
 	} else {
 		test.Log(string(output))
 	}
-	data, err := os.ReadFile(recordsPath)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(recordsPath)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var records []struct{ Source, Go, Prettier string }
-	if err = json.Unmarshal(data, &records); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &records); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	cases := []map[string]string{}
 	var want strings.Builder
@@ -48,8 +48,8 @@ func TestStatementUpstreamDifferences(test *testing.T) {
 	}
 	specs, _ := json.Marshal(cases)
 	specsPath := filepath.Join(directory, "cases.json")
-	if err = os.WriteFile(specsPath, specs, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(specsPath, specs, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	script, _ := filepath.Abs("testdata/embedded.mjs")
 	bundles := root + "/cohere/internal/format/prettier/bundles"

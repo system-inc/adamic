@@ -38,23 +38,23 @@ func runPython(test *testing.T, module string) {
 	ctx, cancel := context.WithTimeout(context.Background(), 180*time.Second)
 	defer cancel()
 	path := filepath.Join(test.TempDir(), "python.log")
-	log, err := os.Create(path)
-	if err != nil {
-		test.Fatal(err)
+	log, createError := os.Create(path)
+	if createError != nil {
+		test.Fatal(createError)
 	}
 	command := toolchain.CommandContextIn(ctx, ".", "python3", "-E", "-S", "-B", "-m", "unittest", module)
 	command.Env = append(command.Env, "PYTHONDONTWRITEBYTECODE=1")
 	command.Stdout, command.Stderr = log, log
-	runErr := command.Run()
-	if err := log.Close(); err != nil {
-		test.Fatal(err)
+	runError := command.Run()
+	if closeError := log.Close(); closeError != nil {
+		test.Fatal(closeError)
 	}
-	output, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	output, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	if runErr != nil {
-		test.Fatalf("%s: %v\n%s", module, runErr, output)
+	if runError != nil {
+		test.Fatalf("%s: %v\n%s", module, runError, output)
 	}
 	test.Logf("%s: %s", module, output)
 }

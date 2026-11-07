@@ -137,8 +137,8 @@ func Adamic(test testing.TB) string {
 	return GoBuild(test, "adamic", "./cmd/adamic", nil)
 }
 
-// errBuiltElsewhere is BuiltElsewhere's build: the one product test that builds the product is its owner.
-var errBuiltElsewhere = errors.New("built by another package's product test")
+// errorBuiltElsewhere is BuiltElsewhere's build: the one product test that builds the product is its owner.
+var errorBuiltElsewhere = errors.New("built by another package's product test")
 
 // AdamicOwner is the one product test that builds Adamic under the trace: every other package's product test that
 // reads it waits for it in the tree's product order (cloud/fast-gate/product-order.json), which Loom's build-tree
@@ -157,16 +157,16 @@ func AdamicBuiltElsewhere(test testing.TB) string {
 	}
 	request := goRequest{verb: "build", output: "adamic", pkg: "./cmd/adamic"}
 	request.arguments = reproducible(request.arguments)
-	inputs, err := request.inputs()
-	if err != nil {
-		test.Fatalf("go build ./cmd/adamic: %v", err)
+	inputs, inputsError := request.inputs()
+	if inputsError != nil {
+		test.Fatalf("go build ./cmd/adamic: %v", inputsError)
 	}
 	return filepath.Join(BuiltElsewhere(
 		test,
 		"the stage 0 compiler",
 		inputs,
 		AdamicOwner,
-		func(string) error { return errBuiltElsewhere },
+		func(string) error { return errorBuiltElsewhere },
 	), request.output)
 }
 
@@ -189,13 +189,13 @@ func BuiltElsewhere(
 	if traceDirectory() == "" {
 		return Product(test, inputs, build)
 	}
-	directory, err := Get(inputs, func(string) error { return errBuiltElsewhere })
-	if err != nil {
+	directory, getError := Get(inputs, func(string) error { return errorBuiltElsewhere })
+	if getError != nil {
 		test.Fatalf(
 			"%s is %s's to build, and it isn't here: is this test in the tree's product order after it? %v",
 			what,
 			owner,
-			err,
+			getError,
 		)
 	}
 	return directory
@@ -212,9 +212,9 @@ func GoExports(test testing.TB, packages ...string) string {
 	// -buildvcs=false: a test main is package main, and go stamps the commit into every one it compiles, so without it
 	// the export data of each test main differs at every commit under the same key (landable-8: internal/ir's product).
 	request.arguments = []string{"-trimpath", "-buildvcs=false"}
-	inputs, err := request.inputs()
-	if err != nil {
-		test.Fatalf("go list -export %s: %v", request.pkg, err)
+	inputs, inputsError := request.inputs()
+	if inputsError != nil {
+		test.Fatalf("go list -export %s: %v", request.pkg, inputsError)
 	}
 	root, _ := repositoryRoot()
 	return Product(
@@ -235,9 +235,9 @@ func GoDirectExports(test testing.TB, packages ...string) string {
 	test.Helper()
 	request := goRequest{verb: "list -export direct", output: "listing.json", pkg: strings.Join(packages, " ")}
 	request.arguments = []string{"-trimpath", "-buildvcs=false"}
-	inputs, err := request.inputs()
-	if err != nil {
-		test.Fatalf("go list -export %s: %v", request.pkg, err)
+	inputs, inputsError := request.inputs()
+	if inputsError != nil {
+		test.Fatalf("go list -export %s: %v", request.pkg, inputsError)
 	}
 	root, _ := repositoryRoot()
 	return Product(
@@ -250,9 +250,9 @@ func GoDirectExports(test testing.TB, packages ...string) string {
 func goProduct(test testing.TB, request goRequest) string {
 	test.Helper()
 	request.arguments = reproducible(request.arguments)
-	inputs, err := request.inputs()
-	if err != nil {
-		test.Fatalf("go %s %s: %v", request.verb, request.pkg, err)
+	inputs, inputsError := request.inputs()
+	if inputsError != nil {
+		test.Fatalf("go %s %s: %v", request.verb, request.pkg, inputsError)
 	}
 	root, _ := repositoryRoot()
 	// Lean: go builds from the files its key names, in a process of its own, by a plan made before the window opens.
@@ -269,9 +269,9 @@ func goProduct(test testing.TB, request goRequest) string {
 // are the packages' own (Declared) or the overlay's replacements, and the outside headers' key over their include
 // directories (outsideHeaders' flag). A plan that can't be made says why, and its build fails with it.
 func (request goRequest) plan(root string, inputs Inputs) goplan.Plan {
-	parts, err := request.planned(root, inputs)
-	if err != nil {
-		return goplan.Failed(err.Error())
+	parts, plannedError := request.planned(root, inputs)
+	if plannedError != nil {
+		return goplan.Failed(plannedError.Error())
 	}
 	return goplan.New(parts.command, parts.replace, parts.headers, parts.mutated)
 }
@@ -285,13 +285,13 @@ type planParts struct {
 }
 
 func (request goRequest) planned(root string, inputs Inputs) (planParts, error) {
-	program, err := toolchain.Path("go")
-	if err != nil {
-		return planParts{}, err
+	program, pathError := toolchain.Path("go")
+	if pathError != nil {
+		return planParts{}, pathError
 	}
-	_, overlay, err := request.identity(root)
-	if err != nil {
-		return planParts{}, err
+	_, overlay, identityError := request.identity(root)
+	if identityError != nil {
+		return planParts{}, identityError
 	}
 	parts := planParts{command: goplan.Command{
 		Program:     program,
@@ -308,22 +308,23 @@ func (request goRequest) planned(root string, inputs Inputs) (planParts, error) 
 		if !filepath.IsAbs(path) {
 			path = filepath.Join(root, path)
 		}
-		content, err := os.ReadFile(path)
-		if err != nil {
-			return planParts{}, err
+		content, readError := os.ReadFile(path)
+		if readError != nil {
+			return planParts{}, readError
 		}
 		var declared struct{ Replace map[string]string }
-		if err := json.Unmarshal(content, &declared); err != nil {
-			return planParts{}, fmt.Errorf("overlay %s: %v", path, err)
+		if decodeError := json.Unmarshal(content, &declared); decodeError != nil {
+			return planParts{}, fmt.Errorf("overlay %s: %v", path, decodeError)
 		}
 		parts.replace = declared.Replace
 	}
-	if parts.headers, err = outsideHeaderPlan(root, inputs); err != nil {
-		return planParts{}, err
+	var outsideHeaderPlanError error
+	if parts.headers, outsideHeaderPlanError = outsideHeaderPlan(root, inputs); outsideHeaderPlanError != nil {
+		return planParts{}, outsideHeaderPlanError
 	}
-	texts, err := request.mutated(root)
-	if err != nil {
-		return planParts{}, err
+	texts, mutatedError := request.mutated(root)
+	if mutatedError != nil {
+		return planParts{}, mutatedError
 	}
 	for _, file := range slices.Sorted(maps.Keys(texts)) {
 		mutation := goplan.Mutation{File: file, Text: texts[file], Original: filepath.Join(root, file)}
@@ -385,8 +386,8 @@ func outsideHeaderPlan(root string, inputs Inputs) ([]goplan.Header, error) {
 			continue
 		}
 		var listed outsideHeaderPackage
-		if err := json.Unmarshal([]byte(encoded), &listed); err != nil {
-			return nil, fmt.Errorf("%s: %v", flag, err)
+		if decodeError := json.Unmarshal([]byte(encoded), &listed); decodeError != nil {
+			return nil, fmt.Errorf("%s: %v", flag, decodeError)
 		}
 		var digest string
 		var err error
@@ -411,9 +412,9 @@ func outsideHeaderPlan(root string, inputs Inputs) ([]goplan.Header, error) {
 func goSettings(
 	directory string,
 	environment, names []string,
-) (settings []string, values map[string]string, err error) {
-	keying(func() { settings, values, err = goSettingsKeyed(directory, environment, names) })
-	return settings, values, err
+) (settings []string, values map[string]string, goSettingsError error) {
+	keying(func() { settings, values, goSettingsError = goSettingsKeyed(directory, environment, names) })
+	return settings, values, goSettingsError
 }
 
 func goSettingsKeyed(directory string, environment, names []string) ([]string, map[string]string, error) {
@@ -426,17 +427,17 @@ func goSettingsKeyed(directory string, environment, names []string) ([]string, m
 	command := toolchain.Command("go", append([]string{"env", "-json", "GOVERSION"}, asked...)...)
 	command.Dir = directory
 	command.Env = environment
-	output, err := command.Output()
-	if err != nil {
+	output, outputError := command.Output()
+	if outputError != nil {
 		var exit *exec.ExitError
-		if errors.As(err, &exit) {
-			return nil, nil, fmt.Errorf("go env: %v\n%s", err, exit.Stderr)
+		if errors.As(outputError, &exit) {
+			return nil, nil, fmt.Errorf("go env: %v\n%s", outputError, exit.Stderr)
 		}
-		return nil, nil, err
+		return nil, nil, outputError
 	}
 	values := map[string]string{}
-	if err := json.Unmarshal(output, &values); err != nil {
-		return nil, nil, fmt.Errorf("go env: %v", err)
+	if decodeError := json.Unmarshal(output, &values); decodeError != nil {
+		return nil, nil, fmt.Errorf("go env: %v", decodeError)
 	}
 	settings := make([]string, 0, len(asked))
 	for _, name := range asked {
@@ -493,9 +494,9 @@ func goWorkspace(path string) string {
 	if path == "" || path == "off" {
 		return "GOWORK=off"
 	}
-	output, err := toolchain.Command("go", "work", "edit", "-json", path).Output()
-	if err != nil {
-		return "GOWORK unreadable: " + err.Error()
+	output, outputError := toolchain.Command("go", "work", "edit", "-json", path).Output()
+	if outputError != nil {
+		return "GOWORK unreadable: " + outputError.Error()
 	}
 	var workspace struct {
 		Go, Toolchain string
@@ -505,8 +506,8 @@ func goWorkspace(path string) string {
 			Old, New struct{ Path, Version string }
 		}
 	}
-	if err := json.Unmarshal(output, &workspace); err != nil {
-		return "GOWORK unreadable: " + err.Error()
+	if decodeError := json.Unmarshal(output, &workspace); decodeError != nil {
+		return "GOWORK unreadable: " + decodeError.Error()
 	}
 	root, _ := repositoryRoot()
 	local := func(name string) string {
@@ -523,9 +524,9 @@ func goWorkspace(path string) string {
 			workspace.Replace[index].New.Path = local(workspace.Replace[index].New.Path)
 		}
 	}
-	canonical, err := json.Marshal(workspace)
-	if err != nil {
-		return "GOWORK unreadable: " + err.Error()
+	canonical, encodeError := json.Marshal(workspace)
+	if encodeError != nil {
+		return "GOWORK unreadable: " + encodeError.Error()
 	}
 	return "GOWORK " + string(canonical)
 }
@@ -561,13 +562,13 @@ func GoTestInputs(
 // for one product many times keys it once, its parallel tests included: they wait on the first one's go list rather
 // than each running their own. A failure isn't remembered, so the next ask tries again.
 func (request goRequest) inputs() (Inputs, error) {
-	root, err := repositoryRoot()
-	if err != nil {
-		return Inputs{}, err
+	root, repositoryRootError := repositoryRoot()
+	if repositoryRootError != nil {
+		return Inputs{}, repositoryRootError
 	}
-	identity, overlay, err := request.identity(root)
-	if err != nil {
-		return Inputs{}, err
+	identity, overlay, identityError := request.identity(root)
+	if identityError != nil {
+		return Inputs{}, identityError
 	}
 	if inputs, ok := precomputed()[identity]; ok {
 		return inputs, nil
@@ -616,9 +617,9 @@ func (request goRequest) identity(root string) (string, overlayKey, error) {
 			keyed = append(keyed, argument)
 		}
 	}
-	overlay, err := overlayInputs(root, overlayPath)
-	if err != nil {
-		return "", overlayKey{}, err
+	overlay, overlayInputsError := overlayInputs(root, overlayPath)
+	if overlayInputsError != nil {
+		return "", overlayKey{}, overlayInputsError
 	}
 	overlay.path, overlay.arguments = overlayPath, keyed
 	parts := []string{
@@ -645,13 +646,13 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 		command := toolchain.Command("go", arguments...)
 		command.Dir = directory
 		command.Env = toolchain.Env(request.environment...)
-		output, err := command.Output()
-		if err != nil {
+		output, outputError := command.Output()
+		if outputError != nil {
 			var exit *exec.ExitError
-			if errors.As(err, &exit) {
-				return nil, fmt.Errorf("go %s: %v\n%s", strings.Join(arguments, " "), err, exit.Stderr)
+			if errors.As(outputError, &exit) {
+				return nil, fmt.Errorf("go %s: %v\n%s", strings.Join(arguments, " "), outputError, exit.Stderr)
 			}
-			return nil, err
+			return nil, outputError
 		}
 		return output, nil
 	}
@@ -667,9 +668,9 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 		// began without it).
 		asked = append(asked, "-test")
 	}
-	listing, err := run(append(append(asked, listed...), strings.Fields(request.pkg)...)...)
-	if err != nil {
-		return Inputs{}, err
+	listing, runError := run(append(append(asked, listed...), strings.Fields(request.pkg)...)...)
+	if runError != nil {
+		return Inputs{}, runError
 	}
 	// go reports paths as the system resolves them, and the repository's root may be spelled through a symbolic link
 	// (macOS's /var is /private/var): a path under either spelling is the repository's, respelled under root, so no
@@ -696,9 +697,9 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 			if !inside(root, path) {
 				continue
 			}
-			relative, err := filepath.Rel(root, path)
-			if err != nil {
-				return err
+			relative, relativePathError := filepath.Rel(root, path)
+			if relativePathError != nil {
+				return relativePathError
 			}
 			relative = filepath.ToSlash(relative)
 			// A path the overlay replaces or adds is keyed by the overlay's map and the replacement's content; one the
@@ -718,10 +719,10 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 			GoFiles, CgoFiles, CFiles, CXXFiles, HFiles, SFiles, SysoFiles, EmbedFiles []string
 			CgoCFLAGS, CgoCPPFLAGS, CgoCXXFLAGS                                        []string
 		}
-		if err := decoder.Decode(&listed); err == io.EOF {
+		if decodeError := decoder.Decode(&listed); decodeError == io.EOF {
 			break
-		} else if err != nil {
-			return Inputs{}, err
+		} else if decodeError != nil {
+			return Inputs{}, decodeError
 		}
 		listed.Dir = respell(listed.Dir)
 		if listed.Standard || !inside(root, listed.Dir) {
@@ -737,8 +738,8 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 			listed.SysoFiles,
 			listed.EmbedFiles,
 		} {
-			if err := add(listed.Dir, names); err != nil {
-				return Inputs{}, err
+			if addError := add(listed.Dir, names); addError != nil {
+				return Inputs{}, addError
 			}
 		}
 		// A header reached through '#cgo CFLAGS: -I<dir>' is an input too: every file of a directory inside the
@@ -756,8 +757,8 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 				}
 				include = respell(include)
 				if inside(root, include) {
-					if err := add(root, []string{mustRelative(root, include)}); err != nil {
-						return Inputs{}, err
+					if addError := add(root, []string{mustRelative(root, include)}); addError != nil {
+						return Inputs{}, addError
 					}
 					if filepath.Clean(include) != filepath.Clean(listed.Dir) {
 						pkg := filepath.ToSlash(mustRelative(root, listed.Dir))
@@ -772,33 +773,37 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 		}
 		if listed.Module != nil && inside(root, respell(listed.Module.GoMod)) {
 			module := filepath.Dir(respell(listed.Module.GoMod))
-			if err := add(module, existing(module, "go.mod", "go.sum")); err != nil {
-				return Inputs{}, err
+			if addError := add(module, existing(module, "go.mod", "go.sum")); addError != nil {
+				return Inputs{}, addError
 			}
 		}
 	}
 	for _, place := range []string{root, directory} {
-		if err := add(place, existing(place, "go.work")); err != nil {
-			return Inputs{}, err
+		if addError := add(place, existing(place, "go.work")); addError != nil {
+			return Inputs{}, addError
 		}
 	}
 	// A module the build's module or the workspace replaces with a directory of the tree selects versions through its
 	// go.mod whether or not the build compiles a package of it (the 17 cohere/TypeScript-shim modules, #c2chyab).
-	replaced, err := localReplacements(root, root, directory)
-	if err != nil {
-		return Inputs{}, err
+	replaced, localReplacementsError := localReplacements(root, root, directory)
+	if localReplacementsError != nil {
+		return Inputs{}, localReplacementsError
 	}
 	for _, module := range replaced {
-		if err := add(module, existing(module, "go.mod", "go.sum")); err != nil {
-			return Inputs{}, err
+		if addError := add(module, existing(module, "go.mod", "go.sum")); addError != nil {
+			return Inputs{}, addError
 		}
 	}
 	// The go env values a build reads beyond its sources (toolchain.GoSettings, each of which toolchain.Env passes),
 	// asked of go under the environment the build gets, so a default counts like a setting, keyed as goSetting says:
 	// GOFLAGS without its -p share (portable), the workspace by content, the release GOTOOLCHAIN selects.
-	settings, values, err := goSettings(directory, toolchain.Env(request.environment...), toolchain.GoSettings)
-	if err != nil {
-		return Inputs{}, err
+	settings, values, goSettingsError := goSettings(
+		directory,
+		toolchain.Env(request.environment...),
+		toolchain.GoSettings,
+	)
+	if goSettingsError != nil {
+		return Inputs{}, goSettingsError
 	}
 	for _, target := range overlay.files {
 		files[target] = true
@@ -813,8 +818,8 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 			)
 		}
 	}
-	if _, err := request.mutated(root); err != nil {
-		return Inputs{}, err
+	if _, mutatedError := request.mutated(root); mutatedError != nil {
+		return Inputs{}, mutatedError
 	}
 	name := "go build " + request.pkg + " " + request.output
 	if request.verb != "build" || request.module != "" {
@@ -826,9 +831,9 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 	), Toolchain: []string{Tool("go", "version")}}
 	for _, pkg := range slices.Sorted(maps.Keys(outside)) {
 		includes := slices.Sorted(slices.Values(outside[pkg]))
-		encoded, err := json.Marshal(outsideHeaderPackage{Package: pkg, Includes: includes})
-		if err != nil {
-			return Inputs{}, err
+		encoded, encodeError := json.Marshal(outsideHeaderPackage{Package: pkg, Includes: includes})
+		if encodeError != nil {
+			return Inputs{}, encodeError
 		}
 		inputs.Flags = append(inputs.Flags, outsideHeaders+string(encoded))
 	}
@@ -862,18 +867,18 @@ func precomputed() map[string]Inputs {
 		return index.(map[string]Inputs)
 	}
 	index := map[string]Inputs{}
-	content, err := os.ReadFile(path)
-	if err != nil {
-		note("build inputs index %s: %v", path, err)
+	content, readError := os.ReadFile(path)
+	if readError != nil {
+		note("build inputs index %s: %v", path, readError)
 		return index
 	}
 	decoder := json.NewDecoder(strings.NewReader(string(content)))
 	for {
 		var line indexedInputs
-		if err := decoder.Decode(&line); err == io.EOF {
+		if decodeError := decoder.Decode(&line); decodeError == io.EOF {
 			break
-		} else if err != nil {
-			note("build inputs index %s: %v", path, err)
+		} else if decodeError != nil {
+			note("build inputs index %s: %v", path, decodeError)
 			return map[string]Inputs{}
 		}
 		index[line.Request] = line.Inputs
@@ -889,13 +894,13 @@ func recordInputs(identity string, inputs Inputs) {
 	if path == "" {
 		return
 	}
-	line, err := json.Marshal(indexedInputs{Request: identity, Inputs: inputs})
-	if err != nil {
+	line, encodeError := json.Marshal(indexedInputs{Request: identity, Inputs: inputs})
+	if encodeError != nil {
 		return
 	}
-	file, err := os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o644)
-	if err != nil {
-		note("build inputs record %s: %v", path, err)
+	file, openError := os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o644)
+	if openError != nil {
+		note("build inputs record %s: %v", path, openError)
 		return
 	}
 	file.Write(append(line, '\n'))
@@ -919,13 +924,13 @@ func overlayInputs(root, path string) (overlayKey, error) {
 	if !filepath.IsAbs(path) {
 		path = filepath.Join(root, path)
 	}
-	content, err := os.ReadFile(path)
-	if err != nil {
-		return overlayKey{}, fmt.Errorf("overlay %s: %v", path, err)
+	content, readError := os.ReadFile(path)
+	if readError != nil {
+		return overlayKey{}, fmt.Errorf("overlay %s: %v", path, readError)
 	}
 	var declared struct{ Replace map[string]string }
-	if err := json.Unmarshal(content, &declared); err != nil {
-		return overlayKey{}, fmt.Errorf("overlay %s: %v", path, err)
+	if decodeError := json.Unmarshal(content, &declared); decodeError != nil {
+		return overlayKey{}, fmt.Errorf("overlay %s: %v", path, decodeError)
 	}
 	relative := func(name string) string {
 		if !filepath.IsAbs(name) {
@@ -955,8 +960,8 @@ func overlayInputs(root, path string) (overlayKey, error) {
 				replacement,
 			)
 		}
-		if _, err := os.Stat(absolute); err != nil {
-			return overlayKey{}, fmt.Errorf("overlay %s: %v", path, err)
+		if _, statError := os.Stat(absolute); statError != nil {
+			return overlayKey{}, fmt.Errorf("overlay %s: %v", path, statError)
 		}
 		key.flags = append(key.flags, "overlay "+relative(original)+" = "+relative(absolute))
 		key.files = append(key.files, relative(absolute))
@@ -984,7 +989,7 @@ func listArguments(arguments []string) []string {
 func existing(directory string, names ...string) []string {
 	var found []string
 	for _, name := range names {
-		if _, err := os.Stat(filepath.Join(directory, name)); err == nil {
+		if _, statError := os.Stat(filepath.Join(directory, name)); statError == nil {
 			found = append(found, name)
 		}
 	}

@@ -43,7 +43,11 @@ func (l *lowering) censusProveOverloadResult(implementation, overload *ast.Node)
 	return l.censusReturnProof(implementation, overload, nil, nil)
 }
 
-func (l *lowering) censusReturnProof(implementation, overload *ast.Node, admitted []*checker.Type, target *checker.Type) bool {
+func (l *lowering) censusReturnProof(
+	implementation, overload *ast.Node,
+	admitted []*checker.Type,
+	target *checker.Type,
+) bool {
 	outer := l.typeMapper
 	defer func() { l.typeMapper = outer }()
 	sources, targets := []*checker.Type{}, []*checker.Type{}
@@ -64,11 +68,13 @@ func (l *lowering) censusReturnProof(implementation, overload *ast.Node, admitte
 	parameters := implementation.Parameters()
 	initial := make([]*checker.Type, len(parameters))
 	for index, parameter := range parameters {
-		if !ast.IsIdentifier(parameter.Name()) || parameter.AsParameterDeclaration().Initializer != nil || parameter.AsParameterDeclaration().DotDotDotToken != nil {
+		if !ast.IsIdentifier(parameter.Name()) ||
+			parameter.AsParameterDeclaration().Initializer != nil ||
+			parameter.AsParameterDeclaration().DotDotDotToken != nil {
 			return false
 		}
-		given, _, rest, err := l.censusOverloadParameter(overload.Parameters(), index)
-		if err != nil || rest {
+		given, _, rest, censusOverloadParameterError := l.censusOverloadParameter(overload.Parameters(), index)
+		if censusOverloadParameterError != nil || rest {
 			return false
 		}
 		if given == nil {
@@ -85,7 +91,9 @@ func (l *lowering) censusReturnProof(implementation, overload *ast.Node, admitte
 	unchanged := true
 	var scan ast.Visitor
 	scan = func(node *ast.Node) bool {
-		if node.Kind == ast.KindAsExpression || node.Kind == ast.KindTypeAssertionExpression || node.Kind == ast.KindNonNullExpression {
+		if node.Kind == ast.KindAsExpression ||
+			node.Kind == ast.KindTypeAssertionExpression ||
+			node.Kind == ast.KindNonNullExpression {
 			unchanged = false
 		}
 		if ast.IsIdentifier(node) && ast.IsAssignmentTarget(node) {
@@ -105,7 +113,9 @@ func (l *lowering) censusReturnProof(implementation, overload *ast.Node, admitte
 	narrowed := func(index int, flow *ast.FlowNode) *checker.Type {
 		parameter := parameters[index]
 		declared := l.checker.GetTypeAtLocation(parameter.Name())
-		return l.concrete(predicateFlowType(l.checker, parameter.Name(), declared, initial[index], implementation, flow))
+		return l.concrete(
+			predicateFlowType(l.checker, parameter.Name(), declared, initial[index], implementation, flow),
+		)
 	}
 	reachable := func(flow *ast.FlowNode) bool {
 		for index := range parameters {
@@ -160,10 +170,13 @@ func (l *lowering) censusReturnProof(implementation, overload *ast.Node, admitte
 			trusted := false
 			if check.Kind == ast.KindBinaryExpression {
 				binary := check.AsBinaryExpression()
-				if binary.OperatorToken.Kind == ast.KindEqualsEqualsEqualsToken || binary.OperatorToken.Kind == ast.KindExclamationEqualsEqualsToken {
+				if binary.OperatorToken.Kind == ast.KindEqualsEqualsEqualsToken ||
+					binary.OperatorToken.Kind == ast.KindExclamationEqualsEqualsToken {
 					for _, parameter := range parameters {
 						proof := predicateFlowProof{l: l, parameter: parameter}
-						trusted = trusted || proof.reference(ast.SkipParentheses(binary.Left)) && proof.literal(binary.Right) || proof.reference(ast.SkipParentheses(binary.Right)) && proof.literal(binary.Left)
+						trusted = trusted ||
+							proof.reference(ast.SkipParentheses(binary.Left)) && proof.literal(binary.Right) ||
+							proof.reference(ast.SkipParentheses(binary.Right)) && proof.literal(binary.Left)
 					}
 				}
 			}

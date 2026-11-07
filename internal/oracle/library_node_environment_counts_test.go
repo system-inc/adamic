@@ -35,22 +35,22 @@ func init() {
 		additionalFixtureCounts = append(
 			additionalFixtureCounts,
 			countCase{key, func(test *testing.T) (string, func() string) {
-				path, err := filepath.Abs(filepath.Join(repository, key))
-				if err != nil {
-					test.Fatal(err)
+				path, absolutePathError := filepath.Abs(filepath.Join(repository, key))
+				if absolutePathError != nil {
+					test.Fatal(absolutePathError)
 				}
-				loaded, err := load.LoadDisplayed([]string{path}, func(file string) string {
+				loaded, loadDisplayedError := load.LoadDisplayed([]string{path}, func(file string) string {
 					if file == path {
 						return "<source>.a"
 					}
 					return countPortable(test, file, "")
 				})
-				if err != nil {
-					test.Fatal(err)
+				if loadDisplayedError != nil {
+					test.Fatal(loadDisplayedError)
 				}
-				program, err := lower.Lower(context.Background(), loaded)
-				if err != nil {
-					test.Fatal(err)
+				program, lowerError := lower.Lower(context.Background(), loaded)
+				if lowerError != nil {
+					test.Fatal(lowerError)
 				}
 				source := native.C(program)
 				environment := processEnvironmentFixtureEnvironment(name)
@@ -58,8 +58,8 @@ func init() {
 				runs := countPortable(test, source, path) + "\nenvironment " + strings.Join(environment, "\n")
 				return runs, func() string {
 					binary := filepath.Join(test.TempDir(), "program")
-					if err := native.Build(source, binary, native.Options{Count: true}); err != nil {
-						test.Fatal(err)
+					if buildError := native.Build(source, binary, native.Options{Count: true}); buildError != nil {
+						test.Fatal(buildError)
 					}
 					got := processEnvironmentRun(test, environment, binary)
 					match := countsLine.FindSubmatch(got.stderr)

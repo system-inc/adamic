@@ -71,17 +71,17 @@ func productDirectory(nameKey string) string {
 	if directory, ok := productKeys.Load(nameKey); ok {
 		return directory.(string)
 	}
-	cache, err := cacheLocation()
-	if err != nil {
+	cache, cacheLocationError := cacheLocation()
+	if cacheLocationError != nil {
 		return filepath.Join(cache, nameKey)
 	}
-	output, err := outputLocation()
-	if err != nil {
+	output, outputLocationError := outputLocation()
+	if outputLocationError != nil {
 		return filepath.Join(cache, nameKey)
 	}
 	var directory string
 	var upstreams []upstream
-	if root, err := repositoryRoot(); err == nil {
+	if root, repositoryRootError := repositoryRoot(); repositoryRootError == nil {
 		keying(func() { directory, upstreams = namedProduct(root, output, nameKey) })
 	}
 	if directory == "" {
@@ -99,10 +99,16 @@ func productDirectory(nameKey string) string {
 	return holding(nameKey, directory)
 }
 
-// namedProduct is productDirectory's place for nameKey, with the upstreams of the set that found it there, if a set did.
-// cache is where this process writes products, and each place is looked for there and then in the build cache.
+// namedProduct is productDirectory's place for nameKey, with the upstreams of the set that found it there, if a set
+// did. cache is where this process writes products, and each place is looked for there and then in the build cache.
 func namedProduct(root, cache, nameKey string) (string, []upstream) {
-	if looked, err := productFor(root, cache, nameKey, 0, nil); err == nil && looked.directory != "" {
+	if looked, productForError := productFor(
+		root,
+		cache,
+		nameKey,
+		0,
+		nil,
+	); productForError == nil && looked.directory != "" {
 		return looked.directory, looked.upstreams
 	}
 	if traceDirectory() != "" {
@@ -111,7 +117,7 @@ func namedProduct(root, cache, nameKey string) (string, []upstream) {
 		}
 	}
 	if inputs, ok := localInputs(cache, nameKey); ok {
-		if key, err := Key(root, inputs); err == nil {
+		if key, keyError := Key(root, inputs); keyError == nil {
 			if built, ok := directoryPlace(filepath.Join(cache, "local", key)); ok {
 				return built, nil
 			}
@@ -121,8 +127,8 @@ func namedProduct(root, cache, nameKey string) (string, []upstream) {
 }
 
 func isDirectory(path string) bool {
-	info, err := os.Stat(path)
-	return err == nil && info.IsDir()
+	info, statError := os.Stat(path)
+	return statError == nil && info.IsDir()
 }
 
 // directoryPlace is the first place path is a directory at, under the output directory or the build cache
@@ -166,7 +172,7 @@ func pointLocal(cache, nameKey string, inputs Inputs) error {
 	path := localPointer(cache, nameKey)
 	// Written where this process writes, unless the output directory or the build cache already holds the same pointer.
 	for _, place := range location.ReadPlaces(path) {
-		if existing, err := os.ReadFile(place); err == nil && bytes.Equal(existing, encoded) {
+		if existing, readError := os.ReadFile(place); readError == nil && bytes.Equal(existing, encoded) {
 			return nil
 		}
 	}
@@ -193,8 +199,8 @@ func pointLocal(cache, nameKey string, inputs Inputs) error {
 // localInputs are the inputs nameKey's pointer records, read in the output directory first, then in the build cache.
 func localInputs(cache, nameKey string) (Inputs, bool) {
 	for _, place := range location.ReadPlaces(localPointer(cache, nameKey)) {
-		content, err := os.ReadFile(place)
-		if err != nil {
+		content, readError := os.ReadFile(place)
+		if readError != nil {
 			continue
 		}
 		var inputs Inputs
@@ -206,23 +212,25 @@ func localInputs(cache, nameKey string) (Inputs, bool) {
 // relocatable refuses a product whose text names a path of the machine that built it: the repository, the build
 // cache (so any product in it, and this one's scratch directory), a product built uncached, the home directory, the
 // temporary directory, or a location an ADAMIC_ variable names (ADAMIC_TYPESCRIPT_SOURCE). A file holding a zero byte
-// is a binary, and so is a macOS .dSYM bundle, unless it is data a test reads back (dataFormats): this check doesn't read
-// their paths. That a binary's path is debug information no test reads is not a reason to trust it, since a path baked
-// into a binary makes the product differ by where it was built: the audit is what finds one (ADAMIC_BUILD_AUDIT_KEYS
-// rebuilds an audited product in a fresh directory, and its audit-difference line names the file and the section the
-// path landed in, auditHit). Every other file is text a reader parses, and must say <repository> and <build cache>/<name
-// key>.
+// is a binary, and so is a macOS .dSYM bundle, unless it is data a test reads back (dataFormats): this check doesn't
+// read their paths. That a binary's path is debug information no test reads is not a reason to trust it, since a path
+// baked into a binary makes the product differ by where it was built: the audit is what finds one
+// (ADAMIC_BUILD_AUDIT_KEYS rebuilds an audited product in a fresh directory, and its audit-difference line names the
+// file and the section the path landed in, auditHit). Every other file is text a reader parses, and must say
+// <repository> and <build cache>/<name key>.
 //
 // One path is not the builder's: a whole path token that occurs, as the same whole token, in a tracked file among the
-// product's own declared inputs (its Files, read on this tree) is that input's text, which the product carries (#arw7837:
-// json's pinned corpus is the repository's JSON, whose reports name /tmp/adamic-gate/... runs). It passes. A token naming
-// the build cache or a product directory never does, since no input can vouch for where this machine builds.
+// product's own declared inputs (its Files, read on this tree) is that input's text, which the product carries
+// (#arw7837: json's pinned corpus is the repository's JSON, whose reports name /tmp/adamic-gate/... runs). It passes. A
+// token naming the build cache or a product directory never does, since no input can vouch for where this machine
+// builds.
 func relocatable(inputs Inputs, directory string) error {
 	places := machinePlaces()
 	vouching := declaredText(inputs.Files)
 	return readFiles(directory, true, func(file string, content []byte, _ fs.FileMode) error {
 		text := string(content)
-		// In data, the byte before a string is its length, any byte at all, so a path there starts wherever it is found.
+		// In data, the byte before a string is its length, any byte at all, so a path there starts wherever it is
+		// found.
 		data := slices.Contains(dataFormats, filepath.Ext(file))
 		for _, place := range places {
 			for _, token := range pathTokens(text, place.path, data) {
@@ -230,10 +238,15 @@ func relocatable(inputs Inputs, directory string) error {
 					continue
 				}
 				relative, _ := filepath.Rel(directory, file)
-				return fmt.Errorf("product %s holds a path of the machine that built it: %s names %s (%s). A runner fetches this product and "+
-					"reads it elsewhere, so a product names the tree as <repository> and a product as <build cache>/<name key> "+
-					"(buildcache.Relative, read back with buildcache.Absolute), or keeps the path out of its bytes (#tqrqx60)",
-					inputs.Name, filepath.ToSlash(relative), place.path, place.name)
+				return fmt.Errorf(
+					"product %s holds a path of the machine that built it: %s names %s (%s). A runner fetches this product and "+
+						"reads it elsewhere, so a product names the tree as <repository> and a product as <build cache>/<name key> "+
+						"(buildcache.Relative, read back with buildcache.Absolute), or keeps the path out of its bytes (#tqrqx60)",
+					inputs.Name,
+					filepath.ToSlash(relative),
+					place.path,
+					place.name,
+				)
 			}
 		}
 		return nil
@@ -289,14 +302,14 @@ func (vouching *declaredVouching) holds(token string, places []place) bool {
 		}
 	}
 	vouching.once.Do(func() {
-		root, err := repositoryRoot()
-		if err != nil {
+		root, repositoryRootError := repositoryRoot()
+		if repositoryRootError != nil {
 			return
 		}
 		for _, name := range vouching.files {
 			start := filepath.Join(root, name)
-			filepath.WalkDir(start, func(file string, entry fs.DirEntry, err error) error {
-				if err != nil {
+			filepath.WalkDir(start, func(file string, entry fs.DirEntry, pathError error) error {
+				if pathError != nil {
 					return nil
 				}
 				if entry.IsDir() {
@@ -306,7 +319,7 @@ func (vouching *declaredVouching) holds(token string, places []place) bool {
 					return nil
 				}
 				if entry.Type().IsRegular() && Tracked(root, file, false) {
-					if content, err := os.ReadFile(file); err == nil {
+					if content, readError := os.ReadFile(file); readError == nil {
 						vouching.texts = append(vouching.texts, content)
 					}
 				}
@@ -331,7 +344,8 @@ func (vouching *declaredVouching) holds(token string, places []place) bool {
 	})
 	// A token of path bytes and separators alone stands whole in a text exactly when it is one of the text's maximal
 	// runs of them: looked up, once the texts are read (json's pinned corpus, landable-14b's tree, Oct 11: every token
-	// its product holds scanned against 819 declared files ran past go test's 10 minutes). Any other token is looked for.
+	// its product holds scanned against 819 declared files ran past go test's 10 minutes). Any other token is looked
+	// for.
 	if !strings.ContainsFunc(token, func(r rune) bool { return r >= 0x80 || !pathByte(byte(r)) && r != '/' }) {
 		return vouching.tokens[token]
 	}
@@ -352,8 +366,8 @@ func isProduct(directory string) bool {
 	if _, ok := productDirectories.Load(directory); ok {
 		return true
 	}
-	roots, err := location.Roots()
-	if err != nil || !productKey.MatchString(filepath.Base(directory)) {
+	roots, rootsError := location.Roots()
+	if rootsError != nil || !productKey.MatchString(filepath.Base(directory)) {
 		return false
 	}
 	parent := filepath.Dir(directory)
@@ -382,7 +396,8 @@ func machinePlaces() []place {
 		for _, candidate := range []string{filepath.Clean(path), resolved(path)} {
 			// / names every path, and a top-level directory such as /tmp is too short to tell a machine's own path from
 			// one a product's text means (a lowered program's "/tmp/out").
-			if candidate == "" || strings.Count(strings.Trim(candidate, string(filepath.Separator)), string(filepath.Separator)) < 1 {
+			if candidate == "" ||
+				strings.Count(strings.Trim(candidate, string(filepath.Separator)), string(filepath.Separator)) < 1 {
 				continue
 			}
 			if !slices.ContainsFunc(found, func(other place) bool { return other.path == candidate }) {
@@ -390,22 +405,23 @@ func machinePlaces() []place {
 			}
 		}
 	}
-	if root, err := repositoryRoot(); err == nil {
+	if root, repositoryRootError := repositoryRoot(); repositoryRootError == nil {
 		add(root, "the repository")
 	}
-	cache, cacheErr := cacheLocation()
-	if cacheErr == nil {
+	cache, cacheError := cacheLocation()
+	if cacheError == nil {
 		add(cache, "the build cache")
 	}
 	// The output directory is the build cache's, whose products Loom copies into it: no product names it either.
-	if output, err := outputLocation(); err == nil && (cacheErr != nil || output != cache) {
+	if output, outputLocationError := outputLocation(); outputLocationError == nil &&
+		(cacheError != nil || output != cache) {
 		add(output, "the build cache")
 	}
 	productDirectories.Range(func(directory, _ any) bool {
 		add(directory.(string), "a product directory")
 		return true
 	})
-	if home, err := os.UserHomeDir(); err == nil {
+	if home, homeDirectoryError := os.UserHomeDir(); homeDirectoryError == nil {
 		add(home, "the home directory")
 	}
 	add(os.TempDir(), "the temporary directory")

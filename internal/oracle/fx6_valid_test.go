@@ -49,13 +49,13 @@ func init() {
 
 func TestOracleViewsViewedProducerMutation(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("../../internal/lower/testdata/fx6/p35.ts")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("../../internal/lower/testdata/fx6/p35.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	want := onNode(test, path)
 	test.Logf("Node: exit=%d stdout=%q stderr=%q", want.exitCode, want.stdout, want.stderr)
@@ -73,13 +73,13 @@ func TestOracleViewsViewedProducerMutation(test *testing.T) {
 
 func TestOracleViewsUnrelatedMutableField(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("../../internal/lower/testdata/fx6/p36.ts")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("../../internal/lower/testdata/fx6/p36.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	want := onNode(test, path)
 	test.Logf("Node: exit=%d stdout=%q stderr=%q", want.exitCode, want.stdout, want.stderr)
@@ -97,13 +97,13 @@ func TestOracleViewsUnrelatedMutableField(test *testing.T) {
 
 func TestOracleViewsUnrelatedUnionField(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("../../internal/lower/testdata/fx6/p37.ts")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("../../internal/lower/testdata/fx6/p37.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	want := onNode(test, path)
 	test.Logf("Node: exit=%d stdout=%q stderr=%q", want.exitCode, want.stdout, want.stderr)
@@ -121,13 +121,13 @@ func TestOracleViewsUnrelatedUnionField(test *testing.T) {
 
 func TestOracleViewsUnrelatedOptionalStringField(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("../../internal/lower/testdata/fx6/p38.ts")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("../../internal/lower/testdata/fx6/p38.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	want := onNode(test, path)
 	test.Logf("Node: exit=%d stdout=%q stderr=%q", want.exitCode, want.stdout, want.stderr)
@@ -145,13 +145,13 @@ func TestOracleViewsUnrelatedOptionalStringField(test *testing.T) {
 
 func TestOracleViewsDestructuredScalarUnion(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("../../internal/lower/testdata/fx6/p51.ts")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("../../internal/lower/testdata/fx6/p51.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	want := onNode(test, path)
 	test.Logf("Node: exit=%d stdout=%q stderr=%q", want.exitCode, want.stdout, want.stderr)
@@ -169,13 +169,13 @@ func TestOracleViewsDestructuredScalarUnion(test *testing.T) {
 
 func TestOracleViewsDestructuredCallableUnion(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("../../internal/lower/testdata/fx6/p53.ts")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("../../internal/lower/testdata/fx6/p53.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	want := onNode(test, path)
 	test.Logf("Node: exit=%d stdout=%q stderr=%q", want.exitCode, want.stdout, want.stderr)
@@ -195,28 +195,28 @@ func TestOracleViewsDestructuredCallableUnion(test *testing.T) {
 // value passes (#q97a1rr). Its .ts twin keeps the cast a checked view and is refused at the destructuring.
 func TestOracleViewsDestructuredInvalidObjectUnionRefuses(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("../lower/testdata/fx6_refused/p49.a")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("../lower/testdata/fx6_refused/p49.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	source := onNode(test, path)
 	if source.exitCode != 0 || string(source.stdout) != "true\n" {
 		test.Fatalf("Node control: %+v", source)
 	}
-	_, err = lowered(test, path)
+	_, loweredError := lowered(test, path)
 	var refused *lower.Refused
-	if !errors.As(err, &refused) ||
+	if !errors.As(loweredError, &refused) ||
 		refused.What != `a downcast to Holder whose tag test is vacuous: every { readonly kind: "Holder"; } has kind "Holder"` ||
 		refused.Fix != "give Holder a tag of its own in a discriminated union, or build the value as a Holder so the compiler can prove it" ||
 		!strings.Contains(refused.Where, "p49.a:9:14") {
-		test.Fatalf("want the located vacuous downcast refusal with fix at 9:14, got %v", err)
+		test.Fatalf("want the located vacuous downcast refusal with fix at 9:14, got %v", loweredError)
 	}
-	_, err = lowered(test, typeScriptTwin(test, path))
-	if !errors.As(err, &refused) ||
+	_, loweredError = lowered(test, typeScriptTwin(test, path))
+	if !errors.As(loweredError, &refused) ||
 		refused.What != "a destructured object-union view with an incompatible literal producer" ||
 		refused.Fix != "build a member of Target before destructuring field value" ||
 		!strings.Contains(refused.Where, "p49.ts:") {
-		test.Fatalf("twin: want located incompatible-producer refusal with fix, got %v", err)
+		test.Fatalf("twin: want located incompatible-producer refusal with fix, got %v", loweredError)
 	}
 }
 
@@ -226,26 +226,26 @@ func TestOracleViewsDestructuredInvalidObjectUnionRefuses(test *testing.T) {
 // is one every source value passes (#q97a1rr); its .ts twin keeps the cast a checked view and is refused at the read.
 func TestOracleViewsDestructuredInvalidCallableRefuses(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("../../internal/lower/testdata/fx6/p51_wrong.a")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("../../internal/lower/testdata/fx6/p51_wrong.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	if source := onNode(test, path); source.exitCode != 0 {
 		test.Fatalf("Node control failed: %#v", source)
 	}
-	_, err = lowered(test, path)
+	_, loweredError := lowered(test, path)
 	var refused *lower.Refused
-	if !errors.As(err, &refused) ||
+	if !errors.As(loweredError, &refused) ||
 		refused.What != `a downcast to Receiver whose tag test is vacuous: every { readonly kind: "Receiver"; } has kind "Receiver"` ||
 		refused.Fix != "give Receiver a tag of its own in a discriminated union, or build the value as a Receiver so the compiler can prove it" ||
 		!strings.Contains(refused.Where, "p51_wrong.a:6:14") {
-		test.Fatalf("want the located vacuous downcast refusal at 6:14, got %v", err)
+		test.Fatalf("want the located vacuous downcast refusal at 6:14, got %v", loweredError)
 	}
-	_, err = lowered(test, typeScriptTwin(test, path))
-	if !errors.As(err, &refused) ||
+	_, loweredError = lowered(test, typeScriptTwin(test, path))
+	if !errors.As(loweredError, &refused) ||
 		refused.What != "checked view read of field value with unsupported representation conversion contract" ||
 		refused.Fix != "prove or implement the representation conversion contract before reading this field" ||
 		!strings.Contains(refused.Where, "p51_wrong.ts:7:9") {
-		test.Fatalf("twin: want the located representation conversion refusal at 7:9, got %v", err)
+		test.Fatalf("twin: want the located representation conversion refusal at 7:9, got %v", loweredError)
 	}
 }

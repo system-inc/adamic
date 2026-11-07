@@ -40,9 +40,9 @@ func TestCohereMirrors(test *testing.T) {
 	// Reads: *.mjs
 	// Reads: *.py
 	// Reads: *.sh
-	problems, err := checkMirrors("../..")
-	if err != nil {
-		test.Fatal(err)
+	problems, checkMirrorsError := checkMirrors("../..")
+	if checkMirrorsError != nil {
+		test.Fatal(checkMirrorsError)
 	}
 	for _, problem := range problems {
 		test.Error(problem)
@@ -55,9 +55,9 @@ func parseGo(path string) (*ast.File, error) {
 
 // goFiles includes scratch files, generated files and tests, regardless of build tags.
 func goFiles(root string, visit func(string, *ast.File) error) error {
-	return filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
+	return filepath.WalkDir(root, func(path string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
 		if entry.IsDir() {
 			if path == filepath.Join(root, "cohere") ||
@@ -72,13 +72,13 @@ func goFiles(root string, visit func(string, *ast.File) error) error {
 		if filepath.Ext(path) != ".go" {
 			return nil
 		}
-		file, err := parseGo(path)
-		if err != nil {
-			return fmt.Errorf("%s: parse Go before checking mirrors: %w", path, err)
+		file, parseGoError := parseGo(path)
+		if parseGoError != nil {
+			return fmt.Errorf("%s: parse Go before checking mirrors: %w", path, parseGoError)
 		}
-		relative, err := filepath.Rel(root, path)
-		if err != nil {
-			return err
+		relative, relativePathError := filepath.Rel(root, path)
+		if relativePathError != nil {
+			return relativePathError
 		}
 		return visit(filepath.ToSlash(relative), file)
 	})
@@ -87,15 +87,15 @@ func goFiles(root string, visit func(string, *ast.File) error) error {
 // Registration and definition are joined by package directory and variable name. An id
 // merely mentioned in a cohere test or policy message is not a registered rule.
 func cohereIDs(root string) (map[string]bool, error) {
-	data, err := os.ReadFile(filepath.Join(root, "cohere/internal/lint/configuration/sets/adamic.json"))
-	if err != nil {
-		return nil, fmt.Errorf("read cohere adamic set (initialize submodules): %w", err)
+	data, readError := os.ReadFile(filepath.Join(root, "cohere/internal/lint/configuration/sets/adamic.json"))
+	if readError != nil {
+		return nil, fmt.Errorf("read cohere adamic set (initialize submodules): %w", readError)
 	}
 	var set struct {
 		Rules map[string]json.RawMessage `json:"rules"`
 	}
-	if err := json.Unmarshal(data, &set); err != nil {
-		return nil, err
+	if decodeError := json.Unmarshal(data, &set); decodeError != nil {
+		return nil, decodeError
 	}
 	if len(set.Rules) == 0 {
 		return nil, fmt.Errorf("cohere adamic set has no rules")
@@ -103,7 +103,7 @@ func cohereIDs(root string) (map[string]bool, error) {
 	definitions := map[string]string{}
 	registrations := map[string]bool{}
 	rulesRoot := filepath.Join(root, "cohere/internal/lint/rules")
-	err = goFiles(rulesRoot, func(path string, file *ast.File) error {
+	goFilesError := goFiles(rulesRoot, func(path string, file *ast.File) error {
 		if strings.HasSuffix(path, "_test.go") {
 			return nil
 		}
@@ -178,8 +178,8 @@ func cohereIDs(root string) (map[string]bool, error) {
 		})
 		return nil
 	})
-	if err != nil {
-		return nil, err
+	if goFilesError != nil {
+		return nil, goFilesError
 	}
 	registered := map[string]bool{}
 	for key := range registrations {
@@ -225,8 +225,8 @@ func resolvedString(expr ast.Expr, visiting map[*ast.Object]bool) (string, bool)
 		}
 	case *ast.BasicLit:
 		if value.Kind == token.STRING {
-			text, err := strconv.Unquote(value.Value)
-			return text, err == nil
+			text, unquoteError := strconv.Unquote(value.Value)
+			return text, unquoteError == nil
 		}
 	case *ast.BinaryExpr:
 		if value.Op == token.ADD {
@@ -256,9 +256,9 @@ func hasProvenance(file *ast.File) bool {
 // documents and string literals are not source provenance headers.
 func sourceHeaders(root string) (map[string]bool, error) {
 	headers := map[string]bool{}
-	err := filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
+	walkError := filepath.WalkDir(root, func(path string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
 		if entry.IsDir() {
 			if entry.Name() == ".git" ||
@@ -275,9 +275,9 @@ func sourceHeaders(root string) (map[string]bool, error) {
 		default:
 			return nil
 		}
-		data, err := os.ReadFile(path)
-		if err != nil {
-			return err
+		data, readError := os.ReadFile(path)
+		if readError != nil {
+			return readError
 		}
 		var comments []string
 		block := false
@@ -298,15 +298,15 @@ func sourceHeaders(root string) (map[string]bool, error) {
 			}
 		}
 		if provenance.MatchString(strings.Join(comments, "\n")) {
-			relative, err := filepath.Rel(root, path)
-			if err != nil {
-				return err
+			relative, relativePathError := filepath.Rel(root, path)
+			if relativePathError != nil {
+				return relativePathError
 			}
 			headers[filepath.ToSlash(relative)] = true
 		}
 		return nil
 	})
-	return headers, err
+	return headers, walkError
 }
 
 func ruleMention(text, id string) bool {
@@ -346,23 +346,23 @@ func ruleMention(text, id string) bool {
 }
 
 func checkMirrors(root string) ([]string, error) {
-	headers, err := sourceHeaders(root)
-	if err != nil {
-		return nil, err
+	headers, sourceHeadersError := sourceHeaders(root)
+	if sourceHeadersError != nil {
+		return nil, sourceHeadersError
 	}
-	ids, err := cohereIDs(root)
-	if err != nil {
-		return nil, err
+	ids, cohereIDsError := cohereIDs(root)
+	if cohereIDsError != nil {
+		return nil, cohereIDsError
 	}
-	data, err := os.ReadFile(filepath.Join(root, "internal/dry/testdata/cohere-mirrors.json"))
-	if err != nil {
-		return nil, err
+	data, readError := os.ReadFile(filepath.Join(root, "internal/dry/testdata/cohere-mirrors.json"))
+	if readError != nil {
+		return nil, readError
 	}
 	var entries []mirror
 	decoder := json.NewDecoder(strings.NewReader(string(data)))
 	decoder.DisallowUnknownFields()
-	if err := decoder.Decode(&entries); err != nil {
-		return nil, err
+	if decodeError := decoder.Decode(&entries); decodeError != nil {
+		return nil, decodeError
 	}
 	byPath := map[string][]int{}
 	var problems []string
@@ -394,8 +394,8 @@ func checkMirrors(root string) ([]string, error) {
 		if !strings.HasPrefix(entry.Counterpart, "cohere/") || strings.Contains(entry.Counterpart, "..") {
 			return nil, fmt.Errorf("%s: counterpart must name a cohere path", entry.Path)
 		}
-		if _, err := os.Stat(filepath.Join(root, entry.Counterpart)); err != nil {
-			return nil, fmt.Errorf("%s: cohere counterpart %s: %w", entry.Path, entry.Counterpart, err)
+		if _, statError := os.Stat(filepath.Join(root, entry.Counterpart)); statError != nil {
+			return nil, fmt.Errorf("%s: cohere counterpart %s: %w", entry.Path, entry.Counterpart, statError)
 		}
 		byPath[entry.Path] = append(byPath[entry.Path], index)
 	}
@@ -406,7 +406,7 @@ func checkMirrors(root string) ([]string, error) {
 			delete(headers, entry.Path)
 		}
 	}
-	err = goFiles(root, func(path string, file *ast.File) error {
+	goFilesError := goFiles(root, func(path string, file *ast.File) error {
 		lifted := hasProvenance(file)
 		literals := []string{}
 		// Imports identify dependencies, not diagnostics. Comments likewise do not emit ids.
@@ -503,8 +503,8 @@ func checkMirrors(root string) ([]string, error) {
 		}
 		return nil
 	})
-	if err != nil {
-		return nil, err
+	if goFilesError != nil {
+		return nil, goFilesError
 	}
 	for path := range headers {
 		// Go comment groups have already produced their detailed diagnostic.
@@ -534,43 +534,43 @@ func checkMirrors(root string) ([]string, error) {
 func mirrorMutant(test *testing.T, mutation string) {
 	test.Helper()
 	root := test.TempDir()
-	cohere, err := filepath.Abs("../../cohere")
-	if err != nil {
-		test.Fatal(err)
+	cohere, absolutePathError := filepath.Abs("../../cohere")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	if err := os.Symlink(cohere, filepath.Join(root, "cohere")); err != nil {
-		test.Fatal(err)
+	if symlinkError := os.Symlink(cohere, filepath.Join(root, "cohere")); symlinkError != nil {
+		test.Fatal(symlinkError)
 	}
 	write := func(path string, data []byte) {
 		test.Helper()
 		target := filepath.Join(root, path)
-		if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(filepath.Dir(target), 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.WriteFile(target, data, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(target, data, 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	inventory := "internal/dry/testdata/cohere-mirrors.json"
-	data, err := os.ReadFile("testdata/cohere-mirrors.json")
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile("testdata/cohere-mirrors.json")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var entries []mirror
-	if err := json.Unmarshal(data, &entries); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &entries); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	for _, entry := range entries {
-		source, err := os.ReadFile(filepath.Join("../..", entry.Path))
-		if err != nil {
-			test.Fatal(err)
+		source, readError := os.ReadFile(filepath.Join("../..", entry.Path))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		write(entry.Path, source)
 	}
 	write(inventory, data)
-	baseline, err := checkMirrors(root)
-	if err != nil || len(baseline) != 0 {
-		test.Fatalf("baseline: %v, %v", baseline, err)
+	baseline, checkMirrorsError := checkMirrors(root)
+	if checkMirrorsError != nil || len(baseline) != 0 {
+		test.Fatalf("baseline: %v, %v", baseline, checkMirrorsError)
 	}
 	expected := "scratch.go:"
 	action := "unlisted"
@@ -608,8 +608,8 @@ func mirrorMutant(test *testing.T, mutation string) {
 	case "missing file":
 		expected = entries[0].Path + ":"
 		action = "stale lift"
-		if err := os.Remove(filepath.Join(root, entries[0].Path)); err != nil {
-			test.Fatal(err)
+		if removeError := os.Remove(filepath.Join(root, entries[0].Path)); removeError != nil {
+			test.Fatal(removeError)
 		}
 	case "stale evidence":
 		expected = "internal/lower/refusals.go:"
@@ -622,9 +622,9 @@ func mirrorMutant(test *testing.T, mutation string) {
 	default:
 		test.Fatalf("unknown mutant %s", mutation)
 	}
-	problems, err := checkMirrors(root)
-	if err != nil {
-		test.Fatal(err)
+	problems, checkMirrorsError := checkMirrors(root)
+	if checkMirrorsError != nil {
+		test.Fatal(checkMirrorsError)
 	}
 	for _, problem := range problems {
 		if strings.Contains(problem, expected) && strings.Contains(problem, action) {

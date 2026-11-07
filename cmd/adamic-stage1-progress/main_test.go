@@ -34,14 +34,14 @@ func TestPhysicalInventoryBoundaries(test *testing.T) {
 func TestDeclarationCreditIsBoundedAndFailsClosed(test *testing.T) {
 	test.Parallel()
 	source := []byte("package p\n\n// selected\nfunc chosen() {\n}\n\nfunc untouched() {}\n")
-	marks, err := credit(source, []string{"chosen"})
-	if err != nil {
-		test.Fatal(err)
+	marks, creditError := credit(source, []string{"chosen"})
+	if creditError != nil {
+		test.Fatal(creditError)
 	}
 	if len(marks) != 3 || !marks[3] || !marks[5] || marks[7] {
 		test.Fatalf("marks=%v", marks)
 	}
-	if _, err := credit(source, []string{"renamed"}); err == nil {
+	if _, creditError := credit(source, []string{"renamed"}); creditError == nil {
 		test.Fatal("missing declaration silently credited")
 	}
 }
@@ -61,15 +61,15 @@ func TestUnionDoesNotCountSharedLinesTwice(test *testing.T) {
 			Packages: []packageRow{{Package: "internal/p", GoLines: 4, Evidence: []string{"gap"}}},
 		},
 	}
-	combined, err := union(reports)
-	if err != nil {
-		test.Fatal(err)
+	combined, unionError := union(reports)
+	if unionError != nil {
+		test.Fatal(unionError)
 	}
 	if combined.Ported != 3 || combined.Total != 4 || combined.Percent != 75 || combined.Complete != 0 {
 		test.Fatalf("union=%#v", combined)
 	}
 	reports[1].Cohere = "different"
-	if _, err := union(reports); err == nil {
+	if _, unionError := union(reports); unionError == nil {
 		test.Fatal("union accepted incompatible pins")
 	}
 }
@@ -77,26 +77,26 @@ func TestGitSnapshotAndEvidenceBoundary(test *testing.T) {
 	test.Parallel()
 	root := test.TempDir()
 	cohere := filepath.Join(root, "cohere")
-	if err := os.MkdirAll(cohere, 0755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(cohere, 0755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	command := func(directory string, args ...string) string {
 		test.Helper()
 		c := toolchain.GitCommand(append([]string{"-C", directory}, args...)...)
-		out, err := c.CombinedOutput()
-		if err != nil {
-			test.Fatalf("git %v: %v %s", args, err, out)
+		out, combinedOutputError := c.CombinedOutput()
+		if combinedOutputError != nil {
+			test.Fatalf("git %v: %v %s", args, combinedOutputError, out)
 		}
 		return strings.TrimSpace(string(out))
 	}
 	write := func(name, text string) {
 		test.Helper()
 		name = filepath.Join(root, name)
-		if err := os.MkdirAll(filepath.Dir(name), 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(filepath.Dir(name), 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.WriteFile(name, []byte(text), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(name, []byte(text), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	initialize := func(directory string) {
@@ -121,18 +121,18 @@ func TestGitSnapshotAndEvidenceBoundary(test *testing.T) {
 	command(root, "commit", "-qm", "ported snapshot")
 	first := command(root, "rev-parse", "HEAD")
 	write("stage1/cohere/gitignore/main.ts", "dirty source does not affect the Git snapshot")
-	report, err := measure(root, first, map[string]*inventory{})
-	if err != nil {
-		test.Fatal(err)
+	report, measureError := measure(root, first, map[string]*inventory{})
+	if measureError != nil {
+		test.Fatal(measureError)
 	}
 	if report.Total != 4 || report.Ported != 3 || report.Complete != 1 || report.NotStarted != 1 {
 		test.Fatalf("snapshot=%#v", report)
 	}
 	command(root, "rm", "--cached", "stage1/cohere/gitignore/gitignore_test.go")
 	command(root, "commit", "-qm", "without parity test")
-	report, err = measure(root, "HEAD", map[string]*inventory{})
-	if err != nil {
-		test.Fatal(err)
+	report, measureError = measure(root, "HEAD", map[string]*inventory{})
+	if measureError != nil {
+		test.Fatal(measureError)
 	}
 	if report.Ported != 0 || report.Complete != 0 || report.Partial != 1 {
 		test.Fatalf("unheld port got credit: %#v", report)
@@ -141,7 +141,7 @@ func TestGitSnapshotAndEvidenceBoundary(test *testing.T) {
 	write("stage1/cohere/new_slice/GAPS.md", "# Unknown\n")
 	command(root, "add", "stage1/cohere/new_slice")
 	command(root, "commit", "-qm", "unknown slice")
-	if _, err := measure(root, "HEAD", map[string]*inventory{}); err == nil {
+	if _, measureError := measure(root, "HEAD", map[string]*inventory{}); measureError == nil {
 		test.Fatal("unknown slice silently classified")
 	}
 	command(root, "update-ref", "refs/remotes/origin/main", first)
@@ -149,11 +149,11 @@ func TestGitSnapshotAndEvidenceBoundary(test *testing.T) {
 	command(root, "update-ref", "refs/remotes/origin/codex/stage1-old", first)
 	command(root, "update-ref", "refs/remotes/origin/codex/typescript-scanner", "HEAD")
 	command(root, "update-ref", "refs/remotes/origin/codex/unrelated", "HEAD")
-	refs, integrated, err := pending(root)
-	if err != nil ||
+	refs, integrated, pendingError := pending(root)
+	if pendingError != nil ||
 		strings.Join(refs, ",") != "origin/codex/stage1-new,origin/codex/typescript-scanner" ||
 		strings.Join(integrated, ",") != "origin/codex/stage1-old" {
-		test.Fatalf("pending=%v integrated=%v err=%v", refs, integrated, err)
+		test.Fatalf("pending=%v integrated=%v err=%v", refs, integrated, pendingError)
 	}
 
 }

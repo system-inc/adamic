@@ -22,9 +22,9 @@ import (
 func TestObjectIntersectionFieldsAgreeWithNode(test *testing.T) {
 	test.Parallel()
 	directory := "internal/oracle/testdata/object_intersection_fields"
-	entries, err := os.ReadDir(filepath.Join(repository, directory))
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(filepath.Join(repository, directory))
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -34,9 +34,9 @@ func TestObjectIntersectionFieldsAgreeWithNode(test *testing.T) {
 		programs++
 		test.Run(entry.Name(), func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, directory, entry.Name()))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(filepath.Join(repository, directory, entry.Name()))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			objectIntersectionAgrees(test, path)
 		})
@@ -73,8 +73,8 @@ while (at !== undefined) {
 }
 console.log(` + "`${total}`" + `);
 `
-	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	// Readonly links each made with the one before close no cycle, so no graph region holds them.
 	if got := objectIntersectionGraph(test, objectIntersectionAgrees(test, path)); got != "" {
@@ -138,8 +138,8 @@ console.log(` + "`${total}`" + `);
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
 			path := filepath.Join(test.TempDir(), "cycle.a")
-			if err := os.WriteFile(path, []byte(probe.source), 0o644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, []byte(probe.source), 0o644); writeError != nil {
+				test.Fatal(writeError)
 			}
 			if got := objectIntersectionGraph(test, objectIntersectionAgrees(test, path)); got != probe.graph {
 				test.Errorf("graph counts %q, want %q", got, probe.graph)
@@ -155,8 +155,8 @@ var objectIntersectionGraphCounts = regexp.MustCompile(`(?m)^adamic: graph count
 func objectIntersectionGraph(test *testing.T, program *ir.Program) string {
 	test.Helper()
 	binary := filepath.Join(test.TempDir(), "counted")
-	if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), binary, native.Options{Count: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	name, arguments := pinnedStack(binary)
 	counted := execute(test, name, arguments...)
@@ -181,9 +181,9 @@ func objectIntersectionAgrees(test *testing.T, path string) *ir.Program {
 	if want.exitCode != 0 {
 		test.Fatalf("Node: %#v", want)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	sanitized, binary := nativelyUncached(test, program)
 	for backend, got := range map[string]run{

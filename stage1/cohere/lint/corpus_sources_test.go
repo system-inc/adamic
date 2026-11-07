@@ -57,16 +57,16 @@ func TestCompilerCorpusSourcesExcludeOnlyNamedFolders(test *testing.T) {
 	for selected, group := range [][]string{retained, excluded} {
 		for _, name := range group {
 			file := filepath.Join(checkout, name)
-			if err := os.MkdirAll(filepath.Dir(file), 0755); err != nil {
-				test.Fatal(err)
+			if createDirectoryError := os.MkdirAll(filepath.Dir(file), 0755); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
 			// No oracle should ever parse the deliberately invalid fixture content.
 			content := "export const value = 1;\n"
 			if selected == 1 {
 				content = "new Promise(@dec async () => {})\n"
 			}
-			if err := os.WriteFile(file, []byte(content), 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(file, []byte(content), 0644); writeError != nil {
+				test.Fatal(writeError)
 			}
 		}
 	}
@@ -101,8 +101,11 @@ func TestCompilerCorpusListsTheRegistryOnce(test *testing.T) {
 		{[]string{other, registry}, true},
 		{[]string{registry, other, registry}, false},
 	} {
-		if err := compilerRegistryListedOnce(check.sources, registry); (err == nil) != check.ok {
-			test.Errorf("%q: %v, want ok %t", check.sources, err, check.ok)
+		if compilerRegistryListedOnceError := compilerRegistryListedOnce(
+			check.sources,
+			registry,
+		); (compilerRegistryListedOnceError == nil) != check.ok {
+			test.Errorf("%q: %v, want ok %t", check.sources, compilerRegistryListedOnceError, check.ok)
 		}
 	}
 }

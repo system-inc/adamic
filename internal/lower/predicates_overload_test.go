@@ -54,22 +54,22 @@ func TestPredicateOverloadRuntime(test *testing.T) {
 			if probe.name == "parser_every_result" || probe.name == "overload_every" {
 				extension = ".ts"
 			}
-			path, err := filepath.Abs("testdata/predicates/" + probe.name + extension)
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs("testdata/predicates/" + probe.name + extension)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			run := func(command *exec.Cmd, stdout, stderr string, code int) {
 				test.Helper()
 				var output, errors bytes.Buffer
 				command.Stdout = &output
 				command.Stderr = &errors
-				err := command.Run()
+				runError := command.Run()
 				got := 0
-				if err != nil {
-					if exit, ok := err.(*exec.ExitError); ok {
+				if runError != nil {
+					if exit, ok := runError.(*exec.ExitError); ok {
 						got = exit.ExitCode()
 					} else {
-						test.Fatal(err)
+						test.Fatal(runError)
 					}
 				}
 				if got != code || output.String() != stdout || errors.String() != stderr {
@@ -85,14 +85,14 @@ func TestPredicateOverloadRuntime(test *testing.T) {
 					)
 				}
 			}
-			source, err := os.ReadFile(path)
-			if err != nil {
-				test.Fatal(err)
+			source, readError := os.ReadFile(path)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			lowerInput := lowerTypeScriptAssertionSource // Checked witnesses opt into .ts; .a now requires a body proof.
-			program, err := lowerInput(test, string(source))
-			if err != nil {
-				test.Fatal(err)
+			program, lowerInputError := lowerInput(test, string(source))
+			if lowerInputError != nil {
+				test.Fatal(lowerInputError)
 			}
 			// Behavior cannot count proven, checked, or unobservable predicate sites.
 			if counts, ok := map[string][3]int{
@@ -144,8 +144,12 @@ func TestPredicateOverloadRuntime(test *testing.T) {
 				code = 70
 			}
 			binary := filepath.Join(test.TempDir(), "native")
-			if err = native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(
+				native.C(program),
+				binary,
+				native.Options{Sanitize: true},
+			); buildError != nil {
+				test.Fatal(buildError)
 			}
 			command := exec.Command(binary)
 			run(command, stdout, stderr, code)
@@ -161,11 +165,12 @@ func TestPredicateOverloadRuntime(test *testing.T) {
 
 func TestIndirectPredicateOverloadIsPending(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(
+	_, lowerSourceError := lowerSource(
 		test,
 		`function lie(value: number | string): value is number; function lie(value: number | string): boolean { return true; } const alias=lie; alias("text");`,
 	)
-	if err == nil || !strings.Contains(err.Error(), "indirect call of a checked predicate overload") {
-		test.Fatalf("want explicit indirect-call capability gap, got %v", err)
+	if lowerSourceError == nil ||
+		!strings.Contains(lowerSourceError.Error(), "indirect call of a checked predicate overload") {
+		test.Fatalf("want explicit indirect-call capability gap, got %v", lowerSourceError)
 	}
 }

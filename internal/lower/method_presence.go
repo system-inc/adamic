@@ -42,7 +42,9 @@ func (l *lowering) methodPresenceTest(node *ast.Node) bool {
 	if node.Kind != ast.KindPropertyAccessExpression || !l.alwaysPresentMethod(node) || !presenceConsumer(node) {
 		return false
 	}
-	return !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) && !l.nodeProcessMethodObservation(node)
+	return !l.stringMethodObservation(node) &&
+		!l.libraryArrayObservedMethod(node) &&
+		!l.nodeProcessMethodObservation(node)
 }
 
 // alwaysPresentMethod reports whether a property access reads a method every declaration of which is a
@@ -53,7 +55,8 @@ func (l *lowering) alwaysPresentMethod(node *ast.Node) bool {
 		return false
 	}
 	for _, declaration := range symbol.Declarations {
-		if declaration.Kind != ast.KindMethodDeclaration && declaration.Kind != ast.KindMethodSignature || ast.HasQuestionToken(declaration) {
+		if declaration.Kind != ast.KindMethodDeclaration && declaration.Kind != ast.KindMethodSignature ||
+			ast.HasQuestionToken(declaration) {
 			return false
 		}
 	}
@@ -86,7 +89,8 @@ func presenceConsumer(node *ast.Node) bool {
 	case ast.KindConditionalExpression:
 		return parent.AsConditionalExpression().Condition == node
 	case ast.KindBinaryExpression:
-		return parent.AsBinaryExpression().OperatorToken.Kind == ast.KindAmpersandAmpersandToken && parent.AsBinaryExpression().Left == node
+		return parent.AsBinaryExpression().OperatorToken.Kind == ast.KindAmpersandAmpersandToken &&
+			parent.AsBinaryExpression().Left == node
 	}
 	return false
 }
@@ -109,7 +113,9 @@ func (read methodPresenceRead) then(result ir.Expression) ir.Expression {
 
 // methodPresence lowers operand's receiver when operand is a method read only to test for it; handled
 // is false for any other operand, which its consumer lowers as it always has.
-func (l *lowering) methodPresence(operand *ast.Node) (read methodPresenceRead, handled bool, err error) {
+func (l *lowering) methodPresence(
+	operand *ast.Node,
+) (read methodPresenceRead, handled bool, methodPresenceError error) {
 	node := ast.SkipParentheses(operand)
 	if !l.methodPresenceTest(node) {
 		return methodPresenceRead{}, false, nil
@@ -118,7 +124,10 @@ func (l *lowering) methodPresence(operand *ast.Node) (read methodPresenceRead, h
 	receiver := ast.SkipParentheses(access.Expression)
 	if access.QuestionDotToken == nil && node.Flags&ast.NodeFlagsOptionalChain != 0 {
 		// The rest of a chain after a ?., which short-circuits with it, as property stops it.
-		return methodPresenceRead{}, true, l.notYet(node, "a presence test of a method at the end of an optional chain longer than one step")
+		return methodPresenceRead{}, true, l.notYet(
+			node,
+			"a presence test of a method at the end of an optional chain longer than one step",
+		)
 	}
 	if receiver.Kind == ast.KindSuperKeyword {
 		return methodPresenceRead{}, true, l.notYet(node, "a presence test of a method read through super")
@@ -136,9 +145,9 @@ func (l *lowering) methodPresence(operand *ast.Node) (read methodPresenceRead, h
 	if !class && !library {
 		return methodPresenceRead{}, true, l.notYet(node, methodPresenceUnproven)
 	}
-	value, err := l.expression(access.Expression)
-	if err != nil {
-		return methodPresenceRead{}, true, err
+	value, expressionError := l.expression(access.Expression)
+	if expressionError != nil {
+		return methodPresenceRead{}, true, expressionError
 	}
 	if !class && value.Type() != ir.Array && value.Type() != ir.String {
 		// A library method on an object Adamic didn't build as its own array or string: a Map, a host
@@ -154,7 +163,10 @@ func (l *lowering) methodPresence(operand *ast.Node) (read methodPresenceRead, h
 		// truthiness is ?.'s nullish test, on the receiver's one evaluation.
 		return methodPresenceRead{present: ir.Truthy{Value: value}}, true, nil
 	}
-	return methodPresenceRead{}, true, l.notYet(node, "a presence test of a method read through ?. on a "+typeName(value.Type()))
+	return methodPresenceRead{}, true, l.notYet(
+		node,
+		"a presence test of a method read through ?. on a "+typeName(value.Type()),
+	)
 }
 
 // methodPresenceUnproven is what a presence test stops as where nothing about how the receiver was made
@@ -199,7 +211,10 @@ func (l *lowering) programClassMethod(node *ast.Node) bool {
 	}
 	for _, declaration := range symbol.Declarations {
 		class := declaration.Parent
-		if declaration.Kind != ast.KindMethodDeclaration || declaration.Body() == nil || class == nil || class.Name() == nil {
+		if declaration.Kind != ast.KindMethodDeclaration ||
+			declaration.Body() == nil ||
+			class == nil ||
+			class.Name() == nil {
 			return false
 		}
 		if _, known := l.classes[l.symbol(class.Name())]; !known {
@@ -216,29 +231,35 @@ func (l *lowering) libraryGlobalReceiver(node *ast.Node) bool {
 		return false
 	}
 	symbol := l.checker.GetSymbolAtLocation(node)
-	return symbol != nil && len(symbol.Declarations) > 0 && load.IsLibrary(ast.GetSourceFileOfNode(symbol.Declarations[0]))
+	return symbol != nil &&
+		len(symbol.Declarations) > 0 &&
+		load.IsLibrary(ast.GetSourceFileOfNode(symbol.Declarations[0]))
 }
 
 // methodPresenceTypeOf lowers typeof of a method read only to test for it: "function", or through ?.
 // "undefined" where the receiver is missing.
 func (l *lowering) methodPresenceTypeOf(node *ast.Node) (ir.Expression, bool, error) {
-	read, handled, err := l.methodPresence(node.AsTypeOfExpression().Expression)
-	if !handled || err != nil {
-		return nil, handled, err
+	read, handled, methodPresenceError := l.methodPresence(node.AsTypeOfExpression().Expression)
+	if !handled || methodPresenceError != nil {
+		return nil, handled, methodPresenceError
 	}
 	function := ir.StringConstant{Index: l.constant("function")}
 	if read.present == nil {
 		return read.then(function), true, nil
 	}
-	return ir.Conditional{Condition: read.present, WhenTrue: function, WhenNot: ir.StringConstant{Index: l.constant("undefined")}}, true, nil
+	return ir.Conditional{
+		Condition: read.present,
+		WhenTrue:  function,
+		WhenNot:   ir.StringConstant{Index: l.constant("undefined")},
+	}, true, nil
 }
 
 // methodPresenceCondition lowers a condition that is a method read only to test for it: true, or
 // through ?. whether the receiver is there.
 func (l *lowering) methodPresenceCondition(node *ast.Node) (ir.Expression, bool, error) {
-	read, handled, err := l.methodPresence(node)
-	if !handled || err != nil {
-		return nil, handled, err
+	read, handled, methodPresenceError := l.methodPresence(node)
+	if !handled || methodPresenceError != nil {
+		return nil, handled, methodPresenceError
 	}
 	if read.present == nil {
 		return read.then(ir.BooleanConstant{Value: true}), true, nil
@@ -249,9 +270,9 @@ func (l *lowering) methodPresenceCondition(node *ast.Node) (ir.Expression, bool,
 // methodPresenceNot lowers ! of a method read only to test for it: false, or through ?. whether the
 // receiver is missing.
 func (l *lowering) methodPresenceNot(operand *ast.Node) (ir.Expression, bool, error) {
-	read, handled, err := l.methodPresence(operand)
-	if !handled || err != nil {
-		return nil, handled, err
+	read, handled, methodPresenceError := l.methodPresence(operand)
+	if !handled || methodPresenceError != nil {
+		return nil, handled, methodPresenceError
 	}
 	if read.present == nil {
 		return read.then(ir.BooleanConstant{Value: false}), true, nil
@@ -267,17 +288,20 @@ func (l *lowering) methodPresenceAnd(node *ast.Node) (ir.Expression, bool, error
 		// || and ?? keep the method value: it is their whole value, never right's.
 		return nil, false, nil
 	}
-	read, handled, err := l.methodPresence(binary.Left)
-	if !handled || err != nil {
-		return nil, handled, err
+	read, handled, methodPresenceError := l.methodPresence(binary.Left)
+	if !handled || methodPresenceError != nil {
+		return nil, handled, methodPresenceError
 	}
 	if read.present != nil {
 		// The receiver's undefined would be the whole value, a slot right's representation may not hold.
-		return nil, true, l.notYet(node, "the left of && reading a method through ?., whose missing receiver would be the value")
+		return nil, true, l.notYet(
+			node,
+			"the left of && reading a method through ?., whose missing receiver would be the value",
+		)
 	}
-	right, err := l.expression(binary.Right)
-	if err != nil {
-		return nil, true, err
+	right, expressionError := l.expression(binary.Right)
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
 	return read.then(right), true, nil
 }

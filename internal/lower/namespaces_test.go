@@ -56,10 +56,10 @@ func TestNamespaceLimitsStayLoud(test *testing.T) {
 		},
 	} {
 		test.Run(probe.name, func(test *testing.T) {
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.reason) {
-				test.Fatalf("got %v, want NotYet %s", err, probe.reason)
+			if !errors.As(lowerSourceError, &notYet) || !strings.Contains(lowerSourceError.Error(), probe.reason) {
+				test.Fatalf("got %v, want NotYet %s", lowerSourceError, probe.reason)
 			}
 		})
 	}
@@ -67,10 +67,13 @@ func TestNamespaceLimitsStayLoud(test *testing.T) {
 
 func TestNamespaceReceiverRefusal(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(test, "namespace N {export function read(this:{readonly x:number}):number{return this.x;}}")
+	_, lowerSourceError := lowerSource(
+		test,
+		"namespace N {export function read(this:{readonly x:number}):number{return this.x;}}",
+	)
 	var refused *Refused
-	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "different receivers") {
-		test.Fatalf("got %v", err)
+	if !errors.As(lowerSourceError, &refused) || !strings.Contains(lowerSourceError.Error(), "different receivers") {
+		test.Fatalf("got %v", lowerSourceError)
 	}
 }
 
@@ -90,14 +93,15 @@ func TestNamespaceTypesErase(test *testing.T) {
 
 func TestTracingNamespaceEscapeStaysNotYet(test *testing.T) {
 	test.Parallel()
-	source, err := os.ReadFile("testdata/namespaces_notyet/tracing_escape.a")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("testdata/namespaces_notyet/tracing_escape.a")
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	_, err = lowerSource(test, string(source))
+	_, lowerSourceError := lowerSource(test, string(source))
 	var notYet *NotYet
-	if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "no runtime container is emitted") {
-		test.Fatalf("got %v, want the explicit missing runtime-container reason", err)
+	if !errors.As(lowerSourceError, &notYet) ||
+		!strings.Contains(lowerSourceError.Error(), "no runtime container is emitted") {
+		test.Fatalf("got %v, want the explicit missing runtime-container reason", lowerSourceError)
 	}
 }
 
@@ -110,18 +114,18 @@ func TestDebugNamespaceMergedCapabilities(test *testing.T) {
 	} {
 		test.Run(testCase.name, func(test *testing.T) {
 			test.Parallel()
-			source, err := os.ReadFile("testdata/namespaces_notyet/" + testCase.name)
-			if err != nil {
-				test.Fatal(err)
+			source, readError := os.ReadFile("testdata/namespaces_notyet/" + testCase.name)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			if testCase.reason == "" {
 				lowersAndAgreesWithNode(test, string(source))
 				return
 			}
-			_, err = lowerSource(test, string(source))
+			_, lowerSourceError := lowerSource(test, string(source))
 			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), testCase.reason) {
-				test.Fatalf("got %v, want NotYet %s", err, testCase.reason)
+			if !errors.As(lowerSourceError, &notYet) || !strings.Contains(lowerSourceError.Error(), testCase.reason) {
+				test.Fatalf("got %v, want NotYet %s", lowerSourceError, testCase.reason)
 			}
 		})
 	}
@@ -133,10 +137,11 @@ func TestNamespaceReturnedAssignmentLimits(test *testing.T) {
 		"namespace N {let text=''; export function set():string{return text='built'.repeat(2);}}",
 		"namespace N {let optional:number|undefined; export function set():number{return optional=1;}}",
 	} {
-		_, err := lowerSource(test, source)
+		_, lowerSourceError := lowerSource(test, source)
 		var notYet *NotYet
-		if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "only scalar singleton assignment is proven") {
-			test.Fatalf("got %v, want the scalar returned-assignment boundary", err)
+		if !errors.As(lowerSourceError, &notYet) ||
+			!strings.Contains(lowerSourceError.Error(), "only scalar singleton assignment is proven") {
+			test.Fatalf("got %v, want the scalar returned-assignment boundary", lowerSourceError)
 		}
 	}
 }
@@ -145,14 +150,15 @@ func TestNamespaceInitializationReachability(test *testing.T) {
 	test.Parallel()
 	for _, name := range []string{"direct", "helper", "cycle"} {
 		test.Run(name, func(test *testing.T) {
-			source, err := os.ReadFile("testdata/namespaces_notyet/reaching_" + name + ".a")
-			if err != nil {
-				test.Fatal(err)
+			source, readError := os.ReadFile("testdata/namespaces_notyet/reaching_" + name + ".a")
+			if readError != nil {
+				test.Fatal(readError)
 			}
-			_, err = lowerSource(test, string(source))
+			_, lowerSourceError := lowerSource(test, string(source))
 			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "through a reachable call") {
-				test.Fatalf("reaching call lost its initialization refusal: %v", err)
+			if !errors.As(lowerSourceError, &notYet) ||
+				!strings.Contains(lowerSourceError.Error(), "through a reachable call") {
+				test.Fatalf("reaching call lost its initialization refusal: %v", lowerSourceError)
 			}
 		})
 	}
@@ -167,22 +173,23 @@ func TestNamespaceClosedCallGraphEdges(test *testing.T) {
 		"function read(x:boolean=N.x):boolean{return x;} read(); namespace N {export let x=false;}",
 		"function one(x:boolean):boolean{return x ? two(false) : N.x;} function two(x:boolean):boolean{return one(x);} one(true); namespace N {export let x=false;}",
 	} {
-		_, err := lowerSource(test, source)
+		_, lowerSourceError := lowerSource(test, source)
 		var notYet *NotYet
-		if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "through a reachable call") {
-			test.Fatalf("got %v", err)
+		if !errors.As(lowerSourceError, &notYet) ||
+			!strings.Contains(lowerSourceError.Error(), "through a reachable call") {
+			test.Fatalf("got %v", lowerSourceError)
 		}
 	}
 }
 
 func TestEmptyNeverMapCannotGainWritableInhabitants(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(
+	_, lowerSourceError := lowerSource(
 		test,
 		"const empty = new Map<never, never>(); const wide: Map<string, number> = empty; wide.set('x', 1);",
 	)
 	var refused *Refused
-	if !errors.As(err, &refused) {
-		test.Fatalf("got %v, want invariant mutable view refused", err)
+	if !errors.As(lowerSourceError, &refused) {
+		test.Fatalf("got %v, want invariant mutable view refused", lowerSourceError)
 	}
 }

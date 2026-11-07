@@ -9,9 +9,9 @@ import (
 // fx6Source returns the fixture file's source and its extension, the mode it lowers in.
 func fx6Source(test *testing.T, file string) (string, string) {
 	test.Helper()
-	source, err := os.ReadFile("testdata/fx6/" + file)
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("testdata/fx6/" + file)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return string(source), filepath.Ext(file)
 }

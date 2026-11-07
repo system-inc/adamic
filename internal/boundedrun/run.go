@@ -39,7 +39,10 @@ type Cmd struct {
 // Command bounds execution and pipe draining. Release its context after reaping,
 // including failed starts. Successful completion also stops residual descendants.
 func Command(limit time.Duration, name string, args ...string) (*Cmd, func()) {
-	if cap, err := strconv.ParseFloat(os.Getenv("ADAMIC_CHILD_DEADLINE"), 64); err == nil && cap > 0 && cap < limit.Seconds() {
+	if cap, parseError := strconv.ParseFloat(
+		os.Getenv("ADAMIC_CHILD_DEADLINE"),
+		64,
+	); parseError == nil && cap > 0 && cap < limit.Seconds() {
 		limit = time.Duration(cap * float64(time.Second))
 	}
 	ctx, cancel := WithTimeout(context.Background(), limit)
@@ -47,15 +50,15 @@ func Command(limit time.Duration, name string, args ...string) (*Cmd, func()) {
 	return command, cancel
 }
 
-func (cmd *Cmd) finish(err error) error {
+func (cmd *Cmd) finish(sourceError error) error {
 	_ = Kill(cmd.Cmd)
 	if cmd.context.Err() != nil {
 		return fmt.Errorf("child %s: %w; process group killed", cmd.Path, context.Cause(cmd.context))
 	}
-	if errors.Is(err, exec.ErrWaitDelay) {
-		return fmt.Errorf("child %s: output pipe deadline exceeded; process group killed: %w", cmd.Path, err)
+	if errors.Is(sourceError, exec.ErrWaitDelay) {
+		return fmt.Errorf("child %s: output pipe deadline exceeded; process group killed: %w", cmd.Path, sourceError)
 	}
-	return err
+	return sourceError
 }
 func (cmd *Cmd) Wait() error {
 	done := make(chan error, 1)
@@ -78,8 +81,8 @@ func (cmd *Cmd) Wait() error {
 	}
 }
 func (cmd *Cmd) Run() error {
-	if err := cmd.Start(); err != nil {
-		return err
+	if startError := cmd.Start(); startError != nil {
+		return startError
 	}
 	return cmd.Wait()
 }
@@ -89,8 +92,8 @@ func (cmd *Cmd) CombinedOutput() ([]byte, error) {
 	}
 	var output captureBuffer
 	cmd.Stdout, cmd.Stderr = &output, &output
-	err := cmd.Run()
-	return output.Bytes(), err
+	runError := cmd.Run()
+	return output.Bytes(), runError
 }
 func (cmd *Cmd) Output() ([]byte, error) {
 	if cmd.Stdout != nil {
@@ -98,8 +101,8 @@ func (cmd *Cmd) Output() ([]byte, error) {
 	}
 	var output captureBuffer
 	cmd.Stdout = &output
-	err := cmd.Run()
-	return output.Bytes(), err
+	runError := cmd.Run()
+	return output.Bytes(), runError
 }
 
 func CommandContext(ctx context.Context, name string, args ...string) *Cmd {
@@ -109,7 +112,13 @@ func CommandContext(ctx context.Context, name string, args ...string) *Cmd {
 	cmd := exec.CommandContext(ctx, name, args...)
 	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	cmd.Cancel = func() error {
-		fmt.Fprintf(os.Stderr, "child %s %v: deadline/cancellation expired; killing process group; descendants=%v\n", name, args, descendantNames(cmd.Process.Pid))
+		fmt.Fprintf(
+			os.Stderr,
+			"child %s %v: deadline/cancellation expired; killing process group; descendants=%v\n",
+			name,
+			args,
+			descendantNames(cmd.Process.Pid),
+		)
 		return Kill(cmd)
 	}
 	// WaitDelay also covers a leader that exited while a descendant holds a pipe.
@@ -122,11 +131,11 @@ func Kill(cmd *exec.Cmd) error {
 	if cmd.Process == nil {
 		return os.ErrProcessDone
 	}
-	err := syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
-	if err == syscall.ESRCH {
+	killError := syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
+	if killError == syscall.ESRCH {
 		return os.ErrProcessDone
 	}
-	return err
+	return killError
 }
 
 // Register isolates an operation whose dependency starts unbounded children. The
@@ -136,9 +145,9 @@ func Register(name string, operation func([]string) (string, error)) {
 	if len(os.Args) < 2 || os.Args[1] != "--adamic-bounded-"+name {
 		return
 	}
-	value, err := operation(os.Args[2:])
-	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
+	value, operationError := operation(os.Args[2:])
+	if operationError != nil {
+		fmt.Fprintln(os.Stderr, operationError)
 		os.Exit(1)
 	}
 	fmt.Print(value)
@@ -146,22 +155,22 @@ func Register(name string, operation func([]string) (string, error)) {
 }
 
 func Operation(limit time.Duration, name string, args ...string) (string, error) {
-	executable, err := os.Executable()
-	if err != nil {
-		return "", err
+	executable, executableError := os.Executable()
+	if executableError != nil {
+		return "", executableError
 	}
 	command, release := Command(limit, executable, append([]string{"--adamic-bounded-" + name}, args...)...)
 	defer release()
-	output, err := command.CombinedOutput()
-	if err != nil {
-		return "", fmt.Errorf("child %s: %w: %s", name, err, output)
+	output, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError != nil {
+		return "", fmt.Errorf("child %s: %w: %s", name, combinedOutputError, output)
 	}
 	return string(output), nil
 }
 
 func descendantNames(pid int) []string {
-	tasks, err := filepath.Glob(fmt.Sprintf("/proc/%d/task/*/children", pid))
-	if err != nil {
+	tasks, globError := filepath.Glob(fmt.Sprintf("/proc/%d/task/*/children", pid))
+	if globError != nil {
 		return nil
 	}
 	var children []byte
@@ -173,8 +182,8 @@ func descendantNames(pid int) []string {
 
 	var names []string
 	for _, child := range strings.Fields(string(children)) {
-		number, err := strconv.Atoi(child)
-		if err != nil {
+		number, parseError := strconv.Atoi(child)
+		if parseError != nil {
 			continue
 		}
 		name, _ := os.ReadFile(fmt.Sprintf("/proc/%d/comm", number))

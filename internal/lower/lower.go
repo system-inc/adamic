@@ -31,7 +31,10 @@ type Options struct {
 }
 
 func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
-	return LowerWithOptions(ctx, program, Options{ProgramRegion: os.Getenv("ADAMIC_PROGRAM_REGION") == "1", OwnershipQuery: os.Getenv("ADAMIC_OWNERSHIP_QUERY") == "1"})
+	return LowerWithOptions(ctx, program, Options{
+		ProgramRegion:  os.Getenv("ADAMIC_PROGRAM_REGION") == "1",
+		OwnershipQuery: os.Getenv("ADAMIC_OWNERSHIP_QUERY") == "1",
+	})
 }
 
 func LowerWithOptions(ctx context.Context, program *load.Program, options Options) (*ir.Program, error) {
@@ -48,27 +51,60 @@ func LowerWithOptions(ctx context.Context, program *load.Program, options Option
 
 	var plan *programMembership
 	if options.ProgramRegion {
-		discovery, err := lowerChecked(program, typeChecker, entry, nil, true, false)
-		if err != nil {
-			return nil, err
+		discovery, lowerCheckedError := lowerChecked(program, typeChecker, entry, nil, true, false)
+		if lowerCheckedError != nil {
+			return nil, lowerCheckedError
 		}
 		plan = discovery.programPlan
 	}
-	built, err := lowerChecked(program, typeChecker, entry, plan, false, options.Debug, options.OwnershipQuery)
-	if err != nil {
-		return nil, err
+	built, lowerCheckedError := lowerChecked(
+		program,
+		typeChecker,
+		entry,
+		plan,
+		false,
+		options.Debug,
+		options.OwnershipQuery,
+	)
+	if lowerCheckedError != nil {
+		return nil, lowerCheckedError
 	}
 
 	return built.result, nil
 }
 
-func lowerChecked(program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery, debug bool, ownershipQuery ...bool) (*lowering, error) {
+func lowerChecked(
+	program *load.Program,
+	typeChecker *checker.Checker,
+	entry *ast.SourceFile,
+	plan *programMembership,
+	discovery, debug bool,
+	ownershipQuery ...bool,
+) (*lowering, error) {
 	return lowerCheckedWithCycleTypes(program, typeChecker, entry, plan, discovery, debug, nil, ownershipQuery...)
 }
 
 // Tests retain transient checker types before lazy queries replace them.
-func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery, debug bool, cycleTypes map[int]*checker.Type, ownershipQuery ...bool) (*lowering, error) {
-	lowering := &lowering{cycleTypes: cycleTypes, program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1, entry: entry, programPlan: plan, programDiscovery: discovery}
+func lowerCheckedWithCycleTypes(
+	program *load.Program,
+	typeChecker *checker.Checker,
+	entry *ast.SourceFile,
+	plan *programMembership,
+	discovery, debug bool,
+	cycleTypes map[int]*checker.Type,
+	ownershipQuery ...bool,
+) (*lowering, error) {
+	lowering := &lowering{
+		cycleTypes:       cycleTypes,
+		program:          program,
+		checker:          typeChecker,
+		result:           &ir.Program{},
+		this:             -1,
+		functionIndex:    -1,
+		entry:            entry,
+		programPlan:      plan,
+		programDiscovery: discovery,
+	}
 	lowering.debug = debug
 	lowering.result.ProgramRegion = discovery || plan != nil
 	if plan != nil {
@@ -77,22 +113,22 @@ func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Chec
 
 	// The base name only, so the same program emits the same C on every machine.
 	lowering.result.Source = filepath.Base(program.FileName(entry))
-	modules, err := lowering.moduleOrder(entry)
-	if err != nil {
-		return nil, err
+	modules, moduleOrderError := lowering.moduleOrder(entry)
+	if moduleOrderError != nil {
+		return nil, moduleOrderError
 	}
 	lowering.noteInheritance(modules)
-	if err := lowering.enumInitialization(modules); err != nil {
-		return nil, err
+	if enumInitializationError := lowering.enumInitialization(modules); enumInitializationError != nil {
+		return nil, enumInitializationError
 	}
 	lowering.noteAccessorNames(modules)
 	lowering.noteOmittedOptionals(modules)
-	if err := lowering.namespaceInitialization(modules); err != nil {
-		return nil, err
+	if namespaceInitializationError := lowering.namespaceInitialization(modules); namespaceInitializationError != nil {
+		return nil, namespaceInitializationError
 	}
 	for _, module := range modules {
-		if err := lowering.refuse(module); err != nil {
-			return nil, err
+		if refuseError := lowering.refuse(module); refuseError != nil {
+			return nil, refuseError
 		}
 	}
 	// Link every declaration before lowering any function body, including across back edges.
@@ -100,14 +136,14 @@ func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Chec
 	for _, module := range modules {
 		declarations = append(declarations, module.Statements.Nodes...)
 	}
-	if err := lowering.declareModule(declarations); err != nil {
-		return nil, err
+	if declareModuleError := lowering.declareModule(declarations); declareModuleError != nil {
+		return nil, declareModuleError
 	}
 	lowering.recordExports(entry)
 	for _, module := range modules {
-		body, err := lowering.moduleStatements(module)
-		if err != nil {
-			return nil, err
+		body, moduleStatementsError := lowering.moduleStatements(module)
+		if moduleStatementsError != nil {
+			return nil, moduleStatementsError
 		}
 		lowering.result.Main = append(lowering.result.Main, body...)
 	}
@@ -116,72 +152,80 @@ func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Chec
 	}
 	lowering.result.Main = append(lowering.forwarderValues, lowering.result.Main...)
 	lowering.finishClassCalls()
-	if err := lowering.finishAccessors(); err != nil {
-		return nil, err
+	if finishAccessorsError := lowering.finishAccessors(); finishAccessorsError != nil {
+		return nil, finishAccessorsError
 	}
 	lowering.finishToPrimitive()
 	// Before exceptions: a view a generator feeds is rewritten into its dispatch here, and the
 	// dispatch's steps are throws the fixed point must see, each its own generator's ResumeMayThrow.
-	if err := lowering.checkIterableViews(); err != nil {
-		return nil, err
+	if checkIterableViewsError := lowering.checkIterableViews(); checkIterableViewsError != nil {
+		return nil, checkIterableViewsError
 	}
-	if err := lowering.exceptions(); err != nil {
-		return nil, err
+	if exceptionsError := lowering.exceptions(); exceptionsError != nil {
+		return nil, exceptionsError
 	}
-	if err := lowering.checkLibrarySpreads(modules); err != nil {
-		return nil, err
+	if checkLibrarySpreadsError := lowering.checkLibrarySpreads(modules); checkLibrarySpreadsError != nil {
+		return nil, checkLibrarySpreadsError
 	}
-	if err := lowering.checkAccessorSpreads(); err != nil {
-		return nil, err
+	if checkAccessorSpreadsError := lowering.checkAccessorSpreads(); checkAccessorSpreadsError != nil {
+		return nil, checkAccessorSpreadsError
 	}
-	if err := lowering.checkRecordGuardedReads(); err != nil {
-		return nil, err
+	if checkRecordGuardedReadsError := lowering.checkRecordGuardedReads(); checkRecordGuardedReadsError != nil {
+		return nil, checkRecordGuardedReadsError
 	}
-	if err := lowering.checkDynamicKeyedGetters(); err != nil {
-		return nil, err
+	if checkDynamicKeyedGettersError := lowering.checkDynamicKeyedGetters(); checkDynamicKeyedGettersError != nil {
+		return nil, checkDynamicKeyedGettersError
 	}
-	if err := checkGeneratorRoads(lowering.result); err != nil {
-		return nil, err
+	if checkGeneratorRoadsError := checkGeneratorRoads(lowering.result); checkGeneratorRoadsError != nil {
+		return nil, checkGeneratorRoadsError
 	}
-	if err := flow.NormalizeAsync(lowering.result); err != nil {
+	if normalizeAsyncError := flow.NormalizeAsync(lowering.result); normalizeAsyncError != nil {
 		where := entry.AsNode()
 		var located *flow.AsyncError
-		if errors.As(err, &located) && located.Site > 0 && located.Site <= len(lowering.asyncSites) {
+		if errors.As(normalizeAsyncError, &located) && located.Site > 0 && located.Site <= len(lowering.asyncSites) {
 			where = lowering.asyncSites[located.Site-1]
 		}
-		return nil, &NotYet{Where: lowering.program.Where(where), What: err.Error()}
+		return nil, &NotYet{Where: lowering.program.Where(where), What: normalizeAsyncError.Error()}
 	}
 	if lowering.result.AsyncEntry > 0 {
 		// NormalizeAsync moved module bodies into one scheduler entry. Main now
 		// holds only its generated invocation; retain boundaries of the actual Main.
-		source := ir.SourceIdentity{Module: lowering.modulePath(entry), Declaration: []string{"module"}, Role: "async_module"}
+		source := ir.SourceIdentity{
+			Module:      lowering.modulePath(entry),
+			Declaration: []string{"module"},
+			Role:        "async_module",
+		}
 		lowering.result.Functions[lowering.result.AsyncEntry-1].Source = source
 		lowering.result.MainModules = []ir.MainModule{{Module: source.Module, Statements: len(lowering.result.Main)}}
 	}
-	if err := lowering.findCycles(modules); err != nil {
-		return nil, err
+	if findCyclesError := lowering.findCycles(modules); findCyclesError != nil {
+		return nil, findCyclesError
 	}
-	if err := lowering.checkViewOptionalWrites(); err != nil {
-		return nil, err
+	if checkViewOptionalWritesError := lowering.checkViewOptionalWrites(); checkViewOptionalWritesError != nil {
+		return nil, checkViewOptionalWritesError
 	}
-	if err := lowering.checkViewCopies(); err != nil {
-		return nil, err
+	if checkViewCopiesError := lowering.checkViewCopies(); checkViewCopiesError != nil {
+		return nil, checkViewCopiesError
 	}
-	if err := lowering.checkViewWidenedReads(); err != nil {
-		return nil, err
+	if checkViewWidenedReadsError := lowering.checkViewWidenedReads(); checkViewWidenedReadsError != nil {
+		return nil, checkViewWidenedReadsError
 	}
 	if len(lowering.asyncPayloadFailures) > 0 {
 		return nil, lowering.asyncPayloadFailures[0]
 	}
-	if err := lowering.checkPromiseConsumption(); err != nil {
-		return nil, err
+	if checkPromiseConsumptionError := lowering.checkPromiseConsumption(); checkPromiseConsumptionError != nil {
+		return nil, checkPromiseConsumptionError
 	}
-	if err := lowering.checkViewLogicalWrites(); err != nil {
-		return nil, err
+	if checkViewLogicalWritesError := lowering.checkViewLogicalWrites(); checkViewLogicalWritesError != nil {
+		return nil, checkViewLogicalWritesError
 	}
 	if discovery || plan != nil {
 		if lowering.result.HasAsync() {
-			return nil, &Refused{Where: program.Where(entry.AsNode()), What: "Program region with async work", Fix: "keep Program members in the one-shot synchronous CLI"}
+			return nil, &Refused{
+				Where: program.Where(entry.AsNode()),
+				What:  "Program region with async work",
+				Fix:   "keep Program members in the one-shot synchronous CLI",
+			}
 		}
 		// A program with generators may have a Program region (#8xcz03h), since no generator frame
 		// can join one or reach a member by a road the cycle walk doesn't see:
@@ -208,15 +252,19 @@ func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Chec
 		// links, and these pins are that work's done-when.
 	}
 	if plan != nil {
-		if err := lowering.applyProgramMetadata(plan); err != nil {
-			return nil, err
+		if applyProgramMetadataError := lowering.applyProgramMetadata(plan); applyProgramMetadataError != nil {
+			return nil, applyProgramMetadataError
 		}
 	}
 	if len(ownershipQuery) > 0 && ownershipQuery[0] && lowering.hasMovedParallelMap {
 		for _, transfer := range fresh.QueryOwnershipTransfers(lowering.result) {
 			if transfer.Answer.Verdict != fresh.Proven {
 				where := lowering.moveSites[transfer.Site-1]
-				return nil, lowering.moveRefused(where, "whole reachable ownership is not proven (ownership query "+transfer.Answer.Verdict.String()+": "+fmt.Sprint(transfer.Answer.Evidence)+")")
+				return nil, lowering.moveRefused(where, "whole reachable ownership is not proven (ownership query "+
+					transfer.Answer.Verdict.String()+
+					": "+
+					fmt.Sprint(transfer.Answer.Evidence)+
+					")")
 			}
 		}
 	}
@@ -225,8 +273,8 @@ func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Chec
 	counters(lowering.result)
 	// Last, once nothing more changes the program: its walk of the method tables is the one the
 	// emitter reads too (ir.Program's MethodsNamed).
-	if err := lowering.voidDiscards(); err != nil {
-		return nil, err
+	if voidDiscardsError := lowering.voidDiscards(); voidDiscardsError != nil {
+		return nil, voidDiscardsError
 	}
 	return lowering, nil
 }

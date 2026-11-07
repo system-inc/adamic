@@ -28,21 +28,21 @@ func TestReleaseOracleCatchesOneByte(test *testing.T) {
 }
 func releaseAgrees(test *testing.T, fixture string, mutant bool) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, fixture))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, fixture))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	want := onNode(test, path)
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	if mutant {
 		program.Strings[0] += "!"
 	}
 	binary := filepath.Join(test.TempDir(), "shipped")
-	if err := native.Build(native.C(program), binary, native.Options{Release: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), binary, native.Options{Release: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	difference := disagreement(want, execute(test, binary))
 	if mutant {
@@ -67,14 +67,14 @@ func TestReleaseTailCallGuardMutant(test *testing.T) {
 }
 func releaseTailMutant(test *testing.T, fixture string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	want := onNode(test, path)
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	options := native.Options{Release: true}
 	flags := slices.DeleteFunc(
@@ -82,19 +82,19 @@ func releaseTailMutant(test *testing.T, fixture string) {
 		func(flag string) bool { return flag == "-fno-optimize-sibling-calls" },
 	)
 	binary := filepath.Join(test.TempDir(), "mutant")
-	if err := native.BuildFlags(native.C(program), binary, options, flags); err != nil {
-		test.Fatal(err)
+	if buildFlagsError := native.BuildFlags(native.C(program), binary, options, flags); buildFlagsError != nil {
+		test.Fatal(buildFlagsError)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
 	command := exec.CommandContext(ctx, binary)
-	output, err := command.CombinedOutput()
+	output, combinedOutputError := command.CombinedOutput()
 	if ctx.Err() == context.DeadlineExceeded {
 		test.Log("tail-call option omission caught: mutant loops beyond 2 s while Node panics")
 		return
 	}
 	if command.ProcessState == nil {
-		test.Fatalf("unexpected mutant result: %v %q", err, output)
+		test.Fatalf("unexpected mutant result: %v %q", combinedOutputError, output)
 	}
 	if command.ProcessState.ExitCode() == want.exitCode {
 		test.Fatalf("tail-call mutant survived: %q", output)

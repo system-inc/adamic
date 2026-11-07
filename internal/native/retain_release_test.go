@@ -123,13 +123,17 @@ int main(int argc, char **argv) {
 func retainReleaseProduct(test *testing.T, tsan bool) string {
 	test.Helper()
 	options := Options{ProgramRegion: true, Count: true, Sanitize: !tsan, ThreadSanitize: tsan}
-	files, flags, compiler, version, err := runtimeInputs("", options, []string{"-DADAMIC_CANONICAL_CLOSURES=1"})
-	if err != nil {
-		test.Fatal(err)
+	files, flags, compiler, version, runtimeInputsError := runtimeInputs(
+		"",
+		options,
+		[]string{"-DADAMIC_CANONICAL_CLOSURES=1"},
+	)
+	if runtimeInputsError != nil {
+		test.Fatal(runtimeInputsError)
 	}
-	headers, err := headersRead(files, flags, compiler)
-	if err != nil {
-		test.Fatal(err)
+	headers, headersReadError := headersRead(files, flags, compiler)
+	if headersReadError != nil {
+		test.Fatal(headersReadError)
 	}
 	inputs := buildcache.Inputs{
 		Name: fmt.Sprintf("retain-release-inline-%t", tsan),
@@ -147,32 +151,40 @@ func retainReleaseProduct(test *testing.T, tsan bool) string {
 		},
 	}
 	return buildcache.Product(test, inputs, func(directory string) error {
-		cache, err := cacheDirectory("retain-release-inline")
-		if err != nil {
-			return err
+		cache, cacheDirectoryError := cacheDirectory("retain-release-inline")
+		if cacheDirectoryError != nil {
+			return cacheDirectoryError
 		}
-		library, err := cachedRuntime(files, flags, compiler, version, cache)
-		if err != nil {
-			return err
+		library, cachedRuntimeError := cachedRuntime(files, flags, compiler, version, cache)
+		if cachedRuntimeError != nil {
+			return cachedRuntimeError
 		}
-		scratch, err := os.MkdirTemp("", "adamic-retain-release-")
-		if err != nil {
-			return err
+		scratch, temporaryDirectoryError := os.MkdirTemp("", "adamic-retain-release-")
+		if temporaryDirectoryError != nil {
+			return temporaryDirectoryError
 		}
 		defer os.RemoveAll(scratch)
 		for _, file := range files {
 			if strings.HasSuffix(file.name, ".h") {
-				if err := os.WriteFile(filepath.Join(scratch, file.name), file.contents, 0644); err != nil {
-					return err
+				if writeError := os.WriteFile(
+					filepath.Join(scratch, file.name),
+					file.contents,
+					0644,
+				); writeError != nil {
+					return writeError
 				}
 			}
 		}
-		header, err := os.ReadFile(filepath.Join(scratch, "adamic.h"))
-		if err != nil {
-			return err
+		header, readError := os.ReadFile(filepath.Join(scratch, "adamic.h"))
+		if readError != nil {
+			return readError
 		}
-		if err := os.WriteFile(filepath.Join(scratch, "main.c"), []byte(retainReleaseSource), 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(
+			filepath.Join(scratch, "main.c"),
+			[]byte(retainReleaseSource),
+			0644,
+		); writeError != nil {
+			return writeError
 		}
 		names := []string{"control"}
 		if tsan {
@@ -220,15 +232,23 @@ func retainReleaseProduct(test *testing.T, tsan bool) string {
 				}
 				changed = changed[:begin] + strings.Replace(part, before, after, 1) + changed[end:]
 			}
-			if err := os.WriteFile(filepath.Join(scratch, "adamic.h"), []byte(changed), 0644); err != nil {
-				return err
+			if writeError := os.WriteFile(
+				filepath.Join(scratch, "adamic.h"),
+				[]byte(changed),
+				0644,
+			); writeError != nil {
+				return writeError
 			}
 			args := append(slices.Clone(flags), prefixMaps(scratch, "/adamic-build")...)
 			args = append(args, "-I", ".", "-o", filepath.Join(directory, name), "main.c")
 			args = append(args, RuntimeLinkFlags(library)...)
 			args = append(args, "-lm")
-			if output, err := toolchain.CommandIn(scratch, compiler, args...).CombinedOutput(); err != nil {
-				return fmt.Errorf("compile %s: %w\n%s", name, err, output)
+			if output, combinedOutputError := toolchain.CommandIn(
+				scratch,
+				compiler,
+				args...,
+			).CombinedOutput(); combinedOutputError != nil {
+				return fmt.Errorf("compile %s: %w\n%s", name, combinedOutputError, output)
 			}
 		}
 		return nil
@@ -270,20 +290,20 @@ func retainReleaseCheck(test *testing.T, kind string, tsan, mutant bool) {
 		)
 		var stdout, stderr bytes.Buffer
 		command.Stdout, command.Stderr = &stdout, &stderr
-		err := command.Run()
+		runError := command.Run()
 		output := stderr.String()
 		release()
 		if mutant {
-			if err == nil || (!strings.Contains(string(output), "must redirect ownership") &&
+			if runError == nil || (!strings.Contains(string(output), "must redirect ownership") &&
 				!strings.Contains(string(output), "ThreadSanitizer: data race")) {
-				test.Fatalf("%s survived or failed differently: %v\n%s", name, err, output)
+				test.Fatalf("%s survived or failed differently: %v\n%s", name, runError, output)
 			}
 			test.Logf("%s caught: %s", name, strings.SplitN(string(output), "\n", 2)[0])
-		} else if err != nil ||
+		} else if runError != nil ||
 			stdout.String() != "ownership clean\n" ||
 			strings.Contains(string(output), "ThreadSanitizer:") ||
 			strings.Contains(string(output), "ERROR:") {
-			test.Fatalf("%s: %v\nstdout: %s\nstderr: %s", kind, err, stdout.String(), output)
+			test.Fatalf("%s: %v\nstdout: %s\nstderr: %s", kind, runError, stdout.String(), output)
 		}
 	}
 }

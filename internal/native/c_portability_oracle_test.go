@@ -53,17 +53,17 @@ func TestLongUnicodeLiteralByteCoverage(test *testing.T) {
 
 func portabilityFixture(test *testing.T) (*ir.Program, string) {
 	test.Helper()
-	file, err := filepath.Abs("../oracle/testdata/long_unicode_literals.a")
-	if err != nil {
-		test.Fatal(err)
+	file, absolutePathError := filepath.Abs("../oracle/testdata/long_unicode_literals.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	loaded, err := load.Load([]string{file})
-	if err != nil {
-		test.Fatal(err)
+	loaded, loadError := load.Load([]string{file})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := lower.Lower(test.Context(), loaded)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerError := lower.Lower(test.Context(), loaded)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	return program, file
 }
@@ -71,15 +71,15 @@ func portabilityFixture(test *testing.T) (*ir.Program, string) {
 func longUnicodePortability(test *testing.T, compiler string) {
 	test.Helper()
 	program, file := portabilityFixture(test)
-	runner, err := filepath.Abs("../../oracle/node.mjs")
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs("../../oracle/node.mjs")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	want := portabilityRun(test, "node", "--disable-warning=ExperimentalWarning", runner, file)
 	directory := test.TempDir()
 	generated := filepath.Join(directory, "generated.mjs")
-	if err := os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	if got := portabilityRun(
 		test,
@@ -109,17 +109,17 @@ func longUnicodePortability(test *testing.T, compiler string) {
 	}
 	source := C(program)
 	flags = append(flags, featureFlags(source)...)
-	compilerPath, err := exec.LookPath(compiler)
-	if err != nil {
-		test.Fatal(err)
+	compilerPath, lookPathError := exec.LookPath(compiler)
+	if lookPathError != nil {
+		test.Fatal(lookPathError)
 	}
-	version, err := exec.Command(compilerPath, "--version").CombinedOutput()
-	if err != nil {
-		test.Fatal(err)
+	version, combinedOutputError := exec.Command(compilerPath, "--version").CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatal(combinedOutputError)
 	}
-	files, err := readRuntime(runtime, "runtime")
-	if err != nil {
-		test.Fatal(err)
+	files, readRuntimeError := readRuntime(runtime, "runtime")
+	if readRuntimeError != nil {
+		test.Fatal(readRuntimeError)
 	}
 	kept := files[:0]
 	for _, file := range files {
@@ -131,31 +131,31 @@ func longUnicodePortability(test *testing.T, compiler string) {
 		}
 		kept = append(kept, file)
 	}
-	cache, err := os.UserCacheDir()
-	if err != nil {
-		test.Fatal(err)
+	cache, userCacheDirectoryError := os.UserCacheDir()
+	if userCacheDirectoryError != nil {
+		test.Fatal(userCacheDirectoryError)
 	}
-	library, err := cachedRuntime(
+	library, cachedRuntimeError := cachedRuntime(
 		kept,
 		flags,
 		compilerPath,
 		string(version),
 		filepath.Join(cache, "adamic", "c-portability"),
 	)
-	if err != nil {
-		test.Fatal(err)
+	if cachedRuntimeError != nil {
+		test.Fatal(cachedRuntimeError)
 	}
 	main := filepath.Join(directory, "main.c")
-	if err := os.WriteFile(main, []byte(source), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(main, []byte(source), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	binary := filepath.Join(directory, "native")
 	arguments := append(append([]string{}, flags...), "-no-pie", "-I", filepath.Dir(library), main, "-o", binary)
 	arguments = append(arguments, RuntimeLinkFlags(library)...)
 	arguments = append(arguments, "-lm")
-	output, err := exec.Command(compilerPath, arguments...).CombinedOutput()
-	if err != nil || len(output) != 0 {
-		test.Fatalf("%s build: %v\n%s", compiler, err, output)
+	output, combinedOutputError := exec.Command(compilerPath, arguments...).CombinedOutput()
+	if combinedOutputError != nil || len(output) != 0 {
+		test.Fatalf("%s build: %v\n%s", compiler, combinedOutputError, output)
 	}
 	if got := portabilityRun(test, binary); !bytes.Equal(got, want) {
 		test.Fatalf("%s native output differs from source Node: got %q, want %q", compiler, got, want)
@@ -174,8 +174,8 @@ func portabilityRun(test *testing.T, name string, arguments ...string) []byte {
 	)
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
-	if err := command.Run(); err != nil || stderr.Len() != 0 {
-		test.Fatalf("%s: %v\n%s", name, err, stderr.String())
+	if runError := command.Run(); runError != nil || stderr.Len() != 0 {
+		test.Fatalf("%s: %v\n%s", name, runError, stderr.String())
 	}
 	return stdout.Bytes()
 }

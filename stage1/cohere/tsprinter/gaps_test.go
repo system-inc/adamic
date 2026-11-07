@@ -20,23 +20,23 @@ func TestCompilerGaps(test *testing.T) {
 		// Not parallel within the parent: a parallel subtest queues behind every waiting test in the unit, and that
 		// wait counts as the parent's own time (259 s at share 8, landable-16c, for one Node run, a load and a lower).
 		test.Run(item.name, func(test *testing.T) {
-			path, err := filepath.Abs("gaps/" + item.name + ".ts")
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs("gaps/" + item.name + ".ts")
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			node := onNode(test, path)
 			if node.ExitCode != 0 || len(node.Stderr) != 0 || string(node.Stdout) != item.output {
 				test.Fatalf("Node: %#v", node)
 			}
-			program, err := load.Load([]string{path})
-			if err != nil {
-				test.Fatal(err)
+			program, loadError := load.Load([]string{path})
+			if loadError != nil {
+				test.Fatal(loadError)
 			}
-			_, err = lower.Lower(context.Background(), program)
-			if err == nil || !strings.Contains(err.Error(), item.reason) {
-				test.Fatalf("expected recorded gap %q, got %v", item.reason, err)
+			_, lowerError := lower.Lower(context.Background(), program)
+			if lowerError == nil || !strings.Contains(lowerError.Error(), item.reason) {
+				test.Fatalf("expected recorded gap %q, got %v", item.reason, lowerError)
 			}
-			test.Logf("Node %q; stage 0 %s", item.output, err)
+			test.Logf("Node %q; stage 0 %s", item.output, lowerError)
 		})
 	}
 }
@@ -46,9 +46,9 @@ func TestCompilerGaps(test *testing.T) {
 // the leak check. The port's separate decrement statement still stands; retiring it is cohere's.
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
 func TestClosedPrefixUpdateValueGap(test *testing.T) {
-	path, err := filepath.Abs("gaps/prefixUpdateValue.ts")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("gaps/prefixUpdateValue.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	program := lowered(test, path)
 	binary := filepath.Join(sourceSanitized(test, prefixUpdateValueSource), "port")
@@ -65,9 +65,9 @@ func TestClosedPrefixUpdateValueGap(test *testing.T) {
 
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
 func TestNumberConstructor(test *testing.T) {
-	path, err := filepath.Abs("testdata/numberConstructor.ts")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("testdata/numberConstructor.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	program := lowered(test, path)
 	binary := filepath.Join(sourceSanitized(test, numberConstructorSource), "port")

@@ -80,21 +80,25 @@ func TestGraphRegionsRuntime(test *testing.T) {
 	test.Parallel()
 	for _, counted := range []bool{false, true} {
 		binary := filepath.Join(test.TempDir(), "regions")
-		if err := native.Build(graphHarness, binary, native.Options{Sanitize: true, Count: counted}); err != nil {
-			test.Fatal(err)
+		if buildError := native.Build(
+			graphHarness,
+			binary,
+			native.Options{Sanitize: true, Count: counted},
+		); buildError != nil {
+			test.Fatal(buildError)
 		}
 		for _, mode := range []string{"escaping", "anchor", "later", "leak", "shared"} {
 			command := exec.Command(binary, mode)
 			command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1")
-			output, err := command.CombinedOutput()
+			output, combinedOutputError := command.CombinedOutput()
 			text := string(output)
 			switch mode {
 			case "anchor", "escaping":
 				if report := leakcheck.Report(test, graphHarness, binary, mode); report != "" {
 					test.Fatalf("%s leaked: %s", mode, report)
 				}
-				if err != nil {
-					test.Fatalf("%s counted=%t: %v\n%s", mode, counted, err, text)
+				if combinedOutputError != nil {
+					test.Fatalf("%s counted=%t: %v\n%s", mode, counted, combinedOutputError, text)
 				}
 				if mode == "escaping" && !strings.Contains(text, "made at runtime\n") {
 					test.Fatal(text)
@@ -118,12 +122,13 @@ func TestGraphRegionsRuntime(test *testing.T) {
 					test.Fatal("diagnostic tracing in release build")
 				}
 			case "later":
-				if err == nil || !strings.Contains(text, "ERROR: AddressSanitizer: heap-use-after-free") {
-					test.Fatalf("later read not caught: %v\n%s", err, text)
+				if combinedOutputError == nil ||
+					!strings.Contains(text, "ERROR: AddressSanitizer: heap-use-after-free") {
+					test.Fatalf("later read not caught: %v\n%s", combinedOutputError, text)
 				}
 			case "leak":
-				if err != nil {
-					test.Fatalf("anchor mutant failed before leak check: %v\n%s", err, text)
+				if combinedOutputError != nil {
+					test.Fatalf("anchor mutant failed before leak check: %v\n%s", combinedOutputError, text)
 				}
 				report := leakcheck.Report(test, graphHarness, binary, mode)
 				if report == "" {
@@ -132,19 +137,23 @@ func TestGraphRegionsRuntime(test *testing.T) {
 					countedBinary := binary
 					if !counted {
 						countedBinary = filepath.Join(test.TempDir(), "anchor-counted")
-						if err := native.Build(
+						if buildError := native.Build(
 							graphHarness,
 							countedBinary,
 							native.Options{Sanitize: true, Count: true},
-						); err != nil {
-							test.Fatal(err)
+						); buildError != nil {
+							test.Fatal(buildError)
 						}
 					}
 					command := exec.Command(countedBinary, mode)
 					command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1")
-					output, err := command.CombinedOutput()
-					if err != nil {
-						test.Fatalf("anchor mutant failed before counted leak check: %v\n%s", err, output)
+					output, combinedOutputError := command.CombinedOutput()
+					if combinedOutputError != nil {
+						test.Fatalf(
+							"anchor mutant failed before counted leak check: %v\n%s",
+							combinedOutputError,
+							output,
+						)
 					}
 					report = leakcheck.Unbalanced(leakcheck.Run{Stderr: output})
 					if !strings.Contains(report, "heap values leaked: 4") {
@@ -153,8 +162,9 @@ func TestGraphRegionsRuntime(test *testing.T) {
 				}
 				test.Logf("unreleased anchor counted=%t: %s", counted, report)
 			case "shared":
-				if err == nil || !strings.Contains(text, "merging shared graph regions is not yet supported") {
-					test.Fatalf("shared merge not rejected: %v\n%s", err, text)
+				if combinedOutputError == nil ||
+					!strings.Contains(text, "merging shared graph regions is not yet supported") {
+					test.Fatalf("shared merge not rejected: %v\n%s", combinedOutputError, text)
 				}
 			}
 		}
@@ -189,12 +199,12 @@ int main(void) {
 }
 `
 	binary := filepath.Join(test.TempDir(), "closure")
-	if err := native.Build(harness, binary, native.Options{Sanitize: true, Count: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(harness, binary, native.Options{Sanitize: true, Count: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
-	output, err := exec.Command(binary).CombinedOutput()
-	if err != nil {
-		test.Fatalf("%v\n%s", err, output)
+	output, combinedOutputError := exec.Command(binary).CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("%v\n%s", combinedOutputError, output)
 	}
 	if report := leakcheck.Report(test, harness, binary); report != "" {
 		test.Fatal(report)
@@ -246,19 +256,25 @@ int main(void) {
 	source = strings.ReplaceAll(source, "adamic_object_size(3)", "adamic_object_size(2)")
 	directory := test.TempDir()
 	binary := filepath.Join(directory, "million")
-	if err := native.Build(source, binary, native.Options{Count: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(source, binary, native.Options{Count: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
-	output, err := exec.Command("/bin/sh", "-c", `"$@" & child=$!; wait "$child"`, "rss", binary).CombinedOutput()
-	if err != nil {
-		test.Fatalf("native: %v\n%s", err, output)
+	output, combinedOutputError := exec.Command(
+		"/bin/sh",
+		"-c",
+		`"$@" & child=$!; wait "$child"`,
+		"rss",
+		binary,
+	).CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("native: %v\n%s", combinedOutputError, output)
 	}
 	size := regexp.MustCompile(`(?m)^node_bytes (\d+)$`).FindSubmatch(output)
 	if size == nil {
 		test.Fatal("missing node allocation size")
 	}
-	nodeBytes, err := strconv.ParseUint(string(size[1]), 10, 64)
-	if err != nil || nodeBytes == 0 {
+	nodeBytes, parseError := strconv.ParseUint(string(size[1]), 10, 64)
+	if parseError != nil || nodeBytes == 0 {
 		test.Fatalf("invalid node allocation size: %s", size[1])
 	}
 	want := fmt.Sprintf(
@@ -272,18 +288,18 @@ int main(void) {
 	}
 	test.Logf("native runtime foundation:\n%s", output)
 	release := filepath.Join(directory, "million-release")
-	if err := native.Build(source, release, native.Options{}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(source, release, native.Options{}); buildError != nil {
+		test.Fatal(buildError)
 	}
-	releaseOutput, err := exec.Command(
+	releaseOutput, combinedOutputError := exec.Command(
 		"/bin/sh",
 		"-c",
 		`"$@" & child=$!; wait "$child"`,
 		"rss",
 		release,
 	).CombinedOutput()
-	if err != nil {
-		test.Fatalf("release: %v\n%s", err, releaseOutput)
+	if combinedOutputError != nil {
+		test.Fatalf("release: %v\n%s", combinedOutputError, releaseOutput)
 	}
 	if strings.Contains(string(releaseOutput), "graph region:") {
 		test.Fatal("diagnostics in release")
@@ -291,12 +307,12 @@ int main(void) {
 	test.Logf("native release flags: %s", strings.Join(native.Flags(native.Options{}), " "))
 	test.Logf("native release:\n%s", releaseOutput)
 	sanitized := filepath.Join(directory, "million-sanitized")
-	if err := native.Build(source, sanitized, native.Options{Count: true, Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(source, sanitized, native.Options{Count: true, Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
-	sanitizedOutput, err := exec.Command(sanitized).CombinedOutput()
-	if err != nil {
-		test.Fatalf("million-member sanitizer/leak check: %v\n%s", err, sanitizedOutput)
+	sanitizedOutput, combinedOutputError := exec.Command(sanitized).CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("million-member sanitizer/leak check: %v\n%s", combinedOutputError, sanitizedOutput)
 	}
 	if !strings.Contains(string(sanitizedOutput), "allocations 1000000 frees 1000000") {
 		test.Fatal(string(sanitizedOutput))
@@ -326,12 +342,19 @@ console.log('rss_kib ' + process.resourceUsage().maxRSS);
 root = previous = undefined;
 `
 	path := filepath.Join(directory, "million.js")
-	if err := os.WriteFile(path, []byte(js), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(js), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	output, err = exec.Command("/bin/sh", "-c", `"$@" & child=$!; wait "$child"`, "rss", "node", path).CombinedOutput()
-	if err != nil {
-		test.Fatalf("Node: %v\n%s", err, output)
+	output, combinedOutputError = exec.Command(
+		"/bin/sh",
+		"-c",
+		`"$@" & child=$!; wait "$child"`,
+		"rss",
+		"node",
+		path,
+	).CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("Node: %v\n%s", combinedOutputError, output)
 	}
 	if !strings.Contains(string(output), "members 1000000 reachable 950001") {
 		test.Fatal(string(output))
@@ -369,12 +392,12 @@ func TestGraphContainerBoundary(test *testing.T) {
 `
 	source := graphHarness[:strings.Index(graphHarness, "__attribute__")] + main
 	binary := filepath.Join(test.TempDir(), "containers")
-	if err := native.Build(source, binary, native.Options{Count: true, Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(source, binary, native.Options{Count: true, Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
-	output, err := exec.Command(binary).CombinedOutput()
-	if err != nil {
-		test.Fatalf("%v\n%s", err, output)
+	output, combinedOutputError := exec.Command(binary).CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("%v\n%s", combinedOutputError, output)
 	}
 	if report := leakcheck.Report(test, source, binary); report != "" {
 		test.Fatal(report)
@@ -421,12 +444,12 @@ func TestGraphLazyRegions(test *testing.T) {
 `
 	source := graphHarness[:strings.Index(graphHarness, "__attribute__")] + main
 	binary := filepath.Join(test.TempDir(), "lazy")
-	if err := native.Build(source, binary, native.Options{Sanitize: true, Count: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(source, binary, native.Options{Sanitize: true, Count: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
-	output, err := exec.Command(binary).CombinedOutput()
-	if err != nil {
-		test.Fatalf("%v\n%s", err, output)
+	output, combinedOutputError := exec.Command(binary).CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("%v\n%s", combinedOutputError, output)
 	}
 	if report := leakcheck.Report(test, source, binary); report != "" {
 		test.Fatal(report)
@@ -450,13 +473,13 @@ func TestGraphLazyRegions(test *testing.T) {
 func TestGraphUnreleasedAnchorCounted(test *testing.T) {
 	test.Parallel()
 	binary := filepath.Join(test.TempDir(), "anchor-counted")
-	if err := native.Build(graphHarness, binary, native.Options{Count: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(graphHarness, binary, native.Options{Count: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	for _, mode := range []string{"anchor", "leak"} {
-		output, err := exec.Command(binary, mode).CombinedOutput()
-		if err != nil {
-			test.Fatalf("%s: %v\n%s", mode, err, output)
+		output, combinedOutputError := exec.Command(binary, mode).CombinedOutput()
+		if combinedOutputError != nil {
+			test.Fatalf("%s: %v\n%s", mode, combinedOutputError, output)
 		}
 		report := leakcheck.Unbalanced(leakcheck.Run{Stderr: output})
 		if mode == "anchor" && report != "" {
@@ -475,8 +498,8 @@ func graphMeasuredSize(test *testing.T, output []byte, name string) uint64 {
 	if match == nil {
 		test.Fatalf("missing %s: %s", name, output)
 	}
-	size, err := strconv.ParseUint(string(match[1]), 10, 64)
-	if err != nil || size == 0 {
+	size, parseError := strconv.ParseUint(string(match[1]), 10, 64)
+	if parseError != nil || size == 0 {
 		test.Fatalf("invalid %s: %s", name, match[1])
 	}
 	return size
@@ -531,8 +554,8 @@ int main(int count, char **arguments) {
 `
 	source := graphHarness[:strings.Index(graphHarness, "__attribute__")] + main
 	binary := filepath.Join(test.TempDir(), "refusals")
-	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(source, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	for mode, want := range map[string]string{
 		"string":    "compiler bug: a string can't be adopted into a graph region",
@@ -543,9 +566,9 @@ int main(int count, char **arguments) {
 	} {
 		command := exec.Command(binary, mode)
 		command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1")
-		output, err := command.CombinedOutput()
-		if err == nil || !strings.Contains(string(output), want) {
-			test.Fatalf("%s: want %q: %v\n%s", mode, want, err, output)
+		output, combinedOutputError := command.CombinedOutput()
+		if combinedOutputError == nil || !strings.Contains(string(output), want) {
+			test.Fatalf("%s: want %q: %v\n%s", mode, want, combinedOutputError, output)
 		}
 		if mode != "control" && strings.Contains(string(output), "Sanitizer") {
 			test.Fatalf("%s stopped by a sanitizer, not by name:\n%s", mode, output)

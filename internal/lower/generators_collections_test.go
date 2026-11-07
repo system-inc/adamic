@@ -14,7 +14,7 @@ import (
 // pairs and goes red.
 func TestNewMapAndNewSetStepAGeneratorsCall(test *testing.T) {
 	test.Parallel()
-	program, err := lowerSource(
+	program, lowerSourceError := lowerSource(
 		test,
 		`function* pairs(count: number): Generator<[string, number], undefined, undefined> {
 	for (let index = 0; index < count; index++) {
@@ -30,11 +30,11 @@ const map = new Map(pairs(2));
 const set = new Set(words(2));
 console.log(String(map.size) + " " + String(set.size));`,
 	)
-	if err != nil {
-		test.Fatal(err)
+	if lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
-	if err := checkGeneratorRoads(program); err != nil {
-		test.Errorf("the lowered program's roads: %v", err)
+	if checkGeneratorRoadsError := checkGeneratorRoads(program); checkGeneratorRoadsError != nil {
+		test.Errorf("the lowered program's roads: %v", checkGeneratorRoadsError)
 	}
 	made := map[string]bool{}
 	walk(program.Main, func(node any) bool {
@@ -58,7 +58,7 @@ console.log(String(map.size) + " " + String(set.size));`,
 	// A generic generator's instance is consumed as a plain one is (S2a): its pairs are read from the
 	// call's instantiated type.
 	// A tuple's fixed indices read K and V as they are, where an array's index would read K | undefined.
-	if _, err := lowerSource(
+	if _, lowerSourceError := lowerSource(
 		test,
 		`function* zip<K, V>(items: readonly (readonly [K, V])[]): Generator<[K, V], undefined, undefined> {
 	for (const item of items) {
@@ -71,8 +71,8 @@ function* each<T>(items: readonly T[]): Generator<T, undefined, undefined> {
 	}
 }
 console.log(String(new Map(zip([["a", 1], ["b", 2]])).size) + " " + String(new Set(each([3, 3])).size));`,
-	); err != nil {
-		test.Errorf("new Map and new Set of generic generators' instances: %v", err)
+	); lowerSourceError != nil {
+		test.Errorf("new Map and new Set of generic generators' instances: %v", lowerSourceError)
 	}
 }
 
@@ -109,10 +109,10 @@ console.log('built');`,
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var gap *NotYet
-			if !errors.As(err, &gap) || !strings.Contains(gap.What, probe.reason) {
-				test.Fatalf("got %v, want a NotYet saying %q", err, probe.reason)
+			if !errors.As(lowerSourceError, &gap) || !strings.Contains(gap.What, probe.reason) {
+				test.Fatalf("got %v, want a NotYet saying %q", lowerSourceError, probe.reason)
 			}
 		})
 	}

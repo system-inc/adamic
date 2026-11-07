@@ -12,15 +12,15 @@ import (
 // it would key lane's units on the adapted tree's build code.
 func typescriptPin(test testing.TB, repository string) string {
 	test.Helper()
-	data, err := os.ReadFile(filepath.Join(repository, "stage3/source.json"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(repository, "stage3/source.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var source struct {
 		Commit string `json:"commit"`
 	}
-	if err := json.Unmarshal(data, &source); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &source); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	return source.Commit
 }

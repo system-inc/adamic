@@ -15,9 +15,9 @@ import (
 func TestJSONValues52PinnedAnySampleReadsRemain(test *testing.T) {
 	test.Parallel()
 	root := repositoryRoot(test)
-	data, err := os.ReadFile(filepath.Join(root, "stage3/adapt/52-json-values/public-any-pinned.json"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(root, "stage3/adapt/52-json-values/public-any-pinned.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var rows []struct {
 		Path     []string `json:"path"`
@@ -25,8 +25,8 @@ func TestJSONValues52PinnedAnySampleReadsRemain(test *testing.T) {
 		Baseline string   `json:"baseline"`
 		Read     string   `json:"read"`
 	}
-	if err := json.Unmarshal(data, &rows); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &rows); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if len(rows) > 1 {
 		test.Fatal("the reviewed public-any exemption list grew")
@@ -40,9 +40,9 @@ func TestJSONValues52PinnedAnySampleReadsRemain(test *testing.T) {
 		"show",
 		typescriptPin(test, root)+":tests/cases/compiler/APISample_parseConfig.ts",
 	)
-	sample, err := command.Output()
-	if err != nil {
-		test.Fatalf("read pinned API sample: %v", err)
+	sample, outputError := command.Output()
+	if outputError != nil {
+		test.Fatalf("read pinned API sample: %v", outputError)
 	}
 	seen := map[string]bool{}
 	for _, row := range rows {

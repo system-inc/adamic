@@ -62,8 +62,8 @@ func (l *lowering) superAccessor(target *ast.Node, valueNode *ast.Node) (ir.Expr
 	if l.instance == nil || l.instance.base == nil {
 		return nil, true, l.notYet(target, "super outside a derived accessor or method")
 	}
-	if err := l.useOfThis(receiver); err != nil {
-		return nil, true, err
+	if useOfThisError := l.useOfThis(receiver); useOfThisError != nil {
+		return nil, true, useOfThisError
 	}
 	prefix := "$get:"
 	if valueNode != nil {
@@ -73,33 +73,55 @@ func (l *lowering) superAccessor(target *ast.Node, valueNode *ast.Node) (ir.Expr
 	if !exists {
 		if l.instance.static {
 			symbol := l.checker.GetSymbolAtLocation(target.Name())
-			if symbol != nil && len(symbol.Declarations) > 0 && symbol.Declarations[0].Kind == ast.KindPropertyDeclaration {
-				of, err := l.typeOfSymbol(target, symbol)
-				if err != nil {
-					return nil, true, err
+			if symbol != nil &&
+				len(symbol.Declarations) > 0 &&
+				symbol.Declarations[0].Kind == ast.KindPropertyDeclaration {
+				of, typeOfSymbolError := l.typeOfSymbol(target, symbol)
+				if typeOfSymbolError != nil {
+					return nil, true, typeOfSymbolError
 				}
 				if valueNode == nil {
 					parent := l.staticBase(l.classNode.Parent)
-					return ir.Property{Object: ir.Read{Local: l.staticGlobals[l.symbol(parent.Name())], Of: ir.Object, Checked: true}, Name: l.fieldName(target.Name()), Of: of}, true, nil
+					return ir.Property{
+						Object: ir.Read{Local: l.staticGlobals[l.symbol(parent.Name())], Of: ir.Object, Checked: true},
+						Name:   l.fieldName(target.Name()),
+						Of:     of,
+					}, true, nil
 				}
-				value, err := l.expression(valueNode)
-				if err != nil {
-					return nil, true, err
+				value, expressionError := l.expression(valueNode)
+				if expressionError != nil {
+					return nil, true, expressionError
 				}
 				index := len(l.result.Functions)
 				self := len(l.result.Locals)
-				l.result.Locals = append(l.result.Locals, ir.Local{Name: "this", Type: ir.Object, Function: index}, ir.Local{Name: "value", Type: of, Function: index})
-				l.result.Functions = append(l.result.Functions, ir.Function{Name: "super_static_set", Parameters: []int{self, self + 1}, Body: []ir.Statement{ir.SetProperty{Object: ir.Read{Local: self, Of: ir.Object}, Name: l.fieldName(target.Name()), Value: ir.Read{Local: self + 1, Of: of}, Site: l.staticWriteSite(target)}}})
-				return ir.Call{Function: index, Arguments: []ir.Expression{ir.Read{Local: l.this, Of: ir.Object}, fit(value, of)}}, true, nil
+				l.result.Locals = append(
+					l.result.Locals,
+					ir.Local{Name: "this", Type: ir.Object, Function: index},
+					ir.Local{Name: "value", Type: of, Function: index},
+				)
+				l.result.Functions = append(l.result.Functions, ir.Function{
+					Name:       "super_static_set",
+					Parameters: []int{self, self + 1},
+					Body: []ir.Statement{ir.SetProperty{
+						Object: ir.Read{Local: self, Of: ir.Object},
+						Name:   l.fieldName(target.Name()),
+						Value:  ir.Read{Local: self + 1, Of: of},
+						Site:   l.staticWriteSite(target),
+					}},
+				})
+				return ir.Call{
+					Function:  index,
+					Arguments: []ir.Expression{ir.Read{Local: l.this, Of: ir.Object}, fit(value, of)},
+				}, true, nil
 			}
 		}
 		return nil, true, l.notYet(target, "super of a member without the requested accessor")
 	}
 	arguments := []ir.Expression{ir.Read{Local: l.this, Of: ir.Object}}
 	if valueNode != nil {
-		value, err := l.expression(valueNode)
-		if err != nil {
-			return nil, true, err
+		value, expressionError := l.expression(valueNode)
+		if expressionError != nil {
+			return nil, true, expressionError
 		}
 		value = fit(value, l.result.Locals[l.result.Functions[index].Parameters[1]].Type)
 		arguments = append(arguments, value)
@@ -115,15 +137,18 @@ func (l *lowering) literalAccessor(owner, declaration *ast.Node) (ir.Expression,
 	self := len(l.result.Locals)
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "this", Type: ir.Object, Function: index})
 	l.noteLocal(self, l.concrete(l.checker.GetTypeAtLocation(owner)), owner)
-	l.accessorCaptures = append(l.accessorCaptures, accessorCapture{holder: l.concrete(l.checker.GetTypeAtLocation(owner)), function: index})
+	l.accessorCaptures = append(
+		l.accessorCaptures,
+		accessorCapture{holder: l.concrete(l.checker.GetTypeAtLocation(owner)), function: index},
+	)
 	outerInstance, outerUnset := l.instance, l.unsetUntil
 	l.instance, l.unsetUntil = nil, 0
 	l.closures = append(l.closures, index)
-	err := l.lowerFunction(index, declaration, self)
+	lowerFunctionError := l.lowerFunction(index, declaration, self)
 	l.closures = l.closures[:len(l.closures)-1]
 	l.instance, l.unsetUntil = outerInstance, outerUnset
-	if err != nil {
-		return nil, 0, err
+	if lowerFunctionError != nil {
+		return nil, 0, lowerFunctionError
 	}
 	return ir.MakeClosure{Function: index}, index, nil
 }
@@ -143,7 +168,10 @@ func (l *lowering) accessorLiteral(node *ast.Node) (ir.Expression, bool, error) 
 		return nil, false, nil
 	}
 	class := len(l.result.Classes) + 1
-	l.result.Classes = append(l.result.Classes, ir.Class{Source: l.sourceIdentity(node), Name: "literal_accessors", Constructor: -1, Literal: true})
+	l.result.Classes = append(
+		l.result.Classes,
+		ir.Class{Source: l.sourceIdentity(node), Name: "literal_accessors", Constructor: -1, Literal: true},
+	)
 	literal := ir.ObjectLiteral{Class: class}
 	keys := map[string]bool{}
 	for _, property := range properties {
@@ -155,25 +183,32 @@ func (l *lowering) accessorLiteral(node *ast.Node) (ir.Expression, bool, error) 
 			return nil, true, l.notYet(property, "a computed accessor literal name")
 		}
 		if strings.HasPrefix(name.Text(), "#accessor:") {
-			return nil, true, l.notYet(name, "an accessor literal property name reserved for closure storage; rename the property")
+			return nil, true, l.notYet(
+				name,
+				"an accessor literal property name reserved for closure storage; rename the property",
+			)
 		}
 		var value ir.Expression
 		var err error
 		if accessorMember(property) {
 			var function int
-			value, function, err = l.literalAccessor(node, property)
-			if err != nil {
-				return nil, true, err
+			var literalAccessorError error
+			value, function, literalAccessorError = l.literalAccessor(node, property)
+			if literalAccessorError != nil {
+				return nil, true, literalAccessorError
 			}
 			l.registerAccessor(class, property, function)
 			storage := fmt.Sprintf("#accessor:%d", function)
 			literal.Fields = append(literal.Fields, ir.Field{Name: storage, Value: value, Private: true})
 			if !keys[name.Text()] {
-				of, err := l.typeOf(name)
-				if err != nil || slotless(of) {
+				of, typeOfError := l.typeOf(name)
+				if typeOfError != nil || slotless(of) {
 					return nil, true, l.notYet(property, "an accessor without a native property representation")
 				}
-				l.result.Classes[class-1].PublicFields = append(l.result.Classes[class-1].PublicFields, ir.Field{Name: name.Text(), Value: zeroValue(of)})
+				l.result.Classes[class-1].PublicFields = append(
+					l.result.Classes[class-1].PublicFields,
+					ir.Field{Name: name.Text(), Value: zeroValue(of)},
+				)
 				keys[name.Text()] = true
 			}
 			continue
@@ -302,8 +337,11 @@ func (l *lowering) finishAccessors() error {
 		return nil
 	}
 	reach := newAccessorReach(l.result)
-	if err := l.refuseReachedContractGetters(reach, names); err != nil {
-		return err
+	if refuseReachedContractGettersError := l.refuseReachedContractGetters(
+		reach,
+		names,
+	); refuseReachedContractGettersError != nil {
+		return refuseReachedContractGettersError
 	}
 	groups := map[string][]int{}
 	for _, class := range l.result.Classes {
@@ -330,14 +368,20 @@ func (l *lowering) finishAccessors() error {
 		for _, class := range l.result.Classes {
 			for _, accessor := range class.Accessors {
 				if accessor.Name == name && ((setter && accessor.Setter < 0) || (!setter && accessor.Getter < 0)) {
-					failure = &NotYet{Where: l.result.Source, What: "a property name shared with a descriptor missing the requested getter or setter"}
+					failure = &NotYet{
+						Where: l.result.Source,
+						What:  "a property name shared with a descriptor missing the requested getter or setter",
+					}
 					return 0
 				}
 			}
 		}
 		targets := groups[kind+name]
 		if len(targets) == 0 {
-			failure = &NotYet{Where: l.result.Source, What: "reading a setter-only property or writing a getter-only property"}
+			failure = &NotYet{
+				Where: l.result.Source,
+				What:  "reading a setter-only property or writing a getter-only property",
+			}
 			return 0
 		}
 		for _, target := range targets {
@@ -346,7 +390,10 @@ func (l *lowering) finishAccessors() error {
 				actual = l.result.Locals[l.result.Functions[target].Parameters[1]].Type
 			}
 			if actual != of {
-				failure = &NotYet{Where: l.result.Source, What: "accessors sharing a name with different native representations"}
+				failure = &NotYet{
+					Where: l.result.Source,
+					What:  "accessors sharing a name with different native representations",
+				}
 				return 0
 			}
 		}
@@ -357,7 +404,13 @@ func (l *lowering) finishAccessors() error {
 		l.result.Locals = append(l.result.Locals, ir.Local{Name: "object", Type: ir.Object, Function: index})
 		function.Parameters = []int{self}
 		object := ir.Read{Local: self, Of: ir.Object}
-		call := ir.Call{Function: targets[0], Arguments: []ir.Expression{object}, Returns: of, Virtual: -1, Accessor: name}
+		call := ir.Call{
+			Function:  targets[0],
+			Arguments: []ir.Expression{object},
+			Returns:   of,
+			Virtual:   -1,
+			Accessor:  name,
+		}
 		l.result.MethodTargets[targets[0]] = targets
 		if setter {
 			function.Returns, call.Returns, call.Setter = 0, 0, true
@@ -366,9 +419,16 @@ func (l *lowering) finishAccessors() error {
 			function.Parameters = append(function.Parameters, incoming)
 			value := ir.Read{Local: incoming, Of: of}
 			call.Arguments = append(call.Arguments, value)
-			function.Body = []ir.Statement{ir.If{Condition: ir.HasAccessor{Object: object, Name: name}, Then: []ir.Statement{ir.Evaluate{Value: call}}, Else: []ir.Statement{ir.SetProperty{Object: object, Name: name, Value: value, Site: site}}}}
+			function.Body = []ir.Statement{ir.If{
+				Condition: ir.HasAccessor{Object: object, Name: name},
+				Then:      []ir.Statement{ir.Evaluate{Value: call}},
+				Else:      []ir.Statement{ir.SetProperty{Object: object, Name: name, Value: value, Site: site}},
+			}}
 		} else {
-			function.Body = []ir.Statement{ir.If{Condition: ir.HasAccessor{Object: object, Name: name}, Then: []ir.Statement{ir.Return{Value: call}}}, ir.Return{Value: ir.Property{Object: object, Name: name, Of: of}}}
+			function.Body = []ir.Statement{ir.If{
+				Condition: ir.HasAccessor{Object: object, Name: name},
+				Then:      []ir.Statement{ir.Return{Value: call}},
+			}, ir.Return{Value: ir.Property{Object: object, Name: name, Of: of}}}
 		}
 		l.result.Functions = append(l.result.Functions, function)
 		return index
@@ -394,7 +454,8 @@ func (l *lowering) finishAccessors() error {
 					node = expression
 				}
 			case ir.Property:
-				if names[expression.Name] && reach.owner(reach.graph.ReachingAllocations(original.(ir.Property).Object), expression.Name) {
+				if names[expression.Name] &&
+					reach.owner(reach.graph.ReachingAllocations(original.(ir.Property).Object), expression.Name) {
 					if expression.Optional {
 						failure = &NotYet{Where: l.result.Source, What: "an optional accessor read"}
 						return value
@@ -402,14 +463,23 @@ func (l *lowering) finishAccessors() error {
 					// The dispatcher's fallback is an unchecked load, so a checked read can't go
 					// through it: refuse at the read rather than drop its check (#c7w6j0y).
 					if expression.View != "" && l.result.CheckedField(expression.ViewReceiverTypeID, expression.Name) {
-						failure = &NotYet{Where: expression.ViewWhere, What: "a checked view read whose receiver may own an accessor of the same name"}
+						failure = &NotYet{
+							Where: expression.ViewWhere,
+							What:  "a checked view read whose receiver may own an accessor of the same name",
+						}
 						return value
 					}
 					index := dispatch(expression.Name, expression.Of, false, 0)
-					node = ir.Call{Function: index, Arguments: []ir.Expression{expression.Object}, Returns: expression.Of}
+					node = ir.Call{
+						Function:  index,
+						Arguments: []ir.Expression{expression.Object},
+						Returns:   expression.Of,
+					}
 				}
 			case ir.SetProperty:
-				if names[expression.Name] && !expression.Define && reach.owner(reach.graph.ReachingAllocations(original.(ir.SetProperty).Object), expression.Name) {
+				if names[expression.Name] &&
+					!expression.Define &&
+					reach.owner(reach.graph.ReachingAllocations(original.(ir.SetProperty).Object), expression.Name) {
 					// As a read: the fallback store drops the checked write's conversion. The write is
 					// located at its receiver when lowering recorded its site (fresh.go's writeSite).
 					if l.result.CheckedField(expression.ViewReceiverTypeID, expression.Name) {
@@ -417,11 +487,16 @@ func (l *lowering) finishAccessors() error {
 						if expression.Site > 0 && expression.Site <= len(l.writeSites) {
 							where = l.program.Where(l.writeSites[expression.Site-1].node)
 						}
-						failure = &NotYet{Where: where, What: "a checked view write of " + expression.Name + " whose receiver may own an accessor of the same name"}
+						failure = &NotYet{Where: where, What: "a checked view write of " +
+							expression.Name +
+							" whose receiver may own an accessor of the same name"}
 						return value
 					}
 					index := dispatch(expression.Name, expression.Value.Type(), true, expression.Site)
-					node = ir.Evaluate{Value: ir.Call{Function: index, Arguments: []ir.Expression{expression.Object, expression.Value}}}
+					node = ir.Evaluate{Value: ir.Call{
+						Function:  index,
+						Arguments: []ir.Expression{expression.Object, expression.Value},
+					}}
 				}
 			}
 			result := reflect.New(value.Type()).Elem()
@@ -451,7 +526,9 @@ func (l *lowering) finishAccessors() error {
 	count := len(l.result.Functions)
 	l.result.Main = transform(reflect.ValueOf(l.result.Main)).Interface().([]ir.Statement)
 	for index := 0; index < count; index++ {
-		l.result.Functions[index].Body = transform(reflect.ValueOf(l.result.Functions[index].Body)).Interface().([]ir.Statement)
+		l.result.Functions[index].Body = transform(
+			reflect.ValueOf(l.result.Functions[index].Body),
+		).Interface().([]ir.Statement)
 	}
 	return failure
 }
@@ -484,7 +561,9 @@ func (l *lowering) checkAccessorSpreads() error {
 	throwing := false
 	for _, class := range l.result.Classes {
 		for _, accessor := range class.Accessors {
-			if class.Literal && accessor.Getter >= 0 && (l.libraryFailure(l.result.Functions[accessor.Getter].Body, map[int]bool{}) != "") {
+			if class.Literal &&
+				accessor.Getter >= 0 &&
+				(l.libraryFailure(l.result.Functions[accessor.Getter].Body, map[int]bool{}) != "") {
 				throwing = true
 			}
 		}

@@ -31,17 +31,17 @@ func TestMeasureClangUnits(test *testing.T) {
 	if selected != "" {
 		filename = "timings-" + selected + ".jsonl"
 	}
-	output, err := os.Create(filepath.Join(directory, filename))
-	if err != nil {
-		test.Fatal(err)
+	output, createError := os.Create(filepath.Join(directory, filename))
+	if createError != nil {
+		test.Fatal(createError)
 	}
 	defer output.Close()
 	encoder := json.NewEncoder(output)
 	metadata := map[string]string{}
 	// The tree's commit: git where it has .git, else the manifest a Loom runner's unpacked source carries.
-	commit, err := tracked.Head("../..")
-	if err != nil {
-		test.Fatal(err)
+	commit, headError := tracked.Head("../..")
+	if headError != nil {
+		test.Fatal(headError)
 	}
 	metadata["commit"] = commit
 	// The processors this process may run on, as nproc reports them (both read the scheduler's affinity mask), without
@@ -49,15 +49,15 @@ func TestMeasureClangUnits(test *testing.T) {
 	// resolves them.
 	metadata["nproc"] = strconv.Itoa(goruntime.NumCPU())
 	for name, arguments := range map[string][]string{"go": {"version"}, "clang": {"--version"}, "node": {"--version"}} {
-		data, err := toolchain.Command(name, arguments...).Output()
-		if err != nil {
-			test.Fatal(err)
+		data, outputError := toolchain.Command(name, arguments...).Output()
+		if outputError != nil {
+			test.Fatal(outputError)
 		}
 		metadata[name] = strings.Split(strings.TrimSpace(string(data)), "\n")[0]
 	}
-	cpuMax, err := os.ReadFile("/sys/fs/cgroup/cpu.max")
-	if err != nil {
-		test.Fatal(err)
+	cpuMax, readError := os.ReadFile("/sys/fs/cgroup/cpu.max")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	metadata["cpu.max"] = strings.TrimSpace(string(cpuMax))
 	slow := false
@@ -78,8 +78,8 @@ func TestMeasureClangUnits(test *testing.T) {
 				test.Fatal(err)
 			}
 			filename := filepath.Join(directory, "main.c")
-			if err := os.WriteFile(filename, []byte(source), 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(filename, []byte(source), 0644); writeError != nil {
+				test.Fatal(writeError)
 			}
 			args := sourceFlags(source, options)
 			if trace {
@@ -97,8 +97,11 @@ func TestMeasureClangUnits(test *testing.T) {
 			args = append(args, "-lm")
 			command = "clang " + strings.Join(args, " ")
 			started = time.Now()
-			if data, err := toolchain.Command("clang", args...).CombinedOutput(); err != nil {
-				test.Fatalf("clang: %v\n%s", err, data)
+			if data, combinedOutputError := toolchain.Command(
+				"clang",
+				args...,
+			).CombinedOutput(); combinedOutputError != nil {
+				test.Fatalf("clang: %v\n%s", combinedOutputError, data)
 			}
 		} else {
 			var err error
@@ -131,8 +134,8 @@ func TestMeasureClangUnits(test *testing.T) {
 			"build_flags": metadata,
 			"cache":       "runtime warm; checker warm for typeaware; unit cache enabled, cold for full, warm for one-line/warm; no program result cache",
 		}
-		if err := encoder.Encode(row); err != nil {
-			test.Fatal(err)
+		if encodeError := encoder.Encode(row); encodeError != nil {
+			test.Fatal(encodeError)
 		}
 		test.Logf("%s %s round=%d jobs=%d %.6fs", program, loop, round, options.Jobs, elapsed)
 	}
@@ -141,14 +144,14 @@ func TestMeasureClangUnits(test *testing.T) {
 		if selected != "" && selected != program {
 			continue
 		}
-		data, err := os.ReadFile(filepath.Join(directory, program+".c"))
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(filepath.Join(directory, program+".c"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		source := string(data)
-		header, units, err := splitC(source)
-		if err != nil {
-			test.Fatal(err)
+		header, units, splitCError := splitC(source)
+		if splitCError != nil {
+			test.Fatal(splitCError)
 		}
 		test.Logf(
 			"%s lines=%d bytes=%d units=%d header=%d",
@@ -158,14 +161,14 @@ func TestMeasureClangUnits(test *testing.T) {
 			len(units),
 			len(header),
 		)
-		changedData, err := os.ReadFile(filepath.Join(directory, program+"-changed.c"))
-		if err != nil {
-			test.Fatal(err)
+		changedData, readError := os.ReadFile(filepath.Join(directory, program+"-changed.c"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		changed := string(changedData)
-		changedHeader, changedUnits, err := splitC(changed)
-		if err != nil {
-			test.Fatal(err)
+		changedHeader, changedUnits, splitCError := splitC(changed)
+		if splitCError != nil {
+			test.Fatal(splitCError)
 		}
 		if header != changedHeader || len(units) != len(changedUnits) {
 			test.Fatal("module edit changed the shared header or unit count")
@@ -200,8 +203,8 @@ func TestMeasureClangUnits(test *testing.T) {
 				run(program, mode.name+"-whole", round, mode.options, source, false)
 				for _, jobs := range []int{1, 5} {
 					// Only remove the named object-cache directory in this benchmark's scratch cache.
-					if err := os.RemoveAll(filepath.Join(cache, "native-units")); err != nil {
-						test.Fatal(err)
+					if removeError := os.RemoveAll(filepath.Join(cache, "native-units")); removeError != nil {
+						test.Fatal(removeError)
 					}
 					options := mode.options
 					options.Split = true

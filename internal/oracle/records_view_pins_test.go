@@ -28,24 +28,24 @@ func TestRecordViewPinsStopWithTheirHeaders(test *testing.T) {
 	for _, name := range recordViewPins {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			absolute, err := filepath.Abs(
+			absolute, absolutePathError := filepath.Abs(
 				filepath.Join(repository, "internal/oracle/testdata/records_refused", name+".a"),
 			)
-			if err != nil {
-				test.Fatal(err)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			source, err := os.ReadFile(absolute)
-			if err != nil {
-				test.Fatal(err)
+			source, readError := os.ReadFile(absolute)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			header, _, _ := strings.Cut(string(source), "\n")
 			want, pinned := strings.CutPrefix(header, "// a-check: refused ")
 			if !pinned || want == "" {
 				test.Fatalf("first line %q names no stop", header)
 			}
-			_, err = lowered(test, absolute)
-			if err == nil || !strings.Contains(err.Error(), want) {
-				test.Fatalf("got %v, want an error holding %q", err, want)
+			_, loweredError := lowered(test, absolute)
+			if loweredError == nil || !strings.Contains(loweredError.Error(), want) {
+				test.Fatalf("got %v, want an error holding %q", loweredError, want)
 			}
 		})
 	}

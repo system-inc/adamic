@@ -14,9 +14,9 @@ func resolvedLookedUp(test *testing.T, r *rig, nameKey string) found {
 	test.Helper()
 	forgetHeldForLife()
 	resolvedMaps.Clear()
-	looked, err := productFor(r.root, r.cache, nameKey, 0, nil)
-	if err != nil {
-		test.Fatalf("name key %s: %v", nameKey[:12], err)
+	looked, productForError := productFor(r.root, r.cache, nameKey, 0, nil)
+	if productForError != nil {
+		test.Fatalf("name key %s: %v", nameKey[:12], productForError)
 	}
 	return looked
 }
@@ -25,8 +25,8 @@ func resolvedLookedUp(test *testing.T, r *rig, nameKey string) found {
 func resolvedMapAt(test *testing.T, content string) {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "resolved.json")
-	if err := os.WriteFile(path, []byte(content), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(content), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	test.Setenv(resolvedVariable, path)
 }
@@ -59,8 +59,8 @@ func TestAResolvedLookupFindsTheProductTheIndexWouldPick(test *testing.T) {
 	}
 	portNameKey, notesNameKey := built["port"].NameKey, built["notes"].NameKey
 	for _, nameKey := range []string{portNameKey, notesNameKey} {
-		if _, err := os.Stat(readsPath(r.cache, nameKey)); err != nil {
-			test.Fatalf("the settled build recorded no read sets: %v", err)
+		if _, statError := os.Stat(readsPath(r.cache, nameKey)); statError != nil {
+			test.Fatalf("the settled build recorded no read sets: %v", statError)
 		}
 	}
 
@@ -171,8 +171,8 @@ func TestAResolvedLookupFindsTheProductTheIndexWouldPick(test *testing.T) {
 	// With the read sets gone, the map alone still answers: the lookup never needed them. Only the files this test's
 	// builds recorded are removed.
 	for _, nameKey := range []string{portNameKey, notesNameKey} {
-		if err := os.Remove(readsPath(r.cache, nameKey)); err != nil {
-			test.Fatal(err)
+		if removeError := os.Remove(readsPath(r.cache, nameKey)); removeError != nil {
+			test.Fatal(removeError)
 		}
 	}
 	test.Setenv(resolvedVariable, "")

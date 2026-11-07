@@ -62,13 +62,15 @@ func init() {
 }
 func environmentAgrees(test *testing.T, name string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/environment_"+name+".a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/environment_"+name+".a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	truth := onNode(test, path)
 	if diff := disagreement(truth, onJavaScriptBackend(test, program)); diff != "" {
@@ -89,8 +91,8 @@ func environmentAgrees(test *testing.T, name string) {
 	}
 	code := native.C(program)
 	binary := filepath.Join(test.TempDir(), "counted")
-	if err := native.Build(code, binary, native.Options{Count: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(code, binary, native.Options{Count: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	command, args := pinnedStack(binary)
 	counted := execute(test, command, args...)
@@ -249,13 +251,15 @@ func TestEnvironmentVirtualCallAgreesWithNode(test *testing.T) {
 
 func TestEnvironmentEscapeStackMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/environment_returned.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/environment_returned.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	source := native.C(program)
 	allocation := regexp.MustCompile(
@@ -285,8 +289,8 @@ func TestEnvironmentEscapeStackMutant(test *testing.T) {
 		"static __attribute__((noinline)) adamic_closure * "+emittedFunctionSymbol(test, source, "make"),
 	)
 	binary := filepath.Join(test.TempDir(), "mutant")
-	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(source, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	result := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=0:detect_stack_use_after_return=1"}, binary)
 	if !strings.Contains(string(result.stderr), "AddressSanitizer: stack-use-after-return") {
@@ -297,13 +301,15 @@ func TestEnvironmentEscapeStackMutant(test *testing.T) {
 
 func TestEnvironmentUnknownCallStackMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/environment_unknown_call.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/environment_unknown_call.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	source := native.C(program)
 	allocation := regexp.MustCompile(
@@ -333,8 +339,8 @@ func TestEnvironmentUnknownCallStackMutant(test *testing.T) {
 		"static __attribute__((noinline)) void "+emittedFunctionSymbol(test, source, "fill"),
 	)
 	binary := filepath.Join(test.TempDir(), "mutant")
-	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(source, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	result := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=0:detect_stack_use_after_return=1"}, binary)
 	if !strings.Contains(string(result.stderr), "AddressSanitizer: stack-use-after-return") {
@@ -345,13 +351,13 @@ func TestEnvironmentUnknownCallStackMutant(test *testing.T) {
 
 func TestEnvironmentThrowReleaseMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/environment_exits.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/environment_exits.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	source := native.C(program)
 	// Only the exceptional exits lose destruction. Ordinary returns keep it.
@@ -363,8 +369,8 @@ func TestEnvironmentThrowReleaseMutant(test *testing.T) {
 	}
 	source = cleanup.ReplaceAllString(source, "$1")
 	binary := filepath.Join(test.TempDir(), "mutant")
-	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(source, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	result := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary)
 	if difference := disagreement(onNode(test, path), result); difference != "" {
@@ -375,8 +381,8 @@ func TestEnvironmentThrowReleaseMutant(test *testing.T) {
 		// The macOS tool needs an unsanitized build of the mutated C itself.
 		// Re-emitting the original IR would silently remove this mutation.
 		release := filepath.Join(test.TempDir(), "mutant-release")
-		if err := native.Build(source, release, native.Options{}); err != nil {
-			test.Fatal(err)
+		if buildError := native.Build(source, release, native.Options{}); buildError != nil {
+			test.Fatal(buildError)
 		}
 		result := execute(test, "leaks", "--atExit", "--", release)
 		if result.exitCode != 0 {
@@ -395,13 +401,15 @@ func TestEnvironmentThrowReleaseMutant(test *testing.T) {
 // must reach the owned-cell store assertion, rather than clang or the runtime.
 func TestEnvironmentCapturedParameterBorrowMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/environment_captured_parameters.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/environment_captured_parameters.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	captured := 0
 	for _, function := range program.Functions {
@@ -449,15 +457,15 @@ func TestEnvironmentCapturedParameterReassignAgreesWithNode(test *testing.T) {
 
 func TestEnvironmentCapturedCellOwnershipMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(
+	path, absolutePathError := filepath.Abs(
 		filepath.Join(repository, "internal/oracle/testdata/environment_captured_parameter_escape.a"),
 	)
-	if err != nil {
-		test.Fatal(err)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	code := native.C(program)
 	retain := regexp.MustCompile(`(->value.reference = )adamic_retain\((adamic_local_[0-9]+_text)\);`)
@@ -466,8 +474,8 @@ func TestEnvironmentCapturedCellOwnershipMutant(test *testing.T) {
 	}
 	code = retain.ReplaceAllString(code, "${1}${2};")
 	binary := filepath.Join(test.TempDir(), "missing-cell-owner")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(code, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	result := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary)
 	if !strings.Contains(string(result.stderr), "AddressSanitizer: heap-use-after-free") {
@@ -477,15 +485,15 @@ func TestEnvironmentCapturedCellOwnershipMutant(test *testing.T) {
 }
 func TestEnvironmentRegionThrowReleaseMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(
+	path, absolutePathError := filepath.Abs(
 		filepath.Join(repository, "internal/oracle/testdata/environment_coverage_region_values.a"),
 	)
-	if err != nil {
-		test.Fatal(err)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	code := native.C(program)
 	cleanup := regexp.MustCompile(
@@ -496,16 +504,16 @@ func TestEnvironmentRegionThrowReleaseMutant(test *testing.T) {
 	}
 	code = cleanup.ReplaceAllString(code, "$1")
 	binary := filepath.Join(test.TempDir(), "missing-region-cleanup")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(code, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	result := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary)
 	if diff := disagreement(onNode(test, path), result); diff != "" {
 		test.Fatal("mutant must preserve output and sanitizer behavior: " + diff)
 	}
 	counted := filepath.Join(test.TempDir(), "missing-region-counted")
-	if err := native.Build(code, counted, native.Options{Count: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(code, counted, native.Options{Count: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	command, arguments := pinnedStack(counted)
 	balance := execute(test, command, arguments...)

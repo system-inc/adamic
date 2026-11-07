@@ -12,9 +12,9 @@ var producer bool
 
 func Program(test *testing.T, file, output string) string {
 	test.Helper()
-	path, err := filepath.Abs(file)
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(file)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return stock(test, output+"-owner-v1", path, nil)
 }
@@ -25,9 +25,9 @@ func stock(test testing.TB, output, pkg string, arguments []string, environment 
 	if producer {
 		return buildcache.GoBuildIn(test, "cohere", output, pkg, arguments, environment...)
 	}
-	inputs, err := buildcache.GoBuildInInputs("cohere", output, pkg, arguments, nil, environment...)
-	if err != nil {
-		test.Fatal(err)
+	inputs, goBuildInInputsError := buildcache.GoBuildInInputs("cohere", output, pkg, arguments, nil, environment...)
+	if goBuildInInputsError != nil {
+		test.Fatal(goBuildInInputsError)
 	}
 	directory := buildcache.BuiltElsewhere(
 		test,

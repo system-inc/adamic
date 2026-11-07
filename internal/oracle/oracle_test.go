@@ -592,10 +592,10 @@ func executeWith(test *testing.T, environment []string, name string, arguments .
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	var exitError *exec.ExitError
-	if err != nil && !errors.As(err, &exitError) {
-		test.Fatalf("running %s: %v", name, err)
+	if captureError != nil && !errors.As(captureError, &exitError) {
+		test.Fatalf("running %s: %v", name, captureError)
 	}
 	result := run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}
 	rememberRun(test, result)
@@ -614,13 +614,13 @@ func bounded(test *testing.T, name string, arguments ...string) (context.Context
 	test.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 	test.Cleanup(cancel)
-	path, err := toolchain.Path(name)
-	if err != nil {
+	path, pathError := toolchain.Path(name)
+	if pathError != nil {
 		path = name
 	}
 	command := exec.CommandContext(ctx, path, arguments...)
-	if err != nil {
-		command.Err = err
+	if pathError != nil {
+		command.Err = pathError
 	}
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
@@ -648,8 +648,8 @@ func onNode(test *testing.T, path string) run {
 func onJavaScriptBackend(test *testing.T, program *ir.Program) run {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "program.mjs")
-	if err := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return onNode(test, path)
 }
@@ -657,13 +657,13 @@ func onJavaScriptBackend(test *testing.T, program *ir.Program) run {
 // lowered checks and lowers a program, or returns stage 0's refusal.
 func lowered(test *testing.T, path string) (*ir.Program, error) {
 	test.Helper()
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatalf("Load: %v", err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatalf("Load: %v", loadError)
 	}
-	absolute, err := filepath.Abs(path)
-	if err != nil {
-		test.Fatal(err)
+	absolute, absolutePathError := filepath.Abs(path)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	for _, file := range program.Files() {
 		rememberImports(absolute, file.Text(), program)
@@ -703,8 +703,8 @@ func leaks(test *testing.T, program *ir.Program, sanitized string) string {
 func releasedUncached(test *testing.T, program *ir.Program) run {
 	test.Helper()
 	binary := filepath.Join(test.TempDir(), "release")
-	if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), binary, native.Options{}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	return execute(test, binary)
 }
@@ -712,8 +712,8 @@ func releasedUncached(test *testing.T, program *ir.Program) run {
 func nativelyUncached(test *testing.T, program *ir.Program) (run, string) {
 	test.Helper()
 	binary := filepath.Join(test.TempDir(), "program")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	var environment []string
 	if runtime.GOOS == "linux" {
@@ -735,15 +735,15 @@ func leaksUncached(test *testing.T, program *ir.Program, sanitized string) strin
 
 func leakChecked(test *testing.T, code string, sanitized string) string {
 	test.Helper()
-	report, err := leakcheck.Check(leakcheck.Program{
+	report, checkError := leakcheck.Check(leakcheck.Program{
 		C: code, Sanitized: sanitized, Counted: filepath.Join(test.TempDir(), "counted"),
 		Execute: func(environment []string, name string, arguments ...string) leakcheck.Run {
 			result := executeWith(test, environment, name, arguments...)
 			return leakcheck.Run{Stdout: result.stdout, Stderr: result.stderr, ExitCode: result.exitCode}
 		},
 	})
-	if err != nil {
-		test.Fatal(err)
+	if checkError != nil {
+		test.Fatal(checkError)
 	}
 	return report
 }
@@ -775,32 +775,32 @@ func runNativeAgreesShard(test *testing.T, shard int) {
 		fixture := fixtures[index]
 		test.Run(fixture.path, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, fixture.path))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(filepath.Join(repository, fixture.path))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			program, err := lowered(test, path)
+			program, loweredError := lowered(test, path)
 			if refusedAdamicNonNullFixture(fixture.path) {
-				assertAdamicNonNullRefusal(test, err)
+				assertAdamicNonNullRefusal(test, loweredError)
 				return
 			}
 			if runtimeBoundaryViewFixture(fixture.path) {
-				assertRuntimeBoundaryViewRefusal(test, err)
+				assertRuntimeBoundaryViewRefusal(test, loweredError)
 				return
 			}
-			if assertAsyncWitnessRefusal(test, fixture.path, path, err) {
+			if assertAsyncWitnessRefusal(test, fixture.path, path, loweredError) {
 				return
 			}
 			if !fixture.lowers {
 				var notYet *lower.NotYet
-				if !errors.As(err, &notYet) {
-					test.Fatalf("want stage 0 to refuse with where and what, got %v", err)
+				if !errors.As(loweredError, &notYet) {
+					test.Fatalf("want stage 0 to refuse with where and what, got %v", loweredError)
 				}
 				test.Logf("not yet: %v", notYet)
 				return
 			}
-			if err != nil {
-				test.Fatalf("Lower: %v", err)
+			if loweredError != nil {
+				test.Fatalf("Lower: %v", loweredError)
 			}
 			if probing {
 				// TestFamiliesCatchAPlantedCase's mutant: TestTheOracleCatchesOneByte's byte, after lowering.
@@ -908,8 +908,8 @@ func nativelyCheckingLeaks(
 	// The two observations natively and leaks would each count, made by one run.
 	identity(test).cache.misses[nativeResults].Add(2)
 	binary := filepath.Join(test.TempDir(), "program")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	result = executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
 	if bytes.Contains(result.stderr, []byte("ERROR: LeakSanitizer")) {
@@ -926,13 +926,13 @@ func nativelyCheckingLeaks(
 // read as a disagreement.
 func TestTheOracleCatchesOneByte(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "dedication", "dedication.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "dedication", "dedication.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	program.Strings[0] += "!"
 	native, _ := natively(test, program)

@@ -70,9 +70,9 @@ func TestSplitUnitCoverage(test *testing.T) {
 		{"decode_ascii_test.go", "TestDecodeASCIIWASIUnit", "runDecodeASCIIUnit", "wasi", 45},
 		{"normalize_test.go", "TestNormalizeMatchesNodePoints", "runNormalizeUnit", "", 17},
 	} {
-		file, err := parser.ParseFile(token.NewFileSet(), plan.file, nil, 0)
-		if err != nil {
-			test.Fatal(err)
+		file, parseFileError := parser.ParseFile(token.NewFileSet(), plan.file, nil, 0)
+		if parseFileError != nil {
+			test.Fatal(parseFileError)
 		}
 		seen := make([]bool, plan.units)
 		for _, declaration := range file.Decls {
@@ -80,8 +80,8 @@ func TestSplitUnitCoverage(test *testing.T) {
 			if !ok || !strings.HasPrefix(function.Name.Name, plan.prefix) {
 				continue
 			}
-			index, err := strconv.Atoi(strings.TrimPrefix(function.Name.Name, plan.prefix))
-			if err != nil ||
+			index, parseError := strconv.Atoi(strings.TrimPrefix(function.Name.Name, plan.prefix))
+			if parseError != nil ||
 				index < 0 ||
 				index >= plan.units ||
 				function.Name.Name != fmt.Sprintf("%s%02d", plan.prefix, index) {
@@ -210,9 +210,9 @@ func parseTestShard(value string) (testShard, error) {
 }
 func currentTestShard(test *testing.T) testShard {
 	test.Helper()
-	shard, err := parseTestShard(os.Getenv("ADAMIC_TEST_SHARD"))
-	if err != nil {
-		test.Fatal(err)
+	shard, parseTestShardError := parseTestShard(os.Getenv("ADAMIC_TEST_SHARD"))
+	if parseTestShardError != nil {
+		test.Fatal(parseTestShardError)
 	}
 	return shard
 }
@@ -221,12 +221,12 @@ func (s testShard) owns(piece int) bool { return piece%s.count == s.index }
 func TestShardSelection(test *testing.T) {
 	test.Parallel()
 	for _, value := range []string{"-1/2", "0/0", "2/2", "one/2", "0/2/3", "/2"} {
-		if _, err := parseTestShard(value); err == nil {
+		if _, parseTestShardError := parseTestShard(value); parseTestShardError == nil {
 			test.Errorf("invalid shard accepted: %q", value)
 		}
 	}
-	if shard, err := parseTestShard(""); err != nil || shard != (testShard{0, 1}) {
-		test.Fatalf("default shard: %+v %v", shard, err)
+	if shard, parseTestShardError := parseTestShard(""); parseTestShardError != nil || shard != (testShard{0, 1}) {
+		test.Fatalf("default shard: %+v %v", shard, parseTestShardError)
 	}
 }
 
@@ -256,9 +256,9 @@ func TestRetainedSplitCoverage(test *testing.T) {
 			for count := 1; count <= 100; count++ {
 				seen := make([]int, pieces)
 				for index := 0; index < count; index++ {
-					shard, err := parseTestShard(fmt.Sprintf("%d/%d", index, count))
-					if err != nil {
-						test.Fatal(err)
+					shard, parseTestShardError := parseTestShard(fmt.Sprintf("%d/%d", index, count))
+					if parseTestShardError != nil {
+						test.Fatal(parseTestShardError)
 					}
 					for piece := 0; piece < pieces; piece++ {
 						if shard.owns(piece) {
@@ -312,9 +312,9 @@ func TestRetainedTopLevelCoverage(test *testing.T) {
 		{"record_test.go", "TestRecordMutantsUnit", "runRecordMutantUnit", 6},
 		{"wasm_test.go", "TestWASIUnit", "runWASIUnit", 36},
 	} {
-		file, err := parser.ParseFile(token.NewFileSet(), plan.file, nil, 0)
-		if err != nil {
-			test.Fatal(err)
+		file, parseFileError := parser.ParseFile(token.NewFileSet(), plan.file, nil, 0)
+		if parseFileError != nil {
+			test.Fatal(parseFileError)
 		}
 		seen := make([]bool, plan.count)
 		for _, declaration := range file.Decls {
@@ -322,8 +322,8 @@ func TestRetainedTopLevelCoverage(test *testing.T) {
 			if !ok || !strings.HasPrefix(function.Name.Name, plan.prefix) {
 				continue
 			}
-			index, err := strconv.Atoi(strings.TrimPrefix(function.Name.Name, plan.prefix))
-			if err != nil || index < 0 || index >= plan.count || seen[index] {
+			index, parseError := strconv.Atoi(strings.TrimPrefix(function.Name.Name, plan.prefix))
+			if parseError != nil || index < 0 || index >= plan.count || seen[index] {
 				test.Fatalf("invalid unit %s", function.Name.Name)
 			}
 			seen[index] = true
@@ -401,9 +401,9 @@ func checkNamedWrappers[Row any](test *testing.T, file, prefix, helper string, r
 		}
 		want[name] = row
 	}
-	tree, err := parser.ParseFile(token.NewFileSet(), file, nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	tree, parseFileError := parser.ParseFile(token.NewFileSet(), file, nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	found := make(map[string]bool, len(rows))
 	for _, declaration := range tree.Decls {

@@ -94,8 +94,8 @@ func BenchmarkTraceRead(benchmark *testing.B) {
 			executables: map[string]bool{},
 			searched:    map[string]bool{},
 		})
-		if err := state.read(strings.NewReader(trace)); err != nil {
-			benchmark.Fatal(err)
+		if readError := state.read(strings.NewReader(trace)); readError != nil {
+			benchmark.Fatal(readError)
 		}
 	}
 	benchmark.ReportMetric(float64(benchmark.Elapsed().Nanoseconds())/float64(benchmark.N*lines), "ns/line")

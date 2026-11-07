@@ -21,16 +21,16 @@ func TestV8CompatibilityRefusals(test *testing.T) {
 		{`[\q{ab|a|}]`, "v", "empty"},
 	} {
 		test.Run(row[0]+"/"+row[1], func(test *testing.T) {
-			p, err := Compile(row[0], row[1])
-			if err != nil {
-				test.Fatal(err)
+			p, compileError := Compile(row[0], row[1])
+			if compileError != nil {
+				test.Fatal(compileError)
 			}
-			_, err = p.NativeDeclarations("probe")
+			_, nativeDeclarationsError := p.NativeDeclarations("probe")
 			var divergence *V8DivergenceError
-			if !errors.As(err, &divergence) {
-				test.Fatalf("expected V8 compatibility refusal, got %v", err)
+			if !errors.As(nativeDeclarationsError, &divergence) {
+				test.Fatalf("expected V8 compatibility refusal, got %v", nativeDeclarationsError)
 			}
-			test.Log(err)
+			test.Log(nativeDeclarationsError)
 		})
 	}
 }
@@ -62,7 +62,7 @@ func TestV8VisibleShapesNode(test *testing.T) {
 		} {
 			for _, flags := range []string{"u", "iu", "v", "iv"} {
 				pattern := prefix + atom
-				if _, err := Compile(pattern, flags); err != nil {
+				if _, compileError := Compile(pattern, flags); compileError != nil {
 					continue
 				}
 				for _, input := range []string{
@@ -94,15 +94,15 @@ func TestV8VisibleShapesNode(test *testing.T) {
 	accepted, refusedAgree, refusedDisagree := 0, 0, 0
 	refusedPatterns := map[string]bool{}
 	for i, c := range cases {
-		p, err := Compile(c.Pattern, c.Flags)
-		if err != nil {
-			test.Fatal(err)
+		p, compileError := Compile(c.Pattern, c.Flags)
+		if compileError != nil {
+			test.Fatal(compileError)
 		}
 		r := p.New()
 		r.StepLimit = 1000000
-		got, err := matcherResult(r, c.Input)
-		if err != nil {
-			test.Fatal(err)
+		got, matcherResultError := matcherResult(r, c.Input)
+		if matcherResultError != nil {
+			test.Fatal(matcherResultError)
 		}
 		agrees := reflect.DeepEqual(got, results[i])
 		if p.NativeCompatibility() != nil {
@@ -153,12 +153,12 @@ func TestV8CompatibilityAcceptedNode(test *testing.T) {
 		{`(?i:a)\w`, "", "aK"},
 		{`[[\q{ab|a|}]--[\q{}]]`, "v", "a"}, {`[\q{ab|}]`, "v", "a"},
 	} {
-		p, err := Compile(row[0], row[1])
-		if err != nil {
-			test.Fatal(err)
+		p, compileError := Compile(row[0], row[1])
+		if compileError != nil {
+			test.Fatal(compileError)
 		}
-		if err := p.NativeCompatibility(); err != nil {
-			test.Fatalf("agreed shape over-refused %s/%s: %v", row[0], row[1], err)
+		if nativeCompatibilityError := p.NativeCompatibility(); nativeCompatibilityError != nil {
+			test.Fatalf("agreed shape over-refused %s/%s: %v", row[0], row[1], nativeCompatibilityError)
 		}
 		cases = append(cases, executionCase{Pattern: row[0], Flags: row[1], Input: utf16.Encode([]rune(row[2]))})
 	}
@@ -171,14 +171,14 @@ func TestV8EmptyClassStringReplacement(test *testing.T) {
 	test.Parallel()
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
-	out, err := exec.CommandContext(
+	out, combinedOutputError := exec.CommandContext(
 		ctx,
 		"node",
 		"-e",
 		`const r=/[\q{ab|a|}]/gv; r.lastIndex=0; console.log("🌍a🌍".replace(r,"")); console.log(JSON.stringify(/[\q{ab|a|}]/v.exec("a"))); console.log(process.version,process.versions.v8);`,
 	).CombinedOutput()
-	if err != nil {
-		test.Fatalf("control: %v: %s", err, out)
+	if combinedOutputError != nil {
+		test.Fatalf("control: %v: %s", combinedOutputError, out)
 	}
 	test.Logf("optimized control and conforming direct exec: %s", out)
 	if !strings.HasPrefix(string(out), "🌍🌍\n") {
@@ -186,14 +186,14 @@ func TestV8EmptyClassStringReplacement(test *testing.T) {
 	}
 	ctxSlow, cancelSlow := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancelSlow()
-	out, err = exec.CommandContext(
+	out, combinedOutputError = exec.CommandContext(
 		ctxSlow,
 		"node",
 		"-e",
 		`const r=/[\q{ab|a|}]/gv; const [zero]=[0,NaN]; r.lastIndex=zero; console.log("🌍a🌍".replace(r,""));`,
 	).CombinedOutput()
 	if ctxSlow.Err() != context.DeadlineExceeded {
-		test.Fatalf("recorded slow-path hang changed: err=%v output=%q", err, out)
+		test.Fatalf("recorded slow-path hang changed: err=%v output=%q", combinedOutputError, out)
 	}
 	test.Log("slow-path reproduction: timed out after 2s (process killed)")
 }

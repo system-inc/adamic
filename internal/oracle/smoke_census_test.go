@@ -62,9 +62,9 @@ func smokeUnregistered(entries []smokeEntry, lanes map[string][]string) []string
 
 func TestSmokeEntriesAreRegisteredCases(test *testing.T) {
 	test.Parallel()
-	text, err := os.ReadFile(filepath.Join(repository, smokeListPath))
-	if err != nil {
-		test.Fatal(err)
+	text, readError := os.ReadFile(filepath.Join(repository, smokeListPath))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	entries := parseSmokeList(string(text))
 	if len(entries) == 0 {

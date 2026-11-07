@@ -33,24 +33,28 @@ func TestModuleNamespaceLimitsStayLoud(test *testing.T) {
 				"main.a":     "import * as performance from './provider.a';\n" + probe.source,
 				"provider.a": probe.provider,
 			} {
-				if err := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); err != nil {
-					test.Fatal(err)
+				if writeError := os.WriteFile(
+					filepath.Join(directory, name),
+					[]byte(source),
+					0o644,
+				); writeError != nil {
+					test.Fatal(writeError)
 				}
 			}
-			program, err := load.Load([]string{entry})
+			program, loadError := load.Load([]string{entry})
 			if probe.reason == "" {
-				if err == nil {
+				if loadError == nil {
 					test.Fatal("checker allowed writing an ESM export")
 				}
 				return
 			}
-			if err != nil {
-				test.Fatal(err)
+			if loadError != nil {
+				test.Fatal(loadError)
 			}
-			_, err = Lower(context.Background(), program)
+			_, lowerError := Lower(context.Background(), program)
 			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.reason) {
-				test.Fatalf("got %v, want NotYet %s", err, probe.reason)
+			if !errors.As(lowerError, &notYet) || !strings.Contains(lowerError.Error(), probe.reason) {
+				test.Fatalf("got %v, want NotYet %s", lowerError, probe.reason)
 			}
 		})
 	}
@@ -59,13 +63,13 @@ func TestModuleNamespaceLimitsStayLoud(test *testing.T) {
 func TestModuleNamespaceInitializedReadProof(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join("..", "oracle", "testdata", "module_namespace_reads", "direct_initialized.a")
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	lowered, err := Lower(context.Background(), program)
-	if err != nil {
-		test.Fatal(err)
+	lowered, lowerError := Lower(context.Background(), program)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	requireLoweredOutput(test, lowered)
 	if strings.Contains(native.C(lowered), "ReferenceError: Cannot access 'value'") {

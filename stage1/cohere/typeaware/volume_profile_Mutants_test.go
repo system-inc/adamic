@@ -81,9 +81,9 @@ func runVolumeProfileMutantShard(test *testing.T, shardIndex int) {
 	test.Helper()
 	started := time.Now()
 	changes := volumeProfileMutantSlices()[shardIndex]
-	repository, err := filepath.Abs("../../..")
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs("../../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	h := &harness{t: test, repository: repository, directory: test.TempDir()}
 	oracle := volumeProfileMutantOracle(h)
@@ -135,21 +135,21 @@ func volumeProfileMutantProduct(h *harness, change volumeProfileMutantChange) st
 	// Hash the actual build executables as well as the imported source tree.
 	var products []string
 	for _, path := range []string{stage0, archive} {
-		data, err := os.ReadFile(path)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(path)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		products = append(products, fmt.Sprintf("%x", sha256.Sum256(data)))
 	}
-	files, err := filepath.Glob(filepath.Join(repository, "stage1/cohere/typeaware/*.ts"))
-	if err != nil {
-		test.Fatal(err)
+	files, globError := filepath.Glob(filepath.Join(repository, "stage1/cohere/typeaware/*.ts"))
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	inputs := []string{"stage1/typescript", "stage1/cohere/lint"}
 	for _, path := range files {
-		relative, err := filepath.Rel(repository, path)
-		if err != nil {
-			test.Fatal(err)
+		relative, relativePathError := filepath.Rel(repository, path)
+		if relativePathError != nil {
+			test.Fatal(relativePathError)
 		}
 		inputs = append(inputs, relative)
 	}
@@ -157,9 +157,9 @@ func volumeProfileMutantProduct(h *harness, change volumeProfileMutantChange) st
 	// Include mutated source bytes explicitly, independent of scratch paths.
 	digest := sha256.New()
 	for _, path := range files {
-		data, err := os.ReadFile(path)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(path)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		source := string(data)
 		if filepath.Base(path) == "shadow.ts" {
@@ -198,18 +198,18 @@ func volumeProfileMutantOracle(h *harness) string {
 func volumeProfileSourceMutant(h *harness, stage0, archive, name, from, to string) string {
 	h.t.Helper()
 	directory := filepath.Join(h.directory, name+"-source")
-	if err := os.MkdirAll(directory, 0755); err != nil {
-		h.t.Fatal(err)
+	if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+		h.t.Fatal(createDirectoryError)
 	}
 	sourceDirectory := filepath.Join(h.repository, "stage1/cohere/typeaware")
-	files, err := filepath.Glob(filepath.Join(sourceDirectory, "*.ts"))
-	if err != nil {
-		h.t.Fatal(err)
+	files, globError := filepath.Glob(filepath.Join(sourceDirectory, "*.ts"))
+	if globError != nil {
+		h.t.Fatal(globError)
 	}
 	for _, path := range files {
-		data, err := os.ReadFile(path)
-		if err != nil {
-			h.t.Fatal(err)
+		data, readError := os.ReadFile(path)
+		if readError != nil {
+			h.t.Fatal(readError)
 		}
 		source := string(data)
 		if filepath.Base(path) == "shadow.ts" {
@@ -220,8 +220,12 @@ func volumeProfileSourceMutant(h *harness, stage0, archive, name, from, to strin
 		}
 		source = strings.ReplaceAll(source, "../../typescript/", filepath.Join(h.repository, "stage1/typescript")+"/")
 		source = strings.ReplaceAll(source, "../lint/", filepath.Join(h.repository, "stage1/cohere/lint")+"/")
-		if err := os.WriteFile(filepath.Join(directory, filepath.Base(path)), []byte(source), 0600); err != nil {
-			h.t.Fatal(err)
+		if writeError := os.WriteFile(
+			filepath.Join(directory, filepath.Base(path)),
+			[]byte(source),
+			0600,
+		); writeError != nil {
+			h.t.Fatal(writeError)
 		}
 	}
 	binary := filepath.Join(h.directory, name)
@@ -230,8 +234,8 @@ func volumeProfileSourceMutant(h *harness, stage0, archive, name, from, to strin
 		exec.Command(stage0, "build", filepath.Join(directory, "volume_suite.ts"), "-o", binary, "--tsgo", archive),
 	)
 	// The source's imports name this checkout for the build above; the product names it <repository> (#tqrqx60).
-	if err := buildcache.RelativeFiles(directory); err != nil {
-		h.t.Fatal(err)
+	if relativeFilesError := buildcache.RelativeFiles(directory); relativeFilesError != nil {
+		h.t.Fatal(relativeFilesError)
 	}
 	return binary
 }

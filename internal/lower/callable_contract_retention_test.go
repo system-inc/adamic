@@ -10,9 +10,9 @@ import (
 // callableContractSource returns the fixture file's source and its extension, the mode it lowers in.
 func callableContractSource(test *testing.T, file string) (string, string) {
 	test.Helper()
-	source, err := os.ReadFile("testdata/fx7_wrong_aborts/" + file)
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("testdata/fx7_wrong_aborts/" + file)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return string(source), filepath.Ext(file)
 }
@@ -71,19 +71,19 @@ func TestCallableContractSpreadRefused(test *testing.T) {
 	test.Parallel()
 	source, extension := callableContractSource(test, "p18.ts")
 	source = strings.Replace(source, "view.value(4)", "view.value(...[4])", 1)
-	_, err := lowerSourceAs(test, source, extension)
-	if err == nil ||
-		!strings.Contains(err.Error(), "main.ts:") ||
-		!strings.Contains(err.Error(), "spread arguments through a checked callable view") {
-		test.Fatalf("want located checked-callable spread refusal, got %v", err)
+	_, lowerSourceAsError := lowerSourceAs(test, source, extension)
+	if lowerSourceAsError == nil ||
+		!strings.Contains(lowerSourceAsError.Error(), "main.ts:") ||
+		!strings.Contains(lowerSourceAsError.Error(), "spread arguments through a checked callable view") {
+		test.Fatalf("want located checked-callable spread refusal, got %v", lowerSourceAsError)
 	}
 }
 
 func TestCallableContractPlainSpread(test *testing.T) {
 	test.Parallel()
-	source, err := os.ReadFile("../oracle/testdata/closure_convention_receiver_rest.a")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("../oracle/testdata/closure_convention_receiver_rest.a")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	lowersAndAgreesWithNode(test, string(source))
 	// Native retains the ordinary receiver/rest ABI outside checked callable views.

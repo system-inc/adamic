@@ -46,12 +46,12 @@ int main(void){
 }
 `
 	binary := filepath.Join(test.TempDir(), "snapshot")
-	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(source, binary, Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	if output, err := exec.CommandContext(ctx, binary).CombinedOutput(); err != nil {
-		test.Fatalf("%v: %s", err, output)
+	if output, combinedOutputError := exec.CommandContext(ctx, binary).CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("%v: %s", combinedOutputError, output)
 	}
 }

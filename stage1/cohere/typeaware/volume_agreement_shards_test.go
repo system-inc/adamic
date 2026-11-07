@@ -199,9 +199,9 @@ func volumeAgreementOracle(h *volumeGuardHarness) string {
 func volumeAgreementSource(h *volumeGuardHarness, name string) string {
 	entry := filepath.Join(h.repository, "stage1/cohere/typeaware/volume_suite.ts")
 	if name == "volume-source" {
-		data, err := os.ReadFile(entry)
-		if err != nil {
-			h.t.Fatal(err)
+		data, readError := os.ReadFile(entry)
+		if readError != nil {
+			h.t.Fatal(readError)
 		}
 		text := string(data)
 		from := "const program = tsgoProgram(config, paths);"
@@ -230,18 +230,18 @@ const program = tsgoProgram(config, rootsManifest.text.split('\n').filter((path)
 	inputs := volumeAgreementInputs(name, false)
 	inputs.Flags = append(inputs.Flags, name)
 	dir := buildcache.Product(h.t, inputs, func(dir string) error {
-		loaded, err := load.Load([]string{entry})
-		if err != nil {
-			return err
+		loaded, loadError := load.Load([]string{entry})
+		if loadError != nil {
+			return loadError
 		}
 		loaded.EnableTSGo()
-		program, err := lower.Lower(context.Background(), loaded)
-		if err != nil {
-			return err
+		program, lowerError := lower.Lower(context.Background(), loaded)
+		if lowerError != nil {
+			return lowerError
 		}
-		source, err := native.TSGoC(program)
-		if err != nil {
-			return err
+		source, tsGoCError := native.TSGoC(program)
+		if tsGoCError != nil {
+			return tsGoCError
 		}
 		return os.WriteFile(filepath.Join(dir, "source.c"), []byte(source), 0444)
 	})
@@ -251,16 +251,16 @@ func volumeAgreementNative(h *volumeGuardHarness, name, archive, source string, 
 	inputs := volumeAgreementInputs(name, sanitize)
 	inputs.Flags = append(inputs.Flags, "BuildSplitTSGo Jobs=4")
 	for _, path := range []string{archive, source} {
-		sum, err := typeSymbolFileHash(path)
-		if err != nil {
-			h.t.Fatal(err)
+		sum, typeSymbolFileHashError := typeSymbolFileHash(path)
+		if typeSymbolFileHashError != nil {
+			h.t.Fatal(typeSymbolFileHashError)
 		}
 		inputs.Flags = append(inputs.Flags, sum)
 	}
 	dir := buildcache.Product(h.t, inputs, func(dir string) error {
-		data, err := os.ReadFile(source)
-		if err != nil {
-			return err
+		data, readError := os.ReadFile(source)
+		if readError != nil {
+			return readError
 		}
 		return native.BuildSplitTSGo(
 			string(data),
@@ -425,8 +425,11 @@ func runVolumeAgreementShard(test *testing.T, shard int) {
 		default:
 			truth := volumeGuardMust(h, key+"-truth", exec.Command(products["oracle"], config, manifest))
 			got := volumeGuardMust(h, key+"-run", exec.Command(products[key+"-native"], config, manifest))
-			if err := volumeAgreementSurvived(got, truth); err != nil {
-				test.Fatalf("%s: %v", key, err)
+			if volumeAgreementSurvivedError := volumeAgreementSurvived(
+				got,
+				truth,
+			); volumeAgreementSurvivedError != nil {
+				test.Fatalf("%s: %v", key, volumeAgreementSurvivedError)
 			}
 			test.Logf("%s caught at byte %d", key, firstDifference(got.stdout, truth.stdout))
 		}

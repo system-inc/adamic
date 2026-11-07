@@ -32,8 +32,8 @@ const artifactProbeDeadline = 30 * time.Second
 func RequireArtifacts(test testing.TB, directory string, artifacts ...Artifact) {
 	test.Helper()
 	for _, artifact := range artifacts {
-		if err := requireArtifact(directory, artifact); err != nil {
-			test.Fatalf("artifact %s: %v", artifact.Name, err)
+		if requireArtifactError := requireArtifact(directory, artifact); requireArtifactError != nil {
+			test.Fatalf("artifact %s: %v", artifact.Name, requireArtifactError)
 		}
 	}
 }
@@ -43,9 +43,9 @@ func requireArtifact(directory string, artifact Artifact) error {
 		return fmt.Errorf("directory and local artifact name are required")
 	}
 	path := filepath.Join(directory, artifact.Name)
-	info, err := os.Stat(path)
-	if err != nil {
-		return err
+	info, statError := os.Stat(path)
+	if statError != nil {
+		return statError
 	}
 	if !info.Mode().IsRegular() || info.Size() == 0 {
 		return fmt.Errorf("must be a non-empty regular file")
@@ -67,14 +67,14 @@ func requireArtifact(directory string, artifact Artifact) error {
 	// Each stream is read to its end, the probe's process group killed once it exits (childguard.Capture), so a child
 	// that keeps an output pipe open can't hold the read past the probe, and no timer after the exit makes a slow drain
 	// red by chance, as a WaitDelay did (#n3gk22h, adamiclint's waitdelay).
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	output := append(stdout, stderr...)
 	if ctx.Err() != nil {
 		return fmt.Errorf("probe: %w", ctx.Err())
 	}
-	if err != nil {
-		if exit, ok := err.(*exec.ExitError); !ok || exit.ExitCode() != artifact.ExitCode {
-			return fmt.Errorf("probe: %w: %s", err, output)
+	if captureError != nil {
+		if exit, ok := captureError.(*exec.ExitError); !ok || exit.ExitCode() != artifact.ExitCode {
+			return fmt.Errorf("probe: %w: %s", captureError, output)
 		}
 	} else if artifact.ExitCode != 0 {
 		return fmt.Errorf("probe exited 0, want %d", artifact.ExitCode)

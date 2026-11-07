@@ -19,12 +19,12 @@ import (
 func lowerCountedImpliedTargets(test *testing.T, source string) (*lowering, map[*ast.Node]int) {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "main.a")
-	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	file := program.Files()[0]
 	checked, release := program.Checker(context.Background(), file)
@@ -38,15 +38,16 @@ func lowerCountedImpliedTargets(test *testing.T, source string) (*lowering, map[
 		}
 		return checked.GetTypeAtLocation(node)
 	}
-	if err := l.refuse(file); err != nil {
-		test.Fatal(err)
+	if refuseError := l.refuse(file); refuseError != nil {
+		test.Fatal(refuseError)
 	}
-	if err := l.declareModule(file.Statements.Nodes); err != nil {
-		test.Fatal(err)
+	if declareModuleError := l.declareModule(file.Statements.Nodes); declareModuleError != nil {
+		test.Fatal(declareModuleError)
 	}
-	l.result.Main, err = l.statements(file.Statements.Nodes)
-	if err != nil {
-		test.Fatal(err)
+	var statementsError error
+	l.result.Main, statementsError = l.statements(file.Statements.Nodes)
+	if statementsError != nil {
+		test.Fatal(statementsError)
 	}
 	if len(l.result.Main) == 0 {
 		test.Fatal("no statements lowered")

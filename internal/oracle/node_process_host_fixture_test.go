@@ -18,18 +18,18 @@ func TestNodeProcessHostNewLine(test *testing.T) {
 
 func nodeProcessHostNewLine(test *testing.T, statusPath string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "stage3/fixtures/host/23_newLine.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "stage3/fixtures/host/23_newLine.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	var binary, script string
-	data, err := os.ReadFile(statusPath)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(statusPath)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var rows []hostMeasurement
-	if err := json.Unmarshal(data, &rows); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &rows); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	found := false
 	var truth run
@@ -64,22 +64,22 @@ func nodeProcessHostNewLine(test *testing.T, statusPath string) {
 			test.Fatal("native versus recorded Node: " + difference)
 		}
 	})
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	code := native.C(program)
 	if strings.Count(code, "adamic_node_eol()") != 1 {
 		test.Fatal("native EOL anchor changed")
 	}
 	mutant := filepath.Join(test.TempDir(), "newline-mutant")
-	if err := native.Build(
+	if buildError := native.Build(
 		"#include \"adamic.h\"\nstatic adamic_string mutant_eol = ADAMIC_STRING(\"\\r\\n\");\n"+
 			strings.Replace(code, "adamic_node_eol()", "&mutant_eol", 1),
 		mutant,
 		native.Options{Sanitize: true},
-	); err != nil {
-		test.Fatal(err)
+	); buildError != nil {
+		test.Fatal(buildError)
 	}
 	bad := execute(test, mutant)
 	if bad.exitCode != 0 || len(bad.stderr) != 0 || disagreement(truth, bad) != "stdout differs" {
@@ -96,21 +96,21 @@ func nodeProcessHostNewLine(test *testing.T, statusPath string) {
 		if difference := disagreement(truth, hostNodeWith(test, inputRun{}, nodeBinary, script)); difference != "" {
 			test.Fatal("JavaScript versus recorded Node: " + difference)
 		}
-		source, err := os.ReadFile(script)
-		if err != nil {
-			test.Fatal(err)
+		source, readError := os.ReadFile(script)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		anchor := `"\n"`
 		if strings.Count(string(source), anchor) != 1 {
 			test.Fatal("JavaScript EOL anchor changed")
 		}
 		jsMutant := filepath.Join(test.TempDir(), "newline-mutant.mjs")
-		if err := os.WriteFile(
+		if writeError := os.WriteFile(
 			jsMutant,
 			[]byte(strings.Replace(string(source), anchor, `"\r\n"`, 1)),
 			0600,
-		); err != nil {
-			test.Fatal(err)
+		); writeError != nil {
+			test.Fatal(writeError)
 		}
 		bad := hostNodeWith(test, inputRun{}, nodeBinary, jsMutant)
 		if bad.exitCode != 0 || len(bad.stderr) != 0 || disagreement(truth, bad) != "stdout differs" {

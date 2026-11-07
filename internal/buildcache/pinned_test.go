@@ -16,14 +16,14 @@ func pinnedRepository(test *testing.T) (string, string, string) {
 	gitIn(test, root, "init", "-q")
 	commit := func(content string) string {
 		test.Helper()
-		if err := os.WriteFile(filepath.Join(root, "a.json"), []byte(content), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(root, "a.json"), []byte(content), 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		gitIn(test, root, "add", "a.json")
 		gitIn(test, root, "commit", "-q", "-m", content)
-		output, err := toolchain.GitCommandIn(root, "rev-parse", "HEAD").Output()
-		if err != nil {
-			test.Fatal(err)
+		output, outputError := toolchain.GitCommandIn(root, "rev-parse", "HEAD").Output()
+		if outputError != nil {
+			test.Fatal(outputError)
 		}
 		return strings.TrimSpace(string(output))
 	}
@@ -47,13 +47,13 @@ func TestPinnedGitReadsTheCommitsOwnBytesAsKeyTimeWork(test *testing.T) {
 		previous(compute)
 	}
 	test.Cleanup(func() { pinnedKeying = previous })
-	output, err := PinnedGit(root, inputs, pinned, nil, "show", pinned+":a.json")
-	if err != nil || string(output) != `{"pinned":true}` || keyed != 1 {
-		test.Fatalf("the pin's a.json read %q (%v), as keying %d times", output, err, keyed)
+	output, pinnedGitError := PinnedGit(root, inputs, pinned, nil, "show", pinned+":a.json")
+	if pinnedGitError != nil || string(output) != `{"pinned":true}` || keyed != 1 {
+		test.Fatalf("the pin's a.json read %q (%v), as keying %d times", output, pinnedGitError, keyed)
 	}
-	output, err = PinnedGit(root, inputs, pinned, []byte(pinned+":a.json\n"), "cat-file", "--batch")
-	if err != nil || !strings.HasSuffix(strings.TrimSpace(string(output)), `{"pinned":true}`) {
-		test.Fatalf("the pin's a.json through stdin read %q: %v", output, err)
+	output, pinnedGitError = PinnedGit(root, inputs, pinned, []byte(pinned+":a.json\n"), "cat-file", "--batch")
+	if pinnedGitError != nil || !strings.HasSuffix(strings.TrimSpace(string(output)), `{"pinned":true}`) {
+		test.Fatalf("the pin's a.json through stdin read %q: %v", output, pinnedGitError)
 	}
 	for name, c := range map[string]struct {
 		inputs Inputs
@@ -63,15 +63,15 @@ func TestPinnedGitReadsTheCommitsOwnBytesAsKeyTimeWork(test *testing.T) {
 		"a short id":             {inputs, pinned[:12], "isn't a full commit id"},
 		"a commit no flag names": {inputs, later, "no flag of its key names commit"},
 	} {
-		if _, err := PinnedGit(
+		if _, pinnedGitError := PinnedGit(
 			root,
 			c.inputs,
 			c.commit,
 			nil,
 			"show",
 			c.commit+":a.json",
-		); err == nil || !strings.Contains(err.Error(), c.want) {
-			test.Errorf("%s: %v", name, err)
+		); pinnedGitError == nil || !strings.Contains(pinnedGitError.Error(), c.want) {
+			test.Errorf("%s: %v", name, pinnedGitError)
 		}
 	}
 }
@@ -83,7 +83,7 @@ func TestPinnedGitWritesTheCallersTraceTwoEvents(test *testing.T) {
 	root, pinned, _ := pinnedRepository(test)
 	events := filepath.Join(test.TempDir(), "events.json")
 	test.Setenv("GIT_TRACE2_EVENT", events)
-	if _, err := PinnedGit(
+	if _, pinnedGitError := PinnedGit(
 		root,
 		Inputs{Name: "pinned corpus", Flags: []string{"at " + pinned}},
 		pinned,
@@ -91,10 +91,10 @@ func TestPinnedGitWritesTheCallersTraceTwoEvents(test *testing.T) {
 		"cat-file",
 		"-e",
 		pinned+"^{commit}",
-	); err != nil {
-		test.Fatal(err)
+	); pinnedGitError != nil {
+		test.Fatal(pinnedGitError)
 	}
-	if content, err := os.ReadFile(events); err != nil || !strings.Contains(string(content), `"cat-file"`) {
-		test.Fatalf("the trace2 events read %q: %v", content, err)
+	if content, readError := os.ReadFile(events); readError != nil || !strings.Contains(string(content), `"cat-file"`) {
+		test.Fatalf("the trace2 events read %q: %v", content, readError)
 	}
 }

@@ -21,16 +21,16 @@ func TestProfileArtifacts(test *testing.T) {
 	if directory == "" {
 		test.Skip("set ADAMIC_SCANNER_PROFILE_DIR to a scratch directory")
 	}
-	if err := os.MkdirAll(directory, 0755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	for _, name := range portFiles {
-		data, err := os.ReadFile(name)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(name)
+		if readError != nil {
+			test.Fatal(readError)
 		}
-		if err := os.WriteFile(filepath.Join(directory, name), data, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, name), data, 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	files := sourceFiles(test, compilerSource(test))
@@ -38,45 +38,53 @@ func TestProfileArtifacts(test *testing.T) {
 	for _, path := range files {
 		manifest.WriteString("scan\t" + path + "\n")
 	}
-	if err := os.WriteFile(filepath.Join(directory, "compiler.txt"), []byte(manifest.String()), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(
+		filepath.Join(directory, "compiler.txt"),
+		[]byte(manifest.String()),
+		0644,
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
-	oracle, err := os.ReadFile(goOracle(test))
-	if err != nil {
-		test.Fatal(err)
+	oracle, readError := os.ReadFile(goOracle(test))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	if err := os.WriteFile(filepath.Join(directory, "oracle"), oracle, 0755); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(directory, "oracle"), oracle, 0755); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{filepath.Join(directory, "main.ts")})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		test.Fatal(err)
+	lowered, lowerError := lower.Lower(context.Background(), program)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	source := native.C(lowered)
-	if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if err := native.Build(source, filepath.Join(directory, "scanner"), native.Options{}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(source, filepath.Join(directory, "scanner"), native.Options{}); buildError != nil {
+		test.Fatal(buildError)
 	}
-	if err := native.Build(source, filepath.Join(directory, "counted"), native.Options{Count: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(
+		source,
+		filepath.Join(directory, "counted"),
+		native.Options{Count: true},
+	); buildError != nil {
+		test.Fatal(buildError)
 	}
 	paths := corpusfiles.Repository(test, repository, []string{"internal/native/runtime"}, []string{"*.c", "*.h"})
 	units := []string{filepath.Join(directory, "main.c")}
 	for _, sourcePath := range paths {
 		name := filepath.Base(sourcePath)
-		data, err := os.ReadFile(sourcePath)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(sourcePath)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		path := filepath.Join(directory, name)
-		if err := os.WriteFile(path, data, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, data, 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		if strings.HasSuffix(name, ".c") {
 			units = append(units, path)

@@ -29,18 +29,18 @@ func UntaggedViewMembers(contracts []ir.ViewContract, union ir.ViewContractID) (
 		}
 		return contracts[int(id)-1], nil
 	}
-	root, err := lookup(union)
-	if err != nil {
-		return nil, err
+	root, lookupError := lookup(union)
+	if lookupError != nil {
+		return nil, lookupError
 	}
 	if root.Kind != ir.ViewUnion || len(root.Members) == 0 {
 		return nil, fmt.Errorf("%s is not a nonempty object union", root.Name)
 	}
 	members := make([]UntaggedViewMember, 0, len(root.Members))
 	for _, id := range root.Members {
-		contract, err := lookup(id)
-		if err != nil {
-			return nil, err
+		contract, lookupError := lookup(id)
+		if lookupError != nil {
+			return nil, lookupError
 		}
 		if contract.Kind != ir.ViewObject || contract.Of != ir.Object {
 			return nil, fmt.Errorf("union member %s needs its owning family adapter", contract.Name)
@@ -51,9 +51,9 @@ func UntaggedViewMembers(contracts []ir.ViewContract, union ir.ViewContractID) (
 			if field.Optional {
 				continue
 			}
-			tag, err := lookup(field.Contract)
-			if err != nil {
-				return nil, err
+			tag, lookupError := lookup(field.Contract)
+			if lookupError != nil {
+				return nil, lookupError
 			}
 			if tag.Kind != ir.ViewScalar || len(tag.Allowed) == 0 {
 				continue
@@ -63,7 +63,10 @@ func UntaggedViewMembers(contracts []ir.ViewContract, union ir.ViewContractID) (
 					return nil, fmt.Errorf("unsupported tag contract %s.%s", contract.Name, field.Name)
 				}
 			}
-			member.Tags = append(member.Tags, UntaggedViewTag{Field: field.Name, Allowed: append([]ir.ViewLiteral(nil), tag.Allowed...)})
+			member.Tags = append(
+				member.Tags,
+				UntaggedViewTag{Field: field.Name, Allowed: append([]ir.ViewLiteral(nil), tag.Allowed...)},
+			)
 		}
 		members = append(members, member)
 	}
@@ -85,7 +88,11 @@ func (l *lowering) supportsUntaggedRead(root ir.ViewContract) bool {
 			return false
 		}
 		if contract.Kind == ir.ViewScalar {
-			return contract.Of == ir.Number || contract.Of == ir.String || contract.Of == ir.Boolean || contract.Of == ir.MaybeNumber || contract.Of == ir.MaybeBoolean
+			return contract.Of == ir.Number ||
+				contract.Of == ir.String ||
+				contract.Of == ir.Boolean ||
+				contract.Of == ir.MaybeNumber ||
+				contract.Of == ir.MaybeBoolean
 		}
 		if contract.Kind == ir.ViewCallable {
 			return contract.Result != 0 || contract.DiscardResult
@@ -121,7 +128,8 @@ func (l *lowering) supportsUntaggedRead(root ir.ViewContract) bool {
 				continue
 			}
 			child := l.result.ViewContracts[field.Contract-1]
-			tagged = tagged || child.Kind == ir.ViewScalar && (len(child.Allowed) != 0 || field.Name == "kind" && (child.Of == ir.Number || child.Of == ir.String || child.Of == ir.Boolean))
+			tagged = tagged || child.Kind == ir.ViewScalar && (len(child.Allowed) != 0 ||
+				field.Name == "kind" && (child.Of == ir.Number || child.Of == ir.String || child.Of == ir.Boolean))
 		}
 		if tagged {
 			return true
@@ -200,9 +208,9 @@ func (l *lowering) prepareUntaggedCallableUnionRead(node *ast.Node, target *chec
 		if !l.callableViewContract(member) {
 			return 0, l.notYet(node, "a callable union member without a producer signature")
 		}
-		child, err := l.prepareUntaggedCallableMember(node, member)
-		if err != nil {
-			return 0, err
+		child, prepareUntaggedCallableMemberError := l.prepareUntaggedCallableMember(node, member)
+		if prepareUntaggedCallableMemberError != nil {
+			return 0, prepareUntaggedCallableMemberError
 		}
 		if l.untaggedCallableTargets == nil {
 			l.untaggedCallableTargets = map[ir.ViewContractID]*checker.Type{}
@@ -224,7 +232,10 @@ func (l *lowering) prepareUntaggedStructuralRead(node *ast.Node, target *checker
 	seen[target] = true
 	if l.callableViewContract(target) {
 		if l.untaggedCallableShape(target) {
-			if id, err := l.prepareUntaggedCallableMember(node, target); err == nil {
+			if id, prepareUntaggedCallableMemberError := l.prepareUntaggedCallableMember(
+				node,
+				target,
+			); prepareUntaggedCallableMemberError == nil {
 				l.result.ViewContracts[id-1].Unsupported = ""
 			}
 		}
@@ -262,7 +273,9 @@ func (l *lowering) certifyUntaggedCallableProducers() {
 			if !function.Closure || function.Receiver {
 				continue
 			}
-			if l.checker.IsTypeAssignableTo(producer.proven, target) && l.untaggedCallableABI(producer.function, *contract) && l.uniquelyAssignableCallable(producer.proven, id) {
+			if l.checker.IsTypeAssignableTo(producer.proven, target) &&
+				l.untaggedCallableABI(producer.function, *contract) &&
+				l.uniquelyAssignableCallable(producer.proven, id) {
 				contract.Functions = append(contract.Functions, producer.function)
 			}
 		}

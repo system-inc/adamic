@@ -60,10 +60,15 @@ func (l *lowering) nodeArrayLayoutOf(proven *checker.Type) (ArrayLayout, *checke
 		if !known {
 			return ArrayLayout{}, nil, false
 		}
-		extras = append(extras, FieldContract{Name: property.Name, DeclaredType: l.checker.TypeToString(declared), Of: of, Optional: property.Flags&ast.SymbolFlagsOptional != 0})
+		extras = append(extras, FieldContract{
+			Name:         property.Name,
+			DeclaredType: l.checker.TypeToString(declared),
+			Of:           of,
+			Optional:     property.Flags&ast.SymbolFlagsOptional != 0,
+		})
 	}
-	layout, err := NodeArrayLayout(held, extras)
-	return layout, element, err == nil
+	layout, nodeArrayLayoutError := NodeArrayLayout(held, extras)
+	return layout, element, nodeArrayLayoutError == nil
 }
 
 func (l *lowering) nodeArrayCast(node *ast.Node) bool {
@@ -77,14 +82,17 @@ func (l *lowering) nodeArrayCast(node *ast.Node) bool {
 	}
 	actual := l.elementTypeOfArray(l.checker.GetTypeAtLocation(as.Expression))
 	// Mutable array elements keep their representation and their full element contract.
-	return actual != nil && l.castAssignable(actual, element) && l.castAssignable(element, l.checker.GetWidenedType(actual)) && l.sameKeeping(actual, element, map[[2]*checker.Type]bool{})
+	return actual != nil &&
+		l.castAssignable(actual, element) &&
+		l.castAssignable(element, l.checker.GetWidenedType(actual)) &&
+		l.sameKeeping(actual, element, map[[2]*checker.Type]bool{})
 }
 
 func (l *lowering) constructNodeArray(node *ast.Node) (ir.Expression, error) {
 	layout, element, _ := l.nodeArrayLayoutOf(l.concrete(l.checker.GetTypeAtLocation(node)))
-	value, err := l.arrayLiteral(ast.SkipParentheses(node.AsAsExpression().Expression))
-	if err != nil {
-		return nil, err
+	value, arrayLiteralError := l.arrayLiteral(ast.SkipParentheses(node.AsAsExpression().Expression))
+	if arrayLiteralError != nil {
+		return nil, arrayLiteralError
 	}
 	literal, known := value.(ir.ArrayLiteral)
 	if !known {
@@ -105,17 +113,24 @@ func (l *lowering) constructNodeArray(node *ast.Node) (ir.Expression, error) {
 }
 
 func (l *lowering) nodeArrayProperty(node *ast.Node, object ir.Expression, name string) (ir.Expression, bool, error) {
-	layout, _, known := l.nodeArrayLayoutOf(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression)))
+	layout, _, known := l.nodeArrayLayoutOf(
+		l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression)),
+	)
 	if !known {
 		return nil, false, nil
 	}
-	field, err := layout.Read(name)
-	if err != nil {
+	field, readError := layout.Read(name)
+	if readError != nil {
 		return nil, true, l.notYet(node, "a NodeArray field outside its fixed metadata layout")
 	}
 	declared := l.checker.GetTypeOfSymbol(l.checker.GetSymbolAtLocation(node.Name()))
 	value := ir.DynamicProperty{Object: fit(object, ir.Union), Name: name}
-	checked, err := l.unsetSpecialization(node, value, declared, "field '"+name+"', factory 'NodeArray allocation'")
+	checked, unsetSpecializationError := l.unsetSpecialization(
+		node,
+		value,
+		declared,
+		"field '"+name+"', factory 'NodeArray allocation'",
+	)
 	_ = field // Layout membership is proved independently of observed presence.
-	return checked, true, err
+	return checked, true, unsetSpecializationError
 }

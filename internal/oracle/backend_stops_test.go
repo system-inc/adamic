@@ -51,9 +51,9 @@ func assertUnlistedBackendSourceAgreement(test *testing.T, nativeBackend bool) {
 	test.Helper()
 	fixture := "dedication/dedication.a"
 	path := filepath.Join(repository, fixture)
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	truth := onSliceNode(test, path)
 	var actual run
@@ -88,9 +88,9 @@ func terminalStackProgram(test *testing.T) *ir.Program {
 	if difference := disagreement(wantSource, source); difference != "" {
 		test.Fatalf("original Node: %s", difference)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	return program
 }
@@ -127,8 +127,8 @@ func TestTerminalStackStopMarkedJavaScript(test *testing.T) {
 		return ""
 	}})
 	generated := filepath.Join(test.TempDir(), "marked.mjs")
-	if err := os.WriteFile(generated, []byte(code), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(generated, []byte(code), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	if difference := disagreement(
 		ruledBackendDivergences[0].javascript,
@@ -143,13 +143,15 @@ func TestTerminalStackStopMarkedJavaScript(test *testing.T) {
 // native's unrelated terminal code-point check is not an oracle exception.
 func TestNonOverflowRangeErrorCatch(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/backend_stop_catches.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/backend_stop_catches.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	code := javascript.JavaScript(program)
 	original := `throw new Error("ordinary");`
@@ -158,8 +160,8 @@ func TestNonOverflowRangeErrorCatch(test *testing.T) {
 	}
 	code = strings.Replace(code, original, `throw new RangeError("ordinary");`, 1)
 	generated := filepath.Join(test.TempDir(), "range-error.mjs")
-	if err := os.WriteFile(generated, []byte(code), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(generated, []byte(code), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	want := onSliceNode(test, path)
 	got := onSliceNode(test, generated)

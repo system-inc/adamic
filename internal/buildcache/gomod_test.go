@@ -104,9 +104,9 @@ func TestGoModReplacementsAreGosForEveryShapeOfReplace(test *testing.T) {
 			directory := test.TempDir()
 			write(test, directory, "go.mod", testCase.content)
 			want := goModEditReplacements(test, filepath.Join(directory, "go.mod"))
-			got, err := goModReplacements([]byte(testCase.content))
-			if err != nil {
-				test.Fatalf("goModReplacements: %v\n%s", err, testCase.content)
+			got, goModReplacementsError := goModReplacements([]byte(testCase.content))
+			if goModReplacementsError != nil {
+				test.Fatalf("goModReplacements: %v\n%s", goModReplacementsError, testCase.content)
 			}
 			if !slices.Equal(got, want) {
 				test.Fatalf("goModReplacements says %q, go says %q, of\n%s", got, want, testCase.content)
@@ -124,9 +124,9 @@ func TestGoModReplacementsAreGosForEveryTrackedGoMod(test *testing.T) {
 	test.Parallel()
 	root := repositoryRootForTest(test)
 	var found []string
-	err := filepath.WalkDir(root, func(name string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
+	walkError := filepath.WalkDir(root, func(name string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
 		if entry.IsDir() {
 			if name != root &&
@@ -140,8 +140,8 @@ func TestGoModReplacementsAreGosForEveryTrackedGoMod(test *testing.T) {
 		}
 		return nil
 	})
-	if err != nil {
-		test.Fatal(err)
+	if walkError != nil {
+		test.Fatal(walkError)
 	}
 	if !slices.Contains(found, filepath.Join(root, "go.mod")) {
 		test.Fatalf("the tree's own go.mod isn't among the %d found: %q", len(found), found)
@@ -149,14 +149,14 @@ func TestGoModReplacementsAreGosForEveryTrackedGoMod(test *testing.T) {
 	for _, name := range found {
 		relative, _ := filepath.Rel(root, name)
 		test.Run(relative, func(test *testing.T) {
-			content, err := os.ReadFile(name)
-			if err != nil {
-				test.Fatal(err)
+			content, readError := os.ReadFile(name)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			want := goModEditReplacements(test, name)
-			got, err := goModReplacements(content)
-			if err != nil {
-				test.Fatalf("goModReplacements: %v", err)
+			got, goModReplacementsError := goModReplacements(content)
+			if goModReplacementsError != nil {
+				test.Fatalf("goModReplacements: %v", goModReplacementsError)
 			}
 			if !slices.Equal(got, want) {
 				test.Fatalf("goModReplacements says %q, go says %q", got, want)
@@ -179,41 +179,41 @@ func TestTheWorkspaceSumsAreWholeSoGoWritesNoneBesideTheWork(test *testing.T) {
 	test.Parallel()
 	root := repositoryRootForTest(test)
 	work, sums := filepath.Join(test.TempDir(), "workspace"), ""
-	if err := os.Mkdir(work, 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.Mkdir(work, 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	test.Cleanup(func() { os.Chmod(work, 0o755) })
 	run := func(arguments ...string) []byte {
 		test.Helper()
 		command := toolchain.CommandIn(root, "go", arguments...)
 		command.Env = append(command.Env, "GOWORK="+filepath.Join(work, "go.work"))
-		output, err := command.Output()
-		if err != nil {
+		output, outputError := command.Output()
+		if outputError != nil {
 			var exit *exec.ExitError
-			if errors.As(err, &exit) {
-				test.Fatalf("go %s: %v\n%s", strings.Join(arguments, " "), err, exit.Stderr)
+			if errors.As(outputError, &exit) {
+				test.Fatalf("go %s: %v\n%s", strings.Join(arguments, " "), outputError, exit.Stderr)
 			}
-			test.Fatalf("go %s: %v", strings.Join(arguments, " "), err)
+			test.Fatalf("go %s: %v", strings.Join(arguments, " "), outputError)
 		}
 		return output
 	}
 	for _, name := range []string{"go.work", "go.work.sum"} {
-		content, err := os.ReadFile(filepath.Join(root, name))
-		if err != nil {
-			test.Fatalf("the tree's %s: %v", name, err)
+		content, readError := os.ReadFile(filepath.Join(root, name))
+		if readError != nil {
+			test.Fatalf("the tree's %s: %v", name, readError)
 		}
 		if name == "go.work.sum" {
 			sums = string(content)
 		}
-		if err := os.WriteFile(filepath.Join(work, name), content, 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(work, name), content, 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	var file struct {
 		Use []struct{ DiskPath string }
 	}
-	if err := json.Unmarshal(run("work", "edit", "-json"), &file); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(run("work", "edit", "-json"), &file); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if len(file.Use) == 0 {
 		test.Fatal("the root go.work uses no module")
@@ -221,55 +221,55 @@ func TestTheWorkspaceSumsAreWholeSoGoWritesNoneBesideTheWork(test *testing.T) {
 	edit := []string{"work", "edit"}
 	for _, use := range file.Use {
 		module := filepath.Join(root, filepath.FromSlash(use.DiskPath))
-		if _, err := os.Stat(filepath.Join(module, "go.mod")); err != nil {
+		if _, statError := os.Stat(filepath.Join(module, "go.mod")); statError != nil {
 			test.Fatalf(
 				"the workspace's module %s isn't in this tree, as a checkout without its submodules: %v",
 				use.DiskPath,
-				err,
+				statError,
 			)
 		}
 		edit = append(edit, "-dropuse="+use.DiskPath, "-use="+module)
 	}
 	run(edit...)
 	for _, name := range []string{"go.work", "go.work.sum"} {
-		if err := os.Chmod(filepath.Join(work, name), 0o444); err != nil {
-			test.Fatal(err)
+		if changeModeError := os.Chmod(filepath.Join(work, name), 0o444); changeModeError != nil {
+			test.Fatal(changeModeError)
 		}
 	}
-	if err := os.Chmod(work, 0o555); err != nil {
-		test.Fatal(err)
+	if changeModeError := os.Chmod(work, 0o555); changeModeError != nil {
+		test.Fatal(changeModeError)
 	}
 	run("list", "-deps", "-test", "-json", "all")
-	after, err := os.ReadFile(filepath.Join(work, "go.work.sum"))
-	if err != nil || string(after) != sums {
-		test.Fatalf("go changed the workspace's sums (%v):\n%s", err, after)
+	after, readError := os.ReadFile(filepath.Join(work, "go.work.sum"))
+	if readError != nil || string(after) != sums {
+		test.Fatalf("go changed the workspace's sums (%v):\n%s", readError, after)
 	}
-	if entries, err := os.ReadDir(work); err != nil || len(entries) != 2 {
+	if entries, readDirectoryError := os.ReadDir(work); readDirectoryError != nil || len(entries) != 2 {
 		test.Fatalf(
 			"the workspace holds %d entries after go list, want its go.work and go.work.sum alone (%v)",
 			len(entries),
-			err,
+			readDirectoryError,
 		)
 	}
 }
 
 func goModEditReplacements(test *testing.T, name string) []string {
 	test.Helper()
-	output, err := toolchain.CommandIn(filepath.Dir(name), "go", "mod", "edit", "-json", name).Output()
-	if err != nil {
+	output, outputError := toolchain.CommandIn(filepath.Dir(name), "go", "mod", "edit", "-json", name).Output()
+	if outputError != nil {
 		var exit *exec.ExitError
-		if errors.As(err, &exit) {
-			test.Fatalf("go mod edit -json refuses the go.mod: %v\n%s", err, exit.Stderr)
+		if errors.As(outputError, &exit) {
+			test.Fatalf("go mod edit -json refuses the go.mod: %v\n%s", outputError, exit.Stderr)
 		}
-		test.Fatalf("go mod edit -json: %v", err)
+		test.Fatalf("go mod edit -json: %v", outputError)
 	}
 	var file struct {
 		Replace []struct {
 			New struct{ Path, Version string }
 		}
 	}
-	if err := json.Unmarshal(output, &file); err != nil {
-		test.Fatalf("go mod edit -json: %v\n%s", err, output)
+	if decodeError := json.Unmarshal(output, &file); decodeError != nil {
+		test.Fatalf("go mod edit -json: %v\n%s", decodeError, output)
 	}
 	var paths []string
 	for _, replacement := range file.Replace {

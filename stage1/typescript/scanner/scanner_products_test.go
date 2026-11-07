@@ -46,9 +46,9 @@ var scannerProducts sync.Map
 
 func scannerFetch(test *testing.T, inputs buildcache.Inputs, recipe func(string) error) string {
 	test.Helper()
-	identity, err := json.Marshal(inputs)
-	if err != nil {
-		test.Fatal(err)
+	identity, encodeError := json.Marshal(inputs)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	value, _ := scannerProducts.LoadOrStore(string(identity), &scannerPrepared{})
 	prepared := value.(*scannerPrepared)
@@ -70,9 +70,9 @@ func scannerPortProduct(test *testing.T, source string, sanitize bool) string {
 	flags := append(native.Flags(options), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 	contents := make(map[string][]byte)
 	for _, name := range portFiles {
-		data, err := os.ReadFile(filepath.Join(source, name))
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(filepath.Join(source, name))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		contents[name] = data
 		flags = append(flags, name+"="+string(data))
@@ -85,17 +85,17 @@ func scannerPortProduct(test *testing.T, source string, sanitize bool) string {
 	}
 	return scannerFetch(test, inputs, func(directory string) error {
 		for _, name := range portFiles {
-			if err := os.WriteFile(filepath.Join(directory, name), contents[name], 0644); err != nil {
-				return err
+			if writeError := os.WriteFile(filepath.Join(directory, name), contents[name], 0644); writeError != nil {
+				return writeError
 			}
 		}
-		program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-		if err != nil {
-			return err
+		program, loadError := load.Load([]string{filepath.Join(directory, "main.ts")})
+		if loadError != nil {
+			return loadError
 		}
-		lowered, err := lower.Lower(context.Background(), program)
-		if err != nil {
-			return err
+		lowered, lowerError := lower.Lower(context.Background(), program)
+		if lowerError != nil {
+			return lowerError
 		}
 		return native.Build(native.C(lowered), filepath.Join(directory, "scanner"), options)
 	})
@@ -165,9 +165,9 @@ func scannerCaseIdentity(line string) string {
 
 func scannerManifestLines(test *testing.T, path string) []string {
 	test.Helper()
-	data, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")
 }
@@ -190,18 +190,18 @@ func scannerRun(test *testing.T, ctx context.Context, name string, args ...strin
 	test.Helper()
 	command := exec.CommandContext(ctx, name, args...)
 	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
-	output, stderr, err := childguard.Capture(ctx, command)
-	if err != nil || len(stderr) != 0 {
-		test.Fatalf("%s: %v\n%s", name, err, stderr)
+	output, stderr, captureError := childguard.Capture(ctx, command)
+	if captureError != nil || len(stderr) != 0 {
+		test.Fatalf("%s: %v\n%s", name, captureError, stderr)
 	}
 	return output
 }
 
 func scannerNode(test *testing.T, ctx context.Context, directory, manifest string) []byte {
 	test.Helper()
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return scannerRun(
 		test,
@@ -229,8 +229,8 @@ func scannerShard(test *testing.T, shard int) {
 	asked := askedCorpus(test)
 	lines := scannerSelect(scannerManifestLines(test, asked.all), shard)
 	manifest := filepath.Join(test.TempDir(), "shard.txt")
-	if err := os.WriteFile(manifest, []byte(strings.Join(lines, "\n")+"\n"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(manifest, []byte(strings.Join(lines, "\n")+"\n"), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	setupTime := time.Since(setup)
 	started := time.Now()

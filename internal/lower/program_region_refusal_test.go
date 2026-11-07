@@ -12,19 +12,19 @@ import (
 func programCycleRefusalParity(test *testing.T, source string) {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "main.a")
-	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	var baseline *Refused
 	for _, enabled := range []bool{false, true} {
-		loaded, err := load.Load([]string{path})
-		if err != nil {
-			test.Fatal(err)
+		loaded, loadError := load.Load([]string{path})
+		if loadError != nil {
+			test.Fatal(loadError)
 		}
-		_, err = LowerWithOptions(context.Background(), loaded, Options{ProgramRegion: enabled})
+		_, lowerWithOptionsError := LowerWithOptions(context.Background(), loaded, Options{ProgramRegion: enabled})
 		var refused *Refused
-		if !errors.As(err, &refused) {
-			test.Fatalf("ProgramRegion=%t: got %v, want Refused", enabled, err)
+		if !errors.As(lowerWithOptionsError, &refused) {
+			test.Fatalf("ProgramRegion=%t: got %v, want Refused", enabled, lowerWithOptionsError)
 		}
 		if !enabled {
 			baseline = refused

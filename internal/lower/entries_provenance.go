@@ -29,7 +29,8 @@ func (l *lowering) enumerationProven(node *ast.Node, element *checker.Type, dept
 			if property.Kind != ast.KindPropertyAssignment && property.Kind != ast.KindShorthandPropertyAssignment {
 				return false
 			}
-			if property.Kind == ast.KindPropertyAssignment && l.uninitializedInitializer(property.AsPropertyAssignment().Initializer) {
+			if property.Kind == ast.KindPropertyAssignment &&
+				l.uninitializedInitializer(property.AsPropertyAssignment().Initializer) {
 				return false
 			}
 			name, known := l.methodName(property)
@@ -38,7 +39,10 @@ func (l *lowering) enumerationProven(node *ast.Node, element *checker.Type, dept
 			}
 		}
 		for _, field := range l.checker.GetPropertiesOfType(l.checker.GetTypeAtLocation(node)) {
-			if field.Flags&ast.SymbolFlagsOptional != 0 || (!l.enumAssignable(l.checker.GetTypeOfSymbol(field), element) || !l.checker.IsTypeAssignableTo(l.checker.GetTypeOfSymbol(field), element)) {
+			if field.Flags&ast.SymbolFlagsOptional != 0 || (!l.enumAssignable(
+				l.checker.GetTypeOfSymbol(field),
+				element,
+			) || !l.checker.IsTypeAssignableTo(l.checker.GetTypeOfSymbol(field), element)) {
 				return false
 			}
 		}
@@ -62,15 +66,16 @@ func (l *lowering) enumerationProven(node *ast.Node, element *checker.Type, dept
 }
 
 func (l *lowering) enumerationBindingWritten(symbol *ast.Symbol) bool {
-	modules, err := l.moduleOrder(l.program.Files()[0])
-	if err != nil {
+	modules, moduleOrderError := l.moduleOrder(l.program.Files()[0])
+	if moduleOrderError != nil {
 		return true
 	}
 	written := false
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
 		var target *ast.Node
-		if node.Kind == ast.KindBinaryExpression && ast.IsAssignmentOperator(node.AsBinaryExpression().OperatorToken.Kind) {
+		if node.Kind == ast.KindBinaryExpression &&
+			ast.IsAssignmentOperator(node.AsBinaryExpression().OperatorToken.Kind) {
 			target = node.AsBinaryExpression().Left
 		}
 		if node.Kind == ast.KindPrefixUnaryExpression {
@@ -103,26 +108,39 @@ func (l *lowering) enumerationBindingWritten(symbol *ast.Symbol) bool {
 // Native reflection currently represents own data descriptors only. Do not let an
 // erased accessor origin become a slot read; accessor and symbol layouts are refused.
 func (l *lowering) enumerationDescriptors(where *ast.Node, checked bool) error {
-	modules, err := l.moduleOrder(l.program.Files()[0])
-	if err != nil {
-		return err
+	modules, moduleOrderError := l.moduleOrder(l.program.Files()[0])
+	if moduleOrderError != nil {
+		return moduleOrderError
 	}
 	var failure error
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
 		if node.Kind == ast.KindGetAccessor || node.Kind == ast.KindSetAccessor {
-			failure = &Refused{Where: l.program.Where(where), What: "Object enumeration with getter or accessor descriptors", Fix: "use own data properties for this first reflection implementation"}
+			failure = &Refused{
+				Where: l.program.Where(where),
+				What:  "Object enumeration with getter or accessor descriptors",
+				Fix:   "use own data properties for this first reflection implementation",
+			}
 		}
 		if node.Kind == ast.KindObjectLiteralExpression {
 			for _, property := range node.AsObjectLiteralExpression().Properties.Nodes {
-				if property.Name() != nil && property.Name().Kind == ast.KindComputedPropertyName && l.checker.GetTypeAtLocation(property.Name().AsComputedPropertyName().Expression).Flags()&checker.TypeFlagsESSymbolLike != 0 {
-					failure = &Refused{Where: l.program.Where(where), What: "Object enumeration with symbol keys", Fix: "use string-keyed own data properties for this first reflection implementation"}
+				if property.Name() != nil &&
+					property.Name().Kind == ast.KindComputedPropertyName &&
+					l.checker.GetTypeAtLocation(
+						property.Name().AsComputedPropertyName().Expression,
+					).Flags()&checker.TypeFlagsESSymbolLike != 0 {
+					failure = &Refused{
+						Where: l.program.Where(where),
+						What:  "Object enumeration with symbol keys",
+						Fix:   "use string-keyed own data properties for this first reflection implementation",
+					}
 				}
 				name, known := l.methodName(property)
 				if known && (strings.ContainsRune(name, 0) || strings.HasPrefix(name, "#") || name == iteratorSlot) {
 					failure = l.notYet(where, "Object enumeration of a literal with reserved or symbol key storage")
 				}
-				if property.Kind == ast.KindSpreadAssignment && l.includesUndefined(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression)) {
+				if property.Kind == ast.KindSpreadAssignment &&
+					l.includesUndefined(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression)) {
 					failure = l.notYet(where, "Object enumeration of a nullable spread with synthetic absent slots")
 				}
 			}

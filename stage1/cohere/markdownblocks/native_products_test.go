@@ -106,13 +106,13 @@ func probeEmitted(test *testing.T, path string) string {
 	test.Helper()
 	inputs := loweredEmittedInputs("markdownblocks probe "+path+" emitted JavaScript", importClosure(test, path)...)
 	return buildcache.Product(test, inputs, func(directory string) error {
-		entry, err := filepath.Abs(path)
-		if err != nil {
-			return err
+		entry, absolutePathError := filepath.Abs(path)
+		if absolutePathError != nil {
+			return absolutePathError
 		}
-		program, err := loweredResult(entry)
-		if err != nil {
-			return err
+		program, loweredResultError := loweredResult(entry)
+		if loweredResultError != nil {
+			return loweredResultError
 		}
 		return os.WriteFile(filepath.Join(directory, "port.mjs"), []byte(javascript.JavaScript(program)), 0644)
 	})
@@ -126,13 +126,13 @@ var relativeImport = regexp.MustCompile(`(?:from|import)\s+['"](\.[^'"]*)['"]`)
 // from the tree each time it keys, so a source that gains an import moves the key.
 func importClosure(test *testing.T, path string) []string {
 	test.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	entry, err := filepath.Abs(path)
-	if err != nil {
-		test.Fatal(err)
+	entry, absolutePathError := filepath.Abs(path)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	seen := map[string]bool{}
 	pending := []string{entry}
@@ -143,9 +143,9 @@ func importClosure(test *testing.T, path string) []string {
 			continue
 		}
 		seen[source] = true
-		contents, err := os.ReadFile(source)
-		if err != nil {
-			test.Fatal(err)
+		contents, readError := os.ReadFile(source)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		for _, match := range relativeImport.FindAllStringSubmatch(string(contents), -1) {
 			pending = append(pending, filepath.Join(filepath.Dir(source), match[1]))
@@ -153,9 +153,9 @@ func importClosure(test *testing.T, path string) []string {
 	}
 	var sources []string
 	for source := range seen {
-		relative, err := filepath.Rel(root, source)
-		if err != nil {
-			test.Fatal(err)
+		relative, relativePathError := filepath.Rel(root, source)
+		if relativePathError != nil {
+			test.Fatal(relativePathError)
 		}
 		sources = append(sources, filepath.ToSlash(relative))
 	}
@@ -207,17 +207,17 @@ func loweredEmittedInputs(name string, sources ...string) buildcache.Inputs {
 // buildLoweredNative lowers the program at path, relative to this package, and builds it with options as
 // directory/port.
 func buildLoweredNative(path, directory string, options native.Options) error {
-	entry, err := filepath.Abs(path)
-	if err != nil {
-		return err
+	entry, absolutePathError := filepath.Abs(path)
+	if absolutePathError != nil {
+		return absolutePathError
 	}
-	program, err := load.Load([]string{entry})
-	if err != nil {
-		return fmt.Errorf("Load: %w", err)
+	program, loadError := load.Load([]string{entry})
+	if loadError != nil {
+		return fmt.Errorf("Load: %w", loadError)
 	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		return fmt.Errorf("Lower: %w", err)
+	lowered, lowerError := lower.Lower(context.Background(), program)
+	if lowerError != nil {
+		return fmt.Errorf("Lower: %w", lowerError)
 	}
 	return native.Build(native.C(lowered), filepath.Join(directory, "port"), options)
 }

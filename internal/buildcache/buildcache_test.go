@@ -30,11 +30,11 @@ func repository(test *testing.T) string {
 func write(test *testing.T, root, name, content string) {
 	test.Helper()
 	path := filepath.Join(root, name)
-	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	if err := os.WriteFile(path, []byte(content), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(content), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 }
 
@@ -45,22 +45,22 @@ func write(test *testing.T, root, name, content string) {
 // the program again on ETXTBSY would only hide the race.
 func writeExecutable(test *testing.T, path, content string) {
 	test.Helper()
-	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	syscall.ForkLock.RLock()
-	err := os.WriteFile(path, []byte(content), 0o755)
+	writeError := os.WriteFile(path, []byte(content), 0o755)
 	syscall.ForkLock.RUnlock()
-	if err != nil {
-		test.Fatal(err)
+	if writeError != nil {
+		test.Fatal(writeError)
 	}
 }
 
 func key(test *testing.T, root string, inputs Inputs) string {
 	test.Helper()
-	value, err := Key(root, inputs)
-	if err != nil {
-		test.Fatal(err)
+	value, keyError := Key(root, inputs)
+	if keyError != nil {
+		test.Fatal(keyError)
 	}
 	return value
 }
@@ -112,20 +112,26 @@ func TestEveryInputChangesTheKey(test *testing.T) {
 		},
 		"added file": func(test *testing.T, root string) Inputs { write(test, root, "source/c.c", ""); return base },
 		"renamed file": func(test *testing.T, root string) Inputs {
-			if err := os.Rename(filepath.Join(root, "source/b.c"), filepath.Join(root, "source/b2.c")); err != nil {
-				test.Fatal(err)
+			if renameError := os.Rename(
+				filepath.Join(root, "source/b.c"),
+				filepath.Join(root, "source/b2.c"),
+			); renameError != nil {
+				test.Fatal(renameError)
 			}
 			return base
 		},
 		"exec bit": func(test *testing.T, root string) Inputs {
-			if err := os.Chmod(filepath.Join(root, "flags.txt"), 0o755); err != nil {
-				test.Fatal(err)
+			if changeModeError := os.Chmod(filepath.Join(root, "flags.txt"), 0o755); changeModeError != nil {
+				test.Fatal(changeModeError)
 			}
 			return base
 		},
 		"empty directory": func(test *testing.T, root string) Inputs {
-			if err := os.Mkdir(filepath.Join(root, "source", "empty"), 0o755); err != nil {
-				test.Fatal(err)
+			if createDirectoryError := os.Mkdir(
+				filepath.Join(root, "source", "empty"),
+				0o755,
+			); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
 			return base
 		},
@@ -145,8 +151,8 @@ func TestEveryInputChangesTheKey(test *testing.T) {
 		root := repository(test)
 		before := key(test, root, base)
 		later := time.Now().Add(time.Hour)
-		if err := os.Chtimes(filepath.Join(root, "source/a.c"), later, later); err != nil {
-			test.Fatal(err)
+		if changeTimesError := os.Chtimes(filepath.Join(root, "source/a.c"), later, later); changeTimesError != nil {
+			test.Fatal(changeTimesError)
 		}
 		if after := key(test, root, base); after != before {
 			test.Fatalf("a touched file with the same content moved the key: %s, then %s", before, after)
@@ -158,7 +164,7 @@ func TestEveryInputChangesTheKey(test *testing.T) {
 		for _, name := range []string{"/etc/hosts", "../escape"} {
 			in := base
 			in.Files = []string{name}
-			if _, err := Key(root, in); err == nil {
+			if _, keyError := Key(root, in); keyError == nil {
 				test.Fatalf("input %s was accepted", name)
 			}
 		}
@@ -182,9 +188,9 @@ func TestAKeyNamesHowProductsAreHeld(test *testing.T) {
 	}
 	now := key(test, root, base)
 	for _, earlier := range []string{"v1", "v2", "v3", "v4"} {
-		old, err := keyAt(earlier, root, base)
-		if err != nil {
-			test.Fatal(err)
+		old, keyAtError := keyAt(earlier, root, base)
+		if keyAtError != nil {
+			test.Fatal(keyAtError)
 		}
 		if now == old {
 			test.Fatalf("the same inputs key %s under %s and under %s", now, earlier, keyVersion)
@@ -211,11 +217,11 @@ func plant(test *testing.T, root string, changes map[string]string) {
 		}
 		write(test, root, name, content)
 	}
-	if err := os.Chmod(filepath.Join(root, "source/nested/run.sh"), 0o755); err != nil {
-		test.Fatal(err)
+	if changeModeError := os.Chmod(filepath.Join(root, "source/nested/run.sh"), 0o755); changeModeError != nil {
+		test.Fatal(changeModeError)
 	}
-	if err := os.Symlink("a.c", filepath.Join(root, "source/link")); err != nil {
-		test.Fatal(err)
+	if symlinkError := os.Symlink("a.c", filepath.Join(root, "source/link")); symlinkError != nil {
+		test.Fatal(symlinkError)
 	}
 }
 
@@ -228,8 +234,8 @@ func checkout(test *testing.T) string {
 	plant(test, root, nil)
 	old := time.Now().Add(-time.Hour)
 	for name := range declaredTree {
-		if err := os.Chtimes(filepath.Join(root, name), old, old); err != nil {
-			test.Fatal(err)
+		if changeTimesError := os.Chtimes(filepath.Join(root, name), old, old); changeTimesError != nil {
+			test.Fatal(changeTimesError)
 		}
 	}
 	gitIn(test, root, "init", "-q")
@@ -255,17 +261,17 @@ func TestADeclaredCleanFileIsValuedUnread(test *testing.T) {
 	test.Parallel()
 	root := checkout(test)
 	unreadable := filepath.Join(root, "source/a.c")
-	if err := os.Chmod(unreadable, 0); err != nil {
-		test.Fatal(err)
+	if changeModeError := os.Chmod(unreadable, 0); changeModeError != nil {
+		test.Fatal(changeModeError)
 	}
 	test.Cleanup(func() { os.Chmod(unreadable, 0o644) })
-	if _, err := os.ReadFile(unreadable); err == nil {
+	if _, readError := os.ReadFile(unreadable); readError == nil {
 		test.Skip("this user reads a file with no permissions, so a file valued unread can't be told from one read")
 	}
 	time.Sleep(1100 * time.Millisecond)
-	got, err := Key(root, declared)
-	if err != nil {
-		test.Fatalf("keying a clean tracked file read it: %v", err)
+	got, keyError := Key(root, declared)
+	if keyError != nil {
+		test.Fatalf("keying a clean tracked file read it: %v", keyError)
 	}
 	if want := key(test, unpacked(test, nil), declared); got != want {
 		test.Fatalf("a checkout valued unread keys %s, an unpacked copy hashed keys %s", got, want)
@@ -286,8 +292,8 @@ func TestADeclaredDirtyFileIsHashed(test *testing.T) {
 		root := checkout(test)
 		write(test, root, "source/a.c", changed["source/a.c"])
 		older := time.Now().Add(-2 * time.Hour)
-		if err := os.Chtimes(filepath.Join(root, "source/a.c"), older, older); err != nil {
-			test.Fatal(err)
+		if changeTimesError := os.Chtimes(filepath.Join(root, "source/a.c"), older, older); changeTimesError != nil {
+			test.Fatal(changeTimesError)
 		}
 		if got := key(test, root, declared); got != want || got == clean {
 			test.Fatalf(
@@ -317,8 +323,8 @@ func TestADeclaredDirtyFileIsHashed(test *testing.T) {
 		}
 		write(test, root, "source/a.c", changed["source/a.c"])
 		older := time.Now().Add(-2 * time.Hour)
-		if err := os.Chtimes(filepath.Join(root, "source/a.c"), older, older); err != nil {
-			test.Fatal(err)
+		if changeTimesError := os.Chtimes(filepath.Join(root, "source/a.c"), older, older); changeTimesError != nil {
+			test.Fatal(changeTimesError)
 		}
 		if got := key(test, root, declared); got != want {
 			test.Fatalf(
@@ -344,17 +350,17 @@ func TestACheckoutAndItsUnpackedSourceKeyTheSame(test *testing.T) {
 	}
 	runner := unpacked(test, nil)
 	write(test, runner, "source/node_modules/package/index.js", "module.exports = 1;\n")
-	listing, err := toolchain.GitCommand("-C", root, "ls-tree", "-r", "-z", "--full-tree", "HEAD").Output()
-	if err != nil {
-		test.Fatal(err)
+	listing, outputError := toolchain.GitCommand("-C", root, "ls-tree", "-r", "-z", "--full-tree", "HEAD").Output()
+	if outputError != nil {
+		test.Fatal(outputError)
 	}
 	write(test, runner, ".tracked/files", string(listing))
 	if got := key(test, runner, declared); got != want {
 		test.Fatalf("a runner's source with its manifest keys %s, its checkout %s", got, want)
 	}
 	plain := unpacked(test, nil)
-	if err := os.Chmod(filepath.Join(plain, "source/nested/run.sh"), 0o644); err != nil {
-		test.Fatal(err)
+	if changeModeError := os.Chmod(filepath.Join(plain, "source/nested/run.sh"), 0o644); changeModeError != nil {
+		test.Fatal(changeModeError)
 	}
 	if key(test, plain, declared) == want {
 		test.Fatal("run.sh without its exec bit keys as the checkout does")
@@ -392,8 +398,10 @@ func TestABuildRunsOncePerKey(test *testing.T) {
 	if builds != 1 || first != second {
 		test.Fatalf("%d builds, products %s and %s", builds, first, second)
 	}
-	if content, err := os.ReadFile(filepath.Join(second, "product")); err != nil || string(content) != "built" {
-		test.Fatalf("the product reads %q, %v", content, err)
+	if content, readError := os.ReadFile(
+		filepath.Join(second, "product"),
+	); readError != nil || string(content) != "built" {
+		test.Fatalf("the product reads %q, %v", content, readError)
 	}
 	lines, _ := os.ReadFile(log)
 	if got := strings.Fields(
@@ -407,11 +415,11 @@ func TestABuildRunsOncePerKey(test *testing.T) {
 func TestAFailedBuildLeavesNothing(test *testing.T) {
 	cache, _ := cached(test)
 	failure := errors.New("clang failed")
-	if _, err := Get(thisPackage, func(directory string) error {
+	if _, getError := Get(thisPackage, func(directory string) error {
 		os.WriteFile(filepath.Join(directory, "half"), nil, 0o644)
 		return failure
-	}); !errors.Is(err, failure) {
-		test.Fatalf("the build's error was lost: %v", err)
+	}); !errors.Is(getError, failure) {
+		test.Fatalf("the build's error was lost: %v", getError)
 	}
 	for _, directory := range []string{cache, filepath.Join(cache, "local")} {
 		entries, _ := os.ReadDir(directory)
@@ -452,14 +460,14 @@ func TestReadModeNamesAMissingProductAndNeverBuilds(test *testing.T) {
 	build := r.built(test)["port"]
 	r.window(build.Build, func() { r.open(r.pid, "source/a.c") })
 	r.settle(test)
-	if _, err := reading(test, port); err != nil {
-		test.Fatalf("read mode missed a settled product: %v", err)
+	if _, readingError := reading(test, port); readingError != nil {
+		test.Fatalf("read mode missed a settled product: %v", readingError)
 	}
 	elsewhere := port
 	elsewhere.Flags = []string{"-DOTHER"}
-	_, err := reading(test, elsewhere)
-	if !errors.Is(err, ErrNotBuilt) {
-		test.Fatalf("a missing product read as %v, want ErrNotBuilt", err)
+	_, readingError := reading(test, elsewhere)
+	if !errors.Is(readingError, ErrNotBuilt) {
+		test.Fatalf("a missing product read as %v, want ErrNotBuilt", readingError)
 	}
 	missing := NameKey(r.root, elsewhere)
 	for _, want := range []string{
@@ -471,8 +479,8 @@ func TestReadModeNamesAMissingProductAndNeverBuilds(test *testing.T) {
 		"flag -DOTHER",
 		"file source",
 	} {
-		if !strings.Contains(err.Error(), want) {
-			test.Fatalf("the error doesn't name %q: %v", want, err)
+		if !strings.Contains(readingError.Error(), want) {
+			test.Fatalf("the error doesn't name %q: %v", want, readingError)
 		}
 	}
 	entries, _ := os.ReadDir(r.cache)
@@ -488,9 +496,9 @@ func TestReadModeNamesAMissingProductAndNeverBuilds(test *testing.T) {
 
 func repositoryRootForTest(test *testing.T) string {
 	test.Helper()
-	root, err := repositoryRoot()
-	if err != nil {
-		test.Fatal(err)
+	root, repositoryRootError := repositoryRoot()
+	if repositoryRootError != nil {
+		test.Fatal(repositoryRootError)
 	}
 	return root
 }
@@ -505,13 +513,13 @@ func TestParallelCallersBuildOnce(test *testing.T) {
 		group.Add(1)
 		go func() {
 			defer group.Done()
-			directory, err := Get(thisPackage, func(string) error {
+			directory, getError := Get(thisPackage, func(string) error {
 				builds.Add(1)
 				time.Sleep(50 * time.Millisecond)
 				return nil
 			})
-			if err != nil {
-				test.Error(err)
+			if getError != nil {
+				test.Error(getError)
 			}
 			products[index] = directory
 		}()
@@ -571,11 +579,13 @@ func TestASettledPlacementWaitsForAFillOfItsKey(test *testing.T) {
 	if directory != product {
 		test.Fatalf("placeSettled returned %s, not the product at %s", directory, product)
 	}
-	if content, err := os.ReadFile(filepath.Join(product, "product")); err != nil || string(content) != "fetched" {
-		test.Fatalf("the product reads %q, %v", content, err)
+	if content, readError := os.ReadFile(
+		filepath.Join(product, "product"),
+	); readError != nil || string(content) != "fetched" {
+		test.Fatalf("the product reads %q, %v", content, readError)
 	}
-	if _, err := os.Stat(settled); !errors.Is(err, fs.ErrNotExist) {
-		test.Fatalf("the settled build's copy stayed at %s: %v", settled, err)
+	if _, statError := os.Stat(settled); !errors.Is(statError, fs.ErrNotExist) {
+		test.Fatalf("the settled build's copy stayed at %s: %v", settled, statError)
 	}
 }
 
@@ -586,19 +596,21 @@ func TestAFillThatLosesItsRenameFindsTheProduct(test *testing.T) {
 	test.Parallel()
 	cache := test.TempDir()
 	product := filepath.Join(cache, strings.Repeat("cd", 32))
-	placed, built, err := filled(product, "inputs", func(scratch string) error {
+	placed, built, filledError := filled(product, "inputs", func(scratch string) error {
 		write(test, product, "product", "placed")
 		return os.WriteFile(filepath.Join(scratch, "product"), []byte("fetched"), 0o644)
 	})
-	if err != nil || built || placed != product {
-		test.Fatalf("the fill that lost its rename: placed at %s, built %t, %v", placed, built, err)
+	if filledError != nil || built || placed != product {
+		test.Fatalf("the fill that lost its rename: placed at %s, built %t, %v", placed, built, filledError)
 	}
-	if content, err := os.ReadFile(filepath.Join(product, "product")); err != nil || string(content) != "placed" {
-		test.Fatalf("the product reads %q, %v", content, err)
+	if content, readError := os.ReadFile(
+		filepath.Join(product, "product"),
+	); readError != nil || string(content) != "placed" {
+		test.Fatalf("the product reads %q, %v", content, readError)
 	}
-	entries, err := os.ReadDir(cache)
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(cache)
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	for _, entry := range entries {
 		if strings.HasPrefix(entry.Name(), ".building-") {
@@ -617,11 +629,11 @@ func TestAFillThatLosesItsRenameFindsTheProduct(test *testing.T) {
 func TestAToolsFlagKeysAlikeUnderEveryHomeAndSpelling(test *testing.T) {
 	box, unit := test.TempDir(), test.TempDir()
 	tools := filepath.Join(box, "adamic-tools")
-	if err := os.MkdirAll(filepath.Join(tools, "wasi-sysroot"), 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(filepath.Join(tools, "wasi-sysroot"), 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	if err := os.Symlink("adamic-tools", filepath.Join(box, ".adamic-tools")); err != nil {
-		test.Fatal(err)
+	if symlinkError := os.Symlink("adamic-tools", filepath.Join(box, ".adamic-tools")); symlinkError != nil {
+		test.Fatal(symlinkError)
 	}
 	repository := filepath.Join(test.TempDir(), "adamic")
 	test.Setenv("ADAMIC_TOOLS", tools)
@@ -762,8 +774,8 @@ func TestAKeyHashesWhatTheTreeCarries(test *testing.T) {
 			[]string{"-C", directory, "-c", "user.name=t", "-c", "user.email=t@t", "-c", "init.defaultBranch=main"},
 			arguments...,
 		)...)
-		if output, err := command.CombinedOutput(); err != nil {
-			test.Fatalf("git %v: %v\n%s", arguments, err, output)
+		if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+			test.Fatalf("git %v: %v\n%s", arguments, combinedOutputError, output)
 		}
 	}
 	carried := map[string]string{
@@ -801,8 +813,8 @@ func TestAKeyHashesWhatTheTreeCarries(test *testing.T) {
 	git(filepath.Join(linked, "module"), "commit", "-q", "-m", "module")
 	git(linked, "init", "-q")
 	git(linked, "add", "source", "flags.txt", "module")
-	if err := os.RemoveAll(filepath.Join(linked, "module", ".git")); err != nil {
-		test.Fatal(err)
+	if removeError := os.RemoveAll(filepath.Join(linked, "module", ".git")); removeError != nil {
+		test.Fatal(removeError)
 	}
 	inputs := Inputs{Name: "port", Files: []string{"source", "flags.txt", "module"}}
 	inSource := key(test, unpacked, inputs)
@@ -890,9 +902,9 @@ func TestAToolsReportNamesTheToolNotItsPlace(test *testing.T) {
 // (#94aa17s).
 func TestAToolsReportIsTheSameThroughEitherLink(test *testing.T) {
 	test.Parallel()
-	home, err := filepath.EvalSymlinks(test.TempDir())
-	if err != nil {
-		test.Fatal(err)
+	home, resolveSymlinksError := filepath.EvalSymlinks(test.TempDir())
+	if resolveSymlinksError != nil {
+		test.Fatal(resolveSymlinksError)
 	}
 	tools := filepath.Join(home, "adamic-tools")
 	writeExecutable(
@@ -900,14 +912,17 @@ func TestAToolsReportIsTheSameThroughEitherLink(test *testing.T) {
 		filepath.Join(tools, "llvm/bin/fakecc"),
 		"#!/bin/sh\necho 'fakecc version 20.1.8'\necho \"resources: "+tools+"/llvm/lib/fakecc/20\"\n",
 	)
-	if err := os.MkdirAll(filepath.Join(tools, "bin"), 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(filepath.Join(tools, "bin"), 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	if err := os.Symlink(filepath.Join(tools, "llvm/bin/fakecc"), filepath.Join(tools, "bin/fakecc")); err != nil {
-		test.Fatal(err)
+	if symlinkError := os.Symlink(
+		filepath.Join(tools, "llvm/bin/fakecc"),
+		filepath.Join(tools, "bin/fakecc"),
+	); symlinkError != nil {
+		test.Fatal(symlinkError)
 	}
-	if err := os.Symlink("adamic-tools", filepath.Join(home, ".adamic-tools")); err != nil {
-		test.Fatal(err)
+	if symlinkError := os.Symlink("adamic-tools", filepath.Join(home, ".adamic-tools")); symlinkError != nil {
+		test.Fatal(symlinkError)
 	}
 	runner, workshop := Tool(
 		filepath.Join(tools, "bin/fakecc"),
@@ -987,9 +1002,9 @@ func TestToolNamesItselfOnce(test *testing.T) {
 // check after the traced path is taken.
 // Not parallel: cached and each path's test.Setenv.
 func TestADeclaredFileOutsideTheRepositoryIsRefusedOnEveryPath(test *testing.T) {
-	root, err := repositoryRoot()
-	if err != nil {
-		test.Fatal(err)
+	root, repositoryRootError := repositoryRoot()
+	if repositoryRootError != nil {
+		test.Fatal(repositoryRootError)
 	}
 	for _, name := range []string{filepath.Join(root, "go.mod"), "../outside", "internal/../../outside"} {
 		want := fmt.Sprintf("input %q must be inside the repository, relative to its root", name)
@@ -1003,12 +1018,12 @@ func TestADeclaredFileOutsideTheRepositoryIsRefusedOnEveryPath(test *testing.T) 
 			test.Setenv("ADAMIC_BUILD_CACHE", path.cache)
 			test.Setenv("ADAMIC_BUILD_TRACE", path.trace)
 			built := false
-			_, err := Get(
+			_, getError := Get(
 				Inputs{Name: "declares " + name, Files: []string{"go.mod", name}},
 				func(string) error { built = true; return nil },
 			)
-			if err == nil || err.Error() != want || built {
-				test.Errorf("%s, declaring %s: built %t, error %v, want %q", path.name, name, built, err, want)
+			if getError == nil || getError.Error() != want || built {
+				test.Errorf("%s, declaring %s: built %t, error %v, want %q", path.name, name, built, getError, want)
 			}
 		}
 	}

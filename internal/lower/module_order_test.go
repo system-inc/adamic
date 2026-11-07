@@ -15,13 +15,13 @@ import (
 // moduleOrderLowering is a fresh lowering of the program at path, from its entry's checker.
 func moduleOrderLowering(test *testing.T, path string) *lowering {
 	test.Helper()
-	absolute, err := filepath.Abs(path)
-	if err != nil {
-		test.Fatal(err)
+	absolute, absolutePathError := filepath.Abs(path)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := load.Load([]string{absolute})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{absolute})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	checked, release := program.Checker(context.Background(), program.Files()[0])
 	test.Cleanup(release)
@@ -36,26 +36,26 @@ func TestModuleOrderIsComputedOncePerLowering(test *testing.T) {
 	const cyclic = "../oracle/testdata/import_cycles/order/main.a"
 	held := moduleOrderLowering(test, cyclic)
 	entry := held.program.Files()[0]
-	first, err := held.moduleOrder(entry)
-	if err != nil {
-		test.Fatal(err)
+	first, moduleOrderError := held.moduleOrder(entry)
+	if moduleOrderError != nil {
+		test.Fatal(moduleOrderError)
 	}
 	if !held.cyclicModules {
 		test.Fatal("the fixture's modules aren't cyclic, so it can't hold proveModuleReads to its answer")
 	}
 	for asked := 2; asked <= 5; asked++ {
-		again, err := held.moduleOrder(entry)
-		if err != nil || !slices.Equal(again, first) {
-			test.Fatalf("ask %d: %v, %d modules against %d", asked, err, len(again), len(first))
+		again, moduleOrderError := held.moduleOrder(entry)
+		if moduleOrderError != nil || !slices.Equal(again, first) {
+			test.Fatalf("ask %d: %v, %d modules against %d", asked, moduleOrderError, len(again), len(first))
 		}
 	}
 	if held.moduleOrders != 1 {
 		test.Fatalf("module order computed %d times for one lowering and entry", held.moduleOrders)
 	}
 	fresh := moduleOrderLowering(test, cyclic)
-	order, err := fresh.moduleOrder(fresh.program.Files()[0])
-	if err != nil {
-		test.Fatal(err)
+	order, moduleOrderError := fresh.moduleOrder(fresh.program.Files()[0])
+	if moduleOrderError != nil {
+		test.Fatal(moduleOrderError)
 	}
 	if len(order) != len(first) ||
 		fresh.cyclicModules != held.cyclicModules ||

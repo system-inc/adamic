@@ -72,14 +72,14 @@ func printerPreflightInputs(test *testing.T) (script, library, embedded string) 
 	if library == "" {
 		test.Skip("set ADAMIC_GRAPHQL_PRETTIER to prettier@3.9.6 and graphql@17.0.2")
 	}
-	var err error
-	script, err = filepath.Abs("testdata/prettier.mjs")
-	if err != nil {
-		test.Fatal(err)
+	var absolutePathError error
+	script, absolutePathError = filepath.Abs("testdata/prettier.mjs")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	embedded, err = filepath.Abs(filepath.Join(repository, "cohere/internal/format/prettier/bundles"))
-	if err != nil {
-		test.Fatal(err)
+	embedded, absolutePathError = filepath.Abs(filepath.Join(repository, "cohere/internal/format/prettier/bundles"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return
 }
@@ -99,17 +99,17 @@ func printerUpstreamUnit(test *testing.T, unit int) {
 	if len(shards) != testPrinterUpstreamPreflightShards {
 		test.Fatalf("enumerated %d shards, declared %d", len(shards), testPrinterUpstreamPreflightShards)
 	}
-	if err := printerShardUnion(whole, shards); err != nil {
-		test.Fatal(err)
+	if printerShardUnionError := printerShardUnion(whole, shards); printerShardUnionError != nil {
+		test.Fatal(printerShardUnionError)
 	}
 	test.Logf("union: %d unique mode/case ids across %d shards", len(whole), len(shards))
 	if unit < 0 {
 		test.Logf("setup wall %.3fs", time.Since(setupStart).Seconds())
 		return
 	}
-	selected, err := printerShardSelection(os.Getenv("ADAMIC_TEST_SHARD"), len(shards))
-	if err != nil {
-		test.Fatal(err)
+	selected, printerShardSelectionError := printerShardSelection(os.Getenv("ADAMIC_TEST_SHARD"), len(shards))
+	if printerShardSelectionError != nil {
+		test.Fatal(printerShardSelectionError)
 	}
 	for number, shard := range shards {
 		if number != unit || !selected[number] {
@@ -130,7 +130,7 @@ func printerUpstreamUnit(test *testing.T, unit int) {
 				{"embedded fork", embedded, "embedded"},
 			} {
 				got := execute(test, nil, "node", script, side.directory, shard.path, shard.mode, side.engine)
-				counts, err := printerPreflightDisagreement(number, shard, got)
+				counts, printerPreflightDisagreementError := printerPreflightDisagreement(number, shard, got)
 				test.Logf(
 					"%s: %d texts: %d byte-identical formatted, %d shared refusals, %d known whitespace differences, %d unexpected differences",
 					side.name,
@@ -140,8 +140,8 @@ func printerUpstreamUnit(test *testing.T, unit int) {
 					counts.known,
 					counts.unexpected,
 				)
-				if err != nil {
-					test.Errorf("%s: %v", side.name, err)
+				if printerPreflightDisagreementError != nil {
+					test.Errorf("%s: %v", side.name, printerPreflightDisagreementError)
 				}
 			}
 		}
@@ -157,8 +157,12 @@ func TestPrinterPreflightPlantedDisagreement(test *testing.T) {
 		cases, want := printerCases(test, mode)
 		shard := printerShard{mode: mode, path: cases, cases: enumeratePrinter(test, mode, cases, want)}
 		got := execute(test, nil, "node", script, library, shard.path, mode, "npm")
-		if _, err := printerPreflightDisagreement(number, shard, got); err != nil {
-			test.Fatal(err)
+		if _, printerPreflightDisagreementError := printerPreflightDisagreement(
+			number,
+			shard,
+			got,
+		); printerPreflightDisagreementError != nil {
+			test.Fatal(printerPreflightDisagreementError)
 		}
 		shards = append(shards, shard)
 		results = append(results, got)
@@ -166,14 +170,18 @@ func TestPrinterPreflightPlantedDisagreement(test *testing.T) {
 	shards[0].cases[0].want += "planted disagreement"
 	caught := 0
 	for number, shard := range shards {
-		if _, err := printerPreflightDisagreement(number, shard, results[number]); err != nil {
+		if _, printerPreflightDisagreementError := printerPreflightDisagreement(
+			number,
+			shard,
+			results[number],
+		); printerPreflightDisagreementError != nil {
 			caught++
 			if number != 0 ||
-				!strings.Contains(err.Error(), "shard-000") ||
-				!strings.Contains(err.Error(), "defaults/case-000000") {
-				test.Fatalf("wrong owner: %v", err)
+				!strings.Contains(printerPreflightDisagreementError.Error(), "shard-000") ||
+				!strings.Contains(printerPreflightDisagreementError.Error(), "defaults/case-000000") {
+				test.Fatalf("wrong owner: %v", printerPreflightDisagreementError)
 			}
-			test.Logf("planted disagreement caught: %v", err)
+			test.Logf("planted disagreement caught: %v", printerPreflightDisagreementError)
 		}
 	}
 	if caught != 1 {

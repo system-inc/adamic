@@ -39,9 +39,9 @@ type yamlMatchGo struct {
 func (comparison yamlMatchGo) corpus(test *testing.T) ([]string, int) {
 	test.Helper()
 	path, files, count := comparison.cases(test)
-	data, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	cases := strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")
 	if len(cases) != count {
@@ -76,16 +76,16 @@ func (comparison yamlMatchGo) run(test *testing.T, shard int) yamlShardRun {
 		cases[i] = all[index]
 	}
 	path := filepath.Join(test.TempDir(), comparison.family+"-cases.txt")
-	if err := os.WriteFile(path, []byte(strings.Join(cases, "\n")+"\n"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(strings.Join(cases, "\n")+"\n"), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	entry, err := filepath.Abs(comparison.entry)
-	if err != nil {
-		test.Fatal(err)
+	entry, absolutePathError := filepath.Abs(comparison.entry)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	runner := filepath.Join(root, "oracle/node.mjs")
 	arguments := append(append([]string(nil), comparison.arguments...), path)
@@ -147,8 +147,8 @@ func (comparison yamlMatchGo) planted(test *testing.T) {
 	binary := comparison.build.binary(test, comparison.entry)
 	cases, _ := comparison.corpus(test)
 	path := filepath.Join(test.TempDir(), "cases.txt")
-	if err := os.WriteFile(path, []byte(cases[0]+"\n"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(cases[0]+"\n"), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	arguments := append(append([]string(nil), comparison.arguments...), path)
 	expected := run(test, "", nil, oracle, arguments...)

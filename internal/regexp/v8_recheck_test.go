@@ -41,9 +41,9 @@ func TestV8Node2419Recheck(test *testing.T) {
 		if !reflect.DeepEqual(answers[i].Captures, row.node) {
 			test.Fatalf("recorded Node 24.19 reproduction changed %s/%s: %+v", row.pattern, row.flags, answers[i])
 		}
-		p, err := Compile(row.pattern, row.flags)
-		if err != nil {
-			test.Fatal(err)
+		p, compileError := Compile(row.pattern, row.flags)
+		if compileError != nil {
+			test.Fatal(compileError)
 		}
 		if (p.NativeCompatibility() != nil) != row.refused {
 			test.Fatalf("refusal %s/%s: %v", row.pattern, row.flags, p.NativeCompatibility())
@@ -51,9 +51,9 @@ func TestV8Node2419Recheck(test *testing.T) {
 		if row.refused {
 			r := p.New()
 			r.StepLimit = 1000000
-			got, err := matcherResult(r, cases[i].Input)
-			if err != nil {
-				test.Fatal(err)
+			got, matcherResultError := matcherResult(r, cases[i].Input)
+			if matcherResultError != nil {
+				test.Fatal(matcherResultError)
 			}
 			if !reflect.DeepEqual(got.Captures, row.spec) {
 				test.Fatalf("reference/spec witness %s/%s: got %+v spec %v", row.pattern, row.flags, got, row.spec)

@@ -29,19 +29,19 @@ func TestPredicateDirectionUsesLower(test *testing.T) {
 	for _, name := range []string{"argument", "inferred_some", "body_call"} {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(
+			path, absolutePathError := filepath.Abs(
 				filepath.Join(repository, "internal/oracle/testdata/predicate_direction_uses", name+".ts"),
 			)
-			if err != nil {
-				test.Fatal(err)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			truth := onNode(test, path)
 			if truth.exitCode != 0 || len(truth.stderr) != 0 || len(truth.stdout) == 0 {
 				test.Fatalf("Node: %+v", truth)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			if program.PredicateChecks.Checked == 0 {
 				test.Fatalf("no checked predicate call: %+v", program.PredicateChecks)
@@ -61,18 +61,18 @@ func TestPredicateDirectionUsesLower(test *testing.T) {
 // on both backends, where Node prints true.
 func TestPredicateDirectionUsesInferredLieStops(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(
+	path, absolutePathError := filepath.Abs(
 		filepath.Join(repository, "internal/oracle/testdata/predicate_direction_uses/inferred_lie.ts"),
 	)
-	if err != nil {
-		test.Fatal(err)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	if difference := disagreement(run{stdout: []byte("true\n")}, onNode(test, path)); difference != "" {
 		test.Fatal("source Node: " + difference)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	where := ""
 	for _, site := range program.PredicateChecks.Sites {
@@ -110,9 +110,9 @@ func TestPredicateDirectionUsesStayNotYet(test *testing.T) {
 		path := "internal/oracle/testdata/predicate_direction_uses/stopped/" + name + ".ts"
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			absolute, err := filepath.Abs(filepath.Join(repository, path))
-			if err != nil {
-				test.Fatal(err)
+			absolute, absolutePathError := filepath.Abs(filepath.Join(repository, path))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			truth := onNode(test, absolute)
 			if truth.exitCode != 0 || len(truth.stderr) != 0 || len(truth.stdout) == 0 {
@@ -124,9 +124,9 @@ func TestPredicateDirectionUsesStayNotYet(test *testing.T) {
 			if !errors.As(stopped, &notYet) && (name != "filter" || !errors.As(stopped, &refused)) {
 				test.Fatalf("want a NotYet, got %v", stopped)
 			}
-			expected, err := os.ReadFile(strings.TrimSuffix(absolute, ".ts") + ".stopped")
-			if err != nil {
-				test.Fatal(err)
+			expected, readError := os.ReadFile(strings.TrimSuffix(absolute, ".ts") + ".stopped")
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			got := strings.ReplaceAll(stopped.Error(), strings.TrimSuffix(absolute, path), "")
 			if got != strings.TrimSpace(string(expected)) {

@@ -23,9 +23,9 @@ func (l *lowering) isOptionalJoin(node *ast.Node) bool {
 
 func (l *lowering) optionalJoin(node *ast.Node) (ir.Expression, error) {
 	receiver := ast.SkipParentheses(node.AsCallExpression().Expression).AsPropertyAccessExpression().Expression
-	value, _, err := l.arrayMethod(node, receiver, "join")
-	if err != nil {
-		return nil, err
+	value, _, arrayMethodError := l.arrayMethod(node, receiver, "join")
+	if arrayMethodError != nil {
+		return nil, arrayMethodError
 	}
 	join := value.(ir.ArrayJoin)
 	function := -1
@@ -33,7 +33,10 @@ func (l *lowering) optionalJoin(node *ast.Node) (ir.Expression, error) {
 		function = l.functionIndex
 	}
 	local := len(l.result.Locals)
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: "optional_join_receiver", Type: ir.Array, Function: function, ExpressionAssigned: true})
+	l.result.Locals = append(
+		l.result.Locals,
+		ir.Local{Name: "optional_join_receiver", Type: ir.Array, Function: function, ExpressionAssigned: true},
+	)
 	read := ir.Read{Local: local, Of: ir.Array}
 	array := join.Array
 	join.Array = read

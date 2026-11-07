@@ -40,12 +40,17 @@ console.log(describe({}));
 func TestRecordMemberHeapReadsMatchNode(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "main.a")
-	if err := os.WriteFile(path, []byte(recordMemberHeapSource), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(recordMemberHeapSource), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	truth, err := exec.Command("node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", path).Output()
-	if err != nil || string(truth) != "tsconfig:2 @x/*\nnone nopaths\n" {
-		test.Fatalf("source Node: %v, %q", err, truth)
+	truth, outputError := exec.Command(
+		"node",
+		"--disable-warning=ExperimentalWarning",
+		"../../oracle/node.mjs",
+		path,
+	).Output()
+	if outputError != nil || string(truth) != "tsconfig:2 @x/*\nnone nopaths\n" {
+		test.Fatalf("source Node: %v, %q", outputError, truth)
 	}
 	program := recordMemberHeapLowered(test, path)
 	arms := map[ir.Type]bool{}
@@ -61,16 +66,16 @@ func TestRecordMemberHeapReadsMatchNode(test *testing.T) {
 		test.Fatalf("checked arms %v, want a fixed object's and a dictionary's", arms)
 	}
 	js := filepath.Join(test.TempDir(), "main.mjs")
-	if err := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if got, err := exec.Command(
+	if got, outputError := exec.Command(
 		"node",
 		"--disable-warning=ExperimentalWarning",
 		"../../oracle/node.mjs",
 		js,
-	).Output(); err != nil || !bytes.Equal(got, truth) {
-		test.Fatalf("JavaScript: %v, %q; Node %q", err, got, truth)
+	).Output(); outputError != nil || !bytes.Equal(got, truth) {
+		test.Fatalf("JavaScript: %v, %q; Node %q", outputError, got, truth)
 	}
 	code := native.C(program)
 	stdout, stderr, exit, binary := recordMemberHeapRun(test, code)
@@ -149,21 +154,21 @@ console.log(read ? "present" : "absent");
 func recordMemberHeapC(test *testing.T, source string) string {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "main.ts")
-	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return native.C(recordMemberHeapLowered(test, path))
 }
 
 func recordMemberHeapLowered(test *testing.T, path string) *ir.Program {
 	test.Helper()
-	checked, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	checked, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := lower.Lower(context.Background(), checked)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerError := lower.Lower(context.Background(), checked)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	return program
 }
@@ -172,19 +177,19 @@ func recordMemberHeapLowered(test *testing.T, path string) *ir.Program {
 func recordMemberHeapRun(test *testing.T, code string) (string, string, int, string) {
 	test.Helper()
 	binary := filepath.Join(test.TempDir(), "native")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(code, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	command := exec.Command(binary)
 	command.Env = append(os.Environ(), "UBSAN_OPTIONS=halt_on_error=1")
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
-	err := command.Run()
+	runError := command.Run()
 	exit := 0
-	if failed, ok := err.(*exec.ExitError); ok {
+	if failed, ok := runError.(*exec.ExitError); ok {
 		exit = failed.ExitCode()
-	} else if err != nil {
-		test.Fatal(err)
+	} else if runError != nil {
+		test.Fatal(runError)
 	}
 	return stdout.String(), stderr.String(), exit, binary
 }

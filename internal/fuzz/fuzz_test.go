@@ -54,12 +54,12 @@ func TestGeneratedProgramsCheckAndLower(test *testing.T) {
 				path := filepath.Join(directory, "program.a")
 				generated := Generate(seed)
 				source := generated.Source()
-				if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-					test.Fatal(err)
+				if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
+					test.Fatal(writeError)
 				}
-				program, err := load.Load([]string{path})
-				if err != nil {
-					test.Errorf("seed %d: the checker refused it: %v", seed, err)
+				program, loadError := load.Load([]string{path})
+				if loadError != nil {
+					test.Errorf("seed %d: the checker refused it: %v", seed, loadError)
 					continue
 				}
 				if generated.Refusal != "" {
@@ -70,23 +70,30 @@ func TestGeneratedProgramsCheckAndLower(test *testing.T) {
 					if !strings.Contains(source, prefix+generated.Refusal) {
 						test.Errorf("seed %d: refusal %q is not in the source", seed, generated.Refusal)
 					}
-					_, err := lower.Lower(context.Background(), program)
-					if err == nil {
+					_, lowerError := lower.Lower(context.Background(), program)
+					if lowerError == nil {
 						test.Errorf("seed %d: compiler accepted a program it must refuse (%s)", seed, generated.Refusal)
 						continue
 					}
 					var move *lower.Refused
 					if generated.RefusalFix != "" &&
-						(!errors.As(err, &move) || move.What != generated.Refusal || move.Fix != generated.RefusalFix) {
-						test.Errorf("seed %d: wrong move refusal: %v", seed, err)
+						(!errors.As(lowerError, &move) ||
+							move.What != generated.Refusal ||
+							move.Fix != generated.RefusalFix) {
+						test.Errorf("seed %d: wrong move refusal: %v", seed, lowerError)
 					}
-					if !strings.Contains(err.Error(), generated.Refusal) {
-						test.Errorf("seed %d: refusal did not name the path %q: %v", seed, generated.Refusal, err)
+					if !strings.Contains(lowerError.Error(), generated.Refusal) {
+						test.Errorf(
+							"seed %d: refusal did not name the path %q: %v",
+							seed,
+							generated.Refusal,
+							lowerError,
+						)
 					}
 					continue
 				}
-				if _, err := lower.Lower(context.Background(), program); err != nil {
-					test.Errorf("seed %d: stage 0 didn't lower it: %v", seed, err)
+				if _, lowerError := lower.Lower(context.Background(), program); lowerError != nil {
+					test.Errorf("seed %d: stage 0 didn't lower it: %v", seed, lowerError)
 				}
 			}
 		})
@@ -190,11 +197,11 @@ func TestRegexProgramsPassTheChecker(test *testing.T) {
 			for seed := seeds.first; seed <= seeds.last; seed++ {
 				path := filepath.Join(directory, "program.a")
 				source := Generate(seed).Source()
-				if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-					test.Fatal(err)
+				if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
+					test.Fatal(writeError)
 				}
-				if _, err := load.Load([]string{path}); err != nil {
-					test.Errorf("seed %d: the checker refused it: %v\n%s", seed, err, source)
+				if _, loadError := load.Load([]string{path}); loadError != nil {
+					test.Errorf("seed %d: the checker refused it: %v\n%s", seed, loadError, source)
 				}
 			}
 		})
@@ -355,16 +362,16 @@ func TestOwnershipShapes(test *testing.T) {
 			test.Errorf("seed %d: ownership left out the family", seed)
 		}
 		path := filepath.Join(directory, "program.a")
-		if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
-		program, err := load.Load([]string{path})
-		if err != nil {
-			test.Errorf("seed %d: the checker refused it: %v\n%s", seed, err, source)
+		program, loadError := load.Load([]string{path})
+		if loadError != nil {
+			test.Errorf("seed %d: the checker refused it: %v\n%s", seed, loadError, source)
 			continue
 		}
-		if _, err := lower.Lower(context.Background(), program); err != nil {
-			test.Errorf("seed %d: stage 0 didn't lower it: %v\n%s", seed, err, source)
+		if _, lowerError := lower.Lower(context.Background(), program); lowerError != nil {
+			test.Errorf("seed %d: stage 0 didn't lower it: %v\n%s", seed, lowerError, source)
 		}
 	}
 	for _, marker := range want {

@@ -28,7 +28,7 @@ func toPrimitiveHelper(test *testing.T, program *ir.Program) ir.Function {
 // out of instanceToString's arms, which this names.
 func TestToPrimitiveCoversEveryClass(test *testing.T) {
 	test.Parallel()
-	program, err := lowerSource(test, `class Base {
+	program, lowerSourceError := lowerSource(test, `class Base {
 	toString(): string {
 		return 'base';
 	}
@@ -60,8 +60,8 @@ console.log(String(new Counter().increment()));
 console.log(String(new Unseen().flag));
 console.log(String(accessor.area));
 `)
-	if err != nil {
-		test.Fatal(err)
+	if lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
 	covered := map[int]bool{}
 	walk(toPrimitiveHelper(test, program).Body, func(node any) bool {
@@ -100,7 +100,7 @@ console.log(String(accessor.area));
 // own fields, from OwnStart, so Derived's arm answers "[object Object]" and Below's calls its method.
 func TestToPrimitiveInheritedFieldStops(test *testing.T) {
 	test.Parallel()
-	program, err := lowerSource(test, `class Base {
+	program, lowerSourceError := lowerSource(test, `class Base {
 	toString = (): string => 'field';
 }
 class Derived extends Base {}
@@ -119,8 +119,8 @@ show(new Base());
 show(new Derived());
 show(new Below());
 `)
-	if err != nil {
-		test.Fatal(err)
+	if lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
 	want := "converting an object whose class has a toString or valueOf field to a string is not yet lowered"
 	// The class arms sit inside the instance kind's branch, so they're found at any depth.
@@ -164,12 +164,12 @@ show(new Below());
 // (TestToPrimitiveArrayJoinLetsGoInFinally).
 func TestToPrimitiveUnreachableArmsStop(test *testing.T) {
 	test.Parallel()
-	program, err := lowerSource(
+	program, lowerSourceError := lowerSource(
 		test,
 		"function show(value: unknown): void {\n\tconsole.log(String(value));\n}\nshow(1);\n",
 	)
-	if err != nil {
-		test.Fatal(err)
+	if lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
 	arms := map[int][]ir.Statement{}
 	body := toPrimitiveHelper(test, program).Body
@@ -220,12 +220,12 @@ func TestToPrimitiveUnreachableArmsStop(test *testing.T) {
 // and JoinEnter dropped.
 func TestToPrimitiveArrayJoinLetsGoInFinally(test *testing.T) {
 	test.Parallel()
-	program, err := lowerSource(
+	program, lowerSourceError := lowerSource(
 		test,
 		"function show(value: unknown): void {\n\tconsole.log(String(value));\n}\nshow(['a']);\n",
 	)
-	if err != nil {
-		test.Fatal(err)
+	if lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
 	var arm []ir.Statement
 	for _, statement := range toPrimitiveHelper(test, program).Body {
@@ -303,9 +303,9 @@ func TestToPrimitiveProbesOfUnknownArrays(test *testing.T) {
 			"an array of unknown with erased element storage",
 		},
 	} {
-		_, err := lowerSource(test, probe.source)
-		if err == nil || !strings.Contains(err.Error(), probe.refusal) {
-			test.Errorf("want %q, got %v: %q", probe.refusal, err, probe.source)
+		_, lowerSourceError := lowerSource(test, probe.source)
+		if lowerSourceError == nil || !strings.Contains(lowerSourceError.Error(), probe.refusal) {
+			test.Errorf("want %q, got %v: %q", probe.refusal, lowerSourceError, probe.source)
 		}
 	}
 }

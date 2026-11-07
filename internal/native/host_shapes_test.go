@@ -640,9 +640,9 @@ var entranceDeclaration = regexp.MustCompile(`\b(adamic_(?:has|dynamic)_\w*)\s*\
 // entranceProblems holds union.c, the runtime's headers and the emitter to hostShapeEntrances.
 func entranceProblems(union string, headers map[string]string, emitter string) []string {
 	var problems []string
-	tokens, err := cTokens(strings.ReplaceAll(union, "\\\n", "  "))
-	if err != nil {
-		return []string{"union.c: " + err.Error()}
+	tokens, cTokensError := cTokens(strings.ReplaceAll(union, "\\\n", "  "))
+	if cTokensError != nil {
+		return []string{"union.c: " + cTokensError.Error()}
 	}
 	guarded := map[string]bool{}
 	depth, scope := 0, ""
@@ -699,25 +699,25 @@ func entranceProblems(union string, headers map[string]string, emitter string) [
 // entranceSources reads union.c, the runtime's headers and the emitter's expressions.
 func entranceSources(test *testing.T) (string, map[string]string, string) {
 	test.Helper()
-	union, err := os.ReadFile(filepath.Join("runtime", "union.c"))
-	if err != nil {
-		test.Fatal(err)
+	union, readError := os.ReadFile(filepath.Join("runtime", "union.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	paths, err := filepath.Glob(filepath.Join("runtime", "*.h"))
-	if err != nil {
-		test.Fatal(err)
+	paths, globError := filepath.Glob(filepath.Join("runtime", "*.h"))
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	headers := map[string]string{}
 	for _, path := range paths {
-		text, err := os.ReadFile(path)
-		if err != nil {
-			test.Fatal(err)
+		text, readError := os.ReadFile(path)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		headers[filepath.Base(path)] = string(text)
 	}
-	emitter, err := os.ReadFile("emit_expressions.go")
-	if err != nil {
-		test.Fatal(err)
+	emitter, readError := os.ReadFile("emit_expressions.go")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return string(union), headers, string(emitter)
 }
@@ -839,9 +839,9 @@ var hostShapeDoors = []struct{ refusal, refused string }{
 // nameReaders finds, in one C file, each function that reads a shape's names other than to assign
 // them, and whether it calls the host guard.
 func nameReaders(source string) (map[string]bool, error) {
-	tokens, err := cTokens(strings.ReplaceAll(source, "\\\n", "  "))
-	if err != nil {
-		return nil, err
+	tokens, cTokensError := cTokens(strings.ReplaceAll(source, "\\\n", "  "))
+	if cTokensError != nil {
+		return nil, cTokensError
 	}
 	readers := map[string]bool{}
 	guarded := map[string]bool{}
@@ -903,9 +903,9 @@ func readerProblems(sources map[string]string) []string {
 	}
 	slices.Sort(files)
 	for _, file := range files {
-		readers, err := nameReaders(sources[file])
-		if err != nil {
-			problems = append(problems, file+": "+err.Error())
+		readers, nameReadersError := nameReaders(sources[file])
+		if nameReadersError != nil {
+			problems = append(problems, file+": "+nameReadersError.Error())
 			continue
 		}
 		functions := make([]string, 0, len(readers))
@@ -962,15 +962,15 @@ func readerProblems(sources map[string]string) []string {
 // readerSources reads every runtime C file and header by its name.
 func readerSources(test *testing.T) map[string]string {
 	test.Helper()
-	paths, err := filepath.Glob(filepath.Join("runtime", "*.[ch]"))
-	if err != nil {
-		test.Fatal(err)
+	paths, globError := filepath.Glob(filepath.Join("runtime", "*.[ch]"))
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	sources := map[string]string{}
 	for _, path := range paths {
-		text, err := os.ReadFile(path)
-		if err != nil {
-			test.Fatal(err)
+		text, readError := os.ReadFile(path)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		sources[filepath.Base(path)] = string(text)
 	}
@@ -999,14 +999,14 @@ var hostShapeScan struct {
 func scannedHostShapes(test *testing.T) ([]foundShape, []string) {
 	test.Helper()
 	hostShapeScan.once.Do(func() {
-		shapes, unclassified, err := runtimeShapes(filepath.Join("..", "..", hostShapeRuntime))
-		if err != nil {
-			hostShapeScan.err = err
+		shapes, unclassified, runtimeShapesError := runtimeShapes(filepath.Join("..", "..", hostShapeRuntime))
+		if runtimeShapesError != nil {
+			hostShapeScan.err = runtimeShapesError
 			return
 		}
-		generated, generatedUnclassified, err := generatedShapes(filepath.Join("..", ".."))
-		if err != nil {
-			hostShapeScan.err = err
+		generated, generatedUnclassified, generatedShapesError := generatedShapes(filepath.Join("..", ".."))
+		if generatedShapesError != nil {
+			hostShapeScan.err = generatedShapesError
 			return
 		}
 		hostShapeScan.shapes = append(shapes, generated...)
@@ -1022,9 +1022,9 @@ var shapeWord = regexp.MustCompile(`\badamic_shape\b`)
 
 // runtimeShapes finds every adamic_shape the runtime's C defines or builds.
 func runtimeShapes(directory string) ([]foundShape, []string, error) {
-	paths, err := filepath.Glob(filepath.Join(directory, "*.[ch]"))
-	if err != nil {
-		return nil, nil, err
+	paths, globError := filepath.Glob(filepath.Join(directory, "*.[ch]"))
+	if globError != nil {
+		return nil, nil, globError
 	}
 	if len(paths) == 0 {
 		return nil, nil, fmt.Errorf("no runtime sources in %s", directory)
@@ -1033,9 +1033,9 @@ func runtimeShapes(directory string) ([]foundShape, []string, error) {
 	var shapes []foundShape
 	var unclassified []string
 	for _, path := range paths {
-		source, err := os.ReadFile(path)
-		if err != nil {
-			return nil, nil, err
+		source, readError := os.ReadFile(path)
+		if readError != nil {
+			return nil, nil, readError
 		}
 		found, problems := fileShapes(hostShapeRuntime+filepath.Base(path), string(source))
 		shapes = append(shapes, found...)
@@ -1047,9 +1047,9 @@ func runtimeShapes(directory string) ([]foundShape, []string, error) {
 // fileShapes scans one C file. A line continuation is two bytes, replaced by two spaces, so every
 // token keeps its offset and a directive stays one token.
 func fileShapes(file, source string) ([]foundShape, []string) {
-	tokens, err := cTokens(strings.ReplaceAll(source, "\\\n", "  "))
-	if err != nil {
-		return nil, []string{fmt.Sprintf("%s: %v", file, err)}
+	tokens, cTokensError := cTokens(strings.ReplaceAll(source, "\\\n", "  "))
+	if cTokensError != nil {
+		return nil, []string{fmt.Sprintf("%s: %v", file, cTokensError)}
 	}
 	line := func(index int) int { return strings.Count(source[:tokens[index].start], "\n") + 1 }
 	at := func(index int) string {
@@ -1374,9 +1374,12 @@ func generatedShapes(root string) ([]foundShape, []string, error) {
 	var shapes []foundShape
 	var unclassified []string
 	for _, top := range []string{"internal", "cmd", "bridge"} {
-		err := filepath.WalkDir(filepath.Join(root, top), func(path string, entry fs.DirEntry, err error) error {
-			if err != nil {
-				return err
+		walkError := filepath.WalkDir(filepath.Join(
+			root,
+			top,
+		), func(path string, entry fs.DirEntry, pathError error) error {
+			if pathError != nil {
+				return pathError
 			}
 			if entry.IsDir() {
 				if entry.Name() == "testdata" {
@@ -1387,22 +1390,22 @@ func generatedShapes(root string) ([]foundShape, []string, error) {
 			if !strings.HasSuffix(path, ".go") || strings.HasSuffix(path, "_test.go") {
 				return nil
 			}
-			source, err := os.ReadFile(path)
-			if err != nil {
-				return err
+			source, readError := os.ReadFile(path)
+			if readError != nil {
+				return readError
 			}
 			if !shapeWord.Match(source) {
 				return nil
 			}
-			relative, err := filepath.Rel(root, path)
-			if err != nil {
-				return err
+			relative, relativePathError := filepath.Rel(root, path)
+			if relativePathError != nil {
+				return relativePathError
 			}
 			relative = filepath.ToSlash(relative)
 			files := token.NewFileSet()
-			parsed, err := parser.ParseFile(files, path, source, parser.SkipObjectResolution)
-			if err != nil {
-				return err
+			parsed, parseFileError := parser.ParseFile(files, path, source, parser.SkipObjectResolution)
+			if parseFileError != nil {
+				return parseFileError
 			}
 			for _, declaration := range parsed.Decls {
 				function, isFunction := declaration.(*ast.FuncDecl)
@@ -1416,8 +1419,8 @@ func generatedShapes(root string) ([]foundShape, []string, error) {
 					if !isLiteral || literal.Kind != token.STRING {
 						return true
 					}
-					value, err := strconv.Unquote(literal.Value)
-					if err != nil || !shapeWord.MatchString(value) {
+					value, unquoteError := strconv.Unquote(literal.Value)
+					if unquoteError != nil || !shapeWord.MatchString(value) {
 						return true
 					}
 					where := fmt.Sprintf("%s:%d", relative, files.Position(literal.Pos()).Line)
@@ -1460,8 +1463,8 @@ func generatedShapes(root string) ([]foundShape, []string, error) {
 			}
 			return nil
 		})
-		if err != nil {
-			return nil, nil, err
+		if walkError != nil {
+			return nil, nil, walkError
 		}
 	}
 	return shapes, unclassified, nil
@@ -1557,9 +1560,9 @@ func hostShapeProblems(test *testing.T, table []hostShapeRow, shapes []foundShap
 		problems = append(problems, hostShapePinProblems(test, row)...)
 	}
 	for _, wrapper := range hostShapeWrappers {
-		source, err := os.ReadFile(filepath.Join("..", "..", wrapper.file))
-		if err != nil {
-			problems = append(problems, err.Error())
+		source, readError := os.ReadFile(filepath.Join("..", "..", wrapper.file))
+		if readError != nil {
+			problems = append(problems, readError.Error())
 			continue
 		}
 		if !strings.Contains(string(source), wrapper.declaration) ||
@@ -1584,9 +1587,9 @@ func hostShapeProblems(test *testing.T, table []hostShapeRow, shapes []foundShap
 // reflectGetListed reports whether internal/oracle's reflect_get tests run the fixture.
 func reflectGetListed(test *testing.T, fixture string) bool {
 	test.Helper()
-	source, err := os.ReadFile(filepath.Join("..", "oracle", "reflect_get_test.go"))
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(filepath.Join("..", "oracle", "reflect_get_test.go"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return strings.Contains(string(source), `{"`+fixture+`", `)
 }
@@ -1607,7 +1610,9 @@ func hostShapePinProblems(test *testing.T, row hostShapeRow) []string {
 			problems = append(problems, row.key()+": a host row's pin is a stop fixture, the Error rule or a reason")
 		}
 		if row.stop != "" {
-			if _, err := os.Stat(filepath.Join(fixtures, row.stop)); err != nil || !reflectGetListed(test, row.stop) {
+			if _, statError := os.Stat(
+				filepath.Join(fixtures, row.stop),
+			); statError != nil || !reflectGetListed(test, row.stop) {
 				problems = append(problems, fmt.Sprintf(
 					"%s: its stop fixture %s isn't in reflect_get or isn't run by reflect_get_test.go",
 					row.key(),
@@ -1629,8 +1634,8 @@ func hostShapePinProblems(test *testing.T, row hostShapeRow) []string {
 		path := filepath.Join(fixtures, row.answer)
 		if strings.Contains(row.answer, "/") {
 			path = filepath.Join("..", "..", row.answer)
-			runner, err := os.ReadFile(filepath.Join("..", "..", row.runner))
-			if err != nil || row.runs == "" || !strings.Contains(string(runner), row.runs) {
+			runner, readError := os.ReadFile(filepath.Join("..", "..", row.runner))
+			if readError != nil || row.runs == "" || !strings.Contains(string(runner), row.runs) {
 				problems = append(
 					problems,
 					fmt.Sprintf("%s: %s doesn't run %s's row (%q)", row.key(), row.runner, row.answer, row.runs),
@@ -1642,8 +1647,8 @@ func hostShapePinProblems(test *testing.T, row hostShapeRow) []string {
 				fmt.Sprintf("%s: its answer fixture %s isn't run by reflect_get_test.go", row.key(), row.answer),
 			)
 		}
-		source, err := os.ReadFile(path)
-		if err != nil || !strings.Contains(string(source), row.row) {
+		source, readError := os.ReadFile(path)
+		if readError != nil || !strings.Contains(string(source), row.row) {
 			problems = append(problems, fmt.Sprintf("%s: %s doesn't hold the row %q", row.key(), row.answer, row.row))
 		}
 	case hostShapeUnreachable:
@@ -1666,31 +1671,31 @@ func hostShapePinProblems(test *testing.T, row hostShapeRow) []string {
 // refusalProblem lowers the program and says what's wrong unless lowering refuses it in exactly
 // the given words.
 func refusalProblem(path, refused string) string {
-	checked, err := load.Load([]string{path})
-	if err != nil {
-		return fmt.Sprintf("%s doesn't load: %v", path, err)
+	checked, loadError := load.Load([]string{path})
+	if loadError != nil {
+		return fmt.Sprintf("%s doesn't load: %v", path, loadError)
 	}
-	_, err = lower.Lower(context.Background(), checked)
+	_, lowerError := lower.Lower(context.Background(), checked)
 	var refusal *lower.Refused
 	var notYet *lower.NotYet
 	switch {
-	case errors.As(err, &refusal):
+	case errors.As(lowerError, &refusal):
 		if refusal.What == refused {
 			return ""
 		}
 		return fmt.Sprintf("%s is refused as %q, not %q", path, refusal.What, refused)
-	case errors.As(err, &notYet):
+	case errors.As(lowerError, &notYet):
 		if notYet.What == refused {
 			return ""
 		}
 		return fmt.Sprintf("%s is NotYet as %q, not refused as %q", path, notYet.What, refused)
-	case err == nil:
+	case lowerError == nil:
 		return fmt.Sprintf(
 			"%s lowers, so the refusal that kept its shape from a run-time key read is lifted: classify the shape anew",
 			path,
 		)
 	}
-	return fmt.Sprintf("%s fails to lower otherwise: %v", path, err)
+	return fmt.Sprintf("%s fails to lower otherwise: %v", path, lowerError)
 }
 
 // Every runtime shape, and every one a generator writes, is in hostShapeTable, its C agrees with its
@@ -1714,9 +1719,9 @@ func TestHostShapesClosure(test *testing.T) {
 	for _, problem := range readerProblems(readerSources(test)) {
 		test.Error(problem)
 	}
-	union, err := os.ReadFile(filepath.Join("runtime", "union.c"))
-	if err != nil {
-		test.Fatal(err)
+	union, readError := os.ReadFile(filepath.Join("runtime", "union.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if !strings.Contains(string(union), strconv.Quote(ir.DynamicKeysStop)) {
 		test.Errorf(
@@ -1805,8 +1810,8 @@ func TestHostShapesClosureMutants(test *testing.T) {
 		test.Errorf("adamic_object_has's guard dropped went unnamed")
 	}
 	lowers := filepath.Join(test.TempDir(), "tsgo_query.a")
-	if err := os.WriteFile(lowers, []byte("console.log('lowers');\n"), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(lowers, []byte("console.log('lowers');\n"), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	if problem := refusalProblem(
 		lowers,

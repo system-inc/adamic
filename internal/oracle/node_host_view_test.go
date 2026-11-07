@@ -164,18 +164,20 @@ func TestNodeHostViewReachNotYet(test *testing.T) {
 	} {
 		test.Run(probe.file, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/reland_refused", probe.file))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/reland_refused", probe.file),
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			truth := onNode(test, path)
 			if disagreement(run{stdout: []byte(probe.node)}, truth) != "" {
 				test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
-			program, err := lowered(test, path)
+			program, loweredError := lowered(test, path)
 			if os.Getenv("ADAMIC_HOST_VIEW_MUTANT") == "1" {
-				if err != nil {
-					test.Skipf("this mutant still refuses it: %v", err)
+				if loweredError != nil {
+					test.Skipf("this mutant still refuses it: %v", loweredError)
 				}
 				native, _ := nativelyUncached(test, program)
 				for name, got := range map[string]run{"native": native, "release": releasedUncached(test, program)} {
@@ -213,14 +215,14 @@ func TestNodeHostViewReachNotYet(test *testing.T) {
 				", a member no host registration names"
 			if probe.member == "" {
 				what = probe.file + ":" + probe.at + ": stage 0 can't lower " + probe.subject
-				if err == nil ||
-					!strings.Contains(err.Error(), "which goes past the depth the view check follows, at ") {
-					test.Fatalf("want it refused past the depth the view check follows, got %v", err)
+				if loweredError == nil ||
+					!strings.Contains(loweredError.Error(), "which goes past the depth the view check follows, at ") {
+					test.Fatalf("want it refused past the depth the view check follows, got %v", loweredError)
 				}
 			}
 			var notYet *lower.NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), what) {
-				test.Fatalf("want %q, got %v", what, err)
+			if !errors.As(loweredError, &notYet) || !strings.Contains(loweredError.Error(), what) {
+				test.Fatalf("want %q, got %v", what, loweredError)
 			}
 		})
 	}
@@ -237,15 +239,17 @@ func TestNodeHostViewAnyMemberStopsFirst(test *testing.T) {
 	} {
 		test.Run(probe.file, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/reland_refused", probe.file))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/reland_refused", probe.file),
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			truth := onNode(test, path)
 			if disagreement(run{stdout: []byte("undefined\n")}, truth) != "" {
 				test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
-			_, err = lowered(test, path)
+			_, loweredError := lowered(test, path)
 			what := probe.file +
 				":" +
 				probe.at +
@@ -253,8 +257,8 @@ func TestNodeHostViewAnyMemberStopsFirst(test *testing.T) {
 				probe.site +
 				" site yet"
 			var notYet *lower.NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), what) {
-				test.Fatalf("want %q, got %v", what, err)
+			if !errors.As(loweredError, &notYet) || !strings.Contains(loweredError.Error(), what) {
+				test.Fatalf("want %q, got %v", what, loweredError)
 			}
 		})
 	}
@@ -290,16 +294,16 @@ func TestNodeHostViewRegisteredAgrees(test *testing.T) {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
 			path := filepath.Join(test.TempDir(), "main.ts")
-			if err := os.WriteFile(path, []byte(probe.source), 0o644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, []byte(probe.source), 0o644); writeError != nil {
+				test.Fatal(writeError)
 			}
 			truth := onNode(test, path)
 			if disagreement(run{stdout: []byte("true\n")}, truth) != "" {
 				test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatalf("a registered member's view must lower: %v", err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatalf("a registered member's view must lower: %v", loweredError)
 			}
 			native, _ := natively(test, program)
 			for backend, got := range map[string]run{
@@ -378,15 +382,17 @@ func TestNodeHostViewStopsHeld(test *testing.T) {
 	} {
 		test.Run(probe.file, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/reland_refused", probe.file))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/reland_refused", probe.file),
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			_, err = lowered(test, path)
-			if err == nil ||
-				!strings.Contains(err.Error(), probe.file+":"+probe.at) ||
-				!strings.Contains(err.Error(), probe.what) {
-				test.Fatalf("want it stopped at %s by %q, got %v", probe.at, probe.what, err)
+			_, loweredError := lowered(test, path)
+			if loweredError == nil ||
+				!strings.Contains(loweredError.Error(), probe.file+":"+probe.at) ||
+				!strings.Contains(loweredError.Error(), probe.what) {
+				test.Fatalf("want it stopped at %s by %q, got %v", probe.at, probe.what, loweredError)
 			}
 		})
 	}

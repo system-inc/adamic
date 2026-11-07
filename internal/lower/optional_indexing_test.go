@@ -8,13 +8,14 @@ import (
 
 func TestOptionalIndexingKeepsReadonlyIndexSignaturesNotYet(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(
+	_, lowerSourceError := lowerSource(
 		test,
 		"interface MapLike { readonly [key: string]: number; }\nfunction pick(record: MapLike | undefined, key: string): number | undefined { return record?.[key]; }\n",
 	)
 	var refused *NotYet
-	if !errors.As(err, &refused) || !strings.Contains(refused.What, "non-mutable unrestricted string signature") {
-		test.Fatalf("got %v, want the readonly dictionary refusal", err)
+	if !errors.As(lowerSourceError, &refused) ||
+		!strings.Contains(refused.What, "non-mutable unrestricted string signature") {
+		test.Fatalf("got %v, want the readonly dictionary refusal", lowerSourceError)
 	}
 }
 
@@ -48,16 +49,16 @@ func TestOptionalIndexingKeepsUnsupportedStorageNotYet(test *testing.T) {
 		},
 	} {
 		test.Run(probe.name, func(test *testing.T) {
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			if probe.reason == "" {
-				if err != nil {
-					test.Fatal(err)
+				if lowerSourceError != nil {
+					test.Fatal(lowerSourceError)
 				}
 				return
 			}
 			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(notYet.What, probe.reason) {
-				test.Fatalf("got %v, want NotYet containing %q", err, probe.reason)
+			if !errors.As(lowerSourceError, &notYet) || !strings.Contains(notYet.What, probe.reason) {
+				test.Fatalf("got %v, want NotYet containing %q", lowerSourceError, probe.reason)
 			}
 		})
 	}

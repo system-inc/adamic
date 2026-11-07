@@ -31,9 +31,9 @@ function getRelativePathToDirectoryOrUrl(_a:string,b:string,_c:string,_d:(p:stri
 `
 	source := prefix + strings.Repeat("\n", 1671-strings.Count(prefix, "\n")) + inspectorCleanupPaths
 	path := writeAgreementSource(test, "sys.ts", source)
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	file := program.Files()[0]
 	checked, release := program.Checker(context.Background(), file)
@@ -54,8 +54,8 @@ function getRelativePathToDirectoryOrUrl(_a:string,b:string,_c:string,_d:(p:stri
 			}
 			if kind != "" {
 				got = append(got, fmt.Sprintf("%s %s %s", filepath.Base(program.Where(node)), name, kind))
-				if err := l.nodeLibraryRefusal(node); err != nil {
-					test.Errorf("Profile member still refused: %v", err)
+				if nodeLibraryRefusalError := l.nodeLibraryRefusal(node); nodeLibraryRefusalError != nil {
+					test.Errorf("Profile member still refused: %v", nodeLibraryRefusalError)
 				}
 			}
 		}
@@ -99,10 +99,10 @@ func TestInspectorProfileOtherMembersStayRefused(test *testing.T) {
 		"Session connect":      `import type {Session} from 'node:inspector'; function use(s:Session):void{s.connect();}`,
 	} {
 		test.Run(name, func(test *testing.T) {
-			_, err := lowerSourceAs(test, source, ".ts")
+			_, lowerSourceAsError := lowerSourceAs(test, source, ".ts")
 			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(notYet.What, "node:inspector.") {
-				test.Fatalf("unbound inspector member must stay NotYet: %v", err)
+			if !errors.As(lowerSourceAsError, &notYet) || !strings.Contains(notYet.What, "node:inspector.") {
+				test.Fatalf("unbound inspector member must stay NotYet: %v", lowerSourceAsError)
 			}
 		})
 	}
@@ -121,9 +121,9 @@ function use(inspector:typeof Inspector,session:Inspector.Session):void {
  session.disconnect();
 }`
 	path := writeAgreementSource(test, "session.ts", source)
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	file := program.Files()[0]
 	checked, release := program.Checker(context.Background(), file)
@@ -133,9 +133,9 @@ function use(inspector:typeof Inspector,session:Inspector.Session):void {
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
 		var notYet *NotYet
-		if err := l.nodeLibraryRefusal(
+		if nodeLibraryRefusalError := l.nodeLibraryRefusal(
 			node,
-		); errors.As(err, &notYet) && strings.HasPrefix(notYet.What, "node:inspector.Session") {
+		); errors.As(nodeLibraryRefusalError, &notYet) && strings.HasPrefix(notYet.What, "node:inspector.Session") {
 			sites[notYet.Where+": "+notYet.What] = true
 		}
 		node.ForEachChild(visit)

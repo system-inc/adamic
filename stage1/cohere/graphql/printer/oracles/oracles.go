@@ -32,24 +32,24 @@ var printerOraclePath string
 func Printer(test *testing.T) string {
 	test.Helper()
 	printerOracleOnce.Do(func() {
-		root, err := filepath.Abs(repository)
-		if err != nil {
-			test.Fatal(err)
+		root, absolutePathError := filepath.Abs(repository)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		side, _ := filepath.Abs("testdata/cohere_side_test.go")
 		generator, _ := filepath.Abs("../testdata/cohere_side_test.go")
 		cohere := filepath.Join(root, "cohere")
-		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{
+		overlay, encodeError := json.Marshal(map[string]any{"Replace": map[string]string{
 			cohere + "/internal/format/graphql/adamic_printer_test.go":   side,
 			cohere + "/internal/format/graphql/adamic_generator_test.go": generator,
 		}})
-		if err != nil {
-			test.Fatal(err)
+		if encodeError != nil {
+			test.Fatal(encodeError)
 		}
 		// The overlay names this checkout's paths: it keys and builds the product and is never part of it (#tqrqx60).
 		path := filepath.Join(test.TempDir(), "overlay.json")
-		if err := os.WriteFile(path, overlay, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, overlay, 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		// Each corpus keys the owner-suffixed binary by its name and bytes.
 		const output = "oracle-oracle-owner-v1"
@@ -57,9 +57,15 @@ func Printer(test *testing.T) string {
 		if oracleProducer {
 			printerOraclePath = buildcache.GoTest(test, "cohere", output, "./internal/format/graphql", arguments)
 		} else {
-			inputs, err := buildcache.GoTestInputs("cohere", output, "./internal/format/graphql", arguments, nil)
-			if err != nil {
-				test.Fatal(err)
+			inputs, goTestInputsError := buildcache.GoTestInputs(
+				"cohere",
+				output,
+				"./internal/format/graphql",
+				arguments,
+				nil,
+			)
+			if goTestInputsError != nil {
+				test.Fatal(goTestInputsError)
 			}
 			product := buildcache.BuiltElsewhere(
 				test,
@@ -114,9 +120,9 @@ func Cases(test *testing.T, mode string) (string, string) {
 
 func printerCorpusProduct(test *testing.T, mode string) (string, string) {
 	test.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	// Mode and mutant shards use this fixed corpus: Cohere commit
 	// 7945d102a6c18dd36adf9114a758ce646e8b2359 plus generated controls
@@ -147,19 +153,19 @@ func printerCorpusProduct(test *testing.T, mode string) (string, string) {
 		Flags: []string{"mode=" + mode, "test-run=TestAdamicPrinter"}, Toolchain: runtime.Version(),
 	})
 	recipe := func(directory string) error {
-		request, err := json.Marshal(map[string]any{
+		request, encodeError := json.Marshal(map[string]any{
 			"Sources":  []string(nil),
 			"Cases":    directory + "/cases.txt",
 			"Answers":  directory + "/answers.txt",
 			"Mode":     mode,
 			"Coverage": directory + "/coverage.json",
 		})
-		if err != nil {
-			return err
+		if encodeError != nil {
+			return encodeError
 		}
 		path := filepath.Join(test.TempDir(), "request.json")
-		if err := os.WriteFile(path, request, 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(path, request, 0644); writeError != nil {
+			return writeError
 		}
 		command := toolchain.CommandContextIn(
 			context.Background(),
@@ -171,8 +177,11 @@ func printerCorpusProduct(test *testing.T, mode string) (string, string) {
 		)
 		command.Dir = root + "/cohere"
 		command.Env = append(os.Environ(), "ADAMIC_PRINTER_REQUEST="+path)
-		if output, err := childguard.CombinedOutput(command, childguard.Options{Unbounded: true}); err != nil {
-			return fmt.Errorf("Go oracle: %w\n%s", err, output)
+		if output, combinedOutputError := childguard.CombinedOutput(
+			command,
+			childguard.Options{Unbounded: true},
+		); combinedOutputError != nil {
+			return fmt.Errorf("Go oracle: %w\n%s", combinedOutputError, output)
 		}
 		return nil
 	}
@@ -189,18 +198,18 @@ func printerCorpusProduct(test *testing.T, mode string) (string, string) {
 		)
 	}
 	cases, answers := directory+"/cases.txt", directory+"/answers.txt"
-	data, err := os.ReadFile(answers)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(answers)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if keep := os.Getenv("ADAMIC_GRAPHQL_PRINTER_KEEP"); keep != "" {
 		for _, name := range []string{"cases.txt", "answers.txt", "coverage.json"} {
-			data, err := os.ReadFile(filepath.Join(directory, name))
-			if err != nil {
-				test.Fatal(err)
+			data, readError := os.ReadFile(filepath.Join(directory, name))
+			if readError != nil {
+				test.Fatal(readError)
 			}
-			if err = os.WriteFile(filepath.Join(keep, name), data, 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(filepath.Join(keep, name), data, 0644); writeError != nil {
+				test.Fatal(writeError)
 			}
 		}
 	}
@@ -215,9 +224,9 @@ type Inputs struct {
 
 func Key(test *testing.T, inputs Inputs) buildcache.Inputs {
 	test.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	key := buildcache.Inputs{
 		Name:      inputs.Name,
@@ -225,9 +234,9 @@ func Key(test *testing.T, inputs Inputs) buildcache.Inputs {
 		Toolchain: []string{inputs.Toolchain, runtime.Version(), runtime.GOOS, runtime.GOARCH},
 	}
 	for _, file := range inputs.Files {
-		relative, err := filepath.Rel(root, file)
-		if err != nil {
-			test.Fatal(err)
+		relative, relativePathError := filepath.Rel(root, file)
+		if relativePathError != nil {
+			test.Fatal(relativePathError)
 		}
 		if relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
 			// Generated inputs live in a read-only product outside the repository.
@@ -246,9 +255,9 @@ func Key(test *testing.T, inputs Inputs) buildcache.Inputs {
 
 func printerGeneratedSum(test *testing.T, file string) string {
 	test.Helper()
-	info, err := os.Stat(file)
-	if err != nil {
-		test.Fatal(err)
+	info, statError := os.Stat(file)
+	if statError != nil {
+		test.Fatal(statError)
 	}
 	identity := fmt.Sprintf("%s\x00%d\x00%d", file, info.Size(), info.ModTime().UnixNano())
 	value, _ := printerGeneratedSums.LoadOrStore(identity, &printerGeneratedSumOnce{})

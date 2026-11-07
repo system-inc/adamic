@@ -374,8 +374,8 @@ func compareStreams(test *testing.T, want int, native []string, node []string) {
 		}
 	}
 	for _, scanner := range []*bufio.Scanner{nativeLines, nodeLines} {
-		if err := scanner.Err(); err != nil {
-			test.Errorf("reading: %v", err)
+		if scanError := scanner.Err(); scanError != nil {
+			test.Errorf("reading: %v", scanError)
 		}
 	}
 	nativeWait()
@@ -402,17 +402,17 @@ func streamLines(test *testing.T, arguments []string) (*bufio.Scanner, func()) {
 	}
 	// stderr goes to a file and stdout is read here to its end, so exec copies nothing and no timer
 	// decides when either is complete (#n3gk22h).
-	stderr, err := os.CreateTemp(test.TempDir(), "stderr")
-	if err != nil {
-		test.Fatal(err)
+	stderr, temporaryFileError := os.CreateTemp(test.TempDir(), "stderr")
+	if temporaryFileError != nil {
+		test.Fatal(temporaryFileError)
 	}
 	command.Stderr = stderr
-	stdout, err := command.StdoutPipe()
-	if err != nil {
-		test.Fatal(err)
+	stdout, stdoutPipeError := command.StdoutPipe()
+	if stdoutPipeError != nil {
+		test.Fatal(stdoutPipeError)
 	}
-	if err := command.Start(); err != nil {
-		test.Fatal(err)
+	if startError := command.Start(); startError != nil {
+		test.Fatal(startError)
 	}
 	scanner := bufio.NewScanner(stdout)
 	scanner.Buffer(make([]byte, 1<<16), 1<<20)
@@ -420,11 +420,11 @@ func streamLines(test *testing.T, arguments []string) (*bufio.Scanner, func()) {
 		// Drain what's left, so a side that stopped early can't block the other on a full pipe.
 		for scanner.Scan() {
 		}
-		err := command.Wait()
+		waitError := command.Wait()
 		stderr.Close()
-		if err != nil {
+		if waitError != nil {
 			written, _ := os.ReadFile(stderr.Name())
-			test.Errorf("%s: %v\n%s", arguments[0], err, written)
+			test.Errorf("%s: %v\n%s", arguments[0], waitError, written)
 		}
 	}
 }
@@ -434,18 +434,18 @@ func streamLines(test *testing.T, arguments []string) (*bufio.Scanner, func()) {
 // characters changed.
 func TestCaseTablesMatchNodesUnicode(test *testing.T) {
 	test.Parallel()
-	output, err := toolchain.Command("node", "--print", "process.versions.unicode").Output()
-	if err != nil {
-		test.Fatal(err)
+	output, outputError := toolchain.Command("node", "--print", "process.versions.unicode").Output()
+	if outputError != nil {
+		test.Fatal(outputError)
 	}
 	node := strings.TrimSpace(string(output))
 	for _, tables := range []struct{ file, define, generator string }{
 		{"case_tables.h", "CASE_UNICODE_VERSION", "case_generate.go"},
 		{"normalize_tables.h", "NORMALIZE_UNICODE_VERSION", "normalize_generate.go"},
 	} {
-		contents, err := runtime.ReadFile("runtime/" + tables.file)
-		if err != nil {
-			test.Fatal(err)
+		contents, readFileError := runtime.ReadFile("runtime/" + tables.file)
+		if readFileError != nil {
+			test.Fatal(readFileError)
 		}
 		version := regexp.MustCompile(`#define ` + tables.define + ` "([0-9.]+)"`).FindSubmatch(contents)
 		if version == nil {

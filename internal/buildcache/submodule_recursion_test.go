@@ -15,9 +15,9 @@ func superproject(test *testing.T) (parent, module string) {
 	gitIn(test, source, "init", "-q")
 	gitIn(test, source, "add", ".")
 	gitIn(test, source, "commit", "-q", "-m", "module")
-	parent, err := filepath.EvalSymlinks(test.TempDir())
-	if err != nil {
-		test.Fatal(err)
+	parent, resolveSymlinksError := filepath.EvalSymlinks(test.TempDir())
+	if resolveSymlinksError != nil {
+		test.Fatal(resolveSymlinksError)
 	}
 	write(test, parent, "outer.c", "int outer;\n")
 	gitIn(test, parent, "init", "-q")
@@ -62,16 +62,16 @@ func TestAFileInASubmoduleIsValuedByTheSubmodulesOwnListing(test *testing.T) {
 		test.Helper()
 		write(test, module, "inner.c", content)
 		forgetTracked()
-		info, err := os.Lstat(name)
-		if err != nil {
-			test.Fatal(err)
+		info, statError := os.Lstat(name)
+		if statError != nil {
+			test.Fatal(statError)
 		}
 		if _, _, clean := cleanObject(parent, name, info); clean {
 			test.Fatalf("an edited file inside the submodule was taken as clean")
 		}
-		got, err := gitValue(parent, name, info)
-		if err != nil {
-			test.Fatal(err)
+		got, gitValueError := gitValue(parent, name, info)
+		if gitValueError != nil {
+			test.Fatal(gitValueError)
 		}
 		if want := "false " + blobID([]byte(content), 40); got != want {
 			test.Fatalf("inner.c holding %q valued %q, want %q", content, got, want)
@@ -118,9 +118,9 @@ func TestTreeStateSeesASubmodulesChangeHoweverDeep(test *testing.T) {
 			gitIn(test, source, "add", ".")
 			gitIn(test, source, "-c", "protocol.file.allow=always", "submodule", "add", "-q", deepSource, "deep")
 			gitIn(test, source, "commit", "-q", "-m", "module")
-			parent, err := filepath.EvalSymlinks(test.TempDir())
-			if err != nil {
-				test.Fatal(err)
+			parent, resolveSymlinksError := filepath.EvalSymlinks(test.TempDir())
+			if resolveSymlinksError != nil {
+				test.Fatal(resolveSymlinksError)
 			}
 			write(test, parent, "go.mod", "module github.com/system-inc/adamic\n\ngo 1.27\n")
 			gitIn(test, parent, "init", "-q")
@@ -141,14 +141,14 @@ func TestTreeStateSeesASubmodulesChangeHoweverDeep(test *testing.T) {
 			inRepository(test, parent)
 			forgetTracked()
 			test.Cleanup(forgetTracked)
-			before, err := TreeState()
-			if err != nil {
-				test.Fatal(err)
+			before, treeStateError := TreeState()
+			if treeStateError != nil {
+				test.Fatal(treeStateError)
 			}
 			change(parent)
-			after, err := TreeState()
-			if err != nil {
-				test.Fatal(err)
+			after, treeStateError := TreeState()
+			if treeStateError != nil {
+				test.Fatal(treeStateError)
 			}
 			if after == before {
 				test.Fatalf("the change went unseen: the state stayed\n%s", before)

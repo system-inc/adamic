@@ -14,18 +14,20 @@ import (
 
 func TestGraphParallelMapRefusesRegions(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/concurrency/refused/graph_region.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/concurrency/refused/graph_region.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	_, err = lowered(test, path)
+	_, loweredError := lowered(test, path)
 	var refused *lower.Refused
-	if !errors.As(err, &refused) ||
+	if !errors.As(loweredError, &refused) ||
 		!strings.Contains(refused.What, "Ring.next") ||
 		!strings.Contains(refused.Fix, "part 2 (#p286ycm)") {
-		test.Fatalf("want named graph ownership refusal and move fix, got %v", err)
+		test.Fatalf("want named graph ownership refusal and move fix, got %v", loweredError)
 	}
-	test.Log(err)
+	test.Log(loweredError)
 }
 
 func TestGraphTaskLocalThreadSanitizer(test *testing.T) {
@@ -33,23 +35,23 @@ func TestGraphTaskLocalThreadSanitizer(test *testing.T) {
 	if runtime.GOOS != "linux" {
 		test.Skip("requires Linux ThreadSanitizer")
 	}
-	path, err := filepath.Abs(
+	path, absolutePathError := filepath.Abs(
 		filepath.Join(repository, "internal/oracle/testdata/concurrency/accepted/graph_regions_per_task.a"),
 	)
-	if err != nil {
-		test.Fatal(err)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := onNode(test, path)
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	if len(program.GraphTypes) == 0 {
 		test.Fatal("task did not use graph regions")
 	}
 	binary := filepath.Join(test.TempDir(), "task-local")
-	if err := native.Build(native.C(program), binary, native.Options{ThreadSanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), binary, native.Options{ThreadSanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	result := executeParallel(test, "4", false, binary)
 	if difference := disagreement(truth, result); difference != "" {
@@ -60,14 +62,14 @@ func TestGraphTaskLocalThreadSanitizer(test *testing.T) {
 // These mutants compile; a sanitizer or graph invariant must kill them at run time.
 func graphOracleMutant(test *testing.T, fixture string, change func(string) string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := onNode(test, path)
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	code := native.C(program)
 	changed := change(code)
@@ -75,8 +77,8 @@ func graphOracleMutant(test *testing.T, fixture string, change func(string) stri
 		test.Fatal("mutant changed no emitted C")
 	}
 	binary := filepath.Join(test.TempDir(), "mutant")
-	if err := native.Build(changed, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatalf("mutant must compile: %v", err)
+	if buildError := native.Build(changed, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatalf("mutant must compile: %v", buildError)
 	}
 	result := executeWith(test, []string{
 		"ASAN_OPTIONS=detect_leaks=1",

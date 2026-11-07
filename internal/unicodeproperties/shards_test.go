@@ -173,8 +173,11 @@ var unicodeNodeTopRanges = []unicodeNodeTopRange{
 }
 
 func checkUnicodeTopRangeCoverage(lines []string, shards []unicodeScanShard, groups []unicodeNodeTopRange) error {
-	if err := checkUnicodeShardCoverage(lines, shards); err != nil {
-		return err
+	if checkUnicodeShardCoverageError := checkUnicodeShardCoverage(
+		lines,
+		shards,
+	); checkUnicodeShardCoverageError != nil {
+		return checkUnicodeShardCoverageError
 	}
 	names := map[string]bool{}
 	covered := make([]int, len(shards))
@@ -269,45 +272,53 @@ func TestUnicodeNodeShardCoverage(test *testing.T) {
 	}
 	test.Logf("original inputs SHA256 %x", hash)
 	shards := unicodeCanonicalizeShards(lines)
-	if err := checkUnicodeShardCoverage(lines, shards); err != nil {
-		test.Fatal(err)
+	if checkUnicodeShardCoverageError := checkUnicodeShardCoverage(
+		lines,
+		shards,
+	); checkUnicodeShardCoverageError != nil {
+		test.Fatal(checkUnicodeShardCoverageError)
 	}
-	if err := checkUnicodeShardCoverage(
+	if checkUnicodeShardCoverageError := checkUnicodeShardCoverage(
 		lines,
 		shards[1:],
-	); err == nil || !strings.Contains(err.Error(), "covered 0 times") {
-		test.Fatalf("dropped shard survived: %v", err)
+	); checkUnicodeShardCoverageError == nil ||
+		!strings.Contains(checkUnicodeShardCoverageError.Error(), "covered 0 times") {
+		test.Fatalf("dropped shard survived: %v", checkUnicodeShardCoverageError)
 	}
 	duplicated := append(append([]unicodeScanShard{}, shards...), shards[0])
-	if err := checkUnicodeShardCoverage(
+	if checkUnicodeShardCoverageError := checkUnicodeShardCoverage(
 		lines,
 		duplicated,
-	); err == nil || !strings.Contains(err.Error(), "duplicate shard") {
-		test.Fatalf("duplicate shard survived: %v", err)
+	); checkUnicodeShardCoverageError == nil ||
+		!strings.Contains(checkUnicodeShardCoverageError.Error(), "duplicate shard") {
+		test.Fatalf("duplicate shard survived: %v", checkUnicodeShardCoverageError)
 	}
 	overlap := append([]unicodeScanShard{}, shards...)
 	overlap[1] = unicodeScanShard{79, 159, strings.Join(lines[79:159], "\n") + "\n"}
-	if err := checkUnicodeShardCoverage(
+	if checkUnicodeShardCoverageError := checkUnicodeShardCoverage(
 		lines,
 		overlap,
-	); err == nil || !strings.Contains(err.Error(), "covered 2 times") {
-		test.Fatalf("overlapping shard survived: %v", err)
+	); checkUnicodeShardCoverageError == nil ||
+		!strings.Contains(checkUnicodeShardCoverageError.Error(), "covered 2 times") {
+		test.Fatalf("overlapping shard survived: %v", checkUnicodeShardCoverageError)
 	}
 	crossingStride := append([]unicodeScanShard{}, shards...)
 	crossingStride[50] = unicodeScanShard{4048, 4051, strings.Join(lines[4048:4051], "\n") + "\n"}
-	if err := checkUnicodeShardCoverage(
+	if checkUnicodeShardCoverageError := checkUnicodeShardCoverage(
 		lines,
 		crossingStride,
-	); err == nil || !strings.Contains(err.Error(), "invalid stride shard range") {
-		test.Fatalf("shard crossing into strides survived: %v", err)
+	); checkUnicodeShardCoverageError == nil ||
+		!strings.Contains(checkUnicodeShardCoverageError.Error(), "invalid stride shard range") {
+		test.Fatalf("shard crossing into strides survived: %v", checkUnicodeShardCoverageError)
 	}
 	wideStride := append([]unicodeScanShard{}, shards...)
 	wideStride[51] = unicodeScanShard{4050, 4053, strings.Join(lines[4050:4053], "\n") + "\n"}
-	if err := checkUnicodeShardCoverage(
+	if checkUnicodeShardCoverageError := checkUnicodeShardCoverage(
 		lines,
 		wideStride,
-	); err == nil || !strings.Contains(err.Error(), "invalid stride shard range") {
-		test.Fatalf("three-line stride shard survived: %v", err)
+	); checkUnicodeShardCoverageError == nil ||
+		!strings.Contains(checkUnicodeShardCoverageError.Error(), "invalid stride shard range") {
+		test.Fatalf("three-line stride shard survived: %v", checkUnicodeShardCoverageError)
 	}
 	test.Log("crossing stride boundary and oversized stride shard mutants caught")
 	test.Logf(
@@ -316,8 +327,12 @@ func TestUnicodeNodeShardCoverage(test *testing.T) {
 		len(lines),
 		int64(len(lines))*0x110000,
 	)
-	if err := checkUnicodeTopRangeCoverage(lines, shards, unicodeNodeTopRanges); err != nil {
-		test.Fatal(err)
+	if checkUnicodeTopRangeCoverageError := checkUnicodeTopRangeCoverage(
+		lines,
+		shards,
+		unicodeNodeTopRanges,
+	); checkUnicodeTopRangeCoverageError != nil {
+		test.Fatal(checkUnicodeTopRangeCoverageError)
 	}
 	if len(shards) != 563 || shards[51].start != unicodeStrideScanStart {
 		test.Fatal("dense and stride shard census changed")
@@ -325,41 +340,48 @@ func TestUnicodeNodeShardCoverage(test *testing.T) {
 	if len(unicodeNodeTopRanges) != 132 {
 		test.Fatal("top-level range census changed")
 	}
-	if err := checkUnicodeTopRangeCoverage(
+	if checkUnicodeTopRangeCoverageError := checkUnicodeTopRangeCoverage(
 		lines,
 		shards,
 		unicodeNodeTopRanges[1:],
-	); err == nil || !strings.Contains(err.Error(), "owned 0 times") {
-		test.Fatalf("dropped top-level range survived: %v", err)
+	); checkUnicodeTopRangeCoverageError == nil ||
+		!strings.Contains(checkUnicodeTopRangeCoverageError.Error(), "owned 0 times") {
+		test.Fatalf("dropped top-level range survived: %v", checkUnicodeTopRangeCoverageError)
 	}
 	droppedStride := append([]unicodeNodeTopRange{}, unicodeNodeTopRanges...)
 	droppedStride[4].start++
-	if err := checkUnicodeTopRangeCoverage(
+	if checkUnicodeTopRangeCoverageError := checkUnicodeTopRangeCoverage(
 		lines,
 		shards,
 		droppedStride,
-	); err == nil || !strings.Contains(err.Error(), "shard 51 owned 0 times") {
-		test.Fatalf("dropped stride shard survived: %v", err)
+	); checkUnicodeTopRangeCoverageError == nil ||
+		!strings.Contains(checkUnicodeTopRangeCoverageError.Error(), "shard 51 owned 0 times") {
+		test.Fatalf("dropped stride shard survived: %v", checkUnicodeTopRangeCoverageError)
 	}
 	duplicateGroups := append(append([]unicodeNodeTopRange{}, unicodeNodeTopRanges...), unicodeNodeTopRanges[0])
-	if err := checkUnicodeTopRangeCoverage(lines, shards, duplicateGroups); err == nil {
+	if checkUnicodeTopRangeCoverageError := checkUnicodeTopRangeCoverage(
+		lines,
+		shards,
+		duplicateGroups,
+	); checkUnicodeTopRangeCoverageError == nil {
 		test.Fatal("duplicate top-level range survived")
 	}
 	overlappingGroups := append([]unicodeNodeTopRange{}, unicodeNodeTopRanges...)
 	overlappingGroups[1].start--
-	if err := checkUnicodeTopRangeCoverage(
+	if checkUnicodeTopRangeCoverageError := checkUnicodeTopRangeCoverage(
 		lines,
 		shards,
 		overlappingGroups,
-	); err == nil || !strings.Contains(err.Error(), "owned 2 times") {
-		test.Fatalf("overlapping top-level range survived: %v", err)
+	); checkUnicodeTopRangeCoverageError == nil ||
+		!strings.Contains(checkUnicodeTopRangeCoverageError.Error(), "owned 2 times") {
+		test.Fatalf("overlapping top-level range survived: %v", checkUnicodeTopRangeCoverageError)
 	}
 	test.Log("dropped stride shard, dropped range, duplicate range and overlapping range mutants caught")
 	// The actual Test declarations must equal the dispatch inventory. The runner
 	// also verifies test.Name(), so a wrapper cannot dispatch another range silently.
-	file, err := parser.ParseFile(token.NewFileSet(), "canonicalize_test.go", nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	file, parseFileError := parser.ParseFile(token.NewFileSet(), "canonicalize_test.go", nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	declarations := map[string]int{}
 	for _, decl := range file.Decls {
@@ -465,13 +487,13 @@ func runUnicodeShardPlant(test *testing.T, plant, run, bad, failedShard, passedR
 		run,
 		"-test.v",
 	)
-	output, err := command.CombinedOutput()
-	if err == nil ||
+	output, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError == nil ||
 		bytes.Contains(output, []byte("build failed")) ||
 		!bytes.Contains(output, []byte(bad)) ||
 		!bytes.Contains(output, []byte("--- FAIL: "+failedShard)) ||
 		!bytes.Contains(output, []byte("--- PASS: "+passedRange+" (")) {
-		test.Fatalf("plant did not fail only its Node shard: %v %s", err, output)
+		test.Fatalf("plant did not fail only its Node shard: %v %s", combinedOutputError, output)
 	}
 	if strings.HasPrefix(bad, "BAD GROUP") &&
 		(!bytes.Contains(output, []byte("EXTRA 61 MISSING")) || bytes.Count(output, []byte("BAD GROUP")) != 1) {

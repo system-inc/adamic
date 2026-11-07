@@ -13,24 +13,24 @@ import (
 func TestSelection(test *testing.T) {
 	root := test.TempDir()
 	paths := []string{"pkg/testdata/b.md", "other/b.md", "pkg/fixtures/a.md", "other/a.md", "pkg/testdata/a.md"}
-	if err := os.MkdirAll(filepath.Join(root, "pkg"), 0755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(filepath.Join(root, "pkg"), 0755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	if err := os.WriteFile(filepath.Join(root, "pkg", "source_test.go"), nil, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(root, "pkg", "source_test.go"), nil, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	test.Setenv("ADAMIC_GATE_SAMPLE", strings.Repeat("0", 40))
 	test.Setenv("ADAMIC_GATE_CHANGED", "")
-	first, err := Select(root, paths, 3)
-	if err != nil {
-		test.Fatal(err)
+	first, selectError := Select(root, paths, 3)
+	if selectError != nil {
+		test.Fatal(selectError)
 	}
 	if want := []string{"other/a.md", "pkg/testdata/a.md"}; !reflect.DeepEqual(first.Paths, want) {
 		test.Fatalf("stride: %v want %v", first.Paths, want)
 	}
-	second, err := Select(root, paths, 3)
-	if err != nil {
-		test.Fatal(err)
+	second, selectError := Select(root, paths, 3)
+	if selectError != nil {
+		test.Fatal(selectError)
 	}
 	if !reflect.DeepEqual(first, second) {
 		test.Fatal("selection is not deterministic")
@@ -39,9 +39,9 @@ func TestSelection(test *testing.T) {
 	for i, j := 0, len(reversed)-1; i < j; i, j = i+1, j-1 {
 		reversed[i], reversed[j] = reversed[j], reversed[i]
 	}
-	second, err = Select(root, reversed, 3)
-	if err != nil {
-		test.Fatal(err)
+	second, selectError = Select(root, reversed, 3)
+	if selectError != nil {
+		test.Fatal(selectError)
 	}
 	if !reflect.DeepEqual(first, second) {
 		test.Fatal("selection depends on input order")
@@ -49,9 +49,9 @@ func TestSelection(test *testing.T) {
 	if got := first.Log("TestCorpus"); got != "gate-sample: TestCorpus 2/5 files, stride 3, offset 0" {
 		test.Fatal(got)
 	}
-	control, err := Select(root, paths, 3, "other/b.md")
-	if err != nil {
-		test.Fatal(err)
+	control, selectError := Select(root, paths, 3, "other/b.md")
+	if selectError != nil {
+		test.Fatal(selectError)
 	}
 	if want := []string{"other/a.md", "other/b.md", "pkg/testdata/a.md"}; !reflect.DeepEqual(control.Paths, want) {
 		test.Fatalf("fixed control dropped: %v", control.Paths)
@@ -59,9 +59,9 @@ func TestSelection(test *testing.T) {
 	seen := map[string]bool{}
 	for offset := 0; offset < 3; offset++ {
 		test.Setenv("ADAMIC_GATE_SAMPLE", fmt.Sprintf("%08x%s", offset, strings.Repeat("0", 32)))
-		rotated, err := Select(root, paths, 3)
-		if err != nil {
-			test.Fatal(err)
+		rotated, selectError := Select(root, paths, 3)
+		if selectError != nil {
+			test.Fatal(selectError)
 		}
 		if rotated.Offset != offset {
 			test.Fatalf("offset %d want %d", rotated.Offset, offset)
@@ -75,29 +75,29 @@ func TestSelection(test *testing.T) {
 	}
 	test.Setenv("ADAMIC_GATE_SAMPLE", strings.Repeat("0", 40))
 	list := filepath.Join(root, "changed.txt")
-	if err := os.WriteFile(list, []byte("other/b.md\npkg/new.ts\n"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(list, []byte("other/b.md\npkg/new.ts\n"), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	test.Setenv("ADAMIC_GATE_CHANGED", list)
-	selected, err := Select(root, paths, 3)
-	if err != nil {
-		test.Fatal(err)
+	selected, selectError := Select(root, paths, 3)
+	if selectError != nil {
+		test.Fatal(selectError)
 	}
 	if len(selected.Paths) != len(paths) {
 		test.Fatalf("changed file and package fixtures must all be included: %v", selected.Paths)
 	}
-	if err := os.MkdirAll(filepath.Join(root, "pkg", "testdata"), 0755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(filepath.Join(root, "pkg", "testdata"), 0755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	if err := os.WriteFile(filepath.Join(root, "pkg", "testdata", "adapter.go"), nil, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(root, "pkg", "testdata", "adapter.go"), nil, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if err := os.WriteFile(list, []byte("pkg/testdata/adapter.go\n"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(list, []byte("pkg/testdata/adapter.go\n"), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	selected, err = Select(root, paths, 3)
-	if err != nil {
-		test.Fatal(err)
+	selected, selectError = Select(root, paths, 3)
+	if selectError != nil {
+		test.Fatal(selectError)
 	}
 	if want := []string{
 		"other/a.md",
@@ -108,12 +108,12 @@ func TestSelection(test *testing.T) {
 		test.Fatalf("fixture adapter lost owning package: %v", selected.Paths)
 	}
 	// Changed paths outside the stride must also work without any owning package.
-	if err := os.WriteFile(list, []byte("other/b.md\n"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(list, []byte("other/b.md\n"), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	selected, err = Select(root, paths, 3)
-	if err != nil {
-		test.Fatal(err)
+	selected, selectError = Select(root, paths, 3)
+	if selectError != nil {
+		test.Fatal(selectError)
 	}
 	if want := []string{"other/a.md", "other/b.md", "pkg/testdata/a.md"}; !reflect.DeepEqual(selected.Paths, want) {
 		test.Fatalf("changed file: %v", selected.Paths)
@@ -126,7 +126,7 @@ func TestSelection(test *testing.T) {
 		strings.Repeat("0", 41),
 	} {
 		test.Setenv("ADAMIC_GATE_SAMPLE", sha)
-		if _, err := Select(root, paths, 3); err == nil {
+		if _, selectError := Select(root, paths, 3); selectError == nil {
 			test.Fatalf("accepted malformed switch %q", sha)
 		}
 	}
@@ -135,8 +135,8 @@ func TestSelection(test *testing.T) {
 // Not parallel: this test changes the process-wide sampling environment.
 func TestUnsetIsWholeCorpus(test *testing.T) {
 	old, set := os.LookupEnv("ADAMIC_GATE_SAMPLE")
-	if err := os.Unsetenv("ADAMIC_GATE_SAMPLE"); err != nil {
-		test.Fatal(err)
+	if unsetenvError := os.Unsetenv("ADAMIC_GATE_SAMPLE"); unsetenvError != nil {
+		test.Fatal(unsetenvError)
 	}
 	test.Cleanup(func() {
 		if set {
@@ -147,9 +147,9 @@ func TestUnsetIsWholeCorpus(test *testing.T) {
 	})
 	test.Setenv("ADAMIC_GATE_CHANGED", "/does/not/exist")
 	paths := []string{"b.md", "a.md"}
-	selected, err := Select(test.TempDir(), paths, 3)
-	if err != nil {
-		test.Fatal(err)
+	selected, selectError := Select(test.TempDir(), paths, 3)
+	if selectError != nil {
+		test.Fatal(selectError)
 	}
 	if selected.Sample || !reflect.DeepEqual(selected.Paths, paths) {
 		test.Fatalf("unset changed full corpus: %+v", selected)
@@ -161,16 +161,16 @@ func TestBadChangedList(test *testing.T) {
 	root := test.TempDir()
 	test.Setenv("ADAMIC_GATE_SAMPLE", strings.Repeat("0", 40))
 	test.Setenv("ADAMIC_GATE_CHANGED", filepath.Join(root, "missing"))
-	if _, err := Select(root, []string{"a.md"}, 3); err == nil {
+	if _, selectError := Select(root, []string{"a.md"}, 3); selectError == nil {
 		test.Fatal("missing changed list silently ignored")
 	}
 	list := filepath.Join(root, "changed.txt")
 	test.Setenv("ADAMIC_GATE_CHANGED", list)
 	for _, path := range []string{"../outside.md", filepath.Join(root, "absolute.md")} {
-		if err := os.WriteFile(list, []byte(path+"\n"), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(list, []byte(path+"\n"), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
-		if _, err := Select(root, []string{"a.md"}, 3); err == nil {
+		if _, selectError := Select(root, []string{"a.md"}, 3); selectError == nil {
 			test.Fatalf("accepted non-repository path %q", path)
 		}
 	}
@@ -181,9 +181,9 @@ func TestHexOffset(test *testing.T) {
 	test.Setenv("ADAMIC_GATE_CHANGED", "")
 	for _, prefix := range []string{"0000000a", "0000000A"} {
 		test.Setenv("ADAMIC_GATE_SAMPLE", prefix+strings.Repeat("0", 32))
-		selected, err := Select(test.TempDir(), []string{"a", "b", "c"}, 3)
-		if err != nil {
-			test.Fatal(err)
+		selected, selectError := Select(test.TempDir(), []string{"a", "b", "c"}, 3)
+		if selectError != nil {
+			test.Fatal(selectError)
 		}
 		if selected.Offset != 1 || len(selected.Paths) != 1 || selected.Paths[0] != "b" {
 			test.Fatalf("offset must parse hexadecimal: %+v", selected)

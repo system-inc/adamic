@@ -21,25 +21,27 @@ func TestNodeFSWritePositionsWASI(test *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_fs_file_write_positions.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/node_fs_file_write_positions.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	shared := sharedDirectory(test)
 	truthRun := fsFilePrepare(test, shared, "node")
 	truth := onNodeWith(test, truthRun, path)
 	binary := filepath.Join(shared, "program.wasm")
-	if err := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	how := fsFilePrepare(test, shared, "wasi")
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/wasi.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/wasi.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	got := executeInput(
 		test,
@@ -87,29 +89,29 @@ func TestNodeFSConsumedOptionsMutants(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", probe.path))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", probe.path))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			if !probe.input {
 				// Keep both original and mutant successful: the source catches the
 				// required missing-file exception, while the mutant returns instead.
 				path = filepath.Join(test.TempDir(), "main.a")
 				source := `import {statSync} from 'node:fs'; const options={throwIfNoEntry:true} as const; try {statSync('missing-host-options-mutant-entry',options); console.log('returned');} catch(error) {if(error instanceof Error)console.log('threw');}`
-				if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-					test.Fatal(err)
+				if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+					test.Fatal(writeError)
 				}
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			code := native.C(program)
 			if !probe.input {
 				truth := onNode(test, path)
 				binary := filepath.Join(test.TempDir(), "original")
-				if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-					test.Fatal(err)
+				if buildError := native.Build(code, binary, native.Options{Sanitize: true}); buildError != nil {
+					test.Fatal(buildError)
 				}
 				got := executeWith(
 					test,
@@ -132,8 +134,8 @@ func TestNodeFSConsumedOptionsMutants(test *testing.T) {
 			mutated = strings.Replace(mutated, "#include \"adamic.h\"", "#include \"adamic.h\"\n"+probe.helper, 1)
 			shared := sharedDirectory(test)
 			binary := filepath.Join(shared, "mutant")
-			if err := native.Build(mutated, binary, native.Options{Sanitize: true}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(mutated, binary, native.Options{Sanitize: true}); buildError != nil {
+				test.Fatal(buildError)
 			}
 			environment := []string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}
 			var got, truth run
@@ -168,13 +170,13 @@ func TestNodeFSRmUndefinedNodeMutant(test *testing.T) {
 			source := "import {rmSync} from 'node:fs'; try {rmSync('missing-host-rm-option-entry',{" +
 				name +
 				":undefined});} catch(error) {if(error instanceof Error)console.log(error.message);}"
-			if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+				test.Fatal(writeError)
 			}
-			_, err := lowered(test, path)
+			_, loweredError := lowered(test, path)
 			var missing *lower.NotYet
-			if !errors.As(err, &missing) || !strings.Contains(missing.What, "present as undefined") {
-				test.Fatalf("want option validation refusal, got %v", err)
+			if !errors.As(loweredError, &missing) || !strings.Contains(missing.What, "present as undefined") {
+				test.Fatalf("want option validation refusal, got %v", loweredError)
 			}
 			truth := onNode(test, path)
 			if !strings.Contains(string(truth.stdout), "Received undefined") {
@@ -189,20 +191,24 @@ func TestNodeFSRmUndefinedNodeMutant(test *testing.T) {
 				fallback = "100"
 			}
 			mutantPath := filepath.Join(test.TempDir(), "main.a")
-			if err := os.WriteFile(
+			if writeError := os.WriteFile(
 				mutantPath,
 				[]byte(strings.Replace(source, name+":undefined", name+":"+fallback, 1)),
 				0600,
-			); err != nil {
-				test.Fatal(err)
+			); writeError != nil {
+				test.Fatal(writeError)
 			}
-			program, err := lowered(test, mutantPath)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, mutantPath)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			binary := filepath.Join(test.TempDir(), "mutant")
-			if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(
+				native.C(program),
+				binary,
+				native.Options{Sanitize: true},
+			); buildError != nil {
+				test.Fatal(buildError)
 			}
 			got := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
 			if got.exitCode != 0 || len(got.stderr) != 0 || truth.exitCode != 0 || len(truth.stderr) != 0 {

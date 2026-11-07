@@ -30,10 +30,10 @@ func TestCallableNamespaceLimitsStayLoud(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.reason) {
-				test.Fatalf("got %v, want %s", err, probe.reason)
+			if !errors.As(lowerSourceError, &notYet) || !strings.Contains(lowerSourceError.Error(), probe.reason) {
+				test.Fatalf("got %v, want %s", lowerSourceError, probe.reason)
 			}
 		})
 	}
@@ -41,9 +41,12 @@ func TestCallableNamespaceLimitsStayLoud(test *testing.T) {
 
 func TestCallableNamespaceReceiverStaysLoud(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(test, "function f(this:{x:number}):number{return this.x;} namespace f {export const x=1;}")
+	_, lowerSourceError := lowerSource(
+		test,
+		"function f(this:{x:number}):number{return this.x;} namespace f {export const x=1;}",
+	)
 	var refused *Refused
-	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "different receivers") {
-		test.Fatalf("got %v", err)
+	if !errors.As(lowerSourceError, &refused) || !strings.Contains(lowerSourceError.Error(), "different receivers") {
+		test.Fatalf("got %v", lowerSourceError)
 	}
 }

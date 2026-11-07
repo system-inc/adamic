@@ -14,9 +14,9 @@ func checkCallbackWidening(test *testing.T, name, want string, backends ...strin
 	if diff := disagreement(run{stdout: []byte(want)}, node); diff != "" {
 		test.Fatal("Node: " + diff)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	if len(backends) == 0 {
 		backends = []string{"native", "native-sanitized", "javascript"}
@@ -221,10 +221,10 @@ func TestCallbackWideningUnrepresentedParameter(test *testing.T) {
 	}
 	// The callback's parameter takes each element, an array, where Slice, a plain object type, is held, so
 	// it stops at the callback (lower's shape_fit.go, #nw6d7ws) before the intrinsic's adapter could refuse it.
-	_, err := lowered(test, path)
-	if _, ok := err.(*lower.NotYet); !ok ||
-		err.Error() != path+":3:31: stage 0 can't lower an array going where a plain object type is held yet" {
-		test.Fatalf("expected the array's NotYet at the callback, got %v", err)
+	_, loweredError := lowered(test, path)
+	if _, ok := loweredError.(*lower.NotYet); !ok ||
+		loweredError.Error() != path+":3:31: stage 0 can't lower an array going where a plain object type is held yet" {
+		test.Fatalf("expected the array's NotYet at the callback, got %v", loweredError)
 	}
 }
 
@@ -234,19 +234,19 @@ func TestCallbackWideningUnrepresentedParameter(test *testing.T) {
 func TestCallbackWideningUnrepresentedPromiseParameter(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "promise_like.a")
-	if err := os.WriteFile(path, []byte(
+	if writeError := os.WriteFile(path, []byte(
 		"const tasks = [Promise.resolve(1)];\nconsole.log(tasks.map((p: PromiseLike<number>): string => typeof p).join(','));\n",
-	), 0o644); err != nil {
-		test.Fatal(err)
+	), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	node := onNode(test, path)
 	if diff := disagreement(run{stdout: []byte("object\n")}, node); diff != "" {
 		test.Fatal("Node: " + diff)
 	}
-	_, err := lowered(test, path)
-	refused, ok := err.(*lower.Refused)
+	_, loweredError := lowered(test, path)
+	refused, ok := loweredError.(*lower.Refused)
 	if !ok {
-		test.Fatalf("expected unrepresented parameter refusal, got %v", err)
+		test.Fatalf("expected unrepresented parameter refusal, got %v", loweredError)
 	}
 	if refused.What != "an intrinsic callback parameter p of type PromiseLike<number> receiving array element type Promise<number> without a representation adapter" ||
 		refused.Fix != "annotate parameter p as the element type Promise<number>" {

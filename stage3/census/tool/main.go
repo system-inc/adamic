@@ -69,33 +69,34 @@ func main() {
 	var paths []string
 	var entries []string
 	nonSourceOnly := len(os.Args) == 4 && os.Args[3] == "--non-source-only"
-	err := filepath.WalkDir(os.Args[1], func(path string, entry os.DirEntry, err error) error {
-		if err != nil {
-			return err
+	walkError := filepath.WalkDir(os.Args[1], func(path string, entry os.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
 		if !entry.IsDir() && (filepath.Ext(path) == ".ts" || filepath.Ext(path) == ".a") {
 			paths = append(paths, path)
 		}
-		if !entry.IsDir() && (nonSourceOnly && filepath.Ext(path) != ".ts" && filepath.Ext(path) != ".a" || !nonSourceOnly) {
+		if !entry.IsDir() &&
+			(nonSourceOnly && filepath.Ext(path) != ".ts" && filepath.Ext(path) != ".a" || !nonSourceOnly) {
 			entries = append(entries, path)
 		}
 		return nil
 	})
-	if err != nil {
-		panic(err)
+	if walkError != nil {
+		panic(walkError)
 	}
 	sort.Strings(paths)
 	sort.Strings(entries)
-	output, err := os.Create(os.Args[2])
-	if err != nil {
-		panic(err)
+	output, createError := os.Create(os.Args[2])
+	if createError != nil {
+		panic(createError)
 	}
 	defer output.Close()
 	encoder := json.NewEncoder(output)
 	for index, path := range entries {
 		result := inspect([]string{path})
-		if err := encoder.Encode(result); err != nil {
-			panic(err)
+		if encodeError := encoder.Encode(result); encodeError != nil {
+			panic(encodeError)
 		}
 		fmt.Fprintf(os.Stderr, "%d/%d %s %s %.3fs\n", index+1, len(entries), path, result.Kind, result.Seconds)
 	}
@@ -103,8 +104,8 @@ func main() {
 		return
 	}
 	result := inspect(paths)
-	if err := encoder.Encode(result); err != nil {
-		panic(err)
+	if encodeError := encoder.Encode(result); encodeError != nil {
+		panic(encodeError)
 	}
 	fmt.Fprintf(os.Stderr, "whole program: %d roots %s %.3fs\n", len(paths), result.Kind, result.Seconds)
 }

@@ -30,9 +30,9 @@ func freshPrograms(test *testing.T) []string {
 		"../oracle/testdata/modules/main.a",
 		"../flow/testdata/*.a",
 	} {
-		matches, err := filepath.Glob(pattern)
-		if err != nil {
-			test.Fatal(err)
+		matches, globError := filepath.Glob(pattern)
+		if globError != nil {
+			test.Fatal(globError)
 		}
 		paths = append(paths, matches...)
 	}
@@ -49,28 +49,28 @@ func freshPrograms(test *testing.T) []string {
 func checkFreshProgram(test *testing.T, path string) {
 	test.Helper()
 	writes, proven := 0, 0
-	absolute, err := filepath.Abs(path)
-	if err != nil {
-		test.Fatal(err)
+	absolute, absolutePathError := filepath.Abs(path)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	// This existing corpus fixture contains Map.set and Array.push reference writes.
 	// Unlike a refused fixture or a scalar-only program, its proof cannot be empty.
-	floorPath, err := filepath.Abs("../flow/testdata/mutations.a")
-	if err != nil {
-		test.Fatal(err)
+	floorPath, absolutePathError := filepath.Abs("../flow/testdata/mutations.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	needsWrites := absolute == floorPath
-	program, err := load.Load([]string{absolute})
-	if err != nil {
-		test.Fatalf("%s: Load: %v", path, err)
+	program, loadError := load.Load([]string{absolute})
+	if loadError != nil {
+		test.Fatalf("%s: Load: %v", path, loadError)
 	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
+	lowered, lowerError := lower.Lower(context.Background(), program)
+	if lowerError != nil {
 		if needsWrites {
-			test.Fatalf("%s: known-write corpus fixture must lower: %v", path, err)
+			test.Fatalf("%s: known-write corpus fixture must lower: %v", path, lowerError)
 		}
 		// The oracle's fixtures that stage 0 refuses on purpose.
-		test.Logf("Lower declined: %v", err)
+		test.Logf("Lower declined: %v", lowerError)
 		return
 	}
 	for _, write := range fresh.ProveWrites(lowered) {
@@ -95,17 +95,17 @@ func checkFreshProgram(test *testing.T, path string) {
 // even when the method's return is a scalar. The global can then reach its array.
 func TestMethodKeepsArgument(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("../oracle/testdata/fresh_refused/devirt_fresh_method_keeps_argument.a")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("../oracle/testdata/fresh_refused/devirt_fresh_method_keeps_argument.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	loaded, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	loaded, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := lower.Lower(context.Background(), loaded)
-	if err != nil {
-		test.Fatalf("graph program must be admitted: %v", err)
+	program, lowerError := lower.Lower(context.Background(), loaded)
+	if lowerError != nil {
+		test.Fatalf("graph program must be admitted: %v", lowerError)
 	}
 	found := false
 	for _, write := range fresh.ProveWrites(program) {

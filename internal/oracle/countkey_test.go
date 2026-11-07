@@ -9,25 +9,25 @@ import (
 func TestCountDigestIgnoresSourceDirectory(test *testing.T) {
 	test.Parallel()
 	const key = "internal/oracle/testdata/non_null_null.ts"
-	source, err := os.ReadFile(filepath.Join(repository, key))
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(filepath.Join(repository, key))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	digest := func(directory string) string {
-		if err := os.MkdirAll(directory, 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 		path := filepath.Join(directory, "witness.ts")
-		if err := os.WriteFile(path, source, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, source, 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
-		relative, err := filepath.Rel(root, path)
-		if err != nil {
-			test.Fatal(err)
+		relative, relativePathError := filepath.Rel(root, path)
+		if relativePathError != nil {
+			test.Fatal(relativePathError)
 		}
 		runs, _ := counted(test, relative, false, nil, false, false)
 		return countDigest(test, key, runs)

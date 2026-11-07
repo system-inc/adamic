@@ -23,9 +23,9 @@ import (
 // primitive, the one receiver that would differ, stops before the read.
 func reflectGetFixture(test *testing.T, name string) string {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/reflect_get", name))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/reflect_get", name))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return path
 }
@@ -120,9 +120,9 @@ func TestReflectGetAnswersAgreeWithNode(test *testing.T) {
 					truth.stderr,
 				)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatalf("propertyOf must lower: %v", err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatalf("propertyOf must lower: %v", loweredError)
 			}
 			native, binary := natively(test, program)
 			for name, got := range map[string]run{
@@ -570,9 +570,9 @@ func TestReflectGetStopsAlikeOnBothBackends(test *testing.T) {
 			if truth := onNode(test, path); disagreement(run{stdout: []byte(probe.node)}, truth) != "" {
 				test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatalf("the read must lower and stop at run time: %v", err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatalf("the read must lower and stop at run time: %v", loweredError)
 			}
 			want := reflectGetStop(test, probe.stdout, probe.stop, probe.key)
 			native, _ := natively(test, program)
@@ -607,9 +607,9 @@ func TestReflectGetStopsAlikeOnBothBackends(test *testing.T) {
 func TestReflectGetHostMutantJavaScript(test *testing.T) {
 	test.Parallel()
 	path := reflectGetFixture(test, "stop_host_dirent.a")
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	code := javascript.JavaScript(program)
 	const check = "\tif (host && !error) return adamicDynamicStop('RuntimeValue', key);\n"
@@ -617,8 +617,8 @@ func TestReflectGetHostMutantJavaScript(test *testing.T) {
 		test.Fatal("the host check is not in the helper once")
 	}
 	mutated := filepath.Join(test.TempDir(), "program.mjs")
-	if err := os.WriteFile(mutated, []byte(strings.Replace(code, check, "", 1)), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(mutated, []byte(strings.Replace(code, check, "", 1)), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	got := onNode(test, mutated)
 	want := reflectGetStop(test, "entries true\n", "RuntimeValue", "isFile")
@@ -638,9 +638,9 @@ func TestReflectGetHostMutantJavaScript(test *testing.T) {
 // size its next in test narrows, which adamicDynamicRead guards.
 func TestReflectGetInMutantJavaScript(test *testing.T) {
 	test.Parallel()
-	program, err := lowered(test, reflectGetFixture(test, "stop_in_host_internal.a"))
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, reflectGetFixture(test, "stop_in_host_internal.a"))
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	code := javascript.JavaScript(program)
 	const check = "const adamicDynamicHas = (value, key) => adamicHostValue(value) ? adamicHostStop(key) : key in value;\n"
@@ -648,12 +648,12 @@ func TestReflectGetInMutantJavaScript(test *testing.T) {
 		test.Fatal("the in test's host check is not in the runtime once")
 	}
 	mutated := filepath.Join(test.TempDir(), "program.mjs")
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		mutated,
 		[]byte(strings.Replace(code, check, "const adamicDynamicHas = (value, key) => key in value;\n", 1)),
 		0o644,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
 	got := onNode(test, mutated)
 	if disagreement(reflectGetStop(test, "stats\n", "RuntimeValue", "_fsFileMode"), got) == "" {
@@ -672,9 +672,9 @@ func TestReflectGetInMutantJavaScript(test *testing.T) {
 func TestReflectGetPrivateMutantJavaScript(test *testing.T) {
 	test.Parallel()
 	path := reflectGetFixture(test, "stop_private.a")
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	code := javascript.JavaScript(program)
 	const check = "\tif (key.startsWith('#')) return adamicDynamicStop('Private', key);\n"
@@ -682,8 +682,8 @@ func TestReflectGetPrivateMutantJavaScript(test *testing.T) {
 		test.Fatal("the private check is not in the helper once")
 	}
 	mutated := filepath.Join(test.TempDir(), "program.mjs")
-	if err := os.WriteFile(mutated, []byte(strings.Replace(code, check, "", 1)), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(mutated, []byte(strings.Replace(code, check, "", 1)), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	got := onNode(test, mutated)
 	want := reflectGetStop(test, "hidden\n", "Private", "#x")
@@ -770,12 +770,12 @@ func TestReflectGetOtherShapesNotYet(test *testing.T) {
 	} {
 		test.Run(probe.file, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowered(test, reflectGetFixture(test, probe.file))
+			_, loweredError := lowered(test, reflectGetFixture(test, probe.file))
 			var notYet *lower.NotYet
-			if !errors.As(err, &notYet) ||
-				!strings.Contains(err.Error(), probe.at) ||
-				!strings.Contains(err.Error(), probe.what) {
-				test.Fatalf("want NotYet at %s naming %q, got %v", probe.at, probe.what, err)
+			if !errors.As(loweredError, &notYet) ||
+				!strings.Contains(loweredError.Error(), probe.at) ||
+				!strings.Contains(loweredError.Error(), probe.what) {
+				test.Fatalf("want NotYet at %s naming %q, got %v", probe.at, probe.what, loweredError)
 			}
 		})
 	}
@@ -789,8 +789,8 @@ const nullableArrayRefusal = "an array with a nullable element viewed as unknown
 // lowered as the census lowers a root, lowers whole.
 func TestPropertyOfHostErrorsLowers(test *testing.T) {
 	test.Parallel()
-	if _, err := lowered(test, reflectGetFixture(test, "hostErrors.ts")); err != nil {
-		test.Fatalf("hostErrors.ts must lower with propertyOf: %v", err)
+	if _, loweredError := lowered(test, reflectGetFixture(test, "hostErrors.ts")); loweredError != nil {
+		test.Fatalf("hostErrors.ts must lower with propertyOf: %v", loweredError)
 	}
 }
 
@@ -799,9 +799,9 @@ func TestPropertyOfHostErrorsLowers(test *testing.T) {
 // stop_literal_getter.a's getter is called and answers where both backends stop.
 func TestReflectGetLiteralRowMutant(test *testing.T) {
 	test.Parallel()
-	program, err := lowered(test, reflectGetFixture(test, "stop_literal_getter.a"))
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, reflectGetFixture(test, "stop_literal_getter.a"))
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	code := native.C(program)
 	row := regexp.MustCompile(`(\t\{&\w+, )true(, )`)
@@ -809,12 +809,12 @@ func TestReflectGetLiteralRowMutant(test *testing.T) {
 		test.Fatal("the table has no single literal row")
 	}
 	binary := filepath.Join(test.TempDir(), "mutant")
-	if err := native.Build(
+	if buildError := native.Build(
 		row.ReplaceAllString(code, "${1}false${2}"),
 		binary,
 		native.Options{Sanitize: true},
-	); err != nil {
-		test.Fatal(err)
+	); buildError != nil {
+		test.Fatal(buildError)
 	}
 	got := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary)
 	if want := reflectGetStop(test, "got\n", "ObjectLiteralGetter", "value"); disagreement(want, got) == "" {
@@ -832,13 +832,13 @@ func TestReflectGetLiteralRowMutant(test *testing.T) {
 // was: the commit's proof compares this fixture's C with its base's byte for byte.
 func TestReflectGetLeavesOtherProgramsAlone(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/arrow_this_super.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/arrow_this_super.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	if len(program.Classes) == 0 {
 		test.Fatal("the fixture holds no class")

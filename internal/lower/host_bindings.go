@@ -43,8 +43,8 @@ import (
 // hostBindingNamed is the row for a name, or nil; a table that doesn't parse names nothing here, and
 // ambientRefusal reports its error at the first ambient value declaration.
 func hostBindingNamed(name string) *load.HostBinding {
-	rows, err := load.HostBindings()
-	if err != nil {
+	rows, hostBindingsError := load.HostBindings()
+	if hostBindingsError != nil {
 		return nil
 	}
 	for index := range rows {
@@ -57,15 +57,23 @@ func hostBindingNamed(name string) *load.HostBinding {
 
 // hostBindingRow is the row a declarator is the declaration of, or nil.
 func (l *lowering) hostBindingRow(declaration *ast.Node) *load.HostBinding {
-	if declaration.Kind != ast.KindVariableDeclaration || !ast.IsIdentifier(declaration.Name()) || declaration.Initializer() != nil {
+	if declaration.Kind != ast.KindVariableDeclaration ||
+		!ast.IsIdentifier(declaration.Name()) ||
+		declaration.Initializer() != nil {
 		return nil
 	}
 	list := declaration.Parent
-	if list == nil || list.Kind != ast.KindVariableDeclarationList || list.Parent == nil || list.Parent.Kind != ast.KindVariableStatement {
+	if list == nil ||
+		list.Kind != ast.KindVariableDeclarationList ||
+		list.Parent == nil ||
+		list.Parent.Kind != ast.KindVariableStatement {
 		return nil
 	}
 	statement := list.Parent
-	if statement.Parent == nil || statement.Parent.Kind != ast.KindSourceFile || !ast.HasSyntacticModifier(statement, ast.ModifierFlagsAmbient) || ast.HasSyntacticModifier(statement, ast.ModifierFlagsExport) {
+	if statement.Parent == nil ||
+		statement.Parent.Kind != ast.KindSourceFile ||
+		!ast.HasSyntacticModifier(statement, ast.ModifierFlagsAmbient) ||
+		ast.HasSyntacticModifier(statement, ast.ModifierFlagsExport) {
 		return nil
 	}
 	file := ast.GetSourceFileOfNode(declaration)
@@ -85,7 +93,9 @@ func (l *lowering) hostBindingRow(declaration *ast.Node) *load.HostBinding {
 		keyword = "let"
 	}
 	written := declaration.AsVariableDeclaration().Type
-	if keyword != row.Declaration.Keyword || written == nil || file.Text()[scanner.GetTokenPosOfNode(written, file, false):written.End()] != row.Declaration.Type {
+	if keyword != row.Declaration.Keyword ||
+		written == nil ||
+		file.Text()[scanner.GetTokenPosOfNode(written, file, false):written.End()] != row.Declaration.Type {
 		return nil
 	}
 	return row
@@ -94,8 +104,8 @@ func (l *lowering) hostBindingRow(declaration *ast.Node) *load.HostBinding {
 // hostBindingStatement reports whether every declarator of an ambient variable statement is a host
 // binding's declaration, and if so, the stop for the first whose row doesn't lower, or nil.
 func (l *lowering) hostBindingStatement(statement *ast.Node) (bool, error) {
-	if _, err := load.HostBindings(); err != nil {
-		return true, err
+	if _, hostBindingsError := load.HostBindings(); hostBindingsError != nil {
+		return true, hostBindingsError
 	}
 	var stop error
 	for _, declaration := range statement.AsVariableStatement().DeclarationList.AsVariableDeclarationList().Declarations.Nodes {
@@ -116,8 +126,8 @@ func (l *lowering) hostBindingDeclared(statement *ast.Node) bool {
 	if statement.Kind != ast.KindVariableStatement || !ambientDeclaration(statement) {
 		return false
 	}
-	matched, err := l.hostBindingStatement(statement)
-	return matched && err == nil
+	matched, hostBindingStatementError := l.hostBindingStatement(statement)
+	return matched && hostBindingStatementError == nil
 }
 
 // hostBindingStop is why a row doesn't lower, said as what stage 0 can't lower yet, or "" when it does.
@@ -139,7 +149,15 @@ func hostBindingStop(row load.HostBinding) string {
 		return "the host binding " + row.Name + ", pending " + said + ","
 	}
 	if row.Native.Answer != row.JavaScript.Answer || row.Native.Answer != row.WASM32.Answer {
-		return "the host binding " + row.Name + ", whose targets answer differently (native " + string(row.Native.Answer) + ", javascript " + string(row.JavaScript.Answer) + ", wasm32 " + string(row.WASM32.Answer) + ") where one IR feeds every target, until an IR presence node is ruled,"
+		return "the host binding " +
+			row.Name +
+			", whose targets answer differently (native " +
+			string(row.Native.Answer) +
+			", javascript " +
+			string(row.JavaScript.Answer) +
+			", wasm32 " +
+			string(row.WASM32.Answer) +
+			") where one IR feeds every target, until an IR presence node is ruled,"
 	}
 	if row.Native.Answer == load.HostBindingProvided {
 		return "the host binding " + row.Name + "'s reads through its host model, " + row.Model.Path + ","
@@ -203,7 +221,8 @@ func (l *lowering) hostBindingGuard(condition *ast.Node) *ast.Symbol {
 	}
 	binary := condition.AsBinaryExpression()
 	test, answer := ast.SkipParentheses(binary.Left), ast.SkipParentheses(binary.Right)
-	if test.Kind != ast.KindTypeOfExpression || answer.Kind != ast.KindStringLiteral && answer.Kind != ast.KindNoSubstitutionTemplateLiteral {
+	if test.Kind != ast.KindTypeOfExpression ||
+		answer.Kind != ast.KindStringLiteral && answer.Kind != ast.KindNoSubstitutionTemplateLiteral {
 		return nil
 	}
 	switch binary.OperatorToken.Kind {
@@ -228,7 +247,9 @@ func (l *lowering) hostBindingGuard(condition *ast.Node) *ast.Symbol {
 // hostBindingDominated reports whether a read sits in the then-branch of an if, the right of an && or
 // the true arm of a ?: whose guard proves its binding missing, within the read's own function.
 func (l *lowering) hostBindingDominated(read *ast.Node, symbol *ast.Symbol) bool {
-	for child, parent := read, read.Parent; parent != nil && !ast.IsFunctionLike(parent) && parent.Kind != ast.KindClassStaticBlockDeclaration; child, parent = parent, parent.Parent {
+	for child, parent := read, read.Parent; parent != nil &&
+		!ast.IsFunctionLike(parent) &&
+		parent.Kind != ast.KindClassStaticBlockDeclaration; child, parent = parent, parent.Parent {
 		var guard *ast.Node
 		switch parent.Kind {
 		case ast.KindIfStatement:
@@ -236,7 +257,8 @@ func (l *lowering) hostBindingDominated(read *ast.Node, symbol *ast.Symbol) bool
 				guard = parent.AsIfStatement().Expression
 			}
 		case ast.KindBinaryExpression:
-			if parent.AsBinaryExpression().OperatorToken.Kind == ast.KindAmpersandAmpersandToken && parent.AsBinaryExpression().Right == child {
+			if parent.AsBinaryExpression().OperatorToken.Kind == ast.KindAmpersandAmpersandToken &&
+				parent.AsBinaryExpression().Right == child {
 				guard = parent.AsBinaryExpression().Left
 			}
 		case ast.KindConditionalExpression:
@@ -263,7 +285,11 @@ func (l *lowering) hostBindingRefusal(node *ast.Node) error {
 		return nil
 	}
 	if ast.IsAssignmentTarget(node) {
-		return &Refused{Where: l.program.Where(node), What: "a write to the host binding " + row.Name, Fix: hostBindingWriteFix}
+		return &Refused{
+			Where: l.program.Where(node),
+			What:  "a write to the host binding " + row.Name,
+			Fix:   hostBindingWriteFix,
+		}
 	}
 	if stop := hostBindingStop(*row); stop != "" {
 		return l.notYet(node, stop)
@@ -276,7 +302,9 @@ func (l *lowering) hostBindingRefusal(node *ast.Node) error {
 		return nil
 	}
 	if !l.hostBindingDominated(node, symbol) {
-		return l.notYet(node, "a read of "+row.Name+", a host binding absent on every target, outside the then-branch of if, the right of && or the true arm of ?: under a typeof guard that proves it dead,")
+		return l.notYet(node, "a read of "+
+			row.Name+
+			", a host binding absent on every target, outside the then-branch of if, the right of && or the true arm of ?: under a typeof guard that proves it dead,")
 	}
 	return nil
 }
@@ -301,7 +329,8 @@ func (l *lowering) hostBindingGlobalThisRefusal(node *ast.Node) error {
 			target = node.AsBinaryExpression().Left
 		}
 	case ast.KindPrefixUnaryExpression:
-		if operator := node.AsPrefixUnaryExpression().Operator; operator == ast.KindPlusPlusToken || operator == ast.KindMinusMinusToken {
+		if operator := node.AsPrefixUnaryExpression().Operator; operator == ast.KindPlusPlusToken ||
+			operator == ast.KindMinusMinusToken {
 			target = node.AsPrefixUnaryExpression().Operand
 		}
 	case ast.KindPostfixUnaryExpression:
@@ -320,7 +349,9 @@ func (l *lowering) hostBindingGlobalThisRefusal(node *ast.Node) error {
 		receiver, name, known = target.AsPropertyAccessExpression().Expression, target.AsPropertyAccessExpression().Name().Text(), true
 	case ast.KindElementAccessExpression:
 		receiver = target.AsElementAccessExpression().Expression
-		if key := l.checker.GetTypeAtLocation(target.AsElementAccessExpression().ArgumentExpression); key.Flags()&checker.TypeFlagsStringLiteral != 0 {
+		if key := l.checker.GetTypeAtLocation(
+			target.AsElementAccessExpression().ArgumentExpression,
+		); key.Flags()&checker.TypeFlagsStringLiteral != 0 {
 			name, known = key.AsLiteralType().Value().(string)
 		}
 	default:
@@ -348,7 +379,9 @@ func init() {
 // hostBindingDeadRead is the unreachable placeholder for what a guard proves dead: the guard's test
 // compares typeof's constant "undefined" at run time, so this runs only if that was wrong.
 func (l *lowering) hostBindingDeadRead(symbol *ast.Symbol) ir.Statement {
-	return ir.Panic{Message: ir.StringConstant{Index: l.constant("compiler bug: the typeof guard of " + symbol.Name + ", a host binding absent on every target, was taken")}}
+	return ir.Panic{Message: ir.StringConstant{Index: l.constant(
+		"compiler bug: the typeof guard of " + symbol.Name + ", a host binding absent on every target, was taken",
+	)}}
 }
 
 // hostBindingTypeOf lowers typeof of a host binding: "undefined" for an Absent one.
@@ -374,18 +407,25 @@ func (l *lowering) hostBindingAnd(node *ast.Node) (ir.Expression, bool, error) {
 	if symbol == nil {
 		return nil, false, nil
 	}
-	left, err := l.expression(binary.Left)
-	if err != nil {
-		return nil, true, err
+	left, expressionError := l.expression(binary.Left)
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
-	of, err := l.typeOf(node)
-	if err != nil {
-		return nil, true, err
+	of, typeOfError := l.typeOf(node)
+	if typeOfError != nil {
+		return nil, true, typeOfError
 	}
 	if of != ir.Boolean {
-		return nil, true, l.notYet(node, "the value of an && whose right a host binding's typeof guard proves dead, held as a "+typeName(of))
+		return nil, true, l.notYet(
+			node,
+			"the value of an && whose right a host binding's typeof guard proves dead, held as a "+typeName(of),
+		)
 	}
-	return ir.Binary{Operator: ir.And, Left: left, Right: ir.Effects{Body: []ir.Statement{l.hostBindingDeadRead(symbol)}, Result: unreachablePlaceholder(of)}}, true, nil
+	return ir.Binary{
+		Operator: ir.And,
+		Left:     left,
+		Right:    ir.Effects{Body: []ir.Statement{l.hostBindingDeadRead(symbol)}, Result: unreachablePlaceholder(of)},
+	}, true, nil
 }
 
 // hostBindingAndStatement lowers guard && right as a statement, as if (guard) right.
@@ -398,23 +438,27 @@ func (l *lowering) hostBindingAndStatement(node *ast.Node) ([]ir.Statement, bool
 	if symbol == nil {
 		return nil, false, nil
 	}
-	condition, err := l.condition(binary.Left)
-	if err != nil {
-		return nil, true, err
+	condition, conditionError := l.condition(binary.Left)
+	if conditionError != nil {
+		return nil, true, conditionError
 	}
 	return []ir.Statement{ir.If{Condition: condition, Then: []ir.Statement{l.hostBindingDeadRead(symbol)}}}, true, nil
 }
 
 // hostBindingConditional lowers guard ? whenTrue : whenFalse, whose true arm the guard proves dead: the
 // placeholder there, and the false arm as it is.
-func (l *lowering) hostBindingConditional(node *ast.Node, condition ir.Expression, symbol *ast.Symbol) (ir.Expression, error) {
-	of, err := l.typeOf(node)
-	if err != nil {
-		return nil, err
+func (l *lowering) hostBindingConditional(
+	node *ast.Node,
+	condition ir.Expression,
+	symbol *ast.Symbol,
+) (ir.Expression, error) {
+	of, typeOfError := l.typeOf(node)
+	if typeOfError != nil {
+		return nil, typeOfError
 	}
-	whenNot, err := l.expression(node.AsConditionalExpression().WhenFalse)
-	if err != nil {
-		return nil, err
+	whenNot, expressionError := l.expression(node.AsConditionalExpression().WhenFalse)
+	if expressionError != nil {
+		return nil, expressionError
 	}
 	whenTrue := ir.Effects{Body: []ir.Statement{l.hostBindingDeadRead(symbol)}, Result: unreachablePlaceholder(of)}
 	return ir.Conditional{Condition: condition, WhenTrue: whenTrue, WhenNot: fit(whenNot, of), Of: of}, nil

@@ -46,8 +46,8 @@ func Tree(test *testing.T, name string, startupDelay ...time.Duration) (string, 
 		heartbeat,
 		heartbeat+".ready",
 	)
-	if err := os.WriteFile(child, []byte(script), 0700); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(child, []byte(script), 0700); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return child, heartbeat
 }
@@ -60,14 +60,14 @@ func AssertStopped(test *testing.T, started time.Time, heartbeat, diagnostic, ch
 	if !strings.Contains(diagnostic, child) || !strings.Contains(diagnostic, "deadline") {
 		test.Fatalf("child missing from timeout report: %q", diagnostic)
 	}
-	before, err := os.ReadFile(heartbeat)
-	if err != nil || len(before) == 0 {
-		test.Fatalf("grandchild did not start: %v", err)
+	before, readError := os.ReadFile(heartbeat)
+	if readError != nil || len(before) == 0 {
+		test.Fatalf("grandchild did not start: %v", readError)
 	}
 	time.Sleep(100 * time.Millisecond)
-	after, err := os.ReadFile(heartbeat)
-	if err != nil || string(before) != string(after) {
-		test.Fatalf("grandchild survived group kill: %v", err)
+	after, readError := os.ReadFile(heartbeat)
+	if readError != nil || string(before) != string(after) {
+		test.Fatalf("grandchild survived group kill: %v", readError)
 	}
 	test.Logf("child=%s killed_seconds=%.3f diagnostic=%s", child, time.Since(started).Seconds(), diagnostic)
 }
@@ -81,12 +81,12 @@ func ReadyContext(
 ) (func(context.Context, time.Duration) (context.Context, context.CancelFunc), <-chan time.Time) {
 	test.Helper()
 	return ContextWhenReady(test, func() bool {
-		heartbeatBytes, err := os.ReadFile(heartbeat)
-		if err != nil || len(heartbeatBytes) == 0 {
+		heartbeatBytes, readError := os.ReadFile(heartbeat)
+		if readError != nil || len(heartbeatBytes) == 0 {
 			return false
 		}
-		ready, err := os.ReadFile(heartbeat + ".ready")
-		return err == nil && len(ready) > 0
+		ready, readError := os.ReadFile(heartbeat + ".ready")
+		return readError == nil && len(ready) > 0
 	})
 }
 

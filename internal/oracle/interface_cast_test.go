@@ -12,13 +12,13 @@ import (
 
 func interfaceFixture(test *testing.T, name string) (*ir.Program, string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, interfaceFixturePath(name)))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, interfaceFixturePath(name)))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	return program, path
 }
@@ -26,12 +26,12 @@ func interfaceFixture(test *testing.T, name string) (*ir.Program, string) {
 func interfaceFixturePath(name string) string {
 	aPath := "stage3/interface-downcasts/" + name + ".a"
 	tsPath := "stage3/interface-downcasts/" + name + ".ts"
-	_, aErr := os.Stat(filepath.Join(repository, aPath))
-	_, tsErr := os.Stat(filepath.Join(repository, tsPath))
-	if (aErr == nil) == (tsErr == nil) {
+	_, aError := os.Stat(filepath.Join(repository, aPath))
+	_, tsError := os.Stat(filepath.Join(repository, tsPath))
+	if (aError == nil) == (tsError == nil) {
 		panic("expected exactly one interface fixture: " + aPath + " or " + tsPath)
 	}
-	if aErr == nil {
+	if aError == nil {
 		return aPath
 	}
 	return tsPath
@@ -92,17 +92,17 @@ func TestInterfaceCastOracle(test *testing.T) {
 // This legal Node construction fails only when a required field is read through the cast.
 func TestInterfaceCastChecksMalformedRead(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/missing-name.ts"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/missing-name.ts"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := onNode(test, path)
 	if truth.exitCode != 0 || string(truth.stdout) != "missing\n" {
 		test.Fatalf("Node: %d %q %s", truth.exitCode, truth.stdout, truth.stderr)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	want := run{exitCode: 70, stderr: []byte(
 		"adamic: panic: field read failed: identifier(malformed).name is not initialized; expected string, found missing\n",
@@ -198,13 +198,13 @@ func TestInterfaceCastImportedConstruction(test *testing.T) {
 		"main.ts":  `import { type Node, type Identifier } from './nodes.ts'; function cast(node: Node): Identifier { return node as Identifier; } console.log(cast({ kind: 'identifier', name: 'ok' } as Identifier).name);`,
 	}
 	for name, source := range sources {
-		if err := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
-	program, err := lowered(test, filepath.Join(directory, "main.ts"))
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, filepath.Join(directory, "main.ts"))
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	want := onNode(test, filepath.Join(directory, "main.ts"))
 	actual, _ := nativelyUncached(test, program)
@@ -244,12 +244,12 @@ func TestInterfaceCastScalarTags(test *testing.T) {
 				"console.log('casting'); console.log(member(make(" +
 				testCase.argument +
 				")).name);\n"
-			if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
+				test.Fatal(writeError)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			truth := onNode(test, path)
 			if truth.exitCode != 0 || string(truth.stdout) != "casting\npayloadpayload\n" {

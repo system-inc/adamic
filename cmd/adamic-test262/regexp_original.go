@@ -18,17 +18,17 @@ func (e *engine) originalRegExp(test classified) execution {
 			continue
 		}
 		seen[include] = true
-		text, err := os.ReadFile(filepath.Join(e.test262, "harness", include))
-		if err != nil {
-			return execution{Exit: -1, Stderr: err.Error()}
+		text, readError := os.ReadFile(filepath.Join(e.test262, "harness", include))
+		if readError != nil {
+			return execution{Exit: -1, Stderr: readError.Error()}
 		}
 		source.Write(text)
 		source.WriteByte('\n')
 	}
 	source.WriteString(test.Original)
 	path := filepath.Join(e.work, "original.cjs")
-	if err := os.WriteFile(path, []byte(source.String()), 0o644); err != nil {
-		return execution{Exit: -1, Stderr: err.Error()}
+	if writeError := os.WriteFile(path, []byte(source.String()), 0o644); writeError != nil {
+		return execution{Exit: -1, Stderr: writeError.Error()}
 	}
 	return runProgram(15*time.Second, nil, e.tools.node, path)
 }

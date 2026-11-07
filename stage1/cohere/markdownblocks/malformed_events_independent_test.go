@@ -96,12 +96,16 @@ func malformedEventsBuildProduct(test *testing.T, ctx context.Context, main stri
 		Toolchain: []string{runtime.Version()},
 	}
 	loweredDir := buildcache.Product(test, inputs, func(dir string) error {
-		program, err := loweredResult(main)
-		if err != nil {
-			return err
+		program, loweredResultError := loweredResult(main)
+		if loweredResultError != nil {
+			return loweredResultError
 		}
-		if err := os.WriteFile(filepath.Join(dir, "main.c"), []byte(native.C(program)), 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(
+			filepath.Join(dir, "main.c"),
+			[]byte(native.C(program)),
+			0644,
+		); writeError != nil {
+			return writeError
 		}
 		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
 	})
@@ -122,9 +126,9 @@ func malformedEventsBuildProduct(test *testing.T, ctx context.Context, main stri
 	}
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
 	nativeDir := buildcache.Product(test, inputs, func(dir string) error {
-		source, err := os.ReadFile(filepath.Join(loweredDir, "main.c"))
-		if err != nil {
-			return err
+		source, readError := os.ReadFile(filepath.Join(loweredDir, "main.c"))
+		if readError != nil {
+			return readError
 		}
 		return malformedEventsNativeBuild(ctx, string(source), filepath.Join(dir, "port"), options)
 	})
@@ -213,8 +217,8 @@ func malformedEventsRun(test *testing.T) {
 			equal(test, "normalized actual error", side.stderr, malformedEventsExpected(name, truth.stdout))
 		}
 		scratch := test.TempDir()
-		if e := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); e != nil {
-			test.Fatal(e)
+		if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 		from, to := "Cannot close document, a token", "Cannot close document, token"
 		if name == "not-open" {
@@ -243,9 +247,9 @@ func malformedEventsRun(test *testing.T) {
 			"lowerEntityValues.ts",
 			"testdata/mdast_probe.ts",
 		} {
-			data, e := os.ReadFile(file)
-			if e != nil {
-				test.Fatal(e)
+			data, readError := os.ReadFile(file)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			if file == "mdastCompile.ts" {
 				if strings.Count(string(data), from) != 1 {
@@ -280,9 +284,9 @@ func malformedEventsSharedSetup(test *testing.T) malformedEventsProductSet {
 		configureMarkdownMemory(test)
 		markdownMemory.acquire(1)
 		defer markdownMemory.release(1)
-		root, e := filepath.Abs(repository)
-		if e != nil {
-			test.Fatal(e)
+		root, absolutePathError := filepath.Abs(repository)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		cohere := filepath.Join(root, "cohere")
 		goDir := malformedEventsGoProduct(test, ctx, root)
@@ -291,9 +295,9 @@ func malformedEventsSharedSetup(test *testing.T) malformedEventsProductSet {
 		if fork == "" {
 			fork = filepath.Join(cohere, "internal/format/prettier/bundles")
 		}
-		main, e := filepath.Abs("testdata/mdast_probe.ts")
-		if e != nil {
-			test.Fatal(e)
+		main, absolutePathError := filepath.Abs("testdata/mdast_probe.ts")
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		nativeBinary, javascriptPath := malformedEventsProducts(test, ctx, main)
 		malformedEventsShared = malformedEventsProductSet{goBinary, main, fork, nativeBinary, javascriptPath}
@@ -324,11 +328,11 @@ func malformedEventsDeadline(test *testing.T, name string) (context.Context, fun
 func malformedEventsCommand(ctx context.Context, name string, arguments ...string) *exec.Cmd {
 	command := exec.CommandContext(ctx, name, arguments...)
 	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
+		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if errors.Is(killError, syscall.ESRCH) {
 			return os.ErrProcessDone
 		}
-		return err
+		return killError
 	}
 	return command
 }
@@ -348,22 +352,22 @@ func malformedEventsExecute(
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	if ctx.Err() != nil {
 		test.Fatalf("cooked: %s exceeded 90s: %v", test.Name(), ctx.Err())
 	}
 	var exitError *exec.ExitError
-	if err != nil && !errors.As(err, &exitError) {
-		test.Fatalf("running %s: %v", name, err)
+	if captureError != nil && !errors.As(captureError, &exitError) {
+		test.Fatalf("running %s: %v", name, captureError)
 	}
 	return run{stdout, stderr, command.ProcessState.ExitCode()}
 }
 
 func malformedEventsNode(test *testing.T, ctx context.Context, path string, arguments ...string) run {
 	test.Helper()
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return malformedEventsExecute(
 		test,
@@ -378,14 +382,18 @@ func malformedEventsNativeBuild(ctx context.Context, source, output string, opti
 	if err := ctx.Err(); err != nil {
 		return err
 	}
-	if err := os.WriteFile(filepath.Join(filepath.Dir(output), "main.c"), []byte(source), 0644); err != nil {
-		return err
+	if writeError := os.WriteFile(
+		filepath.Join(filepath.Dir(output), "main.c"),
+		[]byte(source),
+		0644,
+	); writeError != nil {
+		return writeError
 	}
 	// native.Build compiles in a directory of its own and gives clang no absolute path, so the binary names no build
 	// directory: given <build directory>/main.c, the sanitized port kept it in its globals' metadata, random per build
 	// (landable-17c's tree, Oct 11: markdownblocks-malformed-events-native, refs/action/ddf7d5cae0d2).
-	if err := native.Build(source, output, options); err != nil {
-		return fmt.Errorf("native build: %w", err)
+	if buildError := native.Build(source, output, options); buildError != nil {
+		return fmt.Errorf("native build: %w", buildError)
 	}
 	return nil
 }

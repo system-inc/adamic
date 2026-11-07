@@ -215,12 +215,12 @@ func TestNodeHostConsumesArgument(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			file := filepath.Join(test.TempDir(), "main.a")
-			if err := os.WriteFile(file, []byte(probe.source), 0600); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(file, []byte(probe.source), 0600); writeError != nil {
+				test.Fatal(writeError)
 			}
-			program, err := load.Load([]string{file})
-			if err != nil {
-				test.Fatal(err)
+			program, loadError := load.Load([]string{file})
+			if loadError != nil {
+				test.Fatal(loadError)
 			}
 			checked, release := program.Checker(context.Background(), program.Files()[0])
 			defer release()
@@ -252,9 +252,9 @@ func TestNodeHostConsumesArgument(test *testing.T) {
 
 func TestNodeHostOptionsRefusalBoundaries(test *testing.T) {
 	test.Parallel()
-	hidden, err := os.ReadFile("testdata/node_options_widening/hidden_force.a")
-	if err != nil {
-		test.Fatal(err)
+	hidden, readError := os.ReadFile("testdata/node_options_widening/hidden_force.a")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	for _, probe := range []struct{ name, source string }{
 		{
@@ -289,14 +289,14 @@ func TestNodeHostOptionsRefusalBoundaries(test *testing.T) {
 		},
 	} {
 		test.Run(probe.name, func(test *testing.T) {
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var refused *Refused
 			rule := "adamic/invariant-mutable"
 			if probe.name == "ordinary call" || probe.name == "stored wider view" {
 				rule = "adamic/no-optional-widening"
 			}
-			if !errors.As(err, &refused) || !strings.Contains(refused.Fix, rule) {
-				test.Fatalf("want %s refusal, got %v", rule, err)
+			if !errors.As(lowerSourceError, &refused) || !strings.Contains(refused.Fix, rule) {
+				test.Fatalf("want %s refusal, got %v", rule, lowerSourceError)
 			}
 		})
 	}
@@ -314,8 +314,8 @@ func TestNodeHostOptionsConsumptionLowers(test *testing.T) {
 		`import * as fs from 'node:fs'; const options={recursive:true,force:true}; fs.rmSync('missing',options);`,
 		`import {writeFileSync} from 'node:fs'; const options={flag:'w',mode:384,flush:false}; writeFileSync('missing','x',options);`,
 	} {
-		if _, err := lowerSource(test, source); err != nil {
-			test.Fatal(err)
+		if _, lowerSourceError := lowerSource(test, source); lowerSourceError != nil {
+			test.Fatal(lowerSourceError)
 		}
 	}
 }
@@ -342,13 +342,13 @@ func TestNodeHostOptionsReferencesAcrossFiles(test *testing.T) {
 			"import {status} from './options.a'; status('.');",
 			other,
 		} {
-			if err := os.WriteFile(files[index], []byte(source), 0600); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(files[index], []byte(source), 0600); writeError != nil {
+				test.Fatal(writeError)
 			}
 		}
-		program, err := load.Load(files)
-		if err != nil {
-			test.Fatal(err)
+		program, loadError := load.Load(files)
+		if loadError != nil {
+			test.Fatal(loadError)
 		}
 		checked, release := program.Checker(context.Background(), program.Files()[0])
 		analysis := lowering{program: program, checker: checked}
@@ -376,12 +376,15 @@ func TestNodeHostRmPresentUndefinedRefused(test *testing.T) {
 	test.Parallel()
 	for _, name := range []string{"recursive", "force", "maxRetries", "retryDelay"} {
 		test.Run(name, func(test *testing.T) {
-			_, err := lowerSource(test, "import {rmSync} from 'node:fs'; rmSync('missing',{"+name+":undefined});")
+			_, lowerSourceError := lowerSource(
+				test,
+				"import {rmSync} from 'node:fs'; rmSync('missing',{"+name+":undefined});",
+			)
 			var missing *NotYet
-			if !errors.As(err, &missing) ||
+			if !errors.As(lowerSourceError, &missing) ||
 				!strings.Contains(missing.What, "present as undefined") ||
 				!strings.Contains(missing.What, "ERR_INVALID_ARG_TYPE") {
-				test.Fatalf("want explicit Node option validation refusal, got %v", err)
+				test.Fatalf("want explicit Node option validation refusal, got %v", lowerSourceError)
 			}
 		})
 	}

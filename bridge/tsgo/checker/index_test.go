@@ -14,8 +14,8 @@ func TestExactIndexMatchesCompilerNodes(test *testing.T) {
 	test.Parallel()
 	directory := test.TempDir()
 	config := filepath.Join(directory, "tsconfig.json")
-	if err := os.WriteFile(config, []byte(`{"compilerOptions":{"strict":true}}`), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(config, []byte(`{"compilerOptions":{"strict":true}}`), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	var paths []string
 	for name, text := range map[string]string{
@@ -25,14 +25,14 @@ func TestExactIndexMatchesCompilerNodes(test *testing.T) {
 		"empty.ts":  "",
 	} {
 		path := filepath.Join(directory, name)
-		if err := os.WriteFile(path, []byte(text), 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(text), 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 		paths = append(paths, path)
 	}
-	program, err := Open(config, paths)
-	if err != nil {
-		test.Fatal(err)
+	program, openError := Open(config, paths)
+	if openError != nil {
+		test.Fatal(openError)
 	}
 	for _, path := range paths {
 		source := program.Compiler.GetSourceFile(tspath.RootedFilePathFromAbsolute(path))
@@ -60,22 +60,22 @@ func TestExactIndexMatchesCompilerNodes(test *testing.T) {
 						break
 					}
 				}
-				_, got, err := program.exact(
+				_, got, exactError := program.exact(
 					path,
 					uint64(subject.Pos()),
 					uint64(subject.End()),
 					strings.TrimPrefix(subject.Kind.String(), "Kind"),
 				)
-				if err != nil || got != expected {
-					test.Fatalf("exact index changed compiler node: %s %v %v", path, subject.Kind, err)
+				if exactError != nil || got != expected {
+					test.Fatalf("exact index changed compiler node: %s %v %v", path, subject.Kind, exactError)
 				}
 			}
 		}
 		end := uint64(len(source.Text()))
-		if _, _, err := program.exact(path, 0, end, "MissingKind"); err == nil {
+		if _, _, exactError := program.exact(path, 0, end, "MissingKind"); exactError == nil {
 			test.Fatal("warm index accepted wrong kind")
 		}
-		if _, _, err := program.exact(path, 0, end+1, "SourceFile"); err == nil {
+		if _, _, exactError := program.exact(path, 0, end+1, "SourceFile"); exactError == nil {
 			test.Fatal("warm index accepted wrong range")
 		}
 	}

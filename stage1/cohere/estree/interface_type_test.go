@@ -11,35 +11,35 @@ import (
 
 // Not parallel: miscBuild writes the shared adamic-build and adamic/runtime cache directories
 func TestInterfaceTypeMethodGap(test *testing.T) {
-	main, err := filepath.Abs("gaps/interfaceTypeMethod.ts")
-	if err != nil {
-		test.Fatal(err)
+	main, absolutePathError := filepath.Abs("gaps/interfaceTypeMethod.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	if got := string(onNode(test, main)); got != "1\n" {
 		test.Fatalf("Node: %q", got)
 	}
-	loaded, err := load.Load([]string{main})
-	if err != nil {
-		test.Fatal(err)
+	loaded, loadError := load.Load([]string{main})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	_, err = lower.Lower(context.Background(), loaded)
-	isGap := func(err error) bool {
+	_, lowerError := lower.Lower(context.Background(), loaded)
+	isGap := func(lowerError error) bool {
 		var diagnostic *lower.NotYet
-		return errors.As(err, &diagnostic) &&
+		return errors.As(lowerError, &diagnostic) &&
 			diagnostic.Where == main+":10:12" &&
 			diagnostic.What == "a class method through a view that erases its prototype origin"
 	}
-	if !isGap(err) {
-		test.Fatalf("recorded lowering gap changed: %v", err)
+	if !isGap(lowerError) {
+		test.Fatalf("recorded lowering gap changed: %v", lowerError)
 	}
-	test.Logf("Node prints 1; lowering refuses before native emission: %s", err)
+	test.Logf("Node prints 1; lowering refuses before native emission: %s", lowerError)
 	control := estreeInterfaceControlPath(test)
-	loaded, err = load.Load([]string{control})
-	if err != nil {
-		test.Fatal(err)
+	loaded, loadError = load.Load([]string{control})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	if _, err = lower.Lower(context.Background(), loaded); err != nil || isGap(err) {
-		test.Fatalf("default-free control lowering: %v", err)
+	if _, lowerError = lower.Lower(context.Background(), loaded); lowerError != nil || isGap(lowerError) {
+		test.Fatalf("default-free control lowering: %v", lowerError)
 	}
 	controlBinary, controlScript := build(test, control, true)
 	for name, got := range map[string][]byte{

@@ -85,8 +85,8 @@ func jsonPortDedicatedUnion(all, ordinary []textCase, shards []nativeChunk, dedi
 	for index := range dedicated {
 		owners = append(owners, nativeChunk{start: len(ordinary) + index, end: len(ordinary) + index + 1})
 	}
-	if err := jsonPortUnion(combined, owners); err != nil {
-		return err
+	if jsonPortUnionError := jsonPortUnion(combined, owners); jsonPortUnionError != nil {
+		return jsonPortUnionError
 	}
 	if len(combined) != len(all) {
 		return fmt.Errorf("dedicated union has %d of %d cases", len(combined), len(all))
@@ -134,14 +134,14 @@ func TestProduct_JsonFindsClassOrderAnswer(test *testing.T) {
 // The answer's key moves with the oracle's bytes and with the case's, and with nothing else it was given.
 func TestJSONClassOrderAnswerKey(test *testing.T) {
 	test.Parallel()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	key := func(oracle string, item textCase) string {
-		declared, err := buildcache.Key(root, jsonClassOrderAnswerInputs([]byte(oracle), item))
-		if err != nil {
-			test.Fatal(err)
+		declared, keyError := buildcache.Key(root, jsonClassOrderAnswerInputs([]byte(oracle), item))
+		if keyError != nil {
+			test.Fatal(keyError)
 		}
 		return declared
 	}
@@ -188,8 +188,13 @@ func jsonPortClassOrderRun(test *testing.T, side jsonClassOrderSide) {
 	portMatchesPrepare(test)
 	all, _ := jsonTopCorpus(test)
 	ordinary, shards, dedicated := jsonPortDedicatedPartition(all)
-	if err := jsonPortDedicatedUnion(all, ordinary, shards, dedicated); err != nil {
-		test.Fatal(err)
+	if jsonPortDedicatedUnionError := jsonPortDedicatedUnion(
+		all,
+		ordinary,
+		shards,
+		dedicated,
+	); jsonPortDedicatedUnionError != nil {
+		test.Fatal(jsonPortDedicatedUnionError)
 	}
 	items := jsonPortDedicatedCase(dedicated, jsonPortClassOrderKey)
 	if len(items) != 1 {
@@ -207,8 +212,8 @@ func jsonPortClassOrderRun(test *testing.T, side jsonClassOrderSide) {
 	start := time.Now()
 	input, _ := protocol(items, make([]answer, len(items)))
 	path := filepath.Join(test.TempDir(), "cases.txt")
-	if err := os.WriteFile(path, []byte(input), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(input), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	// _000 runs the Go oracle live and holds the stored answer to it, so every other side, which compares against the
 	// stored answer, compares against the oracle. Each side is a test of its own: _000 ran the oracle, release, Node
@@ -220,8 +225,8 @@ func jsonPortClassOrderRun(test *testing.T, side jsonClassOrderSide) {
 			test.Fatalf("Go oracle: exit %d stderr %s", reference.exitCode, reference.stderr)
 		}
 		live := string(reference.stdout)
-		if _, err := jsonPortAnswers(live, len(items)); err != nil {
-			test.Fatal(err)
+		if _, jsonPortAnswersError := jsonPortAnswers(live, len(items)); jsonPortAnswersError != nil {
+			test.Fatal(jsonPortAnswersError)
 		}
 		if stored != live {
 			test.Fatal("the stored class-order Go answer differs from the Go oracle's live answer")
@@ -309,13 +314,23 @@ func TestJSONDedicatedShardOwnership(test *testing.T) {
 	}
 	for _, group := range groups {
 		ordinary, shards, dedicated := jsonPortDedicatedPartition(group)
-		if err := jsonPortDedicatedUnion(group, ordinary, shards, dedicated); err != nil {
-			test.Fatal(err)
+		if jsonPortDedicatedUnionError := jsonPortDedicatedUnion(
+			group,
+			ordinary,
+			shards,
+			dedicated,
+		); jsonPortDedicatedUnionError != nil {
+			test.Fatal(jsonPortDedicatedUnionError)
 		}
 	}
 	ordinary, shards, dedicated := jsonPortDedicatedPartition(all)
-	if err := jsonPortDedicatedUnion(all, ordinary, shards, dedicated); err != nil {
-		test.Fatal(err)
+	if jsonPortDedicatedUnionError := jsonPortDedicatedUnion(
+		all,
+		ordinary,
+		shards,
+		dedicated,
+	); jsonPortDedicatedUnionError != nil {
+		test.Fatal(jsonPortDedicatedUnionError)
 	}
 	if len(dedicated) != len(jsonPortDedicatedKeys) || len(ordinary) != 1 {
 		test.Fatal("wrong dedicated ownership")
@@ -324,13 +339,28 @@ func TestJSONDedicatedShardOwnership(test *testing.T) {
 	if shards[owner].end-shards[owner].start != 1 || ordinary[shards[owner].start].Name != "small.json" {
 		test.Fatal("ordinary hash owner changed")
 	}
-	if err := jsonPortDedicatedUnion(all, ordinary, shards, nil); err == nil {
+	if jsonPortDedicatedUnionError := jsonPortDedicatedUnion(
+		all,
+		ordinary,
+		shards,
+		nil,
+	); jsonPortDedicatedUnionError == nil {
 		test.Fatal("missing dedicated cases survived")
 	}
-	if err := jsonPortDedicatedUnion(all, ordinary, shards, dedicated[:1]); err == nil {
+	if jsonPortDedicatedUnionError := jsonPortDedicatedUnion(
+		all,
+		ordinary,
+		shards,
+		dedicated[:1],
+	); jsonPortDedicatedUnionError == nil {
 		test.Fatal("a missing dedicated case survived")
 	}
-	if err := jsonPortDedicatedUnion(all, ordinary, shards, append(dedicated, dedicated[0])); err == nil {
+	if jsonPortDedicatedUnionError := jsonPortDedicatedUnion(
+		all,
+		ordinary,
+		shards,
+		append(dedicated, dedicated[0]),
+	); jsonPortDedicatedUnionError == nil {
 		test.Fatal("duplicate dedicated case survived")
 	}
 	// Agreement ownership includes each dedicated case exactly once: class order's _000 runs the Go oracle, release,
@@ -380,9 +410,9 @@ func TestJSONDedicatedShardOwnership(test *testing.T) {
 	owned := map[string][]string{}
 	sides := map[string]string{}
 	for _, file := range []string{"class_order_grain30_test.go", "dedicated_test.go"} {
-		tree, err := parser.ParseFile(token.NewFileSet(), file, nil, 0)
-		if err != nil {
-			test.Fatal(err)
+		tree, parseFileError := parser.ParseFile(token.NewFileSet(), file, nil, 0)
+		if parseFileError != nil {
+			test.Fatal(parseFileError)
 		}
 		for _, decl := range tree.Decls {
 			if group, ok := decl.(*ast.GenDecl); ok && group.Tok == token.CONST {

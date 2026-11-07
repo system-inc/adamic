@@ -32,11 +32,11 @@ func typeSymbolExecContext(ctx context.Context, name string, args ...string) *ex
 	command := exec.CommandContext(ctx, name, args...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
+		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if errors.Is(killError, syscall.ESRCH) {
 			return os.ErrProcessDone
 		}
-		return err
+		return killError
 	}
 	return command
 }
@@ -50,9 +50,9 @@ func typeSymbolCommand(directory string, name string, args ...string) error {
 	// Read through childguard.Capture, to its end with no WaitDelay deciding when: exec's own copying under a
 	// one-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF a second after the build
 	// exited, so a finished build could fail its product under load (#n3gk22h's shape).
-	stdout, stderr, err := childguard.Capture(ctx, command)
-	if err != nil {
-		return fmt.Errorf("%s: %w\n%s%s", command, err, stdout, stderr)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
+	if captureError != nil {
+		return fmt.Errorf("%s: %w\n%s%s", command, captureError, stdout, stderr)
 	}
 	return nil
 }
@@ -68,9 +68,9 @@ func typeSymbolOracle(h *harness) string {
 }
 
 func typeSymbolFileHash(path string) (string, error) {
-	data, err := os.ReadFile(path)
-	if err != nil {
-		return "", err
+	data, readError := os.ReadFile(path)
+	if readError != nil {
+		return "", readError
 	}
 	return fmt.Sprintf("%x", sha256.Sum256(data)), nil
 }
@@ -81,20 +81,20 @@ func typeSymbolNativeSpec(
 	repository, stage0, name, entry, archive string,
 	sanitize bool,
 ) (buildcache.Inputs, func(string) error, error) {
-	files, err := typeAwareTrackedTypeScript(
+	files, typeAwareTrackedTypeScriptError := typeAwareTrackedTypeScript(
 		repository,
 		"stage1/typescript",
 		"stage1/cohere/lint",
 		"stage1/cohere/typeaware",
 	)
-	if err != nil {
-		return buildcache.Inputs{}, nil, err
+	if typeAwareTrackedTypeScriptError != nil {
+		return buildcache.Inputs{}, nil, typeAwareTrackedTypeScriptError
 	}
 	var flags []string
 	for _, input := range []struct{ name, path string }{{"stage0", stage0}, {"archive", archive}, {"entry", entry}} {
-		sum, err := typeSymbolFileHash(input.path)
-		if err != nil {
-			return buildcache.Inputs{}, nil, err
+		sum, typeSymbolFileHashError := typeSymbolFileHash(input.path)
+		if typeSymbolFileHashError != nil {
+			return buildcache.Inputs{}, nil, typeSymbolFileHashError
 		}
 		flags = append(flags, input.name+"="+sum)
 	}
@@ -120,9 +120,9 @@ func typeSymbolNativeSpec(
 			args = append(args, "--sanitize")
 		}
 		started := time.Now()
-		err := typeSymbolCommand(repository, stage0, args...)
+		typeSymbolCommandError := typeSymbolCommand(repository, stage0, args...)
 		fmt.Printf("typeSymbol-build %s cold=%.6fs\n", name, time.Since(started).Seconds())
-		return err
+		return typeSymbolCommandError
 	}
 	return inputs, build, nil
 }
@@ -208,7 +208,7 @@ func typeSymbolArchive(h *harness) string {
 func typeSymbolNativeProduct(h *harness) string {
 	stage0 := h.stage0()
 	archive := typeSymbolArchive(h)
-	inputs, build, err := typeSymbolNativeSpec(
+	inputs, build, typeSymbolNativeSpecError := typeSymbolNativeSpec(
 		h.repository,
 		stage0,
 		"volume-type-symbol-native",
@@ -216,17 +216,17 @@ func typeSymbolNativeProduct(h *harness) string {
 		archive,
 		false,
 	)
-	if err != nil {
-		h.t.Fatal(err)
+	if typeSymbolNativeSpecError != nil {
+		h.t.Fatal(typeSymbolNativeSpecError)
 	}
 	return filepath.Join(buildcache.Product(h.t, inputs, build), "native")
 }
 
 func typeSymbolFixtures(h *harness) ([]string, string) {
 	cases := typeSymbolCases()
-	data, err := json.Marshal(cases)
-	if err != nil {
-		h.t.Fatal(err)
+	data, encodeError := json.Marshal(cases)
+	if encodeError != nil {
+		h.t.Fatal(encodeError)
 	}
 	directory := buildcache.Product(h.t, buildcache.Inputs{
 		Name:  "volume-type-symbol-fixtures",
@@ -254,9 +254,9 @@ func typeSymbolFixtures(h *harness) ([]string, string) {
 		return nil
 	})
 	manifest := filepath.Join(directory, "controls.manifest")
-	data, err = os.ReadFile(manifest)
-	if err != nil {
-		h.t.Fatal(err)
+	data, readError := os.ReadFile(manifest)
+	if readError != nil {
+		h.t.Fatal(readError)
 	}
 	var paths []string
 	for _, name := range strings.Split(strings.TrimSpace(string(data)), "\n") {
@@ -270,15 +270,15 @@ func typeSymbolTruth(h *harness, oracle string, paths []string, manifest string)
 	config := filepath.Join(repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
 	// Every root and the config are product inputs; Go-oracle bytes cover its
 	// embedded standard-library declarations and compiled production rules.
-	oracleHash, err := typeSymbolFileHash(oracle)
-	if err != nil {
-		test.Fatal(err)
+	oracleHash, typeSymbolFileHashError := typeSymbolFileHash(oracle)
+	if typeSymbolFileHashError != nil {
+		test.Fatal(typeSymbolFileHashError)
 	}
 	flags := []string{oracleHash, strings.Join(paths, "\n")}
 	for _, path := range paths {
-		sum, err := typeSymbolFileHash(path)
-		if err != nil {
-			test.Fatal(err)
+		sum, typeSymbolFileHashError := typeSymbolFileHash(path)
+		if typeSymbolFileHashError != nil {
+			test.Fatal(typeSymbolFileHashError)
 		}
 		flags = append(flags, sum)
 	}
@@ -297,16 +297,16 @@ func typeSymbolTruth(h *harness, oracle string, paths []string, manifest string)
 		command.Dir = repository
 		// Read through childguard.Capture for typeSymbolCommand's reason: a WaitDelay could fail a run that had
 		// finished but was slow to drain.
-		stdout, stderr, err := childguard.Capture(ctx, command)
-		if err != nil {
-			return fmt.Errorf("oracle: %w %s", err, stderr)
+		stdout, stderr, captureError := childguard.Capture(ctx, command)
+		if captureError != nil {
+			return fmt.Errorf("oracle: %w %s", captureError, stderr)
 		}
 		// Each finding names its fixture in the fixtures product, by that product's key (#tqrqx60).
 		return os.WriteFile(filepath.Join(dir, "findings"), []byte(buildcache.Relative(string(stdout))), 0444)
 	})
-	truthBytes, err := os.ReadFile(filepath.Join(outputDir, "findings"))
-	if err != nil {
-		test.Fatal(err)
+	truthBytes, readError := os.ReadFile(filepath.Join(outputDir, "findings"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return result{stdout: []byte(buildcache.Absolute(string(truthBytes)))}
 }
@@ -315,16 +315,16 @@ func TestVolumeTypeSymbol_000(test *testing.T) {
 	test.Parallel()
 	if selector := os.Getenv("ADAMIC_TEST_SHARD"); selector != "" {
 		var i, n int
-		if _, err := fmt.Sscanf(selector, "%d/%d", &i, &n); err != nil || n < 1 || i < 0 || i >= n {
+		if _, scanError := fmt.Sscanf(selector, "%d/%d", &i, &n); scanError != nil || n < 1 || i < 0 || i >= n {
 			test.Fatalf("invalid ADAMIC_TEST_SHARD %q", selector)
 		}
 		if i != 0 {
 			test.Skip("assigned to shard selector 0")
 		}
 	}
-	repository, err := filepath.Abs("../../..")
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs("../../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	h := &harness{t: test, repository: repository, directory: test.TempDir()}
 	oracle := typeSymbolOracle(h)
@@ -333,8 +333,8 @@ func TestVolumeTypeSymbol_000(test *testing.T) {
 	paths, manifest := typeSymbolFixtures(h)
 	truth := typeSymbolTruth(h, oracle, paths, manifest)
 	observed := typeSymbolMust(h, "type-symbol-run", mutant, config, manifest)
-	if err := typeSymbolSurvived(observed, truth); err != nil {
-		test.Fatal(err)
+	if typeSymbolSurvivedError := typeSymbolSurvived(observed, truth); typeSymbolSurvivedError != nil {
+		test.Fatal(typeSymbolSurvivedError)
 	}
 	test.Logf(
 		"type-symbol mutant caught at byte %d over %d cases",
@@ -357,7 +357,7 @@ func TestVolumeTypeSymbolCommandDeadline(test *testing.T) {
 	defer cancel()
 	command.Env = append(os.Environ(), "ADAMIC_TYPE_SYMBOL_DEADLINE_CHILD=1")
 	started := time.Now()
-	if err := command.Run(); err == nil {
+	if runError := command.Run(); runError == nil {
 		test.Fatal("deadline child escaped cancellation")
 	}
 	if time.Since(started) > 3*time.Second {

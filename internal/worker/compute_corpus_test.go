@@ -17,9 +17,9 @@ import (
 // observations afresh, without workerd or any environment opt-in.
 func computeCorpusProduct(test *testing.T, mutant, build bool) string {
 	test.Helper()
-	inputs, err := buildcache.GoBuildInInputs("", "adamic", "./cmd/adamic", nil, nil)
-	if err != nil {
-		test.Fatal(err)
+	inputs, goBuildInInputsError := buildcache.GoBuildInInputs("", "adamic", "./cmd/adamic", nil, nil)
+	if goBuildInInputsError != nil {
+		test.Fatal(goBuildInInputsError)
 	}
 	inputs.Name = fmt.Sprintf("worker compute corpus sieve-mutant=%t", mutant)
 	inputs.Files = slices.Clone(inputs.Files)
@@ -32,9 +32,9 @@ func computeCorpusProduct(test *testing.T, mutant, build bool) string {
 		"workers/compute/native-driver.a",
 	)
 	inputs.Flags = append(inputs.Flags, fmt.Sprintf("sieve-mutant=%t", mutant))
-	request, err := native.RuntimeRequestFor(native.Options{Release: true})
-	if err != nil {
-		test.Fatal(err)
+	request, runtimeRequestForError := native.RuntimeRequestFor(native.Options{Release: true})
+	if runtimeRequestForError != nil {
+		test.Fatal(runtimeRequestForError)
 	}
 	inputs.Flags = append(inputs.Flags, request.Portable...)
 	inputs.Toolchain = append(
@@ -46,14 +46,14 @@ func computeCorpusProduct(test *testing.T, mutant, build bool) string {
 		return findWorkerProduct(test, inputs)
 	}
 	compiler := workerCompilerProduct(test, nil, false)
-	root, err := filepath.Abs("../..")
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs("../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return buildcache.Product(test, inputs, func(directory string) error {
-		source, err := os.ReadFile(filepath.Join(root, "workers/compute/handler.a"))
-		if err != nil {
-			return err
+		source, readError := os.ReadFile(filepath.Join(root, "workers/compute/handler.a"))
+		if readError != nil {
+			return readError
 		}
 		if mutant {
 			before := "for (let value = 2; value <= limit; value += 1)"
@@ -65,16 +65,16 @@ func computeCorpusProduct(test *testing.T, mutant, build bool) string {
 			)
 		}
 		entry := filepath.Join(directory, "handler.a")
-		if err := os.WriteFile(entry, source, 0600); err != nil {
-			return err
+		if writeError := os.WriteFile(entry, source, 0600); writeError != nil {
+			return writeError
 		}
-		driver, err := os.ReadFile(filepath.Join(root, "workers/compute/native-driver.a"))
-		if err != nil {
-			return err
+		driver, readError := os.ReadFile(filepath.Join(root, "workers/compute/native-driver.a"))
+		if readError != nil {
+			return readError
 		}
 		driverPath := filepath.Join(directory, "native-driver.a")
-		if err := os.WriteFile(driverPath, driver, 0600); err != nil {
-			return err
+		if writeError := os.WriteFile(driverPath, driver, 0600); writeError != nil {
+			return writeError
 		}
 		for _, args := range [][]string{
 			{"worker", entry, "--out", filepath.Join(directory, "worker")},
@@ -82,8 +82,8 @@ func computeCorpusProduct(test *testing.T, mutant, build bool) string {
 		} {
 			command := exec.CommandContext(test.Context(), compiler, args...)
 			command.Dir = root
-			if output, err := command.CombinedOutput(); err != nil {
-				return fmt.Errorf("compute corpus build: %w\n%s", err, output)
+			if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+				return fmt.Errorf("compute corpus build: %w\n%s", combinedOutputError, output)
 			}
 		}
 		return nil
@@ -113,8 +113,8 @@ func runComputeCorpus(test *testing.T, mutant bool) {
 		mode,
 	)
 	command.Env = append(os.Environ(), "ADAMIC_JSON_TYPES="+jsonTypes(test))
-	if output, err := command.CombinedOutput(); err != nil {
-		test.Fatalf("compute corpus: %v\n%s", err, output)
+	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("compute corpus: %v\n%s", combinedOutputError, output)
 	} else {
 		test.Logf("%s", output)
 	}

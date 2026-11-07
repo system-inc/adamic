@@ -17,10 +17,10 @@ func main() {
 	if len(os.Args) != 5 {
 		panic("runtime directory, source, target (native or wasi), output required")
 	}
-	program, err := load.Load([]string{os.Args[2]})
-	check(err)
-	lowered, err := lower.Lower(context.Background(), program)
-	check(err)
+	program, loadError := load.Load([]string{os.Args[2]})
+	check(loadError)
+	lowered, lowerError := lower.Lower(context.Background(), program)
+	check(lowerError)
 	options := native.Options{}
 	var source string
 	compiler := "clang"
@@ -39,18 +39,19 @@ func main() {
 		if handler < 0 {
 			panic("handler absent")
 		}
-		source, err = native.WASI(lowered, handler)
-		check(err)
+		var wasiError error
+		source, wasiError = native.WASI(lowered, handler)
+		check(wasiError)
 		compiler = filepath.Join(filepath.Dir(filepath.Dir(os.Getenv("WASI_SYSROOT"))), "bin/clang")
 	} else if os.Args[3] != "native" {
 		panic("unsupported target")
 	} else {
 		source = native.C(lowered)
 	}
-	library, err := native.RuntimeLibraryForSource(os.Args[1], source, options)
-	check(err)
-	directory, err := os.MkdirTemp("", "decode-service-build-")
-	check(err)
+	library, runtimeLibraryForSourceError := native.RuntimeLibraryForSource(os.Args[1], source, options)
+	check(runtimeLibraryForSourceError)
+	directory, temporaryDirectoryError := os.MkdirTemp("", "decode-service-build-")
+	check(temporaryDirectoryError)
 	defer os.RemoveAll(directory)
 	path := filepath.Join(directory, "main.c")
 	check(os.WriteFile(path, []byte(source), 0644))
@@ -67,13 +68,13 @@ func main() {
 		arguments = append(arguments, native.WASILinkFlags(options)...)
 	}
 	command := exec.Command(compiler, arguments...)
-	output, err := command.CombinedOutput()
-	if err != nil {
-		panic(fmt.Sprintf("%v: %s", err, output))
+	output, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError != nil {
+		panic(fmt.Sprintf("%v: %s", combinedOutputError, output))
 	}
 }
-func check(err error) {
-	if err != nil {
-		panic(err)
+func check(sourceError error) {
+	if sourceError != nil {
+		panic(sourceError)
 	}
 }

@@ -7,9 +7,9 @@ import (
 
 func (l *lowering) labeled(node *ast.Node) ([]ir.Statement, error) {
 	statement := node.AsLabeledStatement()
-	body, err := l.statement(statement.Statement)
-	if err != nil {
-		return nil, err
+	body, statementError := l.statement(statement.Statement)
+	if statementError != nil {
+		return nil, statementError
 	}
 	name := statement.Label.Text()
 	target := statement.Statement

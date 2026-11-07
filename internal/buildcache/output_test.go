@@ -18,14 +18,14 @@ import (
 func makeReadOnly(test *testing.T, directory string) {
 	test.Helper()
 	var directories []string
-	err := filepath.WalkDir(directory, func(path string, entry fs.DirEntry, err error) error {
-		if err == nil && entry.IsDir() {
+	walkError := filepath.WalkDir(directory, func(path string, entry fs.DirEntry, pathError error) error {
+		if pathError == nil && entry.IsDir() {
 			directories = append(directories, path)
 		}
-		return err
+		return pathError
 	})
-	if err != nil {
-		test.Fatal(err)
+	if walkError != nil {
+		test.Fatal(walkError)
 	}
 	test.Cleanup(func() {
 		for _, each := range directories {
@@ -33,8 +33,8 @@ func makeReadOnly(test *testing.T, directory string) {
 		}
 	})
 	for _, each := range directories {
-		if err := os.Chmod(each, 0o555); err != nil {
-			test.Fatal(err)
+		if changeModeError := os.Chmod(each, 0o555); changeModeError != nil {
+			test.Fatal(changeModeError)
 		}
 	}
 }
@@ -44,19 +44,19 @@ func makeReadOnly(test *testing.T, directory string) {
 func cacheListing(test *testing.T, directory string) map[string]string {
 	test.Helper()
 	listing := map[string]string{}
-	err := filepath.WalkDir(directory, func(path string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
+	walkError := filepath.WalkDir(directory, func(path string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
-		info, err := entry.Info()
-		if err != nil {
-			return err
+		info, infoError := entry.Info()
+		if infoError != nil {
+			return infoError
 		}
 		listing[path] = fmt.Sprintf("%s %d %d", info.Mode(), info.Size(), info.ModTime().UnixNano())
 		return nil
 	})
-	if err != nil {
-		test.Fatal(err)
+	if walkError != nil {
+		test.Fatal(walkError)
 	}
 	return listing
 }
@@ -64,8 +64,8 @@ func cacheListing(test *testing.T, directory string) map[string]string {
 // exists fails the test unless path is there.
 func exists(test *testing.T, path, what string) {
 	test.Helper()
-	if _, err := os.Stat(path); err != nil {
-		test.Errorf("%s isn't at %s: %v", what, path, err)
+	if _, statError := os.Stat(path); statError != nil {
+		test.Errorf("%s isn't at %s: %v", what, path, statError)
 	}
 }
 
@@ -94,17 +94,17 @@ func TestAnOutputDirectoryTakesEveryWriteAndTheCacheIsOnlyRead(test *testing.T) 
 	if len(settlement.Settled) != 1 || len(settlement.Refused) != 0 {
 		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	file, err := loadReads(r.cache, build.NameKey)
-	if err != nil || len(file.Sets) != 1 {
-		test.Fatalf("port's read sets: %+v, %v", file, err)
+	file, loadReadsError := loadReads(r.cache, build.NameKey)
+	if loadReadsError != nil || len(file.Sets) != 1 {
+		test.Fatalf("port's read sets: %+v, %v", file, loadReadsError)
 	}
 	settledKey := file.Sets[0].Key
 	settled := filepath.Join(r.cache, settledKey)
-	if err = withReads(r.cache, build.NameKey, func(file *readsFile) error {
+	if withReadsError := withReads(r.cache, build.NameKey, func(file *readsFile) error {
 		file.Sets[0].Key = strings.Repeat("0", 64)
 		return nil
-	}); err != nil {
-		test.Fatal(err)
+	}); withReadsError != nil {
+		test.Fatal(withReadsError)
 	}
 	test.Setenv("ADAMIC_BUILD_TRACE", "")
 	forgetHeldForLife()
@@ -116,46 +116,46 @@ func TestAnOutputDirectoryTakesEveryWriteAndTheCacheIsOnlyRead(test *testing.T) 
 	stored := Inputs{Name: "stored", Files: []string{"source"}}
 	storedNameKey := NameKey(r.root, stored)
 	storedSet := readSet{Entries: []readEntry{{Kind: "content", Path: "source/b.c"}}}
-	evaluated, err := evaluate(r.root, r.cache, storedNameKey, storedSet, 0, nil)
-	if err != nil {
-		test.Fatal(err)
+	evaluated, evaluateError := evaluate(r.root, r.cache, storedNameKey, storedSet, 0, nil)
+	if evaluateError != nil {
+		test.Fatal(evaluateError)
 	}
 	storedSet.Key = evaluated.key
-	if err = recordReads(r.cache, storedNameKey, stored.Name, storedSet); err != nil {
-		test.Fatal(err)
+	if recordReadsError := recordReads(r.cache, storedNameKey, stored.Name, storedSet); recordReadsError != nil {
+		test.Fatal(recordReadsError)
 	}
 
 	makeReadOnly(test, r.cache)
 	before := cacheListing(test, r.cache)
-	scratch, err := filepath.EvalSymlinks(test.TempDir())
-	if err != nil {
-		test.Fatal(err)
+	scratch, resolveSymlinksError := filepath.EvalSymlinks(test.TempDir())
+	if resolveSymlinksError != nil {
+		test.Fatal(resolveSymlinksError)
 	}
 	output := filepath.Join(scratch, "output")
 	test.Setenv(location.OutputDirectoryVariable, output)
 	forgetHeldForLife()
 
 	// Found, never built: by its read sets, and for this machine alone.
-	if found, err := Get(port, refuseBuild); err != nil || found != settled {
-		test.Fatalf("the settled product was found at %q (%v), want %s", found, err, settled)
+	if found, getError := Get(port, refuseBuild); getError != nil || found != settled {
+		test.Fatalf("the settled product was found at %q (%v), want %s", found, getError, settled)
 	}
 	exists(test, readsPath(output, build.NameKey), "the set that found port under another key, recorded again")
-	if again, err := loadReads(
+	if again, loadReadsError := loadReads(
 		output,
 		build.NameKey,
-	); err != nil || len(again.Sets) == 0 || again.Sets[0].Key != settledKey {
+	); loadReadsError != nil || len(again.Sets) == 0 || again.Sets[0].Key != settledKey {
 		test.Errorf(
 			"port's read sets read %+v, %v; want the set that found it first, under %s",
 			again,
-			err,
+			loadReadsError,
 			settledKey[:12],
 		)
 	}
-	if found, err := Get(local, refuseBuild); err != nil || found != built {
-		test.Fatalf("the local product was found at %q (%v), want %s", found, err, built)
+	if found, getError := Get(local, refuseBuild); getError != nil || found != built {
+		test.Fatalf("the local product was found at %q (%v), want %s", found, getError, built)
 	}
 	// Found before anything is made or locked: its hit leaves no trace in the output directory either.
-	if _, err := os.Stat(filepath.Join(output, "local")); err == nil {
+	if _, statError := os.Stat(filepath.Join(output, "local")); statError == nil {
 		test.Error("a hit in the cache made the output directory's local directory")
 	}
 	// Fetched into the output directory.
@@ -165,11 +165,14 @@ func TestAnOutputDirectoryTakesEveryWriteAndTheCacheIsOnlyRead(test *testing.T) 
 	store.put(test, storedSet.Key, map[string]string{"product": "stored"})
 	test.Setenv("ADAMIC_BUILD_STORE", server.URL)
 	test.Setenv("ADAMIC_BUILD_AUDIT", "0")
-	if fetched, err := Get(stored, refuseBuild); err != nil || fetched != filepath.Join(output, storedSet.Key) {
+	if fetched, getError := Get(
+		stored,
+		refuseBuild,
+	); getError != nil || fetched != filepath.Join(output, storedSet.Key) {
 		test.Fatalf(
 			"the stored product was fetched to %q (%v), want %s",
 			fetched,
-			err,
+			getError,
 			filepath.Join(output, storedSet.Key),
 		)
 	}
@@ -181,27 +184,29 @@ func TestAnOutputDirectoryTakesEveryWriteAndTheCacheIsOnlyRead(test *testing.T) 
 		test.Fatalf("a new product is at %s, not in the output directory's local directory", made)
 	}
 	exists(test, localPointer(output, NameKey(r.root, fresh)), "the new product's local pointer")
-	copied, err := Resolved(built)
-	if err != nil {
-		test.Fatalf("resolving a product the read-only cache holds: %v", err)
+	copied, resolvedError := Resolved(built)
+	if resolvedError != nil {
+		test.Fatalf("resolving a product the read-only cache holds: %v", resolvedError)
 	}
 	if !under(copied, filepath.Join(output, "local")) {
 		test.Fatalf("the resolved copy is at %s, not beside the product's place in the output directory", copied)
 	}
-	if content, err := os.ReadFile(
+	if content, readError := os.ReadFile(
 		filepath.Join(copied, "product"),
-	); err != nil || string(content) != r.root+"/source/a.c\n" {
-		test.Fatalf("the resolved copy reads %q, %v", content, err)
+	); readError != nil || string(content) != r.root+"/source/a.c\n" {
+		test.Fatalf("the resolved copy reads %q, %v", content, readError)
 	}
-	if _, err := productDigest(settled); err != nil {
-		test.Fatal(err)
+	if _, productDigestError := productDigest(settled); productDigestError != nil {
+		test.Fatal(productDigestError)
 	}
 	exists(test, filepath.Join(output, settledKey+".digest"), "the settled product's digest")
 	machineFile := filepath.Join(scratch, "machine-file")
 	write(test, scratch, "machine-file", "a machine file\n")
 	systemValue(machineFile)
-	if values, err := os.ReadDir(filepath.Join(output, "machine")); err != nil || len(values) != 1 {
-		test.Errorf("the machine file's value kept in the output directory: %d, %v", len(values), err)
+	if values, readDirectoryError := os.ReadDir(
+		filepath.Join(output, "machine"),
+	); readDirectoryError != nil || len(values) != 1 {
+		test.Errorf("the machine file's value kept in the output directory: %d, %v", len(values), readDirectoryError)
 	}
 
 	// Settled in the output directory: a traced build reading the source and the product only the cache holds.
@@ -253,7 +258,7 @@ func TestAnOutputDirectoryTakesEveryWriteAndTheCacheIsOnlyRead(test *testing.T) 
 	); !strings.Contains(strings.Join(entries, "\n"), "product "+build.NameKey) {
 		test.Errorf("consumer's read set doesn't read port, which only the cache holds: %q", entries)
 	}
-	if _, err := os.Stat(filepath.Join(r.cache, consumerKey)); err == nil {
+	if _, statError := os.Stat(filepath.Join(r.cache, consumerKey)); statError == nil {
 		test.Error("the settled product is in the read-only cache")
 	}
 
@@ -268,11 +273,11 @@ func TestAnOutputDirectoryTakesEveryWriteAndTheCacheIsOnlyRead(test *testing.T) 
 			test.Errorf("%s appeared in the read-only cache", path)
 		}
 	}
-	filepath.WalkDir(output, func(path string, entry fs.DirEntry, err error) error {
-		if err == nil && entry.Type()&fs.ModeSymlink != 0 {
+	filepath.WalkDir(output, func(path string, entry fs.DirEntry, pathError error) error {
+		if pathError == nil && entry.Type()&fs.ModeSymlink != 0 {
 			test.Errorf("the output directory holds a link: %s", path)
 		}
-		return err
+		return pathError
 	})
 }
 
@@ -300,28 +305,29 @@ func TestTheOutputDirectoryKeysAndRelocatesAsTheCache(test *testing.T) {
 		test.Setenv("ADAMIC_BUILD_CACHE_DIR", r.cache)
 		test.Setenv(location.OutputDirectoryVariable, "")
 		if mode != "unset" {
-			scratch, err := filepath.EvalSymlinks(test.TempDir())
-			if err != nil {
-				test.Fatal(err)
+			scratch, resolveSymlinksError := filepath.EvalSymlinks(test.TempDir())
+			if resolveSymlinksError != nil {
+				test.Fatal(resolveSymlinksError)
 			}
 			test.Setenv(location.OutputDirectoryVariable, filepath.Join(scratch, "output-"+mode))
 		}
-		output, err := location.Output()
-		if err != nil {
-			test.Fatal(err)
+		output, outputError := location.Output()
+		if outputError != nil {
+			test.Fatal(outputError)
 		}
 		writing := same
 		writing.Name = "writing"
 		writing.Flags = []string{"--products=" + output, "--into=" + filepath.Join(output, "local")}
 		var one run
-		one.key, err = Key(r.root, same)
-		if err != nil {
-			test.Fatal(err)
+		var keyError error
+		one.key, keyError = Key(r.root, same)
+		if keyError != nil {
+			test.Fatal(keyError)
 		}
 		one.nameKey = NameKey(r.root, same)
-		writingKey, err := Key(r.root, writing)
-		if err != nil {
-			test.Fatal(err)
+		writingKey, keyError := Key(r.root, writing)
+		if keyError != nil {
+			test.Fatal(keyError)
 		}
 		one.writing = writingKey + " " + NameKey(r.root, writing)
 		// A product of its own name in each run, so each builds where that run writes.
@@ -336,9 +342,9 @@ func TestTheOutputDirectoryKeysAndRelocatesAsTheCache(test *testing.T) {
 		if mode != "unset" && !under(directory, output) {
 			test.Fatalf("run %s built its product at %s, not where it writes", mode, directory)
 		}
-		content, err := os.ReadFile(filepath.Join(directory, "names"))
-		if err != nil {
-			test.Fatal(err)
+		content, readError := os.ReadFile(filepath.Join(directory, "names"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		nameKey := NameKey(r.root, relocated)
 		one.bytes = strings.ReplaceAll(string(content), nameKey, "<name key>")
@@ -352,15 +358,15 @@ func TestTheOutputDirectoryKeysAndRelocatesAsTheCache(test *testing.T) {
 		}
 		if mode != "unset" {
 			raw := Inputs{Name: "raw " + mode, Files: []string{"source"}}
-			_, err := Get(raw, func(directory string) error {
+			_, getError := Get(raw, func(directory string) error {
 				return os.WriteFile(
 					filepath.Join(directory, "names"),
 					[]byte(filepath.Join(output, "local")+"\n"),
 					0o644,
 				)
 			})
-			if err == nil || !strings.Contains(err.Error(), "holds a path of the machine that built it") {
-				test.Errorf("run %s kept a product naming its output directory raw: %v", mode, err)
+			if getError == nil || !strings.Contains(getError.Error(), "holds a path of the machine that built it") {
+				test.Errorf("run %s kept a product naming its output directory raw: %v", mode, getError)
 			}
 		}
 		runs[mode] = one

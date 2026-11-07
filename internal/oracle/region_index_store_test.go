@@ -23,25 +23,25 @@ const regionIndexStoreDirectory = "internal/oracle/testdata/region_index_store"
 // holds all three to the pinned text, and returns the program's C for its region assertion.
 func regionIndexStoreAgrees(test *testing.T, name, want string) string {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, regionIndexStoreDirectory, name))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, regionIndexStoreDirectory, name))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := onNode(test, path)
 	if truth.exitCode != 0 || string(truth.stdout) != want || len(truth.stderr) != 0 {
 		test.Fatalf("Node: %d %q %s", truth.exitCode, truth.stdout, truth.stderr)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	if difference := disagreement(truth, onJavaScriptBackend(test, program)); difference != "" {
 		test.Fatalf("JavaScript backend: %s", difference)
 	}
 	code := native.C(program)
 	binary := filepath.Join(test.TempDir(), "program")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(code, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	result := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
 	if difference := disagreement(truth, result); difference != "" {

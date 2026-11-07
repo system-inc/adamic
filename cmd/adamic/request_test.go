@@ -15,8 +15,8 @@ import (
 func requestSource(test *testing.T, source string) string {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "program.a")
-	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return path
 }
@@ -92,10 +92,15 @@ func TestWASIRequestSelection(test *testing.T) {
 			if checked == nil || checkCode != 0 {
 				test.Fatalf("checker refused handler fixture, code %d", checkCode)
 			}
-			name, err := requestFunction(checked)
+			name, requestFunctionError := requestFunction(checked)
 			invalidSignature := testCase.refused
-			if (err != nil) != invalidSignature {
-				test.Fatalf("signature selection returned %q, %v, want refused %t", name, err, invalidSignature)
+			if (requestFunctionError != nil) != invalidSignature {
+				test.Fatalf(
+					"signature selection returned %q, %v, want refused %t",
+					name,
+					requestFunctionError,
+					invalidSignature,
+				)
 			}
 			if testCase.name == "alias" && name != "serve" {
 				test.Fatalf("alias selected %q, want serve", name)
@@ -125,9 +130,9 @@ func TestWASIRequest(test *testing.T) {
 	for _, fixture := range []string{"request.a", "request_alias.a"} {
 		test.Run(fixture, func(test *testing.T) {
 			output := filepath.Join(test.TempDir(), "request.wasm")
-			source, err := filepath.Abs(filepath.Join("testdata/wasi", fixture))
-			if err != nil {
-				test.Fatal(err)
+			source, absolutePathError := filepath.Abs(filepath.Join("testdata/wasi", fixture))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			if code := run([]string{"build", "--target", "wasm32-wasi", source, "-o", output, "--count"}); code != 0 {
 				test.Fatalf("build returned %d", code)
@@ -143,8 +148,8 @@ func TestWASIRequest(test *testing.T) {
 				source,
 				filepath.Join(test.TempDir(), "stdout"),
 			)
-			if result, err := command.CombinedOutput(); err != nil {
-				test.Fatalf("request host: %v\n%s", err, result)
+			if result, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+				test.Fatalf("request host: %v\n%s", combinedOutputError, result)
 			} else {
 				test.Log(string(result))
 			}
@@ -163,12 +168,12 @@ func TestRequestNativeStaysCommand(test *testing.T) {
 		test.Fatal("native C acquired request ABI")
 	}
 	binary := filepath.Join(test.TempDir(), "program")
-	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(source, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
-	result, err := exec.Command(binary).CombinedOutput()
-	if err != nil || string(result) != "dependency initialized\nentry initialized\n" {
-		test.Fatalf("native command: %v, %q", err, result)
+	result, combinedOutputError := exec.Command(binary).CombinedOutput()
+	if combinedOutputError != nil || string(result) != "dependency initialized\nentry initialized\n" {
+		test.Fatalf("native command: %v, %q", combinedOutputError, result)
 	}
 }
 
@@ -176,12 +181,12 @@ func TestRequestNativeStaysCommand(test *testing.T) {
 func TestWASIRequestModuleSelection(test *testing.T) {
 	dir := test.TempDir()
 	dependency := filepath.Join(dir, "dependency.a")
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		dependency,
 		[]byte("export function handleRequest(request: string): string { return request; }"),
 		0644,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
 	path := filepath.Join(dir, "program.a")
 	for _, testCase := range []struct {
@@ -194,8 +199,8 @@ func TestWASIRequestModuleSelection(test *testing.T) {
 			true,
 		},
 	} {
-		if err := os.WriteFile(path, []byte(testCase.source), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(testCase.source), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		program, handler, code := compileWASI(path)
 		if testCase.refused {
@@ -230,9 +235,9 @@ func TestWASIRequestThrows(test *testing.T) {
 		"testdata/wasi/throw-host.mjs",
 		output,
 	)
-	result, err := command.CombinedOutput()
-	exit, ok := err.(*exec.ExitError)
+	result, combinedOutputError := command.CombinedOutput()
+	exit, ok := combinedOutputError.(*exec.ExitError)
 	if !ok || exit.ExitCode() != 70 || string(result) != "adamic: panic: Error: boundary\n" {
-		test.Fatalf("uncaught handler exception: %v, %q", err, result)
+		test.Fatalf("uncaught handler exception: %v, %q", combinedOutputError, result)
 	}
 }

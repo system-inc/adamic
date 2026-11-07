@@ -43,13 +43,13 @@ func run(test *testing.T, directory string, environment []string, name string, a
 		command = toolchain.CommandIn(directory, name, args...)
 		command.Env = append(command.Env, environment...)
 	}
-	var out, errOut bytes.Buffer
-	command.Stdout, command.Stderr = &out, &errOut
-	if err := childguard.Run(command, childguard.Options{}); err != nil {
-		test.Fatalf("%s: %v\n%s", name, err, errOut.Bytes())
+	var out, outError bytes.Buffer
+	command.Stdout, command.Stderr = &out, &outError
+	if runError := childguard.Run(command, childguard.Options{}); runError != nil {
+		test.Fatalf("%s: %v\n%s", name, runError, outError.Bytes())
 	}
-	if errOut.Len() != 0 {
-		test.Fatalf("%s stderr: %s", name, errOut.Bytes())
+	if outError.Len() != 0 {
+		test.Fatalf("%s stderr: %s", name, outError.Bytes())
 	}
 	return out.Bytes()
 }
@@ -62,17 +62,17 @@ func goLexer(test *testing.T, cases string) []byte {
 	if directory := os.Getenv("ADAMIC_YAML_ARTIFACTS"); directory != "" {
 		yamlArtifacts.Lock()
 		defer yamlArtifacts.Unlock()
-		if err := os.MkdirAll(directory, 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		data, err := os.ReadFile(binary)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(binary)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		// A program copied while sibling tests fork goes through the fork-safe writer, or a fork can hold its writable
 		// descriptor and a later exec of it fails with ETXTBSY (#6hjazy4).
-		if err := executable.Write(filepath.Join(directory, "go-lexer"), data); err != nil {
-			test.Fatal(err)
+		if writeError := executable.Write(filepath.Join(directory, "go-lexer"), data); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	return run(test, "", nil, binary, cases)
@@ -141,9 +141,9 @@ func lexerMutantsExpected(test *testing.T) ([]byte, []byte) {
 		// The cases file lives in the first caller's temporary directory, gone when that test ends, so its bytes are
 		// kept.
 		path, _, _ := lexCases(test)
-		cases, err := os.ReadFile(path)
-		if err != nil {
-			test.Fatal(err)
+		cases, readError := os.ReadFile(path)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		lexerMutantsAnswers.expected = goLexer(test, path)
 		lexerMutantsAnswers.cases = cases
@@ -161,9 +161,9 @@ func lexerMutantsEnumeration(test *testing.T) []int {
 	if len(lexerMutants.mutations) != lexerMutantsShards {
 		test.Fatalf("%d lexer mutants, but lexerMutantsShards is %d", len(lexerMutants.mutations), lexerMutantsShards)
 	}
-	file, err := parser.ParseFile(token.NewFileSet(), "lexer_mutants_test.go", nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	file, parseFileError := parser.ParseFile(token.NewFileSet(), "lexer_mutants_test.go", nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	var plan []int
 	for _, declaration := range file.Decls {
@@ -171,9 +171,9 @@ func lexerMutantsEnumeration(test *testing.T) []int {
 		if !ok || !strings.HasPrefix(function.Name.Name, "TestLexerMutants_") {
 			continue
 		}
-		shard, err := strconv.Atoi(strings.TrimPrefix(function.Name.Name, "TestLexerMutants_"))
-		if err != nil {
-			test.Fatal(err)
+		shard, parseError := strconv.Atoi(strings.TrimPrefix(function.Name.Name, "TestLexerMutants_"))
+		if parseError != nil {
+			test.Fatal(parseError)
 		}
 		calls := 0
 		ast.Inspect(function.Body, func(node ast.Node) bool {
@@ -192,7 +192,7 @@ func lexerMutantsEnumeration(test *testing.T) []int {
 			if !ok {
 				test.Fatalf("%s: shard index must be a literal", function.Name.Name)
 			}
-			if index, err := strconv.Atoi(literal.Value); err != nil || index != shard {
+			if index, parseError := strconv.Atoi(literal.Value); parseError != nil || index != shard {
 				test.Fatalf("%s runs mutant %s", function.Name.Name, literal.Value)
 			}
 			calls++
@@ -221,12 +221,12 @@ func lexerMutantsShard(test *testing.T, index int) {
 	product := lexerMutants.product(test, index)
 	corpus, expected := lexerMutantsExpected(test)
 	cases := filepath.Join(test.TempDir(), "cases.txt")
-	if err := os.WriteFile(cases, corpus, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(cases, corpus, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	test.Logf("%s; setup %.3fs", mutant.name, time.Since(setup).Seconds())
 	nativeOut := run(test, "", []string{"ASAN_OPTIONS=detect_leaks=1"}, filepath.Join(product, "mutant"), cases)
@@ -255,8 +255,12 @@ func lexerMutantsShard(test *testing.T, index int) {
 		name   string
 		output []byte
 	}{{"native", nativeOut}, {"Node", node}} {
-		if err := lexerMutantSurvived(side.name, side.output, expected); err != nil {
-			test.Fatal(err)
+		if lexerMutantSurvivedError := lexerMutantSurvived(
+			side.name,
+			side.output,
+			expected,
+		); lexerMutantSurvivedError != nil {
+			test.Fatal(lexerMutantSurvivedError)
 		}
 		test.Logf("%s successful execution, wrong bytes caught: %s", side.name, firstDifference(side.output, expected))
 	}

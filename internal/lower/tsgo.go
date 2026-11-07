@@ -25,13 +25,17 @@ func (l *lowering) tsgo(node *ast.Node) (ir.Expression, bool, error) {
 		return nil, false, nil
 	}
 	if !l.program.TSGoEnabled() {
-		return nil, true, &Refused{Where: l.program.Where(node), What: "an unlinked typescript-go library call", Fix: "build with --tsgo <checker archive>"}
+		return nil, true, &Refused{
+			Where: l.program.Where(node),
+			What:  "an unlinked typescript-go library call",
+			Fix:   "build with --tsgo <checker archive>",
+		}
 	}
 	arguments := []ir.Expression{}
 	for _, argument := range node.AsCallExpression().Arguments.Nodes {
-		value, err := l.expression(argument)
-		if err != nil {
-			return nil, true, err
+		value, expressionError := l.expression(argument)
+		if expressionError != nil {
+			return nil, true, expressionError
 		}
 		arguments = append(arguments, value)
 	}
@@ -67,7 +71,12 @@ func (l *lowering) tsgo(node *ast.Node) (ir.Expression, bool, error) {
 		declared := ir.Function{Name: spec.Prefix + name, Returns: returns}
 		for index, of := range types {
 			local := len(l.result.Locals)
-			l.result.Locals = append(l.result.Locals, ir.Local{Name: fmt.Sprintf("argument%d", index), Type: of, Function: function, Borrowed: of.IsReference()})
+			l.result.Locals = append(l.result.Locals, ir.Local{
+				Name:     fmt.Sprintf("argument%d", index),
+				Type:     of,
+				Function: function,
+				Borrowed: of.IsReference(),
+			})
 			declared.Parameters = append(declared.Parameters, local)
 		}
 		switch name {

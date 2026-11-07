@@ -33,8 +33,8 @@ func TestHandDrivenNextLowers(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			if _, err := lowerSource(test, probe.source); err != nil {
-				test.Fatalf("want it lowered, got %v", err)
+			if _, lowerSourceError := lowerSource(test, probe.source); lowerSourceError != nil {
+				test.Fatalf("want it lowered, got %v", lowerSourceError)
 			}
 		})
 	}
@@ -84,10 +84,10 @@ func TestHandDrivenNextStopsOnEveryOtherRoad(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var gap *NotYet
-			if !errors.As(err, &gap) || !strings.Contains(gap.What, probe.reason) {
-				test.Fatalf("got %v, want a NotYet saying %q", err, probe.reason)
+			if !errors.As(lowerSourceError, &gap) || !strings.Contains(gap.What, probe.reason) {
+				test.Fatalf("got %v, want a NotYet saying %q", lowerSourceError, probe.reason)
 			}
 		})
 	}
@@ -97,11 +97,11 @@ func TestHandDrivenNextStopsOnEveryOtherRoad(test *testing.T) {
 			"function both(numbers: IterableIterator<number>): number { let sum = 0; const first = numbers.next(); if (!first.done) { sum += first.value; } for (const value of numbers) { sum += value; } return sum; }\nconsole.log(String(both(sizes.values())));"
 		test.Run("a for-of beside a next in "+extension, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSourceAs(test, mixed, extension)
+			_, lowerSourceAsError := lowerSourceAs(test, mixed, extension)
 			var gap *NotYet
-			if !errors.As(err, &gap) ||
+			if !errors.As(lowerSourceAsError, &gap) ||
 				!strings.Contains(gap.What, "a for-of beside a hand-driven next() over the same parameter") {
-				test.Fatalf("got %v, want a NotYet saying a for-of beside a hand-driven next()", err)
+				test.Fatalf("got %v, want a NotYet saying a for-of beside a hand-driven next()", lowerSourceAsError)
 			}
 		})
 	}
@@ -115,10 +115,10 @@ func TestHandDrivenNextStopsOnEveryOtherRoad(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var refused *Refused
-			if !errors.As(err, &refused) || !strings.Contains(err.Error(), probe.reason) {
-				test.Fatalf("got %v, want a refusal saying %q", err, probe.reason)
+			if !errors.As(lowerSourceError, &refused) || !strings.Contains(lowerSourceError.Error(), probe.reason) {
+				test.Fatalf("got %v, want a refusal saying %q", lowerSourceError, probe.reason)
 			}
 		})
 	}
@@ -132,9 +132,9 @@ func TestHandDrivenNextStopsOnEveryOtherRoad(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
-			if err == nil || !strings.Contains(err.Error(), "any") {
-				test.Fatalf("got %v, want it stopped as a value of type any", err)
+			_, lowerSourceError := lowerSource(test, probe.source)
+			if lowerSourceError == nil || !strings.Contains(lowerSourceError.Error(), "any") {
+				test.Fatalf("got %v, want it stopped as a value of type any", lowerSourceError)
 			}
 		})
 	}

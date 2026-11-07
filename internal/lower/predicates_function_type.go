@@ -27,7 +27,9 @@ import (
 // the program, on a function type, an interface method or a call signature, naming a parameter, and not
 // one predicateParameter trusts because every producer of it is proven.
 func (l *lowering) checkedFunctionTypeClaim(annotation *ast.Node) bool {
-	if annotation == nil || annotation.Kind != ast.KindTypePredicate || annotation.AsTypePredicateNode().ParameterName.Kind != ast.KindIdentifier {
+	if annotation == nil ||
+		annotation.Kind != ast.KindTypePredicate ||
+		annotation.AsTypePredicateNode().ParameterName.Kind != ast.KindIdentifier {
 		return false
 	}
 	signature := annotation.Parent
@@ -55,7 +57,9 @@ func (l *lowering) checkedFunctionTypeClaim(annotation *ast.Node) bool {
 	// The census overload proof refuses overload_union_impl too today ("cannot be served by
 	// implementation result"), so its fixture goes red through that refusal without this rule: the two
 	// guard one claim independently, and this one stays if the census proof is relaxed (Compiler, Oct 30).
-	if parameter := signature.Parent; parameter.Kind == ast.KindParameter && parameter.Parent.Kind == ast.KindFunctionDeclaration && parameter.Parent.Body() == nil {
+	if parameter := signature.Parent; parameter.Kind == ast.KindParameter &&
+		parameter.Parent.Kind == ast.KindFunctionDeclaration &&
+		parameter.Parent.Body() == nil {
 		implementation := l.censusImplementation(parameter.Parent)
 		if implementation == nil {
 			return false
@@ -68,7 +72,9 @@ func (l *lowering) checkedFunctionTypeClaim(annotation *ast.Node) bool {
 				return false
 			}
 			implemented := implementation.Parameters()[index].Type()
-			return implemented != nil && implemented.Kind == ast.KindFunctionType && l.checkedFunctionTypeClaim(implemented.Type())
+			return implemented != nil &&
+				implemented.Kind == ast.KindFunctionType &&
+				l.checkedFunctionTypeClaim(implemented.Type())
 		}
 		return false
 	}
@@ -80,7 +86,11 @@ func (l *lowering) checkedFunctionTypeClaim(annotation *ast.Node) bool {
 // in beside it so the check never reads a call target back out of the IR (call_targets_guard_test.go).
 // The callee, or a method's receiver, and the arguments are evaluated once, at the call site, into the
 // check's parameters, so the claim reads the value the call received.
-func (l *lowering) checkedFunctionTypeCall(node *ast.Node, closure ir.Expression, call ir.CallClosure) (ir.Expression, error) {
+func (l *lowering) checkedFunctionTypeCall(
+	node *ast.Node,
+	closure ir.Expression,
+	call ir.CallClosure,
+) (ir.Expression, error) {
 	resolved := l.checker.GetResolvedSignature(node)
 	if resolved == nil {
 		return call, nil
@@ -90,7 +100,9 @@ func (l *lowering) checkedFunctionTypeCall(node *ast.Node, closure ir.Expression
 	// declaration, so neither a check nor a vouch read from that declaration speaks for the others. The
 	// call stands only when every member's narrowing signature is vouched for on its own, as two proven
 	// predicates are (no_escape.ts's c41), and none is a claim this head would check.
-	if callee := l.checker.GetTypeAtLocation(node.AsCallExpression().Expression); claim != nil && callee.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+	if callee := l.checker.GetTypeAtLocation(
+		node.AsCallExpression().Expression,
+	); claim != nil && callee.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
 		if !l.predicateCalleeMembersVouched(callee) {
 			return nil, l.notYet(node, "a call narrowing through a union or intersection of callables")
 		}
@@ -105,7 +117,8 @@ func (l *lowering) checkedFunctionTypeCall(node *ast.Node, closure ir.Expression
 		}
 		return call, nil
 	}
-	if claim == nil || (claim.Kind() != checker.TypePredicateKindIdentifier && claim.Kind() != checker.TypePredicateKindAssertsIdentifier) {
+	if claim == nil || (claim.Kind() != checker.TypePredicateKindIdentifier &&
+		claim.Kind() != checker.TypePredicateKindAssertsIdentifier) {
 		return nil, l.notYet(node, "a checked function-type predicate without an identifier claim")
 	}
 	assertion := claim.Kind() == checker.TypePredicateKindAssertsIdentifier
@@ -138,7 +151,10 @@ func (l *lowering) checkedFunctionTypeCall(node *ast.Node, closure ir.Expression
 	site := ir.PredicateCallCheck{Where: l.program.Where(node), Function: name}
 	l.recordPredicateSite(&site, assertion, false, directions, sourceName+" -> "+targetName)
 	wrapper := len(l.result.Functions)
-	l.result.Functions = append(l.result.Functions, ir.Function{Name: "function_type_predicate_check", Returns: call.Type()})
+	l.result.Functions = append(
+		l.result.Functions,
+		ir.Function{Name: "function_type_predicate_check", Returns: call.Type()},
+	)
 	local := func(name string, of ir.Type) int {
 		index := len(l.result.Locals)
 		l.result.Locals = append(l.result.Locals, ir.Local{Name: name, Type: of, Function: wrapper})
@@ -186,16 +202,39 @@ func (l *lowering) checkedFunctionTypeCall(node *ast.Node, closure ir.Expression
 		returned = ir.Read{Local: result, Of: ir.Boolean}
 	}
 	source := l.checker.GetTypeOfSymbol(resolved.Parameters()[index])
-	check, err := l.checkedPredicateCheck(node, node, arguments[index], source, claim.Type(), returned, directions&predicateFalse != 0, local, func(branch string) string {
-		return fmt.Sprintf("predicate %s at %s %s branch: source %s, target %s", name, site.Where, branch, sourceName, targetName)
-	})
-	if err != nil {
-		return nil, err
+	check, checkedPredicateCheckError := l.checkedPredicateCheck(
+		node,
+		node,
+		arguments[index],
+		source,
+		claim.Type(),
+		returned,
+		directions&predicateFalse != 0,
+		local,
+		func(
+			branch string,
+		) string {
+			return fmt.Sprintf(
+				"predicate %s at %s %s branch: source %s, target %s",
+				name,
+				site.Where,
+				branch,
+				sourceName,
+				targetName,
+			)
+		},
+	)
+	if checkedPredicateCheckError != nil {
+		return nil, checkedPredicateCheckError
 	}
 	body = append(body, check...)
 	body = append(body, ir.Return{Value: returned})
 	l.result.Functions[wrapper].Body = body
-	return ir.Call{Function: wrapper, Arguments: append([]ir.Expression{callee}, call.Arguments...), Returns: call.Type()}, nil
+	return ir.Call{
+		Function:  wrapper,
+		Arguments: append([]ir.Expression{callee}, call.Arguments...),
+		Returns:   call.Type(),
+	}, nil
 }
 
 // predicateCallVouched is whether a call that narrows by claim, through declaration, has something behind
@@ -213,12 +252,17 @@ func (l *lowering) predicateCallVouched(declaration *ast.Node, claim *checker.Ty
 	}
 	annotation := declaration.Type()
 	if annotation == nil || annotation.Kind != ast.KindTypePredicate {
-		return claim.Type() != nil && ast.IsFunctionLike(declaration) && declaration.Body() != nil && l.proveInferredPredicate(declaration, claim.Type())
+		return claim.Type() != nil &&
+			ast.IsFunctionLike(declaration) &&
+			declaration.Body() != nil &&
+			l.proveInferredPredicate(declaration, claim.Type())
 	}
-	if l.predicateParameter(annotation) != nil || l.checkedPredicateClosure(declaration) || l.checkedPredicateDeclaration(declaration) {
+	if l.predicateParameter(annotation) != nil ||
+		l.checkedPredicateClosure(declaration) ||
+		l.checkedPredicateDeclaration(declaration) {
 		return true
 	}
-	if _, err := l.provePredicate(annotation); err == nil {
+	if _, provePredicateError := l.provePredicate(annotation); provePredicateError == nil {
 		return true
 	}
 	return l.proveFlowPredicate(annotation) == nil
@@ -234,7 +278,9 @@ func (l *lowering) predicateCalleeMembersVouched(callee *checker.Type) bool {
 				continue
 			}
 			declaration := signature.Declaration()
-			if declaration == nil || l.checkedFunctionTypeClaim(declaration.Type()) || !l.predicateCallVouched(declaration, claim) {
+			if declaration == nil ||
+				l.checkedFunctionTypeClaim(declaration.Type()) ||
+				!l.predicateCallVouched(declaration, claim) {
 				return false
 			}
 		}

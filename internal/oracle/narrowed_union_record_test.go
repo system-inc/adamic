@@ -20,20 +20,20 @@ import (
 // sanitized and release native to show the miscompile (testdata/narrowed-union-record-mutant.json).
 func TestNarrowedUnionRecordTag(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(
+	path, absolutePathError := filepath.Abs(
 		filepath.Join(repository, "internal/oracle/testdata/reland_refused/narrowed_union_record_tag.ts"),
 	)
-	if err != nil {
-		test.Fatal(err)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := onNode(test, path)
 	if disagreement(run{stdout: []byte("5\n")}, truth) != "" {
 		test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 	}
-	program, err := lowered(test, path)
+	program, loweredError := lowered(test, path)
 	if os.Getenv("ADAMIC_NARROWED_RECORD_MUTANT") == "1" {
-		if err != nil {
-			test.Fatalf("the mutant must admit the program: %v", err)
+		if loweredError != nil {
+			test.Fatalf("the mutant must admit the program: %v", loweredError)
 		}
 		native, _ := nativelyUncached(test, program)
 		for name, got := range map[string]run{"native": native, "release": releasedUncached(test, program)} {
@@ -52,12 +52,12 @@ func TestNarrowedUnionRecordTag(test *testing.T) {
 		return
 	}
 	var notYet *lower.NotYet
-	if !errors.As(err, &notYet) ||
-		!strings.Contains(err.Error(), "narrowed_union_record_tag.ts:4:5") ||
+	if !errors.As(loweredError, &notYet) ||
+		!strings.Contains(loweredError.Error(), "narrowed_union_record_tag.ts:4:5") ||
 		!strings.Contains(
-			err.Error(),
+			loweredError.Error(),
 			"stage 0 can't lower a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables yet",
 		) {
-		test.Fatalf("want the object-tag NotYet at the narrowing, got %v", err)
+		test.Fatalf("want the object-tag NotYet at the narrowing, got %v", loweredError)
 	}
 }

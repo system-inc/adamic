@@ -22,9 +22,9 @@ func TestPhaseWritesOneBuildLogLine(test *testing.T) {
 	// A log under a file is a path no one can open.
 	test.Setenv("ADAMIC_BUILD_LOG", filepath.Join(log, "beneath"))
 	Phase("emit", time.Now())
-	written, err := os.ReadFile(log)
-	if err != nil {
-		test.Fatal(err)
+	written, readError := os.ReadFile(log)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if !regexp.MustCompile(`^phase lower - off 1\.5[0-9]{2}\n$`).Match(written) {
 		test.Fatalf("wrote %q, want one line: phase lower - off 1.5xx", written)

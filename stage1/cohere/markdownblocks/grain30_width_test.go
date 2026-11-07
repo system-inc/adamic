@@ -107,8 +107,8 @@ func runGrainWidth(test *testing.T, shard int) {
 		}
 		func(test *testing.T) {
 			scratch := test.TempDir()
-			if e := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); e != nil {
-				test.Fatal(e)
+			if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
 			for _, f := range []string{
 				"width.ts",
@@ -118,9 +118,9 @@ func runGrainWidth(test *testing.T, shard int) {
 				"codec.ts",
 				"testdata/width_probe.ts",
 			} {
-				b, e := os.ReadFile(f)
-				if e != nil {
-					test.Fatal(e)
+				b, readError := os.ReadFile(f)
+				if readError != nil {
+					test.Fatal(readError)
 				}
 				if f == "width.ts" {
 					if strings.Count(string(b), m.from) != 1 {

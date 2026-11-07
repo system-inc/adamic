@@ -11,9 +11,9 @@ import (
 
 func TestIRTypeTags(test *testing.T) {
 	test.Parallel()
-	contents, err := runtime.ReadFile("runtime/adamic.h")
-	if err != nil {
-		test.Fatal(err)
+	contents, readFileError := runtime.ReadFile("runtime/adamic.h")
+	if readFileError != nil {
+		test.Fatal(readFileError)
 	}
 	body := regexp.MustCompile(`(?s)enum adamic_ir_type\s*\{([^}]+)\};`).FindStringSubmatch(string(contents))
 	if body == nil {

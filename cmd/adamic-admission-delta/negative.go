@@ -36,39 +36,48 @@ func contentHash(source []byte) string {
 	return fmt.Sprintf("%x", hash)
 }
 func validContentHash(hash string) bool {
-	decoded, err := hex.DecodeString(hash)
-	return err == nil && len(decoded) == sha256.Size && hash == strings.ToLower(hash)
+	decoded, decodeStringError := hex.DecodeString(hash)
+	return decodeStringError == nil && len(decoded) == sha256.Size && hash == strings.ToLower(hash)
 }
 func readNegativeWitnesses(path string) (negativeWitnessList, error) {
 	var list negativeWitnessList
-	data, err := os.ReadFile(path)
-	if err != nil {
-		return list, err
+	data, readError := os.ReadFile(path)
+	if readError != nil {
+		return list, readError
 	}
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
-	if err = decoder.Decode(&list); err != nil {
-		return list, err
+	if decodeError := decoder.Decode(&list); decodeError != nil {
+		return list, decodeError
 	}
 	var extra any
-	if err = decoder.Decode(&extra); err != io.EOF {
+	if decodeError := decoder.Decode(&extra); decodeError != io.EOF {
 		return list, fmt.Errorf("negative witness list has trailing JSON")
 	}
-	if !strings.Contains(list.Comment, "Adding an entry is a ruling") || !strings.Contains(list.Comment, "@system_adamic") || list.Witnesses == nil {
+	if !strings.Contains(list.Comment, "Adding an entry is a ruling") ||
+		!strings.Contains(list.Comment, "@system_adamic") ||
+		list.Witnesses == nil {
 		return list, fmt.Errorf("negative witness list needs its ruling header and witnesses object")
 	}
 	for hash, witness := range list.Witnesses {
-		if !validContentHash(hash) || !validContentHash(witness.TypeCorrectSHA256) || witness.TypeCorrectSHA256 == hash {
+		if !validContentHash(hash) ||
+			!validContentHash(witness.TypeCorrectSHA256) ||
+			witness.TypeCorrectSHA256 == hash {
 			return list, fmt.Errorf("invalid negative or type-correct content hash %q", hash)
 		}
 		if _, listed := list.Witnesses[witness.TypeCorrectSHA256]; listed {
 			return list, fmt.Errorf("type-correct program cannot be listed: %s", witness.TypeCorrectSHA256)
 		}
-		if !strings.HasPrefix(witness.RulingTask, "#") || len(witness.RulingTask) < 2 || witness.Exit != 70 || !strings.HasPrefix(witness.Stderr, "adamic: panic: ") || !strings.HasSuffix(witness.Stderr, "\n") || strings.Count(witness.Stderr, "\n") != 1 {
+		if !strings.HasPrefix(witness.RulingTask, "#") ||
+			len(witness.RulingTask) < 2 ||
+			witness.Exit != 70 ||
+			!strings.HasPrefix(witness.Stderr, "adamic: panic: ") ||
+			!strings.HasSuffix(witness.Stderr, "\n") ||
+			strings.Count(witness.Stderr, "\n") != 1 {
 			return list, fmt.Errorf("negative witness needs ruling task, exit 70 and exact stop message: %s", hash)
 		}
-		if _, err := declarationLine(witness.Declaration); err != nil {
-			return list, err
+		if _, declarationLineError := declarationLine(witness.Declaration); declarationLineError != nil {
+			return list, declarationLineError
 		}
 		if !supportedLie(witness) {
 			return list, fmt.Errorf("unsupported type lie or repair: %s", hash)
@@ -84,7 +93,9 @@ const checkedBoundaryForm = "checked_boundary"
 
 // checkedBoundaryStop is the view check's message, and only it: a compiler-bug panic or any other guard
 // never qualifies. Its expected and found types are what the declaration is tied to.
-var checkedBoundaryStop = regexp.MustCompile(`^adamic: panic: field read failed: [^\n]* expected ([^,\n]+), found ([^\n]+)\n$`)
+var checkedBoundaryStop = regexp.MustCompile(
+	`^adamic: panic: field read failed: [^\n]* expected ([^,\n]+), found ([^\n]+)\n$`,
+)
 
 func supportedLie(witness negativeWitness) bool {
 	switch witness.Form {
@@ -100,7 +111,10 @@ func supportedLie(witness negativeWitness) bool {
 // expected, for a read, or found in the slot, for a write.
 func supportedCheckedBoundary(witness negativeWitness) bool {
 	stop := checkedBoundaryStop.FindStringSubmatch(witness.Stderr)
-	if witness.Ruling == "" || stop == nil || strings.Contains(witness.Stderr, "compiler bug") || witness.DeclaredType == "" {
+	if witness.Ruling == "" ||
+		stop == nil ||
+		strings.Contains(witness.Stderr, "compiler bug") ||
+		witness.DeclaredType == "" {
 		return false
 	}
 	if witness.DeclaredType != stop[1] && witness.DeclaredType != stop[2] {
@@ -129,8 +143,8 @@ func declarationLine(declaration string) (int, error) {
 	if at <= 0 {
 		return 0, fmt.Errorf("declaration must name file:line")
 	}
-	line, err := strconv.Atoi(declaration[at+1:])
-	if err != nil || line < 1 {
+	line, parseError := strconv.Atoi(declaration[at+1:])
+	if parseError != nil || line < 1 {
 		return 0, fmt.Errorf("declaration must name file:line")
 	}
 	return line, nil
@@ -154,9 +168,9 @@ func validateWitnessSource(source []byte, witness negativeWitness) error {
 	if !supportedLie(witness) {
 		return fmt.Errorf("unsupported type lie or repair")
 	}
-	line, err := declarationLine(witness.Declaration)
-	if err != nil {
-		return err
+	line, declarationLineError := declarationLine(witness.Declaration)
+	if declarationLineError != nil {
+		return declarationLineError
 	}
 	lines := strings.Split(string(source), "\n")
 	if line > len(lines) {
@@ -171,11 +185,18 @@ func validateWitnessSource(source []byte, witness negativeWitness) error {
 			return fmt.Errorf("a checked boundary's repair must replace exactly one place")
 		}
 	} else if witness.DeclaredType == "string" {
-		pattern := `^(let [A-Za-z_$][A-Za-z0-9_$]*: string = ` + regexp.QuoteMeta(witness.RepairFrom) + `;|class [A-Za-z_$][A-Za-z0-9_$]* \{ [A-Za-z_$][A-Za-z0-9_$]*: string = ` + regexp.QuoteMeta(witness.RepairFrom) + `; \})$`
+		pattern := `^(let [A-Za-z_$][A-Za-z0-9_$]*: string = ` +
+			regexp.QuoteMeta(witness.RepairFrom) +
+			`;|class [A-Za-z_$][A-Za-z0-9_$]* \{ [A-Za-z_$][A-Za-z0-9_$]*: string = ` +
+			regexp.QuoteMeta(witness.RepairFrom) +
+			`; \})$`
 		if !regexp.MustCompile(pattern).MatchString(declaration) {
 			return fmt.Errorf("declared string does not contain its ruled literal type lie")
 		}
-	} else if string(source) != "function lookAhead(callback:()=>unknown):unknown {return callback();}\nfunction misfit():unknown {return 'wrong';}\nconst result=lookAhead(misfit) as number;\nconsole.log(String(result));\n" || line != 3 {
+	} else if string(
+		source,
+	) != "function lookAhead(callback:()=>unknown):unknown {return callback();}\nfunction misfit():unknown {return 'wrong';}\nconst result=lookAhead(misfit) as number;\nconsole.log(String(result));\n" ||
+		line != 3 {
 		return fmt.Errorf("declared number does not contain its ruled literal callback type lie")
 	}
 	repaired := repairedSource(source, witness)

@@ -134,9 +134,9 @@ func flowFamilyWrappers(test *testing.T) []byte {
 			fmt.Fprintf(&text, "%s(t, %d)\n}\n", f.runner, shard)
 		}
 	}
-	source, err := format.Source(text.Bytes())
-	if err != nil {
-		test.Fatal(err)
+	source, formatError := format.Source(text.Bytes())
+	if formatError != nil {
+		test.Fatal(formatError)
 	}
 	return source
 }
@@ -145,13 +145,13 @@ func flowFamilyWrappers(test *testing.T) []byte {
 func TestFlowFamilyWrappersAreCurrent(test *testing.T) {
 	want := flowFamilyWrappers(test)
 	if *updateFlowFamilyWrappers {
-		if err := os.WriteFile("families_generated_test.go", want, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile("families_generated_test.go", want, 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		return
 	}
-	got, err := os.ReadFile("families_generated_test.go")
-	if err != nil || !bytes.Equal(got, want) {
-		test.Fatal("Flow wrappers stale; run with -update-flow-family-wrappers", err)
+	got, readError := os.ReadFile("families_generated_test.go")
+	if readError != nil || !bytes.Equal(got, want) {
+		test.Fatal("Flow wrappers stale; run with -update-flow-family-wrappers", readError)
 	}
 }

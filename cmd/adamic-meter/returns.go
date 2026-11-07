@@ -28,9 +28,9 @@ func returnAdaptations(paths []string, overlay map[string]string, before error) 
 	if !errors.As(before, &diagnostics) || diagnosticCount(before, "7030") == 0 {
 		return overlay, 0, nil
 	}
-	program, owned, err := optionalProgram(paths, overlay)
-	if err != nil {
-		return nil, 0, err
+	program, owned, optionalProgramError := optionalProgram(paths, overlay)
+	if optionalProgramError != nil {
+		return nil, 0, optionalProgramError
 	}
 	files := make(map[string]*ast.SourceFile)
 	for _, file := range program.GetSourceFiles() {
@@ -42,9 +42,9 @@ func returnAdaptations(paths []string, overlay map[string]string, before error) 
 		if match == nil {
 			continue
 		}
-		name, err := filepath.Abs(match[1])
-		if err != nil {
-			return nil, 0, err
+		name, absolutePathError := filepath.Abs(match[1])
+		if absolutePathError != nil {
+			return nil, 0, absolutePathError
 		}
 		name = filepath.ToSlash(name)
 		if strings.HasSuffix(name, ".a") {
@@ -64,7 +64,11 @@ func returnAdaptations(paths []string, overlay map[string]string, before error) 
 		for node != nil && !ast.IsFunctionLike(node) {
 			node = node.Parent
 		}
-		if node == nil || node.Type() == nil || node.Body() == nil || node.Body().Kind != ast.KindBlock || ast.GetFunctionFlags(node) != ast.FunctionFlagsNormal {
+		if node == nil ||
+			node.Type() == nil ||
+			node.Body() == nil ||
+			node.Body().Kind != ast.KindBlock ||
+			ast.GetFunctionFlags(node) != ast.FunctionFlagsNormal {
 			continue
 		}
 		c, release := program.GetTypeCheckerForFile(context.Background(), file)

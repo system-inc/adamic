@@ -35,7 +35,11 @@ func (l *lowering) recordElement(t *checker.Type) *checker.Type {
 			}
 		}
 	}
-	if len(infos) != 1 || infos[0].KeyType().Flags() != checker.TypeFlagsString || infos[0].IsReadonly() || len(l.checker.GetSignaturesOfType(t, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(t, checker.SignatureKindConstruct)) != 0 {
+	if len(infos) != 1 ||
+		infos[0].KeyType().Flags() != checker.TypeFlagsString ||
+		infos[0].IsReadonly() ||
+		len(l.checker.GetSignaturesOfType(t, checker.SignatureKindCall)) != 0 ||
+		len(l.checker.GetSignaturesOfType(t, checker.SignatureKindConstruct)) != 0 {
 		return nil
 	}
 	return infos[0].ValueType()
@@ -122,7 +126,10 @@ func (l *lowering) recordReadTarget(node *ast.Node) bool {
 	}
 	n := ast.SkipParentheses(node)
 	if n.Kind == ast.KindPropertyAccessExpression {
-		return l.recordUnionElement(l.checker.GetTypeAtLocation(n.AsPropertyAccessExpression().Expression), n.Name().Text()) != nil
+		return l.recordUnionElement(
+			l.checker.GetTypeAtLocation(n.AsPropertyAccessExpression().Expression),
+			n.Name().Text(),
+		) != nil
 	}
 	return false
 }
@@ -132,7 +139,10 @@ func (l *lowering) recordReadTarget(node *ast.Node) bool {
 func (l *lowering) indexSignatureStorageGap(node *ast.Node) error {
 	if node.Kind == ast.KindIndexSignature && !l.enumerationIndexSignature(node) {
 		if l.recordElement(l.checker.GetTypeAtLocation(node.Parent)) == nil {
-			return l.notYet(node, "a non-mutable unrestricted string signature, or numeric, symbol, patterned or callable dictionary storage")
+			return l.notYet(
+				node,
+				"a non-mutable unrestricted string signature, or numeric, symbol, patterned or callable dictionary storage",
+			)
 		}
 	}
 	return nil
@@ -144,8 +154,14 @@ func init() {
 
 // deleteRefusal refuses delete on anything but a record entry.
 func (l *lowering) deleteRefusal(node *ast.Node) error {
-	if node.Kind == ast.KindDeleteExpression && !l.recordTarget(node.AsDeleteExpression().Expression) && !l.nodeProcessEnvironmentDelete(node) {
-		return &Refused{Where: l.program.Where(node), What: "delete", Fix: "fixed objects cannot lose fields; use a record or Map"}
+	if node.Kind == ast.KindDeleteExpression &&
+		!l.recordTarget(node.AsDeleteExpression().Expression) &&
+		!l.nodeProcessEnvironmentDelete(node) {
+		return &Refused{
+			Where: l.program.Where(node),
+			What:  "delete",
+			Fix:   "fixed objects cannot lose fields; use a record or Map",
+		}
 	}
 	return nil
 }
@@ -161,12 +177,18 @@ func recordPrototypeName(name string) bool {
 }
 func (l *lowering) recordKey(node *ast.Node, read bool) (ir.Expression, error) {
 	n := ast.SkipParentheses(node)
-	if read && (n.Kind == ast.KindStringLiteral || n.Kind == ast.KindNoSubstitutionTemplateLiteral) && recordPrototypeName(n.Text()) {
-		return nil, &Refused{Where: l.program.Where(node), What: "record key " + n.Text() + " names an Object.prototype member", Fix: "use an own-property test and a supported own-key operation; inherited values are outside the record's value type"}
+	if read &&
+		(n.Kind == ast.KindStringLiteral || n.Kind == ast.KindNoSubstitutionTemplateLiteral) &&
+		recordPrototypeName(n.Text()) {
+		return nil, &Refused{
+			Where: l.program.Where(node),
+			What:  "record key " + n.Text() + " names an Object.prototype member",
+			Fix:   "use an own-property test and a supported own-key operation; inherited values are outside the record's value type",
+		}
 	}
-	key, err := l.expression(node)
-	if err != nil {
-		return nil, err
+	key, expressionError := l.expression(node)
+	if expressionError != nil {
+		return nil, expressionError
 	}
 	if key.Type() == ir.Number {
 		return ir.NumberToString{Value: key}, nil
@@ -195,7 +217,10 @@ func (l *lowering) recordAccess(node *ast.Node, read bool) (ir.Expression, ir.Ex
 		name = a.Name().Text()
 	}
 	of, err := l.recordSlot(receiver)
-	if element := l.recordUnionElement(l.checker.GetTypeAtLocation(receiver), name); err != nil && element != nil && read {
+	if element := l.recordUnionElement(
+		l.checker.GetTypeAtLocation(receiver),
+		name,
+	); err != nil && element != nil && read {
 		// Only recordReadTarget's reads reach here with a union; writes and deletes ask recordTarget.
 		of, _ = l.recordStorageType(element)
 		err = nil
@@ -212,21 +237,31 @@ func (l *lowering) recordAccess(node *ast.Node, read bool) (ir.Expression, ir.Ex
 		key, err = l.recordKey(keyNode, read)
 	} else {
 		if read && recordPrototypeName(name) {
-			return nil, nil, 0, &Refused{Where: l.program.Where(node), What: "record key " + name + " names an Object.prototype member", Fix: "use own keys"}
+			return nil, nil, 0, &Refused{
+				Where: l.program.Where(node),
+				What:  "record key " + name + " names an Object.prototype member",
+				Fix:   "use own keys",
+			}
 		}
 		key = ir.StringConstant{Index: l.constant(name)}
 	}
 	return r, key, of, err
 }
 func (l *lowering) recordExpression(node *ast.Node) (ir.Expression, bool, error) {
-	if l.recordTarget(node) || l.recordReadTarget(node) && !l.recordReadDiscarded(node) && !l.recordReadOwnGuarded(node) {
+	if l.recordTarget(node) ||
+		l.recordReadTarget(node) && !l.recordReadDiscarded(node) && !l.recordReadOwnGuarded(node) {
 		discarded := l.recordReadDiscarded(node)
 		guarded := l.recordReadOwnGuarded(node)
-		r, k, of, err := l.recordAccess(node, !discarded && !guarded)
-		if err != nil {
-			return nil, true, err
+		r, k, of, recordAccessError := l.recordAccess(node, !discarded && !guarded)
+		if recordAccessError != nil {
+			return nil, true, recordAccessError
 		}
-		var read ir.Expression = ir.RecordCall{Method: "get", Arguments: []ir.Expression{r, k}, Element: of, Returns: ir.Maybe(of)}
+		var read ir.Expression = ir.RecordCall{
+			Method:    "get",
+			Arguments: []ir.Expression{r, k},
+			Element:   of,
+			Returns:   ir.Maybe(of),
+		}
 		if discarded {
 			return l.recordOwnRead(r, k, of), true, nil
 		}
@@ -234,9 +269,9 @@ func (l *lowering) recordExpression(node *ast.Node) (ir.Expression, bool, error)
 			read = l.recordOwnRead(r, k, of)
 		}
 		here := l.checker.GetTypeAtLocation(node)
-		read, err = l.recordReadType(node, read, here)
-		if err != nil {
-			return nil, true, err
+		read, recordReadTypeError := l.recordReadType(node, read, here)
+		if recordReadTypeError != nil {
+			return nil, true, recordReadTypeError
 		}
 		if !l.includesUndefined(here) && !recordTagObservation(node) {
 			if narrowed, known := l.representation(here); known && read.Type().IsMaybe() && !narrowed.IsMaybe() {
@@ -244,7 +279,9 @@ func (l *lowering) recordExpression(node *ast.Node) (ir.Expression, bool, error)
 			}
 			if read.Type().IsReference() && read.Type() != ir.Union {
 				message := "undefined where the checker narrowed it away: a call since the narrowing put it back"
-				if parent := node.Parent; parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Expression == node {
+				if parent := node.Parent; parent != nil &&
+					parent.Kind == ast.KindPropertyAccessExpression &&
+					parent.AsPropertyAccessExpression().Expression == node {
 					message = "TypeError: Cannot read properties of undefined (reading '" + parent.Name().Text() + "')"
 				}
 				read = ir.Defined{Value: read, Message: message}
@@ -253,35 +290,48 @@ func (l *lowering) recordExpression(node *ast.Node) (ir.Expression, bool, error)
 		return read, true, nil
 	}
 	if node.Kind == ast.KindDeleteExpression && l.recordTarget(node.AsDeleteExpression().Expression) {
-		r, k, of, err := l.recordAccess(node.AsDeleteExpression().Expression, false)
-		return ir.RecordCall{Method: "delete", Arguments: []ir.Expression{r, k}, Element: of, Returns: ir.Boolean}, true, err
+		r, k, of, recordAccessError := l.recordAccess(node.AsDeleteExpression().Expression, false)
+		return ir.RecordCall{
+			Method:    "delete",
+			Arguments: []ir.Expression{r, k},
+			Element:   of,
+			Returns:   ir.Boolean,
+		}, true, recordAccessError
 	}
-	if value, handled, err := l.recordScalarComparison(node); handled {
-		return value, true, err
+	if value, handled, recordScalarComparisonError := l.recordScalarComparison(node); handled {
+		return value, true, recordScalarComparisonError
 	}
 	if node.Kind != ast.KindBinaryExpression {
 		return nil, false, nil
 	}
 	b := node.AsBinaryExpression()
 	if b.OperatorToken.Kind == ast.KindInKeyword && l.recordElement(l.checker.GetTypeAtLocation(b.Right)) != nil {
-		k, err := l.recordKey(b.Left, true)
-		if err != nil {
-			return nil, true, err
+		k, recordKeyError := l.recordKey(b.Left, true)
+		if recordKeyError != nil {
+			return nil, true, recordKeyError
 		}
-		r, err := l.expression(b.Right)
-		return ir.RecordCall{Method: "has", Arguments: []ir.Expression{k, r}, Returns: ir.Boolean}, true, err
+		r, expressionError := l.expression(b.Right)
+		return ir.RecordCall{
+			Method:    "has",
+			Arguments: []ir.Expression{k, r},
+			Returns:   ir.Boolean,
+		}, true, expressionError
 	}
-	if (b.OperatorToken.Kind == ast.KindEqualsToken || b.OperatorToken.Kind == ast.KindQuestionQuestionEqualsToken) && l.recordTarget(b.Left) {
-		r, k, of, err := l.recordAccess(b.Left, b.OperatorToken.Kind == ast.KindQuestionQuestionEqualsToken)
-		if err != nil {
-			return nil, true, err
+	if (b.OperatorToken.Kind == ast.KindEqualsToken || b.OperatorToken.Kind == ast.KindQuestionQuestionEqualsToken) &&
+		l.recordTarget(b.Left) {
+		r, k, of, recordAccessError := l.recordAccess(
+			b.Left,
+			b.OperatorToken.Kind == ast.KindQuestionQuestionEqualsToken,
+		)
+		if recordAccessError != nil {
+			return nil, true, recordAccessError
 		}
-		v, err := l.expression(b.Right)
-		if err != nil {
-			return nil, true, err
+		v, expressionError := l.expression(b.Right)
+		if expressionError != nil {
+			return nil, true, expressionError
 		}
-		if err := l.recordNamedWrite(b.Left, b.Right); err != nil {
-			return nil, true, err
+		if recordNamedWriteError := l.recordNamedWrite(b.Left, b.Right); recordNamedWriteError != nil {
+			return nil, true, recordNamedWriteError
 		}
 		returns := v.Type()
 		v = fit(v, of)
@@ -292,9 +342,21 @@ func (l *lowering) recordExpression(node *ast.Node) (ir.Expression, bool, error)
 			if of.IsMaybe() || of == ir.Union {
 				return nil, true, l.notYet(node, "record ??= with a tagged optional value")
 			}
-			return ir.RecordCoalesce{Record: r, Key: k, Value: v, Element: of, Site: l.writeSite(recordReceiver(b.Left))}, true, nil
+			return ir.RecordCoalesce{
+				Record:  r,
+				Key:     k,
+				Value:   v,
+				Element: of,
+				Site:    l.writeSite(recordReceiver(b.Left)),
+			}, true, nil
 		}
-		write := ir.Expression(ir.RecordCall{Method: "set", Arguments: []ir.Expression{r, k, v}, Element: of, Returns: of, Site: l.writeSite(recordReceiver(b.Left))})
+		write := ir.Expression(ir.RecordCall{
+			Method:    "set",
+			Arguments: []ir.Expression{r, k, v},
+			Element:   of,
+			Returns:   of,
+			Site:      l.writeSite(recordReceiver(b.Left)),
+		})
 		if of == ir.Union && returns != of {
 			write = ir.Narrow{Value: write, To: returns}
 		} else if of.IsMaybe() && returns == of.Present() {
@@ -320,7 +382,11 @@ func (l *lowering) recordLiteral(node *ast.Node, t *checker.Type) (ir.Expression
 	for i, p := range node.AsObjectLiteralExpression().Properties.Nodes {
 		if p.Kind == ast.KindSpreadAssignment {
 			if i != 0 {
-				return nil, &Refused{Where: l.program.Where(p), What: "a spread after the first field", Fix: "spread once, first (adamic/single-spread)"}
+				return nil, &Refused{
+					Where: l.program.Where(p),
+					What:  "a spread after the first field",
+					Fix:   "spread once, first (adamic/single-spread)",
+				}
 			}
 			source := p.AsSpreadAssignment().Expression
 			element := l.recordElement(l.checker.GetTypeAtLocation(source))
@@ -328,23 +394,29 @@ func (l *lowering) recordLiteral(node *ast.Node, t *checker.Type) (ir.Expression
 				return nil, l.notYet(p, "a spread into record storage from a fixed object")
 			}
 			if element != nil {
-				if !l.sameRecordStorage(element, t, map[[2]*checker.Type]bool{}) || !l.sameKeeping(element, t, map[[2]*checker.Type]bool{}) {
+				if !l.sameRecordStorage(element, t, map[[2]*checker.Type]bool{}) ||
+					!l.sameKeeping(element, t, map[[2]*checker.Type]bool{}) {
 					return nil, l.notYet(p, "record spread values seen through different storage")
 				}
 				if widened := l.widened(element, t, map[[2]*checker.Type]bool{}); widened != nil {
-					return nil, &Refused{Where: l.program.Where(p), What: "record spread shares values with an invariant-mutable slot that the target can widen", Fix: "keep the value's mutable fields invariant or copy the values too (adamic/invariant-mutable)"}
+					return nil, &Refused{
+						Where: l.program.Where(p),
+						What:  "record spread shares values with an invariant-mutable slot that the target can widen",
+						Fix:   "keep the value's mutable fields invariant or copy the values too (adamic/invariant-mutable)",
+					}
 				}
 			}
-			e, err := l.recordSlot(source)
-			if err != nil {
-				return nil, err
+			e, recordSlotError := l.recordSlot(source)
+			if recordSlotError != nil {
+				return nil, recordSlotError
 			}
 			if e != of {
 				return nil, l.notYet(p, "record spread with a different value representation")
 			}
-			result.Spread, err = l.expression(source)
-			if err != nil {
-				return nil, err
+			var expressionError error
+			result.Spread, expressionError = l.expression(source)
+			if expressionError != nil {
+				return nil, expressionError
 			}
 			continue
 		}
@@ -355,8 +427,8 @@ func (l *lowering) recordLiteral(node *ast.Node, t *checker.Type) (ir.Expression
 		var key ir.Expression
 		var err error
 		if name.Kind == ast.KindComputedPropertyName {
-			if err := l.recordComputedEntry(node, p, of); err != nil {
-				return nil, err
+			if recordComputedEntryError := l.recordComputedEntry(node, p, of); recordComputedEntryError != nil {
+				return nil, recordComputedEntryError
 			}
 			key, err = l.recordKey(name.AsComputedPropertyName().Expression, false)
 		} else {
@@ -393,7 +465,11 @@ func (l *lowering) recordObjectCall(node *ast.Node, name string) (ir.Expression,
 	return l.recordObjectCallArguments(node, name, node.AsCallExpression().Arguments.Nodes)
 }
 
-func (l *lowering) recordObjectCallArguments(node *ast.Node, name string, args []*ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) recordObjectCallArguments(
+	node *ast.Node,
+	name string,
+	args []*ast.Node,
+) (ir.Expression, bool, error) {
 	if len(args) == 0 || l.recordElement(l.checker.GetTypeAtLocation(args[0])) == nil {
 		return nil, false, nil
 	}
@@ -413,7 +489,10 @@ func (l *lowering) recordObjectCallArguments(node *ast.Node, name string, args [
 	}
 	// A Pick holds the whole record, so its values include fields it doesn't name, held otherwise.
 	if (name == "values" || name == "entries") && l.pickedRecordBase(l.checker.GetTypeAtLocation(args[0])) != nil {
-		return nil, true, l.notYet(node, "Object."+name+" on a Pick of a record, which holds fields the Pick doesn't name")
+		return nil, true, l.notYet(
+			node,
+			"Object."+name+" on a Pick of a record, which holds fields the Pick doesn't name",
+		)
 	}
 	count := 1
 	if name == "hasOwn" {
@@ -422,19 +501,19 @@ func (l *lowering) recordObjectCallArguments(node *ast.Node, name string, args [
 	if len(args) != count {
 		return nil, true, l.notYet(node, "record Object operation argument count")
 	}
-	of, err := l.recordSlot(args[0])
-	if err != nil {
-		return nil, true, err
+	of, recordSlotError := l.recordSlot(args[0])
+	if recordSlotError != nil {
+		return nil, true, recordSlotError
 	}
-	r, err := l.expression(args[0])
-	if err != nil {
-		return nil, true, err
+	r, expressionError := l.expression(args[0])
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
 	result := ir.RecordCall{Method: name, Arguments: []ir.Expression{r}, Element: of, Returns: ir.Array}
 	if name == "hasOwn" {
-		k, err := l.recordKey(args[1], false)
-		if err != nil {
-			return nil, true, err
+		k, recordKeyError := l.recordKey(args[1], false)
+		if recordKeyError != nil {
+			return nil, true, recordKeyError
 		}
 		result.Arguments = append(result.Arguments, k)
 		result.Returns = ir.Boolean
@@ -456,7 +535,11 @@ func (l *lowering) recordStorageView(node *ast.Node) error {
 	if stored, literal := l.branchesStoredAs(source, target); literal && stored {
 		return nil
 	} else if literal || !l.sameRecordStorage(own, target, map[[2]*checker.Type]bool{}) {
-		return l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as "+l.checker.TypeToString(target)+" (fixed objects and records have different storage; copy explicitly)")
+		return l.notYet(node, "a "+
+			l.checker.TypeToString(own)+
+			" seen as "+
+			l.checker.TypeToString(target)+
+			" (fixed objects and records have different storage; copy explicitly)")
 	}
 	return nil
 }
@@ -493,7 +576,10 @@ func (l *lowering) recordViewSite(node *ast.Node) (*ast.Node, *checker.Type) {
 		if l.isLibraryGlobal(callee, "String") {
 			return nil, nil
 		}
-		if callee.Kind == ast.KindPropertyAccessExpression && (l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Object") || l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "JSON")) {
+		if callee.Kind == ast.KindPropertyAccessExpression && (l.isLibraryGlobal(
+			callee.AsPropertyAccessExpression().Expression,
+			"Object",
+		) || l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "JSON")) {
 			return nil, nil
 		}
 	}
@@ -512,7 +598,9 @@ func (l *lowering) branchesStoredAs(source *ast.Node, target *checker.Type) (sto
 	switch node.Kind {
 	case ast.KindObjectLiteralExpression:
 		built := l.checker.GetTypeAtLocation(node)
-		if slot := l.slotType(node); slot != nil && l.recordLiteralElement(node) != nil && l.recordElement(l.checker.GetNonNullableType(slot)) != nil {
+		if slot := l.slotType(node); slot != nil &&
+			l.recordLiteralElement(node) != nil &&
+			l.recordElement(l.checker.GetNonNullableType(slot)) != nil {
 			built = l.checker.GetNonNullableType(slot)
 		}
 		return l.sameRecordStorage(built, target, map[[2]*checker.Type]bool{}), true
@@ -526,7 +614,10 @@ func (l *lowering) branchesStoredAs(source *ast.Node, target *checker.Type) (sto
 		if body == nil || body.Kind == ast.KindBlock {
 			break
 		}
-		own, viewed := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node), checker.SignatureKindCall), l.checker.GetSignaturesOfType(l.checker.GetNonNullableType(target), checker.SignatureKindCall)
+		own, viewed := l.checker.GetSignaturesOfType(
+			l.checker.GetTypeAtLocation(node),
+			checker.SignatureKindCall,
+		), l.checker.GetSignaturesOfType(l.checker.GetNonNullableType(target), checker.SignatureKindCall)
 		if len(own) != 1 || len(viewed) != 1 {
 			break
 		}
@@ -538,7 +629,11 @@ func (l *lowering) branchesStoredAs(source *ast.Node, target *checker.Type) (sto
 		parameters := l.parameterStorage(func() bool {
 			for i := 0; i < len(ownParameters) && i < len(viewedParameters); i++ {
 				// A caller passes the viewed parameter's value into the arrow's own: that's the flow.
-				if !l.sameRecordStorage(l.checker.GetTypeOfSymbol(viewedParameters[i]), l.checker.GetTypeOfSymbol(ownParameters[i]), map[[2]*checker.Type]bool{}) {
+				if !l.sameRecordStorage(
+					l.checker.GetTypeOfSymbol(viewedParameters[i]),
+					l.checker.GetTypeOfSymbol(ownParameters[i]),
+					map[[2]*checker.Type]bool{},
+				) {
 					return false
 				}
 			}
@@ -595,9 +690,15 @@ func (l *lowering) sameRecordStorage(from, to *checker.Type, visited map[[2]*che
 	visited[[2]*checker.Type{from, to}] = true
 	inside, viewed := l.recordElement(from), l.recordElement(to)
 	if inside != nil || viewed != nil {
-		return inside != nil && viewed != nil && l.sameRecordNamedContracts(from, to, inside, viewed, visited) && l.sameRecordStorage(inside, viewed, visited)
+		return inside != nil &&
+			viewed != nil &&
+			l.sameRecordNamedContracts(from, to, inside, viewed, visited) &&
+			l.sameRecordStorage(inside, viewed, visited)
 	}
-	a, b := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall), l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
+	a, b := l.checker.GetSignaturesOfType(
+		from,
+		checker.SignatureKindCall,
+	), l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
 	if len(a) > 0 && len(b) > 0 {
 		ap, bp := a[0].Parameters(), b[0].Parameters()
 		parameters := l.parameterStorage(func() bool {
@@ -608,9 +709,15 @@ func (l *lowering) sameRecordStorage(from, to *checker.Type, visited map[[2]*che
 			}
 			return true
 		})
-		return parameters && l.sameRecordStorage(l.checker.GetReturnTypeOfSignature(a[0]), l.checker.GetReturnTypeOfSignature(b[0]), visited)
+		return parameters && l.sameRecordStorage(
+			l.checker.GetReturnTypeOfSignature(a[0]),
+			l.checker.GetReturnTypeOfSignature(b[0]),
+			visited,
+		)
 	}
-	if l.isArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
+	if l.isArrayType(from) ||
+		checker.IsTupleType(from) ||
+		l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
 		a, b := l.typeArguments(from), l.typeArguments(to)
 		for i := 0; i < len(a) && i < len(b); i++ {
 			if !l.sameRecordStorage(a[i], b[i], visited) {
@@ -624,7 +731,9 @@ func (l *lowering) sameRecordStorage(from, to *checker.Type, visited map[[2]*che
 	// visited pair ever repeats: 1.3 million calls, 294,120 deep, for Promise<() => void>. The
 	// arguments decide outright, failing closed when they differ, since a pair this walk marked
 	// visited would read as alike to any member walk after it.
-	if from.ObjectFlags()&to.ObjectFlags()&checker.ObjectFlagsReference != 0 && from.Target() != nil && from.Target() == to.Target() {
+	if from.ObjectFlags()&to.ObjectFlags()&checker.ObjectFlagsReference != 0 &&
+		from.Target() != nil &&
+		from.Target() == to.Target() {
 		a, b := l.checker.GetTypeArguments(from), l.checker.GetTypeArguments(to)
 		if len(a) != len(b) {
 			return false
@@ -674,7 +783,10 @@ func (l *lowering) recordLiteralRead(node *ast.Node) error {
 			other = b.Left
 		}
 		t := l.checker.GetTypeAtLocation(other)
-		if (b.OperatorToken.Kind == ast.KindEqualsEqualsEqualsToken || b.OperatorToken.Kind == ast.KindExclamationEqualsEqualsToken) && t.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike) != 0 && !l.includesUndefined(t) {
+		if (b.OperatorToken.Kind == ast.KindEqualsEqualsEqualsToken ||
+			b.OperatorToken.Kind == ast.KindExclamationEqualsEqualsToken) &&
+			t.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike) != 0 &&
+			!l.includesUndefined(t) {
 			return nil
 		}
 	}
@@ -688,7 +800,11 @@ func (l *lowering) recordLiteralRead(node *ast.Node) error {
 		}
 	}
 	if recordPrototypeName(name) {
-		return &Refused{Where: l.program.Where(node), What: "record key " + name + " names an Object.prototype member", Fix: "use own keys"}
+		return &Refused{
+			Where: l.program.Where(node),
+			What:  "record key " + name + " names an Object.prototype member",
+			Fix:   "use own keys",
+		}
 	}
 	return nil
 }

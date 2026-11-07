@@ -31,22 +31,22 @@ func TestCheckpointKeysIncludeAllExecutionInputs(test *testing.T) {
 	dir := test.TempDir()
 	path := filepath.Join(dir, "input")
 	os.WriteFile(path, []byte("first"), 0600)
-	first, err := pathDigest(dir)
-	if err != nil {
-		test.Fatal(err)
+	first, pathDigestError := pathDigest(dir)
+	if pathDigestError != nil {
+		test.Fatal(pathDigestError)
 	}
 	os.WriteFile(path, []byte("second"), 0600)
-	second, err := pathDigest(dir)
-	if err != nil {
-		test.Fatal(err)
+	second, pathDigestError := pathDigest(dir)
+	if pathDigestError != nil {
+		test.Fatal(pathDigestError)
 	}
 	if first == second {
 		test.Fatal("external input bytes absent from key")
 	}
 	os.Chmod(path, 0644)
-	third, err := pathDigest(dir)
-	if err != nil {
-		test.Fatal(err)
+	third, pathDigestError := pathDigest(dir)
+	if pathDigestError != nil {
+		test.Fatal(pathDigestError)
 	}
 	if second == third {
 		test.Fatal("external input permissions absent from key")
@@ -94,40 +94,58 @@ func TestPackageCheckpointRequiresIntactCompleteEvidence(test *testing.T) {
 	}
 	save := func(text string) {
 		test.Helper()
-		if err := os.WriteFile(path, []byte(text), 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(text), 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
-		if err := os.WriteFile(stderr, nil, 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(stderr, nil, 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 		e.LogDigest, _ = fileDigest(path)
 		e.StderrDigest, _ = fileDigest(stderr)
-		if err := atomicJSON(filepath.Join(dir, "complete.json"), e); err != nil {
-			test.Fatal(err)
+		if atomicJsonError := atomicJSON(filepath.Join(dir, "complete.json"), e); atomicJsonError != nil {
+			test.Fatal(atomicJsonError)
 		}
 	}
 	save(log)
-	if _, found, err := loadPackage(dir, "key", p, 0, "p"); err != nil || !found {
-		test.Fatalf("complete control rejected: %v", err)
+	if _, found, loadPackageError := loadPackage(dir, "key", p, 0, "p"); loadPackageError != nil || !found {
+		test.Fatalf("complete control rejected: %v", loadPackageError)
 	}
-	if _, _, err := loadPackage(dir, "different-plan", p, 0, "p"); err == nil {
+	if _, _, loadPackageError := loadPackage(dir, "different-plan", p, 0, "p"); loadPackageError == nil {
 		test.Fatal("stale key accepted")
 	}
 	os.WriteFile(path, []byte(log+"{\"Action\":\"output\",\"Package\":\"p\",\"Output\":\"changed bytes\"}\n"), 0600)
-	if _, _, err := loadPackage(dir, "key", p, 0, "p"); err == nil || !strings.Contains(err.Error(), "checksum") {
-		test.Fatal("changed log accepted", err)
+	if _, _, loadPackageError := loadPackage(
+		dir,
+		"key",
+		p,
+		0,
+		"p",
+	); loadPackageError == nil || !strings.Contains(loadPackageError.Error(), "checksum") {
+		test.Fatal("changed log accepted", loadPackageError)
 	}
 	save(log)
 	os.WriteFile(stderr, []byte("changed stderr"), 0600)
-	if _, _, err := loadPackage(dir, "key", p, 0, "p"); err == nil || !strings.Contains(err.Error(), "checksum") {
-		test.Fatal("changed stderr accepted", err)
+	if _, _, loadPackageError := loadPackage(
+		dir,
+		"key",
+		p,
+		0,
+		"p",
+	); loadPackageError == nil || !strings.Contains(loadPackageError.Error(), "checksum") {
+		test.Fatal("changed stderr accepted", loadPackageError)
 	}
 	save(strings.Replace(log, "{\"Action\":\"pass\",\"Package\":\"p\"}\n", "", 1))
-	if _, _, err := loadPackage(dir, "key", p, 0, "p"); err == nil || !strings.Contains(err.Error(), "terminal") {
-		test.Fatal("package without terminal accepted", err)
+	if _, _, loadPackageError := loadPackage(
+		dir,
+		"key",
+		p,
+		0,
+		"p",
+	); loadPackageError == nil || !strings.Contains(loadPackageError.Error(), "terminal") {
+		test.Fatal("package without terminal accepted", loadPackageError)
 	}
 	save(strings.Replace(log, "{\"Action\":\"pass\",\"Package\":\"p\",\"Test\":\"TestPass\"}\n", "", 1))
-	if _, _, err := loadPackage(dir, "key", p, 0, "p"); err == nil {
+	if _, _, loadPackageError := loadPackage(dir, "key", p, 0, "p"); loadPackageError == nil {
 		test.Fatal("test without terminal accepted")
 	}
 	save(strings.Replace(
@@ -136,11 +154,11 @@ func TestPackageCheckpointRequiresIntactCompleteEvidence(test *testing.T) {
 		"\"Action\":\"fail\",\"Package\":\"p\",\"Test\":\"TestPass\"",
 		1,
 	))
-	if _, found, err := loadPackage(dir, "key", p, 0, "p"); err != nil || !found {
-		test.Fatalf("complete failed evidence should stay reusable and red: %v", err)
+	if _, found, loadPackageError := loadPackage(dir, "key", p, 0, "p"); loadPackageError != nil || !found {
+		test.Fatalf("complete failed evidence should stay reusable and red: %v", loadPackageError)
 	}
 	os.Remove(filepath.Join(dir, "complete.json"))
-	if _, found, err := loadPackage(dir, "key", p, 0, "p"); err != nil || found {
+	if _, found, loadPackageError := loadPackage(dir, "key", p, 0, "p"); loadPackageError != nil || found {
 		test.Fatal("partial package considered complete")
 	}
 }
@@ -165,17 +183,17 @@ func TestVolume(t *testing.T) {
 	}
 }
 `
-	if err := os.WriteFile(file, []byte(source), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(file, []byte(source), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	names, err := literalChildren(file, "TestVolume", "changes")
-	if err != nil {
-		test.Fatal(err)
+	names, literalChildrenError := literalChildren(file, "TestVolume", "changes")
+	if literalChildrenError != nil {
+		test.Fatal(literalChildrenError)
 	}
 	if !slices.Equal(names, []string{"assignable-types", "base_shapes"}) {
 		test.Fatalf("wrong rows from a named table: %v", names)
 	}
-	if _, err := literalChildren(file, "TestAbsent", "changes"); err == nil {
+	if _, literalChildrenError := literalChildren(file, "TestAbsent", "changes"); literalChildrenError == nil {
 		test.Fatal("an absent parent enumerated")
 	}
 	p := plan{Count: 2, Units: []unit{
@@ -199,27 +217,27 @@ func TestResumeCleanupPreservesForeignPaths(test *testing.T) {
 	os.Mkdir(checkpoint, 0700)
 	foreign := filepath.Join(root, "foreign")
 	os.Mkdir(foreign, 0700)
-	if err := atomicJSON(
+	if atomicJsonError := atomicJSON(
 		filepath.Join(checkpoint, "scratch.json"),
 		scratchRecord{Key: "key", Path: foreign},
-	); err != nil {
-		test.Fatal(err)
+	); atomicJsonError != nil {
+		test.Fatal(atomicJsonError)
 	}
-	if err := cleanupPackageScratch(checkpoint, "key", root); err == nil {
+	if cleanupPackageScratchError := cleanupPackageScratch(checkpoint, "key", root); cleanupPackageScratchError == nil {
 		test.Fatal("foreign scratch path accepted")
 	}
-	if _, err := os.Stat(foreign); err != nil {
-		test.Fatal("foreign path deleted", err)
+	if _, statError := os.Stat(foreign); statError != nil {
+		test.Fatal("foreign path deleted", statError)
 	}
-	owned, err := os.MkdirTemp(root, "package-")
-	if err != nil {
-		test.Fatal(err)
+	owned, temporaryDirectoryError := os.MkdirTemp(root, "package-")
+	if temporaryDirectoryError != nil {
+		test.Fatal(temporaryDirectoryError)
 	}
 	atomicJSON(filepath.Join(checkpoint, "scratch.json"), scratchRecord{Key: "key", Path: owned})
-	if err := cleanupPackageScratch(checkpoint, "key", root); err != nil {
-		test.Fatal(err)
+	if cleanupPackageScratchError := cleanupPackageScratch(checkpoint, "key", root); cleanupPackageScratchError != nil {
+		test.Fatal(cleanupPackageScratchError)
 	}
-	if _, err := os.Stat(owned); !os.IsNotExist(err) {
+	if _, statError := os.Stat(owned); !os.IsNotExist(statError) {
 		test.Fatal("orphan package scratch retained")
 	}
 }

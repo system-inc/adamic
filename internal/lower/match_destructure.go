@@ -9,7 +9,11 @@ import (
 // matchArray reports whether a destructured type is a RegExp result, which is held as an array of
 // strings whose absent captures read as undefined.
 func (l *lowering) matchArray(destructured *checker.Type) bool {
-	return l.isLibraryType(l.checker.GetNonNullableType(l.concrete(destructured)), "RegExpExecArray", "RegExpMatchArray")
+	return l.isLibraryType(
+		l.checker.GetNonNullableType(l.concrete(destructured)),
+		"RegExpExecArray",
+		"RegExpMatchArray",
+	)
 }
 
 // destructureMatch declares the names of const [, major, minor = "0"] = match from the local held,
@@ -31,18 +35,22 @@ func (l *lowering) destructureMatch(pattern *ast.Node, held int) ([]ir.Statement
 		if !ast.IsIdentifier(binding.Name()) {
 			return nil, l.notYet(binding, "a nested pattern when destructuring a RegExp match")
 		}
-		value := ir.Expression(ir.ArrayIndex{Array: ir.Read{Local: held, Of: ir.Array}, Index: ir.NumberConstant{Value: float64(index)}, Element: ir.String})
+		value := ir.Expression(ir.ArrayIndex{
+			Array:   ir.Read{Local: held, Of: ir.Array},
+			Index:   ir.NumberConstant{Value: float64(index)},
+			Element: ir.String,
+		})
 		var fallback ir.Expression
 		if declared.Initializer != nil {
 			// Lowered before the name is declared, so the default can't see the name it initializes.
-			var err error
-			if fallback, err = l.expression(declared.Initializer); err != nil {
-				return nil, err
+			var expressionError error
+			if fallback, expressionError = l.expression(declared.Initializer); expressionError != nil {
+				return nil, expressionError
 			}
 		}
-		local, err := l.declareLocal(binding.Name())
-		if err != nil {
-			return nil, err
+		local, declareLocalError := l.declareLocal(binding.Name())
+		if declareLocalError != nil {
+			return nil, declareLocalError
 		}
 		of := l.result.Locals[local].Type
 		if of != ir.String {
@@ -53,9 +61,9 @@ func (l *lowering) destructureMatch(pattern *ast.Node, held int) ([]ir.Statement
 			if fallback.Type() != of {
 				return nil, l.notYet(binding, "a RegExp match default of another representation than its name")
 			}
-			// A destructuring default fires on undefined only, and ir.Coalesce is ??, which fires on null too. They agree
-			// here because a match array's elements are a string or undefined, never null; a matchArray that admits a type
-			// whose elements can be null needs its own test here.
+			// A destructuring default fires on undefined only, and ir.Coalesce is ??, which fires on null too. They
+			// agree here because a match array's elements are a string or undefined, never null; a matchArray that
+			// admits a type whose elements can be null needs its own test here.
 			value = ir.Coalesce{Value: value, Fallback: fallback, Of: of}
 		}
 		statements = append(statements, l.initializeLocal(local, value)...)

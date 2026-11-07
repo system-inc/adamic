@@ -57,16 +57,16 @@ func env(key, fallback string) string {
 }
 
 func newCache() (*cache, error) {
-	root, err := os.UserCacheDir()
-	if err != nil {
+	root, userCacheDirectoryError := os.UserCacheDir()
+	if userCacheDirectoryError != nil {
 		root = os.TempDir()
 	}
-	dir, err := filepath.Abs(env("ADAMIC_GOCACHE_DIR", filepath.Join(root, "adamic-gocache")))
-	if err != nil {
-		return nil, err
+	dir, absolutePathError := filepath.Abs(env("ADAMIC_GOCACHE_DIR", filepath.Join(root, "adamic-gocache")))
+	if absolutePathError != nil {
+		return nil, absolutePathError
 	}
-	if err = os.MkdirAll(dir, 0700); err != nil {
-		return nil, err
+	if createDirectoryError := os.MkdirAll(dir, 0700); createDirectoryError != nil {
+		return nil, createDirectoryError
 	}
 	c := &cache{
 		dir:       dir,
@@ -88,11 +88,11 @@ func newCache() (*cache, error) {
 		c.store = ""
 	}
 	if path := os.Getenv("ADAMIC_GOCACHE_TOKEN"); path != "" {
-		b, err := os.ReadFile(path)
-		if err == nil {
+		b, readError := os.ReadFile(path)
+		if readError == nil {
 			c.token = strings.TrimSpace(string(b))
 		} else {
-			c.log("token unavailable: %v", err)
+			c.log("token unavailable: %v", readError)
 		}
 	}
 	return c, nil
@@ -106,25 +106,25 @@ func (c *cache) log(format string, args ...any) {
 
 func digest(b []byte) string { h := sha256.Sum256(b); return hex.EncodeToString(h[:]) }
 func validHash(s string) bool {
-	b, e := hex.DecodeString(s)
-	return e == nil && len(b) == sha256.Size && s == strings.ToLower(s)
+	b, decodeStringError := hex.DecodeString(s)
+	return decodeStringError == nil && len(b) == sha256.Size && s == strings.ToLower(s)
 }
 
 func atomicFile(path string, b []byte) error {
-	if err := os.MkdirAll(filepath.Dir(path), 0700); err != nil {
-		return err
+	if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0700); createDirectoryError != nil {
+		return createDirectoryError
 	}
-	f, err := os.CreateTemp(filepath.Dir(path), ".tmp-")
-	if err != nil {
-		return err
+	f, temporaryFileError := os.CreateTemp(filepath.Dir(path), ".tmp-")
+	if temporaryFileError != nil {
+		return temporaryFileError
 	}
 	defer os.Remove(f.Name())
-	if _, err = f.Write(b); err != nil {
+	if _, writeError := f.Write(b); writeError != nil {
 		f.Close()
-		return err
+		return writeError
 	}
-	if err = f.Close(); err != nil {
-		return err
+	if closeError := f.Close(); closeError != nil {
+		return closeError
 	}
 	return os.Rename(f.Name(), path)
 }
@@ -140,16 +140,16 @@ func (c *cache) check(b []byte, hash string) bool {
 }
 
 func (c *cache) readRemote(path string, limit int64) ([]byte, bool) {
-	res, err := c.client.Get(c.store + path)
-	if err != nil {
+	res, getError := c.client.Get(c.store + path)
+	if getError != nil {
 		return nil, false
 	}
 	defer res.Body.Close()
 	if res.StatusCode != http.StatusOK {
 		return nil, false
 	}
-	b, err := io.ReadAll(io.LimitReader(res.Body, limit+1))
-	return b, err == nil && int64(len(b)) <= limit
+	b, readError := io.ReadAll(io.LimitReader(res.Body, limit+1))
+	return b, readError == nil && int64(len(b)) <= limit
 }
 
 // poisoned distinguishes corruption from an ordinary miss: once corruption is
@@ -158,7 +158,7 @@ func (c *cache) blob(hash string, limit int64) (body []byte, ok, poisoned bool) 
 	if !validHash(hash) {
 		return nil, false, false
 	}
-	if b, err := os.ReadFile(c.blobPath(hash)); err == nil {
+	if b, readError := os.ReadFile(c.blobPath(hash)); readError == nil {
 		if !c.check(b, hash) {
 			return nil, false, true
 		}
@@ -208,9 +208,9 @@ func (c *cache) get(req request) response {
 					continue
 				}
 			} else {
-				var err error
-				ref, err = os.ReadFile(c.refPath(ns, action))
-				if err != nil {
+				var readError error
+				ref, readError = os.ReadFile(c.refPath(ns, action))
+				if readError != nil {
 					continue
 				}
 			}
@@ -237,7 +237,12 @@ func (c *cache) get(req request) response {
 				continue
 			}
 			var r record
-			if json.Unmarshal(rb, &r) != nil || len(r.OutputID) != sha256.Size || r.Size < 0 || r.Size == int64(^uint64(0)>>1) || !validHash(r.SHA256) || hex.EncodeToString(r.OutputID) != r.SHA256 {
+			if json.Unmarshal(rb, &r) != nil ||
+				len(r.OutputID) != sha256.Size ||
+				r.Size < 0 ||
+				r.Size == int64(^uint64(0)>>1) ||
+				!validHash(r.SHA256) ||
+				hex.EncodeToString(r.OutputID) != r.SHA256 {
 				continue
 			}
 			var body []byte
@@ -258,10 +263,10 @@ func (c *cache) get(req request) response {
 				continue
 			}
 			if remote {
-				if err := atomicFile(c.blobPath(r.SHA256), body); err != nil {
+				if atomicFileError := atomicFile(c.blobPath(r.SHA256), body); atomicFileError != nil {
 					continue
 				}
-				if err := atomicFile(c.blobPath(hash), rb); err == nil {
+				if atomicFileError := atomicFile(c.blobPath(hash), rb); atomicFileError == nil {
 					_ = atomicFile(c.refPath(ns, action), []byte(hash))
 				}
 			}
@@ -272,15 +277,15 @@ func (c *cache) get(req request) response {
 }
 
 func (c *cache) upload(path string, b []byte) bool {
-	req, err := http.NewRequest(http.MethodPut, c.writer+path, bytes.NewReader(b))
-	if err != nil {
-		c.log("write: %v", err)
+	req, newRequestError := http.NewRequest(http.MethodPut, c.writer+path, bytes.NewReader(b))
+	if newRequestError != nil {
+		c.log("write: %v", newRequestError)
 		return false
 	}
 	req.Header.Set("Authorization", "Bearer "+c.token)
-	res, err := c.client.Do(req)
-	if err != nil {
-		c.log("write: %v", err)
+	res, requestError := c.client.Do(req)
+	if requestError != nil {
+		c.log("write: %v", requestError)
 		return false
 	}
 	defer res.Body.Close()
@@ -299,7 +304,9 @@ func (c *cache) upload(path string, b []byte) bool {
 func (c *cache) put(req request, body []byte) response {
 	out := response{ID: req.ID}
 	hash := digest(body)
-	if len(req.ActionID) != sha256.Size || hex.EncodeToString(req.OutputID) != hash || req.BodySize != int64(len(body)) {
+	if len(req.ActionID) != sha256.Size ||
+		hex.EncodeToString(req.OutputID) != hash ||
+		req.BodySize != int64(len(body)) {
 		out.Err = "invalid put IDs or body size"
 		return out
 	}
@@ -307,15 +314,15 @@ func (c *cache) put(req request, body []byte) response {
 	rb, _ := json.Marshal(r)
 	rh := digest(rb)
 	action := hex.EncodeToString(req.ActionID)
-	if err := atomicFile(c.blobPath(hash), body); err != nil {
-		out.Err = err.Error()
+	if atomicFileError := atomicFile(c.blobPath(hash), body); atomicFileError != nil {
+		out.Err = atomicFileError.Error()
 		return out
 	}
 	out.DiskPath = c.blobPath(hash)
-	if err := atomicFile(c.blobPath(rh), rb); err != nil {
-		c.log("local record: %v", err)
-	} else if err = atomicFile(c.refPath(c.namespace, action), []byte(rh)); err != nil {
-		c.log("local ref: %v", err)
+	if atomicFileError := atomicFile(c.blobPath(rh), rb); atomicFileError != nil {
+		c.log("local record: %v", atomicFileError)
+	} else if atomicFileError = atomicFile(c.refPath(c.namespace, action), []byte(rh)); atomicFileError != nil {
+		c.log("local ref: %v", atomicFileError)
 	}
 	if c.store != "" && c.token != "" && c.upload("/blobs/"+hash, body) && c.upload("/blobs/"+rh, rb) {
 		c.upload("/refs/"+c.namespace+"/"+action, []byte(rh))
@@ -331,16 +338,16 @@ func (c *cache) put(req request, body []byte) response {
 // never be answered: go treats a response for an unknown ID as fatal.
 func serve(c *cache, input io.Reader, output io.Writer) error {
 	in, enc := bufio.NewReader(input), json.NewEncoder(output)
-	if err := enc.Encode(response{KnownCommands: []string{"get", "put", "close"}}); err != nil {
-		return err
+	if encodeError := enc.Encode(response{KnownCommands: []string{"get", "put", "close"}}); encodeError != nil {
+		return encodeError
 	}
 	var wg sync.WaitGroup
 	var mu sync.Mutex
 	send := func(r response) {
 		mu.Lock()
 		defer mu.Unlock()
-		if err := enc.Encode(r); err != nil {
-			c.log("protocol output: %v", err)
+		if encodeError := enc.Encode(r); encodeError != nil {
+			c.log("protocol output: %v", encodeError)
 		}
 	}
 	// Bodies run to tens of megabytes, so lines are read whole, never through a
@@ -353,51 +360,57 @@ func serve(c *cache, input io.Reader, output io.Writer) error {
 			return line, nil
 		}
 		for {
-			line, err := in.ReadBytes('\n')
+			line, readBytesError := in.ReadBytes('\n')
 			if line = bytes.TrimSpace(line); len(line) > 0 {
 				return line, nil
 			}
-			if err != nil {
-				return nil, err
+			if readBytesError != nil {
+				return nil, readBytesError
 			}
 		}
 	}
 	slots := make(chan struct{}, 16)
 	for {
-		line, err := next()
-		if err != nil {
+		line, nextError := next()
+		if nextError != nil {
 			wg.Wait()
-			if err == io.EOF {
+			if nextError == io.EOF {
 				return nil
 			}
-			return err
+			return nextError
 		}
 		var req request
-		if err := json.Unmarshal(line, &req); err != nil {
+		if decodeError := json.Unmarshal(line, &req); decodeError != nil {
 			wg.Wait()
-			return err
+			return decodeError
 		}
 		var body []byte
 		if req.Command == "put" && req.BodySize > 0 {
-			line, err := next()
-			if err != nil && err != io.EOF {
+			line, nextError := next()
+			if nextError != nil && nextError != io.EOF {
 				wg.Wait()
-				return err
+				return nextError
 			}
 			// Base64 never holds a quote or a brace, so a body line that is not one
 			// closed string is a put go abandoned, possibly with EOF right behind it.
 			brace := bytes.IndexByte(line, '{')
 			if len(line) >= 2 && line[0] == '"' && line[len(line)-1] == '"' && brace < 0 {
-				if err := json.Unmarshal(line, &body); err != nil {
+				if decodeError := json.Unmarshal(line, &body); decodeError != nil {
 					wg.Wait()
-					return err
+					return decodeError
 				}
 			} else if len(line) == 0 || line[0] == '"' {
 				arrived := max(len(line)-1, 0)
 				if brace >= 0 {
 					arrived, carry = brace-1, line[brace:]
 				}
-				c.log("put %d abandoned mid-body by go: action %x, BodySize %d, %d base64 bytes arrived; dropped without a response", req.ID, req.ActionID, req.BodySize, arrived)
+				c.log(
+					"put %d abandoned mid-body by go: action %x, BodySize %d, %d base64 bytes arrived; dropped without a response",
+					req.ID,
+					req.ActionID,
+					req.BodySize,
+					arrived,
+				)
 				continue
 			} else {
 				wg.Wait()

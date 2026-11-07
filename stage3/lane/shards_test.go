@@ -41,9 +41,9 @@ type unit struct {
 func repositoryRoot(test testing.TB) string {
 	test.Helper()
 	// Reads: stage3/*
-	root, err := filepath.Abs("../..")
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs("../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return root
 }
@@ -55,16 +55,16 @@ func boundedCommand(ctx context.Context, root, program string, arguments ...stri
 
 // manifestUnit is the unit named name in the manifest at path.
 func manifestUnit(path, name string) (unit, error) {
-	data, err := os.ReadFile(path)
-	if err != nil {
-		return unit{}, err
+	data, readError := os.ReadFile(path)
+	if readError != nil {
+		return unit{}, readError
 	}
 	var manifest struct {
 		Version int    `json:"version"`
 		Units   []unit `json:"units"`
 	}
-	if err := json.Unmarshal(data, &manifest); err != nil {
-		return unit{}, err
+	if decodeError := json.Unmarshal(data, &manifest); decodeError != nil {
+		return unit{}, decodeError
 	}
 	if manifest.Version != 1 || len(manifest.Units) == 0 {
 		return unit{}, fmt.Errorf("%s holds no version 1 units", path)
@@ -88,9 +88,9 @@ func runManifestShard(test *testing.T, name string) {
 	test.Helper()
 	tree := filepath.Join(adaptedtree.Product(test), "tree")
 	root := repositoryRoot(test)
-	selected, err := manifestUnit(filepath.Join(root, "stage3/lane/shards.json"), name)
-	if err != nil {
-		test.Fatal(err)
+	selected, manifestUnitError := manifestUnit(filepath.Join(root, "stage3/lane/shards.json"), name)
+	if manifestUnitError != nil {
+		test.Fatal(manifestUnitError)
 	}
 	results := test.TempDir()
 	// shard.py's limit is this test's: its deadline, the go test deadline when sooner, less a margin for teardown, so
@@ -113,21 +113,21 @@ func runManifestShard(test *testing.T, name string) {
 	command := boundedCommand(ctx, root, selected.Command[0], arguments...)
 	command.Env = append(command.Env, "STAGE3_ADAPTED_TREE="+tree, "STAGE3_RESULTS="+results,
 		"STAGE3_SHARD_SECONDS="+strconv.FormatFloat(limit.Seconds(), 'f', 1, 64))
-	output, err := command.CombinedOutput()
-	if err != nil {
-		test.Fatalf("%s: %v\n%s", command, err, output)
+	output, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("%s: %v\n%s", command, combinedOutputError, output)
 	}
-	data, err := os.ReadFile(filepath.Join(results, name, "report.json"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(results, name, "report.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var report struct {
 		Status string   `json:"status"`
 		Counts counts   `json:"counts"`
 		Errors []string `json:"errors"`
 	}
-	if err := json.Unmarshal(data, &report); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &report); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if report.Status != "pass" || report.Counts != selected.Expect {
 		test.Fatalf(

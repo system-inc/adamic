@@ -20,10 +20,10 @@ func TestRegExpLiteralTestInputRefusals(test *testing.T) {
 		`/[\q{Ss|x}]/iv.test('s' + 'ſ');`,
 		`/[\q{Ss|x}]/iv.test('\ud800');`,
 	} {
-		_, err := lowerSource(test, source)
+		_, lowerSourceError := lowerSource(test, source)
 		var refusal *NotYet
-		if !errors.As(err, &refusal) || !strings.Contains(err.Error(), "singleton") {
-			test.Fatalf("want named singleton refusal for %s: %v", source, err)
+		if !errors.As(lowerSourceError, &refusal) || !strings.Contains(lowerSourceError.Error(), "singleton") {
+			test.Fatalf("want named singleton refusal for %s: %v", source, lowerSourceError)
 		}
 	}
 }

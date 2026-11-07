@@ -36,8 +36,8 @@ func (l *lowering) checkViewCopies() error {
 	for key := range l.result.CheckedFields {
 		// A record's field is checked under its bare name, and is no view's.
 		receiver, name, keyed := strings.Cut(key, ":")
-		id, err := strconv.Atoi(receiver)
-		if !keyed || err != nil {
+		id, parseError := strconv.Atoi(receiver)
+		if !keyed || parseError != nil {
 			continue
 		}
 		receivers[id] = true
@@ -54,7 +54,10 @@ func (l *lowering) checkViewCopies() error {
 			continue
 		}
 		if view := l.checkedViewType(copied.copied, receivers); view != nil {
-			return l.notYet(copied.node, "a whole-object copy of a value of checked view type "+l.checker.TypeToString(view))
+			return l.notYet(
+				copied.node,
+				"a whole-object copy of a value of checked view type "+l.checker.TypeToString(view),
+			)
 		}
 		named := false
 		for _, property := range l.checker.GetPropertiesOfType(l.checker.GetNonNullableType(copied.copied)) {
@@ -74,7 +77,9 @@ func (l *lowering) checkViewCopies() error {
 			demanded = demanded || viewed[site]
 		}
 		if demanded {
-			return l.notYet(copied.node, "a whole-object copy of a value of type "+l.checker.TypeToString(copied.copied)+" that may hold a checked view's value")
+			return l.notYet(copied.node, "a whole-object copy of a value of type "+
+				l.checker.TypeToString(copied.copied)+
+				" that may hold a checked view's value")
 		}
 	}
 	return nil

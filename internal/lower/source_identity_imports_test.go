@@ -30,14 +30,14 @@ func TestStableDynamicImportRefusal(test *testing.T) {
 
 func stableImportFormRefusal(test *testing.T, name, what, position string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join("testdata/source_identity_imports", name))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join("testdata/source_identity_imports", name))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	for _, region := range []bool{false, true} {
-		program, err := load.Load([]string{path})
-		if err != nil {
-			test.Fatal(err)
+		program, loadError := load.Load([]string{path})
+		if loadError != nil {
+			test.Fatal(loadError)
 		}
 		if name == "import_equals.a" {
 			// The existing namespace-value gap can refuse this fixture before
@@ -58,13 +58,13 @@ func stableImportFormRefusal(test *testing.T, name, what, position string) {
 				test.Fatalf("fixture import-equals route: %s", route)
 			}
 		}
-		_, err = LowerWithOptions(context.Background(), program, Options{ProgramRegion: region})
+		_, lowerWithOptionsError := LowerWithOptions(context.Background(), program, Options{ProgramRegion: region})
 		var gap *NotYet
-		if !errors.As(err, &gap) || gap.What != what || gap.Where != path+position {
+		if !errors.As(lowerWithOptionsError, &gap) || gap.What != what || gap.Where != path+position {
 			test.Fatalf(
 				"ProgramRegion=%t: got %v, want %s: stage 0 can't lower %s yet",
 				region,
-				err,
+				lowerWithOptionsError,
 				path+position,
 				what,
 			)
@@ -76,15 +76,15 @@ func stableImportFormRefusal(test *testing.T, name, what, position string) {
 // type-only fixture above gets past that boundary and exercises route indexing.
 func TestStableRuntimeImportEqualsDiagnostic(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("testdata/source_identity_imports/runtime_import_equals.a")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("testdata/source_identity_imports/runtime_import_equals.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	_, err = load.Load([]string{path})
+	_, loadError := load.Load([]string{path})
 	want := path +
 		":2:1: error TS1202: Import assignment cannot be used when targeting ECMAScript modules. Consider using 'import * as ns from \"mod\"', 'import {a} from \"mod\"', 'import d from \"mod\"', or another module format instead."
-	if err == nil || err.Error() != want {
-		test.Fatalf("got %v; want %s", err, want)
+	if loadError == nil || loadError.Error() != want {
+		test.Fatalf("got %v; want %s", loadError, want)
 	}
 }
 
@@ -96,28 +96,28 @@ func TestStableImportEqualsRouteBindings(test *testing.T) {
 	for i, binding := range []string{"x", "x", "other"} {
 		root := test.TempDir()
 		target := filepath.Join(root, "model.a")
-		model, err := os.ReadFile("testdata/source_identity_imports/model.a")
-		if err != nil {
-			test.Fatal(err)
+		model, readError := os.ReadFile("testdata/source_identity_imports/model.a")
+		if readError != nil {
+			test.Fatal(readError)
 		}
-		if err := os.WriteFile(target, model, 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(target, model, 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 		specifier := "./model.a"
 		if i > 0 {
 			specifier = filepath.ToSlash(target)
 		}
 		entry := filepath.Join(root, "main.a")
-		if err := os.WriteFile(
+		if writeError := os.WriteFile(
 			entry,
 			[]byte("import type "+binding+" = require("+strconv.Quote(specifier)+");"),
 			0600,
-		); err != nil {
-			test.Fatal(err)
+		); writeError != nil {
+			test.Fatal(writeError)
 		}
-		program, err := load.Load([]string{entry})
-		if err != nil {
-			test.Fatal(err)
+		program, loadError := load.Load([]string{entry})
+		if loadError != nil {
+			test.Fatal(loadError)
 		}
 		file := program.Files()[0]
 		checked, release := program.Checker(context.Background(), file)

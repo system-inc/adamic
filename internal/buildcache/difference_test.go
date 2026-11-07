@@ -27,21 +27,21 @@ func TestAnAuditMismatchNamesTheFileAndSectionABuildDirectoryLandedIn(test *test
 		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 	test.Setenv("ADAMIC_BUILD_TRACE", "")
-	temporary, err := filepath.EvalSymlinks(test.TempDir())
-	if err != nil {
-		test.Fatal(err)
+	temporary, resolveSymlinksError := filepath.EvalSymlinks(test.TempDir())
+	if resolveSymlinksError != nil {
+		test.Fatal(resolveSymlinksError)
 	}
 	test.Setenv("TMPDIR", temporary)
 	forgetHeldForLife()
 	keys := filepath.Join(test.TempDir(), "keys")
-	if err := os.WriteFile(keys, []byte(build.NameKey+"\n"), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(keys, []byte(build.NameKey+"\n"), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	test.Setenv("ADAMIC_BUILD_AUDIT_KEYS", keys)
 	log := filepath.Join(test.TempDir(), "builds.log")
 	test.Setenv("ADAMIC_BUILD_LOG", log)
-	if _, err := Get(witness, bakingItsDirectory(test)); err != nil {
-		test.Fatal(err)
+	if _, getError := Get(witness, bakingItsDirectory(test)); getError != nil {
+		test.Fatal(getError)
 	}
 	content, _ := os.ReadFile(log)
 	lines := string(content)
@@ -128,8 +128,8 @@ func TestTheFirstDifferenceIsAFileAndWhereInIt(test *testing.T) {
 	copyWith := func(files map[string][]byte) string {
 		directory := test.TempDir()
 		for name, content := range files {
-			if err := os.WriteFile(filepath.Join(directory, name), content, 0o644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(filepath.Join(directory, name), content, 0o644); writeError != nil {
+				test.Fatal(writeError)
 			}
 		}
 		return directory
@@ -159,9 +159,9 @@ func TestTheFirstDifferenceIsAFileAndWhereInIt(test *testing.T) {
 			"o (ELF section .rodata, at its byte 5)",
 		},
 	} {
-		got, err := firstDifference(copyWith(check.stored), copyWith(check.rebuilt))
-		if err != nil || got != check.want {
-			test.Errorf("%s: %q, %v, want %q", check.name, got, err, check.want)
+		got, firstDifferenceError := firstDifference(copyWith(check.stored), copyWith(check.rebuilt))
+		if firstDifferenceError != nil || got != check.want {
+			test.Errorf("%s: %q, %v, want %q", check.name, got, firstDifferenceError, check.want)
 		}
 	}
 }

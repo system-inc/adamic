@@ -12,19 +12,19 @@ import (
 func mutatedPort(test *testing.T, change oracles.Mutation) string {
 	test.Helper()
 	directory := test.TempDir()
-	parser, err := filepath.Abs("../../typescript/parser")
-	if err != nil {
-		test.Fatal(err)
+	parser, absolutePathError := filepath.Abs("../../typescript/parser")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	files, err := filepath.Glob("*.ts")
-	if err != nil {
-		test.Fatal(err)
+	files, globError := filepath.Glob("*.ts")
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	applied := false
 	for _, file := range files {
-		data, err := os.ReadFile(file)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(file)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		source := string(data)
 		if file == change.File {
@@ -35,8 +35,8 @@ func mutatedPort(test *testing.T, change oracles.Mutation) string {
 			applied = true
 		}
 		source = strings.ReplaceAll(source, "../../typescript/parser/", parser+"/")
-		if err = os.WriteFile(filepath.Join(directory, file), []byte(source), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, file), []byte(source), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	if !applied {

@@ -16,20 +16,20 @@ import (
 func nodeSource(test *testing.T, source string) (*Program, error) {
 	test.Helper()
 	file := filepath.Join(test.TempDir(), "main.a")
-	if err := os.WriteFile(file, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(file, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return Load([]string{file})
 }
 
 func TestNodeLibraryUsesPinnedDeclarations(test *testing.T) {
 	test.Parallel()
-	program, err := nodeSource(
+	program, nodeSourceError := nodeSource(
 		test,
 		`import {readFileSync,statSync} from 'node:fs'; import type {Stats} from 'node:fs'; const bytes:Buffer=readFileSync('x'); const text:string=readFileSync('x','utf8'); const stat:Stats|undefined=statSync('x',{throwIfNoEntry:false}); console.log('checked');`,
 	)
-	if err != nil {
-		test.Fatal(err)
+	if nodeSourceError != nil {
+		test.Fatal(nodeSourceError)
 	}
 	found := false
 	for _, file := range program.compiler.GetSourceFiles() {
@@ -40,9 +40,9 @@ func TestNodeLibraryUsesPinnedDeclarations(test *testing.T) {
 	if !found {
 		test.Fatal("no pinned Node declaration source was loaded")
 	}
-	_, err = nodeSource(test, `import {existsSync} from 'node:fs'; const wrong:number=existsSync('x');`)
-	if err == nil || !strings.Contains(err.Error(), "TS2322") {
-		test.Fatalf("want genuine boolean signature rejection, got %v", err)
+	_, nodeSourceError = nodeSource(test, `import {existsSync} from 'node:fs'; const wrong:number=existsSync('x');`)
+	if nodeSourceError == nil || !strings.Contains(nodeSourceError.Error(), "TS2322") {
+		test.Fatalf("want genuine boolean signature rejection, got %v", nodeSourceError)
 	}
 }
 
@@ -57,20 +57,20 @@ func TestNodeLibraryIgnoresCallerPackage(test *testing.T) {
 	)
 	for name, data := range files {
 		path := filepath.Join(directory, "node_modules", "@types", "node", filepath.FromSlash(name))
-		if err := os.MkdirAll(filepath.Dir(path), 0700); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0700); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.WriteFile(path, data, 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, data, 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	test.Chdir(directory)
-	program, err := nodeSource(
+	program, nodeSourceError := nodeSource(
 		test,
 		`import {existsSync} from 'node:fs'; const exists:boolean=existsSync('missing'); console.log('pinned');`,
 	)
-	if err != nil {
-		test.Fatal(err)
+	if nodeSourceError != nil {
+		test.Fatal(nodeSourceError)
 	}
 	found := false
 	for _, file := range program.compiler.GetSourceFiles() {
@@ -87,11 +87,11 @@ func TestNodeLibraryIgnoresCallerPackage(test *testing.T) {
 // Not parallel: the binary must load Node imports with no checkout or npm nearby.
 func TestNodeLibraryOutsideCheckout(test *testing.T) {
 	test.Chdir(test.TempDir())
-	if _, err := nodeSource(
+	if _, nodeSourceError := nodeSource(
 		test,
 		`import {join} from 'node:path'; const path:string=join('a','b'); console.log(path);`,
-	); err != nil {
-		test.Fatal(err)
+	); nodeSourceError != nil {
+		test.Fatal(nodeSourceError)
 	}
 }
 
@@ -106,31 +106,31 @@ func TestNodeLibraryDamagedBundleError(test *testing.T) {
 			Data: []byte(`{"name":"@types/node","version":"25.3.3"}`),
 		}},
 	} {
-		_, err := nodeTypesIndexFromFS(files)
-		if err == nil ||
-			!strings.Contains(err.Error(), "reinstall Adamic") ||
-			strings.Contains(err.Error(), "stage3/") ||
-			strings.Contains(err.Error(), "node_types/") {
-			test.Fatalf("want a user-facing bundled declaration error, got %v", err)
+		_, nodeTypesIndexFromFsError := nodeTypesIndexFromFS(files)
+		if nodeTypesIndexFromFsError == nil ||
+			!strings.Contains(nodeTypesIndexFromFsError.Error(), "reinstall Adamic") ||
+			strings.Contains(nodeTypesIndexFromFsError.Error(), "stage3/") ||
+			strings.Contains(nodeTypesIndexFromFsError.Error(), "node_types/") {
+			test.Fatalf("want a user-facing bundled declaration error, got %v", nodeTypesIndexFromFsError)
 		}
 	}
 }
 
 func TestNodeLibraryKeepsOfficialConsoleSignatures(test *testing.T) {
 	test.Parallel()
-	if _, err := nodeSource(
+	if _, nodeSourceError := nodeSource(
 		test,
 		`import type {Stats} from 'node:fs'; console.log(true); console.log(undefined); console.log('a','b');`,
-	); err != nil {
-		test.Fatal(err)
+	); nodeSourceError != nil {
+		test.Fatal(nodeSourceError)
 	}
 }
 
 func TestNodeLibraryLazyRequire(test *testing.T) {
 	test.Parallel()
-	program, err := Load([]string{"testdata/node_activation/require.a"})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := Load([]string{"testdata/node_activation/require.a"})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	if !program.fs.nodeTypes {
 		test.Fatal("builtin require did not rebuild with the Node root")
@@ -141,25 +141,25 @@ func TestNodeLibraryImportTypes(test *testing.T) {
 	test.Parallel()
 	// Exercise type-only activation independently of require, then the combined program.
 	source := `type Inspector = typeof import("inspector"); type Stats = import("fs").Stats; type Prefixed = import("node:fs").Stats;`
-	program, err := nodeSource(test, source)
-	if err != nil {
-		test.Fatal(err)
+	program, nodeSourceError := nodeSource(test, source)
+	if nodeSourceError != nil {
+		test.Fatal(nodeSourceError)
 	}
 	if !program.fs.nodeTypes {
 		test.Fatal("import types did not rebuild with the Node root")
 	}
-	if _, err := Load(
+	if _, loadError := Load(
 		[]string{"testdata/node_activation/require.a", "testdata/node_activation/import_type.a"},
-	); err != nil {
-		test.Fatal(err)
+	); loadError != nil {
+		test.Fatal(loadError)
 	}
 }
 
 func TestNodeLibraryActivationStaysNarrow(test *testing.T) {
 	test.Parallel()
-	program, err := Load([]string{"testdata/node_activation/plain.a"})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := Load([]string{"testdata/node_activation/plain.a"})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	assertNoNode := func(program *Program) {
 		test.Helper()
@@ -173,12 +173,12 @@ func TestNodeLibraryActivationStaysNarrow(test *testing.T) {
 		}
 	}
 	assertNoNode(program)
-	program, err = nodeSource(
+	program, nodeSourceError := nodeSource(
 		test,
 		`declare function require(name: string): unknown; const user = require("some-user-package"); const relative = require("./fs"); const unknownNode = require("node:not-a-builtin"); const thirdParty = require("undici-types"); const dynamic = require("f" + "s"); const host = {require}; host.require("fs");`,
 	)
-	if err != nil {
-		test.Fatal(err)
+	if nodeSourceError != nil {
+		test.Fatal(nodeSourceError)
 	}
 	assertNoNode(program)
 }
@@ -186,9 +186,9 @@ func TestNodeLibraryActivationStaysNarrow(test *testing.T) {
 func TestNodeLibraryBuiltinSpecifiers(test *testing.T) {
 	test.Parallel()
 	for _, name := range []string{"fs", "node:fs", "path", "node:path", "inspector", "fs/promises", "node:test"} {
-		program, err := nodeSource(test, `function lazy() { return require("`+name+`"); }`)
-		if err != nil {
-			test.Fatalf("%s: %v", name, err)
+		program, nodeSourceError := nodeSource(test, `function lazy() { return require("`+name+`"); }`)
+		if nodeSourceError != nil {
+			test.Fatalf("%s: %v", name, nodeSourceError)
 		}
 		if !program.fs.nodeTypes {
 			test.Fatalf("%s did not activate Node", name)
@@ -232,12 +232,12 @@ func TestNodeLibraryRequireMutant(test *testing.T) {
 		"-test.timeout=30s",
 		"-test.v",
 	)
-	output, err := command.CombinedOutput()
+	output, combinedOutputError := command.CombinedOutput()
 	if ctx.Err() != nil ||
-		err == nil ||
+		combinedOutputError == nil ||
 		!strings.Contains(string(output), "TS2591") ||
 		!strings.Contains(string(output), "FAIL: TestNodeLibraryLazyRequire") {
-		test.Fatalf("require mutant must fail the real checker with TS2591: %v\n%s", err, output)
+		test.Fatalf("require mutant must fail the real checker with TS2591: %v\n%s", combinedOutputError, output)
 	}
 }
 
@@ -248,9 +248,9 @@ func TestNodePreludeConsoleSignatures(test *testing.T) {
 		if nullable {
 			source = strings.ReplaceAll(source, "message: string", "message: string | null | undefined")
 		}
-		adapted, err := nodePrelude(source)
-		if err != nil {
-			test.Fatal(err)
+		adapted, nodePreludeError := nodePrelude(source)
+		if nodePreludeError != nil {
+			test.Fatal(nodePreludeError)
 		}
 		if !strings.Contains(adapted, "declare var console: Console;") || strings.Contains(adapted, "log(message:") {
 			test.Fatalf("console was not adapted: %s", adapted)
@@ -258,9 +258,9 @@ func TestNodePreludeConsoleSignatures(test *testing.T) {
 		// Standalone main has no Console/process overlay. Exercise both declarations
 		// with nested parameter types and trivia, independent of the method signatures.
 		source += "\n// overlay\ninterface Console { log(message: { value: string | null }): void; error(message: undefined): void; }\ndeclare const process: { nested: { code: number }; };\n"
-		adapted, err = nodePrelude(source, "Console", "process")
-		if err != nil {
-			test.Fatal(err)
+		adapted, nodePreludeError = nodePrelude(source, "Console", "process")
+		if nodePreludeError != nil {
+			test.Fatal(nodePreludeError)
 		}
 		if strings.Contains(adapted, "interface Console") ||
 			!strings.Contains(adapted, "declare var process: NodeJS.Process;") ||
@@ -286,9 +286,11 @@ func TestNodePreludeMissingDeclarations(test *testing.T) {
 					source += declaration + "\n"
 				}
 			}
-			adapted, err := nodePrelude(source, "Console", "process")
-			if err == nil || !strings.Contains(err.Error(), "missing the "+name+" declaration") || adapted != "" {
-				test.Fatalf("want clear missing %s error and no prelude, got %q, %v", name, adapted, err)
+			adapted, nodePreludeError := nodePrelude(source, "Console", "process")
+			if nodePreludeError == nil ||
+				!strings.Contains(nodePreludeError.Error(), "missing the "+name+" declaration") ||
+				adapted != "" {
+				test.Fatalf("want clear missing %s error and no prelude, got %q, %v", name, adapted, nodePreludeError)
 			}
 		})
 	}
@@ -301,8 +303,8 @@ func TestNodePreludeRejectsMalformedAndDuplicateDeclarations(test *testing.T) {
 		"declare const console: {}; declare var console: {};",
 		"declare const console: {}, other: {};",
 	} {
-		if adapted, err := nodePrelude(source); err == nil || adapted != "" {
-			test.Fatalf("invalid prelude passed through: %q, %v", adapted, err)
+		if adapted, nodePreludeError := nodePrelude(source); nodePreludeError == nil || adapted != "" {
+			test.Fatalf("invalid prelude passed through: %q, %v", adapted, nodePreludeError)
 		}
 	}
 }
@@ -314,10 +316,10 @@ func TestNodeLibraryNullablePrelude(test *testing.T) {
 	original := prelude
 	test.Cleanup(func() { prelude = original })
 	prelude = strings.ReplaceAll(prelude, "message: string", "message: string | null | undefined")
-	if _, err := nodeSource(
+	if _, nodeSourceError := nodeSource(
 		test,
 		`import 'node:process'; console.log(true); console.log(undefined); console.error('a','b');`,
-	); err != nil {
-		test.Fatal(err)
+	); nodeSourceError != nil {
+		test.Fatal(nodeSourceError)
 	}
 }

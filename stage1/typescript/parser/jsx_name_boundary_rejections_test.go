@@ -15,18 +15,18 @@ func jsxFailure(test *testing.T, name string, args ...string) (int, string) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
 	command := exec.CommandContext(ctx, name, args...)
-	stdout, err := os.CreateTemp(test.TempDir(), "stdout-")
-	if err != nil {
-		test.Fatal(err)
+	stdout, temporaryFileError := os.CreateTemp(test.TempDir(), "stdout-")
+	if temporaryFileError != nil {
+		test.Fatal(temporaryFileError)
 	}
 	defer stdout.Close()
 	var stderr strings.Builder
 	command.Stdout = stdout
 	command.Stderr = &stderr
-	err = command.Run()
-	exit, ok := err.(*exec.ExitError)
+	runError := command.Run()
+	exit, ok := runError.(*exec.ExitError)
 	if !ok {
-		test.Fatalf("expected parser rejection from %s: %v %s", name, err, &stderr)
+		test.Fatalf("expected parser rejection from %s: %v %s", name, runError, &stderr)
 	}
 	return exit.ExitCode(), stderr.String()
 }
@@ -48,8 +48,8 @@ func TestJsxNameBoundaryRejections(test *testing.T) {
 	for _, item := range cases {
 		path := filepath.Join(test.TempDir(), "name.tsx")
 		paths[item.name] = path
-		if err := os.WriteFile(path, []byte(item.source), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(item.source), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		code, diagnostics := jsxFailure(test, oracle, path, "--whole")
 		if code != 1 || !strings.Contains(diagnostics, "parser diagnostic") {

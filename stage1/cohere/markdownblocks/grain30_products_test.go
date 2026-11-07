@@ -99,12 +99,16 @@ func grainProduct(test *testing.T, name, target string) grainProducts {
 		Files:     whitespaceLayoutBuildFiles(),
 		Toolchain: goTools,
 	}, func(dir string) error {
-		program, err := loweredResult(main)
-		if err != nil {
-			return err
+		program, loweredResultError := loweredResult(main)
+		if loweredResultError != nil {
+			return loweredResultError
 		}
-		if err = os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(program)), 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(
+			filepath.Join(dir, "program.c"),
+			[]byte(native.C(program)),
+			0644,
+		); writeError != nil {
+			return writeError
 		}
 		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
 	})
@@ -112,9 +116,9 @@ func grainProduct(test *testing.T, name, target string) grainProducts {
 	if target == "lowered" {
 		return p
 	}
-	source, err := os.ReadFile(filepath.Join(lowerDir, "program.c"))
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(filepath.Join(lowerDir, "program.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	for _, sanitize := range []bool{true, false} {
 		if target != "" && ((sanitize && target != "sanitized") || (!sanitize && target != "release")) {
@@ -179,18 +183,18 @@ func grainExecute(test *testing.T, env []string, name string, args ...string) ru
 		cmd.Env = append(os.Environ(), env...)
 	}
 	defer textActiveCommands.Delete(cmd)
-	stdout, stderr, err := childguard.Capture(ctx, cmd)
+	stdout, stderr, captureError := childguard.Capture(ctx, cmd)
 	var exitError *exec.ExitError
-	if err != nil && !errors.As(err, &exitError) {
-		test.Fatal(err)
+	if captureError != nil && !errors.As(captureError, &exitError) {
+		test.Fatal(captureError)
 	}
 	return run{stdout: stdout, stderr: stderr, exitCode: cmd.ProcessState.ExitCode()}
 }
 func grainNode(test *testing.T, main string, args ...string) run {
 	test.Helper()
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return grainExecute(
 		test,
@@ -372,23 +376,23 @@ func grainGenerator(test *testing.T, name string) string {
 func grainRegenerate(test *testing.T, name, generator, formatter string) {
 	cmd, ctx := grainCommand(test, generator, "-check", "-formatter", formatter)
 	cmd.Dir = markdownLayoutProductRoot(test)
-	if output, err := textCombinedOutput(ctx, cmd); err != nil {
-		test.Fatalf("%s regeneration: %v\n%s", name, err, output)
+	if output, textCombinedOutputError := textCombinedOutput(ctx, cmd); textCombinedOutputError != nil {
+		test.Fatalf("%s regeneration: %v\n%s", name, textCombinedOutputError, output)
 	}
 }
 
 // Inspect dispatchers, rather than trusting a second hand-written list of leaves.
 func grainVerifyChildren(test *testing.T, family, helper string, children int) {
 	test.Helper()
-	files, err := filepath.Glob("grain30_*_test.go")
-	if err != nil {
-		test.Fatal(err)
+	files, globError := filepath.Glob("grain30_*_test.go")
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	seen := map[int]bool{}
 	for _, file := range files {
-		tree, err := parser.ParseFile(token.NewFileSet(), file, nil, 0)
-		if err != nil {
-			test.Fatal(err)
+		tree, parseFileError := parser.ParseFile(token.NewFileSet(), file, nil, 0)
+		if parseFileError != nil {
+			test.Fatal(parseFileError)
 		}
 		for _, decl := range tree.Decls {
 			fn, ok := decl.(*ast.FuncDecl)
@@ -399,8 +403,8 @@ func grainVerifyChildren(test *testing.T, family, helper string, children int) {
 			if !ok {
 				continue
 			}
-			index, err := strconv.Atoi(suffix)
-			if err != nil || len(suffix) != 3 || index < 0 || index >= children || seen[index] {
+			index, parseError := strconv.Atoi(suffix)
+			if parseError != nil || len(suffix) != 3 || index < 0 || index >= children || seen[index] {
 				test.Fatalf("invalid child %s", fn.Name.Name)
 			}
 			if len(fn.Body.List) != 2 {

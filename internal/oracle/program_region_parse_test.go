@@ -35,9 +35,9 @@ func programParseBuildKind(test *testing.T, enabled, sanitized bool) string {
 			"stage1/typescript/scanner",
 		},
 	}, func(directory string) error {
-		data, err := os.ReadFile(filepath.Join(programParseLower(test, enabled), "code.c"))
-		if err != nil {
-			return err
+		data, readError := os.ReadFile(filepath.Join(programParseLower(test, enabled), "code.c"))
+		if readError != nil {
+			return readError
 		}
 		code := string(data)
 		at := strings.LastIndex(code, "\treturn adamic_host_exit_status();")
@@ -74,12 +74,12 @@ func programParseArguments(test *testing.T) []string {
 	test.Helper()
 	source := programRegionSource(test)
 	var manifest struct{ Files []struct{ Path string } }
-	data, err := os.ReadFile("testdata/program_region/parse_manifest.json")
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile("testdata/program_region/parse_manifest.json")
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	if err := json.Unmarshal(data, &manifest); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &manifest); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if len(manifest.Files) != 77 {
 		test.Fatal("parse input inventory changed")
@@ -89,8 +89,8 @@ func programParseArguments(test *testing.T) []string {
 		lines = append(lines, filepath.Join(source, strings.TrimPrefix(file.Path, "typescript/")))
 	}
 	path := filepath.Join(test.TempDir(), "manifest")
-	if err := os.WriteFile(path, []byte(strings.Join(lines, "\n")+"\n"), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(strings.Join(lines, "\n")+"\n"), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return []string{"--manifest", path, "--count"}
 }
@@ -100,9 +100,9 @@ func programParseMeasurement(test *testing.T, sample int) {
 		test.Skip("Linux getrusage measurement")
 	}
 	args := programParseArguments(test)
-	absolute, err := filepath.Abs("testdata/program_region/parse.a")
-	if err != nil {
-		test.Fatal(err)
+	absolute, absolutePathError := filepath.Abs("testdata/program_region/parse.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := execute(
 		test,
@@ -191,19 +191,27 @@ func programParseLower(test *testing.T, enabled bool) string {
 			"stage1/typescript/scanner",
 		},
 	}, func(directory string) error {
-		source, err := load.Load([]string{"testdata/program_region/parse.a"})
-		if err != nil {
-			return err
+		source, loadError := load.Load([]string{"testdata/program_region/parse.a"})
+		if loadError != nil {
+			return loadError
 		}
-		program, err := lower.LowerWithOptions(context.Background(), source, lower.Options{ProgramRegion: enabled})
-		if err != nil {
-			return err
+		program, lowerWithOptionsError := lower.LowerWithOptions(
+			context.Background(),
+			source,
+			lower.Options{ProgramRegion: enabled},
+		)
+		if lowerWithOptionsError != nil {
+			return lowerWithOptionsError
 		}
 		if len(program.ProgramTypes) != 0 {
 			return fmt.Errorf("acyclic parser selected members")
 		}
-		if err := os.WriteFile(filepath.Join(directory, "code.c"), []byte(native.C(program)), 0600); err != nil {
-			return err
+		if writeError := os.WriteFile(
+			filepath.Join(directory, "code.c"),
+			[]byte(native.C(program)),
+			0600,
+		); writeError != nil {
+			return writeError
 		}
 		return os.WriteFile(filepath.Join(directory, "program.mjs"), []byte(javascript.JavaScript(program)), 0600)
 	})

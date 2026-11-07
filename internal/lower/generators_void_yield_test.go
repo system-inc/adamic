@@ -30,14 +30,14 @@ func TestGeneratorVoidYieldsAreRefusedAtTheYield(test *testing.T) {
 			"function* numbers() { yield 1; yield 2; }\nconst Array = { from(values: Iterable<number>): number[] { const out: number[] = []; for (const value of values) out.push(value); return out; } };\nconsole.log(Array.from(numbers()).join(','));",
 		},
 	} {
-		_, err := lowerSource(test, probe.source)
+		_, lowerSourceError := lowerSource(test, probe.source)
 		var refused *Refused
-		if !errors.As(err, &refused) || !strings.Contains(refused.Error(), "adamic/no-void") {
-			test.Errorf("%s: got %v, want a void rule's refusal", probe.name, err)
+		if !errors.As(lowerSourceError, &refused) || !strings.Contains(refused.Error(), "adamic/no-void") {
+			test.Errorf("%s: got %v, want a void rule's refusal", probe.name, lowerSourceError)
 		}
 	}
 	control := "function* numbers() { yield 1; yield 2; }\nconsole.log([...numbers()].join(',') + ' ' + Array.from(numbers()).join(','));"
-	if _, err := lowerSource(test, control); err != nil {
-		test.Errorf("v6 control: %v", err)
+	if _, lowerSourceError := lowerSource(test, control); lowerSourceError != nil {
+		test.Errorf("v6 control: %v", lowerSourceError)
 	}
 }

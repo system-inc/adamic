@@ -96,21 +96,21 @@ func sourceSanitized(test *testing.T, source sanitizedSource) string {
 		inputs.Flags = append(inputs.Flags, fmt.Sprintf("replacement=%q=>%q", made.from, made.to))
 	}
 	return buildcache.Product(test, inputs, func(directory string) error {
-		contents, err := os.ReadFile(source.path)
-		if err != nil {
-			return err
+		contents, readError := os.ReadFile(source.path)
+		if readError != nil {
+			return readError
 		}
-		text, err := rewritten(string(contents), source.replacements)
-		if err != nil {
-			return err
+		text, rewrittenError := rewritten(string(contents), source.replacements)
+		if rewrittenError != nil {
+			return rewrittenError
 		}
 		sources := filepath.Join(directory, "source")
-		if err := os.Mkdir(sources, 0o755); err != nil {
-			return err
+		if createDirectoryError := os.Mkdir(sources, 0o755); createDirectoryError != nil {
+			return createDirectoryError
 		}
 		entry := filepath.Join(sources, source.entry)
-		if err := os.WriteFile(entry, []byte(text), 0o644); err != nil {
-			return err
+		if writeError := os.WriteFile(entry, []byte(text), 0o644); writeError != nil {
+			return writeError
 		}
 		return buildSanitized(entry, directory)
 	})
@@ -147,9 +147,9 @@ func sanitizedInputs(name string, sources ...string) buildcache.Inputs {
 
 // buildSanitized lowers the program at entry and builds it under the sanitizers as directory/port.
 func buildSanitized(entry, directory string) error {
-	program, err := lowerProgram(entry)
-	if err != nil {
-		return err
+	program, lowerProgramError := lowerProgram(entry)
+	if lowerProgramError != nil {
+		return lowerProgramError
 	}
 	return native.Build(native.C(program), filepath.Join(directory, "port"), native.Options{Sanitize: true})
 }

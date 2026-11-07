@@ -15,7 +15,10 @@ func (l *lowering) constructionCast(node *ast.Node) bool {
 		return false
 	}
 	target := l.concrete(l.checker.GetTypeAtLocation(node))
-	if target.Flags()&checker.TypeFlagsObject == 0 || isClassInstance(target) || len(l.checker.GetSignaturesOfType(target, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(target, checker.SignatureKindConstruct)) != 0 {
+	if target.Flags()&checker.TypeFlagsObject == 0 ||
+		isClassInstance(target) ||
+		len(l.checker.GetSignaturesOfType(target, checker.SignatureKindCall)) != 0 ||
+		len(l.checker.GetSignaturesOfType(target, checker.SignatureKindConstruct)) != 0 {
 		return false
 	}
 	fields := l.checker.GetPropertiesOfType(target)
@@ -27,7 +30,11 @@ func (l *lowering) constructionCast(node *ast.Node) bool {
 			return false
 		}
 		held, known := l.representation(l.checker.GetTypeOfSymbol(field))
-		if field.Flags&ast.SymbolFlagsOptional != 0 || !known || held < ir.Number || held > ir.String || !interfaceScalar(l.checker.GetTypeOfSymbol(field)) {
+		if field.Flags&ast.SymbolFlagsOptional != 0 ||
+			!known ||
+			held < ir.Number ||
+			held > ir.String ||
+			!interfaceScalar(l.checker.GetTypeOfSymbol(field)) {
 			return false
 		}
 	}
@@ -64,9 +71,9 @@ func (l *lowering) constructLiteral(node *ast.Node) (ir.Expression, error) {
 	if source.Kind == ast.KindCallExpression {
 		return l.expression(source)
 	}
-	value, err := l.objectLiteral(source)
-	if err != nil {
-		return nil, err
+	value, objectLiteralError := l.objectLiteral(source)
+	if objectLiteralError != nil {
+		return nil, objectLiteralError
 	}
 	literal := value.(ir.ObjectLiteral)
 	present := map[string]bool{}
@@ -82,7 +89,10 @@ func (l *lowering) constructLiteral(node *ast.Node) (ir.Expression, error) {
 		if held.IsReference() {
 			zero = ir.Undefined{Of: held}
 		}
-		literal.Fields = append(literal.Fields, ir.Field{Name: field.Name, Value: zero, Absent: true, Uninitialized: true})
+		literal.Fields = append(
+			literal.Fields,
+			ir.Field{Name: field.Name, Value: zero, Absent: true, Uninitialized: true},
+		)
 	}
 	return literal, nil
 }
@@ -92,7 +102,10 @@ func (l *lowering) constructLiteral(node *ast.Node) (ir.Expression, error) {
 func (l *lowering) constructionIndexWrite(target, valueNode *ast.Node) ([]ir.Statement, bool, error) {
 	access := target.AsElementAccessExpression()
 	key := ast.SkipParentheses(access.ArgumentExpression)
-	if key.Kind != ast.KindStringLiteral || strings.ContainsRune(key.Text(), 0) || strings.HasPrefix(key.Text(), "#") || key.Text() == "__proto__" {
+	if key.Kind != ast.KindStringLiteral ||
+		strings.ContainsRune(key.Text(), 0) ||
+		strings.HasPrefix(key.Text(), "#") ||
+		key.Text() == "__proto__" {
 		return nil, false, nil
 	}
 	receiver := l.checker.GetTypeAtLocation(access.Expression)
@@ -104,19 +117,21 @@ func (l *lowering) constructionIndexWrite(target, valueNode *ast.Node) ([]ir.Sta
 	if field == nil || !interfaceScalar(l.checker.GetTypeOfSymbol(field)) {
 		return nil, false, nil
 	}
-	object, err := l.expression(access.Expression)
-	if err != nil {
-		return nil, true, err
+	object, expressionError := l.expression(access.Expression)
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
-	value, err := l.expression(valueNode)
-	if err != nil {
-		return nil, true, err
+	value, expressionError := l.expression(valueNode)
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
 	declared, known := l.representation(l.checker.GetTypeOfSymbol(field))
 	if !known || value.Type() != declared {
 		return nil, true, l.notYet(target, "a string-key field write requiring representation conversion")
 	}
-	return []ir.Statement{ir.SetProperty{Object: object, Name: key.Text(), Value: value, Site: l.writeSite(access.Expression)}}, true, nil
+	return []ir.Statement{
+		ir.SetProperty{Object: object, Name: key.Text(), Value: value, Site: l.writeSite(access.Expression)},
+	}, true, nil
 }
 
 // A const initialized by one factory return has a closed physical layout. This
@@ -144,7 +159,9 @@ func (l *lowering) constructionJSON(node *ast.Node) (*ir.JSONSchema, bool) {
 	}
 	if initializer.Kind == ast.KindCallExpression {
 		callee := l.symbol(ast.SkipParentheses(initializer.AsCallExpression().Expression))
-		if callee == nil || len(callee.Declarations) != 1 || callee.Declarations[0].Kind != ast.KindFunctionDeclaration {
+		if callee == nil ||
+			len(callee.Declarations) != 1 ||
+			callee.Declarations[0].Kind != ast.KindFunctionDeclaration {
 			return nil, false
 		}
 		body := callee.Declarations[0].Body()
@@ -179,7 +196,10 @@ func (l *lowering) constructionJSON(node *ast.Node) (*ir.JSONSchema, bool) {
 		field := l.checker.GetPropertyOfType(target, name)
 		held, _ := l.representation(l.checker.GetTypeOfSymbol(field))
 		kind := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string"}[held]
-		schema.Fields = append(schema.Fields, ir.JSONField{Name: l.constant(name), Slot: index, Schema: &ir.JSONSchema{Kind: kind}})
+		schema.Fields = append(
+			schema.Fields,
+			ir.JSONField{Name: l.constant(name), Slot: index, Schema: &ir.JSONSchema{Kind: kind}},
+		)
 	}
 	return schema, true
 }
@@ -242,7 +262,10 @@ func (l *lowering) reserveFactoryFields(node *ast.Node, literal ir.ObjectLiteral
 				if held.IsReference() {
 					zero = ir.Undefined{Of: held}
 				}
-				literal.Fields = append(literal.Fields, ir.Field{Name: field.Name, Value: zero, Absent: true, Uninitialized: true})
+				literal.Fields = append(
+					literal.Fields,
+					ir.Field{Name: field.Name, Value: zero, Absent: true, Uninitialized: true},
+				)
 				present[field.Name] = held
 			}
 		}

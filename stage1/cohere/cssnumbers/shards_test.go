@@ -188,9 +188,9 @@ func numbersSelection(value string, units []numbersUnit) ([]numbersUnit, error) 
 	if len(parts) != 2 {
 		return nil, fmt.Errorf("ADAMIC_TEST_SHARD must be zero-based i/n, got %q", value)
 	}
-	i, errI := strconv.Atoi(parts[0])
-	n, errN := strconv.Atoi(parts[1])
-	if errI != nil || errN != nil || n <= 0 || i < 0 || i >= n {
+	i, iError := strconv.Atoi(parts[0])
+	n, nError := strconv.Atoi(parts[1])
+	if iError != nil || nError != nil || n <= 0 || i < 0 || i >= n {
 		return nil, fmt.Errorf("ADAMIC_TEST_SHARD must satisfy 0 <= i < n, got %q", value)
 	}
 	var selected []numbersUnit
@@ -204,9 +204,9 @@ func numbersSelection(value string, units []numbersUnit) ([]numbersUnit, error) 
 
 func selectedNumbersUnits(test *testing.T, units []numbersUnit) []numbersUnit {
 	test.Helper()
-	selected, err := numbersSelection(os.Getenv("ADAMIC_TEST_SHARD"), units)
-	if err != nil {
-		test.Fatal(err)
+	selected, numbersSelectionError := numbersSelection(os.Getenv("ADAMIC_TEST_SHARD"), units)
+	if numbersSelectionError != nil {
+		test.Fatal(numbersSelectionError)
 	}
 	test.Logf("selection: %d/%d units, ADAMIC_TEST_SHARD=%q", len(selected), len(units), os.Getenv("ADAMIC_TEST_SHARD"))
 	return selected
@@ -257,16 +257,20 @@ func numbersProgramInputs(name, main string) numbersInputs {
 func buildNumbersProgram(test *testing.T, name, main string) numbersProgram {
 	test.Helper()
 	dir := numbersProduct(test, numbersProgramInputs(name, main), func(dir string) error {
-		loaded, err := load.Load([]string{main})
-		if err != nil {
-			return err
+		loaded, loadError := load.Load([]string{main})
+		if loadError != nil {
+			return loadError
 		}
-		program, err := lower.Lower(context.Background(), loaded)
-		if err != nil {
-			return err
+		program, lowerError := lower.Lower(context.Background(), loaded)
+		if lowerError != nil {
+			return lowerError
 		}
-		if err := os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(program)), 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(
+			filepath.Join(dir, "program.c"),
+			[]byte(native.C(program)),
+			0644,
+		); writeError != nil {
+			return writeError
 		}
 		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
 	})
@@ -283,8 +287,8 @@ func numbersClangToolchain(test *testing.T) string {
 	test.Helper()
 	// Read through childguard.Capture for numbersExecute's reason: a WaitDelay could fail a run that had finished.
 	command, ctx := numbersSetupCommand(test, "clang", "--version")
-	if _, _, err := childguard.Capture(ctx, command); err != nil {
-		test.Fatal(err)
+	if _, _, captureError := childguard.Capture(ctx, command); captureError != nil {
+		test.Fatal(captureError)
 	}
 	return buildcache.Tool("clang", "--version")
 }
@@ -309,9 +313,9 @@ func buildNumbersNative(test *testing.T, name string, program numbersProgram, sa
 		options,
 		numbersClangToolchain(test),
 	), func(dir string) error {
-		source, err := os.ReadFile(program.c)
-		if err != nil {
-			return err
+		source, readError := os.ReadFile(program.c)
+		if readError != nil {
+			return readError
 		}
 		return native.Build(string(source), filepath.Join(dir, "port"), options)
 	})
@@ -322,20 +326,20 @@ func prepareNumbersMutant(test *testing.T, mutation numbersMutation) string {
 	test.Helper()
 	parent := numbersTopTempDir(test)
 	scratch := filepath.Join(parent, "cssnumbers")
-	if err := os.Mkdir(scratch, 0755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.Mkdir(scratch, 0755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	if err := os.Mkdir(filepath.Join(parent, "cssstrings"), 0755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.Mkdir(filepath.Join(parent, "cssstrings"), 0755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	dependency, err := os.ReadFile("../cssstrings/strings.ts")
-	if err != nil {
-		test.Fatal(err)
+	dependency, readError := os.ReadFile("../cssstrings/strings.ts")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	write(test, filepath.Join(parent, "cssstrings/strings.ts"), dependency)
-	source, err := os.ReadFile("numbers.ts")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("numbers.ts")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if strings.Count(string(source), mutation.from) != 1 {
 		test.Fatal("mutant must change one site")
@@ -345,9 +349,9 @@ func prepareNumbersMutant(test *testing.T, mutation numbersMutation) string {
 		filepath.Join(scratch, "numbers.ts"),
 		[]byte(strings.Replace(string(source), mutation.from, mutation.to, 1)),
 	)
-	source, err = os.ReadFile("main.ts")
-	if err != nil {
-		test.Fatal(err)
+	source, readError = os.ReadFile("main.ts")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	main := filepath.Join(scratch, "main.ts")
 	write(test, main, source)
@@ -436,9 +440,9 @@ func TestCSSNumbersUnion(test *testing.T) {
 	for _, n := range []int{1, 2, 7, len(units) + 1} {
 		var union []numbersUnit
 		for i := 0; i < n; i++ {
-			selected, err := numbersSelection(fmt.Sprintf("%d/%d", i, n), units)
-			if err != nil {
-				test.Fatal(err)
+			selected, numbersSelectionError := numbersSelection(fmt.Sprintf("%d/%d", i, n), units)
+			if numbersSelectionError != nil {
+				test.Fatal(numbersSelectionError)
 			}
 			union = append(union, selected...)
 		}
@@ -447,7 +451,7 @@ func TestCSSNumbersUnion(test *testing.T) {
 		}
 	}
 	for _, bad := range []string{"0/0", "-1/2", "2/2", "1", "a/2", "1/2/3"} {
-		if _, err := numbersSelection(bad, units); err == nil {
+		if _, numbersSelectionError := numbersSelection(bad, units); numbersSelectionError == nil {
 			test.Fatalf("accepted %q", bad)
 		}
 	}
@@ -494,9 +498,9 @@ func TestCSSNumbersPlantedDisagreement(test *testing.T) {
 		}
 		return
 	}
-	binary, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	binary, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
 	r := numbersExecute(
 		test,
@@ -552,22 +556,22 @@ func numbersOracleAnswersWithCommand(
 		Toolchain: buildcache.Tool("node", "--version"),
 	}, func(dir string) error {
 		path := filepath.Join(dir, "input.txt")
-		if err := os.WriteFile(path, data, 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(path, data, 0644); writeError != nil {
+			return writeError
 		}
 		// Read through childguard.Capture for numbersExecute's reason: a WaitDelay could fail a run that had
 		// finished. A run made by numbersCommand ends at its 90 s deadline; one made by numbersSetupCommand has
 		// none, and the unit's own ceiling bounds it.
 		cmd, ctx := makeCommand(test, command, append(append([]string{}, arguments...), path)...)
-		stdout, stderr, err := childguard.Capture(ctx, cmd)
-		if err != nil || len(stderr) != 0 {
-			return fmt.Errorf("%s oracle: %v; %s", name, err, stderr)
+		stdout, stderr, captureError := childguard.Capture(ctx, cmd)
+		if captureError != nil || len(stderr) != 0 {
+			return fmt.Errorf("%s oracle: %v; %s", name, captureError, stderr)
 		}
 		return os.WriteFile(filepath.Join(dir, "answers.txt"), stdout, 0644)
 	})
-	answer, err := os.ReadFile(filepath.Join(dir, "answers.txt"))
-	if err != nil {
-		test.Fatal(err)
+	answer, readError := os.ReadFile(filepath.Join(dir, "answers.txt"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return run{stdout: answer}
 }

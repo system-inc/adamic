@@ -71,13 +71,13 @@ func compilerExpressionsLower(test *testing.T, absolute string) string {
 		Flags:     []string{"native.C"},
 		Toolchain: tools,
 	}, func(dir string) error {
-		program, err := load.Load([]string{filepath.Join(absolute, "main.ts")})
-		if err != nil {
-			return err
+		program, loadError := load.Load([]string{filepath.Join(absolute, "main.ts")})
+		if loadError != nil {
+			return loadError
 		}
-		ir, err := lower.Lower(context.Background(), program)
-		if err != nil {
-			return err
+		ir, lowerError := lower.Lower(context.Background(), program)
+		if lowerError != nil {
+			return lowerError
 		}
 		return os.WriteFile(filepath.Join(dir, "main.c"), []byte(native.C(ir)), 0644)
 	})
@@ -108,9 +108,9 @@ func compilerExpressionsNative(test *testing.T, absolute string) string {
 		Flags:     flags,
 		Toolchain: tools,
 	}, func(dir string) error {
-		source, err := os.ReadFile(filepath.Join(lowered, "main.c"))
-		if err != nil {
-			return err
+		source, readError := os.ReadFile(filepath.Join(lowered, "main.c"))
+		if readError != nil {
+			return readError
 		}
 		return native.Build(string(source), filepath.Join(dir, "parser"), native.Options{Sanitize: true})
 	})
@@ -129,9 +129,9 @@ func compilerExpressionsSetup(test *testing.T) (string, string, string) {
 		// Setup has no deadline; Loom still bounds the complete unit.
 		// Preserve the pinned corpus prerequisite even for a setup-only invocation.
 		compilerManifest(test)
-		absolute, err := filepath.Abs(".")
-		if err != nil {
-			test.Fatal(err)
+		absolute, absolutePathError := filepath.Abs(".")
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		compilerExpressionsProducts.oracle = wholeMutantBuildOracleProduct(test)
 		compilerExpressionsProducts.absolute = absolute
@@ -144,9 +144,9 @@ func compilerExpressionsSetup(test *testing.T) (string, string, string) {
 func compilerExpressionsEnumeration(test *testing.T) ([][]string, string, int) {
 	test.Helper()
 	path, files := compilerManifest(test)
-	data, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	paths := strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")
 	if len(paths) != files || files == 0 {
@@ -243,8 +243,8 @@ func compilerExpressionsShard(test *testing.T, index int) {
 	shards, planted, _ := compilerExpressionsEnumeration(test)
 	paths := shards[index]
 	manifest := filepath.Join(test.TempDir(), "compiler.txt")
-	if err := os.WriteFile(manifest, []byte(strings.Join(paths, "\n")+"\n"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(manifest, []byte(strings.Join(paths, "\n")+"\n"), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	want := execute(test, "", oracle, "--manifest", manifest)
 	for caseIndex, path := range paths {

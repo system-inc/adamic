@@ -31,19 +31,19 @@ type consumerRow struct {
 
 func consumerRows(test *testing.T) []consumerRow {
 	test.Helper()
-	data, err := os.ReadFile("testdata/consumers.json")
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile("testdata/consumers.json")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var raws []json.RawMessage
-	if err := json.Unmarshal(data, &raws); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &raws); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	rows := make([]consumerRow, len(raws))
 	for i, raw := range raws {
 		rows[i].raw = raw
-		if err := json.Unmarshal(raw, &rows[i]); err != nil {
-			test.Fatal(err)
+		if decodeError := json.Unmarshal(raw, &rows[i]); decodeError != nil {
+			test.Fatal(decodeError)
 		}
 	}
 	return rows
@@ -114,9 +114,9 @@ func runConsumerShard(test *testing.T, shard int) {
 	// The planted-failure subprocess names one row by its corpus index: its owner's comparison sees a wrong output,
 	// every other shard passes without running the corpus.
 	if probe := os.Getenv("ADAMIC_COMMENT_CONSUMER_PROBE"); probe != "" {
-		index, err := strconv.Atoi(probe)
-		if err != nil {
-			test.Fatal(err)
+		index, parseError := strconv.Atoi(probe)
+		if parseError != nil {
+			test.Fatal(parseError)
 		}
 		planted := consumerRows(test)[index]
 		for _, row := range rows {
@@ -130,19 +130,19 @@ func runConsumerShard(test *testing.T, shard int) {
 	for i, row := range rows {
 		raws[i] = row.raw
 	}
-	corpus, err := json.Marshal(raws)
-	if err != nil {
-		test.Fatal(err)
+	corpus, encodeError := json.Marshal(raws)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	original := filepath.Join(test.TempDir(), "consumers.json")
-	if err := os.WriteFile(original, corpus, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(original, corpus, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	goOracle := oracle(test)
 	adapted := run(test, "", goOracle, "--ast", original)
 	path := filepath.Join(test.TempDir(), "adapted.json")
-	if err := os.WriteFile(path, adapted, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, adapted, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	want := run(test, "", goOracle, original)
 	runner, _ := filepath.Abs("../../../../../oracle/node.mjs")
@@ -190,9 +190,9 @@ func TestConsumerCommentHelpersUnion(test *testing.T) {
 
 func TestConsumerCommentHelpersPlantedFailure(test *testing.T) {
 	test.Parallel()
-	binary, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	binary, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
 	planted := consumerRows(test)[0]
 	owner := consumerOwner(planted)
@@ -202,11 +202,11 @@ func TestConsumerCommentHelpersPlantedFailure(test *testing.T) {
 		command := exec.CommandContext(ctx, binary, "-test.run=^"+name+"$", "-test.timeout=75s", "-test.v")
 		command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 		command.Cancel = func() error {
-			err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-			if err == syscall.ESRCH {
+			killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+			if killError == syscall.ESRCH {
 				return os.ErrProcessDone
 			}
-			return err
+			return killError
 		}
 		for _, value := range os.Environ() {
 			if !strings.HasPrefix(value, "ADAMIC_COMMENT_CONSUMER_PROBE=") {
@@ -219,18 +219,18 @@ func TestConsumerCommentHelpersPlantedFailure(test *testing.T) {
 		// shard exited, so a shard that had finished could fail this check under load (#n3gk22h's shape). ctx's 90 s
 		// deadline ends a hung shard. Stdout comes before stderr; the checks below look for their lines anywhere in
 		// either.
-		stdout, stderr, err := childguard.Capture(ctx, command)
+		stdout, stderr, captureError := childguard.Capture(ctx, command)
 		output := append(stdout, stderr...)
 		cancel()
 		if shard == owner {
-			if err == nil ||
+			if captureError == nil ||
 				!bytes.Contains(output, []byte(`output line 1: got "planted"`)) ||
 				!bytes.Contains(output, []byte("--- FAIL: "+name)) {
-				test.Fatalf("%s did not catch the planted row: %v\n%s", name, err, output)
+				test.Fatalf("%s did not catch the planted row: %v\n%s", name, captureError, output)
 			}
 			test.Logf("planted row %q caught only by %s", planted.Name, name)
-		} else if err != nil {
-			test.Fatalf("planted row leaked into %s: %v\n%s", name, err, output)
+		} else if captureError != nil {
+			test.Fatalf("planted row leaked into %s: %v\n%s", name, captureError, output)
 		}
 	}
 }

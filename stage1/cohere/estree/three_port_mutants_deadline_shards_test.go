@@ -61,9 +61,9 @@ type threePortShard struct {
 }
 
 func threePortShards(test *testing.T) []threePortShard {
-	file, err := parser.ParseFile(token.NewFileSet(), "three_port_mutants_deadline_shards_test.go", nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	file, parseFileError := parser.ParseFile(token.NewFileSet(), "three_port_mutants_deadline_shards_test.go", nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	names := map[string]bool{}
 	for _, decl := range file.Decls {
@@ -204,17 +204,17 @@ func threePortLoweredProduct(test *testing.T, mutation threePortMutation) string
 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}}
 	lowered := buildcache.Product(test, inputs, func(dir string) error {
 		source := filepath.Join(dir, "source")
-		if err := os.Mkdir(source, 0755); err != nil {
-			return err
+		if createDirectoryError := os.Mkdir(source, 0755); createDirectoryError != nil {
+			return createDirectoryError
 		}
-		files, err := filepath.Glob("*.ts")
-		if err != nil {
-			return err
+		files, globError := filepath.Glob("*.ts")
+		if globError != nil {
+			return globError
 		}
 		for _, name := range files {
-			data, err := os.ReadFile(name)
-			if err != nil {
-				return err
+			data, readError := os.ReadFile(name)
+			if readError != nil {
+				return readError
 			}
 			text := string(data)
 			if name == mutation.file {
@@ -228,20 +228,20 @@ func threePortLoweredProduct(test *testing.T, mutation threePortMutation) string
 				"'../../typescript/",
 				"'"+filepath.ToSlash(filepath.Join(root(test), "stage1/typescript"))+"/",
 			)
-			if err := os.WriteFile(filepath.Join(source, name), []byte(text), 0644); err != nil {
-				return err
+			if writeError := os.WriteFile(filepath.Join(source, name), []byte(text), 0644); writeError != nil {
+				return writeError
 			}
 		}
-		program, err := load.Load([]string{filepath.Join(source, "main.ts")})
-		if err != nil {
-			return err
+		program, loadError := load.Load([]string{filepath.Join(source, "main.ts")})
+		if loadError != nil {
+			return loadError
 		}
-		ir, err := lower.Lower(context.Background(), program)
-		if err != nil {
-			return err
+		ir, lowerError := lower.Lower(context.Background(), program)
+		if lowerError != nil {
+			return lowerError
 		}
-		if err := os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(ir)), 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(ir)), 0644); writeError != nil {
+			return writeError
 		}
 		// The source's imports name this checkout for the lowering above; the product names it <repository> (#tqrqx60).
 		return buildcache.RelativeFiles(source)
@@ -269,9 +269,9 @@ func threePortNativeProduct(test *testing.T, mutation threePortMutation) string 
 	inputs.Flags = append(inputs.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
 	binary := buildcache.Product(test, inputs, func(dir string) error {
-		c, err := os.ReadFile(filepath.Join(lowered, "program.c"))
-		if err != nil {
-			return err
+		c, readError := os.ReadFile(filepath.Join(lowered, "program.c"))
+		if readError != nil {
+			return readError
 		}
 		return native.Build(string(c), filepath.Join(dir, "port"), native.Options{Sanitize: true, Split: true})
 	})
@@ -370,23 +370,23 @@ func threePortCommand(ctx context.Context, name string, args ...string) *exec.Cm
 		if command.Process == nil {
 			return os.ErrProcessDone
 		}
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if err == syscall.ESRCH {
+		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if killError == syscall.ESRCH {
 			return os.ErrProcessDone
 		}
-		return err
+		return killError
 	}
 	return command
 }
 
 func threePortExecute(test *testing.T, ctx context.Context, name string, args ...string) []byte {
 	test.Helper()
-	output, stderr, err := childguard.Capture(ctx, threePortCommand(ctx, name, args...))
+	output, stderr, captureError := childguard.Capture(ctx, threePortCommand(ctx, name, args...))
 	if ctx.Err() != nil {
 		test.Fatalf("cooked: %s exceeded leaf's 90s deadline", test.Name())
 	}
-	if err != nil || len(stderr) != 0 {
-		test.Fatalf("%s %v: %v\n%s", name, args, err, stderr)
+	if captureError != nil || len(stderr) != 0 {
+		test.Fatalf("%s %v: %v\n%s", name, args, captureError, stderr)
 	}
 	return output
 }
@@ -406,7 +406,7 @@ func TestThreePortMutants_SetupDeadlineProof(test *testing.T) {
 	own, stop := threePortOwnWorkContext(100 * time.Millisecond)
 	defer stop()
 	command := threePortCommand(own, "node", "-e", "setInterval(() => {}, 1000)")
-	if err := command.Run(); err == nil {
+	if runError := command.Run(); runError == nil {
 		test.Fatal("own-work deadline did not kill its child")
 	}
 	if own.Err() != context.DeadlineExceeded {
@@ -455,9 +455,9 @@ func runThreePortShard(test *testing.T, index int) {
 	shards := threePortShards(test)
 	shard := shards[index]
 	if planted := os.Getenv("ADAMIC_THREE_PORT_PROOF"); planted != "" {
-		m, err := strconv.Atoi(planted)
-		if err != nil {
-			test.Fatal(err)
+		m, parseError := strconv.Atoi(planted)
+		if parseError != nil {
+			test.Fatal(parseError)
 		}
 		for _, pair := range shard.cases {
 			want, source, native := []byte("oracle"), []byte("oracle"), []byte("oracle")
@@ -467,8 +467,13 @@ func runThreePortShard(test *testing.T, index int) {
 			if pair.mutant == m && pair.witness {
 				native = want
 			}
-			if err := checkThreePortCase(pair, want, source, native); err != nil {
-				test.Fatal(err)
+			if checkThreePortCaseError := checkThreePortCase(
+				pair,
+				want,
+				source,
+				native,
+			); checkThreePortCaseError != nil {
+				test.Fatal(checkThreePortCaseError)
 			}
 		}
 		return
@@ -499,8 +504,13 @@ func runThreePortShard(test *testing.T, index int) {
 	), len(texts))
 	native := threePortCanonicalRecords(test, threePortExecute(test, ctx, binary, "--manifest", list), len(texts))
 	for i, pair := range shard.cases {
-		if err := checkThreePortCase(pair, want[i], source[i], native[i]); err != nil {
-			test.Fatal(err)
+		if checkThreePortCaseError := checkThreePortCase(
+			pair,
+			want[i],
+			source[i],
+			native[i],
+		); checkThreePortCaseError != nil {
+			test.Fatal(checkThreePortCaseError)
 		}
 	}
 	test.Logf("%s: %d cases", mutation.name, len(texts))
@@ -524,9 +534,9 @@ func TestThreePortMutants_011(test *testing.T) { test.Parallel(); runThreePortSh
 func TestThreePortMutants_ShardProof(test *testing.T) {
 	test.Parallel()
 	shards := threePortShards(test)
-	executable, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	executable, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
 	for m, mutation := range threePortMutations() {
 		failed, caught, expected, caseID := 0, -1, -1, -1
@@ -543,17 +553,17 @@ func TestThreePortMutants_ShardProof(test *testing.T) {
 			ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 			command := threePortCommand(ctx, executable, "-test.run=^"+name+"$", "-test.timeout=90s", "-test.v")
 			command.Env = append(os.Environ(), fmt.Sprintf("ADAMIC_THREE_PORT_PROOF=%d", m))
-			stdout, stderr, err := childguard.Capture(ctx, command)
+			stdout, stderr, captureError := childguard.Capture(ctx, command)
 			output := append(stdout, stderr...)
-			deadlineErr := ctx.Err()
+			deadlineError := ctx.Err()
 			cancel()
-			if deadlineErr != nil {
-				test.Fatalf("proof child exceeded 90s: %v", deadlineErr)
+			if deadlineError != nil {
+				test.Fatalf("proof child exceeded 90s: %v", deadlineError)
 			}
-			if err != nil {
-				exit, ok := err.(*exec.ExitError)
+			if captureError != nil {
+				exit, ok := captureError.(*exec.ExitError)
 				if !ok || exit.ExitCode() != 1 {
-					test.Fatalf("proof child: %v: %s", err, output)
+					test.Fatalf("proof child: %v: %s", captureError, output)
 				}
 				failed++
 				caught = s

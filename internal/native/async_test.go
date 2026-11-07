@@ -51,12 +51,12 @@ func compilerConcurrencyMatchesNode(test *testing.T, name, source, expected stri
 	test.Helper()
 	directory := test.TempDir()
 	path := filepath.Join(directory, name)
-	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	loader, err := filepath.Abs(filepath.Join("..", "..", "oracle", "node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	loader, absolutePathError := filepath.Abs(filepath.Join("..", "..", "oracle", "node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	run := func(environment []string, name string, arguments ...string) leakcheck.Run {
 		command, release := boundedrun.Command(10*time.Second, name, arguments...)
@@ -64,9 +64,9 @@ func compilerConcurrencyMatchesNode(test *testing.T, name, source, expected stri
 		command.Env = append(os.Environ(), environment...)
 		var stdout, stderr bytes.Buffer
 		command.Stdout, command.Stderr = &stdout, &stderr
-		err := command.Run()
+		runError := command.Run()
 		if command.ProcessState == nil {
-			test.Fatalf("running %s: %v", name, err)
+			test.Fatalf("running %s: %v", name, runError)
 		}
 		return leakcheck.Run{Stdout: stdout.Bytes(), Stderr: stderr.Bytes(), ExitCode: command.ProcessState.ExitCode()}
 	}
@@ -74,17 +74,17 @@ func compilerConcurrencyMatchesNode(test *testing.T, name, source, expected stri
 	if witness.ExitCode != 0 || string(witness.Stdout) != expected || len(witness.Stderr) != 0 {
 		test.Fatalf("source Node: %+v", witness)
 	}
-	checked, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	checked, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := lower.Lower(context.Background(), checked)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerError := lower.Lower(context.Background(), checked)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	backend := filepath.Join(directory, "backend.mjs")
-	if err := os.WriteFile(backend, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(backend, []byte(javascript.JavaScript(program)), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	got := run(nil, "node", "--disable-warning=ExperimentalWarning", loader, backend)
 	if got.ExitCode != witness.ExitCode ||
@@ -94,8 +94,8 @@ func compilerConcurrencyMatchesNode(test *testing.T, name, source, expected stri
 	}
 	code := native.C(program)
 	binary := filepath.Join(directory, "sanitized")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(code, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	got = run([]string{"ASAN_OPTIONS=detect_leaks=0"}, binary)
 	if got.ExitCode != witness.ExitCode ||
@@ -103,11 +103,11 @@ func compilerConcurrencyMatchesNode(test *testing.T, name, source, expected stri
 		!bytes.Equal(got.Stderr, witness.Stderr) {
 		test.Fatalf("ASan/UBSan native %+v differs from Node %+v", got, witness)
 	}
-	report, err := leakcheck.Check(
+	report, checkError := leakcheck.Check(
 		leakcheck.Program{C: code, Sanitized: binary, Counted: filepath.Join(directory, "counted"), Execute: run},
 	)
-	if err != nil || report != "" {
-		test.Fatalf("leak check: %v %s", err, report)
+	if checkError != nil || report != "" {
+		test.Fatalf("leak check: %v %s", checkError, report)
 	}
 	test.Log("source Node, JavaScript, ASan/UBSan native and leak check agree")
 }

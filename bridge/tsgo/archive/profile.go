@@ -21,14 +21,14 @@ func startProfile() {
 	if path == "" || profile.file != nil {
 		return
 	}
-	file, err := os.Create(path)
-	if err != nil {
-		panic(err)
+	file, createError := os.Create(path)
+	if createError != nil {
+		panic(createError)
 	}
 	runtime.ReadMemStats(&profile.before)
-	if err := pprof.StartCPUProfile(file); err != nil {
+	if startCpuProfileError := pprof.StartCPUProfile(file); startCpuProfileError != nil {
 		file.Close()
-		panic(err)
+		panic(startCpuProfileError)
 	}
 	profile.file = file
 }
@@ -56,7 +56,15 @@ func stopProfile() {
 	profile.file.Close()
 	var after runtime.MemStats
 	runtime.ReadMemStats(&after)
-	fmt.Fprintf(os.Stderr, "tsgo_go_profile: inspect_ns=%d parts_ns=%d allocated_bytes=%d allocated_objects=%d collections=%d\n", profile.inspect.Nanoseconds(), profile.parts.Nanoseconds(), after.TotalAlloc-profile.before.TotalAlloc, after.Mallocs-profile.before.Mallocs, after.NumGC-profile.before.NumGC)
+	fmt.Fprintf(
+		os.Stderr,
+		"tsgo_go_profile: inspect_ns=%d parts_ns=%d allocated_bytes=%d allocated_objects=%d collections=%d\n",
+		profile.inspect.Nanoseconds(),
+		profile.parts.Nanoseconds(),
+		after.TotalAlloc-profile.before.TotalAlloc,
+		after.Mallocs-profile.before.Mallocs,
+		after.NumGC-profile.before.NumGC,
+	)
 	profile.file = nil
 	profile.inspect = 0
 	profile.parts = 0

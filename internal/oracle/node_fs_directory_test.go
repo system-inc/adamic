@@ -115,13 +115,13 @@ func TestNodeFSDirectoryMutants(test *testing.T) {
 	for _, one := range cases {
 		test.Run(one.name, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", one.fixture))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", one.fixture))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			changed := false
 			if one.function == "readDirectory" {
@@ -200,8 +200,8 @@ func TestNodeFSDirectoryMutants(test *testing.T) {
 			}
 			shared := sharedDirectory(test)
 			binary := filepath.Join(shared, "mutant")
-			if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(source, binary, native.Options{Sanitize: true}); buildError != nil {
+				test.Fatal(buildError)
 			}
 			how := inputRun{directory: filepath.Dir(path)}
 			// LeakSanitizer is Linux's: macOS's AddressSanitizer aborts when asked for it.
@@ -223,24 +223,26 @@ func TestNodeFSDirectoryMutants(test *testing.T) {
 
 func TestNodeFSDirectoryPermissions(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_fs_directory_permissions.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/node_fs_directory_permissions.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	shared := sharedDirectory(test)
 	blocked := filepath.Join(shared, "blocked")
-	if err := os.Mkdir(blocked, 0700); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.Mkdir(blocked, 0700); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	if err := os.WriteFile(filepath.Join(blocked, "child"), nil, 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(blocked, "child"), nil, 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if err := os.Chmod(blocked, 0000); err != nil {
-		test.Fatal(err)
+	if changeModeError := os.Chmod(blocked, 0000); changeModeError != nil {
+		test.Fatal(changeModeError)
 	}
 	test.Cleanup(func() { os.Chmod(blocked, 0700) })
 	how := inputRun{directory: filepath.Dir(path), arguments: []string{blocked}}

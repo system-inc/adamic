@@ -18,13 +18,13 @@ func TestDeadlineKillsGrandchild(test *testing.T) {
 	command, release := Command(200*time.Millisecond, child)
 	defer release()
 	done := make(chan error, 1)
-	go func() { _, err := command.CombinedOutput(); done <- err }()
+	go func() { _, combinedOutputError := command.CombinedOutput(); done <- combinedOutputError }()
 	start := testfixture.WaitStarted(test, ready)
-	err := waitReadyResult(test, done)
-	if err == nil {
+	waitReadyResultError := waitReadyResult(test, done)
+	if waitReadyResultError == nil {
 		test.Fatal("hung child passed")
 	}
-	testfixture.AssertStopped(test, start, heartbeat, err.Error(), child)
+	testfixture.AssertStopped(test, start, heartbeat, waitReadyResultError.Error(), child)
 }
 
 // Not parallel: replaces the process-wide WithTimeout readiness clock.
@@ -43,13 +43,14 @@ func TestExitedLeaderClosesDescendantPipes(test *testing.T) {
 	)
 	defer release()
 	done := make(chan error, 1)
-	go func() { _, err := command.CombinedOutput(); done <- err }()
+	go func() { _, combinedOutputError := command.CombinedOutput(); done <- combinedOutputError }()
 	start := testfixture.WaitStarted(test, ready)
-	err := waitReadyResult(test, done)
-	if !errors.Is(err, exec.ErrWaitDelay) || !strings.Contains(err.Error(), "deadline") {
-		test.Fatalf("pipe deadline missing: %v", err)
+	waitReadyResultError := waitReadyResult(test, done)
+	if !errors.Is(waitReadyResultError, exec.ErrWaitDelay) ||
+		!strings.Contains(waitReadyResultError.Error(), "deadline") {
+		test.Fatalf("pipe deadline missing: %v", waitReadyResultError)
 	}
-	testfixture.AssertStopped(test, start, heartbeat, err.Error(), "/bin/sh")
+	testfixture.AssertStopped(test, start, heartbeat, waitReadyResultError.Error(), "/bin/sh")
 }
 
 type blockedWriter struct{ release, entered chan struct{} }
@@ -120,7 +121,7 @@ func TestReadyDeadlineStartsAfterGrandchild(test *testing.T) {
 	command, release := Command(200*time.Millisecond, child)
 	defer release()
 	done := make(chan error, 1)
-	go func() { _, err := command.CombinedOutput(); done <- err }()
+	go func() { _, combinedOutputError := command.CombinedOutput(); done <- combinedOutputError }()
 	var armed time.Time
 	var err error
 	select {

@@ -15,23 +15,23 @@ import (
 func stdoutRuntimeMutant(test *testing.T, fixture, before, after, catcher string, closed bool) {
 	test.Helper()
 	path, _ := filepath.Abs("testdata/host_stdout/" + fixture + ".a")
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	source := native.C(program)
 	directory := test.TempDir()
-	entries, err := os.ReadDir("../native/runtime")
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir("../native/runtime")
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	for _, entry := range entries {
 		if entry.IsDir() {
 			continue
 		}
-		data, err := os.ReadFile(filepath.Join("../native/runtime", entry.Name()))
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(filepath.Join("../native/runtime", entry.Name()))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		if entry.Name() == "adamic.c" {
 			if strings.Count(string(data), before) != 1 {
@@ -39,35 +39,40 @@ func stdoutRuntimeMutant(test *testing.T, fixture, before, after, catcher string
 			}
 			data = []byte(strings.Replace(string(data), before, after, 1))
 		}
-		if err := os.WriteFile(filepath.Join(directory, entry.Name()), data, 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, entry.Name()), data, 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	options := native.Options{Sanitize: true}
-	archive, err := native.RuntimeLibraryForSource(directory, source, options)
-	if err != nil {
-		test.Fatal(err)
+	archive, runtimeLibraryForSourceError := native.RuntimeLibraryForSource(directory, source, options)
+	if runtimeLibraryForSourceError != nil {
+		test.Fatal(runtimeLibraryForSourceError)
 	}
 	binary := filepath.Join(test.TempDir(), "mutant")
-	if err := native.BuildWithRuntime(source, binary, options, archive); err != nil {
-		test.Fatal(err)
+	if buildWithRuntimeError := native.BuildWithRuntime(
+		source,
+		binary,
+		options,
+		archive,
+	); buildWithRuntimeError != nil {
+		test.Fatal(buildWithRuntimeError)
 	}
 	if closed {
-		reader, writer, err := os.Pipe()
-		if err != nil {
-			test.Fatal(err)
+		reader, writer, pipeError := os.Pipe()
+		if pipeError != nil {
+			test.Fatal(pipeError)
 		}
 		reader.Close()
-		stderr, err := os.Create(filepath.Join(test.TempDir(), "stderr"))
-		if err != nil {
-			test.Fatal(err)
+		stderr, createError := os.Create(filepath.Join(test.TempDir(), "stderr"))
+		if createError != nil {
+			test.Fatal(createError)
 		}
 		code := withStreams(test, writer, stderr, binary)
 		writer.Close()
 		stderr.Close()
-		said, err := os.ReadFile(stderr.Name())
-		if err != nil {
-			test.Fatal(err)
+		said, readError := os.ReadFile(stderr.Name())
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		if code != 0 || len(said) != 0 {
 			test.Fatalf("mutant must finish cleanly with wrong exit0, got %d %q", code, said)

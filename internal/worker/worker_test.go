@@ -16,8 +16,8 @@ import (
 
 func write(test *testing.T, path, text string) {
 	test.Helper()
-	if err := os.WriteFile(path, []byte(text), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(text), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 }
 
@@ -33,8 +33,8 @@ func node(test *testing.T, worker, requests string, oracle bool, source ...strin
 	}
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
-	if err := command.Run(); err != nil {
-		test.Fatalf("Node: %v\nstdout: %s\nstderr: %s", err, &stdout, &stderr)
+	if runError := command.Run(); runError != nil {
+		test.Fatalf("Node: %v\nstdout: %s\nstderr: %s", runError, &stdout, &stderr)
 	}
 	return stdout.String(), stderr.String()
 }
@@ -50,8 +50,8 @@ func responses(test *testing.T, text string) []response {
 	var result []response
 	for _, line := range strings.Split(strings.TrimSpace(text), "\n") {
 		var value response
-		if err := json.Unmarshal([]byte(line), &value); err != nil {
-			test.Fatal(err)
+		if decodeError := json.Unmarshal([]byte(line), &value); decodeError != nil {
+			test.Fatal(decodeError)
 		}
 		result = append(result, value)
 	}
@@ -72,9 +72,9 @@ func header(result response, name string) string {
 func TestWorkerModulesMatchSourceResponses(test *testing.T) {
 	test.Parallel()
 	binary := workerCompilerProduct(test, activeMutation(test), false)
-	fixtures, err := filepath.Glob("testdata/*.a")
-	if err != nil {
-		test.Fatal(err)
+	fixtures, globError := filepath.Glob("testdata/*.a")
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	for _, fixture := range fixtures {
 		name := strings.TrimSuffix(filepath.Base(fixture), ".a")
@@ -82,9 +82,9 @@ func TestWorkerModulesMatchSourceResponses(test *testing.T) {
 			test.Parallel()
 			directory := filepath.Join(test.TempDir(), "compiled")
 			command := exec.Command(binary, "worker", fixture, "--out", directory)
-			output, err := command.CombinedOutput()
+			output, combinedOutputError := command.CombinedOutput()
 			if name == "wrong" {
-				if err == nil {
+				if combinedOutputError == nil {
 					test.Fatal("accepted handle returning string")
 				}
 				for _, part := range []string{
@@ -98,17 +98,17 @@ func TestWorkerModulesMatchSourceResponses(test *testing.T) {
 						test.Fatalf("missing refusal %q: %s", part, output)
 					}
 				}
-				if _, err := os.Stat(directory); !os.IsNotExist(err) {
-					test.Fatalf("refusal wrote output: %v", err)
+				if _, statError := os.Stat(directory); !os.IsNotExist(statError) {
+					test.Fatalf("refusal wrote output: %v", statError)
 				}
 				return
 			}
-			if err != nil {
-				test.Fatalf("adamic worker: %v\n%s", err, output)
+			if combinedOutputError != nil {
+				test.Fatalf("adamic worker: %v\n%s", combinedOutputError, output)
 			}
-			configuration, err := os.ReadFile(filepath.Join(directory, "wrangler.toml"))
-			if err != nil {
-				test.Fatal(err)
+			configuration, readError := os.ReadFile(filepath.Join(directory, "wrangler.toml"))
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			wantConfiguration := fmt.Sprintf(
 				"name = %q\nmain = \"worker.mjs\"\ncompatibility_date = \"2026-10-07\"\n",
@@ -117,17 +117,17 @@ func TestWorkerModulesMatchSourceResponses(test *testing.T) {
 			if string(configuration) != wantConfiguration {
 				test.Fatalf("configuration: %s", configuration)
 			}
-			entries, err := os.ReadDir(directory)
-			if err != nil || len(entries) != 4 {
-				test.Fatalf("want exactly four generated files: %v, %v", entries, err)
+			entries, readDirectoryError := os.ReadDir(directory)
+			if readDirectoryError != nil || len(entries) != 4 {
+				test.Fatalf("want exactly four generated files: %v, %v", entries, readDirectoryError)
 			}
 			source, _ := filepath.Abs(fixture)
 			requests, _ := filepath.Abs(strings.TrimSuffix(fixture, ".a") + ".jsonl")
 			oracleDirectory := test.TempDir()
 			// Only the handler import changes. The bridge bytes otherwise stay identical.
-			bridge, err := os.ReadFile(filepath.Join(directory, "worker.mjs"))
-			if err != nil {
-				test.Fatal(err)
+			bridge, readError := os.ReadFile(filepath.Join(directory, "worker.mjs"))
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			write(
 				test,
@@ -285,16 +285,17 @@ func TestSignature(test *testing.T) {
 		test.Run(fixture.name, func(test *testing.T) {
 			path := filepath.Join(test.TempDir(), "entry.a")
 			write(test, path, fixture.source)
-			program, err := load.Load([]string{path})
-			if err != nil {
-				test.Fatal(err)
+			program, loadError := load.Load([]string{path})
+			if loadError != nil {
+				test.Fatal(loadError)
 			}
-			err = CheckSignature(context.Background(), program)
-			if (err == nil) != fixture.accepted {
-				test.Fatalf("accepted=%t: %v", fixture.accepted, err)
+			checkSignatureError := CheckSignature(context.Background(), program)
+			if (checkSignatureError == nil) != fixture.accepted {
+				test.Fatalf("accepted=%t: %v", fixture.accepted, checkSignatureError)
 			}
-			if err != nil && (!strings.Contains(err.Error(), "found ") || !strings.Contains(err.Error(), "fix:")) {
-				test.Fatalf("unhelpful refusal: %v", err)
+			if checkSignatureError != nil && (!strings.Contains(checkSignatureError.Error(), "found ") ||
+				!strings.Contains(checkSignatureError.Error(), "fix:")) {
+				test.Fatalf("unhelpful refusal: %v", checkSignatureError)
 			}
 		})
 	}
@@ -304,12 +305,12 @@ func TestRefusalPreservesOutput(test *testing.T) {
 	test.Parallel()
 	directory := test.TempDir()
 	write(test, filepath.Join(directory, "handler.mjs"), "sentinel")
-	if err := Build("testdata/wrong.a", directory); err == nil {
+	if buildError := Build("testdata/wrong.a", directory); buildError == nil {
 		test.Fatal("accepted string handler")
 	}
-	entries, err := os.ReadDir(directory)
-	if err != nil || len(entries) != 1 {
-		test.Fatalf("refusal changed directory: %v %v", entries, err)
+	entries, readDirectoryError := os.ReadDir(directory)
+	if readDirectoryError != nil || len(entries) != 1 {
+		test.Fatalf("refusal changed directory: %v %v", entries, readDirectoryError)
 	}
 	contents, _ := os.ReadFile(filepath.Join(directory, "handler.mjs"))
 	if string(contents) != "sentinel" {
@@ -320,8 +321,8 @@ func TestRefusalPreservesOutput(test *testing.T) {
 func TestWorkerRuntimePreservesUTF8AndRefusesIO(test *testing.T) {
 	test.Parallel()
 	directory := test.TempDir()
-	if err := Build("testdata/panic.a", directory); err != nil {
-		test.Fatal(err)
+	if buildError := Build("testdata/panic.a", directory); buildError != nil {
+		test.Fatal(buildError)
 	}
 	runtime := filepath.Join(directory, "adamic.mjs")
 	script := `
@@ -348,13 +349,13 @@ assert.throws(() => runtime.panic('still alive'), runtime.AdamicPanic);
 assert.equal(runtime.utf8At('abc', 0), 97);
 `
 	command := exec.Command("node", "--input-type=module", "-e", script, runtime)
-	if output, err := command.CombinedOutput(); err != nil {
-		test.Fatalf("runtime: %v\n%s", err, output)
+	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("runtime: %v\n%s", combinedOutputError, output)
 	}
 	for _, name := range []string{"handler.mjs", "adamic.mjs", "worker.mjs"} {
-		source, err := os.ReadFile(filepath.Join(directory, name))
-		if err != nil {
-			test.Fatal(err)
+		source, readError := os.ReadFile(filepath.Join(directory, name))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		if forbidden := workersUnavailable(source); forbidden != "" {
 			test.Fatalf("%s uses Workers-unavailable %s", name, forbidden)
@@ -381,8 +382,8 @@ func TestBridgeRethrows(test *testing.T) {
 		filepath.Join(directory, "worker.mjs"),
 		filepath.Join(directory, "handler.mjs"),
 	)
-	if output, err := command.CombinedOutput(); err != nil {
-		test.Fatalf("bridge bug propagation: %v\n%s", err, output)
+	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("bridge bug propagation: %v\n%s", combinedOutputError, output)
 	}
 }
 
@@ -407,13 +408,13 @@ export function café(): string { return 'unicode'; }
 export const arrow = (value: number): number => value + starts;
 `)
 	output := filepath.Join(directory, "output")
-	if err := Build(entry, output); err != nil {
-		test.Fatal(err)
+	if buildError := Build(entry, output); buildError != nil {
+		test.Fatal(buildError)
 	}
 	script := `import assert from 'node:assert/strict'; const module = await import(process.argv[1]); const again = await import(process.argv[1]); assert.equal(module, again); assert.deepEqual(Object.keys(module).sort(), ['arrow', 'café', 'handle', 'renamed']); assert.equal(module.arrow(4), 5); assert.equal(module.café(), 'unicode'); assert.equal(module.renamed(), 'dependency'); assert.equal(module.handle({path: '/path'}).body, 'dependency/path');`
 	command := exec.Command("node", "--input-type=module", "-e", script, filepath.Join(output, "handler.mjs"))
-	if output, err := command.CombinedOutput(); err != nil {
-		test.Fatalf("entry exports: %v\n%s", err, output)
+	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("entry exports: %v\n%s", combinedOutputError, output)
 	}
 }
 
@@ -425,12 +426,12 @@ func TestGenericExportRefused(test *testing.T) {
 export function handle(request: HttpRequest): HttpResponse { return {status: 200, headers: [], body: ''}; }
 export function identity<T>(value: T): T { return value; }`)
 	output := filepath.Join(directory, "output")
-	err := Build(entry, output)
-	if err == nil || !strings.Contains(err.Error(), "exported generic function identity") {
-		test.Fatalf("generic export was silently lost: %v", err)
+	buildError := Build(entry, output)
+	if buildError == nil || !strings.Contains(buildError.Error(), "exported generic function identity") {
+		test.Fatalf("generic export was silently lost: %v", buildError)
 	}
-	if _, err := os.Stat(output); !os.IsNotExist(err) {
-		test.Fatalf("refusal wrote output: %v", err)
+	if _, statError := os.Stat(output); !os.IsNotExist(statError) {
+		test.Fatalf("refusal wrote output: %v", statError)
 	}
 }
 
@@ -476,12 +477,12 @@ func TestDroppedExportRefused(test *testing.T) {
 					"\n",
 			)
 			output := filepath.Join(directory, "output")
-			err := Build(entry, output)
-			if err == nil || !strings.Contains(err.Error(), testCase.refusal) {
-				test.Fatalf("want %q, got %v", testCase.refusal, err)
+			buildError := Build(entry, output)
+			if buildError == nil || !strings.Contains(buildError.Error(), testCase.refusal) {
+				test.Fatalf("want %q, got %v", testCase.refusal, buildError)
 			}
-			if _, err := os.Stat(output); !os.IsNotExist(err) {
-				test.Fatalf("refusal wrote output: %v", err)
+			if _, statError := os.Stat(output); !os.IsNotExist(statError) {
+				test.Fatalf("refusal wrote output: %v", statError)
 			}
 		})
 	}
@@ -501,12 +502,12 @@ export type { Shape } from './shapes.a';
 export namespace Kinds { export type Kind = 'Plain' | 'Fancy'; }
 `)
 	output := filepath.Join(directory, "output")
-	if err := Build(entry, output); err != nil {
-		test.Fatal(err)
+	if buildError := Build(entry, output); buildError != nil {
+		test.Fatal(buildError)
 	}
 	script := `import assert from 'node:assert/strict'; const module = await import(process.argv[1]); assert.deepEqual(Object.keys(module), ['handle']);`
 	command := exec.Command("node", "--input-type=module", "-e", script, filepath.Join(output, "handler.mjs"))
-	if output, err := command.CombinedOutput(); err != nil {
-		test.Fatalf("type-only exports: %v\n%s", err, output)
+	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("type-only exports: %v\n%s", combinedOutputError, output)
 	}
 }

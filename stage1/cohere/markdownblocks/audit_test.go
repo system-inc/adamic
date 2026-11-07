@@ -36,8 +36,8 @@ func auditResults(test *testing.T, name string, result run) []auditOutput {
 	var answers []auditOutput
 	for _, line := range bytes.Split(bytes.TrimSuffix(result.stdout, []byte("\n")), []byte("\n")) {
 		var answer auditOutput
-		if err := json.Unmarshal(line, &answer); err != nil {
-			test.Fatal(err)
+		if decodeError := json.Unmarshal(line, &answer); decodeError != nil {
+			test.Fatal(decodeError)
 		}
 		if answer.AutoError != "" || answer.OffError != "" {
 			test.Fatalf("%s formatting error at %s: %s %s", name, answer.Name, answer.AutoError, answer.OffError)

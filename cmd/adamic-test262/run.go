@@ -58,53 +58,60 @@ type adamicBuilder func(output string) error
 func goBuildAdamic(root string) adamicBuilder {
 	return func(output string) error {
 		build := toolchain.CommandIn(root, "go", "build", "-o", output, "./cmd/adamic")
-		if combined, err := build.CombinedOutput(); err != nil {
-			return fmt.Errorf("building adamic: %w\n%s", err, combined)
+		if combined, combinedOutputError := build.CombinedOutput(); combinedOutputError != nil {
+			return fmt.Errorf("building adamic: %w\n%s", combinedOutputError, combined)
 		}
 		return nil
 	}
 }
 
-func prepareMode(root string, test262 string, work string, buildAdamic adamicBuilder, profile *runProfile, inProcess bool) (*engine, error) {
+func prepareMode(
+	root string,
+	test262 string,
+	work string,
+	buildAdamic adamicBuilder,
+	profile *runProfile,
+	inProcess bool,
+) (*engine, error) {
 	done := profile.preparing("go-build")
-	if err := os.MkdirAll(work, 0o755); err != nil {
-		return nil, err
+	if createDirectoryError := os.MkdirAll(work, 0o755); createDirectoryError != nil {
+		return nil, createDirectoryError
 	}
 	adamic := filepath.Join(work, "adamic")
 	if !inProcess {
 		if buildAdamic == nil {
 			return nil, fmt.Errorf("a subprocess engine needs a stage 0 compiler")
 		}
-		if err := buildAdamic(adamic); err != nil {
-			return nil, err
+		if buildAdamicError := buildAdamic(adamic); buildAdamicError != nil {
+			return nil, buildAdamicError
 		}
 	}
 	done()
 	include := filepath.Join(root, "internal", "native", "runtime")
-	var err error
+	var executableError error
 	done = profile.preparing("cache-context")
 	identityPath := adamic
 	if inProcess {
-		identityPath, err = os.Executable()
-		if err != nil {
-			return nil, err
+		identityPath, executableError = os.Executable()
+		if executableError != nil {
+			return nil, executableError
 		}
 	}
-	compilerBytes, err := os.ReadFile(identityPath)
-	if err != nil {
-		return nil, err
+	compilerBytes, readError := os.ReadFile(identityPath)
+	if readError != nil {
+		return nil, readError
 	}
-	tools, err := resolveTools()
-	if err != nil {
-		return nil, err
+	tools, resolveToolsError := resolveTools()
+	if resolveToolsError != nil {
+		return nil, resolveToolsError
 	}
-	cache, version, context, err := prepareCache(root, tools)
-	if err != nil {
-		return nil, err
+	cache, version, context, prepareCacheError := prepareCache(root, tools)
+	if prepareCacheError != nil {
+		return nil, prepareCacheError
 	}
-	sourceIdentity, err := loweringSourceIdentity(root)
-	if err != nil {
-		return nil, err
+	sourceIdentity, loweringSourceIdentityError := loweringSourceIdentity(root)
+	if loweringSourceIdentityError != nil {
+		return nil, loweringSourceIdentityError
 	}
 	context = cacheKey(context, sourceIdentity)
 	done()
@@ -132,9 +139,9 @@ type result struct {
 }
 
 func (e *engine) runFilter(filter string, limit int, classifyOnly bool) (filterReport, error) {
-	files, err := listTests(e.test262, filter)
-	if err != nil {
-		return filterReport{}, err
+	files, listTestsError := listTests(e.test262, filter)
+	if listTestsError != nil {
+		return filterReport{}, listTestsError
 	}
 	report := filterReport{Path: filter}
 	attempted := 0
@@ -143,12 +150,12 @@ func (e *engine) runFilter(filter string, limit int, classifyOnly bool) (filterR
 	ready := make([]chan struct{}, len(files))
 	indices := make([]int, 0, len(files))
 	for index, file := range files {
-		source, err := os.ReadFile(file)
-		if err != nil {
-			return report, err
+		source, readError := os.ReadFile(file)
+		if readError != nil {
+			return report, readError
 		}
-		relative, err := filepath.Rel(filepath.Join(e.test262, "test"), file)
-		if err != nil {
+		relative, relativePathError := filepath.Rel(filepath.Join(e.test262, "test"), file)
+		if relativePathError != nil {
 			relative = file
 		}
 		relative = filepath.ToSlash(relative)
@@ -174,7 +181,10 @@ func (e *engine) runFilter(filter string, limit int, classifyOnly bool) (filterR
 		jobs = len(indices)
 	}
 	if jobs > 1 {
-		sort.SliceStable(indices, func(i, j int) bool { return len(tests[indices[i]].Program) > len(tests[indices[j]].Program) })
+		sort.SliceStable(
+			indices,
+			func(i, j int) bool { return len(tests[indices[i]].Program) > len(tests[indices[j]].Program) },
+		)
 	}
 	queue := make(chan int)
 	var workers sync.WaitGroup
@@ -185,8 +195,8 @@ func (e *engine) runFilter(filter string, limit int, classifyOnly bool) (filterR
 		// Preserve the serial artifact path when there is just one worker.
 		if jobs > 1 {
 			local.work = filepath.Join(e.work, fmt.Sprintf("worker-%d", worker))
-			if err := os.MkdirAll(local.work, 0755); err != nil {
-				return report, err
+			if createDirectoryError := os.MkdirAll(local.work, 0755); createDirectoryError != nil {
+				return report, createDirectoryError
 			}
 		}
 		locals[worker] = local
@@ -241,12 +251,12 @@ func (e *engine) attempt(test classified) result {
 	defer profile.finish()
 	base := result{Path: test.Path, Directory: test.Directory, Adaptations: test.Adaptations}
 	directory := e.programDirectory(test)
-	if err := os.MkdirAll(directory, 0700); err != nil {
+	if createDirectoryError := os.MkdirAll(directory, 0700); createDirectoryError != nil {
 		// A broken observation cache must not prevent the uncached program from running.
 		directory = e.work
-		if err := os.MkdirAll(directory, 0700); err != nil {
+		if createDirectoryError := os.MkdirAll(directory, 0700); createDirectoryError != nil {
 			base.Kind = outcomeCrashed
-			base.Reason = err.Error()
+			base.Reason = createDirectoryError.Error()
 			return base
 		}
 	}
@@ -261,19 +271,19 @@ func (e *engine) attempt(test classified) result {
 		return base
 	}
 	defer lock.Close()
-	if err := syscall.Flock(int(lock.Fd()), syscall.LOCK_EX); err != nil {
+	if flockError := syscall.Flock(int(lock.Fd()), syscall.LOCK_EX); flockError != nil {
 		base.Kind = outcomeCrashed
-		base.Reason = err.Error()
+		base.Reason = flockError.Error()
 		return base
 	}
 	defer syscall.Flock(int(lock.Fd()), syscall.LOCK_UN)
 	typescript := filepath.Join(directory, "program.a")
 	module := filepath.Join(directory, "program.mts")
-	if err := os.WriteFile(typescript, []byte(test.Program), 0o644); err != nil {
-		return result{Path: test.Path, Directory: test.Directory, Kind: outcomeCrashed, Reason: err.Error()}
+	if writeError := os.WriteFile(typescript, []byte(test.Program), 0o644); writeError != nil {
+		return result{Path: test.Path, Directory: test.Directory, Kind: outcomeCrashed, Reason: writeError.Error()}
 	}
-	if err := os.WriteFile(module, []byte(test.Program), 0o644); err != nil {
-		return result{Path: test.Path, Directory: test.Directory, Kind: outcomeCrashed, Reason: err.Error()}
+	if writeError := os.WriteFile(module, []byte(test.Program), 0o644); writeError != nil {
+		return result{Path: test.Path, Directory: test.Directory, Kind: outcomeCrashed, Reason: writeError.Error()}
 	}
 	cache := e.cache
 	if dependentProgram(test.Program) {
@@ -311,9 +321,9 @@ func (e *engine) attempt(test classified) result {
 		return base
 	}
 	cPath := filepath.Join(directory, "program.c")
-	if err := os.WriteFile(cPath, []byte(lowered.Stdout), 0o644); err != nil {
+	if writeError := os.WriteFile(cPath, []byte(lowered.Stdout), 0o644); writeError != nil {
 		base.Kind = outcomeCrashed
-		base.Reason = err.Error()
+		base.Reason = writeError.Error()
 		return base
 	}
 	binary := filepath.Join(directory, "program.bin")
@@ -331,19 +341,37 @@ func (e *engine) attempt(test classified) result {
 	arguments := append(native.SourceFlags(lowered.Stdout, options), "-I", filepath.Dir(library), "-o", binary, cPath)
 	arguments = append(arguments, native.RuntimeLinkFlags(library)...)
 	arguments = append(arguments, "-lm")
-	nativeCommand := cacheKey(cacheKey(arguments...), binary, "15s-cpu", "2m-wall", fmt.Sprint(outputLimit), fmt.Sprint(nativeEnvironment))
-	key := nativeResultKey(lowered.Stdout, cacheKey(filepath.Base(filepath.Dir(library)), e.runtimeKey), nativeCommand, e.context)
+	nativeCommand := cacheKey(
+		cacheKey(arguments...),
+		binary,
+		"15s-cpu",
+		"2m-wall",
+		fmt.Sprint(outputLimit),
+		fmt.Sprint(nativeEnvironment),
+	)
+	key := nativeResultKey(
+		lowered.Stdout,
+		cacheKey(filepath.Base(filepath.Dir(library)), e.runtimeKey),
+		nativeCommand,
+		e.context,
+	)
 	linkFailed := false
 	// Imported modules can read files or have mutable dependencies. Until their whole input
 	// graph is keyed, all their observations run fresh.
 	nativeRun := profile.observation("native-observation", cache, key, func() (execution, bool) {
-		linked := profile.command("clang", func() execution { return runCommand(2*time.Minute, nil, e.tools.clang, arguments...) })
+		linked := profile.command(
+			"clang",
+			func() execution { return runCommand(2*time.Minute, nil, e.tools.clang, arguments...) },
+		)
 		if linked.Exit != 0 || linked.TimedOut {
 			linkFailed = true
 			return linked, false
 		}
 		defer os.Remove(binary)
-		return profile.command("native", func() execution { return runProgram(15*time.Second, nativeEnvironment, binary) }), true
+		return profile.command(
+			"native",
+			func() execution { return runProgram(15*time.Second, nativeEnvironment, binary) },
+		), true
 	})
 	// A link failure is a compiler crash rather than a native execution verdict.
 	// Only successful links publish observations, so a hit always holds a real execution.
@@ -353,7 +381,14 @@ func (e *engine) attempt(test classified) result {
 		base.Reason = "clang: " + firstLine(nativeRun.Stderr)
 		return base
 	}
-	nodeCommand := cacheKey("node", "--disable-warning=ExperimentalWarning", module, "15s-cpu", "2m-wall", fmt.Sprint(outputLimit))
+	nodeCommand := cacheKey(
+		"node",
+		"--disable-warning=ExperimentalWarning",
+		module,
+		"15s-cpu",
+		"2m-wall",
+		fmt.Sprint(outputLimit),
+	)
 	nodeKey := nodeResultKey(test.Program, e.nodeVersion, fmt.Sprint(e.adapt), nodeCommand, e.nodeContext)
 	nodeRun := profile.observation("node", cache, nodeKey, func() (execution, bool) {
 		return runProgram(15*time.Second, nil, e.tools.node, "--disable-warning=ExperimentalWarning", module), true
@@ -376,7 +411,9 @@ func (e *engine) attempt(test classified) result {
 			base.Kind = outcomeCrashed
 			base.Reason = "original Node: " + crashReason(verdictInput{Node: original})
 		} else if test.NegativePhase == "runtime" {
-			if original.Exit == 0 || !errorNamed(original.Stderr, test.NegativeType) || original.Stdout != nodeRun.Stdout {
+			if original.Exit == 0 ||
+				!errorNamed(original.Stderr, test.NegativeType) ||
+				original.Stdout != nodeRun.Stdout {
 				base.Kind = outcomeFail
 				base.Reason = "original Node negative test disagrees with adaptation"
 			}
@@ -425,7 +462,7 @@ func runCommandWithLimit(timeout time.Duration, extra []string, limit int, name 
 	var stdout, stderr limitedBuffer
 	stdout.limit = limit
 	stderr.limit = limit
-	err := childguard.CaptureTo(ctx, command, &stdout, &stderr)
+	captureToError := childguard.CaptureTo(ctx, command, &stdout, &stderr)
 	result := execution{Stdout: stdout.String(), Stderr: stderr.String()}
 	if stdout.exceeded || stderr.exceeded {
 		result.Exit = -1
@@ -437,13 +474,13 @@ func runCommandWithLimit(timeout time.Duration, extra []string, limit int, name 
 		result.Exit = -1
 		return result
 	}
-	if err == nil {
+	if captureToError == nil {
 		return result
 	}
-	exit, isExit := err.(*exec.ExitError)
+	exit, isExit := captureToError.(*exec.ExitError)
 	if !isExit {
 		result.Exit = -1
-		result.Stderr = result.Stderr + err.Error()
+		result.Stderr = result.Stderr + captureToError.Error()
 		return result
 	}
 	if status, ok := exit.Sys().(syscall.WaitStatus); ok {
@@ -495,17 +532,17 @@ func listTests(test262 string, filter string) ([]string, error) {
 	if filter != "" {
 		target = filepath.Join(root, filepath.FromSlash(filter))
 	}
-	info, err := os.Stat(target)
-	if err != nil {
-		return nil, fmt.Errorf("test262 filter %s: %w", filter, err)
+	info, statError := os.Stat(target)
+	if statError != nil {
+		return nil, fmt.Errorf("test262 filter %s: %w", filter, statError)
 	}
 	if !info.IsDir() {
 		return []string{target}, nil
 	}
 	var files []string
-	err = filepath.WalkDir(target, func(path string, entry os.DirEntry, walkErr error) error {
-		if walkErr != nil {
-			return walkErr
+	walkError := filepath.WalkDir(target, func(path string, entry os.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
 		if entry.IsDir() {
 			return nil
@@ -517,8 +554,8 @@ func listTests(test262 string, filter string) ([]string, error) {
 		files = append(files, path)
 		return nil
 	})
-	if err != nil {
-		return nil, err
+	if walkError != nil {
+		return nil, walkError
 	}
 	sort.Strings(files)
 	return files, nil
@@ -622,7 +659,10 @@ func (report *filterReport) finish() {
 	for _, directory := range report.directories {
 		report.Directories = append(report.Directories, *directory)
 	}
-	sort.Slice(report.Directories, func(i int, j int) bool { return report.Directories[i].Path < report.Directories[j].Path })
+	sort.Slice(
+		report.Directories,
+		func(i int, j int) bool { return report.Directories[i].Path < report.Directories[j].Path },
+	)
 	report.RefusalReasons = sortedReasons(report.refusalReasons)
 	report.SkipReasons = sortedReasons(report.skipReasons)
 	report.CrashReasons = sortedReasons(report.crashReasons)
@@ -667,20 +707,20 @@ func withCrashPath(path string, reason string) string {
 
 func test262Commit(test262 string) string {
 	command := toolchain.GitCommand("-C", test262, "rev-parse", "HEAD")
-	output, err := command.Output()
-	if err != nil {
+	output, outputError := command.Output()
+	if outputError != nil {
 		return ""
 	}
 	return strings.TrimSpace(string(output))
 }
 
 func writeJSON(writer io.Writer, document reportDocument) error {
-	encoded, err := json.MarshalIndent(document, "", "  ")
-	if err != nil {
-		return err
+	encoded, encodeError := json.MarshalIndent(document, "", "  ")
+	if encodeError != nil {
+		return encodeError
 	}
-	_, err = writer.Write(append(encoded, '\n'))
-	return err
+	_, writeError := writer.Write(append(encoded, '\n'))
+	return writeError
 }
 
 // The normal worker does not execute the backup compiler. Build it only if worker transport

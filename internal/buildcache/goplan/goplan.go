@@ -70,20 +70,20 @@ func (plan Plan) Run(directory string) error {
 	}
 	arguments := slices.Clone(plan.command.Arguments)
 	if len(plan.replace) > 0 || len(plan.headers) > 0 || len(plan.mutated) > 0 {
-		scratch, err := os.MkdirTemp("", "buildcache-overlay-")
-		if err != nil {
-			return err
+		scratch, temporaryDirectoryError := os.MkdirTemp("", "buildcache-overlay-")
+		if temporaryDirectoryError != nil {
+			return temporaryDirectoryError
 		}
 		defer os.RemoveAll(scratch)
 		replace := map[string]string{}
 		maps.Copy(replace, plan.replace)
 		for _, mutation := range plan.mutated {
 			copied := filepath.Join(scratch, "mutations", filepath.FromSlash(mutation.File))
-			if err := os.MkdirAll(filepath.Dir(copied), 0o755); err != nil {
-				return err
+			if createDirectoryError := os.MkdirAll(filepath.Dir(copied), 0o755); createDirectoryError != nil {
+				return createDirectoryError
 			}
-			if err := os.WriteFile(copied, []byte(mutation.Text), 0o644); err != nil {
-				return err
+			if writeError := os.WriteFile(copied, []byte(mutation.Text), 0o644); writeError != nil {
+				return writeError
 			}
 			for _, pointer := range mutation.Pointers {
 				replace[pointer] = copied
@@ -94,24 +94,27 @@ func (plan Plan) Run(directory string) error {
 		}
 		for index, header := range plan.headers {
 			path := filepath.Join(scratch, fmt.Sprintf("%d.h", index))
-			if err := os.WriteFile(path, header.Content, 0o644); err != nil {
-				return err
+			if writeError := os.WriteFile(path, header.Content, 0o644); writeError != nil {
+				return writeError
 			}
 			replace[header.Target] = path
 		}
-		encoded, err := json.Marshal(map[string]any{"Replace": replace})
-		if err != nil {
-			return err
+		encoded, encodeError := json.Marshal(map[string]any{"Replace": replace})
+		if encodeError != nil {
+			return encodeError
 		}
-		if err := os.WriteFile(filepath.Join(scratch, "overlay.json"), encoded, 0o644); err != nil {
-			return err
+		if writeError := os.WriteFile(filepath.Join(scratch, "overlay.json"), encoded, 0o644); writeError != nil {
+			return writeError
 		}
 		arguments = append(arguments, "-overlay="+filepath.Join(scratch, "overlay.json"))
 	}
-	command := exec.Command(plan.command.Program, append(append(arguments, "-o", filepath.Join(directory, plan.command.Output)), plan.command.Packages...)...)
+	command := exec.Command(
+		plan.command.Program,
+		append(append(arguments, "-o", filepath.Join(directory, plan.command.Output)), plan.command.Packages...)...,
+	)
 	command.Dir, command.Env = plan.command.Directory, plan.command.Environment
-	if combined, err := command.CombinedOutput(); err != nil {
-		return fmt.Errorf("go %s %s: %v\n%s", plan.command.Verb, plan.command.Package, err, combined)
+	if combined, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+		return fmt.Errorf("go %s %s: %v\n%s", plan.command.Verb, plan.command.Package, combinedOutputError, combined)
 	}
 	return nil
 }

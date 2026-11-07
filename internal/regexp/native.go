@@ -10,8 +10,8 @@ import (
 // NativeDeclarations serializes this already compiled program for the C VM.
 // Bounds beyond the C counter width are refused before emitting any C.
 func (p *Program) NativeDeclarations(name string) (string, error) {
-	if err := p.NativeCompatibility(); err != nil {
-		return "", err
+	if nativeCompatibilityError := p.NativeCompatibility(); nativeCompatibilityError != nil {
+		return "", nativeCompatibilityError
 	}
 	var out strings.Builder
 	var emit func(*Program, string) error
@@ -21,8 +21,8 @@ func (p *Program) NativeDeclarations(name string) (string, error) {
 				return fmt.Errorf("native regexp quantifier bounds above uint64 are not yet supported")
 			}
 			if i.look != nil {
-				if err := emit(i.look, fmt.Sprintf("%s_look_%d", name, index)); err != nil {
-					return err
+				if emitError := emit(i.look, fmt.Sprintf("%s_look_%d", name, index)); emitError != nil {
+					return emitError
 				}
 			}
 			if len(i.set.ranges) > 0 {
@@ -87,7 +87,28 @@ func (p *Program) NativeDeclarations(name string) (string, error) {
 			if i.max != nil {
 				hi = i.max.Uint64()
 			}
-			fmt.Fprintf(&out, "{%d,%d,%d,%d,%d,%d,%t,%t,%t,UINT64_C(%d),UINT64_C(%d),%s,%d,%s,%d,%s,%d,%s},\n", i.op, i.x, i.y, i.direction, nativeFlags(i.flags), i.assertion, i.negative, i.greedy, i.max == nil, lo, hi, rangeName, len(i.set.ranges), stringName, len(i.set.strings), idName, len(ids), lookName)
+			fmt.Fprintf(
+				&out,
+				"{%d,%d,%d,%d,%d,%d,%t,%t,%t,UINT64_C(%d),UINT64_C(%d),%s,%d,%s,%d,%s,%d,%s},\n",
+				i.op,
+				i.x,
+				i.y,
+				i.direction,
+				nativeFlags(i.flags),
+				i.assertion,
+				i.negative,
+				i.greedy,
+				i.max == nil,
+				lo,
+				hi,
+				rangeName,
+				len(i.set.ranges),
+				stringName,
+				len(i.set.strings),
+				idName,
+				len(ids),
+				lookName,
+			)
 		}
 		out.WriteString("};\n")
 		names := make([]string, 0, len(p.names))
@@ -129,7 +150,15 @@ func (p *Program) NativeDeclarations(name string) (string, error) {
 				out.WriteString("adamic_field_reference,")
 			}
 			out.WriteString("};\n")
-			fmt.Fprintf(&out, "static const adamic_shape %s_group_shape = {%d,%s_group_names,%s_group_references,&adamic_host_methods,%s_group_kinds};\n", name, len(names), name, name, name)
+			fmt.Fprintf(
+				&out,
+				"static const adamic_shape %s_group_shape = {%d,%s_group_names,%s_group_references,&adamic_host_methods,%s_group_kinds};\n",
+				name,
+				len(names),
+				name,
+				name,
+				name,
+			)
 		}
 		bits, filter := p.nativeFirstASCII()
 		prefix := p.nativePrefix()
@@ -173,17 +202,51 @@ func (p *Program) NativeDeclarations(name string) (string, error) {
 		out.WriteString(regularBody)
 		_, endAnchored := p.nativeBooleanWidth()
 		testPrefix := testName != "NULL" && !p.nativeAnchored() && !p.flags.Sticky && len(prefix) != 0 && !endAnchored
-		fmt.Fprintf(&out, "static const adamic_regex_program %s __attribute__((aligned(64))) = {%s_code,%s,%t,%d,%d,%d,%s,%d,%s,{UINT64_C(%d),UINT64_C(%d)},%t,%s,%d,%s,%t,%s,%s,%s,%d,%s};\n", name, name, testName, testPrefix, p.captures, p.repeats, nativeFlags(p.flags), groupNames, len(names), shape, bits[0], bits[1], filter, prefixName, len(prefix), fast, p.nativeAnchored(), ascii, regularName, behindName, len(behind), firstName)
+		fmt.Fprintf(
+			&out,
+			"static const adamic_regex_program %s __attribute__((aligned(64))) = {%s_code,%s,%t,%d,%d,%d,%s,%d,%s,{UINT64_C(%d),UINT64_C(%d)},%t,%s,%d,%s,%t,%s,%s,%s,%d,%s};\n",
+			name,
+			name,
+			testName,
+			testPrefix,
+			p.captures,
+			p.repeats,
+			nativeFlags(p.flags),
+			groupNames,
+			len(names),
+			shape,
+			bits[0],
+			bits[1],
+			filter,
+			prefixName,
+			len(prefix),
+			fast,
+			p.nativeAnchored(),
+			ascii,
+			regularName,
+			behindName,
+			len(behind),
+			firstName,
+		)
 		return nil
 	}
-	if err := emit(p, name); err != nil {
-		return "", err
+	if emitError := emit(p, name); emitError != nil {
+		return "", emitError
 	}
 	return out.String(), nil
 }
 func nativeFlags(f Flags) int {
 	result := 0
-	for bit, on := range []bool{f.IgnoreCase, f.Multiline, unicodeMode(f), f.Global, f.Sticky, f.HasIndices, f.UnicodeSets, f.DotAll} {
+	for bit, on := range []bool{
+		f.IgnoreCase,
+		f.Multiline,
+		unicodeMode(f),
+		f.Global,
+		f.Sticky,
+		f.HasIndices,
+		f.UnicodeSets,
+		f.DotAll,
+	} {
 		if on {
 			result |= 1 << bit
 		}

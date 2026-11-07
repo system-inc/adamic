@@ -25,16 +25,16 @@ func main() {
 		panic("checker CONFIG SITES OUTPUT")
 	}
 	var sites []site
-	data, err := os.ReadFile(os.Args[2])
-	if err != nil {
-		panic(err)
+	data, readError := os.ReadFile(os.Args[2])
+	if readError != nil {
+		panic(readError)
 	}
-	if err = json.Unmarshal(data, &sites); err != nil {
-		panic(err)
+	if decodeError := json.Unmarshal(data, &sites); decodeError != nil {
+		panic(decodeError)
 	}
-	p, err := bridge.Open(os.Args[1], nil)
-	if err != nil {
-		panic(err)
+	p, openError := bridge.Open(os.Args[1], nil)
+	if openError != nil {
+		panic(openError)
 	}
 	diagnostics := -1
 	if len(os.Args) == 5 {
@@ -42,7 +42,12 @@ func main() {
 			panic("unknown option")
 		}
 		ctx := context.Background()
-		diagnostics = len(p.Compiler.GetSyntacticDiagnostics(ctx, nil)) + len(p.Compiler.GetConfigFileParsingDiagnostics()) + len(p.Compiler.GetProgramDiagnostics()) + len(p.Compiler.GetGlobalDiagnostics(ctx)) + len(p.Compiler.GetBindDiagnostics(ctx, nil)) + len(p.Compiler.GetSemanticDiagnostics(ctx, nil))
+		diagnostics = len(p.Compiler.GetSyntacticDiagnostics(ctx, nil)) +
+			len(p.Compiler.GetConfigFileParsingDiagnostics()) +
+			len(p.Compiler.GetProgramDiagnostics()) +
+			len(p.Compiler.GetGlobalDiagnostics(ctx)) +
+			len(p.Compiler.GetBindDiagnostics(ctx, nil)) +
+			len(p.Compiler.GetSemanticDiagnostics(ctx, nil))
 	}
 	var rows []map[string]any
 	for _, r := range sites {
@@ -72,20 +77,35 @@ func main() {
 		var parts []map[string]any
 		if t.Flags()&checker.TypeFlagsUnion != 0 {
 			for _, member := range t.Types() {
-				parts = append(parts, map[string]any{"type": c.TypeToString(member), "flags": uint32(member.Flags()), "never": member.Flags()&checker.TypeFlagsNever != 0, "has_id": c.GetPropertyOfType(member, "id") != nil})
+				parts = append(parts, map[string]any{
+					"type":   c.TypeToString(member),
+					"flags":  uint32(member.Flags()),
+					"never":  member.Flags()&checker.TypeFlagsNever != 0,
+					"has_id": c.GetPropertyOfType(member, "id") != nil,
+				})
 			}
 		}
-		rows = append(rows, map[string]any{"id": fmt.Sprintf("%s:%d:%d", r.File, r.Line, r.Column), "type": c.TypeToString(t), "flags": uint32(t.Flags()), "never": t.Flags()&checker.TypeFlagsNever != 0, "relation": valueTrace(c, found, targetAt(c, found), "root"), "members": parts, "diagnostics": diagnostics, "census_source": r.Source, "census_target": r.Target})
+		rows = append(rows, map[string]any{
+			"id":            fmt.Sprintf("%s:%d:%d", r.File, r.Line, r.Column),
+			"type":          c.TypeToString(t),
+			"flags":         uint32(t.Flags()),
+			"never":         t.Flags()&checker.TypeFlagsNever != 0,
+			"relation":      valueTrace(c, found, targetAt(c, found), "root"),
+			"members":       parts,
+			"diagnostics":   diagnostics,
+			"census_source": r.Source,
+			"census_target": r.Target,
+		})
 		release()
 	}
-	out, err := os.Create(os.Args[3])
-	if err != nil {
-		panic(err)
+	out, createError := os.Create(os.Args[3])
+	if createError != nil {
+		panic(createError)
 	}
 	defer out.Close()
 	encoder := json.NewEncoder(out)
 	encoder.SetIndent("", "  ")
-	if err := encoder.Encode(rows); err != nil {
-		panic(err)
+	if encodeError := encoder.Encode(rows); encodeError != nil {
+		panic(encodeError)
 	}
 }

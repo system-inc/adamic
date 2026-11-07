@@ -31,18 +31,18 @@ func TestStatementsSmallRulings(test *testing.T) {
 		{"capture", "7\n", "a function value that captures the variable its own initializer declares", false},
 	} {
 		test.Run(probe.name, func(test *testing.T) {
-			path, pathErr := filepath.Abs(
+			path, pathError := filepath.Abs(
 				filepath.Join(repository, "internal/oracle/testdata/statements_small_stopped", probe.name+".a"),
 			)
-			if pathErr != nil {
-				test.Fatal(pathErr)
+			if pathError != nil {
+				test.Fatal(pathError)
 			}
 			node := onNode(test, path)
 			if node.exitCode != 0 || string(node.stdout) != probe.stdout || len(node.stderr) != 0 {
 				test.Fatalf("source Node: exit %d stdout %q stderr %q", node.exitCode, node.stdout, node.stderr)
 			}
-			program, err := lowered(test, path)
-			if err == nil {
+			program, loweredError := lowered(test, path)
+			if loweredError == nil {
 				native, _ := natively(test, program)
 				backend := onJavaScriptBackend(test, program)
 				test.Fatalf(
@@ -54,12 +54,12 @@ func TestStatementsSmallRulings(test *testing.T) {
 			}
 			var refusal *lower.Refused
 			var notYet *lower.NotYet
-			rightKind := errors.As(err, &notYet)
+			rightKind := errors.As(loweredError, &notYet)
 			if probe.refused {
-				rightKind = errors.As(err, &refusal)
+				rightKind = errors.As(loweredError, &refusal)
 			}
-			if !rightKind || !strings.Contains(err.Error(), probe.reason) {
-				test.Fatalf("want preserved stop %q, got %v", probe.reason, err)
+			if !rightKind || !strings.Contains(loweredError.Error(), probe.reason) {
+				test.Fatalf("want preserved stop %q, got %v", probe.reason, loweredError)
 			}
 		})
 	}

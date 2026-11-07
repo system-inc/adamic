@@ -107,8 +107,8 @@ type journalEntry struct {
 	// build's, keyed in its recipe (leanRecipeOf). Empty for buildcache's own lean builds.
 	LeanCaller string `json:"leanCaller,omitempty"`
 	// Handed and Temporary are a LeanProductOf build's handed paths, as absolute roots, and its process's temporary
-	// directory: the places a read of its may not be keyed under by its spelling (refusedHandedRead). Temporary is empty
-	// for every other build.
+	// directory: the places a read of its may not be keyed under by its spelling (refusedHandedRead). Temporary is
+	// empty for every other build.
 	Handed    []string `json:"handed,omitempty"`
 	Temporary string   `json:"temporary,omitempty"`
 }
@@ -139,12 +139,16 @@ func journal(entry journalEntry) {
 }
 
 func appendJournal(directory string, entry journalEntry) {
-	line, err := json.Marshal(entry)
-	if err != nil {
+	line, encodeError := json.Marshal(entry)
+	if encodeError != nil {
 		return
 	}
-	file, err := os.OpenFile(filepath.Join(directory, "journal.jsonl"), os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o644)
-	if err != nil {
+	file, openError := os.OpenFile(
+		filepath.Join(directory, "journal.jsonl"),
+		os.O_CREATE|os.O_APPEND|os.O_WRONLY,
+		0o644,
+	)
+	if openError != nil {
 		return
 	}
 	file.Write(append(line, '\n'))

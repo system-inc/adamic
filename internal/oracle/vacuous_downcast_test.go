@@ -43,13 +43,13 @@ func init() {
 // written about.
 func typeScriptTwin(test *testing.T, path string) string {
 	test.Helper()
-	source, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	twin := filepath.Join(test.TempDir(), strings.TrimSuffix(filepath.Base(path), ".a")+".ts")
-	if err := os.WriteFile(twin, source, 0o600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(twin, source, 0o600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return twin
 }
@@ -64,9 +64,9 @@ func typeScriptTwin(test *testing.T, path string) string {
 func TestVacuousDowncastsAreRefused(test *testing.T) {
 	test.Parallel()
 	directory := "internal/oracle/testdata/vacuous_downcast_refused"
-	entries, err := os.ReadDir(filepath.Join(repository, directory))
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(filepath.Join(repository, directory))
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -78,18 +78,18 @@ func TestVacuousDowncastsAreRefused(test *testing.T) {
 		path := directory + "/" + name
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			absolute, err := filepath.Abs(filepath.Join(repository, path))
-			if err != nil {
-				test.Fatal(err)
+			absolute, absolutePathError := filepath.Abs(filepath.Join(repository, path))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			_, err = lowered(test, absolute)
+			_, loweredError := lowered(test, absolute)
 			var refused *lower.Refused
-			if !errors.As(err, &refused) {
-				test.Fatalf("want a refusal, got %v", err)
+			if !errors.As(loweredError, &refused) {
+				test.Fatalf("want a refusal, got %v", loweredError)
 			}
-			expected, err := os.ReadFile(strings.TrimSuffix(absolute, ".a") + ".refused")
-			if err != nil {
-				test.Fatal(err)
+			expected, readError := os.ReadFile(strings.TrimSuffix(absolute, ".a") + ".refused")
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			got := strings.ReplaceAll(refused.Error(), strings.TrimSuffix(absolute, path), "")
 			if got != strings.TrimSpace(string(expected)) {

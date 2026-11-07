@@ -63,9 +63,9 @@ func cycleEqualityProduct(test *testing.T, path string) string {
 		cycleCompareProgramModes(test, path, modes...)
 		return os.WriteFile(filepath.Join(directory, "outcome"), []byte(expected), 0600)
 	})
-	data, err := os.ReadFile(filepath.Join(directory, "outcome"))
-	if err != nil || string(data) != expected {
-		test.Fatalf("cycle equality record for %s: %q, %v", path, data, err)
+	data, readError := os.ReadFile(filepath.Join(directory, "outcome"))
+	if readError != nil || string(data) != expected {
+		test.Fatalf("cycle equality record for %s: %q, %v", path, data, readError)
 	}
 	return directory
 }

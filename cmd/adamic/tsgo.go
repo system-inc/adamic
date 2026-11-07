@@ -25,11 +25,20 @@ func buildWithExports(path, output string, arguments []string, entryFunctions bo
 	return buildWithNativeExports(path, output, arguments, native.Build, entryFunctions)
 }
 
-func buildWithNative(path, output string, arguments []string, buildNative func(string, string, native.Options) error) int {
+func buildWithNative(
+	path, output string,
+	arguments []string,
+	buildNative func(string, string, native.Options) error,
+) int {
 	return buildWithNativeExports(path, output, arguments, buildNative, false)
 }
 
-func buildWithNativeExports(path, output string, arguments []string, buildNative func(string, string, native.Options) error, entryFunctions bool) int {
+func buildWithNativeExports(
+	path, output string,
+	arguments []string,
+	buildNative func(string, string, native.Options) error,
+	entryFunctions bool,
+) int {
 	// native links from inside its own temporary build directory and removes it, so a relative -o would name a path
 	// in there and the binary would go with it: the command exited 0 and left nothing (Language, Oct 26). Abs fails
 	// only when the working directory can't be read, which is the machine, so 3 (#z1ba56x's ruling).
@@ -98,15 +107,15 @@ func buildWithNativeExports(path, output string, arguments []string, buildNative
 		return 1
 	}
 	if options.Debug {
-		entry, err := filepath.Abs(path)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "adamic: %v\n", err)
+		entry, absolutePathError := filepath.Abs(path)
+		if absolutePathError != nil {
+			fmt.Fprintf(os.Stderr, "adamic: %v\n", absolutePathError)
 			return 3
 		}
 		options.DebugDirectory = filepath.Dir(entry)
 	}
-	if err := native.ValidateOptions(options); err != nil {
-		fmt.Fprintf(os.Stderr, "adamic: %v\n", err)
+	if validateOptionsError := native.ValidateOptions(options); validateOptionsError != nil {
+		fmt.Fprintf(os.Stderr, "adamic: %v\n", validateOptionsError)
 		return 1
 	}
 	var program *ir.Program

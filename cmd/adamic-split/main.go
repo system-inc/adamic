@@ -18,18 +18,18 @@ func run(args []string, output, errors io.Writer) int {
 		fmt.Fprintln(errors, "usage: adamic-split <file.a>")
 		return 2
 	}
-	source, err := load.Load(args)
-	if err != nil {
-		fmt.Fprintln(errors, err)
+	source, loadError := load.Load(args)
+	if loadError != nil {
+		fmt.Fprintln(errors, loadError)
 		return 1
 	}
-	program, err := lower.Lower(context.Background(), source)
-	if err != nil {
-		fmt.Fprintln(errors, err)
+	program, lowerError := lower.Lower(context.Background(), source)
+	if lowerError != nil {
+		fmt.Fprintln(errors, lowerError)
 		return 1
 	}
-	if err := split.Print(output, split.Analyze(program)); err != nil {
-		fmt.Fprintln(errors, err)
+	if printError := split.Print(output, split.Analyze(program)); printError != nil {
+		fmt.Fprintln(errors, printError)
 		return 1
 	}
 	return 0

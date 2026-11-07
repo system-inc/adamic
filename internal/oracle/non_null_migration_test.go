@@ -14,9 +14,9 @@ import (
 
 func TestMigratedNonNullFixturesRemainCovered(test *testing.T) {
 	test.Parallel()
-	data, err := os.ReadFile(filepath.Join(repository, "docs/verification/non-null-fixture-migration.json"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(repository, "docs/verification/non-null-fixture-migration.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var report struct {
 		Moves []struct {
@@ -24,23 +24,23 @@ func TestMigratedNonNullFixturesRemainCovered(test *testing.T) {
 			Counted          bool `json:"had_count_row"`
 		}
 	}
-	if err := json.Unmarshal(data, &report); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &report); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if len(report.Moves) != 50 {
 		test.Fatalf("want 50 preserved programs, got %d", len(report.Moves))
 	}
-	counts, err := recordedCounts()
-	if err != nil {
-		test.Fatal(err)
+	counts, recordedCountsError := recordedCounts()
+	if recordedCountsError != nil {
+		test.Fatal(recordedCountsError)
 	}
-	predicateKeys, err := predicateCountKeys()
-	if err != nil {
-		test.Fatal(err)
+	predicateKeys, predicateCountKeysError := predicateCountKeys()
+	if predicateCountKeysError != nil {
+		test.Fatal(predicateCountKeysError)
 	}
-	predicateCounts, err := readCountRows(countsDirectory, "predicates", predicateKeys)
-	if err != nil {
-		test.Fatal(err)
+	predicateCounts, readCountRowsError := readCountRows(countsDirectory, "predicates", predicateKeys)
+	if readCountRowsError != nil {
+		test.Fatal(readCountRowsError)
 	}
 	registered := map[string]bool{}
 	for _, fixture := range fixtures {
@@ -48,9 +48,9 @@ func TestMigratedNonNullFixturesRemainCovered(test *testing.T) {
 	}
 	for _, move := range report.Moves {
 		test.Run(move.To, func(test *testing.T) {
-			source, err := os.ReadFile(filepath.Join(repository, move.To))
-			if err != nil {
-				test.Fatal(err)
+			source, readError := os.ReadFile(filepath.Join(repository, move.To))
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			if got := fmt.Sprintf("%x", sha256.Sum256(source)); got != move.SHA256 {
 				test.Fatalf("program changed while migrating %s: %s", move.From, got)
@@ -75,12 +75,12 @@ func TestNonNullLiteralUnionInitializers(test *testing.T) {
 		test.Run(literal, func(test *testing.T) {
 			path := filepath.Join(test.TempDir(), "main.ts")
 			source := "let value: string | number = " + literal + "!; value = 1; console.log(value.toString());\n"
-			if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+				test.Fatal(writeError)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			want := onSliceNode(test, path)
 			native, binary := nativelyUncached(test, program)
@@ -100,9 +100,9 @@ func TestNonNullLiteralUnionInitializers(test *testing.T) {
 // As .ts programs they stop at the assertion itself, before any later read.
 func assertMigratedNonNullCheck(test *testing.T, path, expression, stdout string, mutant bool) {
 	test.Helper()
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	if program.NonNullChecks.Checked == 0 {
 		test.Fatal("migrated fixture lost its inserted non-null check")

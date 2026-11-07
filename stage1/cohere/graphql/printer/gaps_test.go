@@ -22,17 +22,17 @@ func TestPrinterConstructorGap(test *testing.T) {
 	if result.exitCode != 0 || string(result.stdout) != "ready\n" {
 		test.Fatalf("Node: %+v", result)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	_, err = lower.Lower(context.Background(), program)
+	_, lowerError := lower.Lower(context.Background(), program)
 	var refused *lower.Refused
-	if !errors.As(err, &refused) ||
+	if !errors.As(lowerError, &refused) ||
 		!strings.Contains(refused.What, "this escaping a constructor before every field is set") {
-		test.Fatalf("gap changed; update GAPS.md and remove workaround: %v", err)
+		test.Fatalf("gap changed; update GAPS.md and remove workaround: %v", lowerError)
 	}
-	test.Log(err)
+	test.Log(lowerError)
 }
 
 const printerWhitespaceWitnessShards = 5
@@ -79,14 +79,14 @@ func TestPrinterWhitespacePlantedDisagreement(test *testing.T) {
 		}
 		encoded, _ := json.Marshal(answer.String())
 		result := execute(test, nil, "node", "-e", "process.stdout.write("+string(encoded)+")")
-		err := printerShardDisagreement(number, shard, result)
-		if err == nil {
+		printerShardDisagreementError := printerShardDisagreement(number, shard, result)
+		if printerShardDisagreementError == nil {
 			continue
 		}
-		if number != whitespaceOwner(planted) || !strings.Contains(err.Error(), planted) {
-			test.Fatalf("wrong owner: %v", err)
+		if number != whitespaceOwner(planted) || !strings.Contains(printerShardDisagreementError.Error(), planted) {
+			test.Fatalf("wrong owner: %v", printerShardDisagreementError)
 		}
-		test.Log(err)
+		test.Log(printerShardDisagreementError)
 		caught++
 	}
 	if caught != 1 {
@@ -103,8 +103,8 @@ func TestPrinterWhitespaceShardGrowth(test *testing.T) {
 		test.Fatal("growth changed shard count")
 	}
 	for _, cases := range [][]printerCase{original, grown} {
-		if err := printerShardUnion(cases, whitespaceShards(cases)); err != nil {
-			test.Fatal(err)
+		if printerShardUnionError := printerShardUnion(cases, whitespaceShards(cases)); printerShardUnionError != nil {
+			test.Fatal(printerShardUnionError)
 		}
 	}
 	for number, shard := range before {

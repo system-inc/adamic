@@ -23,13 +23,15 @@ func TestDetachedOwnInheritedMutant(test *testing.T) {
 	test.Parallel()
 	for _, name := range []string{"records", "objects"} {
 		test.Run(name, func(test *testing.T) {
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/detached_own_"+name+".a"))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/detached_own_"+name+".a"),
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			p, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			p, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			code := javascript.JavaScript(p)
 			changed := strings.ReplaceAll(code, "Object.hasOwn(", "detachedOwnMutant(")
@@ -38,8 +40,8 @@ func TestDetachedOwnInheritedMutant(test *testing.T) {
 			}
 			changed = "const detachedOwnMutant = (target,key) => key in target;\n" + changed
 			file := filepath.Join(test.TempDir(), "mutant.mjs")
-			if err := os.WriteFile(file, []byte(changed), 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(file, []byte(changed), 0644); writeError != nil {
+				test.Fatal(writeError)
 			}
 			got, want := onNode(test, file), onNode(test, path)
 			if got.exitCode != 0 || len(got.stderr) != 0 || disagreement(want, got) != "stdout differs" {
@@ -52,13 +54,15 @@ func TestDetachedOwnInheritedMutant(test *testing.T) {
 
 func TestDetachedOwnReadinessMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/detached_own_unready.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/detached_own_unready.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	p, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	p, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	changed := false
 	for i := range p.Functions {

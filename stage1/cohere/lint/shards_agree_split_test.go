@@ -148,9 +148,9 @@ func testShardsAgreeHeavyPass(test *testing.T, name, label string, countOnly boo
 	count = testShardsAgreeCount(count)
 	test.Logf("union %d cases, heavy %s: %d cases", leaf.Union, name, leaf.Rows)
 	want, wantCount := testShardsAgreeLeafReferences(test, leaf)
-	got, err := shards.Run(leaf.Binary, leaf.Manifest, count, countOnly)
-	if err != nil {
-		test.Fatal(err)
+	got, runError := shards.Run(leaf.Binary, leaf.Manifest, count, countOnly)
+	if runError != nil {
+		test.Fatal(runError)
 	}
 	if countOnly {
 		if string(got) != string(wantCount) {
@@ -190,49 +190,53 @@ func testShardsAgreeLeafFor(test *testing.T, products testShardsAgreeProducts, r
 			extension string
 			path      *string
 		}{{".output", &leaf.Output}, {".count", &leaf.Count}} {
-			data, err := os.ReadFile(filepath.Join(references, label+file.extension))
-			if err != nil {
-				test.Fatal(err)
+			data, readError := os.ReadFile(filepath.Join(references, label+file.extension))
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			*file.path = filepath.Join(directory, label+file.extension)
-			if err = os.WriteFile(*file.path, []byte(buildcache.Absolute(string(data))), 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(
+				*file.path,
+				[]byte(buildcache.Absolute(string(data))),
+				0644,
+			); writeError != nil {
+				test.Fatal(writeError)
 			}
 		}
 	}
-	data, err := json.Marshal(leaf)
-	if err != nil {
-		test.Fatal(err)
+	data, encodeError := json.Marshal(leaf)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	path := filepath.Join(directory, "leaf.json")
-	if err = os.WriteFile(path, data, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, data, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return path
 }
 
 func testShardsAgreeLeafRead(test *testing.T) testShardsAgreeLeaf {
 	test.Helper()
-	data, err := os.ReadFile(os.Getenv("ADAMIC_SHARDS_AGREE_READY"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(os.Getenv("ADAMIC_SHARDS_AGREE_READY"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var leaf testShardsAgreeLeaf
-	if err = json.Unmarshal(data, &leaf); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &leaf); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	return leaf
 }
 
 func testShardsAgreeLeafReferences(test *testing.T, leaf testShardsAgreeLeaf) ([]byte, []byte) {
 	test.Helper()
-	output, err := os.ReadFile(leaf.Output)
-	if err != nil {
-		test.Fatal(err)
+	output, readError := os.ReadFile(leaf.Output)
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	count, err := os.ReadFile(leaf.Count)
-	if err != nil {
-		test.Fatal(err)
+	count, readError := os.ReadFile(leaf.Count)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return output, count
 }
@@ -310,13 +314,13 @@ func testShardsAgreeUpstream(test *testing.T) []string {
 func testShardsAgreeLowered(test *testing.T, directory string) string {
 	return buildcache.Product(test, testShardsAgreeInputs(test, "lowered"), func(d string) error {
 		prepareRegistry(test, directory)
-		program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-		if err != nil {
-			return err
+		program, loadError := load.Load([]string{filepath.Join(directory, "main.ts")})
+		if loadError != nil {
+			return loadError
 		}
-		lowered, err := lower.Lower(context.Background(), program)
-		if err != nil {
-			return err
+		lowered, lowerError := lower.Lower(context.Background(), program)
+		if lowerError != nil {
+			return lowerError
 		}
 		return os.WriteFile(filepath.Join(d, "main.c"), []byte(native.C(lowered)), 0644)
 	})
@@ -326,9 +330,9 @@ func testShardsAgreeBinary(test *testing.T, directory string) string {
 	inputs := testShardsAgreeInputs(test, "native")
 	// The lowered input is already content-addressed by all its source inputs.
 	d := buildcache.Product(test, inputs, func(d string) error {
-		data, err := os.ReadFile(filepath.Join(c, "main.c"))
-		if err != nil {
-			return err
+		data, readError := os.ReadFile(filepath.Join(c, "main.c"))
+		if readError != nil {
+			return readError
 		}
 		return native.Build(string(data), filepath.Join(d, "scanner"), native.Options{})
 	})
@@ -347,9 +351,9 @@ func testShardsAgreeKey(row string) string {
 }
 func testShardsAgreeOwner(test *testing.T, row string) int {
 	test.Helper()
-	data, err := os.ReadFile(strings.SplitN(row, "\t", 2)[0])
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(strings.SplitN(row, "\t", 2)[0])
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return testShardsAgreeOwnerBytes(row, data)
 }
@@ -451,8 +455,8 @@ func testShardsAgreePrepare(test *testing.T) string {
 			generatedPaths[strings.SplitN(row, "\t", 2)[0]] = true
 		}
 		rows := testShardsAgreeRows(test, generatedRows)
-		if err := os.Mkdir(filepath.Join(d, "generated"), 0755); err != nil {
-			return err
+		if createDirectoryError := os.Mkdir(filepath.Join(d, "generated"), 0755); createDirectoryError != nil {
+			return createDirectoryError
 		}
 		// generated(t) owns temporary sources: copy them into this persistent product.
 		copies := map[string]string{}
@@ -465,12 +469,12 @@ func testShardsAgreePrepare(test *testing.T) string {
 				target, ok := copies[original]
 				if !ok {
 					target = filepath.Join(d, "generated", base)
-					data, err := os.ReadFile(original)
-					if err != nil {
-						return err
+					data, readError := os.ReadFile(original)
+					if readError != nil {
+						return readError
 					}
-					if err = os.WriteFile(target, data, 0644); err != nil {
-						return err
+					if writeError := os.WriteFile(target, data, 0644); writeError != nil {
+						return writeError
 					}
 					copies[original] = target
 				}
@@ -486,9 +490,9 @@ func testShardsAgreePrepare(test *testing.T) string {
 			heavy[i] = testShardsAgreeRecoveryRows(test, oracle, heavy[i], sources)
 		}
 		products := testShardsAgreeProducts{Root: d, Binary: binary, Rows: rows, Buckets: buckets, Heavy: heavy}
-		data, err := json.Marshal(products)
-		if err != nil {
-			return err
+		data, encodeError := json.Marshal(products)
+		if encodeError != nil {
+			return encodeError
 		}
 		// This product, the scanner, the capture's cases and TypeScript's sources are each named by a root the reader
 		// supplies: Product publishes this scratch directory by rename, and a runner holds all four elsewhere
@@ -544,9 +548,9 @@ func testShardsAgreePreparedInputs(test *testing.T) (buildcache.Inputs, map[stri
 		}
 		sources[path] = data
 		// Named inside the TypeScript checkout, not by where this machine keeps it (#t37sw0f).
-		relative, err := filepath.Rel(source, path)
-		if err != nil {
-			test.Fatal(err)
+		relative, relativePathError := filepath.Rel(source, path)
+		if relativePathError != nil {
+			test.Fatal(relativePathError)
 		}
 		fmt.Fprintf(hash, "%s %d\n", filepath.ToSlash(relative), len(data))
 		hash.Write(data)
@@ -664,13 +668,13 @@ func testShardsAgreeReferences(test *testing.T) string {
 }
 func testShardsAgreeRead(test *testing.T, d string) testShardsAgreeProducts {
 	test.Helper()
-	data, err := os.ReadFile(filepath.Join(d, "prepared.json"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(d, "prepared.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var products testShardsAgreeProducts
-	if err = json.Unmarshal([]byte(buildcache.Absolute(string(data))), &products); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal([]byte(buildcache.Absolute(string(data))), &products); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	products.Root = d
 	return products
@@ -743,22 +747,22 @@ func TestShardsRunEmptyShardsPrintNothing(test *testing.T) {
 		"#!/bin/sh\ncase \"$*\" in *\"--shard 0/\"*) ;; *) printf x ;; esac\nexec '%s' \"$@\"\n",
 		products.Binary,
 	)
-	if err := executable.Write(planted, []byte(script)); err != nil {
-		test.Fatal(err)
+	if writeError := executable.Write(planted, []byte(script)); writeError != nil {
+		test.Fatal(writeError)
 	}
 	for _, countOnly := range []bool{false, true} {
-		one, err := shards.Run(products.Binary, path, 1, countOnly)
-		if err != nil {
-			test.Fatal(err)
+		one, runError := shards.Run(products.Binary, path, 1, countOnly)
+		if runError != nil {
+			test.Fatal(runError)
 		}
-		many, err := shards.Run(products.Binary, path, count, countOnly)
-		if err != nil {
-			test.Fatal(err)
+		many, runError := shards.Run(products.Binary, path, count, countOnly)
+		if runError != nil {
+			test.Fatal(runError)
 		}
 		if !bytes.Equal(one, many) {
 			test.Fatalf("count only %t: %d shards over one row printed %q, one shard %q", countOnly, count, many, one)
 		}
-		if _, err := shards.Run(planted, path, count, countOnly); err == nil {
+		if _, runError := shards.Run(planted, path, count, countOnly); runError == nil {
 			test.Fatalf("count only %t: an empty shard that prints a byte passed", countOnly)
 		}
 	}
@@ -784,17 +788,17 @@ func testShardsAgreeRun(directory string, environment []string, name string, arg
 		command = toolchain.CommandIn(directory, name, args...)
 		command.Env = append(command.Env, environment...)
 	}
-	output, err := os.CreateTemp(sharedDirectory, "stdout-")
-	if err != nil {
-		return nil, err
+	output, temporaryFileError := os.CreateTemp(sharedDirectory, "stdout-")
+	if temporaryFileError != nil {
+		return nil, temporaryFileError
 	}
 	defer os.Remove(output.Name())
 	defer output.Close()
 	command.Stdout = output
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
-	if err := command.Run(); err != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
-		return nil, fmt.Errorf("%s %v: %v\n%s", name, args, err, &stderr)
+	if runError := command.Run(); runError != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
+		return nil, fmt.Errorf("%s %v: %v\n%s", name, args, runError, &stderr)
 	}
 	return os.ReadFile(output.Name())
 }
@@ -805,9 +809,16 @@ func testShardsAgreeRecoveryRows(test *testing.T, oracle string, rows []string, 
 		return rows
 	}
 	copied, _ := testShardsAgreeSourceSnapshots(test, rows, sources)
-	output, err := testShardsAgreeRun("", nil, oracle, "--manifest", manifest(test, copied), "--diagnostics")
-	if err != nil {
-		test.Fatal(err)
+	output, testShardsAgreeRunError := testShardsAgreeRun(
+		"",
+		nil,
+		oracle,
+		"--manifest",
+		manifest(test, copied),
+		"--diagnostics",
+	)
+	if testShardsAgreeRunError != nil {
+		test.Fatal(testShardsAgreeRunError)
 	}
 	answer := execution{output: output}
 	flags := strings.Fields(string(answer.output))
@@ -856,11 +867,11 @@ func testShardsAgreeSourceSnapshots(
 		target, ok := paths[fields[0]]
 		if !ok {
 			target = filepath.Join(directory, fmt.Sprint(i), filepath.Base(fields[0]))
-			if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {
-				test.Fatal(err)
+			if createDirectoryError := os.MkdirAll(filepath.Dir(target), 0755); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
-			if err := os.WriteFile(target, data, 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(target, data, 0644); writeError != nil {
+				test.Fatal(writeError)
 			}
 			paths[fields[0]] = target
 			replacements = append(replacements, replacement{[]byte(target), []byte(fields[0])})
@@ -893,23 +904,23 @@ func TestShardsAgree_SourceSnapshotsMatchGo(test *testing.T) {
 	copied, restore := testShardsAgreeSourceSnapshots(test, rows, sources)
 	oracle := lintGoOracleProduct(test)
 	for _, args := range [][]string{nil, {"--count"}} {
-		want, err := testShardsAgreeRun(
+		want, testShardsAgreeRunError := testShardsAgreeRun(
 			"",
 			nil,
 			oracle,
 			append([]string{"--manifest", manifest(test, rows)}, args...)...,
 		)
-		if err != nil {
-			test.Fatal(err)
+		if testShardsAgreeRunError != nil {
+			test.Fatal(testShardsAgreeRunError)
 		}
-		got, err := testShardsAgreeRun(
+		got, testShardsAgreeRunError := testShardsAgreeRun(
 			"",
 			nil,
 			oracle,
 			append([]string{"--manifest", manifest(test, copied)}, args...)...,
 		)
-		if err != nil {
-			test.Fatal(err)
+		if testShardsAgreeRunError != nil {
+			test.Fatal(testShardsAgreeRunError)
 		}
 		if !bytes.Equal(restore(got), want) {
 			test.Fatalf("source snapshot differs from Go for %v", args)

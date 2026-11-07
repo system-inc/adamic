@@ -78,14 +78,14 @@ const plantedMinimum = `function first(list: number[]): number {
 func TestReduceKeepsTheSignature(test *testing.T) {
 	test.Parallel()
 	directory := test.TempDir()
-	checkout, err := PrepareBuilt("../..", buildcache.Adamic(test), filepath.Join(directory, "checkout"))
-	if err != nil {
-		test.Fatal(err)
+	checkout, prepareBuiltError := PrepareBuilt("../..", buildcache.Adamic(test), filepath.Join(directory, "checkout"))
+	if prepareBuiltError != nil {
+		test.Fatal(prepareBuiltError)
 	}
 	original := checkout.Observe(planted, "program.a", filepath.Join(directory, "original"), "")
-	signature, err := Derive(original)
-	if err != nil {
-		test.Fatal(err)
+	signature, deriveError := Derive(original)
+	if deriveError != nil {
+		test.Fatal(deriveError)
 	}
 	for _, name := range []string{"signature", "reduction"} {
 		test.Run(name, func(test *testing.T) {

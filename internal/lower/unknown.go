@@ -35,7 +35,9 @@ func (l *lowering) inProperty(node *ast.Node) (ir.Expression, error) {
 	// "key" in value narrows a union of object types to the members that declare the key, and any
 	// object carrying that key passes, so the narrowed member's fields would be read on trust. The
 	// sound use is presence on an unknown or single object type, where reads stay dynamic.
-	if right := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(binary.Right)); right.Flags()&checker.TypeFlagsUnion != 0 {
+	if right := l.checker.GetNonNullableType(
+		l.checker.GetTypeAtLocation(binary.Right),
+	); right.Flags()&checker.TypeFlagsUnion != 0 {
 		objects := 0
 		for _, member := range right.Types() {
 			if member.Flags()&checker.TypeFlagsObject != 0 {
@@ -43,13 +45,21 @@ func (l *lowering) inProperty(node *ast.Node) (ir.Expression, error) {
 			}
 		}
 		if objects > 1 {
-			return nil, &Refused{Where: l.program.Where(node), What: "in that narrows a union of object types (any object with the key passes)", Fix: "use a discriminant, or a Map"}
+			return nil, &Refused{
+				Where: l.program.Where(node),
+				What:  "in that narrows a union of object types (any object with the key passes)",
+				Fix:   "use a discriminant, or a Map",
+			}
 		}
 	}
 	if checker.IsTupleType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(binary.Right))) {
 		return nil, l.notYet(binary.Right, "in on a tuple (array presence metadata)")
 	}
-	if key.Text() == "stack" || key.Text() == "cause" || key.Text() == "errno" || key.Text() == "syscall" || key.Text() == "path" {
+	if key.Text() == "stack" ||
+		key.Text() == "cause" ||
+		key.Text() == "errno" ||
+		key.Text() == "syscall" ||
+		key.Text() == "path" {
 		return nil, l.notYet(key, "in on an Error internal or optional property (host descriptor metadata)")
 	}
 	if reason := l.presenceHazard(key.Text()); reason != "" {
@@ -58,9 +68,9 @@ func (l *lowering) inProperty(node *ast.Node) (ir.Expression, error) {
 	if l.classes[l.symbol(ast.SkipParentheses(binary.Right))] != nil {
 		return nil, l.notYet(binary.Right, "in on a class constructor (static property presence descriptors)")
 	}
-	object, err := l.expression(binary.Right)
-	if err != nil {
-		return nil, err
+	object, expressionError := l.expression(binary.Right)
+	if expressionError != nil {
+		return nil, expressionError
 	}
 	if object.Type() != ir.Object && object.Type() != ir.Array && object.Type() != ir.Union {
 		return nil, l.notYet(binary.Right, "in on this runtime representation")
@@ -73,7 +83,10 @@ func (l *lowering) dynamicProperty(node *ast.Node, object ir.Expression, name st
 		return nil, l.notYet(node, "a dynamic property name containing NUL (native shape names)")
 	}
 	if l.dynamicReadHazard(name) {
-		return nil, l.notYet(node, "a dynamic getter or method read, or a nullable field (runtime dispatch, slot tags and narrowed rereads)")
+		return nil, l.notYet(
+			node,
+			"a dynamic getter or method read, or a nullable field (runtime dispatch, slot tags and narrowed rereads)",
+		)
 	}
 	// Prototype function values and dynamic array elements need callable and element metadata.
 	switch name {
@@ -81,9 +94,9 @@ func (l *lowering) dynamicProperty(node *ast.Node, object ir.Expression, name st
 		return nil, l.notYet(node, "a dynamic prototype property value (intrinsic identity and ToPrimitive)")
 	}
 	value := ir.Expression(ir.DynamicProperty{Object: object, Name: name})
-	of, err := l.typeOf(node)
-	if err != nil {
-		return nil, err
+	of, typeOfError := l.typeOf(node)
+	if typeOfError != nil {
+		return nil, typeOfError
 	}
 	if of != ir.Union {
 		value = ir.Narrow{Value: value, To: of}
@@ -98,9 +111,12 @@ func (l *lowering) dynamicScalarProperty(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
 	if ast.IsIdentifier(node) {
 		symbol := l.symbol(node)
-		if symbol != nil && len(symbol.Declarations) == 1 && symbol.Declarations[0].Kind == ast.KindVariableDeclaration {
+		if symbol != nil &&
+			len(symbol.Declarations) == 1 &&
+			symbol.Declarations[0].Kind == ast.KindVariableDeclaration {
 			declaration := symbol.Declarations[0]
-			if declaration.Parent.Flags&ast.NodeFlagsConst != 0 && declaration.AsVariableDeclaration().Initializer != nil {
+			if declaration.Parent.Flags&ast.NodeFlagsConst != 0 &&
+				declaration.AsVariableDeclaration().Initializer != nil {
 				node = ast.SkipParentheses(declaration.AsVariableDeclaration().Initializer)
 			}
 		}
@@ -109,14 +125,16 @@ func (l *lowering) dynamicScalarProperty(node *ast.Node) bool {
 		return false
 	}
 	name := node.Name().Text()
-	modules, err := l.moduleOrder(l.program.Files()[0])
-	if err != nil {
+	modules, moduleOrderError := l.moduleOrder(l.program.Files()[0])
+	if moduleOrderError != nil {
 		return false
 	}
 	known := true
 	var visit ast.Visitor
 	visit = func(candidate *ast.Node) bool {
-		if candidate.Kind == ast.KindObjectLiteralExpression || candidate.Kind == ast.KindNewExpression || candidate.Kind == ast.KindArrayLiteralExpression {
+		if candidate.Kind == ast.KindObjectLiteralExpression ||
+			candidate.Kind == ast.KindNewExpression ||
+			candidate.Kind == ast.KindArrayLiteralExpression {
 			if field := l.checker.GetPropertyOfType(l.checker.GetTypeAtLocation(candidate), name); field != nil {
 				proven := l.checker.GetTypeOfSymbol(field)
 				if !l.writable(proven) {
@@ -150,7 +168,9 @@ func (l *lowering) unknownView(node *ast.Node, own, contextual *checker.Type) er
 		if l.librarySymbol(l.memberSymbol(callee)) {
 			return nil
 		}
-		if callee.Kind == ast.KindPropertyAccessExpression && callee.Name().Text() == "stringify" && l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "JSON") {
+		if callee.Kind == ast.KindPropertyAccessExpression &&
+			callee.Name().Text() == "stringify" &&
+			l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "JSON") {
 			return nil
 		}
 	}
@@ -170,11 +190,17 @@ func (l *lowering) unknownView(node *ast.Node, own, contextual *checker.Type) er
 	}
 	for _, field := range l.checker.GetPropertiesOfType(present) {
 		if l.includesNull(l.checker.GetTypeOfSymbol(field)) {
-			return l.notYet(node, "an object with a nullable field viewed as unknown or object (null and undefined slot tags)")
+			return l.notYet(
+				node,
+				"an object with a nullable field viewed as unknown or object (null and undefined slot tags)",
+			)
 		}
 	}
 	if l.reaches(present, l.nullableReferenceArray, map[*checker.Type]bool{}) {
-		return l.notYet(node, "an array with a nullable element viewed as unknown or object (null and undefined element tags)")
+		return l.notYet(
+			node,
+			"an array with a nullable element viewed as unknown or object (null and undefined element tags)",
+		)
 	}
 	if checker.IsTupleType(present) {
 		return l.notYet(node, "a tuple viewed as unknown or object (array presence metadata)")
@@ -184,8 +210,22 @@ func (l *lowering) unknownView(node *ast.Node, own, contextual *checker.Type) er
 	if l.reaches(present, variableTuple, map[*checker.Type]bool{}) {
 		return l.notYet(node, "a tuple with optional or rest elements viewed as unknown or object (tuple length)")
 	}
-	if l.isLibraryType(present, "Map", "ReadonlyMap", "Set", "ReadonlySet", "RegExp", "Date", "Stats", "Hash", "Buffer") {
-		return l.notYet(node, "an opaque host or collection value viewed as unknown or object (dynamic property metadata)")
+	if l.isLibraryType(
+		present,
+		"Map",
+		"ReadonlyMap",
+		"Set",
+		"ReadonlySet",
+		"RegExp",
+		"Date",
+		"Stats",
+		"Hash",
+		"Buffer",
+	) {
+		return l.notYet(
+			node,
+			"an opaque host or collection value viewed as unknown or object (dynamic property metadata)",
+		)
 	}
 	return nil
 }
@@ -263,7 +303,8 @@ func (l *lowering) nullableReference(element *checker.Type) bool {
 // as one written undefined is, so [1] and [1, undefined] of [number, string?] are alike natively, where
 // Node's lengths are 1 and 2. The static read refuses that length too (tupleLength).
 func variableTuple(proven *checker.Type) bool {
-	return checker.IsTupleType(proven) && checker.TupleType_combinedFlags(proven.TargetTupleType())&checker.ElementFlagsNonRequired != 0
+	return checker.IsTupleType(proven) &&
+		checker.TupleType_combinedFlags(proven.TargetTupleType())&checker.ElementFlagsNonRequired != 0
 }
 
 // A key that could denote a getter or a prototype method cannot yet be read dynamically.
@@ -278,15 +319,18 @@ func (l *lowering) dynamicReadHazard(name string) bool {
 			}
 		}
 	}
-	modules, err := l.moduleOrder(l.program.Files()[0])
-	if err != nil {
+	modules, moduleOrderError := l.moduleOrder(l.program.Files()[0])
+	if moduleOrderError != nil {
 		return true
 	}
 	nullable := false
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
 		if node.Kind == ast.KindObjectLiteralExpression || node.Kind == ast.KindNewExpression {
-			if field := l.checker.GetPropertyOfType(l.checker.GetTypeAtLocation(node), name); field != nil && l.includesNull(l.checker.GetTypeOfSymbol(field)) {
+			if field := l.checker.GetPropertyOfType(
+				l.checker.GetTypeAtLocation(node),
+				name,
+			); field != nil && l.includesNull(l.checker.GetTypeOfSymbol(field)) {
 				nullable = true
 			}
 		}
@@ -301,8 +345,8 @@ func (l *lowering) dynamicReadHazard(name string) bool {
 
 // Native absent-spread slots and ambient class fields are storage, not proof of JS presence.
 func (l *lowering) presenceHazard(name string) string {
-	modules, err := l.moduleOrder(l.program.Files()[0])
-	if err != nil {
+	modules, moduleOrderError := l.moduleOrder(l.program.Files()[0])
+	if moduleOrderError != nil {
 		return "runtime shapes are not known"
 	}
 	reason := ""
@@ -310,7 +354,8 @@ func (l *lowering) presenceHazard(name string) string {
 	visit = func(node *ast.Node) bool {
 		if node.Kind == ast.KindObjectLiteralExpression {
 			for _, property := range node.AsObjectLiteralExpression().Properties.Nodes {
-				if property.Kind == ast.KindSpreadAssignment && l.includesUndefined(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression)) {
+				if property.Kind == ast.KindSpreadAssignment &&
+					l.includesUndefined(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression)) {
 					reason = "a possibly absent spread has no property presence descriptors"
 				}
 			}
@@ -319,17 +364,26 @@ func (l *lowering) presenceHazard(name string) string {
 			for _, member := range node.Members() {
 				if member.Kind == ast.KindMethodDeclaration && member.Name().Text() == name {
 					for _, parameter := range member.Parameters() {
-						if held, known := l.representation(l.checker.GetTypeAtLocation(parameter.Name())); known && slotless(held) {
+						if held, known := l.representation(
+							l.checker.GetTypeAtLocation(parameter.Name()),
+						); known && slotless(held) {
 							reason = "a method's presence is not in its native dispatch table"
 						}
 					}
-					for _, signature := range l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(member), checker.SignatureKindCall) {
-						if held, known := l.representation(l.checker.GetReturnTypeOfSignature(signature)); known && slotless(held) {
+					for _, signature := range l.checker.GetSignaturesOfType(
+						l.checker.GetTypeAtLocation(member),
+						checker.SignatureKindCall,
+					) {
+						if held, known := l.representation(
+							l.checker.GetReturnTypeOfSignature(signature),
+						); known && slotless(held) {
 							reason = "a method's presence is not in its native dispatch table"
 						}
 					}
 				}
-				if member.Name() != nil && member.Name().Text() == name && ast.HasSyntacticModifier(member, ast.ModifierFlagsAmbient) {
+				if member.Name() != nil &&
+					member.Name().Text() == name &&
+					ast.HasSyntacticModifier(member, ast.ModifierFlagsAmbient) {
 					reason = "an ambient class field has no JavaScript own property"
 				}
 			}

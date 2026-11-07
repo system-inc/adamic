@@ -16,9 +16,9 @@ func TestOptionalAfterCallFlowEdges(test *testing.T) {
 			if instruction == nil || instruction.Expression == nil {
 				continue
 			}
-			encoded, err := json.Marshal(instruction.Expression)
-			if err != nil {
-				test.Fatal(err)
+			encoded, encodeError := json.Marshal(instruction.Expression)
+			if encodeError != nil {
+				test.Fatal(encodeError)
 			}
 			// Independently select the inserted required-read error from the real fixture.
 			if !strings.Contains(string(encoded), "TypeError: Cannot read properties of undefined") {

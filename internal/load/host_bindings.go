@@ -87,11 +87,24 @@ type HostBindingTarget struct {
 
 // Targets are the row's three columns, in the table's order: native, javascript and wasm32.
 func (binding HostBinding) Targets() []HostBindingTarget {
-	return []HostBindingTarget{{"native", binding.Native}, {"javascript", binding.JavaScript}, {"wasm32", binding.WASM32}}
+	return []HostBindingTarget{
+		{"native", binding.Native},
+		{"javascript", binding.JavaScript},
+		{"wasm32", binding.WASM32},
+	}
 }
 
 // hostBindingTypeOfAnswers are the answers JavaScript's typeof gives.
-var hostBindingTypeOfAnswers = map[string]bool{"undefined": true, "object": true, "boolean": true, "number": true, "bigint": true, "string": true, "symbol": true, "function": true}
+var hostBindingTypeOfAnswers = map[string]bool{
+	"undefined": true,
+	"object":    true,
+	"boolean":   true,
+	"number":    true,
+	"bigint":    true,
+	"string":    true,
+	"symbol":    true,
+	"function":  true,
+}
 
 // HostBindings is the table, parsed and checked once.
 var HostBindings = sync.OnceValues(func() ([]HostBinding, error) {
@@ -102,8 +115,8 @@ func parseHostBindings(data []byte) ([]HostBinding, error) {
 	var rows []HostBinding
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
-	if err := decoder.Decode(&rows); err != nil {
-		return nil, fmt.Errorf("load: host_bindings.json: %w", err)
+	if decodeError := decoder.Decode(&rows); decodeError != nil {
+		return nil, fmt.Errorf("load: host_bindings.json: %w", decodeError)
 	}
 	if decoder.Decode(new(any)) != io.EOF {
 		return nil, fmt.Errorf("load: host_bindings.json: trailing data")
@@ -123,20 +136,29 @@ func parseHostBindings(data []byte) ([]HostBinding, error) {
 
 // hostBindingProblem is what's wrong with a row, or "" when nothing is.
 func hostBindingProblem(row HostBinding) string {
-	if row.Name == "" || strings.IndexFunc(row.Name, func(r rune) bool { return !unicode.IsLetter(r) && !unicode.IsDigit(r) && r != '_' && r != '$' }) >= 0 || unicode.IsDigit(rune(row.Name[0])) {
+	if row.Name == "" || strings.IndexFunc(
+		row.Name,
+		func(r rune) bool { return !unicode.IsLetter(r) && !unicode.IsDigit(r) && r != '_' && r != '$' },
+	) >= 0 || unicode.IsDigit(rune(row.Name[0])) {
 		return "the name isn't an identifier"
 	}
 	declaration := row.Declaration
-	if declaration.File != path.Base(declaration.File) || path.Ext(declaration.File) != ".ts" || strings.HasSuffix(declaration.File, ".d.ts") {
+	if declaration.File != path.Base(declaration.File) ||
+		path.Ext(declaration.File) != ".ts" ||
+		strings.HasSuffix(declaration.File, ".d.ts") {
 		return "the declaration's file isn't the basename of a .ts file"
 	}
 	if declaration.Keyword != "const" && declaration.Keyword != "let" {
 		return "the declaration's keyword is neither const nor let"
 	}
-	if strings.TrimSpace(declaration.Type) != declaration.Type || declaration.Type == "" || strings.ContainsAny(declaration.Type, "\r\n") {
+	if strings.TrimSpace(declaration.Type) != declaration.Type ||
+		declaration.Type == "" ||
+		strings.ContainsAny(declaration.Type, "\r\n") {
 		return "the declared type isn't one line of exact text"
 	}
-	if !strings.HasPrefix(row.Node.Version, "v") || row.Node.Module != "ES" || !hostBindingTypeOfAnswers[row.Node.TypeOf] {
+	if !strings.HasPrefix(row.Node.Version, "v") ||
+		row.Node.Module != "ES" ||
+		!hostBindingTypeOfAnswers[row.Node.TypeOf] {
 		return "Node's answer needs its version, module mode ES and a typeof answer"
 	}
 	provided := false

@@ -44,7 +44,10 @@ func (l *lowering) nestedDeclarations(nodes []*ast.Node) ([]ir.Statement, error)
 			// Only skip a signature when this body contains its implementation.
 			implemented := false
 			for _, candidate := range nodes {
-				if candidate.Kind == ast.KindFunctionDeclaration && candidate.Body() != nil && candidate.Name() != nil && l.symbol(candidate.Name()) == l.symbol(node.Name()) {
+				if candidate.Kind == ast.KindFunctionDeclaration &&
+					candidate.Body() != nil &&
+					candidate.Name() != nil &&
+					l.symbol(candidate.Name()) == l.symbol(node.Name()) {
 					implemented = true
 					break
 				}
@@ -74,9 +77,9 @@ func (l *lowering) nestedDeclarations(nodes []*ast.Node) ([]ir.Statement, error)
 			continue
 		}
 		for _, declaration := range node.AsVariableStatement().DeclarationList.AsVariableDeclarationList().Declarations.Nodes {
-			bound, err := l.preallocateNestedBindings(declaration.Name())
-			if err != nil {
-				return nil, err
+			bound, preallocateNestedBindingsError := l.preallocateNestedBindings(declaration.Name())
+			if preallocateNestedBindingsError != nil {
+				return nil, preallocateNestedBindingsError
 			}
 			prologue = append(prologue, bound...)
 		}
@@ -84,9 +87,9 @@ func (l *lowering) nestedDeclarations(nodes []*ast.Node) ([]ir.Statement, error)
 	functions := []int{}
 	bodies := []*ast.Node{}
 	for _, node := range declarations {
-		local, err := l.declareLocal(node.Name())
-		if err != nil {
-			return nil, err
+		local, declareLocalError := l.declareLocal(node.Name())
+		if declareLocalError != nil {
+			return nil, declareLocalError
 		}
 		if len(node.TypeParameters()) > 0 {
 			if l.generics == nil {
@@ -99,15 +102,24 @@ func (l *lowering) nestedDeclarations(nodes []*ast.Node) ([]ir.Statement, error)
 		}
 		index := len(l.result.Functions)
 		l.result.Locals[local].NestedFunction = index + 1
-		l.result.Functions = append(l.result.Functions, ir.Function{Name: node.Name().Text(), Closure: true, NestedParent: owner + 1})
-		l.closureRecords = append(l.closureRecords, closureRecord{proven: l.concrete(l.checker.GetTypeAtLocation(node.Name())), function: index, node: node})
+		l.result.Functions = append(
+			l.result.Functions,
+			ir.Function{Name: node.Name().Text(), Closure: true, NestedParent: owner + 1},
+		)
+		l.closureRecords = append(
+			l.closureRecords,
+			closureRecord{proven: l.concrete(l.checker.GetTypeAtLocation(node.Name())), function: index, node: node},
+		)
 		if l.instance != nil {
-			l.instance.templates = append(l.instance.templates, template{closure: index, proven: l.checker.GetTypeAtLocation(node.Name()), isClosure: true})
+			l.instance.templates = append(
+				l.instance.templates,
+				template{closure: index, proven: l.checker.GetTypeAtLocation(node.Name()), isClosure: true},
+			)
 		}
 		functions = append(functions, index)
 		bodies = append(bodies, node)
-		if err := l.signature(index, node, -1); err != nil {
-			return nil, err
+		if signatureError := l.signature(index, node, -1); signatureError != nil {
+			return nil, signatureError
 		}
 		prologue = append(prologue, ir.Declare{Local: local, Value: ir.MakeClosure{Function: index}})
 	}
@@ -133,11 +145,11 @@ func (l *lowering) nestedDeclarations(nodes []*ast.Node) ([]ir.Statement, error)
 		l.closures = append(l.closures, index)
 		outerThis := l.this
 		l.this = -1
-		err := l.lowerFunction(index, node, -1)
+		lowerFunctionError := l.lowerFunction(index, node, -1)
 		l.this = outerThis
 		l.closures = l.closures[:len(l.closures)-1]
-		if err != nil {
-			return nil, err
+		if lowerFunctionError != nil {
+			return nil, lowerFunctionError
 		}
 	}
 	environment := []int{}
@@ -244,9 +256,9 @@ func (l *lowering) nestedValue(local int) ir.Expression {
 // for the names it binds are allocated before hoisted closures can capture them.
 func (l *lowering) preallocateNestedBindings(name *ast.Node) ([]ir.Statement, error) {
 	if ast.IsIdentifier(name) {
-		local, err := l.declareLocal(name)
-		if err != nil {
-			return nil, err
+		local, declareLocalError := l.declareLocal(name)
+		if declareLocalError != nil {
+			return nil, declareLocalError
 		}
 		l.result.Locals[local].Preallocated = true
 		return []ir.Statement{ir.Declare{Local: local, Uninitialized: true}}, nil
@@ -259,9 +271,9 @@ func (l *lowering) preallocateNestedBindings(name *ast.Node) ([]ir.Statement, er
 		if skipped(binding) {
 			continue
 		}
-		bound, err := l.preallocateNestedBindings(binding.Name())
-		if err != nil {
-			return nil, err
+		bound, preallocateNestedBindingsError := l.preallocateNestedBindings(binding.Name())
+		if preallocateNestedBindingsError != nil {
+			return nil, preallocateNestedBindingsError
 		}
 		statements = append(statements, bound...)
 	}
@@ -276,7 +288,10 @@ func (l *lowering) finishNestedEnvironment(function *ir.Function, owner int) {
 	}
 	function.FrameIdentity = l.result.Functions[owner].FrameIdentity
 	if function.FrameIdentity > 0 {
-		function.Body = append([]ir.Statement{ir.Declare{Local: function.FrameIdentity - 1, Value: ir.NumberConstant{}}}, function.Body...)
+		function.Body = append(
+			[]ir.Statement{ir.Declare{Local: function.FrameIdentity - 1, Value: ir.NumberConstant{}}},
+			function.Body...,
+		)
 	}
 	direct := map[int]bool{}
 	for _, statement := range function.Body {
@@ -296,11 +311,16 @@ func (l *lowering) finishNestedEnvironment(function *ir.Function, owner int) {
 		function.FrameEnvironment = append(function.FrameEnvironment, local)
 	}
 	if len(function.FrameEnvironment) > 0 {
-		function.Body = append([]ir.Statement{ir.AllocateEnvironment{Cells: slices.Clone(function.FrameEnvironment)}}, function.Body...)
+		function.Body = append(
+			[]ir.Statement{ir.AllocateEnvironment{Cells: slices.Clone(function.FrameEnvironment)}},
+			function.Body...,
+		)
 	}
 	for index := range l.result.Functions {
 		target := &l.result.Functions[index]
-		retains := target.NestedParent == owner+1 || target.ForwardedNestedParent == owner+1 || slices.Contains(target.ReferenceParents, owner+1)
+		retains := target.NestedParent == owner+1 ||
+			target.ForwardedNestedParent == owner+1 ||
+			slices.Contains(target.ReferenceParents, owner+1)
 		for _, local := range target.Environment {
 			retains = retains || slices.Contains(function.FrameEnvironment, local)
 		}

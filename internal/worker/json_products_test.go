@@ -21,9 +21,9 @@ func workerJSONKeys() []string {
 	keys := []string{"decode/corpus", "encode/corpus", "decode/fast_risks.a"}
 	for _, mode := range []string{"decode", "encode"} {
 		// Reads: internal/oracle/testdata/json_*.a
-		paths, err := filepath.Glob("../oracle/testdata/json_" + mode + "_*.a")
-		if err != nil {
-			panic(err)
+		paths, globError := filepath.Glob("../oracle/testdata/json_" + mode + "_*.a")
+		if globError != nil {
+			panic(globError)
 		}
 		for _, path := range paths {
 			key := mode + "/" + filepath.Base(path)
@@ -43,9 +43,9 @@ func workerJSONProduct(test *testing.T, key string, build bool) string {
 	if !ok {
 		test.Fatal(key)
 	}
-	inputs, err := buildcache.GoBuildInInputs("", "adamic", "./cmd/adamic", nil, nil)
-	if err != nil {
-		test.Fatal(err)
+	inputs, goBuildInInputsError := buildcache.GoBuildInInputs("", "adamic", "./cmd/adamic", nil, nil)
+	if goBuildInInputsError != nil {
+		test.Fatal(goBuildInInputsError)
 	}
 	inputs.Name = "worker-json-" + key
 	inputs.Files = slices.Clone(inputs.Files)
@@ -64,9 +64,9 @@ func workerJSONProduct(test *testing.T, key string, build bool) string {
 	if name == "corpus" {
 		inputs.Files = append(inputs.Files, "internal/worker/testdata/json_"+mode+"/cases.a")
 	}
-	request, err := native.RuntimeRequestFor(native.Options{Release: true})
-	if err != nil {
-		test.Fatal(err)
+	request, runtimeRequestForError := native.RuntimeRequestFor(native.Options{Release: true})
+	if runtimeRequestForError != nil {
+		test.Fatal(runtimeRequestForError)
 	}
 	inputs.Flags = append(inputs.Flags, request.Portable...)
 	inputs.Toolchain = append(
@@ -80,13 +80,13 @@ func workerJSONProduct(test *testing.T, key string, build bool) string {
 	}
 	compiler := workerCompilerProduct(test, nil, false)
 	return buildcache.Product(test, inputs, func(directory string) error {
-		root, err := filepath.Abs("../..")
-		if err != nil {
-			return err
+		root, absolutePathError := filepath.Abs("../..")
+		if absolutePathError != nil {
+			return absolutePathError
 		}
-		source, err := os.ReadFile(filepath.Join(root, fixture))
-		if err != nil {
-			return err
+		source, readError := os.ReadFile(filepath.Join(root, fixture))
+		if readError != nil {
+			return readError
 		}
 		entry := filepath.Join(directory, "entry.a")
 		if name == "corpus" {
@@ -95,8 +95,8 @@ func workerJSONProduct(test *testing.T, key string, build bool) string {
 			source = append(source, []byte(
 				"\nimport type { HttpRequest, HttpResponse } from 'adamic/http';\nexport function handle(request: HttpRequest): HttpResponse { return {status:200,headers:[],body:request.body}; }\n",
 			)...)
-			if err := os.WriteFile(entry, source, 0644); err != nil {
-				return err
+			if writeError := os.WriteFile(entry, source, 0644); writeError != nil {
+				return writeError
 			}
 		}
 		for _, args := range [][]string{
@@ -105,8 +105,8 @@ func workerJSONProduct(test *testing.T, key string, build bool) string {
 		} {
 			command := exec.CommandContext(test.Context(), compiler, args...)
 			command.Dir = root
-			if output, err := command.CombinedOutput(); err != nil {
-				return fmt.Errorf("%v: %w\n%s", args, err, output)
+			if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+				return fmt.Errorf("%v: %w\n%s", args, combinedOutputError, output)
 			}
 		}
 		return nil

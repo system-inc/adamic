@@ -39,16 +39,26 @@ func predicateFailure(l *lowering, node *ast.Node, path string) *Refused {
 	if node != nil {
 		where = l.program.Where(node)
 	}
-	return &Refused{Where: where, What: "an unproven type predicate", Fix: path + "; return a boolean and narrow at the caller (adamic/no-type-predicate)"}
+	return &Refused{
+		Where: where,
+		What:  "an unproven type predicate",
+		Fix:   path + "; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+	}
 }
 
 // A comparison on a tag that can lie proves nothing about the layout (#drwm5pj), so neither prover
 // takes it as proof of a member type.
 func predicateTagHazardReason(field string, hazard enumTagHazard) string {
 	if hazard == enumTagSharedValueHazard {
-		return "the comparison of " + field + " proves nothing about the layout, since tags from different numeric enums share a value"
+		return "the comparison of " +
+			field +
+			" proves nothing about the layout, since tags from different numeric enums share a value"
 	}
-	return "the comparison of " + field + " proves nothing about the layout, since a member whose " + field + " is an open numeric enum can hold that value"
+	return "the comparison of " +
+		field +
+		" proves nothing about the layout, since a member whose " +
+		field +
+		" is an open numeric enum can hold that value"
 }
 
 // provePredicate starts with no helper facts. Only independently verified bodies
@@ -56,7 +66,11 @@ func predicateTagHazardReason(field string, hazard enumTagHazard) string {
 // cycles and opaque calls never acquire a summary from their annotations.
 func (l *lowering) provePredicate(node *ast.Node) (predicateProof, error) {
 	proof := predicateProof{}
-	if node == nil || node.Kind != ast.KindTypePredicate || node.Parent == nil || !ast.IsFunctionLike(node.Parent) || node.Parent.Body() == nil {
+	if node == nil ||
+		node.Kind != ast.KindTypePredicate ||
+		node.Parent == nil ||
+		!ast.IsFunctionLike(node.Parent) ||
+		node.Parent.Body() == nil {
 		return proof, predicateFailure(l, node, "no implementation body proves a return path")
 	}
 	if node.AsTypePredicateNode().Type == nil {
@@ -67,7 +81,8 @@ func (l *lowering) provePredicate(node *ast.Node) (predicateProof, error) {
 	}
 	target := l.checker.GetTypeAtLocation(node.AsTypePredicateNode().Type)
 	field := ""
-	if target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsUnion) != 0 && (&predicateVerifier{l: l}).kindTarget(target) {
+	if target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsUnion) != 0 &&
+		(&predicateVerifier{l: l}).kindTarget(target) {
 		field = "kind"
 		proof.TaggedView = true
 	} else if !predicatePrimitiveTarget(target) {
@@ -124,7 +139,12 @@ func (l *lowering) predicateFixedPoint(field string) *predicateFixedPoint {
 // proofs is the lowering's predicateProofs, its declarations found the first time it's asked.
 func (l *lowering) proofs() *predicateProofs {
 	if l.predicateProofs == nil {
-		proofs := &predicateProofs{modes: map[string]*predicateFixedPoint{}, brandedViews: map[brandedViewKey]error{}, brandedRequests: map[string]error{}, brandedClasses: map[*checker.Type][]*checker.Type{}}
+		proofs := &predicateProofs{
+			modes:           map[string]*predicateFixedPoint{},
+			brandedViews:    map[brandedViewKey]error{},
+			brandedRequests: map[string]error{},
+			brandedClasses:  map[*checker.Type][]*checker.Type{},
+		}
 		var visit ast.Visitor
 		visit = func(n *ast.Node) bool {
 			if ast.IsFunctionLike(n) && n.Type() != nil && n.Type().Kind == ast.KindTypePredicate && n.Body() != nil {
@@ -160,13 +180,13 @@ func (l *lowering) runPredicateFixedPoint(field string) *predicateFixedPoint {
 			if _, ok := v.summaries[declaration]; ok {
 				continue
 			}
-			summary, err := v.verify(declaration)
-			if err == nil {
+			summary, verifyError := v.verify(declaration)
+			if verifyError == nil {
 				v.summaries[declaration] = summary
 				delete(point.failures, declaration)
 				changed = true
 			} else {
-				point.failures[declaration] = err
+				point.failures[declaration] = verifyError
 			}
 		}
 		if !changed {
@@ -179,8 +199,8 @@ func (l *lowering) runPredicateFixedPoint(field string) *predicateFixedPoint {
 
 // predicateFailureCopy is a memoized failure for one caller: its own copy of a refusal or a not-yet, so no caller's
 // change to it reaches another's.
-func predicateFailureCopy(err error) error {
-	switch failure := err.(type) {
+func predicateFailureCopy(sourceError error) error {
+	switch failure := sourceError.(type) {
 	case *Refused:
 		copied := *failure
 		return &copied
@@ -188,7 +208,7 @@ func predicateFailureCopy(err error) error {
 		copied := *failure
 		return &copied
 	}
-	return err
+	return sourceError
 }
 
 func predicatePrimitiveTarget(t *checker.Type) bool {
@@ -201,7 +221,8 @@ func predicatePrimitiveTarget(t *checker.Type) bool {
 		return true
 	}
 	// Literal refinements need value partitions, not just typeof partitions.
-	return t.Flags()&(checker.TypeFlagsString|checker.TypeFlagsNumber|checker.TypeFlagsBoolean|checker.TypeFlagsUndefined) != 0 && t.Flags()&(checker.TypeFlagsLiteral|checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsTypeParameter) == 0
+	return t.Flags()&(checker.TypeFlagsString|checker.TypeFlagsNumber|checker.TypeFlagsBoolean|checker.TypeFlagsUndefined) != 0 &&
+		t.Flags()&(checker.TypeFlagsLiteral|checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsTypeParameter) == 0
 }
 
 func (v *predicateVerifier) kindTarget(t *checker.Type) bool {
@@ -257,7 +278,8 @@ func (v *predicateVerifier) collectKinds(declaration *ast.Node) {
 	visit = func(n *ast.Node) bool {
 		if n.Kind == ast.KindBinaryExpression {
 			b := n.AsBinaryExpression()
-			if b.OperatorToken.Kind == ast.KindEqualsEqualsEqualsToken || b.OperatorToken.Kind == ast.KindExclamationEqualsEqualsToken {
+			if b.OperatorToken.Kind == ast.KindEqualsEqualsEqualsToken ||
+				b.OperatorToken.Kind == ast.KindExclamationEqualsEqualsToken {
 				v.addKind(v.l.checker.GetTypeAtLocation(b.Left))
 				v.addKind(v.l.checker.GetTypeAtLocation(b.Right))
 			}
@@ -290,7 +312,12 @@ func (v *predicateVerifier) wanted(t *checker.Type, cell string) (bool, bool) {
 	if !predicatePrimitiveTarget(t) {
 		return false, false
 	}
-	kinds := map[string]checker.TypeFlags{"string": checker.TypeFlagsString, "number": checker.TypeFlagsNumber, "boolean": checker.TypeFlagsBoolean, "undefined": checker.TypeFlagsUndefined}
+	kinds := map[string]checker.TypeFlags{
+		"string":    checker.TypeFlagsString,
+		"number":    checker.TypeFlagsNumber,
+		"boolean":   checker.TypeFlagsBoolean,
+		"undefined": checker.TypeFlagsUndefined,
+	}
 	return t.Flags()&kinds[cell] != 0, true
 }
 
@@ -312,7 +339,11 @@ func (v *predicateVerifier) verify(declaration *ast.Node) ([]predicateTruth, err
 	for _, parameter := range declaration.Parameters() {
 		declared := parameter.AsParameterDeclaration()
 		if declared.Initializer != nil || declared.DotDotDotToken != nil || !ast.IsIdentifier(parameter.Name()) {
-			return nil, predicateFailure(v.l, parameter, "parameter initialization may mutate the tested input before this return path")
+			return nil, predicateFailure(
+				v.l,
+				parameter,
+				"parameter initialization may mutate the tested input before this return path",
+			)
 		}
 	}
 	predicate := declaration.Type().AsTypePredicateNode()
@@ -345,25 +376,25 @@ func (v *predicateVerifier) verify(declaration *ast.Node) ([]predicateTruth, err
 		}
 		body := declaration.Body()
 		if body.Kind != ast.KindBlock {
-			result, err := v.expression(body, parameter, path)
-			if err != nil {
-				return nil, err
+			result, expressionError := v.expression(body, parameter, path)
+			if expressionError != nil {
+				return nil, expressionError
 			}
-			if err = check(body, result); err != nil {
-				return nil, err
+			if checkError := check(body, result); checkError != nil {
+				return nil, checkError
 			}
 			continue
 		}
-		paths, err := v.statements(body.AsBlock().Statements.Nodes, parameter, []predicatePath{path}, check)
-		if err != nil {
-			return nil, err
+		paths, statementsError := v.statements(body.AsBlock().Statements.Nodes, parameter, []predicatePath{path}, check)
+		if statementsError != nil {
+			return nil, statementsError
 		}
 		if len(paths) > 0 {
 			if predicate.AssertsModifier == nil {
 				return nil, predicateFailure(v.l, body, "normal return has no boolean result")
 			}
-			if err = check(body, predicateTrue); err != nil {
-				return nil, err
+			if checkError := check(body, predicateTrue); checkError != nil {
+				return nil, checkError
 			}
 		}
 	}
@@ -415,8 +446,8 @@ func (v *predicateVerifier) expression(n *ast.Node, parameter *ast.Symbol, path 
 	case ast.KindPrefixUnaryExpression:
 		u := n.AsPrefixUnaryExpression()
 		if u.Operator == ast.KindExclamationToken {
-			t, err := v.expression(u.Operand, parameter, path)
-			return predicateNot(t), err
+			t, expressionError := v.expression(u.Operand, parameter, path)
+			return predicateNot(t), expressionError
 		}
 	case ast.KindBinaryExpression:
 		b := n.AsBinaryExpression()
@@ -424,30 +455,40 @@ func (v *predicateVerifier) expression(n *ast.Node, parameter *ast.Symbol, path 
 			return 0, predicateFailure(v.l, n, "mutation invalidates the facts before this return path")
 		}
 		if b.OperatorToken.Kind == ast.KindAmpersandAmpersandToken || b.OperatorToken.Kind == ast.KindBarBarToken {
-			a, err := v.expression(b.Left, parameter, path)
-			if err != nil {
-				return 0, err
+			a, expressionError := v.expression(b.Left, parameter, path)
+			if expressionError != nil {
+				return 0, expressionError
 			}
-			z, err := v.expression(b.Right, parameter, path)
-			if err != nil {
-				return 0, err
+			z, expressionError := v.expression(b.Right, parameter, path)
+			if expressionError != nil {
+				return 0, expressionError
 			}
 			return predicateCombine(a, z, b.OperatorToken.Kind == ast.KindAmpersandAmpersandToken), nil
 		}
-		if b.OperatorToken.Kind == ast.KindEqualsEqualsEqualsToken || b.OperatorToken.Kind == ast.KindExclamationEqualsEqualsToken {
+		if b.OperatorToken.Kind == ast.KindEqualsEqualsEqualsToken ||
+			b.OperatorToken.Kind == ast.KindExclamationEqualsEqualsToken {
 			for _, pair := range [][2]*ast.Node{{b.Left, b.Right}, {b.Right, b.Left}} {
 				test := ast.SkipParentheses(pair[0])
 				constant := pair[1]
 				matched := false
 				yes := false
-				if v.field == "" && test.Kind == ast.KindTypeOfExpression && v.sameParameter(test.AsTypeOfExpression().Expression, parameter) && constant.Kind == ast.KindStringLiteral {
+				if v.field == "" &&
+					test.Kind == ast.KindTypeOfExpression &&
+					v.sameParameter(test.AsTypeOfExpression().Expression, parameter) &&
+					constant.Kind == ast.KindStringLiteral {
 					matched = true
 					yes = v.cells[path.cell] == constant.Text()
 				}
-				if v.field != "" && test.Kind == ast.KindPropertyAccessExpression && test.Name().Text() == v.field && v.sameParameter(test.AsPropertyAccessExpression().Expression, parameter) {
+				if v.field != "" &&
+					test.Kind == ast.KindPropertyAccessExpression &&
+					test.Name().Text() == v.field &&
+					v.sameParameter(test.AsPropertyAccessExpression().Expression, parameter) {
 					// A cell holds every member with that tag value, so a tag that can lie in the
 					// parameter's union doesn't partition it by member.
-					if hazard := v.l.enumTagHazardOf(v.l.checker.GetTypeOfSymbol(parameter), v.field); hazard != enumTagNoHazard {
+					if hazard := v.l.enumTagHazardOf(
+						v.l.checker.GetTypeOfSymbol(parameter),
+						v.field,
+					); hazard != enumTagNoHazard {
 						reason := predicateTagHazardReason(v.field, hazard)
 						refused := predicateFailure(v.l, n, reason)
 						refused.lyingTag = reason
@@ -478,7 +519,9 @@ func (v *predicateVerifier) expression(n *ast.Node, parameter *ast.Symbol, path 
 		}
 	case ast.KindCallExpression:
 		call := n.AsCallExpression()
-		if len(call.Arguments.Nodes) != 1 || !v.sameParameter(call.Arguments.Nodes[0], parameter) || !ast.IsIdentifier(call.Expression) {
+		if len(call.Arguments.Nodes) != 1 ||
+			!v.sameParameter(call.Arguments.Nodes[0], parameter) ||
+			!ast.IsIdentifier(call.Expression) {
 			break
 		}
 		symbol := v.l.symbol(call.Expression)
@@ -489,7 +532,11 @@ func (v *predicateVerifier) expression(n *ast.Node, parameter *ast.Symbol, path 
 					// not an arbitrary argument with the same caller symbol.
 					claim := predicateOfSignature(v.l.checker, v.l.checker.GetSignatureFromDeclaration(d))
 					if claim == nil || claim.ParameterIndex() != 0 {
-						return 0, predicateFailure(v.l, n, "helper argument 0 does not occupy its predicate parameter; pass the tested value at the helper's predicate parameter index")
+						return 0, predicateFailure(
+							v.l,
+							n,
+							"helper argument 0 does not occupy its predicate parameter; pass the tested value at the helper's predicate parameter index",
+						)
 					}
 					return values[path.cell], nil
 				}
@@ -530,34 +577,44 @@ func copyPredicatePath(path predicatePath) predicatePath {
 	return copy
 }
 
-func (v *predicateVerifier) statements(nodes []*ast.Node, parameter *ast.Symbol, paths []predicatePath, check func(*ast.Node, predicateTruth) error) ([]predicatePath, error) {
+func (v *predicateVerifier) statements(
+	nodes []*ast.Node,
+	parameter *ast.Symbol,
+	paths []predicatePath,
+	check func(*ast.Node, predicateTruth) error,
+) ([]predicatePath, error) {
 	for _, n := range nodes {
 		var next []predicatePath
 		for _, path := range paths {
 			switch n.Kind {
 			case ast.KindBlock:
-				result, err := v.statements(n.AsBlock().Statements.Nodes, parameter, []predicatePath{path}, check)
-				if err != nil {
-					return nil, err
+				result, statementsError := v.statements(
+					n.AsBlock().Statements.Nodes,
+					parameter,
+					[]predicatePath{path},
+					check,
+				)
+				if statementsError != nil {
+					return nil, statementsError
 				}
 				next = append(next, result...)
 			case ast.KindReturnStatement:
 				result := predicateTrue
 				if expression := n.AsReturnStatement().Expression; expression != nil {
-					value, err := v.expression(expression, parameter, path)
-					if err != nil {
-						return nil, err
+					value, expressionError := v.expression(expression, parameter, path)
+					if expressionError != nil {
+						return nil, expressionError
 					}
 					result = value
 				}
-				if err := check(n, result); err != nil {
-					return nil, err
+				if checkError := check(n, result); checkError != nil {
+					return nil, checkError
 				}
 			case ast.KindIfStatement:
 				branch := n.AsIfStatement()
-				condition, err := v.expression(branch.Expression, parameter, path)
-				if err != nil {
-					return nil, err
+				condition, expressionError := v.expression(branch.Expression, parameter, path)
+				if expressionError != nil {
+					return nil, expressionError
 				}
 				for _, side := range []struct {
 					truth predicateTruth
@@ -574,9 +631,14 @@ func (v *predicateVerifier) statements(nodes []*ast.Node, parameter *ast.Symbol,
 						next = append(next, p)
 						continue
 					}
-					result, err := v.statements([]*ast.Node{side.body}, parameter, []predicatePath{p}, check)
-					if err != nil {
-						return nil, err
+					result, statementsError := v.statements(
+						[]*ast.Node{side.body},
+						parameter,
+						[]predicatePath{p},
+						check,
+					)
+					if statementsError != nil {
+						return nil, statementsError
 					}
 					next = append(next, result...)
 				}
@@ -586,9 +648,9 @@ func (v *predicateVerifier) statements(nodes []*ast.Node, parameter *ast.Symbol,
 					if !ast.IsIdentifier(d.Name()) || variable.Initializer == nil {
 						return nil, predicateFailure(v.l, n, "an unproven alias on this return path")
 					}
-					value, err := v.expression(variable.Initializer, parameter, path)
-					if err != nil {
-						return nil, err
+					value, expressionError := v.expression(variable.Initializer, parameter, path)
+					if expressionError != nil {
+						return nil, expressionError
 					}
 					path.locals[v.l.checker.GetSymbolAtLocation(d.Name())] = value
 				}
@@ -608,11 +670,15 @@ func (v *predicateVerifier) statements(nodes []*ast.Node, parameter *ast.Symbol,
 					continue
 				}
 				if v.truthiness && expression.Kind == ast.KindCallExpression {
-					return nil, predicateFailure(v.l, n, "a failure helper can return normally on this normal return path")
+					return nil, predicateFailure(
+						v.l,
+						n,
+						"a failure helper can return normally on this normal return path",
+					)
 				}
-				_, err := v.expression(expression, parameter, path)
-				if err != nil {
-					return nil, err
+				_, expressionError := v.expression(expression, parameter, path)
+				if expressionError != nil {
+					return nil, expressionError
 				}
 				next = append(next, path)
 			default:
@@ -637,7 +703,11 @@ func (l *lowering) proveConditionAssertion(node *ast.Node) (predicateProof, erro
 	for _, argument := range declaration.Parameters() {
 		declared := argument.AsParameterDeclaration()
 		if declared.Initializer != nil || declared.DotDotDotToken != nil || !ast.IsIdentifier(argument.Name()) {
-			return predicateProof{}, predicateFailure(l, argument, "parameter initialization may change the asserted input")
+			return predicateProof{}, predicateFailure(
+				l,
+				argument,
+				"parameter initialization may change the asserted input",
+			)
 		}
 	}
 	if declaration.Body().Kind != ast.KindBlock {
@@ -646,17 +716,26 @@ func (l *lowering) proveConditionAssertion(node *ast.Node) (predicateProof, erro
 	for cell := range verifier.cells {
 		check := func(returned *ast.Node, _ predicateTruth) error {
 			if verifier.cells[cell] != "truthy" {
-				return predicateFailure(l, returned, "normal return does not establish the asserted condition's truthiness")
+				return predicateFailure(
+					l,
+					returned,
+					"normal return does not establish the asserted condition's truthiness",
+				)
 			}
 			return nil
 		}
-		paths, err := verifier.statements(declaration.Body().AsBlock().Statements.Nodes, parameter, []predicatePath{{cell: cell, locals: map[*ast.Symbol]predicateTruth{}}}, check)
-		if err != nil {
-			return predicateProof{}, err
+		paths, statementsError := verifier.statements(
+			declaration.Body().AsBlock().Statements.Nodes,
+			parameter,
+			[]predicatePath{{cell: cell, locals: map[*ast.Symbol]predicateTruth{}}},
+			check,
+		)
+		if statementsError != nil {
+			return predicateProof{}, statementsError
 		}
 		if len(paths) != 0 {
-			if err := check(declaration.Body(), predicateTrue); err != nil {
-				return predicateProof{}, err
+			if checkError := check(declaration.Body(), predicateTrue); checkError != nil {
+				return predicateProof{}, checkError
 			}
 		}
 	}
@@ -711,7 +790,9 @@ func (v *predicateVerifier) neverStatement(node *ast.Node, visiting map[*ast.Nod
 		return expression != nil && v.neverCall(expression, visiting)
 	case ast.KindIfStatement:
 		branch := node.AsIfStatement()
-		return branch.ElseStatement != nil && v.neverStatement(branch.ThenStatement, visiting) && v.neverStatement(branch.ElseStatement, visiting)
+		return branch.ElseStatement != nil &&
+			v.neverStatement(branch.ThenStatement, visiting) &&
+			v.neverStatement(branch.ElseStatement, visiting)
 	case ast.KindBlock:
 		for _, statement := range node.AsBlock().Statements.Nodes {
 			if v.neverStatement(statement, visiting) {
@@ -771,11 +852,13 @@ func (l *lowering) predicateOverloadProven(implementation, overload *ast.Node) b
 		return false
 	}
 	parameter := implementation.Parameters()[index]
-	if !ast.IsIdentifier(parameter.Name()) || parameter.AsParameterDeclaration().Initializer != nil || parameter.AsParameterDeclaration().DotDotDotToken != nil {
+	if !ast.IsIdentifier(parameter.Name()) ||
+		parameter.AsParameterDeclaration().Initializer != nil ||
+		parameter.AsParameterDeclaration().DotDotDotToken != nil {
 		return false
 	}
-	admitted, _, rest, err := l.censusOverloadParameter(overload.Parameters(), index)
-	if err != nil || rest || admitted == nil {
+	admitted, _, rest, censusOverloadParameterError := l.censusOverloadParameter(overload.Parameters(), index)
+	if censusOverloadParameterError != nil || rest || admitted == nil {
 		return false
 	}
 	changed := false
@@ -798,14 +881,28 @@ func (l *lowering) predicateOverloadProven(implementation, overload *ast.Node) b
 		}
 		target = predicateTrueType(l.checker)
 	}
-	proof := predicateFlowProof{l: l, function: implementation, parameter: parameter, declared: l.checker.GetTypeAtLocation(parameter.Name()), admitted: admitted, target: l.concrete(target), assertion: claim.Kind() == checker.TypePredicateKindAssertsIdentifier}
+	proof := predicateFlowProof{
+		l:         l,
+		function:  implementation,
+		parameter: parameter,
+		declared:  l.checker.GetTypeAtLocation(parameter.Name()),
+		admitted:  admitted,
+		target:    l.concrete(target),
+		assertion: claim.Kind() == checker.TypePredicateKindAssertsIdentifier,
+	}
 	return proof.proveBody(overload.Type()) == nil
 }
 
 // Reification is limited to independently checkable contracts. Tagged interfaces
 // continue through the shared view checker; untagged/callable contracts are not
 // silently equated with a primitive typeof test.
-func (l *lowering) predicateMembership(node *ast.Node, value ir.Expression, source, target *checker.Type, local func(string, ir.Type) int, depth int) ([]ir.Statement, ir.Expression, error) {
+func (l *lowering) predicateMembership(
+	node *ast.Node,
+	value ir.Expression,
+	source, target *checker.Type,
+	local func(string, ir.Type) int,
+	depth int,
+) ([]ir.Statement, ir.Expression, error) {
 	target = l.concrete(target)
 	source = l.concrete(source)
 	if depth > 8 {
@@ -819,9 +916,16 @@ func (l *lowering) predicateMembership(node *ast.Node, value ir.Expression, sour
 		var setup []ir.Statement
 		var result ir.Expression = ir.BooleanConstant{Value: false}
 		for _, member := range target.Types() {
-			statements, test, err := l.predicateMembership(node, value, source, member, local, depth+1)
-			if err != nil {
-				return nil, nil, err
+			statements, test, predicateMembershipError := l.predicateMembership(
+				node,
+				value,
+				source,
+				member,
+				local,
+				depth+1,
+			)
+			if predicateMembershipError != nil {
+				return nil, nil, predicateMembershipError
 			}
 			setup = append(setup, statements...)
 			result = ir.Binary{Operator: ir.Or, Left: result, Right: test}
@@ -860,7 +964,10 @@ func (l *lowering) predicateMembership(node *ast.Node, value ir.Expression, sour
 		}
 		return nil, test, nil
 	}
-	if l.isArrayType(target) && (source.Flags()&checker.TypeFlagsUndefined != 0 || value.Type() == ir.Number || value.Type() == ir.String || value.Type() == ir.Boolean) {
+	if l.isArrayType(target) && (source.Flags()&checker.TypeFlagsUndefined != 0 ||
+		value.Type() == ir.Number ||
+		value.Type() == ir.String ||
+		value.Type() == ir.Boolean) {
 		return nil, ir.BooleanConstant{Value: false}, nil
 	}
 	if l.isArrayType(target) && value.Type() == ir.Array {
@@ -887,17 +994,46 @@ func (l *lowering) predicateMembership(node *ast.Node, value ir.Expression, sour
 		}
 		held, known := l.kept(element)
 		if !known || slotless(held) {
-			return nil, nil, l.notYet(node, "a checked predicate overload array element "+l.checker.TypeToString(element))
+			return nil, nil, l.notYet(
+				node,
+				"a checked predicate overload array element "+l.checker.TypeToString(element),
+			)
 		}
 		matches := local("array_matches", ir.Boolean)
 		counter := local("array_index", ir.Number)
 		read := ir.Read{Local: counter, Of: ir.Number}
-		statements, test, err := l.predicateMembership(node, ir.ArrayIndex{Array: value, Index: read, Element: held}, element, l.elementTypeOfArray(target), local, depth+1)
-		if err != nil {
-			return nil, nil, err
+		statements, test, predicateMembershipError := l.predicateMembership(
+			node,
+			ir.ArrayIndex{Array: value, Index: read, Element: held},
+			element,
+			l.elementTypeOfArray(target),
+			local,
+			depth+1,
+		)
+		if predicateMembershipError != nil {
+			return nil, nil, predicateMembershipError
 		}
-		loopBody := append(statements, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: test}, Then: []ir.Statement{ir.Assign{Local: matches, Value: ir.BooleanConstant{Value: false}}, ir.Break{}}})
-		setup := []ir.Statement{ir.Declare{Local: matches, Value: ir.BooleanConstant{Value: false}}, ir.If{Condition: censusCondition(value), Then: []ir.Statement{ir.Assign{Local: matches, Value: ir.BooleanConstant{Value: true}}, ir.Declare{Local: counter, Value: ir.NumberConstant{Value: 0}}, ir.Loop{Condition: ir.Binary{Operator: ir.Less, Left: read, Right: ir.Length{Array: value}}, Body: loopBody, Update: []ir.Statement{ir.Assign{Local: counter, Value: ir.Binary{Operator: ir.Add, Left: read, Right: ir.NumberConstant{Value: 1}}}}}}}}
+		loopBody := append(statements, ir.If{
+			Condition: ir.Unary{Operator: ir.Not, Operand: test},
+			Then:      []ir.Statement{ir.Assign{Local: matches, Value: ir.BooleanConstant{Value: false}}, ir.Break{}},
+		})
+		setup := []ir.Statement{
+			ir.Declare{Local: matches, Value: ir.BooleanConstant{Value: false}},
+			ir.If{Condition: censusCondition(value), Then: []ir.Statement{
+				ir.Assign{Local: matches, Value: ir.BooleanConstant{Value: true}},
+				ir.Declare{Local: counter, Value: ir.NumberConstant{Value: 0}},
+				ir.Loop{
+					Condition: ir.Binary{Operator: ir.Less, Left: read, Right: ir.Length{Array: value}},
+					Body:      loopBody,
+					Update: []ir.Statement{
+						ir.Assign{
+							Local: counter,
+							Value: ir.Binary{Operator: ir.Add, Left: read, Right: ir.NumberConstant{Value: 1}},
+						},
+					},
+				},
+			}},
+		}
 		return setup, ir.Read{Local: matches, Of: ir.Boolean}, nil
 	}
 	if isClassInstance(target) && target.Symbol() != nil {
@@ -908,15 +1044,19 @@ func (l *lowering) predicateMembership(node *ast.Node, value ir.Expression, sour
 			if value.Type() != ir.Object && value.Type() != ir.Union {
 				return nil, ir.BooleanConstant{Value: false}, nil
 			}
-			instance, err := l.instantiate(declaration, target, node)
-			if err != nil {
-				return nil, nil, err
+			instance, instantiateError := l.instantiate(declaration, target, node)
+			if instantiateError != nil {
+				return nil, nil, instantiateError
 			}
 			object := value
 			if value.Type() == ir.Union {
 				object = ir.Narrow{Value: value, To: ir.Object}
 			}
-			return nil, ir.Binary{Operator: ir.And, Left: isType("object"), Right: ir.InstanceOf{Value: object, Class: instance.class}}, nil
+			return nil, ir.Binary{
+				Operator: ir.And,
+				Left:     isType("object"),
+				Right:    ir.InstanceOf{Value: object, Class: instance.class},
+			}, nil
 		}
 	}
 	if target.Flags()&checker.TypeFlagsObject != 0 && !isClassInstance(target) && value.Type() == ir.Object {
@@ -927,20 +1067,30 @@ func (l *lowering) predicateMembership(node *ast.Node, value ir.Expression, sour
 			// true branch (#k1t2wp9). predicateRefusal registers the same view for a body proven by
 			// tag alone, so either covers the other on these programs and no test guards one alone:
 			// keep both.
-			if _, err := l.view(node, nil, source, target); err != nil {
-				return nil, nil, err
+			if _, viewError := l.view(node, nil, source, target); viewError != nil {
+				return nil, nil, viewError
 			}
 			// The value enters the view wherever a caller's read is narrowed to it (view_widened.go).
 			l.viewSources[len(l.viewSources)-1].narrows = true
 			literal, of, known := l.literalConstant(tag)
 			if known {
-				return nil, ir.Binary{Operator: ir.And, Left: censusCondition(value), Right: equal(ir.Property{Object: value, Name: "kind", Of: of, View: "predicate argument.kind", ViewType: l.checker.TypeToString(tag)}, literal)}, nil
+				return nil, ir.Binary{Operator: ir.And, Left: censusCondition(value), Right: equal(ir.Property{
+					Object:   value,
+					Name:     "kind",
+					Of:       of,
+					View:     "predicate argument.kind",
+					ViewType: l.checker.TypeToString(tag),
+				}, literal)}, nil
 			}
 		} else if l.brandedSupertype(target) {
 			// No kind set can say which kinds a branded supertype holds (#c7w6j0y, ruled Oct 31), so the call
 			// checks only that the value is an object, and the views check every field where it's read.
-			if err := l.brandedSupertypeViews(node, source, target); err != nil {
-				return nil, nil, err
+			if brandedSupertypeViewsError := l.brandedSupertypeViews(
+				node,
+				source,
+				target,
+			); brandedSupertypeViewsError != nil {
+				return nil, nil, brandedSupertypeViewsError
 			}
 			return nil, censusCondition(value), nil
 		}
@@ -959,7 +1109,9 @@ func (l *lowering) predicateMembership(node *ast.Node, value ir.Expression, sour
 // the check would read structure after structure past the depth bound, as the build infos do. A target
 // with a kind property, tagged or a branded supertype, is the tag rules', never this.
 func (l *lowering) checkedPredicateTargetCause(target *checker.Type) string {
-	if target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 || isClassInstance(target) || l.checker.GetPropertyOfType(target, "kind") != nil {
+	if target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 ||
+		isClassInstance(target) ||
+		l.checker.GetPropertyOfType(target, "kind") != nil {
 		return ""
 	}
 	base := []*checker.Type{target}
@@ -984,7 +1136,8 @@ func (l *lowering) checkedPredicateTargetCause(target *checker.Type) string {
 		return "a checked predicate target whose base has no required field to check"
 	}
 	for _, property := range l.checker.GetPropertiesOfType(target) {
-		if property.Flags&ast.SymbolFlagsOptional == 0 && l.untaggedRecord(l.checker.GetTypeOfSymbol(property), map[*checker.Type]bool{}) {
+		if property.Flags&ast.SymbolFlagsOptional == 0 &&
+			l.untaggedRecord(l.checker.GetTypeOfSymbol(property), map[*checker.Type]bool{}) {
 			return "a checked predicate target whose check would read past the depth bound"
 		}
 	}
@@ -1021,7 +1174,10 @@ func (l *lowering) untaggedRecord(t *checker.Type, visited map[*checker.Type]boo
 			return false
 		}
 	}
-	return t.Flags()&checker.TypeFlagsObject != 0 && !isClassInstance(t) && l.checker.GetPropertyOfType(t, "kind") == nil && len(l.checker.GetSignaturesOfType(t, checker.SignatureKindCall)) == 0
+	return t.Flags()&checker.TypeFlagsObject != 0 &&
+		!isClassInstance(t) &&
+		l.checker.GetPropertyOfType(t, "kind") == nil &&
+		len(l.checker.GetSignaturesOfType(t, checker.SignatureKindCall)) == 0
 }
 
 // A direction is observable whenever the checker still narrows a value read in
@@ -1056,7 +1212,10 @@ func (l *lowering) predicateUseDirections(call *ast.CallExpression) predicateTru
 }
 
 func (l *lowering) predicateReferenceDirections(call *ast.CallExpression, argument *ast.Node) predicateTruth {
-	if argument.Kind != ast.KindIdentifier && argument.Kind != ast.KindPropertyAccessExpression && argument.Kind != ast.KindElementAccessExpression && argument.Kind != ast.KindThisKeyword {
+	if argument.Kind != ast.KindIdentifier &&
+		argument.Kind != ast.KindPropertyAccessExpression &&
+		argument.Kind != ast.KindElementAccessExpression &&
+		argument.Kind != ast.KindThisKeyword {
 		// Temporary values cannot be narrowed by a later reference read.
 		return 0
 	}
@@ -1071,11 +1230,19 @@ func (l *lowering) predicateReferenceDirections(call *ast.CallExpression, argume
 			node.ForEachChild(visit)
 			return false
 		}
-		if l.predicateSameReference(node, argument) && !ast.IsDeclarationName(node) && !predicateWriteOnly(node) && !ast.IsPartOfTypeNode(node) {
+		if l.predicateSameReference(node, argument) &&
+			!ast.IsDeclarationName(node) &&
+			!predicateWriteOnly(node) &&
+			!ast.IsPartOfTypeNode(node) {
 			actual := l.checker.GetTypeAtLocation(node)
 			if !checker.Checker_isTypeIdenticalTo(l.checker, actual, declared) {
 				if flow := node.FlowNodeData(); flow != nil {
-					candidates := l.predicateFlowDirections(flow.FlowNode, call.AsNode(), argument, map[*ast.FlowNode]bool{})
+					candidates := l.predicateFlowDirections(
+						flow.FlowNode,
+						call.AsNode(),
+						argument,
+						map[*ast.FlowNode]bool{},
+					)
 					for _, direction := range []predicateTruth{predicateTrue, predicateFalse} {
 						if candidates&direction == 0 {
 							continue
@@ -1112,14 +1279,20 @@ func (l *lowering) predicateSameReference(a, b *ast.Node) bool {
 }
 
 // Follow the checker's existing graph rather than inventing branch regions.
-func (l *lowering) predicateFlowDirections(flow *ast.FlowNode, call, reference *ast.Node, seen map[*ast.FlowNode]bool) predicateTruth {
+func (l *lowering) predicateFlowDirections(
+	flow *ast.FlowNode,
+	call, reference *ast.Node,
+	seen map[*ast.FlowNode]bool,
+) predicateTruth {
 	if flow == nil || seen[flow] {
 		return 0
 	}
 	seen[flow] = true
 	// A replacement kills earlier predicate facts for this reference. Compound
 	// assignments also read the old narrowed value and must keep those checks.
-	if flow.Flags&ast.FlowFlagsAssignment != 0 && l.predicateSameReference(flow.Node, reference) && predicateWriteOnly(flow.Node) {
+	if flow.Flags&ast.FlowFlagsAssignment != 0 &&
+		l.predicateSameReference(flow.Node, reference) &&
+		predicateWriteOnly(flow.Node) {
 		return 0
 	}
 	var result predicateTruth
@@ -1156,7 +1329,8 @@ func (l *lowering) predicateConditionDirection(node, call *ast.Node, truth bool,
 		}
 		return predicateFalse
 	}
-	if node.Kind == ast.KindPrefixUnaryExpression && node.AsPrefixUnaryExpression().Operator == ast.KindExclamationToken {
+	if node.Kind == ast.KindPrefixUnaryExpression &&
+		node.AsPrefixUnaryExpression().Operator == ast.KindExclamationToken {
 		return l.predicateConditionDirection(node.AsPrefixUnaryExpression().Operand, call, !truth, depth+1)
 	}
 	if node.Kind == ast.KindBinaryExpression {
@@ -1165,9 +1339,24 @@ func (l *lowering) predicateConditionDirection(node, call *ast.Node, truth bool,
 		case ast.KindAmpersandAmpersandToken, ast.KindBarBarToken:
 			precise := truth == (binary.OperatorToken.Kind == ast.KindAmpersandAmpersandToken)
 			if precise {
-				return l.predicateConditionDirection(binary.Left, call, truth, depth+1) | l.predicateConditionDirection(binary.Right, call, truth, depth+1)
+				return l.predicateConditionDirection(
+					binary.Left,
+					call,
+					truth,
+					depth+1,
+				) | l.predicateConditionDirection(binary.Right, call, truth, depth+1)
 			}
-			return l.predicateConditionDirection(binary.Left, call, true, depth+1) | l.predicateConditionDirection(binary.Left, call, false, depth+1) | l.predicateConditionDirection(binary.Right, call, true, depth+1) | l.predicateConditionDirection(binary.Right, call, false, depth+1)
+			return l.predicateConditionDirection(binary.Left, call, true, depth+1) | l.predicateConditionDirection(
+				binary.Left,
+				call,
+				false,
+				depth+1,
+			) | l.predicateConditionDirection(
+				binary.Right,
+				call,
+				true,
+				depth+1,
+			) | l.predicateConditionDirection(binary.Right, call, false, depth+1)
 		case ast.KindEqualsToken, ast.KindBarBarEqualsToken, ast.KindAmpersandAmpersandEqualsToken, ast.KindQuestionQuestionEqualsToken, ast.KindCommaToken:
 			return l.predicateConditionDirection(binary.Right, call, truth, depth+1)
 		case ast.KindEqualsEqualsToken, ast.KindExclamationEqualsToken, ast.KindEqualsEqualsEqualsToken, ast.KindExclamationEqualsEqualsToken:
@@ -1178,8 +1367,14 @@ func (l *lowering) predicateConditionDirection(node, call *ast.Node, truth bool,
 				operand, literal = binary.Right, ast.SkipParentheses(binary.Left)
 			}
 			if ast.IsBooleanLiteral(literal) && !ast.IsAccessExpression(ast.SkipParentheses(operand)) {
-				equal := binary.OperatorToken.Kind == ast.KindEqualsEqualsToken || binary.OperatorToken.Kind == ast.KindEqualsEqualsEqualsToken
-				return l.predicateConditionDirection(operand, call, (truth == (literal.Kind == ast.KindTrueKeyword)) == equal, depth+1)
+				equal := binary.OperatorToken.Kind == ast.KindEqualsEqualsToken ||
+					binary.OperatorToken.Kind == ast.KindEqualsEqualsEqualsToken
+				return l.predicateConditionDirection(
+					operand,
+					call,
+					(truth == (literal.Kind == ast.KindTrueKeyword)) == equal,
+					depth+1,
+				)
 			}
 		}
 	}
@@ -1190,7 +1385,12 @@ func (l *lowering) predicateConditionDirection(node, call *ast.Node, truth bool,
 		if symbol := l.symbol(node); symbol != nil {
 			for _, declaration := range symbol.Declarations {
 				if declaration.Kind == ast.KindVariableDeclaration && declaration.Parent.Flags&ast.NodeFlagsConst != 0 {
-					return l.predicateConditionDirection(declaration.AsVariableDeclaration().Initializer, call, truth, depth+1)
+					return l.predicateConditionDirection(
+						declaration.AsVariableDeclaration().Initializer,
+						call,
+						truth,
+						depth+1,
+					)
 				}
 			}
 		}
@@ -1237,14 +1437,20 @@ func predicateWriteOnly(node *ast.Node) bool {
 	for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
 		parent = parent.Parent
 	}
-	return parent != nil && parent.Kind == ast.KindBinaryExpression && parent.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken
+	return parent != nil &&
+		parent.Kind == ast.KindBinaryExpression &&
+		parent.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken
 }
 
 // Recompute the read with this call's directional fact removed. Merely finding
 // an ancestor condition would attribute a later, independent guard's narrowing
 // to every earlier call, even after their branches have rejoined.
 // Fresh flow nodes keep the pinned checker's cache and original graph untouched.
-func (l *lowering) predicateFlowWithout(root *ast.FlowNode, call, reference *ast.Node, direction predicateTruth) *ast.FlowNode {
+func (l *lowering) predicateFlowWithout(
+	root *ast.FlowNode,
+	call, reference *ast.Node,
+	direction predicateTruth,
+) *ast.FlowNode {
 	memo := map[*ast.FlowNode]*ast.FlowNode{}
 	var clone func(*ast.FlowNode) *ast.FlowNode
 	var list func(*ast.FlowList) *ast.FlowList
@@ -1261,7 +1467,10 @@ func (l *lowering) predicateFlowWithout(root *ast.FlowNode, call, reference *ast
 		if previous := memo[original]; previous != nil {
 			return previous
 		}
-		copy := &ast.FlowNode{Flags: original.Flags &^ (ast.FlowFlagsShared | ast.FlowFlagsReferenced), Node: original.Node}
+		copy := &ast.FlowNode{
+			Flags: original.Flags &^ (ast.FlowFlagsShared | ast.FlowFlagsReferenced),
+			Node:  original.Node,
+		}
 		memo[original] = copy
 		remove := original.Flags&ast.FlowFlagsCall != 0 && original.Node == call && direction == predicateTrue
 		if original.Flags&ast.FlowFlagsCondition != 0 {
@@ -1279,10 +1488,14 @@ func (l *lowering) predicateFlowWithout(root *ast.FlowNode, call, reference *ast
 			return copy
 		}
 		copy.Antecedent, copy.Antecedents = clone(original.Antecedent), list(original.Antecedents)
-		if original.Flags&ast.FlowFlagsStart != 0 && original.Node != nil && original.Node.FlowNodeData() != nil && original.Node.FlowNodeData().FlowNode != nil {
+		if original.Flags&ast.FlowFlagsStart != 0 &&
+			original.Node != nil &&
+			original.Node.FlowNodeData() != nil &&
+			original.Node.FlowNodeData().FlowNode != nil {
 			// Stable identifier captures inherit the container's flow. Reconstruct
 			// that edge explicitly, without altering its shared AST flow node.
-			if reference.Kind == ast.KindIdentifier || (reference.Kind == ast.KindThisKeyword && ast.IsArrowFunction(original.Node)) {
+			if reference.Kind == ast.KindIdentifier ||
+				(reference.Kind == ast.KindThisKeyword && ast.IsArrowFunction(original.Node)) {
 				copy.Flags, copy.Node = ast.FlowFlagsBranchLabel, nil
 				copy.Antecedents = &ast.FlowList{Flow: clone(original.Node.FlowNodeData().FlowNode)}
 			}
@@ -1321,13 +1534,17 @@ func (l *lowering) proveInferredPredicate(function *ast.Node, target *checker.Ty
 		return false
 	}
 	parameter := function.Parameters()[index]
-	if parameter.Name().Kind != ast.KindIdentifier || parameter.AsParameterDeclaration().Initializer != nil || parameter.AsParameterDeclaration().DotDotDotToken != nil {
+	if parameter.Name().Kind != ast.KindIdentifier ||
+		parameter.AsParameterDeclaration().Initializer != nil ||
+		parameter.AsParameterDeclaration().DotDotDotToken != nil {
 		return false
 	}
 	changed := false
 	var writes ast.Visitor
 	writes = func(node *ast.Node) bool {
-		if node.Kind == ast.KindIdentifier && l.symbol(node) == l.symbol(parameter.Name()) && ast.IsAssignmentTarget(node) {
+		if node.Kind == ast.KindIdentifier &&
+			l.symbol(node) == l.symbol(parameter.Name()) &&
+			ast.IsAssignmentTarget(node) {
 			changed = true
 		}
 		node.ForEachChild(writes)
@@ -1337,6 +1554,12 @@ func (l *lowering) proveInferredPredicate(function *ast.Node, target *checker.Ty
 	if changed {
 		return false
 	}
-	proof := predicateFlowProof{l: l, function: function, parameter: parameter, declared: l.checker.GetTypeAtLocation(parameter.Name()), target: target}
+	proof := predicateFlowProof{
+		l:         l,
+		function:  function,
+		parameter: parameter,
+		declared:  l.checker.GetTypeAtLocation(parameter.Name()),
+		target:    target,
+	}
 	return proof.proveBody(function) == nil
 }

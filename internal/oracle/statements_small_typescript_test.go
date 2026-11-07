@@ -22,13 +22,13 @@ var statementsSmallTypeScriptFixtures = []string{
 // use the TypeScript assertion frontend; production .a assertions stay refused.
 func statementsSmallTypeScript(test *testing.T, path string) string {
 	test.Helper()
-	source, err := os.ReadFile(filepath.Join(repository, path))
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(filepath.Join(repository, path))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	typed := filepath.Join(test.TempDir(), strings.TrimSuffix(filepath.Base(path), ".a")+".ts")
-	if err := os.WriteFile(typed, source, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(typed, source, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return typed
 }
@@ -39,18 +39,18 @@ func statementsSmallTypeScriptCounted(test *testing.T, path string) (string, fun
 	test.Helper()
 	typed := statementsSmallTypeScript(test, path)
 	logical := "<repository>/" + strings.TrimSuffix(path, ".a") + ".ts"
-	checked, err := load.LoadDisplayed([]string{typed}, func(name string) string {
+	checked, loadDisplayedError := load.LoadDisplayed([]string{typed}, func(name string) string {
 		if name == typed {
 			return logical
 		}
 		return name
 	})
-	if err != nil {
-		test.Fatal(err)
+	if loadDisplayedError != nil {
+		test.Fatal(loadDisplayedError)
 	}
-	program, err := lower.Lower(context.Background(), checked)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerError := lower.Lower(context.Background(), checked)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	source := native.C(program)
 	return countPortable(test, source, ""), func() string {
@@ -71,9 +71,9 @@ func init() {
 
 func TestStatementsSmallTypeScriptCountInputsAreStable(test *testing.T) {
 	test.Parallel()
-	recorded, err := recordedCounts()
-	if err != nil {
-		test.Fatal(err)
+	recorded, recordedCountsError := recordedCounts()
+	if recordedCountsError != nil {
+		test.Fatal(recordedCountsError)
 	}
 	for _, path := range statementsSmallTypeScriptFixtures {
 		first, measure := statementsSmallTypeScriptCounted(test, path)
@@ -95,9 +95,9 @@ func TestStatementsSmallTypeScriptIncrement(test *testing.T) {
 	for _, path := range statementsSmallTypeScriptFixtures {
 		test.Run(filepath.Base(path), func(test *testing.T) {
 			typed := statementsSmallTypeScript(test, path)
-			program, err := lowered(test, typed)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, typed)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			node := onNode(test, typed)
 			want := node

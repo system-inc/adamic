@@ -77,15 +77,15 @@ func Git(directory string) bool {
 // which must equal the gitlink its parent repository's manifest records for it.
 func Head(directory string) (string, error) {
 	if Git(directory) {
-		output, err := git(directory, "rev-parse", "HEAD")
-		if err != nil {
-			return "", err
+		output, gitError := git(directory, "rev-parse", "HEAD")
+		if gitError != nil {
+			return "", gitError
 		}
 		return strings.TrimSpace(string(output)), nil
 	}
-	found, err := manifestOf(directory)
-	if err != nil {
-		return "", err
+	found, manifestOfError := manifestOf(directory)
+	if manifestOfError != nil {
+		return "", manifestOfError
 	}
 	return found.head, nil
 }
@@ -94,15 +94,15 @@ func Head(directory string) (string, error) {
 // manifest's. A submodule is one gitlink entry; its own files are its repository's.
 func Files(directory string) ([]Entry, error) {
 	if Git(directory) {
-		output, err := git(directory, "ls-files", "--stage", "-z")
-		if err != nil {
-			return nil, err
+		output, gitError := git(directory, "ls-files", "--stage", "-z")
+		if gitError != nil {
+			return nil, gitError
 		}
 		return parseStage(directory, output)
 	}
-	found, err := manifestOf(directory)
-	if err != nil {
-		return nil, err
+	found, manifestOfError := manifestOf(directory)
+	if manifestOfError != nil {
+		return nil, manifestOfError
 	}
 	return found.entries, nil
 }
@@ -112,15 +112,15 @@ func Files(directory string) ([]Entry, error) {
 // answers it runs that command; in a manifest a gitlink with no manifest of its own is refused, not skipped.
 func Recursive(directory string) ([]string, error) {
 	if Git(directory) {
-		output, err := git(directory, "ls-files", "--recurse-submodules", "-z")
-		if err != nil {
-			return nil, err
+		output, gitError := git(directory, "ls-files", "--recurse-submodules", "-z")
+		if gitError != nil {
+			return nil, gitError
 		}
 		return names(output), nil
 	}
-	found, err := manifestOf(directory)
-	if err != nil {
-		return nil, err
+	found, manifestOfError := manifestOf(directory)
+	if manifestOfError != nil {
+		return nil, manifestOfError
 	}
 	var paths []string
 	var expand func(prefix string, entries []Entry, directory string) error
@@ -131,26 +131,30 @@ func Recursive(directory string) ([]string, error) {
 				continue
 			}
 			submodule := filepath.Join(directory, filepath.FromSlash(entry.Path))
-			inner, err := manifestOf(submodule)
-			if err != nil {
-				return err
+			inner, manifestOfError := manifestOf(submodule)
+			if manifestOfError != nil {
+				return manifestOfError
 			}
-			if err := expand(prefix+entry.Path+"/", inner.entries, submodule); err != nil {
-				return err
+			if expandError := expand(prefix+entry.Path+"/", inner.entries, submodule); expandError != nil {
+				return expandError
 			}
 		}
 		// A file on disk the record leaves out would be left out of the listing: a stale manifest, refused by name.
-		extra, err := unrecorded(directory, ".", entries)
-		if err != nil {
-			return err
+		extra, unrecordedError := unrecorded(directory, ".", entries)
+		if unrecordedError != nil {
+			return unrecordedError
 		}
 		if len(extra) != 0 {
-			return fmt.Errorf("%s: files the tree's manifest doesn't record and no .gitignore ignores (a stale manifest, or a leftover): %q", directory, extra)
+			return fmt.Errorf(
+				"%s: files the tree's manifest doesn't record and no .gitignore ignores (a stale manifest, or a leftover): %q",
+				directory,
+				extra,
+			)
 		}
 		return nil
 	}
-	if err := expand("", found.entries, found.directory); err != nil {
-		return nil, err
+	if expandError := expand("", found.entries, found.directory); expandError != nil {
+		return nil, expandError
 	}
 	return paths, nil
 }
@@ -163,9 +167,9 @@ func Unrecorded(directory, root string) ([]string, error) {
 	if Git(directory) {
 		return nil, nil
 	}
-	found, err := manifestOf(directory)
-	if err != nil {
-		return nil, err
+	found, manifestOfError := manifestOf(directory)
+	if manifestOfError != nil {
+		return nil, manifestOfError
 	}
 	return unrecorded(found.directory, root, found.entries)
 }
@@ -194,17 +198,17 @@ func unrecorded(directory, root string, entries []Entry) ([]string, error) {
 	// visit lists a directory's children: a known directory's unknown children become candidates for the ignore
 	// rules, and a candidate directory that isn't ignored has all its children asked in turn.
 	visit = func(relative string, known bool) error {
-		children, err := os.ReadDir(filepath.Join(directory, filepath.FromSlash(relative)))
-		if err != nil {
-			return err
+		children, readDirectoryError := os.ReadDir(filepath.Join(directory, filepath.FromSlash(relative)))
+		if readDirectoryError != nil {
+			return readDirectoryError
 		}
 		for _, child := range children {
 			name := path.Join(relative, child.Name())
 			switch {
 			case child.IsDir() && (submodules[name] || name == ManifestDirectory && holdsManifest):
 			case child.IsDir() && known && directories[name]:
-				if err := visit(name, true); err != nil {
-					return err
+				if visitError := visit(name, true); visitError != nil {
+					return visitError
 				}
 			case !child.IsDir() && known && recorded[name]:
 			default:
@@ -221,16 +225,16 @@ func unrecorded(directory, root string, entries []Entry) ([]string, error) {
 	case !info.IsDir() && !recorded[root]:
 		candidates = append(candidates, root)
 	case info.IsDir() && directories[root] && !submodules[root]:
-		if err := visit(root, true); err != nil {
-			return nil, err
+		if visitError := visit(root, true); visitError != nil {
+			return nil, visitError
 		}
 	case info.IsDir() && !submodules[root]:
 		candidates = append(candidates, root)
 	}
 	for len(candidates) != 0 {
-		ignored, err := ignoredPaths(directory, candidates)
-		if err != nil {
-			return nil, err
+		ignored, ignoredPathsError := ignoredPaths(directory, candidates)
+		if ignoredPathsError != nil {
+			return nil, ignoredPathsError
 		}
 		asked := candidates
 		candidates = nil
@@ -238,20 +242,20 @@ func unrecorded(directory, root string, entries []Entry) ([]string, error) {
 			if ignored[name] {
 				continue
 			}
-			info, err := os.Lstat(filepath.Join(directory, filepath.FromSlash(name)))
-			if err != nil {
-				return nil, err
+			info, statError := os.Lstat(filepath.Join(directory, filepath.FromSlash(name)))
+			if statError != nil {
+				return nil, statError
 			}
 			if !info.IsDir() {
 				found = append(found, name)
 				continue
 			}
-			if _, err := os.Lstat(filepath.Join(directory, filepath.FromSlash(name), ".git")); err == nil {
+			if _, statError := os.Lstat(filepath.Join(directory, filepath.FromSlash(name), ".git")); statError == nil {
 				found = append(found, name+"/")
 				continue
 			}
-			if err := visit(name, false); err != nil {
-				return nil, err
+			if visitError := visit(name, false); visitError != nil {
+				return nil, visitError
 			}
 		}
 	}
@@ -264,17 +268,17 @@ func unrecorded(directory, root string, entries []Entry) ([]string, error) {
 // info/exclude). The directory has no .git, so git runs against an empty scratch repository with directory as its
 // work tree, and --no-index reads only the rules.
 func ignoredPaths(directory string, asked []string) (map[string]bool, error) {
-	scratch, err := os.MkdirTemp("", "tracked-ignore-")
-	if err != nil {
-		return nil, err
+	scratch, temporaryDirectoryError := os.MkdirTemp("", "tracked-ignore-")
+	if temporaryDirectoryError != nil {
+		return nil, temporaryDirectoryError
 	}
 	defer os.RemoveAll(scratch)
 	initialize := toolchain.GitCommand("init", "-q", "--bare", scratch)
-	if output, err := initialize.CombinedOutput(); err != nil {
-		return nil, fmt.Errorf("git init for the ignore rules: %w: %s", err, output)
+	if output, combinedOutputError := initialize.CombinedOutput(); combinedOutputError != nil {
+		return nil, fmt.Errorf("git init for the ignore rules: %w: %s", combinedOutputError, output)
 	}
-	if err := os.WriteFile(filepath.Join(scratch, "info", "exclude"), nil, 0o644); err != nil {
-		return nil, err
+	if writeError := os.WriteFile(filepath.Join(scratch, "info", "exclude"), nil, 0o644); writeError != nil {
+		return nil, writeError
 	}
 	var input bytes.Buffer
 	// Each name is a path, never a pathspec: an untracked file named ":(glob)x" or ":!y" is just a file. "./" keeps
@@ -284,19 +288,34 @@ func ignoredPaths(directory string, asked []string) (map[string]bool, error) {
 		input.WriteString("./" + name)
 		input.WriteByte(0)
 	}
-	command := toolchain.GitCommand("--git-dir="+scratch, "--work-tree="+directory, "-c", "core.bare=false", "-c", "core.excludesFile="+os.DevNull,
-		"check-ignore", "--no-index", "-z", "--stdin")
+	command := toolchain.GitCommand(
+		"--git-dir="+scratch,
+		"--work-tree="+directory,
+		"-c",
+		"core.bare=false",
+		"-c",
+		"core.excludesFile="+os.DevNull,
+		"check-ignore",
+		"--no-index",
+		"-z",
+		"--stdin",
+	)
 	command.Dir = directory
 	command.Stdin = &input
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
-	output, err := command.Output()
+	output, outputError := command.Output()
 	// check-ignore exits 1 when it ignores nothing.
-	if exit := (*exec.ExitError)(nil); errors.As(err, &exit) && exit.ExitCode() == 1 && stderr.Len() == 0 {
-		err = nil
+	if exit := (*exec.ExitError)(nil); errors.As(outputError, &exit) && exit.ExitCode() == 1 && stderr.Len() == 0 {
+		outputError = nil
 	}
-	if err != nil {
-		return nil, fmt.Errorf("git check-ignore in %s: %w: %s", directory, err, strings.TrimSpace(stderr.String()))
+	if outputError != nil {
+		return nil, fmt.Errorf(
+			"git check-ignore in %s: %w: %s",
+			directory,
+			outputError,
+			strings.TrimSpace(stderr.String()),
+		)
 	}
 	ignored := map[string]bool{}
 	for _, name := range names(output) {
@@ -316,15 +335,15 @@ func ignoredPaths(directory string, asked []string) (map[string]bool, error) {
 // so a file added or deleted there moves no read set (lint's compiler corpus skips each rule's evidence/, #hp8gq3e),
 // and git's answer drops the same paths.
 func PathsUnder(directory, root string, skip ...string) ([]string, error) {
-	directory, err := filepath.Abs(directory)
-	if err != nil {
-		return nil, err
+	directory, absolutePathError := filepath.Abs(directory)
+	if absolutePathError != nil {
+		return nil, absolutePathError
 	}
 	var paths []string
 	if !buildcache.Tracing() || !Git(directory) {
-		entries, err := Files(directory)
-		if err != nil {
-			return nil, err
+		entries, filesError := Files(directory)
+		if filesError != nil {
+			return nil, filesError
 		}
 		for _, entry := range Under(entries, root) {
 			if !entry.Submodule() && !Skipped(root, entry.Path, skip) {
@@ -334,12 +353,13 @@ func PathsUnder(directory, root string, skip ...string) ([]string, error) {
 		return paths, nil
 	}
 	start := filepath.Join(directory, filepath.FromSlash(root))
-	err = filepath.WalkDir(start, func(name string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
+	walkError := filepath.WalkDir(start, func(name string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
 		if entry.IsDir() {
-			// A nested repository is its own (git lists only its gitlink), root included; the repository's root never is.
+			// A nested repository is its own (git lists only its gitlink), root included; the repository's root never
+			// is.
 			if name != directory && (Git(name) || !buildcache.Tracked(directory, name, true)) {
 				return filepath.SkipDir
 			}
@@ -349,16 +369,16 @@ func PathsUnder(directory, root string, skip ...string) ([]string, error) {
 			return nil
 		}
 		if buildcache.Tracked(directory, name, false) {
-			relative, err := filepath.Rel(directory, name)
-			if err != nil {
-				return err
+			relative, relativePathError := filepath.Rel(directory, name)
+			if relativePathError != nil {
+				return relativePathError
 			}
 			paths = append(paths, filepath.ToSlash(relative))
 		}
 		return nil
 	})
 	sort.Strings(paths)
-	return paths, err
+	return paths, walkError
 }
 
 // Skipped is whether name, a repository-relative path at or under root, sits in a directory below root whose name skip
@@ -395,7 +415,7 @@ func Under(entries []Entry, root string) []Entry {
 // Changed reads each file entry (gitlinks are skipped) in directory and names those missing, and those that aren't
 // what the record holds: another kind (a file for a link, a directory for a file), another executable bit, or content
 // that doesn't hash to the entry's object. It is what git diff against HEAD answers, for a source with no .git.
-func Changed(directory string, entries []Entry) (missing, changed []string, err error) {
+func Changed(directory string, entries []Entry) (missing, changed []string, changedError error) {
 	type verdict struct {
 		missing, changed bool
 		err              error
@@ -408,8 +428,8 @@ func Changed(directory string, entries []Entry) (missing, changed []string, err 
 		go func() {
 			defer group.Done()
 			for index := range work {
-				missing, changed, err := differs(directory, entries[index])
-				verdicts[index] = verdict{missing, changed, err}
+				missing, changed, differsError := differs(directory, entries[index])
+				verdicts[index] = verdict{missing, changed, differsError}
 			}
 		}()
 	}
@@ -433,21 +453,21 @@ func Changed(directory string, entries []Entry) (missing, changed []string, err 
 	return missing, changed, nil
 }
 
-func differs(directory string, entry Entry) (missing, changed bool, err error) {
+func differs(directory string, entry Entry) (missing, changed bool, differsError error) {
 	name := filepath.Join(directory, filepath.FromSlash(entry.Path))
-	info, err := os.Lstat(name)
-	if errors.Is(err, os.ErrNotExist) {
+	info, statError := os.Lstat(name)
+	if errors.Is(statError, os.ErrNotExist) {
 		return true, false, nil
 	}
-	if err != nil {
-		return false, false, err
+	if statError != nil {
+		return false, false, statError
 	}
 	var content io.Reader
 	switch {
 	case entry.Mode == "120000" && info.Mode()&os.ModeSymlink != 0:
-		target, err := os.Readlink(name)
-		if err != nil {
-			return false, false, err
+		target, readLinkError := os.Readlink(name)
+		if readLinkError != nil {
+			return false, false, readLinkError
 		}
 		content = strings.NewReader(target)
 	case (entry.Mode == "100644" || entry.Mode == "100755") && info.Mode().IsRegular():
@@ -455,27 +475,27 @@ func differs(directory string, entry Entry) (missing, changed bool, err error) {
 		if (info.Mode().Perm()&0o100 != 0) != (entry.Mode == "100755") {
 			return false, true, nil
 		}
-		file, err := os.Open(name)
-		if err != nil {
-			return false, false, err
+		file, openError := os.Open(name)
+		if openError != nil {
+			return false, false, openError
 		}
 		defer file.Close()
 		content = file
 	default:
 		return false, true, nil
 	}
-	object, err := blobObject(content, len(entry.Object))
-	if err != nil {
-		return false, false, fmt.Errorf("hashing %s: %w", name, err)
+	object, blobObjectError := blobObject(content, len(entry.Object))
+	if blobObjectError != nil {
+		return false, false, fmt.Errorf("hashing %s: %w", name, blobObjectError)
 	}
 	return false, object != entry.Object, nil
 }
 
 // blobObject is git's object id for content as a blob: sha1 for a 40-digit id, sha256 for a 64-digit one.
 func blobObject(content io.Reader, digits int) (string, error) {
-	data, err := io.ReadAll(content)
-	if err != nil {
-		return "", err
+	data, readError := io.ReadAll(content)
+	if readError != nil {
+		return "", readError
 	}
 	return object("blob", data, digits)
 }
@@ -486,40 +506,40 @@ func blobObject(content io.Reader, digits int) (string, error) {
 func Write(checkout, tree string) error {
 	var write func(directory, relative string) error
 	write = func(directory, relative string) error {
-		head, err := git(directory, "rev-parse", "HEAD")
-		if err != nil {
-			return err
+		head, gitError := git(directory, "rev-parse", "HEAD")
+		if gitError != nil {
+			return gitError
 		}
-		commit, err := git(directory, "cat-file", "commit", "HEAD")
-		if err != nil {
-			return err
+		commit, gitError := git(directory, "cat-file", "commit", "HEAD")
+		if gitError != nil {
+			return gitError
 		}
-		listing, err := git(directory, "ls-tree", "-r", "-z", "--full-tree", "HEAD")
-		if err != nil {
-			return err
+		listing, gitError := git(directory, "ls-tree", "-r", "-z", "--full-tree", "HEAD")
+		if gitError != nil {
+			return gitError
 		}
 		destination := filepath.Join(tree, ManifestDirectory, filepath.FromSlash(relative))
-		if err := os.MkdirAll(destination, 0o755); err != nil {
-			return err
+		if createDirectoryError := os.MkdirAll(destination, 0o755); createDirectoryError != nil {
+			return createDirectoryError
 		}
-		if err := os.WriteFile(filepath.Join(destination, headFile), head, 0o644); err != nil {
-			return err
+		if writeError := os.WriteFile(filepath.Join(destination, headFile), head, 0o644); writeError != nil {
+			return writeError
 		}
-		if err := os.WriteFile(filepath.Join(destination, commitFile), commit, 0o644); err != nil {
-			return err
+		if writeError := os.WriteFile(filepath.Join(destination, commitFile), commit, 0o644); writeError != nil {
+			return writeError
 		}
-		if err := os.WriteFile(filepath.Join(destination, filesFile), listing, 0o644); err != nil {
-			return err
+		if writeError := os.WriteFile(filepath.Join(destination, filesFile), listing, 0o644); writeError != nil {
+			return writeError
 		}
-		entries, err := parseTree(directory, listing)
-		if err != nil {
-			return err
+		entries, parseTreeError := parseTree(directory, listing)
+		if parseTreeError != nil {
+			return parseTreeError
 		}
 		for _, entry := range entries {
 			submodule := filepath.Join(directory, filepath.FromSlash(entry.Path))
 			if entry.Submodule() && Git(submodule) {
-				if err := write(submodule, path.Join(relative, entry.Path)); err != nil {
-					return err
+				if writeError := write(submodule, path.Join(relative, entry.Path)); writeError != nil {
+					return writeError
 				}
 			}
 		}
@@ -543,16 +563,16 @@ var manifests sync.Map
 // there, refusing one whose commit disagrees with the gitlink its parent repository records for it. A directory with
 // neither .git nor a record is refused by name: its commit and its tracked files are unknown.
 func manifestOf(directory string) (*manifest, error) {
-	directory, err := filepath.Abs(directory)
-	if err != nil {
-		return nil, err
+	directory, absolutePathError := filepath.Abs(directory)
+	if absolutePathError != nil {
+		return nil, absolutePathError
 	}
 	if found, ok := manifests.Load(directory); ok {
 		return found.(*manifest), nil
 	}
-	found, err := readManifest(directory)
-	if err != nil {
-		return nil, err
+	found, readManifestError := readManifest(directory)
+	if readManifestError != nil {
+		return nil, readManifestError
 	}
 	manifests.Store(directory, found)
 	return found, nil
@@ -562,9 +582,9 @@ func manifestOf(directory string) (*manifest, error) {
 var asKeying = buildcache.Keying
 
 // readManifest reads directory's record and checks it against its parent's. The manifest stands where .git would, so
-// reading it is key-time work (buildcache.Keying), as git's own answers are: under Workshop's trace a product test in an
-// unpacked source never records .tracked in its read set, which refuses it as untracked (#asrz3cy). A parent's record
-// is read by its own manifestOf, keyed on its own, so no keying runs inside another.
+// reading it is key-time work (buildcache.Keying), as git's own answers are: under Workshop's trace a product test in
+// an unpacked source never records .tracked in its read set, which refuses it as untracked (#asrz3cy). A parent's
+// record is read by its own manifestOf, keyed on its own, so no keying runs inside another.
 func readManifest(directory string) (*manifest, error) {
 	var root, relative string
 	var found *manifest
@@ -581,13 +601,13 @@ func readManifest(directory string) (*manifest, error) {
 		parentDirectory := filepath.Join(root, filepath.FromSlash(parent))
 		recorded := false
 		asKeying(func() {
-			_, err := os.Stat(filepath.Join(root, ManifestDirectory, filepath.FromSlash(parent), headFile))
-			recorded = err == nil
+			_, statError := os.Stat(filepath.Join(root, ManifestDirectory, filepath.FromSlash(parent), headFile))
+			recorded = statError == nil
 		})
 		if recorded {
-			above, err := manifestOf(parentDirectory)
-			if err != nil {
-				return nil, err
+			above, manifestOfError := manifestOf(parentDirectory)
+			if manifestOfError != nil {
+				return nil, manifestOfError
 			}
 			inside := strings.TrimPrefix(relative, parent+"/")
 			if parent == "." {
@@ -596,12 +616,23 @@ func readManifest(directory string) (*manifest, error) {
 			for _, entry := range above.entries {
 				if entry.Path == inside && entry.Submodule() {
 					if entry.Object != found.head {
-						return nil, fmt.Errorf("%s: the manifest's commit %s isn't %s, the gitlink %s records", directory, found.head, entry.Object, parentDirectory)
+						return nil, fmt.Errorf(
+							"%s: the manifest's commit %s isn't %s, the gitlink %s records",
+							directory,
+							found.head,
+							entry.Object,
+							parentDirectory,
+						)
 					}
 					return found, nil
 				}
 			}
-			return nil, fmt.Errorf("%s: the manifest records it, but %s's records no gitlink at %s", directory, parentDirectory, inside)
+			return nil, fmt.Errorf(
+				"%s: the manifest records it, but %s's records no gitlink at %s",
+				directory,
+				parentDirectory,
+				inside,
+			)
 		}
 		if parent == "." {
 			return nil, fmt.Errorf("%s: the manifest records it, but no repository above it", directory)
@@ -614,45 +645,66 @@ func readManifest(directory string) (*manifest, error) {
 func readRecord(directory string) (string, string, *manifest, error) {
 	root := directory
 	for {
-		if info, err := os.Stat(filepath.Join(root, ManifestDirectory)); err == nil && info.IsDir() {
+		if info, statError := os.Stat(filepath.Join(root, ManifestDirectory)); statError == nil && info.IsDir() {
 			break
 		}
 		parent := filepath.Dir(root)
 		if parent == root {
-			return "", "", nil, fmt.Errorf("%s has no .git, and no %s manifest at or above it records its commit and tracked files (build-tree writes one into the source it chunks)", directory, ManifestDirectory)
+			return "", "", nil, fmt.Errorf(
+				"%s has no .git, and no %s manifest at or above it records its commit and tracked files (build-tree writes one into the source it chunks)",
+				directory,
+				ManifestDirectory,
+			)
 		}
 		root = parent
 	}
-	relative, err := filepath.Rel(root, directory)
-	if err != nil {
-		return "", "", nil, err
+	relative, relativePathError := filepath.Rel(root, directory)
+	if relativePathError != nil {
+		return "", "", nil, relativePathError
 	}
 	relative = filepath.ToSlash(relative)
 	if relative == "." {
 		relative = ""
 	}
 	record := filepath.Join(root, ManifestDirectory, filepath.FromSlash(relative))
-	head, err := os.ReadFile(filepath.Join(record, headFile))
-	if err != nil {
-		return "", "", nil, fmt.Errorf("%s has no .git, and the tree's manifest has no commit for it: %w", directory, err)
+	head, readError := os.ReadFile(filepath.Join(record, headFile))
+	if readError != nil {
+		return "", "", nil, fmt.Errorf(
+			"%s has no .git, and the tree's manifest has no commit for it: %w",
+			directory,
+			readError,
+		)
 	}
-	listing, err := os.ReadFile(filepath.Join(record, filesFile))
-	if err != nil {
-		return "", "", nil, fmt.Errorf("%s has no .git, and the tree's manifest has no tracked files for it: %w", directory, err)
+	listing, readError := os.ReadFile(filepath.Join(record, filesFile))
+	if readError != nil {
+		return "", "", nil, fmt.Errorf(
+			"%s has no .git, and the tree's manifest has no tracked files for it: %w",
+			directory,
+			readError,
+		)
 	}
 	found := &manifest{directory: directory, head: strings.TrimSpace(string(head))}
 	if !objectID(found.head) {
-		return "", "", nil, fmt.Errorf("%s: the manifest's commit %q isn't an object id", filepath.Join(record, headFile), found.head)
+		return "", "", nil, fmt.Errorf(
+			"%s: the manifest's commit %q isn't an object id",
+			filepath.Join(record, headFile),
+			found.head,
+		)
 	}
-	if found.entries, err = parseTree(filepath.Join(record, filesFile), listing); err != nil {
-		return "", "", nil, err
+	var parseTreeError error
+	if found.entries, parseTreeError = parseTree(filepath.Join(record, filesFile), listing); parseTreeError != nil {
+		return "", "", nil, parseTreeError
 	}
-	commit, err := os.ReadFile(filepath.Join(record, commitFile))
-	if err != nil {
-		return "", "", nil, fmt.Errorf("%s has no .git, and the tree's manifest has no commit object for it, so nothing binds its files to its commit: %w", directory, err)
+	commit, readError := os.ReadFile(filepath.Join(record, commitFile))
+	if readError != nil {
+		return "", "", nil, fmt.Errorf(
+			"%s has no .git, and the tree's manifest has no commit object for it, so nothing binds its files to its commit: %w",
+			directory,
+			readError,
+		)
 	}
-	if err := bound(record, found, commit); err != nil {
-		return "", "", nil, err
+	if boundError := bound(record, found, commit); boundError != nil {
+		return "", "", nil, boundError
 	}
 	return root, relative, found, nil
 }
@@ -663,7 +715,13 @@ func parseTree(source string, listing []byte) ([]Entry, error) {
 	for _, line := range names(listing) {
 		header, name, ok := strings.Cut(line, "\t")
 		fields := strings.Fields(header)
-		if !ok || name == "" || len(fields) != 3 || !knownMode(fields[0]) || !objectID(fields[2]) || (fields[1] == "commit") != (fields[0] == "160000") || (fields[1] != "blob" && fields[1] != "commit") {
+		if !ok ||
+			name == "" ||
+			len(fields) != 3 ||
+			!knownMode(fields[0]) ||
+			!objectID(fields[2]) ||
+			(fields[1] == "commit") != (fields[0] == "160000") ||
+			(fields[1] != "blob" && fields[1] != "commit") {
 			return nil, fmt.Errorf("%s: %q isn't a git ls-tree -r entry", source, line)
 		}
 		entries = append(entries, Entry{Mode: fields[0], Object: fields[2], Path: name})
@@ -714,7 +772,13 @@ func git(directory string, arguments ...string) ([]byte, error) {
 	var err error
 	buildcache.Keying(func() { output, err = command.Output() })
 	if err != nil {
-		return nil, fmt.Errorf("git %s in %s: %w: %s", strings.Join(arguments, " "), directory, err, strings.TrimSpace(stderr.String()))
+		return nil, fmt.Errorf(
+			"git %s in %s: %w: %s",
+			strings.Join(arguments, " "),
+			directory,
+			err,
+			strings.TrimSpace(stderr.String()),
+		)
 	}
 	return output, nil
 }
@@ -722,20 +786,32 @@ func git(directory string, arguments ...string) ([]byte, error) {
 // bound refuses a record whose three files aren't one commit's: the commit object must hash to HEAD, and the tree it
 // names must be the tree its files listing rebuilds.
 func bound(record string, found *manifest, commit []byte) error {
-	if id, err := object("commit", commit, len(found.head)); err != nil || id != found.head {
-		return fmt.Errorf("%s: the commit object hashes to %s, not the manifest's commit %s (%v)", filepath.Join(record, commitFile), id, found.head, err)
+	if id, objectError := object("commit", commit, len(found.head)); objectError != nil || id != found.head {
+		return fmt.Errorf(
+			"%s: the commit object hashes to %s, not the manifest's commit %s (%v)",
+			filepath.Join(record, commitFile),
+			id,
+			found.head,
+			objectError,
+		)
 	}
 	line, _, _ := bytes.Cut(commit, []byte("\n"))
 	named, ok := strings.CutPrefix(string(line), "tree ")
 	if !ok || !objectID(named) {
 		return fmt.Errorf("%s: the commit object names no tree: %q", filepath.Join(record, commitFile), line)
 	}
-	rebuilt, err := treeObject(found.entries, len(found.head))
-	if err != nil {
-		return fmt.Errorf("%s: %w", filepath.Join(record, filesFile), err)
+	rebuilt, treeObjectError := treeObject(found.entries, len(found.head))
+	if treeObjectError != nil {
+		return fmt.Errorf("%s: %w", filepath.Join(record, filesFile), treeObjectError)
 	}
 	if rebuilt != named {
-		return fmt.Errorf("%s: the listing rebuilds tree %s, and commit %s names tree %s: the files aren't that commit's", filepath.Join(record, filesFile), rebuilt, found.head, named)
+		return fmt.Errorf(
+			"%s: the listing rebuilds tree %s, and commit %s names tree %s: the files aren't that commit's",
+			filepath.Join(record, filesFile),
+			rebuilt,
+			found.head,
+			named,
+		)
 	}
 	return nil
 }
@@ -750,10 +826,15 @@ func treeObject(entries []Entry, digits int) (string, error) {
 	children := map[string][]child{}
 	directories := map[string]bool{".": true}
 	for _, entry := range entries {
-		children[path.Dir(entry.Path)] = append(children[path.Dir(entry.Path)], child{mode: entry.Mode, name: path.Base(entry.Path), id: entry.Object})
+		children[path.Dir(entry.Path)] = append(
+			children[path.Dir(entry.Path)],
+			child{mode: entry.Mode, name: path.Base(entry.Path), id: entry.Object},
+		)
 		for parent := path.Dir(entry.Path); parent != "." && !directories[parent]; parent = path.Dir(parent) {
 			directories[parent] = true
-			children[path.Dir(parent)] = append(children[path.Dir(parent)], child{mode: "40000", name: path.Base(parent), tree: true})
+			children[path.Dir(
+				parent,
+			)] = append(children[path.Dir(parent)], child{mode: "40000", name: path.Base(parent), tree: true})
 		}
 	}
 	var build func(directory string) (string, error)
@@ -772,14 +853,14 @@ func treeObject(entries []Entry, digits int) (string, error) {
 				return "", fmt.Errorf("%q is listed twice", path.Join(directory, item.name))
 			}
 			if item.tree {
-				id, err := build(path.Join(directory, item.name))
-				if err != nil {
-					return "", err
+				id, buildError := build(path.Join(directory, item.name))
+				if buildError != nil {
+					return "", buildError
 				}
 				item.id = id
 			}
-			raw, err := hex.DecodeString(item.id)
-			if err != nil || len(item.id) != digits {
+			raw, decodeStringError := hex.DecodeString(item.id)
+			if decodeStringError != nil || len(item.id) != digits {
 				return "", fmt.Errorf("%q has object %q", path.Join(directory, item.name), item.id)
 			}
 			fmt.Fprintf(&content, "%s %s\x00", item.mode, item.name)

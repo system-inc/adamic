@@ -32,22 +32,22 @@ func suiteSources(test *testing.T, repository string) []string {
 	pinnedFixtureFiles(test, repository, names)
 	unique := map[string]bool{}
 	for _, name := range names {
-		tree, err := parser.ParseFile(
+		tree, parseFileError := parser.ParseFile(
 			token.NewFileSet(),
 			filepath.Join(repository, "cohere/internal/lint/rules/typescript", name+"_test.go"),
 			nil,
 			0,
 		)
-		if err != nil {
-			test.Fatal(err)
+		if parseFileError != nil {
+			test.Fatal(parseFileError)
 		}
 		add := func(n goast.Expr) {
 			literal, ok := n.(*goast.BasicLit)
 			if !ok || literal.Kind != token.STRING {
 				return
 			}
-			text, err := strconv.Unquote(literal.Value)
-			if err == nil && (strings.Contains(text, ";") ||
+			text, unquoteError := strconv.Unquote(literal.Value)
+			if unquoteError == nil && (strings.Contains(text, ";") ||
 				strings.Contains(text, "\n") ||
 				strings.HasPrefix(text, "class ") ||
 				strings.HasPrefix(text, "interface ")) {
@@ -106,9 +106,9 @@ func suiteSources(test *testing.T, repository string) []string {
 func suiteTSMutant(h *harness, normal, entry, name, relative, from, to string, imports ...string) string {
 	h.t.Helper()
 	path := filepath.Join(h.repository, "stage1/cohere/typeaware", relative)
-	text, err := os.ReadFile(path)
-	if err != nil {
-		h.t.Fatal(err)
+	text, readError := os.ReadFile(path)
+	if readError != nil {
+		h.t.Fatal(readError)
 	}
 	if strings.Count(string(text), from) != 1 {
 		h.t.Fatalf("nonunique %s anchor", name)
@@ -136,9 +136,9 @@ func suiteTSMutant(h *harness, normal, entry, name, relative, from, to string, i
 		source = strings.ReplaceAll(source, "./"+file, filepath.Join(h.repository, "stage1/cohere/typeaware", file))
 	}
 	mutant := h.write(name+".ts", source)
-	driver, err := os.ReadFile(entry)
-	if err != nil {
-		h.t.Fatal(err)
+	driver, readError := os.ReadFile(entry)
+	if readError != nil {
+		h.t.Fatal(readError)
 	}
 	main := strings.Replace(string(driver), "./"+relative, mutant, 1)
 	main = strings.ReplaceAll(main, "../../typescript", filepath.Join(h.repository, "stage1/typescript"))
@@ -171,28 +171,28 @@ const testSixRuleAgreementAndMutantsShards = 95
 
 func prepareSixRuleAgreementAndMutants(test *testing.T) *typeAwarePlan {
 	started := time.Now()
-	if _, _, err := sixSelection(os.Getenv("ADAMIC_TEST_SHARD")); err != nil {
-		test.Fatal(err)
+	if _, _, sixSelectionError := sixSelection(os.Getenv("ADAMIC_TEST_SHARD")); sixSelectionError != nil {
+		test.Fatal(sixSelectionError)
 	}
 	var shards []sixShard
 	add := func(name string, ids []string, run func(*harness)) {
 		shards = append(shards, sixShard{name: name, ids: ids, run: run})
 	}
-	repository, err := filepath.Abs("../../..")
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs("../../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	directory := filepath.Join(productDirectory, "six-plan")
-	if err := os.MkdirAll(directory, 0755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	if path := os.Getenv("ADAMIC_SIX_ARTIFACTS"); path != "" {
-		directory, err = filepath.Abs(path)
-		if err != nil {
-			test.Fatal(err)
+		directory, absolutePathError = filepath.Abs(path)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
-		if err = os.MkdirAll(directory, 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 	}
 	h := &harness{
@@ -570,18 +570,18 @@ func TestSixPinnedFlags(test *testing.T) {
 
 // Not parallel: this builds and executes a native decoder with dynamic inputs.
 func TestFactsDecoderGuards(test *testing.T) {
-	repository, err := filepath.Abs("../../..")
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs("../../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	directory := test.TempDir()
 	if path := os.Getenv("ADAMIC_SIX_GUARD_ARTIFACTS"); path != "" {
-		directory, err = filepath.Abs(path)
-		if err != nil {
-			test.Fatal(err)
+		directory, absolutePathError = filepath.Abs(path)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
-		if err = os.MkdirAll(directory, 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 	}
 	h := &harness{t: test, repository: repository, directory: directory}
@@ -715,13 +715,13 @@ func sixCorpusOnce(test *testing.T) *sixCorpus {
 	test.Helper()
 	shared := &sixCorpusShared
 	shared.once.Do(func() {
-		repository, err := filepath.Abs("../../..")
-		if err != nil {
-			test.Fatal(err)
+		repository, absolutePathError := filepath.Abs("../../..")
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		directory := filepath.Join(productDirectory, "six-corpus")
-		if err := os.MkdirAll(directory, 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 		h := &harness{
 			t:            test,
@@ -783,9 +783,9 @@ func sixMutants(h *harness, repository string) map[string]sixMutant {
 	}
 	// Union test mutates the facts consumer and reroutes the Rules import too.
 	// A separate driver avoids a mutant whose unused module compiles but never runs.
-	factsText, err := os.ReadFile(filepath.Join(repository, "stage1/cohere/typeaware/types.ts"))
-	if err != nil {
-		test.Fatal(err)
+	factsText, readError := os.ReadFile(filepath.Join(repository, "stage1/cohere/typeaware/types.ts"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	from := "return (type.flags & mask) !== 0 ? type.parts : [type.id];"
 	if strings.Count(string(factsText), from) != 1 {
@@ -803,9 +803,9 @@ func sixMutants(h *harness, repository string) map[string]sixMutant {
 		"union-mutant.ts",
 		strings.Replace(factsSource, from, "return mask === 0 ? type.parts : [type.id];", 1),
 	)
-	decoder, err := os.ReadFile(filepath.Join(repository, "stage1/cohere/typeaware/facts.ts"))
-	if err != nil {
-		test.Fatal(err)
+	decoder, readError := os.ReadFile(filepath.Join(repository, "stage1/cohere/typeaware/facts.ts"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	decoderText := strings.Replace(string(decoder), "from './types.ts'", "from '"+factsPath+"'", 1)
 	for _, file := range []string{"frames.ts", "type_fact.ts"} {
@@ -816,9 +816,9 @@ func sixMutants(h *harness, repository string) map[string]sixMutant {
 		)
 	}
 	decoderPath := h.write("union-decoder.ts", decoderText)
-	parameters, err := os.ReadFile(filepath.Join(repository, "stage1/cohere/typeaware/parameters.ts"))
-	if err != nil {
-		test.Fatal(err)
+	parameters, readError := os.ReadFile(filepath.Join(repository, "stage1/cohere/typeaware/parameters.ts"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	parametersPath := h.write(
 		"union-parameters.ts",
@@ -919,7 +919,8 @@ const sixDyingWitnesses = 8
 func (corpus *sixCorpus) witnesses(h *harness, name string, mutant func() string) []string {
 	h.t.Helper()
 	paths, config, manifest, truth, dies := corpus.paths, corpus.config, corpus.manifest, corpus.truth, corpus.mutants[name].dies
-	record, err := cachedTypeAwareProduct("six witnesses "+name, func(directory string) (string, error) {
+	record, cachedTypeAwareProductError := cachedTypeAwareProduct("six witnesses "+
+		name, func(directory string) (string, error) {
 		binary := mutant()
 		var found []string
 		if dies == nil {
@@ -941,12 +942,12 @@ func (corpus *sixCorpus) witnesses(h *harness, name string, mutant func() string
 		file := filepath.Join(directory, "witnesses.txt")
 		return file, os.WriteFile(file, []byte(strings.Join(found, "\n")), 0644)
 	})
-	if err != nil {
-		h.t.Fatal(err)
+	if cachedTypeAwareProductError != nil {
+		h.t.Fatal(cachedTypeAwareProductError)
 	}
-	data, err := os.ReadFile(record)
-	if err != nil {
-		h.t.Fatal(err)
+	data, readError := os.ReadFile(record)
+	if readError != nil {
+		h.t.Fatal(readError)
 	}
 	byName := make(map[string]string, len(paths))
 	for _, path := range paths {
@@ -1006,13 +1007,13 @@ func sixDifferingCases(got, want []byte) []string {
 // the rest of the six plan.
 func sixWitnessProduct(test *testing.T, name string) {
 	corpus := sixCorpusOnce(test)
-	repository, err := filepath.Abs("../../..")
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs("../../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	directory := filepath.Join(productDirectory, "six-witnesses", test.Name())
-	if err := os.MkdirAll(directory, 0755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	// The witness search is the product's fill, shared setup the unit's own budget bounds, as six's corpus harness is,
 	// never typeAwareChildLimit's 90 s for case work: a mutant caught by output runs over the whole generated corpus in

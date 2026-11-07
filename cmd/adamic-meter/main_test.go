@@ -9,9 +9,9 @@ import (
 
 func TestFixtureCorpusCountsEveryDiagnosticKind(test *testing.T) {
 	test.Parallel()
-	r, err := measure("testdata/corpus", false)
-	if err != nil {
-		test.Fatal(err)
+	r, measureError := measure("testdata/corpus", false)
+	if measureError != nil {
+		test.Fatal(measureError)
 	}
 	got := map[string]int{}
 	for _, reason := range r.Reasons {
@@ -28,17 +28,17 @@ func TestFixtureCorpusCountsEveryDiagnosticKind(test *testing.T) {
 func TestAdaptRewritesTypeOnlyImportInMemory(test *testing.T) {
 	test.Parallel()
 	const path = "testdata/adapt/main.ts"
-	before, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	before, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	plain, err := measure("testdata/adapt", false)
-	if err != nil {
-		test.Fatal(err)
+	plain, measureError := measure("testdata/adapt", false)
+	if measureError != nil {
+		test.Fatal(measureError)
 	}
-	adapted, err := measure("testdata/adapt", true)
-	if err != nil {
-		test.Fatal(err)
+	adapted, measureError := measure("testdata/adapt", true)
+	if measureError != nil {
+		test.Fatal(measureError)
 	}
 	if countKind(plain, "mechanical") != 1 {
 		test.Fatalf("plain mechanical diagnostics = %d, want 1", countKind(plain, "mechanical"))
@@ -46,9 +46,9 @@ func TestAdaptRewritesTypeOnlyImportInMemory(test *testing.T) {
 	if countKind(adapted, "mechanical") != 0 || len(adapted.Adaptations) != 1 || adapted.Adaptations[0].Removed != 1 {
 		test.Fatalf("adapted report = %#v", adapted)
 	}
-	after, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	after, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if !bytes.Equal(before, after) {
 		test.Fatal("--adapt changed the fixture on disk")
@@ -72,8 +72,8 @@ func TestJSONIsMachineReadable(test *testing.T) {
 		test.Fatalf("run = %d, stderr = %s", code, stderr.String())
 	}
 	var got report
-	if err := json.Unmarshal(stdout.Bytes(), &got); err != nil {
-		test.Fatalf("invalid JSON: %v\n%s", err, stdout.String())
+	if decodeError := json.Unmarshal(stdout.Bytes(), &got); decodeError != nil {
+		test.Fatalf("invalid JSON: %v\n%s", decodeError, stdout.String())
 	}
 	if got.FilesExamined != 2 || len(got.Reasons) != 2 {
 		test.Fatalf("report = %#v", got)
@@ -91,9 +91,9 @@ func TestNormalizeDropsIncidentalDetails(test *testing.T) {
 // The former NotYet corpus witness is admitted by optional boolean field lowering.
 func TestUnionClassFieldHasNoDiagnostic(test *testing.T) {
 	test.Parallel()
-	r, err := measure("testdata/compiled", false)
-	if err != nil {
-		test.Fatal(err)
+	r, measureError := measure("testdata/compiled", false)
+	if measureError != nil {
+		test.Fatal(measureError)
 	}
 	if r.FilesExamined != 1 || r.FilesReachingLowering != 1 || len(r.Reasons) != 0 {
 		test.Fatalf("compiled union field report = %#v", r)

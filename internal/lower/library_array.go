@@ -20,23 +20,27 @@ func (l *lowering) libraryArrayMethod(node, receiver *ast.Node, name string) (ir
 	return l.libraryArrayMethodArguments(node, receiver, name, node.AsCallExpression().Arguments.Nodes)
 }
 
-func (l *lowering) libraryArrayMethodArguments(node, receiver *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) libraryArrayMethodArguments(
+	node, receiver *ast.Node,
+	name string,
+	written []*ast.Node,
+) (ir.Expression, bool, error) {
 	if name == "push" && len(written) == 1 && written[0].Kind != ast.KindSpreadElement {
 		return l.arrayMethodArguments(node, receiver, name, written)
 	}
 	if name == "push" || name == "unshift" {
 		return l.arrayInsertArguments(node, receiver, name, written)
 	}
-	element, err := l.elementType(receiver)
-	if err != nil {
-		return nil, true, err
+	element, elementTypeError := l.elementType(receiver)
+	if elementTypeError != nil {
+		return nil, true, elementTypeError
 	}
 	if name == "join" && element != ir.Array {
 		return l.arrayMethod(node, receiver, name)
 	}
-	array, err := l.expression(receiver)
-	if err != nil {
-		return nil, true, err
+	array, expressionError := l.expression(receiver)
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
 	switch name {
 	case "join":
@@ -91,19 +95,25 @@ func (l *lowering) libraryArrayMethodArguments(node, receiver *ast.Node, name st
 	if len(written) < 1 || len(written) > 2 {
 		return nil, true, l.notYet(node, name+" with these arguments")
 	}
-	value, err := l.expression(written[0])
-	if err != nil {
-		return nil, true, err
+	value, expressionError := l.expression(written[0])
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
 	value = fit(value, element)
 	if value.Type() != element {
 		return nil, true, l.notYet(node, name+" with a value of another type than the elements")
 	}
-	search := ir.ArraySearch{Array: array, Value: value, Element: element, Includes: name == "includes", Last: name == "lastIndexOf"}
+	search := ir.ArraySearch{
+		Array:    array,
+		Value:    value,
+		Element:  element,
+		Includes: name == "includes",
+		Last:     name == "lastIndexOf",
+	}
 	if len(written) == 2 {
-		from, err := l.expression(written[1])
-		if err != nil {
-			return nil, true, err
+		from, expressionError := l.expression(written[1])
+		if expressionError != nil {
+			return nil, true, expressionError
 		}
 		// undefined means 0 when explicitly supplied, including for lastIndexOf.
 		if _, absent := from.(ir.Undefined); absent {
@@ -122,7 +132,11 @@ func (l *lowering) libraryArrayMethodArguments(node, receiver *ast.Node, name st
 func (l *lowering) libraryArrayComparator(element ir.Type) int {
 	function := len(l.result.Functions)
 	parameters := []int{len(l.result.Locals), len(l.result.Locals) + 1}
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: "left", Type: element, Function: function}, ir.Local{Name: "right", Type: element, Function: function})
+	l.result.Locals = append(
+		l.result.Locals,
+		ir.Local{Name: "left", Type: element, Function: function},
+		ir.Local{Name: "right", Type: element, Function: function},
+	)
 	text := func(local int) ir.Expression {
 		read := ir.Read{Local: local, Of: element}
 		if element == ir.Number {
@@ -134,8 +148,21 @@ func (l *lowering) libraryArrayComparator(element ir.Type) int {
 		return read
 	}
 	left, right := text(parameters[0]), text(parameters[1])
-	result := ir.Conditional{Condition: ir.Binary{Operator: ir.Less, Left: left, Right: right}, WhenTrue: ir.NumberConstant{Value: -1}, WhenNot: ir.Conditional{Condition: ir.Binary{Operator: ir.Greater, Left: left, Right: right}, WhenTrue: ir.NumberConstant{Value: 1}, WhenNot: ir.NumberConstant{Value: 0}}}
-	l.result.Functions = append(l.result.Functions, ir.Function{Name: "array_default_compare", Parameters: parameters, Returns: ir.Number, Body: []ir.Statement{ir.Return{Value: result}}})
+	result := ir.Conditional{
+		Condition: ir.Binary{Operator: ir.Less, Left: left, Right: right},
+		WhenTrue:  ir.NumberConstant{Value: -1},
+		WhenNot: ir.Conditional{
+			Condition: ir.Binary{Operator: ir.Greater, Left: left, Right: right},
+			WhenTrue:  ir.NumberConstant{Value: 1},
+			WhenNot:   ir.NumberConstant{Value: 0},
+		},
+	}
+	l.result.Functions = append(l.result.Functions, ir.Function{
+		Name:       "array_default_compare",
+		Parameters: parameters,
+		Returns:    ir.Number,
+		Body:       []ir.Statement{ir.Return{Value: result}},
+	})
 	return function
 }
 
@@ -171,16 +198,23 @@ func (b *libraryArrayBuilder) declare(name string, value ir.Expression) int {
 }
 func (b *libraryArrayBuilder) finish(name string, result ir.Expression) ir.Expression {
 	b.body = append(b.body, ir.Return{Value: result})
-	b.l.result.Functions = append(b.l.result.Functions, ir.Function{Name: name, Parameters: b.parameters, Returns: result.Type(), Body: b.body})
+	b.l.result.Functions = append(
+		b.l.result.Functions,
+		ir.Function{Name: name, Parameters: b.parameters, Returns: result.Type(), Body: b.body},
+	)
 	return ir.Call{Function: b.function, Arguments: b.arguments, Returns: result.Type()}
 }
 
-func (l *lowering) libraryArraySpliced(node *ast.Node, array ir.Expression, element ir.Type) (ir.Expression, bool, error) {
+func (l *lowering) libraryArraySpliced(
+	node *ast.Node,
+	array ir.Expression,
+	element ir.Type,
+) (ir.Expression, bool, error) {
 	arguments := []ir.Expression{array}
 	for index, written := range node.AsCallExpression().Arguments.Nodes {
-		value, err := l.expression(written)
-		if err != nil {
-			return nil, true, err
+		value, expressionError := l.expression(written)
+		if expressionError != nil {
+			return nil, true, expressionError
 		}
 		if index < 2 {
 			if _, undefined := value.(ir.Undefined); undefined {
@@ -200,7 +234,12 @@ func (l *lowering) libraryArraySpliced(node *ast.Node, array ir.Expression, elem
 	b := l.libraryArrayBuilder(arguments)
 	copy := b.declare("copy", ir.ArraySlice{Array: b.read(b.parameters[0]), Element: element})
 	if len(arguments) > 1 {
-		splice := ir.ArraySplice{Array: b.read(copy), Start: b.read(b.parameters[1]), Element: element, Site: l.writeSite(node)}
+		splice := ir.ArraySplice{
+			Array:   b.read(copy),
+			Start:   b.read(b.parameters[1]),
+			Element: element,
+			Site:    l.writeSite(node),
+		}
 		if len(arguments) > 2 {
 			splice.Count = b.read(b.parameters[2])
 			for _, parameter := range b.parameters[3:] {
@@ -223,8 +262,8 @@ func (l *lowering) libraryArrayFlat(node, receiver *ast.Node, array ir.Expressio
 		if literal.Kind != ast.KindNumericLiteral {
 			return nil, true, l.notYet(node, "flat with a nonconstant depth")
 		}
-		number, err := strconv.ParseFloat(literal.Text(), 64)
-		if err != nil || number > 32 {
+		number, parseError := strconv.ParseFloat(literal.Text(), 64)
+		if parseError != nil || number > 32 {
 			return nil, true, l.notYet(node, "flat with this depth")
 		}
 		depth = int(number)
@@ -247,9 +286,9 @@ func (l *lowering) libraryArrayFlat(node, receiver *ast.Node, array ir.Expressio
 		}
 		layer = item
 	}
-	resultElement, err := l.elementType(node)
-	if err != nil {
-		return nil, true, err
+	resultElement, elementTypeError := l.elementType(node)
+	if elementTypeError != nil {
+		return nil, true, elementTypeError
 	}
 	if resultElement != types[len(types)-1] {
 		return nil, true, l.notYet(node, "flat whose result element type differs from its depth")
@@ -259,7 +298,12 @@ func (l *lowering) libraryArrayFlat(node, receiver *ast.Node, array ir.Expressio
 	var loop func(ir.Expression, int) ir.Statement
 	loop = func(source ir.Expression, level int) ir.Statement {
 		local := b.local("element", types[level])
-		body := []ir.Statement{ir.Evaluate{Value: ir.ArrayPush{Array: b.read(result), Value: b.read(local), Element: resultElement, Site: l.writeSite(node)}}}
+		body := []ir.Statement{ir.Evaluate{Value: ir.ArrayPush{
+			Array:   b.read(result),
+			Value:   b.read(local),
+			Element: resultElement,
+			Site:    l.writeSite(node),
+		}}}
 		if level+1 < len(types) {
 			body = []ir.Statement{loop(b.read(local), level+1)}
 		}
@@ -269,16 +313,20 @@ func (l *lowering) libraryArrayFlat(node, receiver *ast.Node, array ir.Expressio
 	return b.finish("array_flat", b.read(result)), true, nil
 }
 
-func (l *lowering) libraryArrayCopyWithin(node *ast.Node, array ir.Expression, element ir.Type) (ir.Expression, bool, error) {
+func (l *lowering) libraryArrayCopyWithin(
+	node *ast.Node,
+	array ir.Expression,
+	element ir.Type,
+) (ir.Expression, bool, error) {
 	written := node.AsCallExpression().Arguments.Nodes
 	if len(written) < 1 || len(written) > 3 {
 		return nil, true, l.notYet(node, "copyWithin with these arguments")
 	}
 	arguments := []ir.Expression{array}
 	for _, item := range written {
-		value, err := l.expression(item)
-		if err != nil {
-			return nil, true, err
+		value, expressionError := l.expression(item)
+		if expressionError != nil {
+			return nil, true, expressionError
 		}
 		if value.Type() != ir.Number {
 			return nil, true, l.notYet(node, "copyWithin with a nonnumeric bound")
@@ -293,10 +341,18 @@ func (l *lowering) libraryArrayCopyWithin(node *ast.Node, array ir.Expression, e
 		return ir.Binary{Operator: ir.Add, Left: left, Right: right}
 	}
 	relative := func(value ir.Expression) ir.Expression {
-		integer := ir.Conditional{Condition: ir.NumberCall{Function: "isNaN", Arguments: []ir.Expression{value}}, WhenTrue: zero, WhenNot: ir.MathCall{Function: "trunc", Arguments: []ir.Expression{value}}}
+		integer := ir.Conditional{
+			Condition: ir.NumberCall{Function: "isNaN", Arguments: []ir.Expression{value}},
+			WhenTrue:  zero,
+			WhenNot:   ir.MathCall{Function: "trunc", Arguments: []ir.Expression{value}},
+		}
 		local := b.declare("integer", integer)
 		read := b.read(local)
-		return ir.Conditional{Condition: ir.Binary{Operator: ir.Less, Left: read, Right: zero}, WhenTrue: ir.MathCall{Function: "max", Arguments: []ir.Expression{add(b.read(length), read), zero}}, WhenNot: ir.MathCall{Function: "min", Arguments: []ir.Expression{read, b.read(length)}}}
+		return ir.Conditional{
+			Condition: ir.Binary{Operator: ir.Less, Left: read, Right: zero},
+			WhenTrue:  ir.MathCall{Function: "max", Arguments: []ir.Expression{add(b.read(length), read), zero}},
+			WhenNot:   ir.MathCall{Function: "min", Arguments: []ir.Expression{read, b.read(length)}},
+		}
 	}
 	target := b.declare("target", relative(b.read(b.parameters[1])))
 	startValue, endValue := ir.Expression(zero), b.read(length)
@@ -309,14 +365,32 @@ func (l *lowering) libraryArrayCopyWithin(node *ast.Node, array ir.Expression, e
 	start := b.declare("start", relative(startValue))
 	end := b.declare("end", relative(endValue))
 	// Snapshot the source range so overlapping writes have memmove semantics, with references held.
-	copy := b.declare("range", ir.ArraySlice{Array: source, Arguments: []ir.Expression{b.read(start), b.read(end)}, Element: element})
-	count := b.declare("count", ir.MathCall{Function: "min", Arguments: []ir.Expression{ir.Length{Array: b.read(copy)}, ir.Binary{Operator: ir.Subtract, Left: b.read(length), Right: b.read(target)}}})
+	copy := b.declare(
+		"range",
+		ir.ArraySlice{Array: source, Arguments: []ir.Expression{b.read(start), b.read(end)}, Element: element},
+	)
+	count := b.declare("count", ir.MathCall{Function: "min", Arguments: []ir.Expression{
+		ir.Length{Array: b.read(copy)},
+		ir.Binary{Operator: ir.Subtract, Left: b.read(length), Right: b.read(target)},
+	}})
 	index := b.declare("index", zero)
 	value := ir.Expression(ir.ArrayIndex{Array: b.read(copy), Index: b.read(index), Element: element})
 	if value.Type().IsMaybe() && value.Type() != element {
 		value = ir.Unwrap{Value: value}
 	}
-	b.body = append(b.body, ir.Loop{Condition: ir.Binary{Operator: ir.Less, Left: b.read(index), Right: b.read(count)}, Body: []ir.Statement{ir.SetIndex{Array: source, Index: add(b.read(target), b.read(index)), Value: value, Element: element, Site: l.writeSite(node)}}, Update: []ir.Statement{ir.Assign{Local: index, Value: add(b.read(index), ir.NumberConstant{Value: 1})}}})
+	b.body = append(b.body, ir.Loop{
+		Condition: ir.Binary{Operator: ir.Less, Left: b.read(index), Right: b.read(count)},
+		Body: []ir.Statement{
+			ir.SetIndex{
+				Array:   source,
+				Index:   add(b.read(target), b.read(index)),
+				Value:   value,
+				Element: element,
+				Site:    l.writeSite(node),
+			},
+		},
+		Update: []ir.Statement{ir.Assign{Local: index, Value: add(b.read(index), ir.NumberConstant{Value: 1})}},
+	})
 	return b.finish("array_copy_within", source), true, nil
 }
 
@@ -325,13 +399,13 @@ func (l *lowering) libraryArrayWith(node *ast.Node, array ir.Expression, element
 	if len(written) != 2 {
 		return nil, true, l.notYet(node, "with without an index and value")
 	}
-	index, err := l.expression(written[0])
-	if err != nil {
-		return nil, true, err
+	index, expressionError := l.expression(written[0])
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
-	value, err := l.expression(written[1])
-	if err != nil {
-		return nil, true, err
+	value, expressionError := l.expression(written[1])
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
 	value = fit(value, element)
 	if index.Type() != ir.Number || value.Type() != element {
@@ -340,29 +414,58 @@ func (l *lowering) libraryArrayWith(node *ast.Node, array ir.Expression, element
 	b := l.libraryArrayBuilder([]ir.Expression{array, index, value})
 	source, raw := b.read(b.parameters[0]), b.read(b.parameters[1])
 	zero := ir.NumberConstant{Value: 0}
-	integer := b.declare("integer", ir.Conditional{Condition: ir.NumberCall{Function: "isNaN", Arguments: []ir.Expression{raw}}, WhenTrue: zero, WhenNot: ir.MathCall{Function: "trunc", Arguments: []ir.Expression{raw}}})
-	actual := b.declare("actual", ir.Conditional{Condition: ir.Binary{Operator: ir.Less, Left: b.read(integer), Right: zero}, WhenTrue: ir.Binary{Operator: ir.Add, Left: ir.Length{Array: source}, Right: b.read(integer)}, WhenNot: b.read(integer)})
-	outside := ir.Binary{Operator: ir.Or, Left: ir.Binary{Operator: ir.Less, Left: b.read(actual), Right: zero}, Right: ir.Binary{Operator: ir.GreaterOrEqual, Left: b.read(actual), Right: ir.Length{Array: source}}}
+	integer := b.declare("integer", ir.Conditional{
+		Condition: ir.NumberCall{Function: "isNaN", Arguments: []ir.Expression{raw}},
+		WhenTrue:  zero,
+		WhenNot:   ir.MathCall{Function: "trunc", Arguments: []ir.Expression{raw}},
+	})
+	actual := b.declare("actual", ir.Conditional{
+		Condition: ir.Binary{Operator: ir.Less, Left: b.read(integer), Right: zero},
+		WhenTrue:  ir.Binary{Operator: ir.Add, Left: ir.Length{Array: source}, Right: b.read(integer)},
+		WhenNot:   b.read(integer),
+	})
+	outside := ir.Binary{
+		Operator: ir.Or,
+		Left:     ir.Binary{Operator: ir.Less, Left: b.read(actual), Right: zero},
+		Right:    ir.Binary{Operator: ir.GreaterOrEqual, Left: b.read(actual), Right: ir.Length{Array: source}},
+	}
 	errorLocal := b.local("range_error", ir.Object)
-	message := ir.Concat{Parts: []ir.Expression{ir.StringConstant{Index: l.constant("Invalid index : ")}, ir.NumberToString{Value: raw}}}
+	message := ir.Concat{
+		Parts: []ir.Expression{ir.StringConstant{Index: l.constant("Invalid index : ")}, ir.NumberToString{Value: raw}},
+	}
 	b.body = append(b.body, ir.If{Condition: outside, Then: []ir.Statement{
 		ir.Declare{Local: errorLocal, Value: ir.MakeError{Message: message}},
-		ir.SetProperty{Object: b.read(errorLocal), Name: "name", Value: ir.StringConstant{Index: l.constant("RangeError")}, Site: l.libraryArraySyntheticWriteSite(node)},
+		ir.SetProperty{
+			Object: b.read(errorLocal),
+			Name:   "name",
+			Value:  ir.StringConstant{Index: l.constant("RangeError")},
+			Site:   l.libraryArraySyntheticWriteSite(node),
+		},
 		ir.Throw{Value: b.read(errorLocal)},
 	}})
 	copy := b.declare("copy", ir.ArraySlice{Array: source, Element: element})
-	b.body = append(b.body, ir.SetIndex{Array: b.read(copy), Index: b.read(actual), Value: b.read(b.parameters[2]), Element: element, Site: l.writeSite(node)})
+	b.body = append(b.body, ir.SetIndex{
+		Array:   b.read(copy),
+		Index:   b.read(actual),
+		Value:   b.read(b.parameters[2]),
+		Element: element,
+		Site:    l.writeSite(node),
+	})
 	return b.finish("array_with", b.read(copy)), true, nil
 }
 
-func (l *lowering) libraryArrayFlatMap(node *ast.Node, array ir.Expression, element ir.Type) (ir.Expression, bool, error) {
+func (l *lowering) libraryArrayFlatMap(
+	node *ast.Node,
+	array ir.Expression,
+	element ir.Type,
+) (ir.Expression, bool, error) {
 	written := node.AsCallExpression().Arguments.Nodes
 	if len(written) != 1 {
 		return nil, true, l.notYet(node, "flatMap with other than one callback")
 	}
-	callback, err := l.expression(written[0])
-	if err != nil {
-		return nil, true, err
+	callback, expressionError := l.expression(written[0])
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
 	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(written[0]), checker.SignatureKindCall)
 	if callback.Type() != ir.Closure || len(signatures) != 1 || len(signatures[0].Parameters()) > 3 {
@@ -370,9 +473,9 @@ func (l *lowering) libraryArrayFlatMap(node *ast.Node, array ir.Expression, elem
 	}
 	returned := l.checker.GetReturnTypeOfSignature(signatures[0])
 	resultType, known := l.representation(returned)
-	output, err := l.elementType(node)
-	if err != nil {
-		return nil, true, err
+	output, elementTypeError := l.elementType(node)
+	if elementTypeError != nil {
+		return nil, true, elementTypeError
 	}
 	if !known || (resultType != ir.Array && resultType != output) {
 		return nil, true, l.notYet(node, "flatMap with a mixed scalar and array callback result")
@@ -408,12 +511,34 @@ func (l *lowering) libraryArrayFlatMap(node *ast.Node, array ir.Expression, elem
 	body := []ir.Statement{ir.Declare{Local: mapped, Value: call}}
 	if resultType == ir.Array {
 		item := b.local("element", output)
-		body = append(body, ir.ForOf{Iterable: b.read(mapped), Element: output, Local: item, Body: []ir.Statement{ir.Evaluate{Value: ir.ArrayPush{Array: b.read(result), Value: b.read(item), Element: output, Site: l.writeSite(node)}}}})
+		body = append(
+			body,
+			ir.ForOf{Iterable: b.read(mapped), Element: output, Local: item, Body: []ir.Statement{ir.Evaluate{
+				Value: ir.ArrayPush{
+					Array:   b.read(result),
+					Value:   b.read(item),
+					Element: output,
+					Site:    l.writeSite(node),
+				},
+			}}},
+		)
 	} else {
-		body = append(body, ir.Evaluate{Value: ir.ArrayPush{Array: b.read(result), Value: b.read(mapped), Element: output, Site: l.writeSite(node)}})
+		body = append(body, ir.Evaluate{
+			Value: ir.ArrayPush{Array: b.read(result), Value: b.read(mapped), Element: output, Site: l.writeSite(node)},
+		})
 	}
 	// An index the callback removed is skipped, as flatMap's HasProperty requires.
-	b.body = append(b.body, ir.Loop{Condition: ir.Binary{Operator: ir.Less, Left: b.read(index), Right: b.read(count)}, Body: []ir.Statement{ir.If{Condition: ir.Binary{Operator: ir.Less, Left: b.read(index), Right: ir.Length{Array: source}}, Then: body}}, Update: []ir.Statement{ir.Assign{Local: index, Value: ir.Binary{Operator: ir.Add, Left: b.read(index), Right: ir.NumberConstant{Value: 1}}}}})
+	b.body = append(b.body, ir.Loop{
+		Condition: ir.Binary{Operator: ir.Less, Left: b.read(index), Right: b.read(count)},
+		Body: []ir.Statement{ir.If{
+			Condition: ir.Binary{Operator: ir.Less, Left: b.read(index), Right: ir.Length{Array: source}},
+			Then:      body,
+		}},
+		Update: []ir.Statement{ir.Assign{
+			Local: index,
+			Value: ir.Binary{Operator: ir.Add, Left: b.read(index), Right: ir.NumberConstant{Value: 1}},
+		}},
+	})
 	return b.finish("array_flat_map", b.read(result)), true, nil
 }
 
@@ -439,7 +564,10 @@ func (l *lowering) libraryArrayMethodName(node *ast.Node) string {
 		return ""
 	}
 	prototype := ast.SkipParentheses(access.Expression)
-	if prototype.Kind != ast.KindPropertyAccessExpression || prototype.Name().Text() != "prototype" || prototype.AsPropertyAccessExpression().QuestionDotToken != nil || !l.isLibraryGlobal(prototype.AsPropertyAccessExpression().Expression, "Array") {
+	if prototype.Kind != ast.KindPropertyAccessExpression ||
+		prototype.Name().Text() != "prototype" ||
+		prototype.AsPropertyAccessExpression().QuestionDotToken != nil ||
+		!l.isLibraryGlobal(prototype.AsPropertyAccessExpression().Expression, "Array") {
 		return ""
 	}
 	name := access.Name().Text()
@@ -483,7 +611,10 @@ func (l *lowering) libraryArrayObservedMethod(node *ast.Node) bool {
 	if parent.Kind == ast.KindTypeOfExpression {
 		return true
 	}
-	return parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Expression == node && parent.AsPropertyAccessExpression().QuestionDotToken == nil && (parent.Name().Text() == "length" || parent.Name().Text() == "name")
+	return parent.Kind == ast.KindPropertyAccessExpression &&
+		parent.AsPropertyAccessExpression().Expression == node &&
+		parent.AsPropertyAccessExpression().QuestionDotToken == nil &&
+		(parent.Name().Text() == "length" || parent.Name().Text() == "name")
 }
 
 // Direct for...of over a standard array iterator keeps the source alive and reads its length
@@ -503,11 +634,13 @@ func (l *lowering) libraryArrayForOf(node *ast.Node) ([]ir.Statement, bool, erro
 	if name != "entries" && name != "keys" && name != "values" {
 		return nil, false, nil
 	}
-	if receiver, known := l.representation(l.checker.GetTypeAtLocation(access.Expression)); !known || receiver != ir.Array {
+	if receiver, known := l.representation(
+		l.checker.GetTypeAtLocation(access.Expression),
+	); !known || receiver != ir.Array {
 		return nil, false, nil
 	}
-	if err := l.optionalCall(call); err != nil {
-		return nil, true, err
+	if optionalCallError := l.optionalCall(call); optionalCallError != nil {
+		return nil, true, optionalCallError
 	}
 	if statement.AwaitModifier != nil {
 		return nil, true, l.notYet(node, "for await")
@@ -521,13 +654,13 @@ func (l *lowering) libraryArrayForOf(node *ast.Node) ([]ir.Statement, bool, erro
 		return nil, true, l.notYet(node, "an array iterator loop with multiple declarations")
 	}
 	binding := declarations[0].Name()
-	array, err := l.expression(access.Expression)
-	if err != nil {
-		return nil, true, err
+	array, expressionError := l.expression(access.Expression)
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
-	element, err := l.elementType(access.Expression)
-	if err != nil {
-		return nil, true, err
+	element, elementTypeError := l.elementType(access.Expression)
+	if elementTypeError != nil {
+		return nil, true, elementTypeError
 	}
 	local := func(name string, of ir.Type) int {
 		index := len(l.result.Locals)
@@ -542,16 +675,19 @@ func (l *lowering) libraryArrayForOf(node *ast.Node) ([]ir.Statement, bool, erro
 	}
 	body := []ir.Statement{}
 	if ast.IsIdentifier(binding) {
-		bound, err := l.declareLocal(binding)
-		if err != nil {
-			return nil, true, err
+		bound, declareLocalError := l.declareLocal(binding)
+		if declareLocalError != nil {
+			return nil, true, declareLocalError
 		}
 		given := value
 		if name == "keys" {
 			given = read(index)
 		}
 		if name == "entries" {
-			given = ir.ObjectLiteral{Tuple: true, Fields: []ir.Field{{Name: "0", Value: read(index)}, {Name: "1", Value: value}}}
+			given = ir.ObjectLiteral{
+				Tuple:  true,
+				Fields: []ir.Field{{Name: "0", Value: read(index)}, {Name: "1", Value: value}},
+			}
 		}
 		body = append(body, ir.Declare{Local: bound, Value: given})
 	} else if name == "entries" && binding.Kind == ast.KindArrayBindingPattern {
@@ -567,9 +703,9 @@ func (l *lowering) libraryArrayForOf(node *ast.Node) ([]ir.Statement, bool, erro
 			if !ast.IsIdentifier(bound.Name()) || item.Initializer != nil || item.DotDotDotToken != nil {
 				return nil, true, l.notYet(node, "an array entry binding with a default or rest")
 			}
-			variable, err := l.declareLocal(bound.Name())
-			if err != nil {
-				return nil, true, err
+			variable, declareLocalError := l.declareLocal(bound.Name())
+			if declareLocalError != nil {
+				return nil, true, declareLocalError
 			}
 			given := value
 			if position == 0 {
@@ -580,13 +716,24 @@ func (l *lowering) libraryArrayForOf(node *ast.Node) ([]ir.Statement, bool, erro
 	} else {
 		return nil, true, l.notYet(node, "destructuring this array iterator")
 	}
-	inner, err := l.statement(statement.Statement)
-	if err != nil {
-		return nil, true, err
+	inner, statementError := l.statement(statement.Statement)
+	if statementError != nil {
+		return nil, true, statementError
 	}
 	body = append(body, inner...)
-	loop := ir.Loop{Condition: ir.Binary{Operator: ir.Less, Left: read(index), Right: ir.Length{Array: read(source)}}, Body: body, Update: []ir.Statement{ir.Assign{Local: index, Value: ir.Binary{Operator: ir.Add, Left: read(index), Right: ir.NumberConstant{Value: 1}}}}}
-	return []ir.Statement{ir.Block{Body: []ir.Statement{ir.Declare{Local: source, Value: array}, ir.Declare{Local: index, Value: ir.NumberConstant{Value: 0}}, loop}}}, true, nil
+	loop := ir.Loop{
+		Condition: ir.Binary{Operator: ir.Less, Left: read(index), Right: ir.Length{Array: read(source)}},
+		Body:      body,
+		Update: []ir.Statement{ir.Assign{
+			Local: index,
+			Value: ir.Binary{Operator: ir.Add, Left: read(index), Right: ir.NumberConstant{Value: 1}},
+		}},
+	}
+	return []ir.Statement{ir.Block{Body: []ir.Statement{
+		ir.Declare{Local: source, Value: array},
+		ir.Declare{Local: index, Value: ir.NumberConstant{Value: 0}},
+		loop,
+	}}}, true, nil
 }
 
 // A generated Error has no source expression whose checker type names its holder. A nil holder
@@ -627,9 +774,9 @@ func (l *lowering) libraryArrayJoin(node, receiver *ast.Node, array ir.Expressio
 		return nil, true, l.notYet(node, "join with more than one separator")
 	}
 	if len(written) == 1 {
-		value, err := l.expression(written[0])
-		if err != nil {
-			return nil, true, err
+		value, expressionError := l.expression(written[0])
+		if expressionError != nil {
+			return nil, true, expressionError
 		}
 		separator = l.orDefault(written[0], value, ",")
 		if separator.Type() != ir.String {

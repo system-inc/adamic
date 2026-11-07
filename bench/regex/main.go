@@ -30,27 +30,27 @@ func main() {
 	directory := flag.String("out", "/tmp/regex-speed", "artifact directory")
 	buildOnly := flag.Bool("build-only", false, "emit benchmark without running")
 	flag.Parse()
-	if err := run(*directory, *buildOnly); err != nil {
-		fmt.Fprintln(os.Stderr, err)
+	if runError := run(*directory, *buildOnly); runError != nil {
+		fmt.Fprintln(os.Stderr, runError)
 		os.Exit(1)
 	}
 }
 func run(directory string, buildOnly bool) error {
-	if err := os.MkdirAll(directory, 0755); err != nil {
-		return err
+	if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+		return createDirectoryError
 	}
 	var probes []probe
-	err := filepath.WalkDir("cohere/internal/lint", func(path string, entry os.DirEntry, err error) error {
-		if err != nil {
-			return err
+	walkError := filepath.WalkDir("cohere/internal/lint", func(path string, entry os.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
 		if entry.IsDir() || !strings.HasSuffix(path, ".go") || strings.HasSuffix(path, "_test.go") {
 			return nil
 		}
 		files := token.NewFileSet()
-		tree, err := parser.ParseFile(files, path, nil, 0)
-		if err != nil {
-			return err
+		tree, parseFileError := parser.ParseFile(files, path, nil, 0)
+		if parseFileError != nil {
+			return parseFileError
 		}
 		constants := map[string]ast.Expr{}
 		ast.Inspect(tree, func(node ast.Node) bool {
@@ -67,8 +67,8 @@ func run(directory string, buildOnly bool) error {
 			switch e := e.(type) {
 			case *ast.BasicLit:
 				if e.Kind == token.STRING {
-					s, err := strconv.Unquote(e.Value)
-					return s, err == nil
+					s, unquoteError := strconv.Unquote(e.Value)
+					return s, unquoteError == nil
 				}
 			case *ast.BinaryExpr:
 				if e.Op == token.ADD {
@@ -123,7 +123,7 @@ func run(directory string, buildOnly bool) error {
 				fmt.Fprintf(os.Stderr, "dynamic pattern instantiated: %s:%d = %s\n", path, line, pattern)
 			}
 			sample := ""
-			if tree, err := syntax.Parse(pattern, syntax.Perl); err == nil {
+			if tree, parseError := syntax.Parse(pattern, syntax.Perl); parseError == nil {
 				sample = witness(tree)
 			}
 			flags := ""
@@ -138,53 +138,84 @@ func run(directory string, buildOnly bool) error {
 				pattern = strings.ReplaceAll(pattern, "\\x{", "\\u{")
 				flags += "u"
 			}
-			probes = append(probes, probe{fmt.Sprintf("%s:%d", path, files.Position(call.Pos()).Line), pattern, flags, []string{sample, "shadow", "useEffect", "eslint-disable-next-line no-warning-comments -- explanation", "return undefined;", "bg-opacity-50", strings.Repeat("ordinary prose without a directive ", 32), "import React from 'react';\nconst x = useState(0);", "\t* @example 'CAPITAL TOKEN' ```code```"}, 9000})
+			probes = append(
+				probes,
+				probe{fmt.Sprintf("%s:%d", path, files.Position(call.Pos()).Line), pattern, flags, []string{
+					sample,
+					"shadow",
+					"useEffect",
+					"eslint-disable-next-line no-warning-comments -- explanation",
+					"return undefined;",
+					"bg-opacity-50",
+					strings.Repeat("ordinary prose without a directive ", 32),
+					"import React from 'react';\nconst x = useState(0);",
+					"\t* @example 'CAPITAL TOKEN' ```code```",
+				}, 9000},
+			)
 			return true
 		})
 		return nil
 	})
-	if err != nil {
-		return err
+	if walkError != nil {
+		return walkError
 	}
-	keywords := strings.Fields("abstract arguments await boolean break byte case catch char class const continue debugger default delete do double else enum eval export extends false final finally float for function goto if implements import in instanceof int interface let long native new null package private protected public return short static super switch synchronized this throw throws transient true try typeof var void volatile while with yield")
+	keywords := strings.Fields(
+		"abstract arguments await boolean break byte case catch char class const continue debugger default delete do double else enum eval export extends false final finally float for function goto if implements import in instanceof int interface let long native new null package private protected public return short static super switch synchronized this throw throws transient true try typeof var void volatile while with yield",
+	)
 	large := strings.Repeat("ordinary prose; padding 12345\n", 512)
 	probes = append(probes,
-		probe{"hard/keywords", `\b(?:` + strings.Join(keywords, "|") + `)\b`, "", []string{large + "volatile", large}, 200},
-		probe{"hard/email", `[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}`, "", []string{large + "hello@example.com", large}, 200},
+		probe{
+			"hard/keywords",
+			`\b(?:` + strings.Join(keywords, "|") + `)\b`,
+			"",
+			[]string{large + "volatile", large},
+			200,
+		},
+		probe{
+			"hard/email",
+			`[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}`,
+			"",
+			[]string{large + "hello@example.com", large},
+			200,
+		},
 		probe{"hard/ignorecase", `canonicalize`, "iu", []string{large + "CANONICALIZE", large + "Kſ"}, 200},
 		probe{"hard/lookbehind", `(?<=prefix )[a-z]+`, "", []string{large + "prefix suffix", large}, 200})
-	originalData, err := os.ReadFile("bench/regex/originals.json")
-	if err != nil {
-		return err
+	originalData, readError := os.ReadFile("bench/regex/originals.json")
+	if readError != nil {
+		return readError
 	}
 	var originals []probe
-	if err = json.Unmarshal(originalData, &originals); err != nil {
-		return err
+	if decodeError := json.Unmarshal(originalData, &originals); decodeError != nil {
+		return decodeError
 	}
 	probes = append(probes, originals...)
-	data, err := json.MarshalIndent(probes, "", "  ")
-	if err != nil {
-		return err
+	data, encodeError := json.MarshalIndent(probes, "", "  ")
+	if encodeError != nil {
+		return encodeError
 	}
-	if err = os.WriteFile(filepath.Join(directory, "cases.json"), data, 0644); err != nil {
-		return err
+	if writeError := os.WriteFile(filepath.Join(directory, "cases.json"), data, 0644); writeError != nil {
+		return writeError
 	}
 	var source strings.Builder
-	source.WriteString("#define _POSIX_C_SOURCE 200809L\n#include \"adamic.h\"\n#include <stdio.h>\n#include <stdlib.h>\n#include <time.h>\n")
+	source.WriteString(
+		"#define _POSIX_C_SOURCE 200809L\n#include \"adamic.h\"\n#include <stdio.h>\n#include <stdlib.h>\n#include <time.h>\n",
+	)
 	header := os.Getenv("REGEXP_CALLGRIND_HEADER")
 	if header != "" {
 		fmt.Fprintf(&source, "#include %q\n", header)
 	} else {
-		source.WriteString("#define CALLGRIND_START_INSTRUMENTATION ((void)0)\n#define CALLGRIND_STOP_INSTRUMENTATION ((void)0)\n#define CALLGRIND_ZERO_STATS ((void)0)\n#define CALLGRIND_DUMP_STATS ((void)0)\n")
+		source.WriteString(
+			"#define CALLGRIND_START_INSTRUMENTATION ((void)0)\n#define CALLGRIND_STOP_INSTRUMENTATION ((void)0)\n#define CALLGRIND_ZERO_STATS ((void)0)\n#define CALLGRIND_DUMP_STATS ((void)0)\n",
+		)
 	}
 	for id, p := range probes {
-		compiled, err := regex.Compile(p.Pattern, p.Flags)
-		if err != nil {
-			return fmt.Errorf("%s: %w", p.Name, err)
+		compiled, compileError := regex.Compile(p.Pattern, p.Flags)
+		if compileError != nil {
+			return fmt.Errorf("%s: %w", p.Name, compileError)
 		}
-		declarations, err := compiled.NativeDeclarations(fmt.Sprintf("program_%d", id))
-		if err != nil {
-			return err
+		declarations, nativeDeclarationsError := compiled.NativeDeclarations(fmt.Sprintf("program_%d", id))
+		if nativeDeclarationsError != nil {
+			return nativeDeclarationsError
 		}
 		source.WriteString(declarations)
 		for j, input := range p.Inputs {
@@ -192,29 +223,56 @@ func run(directory string, buildOnly bool) error {
 			for _, b := range []byte(input) {
 				fmt.Fprintf(&source, "%d,", b)
 			}
-			fmt.Fprintf(&source, "0};\nstatic adamic_string input_%d_%d = {{0,adamic_kind_string,0},%d,bytes_%d_%d,0,ADAMIC_LITERAL_INDEX,NULL,0};\n", id, j, len(input), id, j)
+			fmt.Fprintf(
+				&source,
+				"0};\nstatic adamic_string input_%d_%d = {{0,adamic_kind_string,0},%d,bytes_%d_%d,0,ADAMIC_LITERAL_INDEX,NULL,0};\n",
+				id,
+				j,
+				len(input),
+				id,
+				j,
+			)
 		}
 	}
-	source.WriteString("int main(int argc,char **argv) {adamic_start(argc,argv);int id=atoi(argv[1]);size_t calls=(size_t)strtoull(argv[2],NULL,10);switch(id){\n")
+	source.WriteString(
+		"int main(int argc,char **argv) {adamic_start(argc,argv);int id=atoi(argv[1]);size_t calls=(size_t)strtoull(argv[2],NULL,10);switch(id){\n",
+	)
 	for id, p := range probes {
-		fmt.Fprintf(&source, "case %d: {adamic_object *regex=adamic_regex_new(&program_%d,&adamic_string_empty,&adamic_string_empty);adamic_string *inputs[]={", id, id)
+		fmt.Fprintf(
+			&source,
+			"case %d: {adamic_object *regex=adamic_regex_new(&program_%d,&adamic_string_empty,&adamic_string_empty);adamic_string *inputs[]={",
+			id,
+			id,
+		)
 		for j := range p.Inputs {
 			fmt.Fprintf(&source, "&input_%d_%d,", id, j)
 		}
-		fmt.Fprintf(&source, "};size_t count=%d;for(size_t k=0;k<100;k++)adamic_regex_test(regex,inputs[k%%count]);struct timespec a,b;size_t sum=0;clock_gettime(CLOCK_MONOTONIC,&a);CALLGRIND_START_INSTRUMENTATION;CALLGRIND_ZERO_STATS;for(size_t k=0;k<calls;k++)sum+=adamic_regex_test(regex,inputs[k%%count]);CALLGRIND_STOP_INSTRUMENTATION;CALLGRIND_DUMP_STATS;clock_gettime(CLOCK_MONOTONIC,&b);struct timespec r;clock_getres(CLOCK_MONOTONIC,&r);printf(\"%%.9f %%zu %%.9f\\n\",(double)(b.tv_sec-a.tv_sec)+(double)(b.tv_nsec-a.tv_nsec)*1e-9,sum,(double)r.tv_sec+(double)r.tv_nsec*1e-9);adamic_release(regex);break;}\n", len(p.Inputs))
+		fmt.Fprintf(
+			&source,
+			"};size_t count=%d;for(size_t k=0;k<100;k++)adamic_regex_test(regex,inputs[k%%count]);struct timespec a,b;size_t sum=0;clock_gettime(CLOCK_MONOTONIC,&a);CALLGRIND_START_INSTRUMENTATION;CALLGRIND_ZERO_STATS;for(size_t k=0;k<calls;k++)sum+=adamic_regex_test(regex,inputs[k%%count]);CALLGRIND_STOP_INSTRUMENTATION;CALLGRIND_DUMP_STATS;clock_gettime(CLOCK_MONOTONIC,&b);struct timespec r;clock_getres(CLOCK_MONOTONIC,&r);printf(\"%%.9f %%zu %%.9f\\n\",(double)(b.tv_sec-a.tv_sec)+(double)(b.tv_nsec-a.tv_nsec)*1e-9,sum,(double)r.tv_sec+(double)r.tv_nsec*1e-9);adamic_release(regex);break;}\n",
+			len(p.Inputs),
+		)
 	}
 	source.WriteString("default:return 1;}return 0;}\n")
-	if err = os.WriteFile(filepath.Join(directory, "main.c"), []byte(source.String()), 0644); err != nil {
-		return err
+	if writeError := os.WriteFile(
+		filepath.Join(directory, "main.c"),
+		[]byte(source.String()),
+		0644,
+	); writeError != nil {
+		return writeError
 	}
 	if os.Getenv("REGEXP_BENCH_NO_BUILD") != "1" {
-		if err = native.Build(source.String(), filepath.Join(directory, "native"), native.Options{}); err != nil {
-			return err
+		if buildError := native.Build(
+			source.String(),
+			filepath.Join(directory, "native"),
+			native.Options{},
+		); buildError != nil {
+			return buildError
 		}
 	}
 	js := `const cases=require('./cases.json');if(!process.version.startsWith('v24.'))throw Error('Node 24 required');const p=cases[+process.argv[2]],n=+process.argv[3],r=new RegExp(p.Pattern,p.Flags);for(let k=0;k<10000;k++)r.test(p.Inputs[k%p.Inputs.length]);let sum=0;const start=process.hrtime.bigint();for(let k=0;k<n;k++)sum+=r.test(p.Inputs[k%p.Inputs.length]);const elapsed=Number(process.hrtime.bigint()-start)/1e9;let step=Infinity;for(let k=0;k<1000;k++){const t=process.hrtime.bigint();let u;do{u=process.hrtime.bigint();}while(u===t);step=Math.min(step,Number(u-t)/1e9);}console.log(elapsed,sum,step);`
-	if err = os.WriteFile(filepath.Join(directory, "node.cjs"), []byte(js), 0644); err != nil {
-		return err
+	if writeError := os.WriteFile(filepath.Join(directory, "node.cjs"), []byte(js), 0644); writeError != nil {
+		return writeError
 	}
 	if buildOnly {
 		return nil
@@ -229,15 +287,20 @@ func run(directory string, buildOnly bool) error {
 				if engine == 0 {
 					command = exec.Command(filepath.Join(directory, "native"), strconv.Itoa(id), strconv.Itoa(p.Calls))
 				} else {
-					command = exec.Command("node", filepath.Join(directory, "node.cjs"), strconv.Itoa(id), strconv.Itoa(p.Calls))
+					command = exec.Command(
+						"node",
+						filepath.Join(directory, "node.cjs"),
+						strconv.Itoa(id),
+						strconv.Itoa(p.Calls),
+					)
 				}
-				output, err := command.CombinedOutput()
-				if err != nil {
-					return fmt.Errorf("%s: %v %s", p.Name, err, output)
+				output, combinedOutputError := command.CombinedOutput()
+				if combinedOutputError != nil {
+					return fmt.Errorf("%s: %v %s", p.Name, combinedOutputError, output)
 				}
-				seconds, checksum, err := reading(string(output))
-				if err != nil {
-					return fmt.Errorf("%s engine %d: %w", p.Name, engine, err)
+				seconds, checksum, readingError := reading(string(output))
+				if readingError != nil {
+					return fmt.Errorf("%s engine %d: %w", p.Name, engine, readingError)
 				}
 				if seconds < best[engine] {
 					best[engine] = seconds
@@ -264,13 +327,13 @@ func reading(output string) (float64, string, error) {
 	if len(fields) != 3 {
 		return 0, "", fmt.Errorf("want seconds, checksum and timer resolution, got %q", output)
 	}
-	seconds, err := strconv.ParseFloat(fields[0], 64)
-	if err != nil {
-		return 0, "", err
+	seconds, parseError := strconv.ParseFloat(fields[0], 64)
+	if parseError != nil {
+		return 0, "", parseError
 	}
-	resolution, err := strconv.ParseFloat(fields[2], 64)
-	if err != nil {
-		return 0, "", err
+	resolution, parseError := strconv.ParseFloat(fields[2], 64)
+	if parseError != nil {
+		return 0, "", parseError
 	}
 	if !(resolution > 0) || !(seconds > resolution) {
 		return 0, "", fmt.Errorf("measured nothing: %.9f s at a timer resolution of %.9f s", seconds, resolution)

@@ -31,14 +31,14 @@ func graphAccepted(test *testing.T, source string) *ir.Program {
 		test.Fatal("cycle was accepted without graph ownership")
 	}
 	js := filepath.Join(test.TempDir(), "main.mjs")
-	if err := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	compareAgreement(test, runAgreementNode(test, js), truth)
 	code := native.C(program)
 	binary := filepath.Join(test.TempDir(), "native")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(code, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
@@ -47,8 +47,14 @@ func graphAccepted(test *testing.T, source string) *ir.Program {
 	var out, diagnostic bytes.Buffer
 	command.Stdout = &out
 	command.Stderr = &diagnostic
-	if err := command.Run(); err != nil || !bytes.Equal(out.Bytes(), truth.stdout) {
-		test.Fatalf("graph native disagrees: %v\n%s\n%s, Node %s", err, diagnostic.Bytes(), out.Bytes(), truth.stdout)
+	if runError := command.Run(); runError != nil || !bytes.Equal(out.Bytes(), truth.stdout) {
+		test.Fatalf(
+			"graph native disagrees: %v\n%s\n%s, Node %s",
+			runError,
+			diagnostic.Bytes(),
+			out.Bytes(),
+			truth.stdout,
+		)
 	}
 	if report := leakcheck.Report(test, code, binary); report != "" {
 		test.Fatal(report)
@@ -58,14 +64,14 @@ func graphAccepted(test *testing.T, source string) *ir.Program {
 
 func TestGraphClosedFrameInputStaysCounted(test *testing.T) {
 	test.Parallel()
-	program, err := lowerSource(test, `function parser(scanner: { scan: () => number }): () => number {
+	program, lowerSourceError := lowerSource(test, `function parser(scanner: { scan: () => number }): () => number {
  let token = 0;
  function read(): number { return token; }
  function next(): number { return token = scanner.scan(); }
  next(); return read;
  } console.log(String(parser({scan: () => 1})()));`)
-	if err != nil {
-		test.Fatal(err)
+	if lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
 	if len(program.GraphTypes) != 0 {
 		test.Fatal("closed frame input seeded graph ownership")
@@ -105,46 +111,49 @@ func TestGraphViewAdoptionIsRefused(test *testing.T) {
 	source := interfaceCastSource +
 		graphReviewCycle +
 		`console.log(identifier({kind:'identifier',pos:0,name:'ok'} as Identifier).name);`
-	_, err := lowerSource(test, source)
-	if err == nil ||
-		!strings.Contains(err.Error(), "a downcast from Node to Identifier in .a whose checks no proof erases") {
-		test.Fatalf("view graph adoption in .a: %v", err)
+	_, lowerSourceError := lowerSource(test, source)
+	if lowerSourceError == nil ||
+		!strings.Contains(
+			lowerSourceError.Error(),
+			"a downcast from Node to Identifier in .a whose checks no proof erases",
+		) {
+		test.Fatalf("view graph adoption in .a: %v", lowerSourceError)
 	}
-	_, err = lowerSourceAs(test, source, ".ts")
-	if err == nil || !strings.Contains(err.Error(), "checked-view adapter") {
-		test.Fatalf("view graph adoption: %v", err)
+	_, lowerSourceAsError := lowerSourceAs(test, source, ".ts")
+	if lowerSourceAsError == nil || !strings.Contains(lowerSourceAsError.Error(), "checked-view adapter") {
+		test.Fatalf("view graph adoption: %v", lowerSourceAsError)
 	}
 }
 func TestGraphDynamicShapeAdoptionIsRefused(test *testing.T) {
 	test.Parallel()
-	data, err := os.ReadFile("../oracle/testdata/entries_record_alias.a")
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile("../oracle/testdata/entries_record_alias.a")
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	_, err = lowerSource(test, string(data)+graphReviewCycle)
-	if err == nil || !strings.Contains(err.Error(), "dynamic-shape") {
-		test.Fatalf("dynamic graph adoption: %v", err)
+	_, lowerSourceError := lowerSource(test, string(data)+graphReviewCycle)
+	if lowerSourceError == nil || !strings.Contains(lowerSourceError.Error(), "dynamic-shape") {
+		test.Fatalf("dynamic graph adoption: %v", lowerSourceError)
 	}
 }
 func TestGraphRecordCycleStaysRefused(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(
+	_, lowerSourceError := lowerSource(
 		test,
 		`interface Ring {self:Ring|undefined;[key:string]:Ring|undefined} const ring:Ring={self:undefined};ring.self=ring;console.log(Object.keys(ring).join(','));`,
 	)
-	if err == nil {
+	if lowerSourceError == nil {
 		test.Fatal("record cycle accepted")
 	}
-	test.Log(err)
+	test.Log(lowerSourceError)
 }
 func TestGraphCountTypesSurviveClassification(test *testing.T) {
 	test.Parallel()
-	program, err := lowerSource(
+	program, lowerSourceError := lowerSource(
 		test,
 		`function make():()=>boolean {let saved:(()=>boolean)|undefined;function f():boolean{return arguments.length===0 && saved===f;}saved=f;return f;}console.log(String(make()()));`,
 	)
-	if err != nil {
-		test.Fatal(err)
+	if lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
 	for i, function := range program.Functions {
 		if function.GraphClosure && function.ReadsArguments {
@@ -163,10 +172,10 @@ func TestGraphCountTypesSurviveClassification(test *testing.T) {
 // Main keeps derived computed members outside lowering until their implementation gap is resolved.
 func graphComputedIteratorGap(test *testing.T, source string) {
 	test.Helper()
-	_, err := lowerSource(test, source)
+	_, lowerSourceError := lowerSource(test, source)
 	var gap *NotYet
-	if !errors.As(err, &gap) || !strings.Contains(gap.What, "a computed member name in a derived class") {
-		test.Fatalf("want main's derived computed-member gap, got %v", err)
+	if !errors.As(lowerSourceError, &gap) || !strings.Contains(gap.What, "a computed member name in a derived class") {
+		test.Fatalf("want main's derived computed-member gap, got %v", lowerSourceError)
 	}
 }
 
@@ -295,16 +304,16 @@ func TestGraphLegacyViewAdoptionIsRefused(test *testing.T) {
  type Third={readonly kind:'c';readonly name:string};
  function narrow(value:First|Second|Third):First|Second{return value as First|Second;}
  console.log(narrow({kind:'a',name:'kept'}).name);`
-	_, err := lowerSource(test, source)
-	if err == nil || !strings.Contains(
-		err.Error(),
+	_, lowerSourceError := lowerSource(test, source)
+	if lowerSourceError == nil || !strings.Contains(
+		lowerSourceError.Error(),
 		"a downcast from First | Second | Third to First | Second in .a whose checks no proof erases",
 	) {
-		test.Fatalf("legacy view graph adoption in .a: %v", err)
+		test.Fatalf("legacy view graph adoption in .a: %v", lowerSourceError)
 	}
-	_, err = lowerSourceAs(test, source, ".ts")
-	if err == nil || !strings.Contains(err.Error(), "checked-view adapter") {
-		test.Fatalf("legacy view graph adoption: %v", err)
+	_, lowerSourceAsError := lowerSourceAs(test, source, ".ts")
+	if lowerSourceAsError == nil || !strings.Contains(lowerSourceAsError.Error(), "checked-view adapter") {
+		test.Fatalf("legacy view graph adoption: %v", lowerSourceAsError)
 	}
 }
 

@@ -31,11 +31,11 @@ func init() {
 
 func TestSwitchCaseDeadZoneStop(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(
+	path, absolutePathError := filepath.Abs(
 		filepath.Join(repository, "internal/oracle/testdata/switch_case_declarations/dead_zone.a"),
 	)
-	if err != nil {
-		test.Fatal(err)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := onNode(test, path)
 	if truth.exitCode != 70 ||
@@ -56,15 +56,15 @@ func TestSwitchCaseDeclarationMutants(test *testing.T) {
 				"no_fallthrough":       "fallthrough.a",
 				"function_not_hoisted": "shared.a",
 			}[name]
-			path, err := filepath.Abs(
+			path, absolutePathError := filepath.Abs(
 				filepath.Join(repository, "internal/oracle/testdata/switch_case_declarations", fixture),
 			)
-			if err != nil {
-				test.Fatal(err)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			changed := false
 			if name == "unready_read" || name == "no_fallthrough" {
@@ -159,18 +159,20 @@ func TestSwitchCaseDeclarationMutants(test *testing.T) {
 // encountering one must diagnose it before visiting a nonexistent body.
 func TestSwitchCaseOverloadIsNotYet(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/switch_case_declarations/overload.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/switch_case_declarations/overload.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := onNode(test, path)
 	if truth.exitCode != 0 || len(truth.stderr) != 0 || string(truth.stdout) != "2\n" {
 		test.Fatalf("Node overload: %+v", truth)
 	}
-	_, err = lowered(test, path)
+	_, loweredError := lowered(test, path)
 	var notYet *lower.NotYet
 	want := path + ":3:1: stage 0 can't lower a function without a body yet"
-	if !errors.As(err, &notYet) || err.Error() != want {
-		test.Fatalf("got %v; want %s", err, want)
+	if !errors.As(loweredError, &notYet) || loweredError.Error() != want {
+		test.Fatalf("got %v; want %s", loweredError, want)
 	}
 }

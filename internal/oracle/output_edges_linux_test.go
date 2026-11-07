@@ -58,8 +58,8 @@ int main(int argc, char **argv) {
  return 0;
 }
 `
-	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(source, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	commands := [][]string{{
 		"node",
@@ -96,8 +96,8 @@ int main(int argc, char **argv) {
  return 0;
 }
 `
-	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(source, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	report := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=0:handle_segv=1"}, binary)
 	if report.exitCode == 0 || !bytes.Contains(report.stderr, []byte("ERROR: AddressSanitizer: SEGV")) ||

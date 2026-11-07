@@ -17,19 +17,19 @@ import (
 // runner shards only read them, lower their program and link it.
 func regExpRunnerRuntime(test testing.TB, options native.Options) (string, native.RuntimeRequest) {
 	test.Helper()
-	request, err := native.RuntimeRequestFor(options)
-	if err != nil {
-		test.Fatal(err)
+	request, runtimeRequestForError := native.RuntimeRequestFor(options)
+	if runtimeRequestForError != nil {
+		test.Fatal(runtimeRequestForError)
 	}
-	if err := runtimeproducts.Declared(request); err != nil {
-		test.Fatal(err)
+	if declaredError := runtimeproducts.Declared(request); declaredError != nil {
+		test.Fatal(declaredError)
 	}
-	directory, err := buildcache.BuiltAhead(runtimeproducts.Inputs(request), fmt.Errorf(
+	directory, builtAheadError := buildcache.BuiltAhead(runtimeproducts.Inputs(request), fmt.Errorf(
 		"RegExp runner runtime not built ahead for options %+v; run TestProduct_RegExpRunner tests first",
 		options,
 	))
-	if err != nil {
-		test.Fatal(err)
+	if builtAheadError != nil {
+		test.Fatal(builtAheadError)
 	}
 	return directory, request
 }
@@ -45,9 +45,9 @@ func TestProduct_RegExpRunnerWASI(test *testing.T) {
 
 func regExpCompilerEngine(test testing.TB, corpus string) *engine {
 	test.Helper()
-	tools, err := resolveTools()
-	if err != nil {
-		test.Fatal(err)
+	tools, resolveToolsError := resolveTools()
+	if resolveToolsError != nil {
+		test.Fatal(resolveToolsError)
 	}
 	worker := &compilerWorker{}
 	test.Cleanup(worker.close)
@@ -74,9 +74,9 @@ func regExpRunnerEngine(test testing.TB, corpus string) *engine {
 func regExpFixture(test testing.TB, corpus, name string) classified {
 	test.Helper()
 	path := "built-ins/RegExp/" + name + ".js"
-	text, err := os.ReadFile(filepath.Join(corpus, "test", path))
-	if err != nil {
-		test.Fatal(err)
+	text, readError := os.ReadFile(filepath.Join(corpus, "test", path))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return classify(path, string(text), true)
 }

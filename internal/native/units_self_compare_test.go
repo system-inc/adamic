@@ -18,9 +18,9 @@ func TestSplitSelfCompareAgreesWithNode(test *testing.T) {
 	test.Parallel()
 	ctx, cancel := context.WithTimeout(context.Background(), 55*time.Second)
 	defer cancel()
-	fixture, err := os.ReadFile("../../stage3/fixtures/self-compare/sweep.a")
-	if err != nil {
-		test.Fatal(err)
+	fixture, readError := os.ReadFile("../../stage3/fixtures/self-compare/sweep.a")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	// Cross the splitter's sixteen-function group boundary, as large products do.
 	for index := 0; index < 16; index++ {
@@ -31,11 +31,11 @@ func TestSplitSelfCompareAgreesWithNode(test *testing.T) {
 		))...)
 	}
 	path := filepath.Join(test.TempDir(), "sweep.a")
-	if err := os.WriteFile(path, fixture, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, fixture, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	// Node executes the source fixture with its TypeScript syntax stripped.
-	want, err := exec.CommandContext(
+	want, outputError := exec.CommandContext(
 		ctx,
 		"node",
 		"--input-type=module",
@@ -43,24 +43,24 @@ func TestSplitSelfCompareAgreesWithNode(test *testing.T) {
 		`import {readFileSync} from 'node:fs'; import {stripTypeScriptTypes} from 'node:module'; eval(stripTypeScriptTypes(readFileSync(process.argv[1], 'utf8')));`,
 		path,
 	).Output()
-	if err != nil {
-		test.Fatalf("Node: %v", err)
+	if outputError != nil {
+		test.Fatalf("Node: %v", outputError)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	lowered, err := lower.Lower(ctx, program)
-	if err != nil {
-		test.Fatal(err)
+	lowered, lowerError := lower.Lower(ctx, program)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	binary := filepath.Join(test.TempDir(), "program")
 	// Build uses -Werror, including C's inline definition diagnostic.
-	if err := Build(C(lowered), binary, Options{Split: true, Jobs: 2}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(C(lowered), binary, Options{Split: true, Jobs: 2}); buildError != nil {
+		test.Fatal(buildError)
 	}
-	got, err := exec.CommandContext(ctx, binary).CombinedOutput()
-	if err != nil || !bytes.Equal(got, want) {
-		test.Fatalf("native: %v\ngot %q\nNode %q", err, got, want)
+	got, combinedOutputError := exec.CommandContext(ctx, binary).CombinedOutput()
+	if combinedOutputError != nil || !bytes.Equal(got, want) {
+		test.Fatalf("native: %v\ngot %q\nNode %q", combinedOutputError, got, want)
 	}
 }

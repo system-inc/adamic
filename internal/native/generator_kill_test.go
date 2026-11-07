@@ -21,17 +21,17 @@ import (
 // (built killed, and TestGeneratorsAgreeWithNode red under UBSan on every fixture).
 func TestGeneratorKillSetReleasesOnlyDeadCells(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("../oracle/testdata/generators/complete.a")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("../oracle/testdata/generators/complete.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	loaded, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	loaded, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := lower.Lower(context.Background(), loaded)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerError := lower.Lower(context.Background(), loaded)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	positions := map[string]int{}
 	for _, function := range program.Functions {

@@ -91,10 +91,10 @@ const dogs: Dog[] = [dog];
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var refused *Refused
-			if !errors.As(err, &refused) || !strings.Contains(err.Error(), probe.part) {
-				test.Fatalf("want refusal naming %q, got %v", probe.part, err)
+			if !errors.As(lowerSourceError, &refused) || !strings.Contains(lowerSourceError.Error(), probe.part) {
+				test.Fatalf("want refusal naming %q, got %v", probe.part, lowerSourceError)
 			}
 		})
 	}

@@ -65,8 +65,8 @@ func graphMeasured(test *testing.T, code string) run {
 		"\tstruct rusage graph_usage; getrusage(RUSAGE_SELF, &graph_usage); printf(\"graph_peak_rss_kib %ld\\n\", graph_usage.ru_maxrss);\n" +
 		code[at:]
 	binary := filepath.Join(test.TempDir(), "measured")
-	if err := native.Build(code, binary, native.Options{Count: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(code, binary, native.Options{Count: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	name, args := pinnedStack("/bin/sh", "-c", `"$@" & child=$!; wait "$child"`, "rss", binary)
 	result := executeWith(test, []string{"ADAMIC_THREADS=1"}, name, args...)
@@ -80,14 +80,14 @@ func graphMeasured(test *testing.T, code string) run {
 
 func graphMeasureFixture(test *testing.T, path string, million bool) {
 	test.Helper()
-	absolute, err := filepath.Abs(filepath.Join(repository, path))
-	if err != nil {
-		test.Fatal(err)
+	absolute, absolutePathError := filepath.Abs(filepath.Join(repository, path))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := onNode(test, absolute)
-	program, err := lowered(test, absolute)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, absolute)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	if len(program.GraphTypes) == 0 {
 		test.Log("no graph types selected; counted and graph emission are identical")
@@ -139,9 +139,9 @@ func graphMeasureFixture(test *testing.T, path string, million bool) {
 		if size == nil {
 			test.Fatal("missing full object size")
 		}
-		bytes, err := strconv.ParseUint(string(size[1]), 10, 64)
-		if err != nil {
-			test.Fatal(err)
+		bytes, parseError := strconv.ParseUint(string(size[1]), 10, 64)
+		if parseError != nil {
+			test.Fatal(parseError)
 		}
 		want := fmt.Sprintf(
 			"live 1000000 bytes %d reachable 950001 bytes %d unreachable 49999 bytes %d metadata 16000064",

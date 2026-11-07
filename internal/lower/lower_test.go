@@ -22,18 +22,18 @@ func lowerSource(test *testing.T, source string) (*ir.Program, error) {
 // fixture's own extension.
 func lowerSourceAs(test *testing.T, source, extension string) (*ir.Program, error) {
 	test.Helper()
-	program, err := load.Load([]string{writeAgreementSource(test, "main"+extension, source)})
-	if err != nil {
-		test.Fatalf("Load: %v", err)
+	program, loadError := load.Load([]string{writeAgreementSource(test, "main"+extension, source)})
+	if loadError != nil {
+		test.Fatalf("Load: %v", loadError)
 	}
 	return Lower(context.Background(), program)
 }
 
 func TestConsoleLowersToWriteLine(test *testing.T) {
 	test.Parallel()
-	program, err := lowerSource(test, "console.log('one');\nconsole.error(`two`);\nconsole.log('one');\n")
-	if err != nil {
-		test.Fatal(err)
+	program, lowerSourceError := lowerSource(test, "console.log('one');\nconsole.error(`two`);\nconsole.log('one');\n")
+	if lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
 	want := []ir.Statement{
 		ir.WriteLine{Stream: ir.Stdout, Value: ir.StringConstant{Index: 0}},
@@ -249,10 +249,10 @@ func TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.HasSuffix(notYet.Error(), probe.want) {
-				test.Errorf("got %v, want an error ending %q", err, probe.want)
+			if !errors.As(lowerSourceError, &notYet) || !strings.HasSuffix(notYet.Error(), probe.want) {
+				test.Errorf("got %v, want an error ending %q", lowerSourceError, probe.want)
 			}
 		})
 	}
@@ -402,10 +402,10 @@ func TestWhatZeroOneRefusesIsRefusedWithAFix(test *testing.T) {
 				graphAccepted(test, probe.source)
 				return
 			}
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var refused *Refused
-			if !errors.As(err, &refused) || !strings.Contains(refused.Error(), probe.want) {
-				test.Errorf("got %v, want a refusal ending %q", err, probe.want)
+			if !errors.As(lowerSourceError, &refused) || !strings.Contains(refused.Error(), probe.want) {
+				test.Errorf("got %v, want a refusal ending %q", lowerSourceError, probe.want)
 			}
 		})
 	}
@@ -734,10 +734,10 @@ const slots: (string | number)[] = [];
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, pets+probe.source)
+			_, lowerSourceError := lowerSource(test, pets+probe.source)
 			var refused *Refused
-			if !errors.As(err, &refused) || !strings.Contains(refused.Error(), probe.want) {
-				test.Errorf("got %v, want a refusal starting %q", err, probe.want)
+			if !errors.As(lowerSourceError, &refused) || !strings.Contains(refused.Error(), probe.want) {
+				test.Errorf("got %v, want a refusal starting %q", lowerSourceError, probe.want)
 			}
 		})
 	}
@@ -948,10 +948,10 @@ console.log(again.item.bark);
 				lowersAndAgreesWithNode(test, pets+probe.source)
 				return
 			}
-			_, err := lowerSource(test, pets+probe.source)
+			_, lowerSourceError := lowerSource(test, pets+probe.source)
 			var refused *Refused
-			if errors.As(err, &refused) {
-				test.Errorf("refused a view that can't write: %v", err)
+			if errors.As(lowerSourceError, &refused) {
+				test.Errorf("refused a view that can't write: %v", lowerSourceError)
 			}
 		})
 	}
@@ -1041,10 +1041,10 @@ func TestATupleSeenAsAnArrayIsNotYet(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.HasSuffix(err.Error(), probe.want) {
-				test.Errorf("got %v, want a not-yet ending %q", err, probe.want)
+			if !errors.As(lowerSourceError, &notYet) || !strings.HasSuffix(lowerSourceError.Error(), probe.want) {
+				test.Errorf("got %v, want a not-yet ending %q", lowerSourceError, probe.want)
 			}
 		})
 	}
@@ -1105,10 +1105,10 @@ func TestAMethodReadAsAValueIsRefused(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, shelter+probe.source)
+			_, lowerSourceError := lowerSource(test, shelter+probe.source)
 			var refused *Refused
-			if !errors.As(err, &refused) || !strings.Contains(refused.Error(), probe.want) {
-				test.Errorf("got %v, want a refusal containing %q", err, probe.want)
+			if !errors.As(lowerSourceError, &refused) || !strings.Contains(refused.Error(), probe.want) {
+				test.Errorf("got %v, want a refusal containing %q", lowerSourceError, probe.want)
 			}
 		})
 	}
@@ -1128,10 +1128,10 @@ func TestAMethodReadAsAValueIsRefused(test *testing.T) {
 			test.Parallel()
 			if neighbor.name == "a field holding a function" {
 				// This partial admission row permits NotYet for an erased prototype origin.
-				_, err := lowerSource(test, shelter+neighbor.source)
+				_, lowerSourceError := lowerSource(test, shelter+neighbor.source)
 				var refused *Refused
-				if errors.As(err, &refused) {
-					test.Errorf("refused a method that keeps its object: %v", err)
+				if errors.As(lowerSourceError, &refused) {
+					test.Errorf("refused a method that keeps its object: %v", lowerSourceError)
 				}
 				return
 			}
@@ -1149,12 +1149,12 @@ func TestLowerLogsItsPhaseOnce(test *testing.T) {
 	log := filepath.Join(test.TempDir(), "build.log")
 	test.Setenv("ADAMIC_BUILD_LOG", log)
 	test.Setenv("ADAMIC_PROGRAM_REGION", "1")
-	if _, err := lowerSource(test, "console.log('phase');\n"); err != nil {
-		test.Fatal(err)
+	if _, lowerSourceError := lowerSource(test, "console.log('phase');\n"); lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
-	written, err := os.ReadFile(log)
-	if err != nil {
-		test.Fatal(err)
+	written, readError := os.ReadFile(log)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if !regexp.MustCompile(`^phase load - off [0-9]+\.[0-9]{3}\nphase lower - off [0-9]+\.[0-9]{3}\n$`).Match(written) {
 		test.Fatalf("wrote %q, want a load phase line, then one lower phase line", written)

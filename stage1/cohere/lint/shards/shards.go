@@ -23,9 +23,9 @@ func Run(binary, manifest string, count int, countOnly bool) ([]byte, error) {
 	if count < 1 {
 		return nil, fmt.Errorf("shard count %d, want at least 1", count)
 	}
-	text, err := os.ReadFile(manifest)
-	if err != nil {
-		return nil, err
+	text, readError := os.ReadFile(manifest)
+	if readError != nil {
+		return nil, readError
 	}
 	rows := Cases(text)
 	outputs := make([][]byte, count)
@@ -43,8 +43,8 @@ func Run(binary, manifest string, count int, countOnly bool) ([]byte, error) {
 			command := exec.Command(binary, arguments...)
 			command.Stdout = &stdout
 			command.Stderr = &stderr
-			if err := command.Run(); err != nil {
-				failures[index] = fmt.Errorf("shard %d/%d: %v: %s", index, count, err, stderr.Bytes())
+			if runError := command.Run(); runError != nil {
+				failures[index] = fmt.Errorf("shard %d/%d: %v: %s", index, count, runError, stderr.Bytes())
 				return
 			}
 			outputs[index] = stdout.Bytes()
@@ -59,8 +59,8 @@ func Run(binary, manifest string, count int, countOnly bool) ([]byte, error) {
 	if countOnly {
 		total := 0
 		for index, output := range outputs {
-			value, err := strconv.Atoi(string(bytes.TrimSpace(output)))
-			if err != nil {
+			value, parseError := strconv.Atoi(string(bytes.TrimSpace(output)))
+			if parseError != nil {
 				return nil, fmt.Errorf("shard %d/%d printed %q, not a count", index, count, output)
 			}
 			total += value
@@ -108,8 +108,8 @@ func Merge(outputs [][]byte, rows int) ([]byte, error) {
 			if lineEnd < 0 {
 				return nil, fmt.Errorf("shard %d: unterminated case line", shard)
 			}
-			number, err := strconv.Atoi(string(output[start+len(casePrefix) : start+lineEnd]))
-			if err != nil {
+			number, parseError := strconv.Atoi(string(output[start+len(casePrefix) : start+lineEnd]))
+			if parseError != nil {
 				return nil, fmt.Errorf("shard %d: malformed case line %q", shard, output[start:start+lineEnd])
 			}
 			end := len(output)

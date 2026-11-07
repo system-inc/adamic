@@ -18,9 +18,9 @@ import (
 func machineFixture(test *testing.T) (owned, loose, dpkg string) {
 	test.Helper()
 	unhanded(test)
-	machine, err := filepath.EvalSymlinks(test.TempDir())
-	if err != nil {
-		test.Fatal(err)
+	machine, resolveSymlinksError := filepath.EvalSymlinks(test.TempDir())
+	if resolveSymlinksError != nil {
+		test.Fatal(resolveSymlinksError)
 	}
 	system := filepath.Join(machine, "usr")
 	dpkg = filepath.Join(machine, "dpkg")
@@ -67,11 +67,11 @@ func houseCopy(test *testing.T, stamp string, mode os.FileMode) string {
 	test.Helper()
 	directory := test.TempDir()
 	path := filepath.Join(directory, fmt.Sprintf("%x.json", sha256.Sum256([]byte(stamp))))
-	if err := os.WriteFile(path, []byte(stamp), 0o600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(stamp), 0o600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if err := os.Chmod(path, mode); err != nil {
-		test.Fatal(err)
+	if changeModeError := os.Chmod(path, mode); changeModeError != nil {
+		test.Fatal(changeModeError)
 	}
 	unwritable(test, directory)
 	return path
@@ -80,8 +80,8 @@ func houseCopy(test *testing.T, stamp string, mode os.FileMode) string {
 // unwritable makes directory unwritable until the test ends, when its removal needs it writable again.
 func unwritable(test *testing.T, directory string) {
 	test.Helper()
-	if err := os.Chmod(directory, 0o555); err != nil {
-		test.Fatal(err)
+	if changeModeError := os.Chmod(directory, 0o555); changeModeError != nil {
+		test.Fatal(changeModeError)
 	}
 	test.Cleanup(func() { os.Chmod(directory, 0o755) })
 }
@@ -108,16 +108,20 @@ func countPackageOpens(test *testing.T) (opens, unkeyed *[]string) {
 // Not parallel: it points the machine's places and dpkg's database at the test, and sets the house's owners.
 func TestAHandedHouseValuesMachineFilesWithoutDpkg(test *testing.T) {
 	owned, loose, dpkg := machineFixture(test)
-	if value, err := systemEntryValue(
+	if value, systemEntryValueError := systemEntryValue(
 		owned,
-	); err != nil || value != "package libc6-dev:amd64 version 2.39-0ubuntu8" || value != systemValue(owned) {
-		test.Fatalf("unhanded, a file dpkg installed values %q, %v", value, err)
+	); systemEntryValueError != nil ||
+		value != "package libc6-dev:amd64 version 2.39-0ubuntu8" ||
+		value != systemValue(owned) {
+		test.Fatalf("unhanded, a file dpkg installed values %q, %v", value, systemEntryValueError)
 	}
-	if value, err := systemEntryValue(loose); err != nil || value != systemValue(loose) {
+	if value, systemEntryValueError := systemEntryValue(
+		loose,
+	); systemEntryValueError != nil || value != systemValue(loose) {
 		test.Fatalf(
 			"unhanded, a file no package owns values %q, %v, and systemValue %q",
 			value,
-			err,
+			systemEntryValueError,
 			systemValue(loose),
 		)
 	}
@@ -128,12 +132,20 @@ func TestAHandedHouseValuesMachineFilesWithoutDpkg(test *testing.T) {
 		fmt.Sprintf(`{"box": "Adam", "at": "2026-10-25T07:21:52Z", "paths": {%q: "file d4b198c4 false"}}`, loose),
 		0o444,
 	)
-	if value, err := systemEntryValue(loose); err != nil || value != "house file d4b198c4 false" {
-		test.Fatalf("handed, a stamped file values %q, %v", value, err)
+	if value, systemEntryValueError := systemEntryValue(
+		loose,
+	); systemEntryValueError != nil || value != "house file d4b198c4 false" {
+		test.Fatalf("handed, a stamped file values %q, %v", value, systemEntryValueError)
 	}
 	content := sha256.Sum256([]byte("int printf(const char *, ...);"))
-	if value, err := systemEntryValue(owned); err != nil || value != fmt.Sprintf("file false %x", content) {
-		test.Fatalf("handed, a file the stamp doesn't name values %q, %v, never by its package", value, err)
+	if value, systemEntryValueError := systemEntryValue(
+		owned,
+	); systemEntryValueError != nil || value != fmt.Sprintf("file false %x", content) {
+		test.Fatalf(
+			"handed, a file the stamp doesn't name values %q, %v, never by its package",
+			value,
+			systemEntryValueError,
+		)
 	}
 	if len(*opens) != 0 {
 		test.Fatalf("handed, dpkg's database was opened: %q", *opens)
@@ -176,8 +188,8 @@ func TestAHandedHouseFileTheCodeUnderTestCouldWriteIsRefused(test *testing.T) {
 			hand: func(test *testing.T, path string) string {
 				directory := test.TempDir()
 				link := filepath.Join(directory, filepath.Base(path))
-				if err := os.Symlink(path, link); err != nil {
-					test.Fatal(err)
+				if symlinkError := os.Symlink(path, link); symlinkError != nil {
+					test.Fatal(symlinkError)
 				}
 				unwritable(test, directory)
 				test.Setenv(houseValuesVariable, link)
@@ -207,8 +219,8 @@ func TestAHandedHouseFileTheCodeUnderTestCouldWriteIsRefused(test *testing.T) {
 				forged := houseCopy(test, good+" ", 0o444)
 				named := filepath.Join(filepath.Dir(forged), filepath.Base(path))
 				os.Chmod(filepath.Dir(forged), 0o755)
-				if err := os.Rename(forged, named); err != nil {
-					test.Fatal(err)
+				if renameError := os.Rename(forged, named); renameError != nil {
+					test.Fatal(renameError)
 				}
 				unwritable(test, filepath.Dir(forged))
 				test.Setenv(houseValuesVariable, named)
@@ -224,8 +236,8 @@ func TestAHandedHouseFileTheCodeUnderTestCouldWriteIsRefused(test *testing.T) {
 			hand: func(test *testing.T, path string) string {
 				named := filepath.Join(filepath.Dir(path), "house-system.json")
 				os.Chmod(filepath.Dir(path), 0o755)
-				if err := os.Rename(path, named); err != nil {
-					test.Fatal(err)
+				if renameError := os.Rename(path, named); renameError != nil {
+					test.Fatal(renameError)
 				}
 				unwritable(test, filepath.Dir(path))
 				test.Setenv(houseValuesVariable, named)
@@ -278,11 +290,17 @@ func TestAHandedHouseFileTheCodeUnderTestCouldWriteIsRefused(test *testing.T) {
 			if testCase.hand != nil {
 				path = testCase.hand(test, path)
 			}
-			value, err := systemEntryValue(loose)
-			if err == nil || !strings.Contains(err.Error(), testCase.want) || !strings.Contains(err.Error(), path) {
-				test.Fatalf("handed %s, valued %q, %v", testCase.name, value, err)
+			value, systemEntryValueError := systemEntryValue(loose)
+			if systemEntryValueError == nil ||
+				!strings.Contains(systemEntryValueError.Error(), testCase.want) ||
+				!strings.Contains(systemEntryValueError.Error(), path) {
+				test.Fatalf("handed %s, valued %q, %v", testCase.name, value, systemEntryValueError)
 			}
-			if _, err := treeEntryValue("", "", readEntry{Kind: "system", Path: loose}); err == nil {
+			if _, treeEntryValueError := treeEntryValue(
+				"",
+				"",
+				readEntry{Kind: "system", Path: loose},
+			); treeEntryValueError == nil {
 				test.Fatalf("handed %s, a lookup valued its system entry", testCase.name)
 			}
 		})
@@ -317,14 +335,14 @@ func TestAHandedFilesOwnerIsReadAsThisNamespaceShowsRoot(test *testing.T) {
 		if testCase.uidMap != "" {
 			write(test, directory, filepath.Base(uidMapFile), testCase.uidMap)
 		}
-		owners, err := ownersHere()
-		if err != nil || !slices.Equal(owners, testCase.want) {
-			test.Errorf("%s: owners %v, %v, want %v", name, owners, err, testCase.want)
+		owners, ownersHereError := ownersHere()
+		if ownersHereError != nil || !slices.Equal(owners, testCase.want) {
+			test.Errorf("%s: owners %v, %v, want %v", name, owners, ownersHereError, testCase.want)
 		}
 	}
 	uidMapFile = filepath.Join(directory, "uid_map-garbled")
 	write(test, directory, "uid_map-garbled", "zero zero all\n")
-	if owners, err := ownersHere(); err == nil {
+	if owners, ownersHereError := ownersHere(); ownersHereError == nil {
 		test.Errorf("a garbled map gave owners %v, never refused", owners)
 	}
 }
@@ -340,9 +358,9 @@ func TestTheHousesBoxAndMomentNeverValueAKey(test *testing.T) {
 		`"box": "Eve", "at": "2026-10-24T01:00:00Z"`,
 	} {
 		handHouse(test, fmt.Sprintf(`{%s, "paths": {%q: "file d4b198c4 false"}}`, box, loose), 0o444)
-		value, err := systemEntryValue(loose)
-		if err != nil {
-			test.Fatal(err)
+		value, systemEntryValueError := systemEntryValue(loose)
+		if systemEntryValueError != nil {
+			test.Fatal(systemEntryValueError)
 		}
 		values = append(values, value)
 	}
@@ -371,8 +389,8 @@ func TestATracedLookupValuesMachineFilesAsKeying(test *testing.T) {
 	systemContents.Range(func(key, _ any) bool { systemContents.Delete(key); return true })
 	packageIndexes.Delete(dpkg)
 	opens, unkeyed := countPackageOpens(test)
-	if _, err := Get(port, func(string) error { test.Fatal("the lookup built"); return nil }); err != nil {
-		test.Fatal(err)
+	if _, getError := Get(port, func(string) error { test.Fatal("the lookup built"); return nil }); getError != nil {
+		test.Fatal(getError)
 	}
 	if len(*opens) == 0 || len(*unkeyed) != 0 {
 		test.Fatalf("the lookup opened dpkg's database at %q; outside keying at %q", *opens, *unkeyed)
@@ -404,9 +422,9 @@ func TestAPlaceValuesEveryPathItCoversFirst(test *testing.T) {
 		both, filepath.Join(aside, "stdio.h"), loose, include, aside, member), 0o444)
 	value := func(path string) string {
 		test.Helper()
-		got, err := systemEntryValue(path)
-		if err != nil {
-			test.Fatalf("%s: %v", path, err)
+		got, systemEntryValueError := systemEntryValue(path)
+		if systemEntryValueError != nil {
+			test.Fatalf("%s: %v", path, systemEntryValueError)
 		}
 		return got
 	}

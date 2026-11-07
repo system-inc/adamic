@@ -37,9 +37,9 @@ const jobserverFixtures = 4
 // compile when a jobserver is open; the token count reaching an argument.
 func TestTheJobserverNeverReachesTheEmittedCOrClang(test *testing.T) {
 	test.Parallel()
-	clang, err := toolchain.Path("clang")
-	if err != nil {
-		test.Skip("no clang: ", err)
+	clang, pathError := toolchain.Path("clang")
+	if pathError != nil {
+		test.Skip("no clang: ", pathError)
 	}
 	var mutex sync.Mutex
 	runs := map[string][2]string{}
@@ -94,12 +94,12 @@ func TestTheJobserverNeverReachesTheEmittedCOrClang(test *testing.T) {
 func jobserverRun(test *testing.T, clang string, tokens int) (report, commands string) {
 	test.Helper()
 	tools := filepath.Join(test.TempDir(), "tools")
-	if err := os.MkdirAll(filepath.Join(tools, "bin"), 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(filepath.Join(tools, "bin"), 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	if archiver := filepath.Join(filepath.Dir(clang), "llvm-ar"); fileRunnable(archiver) {
-		if err := os.Symlink(archiver, filepath.Join(tools, "bin", "llvm-ar")); err != nil {
-			test.Fatal(err)
+		if symlinkError := os.Symlink(archiver, filepath.Join(tools, "bin", "llvm-ar")); symlinkError != nil {
+			test.Fatal(symlinkError)
 		}
 	}
 	fifo := ""
@@ -111,11 +111,11 @@ func jobserverRun(test *testing.T, clang string, tokens int) (report, commands s
 	// of ours, and each clang writes its own file in it, named by its pid, so compiles at once never interleave.
 	wrapper := "#!/bin/sh\n{ printf 'directory %s\\n' \"$PWD\"; for argument in \"$@\"; do printf 'argument %s\\n' \"$argument\"; done; printf 'end\\n'; } > " +
 		strconv.Quote(log) + "/$$\nexec " + strconv.Quote(clang) + " \"$@\"\n"
-	if err := os.MkdirAll(log, 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(log, 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	if err := os.WriteFile(filepath.Join(tools, "bin", "clang"), []byte(wrapper), 0o755); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(tools, "bin", "clang"), []byte(wrapper), 0o755); writeError != nil {
+		test.Fatal(writeError)
 	}
 	runContext, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 	defer cancel()
@@ -141,18 +141,18 @@ func jobserverRun(test *testing.T, clang string, tokens int) (report, commands s
 		"ADAMIC_BUILD_CACHE=",
 		location.OutputDirectoryVariable+"=",
 	)
-	output, err := command.CombinedOutput()
-	if err != nil ||
+	output, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError != nil ||
 		!strings.Contains(string(output), "--- PASS: TestTheJobserverNeverReachesTheEmittedCOrClangChild") {
-		test.Fatalf("the run under a jobserver of %d tokens: %v\n%s", tokens, err, output)
+		test.Fatalf("the run under a jobserver of %d tokens: %v\n%s", tokens, combinedOutputError, output)
 	}
-	written, err := os.ReadFile(filepath.Join(out, "report"))
-	if err != nil {
-		test.Fatal(err)
+	written, readError := os.ReadFile(filepath.Join(out, "report"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	recorded, err := readCommands(log)
-	if err != nil {
-		test.Fatal(err)
+	recorded, readCommandsError := readCommands(log)
+	if readCommandsError != nil {
+		test.Fatal(readCommandsError)
 	}
 	return string(
 		written,
@@ -178,22 +178,22 @@ func TestTheJobserverNeverReachesTheEmittedCOrClangChild(test *testing.T) {
 		if !fixture.lowers || refusedAdamicNonNullFixture(fixture.path) {
 			continue
 		}
-		path, err := filepath.Abs(filepath.Join(repository, fixture.path))
-		if err != nil {
-			test.Fatal(err)
+		path, absolutePathError := filepath.Abs(filepath.Join(repository, fixture.path))
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
-		program, err := lowered(test, path)
-		if err != nil {
-			test.Fatal(fixture.path, err)
+		program, loweredError := lowered(test, path)
+		if loweredError != nil {
+			test.Fatal(fixture.path, loweredError)
 		}
 		code := native.C(program)
 		binary := filepath.Join(out, fmt.Sprintf("program-%d", built))
-		if err := native.Build(code, binary, native.Options{}); err != nil {
-			test.Fatal(fixture.path, err)
+		if buildError := native.Build(code, binary, native.Options{}); buildError != nil {
+			test.Fatal(fixture.path, buildError)
 		}
-		bytes, err := os.ReadFile(binary)
-		if err != nil {
-			test.Fatal(err)
+		bytes, readError := os.ReadFile(binary)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		fmt.Fprintf(
 			&report,
@@ -205,8 +205,8 @@ func TestTheJobserverNeverReachesTheEmittedCOrClangChild(test *testing.T) {
 		)
 		built++
 	}
-	if err := os.WriteFile(filepath.Join(out, "report"), []byte(report.String()), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(out, "report"), []byte(report.String()), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 }
 
@@ -215,24 +215,24 @@ func TestTheJobserverNeverReachesTheEmittedCOrClangChild(test *testing.T) {
 func tokenFIFO(test *testing.T, count int) string {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "jobserver")
-	if err := syscall.Mkfifo(path, 0o600); err != nil {
-		test.Fatal(err)
+	if mkfifoError := syscall.Mkfifo(path, 0o600); mkfifoError != nil {
+		test.Fatal(mkfifoError)
 	}
-	filler, err := os.OpenFile(path, os.O_RDWR, 0)
-	if err != nil {
-		test.Fatal(err)
+	filler, openError := os.OpenFile(path, os.O_RDWR, 0)
+	if openError != nil {
+		test.Fatal(openError)
 	}
 	test.Cleanup(func() { filler.Close() })
-	if _, err := filler.Write([]byte(strings.Repeat("+", count))); err != nil {
-		test.Fatal(err)
+	if _, writeError := filler.Write([]byte(strings.Repeat("+", count))); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return path
 }
 
 // fileRunnable says whether path is a file anyone may run.
 func fileRunnable(path string) bool {
-	info, err := os.Stat(path)
-	return err == nil && info.Mode().IsRegular() && info.Mode().Perm()&0o111 != 0
+	info, statError := os.Stat(path)
+	return statError == nil && info.Mode().IsRegular() && info.Mode().Perm()&0o111 != 0
 }
 
 // randomDirectory is a random name a build gives its own directories (os.MkdirTemp's, buildcache's .building- ones),
@@ -250,7 +250,7 @@ func alikeCommands(commands string, directories []runDirectory) string {
 	slices.SortFunc(directories, func(left, right runDirectory) int { return len(right.path) - len(left.path) })
 	for _, directory := range directories {
 		commands = strings.ReplaceAll(commands, directory.path, directory.name)
-		if resolved, err := filepath.EvalSymlinks(directory.path); err == nil {
+		if resolved, resolveSymlinksError := filepath.EvalSymlinks(directory.path); resolveSymlinksError == nil {
 			commands = strings.ReplaceAll(commands, resolved, directory.name)
 		}
 	}
@@ -276,15 +276,15 @@ func firstCommandMissing(got, want string) string {
 
 // readCommands is every clang command line a run recorded, one file each in directory.
 func readCommands(directory string) (string, error) {
-	entries, err := os.ReadDir(directory)
-	if err != nil {
-		return "", err
+	entries, readDirectoryError := os.ReadDir(directory)
+	if readDirectoryError != nil {
+		return "", readDirectoryError
 	}
 	var commands strings.Builder
 	for _, entry := range entries {
-		content, err := os.ReadFile(filepath.Join(directory, entry.Name()))
-		if err != nil {
-			return "", err
+		content, readError := os.ReadFile(filepath.Join(directory, entry.Name()))
+		if readError != nil {
+			return "", readError
 		}
 		commands.Write(content)
 	}

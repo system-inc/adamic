@@ -46,14 +46,14 @@ func TestNodeRealpathNativeUseMutantIsCaught(test *testing.T) {
 		"-test.count=1",
 		"-test.v",
 	)
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	var exited *exec.ExitError
-	if !errors.As(err, &exited) ||
+	if !errors.As(captureError, &exited) ||
 		exited.ExitCode() != 1 ||
 		!strings.Contains(string(stdout), "want native use refusal zero or multiple arguments") {
 		test.Fatalf(
 			"argument-count mutant must red TestNodeRealpathNativeClosedUses/two_arguments.a: err=%v stdout=%s stderr=%s",
-			err,
+			captureError,
 			stdout,
 			stderr,
 		)

@@ -67,16 +67,16 @@ console.log((missing?.steady ?? -3).toString());
 `
 	directory := test.TempDir()
 	path := filepath.Join(directory, "fields.ts")
-	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	loaded, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	loaded, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := lower.Lower(context.Background(), loaded)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerError := lower.Lower(context.Background(), loaded)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	generated := C(program)
 	// Semantic parity alone would also pass if the optimization disappeared entirely.
@@ -109,8 +109,8 @@ console.log((missing?.steady ?? -3).toString());
 	want := runWithInput(test, "", "node", "--disable-warning=ExperimentalWarning", path)
 	for _, sanitize := range []bool{false, true} {
 		binary := filepath.Join(directory, "fields")
-		if err := Build(generated, binary, Options{Sanitize: sanitize}); err != nil {
-			test.Fatal(err)
+		if buildError := Build(generated, binary, Options{Sanitize: sanitize}); buildError != nil {
+			test.Fatal(buildError)
 		}
 		if got := runWithInput(test, "", binary); got != want {
 			test.Fatalf("sanitize %v: native %q; Node %q", sanitize, got, want)
@@ -125,18 +125,18 @@ func TestRuntimeFieldLayoutsAreIncluded(test *testing.T) {
 	shapePattern := regexp.MustCompile(`static const adamic_shape \w+(?:\[\])? = \{([^;]*)\};`)
 	fieldPattern := regexp.MustCompile(`"([^"]*)"`)
 	offsets := uniformFieldOffsets(&ir.Program{})
-	files, err := runtime.ReadDir("runtime")
-	if err != nil {
-		test.Fatal(err)
+	files, readDirectoryError := runtime.ReadDir("runtime")
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	checked := 0
 	for _, file := range files {
 		if !strings.HasSuffix(file.Name(), ".c") {
 			continue
 		}
-		contents, err := runtime.ReadFile("runtime/" + file.Name())
-		if err != nil {
-			test.Fatal(err)
+		contents, readFileError := runtime.ReadFile("runtime/" + file.Name())
+		if readFileError != nil {
+			test.Fatal(readFileError)
 		}
 		source := string(contents)
 		names := map[string][]string{}
@@ -165,9 +165,9 @@ func TestRuntimeFieldLayoutsAreIncluded(test *testing.T) {
 				if len(parts) != 5 {
 					test.Fatalf("%s: unrecognized runtime shape %s", file.Name(), initializer)
 				}
-				count, err := strconv.Atoi(strings.TrimSpace(parts[0]))
+				count, parseError := strconv.Atoi(strings.TrimSpace(parts[0]))
 				fields := names[strings.TrimSpace(parts[1])]
-				if err != nil || count != len(fields) {
+				if parseError != nil || count != len(fields) {
 					test.Fatalf("%s: unrecognized runtime fields %s", file.Name(), initializer)
 				}
 				for index, name := range fields {
@@ -195,16 +195,16 @@ func TestRegexProgramsKeepCheckedFieldReads(test *testing.T) {
 	const source = `const value={uniform:42};console.log(value.uniform.toString());console.log(/(?<uniform>x)/.exec('x')?.groups?.uniform ?? 'missing');`
 	directory := test.TempDir()
 	path := filepath.Join(directory, "regex-fields.ts")
-	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	loaded, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	loaded, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := lower.Lower(context.Background(), loaded)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerError := lower.Lower(context.Background(), loaded)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	generated := C(program)
 	if !regexp.MustCompile(`adamic_object_(?:data_)?field\([^\n]+, "uniform", &adamic_cache_`).MatchString(generated) {
@@ -213,8 +213,8 @@ func TestRegexProgramsKeepCheckedFieldReads(test *testing.T) {
 	want := runWithInput(test, "", "node", "--disable-warning=ExperimentalWarning", path)
 	for _, sanitize := range []bool{false, true} {
 		binary := filepath.Join(directory, "regex-fields")
-		if err := Build(generated, binary, Options{Sanitize: sanitize}); err != nil {
-			test.Fatal(err)
+		if buildError := Build(generated, binary, Options{Sanitize: sanitize}); buildError != nil {
+			test.Fatal(buildError)
 		}
 		if got := runWithInput(test, "", binary); got != want {
 			test.Fatalf("sanitize %v: native %q; Node %q", sanitize, got, want)
@@ -230,29 +230,29 @@ func TestRegexProgramsKeepCheckedFieldReads(test *testing.T) {
 // reaching set with no such type is refused earlier, as optional widening.
 func TestOptionalWriteMissingSlotRemainsChecked(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("testdata/field_write_absent.a")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("testdata/field_write_absent.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	source, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	wantNode := runWithInput(test, string(source), "node", "--disable-warning=ExperimentalWarning", "-e",
 		"const fs=require('fs'),m=require('module'); eval(m.stripTypeScriptTypes(fs.readFileSync(0,'utf8')))")
 	if wantNode != "2\n2\n" {
 		test.Fatalf("Node changed missing-property semantics: %q", wantNode)
 	}
-	loaded, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	loaded, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	_, err = lower.Lower(context.Background(), loaded)
+	_, lowerError := lower.Lower(context.Background(), loaded)
 	var notYet *lower.NotYet
-	if !errors.As(err, &notYet) || !strings.Contains(
-		err.Error(),
+	if !errors.As(lowerError, &notYet) || !strings.Contains(
+		lowerError.Error(),
 		"field_write_absent.a:5:2: stage 0 can't lower writing a possibly absent optional own field yet",
 	) {
-		test.Fatalf("missing-slot write must be refused before it reaches C, got %v", err)
+		test.Fatalf("missing-slot write must be refused before it reaches C, got %v", lowerError)
 	}
 }

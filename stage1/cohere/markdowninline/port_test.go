@@ -38,13 +38,13 @@ type run struct {
 // lowered checks and lowers a program, failing the test with stage 0's refusal if it can't.
 func lowered(test *testing.T, path string) *ir.Program {
 	test.Helper()
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatalf("Load: %v", err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatalf("Load: %v", loadError)
 	}
-	result, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		test.Fatalf("Lower: %v", err)
+	result, lowerError := lower.Lower(context.Background(), program)
+	if lowerError != nil {
+		test.Fatalf("Lower: %v", lowerError)
 	}
 	return result
 }
@@ -69,10 +69,10 @@ func execute(test *testing.T, environment []string, name string, arguments ...st
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	var exitError *exec.ExitError
-	if err != nil && !errors.As(err, &exitError) {
-		test.Fatalf("running %s: %v", name, err)
+	if captureError != nil && !errors.As(captureError, &exitError) {
+		test.Fatalf("running %s: %v", name, captureError)
 	}
 	return run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}
 }
@@ -80,9 +80,9 @@ func execute(test *testing.T, environment []string, name string, arguments ...st
 // onNode runs a program's source on Node, through the oracle's runner, with its arguments.
 func onNode(test *testing.T, path string, arguments ...string) run {
 	test.Helper()
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return execute(
 		test,
@@ -96,8 +96,8 @@ func onNode(test *testing.T, path string, arguments ...string) run {
 func onJavaScriptBackend(test *testing.T, program *ir.Program, arguments ...string) run {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "program.mjs")
-	if err := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return onNode(test, path, arguments...)
 }
@@ -120,8 +120,8 @@ func leaks(test *testing.T, program *ir.Program, sanitized string, arguments ...
 	switch runtime.GOOS {
 	case "darwin":
 		binary := filepath.Join(test.TempDir(), "port")
-		if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
-			test.Fatal(err)
+		if buildError := native.Build(native.C(program), binary, native.Options{}); buildError != nil {
+			test.Fatal(buildError)
 		}
 		report := execute(test, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
 		if report.exitCode == 0 {
@@ -146,9 +146,9 @@ type inlineCorpusData struct {
 }
 
 func collectInlineCorpus(test *testing.T) inlineCorpusData {
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	var texts []string
 	patterns := []string{"*.md", "*.markdown", "*.mdown", "*.mkd"}
@@ -198,15 +198,15 @@ func collectInlineCorpus(test *testing.T) inlineCorpusData {
 	sort.Strings(paths)
 	names := make([]string, len(paths))
 	for i, path := range paths {
-		name, err := filepath.Rel(root, path)
-		if err != nil {
-			test.Fatal(err)
+		name, relativePathError := filepath.Rel(root, path)
+		if relativePathError != nil {
+			test.Fatal(relativePathError)
 		}
 		names[i] = filepath.ToSlash(name)
 	}
-	selection, err := gatesample.Select(root, names, markdownInlineCorpusStride)
-	if err != nil {
-		test.Fatalf("%s: %v", test.Name(), err)
+	selection, selectError := gatesample.Select(root, names, markdownInlineCorpusStride)
+	if selectError != nil {
+		test.Fatalf("%s: %v", test.Name(), selectError)
 	}
 	selected := map[string]bool{}
 	if selection.Sample {
@@ -220,9 +220,9 @@ func collectInlineCorpus(test *testing.T) inlineCorpusData {
 		}
 	}
 	for _, path := range paths {
-		data, err := os.ReadFile(path)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(path)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		texts = append(texts, string(data))
 	}
@@ -274,8 +274,8 @@ func collectInlineCorpus(test *testing.T) inlineCorpusData {
 }
 func write(test *testing.T, path string, b []byte) {
 	test.Helper()
-	if err := os.WriteFile(path, b, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, b, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 }
 func clean(test *testing.T, name string, r run) {

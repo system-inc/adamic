@@ -10,9 +10,9 @@ import (
 
 func TestNonNullExplainChecks(test *testing.T) {
 	test.Parallel()
-	repository, err := filepath.Abs("../..")
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs("../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	for _, probe := range []struct{ name, position, status, counts string }{
 		{"narrowed", "2:43", "proven", "proven 1 checked 0"},
@@ -61,8 +61,8 @@ func TestNonNullExplainChecks(test *testing.T) {
 					var output, diagnostic bytes.Buffer
 					command.Stdout = &output
 					command.Stderr = &diagnostic
-					if err := command.Run(); err != nil {
-						test.Fatalf("%s: %v %s", backend, err, diagnostic.Bytes())
+					if runError := command.Run(); runError != nil {
+						test.Fatalf("%s: %v %s", backend, runError, diagnostic.Bytes())
 					}
 					if diagnostic.String() != want {
 						test.Fatalf("%s explanation:\n%s\nwant:\n%s", backend, diagnostic.Bytes(), want)

@@ -39,7 +39,7 @@ func checkGraphPathsProgram(test *testing.T, path string) {
 	// Every program runs something; a trace without a point would pass every check here.
 	walked := 0
 	for _, event := range run.events {
-		if _, err := strconv.Atoi(event); err == nil {
+		if _, parseError := strconv.Atoi(event); parseError == nil {
 			walked++
 		}
 	}
@@ -152,9 +152,9 @@ const adamicPoint = (point, variables) => {
 // its graphs (each in single assignment form) and the trace.
 func prepareTrace(test *testing.T, path string) traceSetup {
 	test.Helper()
-	runner, err := filepath.Abs("../../oracle/node.mjs")
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs("../../oracle/node.mjs")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	program := lowered(test, path)
 	result := run{graphs: map[int]*Function{}}
@@ -245,8 +245,8 @@ func traced(test *testing.T, path string, watched bool) run {
 		setup.body,
 	)
 	module := filepath.Join(directory, "program.mjs")
-	if err := os.WriteFile(module, []byte(source), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(module, []byte(source), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	// The trace keeps the whole test's five-minute limit: a loaded gate box can be slower than the
 	// reference box the 30-second unit budget is measured on (beginFlowUnit reports that).
@@ -254,17 +254,17 @@ func traced(test *testing.T, path string, watched bool) run {
 	defer cancel()
 	command := exec.CommandContext(ctx, "node", "--disable-warning=ExperimentalWarning", setup.runner, module)
 	command.Dir = filepath.Dir(path)
-	if output, err := command.CombinedOutput(); err != nil {
-		if _, exited := err.(*exec.ExitError); !exited {
-			test.Fatalf("node: %v\n%s", err, output)
+	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+		if _, exited := combinedOutputError.(*exec.ExitError); !exited {
+			test.Fatalf("node: %v\n%s", combinedOutputError, output)
 		}
 	}
 	if ctx.Err() != nil {
 		test.Fatalf("Node trace exceeded five minutes: %v", ctx.Err())
 	}
-	contents, err := os.ReadFile(trace)
-	if err != nil {
-		test.Fatal(err)
+	contents, readError := os.ReadFile(trace)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	result.events = strings.Split(string(contents), "\n")
 	return result
@@ -357,8 +357,8 @@ func walk(graphs map[int]*Function, marked []point, events []string) []string {
 		case strings.HasPrefix(event, "mutated "):
 			// The ranges' business (ranges_test.go), not the path's.
 		default:
-			index, err := strconv.Atoi(event)
-			if err != nil {
+			index, parseError := strconv.Atoi(event)
+			if parseError != nil {
 				problems = append(problems, fmt.Sprintf("a trace line that isn't an event: %q", event))
 				continue
 			}
@@ -699,7 +699,7 @@ func frames(run run) []sequence {
 			done = append(done, stack[len(stack)-1])
 			stack = stack[:len(stack)-1]
 		default:
-			if index, err := strconv.Atoi(event); err == nil {
+			if index, parseError := strconv.Atoi(event); parseError == nil {
 				top := &stack[len(stack)-1]
 				top.points = append(top.points, run.marked[index].instruction)
 			}

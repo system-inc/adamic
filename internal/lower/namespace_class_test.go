@@ -8,12 +8,13 @@ import (
 
 func TestNamespaceClassEarlyConstructionStaysLoud(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(
+	_, lowerSourceError := lowerSource(
 		test,
 		"function make(){return new Debug.Mapper();} const value=make(); namespace Debug {export class Mapper {kind=0;}}",
 	)
 	var notYet *NotYet
-	if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "namespace read before runtime initialization") {
-		test.Fatalf("early constructor read trusted: %v", err)
+	if !errors.As(lowerSourceError, &notYet) ||
+		!strings.Contains(lowerSourceError.Error(), "namespace read before runtime initialization") {
+		test.Fatalf("early constructor read trusted: %v", lowerSourceError)
 	}
 }

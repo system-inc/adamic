@@ -11,13 +11,13 @@ import (
 
 func inheritanceMemoryProgram(test *testing.T) *ir.Program {
 	test.Helper()
-	checked, err := load.Load([]string{"../oracle/testdata/class_inheritance_memory.a"})
-	if err != nil {
-		test.Fatal(err)
+	checked, loadError := load.Load([]string{"../oracle/testdata/class_inheritance_memory.a"})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := lower.Lower(context.Background(), checked)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerError := lower.Lower(context.Background(), checked)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	return program
 }

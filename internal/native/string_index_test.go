@@ -405,9 +405,9 @@ var stringIndexBinaries = func() map[string]func() (string, error) {
 	binaries := make(map[string]func() (string, error), len(stringIndexPatterns))
 	for name, points := range stringIndexPatterns {
 		binaries[name] = sync.OnceValues(func() (string, error) {
-			directory, err := os.MkdirTemp("", "adamic-string-index-")
-			if err != nil {
-				return "", err
+			directory, temporaryDirectoryError := os.MkdirTemp("", "adamic-string-index-")
+			if temporaryDirectoryError != nil {
+				return "", temporaryDirectoryError
 			}
 			binary := filepath.Join(directory, "harness")
 			return binary, Build(stringIndexReplacer(points).Replace(indexHarness), binary, Options{Sanitize: true})
@@ -426,9 +426,9 @@ func runStringIndexSweep(test *testing.T, name string) {
 	if !ok {
 		test.Fatalf("no index pattern %q", sweep.pattern)
 	}
-	binary, err := build()
-	if err != nil {
-		test.Fatal(err)
+	binary, buildError := build()
+	if buildError != nil {
+		test.Fatal(buildError)
 	}
 	oracle := stringIndexReplacer(stringIndexPatterns[sweep.pattern]).Replace(indexOracle)
 	first, last := strconv.Itoa(sweep.shifts.first), strconv.Itoa(sweep.shifts.last)
@@ -532,8 +532,8 @@ for (let round = 0; round < 40; round++) {
 process.stdout.write(lines.join('\n') + '\n');
 `
 	binary := filepath.Join(test.TempDir(), "append")
-	if err := Build(harness, binary, Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(harness, binary, Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	node := runWithInput(test, "", "node", "--eval", oracle)
 	native := runWithInput(test, "", binary)
@@ -571,12 +571,12 @@ int main(void) {
     return 0;
 }`
 	binary := filepath.Join(test.TempDir(), "cache-states")
-	if err := Build(
+	if buildError := Build(
 		strings.ReplaceAll(source, "@TEXT@", cString(text))+"\n",
 		binary,
 		Options{Sanitize: true},
-	); err != nil {
-		test.Fatal(err)
+	); buildError != nil {
+		test.Fatal(buildError)
 	}
 	node := `const literal = "é😀A".repeat(24) + "Z";
 const texts = [literal, literal, literal + "!"];

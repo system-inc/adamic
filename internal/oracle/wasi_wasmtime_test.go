@@ -22,11 +22,13 @@ func requireWasmtime(test *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASMTIME") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASMTIME=1")
 	}
-	if _, err := exec.LookPath("wasmtime"); err != nil {
-		test.Fatal(err)
+	if _, lookPathError := exec.LookPath("wasmtime"); lookPathError != nil {
+		test.Fatal(lookPathError)
 	}
-	if err := native.ValidateOptions(native.Options{Target: "wasm32-wasi"}); err != nil {
-		test.Fatal(err)
+	if validateOptionsError := native.ValidateOptions(
+		native.Options{Target: "wasm32-wasi"},
+	); validateOptionsError != nil {
+		test.Fatal(validateOptionsError)
 	}
 }
 
@@ -39,9 +41,9 @@ func onWasmtime(test *testing.T, how inputRun, binary string) run {
 	// one root preopen serves both. A dot preopen would shadow absolute paths.
 	directory := how.directory
 	if directory == "" {
-		var err error
-		if directory, err = os.Getwd(); err != nil {
-			test.Fatal(err)
+		var workingDirectoryError error
+		if directory, workingDirectoryError = os.Getwd(); workingDirectoryError != nil {
+			test.Fatal(workingDirectoryError)
 		}
 	}
 	arguments := []string{"run", "--dir", "/::/", "--env", "ADAMIC_WASI_CWD=" + directory, binary}
@@ -178,31 +180,31 @@ func runWasmtimeAgreesShard(test *testing.T, shard int) {
 					test.Log("PASS", fixture.path)
 				}
 			}()
-			path, err := filepath.Abs(filepath.Join(repository, fixture.path))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(filepath.Join(repository, fixture.path))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			program, err := lowered(test, path)
+			program, loweredError := lowered(test, path)
 			// Held to the refusal TestWASIAgreesWithNode holds them to (runtime_boundary_test.go).
 			if runtimeBoundaryViewFixture(fixture.path) {
-				assertRuntimeBoundaryViewRefusal(test, err)
+				assertRuntimeBoundaryViewRefusal(test, loweredError)
 				boundary = true
 				return
 			}
 			// The async witnesses' named refusals, as TestWASIAgreesWithNode holds them (async_witnesses_test.go).
-			if assertAsyncWitnessRefusal(test, fixture.path, path, err) {
+			if assertAsyncWitnessRefusal(test, fixture.path, path, loweredError) {
 				boundary = true
 				return
 			}
 			if !fixture.lowers {
 				var notYet *lower.NotYet
-				if !errors.As(err, &notYet) {
-					test.Fatalf("want NotYet, got %v", err)
+				if !errors.As(loweredError, &notYet) {
+					test.Fatalf("want NotYet, got %v", loweredError)
 				}
 				test.Skip("fixture does not lower")
 			}
-			if err != nil {
-				test.Fatal(err)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			// A fixture that reads process.platform stops at the named panic here as under node:wasi
 			// (wasiHostPlatformFixtures, asserted both ways for every fixture).
@@ -313,20 +315,20 @@ func runWasmtimeInputShard(test *testing.T, shard int) {
 func TestWasmtimeOracleCatchesMutants(test *testing.T) {
 	test.Parallel()
 	requireWasmtime(test)
-	path, err := filepath.Abs(filepath.Join(repository, "dedication", "dedication.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "dedication", "dedication.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	expected := onNodeWith(test, inputRun{}, path)
 	original := native.C(program)
 	probe := func(source string) run {
 		binary := filepath.Join(sharedDirectory(test), "mutant.wasm")
-		if err := native.Build(source, binary, native.Options{Target: "wasm32-wasi"}); err != nil {
-			test.Fatal(err)
+		if buildError := native.Build(source, binary, native.Options{Target: "wasm32-wasi"}); buildError != nil {
+			test.Fatal(buildError)
 		}
 		return onWasmtime(test, inputRun{}, binary)
 	}
@@ -360,13 +362,13 @@ func TestWasmtimeOracleCatchesMutants(test *testing.T) {
 func TestWasmtimeCheckedWitness(test *testing.T) {
 	test.Parallel()
 	requireWasmtime(test)
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/writes_past_end.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/writes_past_end.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	raw := onNodeWith(test, inputRun{}, path)
 	checked := onJavaScriptBackend(test, program)
@@ -374,8 +376,8 @@ func TestWasmtimeCheckedWitness(test *testing.T) {
 		test.Fatal("checked control must differ from raw source exit")
 	}
 	binary := filepath.Join(sharedDirectory(test), "checked.wasm")
-	if err := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	if difference := disagreement(checked, onWasmtime(test, inputRun{}, binary)); difference != "" {
 		test.Fatal(difference)
@@ -421,9 +423,9 @@ func TestWasmtimeWalkLimitCatchesMutants(test *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/walk.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/walk.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	shared := sharedDirectory(test)
 	how := inputRun{directory: filepath.Dir(path), arguments: []string{writable(test, shared, "written")}}

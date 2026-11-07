@@ -14,9 +14,9 @@ func TestStage3FixtureHook(test *testing.T) {
 	if path == "" {
 		test.Skip("called only by the Stage 3 fixture runner")
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	result, binary := nativelyUncached(test, program)
 	if result.exitCode == 0 {
@@ -25,11 +25,11 @@ func TestStage3FixtureHook(test *testing.T) {
 		}
 	}
 	// Byte slices are base64 in JSON, preserving even non-UTF-8 output.
-	data, err := json.Marshal([]any{result.stdout, result.stderr, result.exitCode})
-	if err != nil {
-		test.Fatal(err)
+	data, encodeError := json.Marshal([]any{result.stdout, result.stderr, result.exitCode})
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
-	if err := os.WriteFile(os.Getenv("ADAMIC_STAGE3_RESULT"), data, 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(os.Getenv("ADAMIC_STAGE3_RESULT"), data, 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 }

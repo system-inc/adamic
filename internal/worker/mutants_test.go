@@ -139,11 +139,11 @@ func runWorkerMutant(test *testing.T, mutant workerMutation) {
 	if check == "TestWasmWorkerMemory" {
 		check = "TestWasmWorkerMemory_000/transform"
 	}
-	if report, err := mutantCheck(test, nil, check); err != nil {
-		test.Fatalf("unmutated check failed: %v\n%s", err, report)
+	if report, mutantCheckError := mutantCheck(test, nil, check); mutantCheckError != nil {
+		test.Fatalf("unmutated check failed: %v\n%s", mutantCheckError, report)
 	}
-	report, err := mutantCheck(test, &mutant, check)
-	assertMutantCaught(test, report, err, check, mutant.witness)
+	report, mutantCheckError := mutantCheck(test, &mutant, check)
+	assertMutantCaught(test, report, mutantCheckError, check, mutant.witness)
 }
 
 func mutantCheck(test *testing.T, mutant *workerMutation, check string) ([]byte, error) {
@@ -176,21 +176,21 @@ func mutantCheck(test *testing.T, mutant *workerMutation, check string) ([]byte,
 	return command.CombinedOutput()
 }
 
-func assertMutantCaught(test *testing.T, report []byte, err error, check, witness string) {
+func assertMutantCaught(test *testing.T, report []byte, mutantCheckError error, check, witness string) {
 	test.Helper()
 	var exit *exec.ExitError
-	if !errors.As(err, &exit) || exit.ExitCode() != 1 {
-		test.Fatalf("expected failed check, got %v\n%s", err, report)
+	if !errors.As(mutantCheckError, &exit) || exit.ExitCode() != 1 {
+		test.Fatalf("expected failed check, got %v\n%s", mutantCheckError, report)
 	}
 	decoder := json.NewDecoder(bytes.NewReader(report))
 	failed := false
 	var output strings.Builder
 	for {
 		var event struct{ Action, Test, Output string }
-		if err := decoder.Decode(&event); err == io.EOF {
+		if decodeError := decoder.Decode(&event); decodeError == io.EOF {
 			break
-		} else if err != nil {
-			test.Fatalf("invalid test report: %v\n%s", err, report)
+		} else if decodeError != nil {
+			test.Fatalf("invalid test report: %v\n%s", decodeError, report)
 		}
 		if event.Test == check {
 			failed = failed || event.Action == "fail"

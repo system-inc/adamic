@@ -50,20 +50,20 @@ func TestMatcherOct6Mutants(test *testing.T) {
 	for _, mutant := range mutants {
 		test.Run(mutant.name, func(test *testing.T) {
 			c := cases[mutant.caseIndex]
-			p, err := Compile(c.Pattern, c.Flags)
-			if err != nil {
-				test.Fatal(err)
+			p, compileError := Compile(c.Pattern, c.Flags)
+			if compileError != nil {
+				test.Fatal(compileError)
 			}
-			control, err := matcherResult(p.New(), c.Input)
-			if err != nil || !reflect.DeepEqual(control, expected[mutant.caseIndex]) {
-				test.Fatalf("control: %v %+v", err, control)
+			control, matcherResultError := matcherResult(p.New(), c.Input)
+			if matcherResultError != nil || !reflect.DeepEqual(control, expected[mutant.caseIndex]) {
+				test.Fatalf("control: %v %+v", matcherResultError, control)
 			}
 			mutant.mutate(p)
 			r := p.New()
 			r.StepLimit = 100000
-			got, err := matcherResult(r, c.Input)
-			if err != nil {
-				test.Fatalf("mutant must execute, not hit a limit: %v", err)
+			got, matcherResultError := matcherResult(r, c.Input)
+			if matcherResultError != nil {
+				test.Fatalf("mutant must execute, not hit a limit: %v", matcherResultError)
 			}
 			if reflect.DeepEqual(got, expected[mutant.caseIndex]) {
 				test.Fatal("mutant survived")
@@ -89,9 +89,9 @@ func TestMatcherOct6Mutants(test *testing.T) {
 	} {
 		test.Run(mutant.name, func(test *testing.T) {
 			loop := loops[mutant.index]
-			p, err := Compile(loop.Pattern, loop.Flags)
-			if err != nil {
-				test.Fatal(err)
+			p, compileError := Compile(loop.Pattern, loop.Flags)
+			if compileError != nil {
+				test.Fatal(compileError)
 			}
 			mutant.mutate(p)
 			r := p.New()
@@ -99,9 +99,9 @@ func TestMatcherOct6Mutants(test *testing.T) {
 			r.StepLimit = 100000
 			caught := false
 			for step := 0; step < loop.Steps; step++ {
-				got, err := matcherResult(r, loop.Input)
-				if err != nil {
-					test.Fatal(err)
+				got, matcherResultError := matcherResult(r, loop.Input)
+				if matcherResultError != nil {
+					test.Fatal(matcherResultError)
 				}
 				if !reflect.DeepEqual(got, want[mutant.index][step]) {
 					caught = true

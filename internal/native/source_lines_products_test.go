@@ -64,13 +64,13 @@ func debugCacheEnvironment(test *testing.T, environment []string) []string {
 	if os.Getenv("ADAMIC_BUILD_CACHE_DIR") == "" {
 		test.Fatal("debug products require the unit's ADAMIC_BUILD_CACHE_DIR; refusing the home cache (#phzhe68)")
 	}
-	cache, err := location.BuildCache()
-	if err != nil {
-		test.Fatal(err)
+	cache, buildCacheError := location.BuildCache()
+	if buildCacheError != nil {
+		test.Fatal(buildCacheError)
 	}
-	output, err := location.Output()
-	if err != nil {
-		test.Fatal(err)
+	output, outputError := location.Output()
+	if outputError != nil {
+		test.Fatal(outputError)
 	}
 	return append(environment, "ADAMIC_BUILD_CACHE_DIR="+cache, "ADAMIC_BUILD_OUTPUT_DIR="+output)
 }
@@ -81,12 +81,12 @@ func debugProduct(test *testing.T, inputs buildcache.Inputs, build bool, recipe 
 	if build {
 		return buildcache.Product(test, inputs, recipe)
 	}
-	directory, err := buildcache.BuiltAhead(
+	directory, builtAheadError := buildcache.BuiltAhead(
 		inputs,
 		fmt.Errorf("debug product %s not built ahead; run TestProduct_Debug tests first", inputs.Name),
 	)
-	if err != nil {
-		test.Fatal(err)
+	if builtAheadError != nil {
+		test.Fatal(builtAheadError)
 	}
 	return directory
 }
@@ -98,9 +98,9 @@ func debugReviewProduct(test *testing.T, path string, mode int, build bool) stri
 		fmt.Sprintf("debug-review-%d:%s", mode, filepath.ToSlash(path)),
 		options,
 	), build, func(directory string) error {
-		program, err := debugProgram(test, path, options.Debug)
-		if err != nil {
-			return err
+		program, debugProgramError := debugProgram(test, path, options.Debug)
+		if debugProgramError != nil {
+			return debugProgramError
 		}
 		return Build(CWithOptions(program, options), filepath.Join(directory, "program"), options)
 	})
@@ -111,7 +111,7 @@ func runDebugReviewProducts(test *testing.T, shard, mode int) {
 		if filepath.Dir(path) != "../oracle/testdata/review/agree" {
 			continue
 		}
-		if _, err := os.Stat(strings.TrimSuffix(path, filepath.Ext(path)) + ".pending"); err == nil {
+		if _, statError := os.Stat(strings.TrimSuffix(path, filepath.Ext(path)) + ".pending"); statError == nil {
 			continue
 		}
 		test.Run(filepath.Base(path), func(test *testing.T) {
@@ -139,11 +139,11 @@ func debugLineProduct(test *testing.T, build bool) string {
 		// require both to match byte for byte across entry directories.
 		for index, copy := range []string{"one", "two"} {
 			entry := filepath.Join(directory, copy, "fixture.a")
-			if err := os.MkdirAll(filepath.Dir(entry), 0755); err != nil {
-				return err
+			if createDirectoryError := os.MkdirAll(filepath.Dir(entry), 0755); createDirectoryError != nil {
+				return createDirectoryError
 			}
-			if err := os.WriteFile(entry, []byte(debugLineFixture), 0644); err != nil {
-				return err
+			if writeError := os.WriteFile(entry, []byte(debugLineFixture), 0644); writeError != nil {
+				return writeError
 			}
 			for _, mode := range []struct {
 				names []string
@@ -159,10 +159,10 @@ func debugLineProduct(test *testing.T, build bool) string {
 				)
 				command := toolchain.CommandContextIn(ctx, "../..", compiler, arguments...)
 				command.Env = debugCacheEnvironment(test, command.Env)
-				output, err := command.CombinedOutput()
+				output, combinedOutputError := command.CombinedOutput()
 				cancel()
-				if err != nil {
-					return fmt.Errorf("build %s: %w: %s", mode.names[index], err, output)
+				if combinedOutputError != nil {
+					return fmt.Errorf("build %s: %w: %s", mode.names[index], combinedOutputError, output)
 				}
 			}
 		}
@@ -180,9 +180,9 @@ func debugArchiveProduct(test *testing.T, options Options, build bool) string {
 	if options.Sanitize || options.ThreadSanitize || options.Count {
 		options.Release = false
 	}
-	request, err := RuntimeRequestFor(options)
-	if err != nil {
-		test.Fatal(err)
+	request, runtimeRequestForError := RuntimeRequestFor(options)
+	if runtimeRequestForError != nil {
+		test.Fatal(runtimeRequestForError)
 	}
 	inputs := debugProductInputs(fmt.Sprintf("debug-program-runtime:%+v", options), options)
 	inputs.Flags = append(inputs.Flags, request.Portable...)
@@ -218,12 +218,12 @@ func debugCommandProduct(test *testing.T, build bool) string {
 		Options{Debug: true},
 	), build, func(directory string) error {
 		driver := buildcache.GoTest(test, "", "command.test", "./cmd/adamic", nil)
-		contents, err := os.ReadFile(driver)
-		if err != nil {
-			return err
+		contents, readError := os.ReadFile(driver)
+		if readError != nil {
+			return readError
 		}
-		if err := os.WriteFile(filepath.Join(directory, "command.test"), contents, 0755); err != nil {
-			return err
+		if writeError := os.WriteFile(filepath.Join(directory, "command.test"), contents, 0755); writeError != nil {
+			return writeError
 		}
 		// Read the runtime dependency in this build's window, so native's test units
 		// fetch it as an upstream, rather than merely depending on producer order.
@@ -237,11 +237,11 @@ func debugCommandProduct(test *testing.T, build bool) string {
 		)
 		for index, copy := range []string{"one", "two"} {
 			entry := filepath.Join(directory, copy, "driver-witness.a")
-			if err := os.MkdirAll(filepath.Dir(entry), 0755); err != nil {
-				return err
+			if createDirectoryError := os.MkdirAll(filepath.Dir(entry), 0755); createDirectoryError != nil {
+				return createDirectoryError
 			}
-			if err := os.WriteFile(entry, []byte("console.log('driver');\n"), 0644); err != nil {
-				return err
+			if writeError := os.WriteFile(entry, []byte("console.log('driver');\n"), 0644); writeError != nil {
+				return writeError
 			}
 			name := []string{"witness", "witness-again"}[index]
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
@@ -258,10 +258,10 @@ func debugCommandProduct(test *testing.T, build bool) string {
 			)
 			command.Dir = buildcache.Absolute("<repository>/cmd/adamic")
 			command.Env = debugCacheEnvironment(test, append(os.Environ(), "ADAMIC_BUILD_DEBUG_DRIVER=1"))
-			output, err := command.CombinedOutput()
+			output, combinedOutputError := command.CombinedOutput()
 			cancel()
-			if err != nil {
-				return fmt.Errorf("command driver: %w: %s", err, output)
+			if combinedOutputError != nil {
+				return fmt.Errorf("command driver: %w: %s", combinedOutputError, output)
 			}
 		}
 		return nil
@@ -312,18 +312,18 @@ func debugSharingProduct(test *testing.T, build bool) string {
 				"ADAMIC_BUILD_LOG="+filepath.Join(directory, "build.log"),
 				"ADAMIC_NATIVE_SPLIT=0",
 			)
-			output, err := command.CombinedOutput()
+			output, combinedOutputError := command.CombinedOutput()
 			cancel()
-			if err != nil {
-				return fmt.Errorf("runtime sharing build: %w: %s", err, output)
+			if combinedOutputError != nil {
+				return fmt.Errorf("runtime sharing build: %w: %s", combinedOutputError, output)
 			}
 		}
 		// Keep the observed archive outcomes and keys, which the consumer checks,
 		// without publishing wall-clock durations as part of this product's bytes.
 		path := filepath.Join(directory, "build.log")
-		contents, err := os.ReadFile(path)
-		if err != nil {
-			return err
+		contents, readError := os.ReadFile(path)
+		if readError != nil {
+			return readError
 		}
 		var outcomes strings.Builder
 		for _, line := range strings.Split(string(contents), "\n") {

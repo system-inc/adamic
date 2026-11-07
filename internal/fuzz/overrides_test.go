@@ -81,15 +81,15 @@ func TestOverridesShapesAndLower(test *testing.T) {
 			for seed := seeds.first; seed <= seeds.last; seed++ {
 				source := programs[seed]
 				path := filepath.Join(directory, "program.a")
-				if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-					test.Fatal(err)
+				if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
+					test.Fatal(writeError)
 				}
-				program, err := load.Load([]string{path})
-				if err != nil {
-					test.Fatalf("seed %d: checker: %v\n%s", seed, err, source)
+				program, loadError := load.Load([]string{path})
+				if loadError != nil {
+					test.Fatalf("seed %d: checker: %v\n%s", seed, loadError, source)
 				}
-				if _, err := lower.Lower(context.Background(), program); err != nil {
-					test.Fatalf("seed %d: lower: %v\n%s", seed, err, source)
+				if _, lowerError := lower.Lower(context.Background(), program); lowerError != nil {
+					test.Fatalf("seed %d: lower: %v\n%s", seed, lowerError, source)
 				}
 			}
 		})

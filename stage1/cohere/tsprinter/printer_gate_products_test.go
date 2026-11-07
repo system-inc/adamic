@@ -38,9 +38,9 @@ func printerGateLowered(test *testing.T, family string) string {
 	test.Helper()
 	return oracles.PrinterGateOnce(test, "lowered-"+family, func() string {
 		entry := printerGateEntry(family)
-		path, err := filepath.Abs(entry)
-		if err != nil {
-			test.Fatal(err)
+		path, absolutePathError := filepath.Abs(entry)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		return buildcache.Product(test, buildcache.Inputs{
 			Name:      "tsprinter-lowered-" + family + "-v3",
@@ -49,8 +49,8 @@ func printerGateLowered(test *testing.T, family string) string {
 			Toolchain: []string{buildcache.Tool("go", "version"), runtime.Version(), runtime.GOOS, runtime.GOARCH},
 		}, func(dir string) error {
 			program := lowered(test, path)
-			if err := os.WriteFile(dir+"/port.c", []byte(native.C(program)), 0644); err != nil {
-				return err
+			if writeError := os.WriteFile(dir+"/port.c", []byte(native.C(program)), 0644); writeError != nil {
+				return writeError
 			}
 			return os.WriteFile(dir+"/program.mjs", []byte(javascript.JavaScript(program)), 0644)
 		})
@@ -62,9 +62,9 @@ func printerGateNative(test *testing.T, family string, sanitize bool) string {
 	name := fmt.Sprintf("native-%s-%t", family, sanitize)
 	return oracles.PrinterGateOnce(test, name, func() string {
 		lowered := printerGateLowered(test, family)
-		source, err := os.ReadFile(lowered + "/port.c")
-		if err != nil {
-			test.Fatal(err)
+		source, readError := os.ReadFile(lowered + "/port.c")
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		options := native.Options{Sanitize: sanitize, Split: true, Jobs: 4}
 		flags := append(
@@ -99,9 +99,9 @@ func printerGateNative(test *testing.T, family string, sanitize bool) string {
 
 func printerGateFamilyProducts(test *testing.T, family string) tsPrinterProducts {
 	test.Helper()
-	path, err := filepath.Abs(printerGateEntry(family))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(printerGateEntry(family))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return tsPrinterProducts{
 		source:    path,

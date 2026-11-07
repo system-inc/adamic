@@ -26,9 +26,9 @@ func printerDirectoryAt(test *testing.T, directory, file, from, to string) strin
 	// The port's sources, laid out under directory as they sit under stage1/cohere (printerPortFiles); a mutation
 	// changes one of the printer's own.
 	for _, name := range printerPortFiles {
-		data, err := os.ReadFile(filepath.Join("../..", filepath.FromSlash(name)))
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(filepath.Join("../..", filepath.FromSlash(name)))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		if file != "" && name == "graphql/printer/"+file {
 			if strings.Count(string(data), from) != 1 {
@@ -37,11 +37,11 @@ func printerDirectoryAt(test *testing.T, directory, file, from, to string) strin
 			data = []byte(strings.Replace(string(data), from, to, 1))
 		}
 		target := filepath.Join(directory, filepath.FromSlash(name))
-		if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(filepath.Dir(target), 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err = os.WriteFile(target, data, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(target, data, 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	return filepath.Join(directory, "graphql/printer/main.ts")
@@ -51,8 +51,8 @@ func printerDirectoryAt(test *testing.T, directory, file, from, to string) strin
 func TestPrinterFileDriver(test *testing.T) {
 	test.Parallel()
 	source := filepath.Join(test.TempDir(), "probe.graphql")
-	if err := os.WriteFile(source, []byte("query{hello(a:1,b:2)}"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(source, []byte("query{hello(a:1,b:2)}"), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	products := printerInTreeProducts(test)
 	want := "query {\n    hello(a: 1, b: 2)\n}\n"

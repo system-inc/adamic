@@ -78,26 +78,34 @@ func TestUndecidedCycleReadsUseReadyChecks(test *testing.T) {
 		test.Run(probe.name, func(test *testing.T) {
 			directory := test.TempDir()
 			for name, source := range map[string]string{"a.a": probe.a, "b.a": probe.b} {
-				if err := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); err != nil {
-					test.Fatal(err)
+				if writeError := os.WriteFile(
+					filepath.Join(directory, name),
+					[]byte(source),
+					0o644,
+				); writeError != nil {
+					test.Fatal(writeError)
 				}
 			}
 			// Observe a computed answer before the cycle can panic, rather than
 			// letting a failing cycle pass the oracle on silence.
-			if err := os.WriteFile(
+			if writeError := os.WriteFile(
 				filepath.Join(directory, "probe.a"),
 				[]byte("console.log(`${1 + 2}`);"),
 				0o644,
-			); err != nil {
-				test.Fatal(err)
+			); writeError != nil {
+				test.Fatal(writeError)
 			}
 			entry := filepath.Join(directory, probe.entry)
-			original, err := os.ReadFile(entry)
-			if err != nil {
-				test.Fatal(err)
+			original, readError := os.ReadFile(entry)
+			if readError != nil {
+				test.Fatal(readError)
 			}
-			if err := os.WriteFile(entry, append([]byte("import './probe.a';\n"), original...), 0o644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(
+				entry,
+				append([]byte("import './probe.a';\n"), original...),
+				0o644,
+			); writeError != nil {
+				test.Fatal(writeError)
 			}
 			exit := 0
 			if probe.fails {
@@ -115,22 +123,32 @@ func TestUndecidedCycleReadsUseReadyChecks(test *testing.T) {
 				test.Error("proven base class read retained a TDZ check")
 			}
 			binary := filepath.Join(directory, "native")
-			if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(
+				native.C(program),
+				binary,
+				native.Options{Sanitize: true},
+			); buildError != nil {
+				test.Fatal(buildError)
 			}
 			run := func(command *exec.Cmd) {
 				test.Helper()
-				output, err := command.CombinedOutput()
+				output, combinedOutputError := command.CombinedOutput()
 				if string(output) != probe.output {
-					test.Errorf("%s: got %q, want %q (error %v)", command.Path, output, probe.output, err)
+					test.Errorf(
+						"%s: got %q, want %q (error %v)",
+						command.Path,
+						output,
+						probe.output,
+						combinedOutputError,
+					)
 				}
 				if probe.fails {
-					exit, ok := err.(*exec.ExitError)
+					exit, ok := combinedOutputError.(*exec.ExitError)
 					if !ok || exit.ExitCode() != 70 {
-						test.Errorf("expected exit 70, got %v", err)
+						test.Errorf("expected exit 70, got %v", combinedOutputError)
 					}
-				} else if err != nil {
-					test.Error(err)
+				} else if combinedOutputError != nil {
+					test.Error(combinedOutputError)
 				}
 			}
 			command := exec.Command(binary)

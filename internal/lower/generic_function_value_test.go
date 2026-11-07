@@ -10,13 +10,13 @@ import (
 
 func TestGenericFunctionValuesHaveSeparateInstances(test *testing.T) {
 	test.Parallel()
-	source, err := os.ReadFile("../oracle/testdata/generic_function_value.a")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("../oracle/testdata/generic_function_value.a")
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	program, err := lowerSource(test, string(source))
-	if err != nil {
-		test.Fatal(err)
+	program, lowerSourceError := lowerSource(test, string(source))
+	if lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
 	instances, forwarders := map[ir.Type]int{}, map[ir.Type]int{}
 	for _, function := range program.Functions {
@@ -44,15 +44,15 @@ func TestGenericFunctionValuesHaveSeparateInstances(test *testing.T) {
 // checker identities. A mutant deleting the type identity must fail this count.
 func TestGenericFunctionValueReferenceInstances(test *testing.T) {
 	test.Parallel()
-	program, err := lowerSource(test, `
+	program, lowerSourceError := lowerSource(test, `
 function identity<T>(x: T): T { return x; }
 const first: (x: { readonly left: string }) => { readonly left: string } = identity;
 const second: (x: { readonly right: number }) => { readonly right: number } = identity;
 first({ left: 'a' });
 second({ right: 3 });
 `)
-	if err != nil {
-		test.Fatal(err)
+	if lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
 	instances := 0
 	for _, function := range program.Functions {
@@ -67,28 +67,28 @@ second({ right: 3 });
 
 func TestGenericFunctionValueIdentityComparisonIsNotYet(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(test, `
+	_, lowerSourceError := lowerSource(test, `
 function identity<T>(x: T): T { return x; }
 const first: (x: string) => string = identity;
 const second: (x: string) => string = identity;
 console.log(first === second ? 'same' : 'different');
 `)
-	if err == nil || !strings.Contains(err.Error(), "function identity comparison") {
-		test.Fatalf("want identity comparison NotYet, got %v", err)
+	if lowerSourceError == nil || !strings.Contains(lowerSourceError.Error(), "function identity comparison") {
+		test.Fatalf("want identity comparison NotYet, got %v", lowerSourceError)
 	}
 }
 
 func TestGenericFunctionValueDifferentReferenceRepresentations(test *testing.T) {
 	test.Parallel()
-	program, err := lowerSource(test, `
+	program, lowerSourceError := lowerSource(test, `
 function identity<T>(x: T): T { return x; }
 const first: (x: { readonly left: string }) => { readonly left: string } = identity;
 const second: (x: readonly number[]) => readonly number[] = identity;
 first({ left: 'a' });
 second([3]);
 `)
-	if err != nil {
-		test.Fatal(err)
+	if lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
 	instances := 0
 	for _, function := range program.Functions {
@@ -103,15 +103,15 @@ second([3]);
 
 func TestGenericFunctionValueEarlierIdentityComparisonIsNotYet(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(test, `
+	_, lowerSourceError := lowerSource(test, `
 function compare(a: (x: string) => string, b: (x: string) => string): boolean { return a === b; }
 function identity<T>(x: T): T { return x; }
 const first: (x: string) => string = identity;
 const second: (x: string) => string = identity;
 console.log(compare(first, second) ? 'same' : 'different');
 `)
-	if err == nil || !strings.Contains(err.Error(), "function identity comparison") {
-		test.Fatalf("want earlier identity comparison NotYet, got %v", err)
+	if lowerSourceError == nil || !strings.Contains(lowerSourceError.Error(), "function identity comparison") {
+		test.Fatalf("want earlier identity comparison NotYet, got %v", lowerSourceError)
 	}
 }
 
@@ -126,13 +126,13 @@ func TestGenericFunctionValueIdentityCallsAreNotYet(test *testing.T) {
 	} {
 		test.Run(expression, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, `
+			_, lowerSourceError := lowerSource(test, `
 function identity<T>(x: T): T { return x; }
 const first: (x: string) => string = identity;
 const second: (x: string) => string = identity;
 `+"const observed = "+expression+`;`)
-			if err == nil || !strings.Contains(err.Error(), "function identity observation") {
-				test.Fatalf("want identity observation NotYet, got %v", err)
+			if lowerSourceError == nil || !strings.Contains(lowerSourceError.Error(), "function identity observation") {
+				test.Fatalf("want identity observation NotYet, got %v", lowerSourceError)
 			}
 		})
 	}
@@ -140,26 +140,26 @@ const second: (x: string) => string = identity;
 
 func TestGenericFunctionValueUnionIdentityIsNotYet(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(test, `
+	_, lowerSourceError := lowerSource(test, `
 function compare(a: ((x: string) => string) | string, b: ((x: string) => string) | string): boolean { return a === b; }
 function identity<T>(x: T): T { return x; }
 const first: (x: string) => string = identity;
 console.log(compare(first, first) ? 'same' : 'different');
 `)
-	if err == nil || !strings.Contains(err.Error(), "function identity comparison") {
-		test.Fatalf("want union identity comparison NotYet, got %v", err)
+	if lowerSourceError == nil || !strings.Contains(lowerSourceError.Error(), "function identity comparison") {
+		test.Fatalf("want union identity comparison NotYet, got %v", lowerSourceError)
 	}
 }
 
 func TestGenericFunctionValueNamespaceDirectCallsKeepIdentity(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(test, `namespace Values {
+	_, lowerSourceError := lowerSource(test, `namespace Values {
  export function identity<T>(value: T): T { return value; }
  export function read(value: number): number { return value; }
  }
  const copy = Values.read;
  console.log(String(Values.identity(2)) + ' ' + String(copy === Values.read));`)
-	if err != nil {
-		test.Fatal(err)
+	if lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
 }

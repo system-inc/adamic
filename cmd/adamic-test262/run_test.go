@@ -22,7 +22,7 @@ func TestProgramCPUDeadline(test *testing.T) {
 	directory := test.TempDir()
 	source := filepath.Join(directory, "cpu.c")
 	binary := filepath.Join(directory, "cpu")
-	if err := os.WriteFile(source, []byte(`#include <stdio.h>
+	if writeError := os.WriteFile(source, []byte(`#include <stdio.h>
 #include <time.h>
 int main(int argc, char **argv) {
     clock_t start = clock();
@@ -33,11 +33,17 @@ int main(int argc, char **argv) {
         }
     }
 }
-`), 0600); err != nil {
-		test.Fatal(err)
+`), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if output, err := toolchain.Command("clang", "-O2", "-o", binary, source).CombinedOutput(); err != nil {
-		test.Fatalf("build CPU helper: %v\n%s", err, output)
+	if output, combinedOutputError := toolchain.Command(
+		"clang",
+		"-O2",
+		"-o",
+		binary,
+		source,
+	).CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("build CPU helper: %v\n%s", combinedOutputError, output)
 	}
 	test.Run("spin", func(test *testing.T) {
 		test.Parallel()
@@ -90,17 +96,17 @@ int main(int argc, char **argv) {
 func TestRunFilterAttemptLimit(test *testing.T) {
 	test.Parallel()
 	// Reads: internal/lower/*.go
-	e, err := prepareMode("../..", "testdata/mini", test.TempDir(), nil, nil, true)
-	if err != nil {
-		test.Fatal(err)
+	e, prepareModeError := prepareMode("../..", "testdata/mini", test.TempDir(), nil, nil, true)
+	if prepareModeError != nil {
+		test.Fatal(prepareModeError)
 	}
 	e.cache = &resultCache{directory: test.TempDir()}
 	e.log = io.Discard
 	for _, jobs := range []int{1, 4} {
 		e.jobs = jobs
-		report, err := e.runFilter("", 1, false)
-		if err != nil {
-			test.Fatal(err)
+		report, runFilterError := e.runFilter("", 1, false)
+		if runFilterError != nil {
+			test.Fatal(runFilterError)
 		}
 		attempted := report.Pass + report.Fail + report.Refused + report.Crashed
 		if report.Total != 5 || report.Skipped != 1 || report.Unrun != 3 || attempted != 1 {

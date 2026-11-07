@@ -48,28 +48,28 @@ func suggestionAlongsidePrepare(test *testing.T) {
 	if suggestionAlongside.ready {
 		return
 	}
-	directory, err := os.MkdirTemp(sharedDirectory, "suggestion-alongside-")
-	if err != nil {
-		test.Fatal(err)
+	directory, temporaryDirectoryError := os.MkdirTemp(sharedDirectory, "suggestion-alongside-")
+	if temporaryDirectoryError != nil {
+		test.Fatal(temporaryDirectoryError)
 	}
 	copyPort(test, directory, "", "")
 	// This pinned case selects only no-debugger. Exclude unrelated rules from
 	// the generated dispatch so setup does not lower the entire live corpus.
-	rules, err := os.ReadDir(filepath.Join(directory, "rules"))
-	if err != nil {
-		test.Fatal(err)
+	rules, readDirectoryError := os.ReadDir(filepath.Join(directory, "rules"))
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	for _, rule := range rules {
 		if rule.IsDir() && rule.Name() != "no-debugger" {
-			if err := os.RemoveAll(filepath.Join(directory, "rules", rule.Name())); err != nil {
-				test.Fatal(err)
+			if removeError := os.RemoveAll(filepath.Join(directory, "rules", rule.Name())); removeError != nil {
+				test.Fatal(removeError)
 			}
 		}
 	}
 	for _, name := range []string{"rule.a", "oracle.go"} {
-		data, err := os.ReadFile(filepath.Join("testdata/serialization", name))
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(filepath.Join("testdata/serialization", name))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		from, to := "debuggerMessage, '', '', ''", "debuggerMessage, 'fix', ';', ''"
 		if name == "oracle.go" {
@@ -78,26 +78,26 @@ func suggestionAlongsidePrepare(test *testing.T) {
 		if bytes.Count(data, []byte(from)) != 1 {
 			test.Fatal("automatic fix anchor changed")
 		}
-		if err := os.WriteFile(
+		if writeError := os.WriteFile(
 			filepath.Join(directory, "rules/no-debugger", name),
 			bytes.Replace(data, []byte(from), []byte(to), 1),
 			0644,
-		); err != nil {
-			test.Fatal(err)
+		); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
-	if err := os.Remove(filepath.Join(directory, "rules/no-debugger/rule.ts")); err != nil {
-		test.Fatal(err)
+	if removeError := os.Remove(filepath.Join(directory, "rules/no-debugger/rule.ts")); removeError != nil {
+		test.Fatal(removeError)
 	}
 	prepareRegistry(test, directory)
 	source := filepath.Join(directory, "mixed.ts")
-	if err := os.WriteFile(source, []byte("/*😀*/debugger;\n"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(source, []byte("/*😀*/debugger;\n"), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	// Keep the manifest alive after the setup test returns.
 	path := filepath.Join(directory, "manifest.txt")
-	if err := os.WriteFile(path, []byte(source+"\tno-debugger\n"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source+"\tno-debugger\n"), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	inputs := buildcache.Inputs{Name: "suggestion-alongside-lowered-v2", Files: []string{
 		"stage1/cohere/lint",
@@ -112,16 +112,16 @@ func suggestionAlongsidePrepare(test *testing.T) {
 		"cohere/go.work.sum",
 	}, Flags: []string{"automatic-fix=semicolon", "serialization-fixture=v1"}, Toolchain: []string{runtime.Version()}}
 	lowered := buildcache.Product(test, inputs, func(out string) error {
-		program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-		if err != nil {
-			return err
+		program, loadError := load.Load([]string{filepath.Join(directory, "main.ts")})
+		if loadError != nil {
+			return loadError
 		}
-		ir, err := lower.Lower(context.Background(), program)
-		if err != nil {
-			return err
+		ir, lowerError := lower.Lower(context.Background(), program)
+		if lowerError != nil {
+			return lowerError
 		}
-		if err := os.WriteFile(filepath.Join(out, "lint.c"), []byte(native.C(ir)), 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(filepath.Join(out, "lint.c"), []byte(native.C(ir)), 0644); writeError != nil {
+			return writeError
 		}
 		return os.WriteFile(filepath.Join(out, "lint.mjs"), []byte(javascript.JavaScript(ir)), 0644)
 	})
@@ -130,9 +130,9 @@ func suggestionAlongsidePrepare(test *testing.T) {
 	inputs.Flags = append(inputs.Flags, native.Flags(native.Options{Sanitize: true, Split: true, Jobs: 4})...)
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
 	built := buildcache.Product(test, inputs, func(out string) error {
-		source, err := os.ReadFile(filepath.Join(lowered, "lint.c"))
-		if err != nil {
-			return err
+		source, readError := os.ReadFile(filepath.Join(lowered, "lint.c"))
+		if readError != nil {
+			return readError
 		}
 		return native.Build(
 			string(source),
@@ -223,9 +223,9 @@ func TestSuggestionAlongsideAutomaticFix_002(test *testing.T) {
 
 func suggestionAlongsideUnion(test *testing.T) {
 	test.Helper()
-	file, err := parser.ParseFile(token.NewFileSet(), "suggestion_alongside_shards_test.go", nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	file, parseFileError := parser.ParseFile(token.NewFileSet(), "suggestion_alongside_shards_test.go", nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	seen := map[string]int{}
 	assignments := make([]int, len(suggestionAlongsideCases))
@@ -252,8 +252,8 @@ func suggestionAlongsideUnion(test *testing.T) {
 					if !ok {
 						test.Fatal("shard index must be literal")
 					}
-					index, err := strconv.Atoi(literal.Value)
-					if err != nil || index < 0 || index >= len(assignments) {
+					index, parseError := strconv.Atoi(literal.Value)
+					if parseError != nil || index < 0 || index >= len(assignments) {
 						test.Fatal("invalid shard index")
 					}
 					assignments[index]++
@@ -297,22 +297,22 @@ func TestSuggestionAlongsideAutomaticFixPlantedFailure(test *testing.T) {
 	)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if err == syscall.ESRCH {
+		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if killError == syscall.ESRCH {
 			return os.ErrProcessDone
 		}
-		return err
+		return killError
 	}
 	command.Env = append(os.Environ(), "ADAMIC_SUGGESTION_ALONGSIDE_PLANT=native")
 	// Read through childguard.Capture for lintBuildPhaseChild's reason, stdout then stderr; the 600 s deadline ends a
 	// hung child.
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	output := append(stdout, stderr...)
-	if err == nil ||
+	if captureError == nil ||
 		bytes.Count(output, []byte("--- FAIL: TestSuggestionAlongsideAutomaticFix_")) != 1 ||
 		!bytes.Contains(output, []byte("--- FAIL: TestSuggestionAlongsideAutomaticFix_002")) ||
 		!bytes.Contains(output, []byte("planted automatic fix mismatch")) {
-		test.Fatalf("wrong planted failure: %v\n%s", err, output)
+		test.Fatalf("wrong planted failure: %v\n%s", captureError, output)
 	}
 	test.Log("planted mismatch caught only by shard 002")
 }
@@ -329,11 +329,11 @@ func TestSuggestionAlongsideAutomaticFixSetupIsRequired(test *testing.T) {
 		"-test.v",
 	)
 	command.Env = append(os.Environ(), "ADAMIC_SUGGESTION_ALONGSIDE_PLANT=")
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	output := append(stdout, stderr...)
-	if err != nil ||
+	if captureError != nil ||
 		!bytes.Contains(output, []byte("--- PASS: TestSuggestionAlongsideAutomaticFix_002")) ||
 		!productLookedUp(output, `suggestion-alongside-\S+`) {
-		test.Fatalf("standalone shard: %v\n%s", err, output)
+		test.Fatalf("standalone shard: %v\n%s", captureError, output)
 	}
 }

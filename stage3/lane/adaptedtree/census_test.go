@@ -40,13 +40,13 @@ func TestProduct_AdaptedTreeCensusExports(test *testing.T) {
 func TestTheAdaptedTreeBuildReachesOnlyItsDeclaredFile(test *testing.T) {
 	test.Parallel()
 	// TestMain runs the package's tests from stage3/lane, where repositoryFromLane is the checkout.
-	root, err := filepath.Abs(repositoryFromLane)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repositoryFromLane)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	exports, tree, _, err := leancensus.Imports(censusExports(test))
-	if err != nil {
-		test.Fatal(err)
+	exports, tree, _, importsError := leancensus.Imports(censusExports(test))
+	if importsError != nil {
+		test.Fatal(importsError)
 	}
 	// A slice package that isn't listed is one buildcache no longer links, or renamed: the slice is out of date.
 	for _, pkg := range buildcacheSlice {
@@ -65,9 +65,9 @@ func TestTheAdaptedTreeBuildReachesOnlyItsDeclaredFile(test *testing.T) {
 		Tree:           tree,
 		TestsBuildLean: true,
 	}
-	findings, err := census.Findings()
-	if err != nil {
-		test.Fatal(err)
+	findings, findingsError := census.Findings()
+	if findingsError != nil {
+		test.Fatal(findingsError)
 	}
 	if len(findings) > 0 {
 		test.Fatalf("the adapted tree's build reaches past what its key holds:\n%s", strings.Join(findings, "\n"))

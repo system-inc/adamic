@@ -85,17 +85,17 @@ func main() {
 	if *scratchFlag == "" {
 		fail("-scratch is required")
 	}
-	scratch, err := filepath.Abs(*scratchFlag)
-	check(err)
-	if entries, err := os.ReadDir(scratch); err == nil && len(entries) > 0 {
+	scratch, absolutePathError := filepath.Abs(*scratchFlag)
+	check(absolutePathError)
+	if entries, readDirectoryError := os.ReadDir(scratch); readDirectoryError == nil && len(entries) > 0 {
 		fail("%s is not empty: every mode needs empty caches and stores", scratch)
 	}
 	check(os.MkdirAll(scratch, 0o755))
-	root, err := repositoryRoot()
-	check(err)
+	root, repositoryRootError := repositoryRoot()
+	check(repositoryRootError)
 
-	units, err := productUnits(root, *packagesFlag, *runFlag)
-	check(err)
+	units, productUnitsError := productUnits(root, *packagesFlag, *runFlag)
+	check(productUnitsError)
 	if len(units) == 0 {
 		fail("no TestProduct_ units selected")
 	}
@@ -106,8 +106,8 @@ func main() {
 	fmt.Printf("products: %d TestProduct_ units in %d packages\n", total, len(units))
 
 	server := &store{directory: filepath.Join(scratch, "stores")}
-	listener, err := net.Listen("tcp", "127.0.0.1:0")
-	check(err)
+	listener, listenError := net.Listen("tcp", "127.0.0.1:0")
+	check(listenError)
 	go http.Serve(listener, server)
 	address := "http://" + listener.Addr().String()
 	tokenPath := filepath.Join(scratch, "publish-token")
@@ -130,8 +130,8 @@ func main() {
 		results[mode] = result
 		for _, unit := range units {
 			started := time.Now()
-			outcome, err := result.run(root, scratch, address, tokenPath, unit, *parallelFlag, *timeoutFlag)
-			check(err)
+			outcome, runError := result.run(root, scratch, address, tokenPath, unit, *parallelFlag, *timeoutFlag)
+			check(runError)
 			fmt.Printf(
 				"ran %s %s: %d passed, %d failed, %d skipped, %.1fs\n",
 				mode,
@@ -189,9 +189,9 @@ func productUnits(root, packages, run string) ([]productUnit, error) {
 		directories = strings.Split(packages, ",")
 	} else {
 		// Every package directory whose tests declare a product; go test -list then confirms the names.
-		err := filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
-			if err != nil {
-				return err
+		walkError := filepath.WalkDir(root, func(path string, entry fs.DirEntry, pathError error) error {
+			if pathError != nil {
+				return pathError
 			}
 			if entry.IsDir() && (entry.Name() == ".git" ||
 				entry.Name() == "testdata" ||
@@ -201,9 +201,9 @@ func productUnits(root, packages, run string) ([]productUnit, error) {
 			if entry.IsDir() || !strings.HasSuffix(path, "_test.go") {
 				return nil
 			}
-			content, err := os.ReadFile(path)
-			if err != nil {
-				return err
+			content, readError := os.ReadFile(path)
+			if readError != nil {
+				return readError
 			}
 			if bytes.Contains(content, []byte("\nfunc TestProduct_")) {
 				directory := "./" + filepath.ToSlash(mustRelative(root, filepath.Dir(path)))
@@ -213,8 +213,8 @@ func productUnits(root, packages, run string) ([]productUnit, error) {
 			}
 			return nil
 		})
-		if err != nil {
-			return nil, err
+		if walkError != nil {
+			return nil, walkError
 		}
 	}
 	var filter *regexp.Regexp
@@ -223,9 +223,9 @@ func productUnits(root, packages, run string) ([]productUnit, error) {
 	}
 	var units []productUnit
 	for _, directory := range directories {
-		output, err := toolchain.CommandIn(root, "go", "test", "-list", "^TestProduct_", directory).Output()
-		if err != nil {
-			return nil, fmt.Errorf("go test -list %s: %v", directory, err)
+		output, outputError := toolchain.CommandIn(root, "go", "test", "-list", "^TestProduct_", directory).Output()
+		if outputError != nil {
+			return nil, fmt.Errorf("go test -list %s: %v", directory, outputError)
 		}
 		unit := productUnit{directory: directory}
 		for _, line := range strings.Split(string(output), "\n") {
@@ -275,8 +275,8 @@ func (m *modeResult) runWith(
 ) (runOutcome, error) {
 	temporary := filepath.Join(scratch, m.label, "tmp")
 	for _, directory := range []string{cache, temporary} {
-		if err := os.MkdirAll(directory, 0o755); err != nil {
-			return runOutcome{}, err
+		if createDirectoryError := os.MkdirAll(directory, 0o755); createDirectoryError != nil {
+			return runOutcome{}, createDirectoryError
 		}
 	}
 	environment := map[string]string{
@@ -332,21 +332,21 @@ func (m *modeResult) runWith(
 	}
 	// A unit's run, as a runner gives it: this process's whole environment under the mode's own, with the toolchain's
 	// go, told it stands in root.
-	goPath, err := toolchain.Path("go")
-	if err != nil {
-		return runOutcome{}, err
+	goPath, pathError := toolchain.Path("go")
+	if pathError != nil {
+		return runOutcome{}, pathError
 	}
-	absolute, err := filepath.Abs(root)
-	if err != nil {
-		return runOutcome{}, err
+	absolute, absolutePathError := filepath.Abs(root)
+	if absolutePathError != nil {
+		return runOutcome{}, absolutePathError
 	}
 	environment["PWD"] = absolute
 	command := exec.Command(goPath, arguments...)
 	command.Dir = root
 	command.Env = withEnvironment(os.Environ(), environment)
 	output, _ := command.CombinedOutput()
-	if err := os.WriteFile(log, output, 0o644); err != nil {
-		return runOutcome{}, err
+	if writeError := os.WriteFile(log, output, 0o644); writeError != nil {
+		return runOutcome{}, writeError
 	}
 	outcome := runOutcome{log: log, output: string(output)}
 	scanner := bufio.NewScanner(bytes.NewReader(output))
@@ -424,12 +424,12 @@ func (p product) digest() string {
 
 func compare(server *store, results map[string]*modeResult) bool {
 	products := map[string]map[string]product{}
-	fresh, err := server.products("main", "build")
-	check(err)
+	fresh, productsError := server.products("main", "build")
+	check(productsError)
 	products["fresh"] = fresh
 	for _, mode := range modes[1:] {
-		cached, err := cachedProducts(results[mode].cache)
-		check(err)
+		cached, cachedProductsError := cachedProducts(results[mode].cache)
+		check(cachedProductsError)
 		products[mode] = cached
 	}
 	seconds := map[string]map[string]string{}
@@ -574,8 +574,8 @@ var keyPattern = regexp.MustCompile(`^[0-9a-f]{64}$`)
 
 func cachedProducts(cache string) (map[string]product, error) {
 	products := map[string]product{}
-	entries, err := os.ReadDir(cache)
-	if err != nil {
+	entries, readDirectoryError := os.ReadDir(cache)
+	if readDirectoryError != nil {
 		return products, nil
 	}
 	for _, entry := range entries {
@@ -583,11 +583,11 @@ func cachedProducts(cache string) (map[string]product, error) {
 			continue
 		}
 		directory := filepath.Join(cache, entry.Name())
-		found, err := readDirectory(directory)
-		if err != nil {
-			return nil, err
+		found, readDirectoryError := readDirectory(directory)
+		if readDirectoryError != nil {
+			return nil, readDirectoryError
 		}
-		if described, err := os.ReadFile(directory + ".inputs"); err == nil {
+		if described, readError := os.ReadFile(directory + ".inputs"); readError == nil {
 			first, _, _ := strings.Cut(string(described), "\n")
 			found.name = strings.TrimPrefix(first, "name ")
 		}
@@ -599,14 +599,14 @@ func cachedProducts(cache string) (map[string]product, error) {
 func readDirectory(directory string) (product, error) {
 	var found product
 	var shape []string
-	err := filepath.WalkDir(directory, func(path string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
+	walkError := filepath.WalkDir(directory, func(path string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
 		relative := filepath.ToSlash(mustRelative(directory, path))
-		info, err := os.Lstat(path)
-		if err != nil {
-			return err
+		info, statError := os.Lstat(path)
+		if statError != nil {
+			return statError
 		}
 		// The kind and, for a file, whether it's executable: what the store keeps (store.go writes 0755 or 0644). The
 		// rest of a mode is the building user's umask (a gate box's 002 made 0775 where a fetch makes 0755, Oct 9
@@ -622,9 +622,9 @@ func readDirectory(directory string) (product, error) {
 		if !info.Mode().IsRegular() {
 			return nil
 		}
-		content, err := os.ReadFile(path)
-		if err != nil {
-			return err
+		content, readError := os.ReadFile(path)
+		if readError != nil {
+			return readError
 		}
 		sum := sha256.Sum256(content)
 		// The mode as a manifest stores it, so the content digest of a directory and of a manifest compare.
@@ -640,7 +640,7 @@ func readDirectory(directory string) (product, error) {
 	found.content = func(path string) ([]byte, error) {
 		return os.ReadFile(filepath.Join(directory, filepath.FromSlash(path)))
 	}
-	return found, err
+	return found, walkError
 }
 
 func shapeDifference(want, got string) string {
@@ -698,13 +698,13 @@ func difference(want, got product) string {
 }
 
 func offsets(want, got product, path string) string {
-	first, err := want.content(path)
-	if err != nil {
-		return "(unreadable: " + err.Error() + ")"
+	first, contentError := want.content(path)
+	if contentError != nil {
+		return "(unreadable: " + contentError.Error() + ")"
 	}
-	second, err := got.content(path)
-	if err != nil {
-		return "(unreadable: " + err.Error() + ")"
+	second, contentError := got.content(path)
+	if contentError != nil {
+		return "(unreadable: " + contentError.Error() + ")"
 	}
 	var ranges [][2]int
 	for index := 0; index < min(len(first), len(second)); index++ {
@@ -747,8 +747,8 @@ type region struct {
 // machoRegions finds LC_UUID's bytes and the code signature's in a Mach-O, the two places a macOS link may differ
 // between two links of the same objects (#cchsq45).
 func machoRegions(content []byte) []region {
-	file, err := macho.NewFile(bytes.NewReader(content))
-	if err != nil {
+	file, newFileError := macho.NewFile(bytes.NewReader(content))
+	if newFileError != nil {
 		return nil
 	}
 	defer file.Close()
@@ -789,8 +789,8 @@ func flip(
 	parallel int,
 	timeout time.Duration,
 ) bool {
-	stored, err := server.products("shared", "build-candidate")
-	check(err)
+	stored, productsError := server.products("shared", "build-candidate")
+	check(productsError)
 	// The package whose warm run was quickest, and a product of it.
 	warm := results["warm"]
 	type candidate struct {
@@ -805,8 +805,8 @@ func flip(
 			"warm",
 			strings.ReplaceAll(strings.TrimPrefix(unit.directory, "./"), "/", "_")+".jsonl",
 		)
-		content, err := os.ReadFile(log)
-		if err != nil {
+		content, readError := os.ReadFile(log)
+		if readError != nil {
 			continue
 		}
 		elapsed := packageElapsed(content)
@@ -828,8 +828,8 @@ func flip(
 	var file productFile
 	var content []byte
 	for _, candidate := range victim.files {
-		held, err := os.ReadFile(filepath.Join(server.directory, "shared", "blobs", candidate.sha256))
-		check(err)
+		held, readError := os.ReadFile(filepath.Join(server.directory, "shared", "blobs", candidate.sha256))
+		check(readError)
 		if len(held) > len(content) {
 			file, content = candidate, held
 		}
@@ -844,7 +844,7 @@ func flip(
 	check(os.WriteFile(blob, content, 0o644))
 	cache := filepath.Join(scratch, "warm-flipped", "cache")
 	check(os.MkdirAll(cache, 0o755))
-	outcome, err := warm.runWith(
+	outcome, runWithError := warm.runWith(
 		root,
 		scratch,
 		address,
@@ -855,7 +855,7 @@ func flip(
 		cache,
 		filepath.Join(scratch, "warm-flipped", "builds.log"),
 	)
-	check(err)
+	check(runWithError)
 	_, served := os.Stat(filepath.Join(cache, chosen.key))
 	poisoned := strings.Contains(outcome.output, "cache poisoning") && strings.Contains(outcome.output, file.sha256)
 	fmt.Printf(
@@ -932,8 +932,8 @@ func (s *store) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
 		s.write(writer, request, name, strings.TrimPrefix(object, "write/"))
 		return
 	}
-	content, err := os.ReadFile(filepath.Join(s.directory, name, filepath.FromSlash(object)))
-	if err != nil {
+	content, readError := os.ReadFile(filepath.Join(s.directory, name, filepath.FromSlash(object)))
+	if readError != nil {
 		http.NotFound(writer, request)
 		return
 	}
@@ -945,9 +945,9 @@ func (s *store) write(writer http.ResponseWriter, request *http.Request, name, o
 		http.Error(writer, "forbidden", http.StatusForbidden)
 		return
 	}
-	content, err := io.ReadAll(request.Body)
-	if err != nil {
-		http.Error(writer, err.Error(), http.StatusBadRequest)
+	content, readError := io.ReadAll(request.Body)
+	if readError != nil {
+		http.Error(writer, readError.Error(), http.StatusBadRequest)
 		return
 	}
 	path := filepath.Join(s.directory, name, filepath.FromSlash(object))
@@ -958,11 +958,11 @@ func (s *store) write(writer http.ResponseWriter, request *http.Request, name, o
 			return
 		}
 	case strings.HasPrefix(object, "refs/"):
-		if _, err := os.Stat(filepath.Join(s.directory, name, "blobs", string(content))); err != nil {
+		if _, statError := os.Stat(filepath.Join(s.directory, name, "blobs", string(content))); statError != nil {
 			http.Error(writer, "a ref must name a held blob", http.StatusConflict)
 			return
 		}
-		if held, err := os.ReadFile(path); err == nil {
+		if held, readError := os.ReadFile(path); readError == nil {
 			if !bytes.Equal(held, content) {
 				s.conflicts = append(
 					s.conflicts,
@@ -978,12 +978,12 @@ func (s *store) write(writer http.ResponseWriter, request *http.Request, name, o
 		http.NotFound(writer, request)
 		return
 	}
-	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
-		http.Error(writer, err.Error(), http.StatusInternalServerError)
+	if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0o755); createDirectoryError != nil {
+		http.Error(writer, createDirectoryError.Error(), http.StatusInternalServerError)
 		return
 	}
-	if err := os.WriteFile(path, content, 0o644); err != nil {
-		http.Error(writer, err.Error(), http.StatusInternalServerError)
+	if writeError := os.WriteFile(path, content, 0o644); writeError != nil {
+		http.Error(writer, writeError.Error(), http.StatusInternalServerError)
 		return
 	}
 	writer.WriteHeader(http.StatusCreated)
@@ -992,21 +992,21 @@ func (s *store) write(writer http.ResponseWriter, request *http.Request, name, o
 // products reads every product a store's namespace refers to, from its manifest.
 func (s *store) products(name, namespace string) (map[string]product, error) {
 	products := map[string]product{}
-	references, err := os.ReadDir(filepath.Join(s.directory, name, "refs", namespace))
-	if errors.Is(err, fs.ErrNotExist) {
+	references, readDirectoryError := os.ReadDir(filepath.Join(s.directory, name, "refs", namespace))
+	if errors.Is(readDirectoryError, fs.ErrNotExist) {
 		return products, nil
-	} else if err != nil {
-		return nil, err
+	} else if readDirectoryError != nil {
+		return nil, readDirectoryError
 	}
 	blobs := filepath.Join(s.directory, name, "blobs")
 	for _, reference := range references {
-		sum, err := os.ReadFile(filepath.Join(s.directory, name, "refs", namespace, reference.Name()))
-		if err != nil {
-			return nil, err
+		sum, readError := os.ReadFile(filepath.Join(s.directory, name, "refs", namespace, reference.Name()))
+		if readError != nil {
+			return nil, readError
 		}
-		encoded, err := os.ReadFile(filepath.Join(blobs, strings.TrimSpace(string(sum))))
-		if err != nil {
-			return nil, err
+		encoded, readError := os.ReadFile(filepath.Join(blobs, strings.TrimSpace(string(sum))))
+		if readError != nil {
+			return nil, readError
 		}
 		var stored struct {
 			Key, Name string
@@ -1015,8 +1015,8 @@ func (s *store) products(name, namespace string) (map[string]product, error) {
 				Mode         uint32
 			}
 		}
-		if err := json.Unmarshal(encoded, &stored); err != nil {
-			return nil, err
+		if decodeError := json.Unmarshal(encoded, &stored); decodeError != nil {
+			return nil, decodeError
 		}
 		found := product{name: stored.Name, content: func(path string) ([]byte, error) {
 			for _, file := range stored.Files {
@@ -1037,13 +1037,13 @@ func (s *store) products(name, namespace string) (map[string]product, error) {
 
 // repositoryRoot is the nearest directory above the working directory holding adamic's go.mod, as buildcache finds it.
 func repositoryRoot() (string, error) {
-	directory, err := os.Getwd()
-	if err != nil {
-		return "", err
+	directory, workingDirectoryError := os.Getwd()
+	if workingDirectoryError != nil {
+		return "", workingDirectoryError
 	}
 	for {
-		content, err := os.ReadFile(filepath.Join(directory, "go.mod"))
-		if err == nil && strings.HasPrefix(string(content), "module github.com/system-inc/adamic\n") {
+		content, readError := os.ReadFile(filepath.Join(directory, "go.mod"))
+		if readError == nil && strings.HasPrefix(string(content), "module github.com/system-inc/adamic\n") {
 			return directory, nil
 		}
 		parent := filepath.Dir(directory)
@@ -1059,9 +1059,9 @@ func mustRelative(root, path string) string {
 	return relative
 }
 
-func check(err error) {
-	if err != nil {
-		fail("%v", err)
+func check(sourceError error) {
+	if sourceError != nil {
+		fail("%v", sourceError)
 	}
 }
 
@@ -1088,22 +1088,22 @@ func elsewhere(
 	parallel int,
 	timeout time.Duration,
 ) bool {
-	if status, err := gitOutput(
+	if status, gitOutputError := gitOutput(
 		root,
 		"status",
 		"--porcelain",
 		"--untracked-files=no",
 		"--ignore-submodules=all",
-	); err != nil || status != "" {
+	); gitOutputError != nil || status != "" {
 		fmt.Printf(
 			"FAIL elsewhere: the checkout must be committed and clean to be cloned exactly (%v): %s\n",
-			err,
+			gitOutputError,
 			status,
 		)
 		return false
 	}
-	head, err := gitOutput(root, "rev-parse", "HEAD")
-	check(err)
+	head, gitOutputError := gitOutput(root, "rev-parse", "HEAD")
+	check(gitOutputError)
 	other := filepath.Join(scratch, "elsewhere", "another-checkout-path", "adamic")
 	check(os.MkdirAll(filepath.Dir(other), 0o755))
 	for _, arguments := range [][]string{
@@ -1124,15 +1124,17 @@ func elsewhere(
 			"An unrelated commit",
 		},
 	} {
-		if output, err := toolchain.GitCommand(arguments...).CombinedOutput(); err != nil {
-			fmt.Printf("FAIL elsewhere: git %s: %v\n%s", strings.Join(arguments, " "), err, output)
+		if output, combinedOutputError := toolchain.GitCommand(
+			arguments...,
+		).CombinedOutput(); combinedOutputError != nil {
+			fmt.Printf("FAIL elsewhere: git %s: %v\n%s", strings.Join(arguments, " "), combinedOutputError, output)
 			return false
 		}
 	}
 	// The cohere submodule's files, linked in (copied across file systems), without its git directory.
 	check(linkTree(filepath.Join(root, "cohere"), filepath.Join(other, "cohere")))
-	otherHead, err := gitOutput(other, "rev-parse", "HEAD")
-	check(err)
+	otherHead, gitOutputError := gitOutput(other, "rev-parse", "HEAD")
+	check(gitOutputError)
 	fmt.Printf("elsewhere: %s at %s, another checkout at %s at %s\n", root, head[:10], other, otherHead[:10])
 
 	healthy := true
@@ -1166,8 +1168,8 @@ func elsewhere(
 			run.mode.log = filepath.Join(scratch, run.mode.label, "builds.log")
 			for _, unit := range units {
 				started := time.Now()
-				outcome, err := run.mode.run(run.directory, scratch, address, tokenPath, unit, parallel, timeout)
-				check(err)
+				outcome, runError := run.mode.run(run.directory, scratch, address, tokenPath, unit, parallel, timeout)
+				check(runError)
 				fmt.Printf(
 					"ran %s %s in %s: %d passed, %d failed, %.1fs\n",
 					variant.name,
@@ -1189,12 +1191,12 @@ func elsewhere(
 				}
 			}
 		}
-		mainFresh, err := server.products("main-"+variant.name, "build")
-		check(err)
-		otherFresh, err := server.products("other-"+variant.name, "build")
-		check(err)
-		otherWarm, err := cachedProducts(runs[2].mode.cache)
-		check(err)
+		mainFresh, productsError := server.products("main-"+variant.name, "build")
+		check(productsError)
+		otherFresh, productsError := server.products("other-"+variant.name, "build")
+		check(productsError)
+		otherWarm, cachedProductsError := cachedProducts(runs[2].mode.cache)
+		check(cachedProductsError)
 		_, warmOutcomes := census(runs[2].mode.log)
 		byName := func(products map[string]product) map[string]string {
 			keys := map[string]string{}
@@ -1284,15 +1286,15 @@ func holdsArchive(found product) bool {
 }
 
 func gitOutput(directory string, arguments ...string) (string, error) {
-	output, err := toolchain.GitCommandIn(directory, arguments...).Output()
-	return strings.TrimSpace(string(output)), err
+	output, outputError := toolchain.GitCommandIn(directory, arguments...).Output()
+	return strings.TrimSpace(string(output)), outputError
 }
 
 // linkTree fills target with source's files, hard-linked where it can and copied where it can't, leaving out .git.
 func linkTree(source, target string) error {
-	return filepath.WalkDir(source, func(path string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
+	return filepath.WalkDir(source, func(path string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
 		if entry.Name() == ".git" {
 			if entry.IsDir() {
@@ -1301,26 +1303,26 @@ func linkTree(source, target string) error {
 			return nil
 		}
 		destination := filepath.Join(target, mustRelative(source, path))
-		info, err := os.Lstat(path)
-		if err != nil {
-			return err
+		info, statError := os.Lstat(path)
+		if statError != nil {
+			return statError
 		}
 		switch {
 		case entry.IsDir():
 			return os.MkdirAll(destination, info.Mode().Perm()|0o700)
 		case info.Mode()&fs.ModeSymlink != 0:
-			link, err := os.Readlink(path)
-			if err != nil {
-				return err
+			link, readLinkError := os.Readlink(path)
+			if readLinkError != nil {
+				return readLinkError
 			}
 			return os.Symlink(link, destination)
 		}
 		if os.Link(path, destination) == nil {
 			return nil
 		}
-		content, err := os.ReadFile(path)
-		if err != nil {
-			return err
+		content, readError := os.ReadFile(path)
+		if readError != nil {
+			return readError
 		}
 		return os.WriteFile(destination, content, info.Mode().Perm())
 	})

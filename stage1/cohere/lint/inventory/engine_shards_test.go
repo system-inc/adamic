@@ -28,23 +28,23 @@ const inventoryEngineCaseFile = "stage1/cohere/lint/inventory/testdata/engine_te
 // both are Go builds keyed by go list, never by hand-listed inputs.
 func inventoryEngineBuild(test *testing.T, mutant bool) (string, string) {
 	test.Helper()
-	root, err := filepath.Abs("../../../..")
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs("../../../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	cohere := filepath.Join(root, "cohere")
 	virtual := filepath.Join(cohere, "adamic_inventory.go")
 	virtualTest := filepath.Join(cohere, "adamic_inventory_test.go")
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{
+	overlay, encodeError := json.Marshal(map[string]any{"Replace": map[string]string{
 		virtual:     filepath.Join(root, inventoryUnknownFrequencyMutant.File),
 		virtualTest: filepath.Join(root, inventoryEngineCaseFile),
 	}})
-	if err != nil {
-		test.Fatal(err)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	path := filepath.Join(test.TempDir(), "overlay.json")
-	if err := os.WriteFile(path, overlay, 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, overlay, 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	arguments := []string{"-overlay=" + path}
 	if mutant {
@@ -104,14 +104,14 @@ func inventoryEngineUnion(test *testing.T, binary, directory string) [][]string 
 	test.Helper()
 	command := inventoryEngineSetupCommand(binary, "-test.list=^Test")
 	command.Dir = directory
-	output, err := command.CombinedOutput()
-	if err != nil {
-		test.Fatalf("enumerate engine: %v\n%s", err, output)
+	output, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("enumerate engine: %v\n%s", combinedOutputError, output)
 	}
 	unsplit := strings.Fields(string(output))
-	shards, err := inventoryEnginePartition(unsplit)
-	if err != nil {
-		test.Fatal(err)
+	shards, inventoryEnginePartitionError := inventoryEnginePartition(unsplit)
+	if inventoryEnginePartitionError != nil {
+		test.Fatal(inventoryEnginePartitionError)
 	}
 	if len(shards) != testInventoryEngineShards {
 		test.Fatalf("enumerated %d shards, want %d", len(shards), testInventoryEngineShards)
@@ -148,15 +148,15 @@ func inventoryEngineUnion(test *testing.T, binary, directory string) [][]string 
 func TestInventoryEngineShardAssignment(test *testing.T) {
 	test.Parallel()
 	original := []string{"TestExistingA", "TestExistingB", "TestExistingC"}
-	before, err := inventoryEnginePartition(original)
-	if err != nil {
-		test.Fatal(err)
+	before, inventoryEnginePartitionError := inventoryEnginePartition(original)
+	if inventoryEnginePartitionError != nil {
+		test.Fatal(inventoryEnginePartitionError)
 	}
 	grown := append([]string{"TestAdded"}, original...)
 	slices.Reverse(grown)
-	after, err := inventoryEnginePartition(grown)
-	if err != nil {
-		test.Fatal(err)
+	after, inventoryEnginePartitionError := inventoryEnginePartition(grown)
+	if inventoryEnginePartitionError != nil {
+		test.Fatal(inventoryEnginePartitionError)
 	}
 	if len(before) != testInventoryEngineShards || len(after) != testInventoryEngineShards {
 		test.Fatal("growth changed shard count")
@@ -176,7 +176,7 @@ func TestInventoryEngineShardAssignment(test *testing.T) {
 		test.Fatalf("growth lost cases: %d, want live total %d", total, len(grown))
 	}
 	for _, invalid := range [][]string{nil, {"TestRepeated", "TestRepeated"}} {
-		if _, err := inventoryEnginePartition(invalid); err == nil {
+		if _, inventoryEnginePartitionError := inventoryEnginePartition(invalid); inventoryEnginePartitionError == nil {
 			test.Fatalf("invalid corpus accepted: %v", invalid)
 		}
 	}
@@ -204,9 +204,9 @@ func inventoryEngineSelector(value string) (func(int) bool, error) {
 	if len(parts) != 2 {
 		return nil, fmt.Errorf("ADAMIC_TEST_SHARD must be i/n, got %q", value)
 	}
-	index, indexErr := strconv.Atoi(parts[0])
-	count, countErr := strconv.Atoi(parts[1])
-	if indexErr != nil || countErr != nil || count < 1 || index < 0 || index >= count {
+	index, indexError := strconv.Atoi(parts[0])
+	count, countError := strconv.Atoi(parts[1])
+	if indexError != nil || countError != nil || count < 1 || index < 0 || index >= count {
 		return nil, fmt.Errorf("invalid ADAMIC_TEST_SHARD %q", value)
 	}
 	return func(shard int) bool { return shard%count == index }, nil
@@ -221,13 +221,19 @@ func TestInventoryEngineShardMutant(test *testing.T) {
 	caught := []string{}
 	for index, cases := range shards {
 		for _, name := range cases {
-			output, err := inventoryEngineRun(test, binary, cohere, name)
-			if err == nil {
+			output, inventoryEngineRunError := inventoryEngineRun(test, binary, cohere, name)
+			if inventoryEngineRunError == nil {
 				continue
 			}
 			if name != "TestUnknownFrequencyIsNotZero" ||
 				!strings.Contains(string(output), "unmeasured count printed as zero") {
-				test.Fatalf("unexpected mutant failure in shard-%03d (%s): %v\n%s", index, name, err, output)
+				test.Fatalf(
+					"unexpected mutant failure in shard-%03d (%s): %v\n%s",
+					index,
+					name,
+					inventoryEngineRunError,
+					output,
+				)
 			}
 			caught = append(caught, fmt.Sprintf("shard-%03d", index))
 		}
@@ -264,9 +270,9 @@ func inventoryEngineShared(test *testing.T) (string, string, [][]string) {
 // Assignment hashes the repository-relative case file plus the test name.
 func inventoryEngineTopLevelShard(test *testing.T, index int) {
 	test.Helper()
-	selector, err := inventoryEngineSelector(os.Getenv("ADAMIC_TEST_SHARD"))
-	if err != nil {
-		test.Fatal(err)
+	selector, inventoryEngineSelectorError := inventoryEngineSelector(os.Getenv("ADAMIC_TEST_SHARD"))
+	if inventoryEngineSelectorError != nil {
+		test.Fatal(inventoryEngineSelectorError)
 	}
 	if !selector(index) {
 		test.Skip("outside ADAMIC_TEST_SHARD selection")

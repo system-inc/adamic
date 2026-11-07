@@ -50,19 +50,19 @@ var productCommandCalls = map[string]int{
 func TestProductClangRunsThroughClangIn(test *testing.T) {
 	test.Parallel()
 	// Reads: *.go
-	root, err := filepath.Abs(filepath.Join("..", ".."))
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(filepath.Join("..", ".."))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	found := map[string][]string{}
 	for _, tree := range productClangRoots {
 		start := filepath.Join(root, tree)
-		err := filepath.WalkDir(start, func(path string, entry fs.DirEntry, err error) error {
-			if err != nil {
-				if path == start && errors.Is(err, fs.ErrNotExist) {
+		walkError := filepath.WalkDir(start, func(path string, entry fs.DirEntry, pathError error) error {
+			if pathError != nil {
+				if path == start && errors.Is(pathError, fs.ErrNotExist) {
 					return filepath.SkipDir
 				}
-				return err
+				return pathError
 			}
 			if entry.IsDir() {
 				if entry.Name() == "testdata" ||
@@ -78,9 +78,9 @@ func TestProductClangRunsThroughClangIn(test *testing.T) {
 			relative, _ := filepath.Rel(root, path)
 			relative = filepath.ToSlash(relative)
 			files := token.NewFileSet()
-			parsed, err := parser.ParseFile(files, path, nil, parser.SkipObjectResolution)
-			if err != nil {
-				return err
+			parsed, parseFileError := parser.ParseFile(files, path, nil, parser.SkipObjectResolution)
+			if parseFileError != nil {
+				return parseFileError
 			}
 			if !buildsProduct(parsed) {
 				return nil
@@ -103,8 +103,8 @@ func TestProductClangRunsThroughClangIn(test *testing.T) {
 			}
 			return nil
 		})
-		if err != nil {
-			test.Fatal(err)
+		if walkError != nil {
+			test.Fatal(walkError)
 		}
 	}
 	for site, positions := range found {
@@ -160,8 +160,8 @@ func bareClang(call *ast.CallExpr) bool {
 	if !ok || literal.Kind != token.STRING {
 		return false
 	}
-	value, err := strconv.Unquote(literal.Value)
-	return err == nil && (value == "clang" || value == "clang++")
+	value, unquoteError := strconv.Unquote(literal.Value)
+	return unquoteError == nil && (value == "clang" || value == "clang++")
 }
 
 // selectorName is package.Name for a selector on a package's name, or "".

@@ -63,7 +63,11 @@ func (l *lowering) constraintRelation(binding typeArgumentBinding) error {
 		return nil
 	}
 	if binding.argument == nil {
-		return l.notYet(binding.site, "a generic instantiation whose type argument for "+l.checker.TypeToString(binding.parameter)+", constrained to "+l.checker.TypeToString(binding.constraint)+", can't be read")
+		return l.notYet(binding.site, "a generic instantiation whose type argument for "+
+			l.checker.TypeToString(binding.parameter)+
+			", constrained to "+
+			l.checker.TypeToString(binding.constraint)+
+			", can't be read")
 	}
 	if binding.argument == binding.constraint {
 		return nil
@@ -71,9 +75,9 @@ func (l *lowering) constraintRelation(binding typeArgumentBinding) error {
 	if binding.written != nil {
 		return l.judgeBinding(binding.written, nil, binding.argument, binding.constraint)
 	}
-	judged, err := l.boundArgumentsRefusal(binding)
-	if err != nil || judged {
-		return err
+	judged, boundArgumentsRefusalError := l.boundArgumentsRefusal(binding)
+	if boundArgumentsRefusalError != nil || judged {
+		return boundArgumentsRefusalError
 	}
 	return l.judgeBinding(binding.site, nil, binding.argument, binding.constraint)
 }
@@ -81,8 +85,9 @@ func (l *lowering) constraintRelation(binding typeArgumentBinding) error {
 // boundArgumentsRefusal judges each argument a call's or a new's binding can be inferred from: one
 // whose parameter's type, with the binding's type parameter as its constraint, is another slot than
 // the one the call gives it. judged is whether there was one.
-func (l *lowering) boundArgumentsRefusal(binding typeArgumentBinding) (judged bool, err error) {
-	if binding.generic == nil || binding.site.Kind != ast.KindCallExpression && binding.site.Kind != ast.KindNewExpression {
+func (l *lowering) boundArgumentsRefusal(binding typeArgumentBinding) (judged bool, boundArgumentsRefusalError error) {
+	if binding.generic == nil ||
+		binding.site.Kind != ast.KindCallExpression && binding.site.Kind != ast.KindNewExpression {
 		return false, nil
 	}
 	typeParameters := binding.generic.TypeParameters()
@@ -105,16 +110,26 @@ func (l *lowering) boundArgumentsRefusal(binding typeArgumentBinding) (judged bo
 			continue
 		}
 		declared := l.checker.GetTypeOfSymbol(parameters[at])
-		given, slot := instantiateType(l.checker, declared, binding.mapper), instantiateType(l.checker, declared, asConstraint)
+		given, slot := instantiateType(
+			l.checker,
+			declared,
+			binding.mapper,
+		), instantiateType(l.checker, declared, asConstraint)
 		if given == slot {
 			continue
 		}
 		if argument.Kind == ast.KindSpreadElement {
-			return true, l.notYet(argument, "a spread argument "+l.checker.TypeToString(binding.parameter)+"'s type argument can be inferred from, judged against its constraint "+l.checker.TypeToString(binding.constraint))
+			return true, l.notYet(argument, "a spread argument "+
+				l.checker.TypeToString(binding.parameter)+
+				"'s type argument can be inferred from, judged against its constraint "+
+				l.checker.TypeToString(binding.constraint))
 		}
 		if rest {
 			if !l.isArrayType(slot) {
-				return true, l.notYet(argument, "an argument to a rest parameter that isn't an array, which "+l.checker.TypeToString(binding.parameter)+"'s type argument can be inferred from, judged against its constraint "+l.checker.TypeToString(binding.constraint))
+				return true, l.notYet(argument, "an argument to a rest parameter that isn't an array, which "+
+					l.checker.TypeToString(binding.parameter)+
+					"'s type argument can be inferred from, judged against its constraint "+
+					l.checker.TypeToString(binding.constraint))
 			}
 			slot = l.elementTypeOfArray(slot)
 		}
@@ -122,12 +137,20 @@ func (l *lowering) boundArgumentsRefusal(binding typeArgumentBinding) (judged bo
 		// as they judge only what tsc accepted. One it doesn't is a place the type parameter is taken in,
 		// not given out, a parameter of a callback (value: TIn) => value is TOut, and the binding is judged
 		// by its other arguments, or as its type argument when it has none.
-		if !l.checker.IsTypeAssignableTo(regularTypeOfObjectLiteral(l.checker, l.checker.GetTypeAtLocation(argument)), slot) {
+		if !l.checker.IsTypeAssignableTo(
+			regularTypeOfObjectLiteral(l.checker, l.checker.GetTypeAtLocation(argument)),
+			slot,
+		) {
 			continue
 		}
 		judged = true
-		if err := l.judgeBinding(argument, argument, l.checker.GetTypeAtLocation(argument), slot); err != nil {
-			return true, err
+		if judgeBindingError := l.judgeBinding(
+			argument,
+			argument,
+			l.checker.GetTypeAtLocation(argument),
+			slot,
+		); judgeBindingError != nil {
+			return true, judgeBindingError
 		}
 	}
 	return judged, nil
@@ -157,8 +180,13 @@ func (l *lowering) judgeBinding(where, value *ast.Node, source, target *checker.
 		case ast.KindConditionalExpression:
 			conditional := value.AsConditionalExpression()
 			for _, branch := range []*ast.Node{conditional.WhenTrue, conditional.WhenFalse} {
-				if err := l.judgeBinding(branch, branch, l.checker.GetTypeAtLocation(branch), target); err != nil {
-					return err
+				if judgeBindingError := l.judgeBinding(
+					branch,
+					branch,
+					l.checker.GetTypeAtLocation(branch),
+					target,
+				); judgeBindingError != nil {
+					return judgeBindingError
 				}
 			}
 			return nil
@@ -206,8 +234,13 @@ func (l *lowering) judgeBoundObject(literal *ast.Node, target *checker.Type) err
 			if property.Kind == ast.KindSpreadAssignment {
 				spread := property.AsSpreadAssignment().Expression
 				if ast.SkipParentheses(spread).Kind == ast.KindObjectLiteralExpression {
-					if err := l.judgeBinding(spread, spread, l.checker.GetTypeAtLocation(spread), member); err != nil {
-						return err
+					if judgeBindingError := l.judgeBinding(
+						spread,
+						spread,
+						l.checker.GetTypeAtLocation(spread),
+						member,
+					); judgeBindingError != nil {
+						return judgeBindingError
 					}
 					continue
 				}
@@ -228,25 +261,39 @@ func (l *lowering) judgeBoundObject(literal *ast.Node, target *checker.Type) err
 			}
 			name := property.Name()
 			if name == nil || name.Kind == ast.KindComputedPropertyName {
-				return l.notYet(property, "a computed name in an object literal a type argument is inferred from, judged against its constraint "+l.checker.TypeToString(target))
+				return l.notYet(
+					property,
+					"a computed name in an object literal a type argument is inferred from, judged against its constraint "+
+						l.checker.TypeToString(target),
+				)
 			}
 			slot, declared := l.carriedProperty(member, name)
 			if !declared || slot == nil {
 				continue
 			}
-			var err error
+			var judgeBindingError error
 			switch property.Kind {
 			case ast.KindPropertyAssignment:
 				initializer := property.AsPropertyAssignment().Initializer
-				err = l.judgeBinding(initializer, initializer, l.checker.GetTypeAtLocation(initializer), slot)
+				judgeBindingError = l.judgeBinding(
+					initializer,
+					initializer,
+					l.checker.GetTypeAtLocation(initializer),
+					slot,
+				)
 			case ast.KindShorthandPropertyAssignment:
-				err = l.judgeBinding(name, name, l.checker.GetTypeAtLocation(name), slot)
+				judgeBindingError = l.judgeBinding(name, name, l.checker.GetTypeAtLocation(name), slot)
 			default:
 				// A method or an accessor: its own type, declared where it's written, seen as the slot's.
-				err = l.judgeBinding(property, nil, l.checker.GetTypeOfSymbol(l.checker.GetSymbolOfDeclaration(property)), slot)
+				judgeBindingError = l.judgeBinding(
+					property,
+					nil,
+					l.checker.GetTypeOfSymbol(l.checker.GetSymbolOfDeclaration(property)),
+					slot,
+				)
 			}
-			if err != nil {
-				return err
+			if judgeBindingError != nil {
+				return judgeBindingError
 			}
 		}
 	}
@@ -270,23 +317,41 @@ func (l *lowering) judgeBoundArray(literal *ast.Node, target *checker.Type) erro
 		switch {
 		case element.Kind == ast.KindSpreadElement:
 			spread := element.AsSpreadElement().Expression
-			if err := l.judgeBinding(element, nil, l.checker.GetTypeAtLocation(spread), array); err != nil {
-				return err
+			if judgeBindingError := l.judgeBinding(
+				element,
+				nil,
+				l.checker.GetTypeAtLocation(spread),
+				array,
+			); judgeBindingError != nil {
+				return judgeBindingError
 			}
 			continue
 		case checker.IsTupleType(array):
 			arguments := l.checker.GetTypeArguments(array)
-			if index < len(arguments) && !slices.ContainsFunc(elements[:index], func(before *ast.Node) bool { return before.Kind == ast.KindSpreadElement }) {
+			if index < len(arguments) && !slices.ContainsFunc(
+				elements[:index],
+				func(before *ast.Node) bool { return before.Kind == ast.KindSpreadElement },
+			) {
 				slot = arguments[index]
 			}
 		case l.isArrayType(array):
 			slot = l.elementTypeOfArray(array)
 		}
 		if slot == nil {
-			return l.notYet(element, "an element of an array literal a type argument is inferred from, whose type in its constraint "+l.checker.TypeToString(target)+" can't be read")
+			return l.notYet(
+				element,
+				"an element of an array literal a type argument is inferred from, whose type in its constraint "+
+					l.checker.TypeToString(target)+
+					" can't be read",
+			)
 		}
-		if err := l.judgeBinding(element, element, l.checker.GetTypeAtLocation(element), slot); err != nil {
-			return err
+		if judgeBindingError := l.judgeBinding(
+			element,
+			element,
+			l.checker.GetTypeAtLocation(element),
+			slot,
+		); judgeBindingError != nil {
+			return judgeBindingError
 		}
 	}
 	return nil

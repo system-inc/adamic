@@ -109,16 +109,16 @@ func completeSuggestionPrepare(test *testing.T) {
 	directory := completeSuggestionFixture(test, false)
 	p.directory = directory
 	source := filepath.Join(directory, "suggestions.ts")
-	text, err := os.ReadFile("testdata/serialization/audit-columns.ts.txt")
-	if err != nil {
-		test.Fatal(err)
+	text, readError := os.ReadFile("testdata/serialization/audit-columns.ts.txt")
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	if err := os.WriteFile(source, text, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(source, text, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	p.path = filepath.Join(directory, "manifest.txt")
-	if err := os.WriteFile(p.path, []byte(source+"\tno-debugger\n"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(p.path, []byte(source+"\tno-debugger\n"), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	p.oracle = filepath.Join(completeSuggestionOracleProduct(ctx, test, directory), "oracle")
 	p.want = completeSuggestionExecute(ctx, test, "", p.oracle, "--manifest", p.path).output
@@ -133,15 +133,15 @@ func completeSuggestionPrepare(test *testing.T) {
 // Fixtures live until TestMain exits, independent of the calling test's lifetime.
 func completeSuggestionFixture(test *testing.T, mutant bool) string {
 	test.Helper()
-	directory, err := os.MkdirTemp(sharedDirectory, "complete-suggestion-")
-	if err != nil {
-		test.Fatal(err)
+	directory, temporaryDirectoryError := os.MkdirTemp(sharedDirectory, "complete-suggestion-")
+	if temporaryDirectoryError != nil {
+		test.Fatal(temporaryDirectoryError)
 	}
 	copyPort(test, directory, "", "")
 	for _, name := range []string{"rule.a", "oracle.go"} {
-		data, err := os.ReadFile(filepath.Join("testdata/serialization", name))
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(filepath.Join("testdata/serialization", name))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		if mutant && name == "rule.a" {
 			from := []byte("start + 1, start + 2, ''")
@@ -150,12 +150,16 @@ func completeSuggestionFixture(test *testing.T, mutant bool) string {
 			}
 			data = bytes.Replace(data, from, []byte("start + 1, start + 3, ''"), 1)
 		}
-		if err = os.WriteFile(filepath.Join(directory, "rules/no-debugger", name), data, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(
+			filepath.Join(directory, "rules/no-debugger", name),
+			data,
+			0644,
+		); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
-	if err = os.Remove(filepath.Join(directory, "rules/no-debugger/rule.ts")); err != nil {
-		test.Fatal(err)
+	if removeError := os.Remove(filepath.Join(directory, "rules/no-debugger/rule.ts")); removeError != nil {
+		test.Fatal(removeError)
 	}
 	completeSuggestionOnlyRule(test, directory)
 	return directory
@@ -189,20 +193,20 @@ func completeSuggestionLoweredProduct(ctx context.Context, test *testing.T, dire
 		Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")},
 	}, func(out string) error {
 		prepareRegistry(test, directory)
-		program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-		if err != nil {
-			return err
+		program, loadError := load.Load([]string{filepath.Join(directory, "main.ts")})
+		if loadError != nil {
+			return loadError
 		}
-		lowered, err := lower.Lower(ctx, program)
-		if err != nil {
-			return err
+		lowered, lowerError := lower.Lower(ctx, program)
+		if lowerError != nil {
+			return lowerError
 		}
-		if err = os.WriteFile(
+		if writeError := os.WriteFile(
 			filepath.Join(out, "lint.mjs"),
 			[]byte(javascript.JavaScript(lowered)),
 			0644,
-		); err != nil {
-			return err
+		); writeError != nil {
+			return writeError
 		}
 		return os.WriteFile(filepath.Join(out, "lint.c"), []byte(native.C(lowered)), 0644)
 	})
@@ -221,9 +225,9 @@ func completeSuggestionNativeProduct(ctx context.Context, test *testing.T, direc
 		Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")},
 	}, func(out string) error {
 		product := completeSuggestionLoweredProduct(ctx, test, directory, false)
-		data, err := os.ReadFile(filepath.Join(product, "lint.c"))
-		if err != nil {
-			return err
+		data, readError := os.ReadFile(filepath.Join(product, "lint.c"))
+		if readError != nil {
+			return readError
 		}
 		return native.Build(string(data), filepath.Join(out, "scanner"), native.Options{Sanitize: true})
 	})
@@ -322,14 +326,14 @@ func TestCompleteSuggestionSerialization_005(test *testing.T) {
 // Go oracle used by the original comparison.
 func completeSuggestionOnlyRule(test *testing.T, directory string) {
 	test.Helper()
-	entries, err := os.ReadDir(filepath.Join(directory, "rules"))
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(filepath.Join(directory, "rules"))
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	for _, entry := range entries {
 		if entry.IsDir() && entry.Name() != "no-debugger" {
-			if err := os.RemoveAll(filepath.Join(directory, "rules", entry.Name())); err != nil {
-				test.Fatal(err)
+			if removeError := os.RemoveAll(filepath.Join(directory, "rules", entry.Name())); removeError != nil {
+				test.Fatal(removeError)
 			}
 		}
 	}
@@ -350,33 +354,33 @@ func completeSuggestionReady(test *testing.T) *completeSuggestionProducts {
 func completeSuggestionExecute(ctx context.Context, test *testing.T, directory, name string, args ...string) execution {
 	test.Helper()
 	command := lintCommand(ctx, directory, name, args...)
-	output, err := os.CreateTemp(test.TempDir(), "complete-stdout-")
-	if err != nil {
-		test.Fatal(err)
+	output, temporaryFileError := os.CreateTemp(test.TempDir(), "complete-stdout-")
+	if temporaryFileError != nil {
+		test.Fatal(temporaryFileError)
 	}
 	defer output.Close()
 	command.Stdout = output
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
 	started := time.Now()
-	err = command.Run()
+	runError := command.Run()
 	if command.Process != nil {
 		_ = syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
 	}
-	if err != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
-		test.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
+	if runError != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
+		test.Fatalf("%s %v: %v\n%s", name, args, runError, &stderr)
 	}
-	data, err := os.ReadFile(output.Name())
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(output.Name())
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return execution{data, time.Since(started)}
 }
 func completeSuggestionNode(ctx context.Context, test *testing.T, module, path string) execution {
 	test.Helper()
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return completeSuggestionExecute(
 		ctx,

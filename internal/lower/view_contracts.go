@@ -28,13 +28,19 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 	}
 	if target.Flags()&checker.TypeFlagsUndefined != 0 || l.phantomUndefined(target) {
 		id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
-		l.result.ViewContracts = append(l.result.ViewContracts, ir.ViewContract{Kind: ir.ViewUndefined, Name: "undefined", Undefined: true, Of: ir.Object})
+		l.result.ViewContracts = append(
+			l.result.ViewContracts,
+			ir.ViewContract{Kind: ir.ViewUndefined, Name: "undefined", Undefined: true, Of: ir.Object},
+		)
 		l.result.ViewContractTypes[int(target.Id())] = id
 		return id, nil
 	}
 	if target.Flags()&checker.TypeFlagsNull != 0 {
 		id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
-		l.result.ViewContracts = append(l.result.ViewContracts, ir.ViewContract{Kind: ir.ViewNull, Name: "null", Null: true, Of: ir.Object})
+		l.result.ViewContracts = append(
+			l.result.ViewContracts,
+			ir.ViewContract{Kind: ir.ViewNull, Name: "null", Null: true, Of: ir.Object},
+		)
 		l.result.ViewContractTypes[int(target.Id())] = id
 		return id, nil
 	}
@@ -48,7 +54,11 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 	}
 	if l.callableViewContract(target) {
 		if viewCallableContractHook == nil {
-			return 0, &Refused{Where: l.program.Where(node), What: "a checked view with a callable contract", Fix: "prove the callable body rather than asserting its signature"}
+			return 0, &Refused{
+				Where: l.program.Where(node),
+				What:  "a checked view with a callable contract",
+				Fix:   "prove the callable body rather than asserting its signature",
+			}
 		}
 		return viewCallableContractHook(l, node, target, build)
 	}
@@ -94,12 +104,17 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 
 	if contract.Kind == ir.ViewObject || (contract.Kind == ir.ViewUnion && of == ir.Object) {
 		for _, property := range l.checker.GetPropertiesOfType(target) {
-			child, err := build(l.checker.GetTypeOfSymbol(property))
-			if err != nil {
-				return 0, err
+			child, buildError := build(l.checker.GetTypeOfSymbol(property))
+			if buildError != nil {
+				return 0, buildError
 			}
 
-			contract.Fields = append(contract.Fields, ir.ViewFieldContract{Name: property.Name, Contract: child, Optional: property.Flags&ast.SymbolFlagsOptional != 0, Readonly: l.checker.IsReadonlySymbol(property)})
+			contract.Fields = append(contract.Fields, ir.ViewFieldContract{
+				Name:     property.Name,
+				Contract: child,
+				Optional: property.Flags&ast.SymbolFlagsOptional != 0,
+				Readonly: l.checker.IsReadonlySymbol(property),
+			})
 		}
 	}
 

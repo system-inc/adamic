@@ -388,9 +388,9 @@ func TestFreshWrites____oracle_testdata_environment_virtual_call_a_4ee3b36e7269(
 func TestEnvironmentFreshUnitsCoverFixtures(test *testing.T) {
 	test.Parallel()
 	// Reads: internal/oracle/testdata/*.a
-	paths, err := filepath.Glob("../oracle/testdata/environment_*.a")
-	if err != nil {
-		test.Fatal(err)
+	paths, globError := filepath.Glob("../oracle/testdata/environment_*.a")
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	if len(paths) == 0 {
 		test.Fatal("environment fixture inventory is empty")

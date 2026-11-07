@@ -29,10 +29,10 @@ func TestObjectRefusalsExplainSoundness(test *testing.T) {
 	} {
 		test.Run(probe.reason+probe.source, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var refusal *Refused
-			if !errors.As(err, &refusal) || !strings.Contains(err.Error(), probe.reason) {
-				test.Fatalf("got %v, want refusal with %q", err, probe.reason)
+			if !errors.As(lowerSourceError, &refusal) || !strings.Contains(lowerSourceError.Error(), probe.reason) {
+				test.Fatalf("got %v, want refusal with %q", lowerSourceError, probe.reason)
 			}
 		})
 	}
@@ -48,10 +48,10 @@ func TestObjectUnprovenShapesStayNotYet(test *testing.T) {
 	} {
 		test.Run(source, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, source)
+			_, lowerSourceError := lowerSource(test, source)
 			var notYet *NotYet
-			if !errors.As(err, &notYet) {
-				test.Fatalf("got %v, want NotYet", err)
+			if !errors.As(lowerSourceError, &notYet) {
+				test.Fatalf("got %v, want NotYet", lowerSourceError)
 			}
 		})
 	}

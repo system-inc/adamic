@@ -18,37 +18,37 @@ func main() {
 	if len(args) != 7 {
 		panic("usage: cost config file start end kind question count")
 	}
-	first, err := strconv.ParseUint(args[2], 10, 64)
-	if err != nil {
-		panic(err)
+	first, parseError := strconv.ParseUint(args[2], 10, 64)
+	if parseError != nil {
+		panic(parseError)
 	}
-	last, err := strconv.ParseUint(args[3], 10, 64)
-	if err != nil {
-		panic(err)
+	last, parseError := strconv.ParseUint(args[3], 10, 64)
+	if parseError != nil {
+		panic(parseError)
 	}
-	count, err := strconv.Atoi(args[6])
-	if err != nil || count < 2 {
+	count, parseError := strconv.Atoi(args[6])
+	if parseError != nil || count < 2 {
 		panic("invalid count")
 	}
 	started := time.Now()
-	program, err := bridge.Open(args[0], []string{args[1]})
-	if err != nil {
-		panic(err)
+	program, openError := bridge.Open(args[0], []string{args[1]})
+	if openError != nil {
+		panic(openError)
 	}
 	load := time.Since(started)
 	question := args[5]
 	if strings.HasPrefix(question, "property-info:") {
-		answer, err := program.Inspect(args[1], first, last, args[4], "raw-shape")
-		if err != nil {
-			panic(err)
+		answer, inspectError := program.Inspect(args[1], first, last, args[4], "raw-shape")
+		if inspectError != nil {
+			panic(inspectError)
 		}
 		// The first six fields (header, flags, count, first root) are ASCII.
 		var root string
 		for field := 0; field < 6; field++ {
 			newline := strings.IndexByte(answer, '\n')
-			length, err := strconv.Atoi(answer[:newline])
-			if err != nil {
-				panic(err)
+			length, parseError := strconv.Atoi(answer[:newline])
+			if parseError != nil {
+				panic(parseError)
 			}
 			root = answer[newline+1 : newline+1+length]
 			answer = answer[newline+1+length:]
@@ -59,9 +59,9 @@ func main() {
 	units := 0
 	for index := 0; index < count; index++ {
 		before := time.Now()
-		answer, err := program.Inspect(args[1], first, last, args[4], question)
-		if err != nil {
-			panic(err)
+		answer, inspectError := program.Inspect(args[1], first, last, args[4], question)
+		if inspectError != nil {
+			panic(inspectError)
 		}
 		units += len(utf16.Encode([]rune(answer)))
 		elapsed := time.Since(before)
@@ -71,5 +71,12 @@ func main() {
 		}
 	}
 	fmt.Println(units)
-	fmt.Fprintf(os.Stderr, "factcost: load_ns=%d query_ns=%d queries=%d first_query_ns=%d\n", load.Nanoseconds(), total.Nanoseconds(), count, initial.Nanoseconds())
+	fmt.Fprintf(
+		os.Stderr,
+		"factcost: load_ns=%d query_ns=%d queries=%d first_query_ns=%d\n",
+		load.Nanoseconds(),
+		total.Nanoseconds(),
+		count,
+		initial.Nanoseconds(),
+	)
 }

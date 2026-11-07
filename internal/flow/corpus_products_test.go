@@ -24,39 +24,39 @@ func flowCorpusRemainderProduct(test *testing.T, path string, build bool) string
 		Toolchain: []string{runtime.Version()},
 	}
 	if !build {
-		directory, err := buildcache.BuiltAhead(
+		directory, builtAheadError := buildcache.BuiltAhead(
 			inputs,
 			fmt.Errorf("flow corpus lowering not built ahead; run TestProduct_FlowCorpusRemainder tests first"),
 		)
-		if err != nil {
-			test.Fatal(err)
+		if builtAheadError != nil {
+			test.Fatal(builtAheadError)
 		}
 		return directory
 	}
 	return buildcache.Product(test, inputs, func(directory string) error {
-		absolute, err := filepath.Abs(path)
-		if err != nil {
-			return err
+		absolute, absolutePathError := filepath.Abs(path)
+		if absolutePathError != nil {
+			return absolutePathError
 		}
-		source, err := load.LoadDisplayed([]string{absolute}, buildcache.Relative)
-		if err != nil {
-			return err
+		source, loadDisplayedError := load.LoadDisplayed([]string{absolute}, buildcache.Relative)
+		if loadDisplayedError != nil {
+			return loadDisplayedError
 		}
-		program, err := Lower(context.Background(), source)
-		if err != nil {
-			return err
+		program, lowerError := Lower(context.Background(), source)
+		if lowerError != nil {
+			return lowerError
 		}
 		ir.RegisterGob()
-		file, err := os.Create(filepath.Join(directory, "program.gob"))
-		if err != nil {
-			return err
+		file, createError := os.Create(filepath.Join(directory, "program.gob"))
+		if createError != nil {
+			return createError
 		}
-		err = gob.NewEncoder(file).Encode(program)
-		closeErr := file.Close()
-		if err != nil {
-			return err
+		encodeError := gob.NewEncoder(file).Encode(program)
+		closeError := file.Close()
+		if encodeError != nil {
+			return encodeError
 		}
-		return closeErr
+		return closeError
 	})
 }
 
@@ -71,23 +71,23 @@ func installFlowCorpusRemainderProduct(test *testing.T, path string) {
 	test.Helper()
 	directory := flowCorpusRemainderProduct(test, path, false)
 	ir.RegisterGob()
-	file, err := os.Open(filepath.Join(directory, "program.gob"))
-	if err != nil {
-		test.Fatal(err)
+	file, openError := os.Open(filepath.Join(directory, "program.gob"))
+	if openError != nil {
+		test.Fatal(openError)
 	}
 	defer file.Close()
 	var program ir.Program
-	if err := gob.NewDecoder(file).Decode(&program); err != nil {
-		test.Fatal(err)
+	if decodeError := gob.NewDecoder(file).Decode(&program); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	// Declaration positions are metadata; restore their checkout spelling.
 	for index := range program.Functions {
 		position := &program.Functions[index].Position
 		position.File = buildcache.Absolute(position.File)
 	}
-	absolute, err := filepath.Abs(path)
-	if err != nil {
-		test.Fatal(err)
+	absolute, absolutePathError := filepath.Abs(path)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	value, _ := loweredPrograms.LoadOrStore(absolute, &loweredProgram{})
 	entry := value.(*loweredProgram)

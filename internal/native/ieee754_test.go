@@ -104,14 +104,14 @@ var ieee754Unary = []string{"sin", "cos", "tan", "asin", "acos", "atan", "sinh",
 // and just over it are tried, with both signs. Decimal thresholds (exp's overflow at
 // 709.78...) are found the same way, with their neighbors a few ulps out.
 func ieee754BranchPoints(test *testing.T, random *rand.Rand) []float64 {
-	source, err := runtime.ReadFile("runtime/ieee754.c")
-	if err != nil {
-		test.Fatal(err)
+	source, readFileError := runtime.ReadFile("runtime/ieee754.c")
+	if readFileError != nil {
+		test.Fatal(readFileError)
 	}
 	words := map[uint32]bool{}
 	for _, match := range regexp.MustCompile(`\b(0x[0-9A-Fa-f]{7,8})\b`).FindAllSubmatch(source, -1) {
-		word, err := strconv.ParseUint(string(match[1]), 0, 64)
-		if err == nil && word <= math.MaxUint32 {
+		word, parseError := strconv.ParseUint(string(match[1]), 0, 64)
+		if parseError == nil && word <= math.MaxUint32 {
 			words[uint32(word)] = true
 		}
 	}
@@ -136,8 +136,8 @@ func ieee754BranchPoints(test *testing.T, random *rand.Rand) []float64 {
 	}
 	decimals := regexp.MustCompile(`[<>]=?\s*-?([0-9]+\.[0-9]+(?:[eE][-+]?[0-9]+)?)`)
 	for _, match := range decimals.FindAllSubmatch(source, -1) {
-		value, err := strconv.ParseFloat(string(match[1]), 64)
-		if err != nil {
+		value, parseError := strconv.ParseFloat(string(match[1]), 64)
+		if parseError != nil {
 			continue
 		}
 		for _, step := range []float64{-3, -2, -1, 0, 1, 2, 3} {
@@ -299,8 +299,8 @@ func TestIeee754MatchesNodeBitForBit(test *testing.T) {
 	}
 
 	binary := filepath.Join(test.TempDir(), "harness")
-	if err := Build(ieee754Harness, binary, Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(ieee754Harness, binary, Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	native := strings.Split(strings.TrimSuffix(runWithInput(test, input.String(), binary), "\n"), "\n")
 	oracle := strings.Split(

@@ -61,9 +61,9 @@ var volumeAgreementCheckerParts = [][]string{
 // @typescript-eslint/no-shadow.
 func volumeAgreementOracleSubjects(test *testing.T) []string {
 	test.Helper()
-	data, err := os.ReadFile("testdata/oracle_volume.go")
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile("testdata/oracle_volume.go")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	_, list, ok := strings.Cut(string(data), "subjects := []rule.Rule{")
 	list, _, closed := strings.Cut(list, "}")
@@ -120,10 +120,10 @@ func volumeAgreementCorpusFiles(test *testing.T, kind string) (string, []volumeA
 		if root == "" {
 			test.Skip("ADAMIC_TYPESCRIPT_SOURCE is not configured")
 		}
-		var err error
-		root, err = filepath.Abs(root)
-		if err != nil {
-			test.Fatal(err)
+		var absolutePathError error
+		root, absolutePathError = filepath.Abs(root)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		paths = pinnedCompilerFiles(test, root)
 		config = filepath.Join(root, "src/compiler/tsconfig.json")
@@ -133,9 +133,9 @@ func volumeAgreementCorpusFiles(test *testing.T, kind string) (string, []volumeA
 	seen := map[string]bool{}
 	var files []volumeAgreementCorpusFile
 	for _, path := range paths {
-		key, err := filepath.Rel(root, path)
-		if err != nil {
-			test.Fatal(err)
+		key, relativePathError := filepath.Rel(root, path)
+		if relativePathError != nil {
+			test.Fatal(relativePathError)
 		}
 		key = filepath.ToSlash(key)
 		if seen[key] {

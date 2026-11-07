@@ -38,9 +38,15 @@ func TestParse(test *testing.T) {
 		{"[z-a]", "", false},
 	}
 	for _, testCase := range tests {
-		_, err := Parse(testCase.pattern, testCase.flags)
-		if (err == nil) != testCase.valid {
-			test.Errorf("Parse(%q,%q) error=%v, want valid=%v", testCase.pattern, testCase.flags, err, testCase.valid)
+		_, parseError := Parse(testCase.pattern, testCase.flags)
+		if (parseError == nil) != testCase.valid {
+			test.Errorf(
+				"Parse(%q,%q) error=%v, want valid=%v",
+				testCase.pattern,
+				testCase.flags,
+				parseError,
+				testCase.valid,
+			)
 		}
 	}
 }

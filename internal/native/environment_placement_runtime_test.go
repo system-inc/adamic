@@ -46,12 +46,12 @@ int main(void) {
 }
 `
 	binary := filepath.Join(test.TempDir(), "mixed-region")
-	if err := native.Build(code, binary, native.Options{Sanitize: true, Count: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(code, binary, native.Options{Sanitize: true, Count: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
-	output, err := exec.Command(binary).CombinedOutput()
-	if err != nil {
-		test.Fatalf("mixed-region lifetime: %v %s", err, output)
+	output, combinedOutputError := exec.Command(binary).CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("mixed-region lifetime: %v %s", combinedOutputError, output)
 	}
 	if !strings.Contains(string(output), "mixed region released") {
 		test.Fatal(string(output))

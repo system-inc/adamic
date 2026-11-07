@@ -60,9 +60,9 @@ func TestAcceptanceDiagnostics(test *testing.T) {
 	}
 	main, _ := filepath.Abs("main.ts")
 	binary, script := build(test, main, true)
-	paths, err := os.ReadFile(list)
-	if err != nil {
-		test.Fatal(err)
+	paths, readError := os.ReadFile(list)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	for _, path := range strings.Fields(string(paths)) {
 		for _, argv := range [][]string{

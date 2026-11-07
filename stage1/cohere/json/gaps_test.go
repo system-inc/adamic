@@ -21,23 +21,23 @@ func TestDocumentedStageZeroGaps(test *testing.T) {
 	} {
 		test.Run(gap.file, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join("gaps", gap.file))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(filepath.Join("gaps", gap.file))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			loaded, err := load.Load([]string{path})
-			if err != nil {
-				test.Fatal(err)
+			loaded, loadError := load.Load([]string{path})
+			if loadError != nil {
+				test.Fatal(loadError)
 			}
-			_, err = lower.Lower(context.Background(), loaded)
-			if err == nil || !strings.Contains(err.Error(), gap.message) {
-				test.Fatalf("gap changed: %v; update GAPS.md", err)
+			_, lowerError := lower.Lower(context.Background(), loaded)
+			if lowerError == nil || !strings.Contains(lowerError.Error(), gap.message) {
+				test.Fatalf("gap changed: %v; update GAPS.md", lowerError)
 			}
 			result := onNode(test, path, gap.args...)
 			if result.exitCode != 0 || len(result.stderr) != 0 || string(result.stdout) != gap.output {
 				test.Fatalf("Node: %+v", result)
 			}
-			test.Logf("%s; Node %q", err, gap.output)
+			test.Logf("%s; Node %q", lowerError, gap.output)
 		})
 	}
 }
@@ -47,9 +47,9 @@ func TestDocumentedStageZeroGaps(test *testing.T) {
 // the leak check. The port's checked panic fallback still stands; retiring it is cohere's change.
 func TestClosedEmptyFallbackGap(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join("gaps", "emptyFallback.ts"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join("gaps", "emptyFallback.ts"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	program := lowered(test, path)
 	binary := filepath.Join(gapPortProduct(test, "emptyFallback.ts", native.Options{Sanitize: true}), "port")
@@ -71,9 +71,9 @@ func TestClosedEmptyFallbackGap(test *testing.T) {
 
 func TestClosedMultiplePushGap(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join("gaps", "multiplePush.ts"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join("gaps", "multiplePush.ts"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	program := lowered(test, path)
 	binary := filepath.Join(gapPortProduct(test, "multiplePush.ts", native.Options{Sanitize: true}), "port")

@@ -30,11 +30,11 @@ int main(void) {
 }
 `
 	binary := filepath.Join(test.TempDir(), "metadata-sharing")
-	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(source, binary, Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
-	output, err := exec.Command(binary).CombinedOutput()
-	if err != nil || string(output) != "metadata graph shared\n" {
-		test.Fatalf("metadata graph: %v\n%s", err, output)
+	output, combinedOutputError := exec.Command(binary).CombinedOutput()
+	if combinedOutputError != nil || string(output) != "metadata graph shared\n" {
+		test.Fatalf("metadata graph: %v\n%s", combinedOutputError, output)
 	}
 }

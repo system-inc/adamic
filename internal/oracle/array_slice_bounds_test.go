@@ -11,13 +11,13 @@ import (
 
 func TestArraySliceBounds(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/array_slice_bounds.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/array_slice_bounds.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatalf("Lower: %v", err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatalf("Lower: %v", loweredError)
 	}
 	want := []string{
 		"absent-start:1,2,3", "absent-end:2,3", "both-absent:1,2,3",
@@ -65,9 +65,11 @@ func TestArraySliceBounds(test *testing.T) {
 
 func TestArraySliceBoundsNullRefused(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/array_slice_refused/null_end.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/array_slice_refused/null_end.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := execute(
 		test,
@@ -79,11 +81,11 @@ func TestArraySliceBoundsNullRefused(test *testing.T) {
 	if truth.exitCode != 0 || string(truth.stdout) != "\n" || len(truth.stderr) != 0 {
 		test.Fatalf("Node null end: %+v", truth)
 	}
-	_, err = load.Load([]string{path})
+	_, loadError := load.Load([]string{path})
 	var refused *load.CheckError
 	const diagnostic = ":1:77: error TS2345: Argument of type 'number | null' is not assignable to parameter of type 'number | undefined'.\n  Type 'null' is not assignable to type 'number | undefined'."
-	if !errors.As(err, &refused) || err.Error() != path+diagnostic {
-		test.Fatalf("want null bound refused with %q, got %v", diagnostic, err)
+	if !errors.As(loadError, &refused) || loadError.Error() != path+diagnostic {
+		test.Fatalf("want null bound refused with %q, got %v", diagnostic, loadError)
 	}
-	test.Log(err)
+	test.Log(loadError)
 }

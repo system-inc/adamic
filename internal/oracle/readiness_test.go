@@ -126,9 +126,11 @@ func TestReadinessMutantWeakGenericMessage(test *testing.T) {
 
 func assertReadinessMutant(test *testing.T, probe readinessProbe) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_"+probe.fixture+".ts"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/non_null_"+probe.fixture+".ts"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	if probe.fixture == "lazy_read" || probe.fixture == "weak" {
 		expression := "textInitial!"
@@ -138,9 +140,9 @@ func assertReadinessMutant(test *testing.T, probe readinessProbe) {
 		assertMigratedNonNullCheck(test, path, expression, probe.stdout, true)
 		return
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	want := run{stdout: []byte(probe.stdout), stderr: []byte("adamic: panic: " + probe.stderr + "\n"), exitCode: 70}
 	baseline, _ := nativelyUncached(test, program)
@@ -266,13 +268,15 @@ func assertReadinessMutant(test *testing.T, probe readinessProbe) {
 
 func TestUninitializedIsNotNullishMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_initialized.ts"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/non_null_initialized.ts"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	want := onSliceNode(test, path)
 	baseline, _ := nativelyUncached(test, program)
@@ -348,13 +352,15 @@ func mutateReadiness(statements []ir.Statement, mutate func(any) any) []ir.State
 // Pin both observations, including this assertion's expression-specific native diagnostic.
 func TestNonNullWeakFreedNamesExpression(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_weak_freed.ts"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/non_null_weak_freed.ts"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	node := run{stdout: []byte("before\nlivelive\n")}
 	for _, got := range []run{onSliceNode(test, path), onSliceJavaScript(test, program)} {
@@ -391,9 +397,11 @@ func TestNonNullWeakFreedNamesExpression(test *testing.T) {
 // Non-literal assertions are checked at initialization, even if a later write would replace them.
 func TestNonliteralInitializerCannotSkipCheck(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_lazy_initialized.ts"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/non_null_lazy_initialized.ts"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	assertMigratedNonNullCheck(test, path, "textInitial!", "", true)
 }

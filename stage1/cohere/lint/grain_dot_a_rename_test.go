@@ -50,10 +50,10 @@ func dotARenameInputs(test *testing.T, name string, flags []string) buildcache.I
 	// copyPort also copies witnesses and option sidecars; those enter its key.
 	for _, descriptor := range prepareRegistry(test, packageDirectory) {
 		directory := filepath.Join("stage1/cohere/lint/rules", descriptor.Slug, "testdata")
-		if _, err := os.Stat(filepath.Join(repository, directory)); err == nil {
+		if _, statError := os.Stat(filepath.Join(repository, directory)); statError == nil {
 			files = append(files, filepath.ToSlash(directory))
-		} else if !os.IsNotExist(err) {
-			test.Fatal(err)
+		} else if !os.IsNotExist(statError) {
+			test.Fatal(statError)
 		}
 	}
 	return buildcache.Inputs{Name: "dot-a-rename-" + name, Files: files, Flags: flags,
@@ -94,19 +94,19 @@ func dotARenameSource(test *testing.T) string {
 		[]string{"rules/no-var/rule.a -> rule.ts", packageDirectory},
 	), func(dir string) error {
 		copyPort(test, dir, "", "")
-		if err := os.Rename(
+		if renameError := os.Rename(
 			filepath.Join(dir, "rules/no-var/rule.a"),
 			filepath.Join(dir, "rules/no-var/rule.ts"),
-		); err != nil {
-			return err
+		); renameError != nil {
+			return renameError
 		}
 		// The port's imports name this checkout; the product names it <repository> (#tqrqx60).
 		return buildcache.RelativeFiles(dir)
 	})
 	// The loader and Node read the port, so callers get the copy whose imports name this checkout.
-	directory, err := buildcache.Resolved(product)
-	if err != nil {
-		test.Fatal(err)
+	directory, resolvedError := buildcache.Resolved(product)
+	if resolvedError != nil {
+		test.Fatal(resolvedError)
 	}
 	return directory
 }
@@ -119,8 +119,8 @@ func dotARenameSource(test *testing.T) string {
 func dotARenameRegistered(test *testing.T, source string) string {
 	test.Helper()
 	directory := test.TempDir()
-	if err := os.CopyFS(directory, os.DirFS(source)); err != nil {
-		test.Fatal(err)
+	if copyFsError := os.CopyFS(directory, os.DirFS(source)); copyFsError != nil {
+		test.Fatal(copyFsError)
 	}
 	prepareRegistry(test, directory)
 	return directory
@@ -141,20 +141,20 @@ func dotARenameLowered(test *testing.T, renamed bool) string {
 			prepareRegistry(test, port)
 		}
 		phase := time.Now()
-		program, err := load.Load([]string{filepath.Join(port, "main.ts")})
-		if err != nil {
-			return err
+		program, loadError := load.Load([]string{filepath.Join(port, "main.ts")})
+		if loadError != nil {
+			return loadError
 		}
 		test.Logf("%s load: %.3fs", name, time.Since(phase).Seconds())
 		phase = time.Now()
-		result, err := lower.Lower(context.Background(), program)
-		if err != nil {
-			return err
+		result, lowerError := lower.Lower(context.Background(), program)
+		if lowerError != nil {
+			return lowerError
 		}
 		test.Logf("%s lower: %.3fs", name, time.Since(phase).Seconds())
 		phase = time.Now()
-		if err := os.WriteFile(filepath.Join(dir, "lint.c"), []byte(native.C(result)), 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(filepath.Join(dir, "lint.c"), []byte(native.C(result)), 0644); writeError != nil {
+			return writeError
 		}
 		test.Logf("%s native emit: %.3fs", name, time.Since(phase).Seconds())
 		phase = time.Now()
@@ -173,9 +173,9 @@ func dotARenameNative(test *testing.T, renamed bool) string {
 	options := native.Options{Sanitize: true, Split: true, Jobs: 4}
 	inputs := dotARenameInputs(test, name+"-native", append(native.Flags(options), name, "Split=true", "Jobs=4"))
 	return dotARenameProduct(test, slot, inputs, func(dir string) error {
-		data, err := os.ReadFile(filepath.Join(lowered, "lint.c"))
-		if err != nil {
-			return err
+		data, readError := os.ReadFile(filepath.Join(lowered, "lint.c"))
+		if readError != nil {
+			return readError
 		}
 		started := time.Now()
 		defer func() { test.Logf("%s clang: %.3fs", name, time.Since(started).Seconds()) }()
@@ -217,25 +217,25 @@ func TestProduct_DotARenameRenamedNative(test *testing.T) {
 // copy Resolved made of it read alike.
 func dotARenameFiles(test *testing.T, directory string) map[string]string {
 	test.Helper()
-	root, err := buildcache.ProductRoot(directory)
-	if err != nil {
-		test.Fatal(err)
+	root, productRootError := buildcache.ProductRoot(directory)
+	if productRootError != nil {
+		test.Fatal(productRootError)
 	}
 	files := map[string]string{}
-	err = filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {
-		if err != nil || entry.IsDir() {
-			return err
+	walkError := filepath.WalkDir(root, func(path string, entry os.DirEntry, pathError error) error {
+		if pathError != nil || entry.IsDir() {
+			return pathError
 		}
-		data, err := os.ReadFile(path)
-		if err != nil {
-			return err
+		data, readError := os.ReadFile(path)
+		if readError != nil {
+			return readError
 		}
-		relative, err := filepath.Rel(root, path)
+		relative, relativePathError := filepath.Rel(root, path)
 		files[filepath.ToSlash(relative)] = buildcache.Absolute(string(data))
-		return err
+		return relativePathError
 	})
-	if err != nil {
-		test.Fatal(err)
+	if walkError != nil {
+		test.Fatal(walkError)
 	}
 	return files
 }
@@ -297,12 +297,12 @@ func dotARenameSetup(test *testing.T, renamed bool) dotARenameProducts {
 	test.Helper()
 	started := time.Now()
 	defer func() { test.Logf("TestDotARename (setup): %.3f s", time.Since(started).Seconds()) }()
-	directory, err := filepath.Abs(".")
-	if err != nil {
-		test.Fatal(err)
+	directory, absolutePathError := filepath.Abs(".")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	p := dotARenameProducts{Original: directory}
-	var readErr error
+	var readError error
 	var workers sync.WaitGroup
 	workers.Add(3)
 	go func() {
@@ -313,12 +313,12 @@ func dotARenameSetup(test *testing.T, renamed bool) dotARenameProducts {
 		defer workers.Done()
 		// Node generates the port's registry before it runs it, so it reads a private copy, never the source's.
 		p.Changed = dotARenameRegistered(test, dotARenameSource(test))
-		p.Before, readErr = os.ReadFile(filepath.Join(directory, "rules/no-var/rule.a"))
-		if readErr != nil {
+		p.Before, readError = os.ReadFile(filepath.Join(directory, "rules/no-var/rule.a"))
+		if readError != nil {
 			return
 		}
-		p.After, readErr = os.ReadFile(filepath.Join(p.Changed, "rules/no-var/rule.ts"))
-		if readErr != nil {
+		p.After, readError = os.ReadFile(filepath.Join(p.Changed, "rules/no-var/rule.ts"))
+		if readError != nil {
 			return
 		}
 	}()
@@ -333,8 +333,8 @@ func dotARenameSetup(test *testing.T, renamed bool) dotARenameProducts {
 		}
 	}()
 	workers.Wait()
-	if readErr != nil {
-		test.Fatal(readErr)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if test.Failed() {
 		test.Fatal("DotARename preparation failed")
@@ -344,9 +344,9 @@ func dotARenameSetup(test *testing.T, renamed bool) dotARenameProducts {
 
 func dotARenameUnion(test *testing.T) {
 	test.Helper()
-	file, err := parser.ParseFile(token.NewFileSet(), "grain_dot_a_rename_test.go", nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	file, parseFileError := parser.ParseFile(token.NewFileSet(), "grain_dot_a_rename_test.go", nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	names := map[string]bool{}
 	for _, declaration := range file.Decls {
@@ -410,11 +410,11 @@ func dotARenameChild(ctx context.Context, args ...string) *exec.Cmd {
 	command := exec.CommandContext(ctx, os.Args[0], args...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if err == syscall.ESRCH {
+		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if killError == syscall.ESRCH {
 			return os.ErrProcessDone
 		}
-		return err
+		return killError
 	}
 	return command
 }
@@ -437,12 +437,12 @@ func dotARenameRunShard(test *testing.T, shard int) {
 	var probe dotARenameProbe
 	supplied := os.Getenv("ADAMIC_DOT_A_RENAME_PROBE")
 	if supplied != "" {
-		data, err := os.ReadFile(supplied)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(supplied)
+		if readError != nil {
+			test.Fatal(readError)
 		}
-		if err := json.Unmarshal(data, &probe); err != nil {
-			test.Fatal(err)
+		if decodeError := json.Unmarshal(data, &probe); decodeError != nil {
+			test.Fatal(decodeError)
 		}
 	}
 	for _, key := range dotARenameCases {
@@ -479,31 +479,31 @@ func dotARenameRunShard(test *testing.T, shard int) {
 
 func dotARenamePlant(test *testing.T, key string, p dotARenameProducts, module string) {
 	test.Helper()
-	data, err := os.ReadFile(module)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(module)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	planted := filepath.Join(test.TempDir(), "planted.mjs")
 	marker := "planted dot-a rename disagreement"
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		planted,
 		append(data, []byte(fmt.Sprintf("\nconsole.log(%q);\n", marker))...),
 		0644,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
 	if strings.HasSuffix(key, ":renamed") {
 		p.ChangedJS = planted
 	} else {
 		p.OriginalJS = planted
 	}
-	data, err = json.Marshal(dotARenameProbe{Key: key, Products: p})
-	if err != nil {
-		test.Fatal(err)
+	data, encodeError := json.Marshal(dotARenameProbe{Key: key, Products: p})
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	products := filepath.Join(test.TempDir(), "products.json")
-	if err := os.WriteFile(products, data, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(products, data, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	caught := 0
 	for shard := 0; shard < testDotARenameShards; shard++ {
@@ -511,18 +511,18 @@ func dotARenamePlant(test *testing.T, key string, p dotARenameProducts, module s
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		command := dotARenameChild(ctx, "-test.run=^"+name+"$", "-test.v", "-test.timeout=10s")
 		command.Env = append(os.Environ(), "ADAMIC_DOT_A_RENAME_PROBE="+products)
-		stdout, stderr, err := childguard.Capture(ctx, command)
+		stdout, stderr, captureError := childguard.Capture(ctx, command)
 		output := append(stdout, stderr...)
 		expired := ctx.Err()
 		cancel()
 		if expired != nil {
 			test.Fatalf("planted probe exceeded its deadline: %v\n%s", expired, output)
 		}
-		if err != nil {
+		if captureError != nil {
 			if bytes.Count(output, []byte("--- FAIL: "+name)) != 1 ||
 				!bytes.Contains(output, []byte("emitted JavaScript:")) ||
 				!bytes.Contains(output, []byte(marker)) {
-				test.Fatalf("wrong planted failure: %v\n%s", err, output)
+				test.Fatalf("wrong planted failure: %v\n%s", captureError, output)
 			}
 			caught++
 		}

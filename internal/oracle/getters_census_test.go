@@ -34,30 +34,32 @@ func init() {
 // only recognizes NotYet in its non-lowering list.
 func observeGettersCensus(test *testing.T, shape, refusal, want string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/getters_census_"+shape+".a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/getters_census_"+shape+".a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	node := onNode(test, path)
 	test.Logf("Node: exit %d stdout %q stderr %q", node.exitCode, node.stdout, node.stderr)
 	if node.exitCode != 0 || len(node.stderr) != 0 || string(node.stdout) != want {
 		test.Fatalf("source failed: %+v", node)
 	}
-	program, err := lowered(test, path)
+	program, loweredError := lowered(test, path)
 	if refusal != "" {
-		if err == nil || !strings.Contains(err.Error(), refusal) {
-			test.Fatalf("want refusal %q, got %v", refusal, err)
+		if loweredError == nil || !strings.Contains(loweredError.Error(), refusal) {
+			test.Fatalf("want refusal %q, got %v", refusal, loweredError)
 		}
 		var notYet *lower.NotYet
 		var refused *lower.Refused
-		if !errors.As(err, &notYet) && !errors.As(err, &refused) {
-			test.Fatalf("not a compiler refusal: %v", err)
+		if !errors.As(loweredError, &notYet) && !errors.As(loweredError, &refused) {
+			test.Fatalf("not a compiler refusal: %v", loweredError)
 		}
-		test.Logf("Lower: %v; JavaScript/release/sanitized not reached", err)
+		test.Logf("Lower: %v; JavaScript/release/sanitized not reached", loweredError)
 		return
 	}
-	if err != nil {
-		test.Fatal(err)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	// These formerly cycle-refused callback shapes now require graph ownership.
 	// The overloaded shape returns above with its independent cast refusal.

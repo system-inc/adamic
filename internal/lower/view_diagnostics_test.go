@@ -13,15 +13,15 @@ import (
 func viewDiagnosticLocation(test *testing.T, name, refusal, location string) {
 	test.Helper()
 	path := filepath.Join("testdata", "view_diagnostics", "oct9_views_"+name+".a")
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	_, err = Lower(context.Background(), program)
-	if err == nil ||
-		!strings.Contains(err.Error(), refusal) ||
-		!strings.Contains(err.Error(), "oct9_views_"+name+".a:"+location+":") {
-		test.Fatalf("want %q with source location %s, got %v", refusal, location, err)
+	_, lowerError := Lower(context.Background(), program)
+	if lowerError == nil ||
+		!strings.Contains(lowerError.Error(), refusal) ||
+		!strings.Contains(lowerError.Error(), "oct9_views_"+name+".a:"+location+":") {
+		test.Fatalf("want %q with source location %s, got %v", refusal, location, lowerError)
 	}
 }
 
@@ -35,19 +35,19 @@ func TestViewDiagnosticP17(test *testing.T) {
 // stays a checked view, so the read it was written about is reached as .a reached it before #m8dvvmf.
 func viewDiagnosticTwinLocation(test *testing.T, name, refusal, location string) {
 	test.Helper()
-	source, err := os.ReadFile(filepath.Join("testdata", "view_diagnostics", "oct9_views_"+name+".a"))
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(filepath.Join("testdata", "view_diagnostics", "oct9_views_"+name+".a"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	program, err := load.Load([]string{writeAgreementSource(test, "oct9_views_"+name+".ts", string(source))})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{writeAgreementSource(test, "oct9_views_"+name+".ts", string(source))})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	_, err = Lower(context.Background(), program)
-	if err == nil ||
-		!strings.Contains(err.Error(), refusal) ||
-		!strings.Contains(err.Error(), "oct9_views_"+name+".ts:"+location+":") {
-		test.Fatalf("twin: want %q with source location %s, got %v", refusal, location, err)
+	_, lowerError := Lower(context.Background(), program)
+	if lowerError == nil ||
+		!strings.Contains(lowerError.Error(), refusal) ||
+		!strings.Contains(lowerError.Error(), "oct9_views_"+name+".ts:"+location+":") {
+		test.Fatalf("twin: want %q with source location %s, got %v", refusal, location, lowerError)
 	}
 }
 

@@ -15,18 +15,18 @@ import (
 var sources embed.FS
 
 func Identity() string {
-	entries, err := sources.ReadDir(".")
-	if err != nil {
-		panic(err)
+	entries, readDirectoryError := sources.ReadDir(".")
+	if readDirectoryError != nil {
+		panic(readDirectoryError)
 	}
 	hash := sha256.New()
 	for _, entry := range entries {
 		if strings.HasSuffix(entry.Name(), "_test.go") {
 			continue
 		}
-		data, err := sources.ReadFile(entry.Name())
-		if err != nil {
-			panic(err)
+		data, readFileError := sources.ReadFile(entry.Name())
+		if readFileError != nil {
+			panic(readFileError)
 		}
 		fmt.Fprintf(hash, "%d:%s%d:", len(entry.Name()), entry.Name(), len(data))
 		hash.Write(data)

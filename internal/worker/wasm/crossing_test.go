@@ -15,9 +15,9 @@ import (
 func crossingProduct(test *testing.T) string {
 	test.Helper()
 	return buildcache.Product(test, integrationInputs(test, "crossingProduct"), func(directory string) error {
-		root, err := filepath.Abs("../../..")
-		if err != nil {
-			test.Fatal(err)
+		root, absolutePathError := filepath.Abs("../../..")
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		run := commandRunner(test, root)
 		compiler := buildcache.AdamicBuiltElsewhere(test)
@@ -46,20 +46,20 @@ func TestProduct_GeneratedCrossingInputs(test *testing.T) { crossingProduct(test
 
 func TestGeneratedCrossing(test *testing.T) {
 	test.Parallel()
-	root, err := filepath.Abs("../../..")
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs("../../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	product := crossingProduct(test)
 	directory := test.TempDir()
-	if err := os.CopyFS(directory, os.DirFS(product)); err != nil {
-		test.Fatal(err)
+	if copyFsError := os.CopyFS(directory, os.DirFS(product)); copyFsError != nil {
+		test.Fatal(copyFsError)
 	}
 	run := commandRunner(test, root)
 	write := func(path, text string) {
 		test.Helper()
-		if err := os.WriteFile(path, []byte(text), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(text), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	reference := filepath.Join(root, "internal/native/wasm/exports.mjs")
@@ -153,9 +153,9 @@ encoder0.offset += 8;`, "compare", "recordValue input bytes differ"},
 		test.Run(mutant.name, func(test *testing.T) {
 			scratch := test.TempDir()
 			for _, name := range []string{"crossing.mjs", "wtf8.mjs", "crossing-runtime.mjs", "wasi.mjs"} {
-				data, err := os.ReadFile(filepath.Join(directory, name))
-				if err != nil {
-					test.Fatal(err)
+				data, readError := os.ReadFile(filepath.Join(directory, name))
+				if readError != nil {
+					test.Fatal(readError)
 				}
 				source := string(data)
 				if name == mutant.file {
@@ -186,9 +186,9 @@ encoder0.offset += 8;`, "compare", "recordValue input bytes differ"},
 				filepath.Join(scratch, "crossing.mjs"),
 				mutant.mode,
 			)
-			output, err := command.CombinedOutput()
-			if err == nil || ctx.Err() != nil || !strings.Contains(string(output), mutant.diagnosis) {
-				test.Fatalf("mutant must fail its intended check: %v\n%s", err, output)
+			output, combinedOutputError := command.CombinedOutput()
+			if combinedOutputError == nil || ctx.Err() != nil || !strings.Contains(string(output), mutant.diagnosis) {
+				test.Fatalf("mutant must fail its intended check: %v\n%s", combinedOutputError, output)
 			}
 			test.Logf("caught %s: %s", mutant.name, mutant.diagnosis)
 		})

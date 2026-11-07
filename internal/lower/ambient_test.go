@@ -23,8 +23,8 @@ func TestDefinedModuleAndTypeDeclarationsCompile(test *testing.T) {
         const value: Types.Value = { value: 1 };
         console.log(value.value.toFixed(0));`,
 	} {
-		if _, err := lowerSource(test, source); err != nil {
-			test.Fatal(err)
+		if _, lowerSourceError := lowerSource(test, source); lowerSourceError != nil {
+			test.Fatal(lowerSourceError)
 		}
 	}
 }
@@ -36,12 +36,12 @@ func TestAmbientIdentifierModuleIsRefused(test *testing.T) {
 	graph, statements := namespaceGraphForTest(test, `declare namespace Missing { const value: number; }`)
 	declaration := statements[0]
 	declaration.AsModuleDeclaration().Keyword = ast.KindModuleKeyword
-	err := graph.lowering.ambientRefusal(declaration)
+	ambientRefusalError := graph.lowering.ambientRefusal(declaration)
 	var refused *Refused
-	if !errors.As(err, &refused) ||
+	if !errors.As(ambientRefusalError, &refused) ||
 		refused.What != "an ambient namespace or module holding values" ||
 		!strings.HasSuffix(refused.Where, "graph.a:1:1") {
-		test.Fatalf("want outermost ambient module refusal, got %v", err)
+		test.Fatalf("want outermost ambient module refusal, got %v", ambientRefusalError)
 	}
 }
 
@@ -57,15 +57,15 @@ func TestDefinedImportedModuleCompiles(test *testing.T) {
             const amount: Amount = next(value);
             console.log(amount.toFixed(0));`,
 	} {
-		if err := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
-	program, err := load.Load([]string{filepath.Join(directory, "main.a")})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{filepath.Join(directory, "main.a")})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	if _, err := Lower(context.Background(), program); err != nil {
-		test.Fatal(err)
+	if _, lowerError := Lower(context.Background(), program); lowerError != nil {
+		test.Fatal(lowerError)
 	}
 }

@@ -20,9 +20,9 @@ import (
 func TestDeadZoneThrowsAreCaughtAsNodes(test *testing.T) {
 	test.Parallel()
 	directory := "internal/oracle/testdata/dead_zone_caught"
-	entries, err := os.ReadDir(filepath.Join(repository, directory))
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(filepath.Join(repository, directory))
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -52,9 +52,9 @@ func TestDeadZoneThrowsAreCaughtAsNodes(test *testing.T) {
 // skips its release, and an inline site that skips its owned list; each leaks the strings it held.
 func TestDeadZoneOwnedTemporaryLetsGo(test *testing.T) {
 	test.Parallel()
-	program, err := lowered(test, repository+"/internal/oracle/testdata/dead_zone_caught/owned_temporary.a")
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, repository+"/internal/oracle/testdata/dead_zone_caught/owned_temporary.a")
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	_, binary := natively(test, program)
 	if report := leaks(test, program, binary); report != "" {

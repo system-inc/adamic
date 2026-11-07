@@ -28,26 +28,26 @@ func TestCheckedPredicateBranches(test *testing.T) {
 		{"valid", "argument\ncalled\nnumber\nargument\ncalled\nstring\n", "", ""},
 	} {
 		test.Run(probe.name, func(test *testing.T) {
-			path, err := filepath.Abs("testdata/predicates_checked/" + probe.name + ".a")
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs("testdata/predicates_checked/" + probe.name + ".a")
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			runner, err := filepath.Abs("../../oracle/node.mjs")
-			if err != nil {
-				test.Fatal(err)
+			runner, absolutePathError := filepath.Abs("../../oracle/node.mjs")
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			run := func(command *exec.Cmd, stdout, stderr string, code int) {
 				test.Helper()
 				var out, errors bytes.Buffer
 				command.Stdout = &out
 				command.Stderr = &errors
-				err := command.Run()
+				runError := command.Run()
 				got := 0
-				if err != nil {
-					if exit, ok := err.(*exec.ExitError); ok {
+				if runError != nil {
+					if exit, ok := runError.(*exec.ExitError); ok {
 						got = exit.ExitCode()
 					} else {
-						test.Fatal(err)
+						test.Fatal(runError)
 					}
 				}
 				if out.String() != stdout || errors.String() != stderr || got != code {
@@ -64,13 +64,13 @@ func TestCheckedPredicateBranches(test *testing.T) {
 				}
 			}
 			run(exec.Command("node", "--disable-warning=ExperimentalWarning", runner, path), probe.nodeOut, "", 0)
-			source, err := os.ReadFile(path)
-			if err != nil {
-				test.Fatal(err)
+			source, readError := os.ReadFile(path)
+			if readError != nil {
+				test.Fatal(readError)
 			}
-			program, err := lowerTypeScriptAssertionSource(test, string(source))
-			if err != nil {
-				test.Fatal(err)
+			program, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(test, string(source))
+			if lowerTypeScriptAssertionSourceError != nil {
+				test.Fatal(lowerTypeScriptAssertionSourceError)
 			}
 			if program.PredicateChecks.Checked == 0 || len(program.PredicateChecks.Sites) == 0 {
 				test.Fatalf("missing checked site: %+v", program.PredicateChecks)
@@ -87,21 +87,25 @@ func TestCheckedPredicateBranches(test *testing.T) {
 					probe.branch,
 				)
 				stderr = "adamic: panic: " + message + "\n"
-				_, err = lowerSource(test, string(source))
-				if err == nil || !strings.Contains(err.Error(), "type predicate") {
-					test.Fatalf("lying .a body admitted: %v", err)
+				_, lowerSourceError := lowerSource(test, string(source))
+				if lowerSourceError == nil || !strings.Contains(lowerSourceError.Error(), "type predicate") {
+					test.Fatalf("lying .a body admitted: %v", lowerSourceError)
 				}
 			}
 			binary := filepath.Join(test.TempDir(), "native")
-			if err = native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(
+				native.C(program),
+				binary,
+				native.Options{Sanitize: true},
+			); buildError != nil {
+				test.Fatal(buildError)
 			}
 			command := exec.Command(binary)
 			command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1")
 			run(command, stdout, stderr, code)
 			generated := filepath.Join(test.TempDir(), "generated.mjs")
-			if err = os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0644); writeError != nil {
+				test.Fatal(writeError)
 			}
 			run(exec.Command("node", "--disable-warning=ExperimentalWarning", runner, generated), stdout, stderr, code)
 		})
@@ -164,9 +168,9 @@ func TestCheckedPredicatePendingContracts(test *testing.T) {
 			if probe.name == "overload in .a" {
 				lowerInput = lowerSource
 			}
-			_, err := lowerInput(test, probe.source)
-			if err == nil || !strings.Contains(err.Error(), probe.diagnostic) {
-				test.Fatalf("want pending/refused %q, got %v", probe.diagnostic, err)
+			_, lowerInputError := lowerInput(test, probe.source)
+			if lowerInputError == nil || !strings.Contains(lowerInputError.Error(), probe.diagnostic) {
+				test.Fatalf("want pending/refused %q, got %v", probe.diagnostic, lowerInputError)
 			}
 		})
 	}
@@ -189,30 +193,30 @@ func TestCheckedPredicateUnreadShapesArePending(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs("testdata/predicates_checked/" + probe.name + ".a")
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs("testdata/predicates_checked/" + probe.name + ".a")
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			runner, err := filepath.Abs("../../oracle/node.mjs")
-			if err != nil {
-				test.Fatal(err)
+			runner, absolutePathError := filepath.Abs("../../oracle/node.mjs")
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			var out, diagnostic bytes.Buffer
 			command := exec.Command("node", "--disable-warning=ExperimentalWarning", runner, path)
 			command.Stdout, command.Stderr = &out, &diagnostic
-			if err := command.Run(); err != nil || out.String() != probe.nodeOut || diagnostic.Len() != 0 {
-				test.Fatalf("source Node: %v stdout %q stderr %q", err, out.String(), diagnostic.String())
+			if runError := command.Run(); runError != nil || out.String() != probe.nodeOut || diagnostic.Len() != 0 {
+				test.Fatalf("source Node: %v stdout %q stderr %q", runError, out.String(), diagnostic.String())
 			}
-			source, err := os.ReadFile(path)
-			if err != nil {
-				test.Fatal(err)
+			source, readError := os.ReadFile(path)
+			if readError != nil {
+				test.Fatal(readError)
 			}
-			_, err = lowerTypeScriptAssertionSource(test, string(source))
+			_, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(test, string(source))
 			var notYet *NotYet
-			if !errors.As(err, &notYet) ||
+			if !errors.As(lowerTypeScriptAssertionSourceError, &notYet) ||
 				notYet.What != probe.what ||
 				!strings.HasSuffix(notYet.Where, "main.ts:"+probe.where) {
-				test.Fatalf("want %q pending at the call, got %v", probe.what, err)
+				test.Fatalf("want %q pending at the call, got %v", probe.what, lowerTypeScriptAssertionSourceError)
 			}
 		})
 	}
@@ -238,9 +242,9 @@ func TestCheckedPredicateArgumentIsRead(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			program, err := lowerTypeScriptAssertionSource(test, prelude+probe.source)
-			if err != nil {
-				test.Fatal(err)
+			program, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(test, prelude+probe.source)
+			if lowerTypeScriptAssertionSourceError != nil {
+				test.Fatal(lowerTypeScriptAssertionSourceError)
 			}
 			if program.PredicateChecks.Checked == 0 {
 				test.Fatalf("no checked predicate call: %+v", program.PredicateChecks)
@@ -251,13 +255,13 @@ func TestCheckedPredicateArgumentIsRead(test *testing.T) {
 
 func TestCheckedPredicateTypelessNonAssertionIsNotYet(test *testing.T) {
 	test.Parallel()
-	loaded, err := load.Load([]string{writeAgreementSource(test, "main.a", "const value = true;\n")})
-	if err != nil {
-		test.Fatal(err)
+	loaded, loadError := load.Load([]string{writeAgreementSource(test, "main.a", "const value = true;\n")})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := Lower(context.Background(), loaded)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerError := Lower(context.Background(), loaded)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	declaration, ok := program.Main[0].(ir.Declare)
 	if !ok {
@@ -274,7 +278,7 @@ func TestCheckedPredicateTypelessNonAssertionIsNotYet(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			l := &lowering{program: loaded, result: program}
-			statements, err := l.checkedPredicateCheck(
+			statements, checkedPredicateCheckError := l.checkedPredicateCheck(
 				node,
 				node,
 				declaration.Value,
@@ -286,10 +290,10 @@ func TestCheckedPredicateTypelessNonAssertionIsNotYet(test *testing.T) {
 				func(string) string { return "condition check" },
 			)
 			var notYet *NotYet
-			if !errors.As(err, &notYet) ||
+			if !errors.As(checkedPredicateCheckError, &notYet) ||
 				notYet.What != "a checked predicate without a reifiable target" ||
 				notYet.Where != loaded.Where(node) {
-				test.Fatalf("want located typeless predicate NotYet, got %v", err)
+				test.Fatalf("want located typeless predicate NotYet, got %v", checkedPredicateCheckError)
 			}
 			if statements != nil {
 				test.Fatalf("typeless non-asserts caller received checks: %#v", statements)

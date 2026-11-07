@@ -29,14 +29,14 @@ func init() {
 func TestRegExpReplacementNodeMutants(test *testing.T) {
 	test.Parallel()
 	path, _ := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/regexp_replace/arguments.a"))
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	expected := onNode(test, path)
-	runtime, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/regexp_replace.c"))
-	if err != nil {
-		test.Fatal(err)
+	runtime, readError := os.ReadFile(filepath.Join(repository, "internal/native/runtime/regexp_replace.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	programSource := native.C(program)
 	for _, mutant := range []struct{ name, old, new string }{
@@ -65,8 +65,8 @@ func TestRegExpReplacementNodeMutants(test *testing.T) {
 				"adamic_regex_replace_callback_mutant",
 			)
 			binary := filepath.Join(test.TempDir(), "mutant")
-			if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(source, binary, native.Options{Sanitize: true}); buildError != nil {
+				test.Fatal(buildError)
 			}
 			actual := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=1:halt_on_error=1"}, binary)
 			if actual.exitCode != 0 || len(actual.stderr) != 0 {
@@ -83,9 +83,9 @@ func TestRegExpReplacementNodeMutants(test *testing.T) {
 
 func TestRegExpReplacementTypeGuardMutants(test *testing.T) {
 	test.Parallel()
-	runtime, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/regexp_replace.c"))
-	if err != nil {
-		test.Fatal(err)
+	runtime, readError := os.ReadFile(filepath.Join(repository, "internal/native/runtime/regexp_replace.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	for _, mutant := range []struct{ name, old, new string }{
 		{"argument_guard", "if (!accepted)", "if (!accepted && false)"},
@@ -96,9 +96,9 @@ func TestRegExpReplacementTypeGuardMutants(test *testing.T) {
 			path, _ := filepath.Abs(
 				filepath.Join(repository, "internal/oracle/testdata/regexp_replace/"+mutant.name+".a"),
 			)
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			expected := onJavaScriptBackend(test, program)
 			if expected.exitCode != 70 || !bytes.Contains(expected.stderr, []byte("does not fit its declared type")) {
@@ -119,8 +119,8 @@ func TestRegExpReplacementTypeGuardMutants(test *testing.T) {
 				"adamic_regex_replace_callback_mutant",
 			)
 			binary := filepath.Join(test.TempDir(), "mutant")
-			if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(source, binary, native.Options{Sanitize: true}); buildError != nil {
+				test.Fatal(buildError)
 			}
 			actual := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=1:halt_on_error=1"}, binary)
 			if actual.exitCode != 0 || len(actual.stderr) != 0 {

@@ -8,11 +8,20 @@ import (
 // nonObjectOwnProperty spells the descriptors of the values whose shape is fixed by the language.
 // A generated function keeps the receiver and key in parameters, so each is evaluated once, in
 // JavaScript's order, even when the answer is constant. No native representation is read as an object.
-func (l *lowering) nonObjectOwnProperty(node, receiver *ast.Node, name string, of ir.Type) (ir.Expression, bool, error) {
+func (l *lowering) nonObjectOwnProperty(
+	node, receiver *ast.Node,
+	name string,
+	of ir.Type,
+) (ir.Expression, bool, error) {
 	return l.nonObjectOwnPropertyArguments(node, receiver, name, of, node.AsCallExpression().Arguments.Nodes)
 }
 
-func (l *lowering) nonObjectOwnPropertyArguments(node, receiver *ast.Node, name string, of ir.Type, arguments []*ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) nonObjectOwnPropertyArguments(
+	node, receiver *ast.Node,
+	name string,
+	of ir.Type,
+	arguments []*ast.Node,
+) (ir.Expression, bool, error) {
 	functionPrototype := -1
 	if of == ir.Closure {
 		functionPrototype = l.functionPrototype(receiver, 0)
@@ -21,7 +30,10 @@ func (l *lowering) nonObjectOwnPropertyArguments(node, receiver *ast.Node, name 
 	case ir.Number, ir.Boolean, ir.String, ir.Array, ir.Map:
 	case ir.Closure:
 		if name == "hasOwnProperty" && functionPrototype < 0 {
-			return nil, true, l.notYet(node, "hasOwnProperty on a function (its prototype property depends on whether it was declared or made as an arrow)")
+			return nil, true, l.notYet(
+				node,
+				"hasOwnProperty on a function (its prototype property depends on whether it was declared or made as an arrow)",
+			)
 		}
 	default:
 		return nil, true, l.notYet(node, name+" on a "+typeName(of)+" (mixed value descriptors are not represented)")
@@ -32,13 +44,13 @@ func (l *lowering) nonObjectOwnPropertyArguments(node, receiver *ast.Node, name 
 	if keyType, _ := l.representation(l.checker.GetTypeAtLocation(arguments[0])); keyType != ir.String {
 		return nil, true, l.notYet(node, name+" with a key that isn't a string")
 	}
-	value, err := l.expression(receiver)
-	if err != nil {
-		return nil, true, err
+	value, expressionError := l.expression(receiver)
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
-	key, err := l.expression(arguments[0])
-	if err != nil {
-		return nil, true, err
+	key, expressionError := l.expression(arguments[0])
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
 	function := len(l.result.Functions)
 	held := len(l.result.Locals)
@@ -55,7 +67,11 @@ func (l *lowering) nonObjectOwnPropertyArguments(node, receiver *ast.Node, name 
 			Right: ir.Binary{Operator: ir.Equal, Left: readKey, Right: ir.StringConstant{Index: l.constant("name")}},
 		}
 		if functionPrototype == 1 {
-			result = ir.Binary{Operator: ir.Or, Left: result, Right: ir.Binary{Operator: ir.Equal, Left: readKey, Right: ir.StringConstant{Index: l.constant("prototype")}}}
+			result = ir.Binary{Operator: ir.Or, Left: result, Right: ir.Binary{
+				Operator: ir.Equal,
+				Left:     readKey,
+				Right:    ir.StringConstant{Index: l.constant("prototype")},
+			}}
 		}
 	}
 	if of == ir.Array || of == ir.String {
@@ -68,7 +84,10 @@ func (l *lowering) nonObjectOwnPropertyArguments(node, receiver *ast.Node, name 
 		if of == ir.Array {
 			length = ir.Length{Array: readReceiver}
 		}
-		body = append(body, ir.Declare{Local: index, Value: ir.NumberCall{Function: "parseInt", Arguments: []ir.Expression{readKey, ir.NumberConstant{Value: 10}}}})
+		body = append(body, ir.Declare{Local: index, Value: ir.NumberCall{
+			Function:  "parseInt",
+			Arguments: []ir.Expression{readKey, ir.NumberConstant{Value: 10}},
+		}})
 		// Only a canonical non-negative index is own. parseInt alone would admit '01', '-0', '1x'
 		// and fractional text; the round trip rejects those. A NaN fails the comparisons first.
 		result = ir.Binary{Operator: ir.And,
@@ -80,12 +99,21 @@ func (l *lowering) nonObjectOwnPropertyArguments(node, receiver *ast.Node, name 
 		}
 		// Both arrays and boxed strings have an own length, which is not enumerable.
 		result = ir.Conditional{
-			Condition: ir.Binary{Operator: ir.Equal, Left: readKey, Right: ir.StringConstant{Index: l.constant("length")}},
-			WhenTrue:  ir.BooleanConstant{Value: name == "hasOwnProperty"}, WhenNot: result,
+			Condition: ir.Binary{
+				Operator: ir.Equal,
+				Left:     readKey,
+				Right:    ir.StringConstant{Index: l.constant("length")},
+			},
+			WhenTrue: ir.BooleanConstant{Value: name == "hasOwnProperty"}, WhenNot: result,
 		}
 	}
 	body = append(body, ir.Return{Value: result})
-	l.result.Functions = append(l.result.Functions, ir.Function{Name: name + "_" + typeName(of), Parameters: []int{held, held + 1}, Returns: ir.Boolean, Body: body})
+	l.result.Functions = append(l.result.Functions, ir.Function{
+		Name:       name + "_" + typeName(of),
+		Parameters: []int{held, held + 1},
+		Returns:    ir.Boolean,
+		Body:       body,
+	})
 	return ir.Call{Function: function, Arguments: []ir.Expression{value, key}, Returns: ir.Boolean}, true, nil
 }
 
@@ -113,7 +141,9 @@ func (l *lowering) functionPrototype(node *ast.Node, depth int) int {
 		return -1
 	}
 	declaration := symbol.Declarations[0]
-	if declaration.Kind != ast.KindVariableDeclaration || declaration.Parent == nil || declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
+	if declaration.Kind != ast.KindVariableDeclaration ||
+		declaration.Parent == nil ||
+		declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
 		return -1
 	}
 	initializer := declaration.AsVariableDeclaration().Initializer

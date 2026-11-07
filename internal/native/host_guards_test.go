@@ -46,8 +46,8 @@ int main(int count, char **arguments) {
 func TestHostGuardsStopOnAStatsShape(test *testing.T) {
 	test.Parallel()
 	binary := filepath.Join(test.TempDir(), "host-guards")
-	if err := Build(hostGuardsHarness, binary, Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(hostGuardsHarness, binary, Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	for _, probe := range []struct{ reader, key string }{
 		{"read", "_fsFileMode"},
@@ -61,8 +61,8 @@ func TestHostGuardsStopOnAStatsShape(test *testing.T) {
 			command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
 			var stdout, stderr bytes.Buffer
 			command.Stdout, command.Stderr = &stdout, &stderr
-			err := command.Run()
-			exit, ok := err.(*exec.ExitError)
+			runError := command.Run()
+			exit, ok := runError.(*exec.ExitError)
 			want := "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading '" +
 				probe.key +
 				"')\n"
@@ -73,7 +73,7 @@ func TestHostGuardsStopOnAStatsShape(test *testing.T) {
 				strings.Contains(stderr.String(), "Sanitizer") {
 				test.Fatalf(
 					"want the host stop and exit 70: %v\nstdout %q\nstderr %q",
-					err,
+					runError,
 					stdout.String(),
 					stderr.String(),
 				)

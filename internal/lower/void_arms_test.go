@@ -20,12 +20,15 @@ import (
 // stop.
 func TestVoidWidenedSkipsArmsADiscriminantRulesOut(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSourceAs(test, `function* g(): Generator<number, void, unknown> { yield 1; yield 2; }
+	_, lowerSourceAsError := lowerSourceAs(test, `function* g(): Generator<number, void, unknown> { yield 1; yield 2; }
 const values: Iterable<number, void> = g();
 console.log([...values].join(","));
 `, ".ts")
-	if err != nil && strings.Contains(err.Error(), "no-void-widening") {
-		test.Errorf("Iterable<number, void> taking a function*'s call: want no void-widening stop, got %v", err)
+	if lowerSourceAsError != nil && strings.Contains(lowerSourceAsError.Error(), "no-void-widening") {
+		test.Errorf(
+			"Iterable<number, void> taking a function*'s call: want no void-widening stop, got %v",
+			lowerSourceAsError,
+		)
 	}
 	const tagged = `interface A { readonly kind: "a"; readonly run: () => number; }
 interface B { readonly kind: "b"; readonly run: () => void; }
@@ -66,10 +69,10 @@ console.log(typeof it);`, "seen as unknown"},
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSourceAs(test, probe.source+"\n", ".ts")
+			_, lowerSourceAsError := lowerSourceAs(test, probe.source+"\n", ".ts")
 			var refused *Refused
-			if !errors.As(err, &refused) || !strings.Contains(refused.What, probe.want) {
-				test.Fatalf("want Refused with %q, got %v", probe.want, err)
+			if !errors.As(lowerSourceAsError, &refused) || !strings.Contains(refused.What, probe.want) {
+				test.Fatalf("want Refused with %q, got %v", probe.want, lowerSourceAsError)
 			}
 		})
 	}
@@ -140,10 +143,10 @@ console.log(typeof either.kind);`, ".ts", false},
 				lowersAndAgreesWithNodeAs(test, probe.source+"\n", probe.extension)
 				return
 			}
-			_, err := lowerSourceAs(test, probe.source+"\n", probe.extension)
+			_, lowerSourceAsError := lowerSourceAs(test, probe.source+"\n", probe.extension)
 			var stop *Refused
-			if !errors.As(err, &stop) || !strings.Contains(stop.What, refused) {
-				test.Fatalf("want Refused with %q, got %v", refused, err)
+			if !errors.As(lowerSourceAsError, &stop) || !strings.Contains(stop.What, refused) {
+				test.Fatalf("want Refused with %q, got %v", refused, lowerSourceAsError)
 			}
 		})
 	}

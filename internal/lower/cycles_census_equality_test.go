@@ -30,30 +30,33 @@ import (
 func scanProgramRegionCensus(test *testing.T, indexed bool) []byte {
 	test.Helper()
 	root := programRegionSource(test)
-	input, err := os.Open("../oracle/testdata/program_region/census.csv")
-	if err != nil {
-		test.Fatal(err)
+	input, openError := os.Open("../oracle/testdata/program_region/census.csv")
+	if openError != nil {
+		test.Fatal(openError)
 	}
-	records, err := csv.NewReader(input).ReadAll()
+	records, readAllError := csv.NewReader(input).ReadAll()
 	input.Close()
-	if err != nil {
-		test.Fatal(err)
+	if readAllError != nil {
+		test.Fatal(readAllError)
 	}
 	if len(records) != 1686 {
 		test.Fatalf("inventory records %d", len(records)-1)
 	}
 	roots := []tspath.RootedFilePath{}
-	err = filepath.WalkDir(filepath.Join(root, "src/compiler"), func(path string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
+	walkError := filepath.WalkDir(filepath.Join(
+		root,
+		"src/compiler",
+	), func(path string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
 		if !entry.IsDir() && strings.HasSuffix(path, ".ts") {
 			roots = append(roots, tspath.RootedFilePathFromAbsolute(filepath.ToSlash(path)))
 		}
 		return nil
 	})
-	if err != nil {
-		test.Fatal(err)
+	if walkError != nil {
+		test.Fatal(walkError)
 	}
 	fileSystem := bundled.WrapFS(osvfs.FS())
 	options := &core.CompilerOptions{
@@ -90,8 +93,8 @@ func scanProgramRegionCensus(test *testing.T, indexed bool) []byte {
 	}
 	properties := map[string][]property{}
 	for _, file := range sourceProgram.GetSourceFiles() {
-		relative, err := filepath.Rel(filepath.Join(root, "src/compiler"), file.FileName().AsString())
-		if err != nil || strings.HasPrefix(relative, "..") {
+		relative, relativePathError := filepath.Rel(filepath.Join(root, "src/compiler"), file.FileName().AsString())
+		if relativePathError != nil || strings.HasPrefix(relative, "..") {
 			continue
 		}
 		relative = filepath.ToSlash(relative)
@@ -156,8 +159,8 @@ func scanProgramRegionCensus(test *testing.T, indexed bool) []byte {
 		}
 	}
 	for _, file := range sourceProgram.GetSourceFiles() {
-		relative, err := filepath.Rel(filepath.Join(root, "src/compiler"), file.FileName().AsString())
-		if err != nil || strings.HasPrefix(relative, "..") {
+		relative, relativePathError := filepath.Rel(filepath.Join(root, "src/compiler"), file.FileName().AsString())
+		if relativePathError != nil || strings.HasPrefix(relative, "..") {
 			continue
 		}
 		var visit ast.Visitor
@@ -289,8 +292,8 @@ func scanProgramRegionCensus(test *testing.T, indexed bool) []byte {
 				}
 			}
 		}
-		if err := writer.Write([]string{row[0], declared, membership, why, slotType}); err != nil {
-			test.Fatal(err)
+		if writeError := writer.Write([]string{row[0], declared, membership, why, slotType}); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	if waiting != 77 {
@@ -333,13 +336,13 @@ func TestProduct_CycleScanningCensus(test *testing.T) {
 }
 func TestCycleFinderCensusEquality(test *testing.T) {
 	test.Parallel()
-	before, err := os.ReadFile(filepath.Join(cycleScanningCensusProduct(test), "membership.csv"))
-	if err != nil {
-		test.Fatal(err)
+	before, readError := os.ReadFile(filepath.Join(cycleScanningCensusProduct(test), "membership.csv"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	after, err := os.ReadFile(filepath.Join(programRegionCensusProduct(test, true), "membership.csv"))
-	if err != nil {
-		test.Fatal(err)
+	after, readError := os.ReadFile(filepath.Join(programRegionCensusProduct(test, true), "membership.csv"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if !bytes.Equal(before, after) {
 		test.Fatalf("pinned 1685-record census differs\nscanning:\n%s\nindexed:\n%s", before, after)

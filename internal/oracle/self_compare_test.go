@@ -39,13 +39,13 @@ func TestSelfCompareSweep(test *testing.T) {
 
 func selfCompare(test *testing.T, name string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "stage3/fixtures/self-compare", name+".a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "stage3/fixtures/self-compare", name+".a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	expected := onNode(test, path)
 	compare := func(mode string, actual run) {
@@ -69,8 +69,8 @@ func selfCompare(test *testing.T, name string) {
 		test.Fatal(report)
 	}
 	countedBinary := filepath.Join(test.TempDir(), "counted")
-	if err := native.Build(native.C(program), countedBinary, native.Options{Count: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), countedBinary, native.Options{Count: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	counted := execute(test, countedBinary)
 	if report := leakcheck.Unbalanced(leakRun(counted)); report != "" {
@@ -85,13 +85,13 @@ func selfCompare(test *testing.T, name string) {
 
 func TestSelfCompareConstantMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "stage3/fixtures/self-compare/sweep.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "stage3/fixtures/self-compare/sweep.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	source := native.C(program)
 	calls := regexp.MustCompile(`adamic_same_number\((adamic_local_[A-Za-z0-9_]+), (adamic_local_[A-Za-z0-9_]+)\)`)
@@ -108,8 +108,8 @@ func TestSelfCompareConstantMutant(test *testing.T) {
 		test.Fatal("mutant did not replace numeric self-equality")
 	}
 	binary := filepath.Join(test.TempDir(), "mutant")
-	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(source, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	actual := execute(test, binary)
 	if actual.exitCode != 0 || len(actual.stderr) != 0 {

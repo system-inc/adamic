@@ -159,10 +159,10 @@ func TestGeneratorFormsThisSliceDoesntLowerAreNotYet(test *testing.T) {
 	for _, probe := range probes {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var gap *NotYet
-			if !errors.As(err, &gap) || !strings.Contains(gap.What, probe.reason) {
-				test.Fatalf("got %v, want a NotYet saying %q", err, probe.reason)
+			if !errors.As(lowerSourceError, &gap) || !strings.Contains(gap.What, probe.reason) {
+				test.Fatalf("got %v, want a NotYet saying %q", lowerSourceError, probe.reason)
 			}
 		})
 	}
@@ -174,7 +174,9 @@ func TestGeneratorFormsThisSliceDoesntLowerAreNotYet(test *testing.T) {
 // generator's own call is not one (MayThrow stays false, since the call runs none of the body).
 func TestGeneratorDeclarationsLowerOntoTheirFrame(test *testing.T) {
 	test.Parallel()
-	program, err := lowerSource(test, `function* checked(values: number[]): Generator<number, void, undefined> {
+	program, lowerSourceError := lowerSource(
+		test,
+		`function* checked(values: number[]): Generator<number, void, undefined> {
 	for (const value of values) {
 		if (value < 0) {
 			throw new Error("negative");
@@ -188,9 +190,10 @@ function* quiet(): Generator<string, void, undefined> {
 for (const value of checked([1, 2])) {
 	console.log(String(value));
 }
-quiet();`)
-	if err != nil {
-		test.Fatal(err)
+quiet();`,
+	)
+	if lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
 	found := map[string]ir.Function{}
 	for _, function := range program.Functions {
@@ -216,8 +219,8 @@ quiet();`)
 			quiet.ResumeMayThrow,
 		)
 	}
-	if err := checkGeneratorRoads(program); err != nil {
-		test.Errorf("the lowered program's roads: %v", err)
+	if checkGeneratorRoadsError := checkGeneratorRoads(program); checkGeneratorRoadsError != nil {
+		test.Errorf("the lowered program's roads: %v", checkGeneratorRoadsError)
 	}
 }
 
@@ -226,12 +229,15 @@ quiet();`)
 // missed stop would make, a generator call stored in an ordinary local.
 func TestGeneratorRoadsBackstopFailsOnAStoredGenerator(test *testing.T) {
 	test.Parallel()
-	program, err := lowerSource(test, "function* numbers(): Generator<number, void, undefined> { yield 1; } numbers();")
-	if err != nil {
-		test.Fatal(err)
+	program, lowerSourceError := lowerSource(
+		test,
+		"function* numbers(): Generator<number, void, undefined> { yield 1; } numbers();",
+	)
+	if lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
-	if err := checkGeneratorRoads(program); err != nil {
-		test.Fatalf("the lowered program: %v", err)
+	if checkGeneratorRoadsError := checkGeneratorRoads(program); checkGeneratorRoadsError != nil {
+		test.Fatalf("the lowered program: %v", checkGeneratorRoadsError)
 	}
 	var call ir.Call
 	for _, statement := range program.Main {
@@ -247,7 +253,7 @@ func TestGeneratorRoadsBackstopFailsOnAStoredGenerator(test *testing.T) {
 	local := len(program.Locals)
 	program.Locals = append(program.Locals, ir.Local{Name: "held", Type: ir.Object, Function: -1})
 	program.Main = append(program.Main, ir.Declare{Local: local, Value: call})
-	if err := checkGeneratorRoads(program); err == nil {
+	if checkGeneratorRoadsError := checkGeneratorRoads(program); checkGeneratorRoadsError == nil {
 		test.Fatal("a generator call stored in an ordinary local passed the backstop")
 	}
 }
@@ -266,22 +272,22 @@ func TestGeneratorVoidReturnIsNeverReadBySpreadOrArrayFrom(test *testing.T) {
 		plain + "console.log([0, ...numbers(2)].join(','));",
 		plain + "console.log(Array.from(numbers(3)).join(','));",
 	} {
-		if _, err := lowerSource(test, source); err != nil {
-			test.Errorf("%s: %v", source, err)
+		if _, lowerSourceError := lowerSource(test, source); lowerSourceError != nil {
+			test.Errorf("%s: %v", source, lowerSourceError)
 		}
 	}
-	_, err := lowerSource(test, plain+"const [first] = numbers(3); console.log(String(first));")
+	_, lowerSourceError := lowerSource(test, plain+"const [first] = numbers(3); console.log(String(first));")
 	var refused *Refused
-	if !errors.As(err, &refused) || !strings.Contains(refused.Error(), "adamic/no-void-read") {
-		test.Errorf("destructuring a plain function*: got %v, want adamic/no-void-read's refusal", err)
+	if !errors.As(lowerSourceError, &refused) || !strings.Contains(refused.Error(), "adamic/no-void-read") {
+		test.Errorf("destructuring a plain function*: got %v, want adamic/no-void-read's refusal", lowerSourceError)
 	}
 	// A yielded type that holds void is read by every step, so the rules still judge it.
-	_, err = lowerSource(
+	_, lowerSourceError = lowerSource(
 		test,
 		"function* voids(): Generator<void[], void, undefined> { yield []; }\nconsole.log(String([...voids()].length));",
 	)
-	if !errors.As(err, &refused) {
-		test.Errorf("spreading a generator of void[]: got %v, want a void rule's refusal", err)
+	if !errors.As(lowerSourceError, &refused) {
+		test.Errorf("spreading a generator of void[]: got %v, want a void rule's refusal", lowerSourceError)
 	}
 	// Adamic's conditions (#qk8rztp, 20:22Z). A generator whose yields are void calls is read at
 	// every step, so spread and Array.from of it stay refused; the mutant that drops the yielded-type
@@ -295,9 +301,9 @@ func TestGeneratorVoidReturnIsNeverReadBySpreadOrArrayFrom(test *testing.T) {
 		// Language's attack: a mapper is a second argument, outside the exemption.
 		plain + "console.log(Array.from(numbers(3), (value) => value).join(','));",
 	} {
-		_, err := lowerSource(test, source)
-		if !errors.As(err, &refused) || !strings.Contains(refused.Error(), "adamic/no-void") {
-			test.Errorf("%s: got %v, want a void rule's refusal", source, err)
+		_, lowerSourceError := lowerSource(test, source)
+		if !errors.As(lowerSourceError, &refused) || !strings.Contains(refused.Error(), "adamic/no-void") {
+			test.Errorf("%s: got %v, want a void rule's refusal", source, lowerSourceError)
 		}
 	}
 	// Language's other attack: a generic generator spread at a void instantiation. Generic generators
@@ -309,10 +315,13 @@ func TestGeneratorVoidReturnIsNeverReadBySpreadOrArrayFrom(test *testing.T) {
 	// before the void rules (asyncGeneratorRefusal also taking a generic function*); this reads that
 	// stop instead, and goes red.
 	generic := "function f(): void {}\nfunction* each<T>(value: T) { yield value; }\nconsole.log(String([...each(f())].length));"
-	if _, err := lowerSource(
+	if _, lowerSourceError := lowerSource(
 		test,
 		generic,
-	); !errors.As(err, &refused) || !strings.Contains(refused.Error(), "adamic/no-void") {
-		test.Errorf("a generic generator spread at a void instantiation: got %v, want a void rule's refusal", err)
+	); !errors.As(lowerSourceError, &refused) || !strings.Contains(refused.Error(), "adamic/no-void") {
+		test.Errorf(
+			"a generic generator spread at a void instantiation: got %v, want a void rule's refusal",
+			lowerSourceError,
+		)
 	}
 }

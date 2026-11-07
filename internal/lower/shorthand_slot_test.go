@@ -119,16 +119,16 @@ func TestShorthandIsJudgedAgainstItsPropertysSlot(test *testing.T) {
 			}
 			test.Run(probe.name+extension, func(test *testing.T) {
 				test.Parallel()
-				_, err := lowerSourceAs(test, probe.source, extension)
+				_, lowerSourceAsError := lowerSourceAs(test, probe.source, extension)
 				want := probe.where +
 					": Adamic 0.1 refuses a value of type " +
 					probe.seen +
 					", whose readonly field t becomes writable"
 				var refused *Refused
-				if !errors.As(err, &refused) ||
-					!strings.Contains(err.Error(), want) ||
-					!strings.HasSuffix(err.Error(), "(adamic/invariant-mutable)") {
-					test.Fatalf("want %q, got %v", want, err)
+				if !errors.As(lowerSourceAsError, &refused) ||
+					!strings.Contains(lowerSourceAsError.Error(), want) ||
+					!strings.HasSuffix(lowerSourceAsError.Error(), "(adamic/invariant-mutable)") {
+					test.Fatalf("want %q, got %v", want, lowerSourceAsError)
 				}
 			})
 		}

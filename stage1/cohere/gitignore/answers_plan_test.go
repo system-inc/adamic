@@ -53,9 +53,9 @@ func TestPortAnswerPreparedUnitPlan(test *testing.T) {
 			test.Fatalf("child %d caught planted failure %d times", target, caught)
 		}
 	}
-	file, err := parser.ParseFile(token.NewFileSet(), "answers_prepared_units_test.go", nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	file, parseFileError := parser.ParseFile(token.NewFileSet(), "answers_prepared_units_test.go", nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	declared := map[string]bool{}
 	for _, decl := range file.Decls {

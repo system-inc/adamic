@@ -34,24 +34,24 @@ const optionalRewrite = "present undefined in optional property declarations"
 // lowering: LoadOverlay remains the authoritative checker gate after every adaptation.
 // The options match load's fixed options; the resolver needs no Adamic prelude declarations.
 func optionalProgram(paths []string, overlay map[string]string) (*compiler.Program, map[string]bool, error) {
-	cwd, err := os.Getwd()
-	if err != nil {
-		return nil, nil, err
+	cwd, workingDirectoryError := os.Getwd()
+	if workingDirectoryError != nil {
+		return nil, nil, workingDirectoryError
 	}
 	owned := make(map[string]bool)
 	fs := &optionalFS{FS: osvfs.FS(), source: make(map[string]string)}
 	roots := make([]tspath.RootedFilePath, 0, len(paths))
 	for _, path := range paths {
-		absolute, err := filepath.Abs(path)
-		if err != nil {
-			return nil, nil, err
+		absolute, absolutePathError := filepath.Abs(path)
+		if absolutePathError != nil {
+			return nil, nil, absolutePathError
 		}
 		name := filepath.ToSlash(absolute)
 		owned[name] = true
 		if strings.HasSuffix(name, ".a") {
-			source, err := os.ReadFile(path)
-			if err != nil {
-				return nil, nil, err
+			source, readError := os.ReadFile(path)
+			if readError != nil {
+				return nil, nil, readError
 			}
 			if fs.FS.FileExists(tspath.RootedFilePathFromAbsolute(name + ".ts")) {
 				return nil, nil, fmt.Errorf("ambiguous adaptation source %s", name)
@@ -63,9 +63,9 @@ func optionalProgram(paths []string, overlay map[string]string) (*compiler.Progr
 		roots = append(roots, tspath.RootedFilePathFromAbsolute(name))
 	}
 	for path, source := range overlay {
-		absolute, err := filepath.Abs(path)
-		if err != nil {
-			return nil, nil, err
+		absolute, absolutePathError := filepath.Abs(path)
+		if absolutePathError != nil {
+			return nil, nil, absolutePathError
 		}
 		name := filepath.ToSlash(absolute)
 		if strings.HasSuffix(name, ".a") {
@@ -82,7 +82,13 @@ func optionalProgram(paths []string, overlay map[string]string) (*compiler.Progr
 		Lib: []string{"lib.es2024.d.ts"}, Types: []string{},
 	}
 	fileSystem := cachedvfs.From(bundled.WrapFS(fs))
-	config := tsoptions.NewParsedCommandLine(options, roots, nil, tspath.RootedDirectoryPathFromAbsolute(filepath.ToSlash(cwd)), fileSystem.CaseSensitivity())
+	config := tsoptions.NewParsedCommandLine(
+		options,
+		roots,
+		nil,
+		tspath.RootedDirectoryPathFromAbsolute(filepath.ToSlash(cwd)),
+		fileSystem.CaseSensitivity(),
+	)
 	host := compiler.NewCachedFSCompilerHost(fileSystem, bundled.LibPath(), nil, nil, nil)
 	program := compiler.NewProgram(compiler.ProgramOptions{Config: config, Host: host, SingleThreaded: core.TSTrue})
 	if program == nil {
@@ -128,9 +134,9 @@ func optionalAdaptations(paths []string, overlay map[string]string, before error
 	if !relevant {
 		return overlay, 0, nil
 	}
-	program, owned, err := optionalProgram(paths, overlay)
-	if err != nil {
-		return nil, 0, err
+	program, owned, optionalProgramError := optionalProgram(paths, overlay)
+	if optionalProgramError != nil {
+		return nil, 0, optionalProgramError
 	}
 	files := make(map[string]*ast.SourceFile)
 	for _, file := range program.GetSourceFiles() {
@@ -142,9 +148,9 @@ func optionalAdaptations(paths []string, overlay map[string]string, before error
 		if match == nil || strings.Contains(diagnostic, "could be instantiated") {
 			continue
 		}
-		name, err := filepath.Abs(match[1])
-		if err != nil {
-			return nil, 0, err
+		name, absolutePathError := filepath.Abs(match[1])
+		if absolutePathError != nil {
+			return nil, 0, absolutePathError
 		}
 		name = filepath.ToSlash(name)
 		if strings.HasSuffix(name, ".a") {
@@ -168,8 +174,18 @@ func optionalAdaptations(paths []string, overlay map[string]string, before error
 					continue
 				}
 				assignment := n.AsBinaryExpression()
-				if assignment.OperatorToken.Kind == ast.KindEqualsToken && assignment.Left.Pos() <= pos && pos < assignment.Left.End() && !unprovenIndexRead(c, assignment.Right) && !genericReceiver(c, assignment.Left) {
-					selectOptional(c, c.GetSymbolAtLocation(assignment.Left), c.GetTypeAtLocation(assignment.Right), owned, selected)
+				if assignment.OperatorToken.Kind == ast.KindEqualsToken &&
+					assignment.Left.Pos() <= pos &&
+					pos < assignment.Left.End() &&
+					!unprovenIndexRead(c, assignment.Right) &&
+					!genericReceiver(c, assignment.Left) {
+					selectOptional(
+						c,
+						c.GetSymbolAtLocation(assignment.Left),
+						c.GetTypeAtLocation(assignment.Right),
+						owned,
+						selected,
+					)
 				}
 				break
 			}
@@ -198,7 +214,8 @@ func optionalAdaptations(paths []string, overlay map[string]string, before error
 					value := c.GetTypeOfSymbolAtLocation(actual, expression)
 					if len(actual.Declarations) == 1 {
 						declaration := actual.Declarations[0]
-						if declaration.Kind == ast.KindPropertyAssignment && unprovenIndexRead(c, declaration.AsPropertyAssignment().Initializer) {
+						if declaration.Kind == ast.KindPropertyAssignment &&
+							unprovenIndexRead(c, declaration.AsPropertyAssignment().Initializer) {
 							continue
 						}
 					}
@@ -238,7 +255,11 @@ func optionalAdaptations(paths []string, overlay map[string]string, before error
 			if colon < start || file.Text()[colon] != ':' {
 				return nil, 0, fmt.Errorf("invalid method signature delimiter in %s", name)
 			}
-			edits[name] = append(edits[name], optionalEdit{start, start, ": (", ownerStart}, optionalEdit{colon, colon + 1, " =>", ownerStart})
+			edits[name] = append(
+				edits[name],
+				optionalEdit{start, start, ": (", ownerStart},
+				optionalEdit{colon, colon + 1, " =>", ownerStart},
+			)
 		} else {
 			edits[name] = append(edits[name], optionalEdit{start, start, "(", ownerStart})
 		}
@@ -273,7 +294,13 @@ func optionalAdaptations(paths []string, overlay map[string]string, before error
 	return overlay, count, nil
 }
 
-func selectOptional(c *checker.Checker, symbol *ast.Symbol, value *checker.Type, owned map[string]bool, selected map[*ast.Node]bool) {
+func selectOptional(
+	c *checker.Checker,
+	symbol *ast.Symbol,
+	value *checker.Type,
+	owned map[string]bool,
+	selected map[*ast.Node]bool,
+) {
 	if symbol == nil || symbol.Flags&ast.SymbolFlagsOptional == 0 || len(symbol.Declarations) == 0 || value == nil {
 		return
 	}
@@ -293,10 +320,14 @@ func selectOptional(c *checker.Checker, symbol *ast.Symbol, value *checker.Type,
 	// Resolve every declaration of a merged symbol. Never rewrite external libraries,
 	// required properties, live methods/accessors, inferred slots, or a narrower generic contract.
 	for _, declaration := range symbol.Declarations {
-		if declaration.Kind != ast.KindPropertySignature && declaration.Kind != ast.KindPropertyDeclaration && declaration.Kind != ast.KindMethodSignature {
+		if declaration.Kind != ast.KindPropertySignature &&
+			declaration.Kind != ast.KindPropertyDeclaration &&
+			declaration.Kind != ast.KindMethodSignature {
 			return
 		}
-		if !ast.HasQuestionToken(declaration) || declaration.Type() == nil || !owned[ast.GetSourceFileOfNode(declaration).FileName().AsString()] {
+		if !ast.HasQuestionToken(declaration) ||
+			declaration.Type() == nil ||
+			!owned[ast.GetSourceFileOfNode(declaration).FileName().AsString()] {
 			return
 		}
 		var target *checker.Type
@@ -316,14 +347,16 @@ func selectOptional(c *checker.Checker, symbol *ast.Symbol, value *checker.Type,
 		} else {
 			target = c.GetTypeFromTypeNode(declaration.Type())
 		}
-		if target.Flags()&(checker.TypeFlagsAnyOrUnknown|checker.TypeFlagsTypeParameter|checker.TypeFlagsIndexedAccess) != 0 || c.IsTypeAssignableTo(c.GetUndefinedType(), target) {
+		if target.Flags()&(checker.TypeFlagsAnyOrUnknown|checker.TypeFlagsTypeParameter|checker.TypeFlagsIndexedAccess) != 0 ||
+			c.IsTypeAssignableTo(c.GetUndefinedType(), target) {
 			return
 		}
 		for _, part := range parts {
 			if part.Flags()&checker.TypeFlagsUndefined != 0 {
 				continue
 			}
-			if part.Flags()&(checker.TypeFlagsAnyOrUnknown|checker.TypeFlagsTypeParameter|checker.TypeFlagsIndexedAccess) != 0 || !c.IsTypeAssignableTo(part, target) {
+			if part.Flags()&(checker.TypeFlagsAnyOrUnknown|checker.TypeFlagsTypeParameter|checker.TypeFlagsIndexedAccess) != 0 ||
+				!c.IsTypeAssignableTo(part, target) {
 				return
 			}
 		}
@@ -408,7 +441,8 @@ func unprovenIndexRead(c *checker.Checker, node *ast.Node) bool {
 	}
 	if node.Kind == ast.KindConditionalExpression {
 		conditional := node.AsConditionalExpression()
-		if c.GetTypeAtLocation(conditional.WhenTrue).Flags()&checker.TypeFlagsUndefined != 0 || c.GetTypeAtLocation(conditional.WhenFalse).Flags()&checker.TypeFlagsUndefined != 0 {
+		if c.GetTypeAtLocation(conditional.WhenTrue).Flags()&checker.TypeFlagsUndefined != 0 ||
+			c.GetTypeAtLocation(conditional.WhenFalse).Flags()&checker.TypeFlagsUndefined != 0 {
 			return false
 		}
 	}

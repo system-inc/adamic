@@ -18,17 +18,17 @@ func init() {
 func TestLoomViewsDOriginal(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(repository, "internal/oracle/testdata/loom_views_d/checked-cast.ts")
-	path, err := filepath.Abs(path)
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(path)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	want := onNode(test, path)
 	if want.exitCode != 0 || string(want.stdout) != "8\n" {
 		test.Fatalf("Node: %#v", want)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	sanitized, _ := nativelyUncached(test, program)
 	for backend, got := range map[string]run{
@@ -49,17 +49,17 @@ func loomViewsDAgrees(test *testing.T, relative string) {
 
 func loomViewsDAgreesBackend(test *testing.T, relative, backend string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, relative))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, relative))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	want := onNode(test, path)
 	if want.exitCode != 0 {
 		test.Fatalf("Node: %#v", want)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	for _, candidate := range []string{"native", "sanitized", "javascript"} {
 		if backend != "" && backend != candidate {
@@ -127,30 +127,35 @@ func TestLoomViewsDCallableUnion(test *testing.T) {
 // at the read.
 func TestLoomViewsDBadCallable(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/lower/testdata/fx7_wrong_aborts/bad_callable.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/lower/testdata/fx7_wrong_aborts/bad_callable.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	node := onNode(test, path)
 	if node.exitCode != 0 || string(node.stdout) != "before\nargument\n99\n" {
 		test.Fatalf("Node: %#v", node)
 	}
-	_, err = lowered(test, path)
+	_, loweredError := lowered(test, path)
 	var refused *lower.Refused
-	if !errors.As(err, &refused) ||
-		!strings.Contains(err.Error(), "bad_callable.a:6:14:") ||
-		!strings.Contains(err.Error(), "a downcast to Receiver whose tag test is vacuous") ||
-		!strings.Contains(err.Error(), "give Receiver a tag of its own") {
-		test.Fatalf("want the located vacuous downcast refusal at 6:14, got %v", err)
+	if !errors.As(loweredError, &refused) ||
+		!strings.Contains(loweredError.Error(), "bad_callable.a:6:14:") ||
+		!strings.Contains(loweredError.Error(), "a downcast to Receiver whose tag test is vacuous") ||
+		!strings.Contains(loweredError.Error(), "give Receiver a tag of its own") {
+		test.Fatalf("want the located vacuous downcast refusal at 6:14, got %v", loweredError)
 	}
-	_, err = lowered(test, typeScriptTwin(test, path))
-	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "bad_callable.ts:9:16:") || !strings.Contains(
-		err.Error(),
-		"checked view read of field value with unsupported representation conversion contract",
-	) || !strings.Contains(
-		err.Error(),
-		"prove or implement the representation conversion contract before reading this field",
-	) {
-		test.Fatalf("twin: want the located representation conversion refusal at 9:16, got %v", err)
+	_, loweredError = lowered(test, typeScriptTwin(test, path))
+	if !errors.As(loweredError, &refused) ||
+		!strings.Contains(loweredError.Error(), "bad_callable.ts:9:16:") ||
+		!strings.Contains(
+			loweredError.Error(),
+			"checked view read of field value with unsupported representation conversion contract",
+		) ||
+		!strings.Contains(
+			loweredError.Error(),
+			"prove or implement the representation conversion contract before reading this field",
+		) {
+		test.Fatalf("twin: want the located representation conversion refusal at 9:16, got %v", loweredError)
 	}
 }

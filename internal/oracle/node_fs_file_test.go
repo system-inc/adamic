@@ -35,15 +35,15 @@ var fsFileRefusedFixtures = []string{
 func fsFilePrepare(test *testing.T, shared, name string) inputRun {
 	test.Helper()
 	root := filepath.Join(shared, name)
-	if err := os.Mkdir(root, 0777); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.Mkdir(root, 0777); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	if err := os.Chmod(root, 0777); err != nil {
-		test.Fatal(err)
+	if changeModeError := os.Chmod(root, 0777); changeModeError != nil {
+		test.Fatal(changeModeError)
 	}
 	for _, dir := range []string{"directory", "locked", "closed"} {
-		if err := os.Mkdir(filepath.Join(root, dir), 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.Mkdir(filepath.Join(root, dir), 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 	}
 	for name, data := range map[string][]byte{
@@ -58,27 +58,27 @@ func fsFilePrepare(test *testing.T, shared, name string) inputRun {
 		"locked/file": []byte("locked"),
 		"closed/file": []byte("closed"),
 	} {
-		if err := os.WriteFile(filepath.Join(root, name), data, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(root, name), data, 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	for name, target := range map[string]string{"link": "file", "dangling": "missing", "directory-link": "directory"} {
-		if err := os.Symlink(target, filepath.Join(root, name)); err != nil {
-			test.Fatal(err)
+		if symlinkError := os.Symlink(target, filepath.Join(root, name)); symlinkError != nil {
+			test.Fatal(symlinkError)
 		}
 	}
-	if err := os.Chmod(filepath.Join(root, "locked"), 0555); err != nil {
-		test.Fatal(err)
+	if changeModeError := os.Chmod(filepath.Join(root, "locked"), 0555); changeModeError != nil {
+		test.Fatal(changeModeError)
 	}
-	if err := os.Chmod(filepath.Join(root, "closed"), 0000); err != nil {
-		test.Fatal(err)
+	if changeModeError := os.Chmod(filepath.Join(root, "closed"), 0000); changeModeError != nil {
+		test.Fatal(changeModeError)
 	}
 	// locked and closed keep their files from RemoveAll, so they get their permissions back first: this cleanup runs
 	// before the shared directory's, which the caller registered earlier.
 	test.Cleanup(func() {
 		for _, dir := range []string{"locked", "closed"} {
-			if err := os.Chmod(filepath.Join(root, dir), 0o755); err != nil {
-				test.Errorf("%s stays unremovable: %v", dir, err)
+			if changeModeError := os.Chmod(filepath.Join(root, dir), 0o755); changeModeError != nil {
+				test.Errorf("%s stays unremovable: %v", dir, changeModeError)
 			}
 		}
 	})
@@ -94,25 +94,25 @@ func fsFilePrepare(test *testing.T, shared, name string) inputRun {
 func fsFileSnapshot(test *testing.T, root string) map[string]string {
 	test.Helper()
 	result := map[string]string{}
-	err := filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {
-		if err != nil {
+	walkError := filepath.WalkDir(root, func(path string, entry os.DirEntry, pathError error) error {
+		if pathError != nil {
 			if entry != nil && entry.IsDir() {
 				return filepath.SkipDir
 			}
-			return err
+			return pathError
 		}
-		relative, err := filepath.Rel(root, path)
-		if err != nil {
-			return err
+		relative, relativePathError := filepath.Rel(root, path)
+		if relativePathError != nil {
+			return relativePathError
 		}
-		info, err := entry.Info()
-		if err != nil {
-			return err
+		info, infoError := entry.Info()
+		if infoError != nil {
+			return infoError
 		}
 		if entry.Type()&os.ModeSymlink != 0 {
-			target, err := os.Readlink(path)
-			if err != nil {
-				return err
+			target, readLinkError := os.Readlink(path)
+			if readLinkError != nil {
+				return readLinkError
 			}
 			result[relative] = "link " + target
 			return nil
@@ -121,15 +121,15 @@ func fsFileSnapshot(test *testing.T, root string) map[string]string {
 			result[relative] = fmt.Sprintf("directory %v", info.Mode().Perm())
 			return nil
 		}
-		data, err := os.ReadFile(path)
-		if err != nil {
-			return err
+		data, readError := os.ReadFile(path)
+		if readError != nil {
+			return readError
 		}
 		result[relative] = fmt.Sprintf("file %v %q", info.Mode().Perm(), data)
 		return nil
 	})
-	if err != nil {
-		test.Fatal(err)
+	if walkError != nil {
+		test.Fatal(walkError)
 	}
 	return result
 }
@@ -139,13 +139,15 @@ func TestNodeFSFileAgreesWithNode(test *testing.T) {
 	for _, fixture := range fsFileFixtures {
 		test.Run(fixture, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_fs_file_"+fixture+".a"))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/node_fs_file_"+fixture+".a"),
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			shared := sharedDirectory(test)
 			truthRun := fsFilePrepare(test, shared, "node")
@@ -390,15 +392,15 @@ func TestNodeFSFileMutants(test *testing.T) {
 		}
 		test.Run(one.name, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(
+			path, absolutePathError := filepath.Abs(
 				filepath.Join(repository, "internal/oracle/testdata/node_fs_file_"+one.fixture+".a"),
 			)
-			if err != nil {
-				test.Fatal(err)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			code := native.C(program)
 			original := code
@@ -409,8 +411,8 @@ func TestNodeFSFileMutants(test *testing.T) {
 			code = strings.Replace(code, "#include \"adamic.h\"", "#include \"adamic.h\"\n"+one.helper, 1)
 			shared := sharedDirectory(test)
 			binary := filepath.Join(shared, "mutant")
-			if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(code, binary, native.Options{Sanitize: true}); buildError != nil {
+				test.Fatal(buildError)
 			}
 			how := fsFilePrepare(test, shared, "mutant-input")
 			got := executeInput(

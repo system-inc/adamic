@@ -110,16 +110,16 @@ func parserConstructionProgram(fixture string) *ir.Program {
 
 func parserSourceObservation(test *testing.T, fixture string) string {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join("../../stage3/parser-ahead/rulings", fixture))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join("../../stage3/parser-ahead/rulings", fixture))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	code := `const fs = require('node:fs'); const {stripTypeScriptTypes}=require('node:module'); eval(stripTypeScriptTypes(fs.readFileSync(process.argv[1],'utf8'),{mode:'transform'}));`
 	command := exec.Command("node", "--disable-warning=ExperimentalWarning", "-e", code, path)
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
-	if err := command.Run(); err != nil || stderr.Len() != 0 {
-		test.Fatalf("source Node: %v\n%s", err, stderr.String())
+	if runError := command.Run(); runError != nil || stderr.Len() != 0 {
+		test.Fatalf("source Node: %v\n%s", runError, stderr.String())
 	}
 	return stdout.String()
 }
@@ -130,13 +130,13 @@ func parserConstructionRun(test *testing.T, fixture string, mutationFile, before
 	binary := filepath.Join(test.TempDir(), "native")
 	options := Options{Sanitize: true}
 	if mutationFile == "" {
-		if err := Build(source, binary, options); err != nil {
-			test.Fatal(err)
+		if buildError := Build(source, binary, options); buildError != nil {
+			test.Fatal(buildError)
 		}
 	} else {
-		files, err := readRuntime(runtime, "runtime")
-		if err != nil {
-			test.Fatal(err)
+		files, readRuntimeError := readRuntime(runtime, "runtime")
+		if readRuntimeError != nil {
+			test.Fatal(readRuntimeError)
 		}
 		changed := false
 		for index := range files {
@@ -154,22 +154,22 @@ func parserConstructionRun(test *testing.T, fixture string, mutationFile, before
 			test.Fatal("mutant changed no runtime file")
 		}
 		directory := test.TempDir()
-		compiler, err := exec.LookPath("clang")
-		if err != nil {
-			test.Fatal(err)
+		compiler, lookPathError := exec.LookPath("clang")
+		if lookPathError != nil {
+			test.Fatal(lookPathError)
 		}
 		flags := sourceFlags(source, options)
-		cache, err := cacheDirectory("native-runtime")
-		if err != nil {
-			test.Fatal(err)
+		cache, cacheDirectoryError := cacheDirectory("native-runtime")
+		if cacheDirectoryError != nil {
+			test.Fatal(cacheDirectoryError)
 		}
-		library, err := cachedRuntime(files, flags, compiler, "parser construction mutant", cache)
-		if err != nil {
-			test.Fatal(err)
+		library, cachedRuntimeError := cachedRuntime(files, flags, compiler, "parser construction mutant", cache)
+		if cachedRuntimeError != nil {
+			test.Fatal(cachedRuntimeError)
 		}
 		main := filepath.Join(directory, "main.c")
-		if err := os.WriteFile(main, []byte(source), 0o600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(main, []byte(source), 0o600); writeError != nil {
+			test.Fatal(writeError)
 		}
 		arguments := append(
 			append(append([]string{}, flags...), prefixMaps(directory, "program")...),
@@ -179,16 +179,19 @@ func parserConstructionRun(test *testing.T, fixture string, mutationFile, before
 		)
 		arguments = append(arguments, RuntimeLinkFlags(library)...)
 		arguments = append(arguments, "-lm", "-o", binary)
-		if output, err := exec.Command(compiler, arguments...).CombinedOutput(); err != nil {
-			test.Fatalf("mutant compile: %v\n%s", err, output)
+		if output, combinedOutputError := exec.Command(
+			compiler,
+			arguments...,
+		).CombinedOutput(); combinedOutputError != nil {
+			test.Fatalf("mutant compile: %v\n%s", combinedOutputError, output)
 		}
 	}
 	command := exec.Command(binary)
 	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1")
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
-	if err := command.Run(); err != nil || stderr.Len() != 0 {
-		test.Fatalf("native: %v\n%s", err, stderr.String())
+	if runError := command.Run(); runError != nil || stderr.Len() != 0 {
+		test.Fatalf("native: %v\n%s", runError, stderr.String())
 	}
 	return stdout.String()
 }
@@ -222,12 +225,16 @@ func assertParserConstructionBackend(test *testing.T, fixture string) {
 	}
 	directory := test.TempDir()
 	path := filepath.Join(directory, "generated.mjs")
-	if err := os.WriteFile(path, []byte(javascript.JavaScript(parserConstructionProgram(fixture))), 0o600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(
+		path,
+		[]byte(javascript.JavaScript(parserConstructionProgram(fixture))),
+		0o600,
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
-	runner, err := filepath.Abs("../../oracle/node.mjs")
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs("../../oracle/node.mjs")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	if got := runWithInput(test, "", "node", runner, path); got != want {
 		test.Fatalf("JavaScript stdout %q; Node %q", got, want)

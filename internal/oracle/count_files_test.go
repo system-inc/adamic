@@ -38,8 +38,8 @@ func countRecord(kind, key, row string) ([]byte, error) {
 	}
 	fields[len(fields)-1] = strings.TrimSuffix(fields[len(fields)-1], " |")
 	for _, field := range fields[1:] {
-		value, err := strconv.ParseUint(field, 10, 64)
-		if err != nil || strconv.FormatUint(value, 10) != field {
+		value, parseError := strconv.ParseUint(field, 10, 64)
+		if parseError != nil || strconv.FormatUint(value, 10) != field {
 			return nil, fmt.Errorf("invalid count %q for %s", field, key)
 		}
 	}
@@ -48,14 +48,14 @@ func countRecord(kind, key, row string) ([]byte, error) {
 
 func readCountRow(root, kind, key string) (string, error) {
 	file := filepath.Join(root, kind, filepath.FromSlash(key)+".counts")
-	data, err := os.ReadFile(file)
-	if err != nil {
-		return "", err
+	data, readError := os.ReadFile(file)
+	if readError != nil {
+		return "", readError
 	}
 	row := strings.TrimSuffix(string(data), "\n")
-	canonical, err := countRecord(kind, key, row)
-	if err != nil {
-		return "", fmt.Errorf("%s: %w", file, err)
+	canonical, countRecordError := countRecord(kind, key, row)
+	if countRecordError != nil {
+		return "", fmt.Errorf("%s: %w", file, countRecordError)
 	}
 	if !bytes.Equal(data, canonical) {
 		return "", fmt.Errorf("%s must contain exactly one row with an LF newline", file)
@@ -69,9 +69,9 @@ func readCountRows(root, kind string, keys []string) (map[string]string, error) 
 		if _, exists := rows[key]; exists {
 			return nil, fmt.Errorf("duplicate %s count fixture %s", kind, key)
 		}
-		row, err := readCountRow(root, kind, key)
-		if err != nil {
-			return nil, err
+		row, readCountRowError := readCountRow(root, kind, key)
+		if readCountRowError != nil {
+			return nil, readCountRowError
 		}
 		rows[key] = row
 	}
@@ -84,9 +84,9 @@ func writeCountFiles(root string, runtime, predicates map[string]string) error {
 	files := map[string][]byte{}
 	for kind, rows := range map[string]map[string]string{"runtime": runtime, "predicates": predicates} {
 		for key, row := range rows {
-			data, err := countRecord(kind, key, row)
-			if err != nil {
-				return err
+			data, countRecordError := countRecord(kind, key, row)
+			if countRecordError != nil {
+				return countRecordError
 			}
 			files[filepath.Join(root, kind, filepath.FromSlash(key)+".counts")] = data
 		}
@@ -98,23 +98,23 @@ func writeCountFiles(root string, runtime, predicates map[string]string) error {
 	slices.Sort(paths)
 	for _, path := range paths {
 		data := files[path]
-		if old, err := os.ReadFile(path); err == nil && bytes.Equal(old, data) {
+		if old, readError := os.ReadFile(path); readError == nil && bytes.Equal(old, data) {
 			continue
 		}
-		if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
-			return err
+		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0o755); createDirectoryError != nil {
+			return createDirectoryError
 		}
-		if err := os.WriteFile(path, data, 0o644); err != nil {
-			return err
+		if writeError := os.WriteFile(path, data, 0o644); writeError != nil {
+			return writeError
 		}
 	}
 	return nil
 }
 
 func countsFileCensus(root string) error {
-	predicateKeys, err := predicateCountKeys()
-	if err != nil {
-		return err
+	predicateKeys, predicateCountKeysError := predicateCountKeys()
+	if predicateCountKeysError != nil {
+		return predicateCountKeysError
 	}
 	expected := map[string]bool{}
 	for kind, keys := range map[string][]string{"runtime": countKeys(), "predicates": predicateKeys} {
@@ -128,19 +128,19 @@ func countsFileCensus(root string) error {
 			if source, ok := countFixtureSources[key]; ok {
 				fixture = source
 			}
-			if info, err := os.Stat(
+			if info, statError := os.Stat(
 				filepath.Join(repository, filepath.FromSlash(fixture)),
-			); err != nil || !info.Mode().IsRegular() {
-				return fmt.Errorf("%s has no fixture %s: %v", path, key, err)
+			); statError != nil || !info.Mode().IsRegular() {
+				return fmt.Errorf("%s has no fixture %s: %v", path, key, statError)
 			}
-			if _, err := readCountRow(root, kind, key); err != nil {
-				return fmt.Errorf("fixture %s needs counts file %s: %w", key, path, err)
+			if _, readCountRowError := readCountRow(root, kind, key); readCountRowError != nil {
+				return fmt.Errorf("fixture %s needs counts file %s: %w", key, path, readCountRowError)
 			}
 		}
 	}
-	return filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
+	return filepath.WalkDir(root, func(path string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
 		if entry.IsDir() || path == filepath.Join(root, "README.md") {
 			return nil
@@ -158,8 +158,8 @@ func TestCountsFilesCensus(test *testing.T) {
 	if *updateCounts {
 		return
 	}
-	if err := countsFileCensus(countsDirectory); err != nil {
-		test.Fatal(err)
+	if countsFileCensusError := countsFileCensus(countsDirectory); countsFileCensusError != nil {
+		test.Fatal(countsFileCensusError)
 	}
 }
 
@@ -170,22 +170,22 @@ func regenerateCountRecord(test *testing.T, kind, key, measured string) {
 	test.Helper()
 	root := test.TempDir()
 	rows := map[string]string{key: measured}
-	var err error
+	var writeCountFilesError error
 	if kind == "runtime" {
-		err = writeCountFiles(root, rows, nil)
+		writeCountFilesError = writeCountFiles(root, rows, nil)
 	} else {
-		err = writeCountFiles(root, nil, rows)
+		writeCountFilesError = writeCountFiles(root, nil, rows)
 	}
-	if err != nil {
-		test.Fatal(err)
+	if writeCountFilesError != nil {
+		test.Fatal(writeCountFilesError)
 	}
-	actual, err := os.ReadFile(filepath.Join(root, kind, filepath.FromSlash(key)+".counts"))
-	if err != nil {
-		test.Fatal(err)
+	actual, readError := os.ReadFile(filepath.Join(root, kind, filepath.FromSlash(key)+".counts"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	expected, err := os.ReadFile(countFile(kind, key))
-	if err != nil {
-		test.Fatal(err)
+	expected, readError := os.ReadFile(countFile(kind, key))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if !bytes.Equal(actual, expected) {
 		test.Errorf(

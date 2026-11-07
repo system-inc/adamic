@@ -20,19 +20,19 @@ func TestYieldLookaheadAgrees(test *testing.T) {
 	var manifest strings.Builder
 	for index, source := range cases {
 		path := filepath.Join(directory, fmt.Sprintf("yield-%d.ts", index))
-		if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		manifest.WriteString(path + "\n")
 	}
 	path := filepath.Join(directory, "manifest")
-	if err := os.WriteFile(path, []byte(manifest.String()), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(manifest.String()), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	want := execute(test, "", goOracle(test), "--manifest", path).output
-	port, err := filepath.Abs(".")
-	if err != nil {
-		test.Fatal(err)
+	port, absolutePathError := filepath.Abs(".")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	for _, side := range []struct {
 		name   string

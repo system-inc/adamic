@@ -16,24 +16,24 @@ import (
 func hostBuild(test *testing.T, source, output, directory string, options native.Options) {
 	test.Helper()
 	if directory == "" {
-		if err := native.Build(source, output, options); err != nil {
-			test.Fatal(err)
+		if buildError := native.Build(source, output, options); buildError != nil {
+			test.Fatal(buildError)
 		}
 		return
 	}
-	library, err := native.RuntimeLibrary(directory, options)
-	if err != nil {
-		test.Fatal(err)
+	library, runtimeLibraryError := native.RuntimeLibrary(directory, options)
+	if runtimeLibraryError != nil {
+		test.Fatal(runtimeLibraryError)
 	}
 	main := filepath.Join(test.TempDir(), "main.c")
-	if err := os.WriteFile(main, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(main, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	args := append(native.Flags(options), "-I", filepath.Dir(library), "-o", output, main)
 	args = append(args, native.RuntimeLinkFlags(library)...)
 	args = append(args, "-lm")
-	if out, err := exec.Command("clang", args...).CombinedOutput(); err != nil {
-		test.Fatalf("clang: %v\n%s", err, out)
+	if out, combinedOutputError := exec.Command("clang", args...).CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("clang: %v\n%s", combinedOutputError, out)
 	}
 }
 func hostRun(test *testing.T, env []string, program string, args ...string) leakcheck.Run {
@@ -59,10 +59,10 @@ func hostRun(test *testing.T, env []string, program string, args ...string) leak
 			cmd.Stderr = &stdout
 		}
 	}
-	err := cmd.Run()
-	if err != nil {
-		if _, ok := err.(*exec.ExitError); !ok {
-			test.Fatal(err)
+	runError := cmd.Run()
+	if runError != nil {
+		if _, ok := runError.(*exec.ExitError); !ok {
+			test.Fatal(runError)
 		}
 	}
 	return leakcheck.Run{Stdout: stdout.Bytes(), Stderr: stderr.Bytes(), ExitCode: cmd.ProcessState.ExitCode()}
@@ -70,17 +70,17 @@ func hostRun(test *testing.T, env []string, program string, args ...string) leak
 func hostMutant(test *testing.T, file, before, after string) string {
 	test.Helper()
 	directory := test.TempDir()
-	entries, err := os.ReadDir("runtime")
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir("runtime")
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	for _, e := range entries {
 		if e.IsDir() {
 			continue
 		}
-		data, err := os.ReadFile(filepath.Join("runtime", e.Name()))
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(filepath.Join("runtime", e.Name()))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		if e.Name() == file {
 			if strings.Count(string(data), before) != 1 {
@@ -88,8 +88,8 @@ func hostMutant(test *testing.T, file, before, after string) string {
 			}
 			data = []byte(strings.Replace(string(data), before, after, 1))
 		}
-		if err := os.WriteFile(filepath.Join(directory, e.Name()), data, 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, e.Name()), data, 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	return directory
@@ -97,38 +97,38 @@ func hostMutant(test *testing.T, file, before, after string) string {
 
 func hostFixture(test *testing.T) (source, dir, oracle string, env []string) {
 	test.Helper()
-	data, err := os.ReadFile("testdata/host-runtime/harness.c")
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile("testdata/host-runtime/harness.c")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	source = string(data)
-	oracleData, err := os.ReadFile("testdata/host-runtime/oracle.mjs")
-	if err != nil {
-		test.Fatal(err)
+	oracleData, readError := os.ReadFile("testdata/host-runtime/oracle.mjs")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	dir = test.TempDir()
 	oracle = filepath.Join(dir, "oracle.mjs")
-	if err := os.WriteFile(oracle, oracleData, 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(oracle, oracleData, 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	// Actual default-library entry, alongside both executable and Node bundle.
-	lib, err := os.ReadFile("../../cohere/TypeScript/tsc/internal/bundled/libs/lib.d.ts")
-	if err != nil {
-		test.Fatal(err)
+	lib, readError := os.ReadFile("../../cohere/TypeScript/tsc/internal/bundled/libs/lib.d.ts")
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	if err := os.WriteFile(filepath.Join(dir, "lib.d.ts"), lib, 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(dir, "lib.d.ts"), lib, 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	child := filepath.Join(dir, "child")
-	if err := os.Mkdir(child, 0700); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.Mkdir(child, 0700); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	cwd, err := os.Getwd()
-	if err != nil {
-		test.Fatal(err)
+	cwd, workingDirectoryError := os.Getwd()
+	if workingDirectoryError != nil {
+		test.Fatal(workingDirectoryError)
 	}
-	if err := os.WriteFile(filepath.Join(child, "file"), []byte("data"), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(child, "file"), []byte("data"), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	for name, target := range map[string]string{
 		"link":     "file",
@@ -136,8 +136,8 @@ func hostFixture(test *testing.T) (source, dir, oracle string, env []string) {
 		"loop-a":   "loop-b",
 		"loop-b":   "loop-a",
 	} {
-		if err := os.Symlink(target, filepath.Join(child, name)); err != nil {
-			test.Fatal(err)
+		if symlinkError := os.Symlink(target, filepath.Join(child, name)); symlinkError != nil {
+			test.Fatal(symlinkError)
 		}
 	}
 	env = []string{"HOST_EXPECT_CWD=" + cwd, "HOST_CHILD=" + child}
@@ -181,7 +181,7 @@ func runHostRuntimeContracts(test *testing.T, options native.Options) {
 				test.Fatalf("native %+v; Node %+v", got, truth)
 			}
 			if options.Sanitize {
-				report, err := leakcheck.Check(leakcheck.Program{
+				report, checkError := leakcheck.Check(leakcheck.Program{
 					C:         source,
 					Sanitized: binary,
 					Counted:   filepath.Join(test.TempDir(), "counted"),
@@ -190,8 +190,8 @@ func runHostRuntimeContracts(test *testing.T, options native.Options) {
 						return hostRun(test, append(env, extra...), name, args...)
 					},
 				})
-				if err != nil || report != "" {
-					test.Fatalf("leak check: %v %s", err, report)
+				if checkError != nil || report != "" {
+					test.Fatalf("leak check: %v %s", checkError, report)
 				}
 			}
 		})

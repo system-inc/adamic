@@ -17,15 +17,15 @@ func TestTasteRepresentationLimitsStayExplicit(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var notYet *NotYet
 			var refused *Refused
-			kind := errors.As(err, &notYet)
+			kind := errors.As(lowerSourceError, &notYet)
 			if probe.name == "enum prototype" {
-				kind = errors.As(err, &refused)
+				kind = errors.As(lowerSourceError, &refused)
 			}
-			if !kind || !strings.Contains(err.Error(), probe.reason) {
-				test.Fatalf("want NotYet %q, got %v", probe.reason, err)
+			if !kind || !strings.Contains(lowerSourceError.Error(), probe.reason) {
+				test.Fatalf("want NotYet %q, got %v", probe.reason, lowerSourceError)
 			}
 		})
 	}
@@ -33,10 +33,10 @@ func TestTasteRepresentationLimitsStayExplicit(test *testing.T) {
 
 func TestTasteBoxedScalarFieldNowLowers(test *testing.T) {
 	test.Parallel()
-	if _, err := lowerSource(
+	if _, lowerSourceError := lowerSource(
 		test,
 		`const box: {value: number | string} = {value: 1}; box.value = 3; console.log(String(box.value));`,
-	); err != nil {
-		test.Fatal(err)
+	); lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
 }

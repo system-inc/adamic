@@ -14,9 +14,9 @@ import (
 // the explicitly present A; both literal and runtime-built names must catch it.
 func TestProcessEnvironmentNULRejectMutantIsCaught(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("testdata/process_env/nul.a")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("testdata/process_env/nul.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	environment := processEnvironmentFixtureEnvironment("nul.a")
 	truth := processEnvironmentRun(
@@ -27,24 +27,24 @@ func TestProcessEnvironmentNULRejectMutantIsCaught(test *testing.T) {
 		filepath.Join(repository, "oracle/node.mjs"),
 		path,
 	)
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	source := native.C(program)
 	directory := test.TempDir()
-	entries, err := os.ReadDir("../native/runtime")
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir("../native/runtime")
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	changed := false
 	for _, entry := range entries {
 		if entry.IsDir() {
 			continue
 		}
-		data, err := os.ReadFile(filepath.Join("../native/runtime", entry.Name()))
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(filepath.Join("../native/runtime", entry.Name()))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		if entry.Name() == "host_runtime.c" {
 			const before = "adamic_string *adamic_host_environment(const adamic_string *name) {"
@@ -55,21 +55,26 @@ func TestProcessEnvironmentNULRejectMutantIsCaught(test *testing.T) {
 			data = []byte(strings.Replace(string(data), before, after, 1))
 			changed = true
 		}
-		if err := os.WriteFile(filepath.Join(directory, entry.Name()), data, 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, entry.Name()), data, 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	if !changed {
 		test.Fatal("runtime mutation changed nothing")
 	}
 	options := native.Options{Sanitize: true}
-	archive, err := native.RuntimeLibraryForSource(directory, source, options)
-	if err != nil {
-		test.Fatal(err)
+	archive, runtimeLibraryForSourceError := native.RuntimeLibraryForSource(directory, source, options)
+	if runtimeLibraryForSourceError != nil {
+		test.Fatal(runtimeLibraryForSourceError)
 	}
 	binary := filepath.Join(test.TempDir(), "mutant")
-	if err := native.BuildWithRuntime(source, binary, options, archive); err != nil {
-		test.Fatal(err)
+	if buildWithRuntimeError := native.BuildWithRuntime(
+		source,
+		binary,
+		options,
+		archive,
+	); buildWithRuntimeError != nil {
+		test.Fatal(buildWithRuntimeError)
 	}
 	got := processEnvironmentRun(test, environment, binary)
 	if truth.exitCode != 0 || got.exitCode != 0 || len(truth.stderr) != 0 || len(got.stderr) != 0 {

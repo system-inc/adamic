@@ -92,13 +92,13 @@ func commandRuntimeProduct(test *testing.T, name string) {
 			runtimeproducts.CommandArchive(test, product.options, product.features)
 			return
 		}
-		request, err := native.RuntimeRequestFor(product.options, product.features...)
-		if err != nil {
-			test.Fatal(err)
+		request, runtimeRequestForError := native.RuntimeRequestFor(product.options, product.features...)
+		if runtimeRequestForError != nil {
+			test.Fatal(runtimeRequestForError)
 		}
-		jobserver, err := ccjobserver.Process()
-		if err != nil {
-			test.Fatal(err)
+		jobserver, processError := ccjobserver.Process()
+		if processError != nil {
+			test.Fatal(processError)
 		}
 		buildcache.BuiltElsewhere(
 			test,
@@ -137,13 +137,13 @@ func TestProduct_CommandRuntimeWASICounted(test *testing.T) {
 // Portable's first part when declaring the product.
 func TestCommandRuntimeProductKeyHoldsEveryPart(test *testing.T) {
 	test.Parallel()
-	root, err := filepath.Abs("../..")
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs("../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	request, err := native.RuntimeRequestFor(native.Options{Sanitize: true})
-	if err != nil {
-		test.Fatal(err)
+	request, runtimeRequestForError := native.RuntimeRequestFor(native.Options{Sanitize: true})
+	if runtimeRequestForError != nil {
+		test.Fatal(runtimeRequestForError)
 	}
 	key := buildcache.NameKey(root, commandRuntimeInputs(request))
 	for index, part := range request.Portable {

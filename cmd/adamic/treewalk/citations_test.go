@@ -19,9 +19,9 @@ import (
 func TestDocumentedGoCitationsResolve(test *testing.T) {
 	test.Parallel()
 	root := filepath.Join("..", "..", "..")
-	page, err := os.ReadFile(filepath.Join(root, "docs", "cli.md"))
-	if err != nil {
-		test.Fatal(err)
+	page, readError := os.ReadFile(filepath.Join(root, "docs", "cli.md"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	declared := map[string]map[string]bool{}
 	symbols := 0
@@ -31,7 +31,7 @@ func TestDocumentedGoCitationsResolve(test *testing.T) {
 			continue
 		}
 		if anchor == "" {
-			if _, err := os.Stat(filepath.Join(root, path)); err != nil {
+			if _, statError := os.Stat(filepath.Join(root, path)); statError != nil {
 				test.Errorf("docs/cli.md names %s, which isn't in the tree", path)
 			}
 			continue
@@ -61,9 +61,9 @@ func TestDocumentedGoCitationsResolve(test *testing.T) {
 // declarationsOf names every top-level declaration of a Go file, methods as Type.Method.
 func declarationsOf(test *testing.T, path string) map[string]bool {
 	test.Helper()
-	file, err := parser.ParseFile(token.NewFileSet(), path, nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	file, parseFileError := parser.ParseFile(token.NewFileSet(), path, nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	names := map[string]bool{}
 	for _, declaration := range file.Decls {

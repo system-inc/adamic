@@ -36,9 +36,9 @@ func init() {
 func TestCallableProducerRegistryFiltersDirectFunctions(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(repository, "internal/lower/testdata/callable_producers/p21.ts")
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	injected := 0
 	for i := range program.ViewContracts {

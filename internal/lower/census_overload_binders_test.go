@@ -20,9 +20,9 @@ const answer = wrong(42); console.log('ran');`, "cannot be served by implementat
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
-			if err == nil || !strings.Contains(err.Error(), probe.stop) {
-				test.Fatalf("want %q, got %v", probe.stop, err)
+			_, lowerSourceError := lowerSource(test, probe.source)
+			if lowerSourceError == nil || !strings.Contains(lowerSourceError.Error(), probe.stop) {
+				test.Fatalf("want %q, got %v", probe.stop, lowerSourceError)
 			}
 		})
 	}

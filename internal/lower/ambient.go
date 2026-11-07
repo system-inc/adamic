@@ -73,8 +73,8 @@ func (l *lowering) ambientRefusal(node *ast.Node) error {
 		switch node.Kind {
 		case ast.KindVariableStatement:
 			// A .ts file's declaration a host-binding row names lowers by its row (host_bindings.go).
-			if matched, err := l.hostBindingStatement(node); matched {
-				return err
+			if matched, hostBindingStatementError := l.hostBindingStatement(node); matched {
+				return hostBindingStatementError
 			}
 			what = "an ambient value declaration"
 		case ast.KindFunctionDeclaration:
@@ -88,7 +88,11 @@ func (l *lowering) ambientRefusal(node *ast.Node) error {
 	if what == "" {
 		return nil
 	}
-	return &Refused{Where: l.program.Where(node), What: what, Fix: "define the values in a module and import them; use Adamic-generated platform bindings for host values"}
+	return &Refused{
+		Where: l.program.Where(node),
+		What:  what,
+		Fix:   "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+	}
 }
 
 func init() { refusalRules.register(2200, "ambientRefusal", (*lowering).ambientRefusal) }

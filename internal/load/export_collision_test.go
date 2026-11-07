@@ -12,12 +12,12 @@ func TestStarExportCollisionNamesBothModules(test *testing.T) {
 		[2]string{"left.a", "export const shared = 1;\n"},
 		[2]string{"right.a", "export const shared = 2;\n"},
 	)
-	_, err := Load(paths[:1])
+	_, loadError := Load(paths[:1])
 	want := fmt.Sprintf(
 		"%s:2:1: error TS2308: Adamic 0.1 refuses export * collision for 'shared' between './left.a' and './right.a'; explicitly re-export one binding",
 		paths[0],
 	)
-	if err == nil || err.Error() != want {
-		test.Fatalf("want exact refusal %q, got %v", want, err)
+	if loadError == nil || loadError.Error() != want {
+		test.Fatalf("want exact refusal %q, got %v", want, loadError)
 	}
 }

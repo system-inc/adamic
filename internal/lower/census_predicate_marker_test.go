@@ -14,24 +14,24 @@ const marker: (...args: never[]) => void = isText; console.log(typeof marker);`,
 		`function describe(test: (value: string | number) => value is string): typeof test { return test; }`,
 		`function hold(marker: (...args: number[]) => void): void {} function describe(test: (value: number | string) => value is string): void { hold(test); }`,
 	} {
-		_, err := lowerSource(test, source)
+		_, lowerSourceError := lowerSource(test, source)
 		var refused *Refused
-		if !errors.As(err, &refused) {
-			test.Fatalf("unobservable marker exception escaped its boundary: %v", err)
+		if !errors.As(lowerSourceError, &refused) {
+			test.Fatalf("unobservable marker exception escaped its boundary: %v", lowerSourceError)
 		}
 	}
 }
 
 func TestCensusPredicateMarkerCallStaysNotYet(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(
+	_, lowerSourceError := lowerSource(
 		test,
 		`function isText(value: string | number): value is string { return typeof value === 'string'; }
 const marker: (...args: never[]) => void = isText;
 marker();`,
 	)
 	var notYet *NotYet
-	if !errors.As(err, &notYet) {
-		test.Fatalf("expected erased marker call refusal, got %v", err)
+	if !errors.As(lowerSourceError, &notYet) {
+		test.Fatalf("expected erased marker call refusal, got %v", lowerSourceError)
 	}
 }

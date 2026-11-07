@@ -19,14 +19,14 @@ func jsxManifestCases(test *testing.T, cases []string) string {
 	var list strings.Builder
 	for i, text := range cases {
 		path := filepath.Join(dir, fmt.Sprintf("%04d.tsx", i))
-		if err := os.WriteFile(path, []byte(text), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(text), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		list.WriteString(path + "\n")
 	}
 	path := filepath.Join(dir, "manifest")
-	if err := os.WriteFile(path, []byte(list.String()), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(list.String()), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return path
 }
@@ -54,11 +54,11 @@ func TestJSXOriginalLibraries(test *testing.T) {
 		}
 		for i := range wants {
 			var want, got map[string]any
-			if err := json.Unmarshal([]byte(wants[i]), &want); err != nil {
-				test.Fatal(err)
+			if decodeError := json.Unmarshal([]byte(wants[i]), &want); decodeError != nil {
+				test.Fatal(decodeError)
 			}
-			if err := json.Unmarshal([]byte(gots[i]), &got); err != nil {
-				test.Fatal(err)
+			if decodeError := json.Unmarshal([]byte(gots[i]), &got); decodeError != nil {
+				test.Fatal(decodeError)
 			}
 			if i == 0 {
 				expected := "Type argument list cannot be empty."
@@ -93,8 +93,8 @@ func TestJSXOriginalLibraries(test *testing.T) {
 			if mode != "raw" && i == 8 {
 				normalized := jsxManifestCases(test, []string{strings.ReplaceAll(jsxCases()[i], "\r\n", "\n")})
 				data := execute(test, "", oracle, flag, normalized)
-				if err := json.Unmarshal(bytes.TrimSpace(data), &want); err != nil {
-					test.Fatal(err)
+				if decodeError := json.Unmarshal(bytes.TrimSpace(data), &want); decodeError != nil {
+					test.Fatal(decodeError)
 				}
 				test.Log("postprocessed CRLF: library exactly matches Go on LF-normalized input")
 			}
@@ -138,8 +138,8 @@ func TestJSXMutant(test *testing.T) {
 			"Node":   onNode(test, path, "--manifest", list),
 			"native": execute(test, "", binary, "--manifest", list),
 		} {
-			if err := miscCompare(want, got, true); err != nil {
-				test.Fatalf("%s %s: %v", ids[i], name, err)
+			if miscCompareError := miscCompare(want, got, true); miscCompareError != nil {
+				test.Fatalf("%s %s: %v", ids[i], name, miscCompareError)
 			}
 		}
 	})

@@ -25,29 +25,33 @@ func goCompose(test *testing.T, cases string) []byte {
 	if artifacts := os.Getenv("ADAMIC_YAML_ARTIFACTS"); artifacts != "" {
 		yamlArtifacts.Lock()
 		defer yamlArtifacts.Unlock()
-		if err := os.MkdirAll(artifacts, 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(artifacts, 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		program, err := os.ReadFile(binary)
-		if err != nil {
-			test.Fatal(err)
+		program, readError := os.ReadFile(binary)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		// A program copied while sibling tests fork goes through the fork-safe writer, or a fork can hold its writable
 		// descriptor and a later exec of it fails with ETXTBSY (#6hjazy4).
-		if err := executable.Write(filepath.Join(artifacts, "go-compose"), program); err != nil {
-			test.Fatal(err)
+		if writeError := executable.Write(filepath.Join(artifacts, "go-compose"), program); writeError != nil {
+			test.Fatal(writeError)
 		}
-		inputs, err := os.ReadFile(cases)
-		if err != nil {
-			test.Fatal(err)
+		inputs, readError := os.ReadFile(cases)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		for _, file := range []struct {
 			name string
 			data []byte
 			mode os.FileMode
 		}{{"compose-cases.txt", inputs, 0644}, {"compose-expected.txt", expected, 0644}} {
-			if err := os.WriteFile(filepath.Join(artifacts, file.name), file.data, file.mode); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(
+				filepath.Join(artifacts, file.name),
+				file.data,
+				file.mode,
+			); writeError != nil {
+				test.Fatal(writeError)
 			}
 		}
 	}
@@ -175,9 +179,9 @@ func composeMutantsExpected(test *testing.T) ([]byte, []byte) {
 		// The cases file lives in the first caller's temporary directory, gone when that test ends, so its bytes are
 		// kept.
 		path, _, _ := composeCases(test)
-		cases, err := os.ReadFile(path)
-		if err != nil {
-			test.Fatal(err)
+		cases, readError := os.ReadFile(path)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		composeMutantsAnswers.expected = goCompose(test, path)
 		composeMutantsAnswers.cases = cases
@@ -199,9 +203,9 @@ func composeMutantsEnumeration(test *testing.T) []int {
 			composeMutantsShards,
 		)
 	}
-	file, err := parser.ParseFile(token.NewFileSet(), "compose_test.go", nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	file, parseFileError := parser.ParseFile(token.NewFileSet(), "compose_test.go", nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	var plan []int
 	for _, declaration := range file.Decls {
@@ -209,9 +213,9 @@ func composeMutantsEnumeration(test *testing.T) []int {
 		if !ok || !strings.HasPrefix(function.Name.Name, "TestComposeMutants_") {
 			continue
 		}
-		shard, err := strconv.Atoi(strings.TrimPrefix(function.Name.Name, "TestComposeMutants_"))
-		if err != nil {
-			test.Fatal(err)
+		shard, parseError := strconv.Atoi(strings.TrimPrefix(function.Name.Name, "TestComposeMutants_"))
+		if parseError != nil {
+			test.Fatal(parseError)
 		}
 		calls := 0
 		ast.Inspect(function.Body, func(node ast.Node) bool {
@@ -230,7 +234,7 @@ func composeMutantsEnumeration(test *testing.T) []int {
 			if !ok {
 				test.Fatalf("%s: shard index must be a literal", function.Name.Name)
 			}
-			if index, err := strconv.Atoi(literal.Value); err != nil || index != shard {
+			if index, parseError := strconv.Atoi(literal.Value); parseError != nil || index != shard {
 				test.Fatalf("%s runs mutant %s", function.Name.Name, literal.Value)
 			}
 			calls++
@@ -259,12 +263,12 @@ func composeMutantsShard(test *testing.T, index int) {
 	product := composeMutants.product(test, index)
 	corpus, expected := composeMutantsExpected(test)
 	cases := filepath.Join(test.TempDir(), "cases.txt")
-	if err := os.WriteFile(cases, corpus, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(cases, corpus, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	test.Logf("%s; setup %.3fs", mutant.name, time.Since(setup).Seconds())
 	nativeOut := run(test, "", nil, filepath.Join(product, "mutant"), cases)
@@ -282,8 +286,12 @@ func composeMutantsShard(test *testing.T, index int) {
 		name string
 		out  []byte
 	}{{"native", nativeOut}, {"Node", node}} {
-		if err := composeMutantSurvived(side.name, side.out, expected); err != nil {
-			test.Fatal(err)
+		if composeMutantSurvivedError := composeMutantSurvived(
+			side.name,
+			side.out,
+			expected,
+		); composeMutantSurvivedError != nil {
+			test.Fatal(composeMutantSurvivedError)
 		}
 		test.Logf("%s successful execution, wrong bytes caught: %s", side.name, firstDifference(side.out, expected))
 	}

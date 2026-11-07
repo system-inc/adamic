@@ -18,17 +18,17 @@ func TestDirectClosureCallAgreesWithNode(test *testing.T) {
 // Reuse registered fixtures, whose allocation counts are already recorded.
 func callTargetFixtureAgrees(test *testing.T, name, stdout string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", name))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", name))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	want := onNode(test, path)
 	if want.exitCode != 0 || len(want.stderr) != 0 || string(want.stdout) != stdout {
 		test.Fatalf("Node: exit %d, stdout %q, stderr %q", want.exitCode, want.stdout, want.stderr)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	for _, observation := range []struct {
 		name string

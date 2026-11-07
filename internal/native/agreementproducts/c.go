@@ -148,9 +148,9 @@ func FindC(test testing.TB, owner string) string {
 // and their plants.
 func cInputs(test testing.TB) buildcache.Inputs {
 	test.Helper()
-	compiler, err := buildcache.GoInputs("adamic", "./cmd/adamic", nil, nil)
-	if err != nil {
-		test.Fatalf("go list ./cmd/adamic: %v", err)
+	compiler, goInputsError := buildcache.GoInputs("adamic", "./cmd/adamic", nil, nil)
+	if goInputsError != nil {
+		test.Fatalf("go list ./cmd/adamic: %v", goInputsError)
 	}
 	return buildcache.Inputs{
 		// v1: lowered by stage 0's `adamic c` in a build of what it's handed (#egjbcre).
@@ -172,24 +172,24 @@ func BuildAgreementC(handed buildcache.Handed, directory string) error {
 	}
 	for name, source := range programs {
 		program := filepath.Join(directory, name)
-		if err := os.Mkdir(program, 0o755); err != nil {
-			return err
+		if createDirectoryError := os.Mkdir(program, 0o755); createDirectoryError != nil {
+			return createDirectoryError
 		}
-		if err := os.WriteFile(filepath.Join(program, "main.a"), []byte(source), 0o644); err != nil {
-			return err
+		if writeError := os.WriteFile(filepath.Join(program, "main.a"), []byte(source), 0o644); writeError != nil {
+			return writeError
 		}
 		command := toolchain.CommandIn(program, handed.Paths[0], "c", "main.a")
 		var stdout, stderr bytes.Buffer
 		command.Stdout, command.Stderr = &stdout, &stderr
-		if err := command.Run(); err != nil {
-			return fmt.Errorf("agreementproducts: adamic c %s: %v\n%s", name, err, stderr.Bytes())
+		if runError := command.Run(); runError != nil {
+			return fmt.Errorf("agreementproducts: adamic c %s: %v\n%s", name, runError, stderr.Bytes())
 		}
-		code, err := Plant(name, stdout.String())
-		if err != nil {
-			return fmt.Errorf("agreementproducts: %s: %w", name, err)
+		code, plantError := Plant(name, stdout.String())
+		if plantError != nil {
+			return fmt.Errorf("agreementproducts: %s: %w", name, plantError)
 		}
-		if err := os.WriteFile(filepath.Join(program, "main.c"), []byte(code), 0o644); err != nil {
-			return err
+		if writeError := os.WriteFile(filepath.Join(program, "main.c"), []byte(code), 0o644); writeError != nil {
+			return writeError
 		}
 	}
 	return nil

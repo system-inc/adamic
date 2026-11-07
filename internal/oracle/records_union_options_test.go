@@ -75,11 +75,11 @@ func TestRecordUnionDeclaredReadStops(test *testing.T) {
 	for _, lying := range recordUnionLying {
 		test.Run(lying.name, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(
+			path, absolutePathError := filepath.Abs(
 				filepath.Join(repository, "internal/oracle/testdata/records_union_"+lying.name+".ts"),
 			)
-			if err != nil {
-				test.Fatal(err)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			if truth := onNode(
 				test,
@@ -87,9 +87,9 @@ func TestRecordUnionDeclaredReadStops(test *testing.T) {
 			); truth.exitCode != 0 || string(truth.stdout) != lying.node || len(truth.stderr) != 0 {
 				test.Fatalf("Node no longer reads the lying value: %+v", truth)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			if failure := recordDeclaredReadStop(test, program, lying.found); failure != "" {
 				test.Fatal(failure)
@@ -105,15 +105,15 @@ func TestRecordUnionDeclaredReadMutant(test *testing.T) {
 	for _, lying := range recordUnionLying {
 		test.Run(lying.name, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(
+			path, absolutePathError := filepath.Abs(
 				filepath.Join(repository, "internal/oracle/testdata/records_union_"+lying.name+".ts"),
 			)
-			if err != nil {
-				test.Fatal(err)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			changed := false
 			for i, f := range program.Functions {
@@ -151,9 +151,9 @@ func TestRecordUnionDeclaredReadMutant(test *testing.T) {
 // testdata/records-union-witness-mutant.json.
 func TestRecordUnionWitnessIsRuled(test *testing.T) {
 	test.Parallel()
-	listed, err := os.ReadFile(filepath.Join(repository, "cloud/admission-corpus/negative-witnesses.json"))
-	if err != nil {
-		test.Fatal(err)
+	listed, readError := os.ReadFile(filepath.Join(repository, "cloud/admission-corpus/negative-witnesses.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var list struct {
 		Witnesses map[string]struct {
@@ -169,8 +169,8 @@ func TestRecordUnionWitnessIsRuled(test *testing.T) {
 			Stderr            string `json:"stderr"`
 		} `json:"witnesses"`
 	}
-	if err := json.Unmarshal(listed, &list); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(listed, &list); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	contentHash := func(text string) string {
 		hash := sha256.Sum256([]byte(text))
@@ -180,9 +180,9 @@ func TestRecordUnionWitnessIsRuled(test *testing.T) {
 		test.Run(lying.name, func(test *testing.T) {
 			test.Parallel()
 			path := "internal/oracle/testdata/records_union_" + lying.name + ".ts"
-			source, err := os.ReadFile(filepath.Join(repository, path))
-			if err != nil {
-				test.Fatal(err)
+			source, readError := os.ReadFile(filepath.Join(repository, path))
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			witness, found := list.Witnesses[contentHash(string(source))]
 			if !found {
@@ -203,12 +203,12 @@ func TestRecordUnionWitnessIsRuled(test *testing.T) {
 				test.Fatal("the listed repair isn't one place, or its hash isn't the listed type-correct hash")
 			}
 			repairedPath := filepath.Join(test.TempDir(), "records_union_"+lying.name+".ts")
-			if err := os.WriteFile(repairedPath, []byte(repaired), 0o644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(repairedPath, []byte(repaired), 0o644); writeError != nil {
+				test.Fatal(writeError)
 			}
-			program, err := lowered(test, repairedPath)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, repairedPath)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			truth := onNode(test, repairedPath)
 			sanitized, _ := natively(test, program)

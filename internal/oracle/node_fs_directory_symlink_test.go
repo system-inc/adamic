@@ -31,13 +31,15 @@ func TestNodeFSDirectorySymlinkMutants(test *testing.T) {
 	for _, one := range cases {
 		test.Run(one.name, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_fs_directory_symlink.a"))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/node_fs_directory_symlink.a"),
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			shared := sharedDirectory(test)
 			prepare := func(name string) inputRun {
@@ -86,8 +88,8 @@ func TestNodeFSDirectorySymlinkMutants(test *testing.T) {
 				`}`
 			source = strings.Replace(source, `#include "adamic.h"`, `#include "adamic.h"`+"\n"+helper, 1)
 			binary := filepath.Join(shared, "mutant")
-			if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(source, binary, native.Options{Sanitize: true}); buildError != nil {
+				test.Fatal(buildError)
 			}
 			how := prepare("mutant-input")
 			got := executeInput(test, how, nodeFSDirectorySanitizerEnvironment(), binary, how.arguments...)

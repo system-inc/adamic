@@ -23,13 +23,13 @@ type oracleCase struct {
 // generate it is scratch data and is deliberately not part of this repository.
 func TestNodeAgreement(test *testing.T) {
 	test.Parallel()
-	data, err := os.ReadFile("testdata/test262.json")
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile("testdata/test262.json")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var encoded [][]string
-	if err := json.Unmarshal(data, &encoded); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &encoded); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	cases := make([]oracleCase, 0, len(encoded)+1000)
 	for _, fields := range encoded {
@@ -41,9 +41,9 @@ func TestNodeAgreement(test *testing.T) {
 	corpusCount := len(cases)
 	cases = append(cases, generatedCases()...)
 
-	input, err := json.Marshal(cases)
-	if err != nil {
-		test.Fatal(err)
+	input, encodeError := json.Marshal(cases)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	command := toolchain.Command("node", "-e", `
 const input = require("fs").readFileSync(0, "utf8");
@@ -56,13 +56,13 @@ process.stdout.write(JSON.stringify(cases.map(x => {
   }
 })));`)
 	command.Stdin = bytes.NewReader(input)
-	output, err := command.CombinedOutput()
-	if err != nil {
-		test.Fatalf("Node oracle: %v\n%s", err, output)
+	output, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("Node oracle: %v\n%s", combinedOutputError, output)
 	}
 	var valid []bool
-	if err := json.Unmarshal(output, &valid); err != nil {
-		test.Fatalf("decode Node output: %v\n%s", err, output)
+	if decodeError := json.Unmarshal(output, &valid); decodeError != nil {
+		test.Fatalf("decode Node output: %v\n%s", decodeError, output)
 	}
 	if len(valid) != len(cases) {
 		test.Fatalf("Node returned %d answers for %d cases", len(valid), len(cases))

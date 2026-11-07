@@ -22,9 +22,9 @@ import (
 // nothing but each other, other packages and the standard library.
 func makeCensus(directory string) ([]string, error) {
 	fileSet := gotoken.NewFileSet()
-	entries, err := os.ReadDir(directory)
-	if err != nil {
-		return nil, err
+	entries, readDirectoryError := os.ReadDir(directory)
+	if readDirectoryError != nil {
+		return nil, readDirectoryError
 	}
 	var files []*ast.File
 	for _, entry := range entries {
@@ -32,9 +32,14 @@ func makeCensus(directory string) ([]string, error) {
 		if !strings.HasSuffix(name, ".go") || strings.HasSuffix(name, "_test.go") {
 			continue
 		}
-		file, err := parser.ParseFile(fileSet, filepath.Join(directory, name), nil, parser.SkipObjectResolution)
-		if err != nil {
-			return nil, err
+		file, parseFileError := parser.ParseFile(
+			fileSet,
+			filepath.Join(directory, name),
+			nil,
+			parser.SkipObjectResolution,
+		)
+		if parseFileError != nil {
+			return nil, parseFileError
 		}
 		// The census reads the package this machine builds: a file another platform builds is no file here.
 		if !buildsHere(name) {
@@ -119,9 +124,9 @@ func hostOS() string { return runtime.GOOS }
 // product's bytes, and leaving it out of every key is sound. Mutant: a make file calling a machinery helper.
 func TestTheMakeFilesUseNothingFromTheMachinery(test *testing.T) {
 	test.Parallel()
-	census, err := makeCensus(".")
-	if err != nil {
-		test.Fatal(err)
+	census, makeCensusError := makeCensus(".")
+	if makeCensusError != nil {
+		test.Fatal(makeCensusError)
 	}
 	if len(census) > 0 {
 		test.Fatalf("the make files use %d things the machinery defines:\n%s", len(census), strings.Join(census, "\n"))
@@ -143,13 +148,13 @@ func TestTheMakeCensusHoldsWithNoGoRootAndStillSeesAMachineryUse(test *testing.T
 		"make_y.go":  "package buildcache\n\nfunc alsoMade() int { return made() }\n",
 		"other_x.go": "package buildcache\n\nfunc unused() {}\n",
 	} {
-		if err := os.WriteFile(filepath.Join(directory, name), []byte(content), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, name), []byte(content), 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
-	census, err := makeCensus(directory)
-	if err != nil || !slices.Equal(census, []string{"make_x.go: helper (defined in helper.go)"}) {
-		test.Fatalf("census %q, err %v, want make_x.go's use of helper alone", census, err)
+	census, makeCensusError := makeCensus(directory)
+	if makeCensusError != nil || !slices.Equal(census, []string{"make_x.go: helper (defined in helper.go)"}) {
+		test.Fatalf("census %q, err %v, want make_x.go's use of helper alone", census, makeCensusError)
 	}
 }
 
@@ -208,9 +213,9 @@ func TestProduct_GoProductCensusExports(test *testing.T) {
 func TestAGoProductsBuildReadsNoStateButItsInitializers(test *testing.T) {
 	test.Parallel()
 	root := repositoryRootForTest(test)
-	exports, tree, _, err := leancensus.Imports(goProductCensusExports(test))
-	if err != nil {
-		test.Fatal(err)
+	exports, tree, _, importsError := leancensus.Imports(goProductCensusExports(test))
+	if importsError != nil {
+		test.Fatal(importsError)
 	}
 	census := leancensus.Census{
 		Root:           root,
@@ -223,9 +228,9 @@ func TestAGoProductsBuildReadsNoStateButItsInitializers(test *testing.T) {
 		Tree:           tree,
 		TestsBuildLean: true,
 	}
-	findings, err := census.Findings()
-	if err != nil {
-		test.Fatal(err)
+	findings, findingsError := census.Findings()
+	if findingsError != nil {
+		test.Fatal(findingsError)
 	}
 	if len(findings) > 0 {
 		test.Fatalf("a go product's build reaches past what its key holds:\n%s", strings.Join(findings, "\n"))
@@ -244,9 +249,9 @@ func TestMachineryIsWhatAProductsKeyLeavesOut(test *testing.T) {
 	if linking.reason != "" {
 		test.Fatal(linking.reason)
 	}
-	entries, err := os.ReadDir(filepath.Join(root, "internal", "buildcache"))
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(filepath.Join(root, "internal", "buildcache"))
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	machinery := 0
 	for _, entry := range entries {
@@ -265,23 +270,23 @@ func TestMachineryIsWhatAProductsKeyLeavesOut(test *testing.T) {
 	if machinery == 0 {
 		test.Fatal("no file of the package is machinery, so the comparison saw nothing left out")
 	}
-	err = filepath.WalkDir(filepath.Join(
+	walkError := filepath.WalkDir(filepath.Join(
 		root,
 		"internal",
 		"buildcache",
 		"cmd",
-	), func(file string, entry os.DirEntry, err error) error {
-		if err != nil || entry.IsDir() {
-			return err
+	), func(file string, entry os.DirEntry, pathError error) error {
+		if pathError != nil || entry.IsDir() {
+			return pathError
 		}
-		relative, err := filepath.Rel(root, file)
-		if err == nil && !IsMachinery(filepath.ToSlash(relative)) {
+		relative, relativePathError := filepath.Rel(root, file)
+		if relativePathError == nil && !IsMachinery(filepath.ToSlash(relative)) {
 			test.Errorf("%s isn't machinery", relative)
 		}
-		return err
+		return relativePathError
 	})
-	if err != nil {
-		test.Fatal(err)
+	if walkError != nil {
+		test.Fatal(walkError)
 	}
 	for _, outside := range []string{
 		"go.mod",

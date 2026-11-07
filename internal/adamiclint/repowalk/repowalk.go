@@ -272,9 +272,15 @@ func (walker *walker) assign(target ast.Expr, values []ast.Expr, count, index in
 	}
 	switch {
 	case len(values) == count:
-		walker.assignments[variable] = append(walker.assignments[variable], assigned{expression: values[index], result: -1})
+		walker.assignments[variable] = append(
+			walker.assignments[variable],
+			assigned{expression: values[index], result: -1},
+		)
 	case len(values) == 1:
-		walker.assignments[variable] = append(walker.assignments[variable], assigned{expression: values[0], result: index})
+		walker.assignments[variable] = append(
+			walker.assignments[variable],
+			assigned{expression: values[0], result: index},
+		)
 	default:
 		// A declaration with no value holds the zero value, which is no path the rule reads.
 		walker.unreadable[variable] = true
@@ -811,8 +817,8 @@ func (walker *walker) leavesPackage(path string) bool {
 	if filepath.IsAbs(path) {
 		return false
 	}
-	relative, err := filepath.Rel(walker.directory, filepath.Join(walker.directory, path))
-	if err != nil {
+	relative, relativePathError := filepath.Rel(walker.directory, filepath.Join(walker.directory, path))
+	if relativePathError != nil {
 		return false
 	}
 	relative = filepath.ToSlash(relative)

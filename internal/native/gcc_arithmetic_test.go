@@ -25,9 +25,9 @@ func gccArithmeticProduct(test *testing.T) string {
 		func(s string) bool { return s == "-Wcast-function-type-strict" || s == "-Wno-self-assign" },
 	)
 	files := []runtimeFile{{"main.c", []byte(fusedHarness)}}
-	headers, err := headersRead(files, flags, compiler)
-	if err != nil {
-		test.Fatal(err)
+	headers, headersReadError := headersRead(files, flags, compiler)
+	if headersReadError != nil {
+		test.Fatal(headersReadError)
 	}
 	inputs := buildcache.Inputs{
 		Name: "gcc-arithmetic",
@@ -44,8 +44,12 @@ func gccArithmeticProduct(test *testing.T) string {
 		Toolchain: []string{buildcache.Tool(compiler, "--version"), buildcache.Tool("node", "--version")},
 	}
 	return buildcache.Product(test, inputs, func(directory string) error {
-		if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(fusedHarness), 0600); err != nil {
-			return err
+		if writeError := os.WriteFile(
+			filepath.Join(directory, "main.c"),
+			[]byte(fusedHarness),
+			0600,
+		); writeError != nil {
+			return writeError
 		}
 		for _, variant := range []string{"control", "mutant"} {
 			selected := slices.Clone(flags)
@@ -64,10 +68,10 @@ func gccArithmeticProduct(test *testing.T) string {
 			)
 			command, release := boundedrun.Command(30*time.Second, compiler, args...)
 			command.Dir = directory
-			output, err := command.CombinedOutput()
+			output, combinedOutputError := command.CombinedOutput()
 			release()
-			if err != nil {
-				return fmt.Errorf("GCC arithmetic %s: %w %s", variant, err, output)
+			if combinedOutputError != nil {
+				return fmt.Errorf("GCC arithmetic %s: %w %s", variant, combinedOutputError, output)
 			}
 		}
 		return nil

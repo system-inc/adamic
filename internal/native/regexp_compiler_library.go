@@ -14,9 +14,9 @@ func regexpCompilerSource(source string) bool {
 
 func regexpCompilerLibrary(source string, options Options) (string, error) {
 	flags := append(featureFlags(source), "-DADAMIC_REGEXP_RUNTIME_COMPILER=1")
-	files, flags, compiler, version, err := runtimeInputs("", options, flags)
-	if err != nil {
-		return "", err
+	files, flags, compiler, version, runtimeInputsError := runtimeInputs("", options, flags)
+	if runtimeInputsError != nil {
+		return "", runtimeInputsError
 	}
 	// The component reads runtime headers but compiles only its own units.
 	kept := files[:0]
@@ -34,13 +34,13 @@ func regexpCompilerLinkFlags(source string, options Options, directory string) (
 	if !regexpCompilerSource(source) {
 		return nil, nil
 	}
-	library, err := regexpCompilerLibrary(source, options)
-	if err != nil {
-		return nil, err
+	library, regexpCompilerLibraryError := regexpCompilerLibrary(source, options)
+	if regexpCompilerLibraryError != nil {
+		return nil, regexpCompilerLibraryError
 	}
 	const name = "regexp-compiler"
-	if err := os.Symlink(filepath.Dir(library), filepath.Join(directory, name)); err != nil {
-		return nil, err
+	if symlinkError := os.Symlink(filepath.Dir(library), filepath.Join(directory, name)); symlinkError != nil {
+		return nil, symlinkError
 	}
 	archive := filepath.Join(name, filepath.Base(library))
 	if options.Target == "wasm32-wasi" {

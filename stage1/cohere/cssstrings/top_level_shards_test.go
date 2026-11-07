@@ -22,9 +22,9 @@ func stringsTopTempDir(test *testing.T) string {
 	if stringsTopRootError != nil {
 		test.Fatal(stringsTopRootError)
 	}
-	dir, err := os.MkdirTemp(stringsTopRoot, "input-")
-	if err != nil {
-		test.Fatal(err)
+	dir, temporaryDirectoryError := os.MkdirTemp(stringsTopRoot, "input-")
+	if temporaryDirectoryError != nil {
+		test.Fatal(temporaryDirectoryError)
 	}
 	return dir
 }
@@ -34,7 +34,7 @@ func stringsTopTempDir(test *testing.T) string {
 func TestMain(m *testing.M) {
 	code := m.Run()
 	if stringsTopRoot != "" {
-		if err := os.RemoveAll(stringsTopRoot); err != nil {
+		if removeError := os.RemoveAll(stringsTopRoot); removeError != nil {
 			if code == 0 {
 				code = 1
 			}

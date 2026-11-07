@@ -30,12 +30,16 @@ console.log(typeof new Holder().value);`, "a member typed any (value, inferred f
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerTypeScriptAssertionSource(test, probe.source)
+			_, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(test, probe.source)
 			var refused *Refused
-			if !errors.As(err, &refused) ||
+			if !errors.As(lowerTypeScriptAssertionSourceError, &refused) ||
 				!strings.Contains(refused.What, probe.want) ||
 				!strings.Contains(refused.Fix, "unknown") {
-				test.Fatalf("want Refused with %q and the unknown fix, got %v", probe.want, err)
+				test.Fatalf(
+					"want Refused with %q and the unknown fix, got %v",
+					probe.want,
+					lowerTypeScriptAssertionSourceError,
+				)
 			}
 		})
 	}
@@ -48,12 +52,18 @@ func TestAnyMemberLeavesUnknownAndNested(test *testing.T) {
 	lowersAndAgreesWithNodeAs(test, `interface Opaque { readonly text: unknown; }
 const o: Opaque = { text: 5 };
 console.log(typeof o.text);`, ".ts")
-	_, err := lowerTypeScriptAssertionSource(test, `interface Bag { readonly items: any[]; }
+	_, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(
+		test,
+		`interface Bag { readonly items: any[]; }
 interface Names { readonly items: readonly string[]; }
 function show(b: Bag): void { const n: Names = b; console.log(String(n.items[0])); }
-show({ items: [5] });`)
+show({ items: [5] });`,
+	)
 	var pending *NotYet
-	if !errors.As(err, &pending) || !strings.Contains(err.Error(), "a member typed any (items[]) related to string") {
-		test.Fatalf("a nested any: want step 1's relation NotYet, got %v", err)
+	if !errors.As(lowerTypeScriptAssertionSourceError, &pending) || !strings.Contains(
+		lowerTypeScriptAssertionSourceError.Error(),
+		"a member typed any (items[]) related to string",
+	) {
+		test.Fatalf("a nested any: want step 1's relation NotYet, got %v", lowerTypeScriptAssertionSourceError)
 	}
 }

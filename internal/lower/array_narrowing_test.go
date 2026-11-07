@@ -14,24 +14,24 @@ import (
 
 func arrayNarrowingSource(test *testing.T, name string) string {
 	test.Helper()
-	source, err := os.ReadFile(filepath.Join("testdata", "array_narrowing", name+".a"))
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(filepath.Join("testdata", "array_narrowing", name+".a"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return string(source)
 }
 
 func refusesArrayNarrowing(test *testing.T, name, reason string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join("testdata", "array_narrowing", name+".a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join("testdata", "array_narrowing", name+".a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	checked, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	checked, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	_, err = Lower(context.Background(), checked)
+	_, lowerError := Lower(context.Background(), checked)
 	method := "every"
 	if name == "find" {
 		method = "find"
@@ -56,22 +56,24 @@ func refusesArrayNarrowing(test *testing.T, name, reason string) {
 	var refusal *Refused
 	var notYet *NotYet
 	where := ""
-	if errors.As(err, &refusal) {
+	if errors.As(lowerError, &refusal) {
 		where = refusal.Where
-	} else if errors.As(err, &notYet) {
+	} else if errors.As(lowerError, &notYet) {
 		where = notYet.Where
 	}
 	if where != wantWhere {
-		test.Fatalf("want refusal at narrowing site %s, got %v", wantWhere, err)
+		test.Fatalf("want refusal at narrowing site %s, got %v", wantWhere, lowerError)
 	}
-	if err == nil || !strings.Contains(err.Error(), reason) || !strings.Contains(err.Error(), path+":") {
-		test.Fatalf("want refusal at exact fixture path with %q, got %v", reason, err)
+	if lowerError == nil ||
+		!strings.Contains(lowerError.Error(), reason) ||
+		!strings.Contains(lowerError.Error(), path+":") {
+		test.Fatalf("want refusal at exact fixture path with %q, got %v", reason, lowerError)
 	}
 	if reason == "array element narrowing across a union layout is not yet sound" {
 		var refusal *Refused
-		if !errors.As(err, &refusal) ||
+		if !errors.As(lowerError, &refusal) ||
 			refusal.Fix != "read the elements through the union type, or copy them into a new S[]" {
-			test.Fatalf("want actionable layout refusal, got %v", err)
+			test.Fatalf("want actionable layout refusal, got %v", lowerError)
 		}
 	}
 }

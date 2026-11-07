@@ -12,13 +12,15 @@ import (
 
 func TestNodeFSDirectoryUnionMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_fs_directory_union.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/node_fs_directory_union.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	source := native.C(program)
 	// Model classifying a Stats receiver as an unrelated Dirent kind.
@@ -35,8 +37,8 @@ static bool mutant_static_dirent_is(const adamic_object *value, const char *meth
 `
 	changed = strings.Replace(changed, `#include "adamic.h"`, "#include \"adamic.h\"\n#include <string.h>\n"+helper, 1)
 	binary := filepath.Join(sharedDirectory(test), "static-dispatch-mutant")
-	if err := native.Build(changed, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(changed, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	how := inputRun{directory: filepath.Dir(path)}
 	truth := onNodeWith(test, how, path)
@@ -53,35 +55,37 @@ static bool mutant_static_dirent_is(const adamic_object *value, const char *meth
 // Real special files exercise true results for the shared predicates too.
 func TestNodeFSDirectoryUnionSpecialKinds(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_fs_directory_union.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/node_fs_directory_union.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	shared := sharedDirectory(test)
 	// Gate scratch paths can exceed sockaddr_un's limit. Keep that case in
 	// every run; bind the socket by its relative name from a child directory.
 	root := filepath.Join(shared, strings.Repeat("long-scratch-", 10), "kinds")
-	if err := os.MkdirAll(root, 0755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(root, 0755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	if err := syscall.Mkfifo(filepath.Join(root, "fifo"), 0600); err != nil {
-		test.Fatal(err)
+	if mkfifoError := syscall.Mkfifo(filepath.Join(root, "fifo"), 0600); mkfifoError != nil {
+		test.Fatal(mkfifoError)
 	}
 	socket := executeInput(test, inputRun{directory: root}, nil, "node", "--input-type=module", "-e",
 		`import net from 'node:net'; const server = net.createServer(); server.listen('socket', () => process.exit(0));`)
 	if socket.exitCode != 0 || len(socket.stdout) != 0 || len(socket.stderr) != 0 {
 		test.Fatalf("create socket fixture: %+v", socket)
 	}
-	information, err := os.Lstat(filepath.Join(root, "socket"))
-	if err != nil || information.Mode()&os.ModeSocket == 0 {
-		test.Fatalf("want a real socket fixture: %v, %v", information, err)
+	information, statError := os.Lstat(filepath.Join(root, "socket"))
+	if statError != nil || information.Mode()&os.ModeSocket == 0 {
+		test.Fatalf("want a real socket fixture: %v, %v", information, statError)
 	}
-	if err := os.Symlink("/dev/null", filepath.Join(root, "character")); err != nil {
-		test.Fatal(err)
+	if symlinkError := os.Symlink("/dev/null", filepath.Join(root, "character")); symlinkError != nil {
+		test.Fatal(symlinkError)
 	}
 	how := inputRun{directory: filepath.Dir(path), arguments: []string{root}}
 	truth := onNodeWith(test, how, path)
@@ -97,12 +101,16 @@ func TestNodeFSDirectoryUnionSpecialKinds(test *testing.T) {
 	}
 	if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
 		binary := filepath.Join(shared, "kinds.wasm")
-		if err := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); err != nil {
-			test.Fatal(err)
+		if buildError := native.Build(
+			native.C(program),
+			binary,
+			native.Options{Target: "wasm32-wasi"},
+		); buildError != nil {
+			test.Fatal(buildError)
 		}
-		runner, err := filepath.Abs(filepath.Join(repository, "oracle/wasi.mjs"))
-		if err != nil {
-			test.Fatal(err)
+		runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/wasi.mjs"))
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		result := executeInput(test, how, nil, "node", "--disable-warning=ExperimentalWarning", runner, binary, root)
 		if result.exitCode != 70 || string(
@@ -132,8 +140,8 @@ static bool mutant_lossy_kind(const adamic_object *value, const char *method) {
 `
 		source = strings.Replace(source, `#include "adamic.h"`, "#include \"adamic.h\"\n"+helper, 1)
 		mutant := filepath.Join(shared, "lossy-kind.wasm")
-		if err := native.Build(source, mutant, native.Options{Target: "wasm32-wasi"}); err != nil {
-			test.Fatal(err)
+		if buildError := native.Build(source, mutant, native.Options{Target: "wasm32-wasi"}); buildError != nil {
+			test.Fatal(buildError)
 		}
 		actual := executeInput(test, how, nil, "node", "--disable-warning=ExperimentalWarning", runner, mutant, root)
 		if actual.exitCode != 0 || len(actual.stderr) != 0 || disagreement(truth, actual) != "stdout differs" {

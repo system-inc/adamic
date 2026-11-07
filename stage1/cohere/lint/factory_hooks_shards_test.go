@@ -103,9 +103,9 @@ func TestFactoryHooksPlantedFailure(test *testing.T) {
 
 func factoryHooksDirectory(test *testing.T) string {
 	test.Helper()
-	directory, err := os.MkdirTemp(sharedDirectory, "factory-hooks-")
-	if err != nil {
-		test.Fatal(err)
+	directory, temporaryDirectoryError := os.MkdirTemp(sharedDirectory, "factory-hooks-")
+	if temporaryDirectoryError != nil {
+		test.Fatal(temporaryDirectoryError)
 	}
 	return directory
 }
@@ -113,8 +113,8 @@ func factoryHooksDirectory(test *testing.T) string {
 func factoryHooksManifest(test *testing.T, directory string, rows []string) string {
 	test.Helper()
 	path := filepath.Join(directory, "manifest")
-	if err := os.WriteFile(path, []byte(strings.Join(rows, "\n")+"\n"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(strings.Join(rows, "\n")+"\n"), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return path
 }
@@ -123,21 +123,21 @@ func factoryHooksPrepare(test *testing.T, mutated bool) (string, string) {
 	directory := copyPort(test, factoryHooksDirectory(test), "", "")
 	// This test selects only no-debugger. Keep the same linter and rule source,
 	// but omit unrelated rule factories from this private fixture's module graph.
-	entries, err := os.ReadDir(filepath.Join(directory, "rules"))
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(filepath.Join(directory, "rules"))
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	for _, entry := range entries {
 		if entry.IsDir() && entry.Name() != "no-debugger" {
-			if err := os.RemoveAll(filepath.Join(directory, "rules", entry.Name())); err != nil {
-				test.Fatal(err)
+			if removeError := os.RemoveAll(filepath.Join(directory, "rules", entry.Name())); removeError != nil {
+				test.Fatal(removeError)
 			}
 		}
 	}
 	module := filepath.Join(directory, "rules/no-debugger/rule.ts")
-	data, err := os.ReadFile(module)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(module)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	source := strings.Replace(string(data), "    visit(index: number, parent: number): void {", `    ready = false;
     prepare(root: number): void { this.ready = true; console.log('prepare'); }
@@ -155,27 +155,27 @@ func factoryHooksPrepare(test *testing.T, mutated bool) (string, string) {
 		1,
 	)
 	source = "import { panic } from 'adamic';\n" + source
-	if err := os.WriteFile(module, []byte(source), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(module, []byte(source), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	descriptor := filepath.Join(directory, "rules/no-debugger/rule.json")
-	data, err = os.ReadFile(descriptor)
-	if err != nil {
-		test.Fatal(err)
+	data, readError = os.ReadFile(descriptor)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var options map[string]any
-	if err := json.Unmarshal(data, &options); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &options); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	options["prepare"] = "prepare"
 	options["finish"] = "finish"
 	write := func() {
-		data, err := json.Marshal(options)
-		if err != nil {
-			test.Fatal(err)
+		data, encodeError := json.Marshal(options)
+		if encodeError != nil {
+			test.Fatal(encodeError)
 		}
-		if err := os.WriteFile(descriptor, data, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(descriptor, data, 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	if mutated {
@@ -183,8 +183,8 @@ func factoryHooksPrepare(test *testing.T, mutated bool) (string, string) {
 	}
 	write()
 	fixture := filepath.Join(directory, "hooks.ts")
-	if err := os.WriteFile(fixture, []byte("debugger;\n"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(fixture, []byte("debugger;\n"), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	path := factoryHooksManifest(
 		test,
@@ -218,9 +218,9 @@ func factoryHooksSetup(test *testing.T) {
 			prepared.javascript[index] = factoryHooksLowered(test, ctx, index)
 		}
 		prepared.native = factoryHooksNative(test, ctx, prepared.javascript[0])
-		runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-		if err != nil {
-			test.Fatal(err)
+		runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		prepared.runner = runner
 		factoryHooksReady = prepared
@@ -257,9 +257,9 @@ func factoryHooksLowered(test *testing.T, ctx context.Context, index int) string
 	test.Helper()
 	value := shared(fmt.Sprintf("factory-hooks-lowered-%d", index), func(value *sharedValue) {
 		p := factoryHooksProducts(test)[index]
-		module, err := os.ReadFile(filepath.Join(p.directory, "rules/no-debugger/rule.ts"))
-		if err != nil {
-			test.Fatal(err)
+		module, readError := os.ReadFile(filepath.Join(p.directory, "rules/no-debugger/rule.ts"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		inputs := buildcache.Inputs{
 			Name:      fmt.Sprintf("factory-hooks-lowered-%d", index),
@@ -268,23 +268,23 @@ func factoryHooksLowered(test *testing.T, ctx context.Context, index int) string
 			Toolchain: []string{runtime.Version()},
 		}
 		product := buildcache.Product(test, inputs, func(destination string) error {
-			if _, err := registry.Generate(p.directory); err != nil {
-				return err
+			if _, generateError := registry.Generate(p.directory); generateError != nil {
+				return generateError
 			}
-			program, err := load.Load([]string{filepath.Join(p.directory, "main.ts")})
-			if err != nil {
-				return err
+			program, loadError := load.Load([]string{filepath.Join(p.directory, "main.ts")})
+			if loadError != nil {
+				return loadError
 			}
-			lowered, err := lower.Lower(ctx, program)
-			if err != nil {
-				return err
+			lowered, lowerError := lower.Lower(ctx, program)
+			if lowerError != nil {
+				return lowerError
 			}
-			if err := os.WriteFile(
+			if writeError := os.WriteFile(
 				filepath.Join(destination, "lint.mjs"),
 				[]byte(javascript.JavaScript(lowered)),
 				0644,
-			); err != nil {
-				return err
+			); writeError != nil {
+				return writeError
 			}
 			return os.WriteFile(filepath.Join(destination, "lint.c"), []byte(native.C(lowered)), 0644)
 		})
@@ -299,9 +299,9 @@ func factoryHooksLowered(test *testing.T, ctx context.Context, index int) string
 func factoryHooksNative(test *testing.T, ctx context.Context, javascript string) string {
 	test.Helper()
 	value := shared("factory-hooks-native", func(value *sharedValue) {
-		source, err := os.ReadFile(filepath.Join(filepath.Dir(javascript), "lint.c"))
-		if err != nil {
-			test.Fatal(err)
+		source, readError := os.ReadFile(filepath.Join(filepath.Dir(javascript), "lint.c"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		options := native.Options{Sanitize: true}
 		inputs := buildcache.Inputs{
@@ -336,23 +336,23 @@ func TestFactoryHooks_NativeBuildWorker(test *testing.T) {
 	if sourcePath == "" {
 		test.Skip("invoked only by factory hook product builds")
 	}
-	source, err := os.ReadFile(sourcePath)
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(sourcePath)
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	if err := native.Build(
+	if buildError := native.Build(
 		string(source),
 		os.Getenv("ADAMIC_FACTORY_HOOKS_NATIVE_OUTPUT"),
 		native.Options{Sanitize: true},
-	); err != nil {
-		test.Fatal(err)
+	); buildError != nil {
+		test.Fatal(buildError)
 	}
 }
 
 func factoryHooksBuildNative(ctx context.Context, source, output string) error {
-	executable, err := os.Executable()
-	if err != nil {
-		return err
+	executable, executableError := os.Executable()
+	if executableError != nil {
+		return executableError
 	}
 	command := lintCommand(ctx, "", executable, "-test.run=^TestFactoryHooks_NativeBuildWorker$", "-test.timeout=0")
 	command.Env = append(
@@ -361,9 +361,9 @@ func factoryHooksBuildNative(ctx context.Context, source, output string) error {
 		"ADAMIC_FACTORY_HOOKS_NATIVE_OUTPUT="+output,
 	)
 	// Read through childguard.Capture for lintCommand's reason: a WaitDelay could fail a build that had finished.
-	stdout, stderr, err := childguard.Capture(ctx, command)
-	if err != nil {
-		return fmt.Errorf("sanitized native build: %w\n%s%s", err, stdout, stderr)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
+	if captureError != nil {
+		return fmt.Errorf("sanitized native build: %w\n%s%s", captureError, stdout, stderr)
 	}
 	return nil
 }
@@ -371,26 +371,26 @@ func factoryHooksBuildNative(ctx context.Context, source, output string) error {
 func factoryHooksExecute(test *testing.T, ctx context.Context, name string, args ...string) execution {
 	test.Helper()
 	command := lintCommand(ctx, "", name, args...)
-	output, err := os.CreateTemp(test.TempDir(), "stdout-")
-	if err != nil {
-		test.Fatal(err)
+	output, temporaryFileError := os.CreateTemp(test.TempDir(), "stdout-")
+	if temporaryFileError != nil {
+		test.Fatal(temporaryFileError)
 	}
 	defer output.Close()
 	command.Stdout = output
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
 	started := time.Now()
-	err = command.Run()
+	runError := command.Run()
 	elapsed := time.Since(started)
 	if ctx.Err() != nil {
 		test.Fatalf("cooked: shard exceeded 90s: %v", ctx.Err())
 	}
-	if err != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
-		test.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
+	if runError != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
+		test.Fatalf("%s %v: %v\n%s", name, args, runError, &stderr)
 	}
-	data, err := os.ReadFile(output.Name())
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(output.Name())
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return execution{output: data, duration: elapsed}
 }

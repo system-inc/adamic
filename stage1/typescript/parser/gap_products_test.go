@@ -52,17 +52,17 @@ func gapNative(test *testing.T, relative, directory string, options native.Optio
 		Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")},
 	}
 	product := buildcache.Product(test, inputs, func(out string) error {
-		path, err := filepath.Abs(relative)
-		if err != nil {
-			return err
+		path, absolutePathError := filepath.Abs(relative)
+		if absolutePathError != nil {
+			return absolutePathError
 		}
-		program, err := load.Load([]string{path})
-		if err != nil {
-			return fmt.Errorf("Load: %w", err)
+		program, loadError := load.Load([]string{path})
+		if loadError != nil {
+			return fmt.Errorf("Load: %w", loadError)
 		}
-		lowered, err := lower.Lower(context.Background(), program)
-		if err != nil {
-			return fmt.Errorf("Lower: %w", err)
+		lowered, lowerError := lower.Lower(context.Background(), program)
+		if lowerError != nil {
+			return fmt.Errorf("Lower: %w", lowerError)
 		}
 		return native.Build(native.C(lowered), filepath.Join(out, "native"), options)
 	})

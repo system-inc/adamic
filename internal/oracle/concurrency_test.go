@@ -15,21 +15,21 @@ import (
 // Check inference and the independent sequential witness; the main oracle runs native variants.
 func TestConcurrencyAgreesWithNode(test *testing.T) {
 	test.Parallel()
-	paths, err := filepath.Glob(filepath.Join(repository, "internal/oracle/testdata/concurrency/accepted/*.a"))
-	if err != nil || len(paths) < 9 {
-		test.Fatalf("fixtures: %v (%d)", err, len(paths))
+	paths, globError := filepath.Glob(filepath.Join(repository, "internal/oracle/testdata/concurrency/accepted/*.a"))
+	if globError != nil || len(paths) < 9 {
+		test.Fatalf("fixtures: %v (%d)", globError, len(paths))
 	}
 	for _, path := range paths {
 		test.Run(filepath.Base(path), func(test *testing.T) {
 			test.Parallel()
-			absolute, err := filepath.Abs(path)
-			if err != nil {
-				test.Fatal(err)
+			absolute, absolutePathError := filepath.Abs(path)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			started := time.Now()
-			program, err := lowered(test, absolute)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, absolute)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			if filepath.Base(path) == "recursive_tree.a" && time.Since(started) > 10*time.Second {
 				test.Fatal("recursive readonly tree inference did not finish promptly")
@@ -57,25 +57,25 @@ func TestConcurrencyAgreesWithNode(test *testing.T) {
 
 func TestConcurrencyRefusals(test *testing.T) {
 	test.Parallel()
-	paths, err := filepath.Glob(filepath.Join(repository, "internal/oracle/testdata/concurrency/refused/*.a"))
-	if err != nil || len(paths) < 12 {
-		test.Fatalf("refusal fixtures: %v (%d)", err, len(paths))
+	paths, globError := filepath.Glob(filepath.Join(repository, "internal/oracle/testdata/concurrency/refused/*.a"))
+	if globError != nil || len(paths) < 12 {
+		test.Fatalf("refusal fixtures: %v (%d)", globError, len(paths))
 	}
 	for _, path := range paths {
 		test.Run(filepath.Base(path), func(test *testing.T) {
 			test.Parallel()
-			want, err := os.ReadFile(strings.TrimSuffix(path, ".a") + ".what")
-			if err != nil {
-				test.Fatal(err)
+			want, readError := os.ReadFile(strings.TrimSuffix(path, ".a") + ".what")
+			if readError != nil {
+				test.Fatal(readError)
 			}
-			absolute, err := filepath.Abs(path)
-			if err != nil {
-				test.Fatal(err)
+			absolute, absolutePathError := filepath.Abs(path)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			_, err = lowered(test, absolute)
+			_, loweredError := lowered(test, absolute)
 			var refused *lower.Refused
-			if !errors.As(err, &refused) {
-				test.Fatalf("want Refused %q, got %v", strings.TrimSpace(string(want)), err)
+			if !errors.As(loweredError, &refused) {
+				test.Fatalf("want Refused %q, got %v", strings.TrimSpace(string(want)), loweredError)
 			}
 			if refused.What != strings.TrimSpace(string(want)) {
 				test.Fatalf("want exact What %q, got %q", strings.TrimSpace(string(want)), refused.What)

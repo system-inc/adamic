@@ -110,7 +110,9 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 		if l.narrowedFrom(from, to) {
 			return nil
 		}
-		if constraint := l.checker.GetBaseConstraintOfType(to); constraint != nil && l.canWrite(constraint, map[*checker.Type]bool{}) {
+		if constraint := l.checker.GetBaseConstraintOfType(
+			to,
+		); constraint != nil && l.canWrite(constraint, map[*checker.Type]bool{}) {
 			return &widening{source: from, target: to}
 		}
 		return nil
@@ -158,15 +160,23 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 			}
 			return l.widened(source, target, visited)
 		}
-		if len(fromSignatures) == 1 && len(toSignatures) == 1 && len(fromSignatures[0].TypeParameters()) > 0 && len(toSignatures[0].TypeParameters()) == 0 {
-			fromSignatures = []*checker.Signature{instantiateSignatureInContextOf(l.checker, fromSignatures[0], toSignatures[0], nil, nil)}
+		if len(fromSignatures) == 1 &&
+			len(toSignatures) == 1 &&
+			len(fromSignatures[0].TypeParameters()) > 0 &&
+			len(toSignatures[0].TypeParameters()) == 0 {
+			fromSignatures = []*checker.Signature{
+				instantiateSignatureInContextOf(l.checker, fromSignatures[0], toSignatures[0], nil, nil),
+			}
 		}
 		// Each position the viewed signature hands an argument to (anyRelatedPositions), typed as a
 		// call there sees it: a rest parameter gives its element at that position, never its whole
 		// tuple or array, so a listener `(seen: Error) => void` seen as `(...args: [error: Error]) =>
 		// void` is related Error to Error (#6xzs6gj).
 		for position := range anyRelatedPositions(fromSignatures[0], toSignatures[0]) {
-			takes, given := l.callableParameterTypeAt(fromSignatures[0], position), l.callableParameterTypeAt(toSignatures[0], position)
+			takes, given := l.callableParameterTypeAt(
+				fromSignatures[0],
+				position,
+			), l.callableParameterTypeAt(toSignatures[0], position)
 			if !l.enumAssignable(given, takes) || !l.checker.IsTypeAssignableTo(given, takes) {
 				// tsc relates a method's parameters both ways (method bivariance), so a method taking
 				// a Dog can be seen as one taking any Animal, and handed a Cat.
@@ -176,7 +186,11 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 				return found
 			}
 		}
-		return l.widened(l.checker.GetReturnTypeOfSignature(fromSignatures[0]), l.checker.GetReturnTypeOfSignature(toSignatures[0]), visited)
+		return l.widened(
+			l.checker.GetReturnTypeOfSignature(fromSignatures[0]),
+			l.checker.GetReturnTypeOfSignature(toSignatures[0]),
+			visited,
+		)
 	}
 	fromContainers := l.containers(from)
 	for _, viewed := range l.containers(to) {
@@ -201,7 +215,13 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 // widenedProperties walks to's properties against from's, but those skip names: each field a slot
 // to can write unless it's readonly, and each method a function view of its own. A copy's fields
 // (fresh) are slots of their own, which nothing else writes, so only what they hold is walked.
-func (l *lowering) widenedProperties(from *checker.Type, to *checker.Type, skip map[string]bool, fresh bool, visited map[[2]*checker.Type]bool) *widening {
+func (l *lowering) widenedProperties(
+	from *checker.Type,
+	to *checker.Type,
+	skip map[string]bool,
+	fresh bool,
+	visited map[[2]*checker.Type]bool,
+) *widening {
 	for _, viewed := range l.checker.GetPropertiesOfType(to) {
 		inside := l.checker.GetPropertyOfType(from, viewed.Name)
 		if inside == nil || skip[viewed.Name] {
@@ -212,7 +232,10 @@ func (l *lowering) widenedProperties(from *checker.Type, to *checker.Type, skip 
 			// A method isn't a slot anything writes, but what it returns and takes are views: the
 			// program's own methods. The library's (an Iterable's, an array's own) are left to the
 			// rules for the library's types, and a generic one has no one type to compare.
-			if len(viewed.Declarations) == 0 || load.IsLibrary(ast.GetSourceFileOfNode(viewed.Declarations[0])) || l.generic(target) || l.generic(source) {
+			if len(viewed.Declarations) == 0 ||
+				load.IsLibrary(ast.GetSourceFileOfNode(viewed.Declarations[0])) ||
+				l.generic(target) ||
+				l.generic(source) {
 				continue
 			}
 			if found := l.widened(source, target, visited); found != nil {
@@ -227,7 +250,9 @@ func (l *lowering) widenedProperties(from *checker.Type, to *checker.Type, skip 
 			// enters, is the same field.
 			return &widening{source: source, target: target, readonlyField: viewed.Name}
 		}
-		if !fresh && !l.checker.IsReadonlySymbol(viewed) && (!l.enumAssignable(target, source) || !l.checker.IsTypeAssignableTo(target, source)) {
+		if !fresh &&
+			!l.checker.IsReadonlySymbol(viewed) &&
+			(!l.enumAssignable(target, source) || !l.checker.IsTypeAssignableTo(target, source)) {
 			return &widening{source: source, target: target}
 		}
 		if found := l.widened(source, target, visited); found != nil {
@@ -250,13 +275,19 @@ func (l *lowering) generic(proven *checker.Type) bool {
 // widenedElements walks an array's, a tuple's, a map's or a set's type arguments in from against
 // to's, each a slot to can write unless it's read only.
 func (l *lowering) widenedElements(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) *widening {
-	mutable := !l.isLibraryType(to, "ReadonlyArray", "ReadonlyMap", "ReadonlySet") && !(checker.IsTupleType(to) && to.TargetTupleType().IsReadonly())
+	mutable := !l.isLibraryType(to, "ReadonlyArray", "ReadonlyMap", "ReadonlySet") &&
+		!(checker.IsTupleType(to) && to.TargetTupleType().IsReadonly())
 	return l.widenedArguments(from, to, mutable, visited)
 }
 
 // widenedArguments is widenedElements with whether to's own slots can be written given: a fresh
 // container's can't be written through anything else (freshValue).
-func (l *lowering) widenedArguments(from *checker.Type, to *checker.Type, mutable bool, visited map[[2]*checker.Type]bool) *widening {
+func (l *lowering) widenedArguments(
+	from *checker.Type,
+	to *checker.Type,
+	mutable bool,
+	visited map[[2]*checker.Type]bool,
+) *widening {
 	fromArguments, toArguments := l.checker.GetTypeArguments(from), l.checker.GetTypeArguments(to)
 	if checker.IsTupleType(from) && !checker.IsTupleType(to) && len(toArguments) == 1 {
 		// A tuple seen as an array: every element of it is seen as the array's element.
@@ -288,7 +319,9 @@ func (l *lowering) containers(proven *checker.Type) []*checker.Type {
 	var found []*checker.Type
 	for _, member := range members {
 		if member.Flags()&checker.TypeFlagsObject != 0 && member.ObjectFlags()&checker.ObjectFlagsReference != 0 &&
-			(l.isArrayType(member) || checker.IsTupleType(member) || l.isLibraryType(member, "Map", "ReadonlyMap", "Set", "ReadonlySet")) {
+			(l.isArrayType(member) ||
+				checker.IsTupleType(member) ||
+				l.isLibraryType(member, "Map", "ReadonlyMap", "Set", "ReadonlySet")) {
 			found = append(found, member)
 		}
 	}
@@ -313,7 +346,10 @@ func (l *lowering) sameContainer(from *checker.Type, to *checker.Type) bool {
 // readonly one.
 func (l *lowering) canWrite(proven *checker.Type, visited map[*checker.Type]bool) bool {
 	proven = l.withoutUndefined(proven)
-	if proven == nil || visited[proven] || !l.structured(proven) || len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) > 0 {
+	if proven == nil ||
+		visited[proven] ||
+		!l.structured(proven) ||
+		len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) > 0 {
 		return false
 	}
 	visited[proven] = true
@@ -322,7 +358,8 @@ func (l *lowering) canWrite(proven *checker.Type, visited map[*checker.Type]bool
 	}
 	containers := l.containers(proven)
 	for _, container := range containers {
-		if !l.isLibraryType(container, "ReadonlyArray", "ReadonlyMap", "ReadonlySet") && !(checker.IsTupleType(container) && container.TargetTupleType().IsReadonly()) {
+		if !l.isLibraryType(container, "ReadonlyArray", "ReadonlyMap", "ReadonlySet") &&
+			!(checker.IsTupleType(container) && container.TargetTupleType().IsReadonly()) {
 			return true
 		}
 		for _, element := range l.checker.GetTypeArguments(container) {
@@ -400,7 +437,9 @@ func isClassInstance(proven *checker.Type) bool {
 	if proven.ObjectFlags()&checker.ObjectFlagsClass != 0 {
 		return true
 	}
-	return proven.ObjectFlags()&checker.ObjectFlagsReference != 0 && proven.Target() != nil && proven.Target().ObjectFlags()&checker.ObjectFlagsClass != 0
+	return proven.ObjectFlags()&checker.ObjectFlagsReference != 0 &&
+		proven.Target() != nil &&
+		proven.Target().ObjectFlags()&checker.ObjectFlagsClass != 0
 }
 
 // viewSite reports whether an expression is a value going into a typed slot: an initializer (a
@@ -455,13 +494,16 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 	switch {
 	case node.Kind == ast.KindAsExpression:
 		as := node.AsAsExpression()
-		if as.Type.Kind == ast.KindTypeReference && ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
+		if as.Type.Kind == ast.KindTypeReference &&
+			ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) &&
+			as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
 			return nil
 		}
 		source, target := l.checker.GetTypeAtLocation(as.Expression), l.checker.GetTypeAtLocation(node)
-		if l.checker.IsTypeAssignableTo(source, target) || l.checker.IsTypeAssignableTo(l.checker.GetWidenedType(source), target) {
-			if err := l.provenRelation(node, as.Expression, target); err != nil {
-				return err
+		if l.checker.IsTypeAssignableTo(source, target) ||
+			l.checker.IsTypeAssignableTo(l.checker.GetWidenedType(source), target) {
+			if provenRelationError := l.provenRelation(node, as.Expression, target); provenRelationError != nil {
+				return provenRelationError
 			}
 		} else {
 			// Preserve the existing checks on downcasts; their lowering belongs to cast.go.
@@ -473,8 +515,12 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 		own, contextual, found = l.castSlotWidened(node)
 	case node.Kind == ast.KindSatisfiesExpression:
 		satisfies := node.AsSatisfiesExpression()
-		if err := l.provenRelation(node, satisfies.Expression, l.checker.GetTypeAtLocation(satisfies.Type)); err != nil {
-			return err
+		if provenRelationError := l.provenRelation(
+			node,
+			satisfies.Expression,
+			l.checker.GetTypeAtLocation(satisfies.Type),
+		); provenRelationError != nil {
+			return provenRelationError
 		}
 		own, contextual, found = l.castSlotWidened(node)
 	case node.Kind == ast.KindShorthandPropertyAssignment:
@@ -573,8 +619,12 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 		}
 		own = l.checker.GetTypeAtLocation(node)
 		found = l.freshOrWidened(node, own, contextual)
-		if found == nil && node.Parent != nil && node.Parent.Kind == ast.KindPropertyAssignment && node.Parent.AsPropertyAssignment().Initializer == node {
-			if name := node.Parent.Name(); name != nil && (ast.IsIdentifier(name) || ast.IsStringLiteral(name) || ast.IsNumericLiteral(name)) {
+		if found == nil &&
+			node.Parent != nil &&
+			node.Parent.Kind == ast.KindPropertyAssignment &&
+			node.Parent.AsPropertyAssignment().Initializer == node {
+			if name := node.Parent.Name(); name != nil &&
+				(ast.IsIdentifier(name) || ast.IsStringLiteral(name) || ast.IsNumericLiteral(name)) {
 				if literal := l.slotType(node.Parent.Parent); literal != nil {
 					contextual, found = l.memberLiteralSlotWidened(node, own, literal, name.Text(), contextual)
 				}
@@ -681,7 +731,12 @@ func (l *lowering) castSlotRefusal(node *ast.Node) error {
 // number; the member it's built as promises one literal. Each member-literal slot the value can be
 // assigned to is judged as if it were the only one; the union's own property stays the answer when
 // none of them refuses.
-func (l *lowering) memberLiteralSlotWidened(node *ast.Node, own, literal *checker.Type, name string, contextual *checker.Type) (*checker.Type, *widening) {
+func (l *lowering) memberLiteralSlotWidened(
+	node *ast.Node,
+	own, literal *checker.Type,
+	name string,
+	contextual *checker.Type,
+) (*checker.Type, *widening) {
 	if literal.Flags()&checker.TypeFlagsUnion == 0 {
 		return contextual, nil
 	}
@@ -694,7 +749,8 @@ func (l *lowering) memberLiteralSlotWidened(node *ast.Node, own, literal *checke
 			continue
 		}
 		slot := l.checker.GetNonNullableType(l.checker.GetTypeOfSymbol(property))
-		if slot.Flags()&checker.TypeFlagsNumberLiteral == 0 && !l.numericEnum(l.enumIdentity(slot)) || l.openNumericEnumType(slot) {
+		if slot.Flags()&checker.TypeFlagsNumberLiteral == 0 && !l.numericEnum(l.enumIdentity(slot)) ||
+			l.openNumericEnumType(slot) {
 			continue
 		}
 		if !l.checker.IsTypeAssignableTo(own, slot) {
@@ -713,29 +769,82 @@ func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type
 	}
 	if found.enum {
 		if enumObjectSymbol(found.target) != nil {
-			return &Refused{Where: l.program.Where(node), What: "a structural object seen as " + l.checker.TypeToString(found.target) + "; the complete enum shape is unproven", Fix: "use the enum's runtime object or a typeof alias, or give the ordinary object an explicit interface"}
+			return &Refused{
+				Where: l.program.Where(node),
+				What: "a structural object seen as " +
+					l.checker.TypeToString(found.target) +
+					"; the complete enum shape is unproven",
+				Fix: "use the enum's runtime object or a typeof alias, or give the ordinary object an explicit interface",
+			}
 		}
 		if l.flagEnum(l.enumIdentity(found.target)) && !l.numericEnum(l.enumIdentity(found.target)) {
 			return l.flagWriteRefusal(node, found.target)
 		}
 		if l.numericEnum(l.enumIdentity(found.target)) || l.numericEnum(l.enumIdentity(found.source)) {
-			return &Refused{Where: l.program.Where(node), What: "an unproven value assigned to a numeric literal or enum member slot " + l.checker.TypeToString(found.target), Fix: "compare with this literal and return that constant, or widen the slot to the whole numeric enum or number (adamic/enum-literal)"}
+			return &Refused{
+				Where: l.program.Where(node),
+				What: "an unproven value assigned to a numeric literal or enum member slot " +
+					l.checker.TypeToString(found.target),
+				Fix: "compare with this literal and return that constant, or widen the slot to the whole numeric enum or number (adamic/enum-literal)",
+			}
 		}
-		return &Refused{Where: l.program.Where(node), What: "an arbitrary number or a value from another enum assigned to " + l.checker.TypeToString(found.target) + "; its members are a closed union", Fix: "use a declared member of this enum, or compare the number with its members and return the matching member (adamic/enum-members)"}
+		return &Refused{
+			Where: l.program.Where(node),
+			What: "an arbitrary number or a value from another enum assigned to " +
+				l.checker.TypeToString(found.target) +
+				"; its members are a closed union",
+			Fix: "use a declared member of this enum, or compare the number with its members and return the matching member (adamic/enum-members)",
+		}
 	}
-	what := "a value of type " + l.checker.TypeToString(own) + " seen as " + l.checker.TypeToString(contextual) + ", which can write " + l.checker.TypeToString(found.target) + " where " + l.checker.TypeToString(found.source) + " is read"
+	what := "a value of type " +
+		l.checker.TypeToString(own) +
+		" seen as " +
+		l.checker.TypeToString(contextual) +
+		", which can write " +
+		l.checker.TypeToString(found.target) +
+		" where " +
+		l.checker.TypeToString(found.source) +
+		" is read"
 	fix := "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
 	if found.parameter {
-		what = "a function taking " + l.checker.TypeToString(found.source) + " seen as one taking " + l.checker.TypeToString(found.target) + " (tsc relates a method's parameters both ways), so it can be handed what it can't take"
+		what = "a function taking " +
+			l.checker.TypeToString(found.source) +
+			" seen as one taking " +
+			l.checker.TypeToString(found.target) +
+			" (tsc relates a method's parameters both ways), so it can be handed what it can't take"
 		fix = "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
 	}
 	if found.readonlyField != "" {
-		what = "a value of type " + l.checker.TypeToString(own) + " seen as " + l.checker.TypeToString(contextual) + ", whose readonly field " + found.readonlyField + " becomes writable: a readonly field may hold something narrower than " + l.checker.TypeToString(found.source) + ", which a write of " + l.checker.TypeToString(found.target) + " would replace"
-		fix = "keep " + found.readonlyField + " readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+		what = "a value of type " +
+			l.checker.TypeToString(own) +
+			" seen as " +
+			l.checker.TypeToString(contextual) +
+			", whose readonly field " +
+			found.readonlyField +
+			" becomes writable: a readonly field may hold something narrower than " +
+			l.checker.TypeToString(found.source) +
+			", which a write of " +
+			l.checker.TypeToString(found.target) +
+			" would replace"
+		fix = "keep " +
+			found.readonlyField +
+			" readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
 	}
 	if found.target.Flags()&checker.TypeFlagsTypeParameter != 0 {
-		what = "a value of type " + l.checker.TypeToString(found.source) + " seen as " + l.checker.TypeToString(found.target) + ", a type parameter whose constraint " + l.checker.TypeToString(l.checker.GetBaseConstraintOfType(found.target)) + " can be written, so it can write what " + l.checker.TypeToString(found.source) + " can't hold"
-		fix = "take it as " + l.checker.TypeToString(found.source) + ", or constrain " + l.checker.TypeToString(found.target) + " to something readonly, which can't write (adamic/invariant-mutable)"
+		what = "a value of type " +
+			l.checker.TypeToString(found.source) +
+			" seen as " +
+			l.checker.TypeToString(found.target) +
+			", a type parameter whose constraint " +
+			l.checker.TypeToString(l.checker.GetBaseConstraintOfType(found.target)) +
+			" can be written, so it can write what " +
+			l.checker.TypeToString(found.source) +
+			" can't hold"
+		fix = "take it as " +
+			l.checker.TypeToString(found.source) +
+			", or constrain " +
+			l.checker.TypeToString(found.target) +
+			" to something readonly, which can't write (adamic/invariant-mutable)"
 	}
 	return &Refused{Where: l.program.Where(node), What: what, Fix: fix}
 }
@@ -751,10 +860,12 @@ func (l *lowering) freshOrWidened(node *ast.Node, own *checker.Type, contextual 
 	if own.Flags()&checker.TypeFlagsNever != 0 && l.enumNeverIdentity(node, map[*ast.Node]bool{}) != nil {
 		return nil
 	}
-	targetLiteral := (contextual.Flags()&checker.TypeFlagsNumberLiteral != 0 || l.numericEnum(l.enumIdentity(contextual))) && !l.openNumericEnumType(contextual)
+	targetLiteral := (contextual.Flags()&checker.TypeFlagsNumberLiteral != 0 ||
+		l.numericEnum(l.enumIdentity(contextual))) && !l.openNumericEnumType(contextual)
 	if targetLiteral {
 		if declared := l.enumStoredType(node); declared != nil {
-			if l.openNumericEnumType(declared) && !l.enumMemberOrigin(node, l.enumIdentity(declared), map[*ast.Node]bool{}) {
+			if l.openNumericEnumType(declared) &&
+				!l.enumMemberOrigin(node, l.enumIdentity(declared), map[*ast.Node]bool{}) {
 				return &widening{source: declared, target: contextual, enum: true}
 			}
 		}
@@ -803,7 +914,9 @@ func (l *lowering) freshValue(node *ast.Node) bool {
 	switch node.Kind {
 	case ast.KindNewExpression:
 		callee := node.AsNewExpression().Expression
-		return l.isLibraryGlobal(callee, "Map") || l.isLibraryGlobal(callee, "Set") || l.isLibraryGlobal(callee, "Array")
+		return l.isLibraryGlobal(callee, "Map") ||
+			l.isLibraryGlobal(callee, "Set") ||
+			l.isLibraryGlobal(callee, "Array")
 	case ast.KindCallExpression:
 		callee := ast.SkipParentheses(node.AsCallExpression().Expression)
 		if callee.Kind != ast.KindPropertyAccessExpression {
@@ -816,7 +929,8 @@ func (l *lowering) freshValue(node *ast.Node) bool {
 		}
 		switch method {
 		case "slice", "filter", "map", "concat":
-			return l.isArrayType(l.checker.GetTypeAtLocation(access.Expression)) || l.isLibraryType(l.checker.GetTypeAtLocation(access.Expression), "ReadonlyArray")
+			return l.isArrayType(l.checker.GetTypeAtLocation(access.Expression)) ||
+				l.isLibraryType(l.checker.GetTypeAtLocation(access.Expression), "ReadonlyArray")
 		}
 	}
 	return false
@@ -845,7 +959,8 @@ func (l *lowering) impliedTarget(node *ast.Node) *checker.Type {
 		if context := l.callableContext(parent); context != nil {
 			return context
 		}
-		if conditional := parent.AsConditionalExpression(); conditional.WhenTrue == child || conditional.WhenFalse == child {
+		if conditional := parent.AsConditionalExpression(); conditional.WhenTrue == child ||
+			conditional.WhenFalse == child {
 			return l.impliedExpressionTarget(parent)
 		}
 	case ast.KindBinaryExpression:
@@ -975,11 +1090,14 @@ func (l *lowering) carriedSlot(node *ast.Node) (slot *checker.Type, carried bool
 		return l.carriedSlot(parent)
 	case ast.KindAsExpression:
 		// x as const keeps the slot x goes into; any other assertion gives x the asserted type.
-		if as := parent.AsAsExpression(); as.Type.Kind == ast.KindTypeReference && ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
+		if as := parent.AsAsExpression(); as.Type.Kind == ast.KindTypeReference &&
+			ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) &&
+			as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
 			return l.carriedSlot(parent)
 		}
 	case ast.KindConditionalExpression:
-		if conditional := parent.AsConditionalExpression(); conditional.WhenTrue == node || conditional.WhenFalse == node {
+		if conditional := parent.AsConditionalExpression(); conditional.WhenTrue == node ||
+			conditional.WhenFalse == node {
 			return l.carriedSlot(parent)
 		}
 	case ast.KindBinaryExpression:
@@ -1044,7 +1162,10 @@ func (l *lowering) carriedSlot(node *ast.Node) (slot *checker.Type, carried bool
 		if checker.IsTupleType(array) {
 			index := slices.Index(elements, node)
 			arguments := l.checker.GetTypeArguments(array)
-			if index < 0 || index >= len(arguments) || slices.ContainsFunc(elements[:index], func(element *ast.Node) bool { return element.Kind == ast.KindSpreadElement }) {
+			if index < 0 || index >= len(arguments) || slices.ContainsFunc(
+				elements[:index],
+				func(element *ast.Node) bool { return element.Kind == ast.KindSpreadElement },
+			) {
 				return nil, true, false
 			}
 			return arguments[index], true, true
@@ -1115,7 +1236,10 @@ func destructuringTarget(node *ast.Node) *ast.Node {
 	}
 	if parent := node.Parent; parent != nil && parent.Kind == ast.KindBinaryExpression {
 		binary := parent.AsBinaryExpression()
-		if binary.OperatorToken.Kind == ast.KindEqualsToken && binary.Right == node && (binary.Left.Kind == ast.KindArrayLiteralExpression || binary.Left.Kind == ast.KindObjectLiteralExpression) {
+		if binary.OperatorToken.Kind == ast.KindEqualsToken &&
+			binary.Right == node &&
+			(binary.Left.Kind == ast.KindArrayLiteralExpression ||
+				binary.Left.Kind == ast.KindObjectLiteralExpression) {
 			return binary.Left
 		}
 	}
@@ -1152,7 +1276,19 @@ func (l *lowering) refuseElementWidening(node *ast.Node, pattern *ast.Node) erro
 		}
 		to := l.checker.GetTypeAtLocation(target)
 		if found := l.widened(elements[index], to, map[[2]*checker.Type]bool{}); found != nil {
-			return &Refused{Where: l.program.Where(target), What: "a value of type " + l.checker.TypeToString(elements[index]) + " seen as " + l.checker.TypeToString(to) + ", which can write " + l.checker.TypeToString(found.target) + " where " + l.checker.TypeToString(found.source) + " is read", Fix: "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"}
+			return &Refused{
+				Where: l.program.Where(target),
+				What: "a value of type " +
+					l.checker.TypeToString(elements[index]) +
+					" seen as " +
+					l.checker.TypeToString(to) +
+					", which can write " +
+					l.checker.TypeToString(found.target) +
+					" where " +
+					l.checker.TypeToString(found.source) +
+					" is read",
+				Fix: "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+			}
 		}
 	}
 	return nil
@@ -1180,14 +1316,38 @@ func (l *lowering) refuseFieldWidening(node *ast.Node, pattern *ast.Node) error 
 	}
 	for _, field := range fields {
 		if found := l.widened(field.source, field.targetType, map[[2]*checker.Type]bool{}); found != nil {
-			return &Refused{Where: l.program.Where(field.target), What: "a value of type " + l.checker.TypeToString(field.source) + " seen as " + l.checker.TypeToString(field.targetType) + ", which can write " + l.checker.TypeToString(found.target) + " where " + l.checker.TypeToString(found.source) + " is read", Fix: "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"}
+			return &Refused{
+				Where: l.program.Where(field.target),
+				What: "a value of type " +
+					l.checker.TypeToString(field.source) +
+					" seen as " +
+					l.checker.TypeToString(field.targetType) +
+					", which can write " +
+					l.checker.TypeToString(found.target) +
+					" where " +
+					l.checker.TypeToString(found.source) +
+					" is read",
+				Fix: "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+			}
 		}
 		if field.defaultValue == nil {
 			continue
 		}
 		fallback := l.checker.GetTypeAtLocation(field.defaultValue)
 		if found := l.widened(fallback, field.targetType, map[[2]*checker.Type]bool{}); found != nil {
-			return &Refused{Where: l.program.Where(field.defaultValue), What: "a value of type " + l.checker.TypeToString(fallback) + " seen as " + l.checker.TypeToString(field.targetType) + ", which can write " + l.checker.TypeToString(found.target) + " where " + l.checker.TypeToString(found.source) + " is read", Fix: "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"}
+			return &Refused{
+				Where: l.program.Where(field.defaultValue),
+				What: "a value of type " +
+					l.checker.TypeToString(fallback) +
+					" seen as " +
+					l.checker.TypeToString(field.targetType) +
+					", which can write " +
+					l.checker.TypeToString(found.target) +
+					" where " +
+					l.checker.TypeToString(found.source) +
+					" is read",
+				Fix: "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+			}
 		}
 	}
 	return nil
@@ -1242,7 +1402,10 @@ func (l *lowering) patternFields(own *checker.Type, pattern *ast.Node) (fields [
 // genericFunction reports whether an expression is a function with type parameters of its own,
 // which tsc instantiates to the type it's written into rather than viewing it through that type.
 func (l *lowering) genericFunction(node *ast.Node) bool {
-	for _, signature := range l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node), checker.SignatureKindCall) {
+	for _, signature := range l.checker.GetSignaturesOfType(
+		l.checker.GetTypeAtLocation(node),
+		checker.SignatureKindCall,
+	) {
 		if len(signature.TypeParameters()) > 0 {
 			return true
 		}

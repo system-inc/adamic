@@ -11,17 +11,17 @@ func TestRegularCompileBudget(test *testing.T) {
 	for k := 0; k < 7; k++ {
 		pattern = "(?:" + pattern + "){32}"
 	}
-	program, err := Compile(pattern, "")
-	if err != nil {
-		test.Fatal(err)
+	program, compileError := Compile(pattern, "")
+	if compileError != nil {
+		test.Fatal(compileError)
 	}
 	if program.regular != nil {
 		test.Fatal("empty counted expansion must retain the VM")
 	}
 	matcher := program.New()
 	matcher.StepLimit = 100
-	if _, err := matcher.Exec(nil); !errors.Is(err, ErrStepLimit) {
-		test.Fatalf("counted empty VM budget: %v", err)
+	if _, execError := matcher.Exec(nil); !errors.Is(execError, ErrStepLimit) {
+		test.Fatalf("counted empty VM budget: %v", execError)
 	}
 }
 

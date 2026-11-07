@@ -11,12 +11,12 @@ import (
 
 func TestNonNullAssertionLowersToNullishPanic(test *testing.T) {
 	test.Parallel()
-	program, err := lowerTypeScriptAssertionSource(
+	program, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(
 		test,
 		"const map = new Map<string, number>();\nconsole.log(`${map.get('a')!}`);\n",
 	)
-	if err != nil {
-		test.Fatal(err)
+	if lowerTypeScriptAssertionSourceError != nil {
+		test.Fatal(lowerTypeScriptAssertionSourceError)
 	}
 	var check ir.Coalesce
 	found := false
@@ -40,9 +40,9 @@ func TestNonNullAssertionLowersToNullishPanic(test *testing.T) {
 
 func TestNonNullAssertionOnPresentTypeIsErased(test *testing.T) {
 	test.Parallel()
-	program, err := lowerTypeScriptAssertionSource(test, "const value = 0!;\n")
-	if err != nil {
-		test.Fatal(err)
+	program, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(test, "const value = 0!;\n")
+	if lowerTypeScriptAssertionSourceError != nil {
+		test.Fatal(lowerTypeScriptAssertionSourceError)
 	}
 	if _, ok := program.Main[0].(ir.Declare).Value.(ir.NumberConstant); !ok {
 		test.Fatalf("want a plain number, got %#v", program.Main[0])
@@ -54,9 +54,9 @@ func TestNonNullAssertionOnPresentTypeIsErased(test *testing.T) {
 
 func lowerTypeScriptAssertionSource(test *testing.T, source string) (*ir.Program, error) {
 	test.Helper()
-	program, err := load.Load([]string{writeAgreementSource(test, "main.ts", source)})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{writeAgreementSource(test, "main.ts", source)})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	return Lower(context.Background(), program)
 }

@@ -73,9 +73,9 @@ func typeAwareMutantNative(h *harness, name, entry, archive string, sanitize boo
 func typeAwareMutant(h *harness, archive, entry, name, relative, from, to string, imports ...string) string {
 	return typeAwareSetup(h, name, func() string {
 		if filepath.Base(entry) == "sharded_suite.ts" {
-			data, err := os.ReadFile(entry)
-			if err != nil {
-				h.t.Fatal(err)
+			data, readError := os.ReadFile(entry)
+			if readError != nil {
+				h.t.Fatal(readError)
 			}
 			driver := strings.ReplaceAll(
 				string(data),

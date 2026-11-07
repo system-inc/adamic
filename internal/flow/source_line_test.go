@@ -37,17 +37,17 @@ func TestEveryStatementIsClassified(test *testing.T) {
 		classified[name] = "nested control flow"
 	}
 	found := map[string]bool{}
-	files, err := filepath.Glob("../ir/*.go")
-	if err != nil {
-		test.Fatal(err)
+	files, globError := filepath.Glob("../ir/*.go")
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	for _, path := range files {
 		if strings.HasSuffix(path, "_test.go") {
 			continue
 		}
-		file, err := parser.ParseFile(token.NewFileSet(), path, nil, 0)
-		if err != nil {
-			test.Fatal(err)
+		file, parseFileError := parser.ParseFile(token.NewFileSet(), path, nil, 0)
+		if parseFileError != nil {
+			test.Fatal(parseFileError)
 		}
 		for _, decl := range file.Decls {
 			method, ok := decl.(*ast.FuncDecl)
@@ -69,9 +69,9 @@ func TestEveryStatementIsClassified(test *testing.T) {
 	// Exhaustive statement dispatchers must explicitly recognize metadata. Reflection
 	// walkers see only File and Line, neither an operand nor a nested statement.
 	dispatchers := 0
-	err = filepath.WalkDir("..", func(path string, d fs.DirEntry, err error) error {
-		if err != nil {
-			return err
+	walkError := filepath.WalkDir("..", func(path string, d fs.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
 		if d.IsDir() {
 			if d.Name() == "testdata" || d.Name() == "performance" {
@@ -82,9 +82,9 @@ func TestEveryStatementIsClassified(test *testing.T) {
 		if !strings.HasSuffix(path, ".go") || strings.HasSuffix(path, "_test.go") {
 			return nil
 		}
-		file, err := parser.ParseFile(token.NewFileSet(), path, nil, 0)
-		if err != nil {
-			return err
+		file, parseFileError := parser.ParseFile(token.NewFileSet(), path, nil, 0)
+		if parseFileError != nil {
+			return parseFileError
 		}
 		ast.Inspect(file, func(node ast.Node) bool {
 			sw, ok := node.(*ast.TypeSwitchStmt)
@@ -121,8 +121,8 @@ func TestEveryStatementIsClassified(test *testing.T) {
 		})
 		return nil
 	})
-	if err != nil {
-		test.Fatal(err)
+	if walkError != nil {
+		test.Fatal(walkError)
 	}
 	if dispatchers < 4 {
 		test.Fatalf("census found only %d dispatchers", dispatchers)
@@ -158,9 +158,9 @@ func TestSourceLineHasNoFlowInstruction(test *testing.T) {
 // four-check corpus. A unique fixture path keeps its marked IR out of products.
 func CheckDebugProgram(test *testing.T, path string, program *ir.Program) {
 	test.Helper()
-	absolute, err := filepath.Abs(path)
-	if err != nil {
-		test.Fatal(err)
+	absolute, absolutePathError := filepath.Abs(path)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	entry := &loweredProgram{}
 	entry.once.Do(func() { entry.program = program })

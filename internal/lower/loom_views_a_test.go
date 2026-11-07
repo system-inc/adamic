@@ -10,9 +10,9 @@ import (
 // loomViewFixture returns the fixture file's source and its extension, the mode it lowers in.
 func loomViewFixture(test *testing.T, file string) (string, string) {
 	test.Helper()
-	source, err := os.ReadFile(filepath.Join("testdata", "loom_views_a", file))
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(filepath.Join("testdata", "loom_views_a", file))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return string(source), filepath.Ext(file)
 }
@@ -22,12 +22,12 @@ func loomViewFixture(test *testing.T, file string) (string, string) {
 func requireLoomViewTwinRefusal(test *testing.T, name, diagnostic, fix string) {
 	test.Helper()
 	source, _ := loomViewFixture(test, name+".a")
-	_, err := lowerSourceAs(test, source, ".ts")
-	if err == nil ||
-		!strings.Contains(err.Error(), diagnostic) ||
-		!strings.Contains(err.Error(), fix) ||
-		!strings.Contains(err.Error(), ".ts:") {
-		test.Fatalf("twin: want located refusal %q and fix %q, got %v", diagnostic, fix, err)
+	_, lowerSourceAsError := lowerSourceAs(test, source, ".ts")
+	if lowerSourceAsError == nil ||
+		!strings.Contains(lowerSourceAsError.Error(), diagnostic) ||
+		!strings.Contains(lowerSourceAsError.Error(), fix) ||
+		!strings.Contains(lowerSourceAsError.Error(), ".ts:") {
+		test.Fatalf("twin: want located refusal %q and fix %q, got %v", diagnostic, fix, lowerSourceAsError)
 	}
 }
 
@@ -38,12 +38,12 @@ func requireLoomViewRefusal(test *testing.T, name, output, diagnostic, fix strin
 	if truth.code != 0 || string(truth.stdout) != output || len(truth.stderr) != 0 {
 		test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.code, truth.stdout, truth.stderr)
 	}
-	_, err := lowerSourceAs(test, source, extension)
-	if err == nil ||
-		!strings.Contains(err.Error(), diagnostic) ||
-		!strings.Contains(err.Error(), fix) ||
-		!strings.Contains(err.Error(), ".a:") {
-		test.Fatalf("want located refusal %q and fix %q, got %v", diagnostic, fix, err)
+	_, lowerSourceAsError := lowerSourceAs(test, source, extension)
+	if lowerSourceAsError == nil ||
+		!strings.Contains(lowerSourceAsError.Error(), diagnostic) ||
+		!strings.Contains(lowerSourceAsError.Error(), fix) ||
+		!strings.Contains(lowerSourceAsError.Error(), ".a:") {
+		test.Fatalf("want located refusal %q and fix %q, got %v", diagnostic, fix, lowerSourceAsError)
 	}
 }
 

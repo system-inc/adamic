@@ -34,7 +34,7 @@ func inventoryEngineDeadline(test *testing.T, binary, directory string, cases []
 			"-test.timeout=75s",
 		)
 		command.Dir = directory
-		output, err := inventoryEngineOutput(commandContext, command)
+		output, inventoryEngineOutputError := inventoryEngineOutput(commandContext, command)
 		cancelCommand()
 		test.Logf("%s", output)
 		if ctx.Err() == context.DeadlineExceeded {
@@ -43,8 +43,8 @@ func inventoryEngineDeadline(test *testing.T, binary, directory string, cases []
 				name,
 			)
 		}
-		if err != nil {
-			test.Fatalf("case %s: %v", name, err)
+		if inventoryEngineOutputError != nil {
+			test.Fatalf("case %s: %v", name, inventoryEngineOutputError)
 		}
 	}
 	if elapsed := time.Since(started); elapsed > 60*time.Second {

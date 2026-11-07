@@ -17,17 +17,17 @@ import (
 // mutants. A drain counter observes work directly rather than timing empty scans.
 func remoteScanProduct(test *testing.T, sanitized bool) string {
 	test.Helper()
-	files, flags, compiler, version, err := runtimeInputs(
+	files, flags, compiler, version, runtimeInputsError := runtimeInputs(
 		"",
 		Options{Sanitize: sanitized, slabs: true},
 		[]string{"-DADAMIC_SLAB_QUARANTINE_OFF"},
 	)
-	if err != nil {
-		test.Fatal(err)
+	if runtimeInputsError != nil {
+		test.Fatal(runtimeInputsError)
 	}
-	headers, err := headersRead(files, flags, compiler)
-	if err != nil {
-		test.Fatal(err)
+	headers, headersReadError := headersRead(files, flags, compiler)
+	if headersReadError != nil {
+		test.Fatal(headersReadError)
 	}
 	inputs := buildcache.Inputs{
 		Name: fmt.Sprintf("heap-remote-scan-%t", sanitized),
@@ -49,13 +49,13 @@ func remoteScanProduct(test *testing.T, sanitized bool) string {
 		},
 	}
 	return buildcache.Product(test, inputs, func(directory string) error {
-		source, err := os.ReadFile("testdata/heap_remote_scan.c")
-		if err != nil {
-			return err
+		source, readError := os.ReadFile("testdata/heap_remote_scan.c")
+		if readError != nil {
+			return readError
 		}
-		cache, err := cacheDirectory("heap-remote-scan")
-		if err != nil {
-			return err
+		cache, cacheDirectoryError := cacheDirectory("heap-remote-scan")
+		if cacheDirectoryError != nil {
+			return cacheDirectoryError
 		}
 		var baseline string
 		for _, variant := range []struct{ name, guard string }{
@@ -95,9 +95,10 @@ func remoteScanProduct(test *testing.T, sanitized bool) string {
 			}
 			library := baseline
 			if variant.guard == "" {
-				library, err = cachedRuntime(snapshot, flags, compiler, version, cache)
-				if err != nil {
-					return err
+				var cachedRuntimeError error
+				library, cachedRuntimeError = cachedRuntime(snapshot, flags, compiler, version, cache)
+				if cachedRuntimeError != nil {
+					return cachedRuntimeError
 				}
 				baseline = library
 			} else {
@@ -105,8 +106,12 @@ func remoteScanProduct(test *testing.T, sanitized bool) string {
 				scratch := test.TempDir()
 				for _, file := range snapshot {
 					if file.name == "heap.c" {
-						if err := os.WriteFile(filepath.Join(scratch, "heap.c"), file.contents, 0600); err != nil {
-							return err
+						if writeError := os.WriteFile(
+							filepath.Join(scratch, "heap.c"),
+							file.contents,
+							0600,
+						); writeError != nil {
+							return writeError
 						}
 					}
 				}
@@ -121,13 +126,13 @@ func remoteScanProduct(test *testing.T, sanitized bool) string {
 					object,
 				)
 				staticsCompile(test, compiler, arguments...)
-				data, err := os.ReadFile(baseline)
-				if err != nil {
-					return err
+				data, readError := os.ReadFile(baseline)
+				if readError != nil {
+					return readError
 				}
 				library = filepath.Join(scratch, "runtime.a")
-				if err := os.WriteFile(library, data, 0600); err != nil {
-					return err
+				if writeError := os.WriteFile(library, data, 0600); writeError != nil {
+					return writeError
 				}
 				staticsCompile(test, archiverName(compiler), "r", library, object)
 			}
@@ -138,12 +143,12 @@ func remoteScanProduct(test *testing.T, sanitized bool) string {
 				compiler,
 				library,
 			)
-			data, err := os.ReadFile(binary)
-			if err != nil {
-				return err
+			data, readError := os.ReadFile(binary)
+			if readError != nil {
+				return readError
 			}
-			if err = os.WriteFile(filepath.Join(directory, variant.name), data, 0755); err != nil {
-				return err
+			if writeError := os.WriteFile(filepath.Join(directory, variant.name), data, 0755); writeError != nil {
+				return writeError
 			}
 		}
 		return nil
@@ -159,9 +164,9 @@ func checkRemoteScan(test *testing.T, sanitized bool, variant string) {
 	command := exec.CommandContext(ctx, binary)
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
-	err := command.Run()
+	runError := command.Run()
 	if ctx.Err() != nil || command.ProcessState == nil {
-		test.Fatalf("%s did not finish: %v", variant, err)
+		test.Fatalf("%s did not finish: %v", variant, runError)
 	}
 	got := command.ProcessState.ExitCode()
 	want, exit := "serial skip; remote reuse\n", 0

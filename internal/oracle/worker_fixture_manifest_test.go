@@ -14,9 +14,9 @@ import (
 // rather than duplicating the table or parsing just the literal in oracle_test.go.
 func TestProduct_OracleCompilingFixtures(test *testing.T) {
 	test.Parallel()
-	inputs, err := buildcache.GoTestInputs("", "oracle.test", "./internal/oracle", nil, nil)
-	if err != nil {
-		test.Fatal(err)
+	inputs, goTestInputsError := buildcache.GoTestInputs("", "oracle.test", "./internal/oracle", nil, nil)
+	if goTestInputsError != nil {
+		test.Fatal(goTestInputsError)
 	}
 	inputs.Name = "oracle compiling fixtures"
 	buildcache.Product(test, inputs, func(directory string) error {
@@ -28,9 +28,9 @@ func TestProduct_OracleCompilingFixtures(test *testing.T) {
 		}
 		slices.Sort(paths)
 		paths = slices.Compact(paths)
-		data, err := json.Marshal(paths)
-		if err != nil {
-			return err
+		data, encodeError := json.Marshal(paths)
+		if encodeError != nil {
+			return encodeError
 		}
 		return os.WriteFile(filepath.Join(directory, "fixtures.json"), data, 0644)
 	})

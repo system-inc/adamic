@@ -119,14 +119,14 @@ func execute(dir string, limit time.Duration, name string, args ...string) obser
 	// Capture runs it in its own process group, kills the group when ctx ends or the command exits, and reads each
 	// stream to its end, so no timer decides when the output is whole (#n3gk22h).
 	started := time.Now()
-	out, errout, err := childguard.Capture(ctx, command)
+	out, errout, captureError := childguard.Capture(ctx, command)
 	o := observation{Stdout: string(out), Stderr: string(errout), WallSeconds: time.Since(started).Seconds()}
-	if err != nil {
+	if captureError != nil {
 		o.Exit = -1
-		if e, ok := err.(*exec.ExitError); ok {
+		if e, ok := captureError.(*exec.ExitError); ok {
 			o.Exit = e.ExitCode()
 		} else {
-			o.Error = err.Error()
+			o.Error = captureError.Error()
 		}
 	}
 	if ctx.Err() != nil {
@@ -144,13 +144,18 @@ func git(dir string, args ...string) (string, error) {
 	return strings.TrimSpace(o.Stdout), nil
 }
 func compileClass(o observation) string {
-	if o.Error != "" || o.Exit < 0 || strings.Contains(o.Stderr, "panic:") || strings.Contains(o.Stderr, "fatal error:") {
+	if o.Error != "" ||
+		o.Exit < 0 ||
+		strings.Contains(o.Stderr, "panic:") ||
+		strings.Contains(o.Stderr, "fatal error:") {
 		return "error"
 	}
 	if o.Exit == 0 {
 		return "accepted"
 	}
-	if o.Exit == 1 && (strings.Contains(o.Stderr, "stage 0 can't lower") || strings.Contains(o.Stderr, "Adamic 0.1 refuses") || strings.Contains(o.Stderr, "error TS")) {
+	if o.Exit == 1 && (strings.Contains(o.Stderr, "stage 0 can't lower") ||
+		strings.Contains(o.Stderr, "Adamic 0.1 refuses") ||
+		strings.Contains(o.Stderr, "error TS")) {
 		return "refused"
 	}
 	return "error"
@@ -177,22 +182,22 @@ func classify(a, b observation) string {
 	return "newly-refused"
 }
 
-// errVoid is a run that proved nothing about the change: a timeout or a missing native toolchain says the machine
+// errorVoid is a run that proved nothing about the change: a timeout or a missing native toolchain says the machine
 // was slow or unprovisioned, so the judge reruns it instead of charging the change. A mismatch or an unrecognised
 // compiler error is never void.
-var errVoid = errors.New("admission delta is void")
+var errorVoid = errors.New("admission delta is void")
 
 func main() {
 	os.Exit(exitCode(run(os.Args[1:])))
 }
 
 // exitCode is 0 for a run that held, 3 for a void one and 1 for anything else, printing the error.
-func exitCode(err error) int {
-	if err == nil {
+func exitCode(runError error) int {
+	if runError == nil {
 		return 0
 	}
-	fmt.Fprintln(os.Stderr, err)
-	if errors.Is(err, errVoid) {
+	fmt.Fprintln(os.Stderr, runError)
+	if errors.Is(runError, errorVoid) {
 		return 3
 	}
 	return 1
@@ -205,8 +210,16 @@ func run(args []string) error {
 	baseLowerBinary := flags.String("base-lower-binary", "", "base compiler with admission-lower adapter")
 	headLowerBinary := flags.String("head-lower-binary", "", "head compiler with admission-lower adapter")
 	headBinary := flags.String("head-binary", "", "built head compiler")
-	negativePath := flags.String("negative-witnesses", "cloud/admission-corpus/negative-witnesses.json", "ruled content-hash negative witnesses")
-	runtimeNotYetPath := flags.String("runtime-notyet-stops", "cloud/admission-corpus/runtime-notyet-stops.json", "ruled content-hash run-time NotYet stops")
+	negativePath := flags.String(
+		"negative-witnesses",
+		"cloud/admission-corpus/negative-witnesses.json",
+		"ruled content-hash negative witnesses",
+	)
+	runtimeNotYetPath := flags.String(
+		"runtime-notyet-stops",
+		"cloud/admission-corpus/runtime-notyet-stops.json",
+		"ruled content-hash run-time NotYet stops",
+	)
 	manifestPath := flags.String("manifest", "", "pinned JSON corpus manifest")
 	generator := flags.String("manifest-generator", "", "generator path at head")
 	generatorRevision := flags.String("manifest-generator-revision", "", "generator source revision, defaults to head")
@@ -219,8 +232,8 @@ func run(args []string) error {
 	workers := flags.Int("workers", runtime.GOMAXPROCS(0), "parallel classification workers")
 	compileLimit := flags.Duration("compile-timeout", 45*time.Second, "per-program compiler timeout")
 	givenSeed := flags.String("seed", "", "hex sampling seed, at least 8 bytes, in place of head's SHA-256")
-	if err := flags.Parse(args); err != nil {
-		return err
+	if parseError := flags.Parse(args); parseError != nil {
+		return parseError
 	}
 	if *base == "" {
 		return fmt.Errorf("--base is required")
@@ -235,8 +248,8 @@ func run(args []string) error {
 		return fmt.Errorf("timeout must be positive")
 	}
 	if *givenSeed != "" {
-		if _, err := samplingSeed("", *givenSeed); err != nil {
-			return err
+		if _, samplingSeedError := samplingSeed("", *givenSeed); samplingSeedError != nil {
+			return samplingSeedError
 		}
 	}
 	root, err := git(".", "rev-parse", "--show-toplevel")
@@ -259,7 +272,16 @@ func run(args []string) error {
 		}
 	}
 	startedAll := time.Now()
-	result := report{Programs: []entry{}, RuledRuntimeStopPaths: []string{}, StaleRuntimeStops: []string{}, PendingRuntimeStops: []string{}, Verdict: "pass", Phases: map[string]float64{}, Workers: *workers, Classification: "lowering-only"}
+	result := report{
+		Programs:              []entry{},
+		RuledRuntimeStopPaths: []string{},
+		StaleRuntimeStops:     []string{},
+		PendingRuntimeStops:   []string{},
+		Verdict:               "pass",
+		Phases:                map[string]float64{},
+		Workers:               *workers,
+		Classification:        "lowering-only",
+	}
 	result.NegativeWitnessCount = len(negatives.Witnesses)
 	result.RuntimeNotYetCount = len(runtimeStops.Stops)
 	result.Base, err = git(root, "rev-parse", *base+"^{commit}")
@@ -277,8 +299,8 @@ func run(args []string) error {
 	defer os.RemoveAll(scratch)
 	checkout := func(sha, name string) (string, error) {
 		path := filepath.Join(scratch, name)
-		_, e := git(root, "worktree", "add", "--detach", path, sha)
-		return path, e
+		_, gitError := git(root, "worktree", "add", "--detach", path, sha)
+		return path, gitError
 	}
 	phaseStarted := time.Now()
 	headTree, err := checkout(result.Head, "head")
@@ -335,12 +357,12 @@ func run(args []string) error {
 	phaseStarted = time.Now()
 	var m manifest
 	if *manifestPath != "" {
-		data, e := os.ReadFile(*manifestPath)
-		if e != nil {
-			return e
+		data, readError := os.ReadFile(*manifestPath)
+		if readError != nil {
+			return readError
 		}
-		if e = json.Unmarshal(data, &m); e != nil {
-			return e
+		if decodeError := json.Unmarshal(data, &m); decodeError != nil {
+			return decodeError
 		}
 		if m.SHA != result.Head {
 			return fmt.Errorf("manifest sha %s differs from head %s", m.SHA, result.Head)
@@ -356,18 +378,18 @@ func run(args []string) error {
 			return fmt.Errorf("corpus must be inside head checkout")
 		}
 		start := filepath.Join(headTree, cleanCorpus)
-		err = filepath.WalkDir(start, func(path string, d os.DirEntry, e error) error {
-			if e != nil {
-				return e
+		err = filepath.WalkDir(start, func(path string, d os.DirEntry, pathError error) error {
+			if pathError != nil {
+				return pathError
 			}
 			if !d.IsDir() && (strings.HasSuffix(path, ".a") || strings.HasSuffix(path, ".ts")) {
-				rel, e := filepath.Rel(headTree, path)
-				if e != nil {
-					return e
+				rel, relativePathError := filepath.Rel(headTree, path)
+				if relativePathError != nil {
+					return relativePathError
 				}
-				blob, e := git(root, "rev-parse", result.Head+":"+filepath.ToSlash(rel))
-				if e != nil {
-					return e
+				blob, gitError := git(root, "rev-parse", result.Head+":"+filepath.ToSlash(rel))
+				if gitError != nil {
+					return gitError
 				}
 				c.Programs = append(c.Programs, program{filepath.ToSlash(rel), blob})
 			}
@@ -439,16 +461,16 @@ func run(args []string) error {
 			if filepath.IsAbs(p.Path) || clean == ".." || strings.HasPrefix(clean, "../") {
 				return fmt.Errorf("unsafe program path %q", p.Path)
 			}
-			info, e := os.Lstat(filepath.Join(headTree, p.Path))
-			if e != nil {
-				return e
+			info, statError := os.Lstat(filepath.Join(headTree, p.Path))
+			if statError != nil {
+				return statError
 			}
 			if !info.Mode().IsRegular() {
 				return fmt.Errorf("program is not a regular file: %s", p.Path)
 			}
-			blob, e := git(root, "rev-parse", result.Head+":"+p.Path)
-			if e != nil {
-				return e
+			blob, gitError := git(root, "rev-parse", result.Head+":"+p.Path)
+			if gitError != nil {
+				return gitError
 			}
 			if blob != p.Blob {
 				return fmt.Errorf("blob mismatch for %s: manifest %s head %s", p.Path, p.Blob, blob)
@@ -460,12 +482,17 @@ func run(args []string) error {
 				continue
 			}
 			seen[p.Path] = p.Blob
-			source, e := os.ReadFile(filepath.Join(headTree, p.Path))
-			if e != nil {
-				return e
+			source, readError := os.ReadFile(filepath.Join(headTree, p.Path))
+			if readError != nil {
+				return readError
 			}
 			held[contentHash(source)] = true
-			result.Programs = append(result.Programs, entry{program: p, Corpus: c.Name, NegativeRelated: negativeRelated(p.Path, source, negatives), NotYetRelated: runtimeNotYetRelated(p.Path, source, runtimeStops)})
+			result.Programs = append(result.Programs, entry{
+				program:         p,
+				Corpus:          c.Name,
+				NegativeRelated: negativeRelated(p.Path, source, negatives),
+				NotYetRelated:   runtimeNotYetRelated(p.Path, source, runtimeStops),
+			})
 		}
 	}
 
@@ -490,8 +517,8 @@ func run(args []string) error {
 	// The native build resolves clang as toolchain.Path does; without it every native observation would be a
 	// compilation failure the change didn't cause, so nothing runs and the run is void.
 	if len(selected) > 0 {
-		if _, e := toolchain.Path("clang"); e != nil {
-			voids = append(voids, "native toolchain missing: "+e.Error())
+		if _, pathError := toolchain.Path("clang"); pathError != nil {
+			voids = append(voids, "native toolchain missing: "+pathError.Error())
 			selected = nil
 		}
 	}
@@ -507,7 +534,14 @@ func run(args []string) error {
 		if !filepath.IsAbs(source) {
 			source = filepath.Join(headTree, path)
 		}
-		node = execute(headTree, *limit, "node", "--disable-warning=ExperimentalWarning", filepath.Join(headTree, "oracle/node.mjs"), source)
+		node = execute(
+			headTree,
+			*limit,
+			"node",
+			"--disable-warning=ExperimentalWarning",
+			filepath.Join(headTree, "oracle/node.mjs"),
+			source,
+		)
 		jsCompile = execute(headTree, *limit, h, "js", path)
 		jsPath := filepath.Join(scratch, name+".mjs")
 		javascript = observation{Exit: -1, Error: "JavaScript compilation failed"}
@@ -515,7 +549,14 @@ func run(args []string) error {
 			if err = os.WriteFile(jsPath, []byte(jsCompile.Stdout), 0600); err != nil {
 				return
 			}
-			javascript = execute(headTree, *limit, "node", "--disable-warning=ExperimentalWarning", filepath.Join(headTree, "oracle/node.mjs"), jsPath)
+			javascript = execute(
+				headTree,
+				*limit,
+				"node",
+				"--disable-warning=ExperimentalWarning",
+				filepath.Join(headTree, "oracle/node.mjs"),
+				jsPath,
+			)
 		}
 		jsCompile.Stdout = ""
 		nativePath := filepath.Join(scratch, name)
@@ -530,18 +571,21 @@ func run(args []string) error {
 		record := &result.Programs[index]
 		record.Sampled = true
 		source := filepath.Join(headTree, record.Path)
-		node, jsCompile, javascript, nativeCompile, native, e := observe(fmt.Sprintf("program-%d", index), record.Path)
-		if e != nil {
-			return e
+		node, jsCompile, javascript, nativeCompile, native, observeError := observe(
+			fmt.Sprintf("program-%d", index),
+			record.Path,
+		)
+		if observeError != nil {
+			return observeError
 		}
 		record.Node = &node
 		record.JavaScriptCompile = &jsCompile
 		record.JavaScript = &javascript
 		record.NativeCompile = &nativeCompile
 		record.Native = &native
-		data, e := os.ReadFile(source)
-		if e != nil {
-			return e
+		data, readError := os.ReadFile(source)
+		if readError != nil {
+			return readError
 		}
 		witness, listed := negatives.Witnesses[contentHash(data)]
 		agree := outputsAgree(node, javascript, native)
@@ -549,20 +593,23 @@ func run(args []string) error {
 			result.NodeAgreements++
 		}
 		if listed {
-			if e := validateWitnessSource(data, witness); e != nil {
-				return fmt.Errorf("%s: %w", record.Path, e)
+			if validateWitnessSourceError := validateWitnessSource(data, witness); validateWitnessSourceError != nil {
+				return fmt.Errorf("%s: %w", record.Path, validateWitnessSourceError)
 			}
 			record.NegativeWitness = !agree && acceptsNegativeWitness(witness, headTree, node, javascript, native)
 			if record.NegativeWitness && witness.Form == checkedBoundaryForm {
 				// The repair is the stop's mutant: storing a value of the declared type, it agrees with Node. It keeps
 				// the witness's extension, so it compiles in the witness's own mode: a .ts witness's repair as .ts.
 				repairPath := filepath.Join(scratch, fmt.Sprintf("repair-%d%s", index, filepath.Ext(source)))
-				if e := os.WriteFile(repairPath, repairedSource(data, witness), 0600); e != nil {
-					return e
+				if writeError := os.WriteFile(repairPath, repairedSource(data, witness), 0600); writeError != nil {
+					return writeError
 				}
-				repairNode, _, repairJavaScript, _, repairNative, e := observe(fmt.Sprintf("repair-%d", index), repairPath)
-				if e != nil {
-					return e
+				repairNode, _, repairJavaScript, _, repairNative, observeError := observe(
+					fmt.Sprintf("repair-%d", index),
+					repairPath,
+				)
+				if observeError != nil {
+					return observeError
 				}
 				repairAgree := outputsAgree(repairNode, repairJavaScript, repairNative)
 				record.RepairAgree = &repairAgree
@@ -602,11 +649,11 @@ func run(args []string) error {
 			if held[hash] {
 				continue
 			}
-			source, e := os.ReadFile(filepath.Join(headTree, stop.Path))
-			if errors.Is(e, os.ErrNotExist) {
+			source, readError := os.ReadFile(filepath.Join(headTree, stop.Path))
+			if errors.Is(readError, os.ErrNotExist) {
 				result.PendingRuntimeStops = append(result.PendingRuntimeStops, stop.Path)
-			} else if e != nil {
-				return e
+			} else if readError != nil {
+				return readError
 			} else if contentHash(source) != hash {
 				result.StaleRuntimeStops = append(result.StaleRuntimeStops, stop.Path)
 				result.Verdict = "fail"
@@ -644,7 +691,7 @@ func run(args []string) error {
 		return fmt.Errorf("admission delta failed")
 	}
 	if result.Void {
-		return fmt.Errorf("%w: %s", errVoid, result.VoidReason)
+		return fmt.Errorf("%w: %s", errorVoid, result.VoidReason)
 	}
 	return nil
 }
@@ -654,7 +701,13 @@ func timedOut(node, jsCompile, javascript, nativeCompile, native observation) st
 	for _, command := range []struct {
 		name string
 		o    observation
-	}{{"node", node}, {"javascript compile", jsCompile}, {"javascript", javascript}, {"native compile", nativeCompile}, {"native", native}} {
+	}{
+		{"node", node},
+		{"javascript compile", jsCompile},
+		{"javascript", javascript},
+		{"native compile", nativeCompile},
+		{"native", native},
+	} {
 		if command.o.Error == "timeout" {
 			return command.name
 		}
@@ -669,8 +722,8 @@ func samplingSeed(head, given string) ([]byte, error) {
 		digest := sha256.Sum256([]byte(head))
 		return digest[:], nil
 	}
-	seed, err := hex.DecodeString(given)
-	if err != nil || len(seed) < 8 {
+	seed, decodeStringError := hex.DecodeString(given)
+	if decodeStringError != nil || len(seed) < 8 {
 		return nil, fmt.Errorf("--seed %q must be hex of at least 8 bytes", given)
 	}
 	return seed, nil
@@ -710,5 +763,12 @@ func sample(programs []entry, seed []byte, seconds float64, limit time.Duration)
 	return append(append(diff, witnesses...), others[:take]...), len(others) - take
 }
 func outputsAgree(a, b, c observation) bool {
-	return a.Error == "" && b.Error == "" && c.Error == "" && a.Exit >= 0 && a.Exit == b.Exit && a.Exit == c.Exit && a.Stdout == b.Stdout && a.Stdout == c.Stdout
+	return a.Error == "" &&
+		b.Error == "" &&
+		c.Error == "" &&
+		a.Exit >= 0 &&
+		a.Exit == b.Exit &&
+		a.Exit == c.Exit &&
+		a.Stdout == b.Stdout &&
+		a.Stdout == c.Stdout
 }

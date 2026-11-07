@@ -31,13 +31,13 @@ func TestProduct_TSPrinterOraclesCensusExports(test *testing.T) {
 func TestALibraryOraclesBuildReadsNoStateButItsInitializers(test *testing.T) {
 	test.Parallel()
 	// TestMain runs the package's tests from stage1/cohere/tsprinter, where Repository is the checkout.
-	root, err := filepath.Abs(Repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(Repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	exports, tree, _, err := leancensus.Imports(censusExports(test))
-	if err != nil {
-		test.Fatal(err)
+	exports, tree, _, importsError := leancensus.Imports(censusExports(test))
+	if importsError != nil {
+		test.Fatal(importsError)
 	}
 	census := leancensus.Census{
 		Root:           root,
@@ -50,9 +50,9 @@ func TestALibraryOraclesBuildReadsNoStateButItsInitializers(test *testing.T) {
 		Tree:           tree,
 		TestsBuildLean: true,
 	}
-	findings, err := census.Findings()
-	if err != nil {
-		test.Fatal(err)
+	findings, findingsError := census.Findings()
+	if findingsError != nil {
+		test.Fatal(findingsError)
 	}
 	if len(findings) > 0 {
 		test.Fatalf("a library oracle's build reaches past what its key holds:\n%s", strings.Join(findings, "\n"))
@@ -79,18 +79,23 @@ func TestAProcessThatMayNotBuildAnOracleOnlyFindsIt(test *testing.T) {
 		{"another process under a trace only looks, and a missing product refuses it", false, true, true},
 	} {
 		test.Run(each.name, func(test *testing.T) {
-			directory, found, err := oracleFound(inputs, each.producer, each.tracing)
+			directory, found, oracleFoundError := oracleFound(inputs, each.producer, each.tracing)
 			switch {
-			case each.refused && (err == nil || !strings.Contains(err.Error(), inputs.Name)):
+			case each.refused && (oracleFoundError == nil || !strings.Contains(oracleFoundError.Error(), inputs.Name)):
 				test.Fatalf(
 					"oracleFound: found %v at %q, err %v; want it refused, naming %s",
 					found,
 					directory,
-					err,
+					oracleFoundError,
 					inputs.Name,
 				)
-			case !each.refused && (err != nil || found):
-				test.Fatalf("oracleFound: found %v at %q, err %v; want its caller to build", found, directory, err)
+			case !each.refused && (oracleFoundError != nil || found):
+				test.Fatalf(
+					"oracleFound: found %v at %q, err %v; want its caller to build",
+					found,
+					directory,
+					oracleFoundError,
+				)
 			}
 		})
 	}

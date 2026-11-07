@@ -59,8 +59,8 @@ func arrayElementWitness(
 	test.Helper()
 	directory := test.TempDir()
 	path := filepath.Join(directory, "main.a")
-	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	run := func(env []string, name string, args ...string) ([]byte, []byte, error) {
 		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
@@ -70,35 +70,35 @@ func arrayElementWitness(
 		var out, diagnostic bytes.Buffer
 		command.Stdout = &out
 		command.Stderr = &diagnostic
-		err := command.Run()
-		return out.Bytes(), diagnostic.Bytes(), err
+		runError := command.Run()
+		return out.Bytes(), diagnostic.Bytes(), runError
 	}
 	// The source decodes JSON, so Node takes its type descriptors from the prebuilt json-types product.
-	truth, diagnostic, err := run(
+	truth, diagnostic, runError := run(
 		[]string{"ADAMIC_JSON_TYPES=" + jsonTypes(test)},
 		"node",
 		"--disable-warning=ExperimentalWarning",
 		"../../oracle/node.mjs",
 		path,
 	)
-	if err != nil {
-		test.Fatalf("source Node: %v\n%s", err, diagnostic)
+	if runError != nil {
+		test.Fatalf("source Node: %v\n%s", runError, diagnostic)
 	}
-	checked, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	checked, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := lower.LowerWithOptions(context.Background(), checked, lower.Options{})
-	if err != nil {
-		test.Fatal(err)
+	program, lowerWithOptionsError := lower.LowerWithOptions(context.Background(), checked, lower.Options{})
+	if lowerWithOptionsError != nil {
+		test.Fatal(lowerWithOptionsError)
 	}
 	js := filepath.Join(directory, "main.mjs")
-	if err := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	got, diagnostic, err := run(nil, "node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", js)
-	if err != nil || !bytes.Equal(got, truth) {
-		test.Fatalf("JavaScript: %v\n%s\n%s, Node %s", err, diagnostic, got, truth)
+	got, diagnostic, runError := run(nil, "node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", js)
+	if runError != nil || !bytes.Equal(got, truth) {
+		test.Fatalf("JavaScript: %v\n%s\n%s, Node %s", runError, diagnostic, got, truth)
 	}
 	code := native.C(program)
 	code = strings.ReplaceAll(code, "adamic_array_reverse(", "element_probe_reverse(")
@@ -115,12 +115,12 @@ func arrayElementWitness(
 		code = changed
 	}
 	binary := filepath.Join(directory, "native")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(code, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
-	got, diagnostic, err = run([]string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
-	if err != nil || !bytes.Equal(got, truth) {
-		test.Fatalf("native: %v\n%s\n%s, Node %s", err, diagnostic, got, truth)
+	got, diagnostic, runError = run([]string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
+	if runError != nil || !bytes.Equal(got, truth) {
+		test.Fatalf("native: %v\n%s\n%s, Node %s", runError, diagnostic, got, truth)
 	}
 	elements := []string{}
 	for _, line := range strings.Split(string(diagnostic), "\n") {
@@ -418,16 +418,16 @@ console.log(` + "`${mixed.length}`" + `);
 		test.Run(row.name, func(test *testing.T) {
 			test.Parallel()
 			path := filepath.Join(test.TempDir(), "main.a")
-			if err := os.WriteFile(path, []byte(row.source), 0600); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, []byte(row.source), 0600); writeError != nil {
+				test.Fatal(writeError)
 			}
-			checked, err := load.Load([]string{path})
-			if err != nil {
-				test.Fatal(err)
+			checked, loadError := load.Load([]string{path})
+			if loadError != nil {
+				test.Fatal(loadError)
 			}
-			_, err = lower.LowerWithOptions(context.Background(), checked, lower.Options{})
-			if err == nil || !strings.Contains(err.Error(), row.refusal) {
-				test.Fatalf("want a refusal naming %q, got %v", row.refusal, err)
+			_, lowerWithOptionsError := lower.LowerWithOptions(context.Background(), checked, lower.Options{})
+			if lowerWithOptionsError == nil || !strings.Contains(lowerWithOptionsError.Error(), row.refusal) {
+				test.Fatalf("want a refusal naming %q, got %v", row.refusal, lowerWithOptionsError)
 			}
 		})
 	}
@@ -443,9 +443,9 @@ var scalarElementFunction = regexp.MustCompile(
 // text of it compiled here (so a mutant of that text is what runs).
 func scalarElementHarness(test *testing.T, mutant func(string) string) string {
 	test.Helper()
-	contents, err := os.ReadFile("runtime/array.c")
-	if err != nil {
-		test.Fatal(err)
+	contents, readError := os.ReadFile("runtime/array.c")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	function := scalarElementFunction.FindString(string(contents))
 	if function == "" {
@@ -474,8 +474,8 @@ int main(int argc, char **argv) {
 }
 `
 	binary := filepath.Join(test.TempDir(), "scalar")
-	if err := native.Build(source, binary, native.Options{}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(source, binary, native.Options{}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	return binary
 }
@@ -498,11 +498,11 @@ func scalarElementAnswer(test *testing.T, binary, kind, which string) string {
 	command := exec.CommandContext(ctx, binary, kind, which)
 	command.Stdout = &out
 	command.Stderr = &diagnostic
-	if err := command.Run(); err != nil {
+	if runError := command.Run(); runError != nil {
 		if line, found := strings.CutPrefix(strings.TrimSpace(diagnostic.String()), "adamic: "); found {
 			return line
 		}
-		test.Fatalf("%s %s: %v\n%s", kind, which, err, diagnostic.String())
+		test.Fatalf("%s %s: %v\n%s", kind, which, runError, diagnostic.String())
 	}
 	return strings.TrimSpace(out.String())
 }

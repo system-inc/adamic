@@ -25,8 +25,8 @@ func checkCohereScope(settings []byte, document string) error {
 	var parsed struct {
 		IgnorePatterns []string `json:"ignorePatterns"`
 	}
-	if err := json.Unmarshal(settings, &parsed); err != nil {
-		return fmt.Errorf("CohereSettings.json: %v", err)
+	if decodeError := json.Unmarshal(settings, &parsed); decodeError != nil {
+		return fmt.Errorf("CohereSettings.json: %v", decodeError)
 	}
 	documented := map[string]bool{}
 	for _, line := range strings.Split(document, "\n") {
@@ -84,17 +84,17 @@ func checkCohereScope(settings []byte, document string) error {
 func TestCohereScopeEveryIgnoreHasItsReason(test *testing.T) {
 	test.Parallel()
 	// Reads: CohereSettings.json
-	settings, err := os.ReadFile(filepath.Join("..", "CohereSettings.json"))
-	if err != nil {
-		test.Fatal(err)
+	settings, readError := os.ReadFile(filepath.Join("..", "CohereSettings.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	// Reads: docs/cohere-scope.md
-	document, err := os.ReadFile(filepath.Join("..", "docs", "cohere-scope.md"))
-	if err != nil {
-		test.Fatal(err)
+	document, readError := os.ReadFile(filepath.Join("..", "docs", "cohere-scope.md"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	if err := checkCohereScope(settings, string(document)); err != nil {
-		test.Fatal(err)
+	if checkCohereScopeError := checkCohereScope(settings, string(document)); checkCohereScopeError != nil {
+		test.Fatal(checkCohereScopeError)
 	}
 }
 
@@ -103,18 +103,18 @@ func TestCohereScopeRefusesAnUnpairedIgnore(test *testing.T) {
 	test.Parallel()
 	row := "| `**/testdata/**` | input | Test inputs. | Their tests. |\n"
 	good := `{"ignorePatterns": ["**/testdata/**"]}`
-	if err := checkCohereScope([]byte(good), row); err != nil {
-		test.Fatalf("a good pair was refused: %v", err)
+	if checkCohereScopeError := checkCohereScope([]byte(good), row); checkCohereScopeError != nil {
+		test.Fatalf("a good pair was refused: %v", checkCohereScopeError)
 	}
 	// The same row aligned the way cohere's format pads a table is the same row.
 	padded := "| `**/testdata/**`   | input     | Test inputs.   | Their tests.   |\n"
-	if err := checkCohereScope([]byte(good), padded); err != nil {
-		test.Fatalf("a padded row was refused: %v", err)
+	if checkCohereScopeError := checkCohereScope([]byte(good), padded); checkCohereScopeError != nil {
+		test.Fatalf("a padded row was refused: %v", checkCohereScopeError)
 	}
 	// A later section's table is not read as ignores, so its three-column rows neither fail nor count.
 	later := row + "\n## Out of tsconfig\n\n| `internal/oracle/testdata` | Why. | Its test. |\n"
-	if err := checkCohereScope([]byte(good), later); err != nil {
-		test.Fatalf("a later section's table was read as ignores: %v", err)
+	if checkCohereScopeError := checkCohereScope([]byte(good), later); checkCohereScopeError != nil {
+		test.Fatalf("a later section's table was read as ignores: %v", checkCohereScopeError)
 	}
 	for name, planted := range map[string][2]string{
 		"no reason":        {`{"ignorePatterns": ["**/testdata/**", "stage3/x.json"]}`, row},
@@ -127,7 +127,7 @@ func TestCohereScopeRefusesAnUnpairedIgnore(test *testing.T) {
 		"malformed row":    {good, "| `**/testdata/**` | input |\n"},
 		"settings refused": {`{"ignorePatterns": "**/testdata/**"}`, row},
 	} {
-		if err := checkCohereScope([]byte(planted[0]), planted[1]); err == nil {
+		if checkCohereScopeError := checkCohereScope([]byte(planted[0]), planted[1]); checkCohereScopeError == nil {
 			test.Errorf("%s: the pair was accepted", name)
 		}
 	}

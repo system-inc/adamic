@@ -23,17 +23,17 @@ func requireWorkerd(test *testing.T) string {
 			"set ADAMIC_WORKER_WORKERD=1 to run the workerd corpus; Workers maintainers run this lane by hand with cloud/setup.sh --workerd",
 		)
 	}
-	binary, err := exec.LookPath("workerd")
-	if err != nil {
-		test.Fatal(err)
+	binary, lookPathError := exec.LookPath("workerd")
+	if lookPathError != nil {
+		test.Fatal(lookPathError)
 	}
 	test.Logf("workerd resolved by PATH: %s", binary)
 	return binary
 }
 
 func workerdLoopback(address string) error {
-	host, _, err := net.SplitHostPort(address)
-	if err != nil || host != "127.0.0.1" {
+	host, _, splitHostPortError := net.SplitHostPort(address)
+	if splitHostPortError != nil || host != "127.0.0.1" {
 		return fmt.Errorf("workerd refuses non-loopback address %q; use 127.0.0.1", address)
 	}
 	return nil
@@ -58,8 +58,8 @@ func startWorkerdWithPortHook(
 	released func(string),
 ) (*workerdServer, error) {
 	test.Helper()
-	if err := workerdLoopback(address); err != nil {
-		return nil, err
+	if workerdLoopbackError := workerdLoopback(address); workerdLoopbackError != nil {
+		return nil, workerdLoopbackError
 	}
 	var previous error
 	oldAddress := address
@@ -92,14 +92,14 @@ func startWorkerdWithPortHook(
 
 func startWorkerdAttempt(test *testing.T, directory, address string) (*workerdServer, error) {
 	test.Helper()
-	binary, err := exec.LookPath("workerd")
-	if err != nil {
-		return nil, err
+	binary, lookPathError := exec.LookPath("workerd")
+	if lookPathError != nil {
+		return nil, lookPathError
 	}
 	scratch := test.TempDir()
-	entries, err := os.ReadDir(directory)
-	if err != nil {
-		return nil, err
+	entries, readDirectoryError := os.ReadDir(directory)
+	if readDirectoryError != nil {
+		return nil, readDirectoryError
 	}
 	sort.Slice(entries, func(i, j int) bool {
 		if entries[i].Name() == "worker.mjs" {
@@ -119,12 +119,12 @@ func startWorkerdAttempt(test *testing.T, directory, address string) (*workerdSe
 		} else if !strings.HasSuffix(name, ".mjs") {
 			continue
 		}
-		contents, err := os.ReadFile(filepath.Join(directory, name))
-		if err != nil {
-			return nil, err
+		contents, readError := os.ReadFile(filepath.Join(directory, name))
+		if readError != nil {
+			return nil, readError
 		}
-		if err := os.WriteFile(filepath.Join(scratch, name), contents, 0600); err != nil {
-			return nil, err
+		if writeError := os.WriteFile(filepath.Join(scratch, name), contents, 0600); writeError != nil {
+			return nil, writeError
 		}
 		modules = append(
 			modules,
@@ -134,28 +134,28 @@ func startWorkerdAttempt(test *testing.T, directory, address string) (*workerdSe
 	config := `using Workerd = import "/workerd/workerd.capnp";
 const config :Workerd.Config = (services = [(name = "compute", worker = (modules = [` + strings.Join(modules, ",") + `], compatibilityDate = "2026-10-07"))], sockets = [(name = "http", address = ` + strconv.Quote(address) + `, http = (), service = "compute")]);`
 	configPath := filepath.Join(scratch, "config.capnp")
-	if err := os.WriteFile(configPath, []byte(config), 0600); err != nil {
-		return nil, err
+	if writeError := os.WriteFile(configPath, []byte(config), 0600); writeError != nil {
+		return nil, writeError
 	}
 	logPath := filepath.Join(scratch, "server.log")
-	log, err := os.Create(logPath)
-	if err != nil {
-		return nil, err
+	log, createError := os.Create(logPath)
+	if createError != nil {
+		return nil, createError
 	}
-	controlRead, controlWrite, err := os.Pipe()
-	if err != nil {
+	controlRead, controlWrite, pipeError := os.Pipe()
+	if pipeError != nil {
 		log.Close()
-		return nil, err
+		return nil, pipeError
 	}
 	command := exec.Command(binary, "serve", configPath, "--control-fd", "3")
 	command.ExtraFiles = []*os.File{controlWrite}
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Stdout, command.Stderr = log, log
-	if err := command.Start(); err != nil {
+	if startError := command.Start(); startError != nil {
 		controlRead.Close()
 		controlWrite.Close()
 		log.Close()
-		return nil, err
+		return nil, startError
 	}
 	controlWrite.Close()
 	done := make(chan struct{})
@@ -219,20 +219,22 @@ func TestWorkerdRetriesAnOccupiedPort(test *testing.T) {
 	write(test, filepath.Join(directory, "worker.mjs"), `export default {fetch(){return new Response("ok")}};`)
 	calls := 0
 	occupiedAddress := ""
-	server, err := startWorkerdWithPortHook(test, directory, "127.0.0.1:0", func(address string) {
+	server, startWorkerdWithPortHookError := startWorkerdWithPortHook(test, directory, "127.0.0.1:0", func(
+		address string,
+	) {
 		calls++
 		if calls != 1 {
 			return
 		}
-		listener, err := net.Listen("tcp4", address)
-		if err != nil {
-			test.Fatal(err)
+		listener, listenError := net.Listen("tcp4", address)
+		if listenError != nil {
+			test.Fatal(listenError)
 		}
 		occupiedAddress = address
 		test.Cleanup(func() { listener.Close() })
 	})
-	if err != nil {
-		test.Fatal(err)
+	if startWorkerdWithPortHookError != nil {
+		test.Fatal(startWorkerdWithPortHookError)
 	}
 	if calls != 2 || server.address == occupiedAddress {
 		test.Fatalf(
@@ -250,24 +252,24 @@ func TestWorkerdRetriesAnOccupiedPort(test *testing.T) {
 		`const response = await fetch(process.argv[1]); if (response.status !== 200 || await response.text() !== "ok") process.exit(1);`,
 		"http://"+server.address,
 	)
-	if output, err := command.CombinedOutput(); err != nil {
-		test.Fatalf("retried workerd did not serve: %v\n%s", err, output)
+	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("retried workerd did not serve: %v\n%s", combinedOutputError, output)
 	}
 }
 
 func TestWorkerdRefusesNonLoopbackAddresses(test *testing.T) {
 	test.Parallel()
 	for _, address := range []string{"0.0.0.0:0", "192.0.2.1:0", "[::1]:0", "localhost:0", ":0"} {
-		if _, err := startWorkerd(
+		if _, startWorkerdError := startWorkerd(
 			test,
 			"missing",
 			address,
-		); err == nil || !strings.Contains(err.Error(), "refuses non-loopback") {
-			test.Errorf("%s: %v", address, err)
+		); startWorkerdError == nil || !strings.Contains(startWorkerdError.Error(), "refuses non-loopback") {
+			test.Errorf("%s: %v", address, startWorkerdError)
 		}
 	}
-	if err := workerdLoopback("127.0.0.1:0"); err != nil {
-		test.Fatal(err)
+	if workerdLoopbackError := workerdLoopback("127.0.0.1:0"); workerdLoopbackError != nil {
+		test.Fatal(workerdLoopbackError)
 	}
 }
 
@@ -284,17 +286,17 @@ func TestWorkerdCleanupLeavesNoServer(test *testing.T) {
 		}
 	})
 	test.Run("server", func(test *testing.T) {
-		server, err := startWorkerd(test, directory, "127.0.0.1:0")
-		if err != nil {
-			test.Fatal(err)
+		server, startWorkerdError := startWorkerd(test, directory, "127.0.0.1:0")
+		if startWorkerdError != nil {
+			test.Fatal(startWorkerdError)
 		}
 		process = server.process
 	})
 	if process == nil {
 		return
 	}
-	if err := syscall.Kill(process.Pid, 0); err != syscall.ESRCH {
-		test.Fatalf("workerd survives its test: pid %d, probe %v", process.Pid, err)
+	if killError := syscall.Kill(process.Pid, 0); killError != syscall.ESRCH {
+		test.Fatalf("workerd survives its test: pid %d, probe %v", process.Pid, killError)
 	}
 }
 
@@ -315,22 +317,22 @@ func runWorkerdCorpusShard(test *testing.T, shard int, wasm bool) {
 		family = "TestWorkerdWebAssemblyCorpus"
 	}
 	directory := workerdComputeProduct(test, wasm, false)
-	server, err := startWorkerd(test, directory, "127.0.0.1:0")
-	if err != nil {
-		test.Fatal(err)
+	server, startWorkerdError := startWorkerd(test, directory, "127.0.0.1:0")
+	if startWorkerdError != nil {
+		test.Fatal(startWorkerdError)
 	}
-	root, err := filepath.Abs("../..")
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs("../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	corpus := filepath.Join(root, "workers/compute/corpus")
-	requests, err := os.ReadFile(filepath.Join(corpus, "requests.jsonl"))
-	if err != nil {
-		test.Fatal(err)
+	requests, readError := os.ReadFile(filepath.Join(corpus, "requests.jsonl"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	responses, err := os.ReadFile(filepath.Join(corpus, "responses.jsonl"))
-	if err != nil {
-		test.Fatal(err)
+	responses, readError := os.ReadFile(filepath.Join(corpus, "responses.jsonl"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	requestRows := strings.Split(strings.TrimSuffix(string(requests), "\n"), "\n")
 	responseRows := strings.Split(strings.TrimSuffix(string(responses), "\n"), "\n")
@@ -362,8 +364,8 @@ func runWorkerdCorpusShard(test *testing.T, shard int, wasm bool) {
 			"node",
 			append([]string{"--disable-warning=ExperimentalWarning", replay}, args...)...,
 		)
-		if output, err := command.CombinedOutput(); err != nil {
-			test.Fatalf("corpus: %v\n%s", err, output)
+		if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+			test.Fatalf("corpus: %v\n%s", combinedOutputError, output)
 		} else {
 			test.Logf("%s", output)
 		}

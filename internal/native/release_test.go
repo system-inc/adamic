@@ -19,13 +19,13 @@ import (
 // The mutant must build and fail at runtime, not at clang's type checks.
 func TestReleaseSharedValueAndUnsafeMutant(test *testing.T) {
 	test.Parallel()
-	checked, err := load.Load([]string{"testdata/release_fastpath.a"})
-	if err != nil {
-		test.Fatal(err)
+	checked, loadError := load.Load([]string{"testdata/release_fastpath.a"})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := lower.Lower(context.Background(), checked)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerError := lower.Lower(context.Background(), checked)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	source := C(program)
 	node := exec.Command(
@@ -34,15 +34,15 @@ func TestReleaseSharedValueAndUnsafeMutant(test *testing.T) {
 		"../../oracle/node.mjs",
 		"testdata/release_fastpath.a",
 	)
-	expected, err := node.CombinedOutput()
-	if err != nil || string(expected) != "200 xxxx\n" {
-		test.Fatalf("Node: %v %s", err, expected)
+	expected, combinedOutputError := node.CombinedOutput()
+	if combinedOutputError != nil || string(expected) != "200 xxxx\n" {
+		test.Fatalf("Node: %v %s", combinedOutputError, expected)
 	}
 	for _, mutant := range []bool{false, true} {
 		directory := test.TempDir()
-		files, err := readRuntime(runtime, "runtime")
-		if err != nil {
-			test.Fatal(err)
+		files, readRuntimeError := readRuntime(runtime, "runtime")
+		if readRuntimeError != nil {
+			test.Fatal(readRuntimeError)
 		}
 		for _, file := range files {
 			data := file.contents
@@ -57,24 +57,27 @@ func TestReleaseSharedValueAndUnsafeMutant(test *testing.T) {
 				}
 				data = []byte(strings.Replace(string(data), old, changed, 1))
 			}
-			if err := os.WriteFile(filepath.Join(directory, file.name), data, 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(filepath.Join(directory, file.name), data, 0644); writeError != nil {
+				test.Fatal(writeError)
 			}
 		}
-		library, err := RuntimeLibrary(directory, Options{Sanitize: true})
-		if err != nil {
-			test.Fatal(err)
+		library, runtimeLibraryError := RuntimeLibrary(directory, Options{Sanitize: true})
+		if runtimeLibraryError != nil {
+			test.Fatal(runtimeLibraryError)
 		}
 		main := filepath.Join(directory, "main.c")
-		if err := os.WriteFile(main, []byte(source), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(main, []byte(source), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		binary := filepath.Join(directory, "program")
 		arguments := append(Flags(Options{Sanitize: true}), "-I", filepath.Dir(library), "-o", binary, main)
 		arguments = append(arguments, RuntimeLinkFlags(library)...)
 		arguments = append(arguments, "-lm")
-		if output, err := exec.Command("clang", arguments...).CombinedOutput(); err != nil {
-			test.Fatalf("clang: %v %s", err, output)
+		if output, combinedOutputError := exec.Command(
+			"clang",
+			arguments...,
+		).CombinedOutput(); combinedOutputError != nil {
+			test.Fatalf("clang: %v %s", combinedOutputError, output)
 		}
 		command := exec.Command(binary)
 		command.Env = append(
@@ -84,14 +87,14 @@ func TestReleaseSharedValueAndUnsafeMutant(test *testing.T) {
 			"LSAN_OPTIONS=exitcode=23",
 			"UBSAN_OPTIONS=halt_on_error=1:print_stacktrace=1",
 		)
-		output, err := command.CombinedOutput()
+		output, combinedOutputError := command.CombinedOutput()
 		if mutant {
-			if err == nil || !bytes.Contains(output, []byte("AddressSanitizer: heap-use-after-free")) {
-				test.Fatalf("unsafe mutant survived: %v %s", err, output)
+			if combinedOutputError == nil || !bytes.Contains(output, []byte("AddressSanitizer: heap-use-after-free")) {
+				test.Fatalf("unsafe mutant survived: %v %s", combinedOutputError, output)
 			}
 			test.Log("unsafe last-owner mutant compiles; ASan catches heap-use-after-free on dynamic shared text")
-		} else if err != nil || !bytes.Equal(output, expected) {
-			test.Fatalf("native and leak check: %v %s; Node %s", err, output, expected)
+		} else if combinedOutputError != nil || !bytes.Equal(output, expected) {
+			test.Fatalf("native and leak check: %v %s; Node %s", combinedOutputError, output, expected)
 		}
 	}
 }
@@ -101,31 +104,31 @@ func TestReleaseSharedValueAndUnsafeMutant(test *testing.T) {
 func TestOwnershipInlining(test *testing.T) {
 	test.Parallel()
 	directory := test.TempDir()
-	files, err := readRuntime(runtime, "runtime")
-	if err != nil {
-		test.Fatal(err)
+	files, readRuntimeError := readRuntime(runtime, "runtime")
+	if readRuntimeError != nil {
+		test.Fatal(readRuntimeError)
 	}
 	for _, file := range files {
 		if strings.HasSuffix(file.name, ".h") {
-			if err := os.WriteFile(filepath.Join(directory, file.name), file.contents, 0600); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(filepath.Join(directory, file.name), file.contents, 0600); writeError != nil {
+				test.Fatal(writeError)
 			}
 		}
 	}
 	source := filepath.Join(directory, "ownership.c")
-	if err := os.WriteFile(source, []byte(`#include "adamic.h"
+	if writeError := os.WriteFile(source, []byte(`#include "adamic.h"
 void *hold(void *value) { return adamic_retain(value); }
 void drop(void *value) { adamic_release(value); }
-`), 0600); err != nil {
-		test.Fatal(err)
+`), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	for _, options := range []Options{{}, {Sanitize: true}, {Sanitize: true, Count: true}, {ThreadSanitize: true}} {
 		ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 		arguments := append(Flags(options), "-S", "-emit-llvm", "-o", "-", source)
-		output, err := exec.CommandContext(ctx, "clang", arguments...).CombinedOutput()
+		output, combinedOutputError := exec.CommandContext(ctx, "clang", arguments...).CombinedOutput()
 		cancel()
-		if err != nil {
-			test.Fatalf("%+v clang: %v %s", options, err, output)
+		if combinedOutputError != nil {
+			test.Fatalf("%+v clang: %v %s", options, combinedOutputError, output)
 		}
 		for _, name := range []string{"retain", "release"} {
 			call := regexp.MustCompile(`call [^\n]*@adamic_` + name + `\(`)
@@ -143,8 +146,12 @@ void drop(void *value) { adamic_release(value); }
 	// A file that includes the header and retains nothing builds under the strict flags
 	// harnesses use (decode_ascii_cache_test.go), which don't pass -Wno-unused-function.
 	quiet := filepath.Join(directory, "quiet.c")
-	if err := os.WriteFile(quiet, []byte("#include \"adamic.h\"\nint quiet(void) { return 0; }\n"), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(
+		quiet,
+		[]byte("#include \"adamic.h\"\nint quiet(void) { return 0; }\n"),
+		0600,
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
 	for _, sanitizers := range []string{"-fsanitize=address,undefined", "-fsanitize=thread", ""} {
 		ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
@@ -162,10 +169,15 @@ void drop(void *value) { adamic_release(value); }
 		if sanitizers != "" {
 			arguments = append([]string{sanitizers}, arguments...)
 		}
-		output, err := exec.CommandContext(ctx, "clang", arguments...).CombinedOutput()
+		output, combinedOutputError := exec.CommandContext(ctx, "clang", arguments...).CombinedOutput()
 		cancel()
-		if err != nil {
-			test.Errorf("%q: the header alone doesn't build under -Werror: %v %s", sanitizers, err, output)
+		if combinedOutputError != nil {
+			test.Errorf(
+				"%q: the header alone doesn't build under -Werror: %v %s",
+				sanitizers,
+				combinedOutputError,
+				output,
+			)
 		}
 	}
 }

@@ -13,13 +13,15 @@ func TestCheckedViewFlagDowncast(test *testing.T) {
 	test.Parallel()
 	test.Run("tsc source", func(test *testing.T) {
 		test.Parallel()
-		path, err := filepath.Abs(filepath.Join(repository, "stage3/fixtures/assertions/13_flag_downcast.ts"))
-		if err != nil {
-			test.Fatal(err)
+		path, absolutePathError := filepath.Abs(
+			filepath.Join(repository, "stage3/fixtures/assertions/13_flag_downcast.ts"),
+		)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
-		program, err := lowered(test, path)
-		if err != nil {
-			test.Fatal(err)
+		program, loweredError := lowered(test, path)
+		if loweredError != nil {
+			test.Fatal(loweredError)
 		}
 		want := onNode(test, path)
 		if difference := disagreement(run{stdout: []byte("8\n0\n")}, want); difference != "" {

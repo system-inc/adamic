@@ -23,9 +23,9 @@ import (
 // JavaScript backend, native under ASan and UBSan, and the leak check.
 func recordDefineHiddenSource(test *testing.T) string {
 	test.Helper()
-	source, err := os.ReadFile(filepath.Join("testdata", "records_define_hidden.a"))
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(filepath.Join("testdata", "records_define_hidden.a"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return string(source)
 }
@@ -83,8 +83,8 @@ func recordUncaughtWitness(test *testing.T, source string, mutant func(string) s
 	test.Helper()
 	directory := test.TempDir()
 	path := filepath.Join(directory, "main.a")
-	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	type ran struct {
 		stdout, stderr []byte
@@ -99,8 +99,8 @@ func recordUncaughtWitness(test *testing.T, source string, mutant func(string) s
 		command.Stdout = &stdout
 		command.Stderr = &stderr
 		var exited *exec.ExitError
-		if err := command.Run(); err != nil && !errors.As(err, &exited) {
-			test.Fatalf("running %s: %v", name, err)
+		if runError := command.Run(); runError != nil && !errors.As(runError, &exited) {
+			test.Fatalf("running %s: %v", name, runError)
 		}
 		return ran{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
 	}
@@ -118,17 +118,17 @@ func recordUncaughtWitness(test *testing.T, source string, mutant func(string) s
 			bytes.Equal(got.stdout, truth.stdout) &&
 			bytes.Equal(got.stderr, truth.stderr)
 	}
-	checked, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	checked, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := lower.LowerWithOptions(context.Background(), checked, lower.Options{})
-	if err != nil {
-		test.Fatal(err)
+	program, lowerWithOptionsError := lower.LowerWithOptions(context.Background(), checked, lower.Options{})
+	if lowerWithOptionsError != nil {
+		test.Fatal(lowerWithOptionsError)
 	}
 	js := filepath.Join(directory, "main.mjs")
-	if err := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	if got := run(nil, "node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", js); !agrees(got) {
 		test.Fatalf(
@@ -150,8 +150,8 @@ func recordUncaughtWitness(test *testing.T, source string, mutant func(string) s
 		code = changed
 	}
 	binary := filepath.Join(directory, "native")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(code, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	got := run([]string{"ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
 	if mutant != nil {
@@ -276,16 +276,16 @@ catch(error) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			path := filepath.Join(test.TempDir(), "main.a")
-			if err := os.WriteFile(path, []byte(probe.source), 0600); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, []byte(probe.source), 0600); writeError != nil {
+				test.Fatal(writeError)
 			}
-			checked, err := load.Load([]string{path})
-			if err != nil {
-				test.Fatal(err)
+			checked, loadError := load.Load([]string{path})
+			if loadError != nil {
+				test.Fatal(loadError)
 			}
-			program, err := lower.LowerWithOptions(context.Background(), checked, lower.Options{})
-			if err != nil {
-				test.Fatal(err)
+			program, lowerWithOptionsError := lower.LowerWithOptions(context.Background(), checked, lower.Options{})
+			if lowerWithOptionsError != nil {
+				test.Fatal(lowerWithOptionsError)
 			}
 			code := native.C(program)
 			if got := strings.Count(code, "adamic_record_refused("); got != probe.checks {

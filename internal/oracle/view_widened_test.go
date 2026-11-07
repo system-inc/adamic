@@ -68,9 +68,11 @@ func TestViewWidenedReadNotYet(test *testing.T) {
 	} {
 		test.Run(probe.file, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/reland_refused", probe.file))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/reland_refused", probe.file),
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			truth := onNode(test, path)
 			if probe.node == "" {
@@ -85,10 +87,10 @@ func TestViewWidenedReadNotYet(test *testing.T) {
 			} else if disagreement(run{stdout: []byte(probe.node)}, truth) != "" {
 				test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
-			program, err := lowered(test, path)
+			program, loweredError := lowered(test, path)
 			if os.Getenv("ADAMIC_VIEW_WIDENED_MUTANT") == "1" {
-				if err != nil {
-					test.Fatalf("the mutant must admit the program: %v", err)
+				if loweredError != nil {
+					test.Fatalf("the mutant must admit the program: %v", loweredError)
 				}
 				native, _ := nativelyUncached(test, program)
 				for name, got := range map[string]run{"native": native, "release": releasedUncached(test, program)} {
@@ -112,10 +114,10 @@ func TestViewWidenedReadNotYet(test *testing.T) {
 				probe.through +
 				", which may hold a checked view's value"
 			var notYet *lower.NotYet
-			if !errors.As(err, &notYet) ||
-				!strings.Contains(err.Error(), probe.file+":"+probe.at) ||
-				!strings.Contains(err.Error(), what) {
-				test.Fatalf("want the widened read NotYet at %s, got %v", probe.at, err)
+			if !errors.As(loweredError, &notYet) ||
+				!strings.Contains(loweredError.Error(), probe.file+":"+probe.at) ||
+				!strings.Contains(loweredError.Error(), what) {
+				test.Fatalf("want the widened read NotYet at %s, got %v", probe.at, loweredError)
 			}
 		})
 	}
@@ -141,14 +143,16 @@ func TestViewWidenedRoadsHeld(test *testing.T) {
 	} {
 		test.Run(probe.file, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/reland_refused", probe.file))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/reland_refused", probe.file),
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			truth := onNode(test, path)
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatalf("want it lowered, got %v", err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatalf("want it lowered, got %v", loweredError)
 			}
 			native, _ := natively(test, program)
 			for name, got := range map[string]run{
@@ -197,15 +201,17 @@ func TestViewWidenedRoadsHeld(test *testing.T) {
 	} {
 		test.Run(probe.file, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/reland_refused", probe.file))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/reland_refused", probe.file),
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			_, err = lowered(test, path)
-			if err == nil ||
-				!strings.Contains(err.Error(), probe.file+":"+probe.at) ||
-				!strings.Contains(err.Error(), probe.what) {
-				test.Fatalf("want it refused at %s, got %v", probe.at, err)
+			_, loweredError := lowered(test, path)
+			if loweredError == nil ||
+				!strings.Contains(loweredError.Error(), probe.file+":"+probe.at) ||
+				!strings.Contains(loweredError.Error(), probe.what) {
+				test.Fatalf("want it refused at %s, got %v", probe.at, loweredError)
 			}
 		})
 	}
@@ -256,16 +262,16 @@ show(real);
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
 			path := filepath.Join(test.TempDir(), "main.ts")
-			if err := os.WriteFile(path, []byte(probe.source), 0o644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, []byte(probe.source), 0o644); writeError != nil {
+				test.Fatal(writeError)
 			}
 			truth := onNode(test, path)
 			if disagreement(run{stdout: []byte(probe.node)}, truth) != "" {
 				test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatalf("an honest widened read must lower: %v", err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatalf("an honest widened read must lower: %v", loweredError)
 			}
 			native, _ := natively(test, program)
 			for name, got := range map[string]run{
@@ -293,14 +299,14 @@ show(real);
 	} {
 		test.Run(file, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, file))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(filepath.Join(repository, file))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			truth := onNode(test, path)
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatalf("an honest spread source must lower: %v", err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatalf("an honest spread source must lower: %v", loweredError)
 			}
 			native, _ := natively(test, program)
 			for name, got := range map[string]run{
@@ -333,16 +339,18 @@ for (const x of xs) console.log(x.text);
 const real = { kind: 9, pos: 2, text: "real" };
 show(real);
 `
-		if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
-		_, err := lowered(test, path)
+		_, loweredError := lowered(test, path)
 		var notYet *lower.NotYet
-		if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "main.ts:6:33") || !strings.Contains(
-			err.Error(),
-			"a read of field text through type HasText, which may hold a checked view's value",
-		) {
-			test.Fatalf("want the unknown reach to fail closed at the element's read, got %v", err)
+		if !errors.As(loweredError, &notYet) ||
+			!strings.Contains(loweredError.Error(), "main.ts:6:33") ||
+			!strings.Contains(
+				loweredError.Error(),
+				"a read of field text through type HasText, which may hold a checked view's value",
+			) {
+			test.Fatalf("want the unknown reach to fail closed at the element's read, got %v", loweredError)
 		}
 	})
 }
@@ -361,14 +369,14 @@ func TestViewWidenedPriceAccepted(test *testing.T) {
 	} {
 		test.Run(filepath.Base(probe.file), func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, probe.file))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(filepath.Join(repository, probe.file))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			if truth := onNode(test, path); truth.exitCode != 0 || len(truth.stdout) == 0 {
 				test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
-			_, err = lowered(test, path)
+			_, loweredError := lowered(test, path)
 			what := filepath.Base(probe.file) +
 				":" +
 				probe.at +
@@ -378,8 +386,8 @@ func TestViewWidenedPriceAccepted(test *testing.T) {
 				probe.through +
 				", which may hold a checked view's value"
 			var notYet *lower.NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), what) {
-				test.Fatalf("want %q, got %v", what, err)
+			if !errors.As(loweredError, &notYet) || !strings.Contains(loweredError.Error(), what) {
+				test.Fatalf("want %q, got %v", what, loweredError)
 			}
 		})
 	}
@@ -399,18 +407,20 @@ func TestViewWholeValueReadNotYet(test *testing.T) {
 	} {
 		test.Run(probe.file, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/reland_refused", probe.file))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/reland_refused", probe.file),
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			truth := onNode(test, path)
 			if disagreement(run{stdout: []byte(probe.node)}, truth) != "" {
 				test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
-			program, err := lowered(test, path)
+			program, loweredError := lowered(test, path)
 			if os.Getenv("ADAMIC_VIEW_WIDENED_MUTANT") == "1" {
-				if err != nil {
-					test.Fatalf("the mutant must admit the program: %v", err)
+				if loweredError != nil {
+					test.Fatalf("the mutant must admit the program: %v", loweredError)
 				}
 				native, _ := nativelyUncached(test, program)
 				for name, got := range map[string]run{"native": native, "release": releasedUncached(test, program)} {
@@ -435,8 +445,8 @@ func TestViewWholeValueReadNotYet(test *testing.T) {
 				probe.through +
 				" by encodeJson, which may hold a checked view's value"
 			var notYet *lower.NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), what) {
-				test.Fatalf("want %q, got %v", what, err)
+			if !errors.As(loweredError, &notYet) || !strings.Contains(loweredError.Error(), what) {
+				test.Fatalf("want %q, got %v", what, loweredError)
 			}
 		})
 	}

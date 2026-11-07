@@ -67,29 +67,29 @@ func TestMovesAgreesWithNode_tsan(test *testing.T) {
 
 func TestMovesRefusals(test *testing.T) {
 	test.Parallel()
-	paths, err := filepath.Glob(filepath.Join(repository, "internal/oracle/testdata/moves/refused/*.a"))
-	if err != nil || len(paths) < 30 {
-		test.Fatalf("fixtures: %d %v", len(paths), err)
+	paths, globError := filepath.Glob(filepath.Join(repository, "internal/oracle/testdata/moves/refused/*.a"))
+	if globError != nil || len(paths) < 30 {
+		test.Fatalf("fixtures: %d %v", len(paths), globError)
 	}
 	for _, path := range paths {
 		test.Run(filepath.Base(path), func(test *testing.T) {
 			test.Parallel()
-			want, err := os.ReadFile(strings.TrimSuffix(path, ".a") + ".what")
-			if err != nil {
-				test.Fatal(err)
+			want, readError := os.ReadFile(strings.TrimSuffix(path, ".a") + ".what")
+			if readError != nil {
+				test.Fatal(readError)
 			}
-			fix, err := os.ReadFile(strings.TrimSuffix(path, ".a") + ".fix")
-			if err != nil {
-				test.Fatal(err)
+			fix, readError := os.ReadFile(strings.TrimSuffix(path, ".a") + ".fix")
+			if readError != nil {
+				test.Fatal(readError)
 			}
-			absolute, err := filepath.Abs(path)
-			if err != nil {
-				test.Fatal(err)
+			absolute, absolutePathError := filepath.Abs(path)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			_, err = lowered(test, absolute)
+			_, loweredError := lowered(test, absolute)
 			var refused *lower.Refused
-			if !errors.As(err, &refused) {
-				test.Fatalf("want Refused %q, got %v", strings.TrimSpace(string(want)), err)
+			if !errors.As(loweredError, &refused) {
+				test.Fatalf("want Refused %q, got %v", strings.TrimSpace(string(want)), loweredError)
 			}
 			if refused.Fix != "return it through the results" && refused.Fix != "don't use it after the parallelMap" {
 				test.Fatalf("unapproved move fix: %q", refused.Fix)
@@ -142,8 +142,8 @@ adamic_array *moves_count_map(adamic_array *items, adamic_closure *work, enum ad
 }
 `, abi, abi) + strings.ReplaceAll(generated, "adamic_parallel_map_move(", "moves_count_map(")
 		binary := filepath.Join(directory, "program")
-		if err := native.Build(source, binary, native.Options{Count: true}); err != nil {
-			return err
+		if buildError := native.Build(source, binary, native.Options{Count: true}); buildError != nil {
+			return buildError
 		}
 		return nil
 	})
@@ -196,16 +196,20 @@ func moveSourceInputs() buildcache.Inputs {
 func moveSource(test *testing.T) string {
 	test.Helper()
 	return buildcache.Product(test, moveSourceInputs(), func(directory string) error {
-		path, err := filepath.Abs(filepath.Join(repository, moveObjectsPath))
-		if err != nil {
-			return err
+		path, absolutePathError := filepath.Abs(filepath.Join(repository, moveObjectsPath))
+		if absolutePathError != nil {
+			return absolutePathError
 		}
-		program, err := lowered(test, path)
-		if err != nil {
-			return err
+		program, loweredError := lowered(test, path)
+		if loweredError != nil {
+			return loweredError
 		}
-		if err := os.WriteFile(filepath.Join(directory, "program.c"), []byte(native.C(program)), 0600); err != nil {
-			return err
+		if writeError := os.WriteFile(
+			filepath.Join(directory, "program.c"),
+			[]byte(native.C(program)),
+			0600,
+		); writeError != nil {
+			return writeError
 		}
 		return os.WriteFile(filepath.Join(directory, "program.mjs"), []byte(javascript.JavaScript(program)), 0600)
 	})
@@ -213,9 +217,9 @@ func moveSource(test *testing.T) string {
 
 func moveSourceFile(test *testing.T, name string) string {
 	test.Helper()
-	bytes, err := os.ReadFile(filepath.Join(moveSource(test), name))
-	if err != nil {
-		test.Fatal(err)
+	bytes, readError := os.ReadFile(filepath.Join(moveSource(test), name))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return string(bytes)
 }
@@ -227,10 +231,10 @@ func TestProduct_MovesSource(test *testing.T) {
 
 func TestMovesSourceKeyNamesCompiler(test *testing.T) {
 	test.Parallel()
-	if err := compilerinputs.CheckKey([]string{moveObjectsPath}, func(root string) (string, error) {
+	if checkKeyError := compilerinputs.CheckKey([]string{moveObjectsPath}, func(root string) (string, error) {
 		return buildcache.Key(root, moveSourceInputs())
-	}); err != nil {
-		test.Fatal(err)
+	}); checkKeyError != nil {
+		test.Fatal(checkKeyError)
 	}
 }
 
@@ -289,9 +293,9 @@ func TestProduct_MovesNative_tsan(test *testing.T) {
 func moveNativeVariant(test *testing.T, build string) {
 	test.Helper()
 	directory := moveSource(test)
-	path, err := filepath.Abs(filepath.Join(repository, moveObjectsPath))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, moveObjectsPath))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	source := onNode(test, path)
 	if source.exitCode != 0 {
@@ -384,12 +388,12 @@ func moveEmissionContext(test *testing.T) (context.Context, context.CancelFunc) 
 func emitWithin(ctx context.Context, binary, path string) (emitted, bool) {
 	command := exec.CommandContext(ctx, binary, "c", path)
 	command.Dir = repository
-	output, _, err := childguard.Capture(ctx, command)
+	output, _, captureError := childguard.Capture(ctx, command)
 	if ctx.Err() != nil {
 		return emitted{code: -1}, true
 	}
 	var exit *exec.ExitError
-	if err != nil && !errors.As(err, &exit) {
+	if captureError != nil && !errors.As(captureError, &exit) {
 		return emitted{code: -1}, false
 	}
 	return emitted{code: command.ProcessState.ExitCode(), output: output}, false

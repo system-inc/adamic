@@ -17,20 +17,20 @@ func parserNodeArrayFields() []FieldContract {
 func TestParserNodeArrayLayout(test *testing.T) {
 	test.Parallel()
 	fields := parserNodeArrayFields()
-	layout, err := NodeArrayLayout(ir.Object, fields)
-	if err != nil {
-		test.Fatal(err)
+	layout, nodeArrayLayoutError := NodeArrayLayout(ir.Object, fields)
+	if nodeArrayLayoutError != nil {
+		test.Fatal(nodeArrayLayoutError)
 	}
 	for i, name := range []string{"pos", "end", "hasTrailingComma", "transformFlags"} {
-		field, err := layout.Read(name)
-		if err != nil {
-			test.Fatal(err)
+		field, readError := layout.Read(name)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		if field.Slot != i || field.PresenceBit != i || field.InitializationBit != i || field.Of != fields[i].Of {
 			test.Fatalf("wrong slot for %s: %+v", name, field)
 		}
 	}
-	if _, err := layout.Read("unknown"); err == nil {
+	if _, readError := layout.Read("unknown"); readError == nil {
 		test.Fatal("unknown metadata admitted")
 	}
 }
@@ -41,13 +41,13 @@ func TestParserNodeArrayPresence(test *testing.T) {
 		parserNodeArrayFields(),
 		FieldContract{Name: "cache", DeclaredType: "string | undefined", Of: ir.String, Optional: true},
 	)
-	layout, err := NodeArrayLayout(ir.Object, fields)
-	if err != nil {
-		test.Fatal(err)
+	layout, nodeArrayLayoutError := NodeArrayLayout(ir.Object, fields)
+	if nodeArrayLayoutError != nil {
+		test.Fatal(nodeArrayLayoutError)
 	}
-	cache, err := layout.Read("cache")
-	if err != nil {
-		test.Fatal(err)
+	cache, readError := layout.Read("cache")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if !cache.Optional || cache.Slot != 4 || cache.PresenceBit != 4 || cache.InitializationBit != 4 {
 		test.Fatalf("presence %+v", cache)
@@ -64,14 +64,14 @@ func TestParserNodeArraySchemaFailsClosed(test *testing.T) {
 				fields[i].Of = ir.Object
 			}
 		}
-		if _, err := NodeArrayLayout(ir.Object, fields); err == nil {
+		if _, nodeArrayLayoutError := NodeArrayLayout(ir.Object, fields); nodeArrayLayoutError == nil {
 			test.Fatalf("wrong representation accepted for %s", name)
 		}
 	}
-	if _, err := NodeArrayLayout(
+	if _, nodeArrayLayoutError := NodeArrayLayout(
 		ir.Object,
 		append(parserNodeArrayFields(), FieldContract{Name: "newRequired", DeclaredType: "number", Of: ir.Number}),
-	); err == nil {
+	); nodeArrayLayoutError == nil {
 		test.Fatal("source schema drift ignored")
 	}
 }

@@ -14,17 +14,17 @@ func init() {
 func TestLoomViewsCOriginal(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(repository, "internal/oracle/testdata/loom_views_c/snapshot-original.ts")
-	path, err := filepath.Abs(path)
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(path)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	want := onNode(test, path)
 	if want.exitCode != 0 || string(want.stdout) != "true\nundefined\n" {
 		test.Fatalf("Node: %#v", want)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	sanitized, _ := nativelyUncached(test, program)
 	for backend, got := range map[string]run{

@@ -46,21 +46,21 @@ func TestArgumentsLengthTypeScriptSource(test *testing.T) {
 	for _, name := range argumentLengthFixtures {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			source, err := os.ReadFile(filepath.Join("testdata", name))
-			if err != nil {
-				test.Fatal(err)
+			source, readError := os.ReadFile(filepath.Join("testdata", name))
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			path := filepath.Join(test.TempDir(), "main.ts")
-			if err := os.WriteFile(path, source, 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, source, 0644); writeError != nil {
+				test.Fatal(writeError)
 			}
-			checked, err := load.Load([]string{path})
-			if err != nil {
-				test.Fatal(err)
+			checked, loadError := load.Load([]string{path})
+			if loadError != nil {
+				test.Fatal(loadError)
 			}
-			program, err := lower.Lower(context.Background(), checked)
-			if err != nil {
-				test.Fatal(err)
+			program, lowerError := lower.Lower(context.Background(), checked)
+			if lowerError != nil {
+				test.Fatal(lowerError)
 			}
 			truth := onNode(test, path)
 			compiled, sanitized := natively(test, program)
@@ -84,13 +84,13 @@ func TestArgumentsLengthTypeScriptSource(test *testing.T) {
 // value comparison catches this exact clean 9-versus-1 miscompile.
 func TestArgumentsLengthWrongSlotMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join("testdata", "native-arguments-length-value.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join("testdata", "native-arguments-length-value.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	truth := onNode(test, path)
 	source := native.C(program)
@@ -107,8 +107,8 @@ func TestArgumentsLengthWrongSlotMutant(test *testing.T) {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
 			binary := filepath.Join(test.TempDir(), "mutant")
-			if err := native.Build(mutated, binary, native.Options{Sanitize: sanitize}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(mutated, binary, native.Options{Sanitize: sanitize}); buildError != nil {
+				test.Fatal(buildError)
 			}
 			got := execute(test, binary)
 			if got.exitCode != 0 || len(got.stderr) != 0 || string(got.stdout) != "9\n" {

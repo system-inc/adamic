@@ -47,13 +47,13 @@ func closedGap(test *testing.T, file, output string) {
 	test.Helper()
 	binary := yamlClosedGapsBuild.binary(test, file)
 	emitted := yamlClosedGapsBuild.emitted(test, file)
-	path, err := filepath.Abs(file)
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(file)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	expected := run(test, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, path)
 	if string(expected) != output {

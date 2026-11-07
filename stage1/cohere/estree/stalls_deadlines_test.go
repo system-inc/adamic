@@ -31,11 +31,11 @@ func estreeScopedCommand(ctx context.Context, name string, args ...string) *exec
 		if command.Process == nil {
 			return os.ErrProcessDone
 		}
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if err == syscall.ESRCH {
+		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if killError == syscall.ESRCH {
 			return os.ErrProcessDone
 		}
-		return err
+		return killError
 	}
 	return command
 }
@@ -44,12 +44,12 @@ func estreeScopedExecute(test *testing.T, name string, args ...string) []byte {
 	test.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
-	output, stderr, err := childguard.Capture(ctx, estreeScopedCommand(ctx, name, args...))
+	output, stderr, captureError := childguard.Capture(ctx, estreeScopedCommand(ctx, name, args...))
 	if ctx.Err() != nil {
 		test.Fatalf("cooked: %s %v exceeded its 90s child deadline", name, args)
 	}
-	if err != nil || len(stderr) != 0 {
-		test.Fatalf("%s %v: %v\n%s", name, args, err, stderr)
+	if captureError != nil || len(stderr) != 0 {
+		test.Fatalf("%s %v: %v\n%s", name, args, captureError, stderr)
 	}
 	return output
 }
@@ -73,9 +73,9 @@ func estreeScopedRefusal(test *testing.T, argv []string, diagnostic string) {
 	budget := estreeRefusalBudget(test, argv)
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
-	reader, writer, err := os.Pipe()
-	if err != nil {
-		test.Fatal(err)
+	reader, writer, pipeError := os.Pipe()
+	if pipeError != nil {
+		test.Fatal(pipeError)
 	}
 	defer reader.Close()
 	defer writer.Close()
@@ -90,26 +90,26 @@ func estreeScopedRefusal(test *testing.T, argv []string, diagnostic string) {
 	command.ExtraFiles = []*os.File{writer}
 	// Captured, not exec's copying under a WaitDelay: exec.ErrWaitDelay is an error with a ProcessState, so a child
 	// that exited cleanly could pass the err check below as a refusal, and one that refused could lose its diagnostic.
-	output, stderr, err := childguard.Capture(ctx, command)
+	output, stderr, captureError := childguard.Capture(ctx, command)
 	writer.Close()
-	ready, readErr := io.ReadAll(reader)
+	ready, readError := io.ReadAll(reader)
 	if ctx.Err() != nil {
 		test.Fatalf("cooked: %v exceeded its 90s child deadline", argv)
 	}
-	if readErr != nil || string(ready) != "started\n" {
-		test.Fatalf("%v: child never started: %v %q\n%s", argv, readErr, ready, stderr)
+	if readError != nil || string(ready) != "started\n" {
+		test.Fatalf("%v: child never started: %v %q\n%s", argv, readError, ready, stderr)
 	}
 	cpu := command.ProcessState.UserTime() + command.ProcessState.SystemTime()
 	status := command.ProcessState.Sys().(syscall.WaitStatus)
 	timedOut := cpu >= budget || (status.Signaled() && status.Signal() == syscall.SIGXCPU)
-	if timedOut || err == nil || len(output) != 0 || !strings.Contains(string(stderr), diagnostic) {
+	if timedOut || captureError == nil || len(output) != 0 || !strings.Contains(string(stderr), diagnostic) {
 		test.Fatalf(
 			"%v: timeout=%v cpu=%s budget=%s exit=%v stdout=%d stderr=%s",
 			argv,
 			timedOut,
 			cpu,
 			budget,
-			err,
+			captureError,
 			len(output),
 			stderr,
 		)
@@ -143,8 +143,8 @@ func TestEstreeScopedProcessGroupDeadline(test *testing.T) {
 		}
 		command.Env = append(command.Env, marker+"=grandchild")
 		command.Stdout, command.Stderr = os.Stdout, os.Stderr
-		if err := command.Run(); err != nil {
-			test.Fatal(err)
+		if runError := command.Run(); runError != nil {
+			test.Fatal(runError)
 		}
 		return
 	}
@@ -170,14 +170,14 @@ func TestEstreeScopedProcessGroupDeadline(test *testing.T) {
 		}
 	}()
 	started := time.Now()
-	output, err := command.CombinedOutput()
-	if err == nil ||
+	output, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError == nil ||
 		ctx.Err() != context.DeadlineExceeded ||
 		!bytes.Contains(output, []byte("grandchild-ready")) ||
 		time.Since(started) >= 4*time.Second {
 		test.Fatalf(
 			"context must kill parent and grandchild promptly: %v context=%v elapsed=%s\n%s",
-			err,
+			combinedOutputError,
 			ctx.Err(),
 			time.Since(started),
 			output,

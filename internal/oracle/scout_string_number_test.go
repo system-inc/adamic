@@ -21,31 +21,32 @@ func init() {
 
 func nullableObjectStorageOutcome(test *testing.T, name string) {
 	test.Helper()
-	path, err := filepath.Abs(
+	path, absolutePathError := filepath.Abs(
 		filepath.Join(repository, "internal/oracle/testdata/scout_nullable_storage_refused", name+".a"),
 	)
-	if err != nil {
-		test.Fatal(err)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	if difference := disagreement(run{stdout: []byte("true\n")}, onNode(test, path)); difference != "" {
 		test.Fatal(difference)
 	}
-	_, err = lowered(test, path)
+	_, loweredError := lowered(test, path)
 	if name == "array_spread" {
 		var refusal *lower.Refused
-		if !errors.As(err, &refusal) ||
+		if !errors.As(loweredError, &refusal) ||
 			refusal.What != "union-typed array built from a narrower literal" ||
 			refusal.Fix != "declare the literal's element type explicitly, or build the array with a mixed literal" {
-			test.Fatalf("want the newer narrow-literal layout refusal with its fix, got %v", err)
+			test.Fatalf("want the newer narrow-literal layout refusal with its fix, got %v", loweredError)
 		}
-		test.Log(err)
+		test.Log(loweredError)
 		return
 	}
-	if err == nil || !(strings.Contains(err.Error(), "sharing nullable object storage") || name == "lookup" &&
-		strings.Contains(err.Error(), "a nullable object lookup without separate null/undefined tags")) {
-		test.Fatalf("want explicit storage view stop, got %v", err)
+	if loweredError == nil ||
+		!(strings.Contains(loweredError.Error(), "sharing nullable object storage") || name == "lookup" &&
+			strings.Contains(loweredError.Error(), "a nullable object lookup without separate null/undefined tags")) {
+		test.Fatalf("want explicit storage view stop, got %v", loweredError)
 	}
-	test.Log(err)
+	test.Log(loweredError)
 }
 func TestNullableObjectStorageArray(test *testing.T) {
 	test.Parallel()

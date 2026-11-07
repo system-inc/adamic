@@ -14,17 +14,21 @@ import (
 func async2RuntimeGuard(test *testing.T, mode, file, old, replacement, diagnostic string) {
 	test.Helper()
 	options := Options{Sanitize: true}
-	files, flags, compiler, version, err := runtimeInputs("", options, []string{"-DADAMIC_CANONICAL_CLOSURES=1"})
-	if err != nil {
-		test.Fatal(err)
+	files, flags, compiler, version, runtimeInputsError := runtimeInputs(
+		"",
+		options,
+		[]string{"-DADAMIC_CANONICAL_CLOSURES=1"},
+	)
+	if runtimeInputsError != nil {
+		test.Fatal(runtimeInputsError)
 	}
-	cache, err := cacheDirectory("async2-runtime")
-	if err != nil {
-		test.Fatal(err)
+	cache, cacheDirectoryError := cacheDirectory("async2-runtime")
+	if cacheDirectoryError != nil {
+		test.Fatal(cacheDirectoryError)
 	}
-	source, err := os.ReadFile("testdata/async2/runtime.c")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("testdata/async2/runtime.c")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	for _, mutant := range []bool{false, true} {
 		if mutant {
@@ -44,9 +48,9 @@ func async2RuntimeGuard(test *testing.T, mode, file, old, replacement, diagnosti
 				test.Fatalf("missing runtime file %s", file)
 			}
 		}
-		library, err := cachedRuntime(files, flags, compiler, version, cache)
-		if err != nil {
-			test.Fatal(err)
+		library, cachedRuntimeError := cachedRuntime(files, flags, compiler, version, cache)
+		if cachedRuntimeError != nil {
+			test.Fatal(cachedRuntimeError)
 		}
 		binary := buildHarnessWithLibrary(test, string(source), flags, compiler, library)
 		command, release := boundedrun.Command(5*time.Second, binary, mode)
@@ -61,33 +65,33 @@ func async2RuntimeGuard(test *testing.T, mode, file, old, replacement, diagnosti
 		} // The refusal intentionally exits with a live frame.
 		command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks="+leaks+":halt_on_error=1")
 		logPath := filepath.Join(test.TempDir(), "run.log")
-		log, err := os.Create(logPath)
-		if err != nil {
-			test.Fatal(err)
+		log, createError := os.Create(logPath)
+		if createError != nil {
+			test.Fatal(createError)
 		}
 		command.Stdout, command.Stderr = log, log
-		err = command.Run()
+		runError := command.Run()
 		release()
-		if closeErr := log.Close(); closeErr != nil {
-			test.Fatal(closeErr)
+		if closeError := log.Close(); closeError != nil {
+			test.Fatal(closeError)
 		}
-		output, readErr := os.ReadFile(logPath)
-		if readErr != nil {
-			test.Fatal(readErr)
+		output, readError := os.ReadFile(logPath)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		if stop, stops := stops[mode]; stops && !mutant {
 			if command.ProcessState == nil ||
 				command.ProcessState.ExitCode() != 70 ||
 				!strings.Contains(string(output), stop) {
-				test.Fatalf("%s guard: %v\n%s", mode, err, output)
+				test.Fatalf("%s guard: %v\n%s", mode, runError, output)
 			}
 		} else if mutant {
-			if err == nil || !strings.Contains(string(output), diagnostic) {
-				test.Fatalf("mutant survived or failed for another reason: %v\n%s", err, output)
+			if runError == nil || !strings.Contains(string(output), diagnostic) {
+				test.Fatalf("mutant survived or failed for another reason: %v\n%s", runError, output)
 			}
 			test.Logf("%s mutant caught by %s", mode, diagnostic)
-		} else if err != nil || len(output) != 0 {
-			test.Fatalf("control: %v\n%s", err, output)
+		} else if runError != nil || len(output) != 0 {
+			test.Fatalf("control: %v\n%s", runError, output)
 		}
 	}
 }

@@ -82,8 +82,8 @@ func nodeResultKey(source, javascript, nodeVersion, context string) string {
 }
 
 func (cache *resultCache) read(key string, value any) bool {
-	contents, err := os.ReadFile(filepath.Join(cache.directory, key+".json"))
-	if err != nil {
+	contents, readError := os.ReadFile(filepath.Join(cache.directory, key+".json"))
+	if readError != nil {
 		return false
 	}
 	var envelope resultEnvelope
@@ -97,31 +97,31 @@ func (cache *resultCache) read(key string, value any) bool {
 
 func (cache *resultCache) write(test *testing.T, key string, value any) {
 	test.Helper()
-	encoded, err := json.Marshal(value)
-	if err != nil {
-		test.Fatal(err)
+	encoded, encodeError := json.Marshal(value)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
-	contents, err := json.Marshal(resultEnvelope{key, cacheKey(string(encoded)), encoded})
-	if err != nil {
-		test.Fatal(err)
+	contents, encodeError := json.Marshal(resultEnvelope{key, cacheKey(string(encoded)), encoded})
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
-	if err := os.MkdirAll(cache.directory, 0o700); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(cache.directory, 0o700); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	temporary, err := os.CreateTemp(cache.directory, ".result-")
-	if err != nil {
-		test.Fatal(err)
+	temporary, temporaryFileError := os.CreateTemp(cache.directory, ".result-")
+	if temporaryFileError != nil {
+		test.Fatal(temporaryFileError)
 	}
 	defer os.Remove(temporary.Name())
-	if _, err := temporary.Write(contents); err != nil {
+	if _, writeError := temporary.Write(contents); writeError != nil {
 		temporary.Close()
-		test.Fatal(err)
+		test.Fatal(writeError)
 	}
-	if err := temporary.Close(); err != nil {
-		test.Fatal(err)
+	if closeError := temporary.Close(); closeError != nil {
+		test.Fatal(closeError)
 	}
-	if err := os.Rename(temporary.Name(), filepath.Join(cache.directory, key+".json")); err != nil {
-		test.Fatal(err)
+	if renameError := os.Rename(temporary.Name(), filepath.Join(cache.directory, key+".json")); renameError != nil {
+		test.Fatal(renameError)
 	}
 }
 
@@ -174,31 +174,31 @@ var gateError error
 func identity(test *testing.T) gateIdentity {
 	test.Helper()
 	gateOnce.Do(func() {
-		directory, err := os.UserCacheDir()
-		if err != nil {
-			gateError = err
+		directory, userCacheDirectoryError := os.UserCacheDir()
+		if userCacheDirectoryError != nil {
+			gateError = userCacheDirectoryError
 			return
 		}
 		gate.cache = &resultCache{directory: filepath.Join(directory, "adamic", "gate")}
-		version, err := toolchain.Command("node", "--version").CombinedOutput()
-		if err != nil {
-			gateError = fmt.Errorf("node --version: %w: %s", err, version)
+		version, combinedOutputError := toolchain.Command("node", "--version").CombinedOutput()
+		if combinedOutputError != nil {
+			gateError = fmt.Errorf("node --version: %w: %s", combinedOutputError, version)
 			return
 		}
 		gate.nodeVersion = string(version)
 		for index, options := range []native.Options{{Sanitize: true}, {}, {Count: true}} {
-			library, err := native.RuntimeLibrary("", options)
-			if err != nil {
-				gateError = err
+			library, runtimeLibraryError := native.RuntimeLibrary("", options)
+			if runtimeLibraryError != nil {
+				gateError = runtimeLibraryError
 				return
 			}
 			gate.libraries[index] = filepath.Base(filepath.Dir(library))
 		}
 		// The cache holds what these exact checks observed. Editing a harness or oracle runner must
 		// invalidate it even when a fixture's generated code happens to remain identical.
-		files, err := filepath.Glob("*.go")
-		if err != nil {
-			gateError = err
+		files, globError := filepath.Glob("*.go")
+		if globError != nil {
+			gateError = globError
 			return
 		}
 		files = append(
@@ -213,15 +213,15 @@ func identity(test *testing.T) gateIdentity {
 			repository+"/internal/leakcheck/leakcheck.go",
 		)
 		parts := []string{"gate-context-v1", runtime.GOOS, runtime.GOARCH, fmt.Sprint(os.Geteuid())}
-		root, err := filepath.Abs(repository)
-		if err != nil {
-			gateError = err
+		root, absolutePathError := filepath.Abs(repository)
+		if absolutePathError != nil {
+			gateError = absolutePathError
 			return
 		}
 		parts = append(parts, root)
 		var stack syscall.Rlimit
-		if err := syscall.Getrlimit(syscall.RLIMIT_STACK, &stack); err != nil {
-			gateError = err
+		if getrlimitError := syscall.Getrlimit(syscall.RLIMIT_STACK, &stack); getrlimitError != nil {
+			gateError = getrlimitError
 			return
 		}
 		parts = append(parts, fmt.Sprint(stack.Cur, stack.Max))
@@ -233,9 +233,9 @@ func identity(test *testing.T) gateIdentity {
 			}
 		}
 		for _, file := range files {
-			contents, err := os.ReadFile(file)
-			if err != nil {
-				gateError = err
+			contents, readError := os.ReadFile(file)
+			if readError != nil {
+				gateError = readError
 				return
 			}
 			parts = append(parts, file, string(contents))
@@ -279,21 +279,21 @@ func sourceIdentity(test *testing.T, path string) string {
 	var parts []string
 	var visit func(string)
 	visit = func(path string) {
-		absolute, err := filepath.Abs(path)
-		if err != nil {
-			test.Fatal(err)
+		absolute, absolutePathError := filepath.Abs(path)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		if visited[absolute] {
 			return
 		}
 		visited[absolute] = true
-		contents, err := os.ReadFile(absolute)
-		if err != nil {
-			test.Fatal(err)
+		contents, readError := os.ReadFile(absolute)
+		if readError != nil {
+			test.Fatal(readError)
 		}
-		relative, err := filepath.Rel(root, absolute)
-		if err != nil {
-			test.Fatal(err)
+		relative, relativePathError := filepath.Rel(root, absolute)
+		if relativePathError != nil {
+			test.Fatal(relativePathError)
 		}
 		parts = append(parts, relative, string(contents))
 		if filepath.Ext(absolute) == ".mjs" {
@@ -304,9 +304,9 @@ func sourceIdentity(test *testing.T, path string) string {
 		if ok {
 			imports = value.([]string)
 		} else {
-			program, err := load.Load([]string{absolute})
-			if err != nil {
-				test.Fatal(err)
+			program, loadError := load.Load([]string{absolute})
+			if loadError != nil {
+				test.Fatal(loadError)
 			}
 			imports = rememberImports(absolute, string(contents), program)
 		}
@@ -324,9 +324,9 @@ func cachedNode(test *testing.T, path string, execute func() run) run {
 	given := identity(test)
 	source, javascript := "", ""
 	if filepath.Ext(path) == ".mjs" {
-		contents, err := os.ReadFile(path)
-		if err != nil {
-			test.Fatal(err)
+		contents, readError := os.ReadFile(path)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		javascript = string(contents)
 	} else {
@@ -400,32 +400,32 @@ func inputIdentity(test *testing.T) string {
 	var parts []string
 	for _, name := range []string{"reading", "walking"} {
 		root := filepath.Join(repository, "internal", "oracle", "testdata", name)
-		err := filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {
-			if err != nil {
-				return err
+		walkError := filepath.WalkDir(root, func(path string, entry os.DirEntry, pathError error) error {
+			if pathError != nil {
+				return pathError
 			}
-			info, err := os.Lstat(path)
-			if err != nil {
-				return err
+			info, statError := os.Lstat(path)
+			if statError != nil {
+				return statError
 			}
 			parts = append(parts, path, fmt.Sprint(info.Mode()))
 			if info.Mode()&os.ModeSymlink != 0 {
-				target, err := os.Readlink(path)
-				if err != nil {
-					return err
+				target, readLinkError := os.Readlink(path)
+				if readLinkError != nil {
+					return readLinkError
 				}
 				parts = append(parts, target)
 			} else if !entry.IsDir() {
-				contents, err := os.ReadFile(path)
-				if err != nil {
-					return err
+				contents, readError := os.ReadFile(path)
+				if readError != nil {
+					return readError
 				}
 				parts = append(parts, string(contents))
 			}
 			return nil
 		})
-		if err != nil {
-			test.Fatal(err)
+		if walkError != nil {
+			test.Fatal(walkError)
 		}
 	}
 	return cacheKey(parts...)
@@ -439,14 +439,15 @@ func cacheProbe(test *testing.T, path string, program *ir.Program, external stri
 		return
 	}
 	if program == nil {
-		absolute, err := filepath.Abs(filepath.Join(repository, path))
-		if err != nil {
-			test.Fatal(err)
+		absolute, absolutePathError := filepath.Abs(filepath.Join(repository, path))
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		path = absolute
-		program, err = lowered(test, path)
-		if err != nil {
-			test.Fatal(err)
+		var loweredError error
+		program, loweredError = lowered(test, path)
+		if loweredError != nil {
+			test.Fatal(loweredError)
 		}
 	}
 	given := identity(test)
@@ -476,8 +477,8 @@ func TestMain(main *testing.M) {
 	// -update-counts' writer: the runtime shards and predicate table measured independent
 	// rows; publish their individual files only after every selected test succeeds.
 	if *updateCounts && status == 0 {
-		if err := writeCounts(); err != nil {
-			fmt.Println(err)
+		if writeCountsError := writeCounts(); writeCountsError != nil {
+			fmt.Println(writeCountsError)
 			status = 1
 		}
 	}
@@ -503,8 +504,8 @@ func TestGateCacheGeneratedC(test *testing.T) {
 		key := nativeResultKey(code, "runtime", "node", "harness")
 		result := reusableResult(test, cache, nativeResults, key, func() nativeResult {
 			binary := filepath.Join(test.TempDir(), "program")
-			if err := native.Build(code, binary, native.Options{}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(code, binary, native.Options{}); buildError != nil {
+				test.Fatal(buildError)
 			}
 			return nativeResult{Run: record(execute(test, binary))}
 		})
@@ -554,19 +555,19 @@ func TestGateCacheNodeInputs(test *testing.T) {
 	directory := test.TempDir()
 	entry := filepath.Join(directory, "main.ts")
 	dependency := filepath.Join(directory, "part.ts")
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		entry,
 		[]byte("import { value } from './part.ts';\nconsole.log(value);\n"),
 		0600,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if err := os.WriteFile(dependency, []byte("export const value = 'first';\n"), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(dependency, []byte("export const value = 'first';\n"), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	before := sourceIdentity(test, entry)
-	if err := os.WriteFile(dependency, []byte("export const value = 'other';\n"), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(dependency, []byte("export const value = 'other';\n"), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	if sourceIdentity(test, entry) == before {
 		test.Fatal("an imported module changed without invalidating Node's source key")
@@ -599,12 +600,12 @@ func TestGateCacheAtomicEvidence(test *testing.T) {
 		test.Fatalf("same key executed %d times, want one", builds.Load())
 	}
 	// A partial or corrupted entry is a miss, never trusted evidence.
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		filepath.Join(cache.directory, key+".json"),
 		[]byte(`{"Key":"wrong","Value":null}`),
 		0600,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
 	reusableResult(test, cache, nativeResults, key, func() nativeResult { builds.Add(1); return want })
 	if builds.Load() != 2 {

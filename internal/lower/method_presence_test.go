@@ -44,8 +44,8 @@ func TestMethodPresenceTestsLower(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			if _, err := lowerSource(test, probe.source); err != nil {
-				test.Fatalf("want it to lower, got %v", err)
+			if _, lowerSourceError := lowerSource(test, probe.source); lowerSourceError != nil {
+				test.Fatalf("want it to lower, got %v", lowerSourceError)
 			}
 		})
 	}
@@ -110,10 +110,10 @@ func TestMethodReadsThatKeepTheValueAreRefused(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var refused *Refused
-			if !errors.As(err, &refused) || !strings.Contains(refused.Error(), probe.want) {
-				test.Errorf("got %v, want a refusal containing %q", err, probe.want)
+			if !errors.As(lowerSourceError, &refused) || !strings.Contains(refused.Error(), probe.want) {
+				test.Errorf("got %v, want a refusal containing %q", lowerSourceError, probe.want)
 			}
 		})
 	}
@@ -163,10 +163,10 @@ func TestMethodPresenceTheReceiverDoesntProveIsNotYet(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSourceAs(test, probe.source, probe.extension)
+			_, lowerSourceAsError := lowerSourceAs(test, probe.source, probe.extension)
 			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.HasSuffix(err.Error(), probe.want) {
-				test.Errorf("got %v, want a not-yet ending %q", err, probe.want)
+			if !errors.As(lowerSourceAsError, &notYet) || !strings.HasSuffix(lowerSourceAsError.Error(), probe.want) {
+				test.Errorf("got %v, want a not-yet ending %q", lowerSourceAsError, probe.want)
 			}
 		})
 	}
@@ -192,10 +192,10 @@ func TestMethodPresenceThroughOptionalChainGaps(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.HasSuffix(err.Error(), probe.want) {
-				test.Errorf("got %v, want a not-yet ending %q", err, probe.want)
+			if !errors.As(lowerSourceError, &notYet) || !strings.HasSuffix(lowerSourceError.Error(), probe.want) {
+				test.Errorf("got %v, want a not-yet ending %q", lowerSourceError, probe.want)
 			}
 		})
 	}
@@ -278,9 +278,10 @@ func TestMethodPresenceRestsOnTheseStops(test *testing.T) {
 		for _, extension := range []string{".a", ".ts"} {
 			test.Run(probe.name+extension, func(test *testing.T) {
 				test.Parallel()
-				_, err := lowerSourceAs(test, probe.source, extension)
-				if err == nil || !strings.Contains(err.Error(), "main"+extension+":"+probe.at+": "+probe.want) {
-					test.Fatalf("got %v, want the stop at %s: %q", err, probe.at, probe.want)
+				_, lowerSourceAsError := lowerSourceAs(test, probe.source, extension)
+				if lowerSourceAsError == nil ||
+					!strings.Contains(lowerSourceAsError.Error(), "main"+extension+":"+probe.at+": "+probe.want) {
+					test.Fatalf("got %v, want the stop at %s: %q", lowerSourceAsError, probe.at, probe.want)
 				}
 				// The presence test is the program's last line, so a stop on an earlier one comes first.
 				stopped, _, _ := strings.Cut(probe.at, ":")
@@ -304,10 +305,10 @@ func TestMethodPresenceRestsOnTheseStops(test *testing.T) {
 // (testdata/method_presence/mutants.md in internal/oracle): load.go's Lib made lib.es2026.d.ts.
 func TestMethodPresenceLibraryStopsAtES2024(test *testing.T) {
 	test.Parallel()
-	if _, err := load.Load([]string{
+	if _, loadError := load.Load([]string{
 		writeAgreementSource(test, "main.a", "console.log(String(Map.groupBy([1, 2], (value) => value % 2).size));\n"),
-	}); err != nil {
-		test.Fatalf("es2024's Map.groupBy: %v", err)
+	}); loadError != nil {
+		test.Fatalf("es2024's Map.groupBy: %v", loadError)
 	}
 	for _, probe := range []struct{ library, member, source string }{
 		{"lib.es2025.regexp", "escape", "console.log(typeof RegExp.escape);\n"},
@@ -317,14 +318,14 @@ func TestMethodPresenceLibraryStopsAtES2024(test *testing.T) {
 	} {
 		test.Run(probe.library, func(test *testing.T) {
 			test.Parallel()
-			if _, err := load.Load(
+			if _, loadError := load.Load(
 				[]string{writeAgreementSource(test, "main.a", probe.source)},
-			); err == nil || !strings.Contains(err.Error(), "'"+probe.member+"'") {
+			); loadError == nil || !strings.Contains(loadError.Error(), "'"+probe.member+"'") {
 				test.Errorf(
 					"%s's %s: got %v, want the checker not to know it. Load's library has moved past lib.es2024.d.ts, so method_presence.go's library fold may say \"function\" where Node has none",
 					probe.library,
 					probe.member,
-					err,
+					loadError,
 				)
 			}
 		})

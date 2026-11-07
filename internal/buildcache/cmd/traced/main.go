@@ -5,9 +5,9 @@
 //
 // Run it inside the adamic tree, with the environment the command builds in (ADAMIC_BUILD_CACHE_DIR,
 // ADAMIC_BUILD_OUTPUT_DIR, GOFLAGS). Workshop's tree builder sets ADAMIC_BUILD_STORE=traced, which refuses any product
-// built outside a trace; what settles stays in the cache, which Loom ships, read sets and all, and nothing is written to
-// the store. With ADAMIC_BUILD_OUTPUT_DIR set, the run reads the cache and writes everything there instead, the trace
-// too, for Loom to copy into the cache. The command runs under strace -f with ADAMIC_BUILD_TRACE naming a trace
+// built outside a trace; what settles stays in the cache, which Loom ships, read sets and all, and nothing is written
+// to the store. With ADAMIC_BUILD_OUTPUT_DIR set, the run reads the cache and writes everything there instead, the
+// trace too, for Loom to copy into the cache. The command runs under strace -f with ADAMIC_BUILD_TRACE naming a trace
 // directory under the build cache (or the output directory), so every process that builds a product marks it in the
 // trace and journals it; the trace streams through a pipe into buildcache.Settle, never to disk.
 // GOENV is off unless set, so go never reads a configuration file in the home directory, which no key can name.
@@ -15,8 +15,8 @@
 // The tree is taken as git sees it (HEAD, status, each submodule) before the run and after: a read set is valued when
 // the run ends, so a run whose tree changed meanwhile refuses every product, as does one that wrote into the tree.
 // traced -tree-state <file> takes it and writes it to the file, nothing more; a run with ADAMIC_TRACE_TREE_STATE naming
-// that file starts from it rather than taking its own (Loom's build-tree, once for each wave of product tests that start
-// together, so a wave's start never forks git in the hundreds, #2q48btg).
+// that file starts from it rather than taking its own (Loom's build-tree, once for each wave of product tests that
+// start together, so a wave's start never forks git in the hundreds, #2q48btg).
 //
 // traced -machinery reads paths on stdin, one a line, slash-separated from the tree's root, and prints those that are
 // the build machinery (buildcache.IsMachinery), nothing more, on any system: Loom seeds a tree from another only when
@@ -65,26 +65,37 @@ var straceArguments = []string{"-f", "--seccomp-bpf", "--decode-fds=path", "-q",
 
 func main() {
 	flag.Usage = func() {
-		fmt.Fprintln(os.Stderr, "usage: traced -- <command> [arguments...]\n       traced -tree-state <file>\n       traced -machinery < paths")
+		fmt.Fprintln(
+			os.Stderr,
+			"usage: traced -- <command> [arguments...]\n       traced -tree-state <file>\n       traced -machinery < paths",
+		)
 		flag.PrintDefaults()
 	}
-	treeState := flag.String("tree-state", "", "write the tree's state to this file and exit, for every run of a wave to start from (ADAMIC_TRACE_TREE_STATE)")
-	machinery := flag.Bool("machinery", false, "read paths on stdin, one a line, and print those that are the build machinery (buildcache.IsMachinery), for Loom's seed rule")
+	treeState := flag.String(
+		"tree-state",
+		"",
+		"write the tree's state to this file and exit, for every run of a wave to start from (ADAMIC_TRACE_TREE_STATE)",
+	)
+	machinery := flag.Bool(
+		"machinery",
+		false,
+		"read paths on stdin, one a line, and print those that are the build machinery (buildcache.IsMachinery), for Loom's seed rule",
+	)
 	flag.Parse()
 	if *machinery {
 		if flag.NArg() != 0 || *treeState != "" {
 			flag.Usage()
 			os.Exit(2)
 		}
-		if err := printMachinery(os.Stdin, os.Stdout); err != nil {
-			fmt.Fprintln(os.Stderr, "traced:", err)
+		if printMachineryError := printMachinery(os.Stdin, os.Stdout); printMachineryError != nil {
+			fmt.Fprintln(os.Stderr, "traced:", printMachineryError)
 			os.Exit(2)
 		}
 		return
 	}
 	if *treeState != "" && flag.NArg() == 0 {
-		if err := writeTreeState(*treeState); err != nil {
-			fmt.Fprintln(os.Stderr, "traced:", err)
+		if writeTreeStateError := writeTreeState(*treeState); writeTreeStateError != nil {
+			fmt.Fprintln(os.Stderr, "traced:", writeTreeStateError)
 			os.Exit(2)
 		}
 		return
@@ -95,19 +106,22 @@ func main() {
 	}
 	report := os.Getenv("ADAMIC_TRACE_REPORT")
 	if report != "" {
-		if absolute, err := filepath.Abs(report); err == nil {
+		if absolute, absolutePathError := filepath.Abs(report); absolutePathError == nil {
 			report = absolute
 		}
-		if err := os.WriteFile(report, nil, 0o644); err != nil {
-			fmt.Fprintln(os.Stderr, "traced: ADAMIC_TRACE_REPORT:", err)
+		if writeError := os.WriteFile(report, nil, 0o644); writeError != nil {
+			fmt.Fprintln(os.Stderr, "traced: ADAMIC_TRACE_REPORT:", writeError)
 			os.Exit(2)
 		}
 	}
-	status, err := run(flag.Args(), report)
-	if err != nil {
-		fmt.Fprintln(os.Stderr, "traced:", err)
+	status, runError := run(flag.Args(), report)
+	if runError != nil {
+		fmt.Fprintln(os.Stderr, "traced:", runError)
 		if report != "" {
-			buildcache.WriteReport(report, []buildcache.Report{{Outcome: buildcache.ReportLost, Reason: "traced: " + err.Error()}})
+			buildcache.WriteReport(
+				report,
+				[]buildcache.Report{{Outcome: buildcache.ReportLost, Reason: "traced: " + runError.Error()}},
+			)
 		}
 		os.Exit(2)
 	}
@@ -124,40 +138,49 @@ func printMachinery(paths io.Reader, out io.Writer) error {
 			fmt.Fprintln(writer, scanner.Text())
 		}
 	}
-	if err := scanner.Err(); err != nil {
-		return err
+	if scanError := scanner.Err(); scanError != nil {
+		return scanError
 	}
 	return writer.Flush()
 }
 
 func run(command []string, report string) (int, error) {
 	if runtime.GOOS != "linux" {
-		return 0, errors.New("tracing is strace's, on Linux (Workshop); here a product builds only with ADAMIC_BUILD_STORE=off, for this machine alone")
+		return 0, errors.New(
+			"tracing is strace's, on Linux (Workshop); here a product builds only with ADAMIC_BUILD_STORE=off, for this machine alone",
+		)
 	}
 	probe := exec.Command("strace", append(append([]string{}, straceArguments...), "-o", "/dev/null", "true")...)
-	if output, err := probe.CombinedOutput(); err != nil {
-		return 0, fmt.Errorf("this strace can't trace as Settle needs (strace 6 with --seccomp-bpf and --decode-fds=path): %v\n%s", err, output)
+	if output, combinedOutputError := probe.CombinedOutput(); combinedOutputError != nil {
+		return 0, fmt.Errorf(
+			"this strace can't trace as Settle needs (strace 6 with --seccomp-bpf and --decode-fds=path): %v\n%s",
+			combinedOutputError,
+			output,
+		)
 	}
 	// The trace, its journal and what settled are written where the run writes its products (location.Output): the
 	// build cache, or the output directory of a run that only reads the cache, which Loom copies into it afterwards.
-	cache, err := location.Output()
-	if err != nil {
-		return 0, err
+	cache, outputError := location.Output()
+	if outputError != nil {
+		return 0, outputError
 	}
-	if err := os.MkdirAll(filepath.Join(cache, "traces"), 0o755); err != nil {
-		return 0, err
+	if createDirectoryError := os.MkdirAll(filepath.Join(cache, "traces"), 0o755); createDirectoryError != nil {
+		return 0, createDirectoryError
 	}
-	directory, err := os.MkdirTemp(filepath.Join(cache, "traces"), time.Now().UTC().Format("20060102T150405Z")+"-")
-	if err != nil {
-		return 0, err
+	directory, temporaryDirectoryError := os.MkdirTemp(
+		filepath.Join(cache, "traces"),
+		time.Now().UTC().Format("20060102T150405Z")+"-",
+	)
+	if temporaryDirectoryError != nil {
+		return 0, temporaryDirectoryError
 	}
 	pipe := filepath.Join(directory, "trace.fifo")
-	if err = syscall.Mkfifo(pipe, 0o600); err != nil {
-		return 0, err
+	if mkfifoError := syscall.Mkfifo(pipe, 0o600); mkfifoError != nil {
+		return 0, mkfifoError
 	}
-	before, err := treeStateBefore(buildcache.TreeState)
-	if err != nil {
-		return 0, fmt.Errorf("the tree's state before the run: %v", err)
+	before, treeStateBeforeError := treeStateBefore(buildcache.TreeState)
+	if treeStateBeforeError != nil {
+		return 0, fmt.Errorf("the tree's state before the run: %v", treeStateBeforeError)
 	}
 	// Settle sees the environment the command runs in: the same cache, the same store, the same trace.
 	os.Setenv("ADAMIC_BUILD_TRACE", directory)
@@ -171,28 +194,31 @@ func run(command []string, report string) (int, error) {
 	done := make(chan settled, 1)
 	go func() {
 		// Opening blocks until strace opens the pipe to write; the trace ends when strace exits.
-		reader, err := os.Open(pipe)
-		if err != nil {
-			done <- settled{err: err}
+		reader, openError := os.Open(pipe)
+		if openError != nil {
+			done <- settled{err: openError}
 			return
 		}
 		defer reader.Close()
-		settlement, err := buildcache.Settle(directory, reader, before)
-		done <- settled{settlement, err}
+		settlement, settleError := buildcache.Settle(directory, reader, before)
+		done <- settled{settlement, settleError}
 	}()
-	strace := exec.Command("strace", append(append(append([]string{}, straceArguments...), "-o", pipe, "--"), command...)...)
+	strace := exec.Command(
+		"strace",
+		append(append(append([]string{}, straceArguments...), "-o", pipe, "--"), command...)...,
+	)
 	complaints := &straceComplaints{}
 	strace.Stdin, strace.Stdout, strace.Stderr = os.Stdin, os.Stdout, io.MultiWriter(os.Stderr, complaints)
 	status := 0
-	if err = strace.Run(); err != nil {
+	if runError := strace.Run(); runError != nil {
 		var exit *exec.ExitError
-		if !errors.As(err, &exit) {
+		if !errors.As(runError, &exit) {
 			// strace never opened the pipe: open it ourselves so the reader ends.
-			if writer, openErr := os.OpenFile(pipe, os.O_WRONLY, 0); openErr == nil {
+			if writer, openError := os.OpenFile(pipe, os.O_WRONLY, 0); openError == nil {
 				writer.Close()
 			}
 			<-done
-			return 0, err
+			return 0, runError
 		}
 		status = exit.ExitCode()
 	}
@@ -200,24 +226,32 @@ func run(command []string, report string) (int, error) {
 	if result.err != nil {
 		return 0, fmt.Errorf("settling %s: %v", directory, result.err)
 	}
-	// strace exits with the command's status, but exits 1 when ptrace(PTRACE_LISTEN) fails on a tracee already gone, which
-	// loses nothing: a tracee still running would never have been resumed, and the run couldn't have ended (home-7's dry
-	// run, Oct 11: 3 of 454 tests exited 1 though go test passed and their products settled). Then the run's status is
-	// the command's own exit, as the trace holds it. After any other complaint of strace's, the trace may be missing
-	// events, so strace's status stands and the run reads as failed.
+	// strace exits with the command's status, but exits 1 when ptrace(PTRACE_LISTEN) fails on a tracee already gone,
+	// which loses nothing: a tracee still running would never have been resumed, and the run couldn't have ended
+	// (home-7's dry run, Oct 11: 3 of 454 tests exited 1 though go test passed and their products settled). Then the
+	// run's status is the command's own exit, as the trace holds it. After any other complaint of strace's, the trace
+	// may be missing events, so strace's status stands and the run reads as failed.
 	if result.settlement.CommandExited && status != result.settlement.CommandStatus && complaints.onlyListen() {
-		fmt.Fprintf(os.Stderr, "traced: strace exited %d after %d failed PTRACE_LISTEN on tracees already gone; the command exited %d, the run's status\n",
-			status, len(complaints.lines), result.settlement.CommandStatus)
+		fmt.Fprintf(
+			os.Stderr,
+			"traced: strace exited %d after %d failed PTRACE_LISTEN on tracees already gone; the command exited %d, the run's status\n",
+			status,
+			len(complaints.lines),
+			result.settlement.CommandStatus,
+		)
 		status = result.settlement.CommandStatus
 	}
 	lost := tracerLost(result.settlement.CommandExited, status, complaints)
 	if lost != "" {
 		fmt.Fprintln(os.Stderr, "traced:", lost)
-		result.settlement.Reports = append([]buildcache.Report{{Outcome: buildcache.ReportLost, Reason: "traced: " + lost}}, result.settlement.Reports...)
+		result.settlement.Reports = append(
+			[]buildcache.Report{{Outcome: buildcache.ReportLost, Reason: "traced: " + lost}},
+			result.settlement.Reports...,
+		)
 	}
 	if report != "" {
-		if err = buildcache.WriteReport(report, result.settlement.Reports); err != nil {
-			return 0, fmt.Errorf("ADAMIC_TRACE_REPORT: %v", err)
+		if writeReportError := buildcache.WriteReport(report, result.settlement.Reports); writeReportError != nil {
+			return 0, fmt.Errorf("ADAMIC_TRACE_REPORT: %v", writeReportError)
 		}
 	}
 	lines := append(append([]string{}, result.settlement.Settled...), result.settlement.Refused...)
@@ -227,7 +261,12 @@ func run(command []string, report string) (int, error) {
 	text := strings.Join(lines, "\n") + "\n"
 	os.WriteFile(filepath.Join(directory, "settled.txt"), []byte(text), 0o644)
 	fmt.Print(text)
-	fmt.Printf("traced: %d settled, %d refused; journal and report in %s\n", len(result.settlement.Settled), len(result.settlement.Refused), directory)
+	fmt.Printf(
+		"traced: %d settled, %d refused; journal and report in %s\n",
+		len(result.settlement.Settled),
+		len(result.settlement.Refused),
+		directory,
+	)
 	if lost != "" {
 		return 2, nil
 	}
@@ -237,33 +276,33 @@ func run(command []string, report string) (int, error) {
 	return status, nil
 }
 
-// writeTreeState takes the tree's state and writes it to path whole: it lands under its own name only once written, so a
-// run starting from it never reads half of one.
+// writeTreeState takes the tree's state and writes it to path whole: it lands under its own name only once written, so
+// a run starting from it never reads half of one.
 func writeTreeState(path string) error {
-	state, err := buildcache.TreeState()
-	if err != nil {
-		return fmt.Errorf("the tree's state: %v", err)
+	state, treeStateError := buildcache.TreeState()
+	if treeStateError != nil {
+		return fmt.Errorf("the tree's state: %v", treeStateError)
 	}
 	partial := path + ".partial"
-	if err = os.WriteFile(partial, []byte(state), 0o644); err != nil {
-		return err
+	if writeError := os.WriteFile(partial, []byte(state), 0o644); writeError != nil {
+		return writeError
 	}
 	return os.Rename(partial, path)
 }
 
-// treeStateBefore is the tree's state before the run: the one ADAMIC_TRACE_TREE_STATE's file holds, taken by -tree-state
-// before the wave this run starts in, or one take takes now. A state taken earlier only widens what must hold still
-// until the run ends, so a change since it was taken still refuses every product. The variable is unset either way, so
-// nothing the command runs sees it, or keys the file it names.
+// treeStateBefore is the tree's state before the run: the one ADAMIC_TRACE_TREE_STATE's file holds, taken by
+// -tree-state before the wave this run starts in, or one take takes now. A state taken earlier only widens what must
+// hold still until the run ends, so a change since it was taken still refuses every product. The variable is unset
+// either way, so nothing the command runs sees it, or keys the file it names.
 func treeStateBefore(take func() (string, error)) (string, error) {
 	path := os.Getenv("ADAMIC_TRACE_TREE_STATE")
 	os.Unsetenv("ADAMIC_TRACE_TREE_STATE")
 	if path == "" {
 		return take()
 	}
-	state, err := os.ReadFile(path)
-	if err != nil {
-		return "", fmt.Errorf("ADAMIC_TRACE_TREE_STATE: %v", err)
+	state, readError := os.ReadFile(path)
+	if readError != nil {
+		return "", fmt.Errorf("ADAMIC_TRACE_TREE_STATE: %v", readError)
 	}
 	if len(state) == 0 {
 		return "", fmt.Errorf("ADAMIC_TRACE_TREE_STATE: %s holds no state", path)
@@ -272,16 +311,20 @@ func treeStateBefore(take func() (string, error)) (string, error) {
 }
 
 // tracerLost is why a run was lost to strace itself, or "": strace complained and failed before the trace held the
-// command's exit, so the trace is cut short and the command died with it or ran on untraced (Workshop, Oct 14, #j4hwdks:
-// strace 6.8's PTRACE_LISTEN failing on WSL2 mid-fill, the fill reading 0 settled, 0 refused, its product never recorded
-// and a read-mode unit failing on it). It's the tracer's failure, never the command's: the report's first line says the
-// run was lost and traced exits 2, as for a run it couldn't trace, so the caller traces it again. What settled before
-// strace failed stands, each product's build traced whole.
+// command's exit, so the trace is cut short and the command died with it or ran on untraced (Workshop, Oct 14,
+// #j4hwdks: strace 6.8's PTRACE_LISTEN failing on WSL2 mid-fill, the fill reading 0 settled, 0 refused, its product
+// never recorded and a read-mode unit failing on it). It's the tracer's failure, never the command's: the report's
+// first line says the run was lost and traced exits 2, as for a run it couldn't trace, so the caller traces it again.
+// What settled before strace failed stands, each product's build traced whole.
 func tracerLost(commandExited bool, status int, complaints *straceComplaints) string {
 	if commandExited || status == 0 || len(complaints.lines) == 0 {
 		return ""
 	}
-	return fmt.Sprintf("strace exited %d before the command did, after %s, so the trace is cut short", status, strings.Join(complaints.lines, "; "))
+	return fmt.Sprintf(
+		"strace exited %d before the command did, after %s, so the trace is cut short",
+		status,
+		strings.Join(complaints.lines, "; "),
+	)
 }
 
 // straceComplaints keeps strace's own lines from the stderr it shares with the command: each one it prints as

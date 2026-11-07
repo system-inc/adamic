@@ -27,12 +27,12 @@ type PrettierPin struct {
 
 func readPrettierPin(root string) (PrettierPin, error) {
 	var pin PrettierPin
-	encoded, err := os.ReadFile(filepath.Join(root, "stage1/cohere/json/testdata/prettier.pin"))
-	if err != nil {
-		return pin, err
+	encoded, readError := os.ReadFile(filepath.Join(root, "stage1/cohere/json/testdata/prettier.pin"))
+	if readError != nil {
+		return pin, readError
 	}
-	if err := json.Unmarshal(encoded, &pin); err != nil {
-		return pin, fmt.Errorf("testdata/prettier.pin: %w", err)
+	if decodeError := json.Unmarshal(encoded, &pin); decodeError != nil {
+		return pin, fmt.Errorf("testdata/prettier.pin: %w", decodeError)
 	}
 	if pin.Version == "" || len(pin.PackageLockSHA256) != 64 {
 		return pin, fmt.Errorf(
@@ -61,9 +61,9 @@ func UpstreamParityInputFiles() []string { return append([]string(nil), upstream
 
 // UpstreamParityInputs is shared with the parent json tests.
 func UpstreamParityInputs(root, cohereCommit, corpusCommit string, oracle, audit []byte) (buildcache.Inputs, error) {
-	pin, err := readPrettierPin(root)
-	if err != nil {
-		return buildcache.Inputs{}, err
+	pin, readPrettierPinError := readPrettierPin(root)
+	if readPrettierPinError != nil {
+		return buildcache.Inputs{}, readPrettierPinError
 	}
 	return buildcache.Inputs{
 		Name:  "json upstream parity verdict oracle-owner-v1",
@@ -85,9 +85,9 @@ type jsonUpstreamReport struct {
 }
 
 func readJSONUpstreamReport(path string) (jsonUpstreamReport, error) {
-	encoded, err := os.ReadFile(path)
-	if err != nil {
-		return jsonUpstreamReport{}, err
+	encoded, readError := os.ReadFile(path)
+	if readError != nil {
+		return jsonUpstreamReport{}, readError
 	}
 	lines := strings.Split(strings.TrimSuffix(string(encoded), "\n"), "\n")
 	if len(lines) != 6 {
@@ -105,8 +105,8 @@ func readJSONUpstreamReport(path string) (jsonUpstreamReport, error) {
 
 // ReadUpstreamReport is shared with the parent json tests.
 func ReadUpstreamReport(path string) (string, map[string]string, error) {
-	r, err := readJSONUpstreamReport(path)
-	return r.text, r.blocks, err
+	r, readJsonUpstreamReportError := readJSONUpstreamReport(path)
+	return r.text, r.blocks, readJsonUpstreamReportError
 }
 
 func upstreamBlock(id string, left, right ComparisonAnswer) string {
@@ -241,24 +241,24 @@ func buildJSONUpstreamParity(cases []ComparisonCase, oracle, audit, library stri
 			return err
 		}
 		input, _ := Protocol(cases, make([]ComparisonAnswer, len(cases)))
-		if err := os.WriteFile(casesPath, encoded, 0o644); err != nil {
-			return err
+		if writeError := os.WriteFile(casesPath, encoded, 0o644); writeError != nil {
+			return writeError
 		}
-		if err := os.WriteFile(protocolPath, []byte(input), 0o644); err != nil {
-			return err
+		if writeError := os.WriteFile(protocolPath, []byte(input), 0o644); writeError != nil {
+			return writeError
 		}
 		cohere, err := filepath.Abs("../../../cohere")
 		if err != nil {
 			return err
 		}
 		readAnswers := func(name, path string) ([]ComparisonAnswer, error) {
-			encoded, err := os.ReadFile(path)
-			if err != nil {
-				return nil, fmt.Errorf("%s: %w", name, err)
+			encoded, readError := os.ReadFile(path)
+			if readError != nil {
+				return nil, fmt.Errorf("%s: %w", name, readError)
 			}
 			var answers []ComparisonAnswer
-			if err := json.Unmarshal(encoded, &answers); err != nil {
-				return nil, fmt.Errorf("%s: %w", name, err)
+			if decodeError := json.Unmarshal(encoded, &answers); decodeError != nil {
+				return nil, fmt.Errorf("%s: %w", name, decodeError)
 			}
 			return answers, nil
 		}
@@ -285,8 +285,11 @@ func buildJSONUpstreamParity(cases []ComparisonCase, oracle, audit, library stri
 			command := toolchain.CommandIn("", audit, "-test.v", "-test.run=^TestAdamicJSONAudit$")
 			command.Dir = filepath.Join(cohere, "internal/format/javascript")
 			command.Env = append(os.Environ(), "ADAMIC_JSON_CASES="+casesPath, "ADAMIC_JSON_ANSWERS="+answersPath)
-			if output, err := childguard.CombinedOutput(command, jsonGuard); err != nil {
-				errs[1] = fmt.Errorf("cohere audit: %v\n%s", err, output)
+			if output, combinedOutputError := childguard.CombinedOutput(
+				command,
+				jsonGuard,
+			); combinedOutputError != nil {
+				errs[1] = fmt.Errorf("cohere audit: %v\n%s", combinedOutputError, output)
 				return
 			}
 			auditAnswers, errs[1] = readAnswers("cohere audit", answersPath)
@@ -303,8 +306,11 @@ func buildJSONUpstreamParity(cases []ComparisonCase, oracle, audit, library stri
 				casesPath,
 				answersPath,
 			)
-			if output, err := childguard.CombinedOutput(command, jsonGuard); err != nil {
-				errs[2] = fmt.Errorf("Prettier: %v\n%s", err, output)
+			if output, combinedOutputError := childguard.CombinedOutput(
+				command,
+				jsonGuard,
+			); combinedOutputError != nil {
+				errs[2] = fmt.Errorf("Prettier: %v\n%s", combinedOutputError, output)
 				return
 			}
 			prettierAnswers, errs[2] = readAnswers("Prettier", answersPath)
@@ -320,12 +326,16 @@ func buildJSONUpstreamParity(cases []ComparisonCase, oracle, audit, library stri
 			{"json's Go oracle", "go-oracle.txt", goAnswers},
 			{"cohere's audit binary", "cohere-audit.txt", auditAnswers},
 		} {
-			report, err := upstreamVerdict(side.name, cases, side.answers, prettierAnswers, known)
-			if err != nil {
-				return err
+			report, upstreamVerdictError := upstreamVerdict(side.name, cases, side.answers, prettierAnswers, known)
+			if upstreamVerdictError != nil {
+				return upstreamVerdictError
 			}
-			if err := os.WriteFile(filepath.Join(directory, side.file), []byte(report), 0o644); err != nil {
-				return err
+			if writeError := os.WriteFile(
+				filepath.Join(directory, side.file),
+				[]byte(report),
+				0o644,
+			); writeError != nil {
+				return writeError
 			}
 		}
 		summary := fmt.Sprintf(
@@ -351,29 +361,30 @@ func UpstreamParity(test *testing.T) string {
 		test.Skip("set ADAMIC_JSON_PRETTIER for the separate upstream report")
 	}
 	jsonUpstreamParity.once.Do(func() {
-		if err := gatesample.Validate(); err != nil {
-			test.Fatal(err)
+		if validateError := gatesample.Validate(); validateError != nil {
+			test.Fatal(validateError)
 		}
-		root, err := filepath.Abs(repository)
-		if err != nil {
-			test.Fatal(err)
+		root, absolutePathError := filepath.Abs(repository)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		oracle, audit := FormatterOracle(test), AuditOracle(test)
 		binaries := make([][]byte, 2)
 		for i, path := range []string{oracle, audit} {
-			if binaries[i], err = os.ReadFile(path); err != nil {
-				test.Fatal(err)
+			var readError error
+			if binaries[i], readError = os.ReadFile(path); readError != nil {
+				test.Fatal(readError)
 			}
 		}
-		inputs, err := UpstreamParityInputs(
+		inputs, upstreamParityInputsError := UpstreamParityInputs(
 			root,
 			corpusfiles.CohereCommit,
 			RepositoryCorpusCommit,
 			binaries[0],
 			binaries[1],
 		)
-		if err != nil {
-			test.Fatal(err)
+		if upstreamParityInputsError != nil {
+			test.Fatal(upstreamParityInputsError)
 		}
 		// The whole corpus, not a gate sample, read before the build: listing the tracked JSON reads .git, which a
 		// traced build refuses.

@@ -10,12 +10,12 @@ func TestUnicodeDecimalEscape(test *testing.T) {
 	// Node rejects the missing second capture in Unicode mode; legacy mode
 	// accepts the same escape as an octal character escape.
 	const pattern = `(a)\2`
-	_, err := Parse(pattern, "u")
+	_, parseError := Parse(pattern, "u")
 	var syntax *SyntaxError
-	if !errors.As(err, &syntax) || syntax.Message != "invalid decimal escape" {
-		test.Errorf("Parse(%q, %q) error=%v, want SyntaxError for invalid decimal escape", pattern, "u", err)
+	if !errors.As(parseError, &syntax) || syntax.Message != "invalid decimal escape" {
+		test.Errorf("Parse(%q, %q) error=%v, want SyntaxError for invalid decimal escape", pattern, "u", parseError)
 	}
-	if _, err := Parse(pattern, ""); err != nil {
-		test.Errorf("Parse(%q, %q) error=%v, want legacy escape accepted", pattern, "", err)
+	if _, parseError := Parse(pattern, ""); parseError != nil {
+		test.Errorf("Parse(%q, %q) error=%v, want legacy escape accepted", pattern, "", parseError)
 	}
 }

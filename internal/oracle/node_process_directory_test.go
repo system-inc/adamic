@@ -35,19 +35,19 @@ func TestNodeProcessDirectoryRuntime_004(test *testing.T) {
 
 func nodeProcessDirectoryRuntime(test *testing.T, shard int) {
 	// Canonical, so cwd() reads back what chdir was given: macOS's /tmp is a link to /private/tmp.
-	scratch, err := filepath.EvalSymlinks(test.TempDir())
-	if err != nil {
-		test.Fatal(err)
+	scratch, resolveSymlinksError := filepath.EvalSymlinks(test.TempDir())
+	if resolveSymlinksError != nil {
+		test.Fatal(resolveSymlinksError)
 	}
 	child, missing := filepath.Join(scratch, "child"), filepath.Join(scratch, "absent")
-	if err := os.Mkdir(child, 0700); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.Mkdir(child, 0700); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	source, err := filepath.Abs(
+	source, absolutePathError := filepath.Abs(
 		filepath.Join(repository, "internal/oracle/testdata/node_process_runtime/node_process_directory_mutation.a"),
 	)
-	if err != nil {
-		test.Fatal(err)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := execute(
 		test,
@@ -103,9 +103,9 @@ func nodeProcessDirectoryRuntime(test *testing.T, shard int) {
 		nodeProcessRuntimeAgreement(test, program, truth, shard)
 		return
 	}
-	data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/node_process.c"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(repository, "internal/native/runtime/node_process.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	for name, anchor := range map[string]string{
 		"cache invalidation": "adamic_release(current_directory); current_directory = NULL;",
@@ -126,8 +126,12 @@ func nodeProcessDirectoryRuntime(test *testing.T, shard int) {
 			runtime = nodeProcessMutantNames(runtime, "mutant_node_")
 			code := nodeProcessMutantNames(native.C(program), "mutant_node_")
 			mutant := filepath.Join(test.TempDir(), "mutant")
-			if err := native.Build(runtime+"\n"+code, mutant, native.Options{Sanitize: true}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(
+				runtime+"\n"+code,
+				mutant,
+				native.Options{Sanitize: true},
+			); buildError != nil {
+				test.Fatal(buildError)
 			}
 			bad := execute(test, mutant)
 			if bad.exitCode != 0 || len(bad.stderr) != 0 || disagreement(truth, bad) != "stdout differs" {
@@ -156,22 +160,22 @@ func TestNodeProcessDirectorySymlinksRuntime_003(test *testing.T) {
 }
 
 func nodeProcessDirectorySymlinksRuntime(test *testing.T, shard int) {
-	scratch, err := filepath.EvalSymlinks(test.TempDir())
-	if err != nil {
-		test.Fatal(err)
+	scratch, resolveSymlinksError := filepath.EvalSymlinks(test.TempDir())
+	if resolveSymlinksError != nil {
+		test.Fatal(resolveSymlinksError)
 	}
 	child, link := filepath.Join(scratch, "child"), filepath.Join(scratch, "link")
-	if err := os.Mkdir(child, 0700); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.Mkdir(child, 0700); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	if err := os.Symlink("child", link); err != nil {
-		test.Fatal(err)
+	if symlinkError := os.Symlink("child", link); symlinkError != nil {
+		test.Fatal(symlinkError)
 	}
 	source := filepath.Join(test.TempDir(), "main.a")
-	if err := os.WriteFile(source, []byte(
+	if writeError := os.WriteFile(source, []byte(
 		"process.chdir(process.argv[2]); console.log(process.cwd()); process.chdir('..'); console.log(process.cwd());",
-	), 0600); err != nil {
-		test.Fatal(err)
+	), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	truth := onNodeWith(test, inputRun{arguments: []string{link}}, source)
 	program := &ir.Program{Source: "process-directory-symlinks.a", Strings: []string{link, ".."}}
@@ -190,9 +194,9 @@ func nodeProcessDirectorySymlinksRuntime(test *testing.T, shard int) {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
 	{
-		data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/node_process.c"))
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(filepath.Join(repository, "internal/native/runtime/node_process.c"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		anchor := "char *resolved = realpath(path, NULL);"
 		if strings.Count(string(data), anchor) != 1 {
@@ -247,8 +251,8 @@ func nodeProcessRuntimeAgreement(test *testing.T, program *ir.Program, truth run
 func nodeProcessJavaScript(test *testing.T, program *ir.Program) run {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "program.mjs")
-	if err := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return onNodeWith(test, inputRun{}, path)
 }

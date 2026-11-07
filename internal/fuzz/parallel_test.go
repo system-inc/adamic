@@ -16,9 +16,9 @@ import (
 func prepareParallelRunner(test *testing.T) (string, *Checkout) {
 	test.Helper()
 	directory := test.TempDir()
-	checkout, err := PrepareBuilt("../..", buildcache.Adamic(test), filepath.Join(directory, "checkout"))
-	if err != nil {
-		test.Fatal(err)
+	checkout, prepareBuiltError := PrepareBuilt("../..", buildcache.Adamic(test), filepath.Join(directory, "checkout"))
+	if prepareBuiltError != nil {
+		test.Fatal(prepareBuiltError)
 	}
 	test.Logf("thread sanitizer: %s", checkout.TSan)
 
@@ -150,22 +150,22 @@ int main(void) {
 		}
 		test.Run(name, func(test *testing.T) {
 			directory := test.TempDir()
-			if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(code), 0600); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(filepath.Join(directory, "main.c"), []byte(code), 0600); writeError != nil {
+				test.Fatal(writeError)
 			}
 			binary := filepath.Join(directory, "sanitized")
-			if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(code, binary, native.Options{Sanitize: true}); buildError != nil {
+				test.Fatal(buildError)
 			}
 			counted := filepath.Join(directory, "counted-proof")
-			if err := native.Build(code, counted, native.Options{Count: true}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(code, counted, native.Options{Count: true}); buildError != nil {
+				test.Fatal(buildError)
 			}
 			checkout := &Checkout{}
 			for _, threads := range []string{"", "1"} {
-				report, err := checkout.leaks(binary, directory, threads)
-				if err != nil {
-					test.Fatal(err)
+				report, leaksError := checkout.leaks(binary, directory, threads)
+				if leaksError != nil {
+					test.Fatal(leaksError)
 				}
 				result := executeIsolated(directory, nativeEnvironment(threads), 20*time.Second, counted)
 				countedReport := leakcheck.Unbalanced(

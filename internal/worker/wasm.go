@@ -32,24 +32,24 @@ var crossingGenerator embed.FS
 // generateCrossing is the build-time seam to the ABI crossing generator.
 func generateCrossing(abiPath, outputPath string) error {
 	directory := filepath.Join(filepath.Dir(outputPath), "generator")
-	if err := os.Mkdir(directory, 0755); err != nil {
-		return err
+	if createDirectoryError := os.Mkdir(directory, 0755); createDirectoryError != nil {
+		return createDirectoryError
 	}
 	for _, name := range []string{"generate-crossing.mjs", "wtf8.mjs", "crossing-runtime.mjs", "wasi.mjs"} {
-		source, err := crossingGenerator.ReadFile("wasm/" + name)
-		if err != nil {
-			return err
+		source, readFileError := crossingGenerator.ReadFile("wasm/" + name)
+		if readFileError != nil {
+			return readFileError
 		}
-		if err := os.WriteFile(filepath.Join(directory, name), source, 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(filepath.Join(directory, name), source, 0644); writeError != nil {
+			return writeError
 		}
 	}
 	command := exec.Command("node", filepath.Join(directory, "generate-crossing.mjs"), abiPath, outputPath)
-	if output, err := command.CombinedOutput(); err != nil {
-		return fmt.Errorf("worker: crossing generation: %w\n%s", err, output)
+	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+		return fmt.Errorf("worker: crossing generation: %w\n%s", combinedOutputError, output)
 	}
-	if _, err := os.Stat(outputPath); err != nil {
-		return fmt.Errorf("worker: generate-crossing.mjs did not produce %s: %w", outputPath, err)
+	if _, statError := os.Stat(outputPath); statError != nil {
+		return fmt.Errorf("worker: generate-crossing.mjs did not produce %s: %w", outputPath, statError)
 	}
 	return nil
 }
@@ -65,60 +65,77 @@ func selectedFunctions(checked *load.Program, lowered *ir.Program, names []strin
 	selected := map[int]string{}
 	for _, name := range names {
 		if !declarations[name] {
-			return nil, fmt.Errorf("worker: refused Wasm name %q: not a top-level function in the entry; fix: name an entry function declaration", name)
+			return nil, fmt.Errorf(
+				"worker: refused Wasm name %q: not a top-level function in the entry; fix: name an entry function declaration",
+				name,
+			)
 		}
 		index := -1
 		for candidate, function := range lowered.Functions {
 			if function.Name == name && !function.Closure {
 				if index >= 0 {
-					return nil, fmt.Errorf("worker: ambiguous Wasm name %q; fix: give entry and dependency functions distinct names", name)
+					return nil, fmt.Errorf(
+						"worker: ambiguous Wasm name %q; fix: give entry and dependency functions distinct names",
+						name,
+					)
 				}
 				index = candidate
 			}
 		}
 		if index < 0 {
-			return nil, fmt.Errorf("worker: Wasm function %q was not lowered; fix: use a concrete function declaration", name)
+			return nil, fmt.Errorf(
+				"worker: Wasm function %q was not lowered; fix: use a concrete function declaration",
+				name,
+			)
 		}
-		if err := CheckPure(lowered, index); err != nil {
-			return nil, err
+		if checkPureError := CheckPure(lowered, index); checkPureError != nil {
+			return nil, checkPureError
 		}
 		selected[index] = name
 	}
 	return selected, nil
 }
 
-func wasmFiles(entry string, checked *load.Program, lowered *ir.Program, options Options) (map[int]string, string, []workerFile, error) {
-	selected, err := selectedFunctions(checked, lowered, options.Wasm)
-	if err != nil {
-		return nil, "", nil, err
+func wasmFiles(
+	entry string,
+	checked *load.Program,
+	lowered *ir.Program,
+	options Options,
+) (map[int]string, string, []workerFile, error) {
+	selected, selectedFunctionsError := selectedFunctions(checked, lowered, options.Wasm)
+	if selectedFunctionsError != nil {
+		return nil, "", nil, selectedFunctionsError
 	}
 	if options.BuildWasm == nil {
 		return nil, "", nil, fmt.Errorf("worker: Wasm build pipeline is not configured")
 	}
-	scratch, err := os.MkdirTemp("", "adamic-worker-wasm-")
-	if err != nil {
-		return nil, "", nil, err
+	scratch, temporaryDirectoryError := os.MkdirTemp("", "adamic-worker-wasm-")
+	if temporaryDirectoryError != nil {
+		return nil, "", nil, temporaryDirectoryError
 	}
 	defer os.RemoveAll(scratch)
 	modulePath, abiPath := filepath.Join(scratch, "handler.wasm"), filepath.Join(scratch, "abi.json")
-	if err := options.BuildWasm(entry, modulePath, abiPath, options.Wasm); err != nil {
-		return nil, "", nil, err
+	if buildWasmError := options.BuildWasm(entry, modulePath, abiPath, options.Wasm); buildWasmError != nil {
+		return nil, "", nil, buildWasmError
 	}
-	module, err := os.ReadFile(modulePath)
-	if err != nil {
-		return nil, "", nil, err
+	module, readError := os.ReadFile(modulePath)
+	if readError != nil {
+		return nil, "", nil, readError
 	}
-	abi, err := os.ReadFile(abiPath)
-	if err != nil {
-		return nil, "", nil, err
+	abi, readError := os.ReadFile(abiPath)
+	if readError != nil {
+		return nil, "", nil, readError
 	}
 	var table native.ABITable
-	if err := json.Unmarshal(abi, &table); err != nil || table.Version != 1 || len(table.Exports) != len(selected) {
-		return nil, "", nil, fmt.Errorf("worker: build emitted an invalid ABI table: %v", err)
+	if decodeError := json.Unmarshal(
+		abi,
+		&table,
+	); decodeError != nil || table.Version != 1 || len(table.Exports) != len(selected) {
+		return nil, "", nil, fmt.Errorf("worker: build emitted an invalid ABI table: %v", decodeError)
 	}
 	crossingPath := filepath.Join(scratch, "crossing.mjs")
-	if err := generateCrossing(abiPath, crossingPath); err != nil {
-		return nil, "", nil, err
+	if generateCrossingError := generateCrossing(abiPath, crossingPath); generateCrossingError != nil {
+		return nil, "", nil, generateCrossingError
 	}
 	indices := make([]int, 0, len(selected))
 	for index := range selected {
@@ -149,13 +166,22 @@ initializeCrossing();
 		name := "wasmFunction_" + strconv.Itoa(index)
 		external[index] = name
 		imports = append(imports, name)
-		fmt.Fprintf(&state, "export function %s(...arguments_) {\n\tpanicMessage = '';\n\ttry { return crossing[%q](...arguments_); }\n\tcatch (error) { if (error instanceof WASIExit && error.code === 70) throw new AdamicPanic(panicMessage || 'Wasm panic'); throw error; }\n}\n", name, selected[index])
+		fmt.Fprintf(
+			&state,
+			"export function %s(...arguments_) {\n\tpanicMessage = '';\n\ttry { return crossing[%q](...arguments_); }\n\tcatch (error) { if (error instanceof WASIExit && error.code === 70) throw new AdamicPanic(panicMessage || 'Wasm panic'); throw error; }\n}\n",
+			name,
+			selected[index],
+		)
 	}
-	files := []workerFile{{"handler.wasm", string(module)}, {"abi.json", string(abi)}, {"wasm-state.mjs", state.String()}}
+	files := []workerFile{
+		{"handler.wasm", string(module)},
+		{"abi.json", string(abi)},
+		{"wasm-state.mjs", state.String()},
+	}
 	for _, name := range []string{"crossing.mjs", "wtf8.mjs", "crossing-runtime.mjs", "wasi.mjs"} {
-		contents, err := os.ReadFile(filepath.Join(scratch, name))
-		if err != nil {
-			return nil, "", nil, err
+		contents, readError := os.ReadFile(filepath.Join(scratch, name))
+		if readError != nil {
+			return nil, "", nil, readError
 		}
 		files = append(files, workerFile{name, string(contents)})
 	}
@@ -164,6 +190,11 @@ initializeCrossing();
 
 func wasmBridge(handlerImport string) string {
 	bridge := Bridge(handlerImport)
-	bridge = strings.Replace(bridge, "export default {", "import { initializeCrossing } from './wasm-state.mjs';\ninitializeCrossing();\n\nexport default {", 1)
+	bridge = strings.Replace(
+		bridge,
+		"export default {",
+		"import { initializeCrossing } from './wasm-state.mjs';\ninitializeCrossing();\n\nexport default {",
+		1,
+	)
 	return bridge
 }

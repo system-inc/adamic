@@ -13,13 +13,13 @@ import (
 
 func TestDevirtualizedCalls(test *testing.T) {
 	test.Parallel()
-	source, err := load.Load([]string{"../oracle/testdata/devirtualize.a"})
-	if err != nil {
-		test.Fatal(err)
+	source, loadError := load.Load([]string{"../oracle/testdata/devirtualize.a"})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := lower.Lower(context.Background(), source)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerError := lower.Lower(context.Background(), source)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	e := &emitter{program: program}
 	single, multiple, exact := 0, 0, 0

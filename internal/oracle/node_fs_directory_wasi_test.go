@@ -31,13 +31,13 @@ func TestNodeFSDirectoryWASIAgreement(test *testing.T) {
 	} {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", name+".a"))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", name+".a"))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			shared := sharedDirectory(test)
 			prepare := func(label string) inputRun {
@@ -55,12 +55,16 @@ func TestNodeFSDirectoryWASIAgreement(test *testing.T) {
 				test.Fatalf("Node failed: %+v", truth)
 			}
 			binary := filepath.Join(shared, "program.wasm")
-			if err := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(
+				native.C(program),
+				binary,
+				native.Options{Target: "wasm32-wasi"},
+			); buildError != nil {
+				test.Fatal(buildError)
 			}
-			runner, err := filepath.Abs(filepath.Join(repository, "oracle/wasi.mjs"))
-			if err != nil {
-				test.Fatal(err)
+			runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/wasi.mjs"))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			how := prepare("wasi")
 			args := append([]string{"--disable-warning=ExperimentalWarning", runner, binary}, how.arguments...)
@@ -86,30 +90,30 @@ func TestNodeFSDirectoryWASICWDMutant(test *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_path_posix.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_path_posix.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	shared := sharedDirectory(test)
 	binary := filepath.Join(shared, "program.wasm")
-	if err := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); buildError != nil {
+		test.Fatal(buildError)
 	}
-	runner, err := os.ReadFile(filepath.Join(repository, "oracle/wasi.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, readError := os.ReadFile(filepath.Join(repository, "oracle/wasi.mjs"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	mutated := strings.Replace(string(runner), "ADAMIC_WASI_CWD: process.cwd()", "ADAMIC_WASI_CWD: '/'", 1)
 	if mutated == string(runner) {
 		test.Fatal("cwd mutant changed nothing")
 	}
 	mutant := filepath.Join(shared, "runner.mjs")
-	if err := os.WriteFile(mutant, []byte(mutated), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(mutant, []byte(mutated), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	how := inputRun{directory: filepath.Dir(path)}
 	truth := onNodeWith(test, how, path)

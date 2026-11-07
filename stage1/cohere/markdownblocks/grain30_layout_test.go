@@ -48,8 +48,11 @@ func runGrainLayout(test *testing.T, slice string, shard int) {
 		encode := strings.NewReplacer(`\`, `\\`, "\n", `\n`, "\r", `\r`, "\t", `\t`)
 		for index, input := range inputs {
 			for side, output := range fixture.outputs {
-				if err := grainDifference(output[index], expected[index]); err != nil {
-					test.Fatalf("%s %s: %v", side, input.Name, err)
+				if grainDifferenceError := grainDifference(
+					output[index],
+					expected[index],
+				); grainDifferenceError != nil {
+					test.Fatalf("%s %s: %v", side, input.Name, grainDifferenceError)
 				}
 			}
 			answer := fixture.answers[index]
@@ -82,8 +85,11 @@ func runGrainLayout(test *testing.T, slice string, shard int) {
 				for round := 0; round < 3; round++ {
 					result := grainExecute(test, nil, side.command, side.args...)
 					clean(test, side.name, result)
-					if err := grainDifference(result.stdout, fixture.want); err != nil {
-						test.Fatalf("%s throughput: %v", side.name, err)
+					if grainDifferenceError := grainDifference(
+						result.stdout,
+						fixture.want,
+					); grainDifferenceError != nil {
+						test.Fatalf("%s throughput: %v", side.name, grainDifferenceError)
 					}
 				}
 				test.Logf(
@@ -118,8 +124,8 @@ func grainLayoutMutantFixtures(test *testing.T, products leafCompositionProducts
 		dir := test.TempDir()
 		var batch bytes.Buffer
 		for _, input := range all {
-			if err := json.NewEncoder(&batch).Encode(input); err != nil {
-				test.Fatal(err)
+			if encodeError := json.NewEncoder(&batch).Encode(input); encodeError != nil {
+				test.Fatal(encodeError)
 			}
 		}
 		cases := filepath.Join(dir, "cases.jsonl")
@@ -130,9 +136,9 @@ func grainLayoutMutantFixtures(test *testing.T, products leafCompositionProducts
 		poisonLeafCompositionCases(test, nativeCases)
 		// Go writes the port's cases into the first caller's temporary directory, gone when that test ends, so their
 		// bytes are kept.
-		encoded, err := os.ReadFile(nativeCases)
-		if err != nil {
-			test.Fatal(err)
+		encoded, readError := os.ReadFile(nativeCases)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		grainLayoutMutantAnswers.stdout = want.stdout
 		grainLayoutMutantAnswers.nativeCases = encoded
@@ -238,16 +244,19 @@ func grainLayoutMutation(test *testing.T, fixture *layoutFixture, slice string, 
 			nativeCases, inputs := fixture.mutantNativeCases, fixture.mutantInputs
 			want := run{stdout: fixture.mutantWant}
 			scratch := test.TempDir()
-			if err := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); err != nil {
-				test.Fatal(err)
+			if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
-			if err := os.Mkdir(filepath.Join(scratch, "markdowninline"), 0755); err != nil {
-				test.Fatal(err)
+			if createDirectoryError := os.Mkdir(
+				filepath.Join(scratch, "markdowninline"),
+				0755,
+			); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
 			for _, name := range []string{"inline.ts", "classes.ts"} {
-				content, err := os.ReadFile(filepath.Join("../markdowninline", name))
-				if err != nil {
-					test.Fatal(err)
+				content, readError := os.ReadFile(filepath.Join("../markdowninline", name))
+				if readError != nil {
+					test.Fatal(readError)
 				}
 				write(test, filepath.Join(scratch, "markdowninline", name), content)
 			}
@@ -275,9 +284,9 @@ func grainLayoutMutation(test *testing.T, fixture *layoutFixture, slice string, 
 				"whitespace.ts",
 				"whitespaceCodec.ts",
 			} {
-				content, err := os.ReadFile(name)
-				if err != nil {
-					test.Fatal(err)
+				content, readError := os.ReadFile(name)
+				if readError != nil {
+					test.Fatal(readError)
 				}
 				if name == "leaves.ts" {
 					content = []byte(strings.Replace(
@@ -295,9 +304,9 @@ func grainLayoutMutation(test *testing.T, fixture *layoutFixture, slice string, 
 				}
 				write(test, filepath.Join(scratch, name), content)
 			}
-			content, err := os.ReadFile(main)
-			if err != nil {
-				test.Fatal(err)
+			content, readError := os.ReadFile(main)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			content = []byte(
 				strings.Replace(string(content), "../../markdowninline/inline.ts", "../markdowninline/inline.ts", 1),

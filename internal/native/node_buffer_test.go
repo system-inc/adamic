@@ -97,25 +97,25 @@ func TestNodeBufferRuntimeWithoutDeclarations(test *testing.T) {
 	}
 	directory := test.TempDir()
 	oracle := filepath.Join(directory, "oracle.mjs")
-	if err := os.WriteFile(oracle, []byte(source.String()), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(oracle, []byte(source.String()), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	runner, err := filepath.Abs("../../oracle/node.mjs")
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs("../../oracle/node.mjs")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	want := runWithInput(test, "", "node", runner, oracle)
 	generated := filepath.Join(directory, "generated.mjs")
-	if err := os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	if got := runWithInput(test, "", "node", runner, generated); got != want {
 		test.Fatalf("JavaScript stdout differs from Node: got %q, want %q", got, want)
 	}
 	for _, sanitize := range []bool{false, true} {
 		binary := filepath.Join(directory, "native")
-		if err := Build(C(program), binary, Options{Sanitize: sanitize}); err != nil {
-			test.Fatal(err)
+		if buildError := Build(C(program), binary, Options{Sanitize: sanitize}); buildError != nil {
+			test.Fatal(buildError)
 		}
 		if got := runWithInput(test, "", binary); got != want {
 			test.Fatalf("native stdout differs from Node (sanitize %v): got %q, want %q", sanitize, got, want)

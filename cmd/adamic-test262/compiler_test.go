@@ -15,9 +15,9 @@ import (
 
 func TestCompilerWorkerMatchesSubprocess(test *testing.T) {
 	test.Parallel()
-	e, err := prepare(test, "testdata/mini", test.TempDir())
-	if err != nil {
-		test.Fatal(err)
+	e, prepareError := prepare(test, "testdata/mini", test.TempDir())
+	if prepareError != nil {
+		test.Fatal(prepareError)
 	}
 	worker := &compilerWorker{}
 	defer worker.close()
@@ -28,19 +28,19 @@ func TestCompilerWorkerMatchesSubprocess(test *testing.T) {
 		"throw new Error('fixture');",
 	} {
 		source := filepath.Join(test.TempDir(), "program.a")
-		if err := os.WriteFile(source, []byte(program(body)), 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(source, []byte(program(body)), 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 		// The reference is our own compiler. Drain both streams completely while
 		// retaining the deadline and bounded diagnostic capture.
 		ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 		command := exec.CommandContext(ctx, e.adamic, "c", source)
 		stdout, stderr := limitedBuffer{limit: 16 << 20}, limitedBuffer{limit: 16 << 20}
-		err := childguard.CaptureTo(ctx, command, &stdout, &stderr)
+		captureToError := childguard.CaptureTo(ctx, command, &stdout, &stderr)
 		cancel()
 		var exitError *exec.ExitError
-		if err != nil && !errors.As(err, &exitError) {
-			test.Fatalf("reference compiler failed: %v", err)
+		if captureToError != nil && !errors.As(captureToError, &exitError) {
+			test.Fatalf("reference compiler failed: %v", captureToError)
 		}
 		if ctx.Err() == context.DeadlineExceeded || stdout.exceeded || stderr.exceeded {
 			test.Fatal("reference compiler exceeded its deadline or output limit")
@@ -71,22 +71,22 @@ func TestCompilerHangHelper(test *testing.T) {
 
 func TestCompilerWorkerTimeout(test *testing.T) {
 	test.Parallel()
-	executable, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	executable, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
 	command := exec.Command(executable, "-test.run=^TestCompilerHangHelper$")
 	command.Env = append(os.Environ(), "ADAMIC_TEST262_HANG_HELPER=1")
-	input, err := command.StdinPipe()
-	if err != nil {
-		test.Fatal(err)
+	input, stdinPipeError := command.StdinPipe()
+	if stdinPipeError != nil {
+		test.Fatal(stdinPipeError)
 	}
-	output, err := command.StdoutPipe()
-	if err != nil {
-		test.Fatal(err)
+	output, stdoutPipeError := command.StdoutPipe()
+	if stdoutPipeError != nil {
+		test.Fatal(stdoutPipeError)
 	}
-	if err := command.Start(); err != nil {
-		test.Fatal(err)
+	if startError := command.Start(); startError != nil {
+		test.Fatal(startError)
 	}
 	worker := &compilerWorker{
 		command: command,

@@ -48,12 +48,14 @@ func workerCommand(arguments []string) int {
 			arguments = append(arguments, "--export", name)
 		}
 		if code := buildWithExports(entry, module, arguments, true); code != 0 {
-			return fmt.Errorf("worker: Wasm build refused; fix: use ABI version 1 signatures and a configured WASI toolchain")
+			return fmt.Errorf(
+				"worker: Wasm build refused; fix: use ABI version 1 signatures and a configured WASI toolchain",
+			)
 		}
 		return nil
 	}}
-	if err := worker.BuildWith(entry, output, options); err != nil {
-		fmt.Fprintln(os.Stderr, relative("adamic: "+err.Error()))
+	if buildWithError := worker.BuildWith(entry, output, options); buildWithError != nil {
+		fmt.Fprintln(os.Stderr, relative("adamic: "+buildWithError.Error()))
 		return 1
 	}
 	return 0

@@ -204,9 +204,9 @@ func TestToExponentialAndToPrecisionValueRangesTile(test *testing.T) {
 // dtoaHarnessBinary is the harness every range of the sweep runs, built once for all of them in
 // this process, in a directory of its own, since a test's own would go when that test ends.
 var dtoaHarnessBinary = sync.OnceValues(func() (string, error) {
-	directory, err := os.MkdirTemp("", "adamic-dtoa-")
-	if err != nil {
-		return "", err
+	directory, temporaryDirectoryError := os.MkdirTemp("", "adamic-dtoa-")
+	if temporaryDirectoryError != nil {
+		return "", temporaryDirectoryError
 	}
 	binary := filepath.Join(directory, "harness")
 	return binary, Build(dtoaHarness, binary, Options{Sanitize: true})
@@ -256,9 +256,9 @@ func runDtoaValues(test *testing.T, name string) {
 		}
 	}
 
-	binary, err := dtoaHarnessBinary()
-	if err != nil {
-		test.Fatal(err)
+	binary, dtoaHarnessBinaryError := dtoaHarnessBinary()
+	if dtoaHarnessBinaryError != nil {
+		test.Fatal(dtoaHarnessBinaryError)
 	}
 	native := strings.Split(strings.TrimSuffix(runWithInput(test, input.String(), binary), "\n"), "\n")
 	oracle := strings.Split(
@@ -320,8 +320,8 @@ int main(int count, char **arguments) {
 }
 `
 	binary := filepath.Join(test.TempDir(), "harness")
-	if err := Build(harness, binary, Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(harness, binary, Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	for _, probe := range []struct {
 		operation string
@@ -399,10 +399,10 @@ func outcome(test *testing.T, name string, arguments ...string) ran {
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
-	err := command.Run()
+	runError := command.Run()
 	var exit *exec.ExitError
-	if err != nil && !errors.As(err, &exit) {
-		test.Fatalf("%s: %v", name, err)
+	if runError != nil && !errors.As(runError, &exit) {
+		test.Fatalf("%s: %v", name, runError)
 	}
 	return ran{stdout.String(), stderr.String(), command.ProcessState.ExitCode()}
 }

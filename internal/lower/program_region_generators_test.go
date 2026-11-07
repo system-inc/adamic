@@ -30,10 +30,10 @@ func programRegionGeneratorRun(body string) string {
 // programRegionGeneratorStops lowers source with the Program region on and wants a NotYet saying reason.
 func programRegionGeneratorStops(test *testing.T, source, reason string) {
 	test.Helper()
-	_, err := programLowerSource(test, source)
+	_, programLowerSourceError := programLowerSource(test, source)
 	var gap *NotYet
-	if !errors.As(err, &gap) || !strings.Contains(gap.What, reason) {
-		test.Fatalf("got %v, want a NotYet saying %q", err, reason)
+	if !errors.As(programLowerSourceError, &gap) || !strings.Contains(gap.What, reason) {
+		test.Fatalf("got %v, want a NotYet saying %q", programLowerSourceError, reason)
 	}
 }
 
@@ -41,10 +41,10 @@ func programRegionGeneratorStops(test *testing.T, source, reason string) {
 // literals in it, so each pin below is stopped by its own road and not by the region.
 func TestProgramRegionGeneratorProgramEngages(test *testing.T) {
 	test.Parallel()
-	program, err := programLowerSource(test, programRegionGeneratorTree+
+	program, programLowerSourceError := programLowerSource(test, programRegionGeneratorTree+
 		programRegionGeneratorRun(" for (const tree of walk(branch)) { console.log(tree.name); }"))
-	if err != nil {
-		test.Fatal(err)
+	if programLowerSourceError != nil {
+		test.Fatal(programLowerSourceError)
 	}
 	if !program.HasGenerators() || len(program.ProgramTypes) == 0 {
 		test.Fatalf(

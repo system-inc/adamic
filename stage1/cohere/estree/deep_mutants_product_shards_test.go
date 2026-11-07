@@ -58,9 +58,9 @@ func deepMutantsOwner(index, count int) int { return index * testDeepMutantsShar
 func deepMutantsProof(test *testing.T) {
 	test.Helper()
 	cases := deepMutantsEnumeration()
-	file, err := parser.ParseFile(token.NewFileSet(), "deep_mutants_product_shards_test.go", nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	file, parseFileError := parser.ParseFile(token.NewFileSet(), "deep_mutants_product_shards_test.go", nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	names := map[string]bool{}
 	for _, decl := range file.Decls {
@@ -116,9 +116,9 @@ func deepMutantsProof(test *testing.T) {
 func deepMutantsSnapshot(test *testing.T, mutation deepMutantsMutation) (map[string][]byte, buildcache.Inputs) {
 	test.Helper()
 	path := mutantPort(test, mutation.file, mutation.from, mutation.to)
-	files, err := filepath.Glob(filepath.Join(filepath.Dir(path), "*.ts"))
-	if err != nil {
-		test.Fatal(err)
+	files, globError := filepath.Glob(filepath.Join(filepath.Dir(path), "*.ts"))
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	snapshot := map[string][]byte{}
 	inputs := buildcache.Inputs{
@@ -128,9 +128,9 @@ func deepMutantsSnapshot(test *testing.T, mutation deepMutantsMutation) (map[str
 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
 	}
 	for _, file := range files {
-		data, err := os.ReadFile(file)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(file)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		name := filepath.Base(file)
 		snapshot[name] = data
@@ -161,15 +161,19 @@ func deepMutantsLowered(test *testing.T, mutation deepMutantsMutation) (string, 
 	checkpoint, inputs := deepMutantsIRProduct(test, mutation)
 	inputs.Name = "deep-mutants-emitted-v1"
 	lowered := buildcache.Product(test, inputs, func(dir string) error {
-		program, err := estreeFamilyReadCheckpoint(checkpoint)
-		if err != nil {
-			return err
+		program, estreeFamilyReadCheckpointError := estreeFamilyReadCheckpoint(checkpoint)
+		if estreeFamilyReadCheckpointError != nil {
+			return estreeFamilyReadCheckpointError
 		}
-		if err := estreeFamilyCopySource(checkpoint, dir); err != nil {
-			return err
+		if estreeFamilyCopySourceError := estreeFamilyCopySource(checkpoint, dir); estreeFamilyCopySourceError != nil {
+			return estreeFamilyCopySourceError
 		}
-		if err := os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(program)), 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(
+			filepath.Join(dir, "program.c"),
+			[]byte(native.C(program)),
+			0644,
+		); writeError != nil {
+			return writeError
 		}
 		return os.WriteFile(filepath.Join(dir, "port.mjs"), []byte(javascript.JavaScript(program)), 0644)
 	})
@@ -180,9 +184,9 @@ func deepMutantsNative(test *testing.T, mutation deepMutantsMutation) string {
 	test.Helper()
 	lowered, inputs := deepMutantsLowered(test, mutation)
 
-	data, err := os.ReadFile(filepath.Join(lowered, "program.c"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(lowered, "program.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	inputs.Name = "deep-mutants-native-v3"
 	for _, name := range []string{"ADAMIC_NATIVE_SPLIT"} {
@@ -269,9 +273,9 @@ func deepMutantsShard(test *testing.T, shard int) {
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	list := manifest(test, []string{deepMutantsInput})
-	want, err := os.ReadFile(filepath.Join(fixture, "want"))
-	if err != nil {
-		test.Fatal(err)
+	want, readError := os.ReadFile(filepath.Join(fixture, "want"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	for index, item := range cases {
 		if deepMutantsOwner(index, len(cases)) != shard {

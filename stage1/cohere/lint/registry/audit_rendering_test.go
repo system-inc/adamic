@@ -10,31 +10,31 @@ import (
 func TestDeterministicRegeneration(test *testing.T) {
 	test.Parallel()
 	root := copyRules(test)
-	descriptors, err := Generate(root)
-	if err != nil {
-		test.Fatal(err)
+	descriptors, generateError := Generate(root)
+	if generateError != nil {
+		test.Fatal(generateError)
 	}
 	ts, goSource := Render(descriptors)
 	verifyAuditRegistryRendering(test, descriptors)
 	for _, name := range []string{"registry.ts", "registry.go"} {
 		path := filepath.Join(root, ".generated", name)
-		before, err := os.Stat(path)
-		if err != nil {
-			test.Fatal(err)
+		before, statError := os.Stat(path)
+		if statError != nil {
+			test.Fatal(statError)
 		}
-		if _, err := Generate(root); err != nil {
-			test.Fatal(err)
+		if _, generateError := Generate(root); generateError != nil {
+			test.Fatal(generateError)
 		}
-		after, err := os.Stat(path)
-		if err != nil {
-			test.Fatal(err)
+		after, statError := os.Stat(path)
+		if statError != nil {
+			test.Fatal(statError)
 		}
 		if !before.ModTime().Equal(after.ModTime()) {
 			test.Fatalf("unchanged %s rewritten", name)
 		}
-		data, err := os.ReadFile(path)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(path)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		expected := ts
 		if name == "registry.go" {
@@ -65,9 +65,9 @@ func verifyAuditRegistryRendering(test *testing.T, descriptors []Descriptor) {
 		name string
 		data []byte
 	}{{"registry.ts.txt", ts}, {"registry.go.txt", goSource}} {
-		want, err := os.ReadFile(filepath.Join("testdata", "audit", output.name))
-		if err != nil {
-			test.Fatal(err)
+		want, readError := os.ReadFile(filepath.Join("testdata", "audit", output.name))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		if !bytes.Equal(output.data, want) {
 			test.Fatalf("%s full rendering differs: got\n%s\nwant\n%s", output.name, output.data, want)

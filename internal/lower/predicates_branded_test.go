@@ -215,10 +215,13 @@ show(v);`,
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			program, err := lowerTypeScriptAssertionSource(test, brandedPrelude+lie+probe.source)
+			program, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(
+				test,
+				brandedPrelude+lie+probe.source,
+			)
 			if os.Getenv("ADAMIC_BRANDED_WIDENED_MUTANT") == "1" {
-				if err != nil {
-					test.Fatalf("the mutant must admit the program: %v", err)
+				if lowerTypeScriptAssertionSourceError != nil {
+					test.Fatalf("the mutant must admit the program: %v", lowerTypeScriptAssertionSourceError)
 				}
 				code, out, errs := brandedNative(test, program)
 				if code == 0 && out == probe.node {
@@ -235,10 +238,13 @@ show(v);`,
 			}
 			what := "a read of field name through type " + probe.through
 			var pending *NotYet
-			if !errors.As(err, &pending) ||
-				!strings.Contains(err.Error(), what) ||
-				!strings.Contains(err.Error(), "which may hold a checked view's value") {
-				test.Fatalf("want NotYet at the read with %q, got %v", what, err)
+			if !errors.As(lowerTypeScriptAssertionSourceError, &pending) ||
+				!strings.Contains(lowerTypeScriptAssertionSourceError.Error(), what) ||
+				!strings.Contains(
+					lowerTypeScriptAssertionSourceError.Error(),
+					"which may hold a checked view's value",
+				) {
+				test.Fatalf("want NotYet at the read with %q, got %v", what, lowerTypeScriptAssertionSourceError)
 			}
 		})
 	}
@@ -395,11 +401,14 @@ const v = { kind: 9, pos: 1, text: "x" }; show(v);`, "checked predicate overload
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerTypeScriptAssertionSource(test, brandedPrelude+probe.source)
+			_, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(test, brandedPrelude+probe.source)
 			var pending *NotYet
 			var refused *Refused
-			if !errors.As(err, &pending) && !errors.As(err, &refused) || !strings.Contains(err.Error(), probe.want) {
-				test.Fatalf("want NotYet or Refused with %q, got %v", probe.want, err)
+			if !errors.As(lowerTypeScriptAssertionSourceError, &pending) && !errors.As(
+				lowerTypeScriptAssertionSourceError,
+				&refused,
+			) || !strings.Contains(lowerTypeScriptAssertionSourceError.Error(), probe.want) {
+				test.Fatalf("want NotYet or Refused with %q, got %v", probe.want, lowerTypeScriptAssertionSourceError)
 			}
 		})
 	}
@@ -500,10 +509,13 @@ show(i);`, walk, false},
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			program, err := lowerTypeScriptAssertionSource(test, brandedPrelude+lie+probe.source)
+			program, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(
+				test,
+				brandedPrelude+lie+probe.source,
+			)
 			if os.Getenv("ADAMIC_BRANDED_CALLS_MUTANT") == "1" && probe.opened {
-				if err != nil {
-					test.Fatalf("the mutant must admit the program: %v", err)
+				if lowerTypeScriptAssertionSourceError != nil {
+					test.Fatalf("the mutant must admit the program: %v", lowerTypeScriptAssertionSourceError)
 				}
 				code, out, errs := brandedNative(test, program)
 				if code == 0 && out == "undefined\n" {
@@ -518,8 +530,9 @@ show(i);`, walk, false},
 				return
 			}
 			var pending *NotYet
-			if !errors.As(err, &pending) || !strings.Contains(err.Error(), probe.want) {
-				test.Fatalf("want NotYet with %q, got %v", probe.want, err)
+			if !errors.As(lowerTypeScriptAssertionSourceError, &pending) ||
+				!strings.Contains(lowerTypeScriptAssertionSourceError.Error(), probe.want) {
+				test.Fatalf("want NotYet with %q, got %v", probe.want, lowerTypeScriptAssertionSourceError)
 			}
 		})
 	}
@@ -549,13 +562,19 @@ const nodes: Node[] = [{ kind: 80, pos: 6 }];
 console.log(String(firstPos(nodes)));
 console.log(String(firstOf([7])));
 `, ".ts")
-	_, err := lowerTypeScriptAssertionSource(test, brandedPrelude+some+`const elements: TypeElement[] = [element];
+	_, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(
+		test,
+		brandedPrelude+some+`const elements: TypeElement[] = [element];
 console.log(String(firstPos(elements)));
-`)
+`,
+	)
 	var pending *NotYet
-	if !errors.As(err, &pending) ||
-		!strings.Contains(err.Error(), "checked predicate membership of a branded supertype on its false branch") {
-		test.Fatalf("want T at TypeElement NotYet on the false side, got %v", err)
+	if !errors.As(lowerTypeScriptAssertionSourceError, &pending) ||
+		!strings.Contains(
+			lowerTypeScriptAssertionSourceError.Error(),
+			"checked predicate membership of a branded supertype on its false branch",
+		) {
+		test.Fatalf("want T at TypeElement NotYet on the false side, got %v", lowerTypeScriptAssertionSourceError)
 	}
 }
 
@@ -633,13 +652,16 @@ console.log(String(castName(a as Node, isTypeElement).pos));`},
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerTypeScriptAssertionSource(test, brandedPrelude+helpers+probe.source)
+			_, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(
+				test,
+				brandedPrelude+helpers+probe.source,
+			)
 			var refused *Refused
 			if want := "main.ts:17:29: Adamic 0.1 refuses optional property name in Positioned absent from structural source Node, which can hide fields; declare name on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"; !errors.As(
-				err,
+				lowerTypeScriptAssertionSourceError,
 				&refused,
 			) || !strings.HasSuffix(refused.Error(), want) {
-				test.Fatalf("got %v, want a refusal ending %q", err, want)
+				test.Fatalf("got %v, want a refusal ending %q", lowerTypeScriptAssertionSourceError, want)
 			}
 		})
 	}
@@ -738,10 +760,11 @@ const b: Bag = { kind: 80, pos: 2 }; show(b);`,
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerTypeScriptAssertionSource(test, brandedPrelude+probe.source)
+			_, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(test, brandedPrelude+probe.source)
 			var pending *NotYet
-			if !errors.As(err, &pending) || !strings.Contains(err.Error(), probe.want) {
-				test.Fatalf("want NotYet with %q, got %v", probe.want, err)
+			if !errors.As(lowerTypeScriptAssertionSourceError, &pending) ||
+				!strings.Contains(lowerTypeScriptAssertionSourceError.Error(), probe.want) {
+				test.Fatalf("want NotYet with %q, got %v", probe.want, lowerTypeScriptAssertionSourceError)
 			}
 		})
 	}
@@ -897,11 +920,17 @@ const mv: Mut = v; show(mv);`, "name", "w\n", false},
 			test.Parallel()
 			source := brandedPrelude + probe.source
 			if probe.notYet {
-				_, err := lowerTypeScriptAssertionSource(test, source)
+				_, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(test, source)
 				var pending *NotYet
-				if !errors.As(err, &pending) ||
-					!strings.Contains(err.Error(), "writing a possibly absent optional own field") {
-					test.Fatalf("want NotYet at the write, writing a possibly absent optional own field, got %v", err)
+				if !errors.As(lowerTypeScriptAssertionSourceError, &pending) ||
+					!strings.Contains(
+						lowerTypeScriptAssertionSourceError.Error(),
+						"writing a possibly absent optional own field",
+					) {
+					test.Fatalf(
+						"want NotYet at the write, writing a possibly absent optional own field, got %v",
+						lowerTypeScriptAssertionSourceError,
+					)
 				}
 				return
 			}
@@ -964,7 +993,7 @@ function isSizedLie(n: Node): n is Sized { return kindOf(n) !== 0; }
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerTypeScriptAssertionSource(test, brandedPrelude+
+			_, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(test, brandedPrelude+
 				records+
 				probe.show+
 				body+
@@ -972,9 +1001,12 @@ function isSizedLie(n: Node): n is Sized { return kindOf(n) !== 0; }
 				probe.value+
 				"; const v: Node = w; show(v);\nconsole.log(String(counts[\"a\"]));\n")
 			var pending *NotYet
-			if !errors.As(err, &pending) ||
+			if !errors.As(lowerTypeScriptAssertionSourceError, &pending) ||
 				pending.What != "a union or optional field read in a program with record storage" {
-				test.Fatalf("want NotYet at the n.size read, held by record storage, got %v", err)
+				test.Fatalf(
+					"want NotYet at the n.size read, held by record storage, got %v",
+					lowerTypeScriptAssertionSourceError,
+				)
 			}
 		})
 	}
@@ -1025,10 +1057,11 @@ console.log(show(i)());
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerTypeScriptAssertionSource(test, brandedPrelude+probe.source)
+			_, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(test, brandedPrelude+probe.source)
 			var pending *NotYet
-			if !errors.As(err, &pending) || !strings.Contains(err.Error(), probe.want) {
-				test.Fatalf("want NotYet with %q, got %v", probe.want, err)
+			if !errors.As(lowerTypeScriptAssertionSourceError, &pending) ||
+				!strings.Contains(lowerTypeScriptAssertionSourceError.Error(), probe.want) {
+				test.Fatalf("want NotYet with %q, got %v", probe.want, lowerTypeScriptAssertionSourceError)
 			}
 		})
 	}
@@ -1121,15 +1154,16 @@ function via(x: T): string { if (guard(x)) { return String(x.name); } return "no
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
 			source := brandedPrelude + mutual + strings.ReplaceAll(probe.via, "x: T", "x: "+probe.of) + probe.source
-			program, err := lowerTypeScriptAssertionSource(test, source)
+			program, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(test, source)
 			var pending *NotYet
 			var refused *Refused
-			if errors.As(err, &pending) || errors.As(err, &refused) {
-				test.Logf("stops before it lowers: %v", err)
+			if errors.As(lowerTypeScriptAssertionSourceError, &pending) ||
+				errors.As(lowerTypeScriptAssertionSourceError, &refused) {
+				test.Logf("stops before it lowers: %v", lowerTypeScriptAssertionSourceError)
 				return
 			}
-			if err != nil {
-				test.Fatal(err)
+			if lowerTypeScriptAssertionSourceError != nil {
+				test.Fatal(lowerTypeScriptAssertionSourceError)
 			}
 			if !strings.Contains(probe.name, "honest") {
 				brandedStopsProgram(test, program, "adamic: panic: ")
@@ -1144,9 +1178,9 @@ function via(x: T): string { if (guard(x)) { return String(x.name); } return "no
 // which must stop at exit 70 with nothing printed and stderr starting with the located failure.
 func brandedStops(test *testing.T, source, stderr string) {
 	test.Helper()
-	program, err := lowerTypeScriptAssertionSource(test, source)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(test, source)
+	if lowerTypeScriptAssertionSourceError != nil {
+		test.Fatal(lowerTypeScriptAssertionSourceError)
 	}
 	brandedStopsProgram(test, program, stderr)
 }
@@ -1157,16 +1191,16 @@ func brandedStopsProgram(test *testing.T, program *ir.Program, stderr string) {
 	test.Helper()
 	directory := test.TempDir()
 	binary := filepath.Join(directory, "native")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
-	runner, err := filepath.Abs("../../oracle/node.mjs")
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs("../../oracle/node.mjs")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	generated := filepath.Join(directory, "generated.mjs")
-	if err := os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	for _, command := range []*exec.Cmd{
 		exec.Command(binary),
@@ -1176,10 +1210,10 @@ func brandedStopsProgram(test *testing.T, program *ir.Program, stderr string) {
 		var out, errs bytes.Buffer
 		command.Stdout, command.Stderr = &out, &errs
 		code := 0
-		if err := command.Run(); err != nil {
+		if runError := command.Run(); runError != nil {
 			var exit *exec.ExitError
-			if !errors.As(err, &exit) {
-				test.Fatal(err)
+			if !errors.As(runError, &exit) {
+				test.Fatal(runError)
 			}
 			code = exit.ExitCode()
 		}
@@ -1200,18 +1234,18 @@ func brandedStopsProgram(test *testing.T, program *ir.Program, stderr string) {
 func brandedNative(test *testing.T, program *ir.Program) (int, string, string) {
 	test.Helper()
 	binary := filepath.Join(test.TempDir(), "native")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	command := exec.Command(binary)
 	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1")
 	var out, errs bytes.Buffer
 	command.Stdout, command.Stderr = &out, &errs
 	code := 0
-	if err := command.Run(); err != nil {
+	if runError := command.Run(); runError != nil {
 		var exit *exec.ExitError
-		if !errors.As(err, &exit) {
-			test.Fatal(err)
+		if !errors.As(runError, &exit) {
+			test.Fatal(runError)
 		}
 		code = exit.ExitCode()
 	}

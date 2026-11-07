@@ -31,7 +31,7 @@ import (
 	"github.com/system-inc/adamic/internal/buildlog"
 )
 
-var errReadOnly = errors.New("load: the source file system is read-only")
+var errorReadOnly = errors.New("load: the source file system is read-only")
 
 // Program is a loaded Adamic program that the checker accepted.
 type Program struct {
@@ -105,9 +105,9 @@ func load(paths []string, overlay map[string]string, display func(string) string
 	if len(paths) == 0 {
 		return nil, errors.New("load: no files given")
 	}
-	workingDirectory, err := os.Getwd()
-	if err != nil {
-		return nil, fmt.Errorf("load: resolving the current directory: %w", err)
+	workingDirectory, workingDirectoryError := os.Getwd()
+	if workingDirectoryError != nil {
+		return nil, fmt.Errorf("load: resolving the current directory: %w", workingDirectoryError)
 	}
 	currentDirectory := tspath.RootedDirectoryPathFromAbsolute(workingDirectory)
 
@@ -118,9 +118,9 @@ func load(paths []string, overlay map[string]string, display func(string) string
 	fs := &sourceFS{FS: osvfs.FS(), overlay: normalizedOverlay, display: display}
 	roots := make([]tspath.RootedFilePath, 0, len(paths)+1)
 	for _, path := range paths {
-		root, err := rootFileName(fs, currentDirectory, path)
-		if err != nil {
-			return nil, err
+		root, rootFileNameError := rootFileName(fs, currentDirectory, path)
+		if rootFileNameError != nil {
+			return nil, rootFileNameError
 		}
 		roots = append(roots, root)
 	}
@@ -129,7 +129,13 @@ func load(paths []string, overlay map[string]string, display func(string) string
 	// bundled.WrapFS lays the embedded lib.*.d.ts files over the source view, and cachedvfs memoizes
 	// the stats module resolution repeats.
 	fileSystem := cachedvfs.From(&regexpLibraryFS{FS: &nodeLibraryFS{FS: bundled.WrapFS(fs)}})
-	config := tsoptions.NewParsedCommandLine(compilerOptions(), roots, nil, currentDirectory, fileSystem.CaseSensitivity())
+	config := tsoptions.NewParsedCommandLine(
+		compilerOptions(),
+		roots,
+		nil,
+		currentDirectory,
+		fileSystem.CaseSensitivity(),
+	)
 	host := compiler.NewCachedFSCompilerHost(fileSystem, bundled.LibPath(), nil, nil, nil)
 	program := compiler.NewProgram(compiler.ProgramOptions{
 		Config:         config,
@@ -141,13 +147,13 @@ func load(paths []string, overlay map[string]string, display func(string) string
 	}
 
 	if usesNodeModules(program) {
-		index, err := nodeTypesIndex()
-		if err != nil {
-			return nil, err
+		index, nodeTypesIndexError := nodeTypesIndex()
+		if nodeTypesIndexError != nil {
+			return nil, nodeTypesIndexError
 		}
-		adaptedPrelude, err := nodePrelude(prelude)
-		if err != nil {
-			return nil, err
+		adaptedPrelude, nodePreludeError := nodePrelude(prelude)
+		if nodePreludeError != nil {
+			return nil, nodePreludeError
 		}
 		fs.nodePreludeText = adaptedPrelude
 		fs.nodeTypes = true
@@ -226,7 +232,11 @@ func IsLibrary(sourceFile *ast.SourceFile) bool {
 }
 
 // rootFileName is the name the checker knows a source file by, refusing anything that isn't Adamic.
-func rootFileName(fs *sourceFS, currentDirectory tspath.RootedDirectoryPath, path string) (tspath.RootedFilePath, error) {
+func rootFileName(
+	fs *sourceFS,
+	currentDirectory tspath.RootedDirectoryPath,
+	path string,
+) (tspath.RootedFilePath, error) {
 	fileName := currentDirectory.ResolveFile(path)
 	switch filepath.Ext(fileName.AsString()) {
 	case ".ts":
@@ -239,7 +249,12 @@ func rootFileName(fs *sourceFS, currentDirectory tspath.RootedDirectoryPath, pat
 			return "", fmt.Errorf("load: no file at %s", path)
 		}
 		if fs.FS.FileExists(fileName.AppendSuffix(".ts")) {
-			return "", fmt.Errorf("load: %s and %s.ts both exist, and an import of %s could mean either; rename one", path, path, filepath.Base(path))
+			return "", fmt.Errorf(
+				"load: %s and %s.ts both exist, and an import of %s could mean either; rename one",
+				path,
+				path,
+				filepath.Base(path),
+			)
 		}
 		return fileName.AppendSuffix(".ts"), nil
 	}

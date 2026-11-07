@@ -51,30 +51,38 @@ func run(arguments []string, stdout, stderr io.Writer) int {
 	flags.SetOutput(stderr)
 	asJSON := flags.Bool("json", false, "write JSON")
 	adapt := flags.Bool("adapt", false, "apply semantics-preserving rewrites in memory")
-	if err := flags.Parse(arguments); err != nil {
+	if parseError := flags.Parse(arguments); parseError != nil {
 		return 2
 	}
 	if flags.NArg() != 1 {
 		fmt.Fprintln(stderr, "usage: adamic-meter [--adapt] [--json] <directory>")
 		return 2
 	}
-	r, err := measure(flags.Arg(0), *adapt)
-	if err != nil {
-		fmt.Fprintf(stderr, "adamic-meter: %v\n", err)
+	r, measureError := measure(flags.Arg(0), *adapt)
+	if measureError != nil {
+		fmt.Fprintf(stderr, "adamic-meter: %v\n", measureError)
 		return 1
 	}
 	if *asJSON {
 		encoder := json.NewEncoder(stdout)
 		encoder.SetIndent("", "  ")
-		if err := encoder.Encode(r); err != nil {
-			fmt.Fprintf(stderr, "adamic-meter: writing JSON: %v\n", err)
+		if encodeError := encoder.Encode(r); encodeError != nil {
+			fmt.Fprintf(stderr, "adamic-meter: writing JSON: %v\n", encodeError)
 			return 1
 		}
 		return 0
 	}
 	fmt.Fprintf(stdout, "COUNT  FILES  KIND        REASON  EXAMPLE\n")
 	for _, reason := range r.Reasons {
-		fmt.Fprintf(stdout, "%5d  %5d  %-10s  %s  %s\n", reason.Count, len(reason.Files), reason.Kind, reason.Reason, reason.Example)
+		fmt.Fprintf(
+			stdout,
+			"%5d  %5d  %-10s  %s  %s\n",
+			reason.Count,
+			len(reason.Files),
+			reason.Kind,
+			reason.Reason,
+			reason.Example,
+		)
 	}
 	for _, adapted := range r.Adaptations {
 		fmt.Fprintf(stdout, "adapted: %s removed %d diagnostics\n", adapted.Rewrite, adapted.Removed)
@@ -88,13 +96,13 @@ func run(arguments []string, stdout, stderr io.Writer) int {
 }
 
 func measure(root string, adapt bool) (*report, error) {
-	absolute, err := filepath.Abs(root)
-	if err != nil {
-		return nil, err
+	absolute, absolutePathError := filepath.Abs(root)
+	if absolutePathError != nil {
+		return nil, absolutePathError
 	}
-	info, err := os.Stat(absolute)
-	if err != nil {
-		return nil, err
+	info, statError := os.Stat(absolute)
+	if statError != nil {
+		return nil, statError
 	}
 	if !info.IsDir() {
 		return nil, fmt.Errorf("%s is not a directory", root)
@@ -102,9 +110,9 @@ func measure(root string, adapt bool) (*report, error) {
 	result := &report{Root: filepath.ToSlash(absolute)}
 	byReason := make(map[string]*finding)
 	var paths []string
-	err = filepath.WalkDir(absolute, func(path string, entry os.DirEntry, walkErr error) error {
-		if walkErr != nil {
-			return walkErr
+	walkError := filepath.WalkDir(absolute, func(path string, entry os.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
 		if entry.IsDir() {
 			return nil
@@ -121,15 +129,20 @@ func measure(root string, adapt bool) (*report, error) {
 		paths = append(paths, path)
 		return nil
 	})
-	if err != nil {
-		return nil, err
+	if walkError != nil {
+		return nil, walkError
 	}
 	add := func(path string, observations []observation) {
 		for _, observation := range observations {
 			key := observation.Kind + "\x00" + observation.Reason
 			existing := byReason[key]
 			if existing == nil {
-				existing = &finding{Kind: observation.Kind, Reason: observation.Reason, Example: relative(absolute, observation.Example), fileSeen: make(map[string]bool)}
+				existing = &finding{
+					Kind:     observation.Kind,
+					Reason:   observation.Reason,
+					Example:  relative(absolute, observation.Example),
+					fileSeen: make(map[string]bool),
+				}
 				byReason[key] = existing
 			}
 			existing.Count++
@@ -146,18 +159,19 @@ func measure(root string, adapt bool) (*report, error) {
 	if len(paths) != 0 {
 		loader := load.Load
 		var overlay map[string]string
-		baseline, baselineErr := load.Load(paths)
+		baseline, baselineError := load.Load(paths)
 		_ = baseline
 		if adapt {
-			overlay, result.Adaptations, err = adaptations(paths, baselineErr)
-			if err != nil {
-				return nil, err
+			var adaptationsError error
+			overlay, result.Adaptations, adaptationsError = adaptations(paths, baselineError)
+			if adaptationsError != nil {
+				return nil, adaptationsError
 			}
 			loader = func(paths []string) (*load.Program, error) { return load.LoadOverlay(paths, overlay) }
 		}
-		if _, loadErr := loader(paths); loadErr != nil {
+		if _, loadError := loader(paths); loadError != nil {
 			var checkError *load.CheckError
-			if errors.As(loadErr, &checkError) {
+			if errors.As(loadError, &checkError) {
 				diagnosed := make(map[string]bool)
 				for _, diagnostic := range checkError.Diagnostics {
 					match := checkerDiagnostic.FindStringSubmatch(diagnostic)
@@ -186,7 +200,7 @@ func measure(root string, adapt bool) (*report, error) {
 					}
 				}
 			} else {
-				add(paths[0], []observation{{"load", normalize(loadErr.Error()), paths[0]}})
+				add(paths[0], []observation{{"load", normalize(loadError.Error()), paths[0]}})
 			}
 		} else {
 			for _, path := range paths {
@@ -231,19 +245,20 @@ type sourceEdit struct {
 	line, column int
 }
 
-func adaptations(paths []string, baselineErr error) (map[string]string, []adaptation, error) {
-	overlay, rewrites, err := importAdaptations(paths, baselineErr)
-	if err != nil {
-		return nil, nil, err
+func adaptations(paths []string, baselineError error) (map[string]string, []adaptation, error) {
+	overlay, rewrites, importAdaptationsError := importAdaptations(paths, baselineError)
+	if importAdaptationsError != nil {
+		return nil, nil, importAdaptationsError
 	}
 	_, before := load.LoadOverlay(paths, overlay)
 	initial := optionalDiagnosticCount(before)
 	changed := 0
 	for {
 		var count int
-		overlay, count, err = optionalAdaptations(paths, overlay, before)
-		if err != nil {
-			return nil, nil, err
+		var optionalAdaptationsError error
+		overlay, count, optionalAdaptationsError = optionalAdaptations(paths, overlay, before)
+		if optionalAdaptationsError != nil {
+			return nil, nil, optionalAdaptationsError
 		}
 		if count == 0 {
 			break
@@ -252,27 +267,37 @@ func adaptations(paths []string, baselineErr error) (map[string]string, []adapta
 		_, before = load.LoadOverlay(paths, overlay)
 	}
 	if changed != 0 {
-		rewrites = append(rewrites, adaptation{Rewrite: optionalRewrite, Removed: initial - optionalDiagnosticCount(before), DeclarationsChanged: changed})
+		rewrites = append(rewrites, adaptation{
+			Rewrite:             optionalRewrite,
+			Removed:             initial - optionalDiagnosticCount(before),
+			DeclarationsChanged: changed,
+		})
 	}
 	initialReturns := diagnosticCount(before, "7030")
-	overlay, changed, err = returnAdaptations(paths, overlay, before)
-	if err != nil {
-		return nil, nil, err
+	overlay, changed, returnAdaptationsError := returnAdaptations(paths, overlay, before)
+	if returnAdaptationsError != nil {
+		return nil, nil, returnAdaptationsError
 	}
 	if changed != 0 {
 		_, after := load.LoadOverlay(paths, overlay)
-		rewrites = append(rewrites, adaptation{Rewrite: returnRewrite, Removed: initialReturns - diagnosticCount(after, "7030"), FunctionsChanged: changed})
+		rewrites = append(rewrites, adaptation{
+			Rewrite:          returnRewrite,
+			Removed:          initialReturns - diagnosticCount(after, "7030"),
+			FunctionsChanged: changed,
+		})
 	}
 	return overlay, rewrites, nil
 }
 
-func optionalDiagnosticCount(err error) int {
-	return diagnosticCount(err, "2412") + diagnosticCount(err, "2375") + diagnosticCount(err, "2379")
+func optionalDiagnosticCount(sourceError error) int {
+	return diagnosticCount(sourceError, "2412") +
+		diagnosticCount(sourceError, "2375") +
+		diagnosticCount(sourceError, "2379")
 }
 
-func importAdaptations(paths []string, baselineErr error) (map[string]string, []adaptation, error) {
+func importAdaptations(paths []string, baselineError error) (map[string]string, []adaptation, error) {
 	var checkError *load.CheckError
-	if !errors.As(baselineErr, &checkError) {
+	if !errors.As(baselineError, &checkError) {
 		return nil, nil, nil
 	}
 	edits := make(map[string][]sourceEdit)
@@ -287,9 +312,9 @@ func importAdaptations(paths []string, baselineErr error) (map[string]string, []
 	}
 	overlay := make(map[string]string, len(edits))
 	for path, fileEdits := range edits {
-		source, err := os.ReadFile(path)
-		if err != nil {
-			return nil, nil, fmt.Errorf("reading %s to adapt it: %w", path, err)
+		source, readError := os.ReadFile(path)
+		if readError != nil {
+			return nil, nil, fmt.Errorf("reading %s to adapt it: %w", path, readError)
 		}
 		lines := strings.Split(string(source), "\n")
 		sort.Slice(fileEdits, func(i, j int) bool {
@@ -312,14 +337,16 @@ func importAdaptations(paths []string, baselineErr error) (map[string]string, []
 	if len(edits) == 0 {
 		return overlay, nil, nil
 	}
-	_, adaptedErr := load.LoadOverlay(paths, overlay)
-	remaining := diagnosticCount(adaptedErr, "1484")
-	return overlay, []adaptation{{Rewrite: "type-only imports (TS1484)", Removed: diagnosticCount(baselineErr, "1484") - remaining}}, nil
+	_, adaptedError := load.LoadOverlay(paths, overlay)
+	remaining := diagnosticCount(adaptedError, "1484")
+	return overlay, []adaptation{
+		{Rewrite: "type-only imports (TS1484)", Removed: diagnosticCount(baselineError, "1484") - remaining},
+	}, nil
 }
 
-func diagnosticCount(err error, code string) int {
+func diagnosticCount(sourceError error, code string) int {
 	var checkError *load.CheckError
-	if !errors.As(err, &checkError) {
+	if !errors.As(sourceError, &checkError) {
 		return 0
 	}
 	count := 0
@@ -333,11 +360,11 @@ func diagnosticCount(err error, code string) int {
 }
 
 func inspect(path string, overlay map[string]string) ([]observation, bool) {
-	program, err := load.LoadOverlay([]string{path}, overlay)
-	if err != nil {
+	program, loadOverlayError := load.LoadOverlay([]string{path}, overlay)
+	if loadOverlayError != nil {
 		var checkError *load.CheckError
-		if !errors.As(err, &checkError) {
-			return []observation{{"load", normalize(err.Error()), path}}, false
+		if !errors.As(loadOverlayError, &checkError) {
+			return []observation{{"load", normalize(loadOverlayError.Error()), path}}, false
 		}
 		observations := make([]observation, 0, len(checkError.Diagnostics))
 		for _, diagnostic := range checkError.Diagnostics {
@@ -345,24 +372,27 @@ func inspect(path string, overlay map[string]string) ([]observation, bool) {
 			if match == nil {
 				observations = append(observations, observation{"type", "TypeScript diagnostic", diagnostic})
 			} else {
-				observations = append(observations, observation{typescriptCategory(match[2]), "TypeScript TS" + match[2], match[1]})
+				observations = append(
+					observations,
+					observation{typescriptCategory(match[2]), "TypeScript TS" + match[2], match[1]},
+				)
 			}
 		}
 		return observations, false
 	}
-	_, err = lower.Lower(context.Background(), program)
-	if err == nil {
+	_, lowerError := lower.Lower(context.Background(), program)
+	if lowerError == nil {
 		return nil, true
 	}
 	var refused *lower.Refused
-	if errors.As(err, &refused) {
+	if errors.As(lowerError, &refused) {
 		return []observation{{"Refused", normalize(refused.What), refused.Where}}, true
 	}
 	var notYet *lower.NotYet
-	if errors.As(err, &notYet) {
+	if errors.As(lowerError, &notYet) {
 		return []observation{{"NotYet", normalize(notYet.What), notYet.Where}}, true
 	}
-	return []observation{{"lower", normalize(err.Error()), path}}, true
+	return []observation{{"lower", normalize(lowerError.Error()), path}}, true
 }
 
 // TypeScript assigns its basic parser diagnostics to the low 1xxx range (and JSX parser diagnostics
@@ -396,7 +426,10 @@ func normalize(message string) string {
 }
 
 func relative(root, path string) string {
-	if rel, err := filepath.Rel(root, path); err == nil && rel != "." && !strings.HasPrefix(rel, "..") {
+	if rel, relativePathError := filepath.Rel(
+		root,
+		path,
+	); relativePathError == nil && rel != "." && !strings.HasPrefix(rel, "..") {
 		return filepath.ToSlash(rel)
 	}
 	return filepath.ToSlash(path)

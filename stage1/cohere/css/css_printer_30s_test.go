@@ -38,9 +38,9 @@ func cssPrinterCorpusLines(test *testing.T) []string {
 	test.Helper()
 	cssPrinterCorpusOnce.Do(func() {
 		path, _ := oracles.CachedParserOutputs(test)
-		data, err := os.ReadFile(path)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(path)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		cssPrinterCorpus = strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")
 	})
@@ -52,14 +52,14 @@ func cssPrinterCorpusLines(test *testing.T) []string {
 // drop): drop the fixture root from the live enumeration; the corpora then differ.
 func TestCSSPrinterCorpusIsTheParserCorpus(test *testing.T) {
 	test.Parallel()
-	live, err := os.ReadFile(cssPrinterCases(test, oracles.ComparisonOracle(test, false)))
-	if err != nil {
-		test.Fatal(err)
+	live, readError := os.ReadFile(cssPrinterCases(test, oracles.ComparisonOracle(test, false)))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	product, _ := oracles.CachedParserOutputs(test)
-	declared, err := os.ReadFile(product)
-	if err != nil {
-		test.Fatal(err)
+	declared, readError := os.ReadFile(product)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if difference := firstDifference(string(live), string(declared)); difference != "" {
 		test.Fatalf("the printer's live corpus differs from the parser's corpus product: %s", difference)
@@ -114,48 +114,71 @@ func TestCSSPrinterSanitizedRunNamesEachFailure(test *testing.T) {
 		test.Skip("Linux runs leak detection inside the sanitized run")
 	}
 	cases := filepath.Join(test.TempDir(), "cases.txt")
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		cases,
 		[]byte(">Ca{color:red;margin:0.50px}\n>Sa{--x:{b:c};color:rgb(1,2,3)}\n"),
 		0644,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
 	expected := cssPrinterAnswers(test, oracles.ComparisonOracle(test, true), cases, "default")
 	arguments := []string{cases, "output", "once", "default"}
-	if err := cssPrinterSanitizedAgreement(
+	if cssPrinterSanitizedAgreementError := cssPrinterSanitizedAgreement(
 		test,
 		cssPrinterProduct(test, -1).binary,
 		expected,
 		arguments...,
-	); err != nil {
-		test.Fatalf("the unmutated printer: %v", err)
+	); cssPrinterSanitizedAgreementError != nil {
+		test.Fatalf("the unmutated printer: %v", cssPrinterSanitizedAgreementError)
 	}
-	err := cssPrinterSanitizedAgreement(test, composedMemoryProduct(test, 2).sanitized, expected, arguments...)
-	if err == nil || !strings.HasPrefix(err.Error(), "leak ") {
-		test.Fatalf("a printer that drops its releases read as %v, want a leak", err)
+	cssPrinterSanitizedAgreementError := cssPrinterSanitizedAgreement(
+		test,
+		composedMemoryProduct(test, 2).sanitized,
+		expected,
+		arguments...,
+	)
+	if cssPrinterSanitizedAgreementError == nil ||
+		!strings.HasPrefix(cssPrinterSanitizedAgreementError.Error(), "leak ") {
+		test.Fatalf("a printer that drops its releases read as %v, want a leak", cssPrinterSanitizedAgreementError)
 	}
-	test.Logf("planted leak: %.120s", err)
-	err = cssPrinterSanitizedAgreement(test, composedMemoryProduct(test, 0).sanitized, expected, arguments...)
-	if err == nil || !strings.HasPrefix(err.Error(), "exit ") || !strings.Contains(err.Error(), "AddressSanitizer") {
-		test.Fatalf("a printer that reads freed memory read as %v, want a sanitizer's error", err)
+	test.Logf("planted leak: %.120s", cssPrinterSanitizedAgreementError)
+	cssPrinterSanitizedAgreementError = cssPrinterSanitizedAgreement(
+		test,
+		composedMemoryProduct(test, 0).sanitized,
+		expected,
+		arguments...,
+	)
+	if cssPrinterSanitizedAgreementError == nil ||
+		!strings.HasPrefix(cssPrinterSanitizedAgreementError.Error(), "exit ") ||
+		!strings.Contains(cssPrinterSanitizedAgreementError.Error(), "AddressSanitizer") {
+		test.Fatalf(
+			"a printer that reads freed memory read as %v, want a sanitizer's error",
+			cssPrinterSanitizedAgreementError,
+		)
 	}
-	test.Logf("planted use after free: %.120s", err)
+	test.Logf("planted use after free: %.120s", cssPrinterSanitizedAgreementError)
 	changed := strings.Replace(expected, "red", "blue", 1)
 	if changed == expected {
 		test.Fatal("no answer to change")
 	}
-	err = cssPrinterSanitizedAgreement(test, cssPrinterProduct(test, -1).binary, changed, arguments...)
-	if err == nil || !strings.HasPrefix(err.Error(), "output differs from Go") {
-		test.Fatalf("a changed answer read as %v, want an output that isn't Go's", err)
+	cssPrinterSanitizedAgreementError = cssPrinterSanitizedAgreement(
+		test,
+		cssPrinterProduct(test, -1).binary,
+		changed,
+		arguments...,
+	)
+	if cssPrinterSanitizedAgreementError == nil ||
+		!strings.HasPrefix(cssPrinterSanitizedAgreementError.Error(), "output differs from Go") {
+		test.Fatalf("a changed answer read as %v, want an output that isn't Go's", cssPrinterSanitizedAgreementError)
 	}
-	err = cssPrinterSanitizedVerdict(run{
+	cssPrinterSanitizedVerdictError := cssPrinterSanitizedVerdict(run{
 		stdout:   []byte(expected),
 		stderr:   []byte("==1==LeakSanitizer has encountered a fatal error.\n"),
 		exitCode: 1,
 	}, expected)
-	if err == nil || !strings.HasPrefix(err.Error(), "LeakSanitizer could not run") {
-		test.Fatalf("LeakSanitizer unable to run read as %v, want a red", err)
+	if cssPrinterSanitizedVerdictError == nil ||
+		!strings.HasPrefix(cssPrinterSanitizedVerdictError.Error(), "LeakSanitizer could not run") {
+		test.Fatalf("LeakSanitizer unable to run read as %v, want a red", cssPrinterSanitizedVerdictError)
 	}
 }
 
@@ -191,8 +214,13 @@ func runCSSPrinterShard(test *testing.T, shard int) {
 		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
 	}
 	if unit.mutant < 0 {
-		if err := cssPrinterSanitizedAgreement(test, product.binary, expected, arguments...); err != nil {
-			test.Fatalf("%s native ASan/UBSan: %v", unit.mode, err)
+		if cssPrinterSanitizedAgreementError := cssPrinterSanitizedAgreement(
+			test,
+			product.binary,
+			expected,
+			arguments...,
+		); cssPrinterSanitizedAgreementError != nil {
+			test.Fatalf("%s native ASan/UBSan: %v", unit.mode, cssPrinterSanitizedAgreementError)
 		}
 		for _, side := range []struct {
 			name   string
@@ -201,8 +229,8 @@ func runCSSPrinterShard(test *testing.T, shard int) {
 			{"Node", onNode(test, product.source, arguments...)},
 			{"JavaScript backend", onNode(test, product.javascript, arguments...)},
 		} {
-			if err := cssAgreement(side.result, expected); err != nil {
-				test.Fatalf("%s %s: %v", unit.mode, side.name, err)
+			if cssAgreementError := cssAgreement(side.result, expected); cssAgreementError != nil {
+				test.Fatalf("%s %s: %v", unit.mode, side.name, cssAgreementError)
 			}
 		}
 		if runtime.GOOS != "linux" {
@@ -245,9 +273,15 @@ func runCSSPrinterShard(test *testing.T, shard int) {
 					side.result.stderr,
 				)
 			}
-			differing, err := cssPrinterDifferingCases(string(side.result.stdout), expected)
-			if err != nil {
-				test.Fatalf("%s %s printer mutant %s: %v", unit.mode, side.name, mutation.name, err)
+			differing, cssPrinterDifferingCasesError := cssPrinterDifferingCases(string(side.result.stdout), expected)
+			if cssPrinterDifferingCasesError != nil {
+				test.Fatalf(
+					"%s %s printer mutant %s: %v",
+					unit.mode,
+					side.name,
+					mutation.name,
+					cssPrinterDifferingCasesError,
+				)
 			}
 			if len(differing) != len(unit.cases) {
 				test.Fatalf(
@@ -283,8 +317,8 @@ func TestCSSPrinterAgreesWithGoUnion(test *testing.T) {
 	witnesses := cssPrinterAllWitnesses(test)
 	defer cssPrinterOwnDeadline(test)()
 	plan := cssModePlan(lines, witnesses)
-	if err := cssModeUnion(lines, plan, witnesses); err != nil {
-		test.Fatal(err)
+	if cssModeUnionError := cssModeUnion(lines, plan, witnesses); cssModeUnionError != nil {
+		test.Fatal(cssModeUnionError)
 	}
 	for offset, unit := range plan[2*cssPrinterPartitions:] {
 		test.Logf(

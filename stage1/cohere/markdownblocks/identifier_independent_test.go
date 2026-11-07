@@ -76,8 +76,11 @@ func identifierScalarsDisagreement(side, truth run) error {
 
 func identifierScalarsAgree(test *testing.T, side, truth run) {
 	test.Helper()
-	if err := identifierScalarsDisagreement(side, truth); err != nil {
-		test.Fatalf("identifier scalar oracle: %v", err)
+	if identifierScalarsDisagreementError := identifierScalarsDisagreement(
+		side,
+		truth,
+	); identifierScalarsDisagreementError != nil {
+		test.Fatalf("identifier scalar oracle: %v", identifierScalarsDisagreementError)
 	}
 }
 
@@ -99,8 +102,8 @@ func identifierScalarsLeaks(test *testing.T, ctx context.Context, products pilot
 func identifierScalarsMutant(test *testing.T, ctx context.Context, products pilotProducts, truth run) {
 	test.Helper()
 	scratch := test.TempDir()
-	if e := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); e != nil {
-		test.Fatal(e)
+	if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	for _, file := range []string{
 		"identifier.ts",
@@ -108,9 +111,9 @@ func identifierScalarsMutant(test *testing.T, ctx context.Context, products pilo
 		"identifierCaseValues.ts",
 		"testdata/identifier_probe.ts",
 	} {
-		data, e := os.ReadFile(file)
-		if e != nil {
-			test.Fatal(e)
+		data, readError := os.ReadFile(file)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		if file == "identifierCaseKeys.ts" {
 			if !strings.Contains(string(data), "65,") {
@@ -159,9 +162,9 @@ func identifierScalarsEnumeration(test *testing.T) []int {
 			identifierScalarsShards,
 		)
 	}
-	file, err := parser.ParseFile(token.NewFileSet(), "identifier_independent_test.go", nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	file, parseFileError := parser.ParseFile(token.NewFileSet(), "identifier_independent_test.go", nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	var plan []int
 	for _, declaration := range file.Decls {
@@ -169,9 +172,9 @@ func identifierScalarsEnumeration(test *testing.T) []int {
 		if !ok || !strings.HasPrefix(function.Name.Name, "TestMdastIdentifierScalars_") {
 			continue
 		}
-		shard, err := strconv.Atoi(strings.TrimPrefix(function.Name.Name, "TestMdastIdentifierScalars_"))
-		if err != nil {
-			test.Fatal(err)
+		shard, parseError := strconv.Atoi(strings.TrimPrefix(function.Name.Name, "TestMdastIdentifierScalars_"))
+		if parseError != nil {
+			test.Fatal(parseError)
 		}
 		calls := 0
 		ast.Inspect(function.Body, func(node ast.Node) bool {
@@ -190,7 +193,7 @@ func identifierScalarsEnumeration(test *testing.T) []int {
 			if !ok {
 				test.Fatalf("%s: shard index must be a literal", function.Name.Name)
 			}
-			if index, err := strconv.Atoi(literal.Value); err != nil || index != shard {
+			if index, parseError := strconv.Atoi(literal.Value); parseError != nil || index != shard {
 				test.Fatalf("%s runs side %s", function.Name.Name, literal.Value)
 			}
 			calls++

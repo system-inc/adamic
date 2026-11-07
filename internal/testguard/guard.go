@@ -26,18 +26,21 @@ func init() {
 	if len(os.Args) < 4 || os.Args[1] != "--adamic-cpu-child" {
 		os.Exit(125)
 	}
-	seconds, err := strconv.ParseUint(os.Args[2], 10, 64)
-	if err != nil {
+	seconds, parseError := strconv.ParseUint(os.Args[2], 10, 64)
+	if parseError != nil {
 		os.Exit(125)
 	}
-	if err = syscall.Setrlimit(syscall.RLIMIT_CPU, &syscall.Rlimit{Cur: seconds, Max: seconds + 1}); err != nil {
-		fmt.Fprintln(os.Stderr, "child CPU guard setup:", err)
+	if setrlimitError := syscall.Setrlimit(
+		syscall.RLIMIT_CPU,
+		&syscall.Rlimit{Cur: seconds, Max: seconds + 1},
+	); setrlimitError != nil {
+		fmt.Fprintln(os.Stderr, "child CPU guard setup:", setrlimitError)
 		os.Exit(125)
 	}
 	os.Unsetenv(marker)
 	argv := os.Args[3:]
-	if err = syscall.Exec(argv[0], argv, os.Environ()); err != nil {
-		fmt.Fprintln(os.Stderr, "child CPU guard exec:", err)
+	if execError := syscall.Exec(argv[0], argv, os.Environ()); execError != nil {
+		fmt.Fprintln(os.Stderr, "child CPU guard exec:", execError)
 		os.Exit(125)
 	}
 }
@@ -48,9 +51,9 @@ func PrepareCPU(command *exec.Cmd, budget time.Duration) error {
 	if command.Err != nil {
 		return command.Err
 	}
-	executable, err := os.Executable()
-	if err != nil {
-		return err
+	executable, executableError := os.Executable()
+	if executableError != nil {
+		return executableError
 	}
 	argv := append([]string{command.Path}, command.Args[1:]...)
 	seconds := uint64((budget + time.Second - 1) / time.Second)
@@ -68,12 +71,12 @@ func PrepareCPU(command *exec.Cmd, budget time.Duration) error {
 // errors retain their type. Only guard failures are wrapped with a named reason.
 func Run(command *exec.Cmd, budget, ceiling time.Duration) error {
 	label := strings.Join(command.Args, " ")
-	if err := PrepareCPU(command, budget); err != nil {
-		return err
+	if prepareCpuError := PrepareCPU(command, budget); prepareCpuError != nil {
+		return prepareCpuError
 	}
 	var err error
-	if err = command.Start(); err != nil {
-		return err
+	if startError := command.Start(); startError != nil {
+		return startError
 	}
 	done := make(chan error, 1)
 	go func() { done <- command.Wait() }()
@@ -91,7 +94,8 @@ func Run(command *exec.Cmd, budget, ceiling time.Duration) error {
 	if err != nil && command.ProcessState != nil {
 		cpu := command.ProcessState.UserTime() + command.ProcessState.SystemTime()
 		status := command.ProcessState.Sys().(syscall.WaitStatus)
-		if status.Signaled() && (status.Signal() == syscall.SIGXCPU || (status.Signal() == syscall.SIGKILL && cpu >= budget)) {
+		if status.Signaled() &&
+			(status.Signal() == syscall.SIGXCPU || (status.Signal() == syscall.SIGKILL && cpu >= budget)) {
 			return fmt.Errorf("%s: child CPU hang guard exceeded: CPU %s, budget %s: %w", label, cpu, budget, err)
 		}
 	}

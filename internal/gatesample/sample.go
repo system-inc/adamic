@@ -22,7 +22,14 @@ type Selection struct {
 
 // Log returns the landing gate's stable diagnostic. Call it once per sampled test.
 func (s Selection) Log(testName string) string {
-	return fmt.Sprintf("gate-sample: %s %d/%d files, stride %d, offset %d", testName, len(s.Paths), s.Total, s.Stride, s.Offset)
+	return fmt.Sprintf(
+		"gate-sample: %s %d/%d files, stride %d, offset %d",
+		testName,
+		len(s.Paths),
+		s.Total,
+		s.Stride,
+		s.Offset,
+	)
 }
 
 // Select reads the landing switches and selects from physical corpus files.
@@ -35,8 +42,8 @@ func Select(root string, paths []string, stride int, controls ...string) (Select
 	if !enabled {
 		return selection, nil
 	}
-	if err := Validate(); err != nil {
-		return Selection{}, err
+	if validateError := Validate(); validateError != nil {
+		return Selection{}, validateError
 	}
 	if stride < 1 {
 		return Selection{}, fmt.Errorf("gate sample stride must be positive: %d", stride)
@@ -49,16 +56,18 @@ func Select(root string, paths []string, stride int, controls ...string) (Select
 	}
 	packages := map[string]bool{}
 	if list := os.Getenv("ADAMIC_GATE_CHANGED"); list != "" {
-		data, err := os.ReadFile(list)
-		if err != nil {
-			return Selection{}, fmt.Errorf("ADAMIC_GATE_CHANGED: %w", err)
+		data, readError := os.ReadFile(list)
+		if readError != nil {
+			return Selection{}, fmt.Errorf("ADAMIC_GATE_CHANGED: %w", readError)
 		}
 		for _, line := range strings.Split(string(data), "\n") {
 			line = strings.TrimSuffix(line, "\r")
 			if line == "" {
 				continue
 			}
-			if filepath.IsAbs(line) || strings.HasPrefix(filepath.ToSlash(filepath.Clean(line)), "../") || filepath.Clean(line) == ".." {
+			if filepath.IsAbs(line) ||
+				strings.HasPrefix(filepath.ToSlash(filepath.Clean(line)), "../") ||
+				filepath.Clean(line) == ".." {
 				return Selection{}, fmt.Errorf("ADAMIC_GATE_CHANGED: not a repository path: %q", line)
 			}
 			name := filepath.ToSlash(filepath.Clean(line))
@@ -77,9 +86,9 @@ func Select(root string, paths []string, stride int, controls ...string) (Select
 				}
 			}
 			for {
-				entries, err := os.ReadDir(filepath.Join(root, directory))
-				if err != nil && !os.IsNotExist(err) {
-					return Selection{}, fmt.Errorf("changed package %s: %w", directory, err)
+				entries, readDirectoryError := os.ReadDir(filepath.Join(root, directory))
+				if readDirectoryError != nil && !os.IsNotExist(readDirectoryError) {
+					return Selection{}, fmt.Errorf("changed package %s: %w", directory, readDirectoryError)
 				}
 				found := false
 				for _, entry := range entries {
@@ -129,7 +138,7 @@ func Validate() error {
 	if len(sha) != 40 {
 		return fmt.Errorf("ADAMIC_GATE_SAMPLE=%q: expected 40 hex characters", sha)
 	}
-	if _, err := hex.DecodeString(sha); err != nil {
+	if _, decodeStringError := hex.DecodeString(sha); decodeStringError != nil {
 		return fmt.Errorf("ADAMIC_GATE_SAMPLE=%q: expected 40 hex characters", sha)
 	}
 	return nil

@@ -16,13 +16,17 @@ import (
 // answers linux for Android and goes red; a target's row removed reaches the #error and goes red.
 func TestHostPlatformNames(test *testing.T) {
 	test.Parallel()
-	header, err := filepath.Abs(filepath.Join("runtime", "host_platform.h"))
-	if err != nil {
-		test.Fatal(err)
+	header, absolutePathError := filepath.Abs(filepath.Join("runtime", "host_platform.h"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	probe := filepath.Join(test.TempDir(), "probe.c")
-	if err := os.WriteFile(probe, []byte("#include \""+header+"\"\nname ADAMIC_HOST_PLATFORM\n"), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(
+		probe,
+		[]byte("#include \""+header+"\"\nname ADAMIC_HOST_PLATFORM\n"),
+		0600,
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
 	for _, target := range []struct {
 		name   string
@@ -46,15 +50,16 @@ func TestHostPlatformNames(test *testing.T) {
 			for _, macro := range target.macros {
 				arguments = append(arguments, "-D"+macro)
 			}
-			output, err := exec.Command("clang", append(arguments, probe)...).CombinedOutput()
+			output, combinedOutputError := exec.Command("clang", append(arguments, probe)...).CombinedOutput()
 			if target.want == "" {
-				if err == nil || !strings.Contains(string(output), "a target host_platform.h doesn't name") {
-					test.Fatalf("want the #error, got %v: %s", err, output)
+				if combinedOutputError == nil ||
+					!strings.Contains(string(output), "a target host_platform.h doesn't name") {
+					test.Fatalf("want the #error, got %v: %s", combinedOutputError, output)
 				}
 				return
 			}
-			if err != nil {
-				test.Fatalf("clang: %v\n%s", err, output)
+			if combinedOutputError != nil {
+				test.Fatalf("clang: %v\n%s", combinedOutputError, output)
 			}
 			if got := strings.TrimSpace(string(output)); got != target.want {
 				test.Fatalf("got %q, want %q", got, target.want)

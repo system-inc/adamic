@@ -22,9 +22,9 @@ const smokeList = "cloud/fast-gate/smoke.txt"
 // fixtures unread; an unknown lane taken; a fixture its family doesn't hold taken.
 func TestEverySmokeEntryRunsInAnOracleUnit(t *testing.T) {
 	t.Parallel()
-	content, err := os.ReadFile(filepath.Join(repository, smokeList))
-	if err != nil {
-		t.Fatal(err)
+	content, readError := os.ReadFile(filepath.Join(repository, smokeList))
+	if readError != nil {
+		t.Fatal(readError)
 	}
 	runs := smokeRunner(t)
 	entries := 0
@@ -38,8 +38,8 @@ func TestEverySmokeEntryRunsInAnOracleUnit(t *testing.T) {
 		if len(fields) == 2 {
 			lane, fixture = fields[0], fields[1]
 		}
-		if test, err := runs(lane, fixture); err != nil {
-			t.Error(err)
+		if test, runsError := runs(lane, fixture); runsError != nil {
+			t.Error(runsError)
 		} else {
 			t.Logf("%s runs in %s", fixture, test)
 		}
@@ -53,7 +53,7 @@ func TestEverySmokeEntryRunsInAnOracleUnit(t *testing.T) {
 		{"TestNativeAgreesWithNode", "internal/oracle/testdata/no-such-fixture.a"},
 		{"TestInputAgreesWithNode", "internal/oracle/testdata/bitwise.a"},
 	} {
-		if test, err := runs(planted[0], planted[1]); err == nil {
+		if test, runsError := runs(planted[0], planted[1]); runsError == nil {
 			t.Errorf("%s %s runs in %s, want it refused", planted[0], planted[1], test)
 		}
 	}

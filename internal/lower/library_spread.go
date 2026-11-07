@@ -33,8 +33,8 @@ func (l *lowering) checkLibrarySpreads(modules []*ast.SourceFile) error {
 		if graph.plainSpreadSources(spread.source, map[int]bool{}) {
 			continue
 		}
-		if err := l.librarySpreadRefusal(spread, candidates); err != nil {
-			return err
+		if librarySpreadRefusalError := l.librarySpreadRefusal(spread, candidates); librarySpreadRefusalError != nil {
+			return librarySpreadRefusalError
 		}
 	}
 	return nil
@@ -127,7 +127,8 @@ func (l *lowering) librarySpreadCandidates(modules []*ast.SourceFile) map[*check
 		}
 		for _, declaration := range symbol.Declarations {
 			source := ast.GetSourceFileOfNode(declaration)
-			if load.IsLibrary(source) || load.IsPrelude(source) || (source != nil && strings.Contains(strings.ReplaceAll(source.FileName().AsString(), "\\", "/"), "/@types/node/")) {
+			if load.IsLibrary(source) || load.IsPrelude(source) || (source != nil &&
+				strings.Contains(strings.ReplaceAll(source.FileName().AsString(), "\\", "/"), "/@types/node/")) {
 				candidates[proven] = symbol.Name
 				return
 			}
@@ -155,7 +156,13 @@ func (l *lowering) librarySpreadRefusal(spread librarySpread, candidates map[*ch
 	}
 	if len(names) != 0 {
 		sort.Strings(names)
-		return &Refused{Where: l.program.Where(spread.node), What: "an object spread through a view that may hold library class " + names[0] + " (its internal fields are not own enumerable properties)", Fix: "copy the fields you mean by name"}
+		return &Refused{
+			Where: l.program.Where(spread.node),
+			What: "an object spread through a view that may hold library class " +
+				names[0] +
+				" (its internal fields are not own enumerable properties)",
+			Fix: "copy the fields you mean by name",
+		}
 	}
 	return nil
 }

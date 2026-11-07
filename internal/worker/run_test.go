@@ -10,9 +10,9 @@ import (
 
 func TestOraclePanicPolicy(test *testing.T) {
 	test.Parallel()
-	runtime, err := os.ReadFile("../../oracle/adamic.mjs")
-	if err != nil {
-		test.Fatal(err)
+	runtime, readError := os.ReadFile("../../oracle/adamic.mjs")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	source := string(runtime)
 	begin := strings.Index(source, "export function panic(")
@@ -38,17 +38,17 @@ func TestOraclePanicPolicy(test *testing.T) {
 			test.Parallel()
 			directory := test.TempDir()
 			harness := filepath.Join(directory, "internal", "worker")
-			if err := os.MkdirAll(harness, 0755); err != nil {
-				test.Fatal(err)
+			if createDirectoryError := os.MkdirAll(harness, 0755); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
 			oracle := filepath.Join(directory, "oracle")
-			if err := os.Mkdir(oracle, 0755); err != nil {
-				test.Fatal(err)
+			if createDirectoryError := os.Mkdir(oracle, 0755); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
 			for _, name := range []string{"run.mjs", "wasm-node.mjs"} {
-				contents, err := os.ReadFile(name)
-				if err != nil {
-					test.Fatal(err)
+				contents, readError := os.ReadFile(name)
+				if readError != nil {
+					test.Fatal(readError)
 				}
 				write(test, filepath.Join(harness, name), string(contents))
 			}
@@ -58,9 +58,15 @@ func TestOraclePanicPolicy(test *testing.T) {
 			requests := filepath.Join(directory, "requests.jsonl")
 			write(test, requests, "")
 			command := exec.Command("node", filepath.Join(harness, "run.mjs"), bridge, requests, "--oracle-runtime")
-			output, err := command.CombinedOutput()
-			if err == nil || !strings.Contains(string(output), "oracle panic policy: "+fixture.witness) {
-				test.Fatalf("expected named panic definition error %q: %v\n%s", fixture.witness, err, output)
+			output, combinedOutputError := command.CombinedOutput()
+			if combinedOutputError == nil ||
+				!strings.Contains(string(output), "oracle panic policy: "+fixture.witness) {
+				test.Fatalf(
+					"expected named panic definition error %q: %v\n%s",
+					fixture.witness,
+					combinedOutputError,
+					output,
+				)
 			}
 		})
 	}

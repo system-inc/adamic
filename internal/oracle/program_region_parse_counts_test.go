@@ -21,13 +21,13 @@ func init() {
 		additionalFixtureCounts = append(
 			additionalFixtureCounts,
 			countCase{key, func(test *testing.T) (string, func() string) {
-				code, err := os.ReadFile(filepath.Join(programParseLower(test, enabled), "code.c"))
-				if err != nil {
-					test.Fatal(err)
+				code, readError := os.ReadFile(filepath.Join(programParseLower(test, enabled), "code.c"))
+				if readError != nil {
+					test.Fatal(readError)
 				}
-				manifest, err := os.ReadFile("testdata/program_region/parse_manifest.json")
-				if err != nil {
-					test.Fatal(err)
+				manifest, readError := os.ReadFile("testdata/program_region/parse_manifest.json")
+				if readError != nil {
+					test.Fatal(readError)
 				}
 				runs := string(code) +
 					strings.Join(native.Flags(native.Options{Count: true, ProgramRegion: enabled}), " ") +

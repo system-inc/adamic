@@ -11,12 +11,12 @@ import (
 func TestSpeedCostProbes(test *testing.T) {
 	test.Parallel()
 	input := filepath.Join(test.TempDir(), "units.txt")
-	if err := os.WriteFile(input, []byte(strings.Repeat("abc中😀", 4000)), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(input, []byte(strings.Repeat("abc中😀", 4000)), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	runner := filepath.Join(root, "oracle/node.mjs")
 	for _, probe := range []struct{ file, first, second, answer string }{
@@ -28,9 +28,9 @@ func TestSpeedCostProbes(test *testing.T) {
 		test.Run(probe.file, func(test *testing.T) {
 			binary := yamlSpeedProbesBuild.binary(test, "gaps/"+probe.file)
 			emitted := yamlSpeedProbesBuild.emitted(test, "gaps/"+probe.file)
-			entry, err := filepath.Abs(filepath.Join("gaps", probe.file))
-			if err != nil {
-				test.Fatal(err)
+			entry, absolutePathError := filepath.Abs(filepath.Join("gaps", probe.file))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			argument := input
 			if probe.file == "numericMapLookup.ts" {

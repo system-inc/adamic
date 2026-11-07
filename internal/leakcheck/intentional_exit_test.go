@@ -39,10 +39,10 @@ func TestIntentionalExitIsNarrow(test *testing.T) {
 		})
 	}
 	// Existing failure paths stay failures: a nonzero status without the terminal runtime marker.
-	report, err := Check(Program{Execute: func(env []string, name string, args ...string) Run {
+	report, checkError := Check(Program{Execute: func(env []string, name string, args ...string) Run {
 		return Run{ExitCode: 2, Stderr: []byte("ordinary failure\n")}
 	}})
-	if err == nil && !strings.Contains(report, "ordinary failure") {
+	if checkError == nil && !strings.Contains(report, "ordinary failure") {
 		test.Fatalf("unmarked failure accepted: %q", report)
 	}
 }

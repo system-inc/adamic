@@ -70,16 +70,16 @@ func counted(builds *atomic.Int32) func(string, sources, Options) error {
 // process, as a caller lowers without the cache.
 func freshC(test *testing.T, entry string, options Options) string {
 	test.Helper()
-	program, err := load.Load(fromHere([]string{entry}))
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load(fromHere([]string{entry}))
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	if options.TSGo {
 		program.EnableTSGo()
 	}
-	lowering, err := lower.LowerWithOptions(context.Background(), program, options.Lower)
-	if err != nil {
-		test.Fatal(err)
+	lowering, lowerWithOptionsError := lower.LowerWithOptions(context.Background(), program, options.Lower)
+	if lowerWithOptionsError != nil {
+		test.Fatal(lowerWithOptionsError)
 	}
 	return native.CWithOptions(lowering, native.Options{Debug: options.Lower.Debug})
 }
@@ -115,13 +115,13 @@ func sameC(test *testing.T, what, want, got string) {
 // keyOf is the key inputs address, on this tree.
 func keyOf(test *testing.T, inputs buildcache.Inputs) string {
 	test.Helper()
-	root, err := repositoryRoot()
-	if err != nil {
-		test.Fatal(err)
+	root, repositoryRootError := repositoryRoot()
+	if repositoryRootError != nil {
+		test.Fatal(repositoryRootError)
 	}
-	key, err := buildcache.Key(root, inputs)
-	if err != nil {
-		test.Fatal(err)
+	key, keyError := buildcache.Key(root, inputs)
+	if keyError != nil {
+		test.Fatal(keyError)
 	}
 	return key
 }
@@ -132,12 +132,12 @@ func TestTheKeyMovesWithEachInputTheLoweringReads(test *testing.T) {
 	test.Parallel()
 	directory := test.TempDir()
 	entry := filepath.Join(directory, "enums.a")
-	original, err := os.ReadFile(filepath.Join("..", "oracle", "testdata", "enums.a"))
-	if err != nil {
-		test.Fatal(err)
+	original, readError := os.ReadFile(filepath.Join("..", "oracle", "testdata", "enums.a"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	if err := os.WriteFile(entry, original, 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(entry, original, 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	quiet := environment{getenv: func(string) string { return "" }, workingDirectory: directory}
 	before := keyOf(test, inputsOf(test, sourcesOf(test, []string{entry}), Options{}, quiet))
@@ -176,8 +176,8 @@ func TestTheKeyMovesWithEachInputTheLoweringReads(test *testing.T) {
 	}
 	edited := slices.Clone(original)
 	edited[len(edited)-2] ^= 1
-	if err := os.WriteFile(entry, edited, 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(entry, edited, 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	if keyOf(test, inputsOf(test, sourcesOf(test, []string{entry}), Options{}, quiet)) == before {
 		test.Error("a change to a byte of the source kept the key")
@@ -190,9 +190,9 @@ func TestTheKeyMovesWithEachInputTheLoweringReads(test *testing.T) {
 // internal/native among the lowering's packages.
 func TestTheKeyLeavesOutNativeAndJavaScript(test *testing.T) {
 	test.Parallel()
-	lowering, err := loweringClosure()
-	if err != nil {
-		test.Fatal(err)
+	lowering, loweringClosureError := loweringClosure()
+	if loweringClosureError != nil {
+		test.Fatal(loweringClosureError)
 	}
 	inputs := inputsOf(
 		test,
@@ -286,16 +286,16 @@ var tornProgram = corpus[4]
 // the IR it serves emits the C a fresh lowering does; a read after that finds the rebuilt product.
 func replaced(test *testing.T, first string, read sources, builds *atomic.Int32, data, sum []byte) {
 	test.Helper()
-	if err := os.WriteFile(filepath.Join(first, gobFile), data, 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(first, gobFile), data, 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if err := os.WriteFile(filepath.Join(first, sumFile), sum, 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(first, sumFile), sum, 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if _, err := readStored(first); err == nil {
+	if _, readStoredError := readStored(first); readStoredError == nil {
 		test.Fatal("the stored IR reads back")
 	} else {
-		test.Logf("the stored IR doesn't read back: %v", err)
+		test.Logf("the stored IR doesn't read back: %v", readStoredError)
 	}
 	program, _, second := stored(test, read, Options{}, counted(builds))
 	if second == first || builds.Load() != 2 {
@@ -316,13 +316,13 @@ func TestATornStoredIRIsAMissAndRebuilt(test *testing.T) {
 	read := sourcesOf(test, fromHere(tornProgram))
 	var builds atomic.Int32
 	_, _, first := stored(test, read, Options{}, counted(&builds))
-	data, err := os.ReadFile(filepath.Join(first, gobFile))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(first, gobFile))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	sum, err := os.ReadFile(filepath.Join(first, sumFile))
-	if err != nil {
-		test.Fatal(err)
+	sum, readError := os.ReadFile(filepath.Join(first, sumFile))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	at := bytes.Index(data, []byte("outside"))
 	if at < 0 {
@@ -353,14 +353,14 @@ type environmentRead struct{ variable, where string }
 func environmentReads(test *testing.T, file string) []environmentRead {
 	test.Helper()
 	positions := token.NewFileSet()
-	parsed, err := parser.ParseFile(positions, file, nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	parsed, parseFileError := parser.ParseFile(positions, file, nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	packages := map[string]bool{}
 	for _, spec := range parsed.Imports {
-		path, err := strconv.Unquote(spec.Path.Value)
-		if err != nil || (path != "os" && path != "syscall") {
+		path, unquoteError := strconv.Unquote(spec.Path.Value)
+		if unquoteError != nil || (path != "os" && path != "syscall") {
 			continue
 		}
 		local := path
@@ -410,15 +410,15 @@ func environmentReads(test *testing.T, file string) []environmentRead {
 // keyed, and ADAMIC_BUILD_LOG (buildlog.Phase), not. Mutant: an os.Getenv planted in internal/lower with no key line.
 func TestEveryEnvironmentReadOfTheLoweringIsKeyed(test *testing.T) {
 	test.Parallel()
-	root, err := repositoryRoot()
-	if err != nil {
-		test.Fatal(err)
+	root, repositoryRootError := repositoryRoot()
+	if repositoryRootError != nil {
+		test.Fatal(repositoryRootError)
 	}
 	files := map[string]bool{}
 	for _, system := range []string{"linux", "darwin"} {
-		packages, err := listed(root, []string{"GOOS=" + system, "CGO_ENABLED=1"}, true, loweringEntry...)
-		if err != nil {
-			test.Fatal(err)
+		packages, listedError := listed(root, []string{"GOOS=" + system, "CGO_ENABLED=1"}, true, loweringEntry...)
+		if listedError != nil {
+			test.Fatal(listedError)
 		}
 		for _, item := range packages {
 			if item.Module == nil || item.Module.Path != modulePath {
@@ -432,8 +432,8 @@ func TestEveryEnvironmentReadOfTheLoweringIsKeyed(test *testing.T) {
 	read := map[string][]string{}
 	for file := range files {
 		for _, found := range environmentReads(test, file) {
-			relative, err := filepath.Rel(root, found.where)
-			if err != nil {
+			relative, relativePathError := filepath.Rel(root, found.where)
+			if relativePathError != nil {
 				relative = found.where
 			}
 			if found.variable == "" {
@@ -497,9 +497,9 @@ func TestTheLibrariesAndThePreludeAreInTheBinary(test *testing.T) {
 	for _, paths := range [][]string{corpus[0], corpus[2]} {
 		read := sourcesOf(test, fromHere(paths))
 		directory := test.TempDir()
-		program, err := loaded(directory, read, Options{})
-		if err != nil {
-			test.Fatal(err)
+		program, loadedError := loaded(directory, read, Options{})
+		if loadedError != nil {
+			test.Fatal(loadedError)
 		}
 		counts := map[string]int{}
 		for _, file := range program.CompilerProgram().GetSourceFiles() {
@@ -528,9 +528,9 @@ func TestTheLibrariesAndThePreludeAreInTheBinary(test *testing.T) {
 		}
 		test.Logf("%s loads %v", paths[0], counts)
 	}
-	lowering, err := loweringClosure()
-	if err != nil {
-		test.Fatal(err)
+	lowering, loweringClosureError := loweringClosure()
+	if loweringClosureError != nil {
+		test.Fatal(loweringClosureError)
 	}
 	for _, embedded := range []string{
 		"internal/load/prelude.d.ts",
@@ -549,22 +549,22 @@ func TestTheLibrariesAndThePreludeAreInTheBinary(test *testing.T) {
 func TestAProgramReadingAFileBesideItsSourcesIsRefused(test *testing.T) {
 	test.Parallel()
 	elsewhere := filepath.Join(test.TempDir(), "values.ts")
-	if err := os.WriteFile(elsewhere, []byte("export const value = 'beside';\n"), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(elsewhere, []byte("export const value = 'beside';\n"), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	entry := filepath.Join(test.TempDir(), "main.ts")
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		entry,
 		fmt.Appendf(nil, "import { value } from %q;\nconsole.log(value);\n", elsewhere),
 		0o644,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if _, err := loaded(
+	if _, loadedError := loaded(
 		test.TempDir(),
 		sourcesOf(test, []string{entry}),
 		Options{},
-	); err == nil || !strings.Contains(err.Error(), "isn't one of its sources") {
-		test.Fatalf("got %v, want the read of %s refused", err, elsewhere)
+	); loadedError == nil || !strings.Contains(loadedError.Error(), "isn't one of its sources") {
+		test.Fatalf("got %v, want the read of %s refused", loadedError, elsewhere)
 	}
 }

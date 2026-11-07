@@ -47,7 +47,11 @@ func CheckSignature(ctx context.Context, program *load.Program) error {
 	}
 	found := "no exported handle"
 	refuse := func() error {
-		return fmt.Errorf("%s: refused: worker handle must be (request: HttpRequest) => HttpResponse from 'adamic/http'; found %s\n  fix: import type { HttpRequest, HttpResponse } from 'adamic/http'; export function handle(request: HttpRequest): HttpResponse { ... }", program.FileName(entry), found)
+		return fmt.Errorf(
+			"%s: refused: worker handle must be (request: HttpRequest) => HttpResponse from 'adamic/http'; found %s\n  fix: import type { HttpRequest, HttpResponse } from 'adamic/http'; export function handle(request: HttpRequest): HttpResponse { ... }",
+			program.FileName(entry),
+			found,
+		)
 	}
 	if exported == nil {
 		return refuse()
@@ -63,7 +67,9 @@ func CheckSignature(ctx context.Context, program *load.Program) error {
 		return refuse()
 	}
 	declaration := target.Declarations[0]
-	if declaration.Kind != ast.KindFunctionDeclaration || len(declaration.TypeParameters()) != 0 || len(declaration.Parameters()) != 1 {
+	if declaration.Kind != ast.KindFunctionDeclaration ||
+		len(declaration.TypeParameters()) != 0 ||
+		len(declaration.Parameters()) != 1 {
 		return refuse()
 	}
 	parameter := declaration.Parameters()[0].AsParameterDeclaration()
@@ -87,7 +93,9 @@ func CheckSignature(ctx context.Context, program *load.Program) error {
 		return fmt.Errorf("worker: missing HttpRequest or HttpResponse in the adamic prelude")
 	}
 	signature := signatures[0]
-	if len(signature.Parameters()) != 1 || types.GetTypeOfSymbolAtLocation(signature.Parameters()[0], declaration) != requestType || types.GetReturnTypeOfSignature(signature) != responseType {
+	if len(signature.Parameters()) != 1 ||
+		types.GetTypeOfSymbolAtLocation(signature.Parameters()[0], declaration) != requestType ||
+		types.GetReturnTypeOfSignature(signature) != responseType {
 		return refuse()
 	}
 	return nil
@@ -144,7 +152,14 @@ func refuseDroppedExports(program *load.Program, lowered *ir.Program) error {
 			site = name
 		}
 		line, column := scanner.GetLineAndCharacterOfPosition(source, scanner.GetTokenPosOfNode(site, source, false))
-		return fmt.Errorf("%s:%d:%d: refused: worker export %s is %s, and a Worker's module exports only functions and closures\n  fix: export a function that returns it, or stop exporting it", program.FileName(source), line+1, column+1, exported.Name, kind)
+		return fmt.Errorf(
+			"%s:%d:%d: refused: worker export %s is %s, and a Worker's module exports only functions and closures\n  fix: export a function that returns it, or stop exporting it",
+			program.FileName(source),
+			line+1,
+			column+1,
+			exported.Name,
+			kind,
+		)
 	}
 	return nil
 }
@@ -189,12 +204,12 @@ func Build(entry, output string) error {
 }
 
 func BuildWith(entry, output string, options Options) error {
-	program, err := load.Load([]string{entry})
-	if err != nil {
-		return err
+	program, loadError := load.Load([]string{entry})
+	if loadError != nil {
+		return loadError
 	}
-	if err := CheckSignature(context.Background(), program); err != nil {
-		return err
+	if checkSignatureError := CheckSignature(context.Background(), program); checkSignatureError != nil {
+		return checkSignatureError
 	}
 	types, release := program.Checker(context.Background(), program.Files()[0])
 	for _, exported := range types.GetExportsOfModule(program.Files()[0].AsNode().Symbol()) {
@@ -208,17 +223,20 @@ func BuildWith(entry, output string, options Options) error {
 		for _, declaration := range target.Declarations {
 			if declaration.Kind == ast.KindFunctionDeclaration && len(declaration.TypeParameters()) != 0 {
 				release()
-				return fmt.Errorf("worker: exported generic function %s is not yet supported; fix: export a concrete function", exported.Name)
+				return fmt.Errorf(
+					"worker: exported generic function %s is not yet supported; fix: export a concrete function",
+					exported.Name,
+				)
 			}
 		}
 	}
 	release()
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		return err
+	lowered, lowerError := lower.Lower(context.Background(), program)
+	if lowerError != nil {
+		return lowerError
 	}
-	if err := refuseDroppedExports(program, lowered); err != nil {
-		return err
+	if refuseDroppedExportsError := refuseDroppedExports(program, lowered); refuseDroppedExportsError != nil {
+		return refuseDroppedExportsError
 	}
 	hasHandle := false
 	for _, exported := range lowered.Exports {
@@ -234,19 +252,28 @@ func BuildWith(entry, output string, options Options) error {
 	var imports string
 	bridge := Bridge("./handler.mjs")
 	if len(options.Wasm) != 0 {
-		backend.ExternalFunctions, imports, wasm, err = wasmFiles(entry, program, lowered, options)
-		if err != nil {
-			return err
+		var wasmFilesError error
+		backend.ExternalFunctions, imports, wasm, wasmFilesError = wasmFiles(entry, program, lowered, options)
+		if wasmFilesError != nil {
+			return wasmFilesError
 		}
 		bridge = wasmBridge("./handler.mjs")
 	}
 	handler := imports + javascript.JavaScriptWith(lowered, backend)
 	name := strings.TrimSuffix(filepath.Base(entry), filepath.Ext(entry))
-	configuration := fmt.Sprintf("name = %s\nmain = \"worker.mjs\"\ncompatibility_date = \"2026-10-07\"\n", strconv.Quote(name))
+	configuration := fmt.Sprintf(
+		"name = %s\nmain = \"worker.mjs\"\ncompatibility_date = \"2026-10-07\"\n",
+		strconv.Quote(name),
+	)
 	if len(options.Wasm) != 0 {
 		configuration += "\n[[rules]]\ntype = \"CompiledWasm\"\nglobs = [\"**/*.wasm\"]\nfallthrough = false\n"
 	}
-	runtime := strings.Replace(workerRuntime, "/* UTF8_RUNTIME */", strings.Replace(utf8Runtime, "export function createUtf8", "function createUtf8", 1), 1)
+	runtime := strings.Replace(
+		workerRuntime,
+		"/* UTF8_RUNTIME */",
+		strings.Replace(utf8Runtime, "export function createUtf8", "function createUtf8", 1),
+		1,
+	)
 	const decoderStub = "// The JavaScript backend imports decodeJson. Its Workers implementation is a separate unit, so until it\n// lands a call panics, loudly, rather than decoding with code the oracle also runs.\nexport function decodeJson() {\n    panic('decodeJson: not yet available on Workers');\n}"
 	if strings.Count(runtime, decoderStub) != 1 {
 		return fmt.Errorf("worker: decodeJson runtime assembly marker missing")
@@ -264,12 +291,12 @@ func BuildWith(entry, output string, options Options) error {
 		{"wrangler.toml", configuration},
 	}
 	files = append(files, wasm...)
-	if err := os.MkdirAll(output, 0755); err != nil {
-		return err
+	if createDirectoryError := os.MkdirAll(output, 0755); createDirectoryError != nil {
+		return createDirectoryError
 	}
 	for _, file := range files {
-		if err := os.WriteFile(filepath.Join(output, file.name), []byte(file.text), 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(filepath.Join(output, file.name), []byte(file.text), 0644); writeError != nil {
+			return writeError
 		}
 	}
 	return nil

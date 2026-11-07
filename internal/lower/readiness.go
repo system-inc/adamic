@@ -45,9 +45,11 @@ func (l *lowering) uninitializedInitializer(node *ast.Node) bool {
 func (l *lowering) uninitializedDeclaration(node *ast.Node) bool {
 	switch node.Kind {
 	case ast.KindVariableDeclaration:
-		return node.AsVariableDeclaration().ExclamationToken != nil || l.uninitializedInitializer(node.AsVariableDeclaration().Initializer)
+		return node.AsVariableDeclaration().ExclamationToken != nil ||
+			l.uninitializedInitializer(node.AsVariableDeclaration().Initializer)
 	case ast.KindPropertyDeclaration:
-		return node.PostfixToken() != nil && node.PostfixToken().Kind == ast.KindExclamationToken || l.uninitializedInitializer(node.AsPropertyDeclaration().Initializer)
+		return node.PostfixToken() != nil && node.PostfixToken().Kind == ast.KindExclamationToken ||
+			l.uninitializedInitializer(node.AsPropertyDeclaration().Initializer)
 	}
 	return false
 }
@@ -158,7 +160,10 @@ func readiness(program *ir.Program) {
 		count := len(program.Locals) + len(fieldSlots)
 		ins, outs, exceptional := map[flow.BlockId][]bool{}, map[flow.BlockId][]bool{}, map[flow.BlockId][]bool{}
 		for _, block := range graph.Blocks {
-			ins[block.Id], outs[block.Id], exceptional[block.Id] = make([]bool, count), make([]bool, count), make([]bool, count)
+			ins[block.Id], outs[block.Id], exceptional[block.Id] = make(
+				[]bool,
+				count,
+			), make([]bool, count), make([]bool, count)
 			// Must analysis starts at top away from entry; loops converge by intersection.
 			if block.Id != graph.Entry {
 				for i := 0; i < count; i++ {
@@ -245,7 +250,13 @@ func readiness(program *ir.Program) {
 	}
 }
 
-func readinessWrite(program *ir.Program, graph *flow.Function, instruction *flow.Instruction, state []bool, fields map[fieldReadiness]int) {
+func readinessWrite(
+	program *ir.Program,
+	graph *flow.Function,
+	instruction *flow.Instruction,
+	state []bool,
+	fields map[fieldReadiness]int,
+) {
 	for _, place := range instruction.Defines {
 		local := int(graph.Identifiers[place.Identifier].Declaration) - 1
 		ready := true
@@ -288,7 +299,13 @@ func readinessWrite(program *ir.Program, graph *flow.Function, instruction *flow
 }
 
 // Transform just this instruction's expressions. Nested statements have their own graph locations.
-func readinessStatement(statement ir.Statement, program *ir.Program, fields map[string]bool, ready []bool, fieldSlots map[fieldReadiness]int) ir.Statement {
+func readinessStatement(
+	statement ir.Statement,
+	program *ir.Program,
+	fields map[string]bool,
+	ready []bool,
+	fieldSlots map[fieldReadiness]int,
+) ir.Statement {
 	var transform func(reflect.Value) reflect.Value
 	transform = func(value reflect.Value) reflect.Value {
 		if value.Kind() == reflect.Interface {
@@ -330,7 +347,8 @@ func readinessStatement(statement ir.Statement, program *ir.Program, fields map[
 				}
 				node = expression
 			case ir.Property:
-				if !expression.Unset && (!program.CheckedRead(expression) || expression.Method && !certifiedUntaggedCallableRead(program, program.ViewContractTypes[expression.ViewTypeID])) {
+				if !expression.Unset && (!program.CheckedRead(expression) || expression.Method &&
+					!certifiedUntaggedCallableRead(program, program.ViewContractTypes[expression.ViewTypeID])) {
 					expression.View = ""
 					expression.ViewType = ""
 					expression.ViewAllowed = nil
@@ -446,7 +464,8 @@ func (l *lowering) lazyAssertionInitializer(node *ast.Node) bool {
 
 func assertionVarList(list *ast.Node) bool {
 	for _, declaration := range list.AsVariableDeclarationList().Declarations.Nodes {
-		if !ast.IsIdentifier(declaration.Name()) || !assertionInitializer(declaration.AsVariableDeclaration().Initializer) {
+		if !ast.IsIdentifier(declaration.Name()) ||
+			!assertionInitializer(declaration.AsVariableDeclaration().Initializer) {
 			return false
 		}
 	}
@@ -456,9 +475,9 @@ func assertionVarList(list *ast.Node) bool {
 // lazyAssertion holds the original representation once and assigns only when present.
 func (l *lowering) lazyAssertion(node *ast.Node, to ir.Type) ([]ir.Statement, ir.Expression, ir.Expression, error) {
 	operand := ast.SkipParentheses(node).AsNonNullExpression().Expression
-	value, err := l.expression(operand)
-	if err != nil {
-		return nil, nil, nil, err
+	value, expressionError := l.expression(operand)
+	if expressionError != nil {
+		return nil, nil, nil, expressionError
 	}
 	for {
 		switch narrowed := value.(type) {
@@ -481,13 +500,19 @@ stored:
 		return nil, ir.BooleanConstant{Value: true}, fit(value, to), nil
 	}
 	local := len(l.result.Locals)
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: "assertion_initializer", Type: value.Type(), Function: l.functionIndex})
+	l.result.Locals = append(
+		l.result.Locals,
+		ir.Local{Name: "assertion_initializer", Type: value.Type(), Function: l.functionIndex},
+	)
 	read := ir.Read{Local: local, Of: value.Type()}
 	present := ir.Expression(ir.BooleanConstant{Value: true})
 	if value.Type().IsMaybe() {
 		present = ir.Unary{Operator: ir.Not, Operand: ir.IsUndefined{Value: read}}
 	} else if value.Type().IsReference() {
-		present = ir.Unary{Operator: ir.Not, Operand: ir.Binary{Operator: ir.Or, Left: ir.IsUndefined{Value: read}, Right: ir.IsNull{Value: read}}}
+		present = ir.Unary{
+			Operator: ir.Not,
+			Operand:  ir.Binary{Operator: ir.Or, Left: ir.IsUndefined{Value: read}, Right: ir.IsNull{Value: read}},
+		}
 	}
 	assigned := fit(read, to)
 	if read.Type() == ir.Union && to != ir.Union {

@@ -38,10 +38,10 @@ function ensureTrailingDirectorySeparator(path: string) { return path + '/'; }
 	for _, probe := range probes {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var refused *Refused
-			if !errors.As(err, &refused) || !strings.Contains(refused.What, probe.diagnostic) {
-				test.Fatalf("expected strict overload refusal naming %q; got %v", probe.diagnostic, err)
+			if !errors.As(lowerSourceError, &refused) || !strings.Contains(refused.What, probe.diagnostic) {
+				test.Fatalf("expected strict overload refusal naming %q; got %v", probe.diagnostic, lowerSourceError)
 			}
 		})
 	}
@@ -60,7 +60,7 @@ console.log(pick('files'));
 
 func TestCensusRestMutableElements(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(test, `interface Animal { readonly name: string; }
+	_, lowerSourceError := lowerSource(test, `interface Animal { readonly name: string; }
 interface Dog extends Animal { readonly bark: string; }
 interface House { pet: Animal; }
 interface DogHouse { pet: Dog; }
@@ -71,8 +71,8 @@ replace(...houses);
 console.log(first.pet.bark);
 `)
 	var refused *Refused
-	if !errors.As(err, &refused) {
-		test.Fatalf("a rest copy still shares mutable elements; expected refusal, got %v", err)
+	if !errors.As(lowerSourceError, &refused) {
+		test.Fatalf("a rest copy still shares mutable elements; expected refusal, got %v", lowerSourceError)
 	}
 	test.Logf("rest element relation: %v", refused)
 }
@@ -80,9 +80,9 @@ console.log(first.pet.bark);
 // Flow-narrowed never is not an executable arm that fails to return.
 func TestCensusBooleanDeadBranch(test *testing.T) {
 	test.Parallel()
-	source, err := os.ReadFile("../oracle/testdata/census_boolean_dead_branch.a")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("../oracle/testdata/census_boolean_dead_branch.a")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	lowersAndAgreesWithNode(test, string(source))
 }

@@ -14,11 +14,11 @@ func TestOptionalFunctionValueRelation(test *testing.T) {
 	} {
 		test.Run(source, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, source)
+			_, lowerSourceError := lowerSource(test, source)
 			var refused *Refused
-			if !errors.As(err, &refused) ||
+			if !errors.As(lowerSourceError, &refused) ||
 				!strings.Contains(refused.What, "a function taking number seen as one taking number | undefined") {
-				test.Fatalf("got %v, want strict optional-parameter refusal", err)
+				test.Fatalf("got %v, want strict optional-parameter refusal", lowerSourceError)
 			}
 		})
 	}
@@ -26,12 +26,12 @@ func TestOptionalFunctionValueRelation(test *testing.T) {
 
 func TestOverloadedShorthandFunctionValueStaysNotYet(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(
+	_, lowerSourceError := lowerSource(
 		test,
 		`function f(x: number): number; function f(x: number): number { return x; } const o = { f }; console.log(String(o.f(1)));`,
 	)
 	var notYet *NotYet
-	if !errors.As(err, &notYet) || !strings.Contains(notYet.What, "an overloaded function as a value") {
-		test.Fatalf("got %v, want overload-value diagnostic", err)
+	if !errors.As(lowerSourceError, &notYet) || !strings.Contains(notYet.What, "an overloaded function as a value") {
+		test.Fatalf("got %v, want overload-value diagnostic", lowerSourceError)
 	}
 }

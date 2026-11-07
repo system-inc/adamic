@@ -25,13 +25,15 @@ func init() {
 
 func TestImportCycleRuntimeCalls(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/import_cycles/runtime/even.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/import_cycles/runtime/even.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	// Invoke the exports only after all module bodies finish. This keeps the fixture
 	// inside the interim policy while exercising actual cross-module function calls.
@@ -41,8 +43,8 @@ func TestImportCycleRuntimeCalls(test *testing.T) {
 		";\nimport { odd } from " +
 		quoteJS(filepath.Join(filepath.Dir(path), "odd.a")) +
 		";\nconsole.log(`${even(8)}`);\nconsole.log(`${odd(9)}`);\n"
-	if err := os.WriteFile(runner, []byte(source), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(runner, []byte(source), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	// The generated runner imports fixture source. Run it fresh: the generic .mjs
 	// cache hashes only the runner's bytes, not its imported .a modules.
@@ -105,9 +107,11 @@ func TestImportCycleLoadTimeReads(test *testing.T) {
 		{"hoisted/a.a", "1\n", ""},
 	} {
 		test.Run(probe.path, func(test *testing.T) {
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/import_cycles", probe.path))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/import_cycles", probe.path),
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			truth := onNode(test, path)
 			if string(truth.stdout) != probe.output {
@@ -120,9 +124,9 @@ func TestImportCycleLoadTimeReads(test *testing.T) {
 			} else if truth.exitCode != 0 {
 				test.Fatalf("Node: %+v", truth)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			generated := onJavaScriptBackend(test, program)
 			compiled, _ := natively(test, program)

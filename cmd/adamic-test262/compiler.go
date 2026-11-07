@@ -26,10 +26,10 @@ func init() {
 	encoder := json.NewEncoder(os.Stdout)
 	for {
 		var path string
-		if err := decoder.Decode(&path); err != nil {
+		if decodeError := decoder.Decode(&path); decodeError != nil {
 			os.Exit(0)
 		}
-		if err := encoder.Encode(recordExecution(compileInProcess(path))); err != nil {
+		if encodeError := encoder.Encode(recordExecution(compileInProcess(path))); encodeError != nil {
 			os.Exit(1)
 		}
 	}
@@ -44,22 +44,22 @@ func compileInProcess(path string) (result execution) {
 			result = execution{Exit: -1, Stderr: "command output exceeded capture limit\n"}
 		}
 	}()
-	loaded, err := load.Load([]string{path})
-	if err != nil {
+	loaded, loadError := load.Load([]string{path})
+	if loadError != nil {
 		var checkError *load.CheckError
 		var diagnostic strings.Builder
-		if errors.As(err, &checkError) {
+		if errors.As(loadError, &checkError) {
 			for _, text := range checkError.Diagnostics {
 				fmt.Fprintln(&diagnostic, text)
 			}
 		} else {
-			fmt.Fprintf(&diagnostic, "adamic: %v\n", err)
+			fmt.Fprintf(&diagnostic, "adamic: %v\n", loadError)
 		}
 		return execution{Exit: 1, Stderr: diagnostic.String()}
 	}
-	lowered, err := lower.Lower(context.Background(), loaded)
-	if err != nil {
-		return execution{Exit: 1, Stderr: "adamic: " + err.Error() + "\n"}
+	lowered, lowerError := lower.Lower(context.Background(), loaded)
+	if lowerError != nil {
+		return execution{Exit: 1, Stderr: "adamic: " + lowerError.Error() + "\n"}
 	}
 	if native.UsesTSGo(lowered) {
 		return execution{Exit: 1, Stderr: "adamic: tsgo requires a native build with --tsgo <archive>\n"}
@@ -93,38 +93,38 @@ func (worker *compilerWorker) close() {
 
 func (worker *compilerWorker) compile(path string) execution {
 	if worker.command == nil {
-		executable, err := os.Executable()
-		if err != nil {
-			return execution{Exit: -1, Stderr: err.Error()}
+		executable, executableError := os.Executable()
+		if executableError != nil {
+			return execution{Exit: -1, Stderr: executableError.Error()}
 		}
 		command := exec.Command(executable, "--compiler-worker")
 		command.Env = childEnvironment()
-		input, err := command.StdinPipe()
-		if err != nil {
-			return execution{Exit: -1, Stderr: err.Error()}
+		input, stdinPipeError := command.StdinPipe()
+		if stdinPipeError != nil {
+			return execution{Exit: -1, Stderr: stdinPipeError.Error()}
 		}
-		output, err := command.StdoutPipe()
-		if err != nil {
+		output, stdoutPipeError := command.StdoutPipe()
+		if stdoutPipeError != nil {
 			input.Close()
-			return execution{Exit: -1, Stderr: err.Error()}
+			return execution{Exit: -1, Stderr: stdoutPipeError.Error()}
 		}
-		if err := command.Start(); err != nil {
+		if startError := command.Start(); startError != nil {
 			input.Close()
 			output.Close()
-			return execution{Exit: -1, Stderr: err.Error()}
+			return execution{Exit: -1, Stderr: startError.Error()}
 		}
 		worker.command, worker.input, worker.output = command, input, output
 		worker.encoder, worker.decoder = json.NewEncoder(input), json.NewDecoder(output)
 	}
 	done := make(chan execution, 1)
 	go func() {
-		if err := worker.encoder.Encode(path); err != nil {
-			done <- execution{Exit: -1, Stderr: err.Error()}
+		if encodeError := worker.encoder.Encode(path); encodeError != nil {
+			done <- execution{Exit: -1, Stderr: encodeError.Error()}
 			return
 		}
 		var result recordedExecution
-		if err := worker.decoder.Decode(&result); err != nil {
-			done <- execution{Exit: -1, Stderr: err.Error()}
+		if decodeError := worker.decoder.Decode(&result); decodeError != nil {
+			done <- execution{Exit: -1, Stderr: decodeError.Error()}
 			return
 		}
 		done <- result.execution()

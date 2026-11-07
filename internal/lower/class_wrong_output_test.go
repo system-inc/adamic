@@ -8,9 +8,9 @@ import (
 
 func TestClassWrongOutputIteratorReceiver(test *testing.T) {
 	test.Parallel()
-	source, err := os.ReadFile("../oracle/testdata/class_wrong_output_refused/iterators_override_this.a")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("../oracle/testdata/class_wrong_output_refused/iterators_override_this.a")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	prefix := strings.Split(string(source), "for(const value")[0]
 	for _, use := range []string{
@@ -19,9 +19,9 @@ func TestClassWrongOutputIteratorReceiver(test *testing.T) {
 		"const viewed: BaseIterator = new ScaledIterator(); console.log(Array.from(viewed).join(','));",
 		"const [first = -1] = new ScaledIterator(); console.log(`${first}`);",
 	} {
-		_, err := lowerSource(test, prefix+use)
-		if err == nil || !strings.Contains(err.Error(), "adamic/iterator-receiver-origin") {
-			test.Fatalf("unsafe protocol accepted: %s: %v", use, err)
+		_, lowerSourceError := lowerSource(test, prefix+use)
+		if lowerSourceError == nil || !strings.Contains(lowerSourceError.Error(), "adamic/iterator-receiver-origin") {
+			test.Fatalf("unsafe protocol accepted: %s: %v", use, lowerSourceError)
 		}
 	}
 	for _, use := range []string{
@@ -34,9 +34,9 @@ func TestClassWrongOutputIteratorReceiver(test *testing.T) {
 
 func TestClassWrongOutputKeysRepair(test *testing.T) {
 	test.Parallel()
-	source, err := os.ReadFile("../oracle/testdata/class_wrong_output_refused/iterators_sym_keys_view.a")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("../oracle/testdata/class_wrong_output_refused/iterators_sym_keys_view.a")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	repaired := strings.Replace(string(source), "Object.keys(view)", "Object.keys({ value: view.value })", 1)
 	lowersAndAgreesWithNode(test, repaired)

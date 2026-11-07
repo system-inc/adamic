@@ -23,23 +23,23 @@ func execute(test *testing.T, directory, name string, args ...string) execution 
 	test.Helper()
 	command := exec.Command(name, args...)
 	command.Dir = directory
-	output, err := os.CreateTemp(test.TempDir(), "stdout-")
-	if err != nil {
-		test.Fatal(err)
+	output, temporaryFileError := os.CreateTemp(test.TempDir(), "stdout-")
+	if temporaryFileError != nil {
+		test.Fatal(temporaryFileError)
 	}
 	defer output.Close()
 	command.Stdout = output
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
 	started := time.Now()
-	err = childguard.Run(command, childguard.Options{Stall: parserChildStall})
+	runError := childguard.Run(command, childguard.Options{Stall: parserChildStall})
 	duration := time.Since(started)
-	if err != nil || stderr.Len() != 0 {
-		test.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
+	if runError != nil || stderr.Len() != 0 {
+		test.Fatalf("%s %v: %v\n%s", name, args, runError, &stderr)
 	}
-	data, err := os.ReadFile(output.Name())
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(output.Name())
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return execution{data, duration}
 }
@@ -59,9 +59,9 @@ func TestParserChildGuard_000(test *testing.T) {
 	started := time.Now()
 	test.Cleanup(func() { test.Logf("own work %.3fs", time.Since(started).Seconds()) })
 	manifest, count := jsxManifest(test)
-	directory, err := filepath.Abs(".")
-	if err != nil {
-		test.Fatal(err)
+	directory, absolutePathError := filepath.Abs(".")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	want := execute(test, "", oracle, "--manifest", manifest, "--whole")
 	for _, got := range []execution{

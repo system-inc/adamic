@@ -80,10 +80,13 @@ func (cache *resultCache) reuse(key string, execute func() (execution, bool)) ex
 	lock.Lock()
 	defer lock.Unlock()
 	path := filepath.Join(cache.directory, key+".json")
-	if contents, err := os.ReadFile(path); err == nil {
+	if contents, readError := os.ReadFile(path); readError == nil {
 		var envelope cacheEnvelope
 		var recorded recordedExecution
-		if json.Unmarshal(contents, &envelope) == nil && envelope.Key == key && envelope.Digest == cacheKey(string(envelope.Value)) && json.Unmarshal(envelope.Value, &recorded) == nil {
+		if json.Unmarshal(contents, &envelope) == nil &&
+			envelope.Key == key &&
+			envelope.Digest == cacheKey(string(envelope.Value)) &&
+			json.Unmarshal(envelope.Value, &recorded) == nil {
 			return recorded.execution()
 		}
 	}
@@ -92,16 +95,16 @@ func (cache *resultCache) reuse(key string, execute func() (execution, bool)) ex
 	if !reusable || result.TimedOut || (result.Exit == -1 && result.Signal == "") {
 		return result
 	}
-	encoded, err := json.Marshal(recordExecution(result))
-	if err != nil {
+	encoded, encodeError := json.Marshal(recordExecution(result))
+	if encodeError != nil {
 		return result
 	}
-	contents, err := json.Marshal(cacheEnvelope{key, cacheKey(string(encoded)), encoded})
-	if err != nil || os.MkdirAll(cache.directory, 0700) != nil {
+	contents, encodeError := json.Marshal(cacheEnvelope{key, cacheKey(string(encoded)), encoded})
+	if encodeError != nil || os.MkdirAll(cache.directory, 0700) != nil {
 		return result
 	}
-	temporary, err := os.CreateTemp(cache.directory, ".result-")
-	if err != nil {
+	temporary, temporaryFileError := os.CreateTemp(cache.directory, ".result-")
+	if temporaryFileError != nil {
 		return result
 	}
 	defer os.Remove(temporary.Name())
@@ -126,18 +129,42 @@ var resultEnvironment = []string{
 	// part of a crash's stderr through it. Builder's resolver will name these tools instead.
 	"PATH",
 	// clang reads these for the headers, libraries, helper programs and options of a link.
-	"CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "COMPILER_PATH", "CCC_OVERRIDE_OPTIONS",
+	"CPATH",
+	"C_INCLUDE_PATH",
+	"LIBRARY_PATH",
+	"COMPILER_PATH",
+	"CCC_OVERRIDE_OPTIONS",
 	// On macOS /usr/bin/clang is xcrun's shim: these choose the toolchain and SDK behind it.
-	"DEVELOPER_DIR", "TOOLCHAINS", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET",
+	"DEVELOPER_DIR",
+	"TOOLCHAINS",
+	"SDKROOT",
+	"MACOSX_DEPLOYMENT_TARGET",
 	// The dynamic loader can put other code in clang, Node or the native program.
-	"LD_PRELOAD", "LD_LIBRARY_PATH", "DYLD_INSERT_LIBRARIES", "DYLD_LIBRARY_PATH", "DYLD_FALLBACK_LIBRARY_PATH", "DYLD_FRAMEWORK_PATH",
+	"LD_PRELOAD",
+	"LD_LIBRARY_PATH",
+	"DYLD_INSERT_LIBRARIES",
+	"DYLD_LIBRARY_PATH",
+	"DYLD_FALLBACK_LIBRARY_PATH",
+	"DYLD_FRAMEWORK_PATH",
 	// A sanitizer report is symbolized by the program these name.
-	"ASAN_SYMBOLIZER_PATH", "UBSAN_SYMBOLIZER_PATH",
+	"ASAN_SYMBOLIZER_PATH",
+	"UBSAN_SYMBOLIZER_PATH",
 	// Node's options, debug channels, warnings and colors change what a Node run prints or does.
-	"NODE_OPTIONS", "NODE_DEBUG", "NODE_DEBUG_NATIVE", "NODE_NO_WARNINGS", "NODE_PENDING_DEPRECATION", "NODE_REDIRECT_WARNINGS",
-	"FORCE_COLOR", "NO_COLOR", "NODE_DISABLE_COLORS",
+	"NODE_OPTIONS",
+	"NODE_DEBUG",
+	"NODE_DEBUG_NATIVE",
+	"NODE_NO_WARNINGS",
+	"NODE_PENDING_DEPRECATION",
+	"NODE_REDIRECT_WARNINGS",
+	"FORCE_COLOR",
+	"NO_COLOR",
+	"NODE_DISABLE_COLORS",
 	// Node's Date and Intl answer in the time zone and locale these choose, from the ICU data named.
-	"TZ", "LC_ALL", "LC_MESSAGES", "LANG", "NODE_ICU_DATA",
+	"TZ",
+	"LC_ALL",
+	"LC_MESSAGES",
+	"LANG",
+	"NODE_ICU_DATA",
 }
 
 // passedEnvironment is what a child inherits beyond resultEnvironment, unkeyed: where clang and the
@@ -175,13 +202,13 @@ func childEnvironment(extra ...string) []string {
 type runnerTools struct{ node, clang string }
 
 func resolveTools() (runnerTools, error) {
-	node, err := toolchain.Path("node")
-	if err != nil {
-		return runnerTools{}, err
+	node, pathError := toolchain.Path("node")
+	if pathError != nil {
+		return runnerTools{}, pathError
 	}
-	clang, err := toolchain.Path("clang")
-	if err != nil {
-		return runnerTools{}, err
+	clang, pathError := toolchain.Path("clang")
+	if pathError != nil {
+		return runnerTools{}, pathError
 	}
 	return runnerTools{node: node, clang: clang}, nil
 }
@@ -189,15 +216,15 @@ func resolveTools() (runnerTools, error) {
 // prepareCache derives the execution context every observation is keyed under. root is the checkout
 // under test, as prepareMode gets it, and tools are the programs its runs execute.
 func prepareCache(root string, tools runnerTools) (*resultCache, string, string, error) {
-	directory, err := os.UserCacheDir()
-	if err != nil {
-		return nil, "", "", err
+	directory, userCacheDirectoryError := os.UserCacheDir()
+	if userCacheDirectoryError != nil {
+		return nil, "", "", userCacheDirectoryError
 	}
 	versionCommand := exec.Command(tools.node, "--version")
 	versionCommand.Env = childEnvironment()
-	version, err := versionCommand.CombinedOutput()
-	if err != nil {
-		return nil, "", "", fmt.Errorf("node --version: %w: %s", err, version)
+	version, combinedOutputError := versionCommand.CombinedOutput()
+	if combinedOutputError != nil {
+		return nil, "", "", fmt.Errorf("node --version: %w: %s", combinedOutputError, version)
 	}
 	parts := []string{"test262-context-v2", runtime.GOOS, runtime.GOARCH, fmt.Sprint(os.Geteuid())}
 	// Relative paths in the keyed commands (an explicit -root or -work, and the scratch compiler under
@@ -206,14 +233,14 @@ func prepareCache(root string, tools runnerTools) (*resultCache, string, string,
 	// still name this machine's places (node's and clang's paths found on PATH, the runtime library
 	// and scratch compiler under the cache and work directories), so today observations are reused on
 	// the machine that made them, from any copy of the tree there.
-	place, err := checkoutPlace(root)
-	if err != nil {
-		return nil, "", "", err
+	place, checkoutPlaceError := checkoutPlace(root)
+	if checkoutPlaceError != nil {
+		return nil, "", "", checkoutPlaceError
 	}
 	parts = append(parts, place)
 	var stack syscall.Rlimit
-	if err := syscall.Getrlimit(syscall.RLIMIT_STACK, &stack); err != nil {
-		return nil, "", "", err
+	if getrlimitError := syscall.Getrlimit(syscall.RLIMIT_STACK, &stack); getrlimitError != nil {
+		return nil, "", "", getrlimitError
 	}
 	parts = append(parts, fmt.Sprint(stack.Cur, stack.Max))
 	parts = append(parts, keyedEnvironment(os.LookupEnv)...)
@@ -230,14 +257,14 @@ func prepareCache(root string, tools runnerTools) (*resultCache, string, string,
 		}
 	}
 	// The full executable remains a conservative compiler and native identity.
-	executable, err := os.Executable()
-	if err != nil {
-		return nil, "", "", err
+	executable, executableError := os.Executable()
+	if executableError != nil {
+		return nil, "", "", executableError
 	}
 	for _, path := range []string{executable, tools.node, tools.clang} {
-		contents, err := os.ReadFile(path)
-		if err != nil {
-			return nil, "", "", err
+		contents, readError := os.ReadFile(path)
+		if readError != nil {
+			return nil, "", "", readError
 		}
 		// The runner's location is not input to successful compilation or native execution.
 		// go run allocates a new executable path even for identical built bytes.
@@ -250,7 +277,11 @@ func prepareCache(root string, tools runnerTools) (*resultCache, string, string,
 			nodeParts = append(nodeParts, path, cacheKey(string(contents)))
 		}
 	}
-	return &resultCache{directory: filepath.Join(directory, "adamic", "test262"), bypass: os.Getenv("ADAMIC_GATE_UNCACHED") == "1", nodeContext: cacheKey(nodeParts...)}, string(version), cacheKey(parts...), nil
+	return &resultCache{
+		directory:   filepath.Join(directory, "adamic", "test262"),
+		bypass:      os.Getenv("ADAMIC_GATE_UNCACHED") == "1",
+		nodeContext: cacheKey(nodeParts...),
+	}, string(version), cacheKey(parts...), nil
 }
 
 // checkoutPlace is the working directory relative to the checkout root, in slash form: the same in
@@ -258,25 +289,25 @@ func prepareCache(root string, tools runnerTools) (*resultCache, string, string,
 // sides lose their symbolic links first, since the working directory may be reported either way
 // (macOS's /var is /private/var).
 func checkoutPlace(root string) (string, error) {
-	workingDirectory, err := os.Getwd()
-	if err != nil {
-		return "", err
+	workingDirectory, workingDirectoryError := os.Getwd()
+	if workingDirectoryError != nil {
+		return "", workingDirectoryError
 	}
-	workingDirectory, err = filepath.EvalSymlinks(workingDirectory)
-	if err != nil {
-		return "", err
+	workingDirectory, resolveSymlinksError := filepath.EvalSymlinks(workingDirectory)
+	if resolveSymlinksError != nil {
+		return "", resolveSymlinksError
 	}
-	checkout, err := filepath.Abs(root)
-	if err != nil {
-		return "", err
+	checkout, absolutePathError := filepath.Abs(root)
+	if absolutePathError != nil {
+		return "", absolutePathError
 	}
-	checkout, err = filepath.EvalSymlinks(checkout)
-	if err != nil {
-		return "", err
+	checkout, resolveSymlinksError = filepath.EvalSymlinks(checkout)
+	if resolveSymlinksError != nil {
+		return "", resolveSymlinksError
 	}
-	place, err := filepath.Rel(checkout, workingDirectory)
-	if err != nil {
-		return "", err
+	place, relativePathError := filepath.Rel(checkout, workingDirectory)
+	if relativePathError != nil {
+		return "", relativePathError
 	}
 	return filepath.ToSlash(place), nil
 }
@@ -290,9 +321,9 @@ var runnerSources embed.FS
 func nodeHarnessIdentity() string { return nodeHarnessSourceIdentity(runnerSources) }
 
 func nodeHarnessSourceIdentity(sources fs.FS) string {
-	entries, err := fs.ReadDir(sources, ".")
-	if err != nil {
-		panic(err)
+	entries, readDirectoryError := fs.ReadDir(sources, ".")
+	if readDirectoryError != nil {
+		panic(readDirectoryError)
 	}
 	parts := []string{"test262-node-harness-v2"}
 	for _, entry := range entries {
@@ -300,9 +331,9 @@ func nodeHarnessSourceIdentity(sources fs.FS) string {
 		if name == "compiler.go" || strings.HasSuffix(name, "_test.go") {
 			continue
 		}
-		contents, err := fs.ReadFile(sources, name)
-		if err != nil {
-			panic(err)
+		contents, readFileError := fs.ReadFile(sources, name)
+		if readFileError != nil {
+			panic(readFileError)
 		}
 		parts = append(parts, name, string(contents))
 	}
@@ -314,9 +345,9 @@ func nodeHarnessSourceIdentity(sources fs.FS) string {
 // such as same-length comment changes. It only adds misses; it does not replace the binary.
 func loweringSourceIdentity(root string) (string, error) {
 	directory := filepath.Join(root, "internal", "lower")
-	entries, err := os.ReadDir(directory)
-	if err != nil {
-		return "", err
+	entries, readDirectoryError := os.ReadDir(directory)
+	if readDirectoryError != nil {
+		return "", readDirectoryError
 	}
 	parts := []string{"test262-lowering-source-v1"}
 	for _, entry := range entries {
@@ -324,9 +355,9 @@ func loweringSourceIdentity(root string) (string, error) {
 		if entry.IsDir() || !strings.HasSuffix(name, ".go") || strings.HasSuffix(name, "_test.go") {
 			continue
 		}
-		contents, err := os.ReadFile(filepath.Join(directory, name))
-		if err != nil {
-			return "", err
+		contents, readError := os.ReadFile(filepath.Join(directory, name))
+		if readError != nil {
+			return "", readError
 		}
 		parts = append(parts, name, string(contents))
 	}

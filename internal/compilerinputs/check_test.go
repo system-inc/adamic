@@ -17,8 +17,8 @@ func TestCheckKeyTellsTheCompilerFromTscWhole(test *testing.T) {
 			return buildcache.Key(root, buildcache.Inputs{Name: "stand-in", Files: files})
 		}
 	}
-	if err := CheckKey(own, keyed(append(Lowering(), own...))); err != nil {
-		test.Fatalf("a key naming Lowering: %v", err)
+	if checkKeyError := CheckKey(own, keyed(append(Lowering(), own...))); checkKeyError != nil {
+		test.Fatalf("a key naming Lowering: %v", checkKeyError)
 	}
 	for _, wrong := range []struct {
 		name  string
@@ -28,9 +28,9 @@ func TestCheckKeyTellsTheCompilerFromTscWhole(test *testing.T) {
 		{"tsc whole", append(append(Lowering(), own...), "cohere/TypeScript/tsc"), "names tsc whole"},
 		{"no compiler", own, "doesn't name the compiler"},
 	} {
-		err := CheckKey(own, keyed(wrong.files))
-		if err == nil || !strings.Contains(err.Error(), wrong.want) {
-			test.Errorf("a key declaring %s: got %v, want an error saying it %s", wrong.name, err, wrong.want)
+		checkKeyError := CheckKey(own, keyed(wrong.files))
+		if checkKeyError == nil || !strings.Contains(checkKeyError.Error(), wrong.want) {
+			test.Errorf("a key declaring %s: got %v, want an error saying it %s", wrong.name, checkKeyError, wrong.want)
 		}
 	}
 }

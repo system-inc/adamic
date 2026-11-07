@@ -10,17 +10,17 @@ import (
 )
 
 func TestMain(m *testing.M) {
-	if err := os.Chdir(".."); err != nil {
-		panic(err)
+	if chdirError := os.Chdir(".."); chdirError != nil {
+		panic(chdirError)
 	}
-	if _, err := registry.Stale("."); err != nil {
-		panic(err)
+	if _, staleError := registry.Stale("."); staleError != nil {
+		panic(staleError)
 	}
 	ensureEnvironment()
-	var err error
-	sharedDirectory, err = os.MkdirTemp("", "lint-oracles-")
-	if err != nil {
-		panic(err)
+	var temporaryDirectoryError error
+	sharedDirectory, temporaryDirectoryError = os.MkdirTemp("", "lint-oracles-")
+	if temporaryDirectoryError != nil {
+		panic(temporaryDirectoryError)
 	}
 	oracleProducer = true
 	code := m.Run()

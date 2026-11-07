@@ -43,22 +43,22 @@ int main(int count, char **arguments) {
 		{"slabs", true, "use-after-poison"},
 	} {
 		binary := filepath.Join(test.TempDir(), "harness-"+build.name)
-		if err := Build(harness, binary, Options{Sanitize: true, slabs: build.slabs}); err != nil {
-			test.Fatal(err)
+		if buildError := Build(harness, binary, Options{Sanitize: true, slabs: build.slabs}); buildError != nil {
+			test.Fatal(buildError)
 		}
 		for _, use := range []string{"retain", "length", "none"} {
-			output, err := exec.Command(binary, use).CombinedOutput()
+			output, combinedOutputError := exec.Command(binary, use).CombinedOutput()
 			caught := strings.Contains(string(output), "ERROR: AddressSanitizer: "+build.report)
 			switch {
-			case use == "none" && err != nil:
-				test.Errorf("%s, untouched: want a clean run, got %v\n%s", build.name, err, output)
-			case use != "none" && (err == nil || !caught):
+			case use == "none" && combinedOutputError != nil:
+				test.Errorf("%s, untouched: want a clean run, got %v\n%s", build.name, combinedOutputError, output)
+			case use != "none" && (combinedOutputError == nil || !caught):
 				test.Errorf(
 					"%s, %s after the free: want AddressSanitizer's %s, got %v\n%.400s",
 					build.name,
 					use,
 					build.report,
-					err,
+					combinedOutputError,
 					output,
 				)
 			}
@@ -124,13 +124,13 @@ int main(int count, char **arguments) {
 }
 `
 	binary := filepath.Join(test.TempDir(), "harness")
-	if err := Build(harness, binary, Options{}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(harness, binary, Options{}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	peak := func(mode string) int {
 		// Fork from a small shell after exec, so the child's high-water mark doesn't inherit
 		// the Go test process's changing resident set while other tests run in parallel.
-		output, err := exec.Command(
+		output, combinedOutputError := exec.Command(
 			"/bin/sh",
 			"-c",
 			`"$@" & child=$!; wait "$child"`,
@@ -138,12 +138,12 @@ int main(int count, char **arguments) {
 			binary,
 			mode,
 		).CombinedOutput()
-		if err != nil {
-			test.Fatalf("%s: %v\n%s", mode, err, output)
+		if combinedOutputError != nil {
+			test.Fatalf("%s: %v\n%s", mode, combinedOutputError, output)
 		}
 		var kilobytes, acquired, generation int
-		_, err = fmt.Sscanf(string(output), "%d %d %d", &kilobytes, &acquired, &generation)
-		if err != nil {
+		_, scanError := fmt.Sscanf(string(output), "%d %d %d", &kilobytes, &acquired, &generation)
+		if scanError != nil {
 			test.Fatalf("%s: %q", mode, output)
 		}
 		kilobytes = residentKibibytes(kilobytes, goruntime.GOOS)

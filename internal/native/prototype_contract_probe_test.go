@@ -54,17 +54,17 @@ await import('data:text/javascript,' + encodeURIComponent(source));`, source)
 	command.Env = append(os.Environ(), "NODE_NO_WARNINGS=1")
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
-	if err := command.Run(); err != nil || stderr.Len() != 0 {
-		test.Fatalf("Node: %v\n%s", err, stderr.String())
+	if runError := command.Run(); runError != nil || stderr.Len() != 0 {
+		test.Fatalf("Node: %v\n%s", runError, stderr.String())
 	}
 	return stdout.String()
 }
 
 func prototypeFixture(test *testing.T, name string) string {
 	test.Helper()
-	source, err := os.ReadFile(filepath.Join("testdata", "prototypes", name+".a"))
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(filepath.Join("testdata", "prototypes", name+".a"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return string(source)
 }
@@ -111,14 +111,14 @@ func TestPrototypeMixedCountedCycleProbe(test *testing.T) {
 	expected := prototypeNode(test, prototypeFixture(test, "mixed_set_cycle"))
 	directory := test.TempDir()
 	counted := filepath.Join(directory, "counted")
-	if err := native.Build(prototypeOwnershipModel, counted, native.Options{Count: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(prototypeOwnershipModel, counted, native.Options{Count: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	var stdout, stderr bytes.Buffer
 	command := exec.Command(counted)
 	command.Stdout, command.Stderr = &stdout, &stderr
-	if err := command.Run(); err != nil || stdout.String() != expected {
-		test.Fatalf("counted model: %v %q %s", err, stdout.String(), stderr.String())
+	if runError := command.Run(); runError != nil || stdout.String() != expected {
+		test.Fatalf("counted model: %v %q %s", runError, stdout.String(), stderr.String())
 	}
 	report := prototypeUnbalanced(prototypeExecution{Stdout: stdout.Bytes(), Stderr: stderr.Bytes()})
 	if !strings.Contains(report, "heap values leaked: 2") {
@@ -127,16 +127,20 @@ func TestPrototypeMixedCountedCycleProbe(test *testing.T) {
 	test.Log(strings.TrimSpace(stderr.String()))
 
 	sanitized := filepath.Join(directory, "sanitized")
-	if err := native.Build(prototypeOwnershipModel, sanitized, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(
+		prototypeOwnershipModel,
+		sanitized,
+		native.Options{Sanitize: true},
+	); buildError != nil {
+		test.Fatal(buildError)
 	}
 	command = exec.Command(sanitized)
 	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0:halt_on_error=1", "UBSAN_OPTIONS=halt_on_error=1")
 	stdout.Reset()
 	stderr.Reset()
 	command.Stdout, command.Stderr = &stdout, &stderr
-	if err := command.Run(); err != nil || stdout.String() != expected || stderr.Len() != 0 {
-		test.Fatalf("sanitized model: %v %q %s", err, stdout.String(), stderr.String())
+	if runError := command.Run(); runError != nil || stdout.String() != expected || stderr.Len() != 0 {
+		test.Fatalf("sanitized model: %v %q %s", runError, stdout.String(), stderr.String())
 	}
 	if report := prototypeLeaks(test, prototypeOwnershipModel, sanitized); report == "" {
 		test.Fatal("the leak check missed the mixed ownership cycle")
@@ -156,8 +160,8 @@ func TestPrototypeMixedCountedCycleProbe(test *testing.T) {
 		1,
 	)
 	binary := filepath.Join(directory, "no-back-edge")
-	if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(mutant, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	if report := prototypeLeaks(test, mutant, binary); report != "" {
 		test.Fatalf("without the back edge should free: %s", report)
@@ -182,36 +186,36 @@ func TestPrototypeDebugSiteRefusals(test *testing.T) {
 	for _, fixture := range cases {
 		test.Run("debug_"+fixture.line, func(test *testing.T) {
 			name := filepath.Join("testdata", "prototypes", "sites", "debug_"+fixture.line+".a")
-			source, err := os.ReadFile(name)
-			if err != nil {
-				test.Fatal(err)
+			source, readError := os.ReadFile(name)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			if got := prototypeNode(test, string(source)); got != fixture.expected {
 				test.Fatalf("Node: %q, want %q", got, fixture.expected)
 			}
-			checked, err := load.Load([]string{name})
-			if err != nil {
-				test.Fatal(err)
+			checked, loadError := load.Load([]string{name})
+			if loadError != nil {
+				test.Fatal(loadError)
 			}
-			program, err := lower.Lower(context.Background(), checked)
+			program, lowerError := lower.Lower(context.Background(), checked)
 			if fixture.api == "" {
 				// typeof Object.setPrototypeOf only tests for the method, an observation, not a detach
 				// (lower/method_presence.go, #4q1b2er): it lowers, and each backend prints Node's answer.
-				if err != nil {
-					test.Fatalf("availability probe: %v", err)
+				if lowerError != nil {
+					test.Fatalf("availability probe: %v", lowerError)
 				}
 				prototypeBackendsPrint(test, program, fixture.expected)
 				test.Log("lowered availability probe, no prototype edge")
 				return
 			}
 			var refusal *lower.Refused
-			if !errors.As(err, &refusal) || refusal.What != fixture.api {
-				test.Fatalf("want named %s refusal for debug.ts:%s, got %v", fixture.api, fixture.line, err)
+			if !errors.As(lowerError, &refusal) || refusal.What != fixture.api {
+				test.Fatalf("want named %s refusal for debug.ts:%s, got %v", fixture.api, fixture.line, lowerError)
 			}
 			if !strings.Contains(refusal.Fix, "prototypes expose or replace fields outside the declared shape") {
-				test.Fatalf("refusal lost its reason: %v", err)
+				test.Fatalf("refusal lost its reason: %v", lowerError)
 			}
-			test.Logf("refused debug.ts:%s: %v", fixture.line, err)
+			test.Logf("refused debug.ts:%s: %v", fixture.line, lowerError)
 			lines := strings.Split(string(source), "\n")
 			for index, line := range lines {
 				if strings.HasPrefix(line, fixture.api+"(") {
@@ -222,14 +226,14 @@ func TestPrototypeDebugSiteRefusals(test *testing.T) {
 		})
 	}
 	name := filepath.Join("testdata", "prototypes", "mixed_set_cycle.a")
-	checked, err := load.Load([]string{name})
-	if err != nil {
-		test.Fatal(err)
+	checked, loadError := load.Load([]string{name})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	_, err = lower.Lower(context.Background(), checked)
+	_, lowerError := lower.Lower(context.Background(), checked)
 	var refusal *lower.Refused
-	if !errors.As(err, &refusal) || refusal.What != "Object.setPrototypeOf" {
-		test.Fatalf("mixed-edge admission not refused: %v", err)
+	if !errors.As(lowerError, &refusal) || refusal.What != "Object.setPrototypeOf" {
+		test.Fatalf("mixed-edge admission not refused: %v", lowerError)
 	}
 }
 
@@ -239,12 +243,12 @@ func prototypeBackendsPrint(test *testing.T, program *ir.Program, expected strin
 	test.Helper()
 	directory := test.TempDir()
 	script := filepath.Join(directory, "main.mjs")
-	if err := os.WriteFile(script, []byte(javascript.JavaScript(program)), 0o600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(script, []byte(javascript.JavaScript(program)), 0o600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	binary := filepath.Join(directory, "native")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	for _, backend := range []struct {
 		name    string
@@ -255,8 +259,15 @@ func prototypeBackendsPrint(test *testing.T, program *ir.Program, expected strin
 	} {
 		var stdout, stderr bytes.Buffer
 		backend.command.Stdout, backend.command.Stderr = &stdout, &stderr
-		if err := backend.command.Run(); err != nil || stdout.String() != expected {
-			test.Fatalf("%s: %v, stdout %q, want %q\n%s", backend.name, err, stdout.String(), expected, stderr.String())
+		if runError := backend.command.Run(); runError != nil || stdout.String() != expected {
+			test.Fatalf(
+				"%s: %v, stdout %q, want %q\n%s",
+				backend.name,
+				runError,
+				stdout.String(),
+				expected,
+				stderr.String(),
+			)
 		}
 	}
 }
@@ -264,15 +275,15 @@ func prototypeBackendsPrint(test *testing.T, program *ir.Program, expected strin
 func prototypeRefusalControl(test *testing.T, original, source string) {
 	test.Helper()
 	name := filepath.Join(test.TempDir(), filepath.Base(original))
-	if err := os.WriteFile(name, []byte(source), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(name, []byte(source), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	checked, err := load.Load([]string{name})
-	if err != nil {
-		test.Fatal(err)
+	checked, loadError := load.Load([]string{name})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	if _, err := lower.Lower(context.Background(), checked); err != nil {
-		test.Fatalf("removing the prototype operation must defeat the refusal observation: %v", err)
+	if _, lowerError := lower.Lower(context.Background(), checked); lowerError != nil {
+		test.Fatalf("removing the prototype operation must defeat the refusal observation: %v", lowerError)
 	}
 	test.Log("operation-removal mutant defeats the expected refusal")
 }
@@ -293,9 +304,9 @@ func prototypeUnbalanced(run prototypeExecution) string {
 	}
 	var counts [3]int64
 	for index, group := range []int{1, 2, 6} {
-		value, err := strconv.ParseInt(string(match[group]), 10, 64)
-		if err != nil {
-			return fmt.Sprint(err)
+		value, parseError := strconv.ParseInt(string(match[group]), 10, 64)
+		if parseError != nil {
+			return fmt.Sprint(parseError)
 		}
 		counts[index] = value
 	}
@@ -308,31 +319,31 @@ func prototypeLeaks(test *testing.T, source, binary string) string {
 	test.Helper()
 	if runtime.GOOS == "darwin" {
 		counted := filepath.Join(test.TempDir(), "counted")
-		if err := native.Build(source, counted, native.Options{Count: true}); err != nil {
-			test.Fatal(err)
+		if buildError := native.Build(source, counted, native.Options{Count: true}); buildError != nil {
+			test.Fatal(buildError)
 		}
 		command := exec.Command(counted)
 		var stdout, stderr bytes.Buffer
 		command.Stdout, command.Stderr = &stdout, &stderr
-		err := command.Run()
-		if err != nil {
-			test.Fatal(err)
+		runError := command.Run()
+		if runError != nil {
+			test.Fatal(runError)
 		}
 		if report := prototypeUnbalanced(prototypeExecution{stdout.Bytes(), stderr.Bytes(), 0}); report != "" {
 			return report
 		}
 		command = exec.Command("leaks", "--atExit", "--", counted)
-		output, err := command.CombinedOutput()
-		if err != nil {
-			return fmt.Sprintf("leaks: %v %s", err, output)
+		output, combinedOutputError := command.CombinedOutput()
+		if combinedOutputError != nil {
+			return fmt.Sprintf("leaks: %v %s", combinedOutputError, output)
 		}
 		return ""
 	}
 	command := exec.Command(binary)
 	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1:halt_on_error=1", "UBSAN_OPTIONS=halt_on_error=1")
-	output, err := command.CombinedOutput()
-	if err != nil {
-		return fmt.Sprintf("leak run: %v %s", err, output)
+	output, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError != nil {
+		return fmt.Sprintf("leak run: %v %s", combinedOutputError, output)
 	}
 	return ""
 }

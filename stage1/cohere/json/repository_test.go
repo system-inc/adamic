@@ -32,12 +32,12 @@ func gitCorpus(root string, arguments ...string) ([]byte, error) {
 func gitCorpusInput(root string, input []byte, arguments ...string) ([]byte, error) {
 	command := toolchain.GitCommand(append([]string{"-C", root}, arguments...)...)
 	command.Stdin = bytes.NewReader(input)
-	output, err := childguard.CombinedOutput(command, jsonGuard)
-	if err != nil {
+	output, combinedOutputError := childguard.CombinedOutput(command, jsonGuard)
+	if combinedOutputError != nil {
 		return nil, fmt.Errorf(
 			"JSON corpus requires usable Git metadata: git %s: %w: %s",
 			strings.Join(arguments, " "),
-			err,
+			combinedOutputError,
 			strings.TrimSpace(string(output)),
 		)
 	}
@@ -49,17 +49,17 @@ func repositoryJSONAtHEAD(root string) (repositoryJSON, error) {
 		return repositoryJSONInManifest(root)
 	}
 	state := repositoryJSON{paths: map[string]bool{}}
-	top, err := gitCorpus(root, "rev-parse", "--show-toplevel")
-	if err != nil {
-		return state, err
+	top, gitCorpusError := gitCorpus(root, "rev-parse", "--show-toplevel")
+	if gitCorpusError != nil {
+		return state, gitCorpusError
 	}
-	expected, err := filepath.EvalSymlinks(root)
-	if err != nil {
-		return state, err
+	expected, resolveSymlinksError := filepath.EvalSymlinks(root)
+	if resolveSymlinksError != nil {
+		return state, resolveSymlinksError
 	}
-	actual, err := filepath.EvalSymlinks(strings.TrimSpace(string(top)))
-	if err != nil {
-		return state, err
+	actual, resolveSymlinksError := filepath.EvalSymlinks(strings.TrimSpace(string(top)))
+	if resolveSymlinksError != nil {
+		return state, resolveSymlinksError
 	}
 	if actual != expected {
 		return state, fmt.Errorf(
@@ -68,12 +68,15 @@ func repositoryJSONAtHEAD(root string) (repositoryJSON, error) {
 			actual,
 		)
 	}
-	if _, err := gitCorpus(root, "rev-parse", "--verify", "HEAD"); err != nil {
-		return state, err
+	if _, gitCorpusError := gitCorpus(root, "rev-parse", "--verify", "HEAD"); gitCorpusError != nil {
+		return state, gitCorpusError
 	}
-	paths, err := gitCorpus(root, append([]string{"ls-files", "--cached", "-z", "--"}, repositoryJSONPatterns...)...)
-	if err != nil {
-		return state, err
+	paths, gitCorpusError := gitCorpus(
+		root,
+		append([]string{"ls-files", "--cached", "-z", "--"}, repositoryJSONPatterns...)...,
+	)
+	if gitCorpusError != nil {
+		return state, gitCorpusError
 	}
 	for _, path := range strings.Split(string(paths), "\x00") {
 		if path != "" {
@@ -88,9 +91,9 @@ func repositoryJSONAtHEAD(root string) (repositoryJSON, error) {
 		{"diff", "--cached", "--name-only", "-z", "HEAD", "--"},
 		{"diff", "--name-only", "-z", "--"},
 	} {
-		dirty, err := gitCorpus(root, append(arguments, repositoryJSONPatterns...)...)
-		if err != nil {
-			return state, err
+		dirty, gitCorpusError := gitCorpus(root, append(arguments, repositoryJSONPatterns...)...)
+		if gitCorpusError != nil {
+			return state, gitCorpusError
 		}
 		for _, path := range strings.Split(string(dirty), "\x00") {
 			if path != "" {
@@ -111,12 +114,12 @@ func repositoryJSONAtHEAD(root string) (repositoryJSON, error) {
 // the tracked paths, and each one missing or not as recorded is dirty. The manifest is HEAD and index at once.
 func repositoryJSONInManifest(root string) (repositoryJSON, error) {
 	state := repositoryJSON{paths: map[string]bool{}}
-	if _, err := tracked.Head(root); err != nil {
-		return state, fmt.Errorf("JSON corpus requires usable Git metadata or the tree's manifest: %w", err)
+	if _, headError := tracked.Head(root); headError != nil {
+		return state, fmt.Errorf("JSON corpus requires usable Git metadata or the tree's manifest: %w", headError)
 	}
-	entries, err := tracked.Files(root)
-	if err != nil {
-		return state, fmt.Errorf("JSON corpus requires usable Git metadata or the tree's manifest: %w", err)
+	entries, filesError := tracked.Files(root)
+	if filesError != nil {
+		return state, fmt.Errorf("JSON corpus requires usable Git metadata or the tree's manifest: %w", filesError)
 	}
 	var selected []tracked.Entry
 	for _, entry := range entries {
@@ -131,9 +134,9 @@ func repositoryJSONInManifest(root string) (repositoryJSON, error) {
 		selected = append(selected, entry)
 		state.paths[entry.Path] = true
 	}
-	missing, changed, err := tracked.Changed(root, selected)
-	if err != nil {
-		return state, err
+	missing, changed, changedError := tracked.Changed(root, selected)
+	if changedError != nil {
+		return state, changedError
 	}
 	state.dirty = append(missing, changed...)
 	sort.Strings(state.dirty)
@@ -143,9 +146,9 @@ func repositoryJSONInManifest(root string) (repositoryJSON, error) {
 // Tracked repository inputs follow Git HEAD. Only externally provisioned or
 // generated inputs retain identity pins; arbitrary untracked files are refused.
 func validateCorpus(root string, cases []textCase, expected corpusPin) (corpusPin, int, error) {
-	state, err := repositoryJSONAtHEAD(root)
-	if err != nil {
-		return corpusPin{}, 0, err
+	state, repositoryJsonAtHeadError := repositoryJSONAtHEAD(root)
+	if repositoryJsonAtHeadError != nil {
+		return corpusPin{}, 0, repositoryJsonAtHeadError
 	}
 	return validateCorpusState(state, cases, expected)
 }
@@ -162,18 +165,18 @@ type repositoryFixture struct {
 func fixtureWrite(test *testing.T, root, path, text string) {
 	test.Helper()
 	absolute := filepath.Join(root, filepath.FromSlash(path))
-	if err := os.MkdirAll(filepath.Dir(absolute), 0755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(filepath.Dir(absolute), 0755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	if err := os.WriteFile(absolute, []byte(text), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(absolute, []byte(text), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 }
 
 func fixtureGit(test *testing.T, root string, arguments ...string) {
 	test.Helper()
-	if _, err := gitCorpus(root, arguments...); err != nil {
-		test.Fatal(err)
+	if _, gitCorpusError := gitCorpus(root, arguments...); gitCorpusError != nil {
+		test.Fatal(gitCorpusError)
 	}
 }
 
@@ -218,17 +221,21 @@ func newRepositoryFixture(test *testing.T) repositoryFixture {
 		}
 	}
 	fixture.pin = pinForCases(pinned)
-	if _, count, err := validateCorpus(root, cases, fixture.pin); err != nil || count != 2 {
-		test.Fatalf("fixture baseline: count %d: %v", count, err)
+	if _, count, validateCorpusError := validateCorpus(
+		root,
+		cases,
+		fixture.pin,
+	); validateCorpusError != nil || count != 2 {
+		test.Fatalf("fixture baseline: count %d: %v", count, validateCorpusError)
 	}
 	return fixture
 }
 
 func (f repositoryFixture) cases(test *testing.T) []textCase {
 	test.Helper()
-	cases, err := fileCorpus(f.root)
-	if err != nil {
-		test.Fatal(err)
+	cases, fileCorpusError := fileCorpus(f.root)
+	if fileCorpusError != nil {
+		test.Fatal(fileCorpusError)
 	}
 	return append(cases, textCase{"generated/0/probe.json", "null"})
 }
@@ -269,8 +276,10 @@ func TestRepositoryCorpusMutants(test *testing.T) {
 			test *testing.T,
 			f repositoryFixture,
 		) []textCase {
-			if err := os.Remove(filepath.Join(f.root, "stage3/api/node_modules/typescript/package.json")); err != nil {
-				test.Fatal(err)
+			if removeError := os.Remove(
+				filepath.Join(f.root, "stage3/api/node_modules/typescript/package.json"),
+			); removeError != nil {
+				test.Fatal(removeError)
 			}
 			return f.cases(test)
 		}},
@@ -314,13 +323,13 @@ func TestRepositoryCorpusMutants(test *testing.T) {
 					fixture = unpackRepositoryFixture(test, fixture)
 				}
 				cases := mutant.apply(test, fixture)
-				_, _, err := validateCorpus(fixture.root, cases, fixture.pin)
-				if err == nil ||
-					!strings.Contains(err.Error(), mutant.message) ||
-					!strings.Contains(err.Error(), mutant.path) {
-					test.Fatalf("mutant survived or lost its name: %v", err)
+				_, _, validateCorpusError := validateCorpus(fixture.root, cases, fixture.pin)
+				if validateCorpusError == nil ||
+					!strings.Contains(validateCorpusError.Error(), mutant.message) ||
+					!strings.Contains(validateCorpusError.Error(), mutant.path) {
+					test.Fatalf("mutant survived or lost its name: %v", validateCorpusError)
 				}
-				test.Logf("caught %s: %v", mutant.path, err)
+				test.Logf("caught %s: %v", mutant.path, validateCorpusError)
 			})
 		}
 	}
@@ -331,13 +340,13 @@ func TestRepositoryCorpusMutants(test *testing.T) {
 func unpackRepositoryFixture(test *testing.T, fixture repositoryFixture) repositoryFixture {
 	test.Helper()
 	root := test.TempDir()
-	err := filepath.WalkDir(fixture.root, func(name string, entry fs.DirEntry, err error) error {
-		if err != nil || name == fixture.root {
-			return err
+	walkError := filepath.WalkDir(fixture.root, func(name string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil || name == fixture.root {
+			return pathError
 		}
-		relative, err := filepath.Rel(fixture.root, name)
-		if err != nil {
-			return err
+		relative, relativePathError := filepath.Rel(fixture.root, name)
+		if relativePathError != nil {
+			return relativePathError
 		}
 		if entry.IsDir() {
 			if relative == ".git" {
@@ -345,22 +354,26 @@ func unpackRepositoryFixture(test *testing.T, fixture repositoryFixture) reposit
 			}
 			return nil
 		}
-		data, err := os.ReadFile(name)
-		if err != nil {
-			return err
+		data, readError := os.ReadFile(name)
+		if readError != nil {
+			return readError
 		}
 		fixtureWrite(test, root, filepath.ToSlash(relative), string(data))
 		return nil
 	})
-	if err != nil {
-		test.Fatal(err)
+	if walkError != nil {
+		test.Fatal(walkError)
 	}
-	if err := tracked.Write(fixture.root, root); err != nil {
-		test.Fatal(err)
+	if writeError := tracked.Write(fixture.root, root); writeError != nil {
+		test.Fatal(writeError)
 	}
 	unpacked := repositoryFixture{root: root, pin: fixture.pin}
-	if _, count, err := validateCorpus(root, unpacked.cases(test), unpacked.pin); err != nil || count != 2 {
-		test.Fatalf("unpacked fixture baseline: count %d: %v", count, err)
+	if _, count, validateCorpusError := validateCorpus(
+		root,
+		unpacked.cases(test),
+		unpacked.pin,
+	); validateCorpusError != nil || count != 2 {
+		test.Fatalf("unpacked fixture baseline: count %d: %v", count, validateCorpusError)
 	}
 	return unpacked
 }
@@ -368,19 +381,19 @@ func unpackRepositoryFixture(test *testing.T, fixture repositoryFixture) reposit
 func TestRepositoryLandingWithoutPinEdit(test *testing.T) {
 	test.Parallel()
 	fixture := newRepositoryFixture(test)
-	before, err := json.Marshal(fixture.pin)
-	if err != nil {
-		test.Fatal(err)
+	before, encodeError := json.Marshal(fixture.pin)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	// Only this test's private Git history receives the simulated later landing.
 	fixtureWrite(test, fixture.root, "landing-added.json", "{}")
 	commitFixtureJSON(test, fixture.root, "landing-added.json")
-	actual, count, err := validateCorpus(fixture.root, fixture.cases(test), fixture.pin)
-	if err != nil || count != 3 || actual.SHA256 != fixture.pin.SHA256 {
-		test.Fatalf("landing changed pin or parity: count %d: %v", count, err)
+	actual, count, validateCorpusError := validateCorpus(fixture.root, fixture.cases(test), fixture.pin)
+	if validateCorpusError != nil || count != 3 || actual.SHA256 != fixture.pin.SHA256 {
+		test.Fatalf("landing changed pin or parity: count %d: %v", count, validateCorpusError)
 	}
-	after, err := json.Marshal(fixture.pin)
-	if err != nil || !bytes.Equal(before, after) {
+	after, encodeError := json.Marshal(fixture.pin)
+	if encodeError != nil || !bytes.Equal(before, after) {
 		test.Fatal("landing edited the pin")
 	}
 	test.Log("landing-added.json accepted at the later scratch HEAD; repository 2 -> 3; pin unchanged")
@@ -390,9 +403,9 @@ func TestRepositoryRequiresGit(test *testing.T) {
 	test.Parallel()
 	root := test.TempDir()
 	fixtureWrite(test, root, "a.json", "{}")
-	_, _, err := validateCorpus(root, []textCase{{"a.json", "{}"}}, corpusPin{})
-	if err == nil || !strings.Contains(err.Error(), "requires usable Git metadata") {
-		test.Fatalf("export without Git silently fell back to walking: %v", err)
+	_, _, validateCorpusError := validateCorpus(root, []textCase{{"a.json", "{}"}}, corpusPin{})
+	if validateCorpusError == nil || !strings.Contains(validateCorpusError.Error(), "requires usable Git metadata") {
+		test.Fatalf("export without Git silently fell back to walking: %v", validateCorpusError)
 	}
-	test.Logf("caught checkout without Git: %v", err)
+	test.Logf("caught checkout without Git: %v", validateCorpusError)
 }

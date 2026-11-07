@@ -22,9 +22,9 @@ func mutantNativeProduct(test *testing.T, index int) string {
 	options := native.Options{Sanitize: true, Split: true, Jobs: 4}
 	state := &mutantNativeProducts[index]
 	state.Once.Do(func() {
-		root, err := filepath.Abs(oracles.Repository)
-		if err != nil {
-			test.Fatal(err)
+		root, absolutePathError := filepath.Abs(oracles.Repository)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		// What lowering and the native build read (mutantNativeBuildFiles, which TestMutantNativeInputsCoverWhatItReads
 		// keeps complete): not cohere whole, and the scanner the parser imports included.
@@ -45,18 +45,18 @@ func mutantNativeProduct(test *testing.T, index int) string {
 		}, func(directory string) error {
 			path := mutatedPort(test, oracles.Mutations[index])
 			started := time.Now()
-			program, err := lowerProgram(path)
-			if err != nil {
-				return err
+			program, lowerProgramError := lowerProgram(path)
+			if lowerProgramError != nil {
+				return lowerProgramError
 			}
 			test.Logf("grain lowering: %.3fs", time.Since(started).Seconds())
 			started = time.Now()
 			source := native.C(program)
 			test.Logf("grain C emission: %.3fs", time.Since(started).Seconds())
 			started = time.Now()
-			err = native.Build(source, filepath.Join(directory, "port"), options)
+			buildError := native.Build(source, filepath.Join(directory, "port"), options)
 			test.Logf("grain clang runtime/compile/link: %.3fs", time.Since(started).Seconds())
-			return err
+			return buildError
 		})
 	})
 	if state.Directory == "" {
@@ -77,11 +77,11 @@ func TestMutantOracleCorpusKeyIsItsOracle(test *testing.T) {
 	write := func(name, content string) {
 		test.Helper()
 		path := filepath.Join(stand, filepath.FromSlash(name))
-		if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0o755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.WriteFile(path, []byte(content), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(content), 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	compiled := "cohere/internal/format/javascript/printer.go"
@@ -94,22 +94,22 @@ func TestMutantOracleCorpusKeyIsItsOracle(test *testing.T) {
 	}
 	key := func() string {
 		test.Helper()
-		oracle, err := buildcache.Key(stand, buildcache.Inputs{
+		oracle, keyError := buildcache.Key(stand, buildcache.Inputs{
 			Name:      "stand-in oracle",
 			Files:     []string{compiled},
 			Toolchain: []string{runtime.Version()},
 		})
-		if err != nil {
-			test.Fatal(err)
+		if keyError != nil {
+			test.Fatal(keyError)
 		}
 		inputs := oracles.MutantOracleCorpusInputs(stand, 3, oracle)
 		corpus := buildcache.Inputs{Name: inputs.Name, Flags: inputs.Flags, Toolchain: []string{inputs.Toolchain}}
 		for _, file := range inputs.Files {
 			corpus.Files = append(corpus.Files, filepath.ToSlash(mustRelative(test, stand, file)))
 		}
-		key, err := buildcache.Key(stand, corpus)
-		if err != nil {
-			test.Fatal(err)
+		key, keyError := buildcache.Key(stand, corpus)
+		if keyError != nil {
+			test.Fatal(keyError)
 		}
 		return key
 	}
@@ -131,9 +131,9 @@ func TestMutantOracleCorpusKeyIsItsOracle(test *testing.T) {
 		write(name, name)
 	}
 
-	root, err := filepath.Abs(oracles.Repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(oracles.Repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	for _, file := range oracles.MutantOracleCorpusInputs(root, 3, "").Files {
 		relative := mustRelative(test, root, file)
@@ -166,9 +166,9 @@ func TestMutantOracleCorpusKeyIsItsOracle(test *testing.T) {
 
 func mustRelative(test *testing.T, root, path string) string {
 	test.Helper()
-	relative, err := filepath.Rel(root, path)
-	if err != nil {
-		test.Fatal(err)
+	relative, relativePathError := filepath.Rel(root, path)
+	if relativePathError != nil {
+		test.Fatal(relativePathError)
 	}
 	return filepath.ToSlash(relative)
 }

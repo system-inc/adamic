@@ -14,16 +14,16 @@ func TestNodePathBasenameSignatures(test *testing.T) {
 		`import {basename} from 'node:path'; console.log(basename('a/b.txt',undefined));`,
 		`import {basename} from 'node:path'; function name(path:string,suffix:string|undefined):string {return basename(path,suffix);}`,
 	} {
-		if _, err := lowerSource(test, source); err != nil {
-			test.Fatal(err)
+		if _, lowerSourceError := lowerSource(test, source); lowerSourceError != nil {
+			test.Fatal(lowerSourceError)
 		}
 	}
-	_, err := lowerSource(
+	_, lowerSourceError := lowerSource(
 		test,
 		`import {basename} from 'node:path'; const names:[string]=['x']; console.log(basename(...names));`,
 	)
 	var notYet *NotYet
-	if !errors.As(err, &notYet) || !strings.Contains(notYet.What, "node:path.basename") {
-		test.Fatalf("want named NotYet, got %v", err)
+	if !errors.As(lowerSourceError, &notYet) || !strings.Contains(notYet.What, "node:path.basename") {
+		test.Fatalf("want named NotYet, got %v", lowerSourceError)
 	}
 }

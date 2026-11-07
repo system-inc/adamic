@@ -11,19 +11,19 @@ import (
 func TestParserNonNullSourceExtension(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(repository, "internal/oracle/testdata/non_null_refused/parser_index.a")
-	_, err := lowered(test, path)
-	assertAdamicNonNullRefusal(test, err)
-	source, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	_, loweredError := lowered(test, path)
+	assertAdamicNonNullRefusal(test, loweredError)
+	source, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	checkedPath := filepath.Join(test.TempDir(), "parser_index.ts")
-	if err := os.WriteFile(checkedPath, source, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(checkedPath, source, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := lowered(test, checkedPath)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, checkedPath)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	if program.NonNullChecks.Checked != 1 || program.NonNullChecks.Proven != 0 {
 		test.Fatalf("indexed assertion must remain checked: %+v", program.NonNullChecks)

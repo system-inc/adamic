@@ -17,20 +17,20 @@ import (
 
 func TestDelimiterExpressionMatchesNode(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("gaps/1_delimiter_expression.ts")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("gaps/1_delimiter_expression.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	answer := onNode(test, path)
 	clean(test, "Node gap", answer)
 	equal(test, "Node gap", answer.stdout, []byte("a\\*b\n"))
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		test.Fatal(err)
+	lowered, lowerError := lower.Lower(context.Background(), program)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	binary := filepath.Join(delimiterExpressionSanitized(test), "port")
 	nativeRun := sanitizedRun(test, binary)
@@ -85,17 +85,17 @@ func delimiterExpressionSanitized(test *testing.T) string {
 		Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")},
 	}
 	return buildcache.Product(test, inputs, func(directory string) error {
-		path, err := filepath.Abs("gaps/1_delimiter_expression.ts")
-		if err != nil {
-			return err
+		path, absolutePathError := filepath.Abs("gaps/1_delimiter_expression.ts")
+		if absolutePathError != nil {
+			return absolutePathError
 		}
-		program, err := load.Load([]string{path})
-		if err != nil {
-			return fmt.Errorf("Load: %w", err)
+		program, loadError := load.Load([]string{path})
+		if loadError != nil {
+			return fmt.Errorf("Load: %w", loadError)
 		}
-		lowered, err := lower.Lower(context.Background(), program)
-		if err != nil {
-			return fmt.Errorf("Lower: %w", err)
+		lowered, lowerError := lower.Lower(context.Background(), program)
+		if lowerError != nil {
+			return fmt.Errorf("Lower: %w", lowerError)
 		}
 		return native.Build(native.C(lowered), filepath.Join(directory, "port"), options)
 	})

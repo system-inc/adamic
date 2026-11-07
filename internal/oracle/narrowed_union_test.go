@@ -35,16 +35,16 @@ func TestNarrowedUnionMemberCheck(test *testing.T) {
 	} {
 		test.Run(probe.path, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", probe.path))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", probe.path))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			if node := onNode(test, path); disagreement(run{stdout: []byte(probe.output)}, node) != "" {
 				test.Fatalf("source Node: exit %d, stdout %q, stderr %q", node.exitCode, node.stdout, node.stderr)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			want := run{exitCode: 70, stderr: []byte(
 				"adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n",
@@ -97,20 +97,22 @@ func TestNarrowedUnionMemberCheck(test *testing.T) {
 // Ambiguous object tags need a stronger IR predicate before they can be cast safely.
 func TestNarrowedUnionObjectTagRefusal(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(
+	path, absolutePathError := filepath.Abs(
 		filepath.Join(repository, "internal/oracle/testdata/reland_refused/narrowed_union_object_tag.a"),
 	)
-	if err != nil {
-		test.Fatal(err)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	if node := onNode(test, path); disagreement(run{stdout: []byte("1\n")}, node) != "" {
 		test.Fatalf("source Node: %#v", node)
 	}
-	_, err = lowered(test, path)
-	if err == nil || !strings.Contains(err.Error(), "narrowed_union_object_tag.a") || !strings.Contains(
-		err.Error(),
-		"stage 0 can't lower a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables yet",
-	) {
-		test.Fatalf("want refusal naming the path and fix, got %v", err)
+	_, loweredError := lowered(test, path)
+	if loweredError == nil ||
+		!strings.Contains(loweredError.Error(), "narrowed_union_object_tag.a") ||
+		!strings.Contains(
+			loweredError.Error(),
+			"stage 0 can't lower a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables yet",
+		) {
+		test.Fatalf("want refusal naming the path and fix, got %v", loweredError)
 	}
 }

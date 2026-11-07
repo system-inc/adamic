@@ -27,20 +27,20 @@ func statementPrepareCommon(test *testing.T, shards *oracles.StatementGateShards
 	binary, release := printerGateNative(test, "statements", true)+
 		"/port", printerGateNative(test, "statements", false)+"/port"
 	if keep := os.Getenv("ADAMIC_TS_STATEMENT_ARTIFACTS"); keep != "" {
-		if err := os.MkdirAll(keep, 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(keep, 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 		for name, source := range map[string]string{"port.c": filepath.Join(loweredDir, "port.c"), "port": release} {
-			data, err := os.ReadFile(source)
-			if err != nil {
-				test.Fatal(err)
+			data, readError := os.ReadFile(source)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			mode := os.FileMode(0644)
 			if name == "port" {
 				mode = 0755
 			}
-			if err := os.WriteFile(filepath.Join(keep, name), data, mode); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(filepath.Join(keep, name), data, mode); writeError != nil {
+				test.Fatal(writeError)
 			}
 		}
 	}
@@ -85,17 +85,17 @@ func statementAgainstGoAndPrettierShard(test *testing.T, shardNumber int) {
 	gapInput := ">const x:number=1;\n>const {x}=value;\n>export const x=1;\n>if(x)f();\n>#!/usr/bin/env node\\nf();\n"
 	gapWant := "notyet\tvariable-types\nnotyet\tvariable-pattern\nnotyet\tvariable-modifiers\nnotyet\tIfStatement\nnotyet\tcomment-attachment\n"
 	gapPath := filepath.Join(test.TempDir(), "statement-gaps.txt")
-	if err := os.WriteFile(gapPath, []byte(gapInput), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(gapPath, []byte(gapInput), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	backend := filepath.Join(loweredDir, "program.mjs")
 	libraryHash := products.LibraryHash
 	var oracleAnswers [2][]byte
 	for side := 0; side < 2; side++ {
 		directory := oracles.StatementLibraryOracle(test, shardNumber, side, shard, libraryHash, library)
-		answers, err := os.ReadFile(filepath.Join(directory, "answers.txt"))
-		if err != nil {
-			test.Fatal(err)
+		answers, readError := os.ReadFile(filepath.Join(directory, "answers.txt"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		oracleAnswers[side] = answers
 	}
@@ -114,8 +114,13 @@ func statementAgainstGoAndPrettierShard(test *testing.T, shardNumber int) {
 		test.Logf("case time after shared setup: %.3fs", time.Since(caseStart).Seconds())
 	})
 	compare := func(name string, result oracles.Run) {
-		if err := statementDisagreement(name, result, shard.Want, shard.Labels); err != nil {
-			test.Fatal(err)
+		if statementDisagreementError := statementDisagreement(
+			name,
+			result,
+			shard.Want,
+			shard.Labels,
+		); statementDisagreementError != nil {
+			test.Fatal(statementDisagreementError)
 		}
 	}
 	compare("Node", statementOnNode(test, port, "--cases", shard.Text, "80"))
@@ -132,8 +137,13 @@ func statementAgainstGoAndPrettierShard(test *testing.T, shardNumber int) {
 		{"native gaps", oracles.StatementExecute(test, nil, binary, "--cases", gapPath, "80")},
 		{"backend gaps", statementOnNode(test, backend, "--cases", gapPath, "80")},
 	} {
-		if err := statementDisagreement(side.name, side.result, gapWant, nil); err != nil {
-			test.Fatal(err)
+		if statementDisagreementError := statementDisagreement(
+			side.name,
+			side.result,
+			gapWant,
+			nil,
+		); statementDisagreementError != nil {
+			test.Fatal(statementDisagreementError)
 		}
 	}
 	if report := statementLeaks(test, binary, release, "--cases", shard.Text, "80"); report != "" {

@@ -44,11 +44,11 @@ func TestUncaughtCodedHostErrorsAgreeWithNode(test *testing.T) {
 	} {
 		test.Run(probe.file, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(
+			path, absolutePathError := filepath.Abs(
 				filepath.Join(repository, "internal/oracle/testdata/coded_host_error", probe.file),
 			)
-			if err != nil {
-				test.Fatal(err)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			truth := onNode(test, path)
 			if problem := disagreement(
@@ -63,9 +63,9 @@ func TestUncaughtCodedHostErrorsAgreeWithNode(test *testing.T) {
 					truth.stderr,
 				)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatalf("an uncaught host error must lower: %v", err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatalf("an uncaught host error must lower: %v", loweredError)
 			}
 			native, _ := natively(test, program)
 			for name, got := range map[string]run{
@@ -95,9 +95,11 @@ func TestUncaughtCodedHostErrorsAgreeWithNode(test *testing.T) {
 // Mutant: error_text ignoring the coded marker turns it red natively (#z28avqd).
 func TestCaughtCodedHostErrorsAgreeWithNode(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/coded_host_error/caught.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/coded_host_error/caught.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := onNode(test, path)
 	if problem := disagreement(run{stdout: []byte(caughtCodedHostErrors)}, truth); problem != "" {
@@ -109,9 +111,9 @@ func TestCaughtCodedHostErrorsAgreeWithNode(test *testing.T) {
 			truth.stderr,
 		)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatalf("String and a template of a caught host error must lower: %v", err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatalf("String and a template of a caught host error must lower: %v", loweredError)
 	}
 	native, _ := natively(test, program)
 	for name, got := range map[string]run{
@@ -172,25 +174,25 @@ func TestCaughtCodedHostErrorToStringNotYet(test *testing.T) {
 	} {
 		test.Run(probe.file, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(
+			path, absolutePathError := filepath.Abs(
 				filepath.Join(repository, "internal/oracle/testdata/coded_host_error", probe.file),
 			)
-			if err != nil {
-				test.Fatal(err)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			if truth := onNode(test, path); disagreement(run{stdout: []byte(probe.stdout)}, truth) != "" {
 				test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
-			_, err = lowered(test, path)
+			_, loweredError := lowered(test, path)
 			var notYet *lower.NotYet
-			if err == nil ||
-				errors.As(err, &notYet) != probe.notYet ||
-				!strings.Contains(err.Error(), probe.at) ||
-				!strings.Contains(err.Error(), probe.says) {
+			if loweredError == nil ||
+				errors.As(loweredError, &notYet) != probe.notYet ||
+				!strings.Contains(loweredError.Error(), probe.at) ||
+				!strings.Contains(loweredError.Error(), probe.says) {
 				test.Fatalf(
 					"want the caught error's toString stopped at %s, got %v: if it lowers now, pin its output to Node here",
 					probe.at,
-					err,
+					loweredError,
 				)
 			}
 		})

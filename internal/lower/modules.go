@@ -26,9 +26,9 @@ func (l *lowering) moduleOrder(entry *ast.SourceFile) ([]*ast.SourceFile, error)
 	if held := l.moduleOrdered; held != nil && held.entry == entry {
 		return slices.Clone(held.order), held.err
 	}
-	order, err := l.orderModules(entry)
-	l.moduleOrdered = &moduleOrdering{entry: entry, order: order, err: err}
-	return slices.Clone(order), err
+	order, orderModulesError := l.orderModules(entry)
+	l.moduleOrdered = &moduleOrdering{entry: entry, order: order, err: orderModulesError}
+	return slices.Clone(order), orderModulesError
 }
 
 // moduleOrdering is moduleOrder's answer for one entry: the order, or the error that refused it.
@@ -45,8 +45,8 @@ func (l *lowering) orderModules(entry *ast.SourceFile) ([]*ast.SourceFile, error
 	// Dynamic imports are not lowered. Refuse them before imported types can
 	// request source identities during declaration or initializer lowering.
 	for _, module := range order {
-		if err := l.dynamicImportGap(module); err != nil {
-			return nil, err
+		if dynamicImportGapError := l.dynamicImportGap(module); dynamicImportGapError != nil {
+			return nil, dynamicImportGapError
 		}
 	}
 	l.cyclicModules = cyclic
@@ -122,14 +122,15 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 			for _, declaration := range list.AsVariableDeclarationList().Declarations.Nodes {
 				// A module's const [a, b] = tuple, or { x, y } = object, declares globals too, each name
 				// its own.
-				if declaration.Name().Kind == ast.KindArrayBindingPattern || declaration.Name().Kind == ast.KindObjectBindingPattern {
+				if declaration.Name().Kind == ast.KindArrayBindingPattern ||
+					declaration.Name().Kind == ast.KindObjectBindingPattern {
 					for _, binding := range declaration.Name().AsBindingPattern().Elements.Nodes {
 						if skipped(binding) || !ast.IsIdentifier(binding.Name()) {
 							continue
 						}
-						local, err := l.declareLocal(binding.Name())
-						if err != nil {
-							return err
+						local, declareLocalError := l.declareLocal(binding.Name())
+						if declareLocalError != nil {
+							return declareLocalError
 						}
 						l.result.Locals[local].Global = true
 						l.result.Locals[local].Hoisted = list.Flags&ast.NodeFlagsBlockScoped == 0
@@ -141,15 +142,16 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 					continue
 				}
 				if ast.IsIdentifier(declaration.Name()) {
-					local, err := l.declareLocal(declaration.Name())
-					if err != nil {
-						return err
+					local, declareLocalError := l.declareLocal(declaration.Name())
+					if declareLocalError != nil {
+						return declareLocalError
 					}
 					l.result.Locals[local].Global = true
 					l.result.Locals[local].Hoisted = list.Flags&ast.NodeFlagsBlockScoped == 0
 					if namespaceVariable(list) {
 						l.result.Locals[local].NamespaceVar = list.Flags&ast.NodeFlagsBlockScoped == 0
-						l.result.Locals[local].NamespaceState = declaration.Initializer() == nil || l.result.Locals[local].NamespaceVar
+						l.result.Locals[local].NamespaceState = declaration.Initializer() == nil ||
+							l.result.Locals[local].NamespaceVar
 					}
 				}
 			}
@@ -157,14 +159,14 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 			// Every enum with an object is declared here, before any function body lowers: a const enum
 			// a namespace cast reaches inside a function, as each of debug.ts's formatters does, reads
 			// its binding before the declaring module's statements are lowered (#52zja36).
-			built, err := l.enumObjectBuilt(statement)
-			if err != nil {
-				return err
+			built, enumObjectBuiltError := l.enumObjectBuilt(statement)
+			if enumObjectBuiltError != nil {
+				return enumObjectBuiltError
 			}
 			if built {
-				local, err := l.enumLocal(statement)
-				if err != nil {
-					return err
+				local, enumLocalError := l.enumLocal(statement)
+				if enumLocalError != nil {
+					return enumLocalError
 				}
 				l.result.Locals[local].Global = true
 			}
@@ -177,9 +179,9 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 				if l.staticGlobals == nil {
 					l.staticGlobals = map[*ast.Symbol]int{}
 				}
-				local, err := l.declareLocal(statement.Name())
-				if err != nil {
-					return err
+				local, declareLocalError := l.declareLocal(statement.Name())
+				if declareLocalError != nil {
+					return declareLocalError
 				}
 				l.result.Locals[local].Global = true
 				l.staticStorage(statement)
@@ -192,8 +194,8 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 			if statement.Body() == nil && l.censusImplementation(statement) != nil {
 				continue
 			}
-			if err := l.censusOverloads(statement); err != nil {
-				return err
+			if censusOverloadsError := l.censusOverloads(statement); censusOverloadsError != nil {
+				return censusOverloadsError
 			}
 			symbol := l.symbol(statement.Name())
 			if len(statement.TypeParameters()) > 0 {
@@ -213,20 +215,24 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 		}
 	}
 	for _, declaration := range declarations {
-		if err := l.signature(l.functions[l.symbol(declaration.Name())], declaration, -1); err != nil {
-			return err
+		if signatureError := l.signature(
+			l.functions[l.symbol(declaration.Name())],
+			declaration,
+			-1,
+		); signatureError != nil {
+			return signatureError
 		}
 	}
 	for _, statement := range statements {
 		if statement.Kind == ast.KindClassDeclaration && l.needsStatics(statement) {
-			if _, err := l.staticInstance(statement); err != nil {
-				return err
+			if _, staticInstanceError := l.staticInstance(statement); staticInstanceError != nil {
+				return staticInstanceError
 			}
 		}
 	}
 	for _, declaration := range declarations {
-		if err := l.functionBody(declaration); err != nil {
-			return err
+		if functionBodyError := l.functionBody(declaration); functionBodyError != nil {
+			return functionBodyError
 		}
 	}
 	return nil

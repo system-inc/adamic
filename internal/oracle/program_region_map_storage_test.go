@@ -57,19 +57,19 @@ func programRegionMapperStorage(test *testing.T, enabled bool) {
 	)
 	checked := code[:m[1]] + assertion + code[m[1]:]
 	binary := filepath.Join(test.TempDir(), "storage")
-	if err := programRegionBuild(
+	if programRegionBuildError := programRegionBuild(
 		test,
 		checked,
 		binary,
 		native.Options{ProgramRegion: enabled, Sanitize: true},
-	); err != nil {
-		test.Fatal(err)
+	); programRegionBuildError != nil {
+		test.Fatal(programRegionBuildError)
 	}
 	resultRun := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
 	if difference := disagreement(oracle, resultRun); difference != "" {
 		test.Fatalf("storage invariant: %s %s", difference, resultRun.stderr)
 	}
-	report, err := leakcheck.Check(leakcheck.Program{
+	report, checkError := leakcheck.Check(leakcheck.Program{
 		C: checked, Sanitized: binary, Counted: filepath.Join(test.TempDir(), "counted"),
 		BuildCounted: func(code, output string) error {
 			return programRegionBuild(test, code, output, native.Options{ProgramRegion: enabled, Count: true})
@@ -78,19 +78,19 @@ func programRegionMapperStorage(test *testing.T, enabled bool) {
 			return leakRun(executeWith(test, environment, name, args...))
 		},
 	})
-	if err != nil || report != "" {
-		test.Fatalf("leak check: %v %s", err, report)
+	if checkError != nil || report != "" {
+		test.Fatalf("leak check: %v %s", checkError, report)
 	}
 	// LeakSanitizer is the Linux leak proof; counters independently account for
 	// every member, and must run here too rather than only on macOS.
 	countedBinary := filepath.Join(test.TempDir(), "storage-counts")
-	if err := programRegionBuild(
+	if programRegionBuildError := programRegionBuild(
 		test,
 		checked,
 		countedBinary,
 		native.Options{ProgramRegion: enabled, Count: true},
-	); err != nil {
-		test.Fatal(err)
+	); programRegionBuildError != nil {
+		test.Fatal(programRegionBuildError)
 	}
 	command, args := pinnedStack(countedBinary)
 	counted := execute(test, command, args...)
@@ -116,8 +116,13 @@ func programRegionMapperStorage(test *testing.T, enabled bool) {
 	}
 	mutant := guard.ReplaceAllString(checked, "bool "+unique+" = true;")
 	bad := filepath.Join(test.TempDir(), "reuse-member-mutant")
-	if err := programRegionBuild(test, mutant, bad, native.Options{ProgramRegion: true, Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if programRegionBuildError := programRegionBuild(
+		test,
+		mutant,
+		bad,
+		native.Options{ProgramRegion: true, Sanitize: true},
+	); programRegionBuildError != nil {
+		test.Fatal(programRegionBuildError)
 	}
 	rejected := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, bad)
 	if rejected.exitCode != 70 ||

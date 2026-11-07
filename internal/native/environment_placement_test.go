@@ -14,13 +14,13 @@ import (
 
 func environmentPlacementCase(test *testing.T, name string, want environmentPlacement) {
 	test.Helper()
-	source, err := load.Load([]string{"../oracle/testdata/environment_" + name + ".a"})
-	if err != nil {
-		test.Fatal(err)
+	source, loadError := load.Load([]string{"../oracle/testdata/environment_" + name + ".a"})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := lower.Lower(context.Background(), source)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerError := lower.Lower(context.Background(), source)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	plan := planRegions(program)
 	sites := 0
@@ -304,13 +304,13 @@ func TestEnvironmentPlacementCapturedParameterReassign(test *testing.T) {
 }
 func TestEnvironmentCapturedParameterHasOneOwner(test *testing.T) {
 	test.Parallel()
-	source, err := load.Load([]string{"../oracle/testdata/environment_captured_parameter_escape.a"})
-	if err != nil {
-		test.Fatal(err)
+	source, loadError := load.Load([]string{"../oracle/testdata/environment_captured_parameter_escape.a"})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := lower.Lower(context.Background(), source)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerError := lower.Lower(context.Background(), source)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	code := C(program)
 	found := false
@@ -398,16 +398,16 @@ function fill(user: User, start: number): string {
  return user.use(read);
 }
 console.log(fill(new Other(), 3));`
-	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	loaded, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	loaded, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := lower.Lower(context.Background(), loaded)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerError := lower.Lower(context.Background(), loaded)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	plan := planRegions(program)
 	virtual, sites := 0, 0
@@ -456,13 +456,13 @@ func TestEnvironmentPlacementNestedGenerator(test *testing.T) {
 	test.Parallel()
 	placements := func(path string) []environmentPlacement {
 		test.Helper()
-		loaded, err := load.Load([]string{path})
-		if err != nil {
-			test.Fatal(err)
+		loaded, loadError := load.Load([]string{path})
+		if loadError != nil {
+			test.Fatal(loadError)
 		}
-		program, err := lower.Lower(context.Background(), loaded)
-		if err != nil {
-			test.Fatal(err)
+		program, lowerError := lower.Lower(context.Background(), loaded)
+		if lowerError != nil {
+			test.Fatal(lowerError)
 		}
 		plan := planRegions(program)
 		var found []environmentPlacement
@@ -499,8 +499,8 @@ func TestEnvironmentPlacementNestedGenerator(test *testing.T) {
 		"    return both();\n" +
 		"}\n" +
 		"console.log(host(`a${String(1)}`, `b${String(2)}`));\n"
-	if err := os.WriteFile(control, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(control, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	if got := placements(control); got[0] != environmentStack {
 		test.Errorf(

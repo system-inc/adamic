@@ -9,14 +9,14 @@ import (
 // This host slice recognizes library declarations, including import aliases.
 // It borrows only strings and does not expose a mutable process object.
 func (l *lowering) nodeHost(node *ast.Node) (ir.Expression, bool, error) {
-	if value, found, err := l.nodeWatchFile(node); found {
-		return value, true, err
+	if value, found, nodeWatchFileError := l.nodeWatchFile(node); found {
+		return value, true, nodeWatchFileError
 	}
-	if value, found, err := l.nodeRealpathCall(node); found {
-		return value, true, err
+	if value, found, nodeRealpathCallError := l.nodeRealpathCall(node); found {
+		return value, true, nodeRealpathCallError
 	}
-	if value, found, err := l.nodeStdoutWrite(node); found {
-		return value, true, err
+	if value, found, nodeStdoutWriteError := l.nodeStdoutWrite(node); found {
+		return value, true, nodeStdoutWriteError
 	}
 	name := l.nodeLibraryMember(node)
 	operation, of := "", ir.String
@@ -33,7 +33,8 @@ func (l *lowering) nodeHost(node *ast.Node) (ir.Expression, bool, error) {
 		return nil, false, nil
 	}
 	call := node.AsCallExpression()
-	if operation != "host_join" && len(call.Arguments.Nodes) != map[string]int{"host_tmpdir": 0, "host_cwd": 0, "host_chdir": 1}[operation] {
+	if operation != "host_join" &&
+		len(call.Arguments.Nodes) != map[string]int{"host_tmpdir": 0, "host_cwd": 0, "host_chdir": 1}[operation] {
 		return nil, true, l.notYet(node, name+" outside the implemented host signature")
 	}
 	if operation == "host_chdir" {
@@ -42,7 +43,10 @@ func (l *lowering) nodeHost(node *ast.Node) (ir.Expression, bool, error) {
 			outer = outer.Parent
 		}
 		discarded := outer.Parent != nil && outer.Parent.Kind == ast.KindExpressionStatement
-		returned := outer.Parent != nil && outer.Parent.Kind == ast.KindReturnStatement && l.function != nil && l.function.Returns == 0
+		returned := outer.Parent != nil &&
+			outer.Parent.Kind == ast.KindReturnStatement &&
+			l.function != nil &&
+			l.function.Returns == 0
 		if !discarded && !returned {
 			return nil, true, l.notYet(node, name+" used as a value")
 		}
@@ -52,9 +56,9 @@ func (l *lowering) nodeHost(node *ast.Node) (ir.Expression, bool, error) {
 		if argument.Kind == ast.KindSpreadElement {
 			return nil, true, l.notYet(argument, name+" with spread arguments")
 		}
-		value, err := l.expression(argument)
-		if err != nil {
-			return nil, true, err
+		value, expressionError := l.expression(argument)
+		if expressionError != nil {
+			return nil, true, expressionError
 		}
 		if value.Type() != ir.String {
 			return nil, true, l.notYet(argument, name+" with non-string arguments")
@@ -65,18 +69,28 @@ func (l *lowering) nodeHost(node *ast.Node) (ir.Expression, bool, error) {
 }
 
 func init() {
-	RegisterNodeLibraryMembers("node:path.join", "node:os.tmpdir", "node:process.Process.cwd", "node:process.Process.chdir", "node:process.cwd", "node:process.chdir", "node:process.process", "node:globals.process")
+	RegisterNodeLibraryMembers(
+		"node:path.join",
+		"node:os.tmpdir",
+		"node:process.Process.cwd",
+		"node:process.Process.chdir",
+		"node:process.cwd",
+		"node:process.chdir",
+		"node:process.process",
+		"node:globals.process",
+	)
 }
 
 // nodePlatformRead lowers process.platform, recognized by its library member, never its spelling,
 // to a host read (#t90fcv5): the binary answers the platform it runs on, as Node does, and the answer
 // is never folded into a constant at compile time. Only a plain read is admitted.
 func (l *lowering) nodePlatformRead(node *ast.Node) (ir.Expression, bool, error) {
-	if l.nodeLibraryMember(node) != "node:process.Process.platform" || (node.Kind != ast.KindPropertyAccessExpression && node.Kind != ast.KindElementAccessExpression) {
+	if l.nodeLibraryMember(node) != "node:process.Process.platform" ||
+		(node.Kind != ast.KindPropertyAccessExpression && node.Kind != ast.KindElementAccessExpression) {
 		return nil, false, nil
 	}
-	if err := l.nodePlatformReadRefusal(node); err != nil {
-		return nil, true, err
+	if nodePlatformReadRefusalError := l.nodePlatformReadRefusal(node); nodePlatformReadRefusalError != nil {
+		return nil, true, nodePlatformReadRefusalError
 	}
 	return ir.NodeFSFile{Operation: "host_platform", Of: ir.String}, true, nil
 }
@@ -108,7 +122,10 @@ func (l *lowering) nodePlatformReadRefusal(node *ast.Node) error {
 // anywhere else is NotYet. It answers for every position of the member, so, as with process.env,
 // the member isn't registered: unregistered, a position this misses falls to the generic NotYet.
 func (l *lowering) nodePlatformUseRefusal(node *ast.Node) (bool, error) {
-	if node.Parent != nil && node.Parent.Kind == ast.KindPropertyAccessExpression && node.Parent.Name() == node && l.nodeLibraryMember(node.Parent) == "node:process.Process.platform" {
+	if node.Parent != nil &&
+		node.Parent.Kind == ast.KindPropertyAccessExpression &&
+		node.Parent.Name() == node &&
+		l.nodeLibraryMember(node.Parent) == "node:process.Process.platform" {
 		return true, l.nodePlatformReadRefusal(node.Parent)
 	}
 	if l.nodeLibraryMember(node) != "node:process.Process.platform" {
@@ -162,7 +179,9 @@ func (l *lowering) nodeEnvironmentReadRefusal(node *ast.Node) error {
 	var assigned *ast.Node
 	deleting := outer.Parent != nil && outer.Parent.Kind == ast.KindDeleteExpression
 	if ast.IsAssignmentTarget(outer) && !deleting {
-		if outer.Parent == nil || outer.Parent.Kind != ast.KindBinaryExpression || outer.Parent.AsBinaryExpression().OperatorToken.Kind != ast.KindEqualsToken {
+		if outer.Parent == nil ||
+			outer.Parent.Kind != ast.KindBinaryExpression ||
+			outer.Parent.AsBinaryExpression().OperatorToken.Kind != ast.KindEqualsToken {
 			return l.notYet(node, member+" written with compound assignment or update")
 		}
 		assigned = outer.Parent.AsBinaryExpression().Right
@@ -172,7 +191,10 @@ func (l *lowering) nodeEnvironmentReadRefusal(node *ast.Node) error {
 	}
 	if node.Kind == ast.KindPropertyAccessExpression {
 		if ir.IsNodeEnvironmentPrototypeKey(node.Name().Text()) {
-			return l.notYet(node, member+" literal prototype key "+node.Name().Text()+" (fix: use process.env['NAME'] for a real variable, or a plain object for the method)")
+			return l.notYet(node, member+
+				" literal prototype key "+
+				node.Name().Text()+
+				" (fix: use process.env['NAME'] for a real variable, or a plain object for the method)")
 		}
 	} else {
 		key := node.AsElementAccessExpression().ArgumentExpression
@@ -201,12 +223,12 @@ func (l *lowering) nodeEnvironmentRead(node *ast.Node) (ir.Expression, bool, err
 	if _, found := l.nodeEnvironmentAccess(node); !found {
 		return nil, false, nil
 	}
-	if err := l.nodeEnvironmentReadRefusal(node); err != nil {
-		return nil, true, err
+	if nodeEnvironmentReadRefusalError := l.nodeEnvironmentReadRefusal(node); nodeEnvironmentReadRefusalError != nil {
+		return nil, true, nodeEnvironmentReadRefusalError
 	}
-	name, err := l.nodeEnvironmentKey(node)
-	if err != nil {
-		return nil, true, err
+	name, nodeEnvironmentKeyError := l.nodeEnvironmentKey(node)
+	if nodeEnvironmentKeyError != nil {
+		return nil, true, nodeEnvironmentKeyError
 	}
 	return ir.NodeFSFile{Operation: "host_env", Arguments: []ir.Expression{name}, Of: ir.String}, true, nil
 }
@@ -217,10 +239,10 @@ func (l *lowering) nodeEnvironmentKey(node *ast.Node) (ir.Expression, error) {
 	if node.Kind == ast.KindPropertyAccessExpression {
 		name = ir.StringConstant{Index: l.constant(node.Name().Text())}
 	} else {
-		var err error
-		name, err = l.expression(node.AsElementAccessExpression().ArgumentExpression)
-		if err != nil {
-			return nil, err
+		var expressionError error
+		name, expressionError = l.expression(node.AsElementAccessExpression().ArgumentExpression)
+		if expressionError != nil {
+			return nil, expressionError
 		}
 		if name.Type() != ir.String {
 			return nil, l.notYet(node, "node:process.Process.env read with a non-string key")
@@ -240,7 +262,8 @@ func (l *lowering) nodeEnvironmentUseRefusal(node *ast.Node) (bool, error) {
 	}
 	if node.Kind == ast.KindBinaryExpression {
 		binary := node.AsBinaryExpression()
-		if binary.OperatorToken.Kind == ast.KindInKeyword && l.nodeLibraryMember(binary.Right) == "node:process.Process.env" {
+		if binary.OperatorToken.Kind == ast.KindInKeyword &&
+			l.nodeLibraryMember(binary.Right) == "node:process.Process.env" {
 			return true, l.notYet(binary.Right, "node:process.Process.env used as a value")
 		}
 	}
@@ -285,7 +308,9 @@ func (l *lowering) nodeEnvironmentUseRefusal(node *ast.Node) (bool, error) {
 // the receiver disambiguates it from any other namespace's native member.
 func (l *lowering) nodeRealpathNative(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
-	return node.Kind == ast.KindPropertyAccessExpression && l.nodeLibraryMember(node) == "node:fs.native" && l.nodeLibraryMember(node.AsPropertyAccessExpression().Expression) == "node:fs.realpathSync"
+	return node.Kind == ast.KindPropertyAccessExpression &&
+		l.nodeLibraryMember(node) == "node:fs.native" &&
+		l.nodeLibraryMember(node.AsPropertyAccessExpression().Expression) == "node:fs.realpathSync"
 }
 
 func (l *lowering) nodeRealpathUseRefusal(node *ast.Node) (bool, error) {
@@ -316,21 +341,30 @@ func (l *lowering) nodeRealpathCall(node *ast.Node) (ir.Expression, bool, error)
 	}
 	call := node.AsCallExpression()
 	if len(call.Arguments.Nodes) != 1 {
-		return nil, true, l.notYet(node, "node:fs.realpathSync.native with encoding, options, or callback arguments; need exactly one string path")
+		return nil, true, l.notYet(
+			node,
+			"node:fs.realpathSync.native with encoding, options, or callback arguments; need exactly one string path",
+		)
 	}
 	argument := call.Arguments.Nodes[0]
 	if argument.Kind == ast.KindSpreadElement {
 		return nil, true, l.notYet(argument, "node:fs.realpathSync.native with spread arguments")
 	}
 	if l.checker.GetTypeAtLocation(argument).Flags()&checker.TypeFlagsStringLike == 0 {
-		return nil, true, l.notYet(argument, "node:fs.realpathSync.native with a non-string path (Buffer and URL paths aren't bound yet)")
+		return nil, true, l.notYet(
+			argument,
+			"node:fs.realpathSync.native with a non-string path (Buffer and URL paths aren't bound yet)",
+		)
 	}
-	value, err := l.expression(argument)
-	if err != nil {
-		return nil, true, err
+	value, expressionError := l.expression(argument)
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
 	if value.Type() != ir.String {
-		return nil, true, l.notYet(argument, "node:fs.realpathSync.native with a non-string path (Buffer and URL paths aren't bound yet)")
+		return nil, true, l.notYet(
+			argument,
+			"node:fs.realpathSync.native with a non-string path (Buffer and URL paths aren't bound yet)",
+		)
 	}
 	return ir.NodeFSFile{Operation: "host_realpath", Arguments: []ir.Expression{value}, Of: ir.String}, true, nil
 }
@@ -352,13 +386,22 @@ func (l *lowering) nodeRealpathValue(node *ast.Node) (ir.Expression, bool, error
 		if valid {
 			signature := signatures[0]
 			parameters := signature.Parameters()
-			valid = signature.ThisParameter() == nil && len(parameters) == 1 && signature.MinArgumentCount() == 1 && signature.Flags()&checker.SignatureFlagsHasRestParameter == 0 && len(signature.TypeParameters()) == 0
+			valid = signature.ThisParameter() == nil &&
+				len(parameters) == 1 &&
+				signature.MinArgumentCount() == 1 &&
+				signature.Flags()&checker.SignatureFlagsHasRestParameter == 0 &&
+				len(signature.TypeParameters()) == 0
 			if valid {
-				valid = l.concrete(l.checker.GetTypeOfSymbol(parameters[0])).Flags() == checker.TypeFlagsString && l.concrete(l.checker.GetReturnTypeOfSignature(signature)).Flags() == checker.TypeFlagsString
+				valid = l.concrete(l.checker.GetTypeOfSymbol(parameters[0])).Flags() == checker.TypeFlagsString &&
+					l.concrete(l.checker.GetReturnTypeOfSignature(signature)).Flags() == checker.TypeFlagsString
 			}
 		}
 		if !valid {
-			return nil, true, l.notYet(node, "node:fs.realpathSync.native value needs exactly (path: string) => string, not "+l.checker.TypeToString(expected))
+			return nil, true, l.notYet(
+				node,
+				"node:fs.realpathSync.native value needs exactly (path: string) => string, not "+
+					l.checker.TypeToString(expected),
+			)
 		}
 	}
 	for index, function := range l.result.Functions {
@@ -368,15 +411,35 @@ func (l *lowering) nodeRealpathValue(node *ast.Node) (ir.Expression, bool, error
 	}
 	index, parameter := len(l.result.Functions), len(l.result.Locals)
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "path", Type: ir.String, Function: index})
-	result := ir.Expression(ir.NodeFSFile{Operation: "host_realpath", Arguments: []ir.Expression{ir.Read{Local: parameter, Of: ir.String}}, Of: ir.String})
+	result := ir.Expression(ir.NodeFSFile{
+		Operation: "host_realpath",
+		Arguments: []ir.Expression{ir.Read{Local: parameter, Of: ir.String}},
+		Of:        ir.String,
+	})
 	if plain {
-		result = ir.NodeHostCall{Module: "node:fs", Member: "realpathSync", Arguments: []ir.Expression{ir.Read{Local: parameter, Of: ir.String}}, Returns: ir.String, Throws: true}
+		result = ir.NodeHostCall{
+			Module:    "node:fs",
+			Member:    "realpathSync",
+			Arguments: []ir.Expression{ir.Read{Local: parameter, Of: ir.String}},
+			Returns:   ir.String,
+			Throws:    true,
+		}
 	}
-	function := ir.Function{Name: role + "_value", SourceLength: 1, Closure: true, Parameters: []int{parameter}, Returns: ir.String, Body: []ir.Statement{ir.Return{Value: result}}}
+	function := ir.Function{
+		Name:         role + "_value",
+		SourceLength: 1,
+		Closure:      true,
+		Parameters:   []int{parameter},
+		Returns:      ir.String,
+		Body:         []ir.Statement{ir.Return{Value: result}},
+	}
 	function.Source.Role = role
 	l.result.Functions = append(l.result.Functions, function)
 	held := len(l.result.Locals)
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: role + "_value", Type: ir.Closure, Global: true, Function: -1})
+	l.result.Locals = append(
+		l.result.Locals,
+		ir.Local{Name: role + "_value", Type: ir.Closure, Global: true, Function: -1},
+	)
 	l.forwarderValues = append(l.forwarderValues, ir.Declare{Local: held, Value: ir.MakeClosure{Function: index}})
 	if l.forwarders == nil {
 		l.forwarders = map[int]int{}
@@ -389,7 +452,9 @@ func (l *lowering) nodeRealpathValue(node *ast.Node) (ir.Expression, bool, error
 // while the native primitive reports blocking success. Never expose that value.
 func (l *lowering) nodeStdoutWriteMember(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
-	return node.Kind == ast.KindPropertyAccessExpression && l.nodeLibraryMember(node) == "node:net.Socket.write" && l.nodeLibraryMember(node.AsPropertyAccessExpression().Expression) == "node:process.Process.stdout"
+	return node.Kind == ast.KindPropertyAccessExpression &&
+		l.nodeLibraryMember(node) == "node:net.Socket.write" &&
+		l.nodeLibraryMember(node.AsPropertyAccessExpression().Expression) == "node:process.Process.stdout"
 }
 
 func (l *lowering) nodeStdoutWriteRefusal(node *ast.Node) error {
@@ -399,7 +464,10 @@ func (l *lowering) nodeStdoutWriteRefusal(node *ast.Node) error {
 		outer = outer.Parent
 	}
 	if outer.Parent == nil || outer.Parent.Kind != ast.KindExpressionStatement {
-		return l.notYet(node, name+" used as a value: its boolean is backpressure in Node and blocking success natively")
+		return l.notYet(
+			node,
+			name+" used as a value: its boolean is backpressure in Node and blocking success natively",
+		)
 	}
 	call := node.AsCallExpression()
 	if node.Flags&ast.NodeFlagsOptionalChain != 0 || call.Expression.Flags&ast.NodeFlagsOptionalChain != 0 {
@@ -422,12 +490,12 @@ func (l *lowering) nodeStdoutWrite(node *ast.Node) (ir.Expression, bool, error) 
 	if node.Kind != ast.KindCallExpression || !l.nodeStdoutWriteMember(node.AsCallExpression().Expression) {
 		return nil, false, nil
 	}
-	if err := l.nodeStdoutWriteRefusal(node); err != nil {
-		return nil, true, err
+	if nodeStdoutWriteRefusalError := l.nodeStdoutWriteRefusal(node); nodeStdoutWriteRefusalError != nil {
+		return nil, true, nodeStdoutWriteRefusalError
 	}
-	value, err := l.expression(node.AsCallExpression().Arguments.Nodes[0])
-	if err != nil {
-		return nil, true, err
+	value, expressionError := l.expression(node.AsCallExpression().Arguments.Nodes[0])
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
 	if value.Type() != ir.String {
 		return nil, true, l.notYet(node, "node:process.Process.stdout.write with a non-string argument")
@@ -438,12 +506,16 @@ func (l *lowering) nodeStdoutWrite(node *ast.Node) (ir.Expression, bool, error) 
 // Only stdout's library member is bound. Streams remain opaque values.
 func (l *lowering) nodeStdoutIsTTYMember(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
-	return node.Kind == ast.KindPropertyAccessExpression && l.nodeLibraryMember(node) == "node:tty.WriteStream.isTTY" && l.nodeLibraryMember(node.AsPropertyAccessExpression().Expression) == "node:process.Process.stdout"
+	return node.Kind == ast.KindPropertyAccessExpression &&
+		l.nodeLibraryMember(node) == "node:tty.WriteStream.isTTY" &&
+		l.nodeLibraryMember(node.AsPropertyAccessExpression().Expression) == "node:process.Process.stdout"
 }
 
 func (l *lowering) nodeStdoutColumnsMember(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
-	return node.Kind == ast.KindPropertyAccessExpression && l.nodeLibraryMember(node) == "node:tty.WriteStream.columns" && l.nodeLibraryMember(node.AsPropertyAccessExpression().Expression) == "node:process.Process.stdout"
+	return node.Kind == ast.KindPropertyAccessExpression &&
+		l.nodeLibraryMember(node) == "node:tty.WriteStream.columns" &&
+		l.nodeLibraryMember(node.AsPropertyAccessExpression().Expression) == "node:process.Process.stdout"
 }
 
 func (l *lowering) nodeStdoutTTYMember(node *ast.Node) bool {
@@ -476,8 +548,8 @@ func (l *lowering) nodeStdoutIsTTYRead(node *ast.Node) (ir.Expression, bool, err
 	if !l.nodeStdoutTTYMember(node) {
 		return nil, false, nil
 	}
-	if err := l.nodeStdoutIsTTYRefusal(node); err != nil {
-		return nil, true, err
+	if nodeStdoutIsTtyRefusalError := l.nodeStdoutIsTTYRefusal(node); nodeStdoutIsTtyRefusalError != nil {
+		return nil, true, nodeStdoutIsTtyRefusalError
 	}
 	if l.nodeStdoutColumnsMember(node) {
 		return ir.NodeFSFile{Operation: "host_stdout_columns", Of: ir.MaybeNumber}, true, nil
@@ -506,7 +578,9 @@ func (l *lowering) nodeStdoutUseRefusal(node *ast.Node) (bool, error) {
 	for receiver.Parent != nil && receiver.Parent.Kind == ast.KindParenthesizedExpression {
 		receiver = receiver.Parent
 	}
-	if receiver.Parent != nil && l.nodeStdoutTTYMember(receiver.Parent) && ast.SkipParentheses(receiver.Parent.AsPropertyAccessExpression().Expression) == access {
+	if receiver.Parent != nil &&
+		l.nodeStdoutTTYMember(receiver.Parent) &&
+		ast.SkipParentheses(receiver.Parent.AsPropertyAccessExpression().Expression) == access {
 		return true, l.nodeStdoutIsTTYRefusal(receiver.Parent)
 	}
 	name := l.nodeLibraryMember(access)
@@ -524,9 +598,15 @@ func (l *lowering) nodeStdoutUseRefusal(node *ast.Node) (bool, error) {
 		if l.nodeStdoutColumnsMember(access) {
 			return true, l.nodeStdoutIsTTYRefusal(access)
 		}
-		return true, l.notYet(access, "node:tty.WriteStream.columns on another stream (fix: read process.stdout.columns)")
+		return true, l.notYet(
+			access,
+			"node:tty.WriteStream.columns on another stream (fix: read process.stdout.columns)",
+		)
 	case "node:tty.WriteStream.rows":
-		return true, l.notYet(access, "node:tty.WriteStream.rows is not bound (fix: use process.stdout.columns for terminal width)")
+		return true, l.notYet(
+			access,
+			"node:tty.WriteStream.rows is not bound (fix: use process.stdout.columns for terminal width)",
+		)
 	}
 	if name == "node:process.Process.stdout" {
 		outer := access
@@ -550,10 +630,15 @@ func (l *lowering) nodeStdoutUseRefusal(node *ast.Node) (bool, error) {
 	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
 		outer = outer.Parent
 	}
-	if outer.Parent != nil && outer.Parent.Kind == ast.KindCallExpression && ast.SkipParentheses(outer.Parent.AsCallExpression().Expression) == access {
+	if outer.Parent != nil &&
+		outer.Parent.Kind == ast.KindCallExpression &&
+		ast.SkipParentheses(outer.Parent.AsCallExpression().Expression) == access {
 		return true, l.nodeStdoutWriteRefusal(outer.Parent)
 	}
-	return true, l.notYet(access, "node:process.Process.stdout.write used as a value: its boolean is backpressure in Node and blocking success natively")
+	return true, l.notYet(
+		access,
+		"node:process.Process.stdout.write used as a value: its boolean is backpressure in Node and blocking success natively",
+	)
 }
 
 // nodeWatchFile binds only the stat-polling forms used by sys.ts. The returned
@@ -571,7 +656,9 @@ func (l *lowering) nodeWatchFile(node *ast.Node) (ir.Expression, bool, error) {
 	}
 	discarded := outer.Parent != nil && outer.Parent.Kind == ast.KindExpressionStatement
 	if name == "node:fs.unwatchFile" && l.function != nil && l.function.Returns == 0 && outer.Parent != nil {
-		discarded = discarded || outer.Parent.Kind == ast.KindReturnStatement || outer.Parent.Kind == ast.KindArrowFunction && outer.Parent.Body() == outer
+		discarded = discarded ||
+			outer.Parent.Kind == ast.KindReturnStatement ||
+			outer.Parent.Kind == ast.KindArrowFunction && outer.Parent.Body() == outer
 	}
 	if !discarded {
 		return refuse("used as a value; discard the result and use unwatchFile")
@@ -585,12 +672,13 @@ func (l *lowering) nodeWatchFile(node *ast.Node) (ir.Expression, bool, error) {
 			return refuse("with spread arguments; write the arguments explicitly")
 		}
 	}
-	if name == "node:fs.watchFile" && len(written) != 3 || name == "node:fs.unwatchFile" && len(written) != 1 && len(written) != 2 {
+	if name == "node:fs.watchFile" && len(written) != 3 ||
+		name == "node:fs.unwatchFile" && len(written) != 1 && len(written) != 2 {
 		return refuse("outside the stat-polling signature")
 	}
-	path, err := l.expression(written[0])
-	if err != nil {
-		return nil, true, err
+	path, expressionError := l.expression(written[0])
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
 	if path.Type() != ir.String {
 		return refuse("with a non-string path; use a string")
@@ -610,9 +698,9 @@ func (l *lowering) nodeWatchFile(node *ast.Node) (ir.Expression, bool, error) {
 			if field.Kind != ast.KindPropertyAssignment || field.Name() == nil || field.Name().Text() != key {
 				return refuse("outside {persistent, interval} options in that order")
 			}
-			value, err := l.expression(field.AsPropertyAssignment().Initializer)
-			if err != nil {
-				return nil, true, err
+			value, expressionError := l.expression(field.AsPropertyAssignment().Initializer)
+			if expressionError != nil {
+				return nil, true, expressionError
 			}
 			expected := ir.Boolean
 			if index == 1 {
@@ -630,7 +718,9 @@ func (l *lowering) nodeWatchFile(node *ast.Node) (ir.Expression, bool, error) {
 			return refuse("with a listener outside a known (curr: Stats, prev: Stats) => void function")
 		}
 		signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(listener), checker.SignatureKindCall)
-		if len(signatures) != 1 || len(signatures[0].Parameters()) != 2 || l.checker.GetReturnTypeOfSignature(signatures[0]).Flags()&checker.TypeFlagsVoid == 0 {
+		if len(signatures) != 1 ||
+			len(signatures[0].Parameters()) != 2 ||
+			l.checker.GetReturnTypeOfSignature(signatures[0]).Flags()&checker.TypeFlagsVoid == 0 {
 			return refuse("with a listener outside (curr: Stats, prev: Stats) => void")
 		}
 		for _, parameter := range signatures[0].Parameters() {
@@ -638,9 +728,9 @@ func (l *lowering) nodeWatchFile(node *ast.Node) (ir.Expression, bool, error) {
 				return refuse("with a listener outside (curr: Stats, prev: Stats) => void")
 			}
 		}
-		callback, err := l.expression(listener)
-		if err != nil {
-			return nil, true, err
+		callback, expressionError := l.expression(listener)
+		if expressionError != nil {
+			return nil, true, expressionError
 		}
 		if callback.Type() != ir.Closure {
 			return refuse("with a non-closure listener")
@@ -666,7 +756,9 @@ func (l *lowering) nodeWatchListener(node *ast.Node, seen map[*ast.Symbol]bool) 
 		}
 		seen[symbol] = true
 		declaration := symbol.Declarations[0]
-		if declaration.Kind == ast.KindVariableDeclaration && declaration.Parent != nil && declaration.Parent.Flags&ast.NodeFlagsConst != 0 {
+		if declaration.Kind == ast.KindVariableDeclaration &&
+			declaration.Parent != nil &&
+			declaration.Parent.Flags&ast.NodeFlagsConst != 0 {
 			value := declaration.AsVariableDeclaration().Initializer
 			return value != nil && l.nodeWatchListener(value, seen)
 		}

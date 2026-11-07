@@ -38,14 +38,14 @@ func grain30Probe(test *testing.T, name string, plant bool) ([]byte, error) {
 	}
 	// Read through childguard.Capture for lintCommand's reason, stdout then stderr. Capture kills the child's group
 	// once it exits, so no product build it started outlives it.
-	stdout, stderr, err := childguard.Capture(ctx, command)
-	return append(stdout, stderr...), err
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
+	return append(stdout, stderr...), captureError
 }
 
-func grain30IsolationResult(index int, output []byte, err error) error {
+func grain30IsolationResult(index int, output []byte, grain30ProbeError error) error {
 	row := grain30IsolationCases[index]
-	if err != nil || !bytes.Contains(output, []byte("--- PASS: "+row.test+" ")) {
-		return fmt.Errorf("isolated %s: %v\n%s", row.test, err, output)
+	if grain30ProbeError != nil || !bytes.Contains(output, []byte("--- PASS: "+row.test+" ")) {
+		return fmt.Errorf("isolated %s: %v\n%s", row.test, grain30ProbeError, output)
 	}
 	if row.product != "" && !productLookedUp(output, regexp.QuoteMeta(row.product)) {
 		return fmt.Errorf("isolated %s never looked up its product %s itself:\n%s", row.test, row.product, output)
@@ -57,29 +57,29 @@ func grain30Isolation(test *testing.T, index int) {
 	test.Helper()
 	started := time.Now()
 	// The child prepares and looks up everything its selected test reads; this process reads none of it.
-	output, err := grain30Probe(test, grain30IsolationCases[index].test, false)
+	output, grain30ProbeError := grain30Probe(test, grain30IsolationCases[index].test, false)
 	test.Logf("preparation: %.3fs", time.Since(started).Seconds())
 	own := time.Now()
 	defer func() { test.Logf("own work: %.3fs", time.Since(own).Seconds()) }()
-	if failure := grain30IsolationResult(index, output, err); failure != nil {
+	if failure := grain30IsolationResult(index, output, grain30ProbeError); failure != nil {
 		test.Fatal(failure)
 	}
 	// Plant a failed selection into the real receipt. The same verifier must
 	// reject it in every child, including the leaf whose cache is already warm.
 	broken := bytes.ReplaceAll(output, []byte("--- PASS: "), []byte("--- FAIL: "))
-	if grain30IsolationResult(index, broken, err) == nil {
+	if grain30IsolationResult(index, broken, grain30ProbeError) == nil {
 		test.Fatal("planted selection failure survived")
 	}
 	if product := grain30IsolationCases[index].product; product != "" {
 		broken = bytes.ReplaceAll(output, []byte("build "+product+" "), []byte("built "+product+" "))
-		if grain30IsolationResult(index, broken, err) == nil {
+		if grain30IsolationResult(index, broken, grain30ProbeError) == nil {
 			test.Fatal("planted missing product lookup survived")
 		}
 	}
 	test.Logf("case %d exactly once; planted failure caught", index)
 }
 
-func grain30PlantResult(shard int, output []byte, err error) error {
+func grain30PlantResult(shard int, output []byte, grain30ProbeError error) error {
 	name := fmt.Sprintf("TestCompleteSuggestionSerialization_%03d", shard)
 	failures := []string{}
 	for _, line := range strings.Split(string(output), "\n") {
@@ -88,14 +88,14 @@ func grain30PlantResult(shard int, output []byte, err error) error {
 		}
 	}
 	if shard == 1 {
-		if err == nil ||
+		if grain30ProbeError == nil ||
 			len(failures) != 1 ||
 			!strings.HasPrefix(failures[0], "--- FAIL: "+name+" ") ||
 			!bytes.Contains(output, []byte("planted suggestion disagreement")) {
-			return fmt.Errorf("wrong planted failure: %v; failures %v\n%s", err, failures, output)
+			return fmt.Errorf("wrong planted failure: %v; failures %v\n%s", grain30ProbeError, failures, output)
 		}
-	} else if err != nil || len(failures) != 0 || !bytes.Contains(output, []byte("--- PASS: "+name+" ")) {
-		return fmt.Errorf("non-owner %s failed: %v\n%s", name, err, output)
+	} else if grain30ProbeError != nil || len(failures) != 0 || !bytes.Contains(output, []byte("--- PASS: "+name+" ")) {
+		return fmt.Errorf("non-owner %s failed: %v\n%s", name, grain30ProbeError, output)
 	}
 	return nil
 }
@@ -105,15 +105,19 @@ func grain30Plant(test *testing.T, shard int) {
 	// The child prepares and looks up everything its leaf reads; this process reads none of it.
 	own := time.Now()
 	defer func() { test.Logf("own work: %.3fs", time.Since(own).Seconds()) }()
-	output, err := grain30Probe(test, fmt.Sprintf("TestCompleteSuggestionSerialization_%03d", shard), true)
-	if failure := grain30PlantResult(shard, output, err); failure != nil {
+	output, grain30ProbeError := grain30Probe(
+		test,
+		fmt.Sprintf("TestCompleteSuggestionSerialization_%03d", shard),
+		true,
+	)
+	if failure := grain30PlantResult(shard, output, grain30ProbeError); failure != nil {
 		test.Fatal(failure)
 	}
 	broken := bytes.ReplaceAll(output, []byte("--- PASS: "), []byte("--- FAIL: "))
 	if shard == 1 {
 		broken = bytes.ReplaceAll(output, []byte("planted suggestion disagreement"), []byte("missing disagreement"))
 	}
-	if grain30PlantResult(shard, broken, err) == nil {
+	if grain30PlantResult(shard, broken, grain30ProbeError) == nil {
 		test.Fatal("planted probe-verdict failure survived")
 	}
 	test.Logf("leaf %d exactly once; planted failure caught", shard)
@@ -184,9 +188,9 @@ func grain30ProbeUnion(groups [][]int, count int) error {
 
 func TestCompleteSuggestionSerialization_ProbeUnion(test *testing.T) {
 	test.Parallel()
-	source, err := os.ReadFile("grain30_serialization_probes_test.go")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("grain30_serialization_probes_test.go")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	pattern := regexp.MustCompile(
 		`(?s)func TestCompleteSuggestionSerialization_(IsolatedShard|PlantedFailure)_([0-9]+)\(t \*testing.T\) \{\s*t\.Parallel\(\)\s*(grain30Isolation|grain30Plant)\(t, ([0-9]+)\)\s*\}`,
@@ -215,8 +219,8 @@ func TestCompleteSuggestionSerialization_ProbeUnion(test *testing.T) {
 		// Empty future groups are legal. Mutation checks must neither index an
 		// empty group nor claim that removing nothing caused missing coverage.
 		groups = append(groups, nil)
-		if err := grain30ProbeUnion(groups, count); err != nil {
-			test.Fatal(err)
+		if grain30ProbeUnionError := grain30ProbeUnion(groups, count); grain30ProbeUnionError != nil {
+			test.Fatal(grain30ProbeUnionError)
 		}
 		for owner, group := range groups {
 			for _, fault := range []string{"unknown", "missing", "duplicate"} {
@@ -229,8 +233,8 @@ func TestCompleteSuggestionSerialization_ProbeUnion(test *testing.T) {
 					broken[owner] = append(broken[owner], count)
 				case "missing":
 					if len(group) == 0 {
-						if err := grain30ProbeUnion(broken, count); err != nil {
-							test.Fatal(err)
+						if grain30ProbeUnionError := grain30ProbeUnion(broken, count); grain30ProbeUnionError != nil {
+							test.Fatal(grain30ProbeUnionError)
 						}
 						continue
 					}

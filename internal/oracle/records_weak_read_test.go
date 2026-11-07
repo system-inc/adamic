@@ -14,9 +14,11 @@ import (
 // weakReadPath is a fixture of records_weak_read, absolute, as a NotYet's Where names it.
 func weakReadPath(test *testing.T, name string) string {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_weak_read", name))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/records_weak_read", name),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return path
 }
@@ -39,9 +41,9 @@ func TestWeakReadAgreesWithNode(test *testing.T) {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
 			path := weakReadPath(test, name+".ts")
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatalf("a weak read in .ts must lower: %v", err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatalf("a weak read in .ts must lower: %v", loweredError)
 			}
 			helpers := 0
 			for _, function := range program.Functions {
@@ -94,9 +96,9 @@ func TestWeakReadAgreesWithNode(test *testing.T) {
 func weakReadStops(test *testing.T, name, printed, stopped, want string) {
 	test.Helper()
 	path := weakReadPath(test, name)
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatalf("the read must lower: %v", err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatalf("the read must lower: %v", loweredError)
 	}
 	node := onNode(test, path)
 	if node.exitCode != 0 || string(node.stdout) != printed {
@@ -132,10 +134,10 @@ func TestRecordLiteralMembershipStops(test *testing.T) {
 func TestWeakReadUnionFieldStaysNotYet(test *testing.T) {
 	test.Parallel()
 	path := weakReadPath(test, "union_field.ts")
-	_, err := lowered(test, path)
+	_, loweredError := lowered(test, path)
 	var notYet *lower.NotYet
-	if !errors.As(err, &notYet) || notYet.What != recordGuardedReason || notYet.Where != path+":10:16" {
-		test.Fatalf("want NotYet %q at :10:16, got %v", recordGuardedReason, err)
+	if !errors.As(loweredError, &notYet) || notYet.What != recordGuardedReason || notYet.Where != path+":10:16" {
+		test.Fatalf("want NotYet %q at :10:16, got %v", recordGuardedReason, loweredError)
 	}
 }
 
@@ -145,10 +147,10 @@ func TestWeakReadUnionFieldStaysNotYet(test *testing.T) {
 func TestWeakReadStaysNotYetInA(test *testing.T) {
 	test.Parallel()
 	path := weakReadPath(test, "weak_read.a")
-	_, err := lowered(test, path)
+	_, loweredError := lowered(test, path)
 	var notYet *lower.NotYet
-	if !errors.As(err, &notYet) || notYet.What != recordGuardedReason || notYet.Where != path+":10:16" {
-		test.Fatalf("want NotYet %q at :10:16, got %v", recordGuardedReason, err)
+	if !errors.As(loweredError, &notYet) || notYet.What != recordGuardedReason || notYet.Where != path+":10:16" {
+		test.Fatalf("want NotYet %q at :10:16, got %v", recordGuardedReason, loweredError)
 	}
 }
 
@@ -214,9 +216,9 @@ func TestWeakReadRecordPath(test *testing.T) {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
 			path := weakReadPath(test, "record_path.ts")
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatalf("record_path.ts must lower: %v", err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatalf("record_path.ts must lower: %v", loweredError)
 			}
 			if name == "fixed" {
 				if node := onNode(test, path); node.exitCode != 0 || string(node.stdout) != probe.stdout {
@@ -299,8 +301,8 @@ func TestWeakReadRoads(test *testing.T) {
 	} {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			program, err := lowered(test, weakReadPath(test, filepath.Join("roads", name+".ts")))
-			if err == nil {
+			program, loweredError := lowered(test, weakReadPath(test, filepath.Join("roads", name+".ts")))
+			if loweredError == nil {
 				for _, function := range program.Functions {
 					if function.Name == "weak_field_read" {
 						test.Fatalf("ROAD REACHES %s", name)
@@ -311,19 +313,19 @@ func TestWeakReadRoads(test *testing.T) {
 			var refused *lower.Refused
 			var notYet *lower.NotYet
 			switch {
-			case errors.As(err, &refused):
+			case errors.As(loweredError, &refused):
 				test.Logf(
 					"%s stops, Refused at %s: %s; fix: %s (%v)",
 					name,
 					refused.Where,
 					refused.What,
 					refused.Fix,
-					err,
+					loweredError,
 				)
-			case errors.As(err, &notYet):
-				test.Logf("%s stops, NotYet at %s: %s (%v)", name, notYet.Where, notYet.What, err)
+			case errors.As(loweredError, &notYet):
+				test.Logf("%s stops, NotYet at %s: %s (%v)", name, notYet.Where, notYet.What, loweredError)
 			default:
-				test.Fatalf("%s stops with neither Refused nor NotYet: %v", name, err)
+				test.Fatalf("%s stops with neither Refused nor NotYet: %v", name, loweredError)
 			}
 		})
 	}

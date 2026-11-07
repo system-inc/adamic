@@ -12,7 +12,7 @@ func TestReportedLeakIsRejected(test *testing.T) {
 		test.Skip("Linux LeakSanitizer report control")
 	}
 	calls := 0
-	report, err := Check(
+	report, checkError := Check(
 		Program{Sanitized: "fixture", Execute: func(environment []string, name string, arguments ...string) Run {
 			calls++
 			// ADAMIC_LEAK_CHECK asks the runtime to mark an intentional exit (adamic.c), so the check
@@ -26,8 +26,8 @@ func TestReportedLeakIsRejected(test *testing.T) {
 			return Run{ExitCode: 1, Stderr: []byte("ERROR: LeakSanitizer: detected memory leaks\n")}
 		}},
 	)
-	if err != nil || calls != 1 || !strings.Contains(report, "ERROR: LeakSanitizer") {
-		test.Fatalf("reported leak was ignored: calls=%d report=%q error=%v", calls, report, err)
+	if checkError != nil || calls != 1 || !strings.Contains(report, "ERROR: LeakSanitizer") {
+		test.Fatalf("reported leak was ignored: calls=%d report=%q error=%v", calls, report, checkError)
 	}
 }
 

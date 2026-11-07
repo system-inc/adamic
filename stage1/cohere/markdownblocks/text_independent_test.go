@@ -15,9 +15,9 @@ import (
 const testMarkdownTextSplittingShards = 64
 
 func textSplittingInputs(test *testing.T) (string, []auditInput) {
-	root, e := filepath.Abs(repository)
-	if e != nil {
-		test.Fatal(e)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	inputs, _ := auditCorpus(test, root)
 	textVerifyCorpus(test, inputs)
@@ -94,13 +94,15 @@ func textSplittingShard(test *testing.T, shard int) {
 	if fork == "" {
 		fork = filepath.Join(cohere, "internal/format/prettier/bundles")
 	}
-	installed, e := os.ReadFile(filepath.Join(fork, "plugins/markdown.js"))
-	if e != nil {
-		test.Fatal(e)
+	installed, readError := os.ReadFile(filepath.Join(fork, "plugins/markdown.js"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	originalBundle, e := os.ReadFile(filepath.Join(cohere, "internal/format/prettier/bundles/plugins/markdown.js"))
-	if e != nil {
-		test.Fatal(e)
+	originalBundle, readError := os.ReadFile(
+		filepath.Join(cohere, "internal/format/prettier/bundles/plugins/markdown.js"),
+	)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	equal(test, "pinned original markdown bundle", installed, originalBundle)
 	library := textExecute(test, nil, "node", "testdata/text_library.mjs", fork, cases)
@@ -118,8 +120,12 @@ func textSplittingShard(test *testing.T, shard int) {
 		{"backend", textOnNode(test, products.backend, cases)},
 	} {
 		clean(test, side.name, side.result)
-		if err := textOutputDifference(inputs, side.result.stdout, want.stdout); err != nil {
-			test.Fatalf("%s: %v", side.name, err)
+		if textOutputDifferenceError := textOutputDifference(
+			inputs,
+			side.result.stdout,
+			want.stdout,
+		); textOutputDifferenceError != nil {
+			test.Fatalf("%s: %v", side.name, textOutputDifferenceError)
 		}
 	}
 	if report := textLeakReport(test, products, cases); report != "" {
@@ -137,8 +143,8 @@ func textSplittingShard(test *testing.T, shard int) {
 	} {
 		func() {
 			scratch := test.TempDir()
-			if e := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); e != nil {
-				test.Fatal(e)
+			if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
 			for _, f := range []string{
 				"splitText.ts",
@@ -150,9 +156,9 @@ func textSplittingShard(test *testing.T, shard int) {
 				"codec.ts",
 				"testdata/text_probe.ts",
 			} {
-				b, e := os.ReadFile(f)
-				if e != nil {
-					test.Fatal(e)
+				b, readError := os.ReadFile(f)
+				if readError != nil {
+					test.Fatal(readError)
 				}
 				if f == m.file {
 					if strings.Count(string(b), m.from) != 1 {

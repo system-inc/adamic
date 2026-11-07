@@ -76,8 +76,8 @@ int main(void) {
 	)
 	for _, sanitize := range []bool{false, true} {
 		binary := filepath.Join(test.TempDir(), "views")
-		if err := Build(source, binary, Options{Sanitize: sanitize, Count: true}); err != nil {
-			test.Fatal(err)
+		if buildError := Build(source, binary, Options{Sanitize: sanitize, Count: true}); buildError != nil {
+			test.Fatal(buildError)
 		}
 		if got := runWithInput(test, "", binary); got != want {
 			test.Fatalf("sanitize %v: %q; Node %q", sanitize, got, want)

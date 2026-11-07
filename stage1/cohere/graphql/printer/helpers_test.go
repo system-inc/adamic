@@ -49,13 +49,13 @@ func firstDifference(got string, want string) string {
 // lowered checks and lowers a program, failing the test with stage 0's refusal if it can't.
 func lowered(test *testing.T, path string) *ir.Program {
 	test.Helper()
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatalf("Load: %v", err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatalf("Load: %v", loadError)
 	}
-	result, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		test.Fatalf("Lower: %v", err)
+	result, lowerError := lower.Lower(context.Background(), program)
+	if lowerError != nil {
+		test.Fatalf("Lower: %v", lowerError)
 	}
 	return result
 }
@@ -91,10 +91,10 @@ func execute(test *testing.T, environment []string, name string, arguments ...st
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
-	err := childguard.Run(command, childguard.Options{})
+	runError := childguard.Run(command, childguard.Options{})
 	var exitError *exec.ExitError
-	if err != nil && !errors.As(err, &exitError) {
-		test.Fatalf("running %s: %v", name, err)
+	if runError != nil && !errors.As(runError, &exitError) {
+		test.Fatalf("running %s: %v", name, runError)
 	}
 	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
 }
@@ -102,9 +102,9 @@ func execute(test *testing.T, environment []string, name string, arguments ...st
 // onNode runs a program's source on Node, through the oracle's runner, with its arguments.
 func onNode(test *testing.T, path string, arguments ...string) run {
 	test.Helper()
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return execute(
 		test,

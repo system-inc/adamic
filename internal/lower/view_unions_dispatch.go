@@ -8,14 +8,19 @@ import (
 )
 
 // All members are interned before a union can supply a read certificate.
-func buildUnionReadContract(l *lowering, node *ast.Node, target *checker.Type, build viewContractBuilder) (ir.ViewContractID, error) {
+func buildUnionReadContract(
+	l *lowering,
+	node *ast.Node,
+	target *checker.Type,
+	build viewContractBuilder,
+) (ir.ViewContractID, error) {
 	if of, known := l.representation(target); known && of == ir.Closure {
 		return l.prepareUntaggedCallableUnionRead(node, target)
 	}
 	l.prepareUntaggedStructuralRead(node, target, map[*checker.Type]bool{})
-	id, err := internMixedUnionViewContract(l, node, target, build)
-	if err != nil {
-		return 0, err
+	id, internMixedUnionViewContractError := internMixedUnionViewContract(l, node, target, build)
+	if internMixedUnionViewContractError != nil {
+		return 0, internMixedUnionViewContractError
 	}
 	contract := l.result.ViewContracts[id-1]
 	contract.Undefined = l.includesUndefined(target)
@@ -28,11 +33,16 @@ func buildUnionReadContract(l *lowering, node *ast.Node, target *checker.Type, b
 	}
 	if contract.Of == ir.Object {
 		for _, field := range l.checker.GetPropertiesOfType(target) {
-			child, err := build(l.checker.GetTypeOfSymbol(field))
-			if err != nil {
-				return 0, err
+			child, buildError := build(l.checker.GetTypeOfSymbol(field))
+			if buildError != nil {
+				return 0, buildError
 			}
-			contract.Fields = append(contract.Fields, ir.ViewFieldContract{Name: field.Name, Contract: child, Optional: field.Flags&ast.SymbolFlagsOptional != 0, Readonly: l.checker.IsReadonlySymbol(field)})
+			contract.Fields = append(contract.Fields, ir.ViewFieldContract{
+				Name:     field.Name,
+				Contract: child,
+				Optional: field.Flags&ast.SymbolFlagsOptional != 0,
+				Readonly: l.checker.IsReadonlySymbol(field),
+			})
 		}
 		l.result.ViewContracts[id-1] = contract
 		if contract.Unsupported == "" && !l.supportsUntaggedRead(contract) {
@@ -58,16 +68,20 @@ func (l *lowering) unionAggregateContract(node *ast.Node, target *checker.Type) 
 		contract.Of = ir.Object
 		contract.FixedTuple = true
 		for position, element := range l.checker.GetTypeArguments(target) {
-			child, err := l.viewContract(node, element)
-			if err != nil {
-				return 0, err
+			child, viewContractError := l.viewContract(node, element)
+			if viewContractError != nil {
+				return 0, viewContractError
 			}
 			flags := target.TargetTupleType().ElementFlags()
 			if flags[position] != checker.ElementFlagsRequired {
 				return 0, l.notYet(node, "a variable tuple checked-view contract")
 			}
 			contract.Tuple = append(contract.Tuple, child)
-			contract.Fields = append(contract.Fields, ir.ViewFieldContract{Name: strconv.Itoa(position), Contract: child, Readonly: target.TargetTupleType().IsReadonly()})
+			contract.Fields = append(contract.Fields, ir.ViewFieldContract{
+				Name:     strconv.Itoa(position),
+				Contract: child,
+				Readonly: target.TargetTupleType().IsReadonly(),
+			})
 		}
 	} else {
 		contract.Kind = ir.ViewArray
@@ -77,9 +91,9 @@ func (l *lowering) unionAggregateContract(node *ast.Node, target *checker.Type) 
 		if element == nil {
 			return 0, l.notYet(node, "an unavailable array union element")
 		}
-		child, err := l.viewContract(node, element)
-		if err != nil {
-			return 0, err
+		child, viewContractError := l.viewContract(node, element)
+		if viewContractError != nil {
+			return 0, viewContractError
 		}
 		contract.Element = child
 	}

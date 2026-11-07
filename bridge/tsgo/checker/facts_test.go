@@ -22,8 +22,8 @@ func decodedFields(test *testing.T, wire string) []string {
 		if end == len(units) {
 			test.Fatal("missing frame header")
 		}
-		size, err := strconv.Atoi(string(utf16.Decode(units[cursor:end])))
-		if err != nil || size < 0 || end+1+size > len(units) {
+		size, parseError := strconv.Atoi(string(utf16.Decode(units[cursor:end])))
+		if parseError != nil || size < 0 || end+1+size > len(units) {
 			test.Fatal("invalid frame length")
 		}
 		cursor = end + 1 + size
@@ -59,27 +59,27 @@ func TestShapeAndNameFacts(test *testing.T) {
 	config := filepath.Join(directory, "tsconfig.json")
 	file := filepath.Join(directory, "file.ts")
 	source := "declare const value: \"世界🌍\";\nvalue;\n"
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		config,
 		[]byte(`{"compilerOptions":{"strict":true,"target":"ES2022","lib":["ES2022"]}}`),
 		0600,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if err := os.WriteFile(file, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(file, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := Open(config, []string{file})
-	if err != nil {
-		test.Fatal(err)
+	program, openError := Open(config, []string{file})
+	if openError != nil {
+		test.Fatal(openError)
 	}
 	start := uint64(strings.LastIndex(source, "\nvalue"))
 	end := start + uint64(len("\nvalue"))
 	ask := func(question string) []string {
 		test.Helper()
-		wire, err := program.Inspect(file, start, end, "Identifier", question)
-		if err != nil {
-			test.Fatal(err)
+		wire, inspectError := program.Inspect(file, start, end, "Identifier", question)
+		if inspectError != nil {
+			test.Fatal(inspectError)
 		}
 		return decodedFields(test, wire)
 	}
@@ -107,11 +107,11 @@ func TestShapeAndNameFacts(test *testing.T) {
 		"name\n1\nextra",
 		"signature-shape",
 	} {
-		if _, err := program.Inspect(file, start, end, "Identifier", question); err == nil {
+		if _, inspectError := program.Inspect(file, start, end, "Identifier", question); inspectError == nil {
 			test.Fatalf("accepted invalid question %q", question)
 		}
 	}
-	if _, err := program.Inspect(file, start, end, "NumericLiteral", "name\n"+shape[5]); err == nil {
+	if _, inspectError := program.Inspect(file, start, end, "NumericLiteral", "name\n"+shape[5]); inspectError == nil {
 		test.Fatal("name accepted an inexact selector")
 	}
 }

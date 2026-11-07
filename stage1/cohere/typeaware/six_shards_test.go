@@ -85,12 +85,14 @@ func sixIDs(prefix string, paths []string) []string {
 		// corpus-relative identity, independent of the checkout's location.
 		if _, relative, ok := strings.Cut(filepath.ToSlash(path), "/src/compiler/"); ok {
 			name = relative
-		} else if repository, err := filepath.Abs("../../.."); err == nil {
+		} else if repository, absolutePathError := filepath.Abs("../../.."); absolutePathError == nil {
 			// Repository corpora also repeat basenames across directories.
-			if relative, err := filepath.Rel(
+			if relative, relativePathError := filepath.Rel(
 				repository,
 				path,
-			); err == nil && relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
+			); relativePathError == nil &&
+				relative != ".." &&
+				!strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
 				name = filepath.ToSlash(relative)
 			}
 		}
@@ -114,12 +116,12 @@ func sixRunShards(test *testing.T, h *harness, expected []string, shards []sixSh
 	if len(shards) != required {
 		test.Fatalf("enumerated shard count %d differs from declared %d", len(shards), required)
 	}
-	if err := sixUnion(expected, shards); err != nil {
-		test.Fatal(err)
+	if sixUnionError := sixUnion(expected, shards); sixUnionError != nil {
+		test.Fatal(sixUnionError)
 	}
-	index, count, err := sixSelection(value)
-	if err != nil {
-		test.Fatal(err)
+	index, count, sixSelectionError := sixSelection(value)
+	if sixSelectionError != nil {
+		test.Fatal(sixSelectionError)
 	}
 	test.Logf("six-union count=%d unique=%d shards=%d", len(expected), len(expected), len(shards))
 	started := h.setupStarted
@@ -133,8 +135,8 @@ func sixRunShards(test *testing.T, h *harness, expected []string, shards []sixSh
 	var setupBefore time.Duration
 	test.Cleanup(func() {
 		cleanupStarted := time.Now()
-		if err := sixUnion(admittedIDs, completed); err != nil {
-			test.Errorf("executed shard union: %v", err)
+		if sixUnionError := sixUnion(admittedIDs, completed); sixUnionError != nil {
+			test.Errorf("executed shard union: %v", sixUnionError)
 		}
 		test.Logf(
 			"six-executed-union count=%d admitted_shards=%d selector=%d/%d",
@@ -175,8 +177,8 @@ func sixRunShards(test *testing.T, h *harness, expected []string, shards []sixSh
 				mu.Unlock()
 			}()
 			directory := filepath.Join(h.directory, "shards", unit)
-			if err := os.MkdirAll(directory, 0755); err != nil {
-				test.Fatal(err)
+			if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
 			local := &harness{t: test, repository: h.repository, directory: directory, parallel: true}
 			shard.run(local)
@@ -240,11 +242,11 @@ func (h *harness) sixCompare(name, oracle, binary, config, roots string, paths [
 	if err := sixOutputError(h.t.Name(), want.stdout, got.stdout, got.stderr); err != nil {
 		h.t.Fatal(err)
 	}
-	if err := sixFindingUnion(want.stdout, paths); err != nil {
-		h.t.Fatalf("shard %s oracle case union: %v", h.t.Name(), err)
+	if sixFindingUnionError := sixFindingUnion(want.stdout, paths); sixFindingUnionError != nil {
+		h.t.Fatalf("shard %s oracle case union: %v", h.t.Name(), sixFindingUnionError)
 	}
-	if err := sixFindingUnion(got.stdout, paths); err != nil {
-		h.t.Fatalf("shard %s native case union: %v", h.t.Name(), err)
+	if sixFindingUnionError := sixFindingUnion(got.stdout, paths); sixFindingUnionError != nil {
+		h.t.Fatalf("shard %s native case union: %v", h.t.Name(), sixFindingUnionError)
 	}
 	h.t.Logf("%s: %d identical finding bytes; %s", name, len(want.stdout), summary(want.stdout))
 	return want
@@ -256,25 +258,25 @@ func TestSixShardUnionRejectsLossAndDuplication(test *testing.T) {
 		"compiler",
 		[]string{"/checkout/src/compiler/utilities.ts", "/checkout/src/compiler/_namespaces/utilities.ts"},
 	)
-	if err := sixUnion(
+	if sixUnionError := sixUnion(
 		[]string{"compiler/utilities.ts", "compiler/_namespaces/utilities.ts"},
 		[]sixShard{{name: "namespaces", ids: ids}},
-	); err != nil {
-		test.Fatal(err)
+	); sixUnionError != nil {
+		test.Fatal(sixUnionError)
 	}
-	repository, err := filepath.Abs("../../..")
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs("../../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	repositoryIDs := sixIDs(
 		"repository",
 		[]string{filepath.Join(repository, "fixtures/main.ts"), filepath.Join(repository, "stage1/main.ts")},
 	)
-	if err := sixUnion(
+	if sixUnionError := sixUnion(
 		[]string{"repository/fixtures/main.ts", "repository/stage1/main.ts"},
 		[]sixShard{{name: "repository", ids: repositoryIDs}},
-	); err != nil {
-		test.Fatal(err)
+	); sixUnionError != nil {
+		test.Fatal(sixUnionError)
 	}
 	expected := []string{"a", "b", "c"}
 	for _, shards := range [][]sixShard{
@@ -282,12 +284,12 @@ func TestSixShardUnionRejectsLossAndDuplication(test *testing.T) {
 		{{name: "left", ids: []string{"a", "b"}}, {name: "right", ids: []string{"b", "c"}}},
 		{{name: "left", ids: []string{"a", "b", "c", "extra"}}},
 	} {
-		if err := sixUnion(expected, shards); err == nil {
+		if sixUnionError := sixUnion(expected, shards); sixUnionError == nil {
 			test.Fatalf("invalid union accepted: %v", shards)
 		}
 	}
 	for _, value := range []string{"1", "-1/2", "2/2", "0/0", "x/2", "0/2/3"} {
-		if _, _, err := sixSelection(value); err == nil {
+		if _, _, sixSelectionError := sixSelection(value); sixSelectionError == nil {
 			test.Fatalf("invalid selector accepted: %s", value)
 		}
 	}
@@ -344,18 +346,18 @@ func TestSixShardPlantedDisagreement(test *testing.T) {
 				}
 				cmd := exec.Command(os.Args[0], "-test.run="+pattern, "-test.v")
 				cmd.Env = append(os.Environ(), "ADAMIC_SIX_PLANTED_CHILD=1", "ADAMIC_TEST_SHARD="+selector)
-				text, err := cmd.CombinedOutput()
+				text, combinedOutputError := cmd.CombinedOutput()
 				if i == 2 {
-					if err == nil ||
+					if combinedOutputError == nil ||
 						!bytes.Contains(text, []byte("shard TestSixShardPlantedDisagreement/shard-002 mismatch")) {
-						test.Fatalf("holding shard failed to catch planted case: %v\n%s", err, text)
+						test.Fatalf("holding shard failed to catch planted case: %v\n%s", combinedOutputError, text)
 					}
 					if bytes.Count(text, []byte("--- FAIL: TestSixShardPlantedDisagreement/shard-")) != 1 {
 						test.Fatalf("expected exactly one failing shard:\n%s", text)
 					}
 					test.Log("planted/case-5 caught exactly by shard-002 (selection 2/4)")
-				} else if err != nil {
-					test.Fatalf("nonholding shard caught planted disagreement: %v\n%s", err, text)
+				} else if combinedOutputError != nil {
+					test.Fatalf("nonholding shard caught planted disagreement: %v\n%s", combinedOutputError, text)
 				}
 			}
 		})
@@ -371,9 +373,9 @@ func sixCompilerRanges(test *testing.T, paths []string, count int) [][]string {
 	}
 	files := make([]file, len(paths))
 	for i, p := range paths {
-		info, err := os.Stat(p)
-		if err != nil {
-			test.Fatal(err)
+		info, statError := os.Stat(p)
+		if statError != nil {
+			test.Fatal(statError)
 		}
 		files[i] = file{i, info.Size()}
 	}
@@ -407,9 +409,9 @@ func sixCompilerRanges(test *testing.T, paths []string, count int) [][]string {
 
 func globalManifestText(h *harness, path string) string {
 	h.t.Helper()
-	data, err := os.ReadFile(path)
-	if err != nil {
-		h.t.Fatal(err)
+	data, readError := os.ReadFile(path)
+	if readError != nil {
+		h.t.Fatal(readError)
 	}
 	return string(data)
 }

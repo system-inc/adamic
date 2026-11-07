@@ -45,7 +45,10 @@ func (l *lowering) finiteElementRead(node *ast.Node, object ir.Expression) (ir.E
 			return nil, l.notYet(node, describe(node))
 		}
 		field := l.checker.GetPropertyOfType(receiver, name)
-		if field == nil || accessorSymbol(field) || (l.accessorNames[name] && field.Flags&ast.SymbolFlagsOptional != 0) || name == "__proto__" {
+		if field == nil ||
+			accessorSymbol(field) ||
+			(l.accessorNames[name] && field.Flags&ast.SymbolFlagsOptional != 0) ||
+			name == "__proto__" {
 			return nil, l.notYet(node, "a computed key without an own data field")
 		}
 		for _, declaration := range field.Declarations {
@@ -54,7 +57,10 @@ func (l *lowering) finiteElementRead(node *ast.Node, object ir.Expression) (ir.E
 			}
 		}
 		stored, known := l.representation(l.checker.GetTypeOfSymbol(field))
-		if !known || censusFieldSlotless(stored) || stored == ir.Weak || l.includesNull(l.checker.GetTypeOfSymbol(field)) {
+		if !known ||
+			censusFieldSlotless(stored) ||
+			stored == ir.Weak ||
+			l.includesNull(l.checker.GetTypeOfSymbol(field)) {
 			return nil, l.notYet(node, "a computed field with an unsupported representation")
 		}
 		if receiver.Flags()&checker.TypeFlagsUnion != 0 {
@@ -76,29 +82,43 @@ func (l *lowering) finiteElementRead(node *ast.Node, object ir.Expression) (ir.E
 	if len(names) == 0 {
 		return nil, l.notYet(node, "a computed key without finite alternatives")
 	}
-	result, err := l.typeOf(node)
-	if err != nil {
-		return nil, err
+	result, typeOfError := l.typeOf(node)
+	if typeOfError != nil {
+		return nil, typeOfError
 	}
-	key, err := l.expression(access.ArgumentExpression)
-	if err != nil {
-		return nil, err
+	key, expressionError := l.expression(access.ArgumentExpression)
+	if expressionError != nil {
+		return nil, expressionError
 	}
 	b := l.libraryArrayBuilder([]ir.Expression{object, key})
 	heldObject, heldKey := b.read(b.parameters[0]), b.read(b.parameters[1])
 	var read ir.Expression
 	for index, name := range names {
 		stored, _ := l.representation(l.checker.GetTypeOfSymbol(fields[index]))
-		read = ir.Property{Object: heldObject, Name: name, Of: stored, Absent: fields[index].Flags&ast.SymbolFlagsOptional != 0}
+		read = ir.Property{
+			Object: heldObject,
+			Name:   name,
+			Of:     stored,
+			Absent: fields[index].Flags&ast.SymbolFlagsOptional != 0,
+		}
 		read = fit(read, result)
 		if read.Type() != result {
 			return nil, l.notYet(node, "a computed field with differently represented alternatives")
 		}
-		b.body = append(b.body, ir.If{Condition: ir.Binary{Operator: ir.Equal, Left: heldKey, Right: tests[index]}, Then: []ir.Statement{ir.Return{Value: read}}})
+		b.body = append(b.body, ir.If{
+			Condition: ir.Binary{Operator: ir.Equal, Left: heldKey, Right: tests[index]},
+			Then:      []ir.Statement{ir.Return{Value: read}},
+		})
 	}
-	b.body = append(b.body, ir.Panic{Message: ir.StringConstant{Index: l.constant("computed object key outside its proven finite union")}})
+	b.body = append(
+		b.body,
+		ir.Panic{Message: ir.StringConstant{Index: l.constant("computed object key outside its proven finite union")}},
+	)
 	value := b.finish("element_access_fields", read)
-	if result.IsReference() && result != ir.Union && !l.includesUndefined(l.checker.GetTypeAtLocation(node)) && !l.acceptsUndefined(node) {
+	if result.IsReference() &&
+		result != ir.Union &&
+		!l.includesUndefined(l.checker.GetTypeAtLocation(node)) &&
+		!l.acceptsUndefined(node) {
 		for _, field := range fields {
 			if l.includesUndefined(l.checker.GetTypeOfSymbol(field)) {
 				return l.computedFieldPresence(node, value), nil
@@ -119,20 +139,30 @@ func (l *lowering) viewKeyedRead(node *ast.Node, object ir.Expression) (ir.Expre
 		return nil, false, nil
 	}
 	keyType := l.checker.GetTypeAtLocation(access.ArgumentExpression)
-	if held, known := l.representation(keyType); !known || held != ir.String || l.includesNull(keyType) || l.includesUndefined(keyType) {
-		return nil, true, l.notYet(access.ArgumentExpression, "a readonly view read by a key that isn't a string (symbol keys and key coercion)")
+	if held, known := l.representation(
+		keyType,
+	); !known || held != ir.String || l.includesNull(keyType) || l.includesUndefined(keyType) {
+		return nil, true, l.notYet(
+			access.ArgumentExpression,
+			"a readonly view read by a key that isn't a string (symbol keys and key coercion)",
+		)
 	}
-	key, err := l.expression(access.ArgumentExpression)
-	if err != nil {
-		return nil, true, err
+	key, expressionError := l.expression(access.ArgumentExpression)
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
 	if key.Type() != ir.String {
-		return nil, true, l.notYet(access.ArgumentExpression, "a readonly view read by a key that isn't a string (symbol keys and key coercion)")
+		return nil, true, l.notYet(
+			access.ArgumentExpression,
+			"a readonly view read by a key that isn't a string (symbol keys and key coercion)",
+		)
 	}
 	// The read can call a class getter the key names, from inside the runtime, so it arms the same
 	// program-wide getter judgment Reflect.get's read does (checkDynamicKeyedGetters).
-	if err := l.checkDynamicKeyedGetterSyntax(node); err != nil {
-		return nil, true, err
+	if checkDynamicKeyedGetterSyntaxError := l.checkDynamicKeyedGetterSyntax(
+		node,
+	); checkDynamicKeyedGetterSyntaxError != nil {
+		return nil, true, checkDynamicKeyedGetterSyntaxError
 	}
 	if l.dynamicKeyedSite == nil {
 		l.dynamicKeyedSite = node
@@ -149,13 +179,20 @@ func (l *lowering) computedFieldPresence(node *ast.Node, value ir.Expression) ir
 	for at.Parent != nil && at.Parent.Kind == ast.KindParenthesizedExpression {
 		at = at.Parent
 	}
-	if parent := at.Parent; parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Expression == at {
-		if written := parent.Parent; written != nil && written.Kind == ast.KindBinaryExpression && written.AsBinaryExpression().Left == parent && written.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken {
+	if parent := at.Parent; parent != nil &&
+		parent.Kind == ast.KindPropertyAccessExpression &&
+		parent.AsPropertyAccessExpression().Expression == at {
+		if written := parent.Parent; written != nil &&
+			written.Kind == ast.KindBinaryExpression &&
+			written.AsBinaryExpression().Left == parent &&
+			written.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken {
 			return value
 		}
 		message = "TypeError: Cannot read properties of undefined (reading '" + parent.Name().Text() + "')"
 	}
-	if parent := at.Parent; parent != nil && parent.Kind == ast.KindElementAccessExpression && parent.AsElementAccessExpression().Expression == at {
+	if parent := at.Parent; parent != nil &&
+		parent.Kind == ast.KindElementAccessExpression &&
+		parent.AsElementAccessExpression().Expression == at {
 		key := ast.SkipParentheses(parent.AsElementAccessExpression().ArgumentExpression)
 		if key.Kind == ast.KindNumericLiteral || key.Kind == ast.KindStringLiteral {
 			message = "TypeError: Cannot read properties of undefined (reading '" + key.Text() + "')"
@@ -167,9 +204,9 @@ func (l *lowering) computedFieldPresence(node *ast.Node, value ir.Expression) ir
 // Until finite reads share the checked member boundary, refuse every matching
 // object read in the program, including aliases and reads lowered before the cast.
 func (l *lowering) refuseViewElementReads(fields map[string]bool) error {
-	modules, err := l.moduleOrder(l.program.Files()[0])
-	if err != nil {
-		return err
+	modules, moduleOrderError := l.moduleOrder(l.program.Files()[0])
+	if moduleOrderError != nil {
+		return moduleOrderError
 	}
 	var refused error
 	var visit ast.Visitor
@@ -182,7 +219,11 @@ func (l *lowering) refuseViewElementReads(fields map[string]bool) error {
 			key := l.checker.GetTypeAtLocation(access.ArgumentExpression)
 			if key.Flags()&checker.TypeFlagsStringLiteral != 0 && fields[key.AsLiteralType().Value().(string)] {
 				if of, _ := l.representation(l.checker.GetTypeAtLocation(access.Expression)); of == ir.Object {
-					refused = &Refused{Where: l.program.Where(node), What: "view member read by element access is not yet checked", Fix: "use view." + key.AsLiteralType().Value().(string)}
+					refused = &Refused{
+						Where: l.program.Where(node),
+						What:  "view member read by element access is not yet checked",
+						Fix:   "use view." + key.AsLiteralType().Value().(string),
+					}
 					return true
 				}
 			}

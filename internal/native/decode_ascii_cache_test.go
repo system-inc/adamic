@@ -20,9 +20,9 @@ import (
 // for it.
 func decodeASCIICorpus(test *testing.T) string {
 	test.Helper()
-	repository, err := filepath.Abs("../..")
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs("../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return buildcache.Product(test, buildcache.Inputs{
 		Name: "decode-ascii-corpus",
@@ -36,14 +36,14 @@ func decodeASCIICorpus(test *testing.T) string {
 	}, func(directory string) error {
 		corpus := filepath.Join(directory, "corpus.bin")
 		command := toolchain.CommandIn(repository, "node", "internal/native/decode_ascii/corpus.mjs", corpus)
-		output, err := command.CombinedOutput()
-		if err != nil {
-			return fmt.Errorf("node corpus.mjs: %w\n%s", err, output)
+		output, combinedOutputError := command.CombinedOutput()
+		if combinedOutputError != nil {
+			return fmt.Errorf("node corpus.mjs: %w\n%s", combinedOutputError, output)
 		}
 		test.Log(string(output))
-		data, err := os.ReadFile(corpus)
-		if err != nil {
-			return err
+		data, readError := os.ReadFile(corpus)
+		if readError != nil {
+			return readError
 		}
 		offsets := []int{0}
 		for offset := 0; offset < len(data); {
@@ -62,8 +62,12 @@ func decodeASCIICorpus(test *testing.T) string {
 		}
 		for _, piece := range unitRanges(decodePrefixes, decodePrefixUnitSize) {
 			path := filepath.Join(directory, piece.name()+".bin")
-			if err := os.WriteFile(path, data[offsets[piece.first]:offsets[piece.last]], 0o644); err != nil {
-				return err
+			if writeError := os.WriteFile(
+				path,
+				data[offsets[piece.first]:offsets[piece.last]],
+				0o644,
+			); writeError != nil {
+				return writeError
 			}
 		}
 		// The units read only their ranges, so the whole corpus would double the product.
@@ -77,9 +81,9 @@ func decodeASCIICorpus(test *testing.T) string {
 // cache as the corpus.
 func decodeASCIIDecoder(test *testing.T, target string) string {
 	test.Helper()
-	repository, err := filepath.Abs("../..")
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs("../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	runtimeDirectory := "internal/native/runtime"
 	inputs := buildcache.Inputs{
@@ -95,9 +99,9 @@ func decodeASCIIDecoder(test *testing.T, target string) string {
 	// keys the decoder. It is built for this machine alone.
 	if alternate := os.Getenv("ADAMIC_DECODE_RUNTIME"); alternate != "" {
 		runtimeDirectory = alternate
-		snapshot, err := readRuntime(os.DirFS(alternate), ".")
-		if err != nil {
-			test.Fatal(err)
+		snapshot, readRuntimeError := readRuntime(os.DirFS(alternate), ".")
+		if readRuntimeError != nil {
+			test.Fatal(readRuntimeError)
 		}
 		for _, file := range snapshot {
 			inputs.Flags = append(inputs.Flags, fmt.Sprintf("runtime %s %x", file.name, sha256.Sum256(file.contents)))
@@ -107,9 +111,9 @@ func decodeASCIIDecoder(test *testing.T, target string) string {
 	if !filepath.IsAbs(runtimePath) {
 		runtimePath = filepath.Join(repository, runtimePath)
 	}
-	sources, err := filepath.Glob(filepath.Join(runtimePath, "*.c"))
-	if err != nil {
-		test.Fatal(err)
+	sources, globError := filepath.Glob(filepath.Join(runtimePath, "*.c"))
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	if len(sources) == 0 {
 		test.Fatal("no runtime sources")
@@ -118,8 +122,9 @@ func decodeASCIIDecoder(test *testing.T, target string) string {
 	var files []string
 	for _, source := range sources {
 		if !filepath.IsAbs(runtimeDirectory) {
-			if source, err = filepath.Rel(repository, source); err != nil {
-				test.Fatal(err)
+			var relativePathError error
+			if source, relativePathError = filepath.Rel(repository, source); relativePathError != nil {
+				test.Fatal(relativePathError)
 			}
 		}
 		files = append(files, source)
@@ -157,9 +162,9 @@ func decodeASCIIDecoder(test *testing.T, target string) string {
 	inputs.Flags = append(inputs.Flags, flags...)
 	inputs.Toolchain = []string{buildcache.Tool(compiler, "--version")}
 	directory := buildcache.Product(test, inputs, func(directory string) error {
-		objectDirectory, err := os.MkdirTemp("", "adamic-decode-")
-		if err != nil {
-			return err
+		objectDirectory, temporaryDirectoryError := os.MkdirTemp("", "adamic-decode-")
+		if temporaryDirectoryError != nil {
+			return temporaryDirectoryError
 		}
 		defer os.RemoveAll(objectDirectory)
 		// The checkout's directory is mapped out of the debug information, which would otherwise name it.
@@ -184,8 +189,8 @@ func decodeASCIIDecoder(test *testing.T, target string) string {
 						compiler,
 						append(append([]string(nil), compileFlags...), "-c", files[index], "-o", objects[index])...,
 					)
-					if output, err := command.CombinedOutput(); err != nil {
-						failures[index] = fmt.Errorf("compile %s: %w\n%s", files[index], err, output)
+					if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+						failures[index] = fmt.Errorf("compile %s: %w\n%s", files[index], combinedOutputError, output)
 					}
 				}
 			}()
@@ -203,8 +208,8 @@ func decodeASCIIDecoder(test *testing.T, target string) string {
 		arguments := append(append([]string(nil), flags...), objects...)
 		arguments = append(arguments, "-lm", "-o", filepath.Join(directory, "decode-"+target))
 		command := toolchain.CommandIn(repository, compiler, arguments...)
-		if output, err := command.CombinedOutput(); err != nil {
-			return fmt.Errorf("decoder link: %w\n%s", err, output)
+		if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+			return fmt.Errorf("decoder link: %w\n%s", combinedOutputError, output)
 		}
 		return nil
 	})

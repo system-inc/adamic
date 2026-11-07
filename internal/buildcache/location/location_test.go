@@ -16,25 +16,25 @@ func TestAnUnsetOutputDirectoryIsTheBuildCache(test *testing.T) {
 	test.Setenv("ADAMIC_SANDBOX", "")
 	for _, value := range []string{"", cache} {
 		test.Setenv(OutputDirectoryVariable, value)
-		output, err := Output()
-		if err != nil || output != cache {
+		output, outputError := Output()
+		if outputError != nil || output != cache {
 			test.Fatalf(
 				"with %s=%q the output directory is %q (%v), want the build cache %s",
 				OutputDirectoryVariable,
 				value,
 				output,
-				err,
+				outputError,
 				cache,
 			)
 		}
-		roots, err := Roots()
-		if err != nil || !slices.Equal(roots, []string{cache}) {
+		roots, rootsError := Roots()
+		if rootsError != nil || !slices.Equal(roots, []string{cache}) {
 			test.Fatalf(
 				"with %s=%q the roots are %q (%v), want the build cache alone",
 				OutputDirectoryVariable,
 				value,
 				roots,
-				err,
+				rootsError,
 			)
 		}
 		product := filepath.Join(cache, "local", "key")
@@ -61,12 +61,12 @@ func TestASetOutputDirectoryIsReadFirstAndWrittenAlone(test *testing.T) {
 	test.Setenv("ADAMIC_SANDBOX", "")
 	test.Chdir(scratch)
 	test.Setenv(OutputDirectoryVariable, "output")
-	output, err := Output()
-	if want := filepath.Join(scratch, "output"); err != nil || output != want {
-		test.Fatalf("the output directory is %q (%v), want %s, made absolute", output, err, want)
+	output, outputError := Output()
+	if want := filepath.Join(scratch, "output"); outputError != nil || output != want {
+		test.Fatalf("the output directory is %q (%v), want %s, made absolute", output, outputError, want)
 	}
-	if roots, err := Roots(); err != nil || !slices.Equal(roots, []string{output, cache}) {
-		test.Fatalf("the roots are %q (%v), want the output directory, then the cache", roots, err)
+	if roots, rootsError := Roots(); rootsError != nil || !slices.Equal(roots, []string{output, cache}) {
+		test.Fatalf("the roots are %q (%v), want the output directory, then the cache", roots, rootsError)
 	}
 	for _, path := range []string{filepath.Join(cache, "local", "key"), filepath.Join(output, "local", "key")} {
 		want := []string{filepath.Join(output, "local", "key"), filepath.Join(cache, "local", "key")}
@@ -88,10 +88,10 @@ func TestASetOutputDirectoryIsReadFirstAndWrittenAlone(test *testing.T) {
 	}
 	test.Setenv("ADAMIC_SANDBOX", "1")
 	test.Setenv("ADAMIC_BUILD_CACHE_DIR", "")
-	if got, err := Output(); err != nil || got != output {
-		test.Errorf("in a sandbox the output directory is %q (%v), want %s", got, err, output)
+	if got, outputError := Output(); outputError != nil || got != output {
+		test.Errorf("in a sandbox the output directory is %q (%v), want %s", got, outputError, output)
 	}
-	if _, err := BuildCache(); err == nil {
+	if _, buildCacheError := BuildCache(); buildCacheError == nil {
 		test.Error("in a sandbox an unset ADAMIC_BUILD_CACHE_DIR names a build cache")
 	}
 }

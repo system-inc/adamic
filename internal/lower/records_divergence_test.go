@@ -15,8 +15,8 @@ func TestRecordDivergenceSupportedNeighbors(test *testing.T) {
 		`const r:Record<string,number>={value:1};function drop():void{delete r["value"];}const value=r["value"];if(value!==undefined){drop();console.log(String(value+1));}`,
 		`const r:Record<string,number>={value:1};function drop():void{delete r["value"];}drop();const value=r["value"];if(typeof value==="number"){console.log(String(value+1));}`,
 	} {
-		if _, err := lowerSource(test, source); err != nil {
-			test.Fatalf("supported neighbor refused: %s: %v", source, err)
+		if _, lowerSourceError := lowerSource(test, source); lowerSourceError != nil {
+			test.Fatalf("supported neighbor refused: %s: %v", source, lowerSourceError)
 		}
 	}
 }

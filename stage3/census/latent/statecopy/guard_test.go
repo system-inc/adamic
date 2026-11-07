@@ -23,11 +23,11 @@ func TestLatentStatecopySortedMapProgramMembership(test *testing.T) {
 		"internal/lower/program_region.go": "package lower; type programMembership struct {types ir.SortedMap[int, []bool]}",
 	} {
 		path := filepath.Join(root, name)
-		if err := os.MkdirAll(filepath.Dir(path), 0700); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0700); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	defer func() {
@@ -47,9 +47,9 @@ func TestLatentStatecopyCoversEveryLoweringStateField(test *testing.T) {
 	test.Parallel()
 	// Reads: internal/lower/*.go
 	// Reads: internal/ir/*.go
-	root, err := filepath.Abs("../../../..")
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs("../../../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	g := loadGenerator(root, filepath.Join(root, "internal/lower/lower.go"))
 	done := map[string]bool{}
@@ -98,8 +98,8 @@ func fieldSource(root, name string) string {
 			continue
 		}
 		positions := token.NewFileSet()
-		file, err := parser.ParseFile(positions, path, nil, 0)
-		if err != nil {
+		file, parseFileError := parser.ParseFile(positions, path, nil, 0)
+		if parseFileError != nil {
 			continue
 		}
 		for _, decl := range file.Decls {
@@ -122,9 +122,9 @@ func TestLatentStatecopySharesSourceIdentities(test *testing.T) {
 	test.Parallel()
 	// Reads: internal/lower/*.go
 	// Reads: internal/ir/*.go
-	root, err := filepath.Abs("../../../..")
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs("../../../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	result := string(generate(root, filepath.Join(root, "internal/lower/lower.go")))
 	if !strings.Contains(result, "func latentCopy_lowering(") {
@@ -147,11 +147,11 @@ func TestLatentStatecopyRefusesAnUnnamedPrivateIRField(test *testing.T) {
 		"internal/lower/lower.go": "package lower; type lowering struct {result *ir.Program}",
 	} {
 		path := filepath.Join(root, name)
-		if err := os.MkdirAll(filepath.Dir(path), 0700); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0700); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	defer func() {
@@ -175,9 +175,9 @@ func TestLatentStatecopyNamesEveryPrivateIRField(test *testing.T) {
 	test.Parallel()
 	// Reads: internal/lower/*.go
 	// Reads: internal/ir/*.go
-	root, err := filepath.Abs("../../../..")
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs("../../../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	g := loadGenerator(root, filepath.Join(root, "internal/lower/lower.go"))
 	declared := map[string]bool{}
@@ -251,8 +251,9 @@ func carryFactGuardGaps(root, lowerInput string) []string {
 	}
 	// Fresh first-error units do not take a unit snapshot. Their shared helper
 	// must own the installed map too, not merely rely on the generated copier.
-	helper, err := os.ReadFile(filepath.Join(root, "stage3/census/latent/full.go.txt"))
-	if err != nil || !strings.Contains(string(helper), "local.entriesRecords = maps.Clone(local.entriesRecords)") {
+	helper, readError := os.ReadFile(filepath.Join(root, "stage3/census/latent/full.go.txt"))
+	if readError != nil ||
+		!strings.Contains(string(helper), "local.entriesRecords = maps.Clone(local.entriesRecords)") {
 		gaps = append(gaps, "carried lowering.entriesRecords lost its owned installation map copy")
 	}
 	return gaps
@@ -260,9 +261,9 @@ func carryFactGuardGaps(root, lowerInput string) []string {
 
 func TestLatentCarryFactsAuditedFields(test *testing.T) {
 	test.Parallel()
-	root, err := filepath.Abs("../../../..")
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs("../../../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	for _, gap := range carryFactGuardGaps(root, filepath.Join(root, "internal/lower/lower.go")) {
 		test.Error(gap)
@@ -271,18 +272,18 @@ func TestLatentCarryFactsAuditedFields(test *testing.T) {
 
 func TestLatentCarryFactsIgnoresUncarriedFields(test *testing.T) {
 	test.Parallel()
-	root, err := filepath.Abs("../../../..")
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs("../../../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	input, err := os.ReadFile(filepath.Join(root, "internal/lower/lower.go"))
-	if err != nil {
-		test.Fatal(err)
+	input, readError := os.ReadFile(filepath.Join(root, "internal/lower/lower.go"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	path := filepath.Join(test.TempDir(), "lower.go")
 	source := strings.Replace(string(input), "type lowering struct {", "type lowering struct {\n futureMemo bool", 1)
-	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	if gaps := carryFactGuardGaps(root, path); len(gaps) > 0 {
 		test.Fatalf("an unrelated lowering field must retain the default unit snapshot: %v", gaps)
@@ -302,12 +303,14 @@ var latentProbeSourceRootError = func() error {
 		return nil
 	}
 	for _, directory := range filepath.SplitList(os.Getenv("PATH")) {
-		executable, err := filepath.EvalSymlinks(filepath.Join(directory, "go"))
-		if err != nil {
+		executable, resolveSymlinksError := filepath.EvalSymlinks(filepath.Join(directory, "go"))
+		if resolveSymlinksError != nil {
 			continue
 		}
 		root := filepath.Dir(filepath.Dir(executable))
-		if info, err := os.Stat(filepath.Join(root, "src", "reflect", "type.go")); err == nil && !info.IsDir() {
+		if info, statError := os.Stat(
+			filepath.Join(root, "src", "reflect", "type.go"),
+		); statError == nil && !info.IsDir() {
 			build.Default.GOROOT = root
 			return nil
 		}
@@ -322,9 +325,9 @@ func TestLatentSpeculativePrivateIRFields(test *testing.T) {
 	if latentProbeSourceRootError != nil {
 		test.Fatal(latentProbeSourceRootError)
 	}
-	root, err := filepath.Abs("../../../..")
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs("../../../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	generated := generate(root, filepath.Join(root, "internal/lower/lower.go"))
 	full := filepath.Join(root, "stage3/census/latent/full.go.txt")
@@ -333,9 +336,9 @@ func TestLatentSpeculativePrivateIRFields(test *testing.T) {
 	}
 	extract := func(path string, source any, names map[string]bool) string {
 		fs := token.NewFileSet()
-		file, err := parser.ParseFile(fs, path, source, 0)
-		if err != nil {
-			test.Fatal(err)
+		file, parseFileError := parser.ParseFile(fs, path, source, 0)
+		if parseFileError != nil {
+			test.Fatal(parseFileError)
 		}
 		result := ""
 		for _, decl := range file.Decls {
@@ -370,32 +373,35 @@ func TestLatentSpeculativePrivateIRFields(test *testing.T) {
 
 	// Check the static ownership assertion before type checking so the historical
 	// mutant is rejected for sharing private fields, even if its old helpers drift.
-	fullAST, err := parser.ParseFile(token.NewFileSet(), full, nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	fullAST, parseFileError := parser.ParseFile(token.NewFileSet(), full, nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
-	generatedAST, err := parser.ParseFile(token.NewFileSet(), "generated.go", generated, 0)
-	if err != nil {
-		test.Fatal(err)
+	generatedAST, parseFileError := parser.ParseFile(token.NewFileSet(), "generated.go", generated, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
-	if err := latentPrivateCopyProof(fullAST, generatedAST); err != nil {
-		test.Fatal(err)
+	if latentPrivateCopyProofError := latentPrivateCopyProof(
+		fullAST,
+		generatedAST,
+	); latentPrivateCopyProofError != nil {
+		test.Fatal(latentPrivateCopyProofError)
 	}
 	fs := token.NewFileSet()
-	probe, err := parser.ParseFile(fs, "probe.go", source, 0)
-	if err != nil {
-		test.Fatal(err)
+	probe, parseFileError := parser.ParseFile(fs, "probe.go", source, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	configuration := types.Config{
 		Importer: latentProbeSourceImporter{Importer: importer.ForCompiler(fs, "source", nil), root: root},
 	}
-	if _, err := configuration.Check(
+	if _, checkError := configuration.Check(
 		"github.com/system-inc/adamic/latentprobe",
 		fs,
 		[]*ast.File{probe},
 		nil,
-	); err != nil {
-		test.Fatalf("assembled speculative copier does not type-check against real IR source: %v", err)
+	); checkError != nil {
+		test.Fatalf("assembled speculative copier does not type-check against real IR source: %v", checkError)
 	}
 }
 
@@ -403,11 +409,15 @@ func TestLatentSpeculativeRefusesUnnamedExportedIRField(test *testing.T) {
 	test.Parallel()
 	root := test.TempDir()
 	path := filepath.Join(root, "internal/ir/ir.go")
-	if err := os.MkdirAll(filepath.Dir(path), 0700); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0700); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	if err := os.WriteFile(path, []byte("package ir; type Function struct { AddedLater []int }"), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(
+		path,
+		[]byte("package ir; type Function struct { AddedLater []int }"),
+		0600,
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
 	defer func() {
 		failure := recover()
@@ -422,9 +432,9 @@ func TestLatentSpeculativeRefusesUnnamedExportedIRField(test *testing.T) {
 
 func TestLatentSpeculativeBoundaryPolicyRequiredAtBuild(test *testing.T) {
 	test.Parallel()
-	root, err := filepath.Abs("../../../..")
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs("../../../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	g := loadGenerator(root, filepath.Join(root, "internal/lower/lower.go"))
 	policies := map[string]irFieldPolicy{}
@@ -445,9 +455,9 @@ func TestLatentSpeculativeBoundaryPolicyRequiredAtBuild(test *testing.T) {
 
 func TestLatentSpeculativeEveryIRFieldPolicyIsCurrent(test *testing.T) {
 	test.Parallel()
-	root, err := filepath.Abs("../../../..")
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs("../../../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	g := loadGenerator(root, filepath.Join(root, "internal/lower/lower.go"))
 	declared := map[string]bool{}

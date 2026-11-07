@@ -12,16 +12,22 @@ import (
 // slot. This is a reference to its shim dependency, not a second inference engine.
 //
 //go:linkname instantiateSignatureInContextOf github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).instantiateSignatureInContextOf
-func instantiateSignatureInContextOf(receiver *checker.Checker, signature *checker.Signature, contextual *checker.Signature, inference *checker.InferenceContext, compare checker.TypeComparer) *checker.Signature
+func instantiateSignatureInContextOf(
+	receiver *checker.Checker,
+	signature *checker.Signature,
+	contextual *checker.Signature,
+	inference *checker.InferenceContext,
+	compare checker.TypeComparer,
+) *checker.Signature
 
 func (l *lowering) genericFunctionValue(node *ast.Node, declaration *ast.Node) (ir.Expression, error) {
 	resolved := l.contextualGenericSignature(node, l.checker.GetSignatureFromDeclaration(declaration))
 	if resolved == nil {
 		return nil, l.notYet(node, "a generic function value without a concrete contextual signature")
 	}
-	index, err := l.instantiateFunctionSignature(node, declaration, resolved)
-	if err != nil {
-		return nil, err
+	index, instantiateFunctionSignatureError := l.instantiateFunctionSignature(node, declaration, resolved)
+	if instantiateFunctionSignatureError != nil {
+		return nil, instantiateFunctionSignatureError
 	}
 	return l.functionValue(node, index)
 }
@@ -39,7 +45,10 @@ func (l *lowering) hasGenericFunctionValues() bool {
 			symbol := l.symbol(node)
 			if symbol != nil {
 				for _, declaration := range symbol.Declarations {
-					if declaration.Kind != ast.KindFunctionDeclaration || declaration.Body() == nil || len(declaration.TypeParameters()) == 0 || node == declaration.Name() {
+					if declaration.Kind != ast.KindFunctionDeclaration ||
+						declaration.Body() == nil ||
+						len(declaration.TypeParameters()) == 0 ||
+						node == declaration.Name() {
 						continue
 					}
 					parent, use := node.Parent, node
@@ -50,7 +59,9 @@ func (l *lowering) hasGenericFunctionValues() bool {
 					for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
 						use, parent = parent, parent.Parent
 					}
-					if parent == nil || parent.Kind != ast.KindCallExpression || parent.AsCallExpression().Expression != use {
+					if parent == nil ||
+						parent.Kind != ast.KindCallExpression ||
+						parent.AsCallExpression().Expression != use {
 						found = true
 						return false
 					}

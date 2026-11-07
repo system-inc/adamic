@@ -17,17 +17,17 @@ import (
 func realpathDirectory(test *testing.T) string {
 	test.Helper()
 	root := test.TempDir()
-	if err := os.Mkdir(filepath.Join(root, "dir"), 0700); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.Mkdir(filepath.Join(root, "dir"), 0700); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	for _, name := range []string{"file", "café-雪"} {
-		if err := os.WriteFile(filepath.Join(root, "dir", name), []byte("data"), 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(root, "dir", name), []byte("data"), 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	// The NUL mutant must resolve the truncated path, rather than fail ENOENT.
-	if err := os.WriteFile(filepath.Join(root, "a"), []byte("data"), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(root, "a"), []byte("data"), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	for name, target := range map[string]string{
 		"link":     "dir",
@@ -36,8 +36,8 @@ func realpathDirectory(test *testing.T) string {
 		"loop-a":   "loop-b",
 		"loop-b":   "loop-a",
 	} {
-		if err := os.Symlink(target, filepath.Join(root, name)); err != nil {
-			test.Fatal(err)
+		if symlinkError := os.Symlink(target, filepath.Join(root, name)); symlinkError != nil {
+			test.Fatal(symlinkError)
 		}
 	}
 	return root
@@ -48,19 +48,19 @@ func realpathRun(test *testing.T, cwd, name string, arguments ...string) run {
 	ctx, command := bounded(test, name, arguments...)
 	command.Dir = cwd
 	command.Env = []string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	var exited *exec.ExitError
-	if err != nil && !errors.As(err, &exited) {
-		test.Fatal(err)
+	if captureError != nil && !errors.As(captureError, &exited) {
+		test.Fatal(captureError)
 	}
 	return run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}
 }
 
 func realpathAgreement(test *testing.T, name string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join("testdata/host_realpath", name))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join("testdata/host_realpath", name))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	cwd := realpathDirectory(test)
 	loader, _ := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
@@ -71,17 +71,17 @@ func realpathAgreement(test *testing.T, name string) {
 	if name == "nul.a" {
 		test.Logf("Node stdout: %s", truth.stdout)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	binary := filepath.Join(test.TempDir(), "native")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	script := filepath.Join(test.TempDir(), "program.mjs")
-	if err := os.WriteFile(script, []byte(javascript.JavaScript(program)), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(script, []byte(javascript.JavaScript(program)), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	for backend, got := range map[string]run{
 		"native":     realpathRun(test, cwd, binary),

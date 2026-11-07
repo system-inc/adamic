@@ -56,9 +56,9 @@ func TestSampling(test *testing.T) {
 	for _, path := range []string{"d", "a", "c", "b"} {
 		programs = append(programs, entry{program: program{Path: path}, Corpus: "fixtures", Class: "newly-accepted"})
 	}
-	seed, err := samplingSeed("head-sha", "")
-	if err != nil {
-		test.Fatal(err)
+	seed, samplingSeedError := samplingSeed("head-sha", "")
+	if samplingSeedError != nil {
+		test.Fatal(samplingSeedError)
 	}
 	selected, omitted := sample(programs, seed, 15, time.Second)
 	if len(selected) != 3 || omitted != 2 || selected[0] != 0 {

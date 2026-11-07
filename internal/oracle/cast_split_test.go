@@ -36,9 +36,9 @@ func init() {
 func TestSplitCastsWithCapturesAreRefused(test *testing.T) {
 	test.Parallel()
 	directory := "internal/oracle/testdata/cast_split_refused"
-	entries, err := os.ReadDir(filepath.Join(repository, directory))
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(filepath.Join(repository, directory))
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -50,18 +50,18 @@ func TestSplitCastsWithCapturesAreRefused(test *testing.T) {
 		path := directory + "/" + name
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			absolute, err := filepath.Abs(filepath.Join(repository, path))
-			if err != nil {
-				test.Fatal(err)
+			absolute, absolutePathError := filepath.Abs(filepath.Join(repository, path))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			_, err = lowered(test, absolute)
+			_, loweredError := lowered(test, absolute)
 			var refused *lower.Refused
-			if !errors.As(err, &refused) {
-				test.Fatalf("want a refusal, got %v", err)
+			if !errors.As(loweredError, &refused) {
+				test.Fatalf("want a refusal, got %v", loweredError)
 			}
-			expected, err := os.ReadFile(strings.TrimSuffix(absolute, ".a") + ".refused")
-			if err != nil {
-				test.Fatal(err)
+			expected, readError := os.ReadFile(strings.TrimSuffix(absolute, ".a") + ".refused")
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			got := strings.ReplaceAll(refused.Error(), strings.TrimSuffix(absolute, path), "")
 			if got != strings.TrimSpace(string(expected)) {
@@ -85,9 +85,9 @@ func TestSplitCastsWithCapturesAreRefused(test *testing.T) {
 func TestSplitCastSeparatorsTheCheckerStops(test *testing.T) {
 	test.Parallel()
 	directory := "internal/oracle/testdata/cast_split_type_error"
-	entries, err := os.ReadDir(filepath.Join(repository, directory))
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(filepath.Join(repository, directory))
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -99,19 +99,19 @@ func TestSplitCastSeparatorsTheCheckerStops(test *testing.T) {
 		path := directory + "/" + name
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			absolute, err := filepath.Abs(filepath.Join(repository, path))
-			if err != nil {
-				test.Fatal(err)
+			absolute, absolutePathError := filepath.Abs(filepath.Join(repository, path))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			_, err = load.Load([]string{absolute})
-			if err == nil {
+			_, loadError := load.Load([]string{absolute})
+			if loadError == nil {
 				test.Fatal("want the checker to stop, got a program")
 			}
 			expected, err2 := os.ReadFile(strings.TrimSuffix(absolute, ".a") + ".error")
 			if err2 != nil {
 				test.Fatal(err2)
 			}
-			got := strings.TrimSpace(strings.ReplaceAll(err.Error(), strings.TrimSuffix(absolute, path), ""))
+			got := strings.TrimSpace(strings.ReplaceAll(loadError.Error(), strings.TrimSuffix(absolute, path), ""))
 			if got != strings.TrimSpace(string(expected)) {
 				test.Fatalf("error: got %q, want %q", got, strings.TrimSpace(string(expected)))
 			}
@@ -146,9 +146,9 @@ func TestSplitCastCaptureCountReadsAnnexB(test *testing.T) {
 		{`a(?!(b))`, "", 2, false},
 		{`(?<!(b))a`, "", 2, false},
 	} {
-		facts, err := regex.CaptureFacts(each.pattern, each.flags)
-		if (err != nil) != each.invalid {
-			test.Errorf("/%s/%s: error %v, want invalid %v", each.pattern, each.flags, err, each.invalid)
+		facts, captureFactsError := regex.CaptureFacts(each.pattern, each.flags)
+		if (captureFactsError != nil) != each.invalid {
+			test.Errorf("/%s/%s: error %v, want invalid %v", each.pattern, each.flags, captureFactsError, each.invalid)
 			continue
 		}
 		if !each.invalid && len(facts.Indices) != each.indices {

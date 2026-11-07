@@ -26,11 +26,11 @@ func lintBuildPhaseChild(test *testing.T, name string, args ...string) (*exec.Cm
 	command := exec.CommandContext(ctx, name, args...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if err == syscall.ESRCH {
+		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if killError == syscall.ESRCH {
 			return os.ErrProcessDone
 		}
-		return err
+		return killError
 	}
 	return command, ctx
 }
@@ -53,13 +53,13 @@ func TestShardsAgree_SetupRequired(test *testing.T) {
 		"-test.v",
 	)
 	command.Env = append(os.Environ(), "ADAMIC_SHARDS_AGREE_LEAF=0")
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	output := append(stdout, stderr...)
-	if err != nil ||
+	if captureError != nil ||
 		!bytes.Contains(output, []byte("--- PASS: TestShardsAgree_000")) ||
 		!productLookedUp(output, "shards-agree-prepared-v1") ||
 		!productLookedUp(output, "shards-agree-references-v1") {
-		test.Fatalf("standalone shard must look up its corpus: %v\n%s", err, output)
+		test.Fatalf("standalone shard must look up its corpus: %v\n%s", captureError, output)
 	}
 }
 
@@ -94,9 +94,9 @@ func TestProfileCompilationBuildNative(test *testing.T) {
 func TestProfileCompilationPlantedFailure(test *testing.T) {
 	test.Parallel()
 	compilationPrepare(test)
-	executable, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	executable, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
 	command, ctx := lintBuildPhaseChild(
 		test,
@@ -106,15 +106,15 @@ func TestProfileCompilationPlantedFailure(test *testing.T) {
 		"-test.timeout=600s",
 	)
 	command.Env = append(os.Environ(), "ADAMIC_PROFILE_COMPILATION_PLANT=1")
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	output := append(stdout, stderr...)
 	if command.ProcessState == nil {
-		test.Fatalf("planted-failure child did not complete: %v", err)
+		test.Fatalf("planted-failure child did not complete: %v", captureError)
 	}
-	if err == nil ||
+	if captureError == nil ||
 		!strings.Contains(string(output), "planted profile disagreement") ||
 		strings.Count(string(output), "--- FAIL: TestProfileCompilation_000") != 1 {
-		test.Fatalf("wrong planted-failure attribution: %v\n%s", err, output)
+		test.Fatalf("wrong planted-failure attribution: %v\n%s", captureError, output)
 	}
 	test.Log("planted single-case disagreement caught by TestProfileCompilation_000")
 }

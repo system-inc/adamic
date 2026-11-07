@@ -25,26 +25,26 @@ func TestPlainMethodsKnowEveryRecordMaker(test *testing.T) {
 	}
 	const maker = "adamic_record_new("
 	found := map[string]bool{}
-	sources, err := filepath.Glob(filepath.Join("..", "native", "*.go"))
-	if err != nil {
-		test.Fatal(err)
+	sources, globError := filepath.Glob(filepath.Join("..", "native", "*.go"))
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	for _, path := range sources {
 		if strings.HasSuffix(path, "_test.go") {
 			continue
 		}
-		source, err := os.ReadFile(path)
-		if err != nil {
-			test.Fatal(err)
+		source, readError := os.ReadFile(path)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		total := strings.Count(string(source), maker)
 		if total == 0 {
 			continue
 		}
 		files := token.NewFileSet()
-		file, err := parser.ParseFile(files, path, source, 0)
-		if err != nil {
-			test.Fatal(err)
+		file, parseFileError := parser.ParseFile(files, path, source, 0)
+		if parseFileError != nil {
+			test.Fatal(parseFileError)
 		}
 		inside := 0
 		for _, declaration := range file.Decls {
@@ -72,14 +72,14 @@ func TestPlainMethodsKnowEveryRecordMaker(test *testing.T) {
 			test.Errorf("%s (%s) no longer makes a record; drop it here and check plainMethods", name, node)
 		}
 	}
-	runtime, err := filepath.Glob(filepath.Join("..", "native", "runtime", "*.c"))
-	if err != nil {
-		test.Fatal(err)
+	runtime, globError := filepath.Glob(filepath.Join("..", "native", "runtime", "*.c"))
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	for _, path := range runtime {
-		source, err := os.ReadFile(path)
-		if err != nil {
-			test.Fatal(err)
+		source, readError := os.ReadFile(path)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		calls := strings.Count(string(source), maker)
 		if filepath.Base(path) == "record.c" {

@@ -116,9 +116,9 @@ func movesCampaignSeeds(first, count int) []uint64 {
 func TestMovesCampaignSeedCoverage(test *testing.T) {
 	test.Parallel()
 	// Read the actual test declarations so removing a campaign loses its seeds.
-	file, err := parser.ParseFile(token.NewFileSet(), "moves_test.go", nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	file, parseFileError := parser.ParseFile(token.NewFileSet(), "moves_test.go", nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	for _, count := range []int{8, 37} {
 		owners := make([]int, count+1)
@@ -145,8 +145,8 @@ func TestMovesCampaignSeedCoverage(test *testing.T) {
 				if !ok {
 					test.Fatalf("%s: campaign seed must be literal", function.Name.Name)
 				}
-				first, err := strconv.Atoi(literal.Value)
-				if err != nil || first < 1 || first > movesCampaignTests {
+				first, parseError := strconv.Atoi(literal.Value)
+				if parseError != nil || first < 1 || first > movesCampaignTests {
 					test.Fatalf("%s: invalid first seed", function.Name.Name)
 				}
 				seeds := movesCampaignSeeds(first, count)
@@ -172,16 +172,16 @@ func TestMovesCampaignSeedCoverage(test *testing.T) {
 func movesCampaign(test *testing.T, first int) {
 	count := 8
 	if value := os.Getenv("ADAMIC_FUZZ_MOVES_SEEDS"); value != "" {
-		var err error
-		count, err = strconv.Atoi(value)
-		if err != nil || count < 1 {
+		var parseError error
+		count, parseError = strconv.Atoi(value)
+		if parseError != nil || count < 1 {
 			test.Fatalf("invalid ADAMIC_FUZZ_MOVES_SEEDS %q", value)
 		}
 	}
 	directory := test.TempDir()
-	checkout, err := PrepareBuilt("../..", buildcache.Adamic(test), filepath.Join(directory, "checkout"))
-	if err != nil {
-		test.Fatal(err)
+	checkout, prepareBuiltError := PrepareBuilt("../..", buildcache.Adamic(test), filepath.Join(directory, "checkout"))
+	if prepareBuiltError != nil {
+		test.Fatal(prepareBuiltError)
 	}
 	if runtime.GOOS == "linux" && checkout.TSan != "ready" {
 		test.Fatalf("TSan required for Linux move campaign: %s", checkout.TSan)
@@ -221,9 +221,9 @@ func movesCampaign(test *testing.T, first int) {
 func TestMovesRunnerCanFail(test *testing.T) {
 	test.Parallel()
 	directory := test.TempDir()
-	checkout, err := PrepareBuilt("../..", buildcache.Adamic(test), filepath.Join(directory, "checkout"))
-	if err != nil {
-		test.Fatal(err)
+	checkout, prepareBuiltError := PrepareBuilt("../..", buildcache.Adamic(test), filepath.Join(directory, "checkout"))
+	if prepareBuiltError != nil {
+		test.Fatal(prepareBuiltError)
 	}
 	var accepted, refused *Program
 	for seed := uint64(1); seed <= 300 && (accepted == nil || refused == nil); seed++ {
@@ -261,12 +261,12 @@ func TestMovesRunnerCanFail(test *testing.T) {
 		}
 	}
 	path := filepath.Join(directory, "finding.a")
-	if err := WriteFinding(path, accepted, 1, nil, nil, "example"); err != nil {
-		test.Fatal(err)
+	if writeFindingError := WriteFinding(path, accepted, 1, nil, nil, "example"); writeFindingError != nil {
+		test.Fatal(writeFindingError)
 	}
-	bytes, err := os.ReadFile(path)
-	if err != nil || !strings.Contains(string(bytes), "-only-moves") {
-		test.Fatal(fmt.Sprintf("focused replay lost: %v %s", err, bytes))
+	bytes, readError := os.ReadFile(path)
+	if readError != nil || !strings.Contains(string(bytes), "-only-moves") {
+		test.Fatal(fmt.Sprintf("focused replay lost: %v %s", readError, bytes))
 	}
 }
 

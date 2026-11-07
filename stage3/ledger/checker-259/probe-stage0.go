@@ -21,22 +21,22 @@ func main() {
 			paths = names
 			name = "<whole>"
 		}
-		_, err := load.Load(paths)
+		_, loadError := load.Load(paths)
 		result := struct {
 			File        string   `json:"file"`
 			Diagnostics []string `json:"diagnostics"`
 			Error       string   `json:"error,omitempty"`
 		}{File: name, Diagnostics: []string{}}
-		if err != nil {
-			if check, ok := err.(*load.CheckError); ok {
+		if loadError != nil {
+			if check, ok := loadError.(*load.CheckError); ok {
 				result.Diagnostics = check.Diagnostics
 			} else {
-				result.Error = err.Error()
+				result.Error = loadError.Error()
 			}
 		}
-		data, err := json.Marshal(result)
-		if err != nil {
-			panic(err)
+		data, encodeError := json.Marshal(result)
+		if encodeError != nil {
+			panic(encodeError)
 		}
 		fmt.Println(string(data))
 		if whole {

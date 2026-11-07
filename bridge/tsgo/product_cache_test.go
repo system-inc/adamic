@@ -20,21 +20,21 @@ func bridgeProductGet(key string, build func(string) error) (string, error) {
 }
 
 func bridgeProductCheck(directory string) error {
-	data, err := os.ReadFile(filepath.Join(directory, "products.json"))
-	if err != nil {
-		return err
+	data, readError := os.ReadFile(filepath.Join(directory, "products.json"))
+	if readError != nil {
+		return readError
 	}
 	var hashes map[string]string
-	if err := json.Unmarshal(data, &hashes); err != nil {
-		return err
+	if decodeError := json.Unmarshal(data, &hashes); decodeError != nil {
+		return decodeError
 	}
 	if len(hashes) != len(bridgeProductNames) {
 		return fmt.Errorf("product count: %d, want %d", len(hashes), len(bridgeProductNames))
 	}
 	for _, name := range bridgeProductNames {
-		data, err := os.ReadFile(filepath.Join(directory, name))
-		if err != nil {
-			return err
+		data, readError := os.ReadFile(filepath.Join(directory, name))
+		if readError != nil {
+			return readError
 		}
 		if hashes[name] != fmt.Sprintf("%x", sha256.Sum256(data)) {
 			return fmt.Errorf("product digest: %s", name)

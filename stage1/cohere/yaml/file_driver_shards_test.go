@@ -53,9 +53,9 @@ func fileDriverCheckUnion(test *testing.T, shards [][]int, count int) {
 func fileDriverSetup(test *testing.T) *fileDriverState {
 	started := time.Now()
 	cases, files, _ := formatCases(test)
-	data, err := os.ReadFile(cases)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(cases)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	inputs := strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")[:files]
 	escape := strings.NewReplacer("\\", "\\\\", "\n", "\\n", "\r", "\\r", "\t", "\\t")
@@ -78,17 +78,17 @@ func fileDriverSetup(test *testing.T) *fileDriverState {
 		inputs = append(inputs, "0\t"+escape.Replace(text))
 	}
 	path := filepath.Join(test.TempDir(), "driver-cases.txt")
-	if err := os.WriteFile(path, []byte(strings.Join(inputs, "\n")+"\n"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(strings.Join(inputs, "\n")+"\n"), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	expected := bytes.Split(bytes.TrimSuffix(fileDriverGoFormat(test, path), []byte("\n")), []byte("\n"))
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	entry, err := filepath.Abs("main.ts")
-	if err != nil {
-		test.Fatal(err)
+	entry, absolutePathError := filepath.Abs("main.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	binary := yamlFormatBuild.binary(test, "main.ts")
 	emitted := yamlFormatBuild.emitted(test, "main.ts")
@@ -131,8 +131,8 @@ func TestFileDriverUnion(test *testing.T) {
 	// Plant one disagreement in the actual native stdout and exercise the byte oracle
 	// over every enumerated slice; precisely one owning shard must detect it.
 	file := filepath.Join(test.TempDir(), "input.yaml")
-	if err := os.WriteFile(file, []byte(unescapeCase(state.inputs[0])), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(file, []byte(unescapeCase(state.inputs[0])), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	actual := fileDriverRun(test, "", []string{"ASAN_OPTIONS=detect_leaks=1"}, state.binary, file)
 	wanted := []byte(unescapeCase("0\t" + strings.TrimPrefix(string(state.expected[0]), "ok\t")))
@@ -175,8 +175,8 @@ func fileDriverRunShard(test *testing.T, shard int) {
 		}
 		wanted := []byte(unescapeCase("0\t" + strings.TrimPrefix(answer, "ok\t")))
 		file := filepath.Join(test.TempDir(), "input.yaml")
-		if err := os.WriteFile(file, []byte(unescapeCase(state.inputs[index])), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(file, []byte(unescapeCase(state.inputs[index])), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		for _, side := range []struct {
 			name string
@@ -262,10 +262,10 @@ func fileDriverRun(test *testing.T, directory string, environment []string, name
 		// caller's settings, not PATH's, run in directory with PWD to match, as toolchain.CommandIn runs one under a
 		// context it has no form for. A program a test built (the Go oracle, the port) runs as named, with this
 		// process's environment. An error resolving it fails the command as it starts.
-		if path, err := toolchain.Path(name); err != nil {
-			command.Err = err
-		} else if absolute, err := filepath.Abs(directory); err != nil {
-			command.Err = err
+		if path, pathError := toolchain.Path(name); pathError != nil {
+			command.Err = pathError
+		} else if absolute, absolutePathError := filepath.Abs(directory); absolutePathError != nil {
+			command.Err = absolutePathError
 		} else {
 			command = exec.CommandContext(ctx, path, args...)
 			command.Dir = directory
@@ -273,9 +273,9 @@ func fileDriverRun(test *testing.T, directory string, environment []string, name
 		}
 	}
 	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
-	output, errors, err := childguard.Capture(ctx, command)
-	if err != nil {
-		test.Fatalf("%s: %v\n%s", name, err, errors)
+	output, errors, captureError := childguard.Capture(ctx, command)
+	if captureError != nil {
+		test.Fatalf("%s: %v\n%s", name, captureError, errors)
 	}
 	if len(errors) != 0 {
 		test.Fatalf("%s stderr: %s", name, errors)
@@ -288,16 +288,16 @@ func fileDriverGoFormat(test *testing.T, cases string) []byte {
 	goBinary := goFormatOracle(test)
 	expected := fileDriverRun(test, "", nil, goBinary, "--cases", cases)
 	if artifacts := os.Getenv("ADAMIC_YAML_ARTIFACTS"); artifacts != "" {
-		if err := os.MkdirAll(artifacts, 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(artifacts, 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		executable, err := os.ReadFile(goBinary)
-		if err != nil {
-			test.Fatal(err)
+		executable, readError := os.ReadFile(goBinary)
+		if readError != nil {
+			test.Fatal(readError)
 		}
-		inputs, err := os.ReadFile(cases)
-		if err != nil {
-			test.Fatal(err)
+		inputs, readError := os.ReadFile(cases)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		for _, file := range []struct {
 			name string
@@ -308,8 +308,12 @@ func fileDriverGoFormat(test *testing.T, cases string) []byte {
 			{"format-cases.txt", inputs, 0644},
 			{"format-expected.txt", expected, 0644},
 		} {
-			if err := os.WriteFile(filepath.Join(artifacts, file.name), file.data, file.mode); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(
+				filepath.Join(artifacts, file.name),
+				file.data,
+				file.mode,
+			); writeError != nil {
+				test.Fatal(writeError)
 			}
 		}
 	}

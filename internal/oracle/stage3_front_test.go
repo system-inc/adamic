@@ -52,15 +52,15 @@ console.log(` + "`${reads}`" + `);
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
 			path := filepath.Join(test.TempDir(), "enum_fallthrough.a")
-			if err := os.WriteFile(path, []byte(programSource), 0600); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, []byte(programSource), 0600); writeError != nil {
+				test.Fatal(writeError)
 			}
 			if got := onNode(test, path); disagreement(truth, got) != "" {
 				test.Fatalf("source Node: %+v", got)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			native, binary := natively(test, program)
 			for backend, got := range map[string]run{

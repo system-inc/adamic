@@ -41,11 +41,11 @@ func numbersCommandContext(
 		if command.Process == nil {
 			return os.ErrProcessDone
 		}
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
+		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if errors.Is(killError, syscall.ESRCH) {
 			return os.ErrProcessDone
 		}
-		return err
+		return killError
 	}
 	test.Cleanup(func() {
 		cancel()
@@ -67,18 +67,18 @@ func numbersExecute(test *testing.T, environment []string, name string, argument
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	var exitError *exec.ExitError
-	if err != nil && !errors.As(err, &exitError) {
-		test.Fatalf("running %s: %v", name, err)
+	if captureError != nil && !errors.As(captureError, &exitError) {
+		test.Fatalf("running %s: %v", name, captureError)
 	}
 	return run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}
 }
 func numbersOnNode(test *testing.T, path string, arguments ...string) run {
 	test.Helper()
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return numbersExecute(
 		test,

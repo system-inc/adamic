@@ -18,10 +18,10 @@ func TestBuildLeanRefusesATargetFirst(test *testing.T) {
 	directory := test.TempDir()
 	test.Setenv("WASI_SYSROOT", filepath.Join(directory, "absent-sysroot"))
 	output := filepath.Join(directory, "output")
-	if err := os.Mkdir(output, 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.Mkdir(output, 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	err := BuildLean(
+	buildLeanError := BuildLean(
 		filepath.Join(directory, "absent-clang"),
 		filepath.Join(directory, "absent.c"),
 		filepath.Join(directory, "absent-archive"),
@@ -29,13 +29,16 @@ func TestBuildLeanRefusesATargetFirst(test *testing.T) {
 		Options{Target: "wasm32-wasi"},
 		nil,
 	)
-	if err == nil ||
-		!strings.HasPrefix(err.Error(), "native: a lean build is one native translation unit, with no target") {
-		test.Fatalf("a wasm32-wasi lean build: %v, want BuildLean's refusal of a target", err)
+	if buildLeanError == nil ||
+		!strings.HasPrefix(
+			buildLeanError.Error(),
+			"native: a lean build is one native translation unit, with no target",
+		) {
+		test.Fatalf("a wasm32-wasi lean build: %v, want BuildLean's refusal of a target", buildLeanError)
 	}
-	entries, err := os.ReadDir(output)
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(output)
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	if len(entries) > 0 {
 		test.Fatalf("a refused lean build made %v beside its output", entries)
@@ -48,10 +51,10 @@ func TestBuildLeanRefusesACompilerByName(test *testing.T) {
 	test.Parallel()
 	directory := test.TempDir()
 	output := filepath.Join(directory, "output")
-	if err := os.Mkdir(output, 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.Mkdir(output, 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	err := BuildLean(
+	buildLeanError := BuildLean(
 		"clang",
 		filepath.Join(directory, "absent.c"),
 		filepath.Join(directory, "absent-archive"),
@@ -59,10 +62,11 @@ func TestBuildLeanRefusesACompilerByName(test *testing.T) {
 		Options{},
 		nil,
 	)
-	if err == nil || !strings.Contains(err.Error(), "runs the compiler it's handed by its absolute path") {
-		test.Fatalf("a lean build handed clang by name: %v, want its refusal", err)
+	if buildLeanError == nil ||
+		!strings.Contains(buildLeanError.Error(), "runs the compiler it's handed by its absolute path") {
+		test.Fatalf("a lean build handed clang by name: %v, want its refusal", buildLeanError)
 	}
-	if entries, err := os.ReadDir(output); err != nil || len(entries) > 0 {
-		test.Fatalf("a refused lean build made %v beside its output: %v", entries, err)
+	if entries, readDirectoryError := os.ReadDir(output); readDirectoryError != nil || len(entries) > 0 {
+		test.Fatalf("a refused lean build made %v beside its output: %v", entries, readDirectoryError)
 	}
 }

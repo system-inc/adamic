@@ -20,26 +20,26 @@ func TestEachGapStandsWhereGapsMdSaysItDoes(test *testing.T) {
 		// wait counts as the parent's own time (212.2 s in the package on Home, for two gaps of 0.15 s each alone on
 		// one core).
 		test.Run(gap.path, func(test *testing.T) {
-			path, err := filepath.Abs(gap.path)
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(gap.path)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			result := onNode(test, path)
 			if result.exitCode != 0 || len(result.stderr) != 0 || string(result.stdout) != gap.stdout {
 				test.Fatalf("Node: exit %d, stdout %q, stderr %q", result.exitCode, result.stdout, result.stderr)
 			}
-			program, err := load.Load([]string{path})
-			if err != nil {
-				test.Fatal(err)
+			program, loadError := load.Load([]string{path})
+			if loadError != nil {
+				test.Fatal(loadError)
 			}
-			_, err = lower.Lower(context.Background(), program)
-			if err == nil {
+			_, lowerError := lower.Lower(context.Background(), program)
+			if lowerError == nil {
 				test.Fatal("gap closed: update GAPS.md and remove the workaround or unblock native composition")
 			}
-			if !strings.Contains(err.Error(), gap.refusal) {
-				test.Fatalf("refusal changed: %v", err)
+			if !strings.Contains(lowerError.Error(), gap.refusal) {
+				test.Fatalf("refusal changed: %v", lowerError)
 			}
-			test.Logf("Node prints %q; Adamic refuses: %v", gap.stdout, err)
+			test.Logf("Node prints %q; Adamic refuses: %v", gap.stdout, lowerError)
 		})
 	}
 }
@@ -90,9 +90,9 @@ func TestClosedParserRegexGap(test *testing.T) {
 
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
 func TestClosedOptionalBooleanConditionGap(test *testing.T) {
-	path, err := filepath.Abs("gaps/3_optional_boolean_condition.ts")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("gaps/3_optional_boolean_condition.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	program := lowered(test, path)
 	binary := filepath.Join(programSanitized(test, "gaps/3_optional_boolean_condition.ts"), "port")

@@ -10,20 +10,20 @@ import (
 
 func TestProgramDiscoveryAllocationIdentities(test *testing.T) {
 	test.Parallel()
-	loaded, err := load.Load([]string{filepath.Join("..", "oracle", "testdata", "arguments_length_extended.a")})
-	if err != nil {
-		test.Fatal(err)
+	loaded, loadError := load.Load([]string{filepath.Join("..", "oracle", "testdata", "arguments_length_extended.a")})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	entry := loaded.Files()[0]
 	check, release := loaded.Checker(context.Background(), entry)
 	defer release()
-	first, err := lowerChecked(loaded, check, entry, nil, true, false)
-	if err != nil {
-		test.Fatal(err)
+	first, lowerCheckedError := lowerChecked(loaded, check, entry, nil, true, false)
+	if lowerCheckedError != nil {
+		test.Fatal(lowerCheckedError)
 	}
-	second, err := lowerChecked(loaded, check, entry, nil, true, false)
-	if err != nil {
-		test.Fatal(err)
+	second, lowerCheckedError := lowerChecked(loaded, check, entry, nil, true, false)
+	if lowerCheckedError != nil {
+		test.Fatal(lowerCheckedError)
 	}
 	a, b := first.programPlan, second.programPlan
 	if !reflect.DeepEqual(a.types, b.types) ||
@@ -42,9 +42,9 @@ func TestProgramDiscoveryAllocationIdentities(test *testing.T) {
 	if !reflect.DeepEqual(a.identities, b.identities) {
 		test.Fatal("repeated discovery changed allocation identities")
 	}
-	built, err := lowerChecked(loaded, check, entry, a, false, false)
-	if err != nil {
-		test.Fatal(err)
+	built, lowerCheckedError := lowerChecked(loaded, check, entry, a, false, false)
+	if lowerCheckedError != nil {
+		test.Fatal(lowerCheckedError)
 	}
 	if !reflect.DeepEqual(programAllocationIdentities(built.result), a.identities) {
 		test.Fatal("final lowering changed allocation identities")

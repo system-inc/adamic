@@ -25,18 +25,18 @@ func TestJSONDescriptorsBuiltOnce(test *testing.T) {
 	if strings.Count(output, "const adamicJsonSchema_") != 2 || strings.Count(output, `{"nodes":`) != 2 {
 		test.Fatalf("schemas not deduplicated:\n%s", output)
 	}
-	if _, err := exec.LookPath("node"); err != nil {
-		test.Skipf("missing Node identity witness: %v", err)
+	if _, lookPathError := exec.LookPath("node"); lookPathError != nil {
+		test.Skipf("missing Node identity witness: %v", lookPathError)
 	}
-	result, err := exec.Command("node", "--input-type=module", "-e", output).CombinedOutput()
-	if err != nil || string(result) != "new\nsame\nsame\nnew\nsame\n" {
-		test.Fatalf("descriptor identities: %v\n%s", err, result)
+	result, combinedOutputError := exec.Command("node", "--input-type=module", "-e", output).CombinedOutput()
+	if combinedOutputError != nil || string(result) != "new\nsame\nsame\nnew\nsame\n" {
+		test.Fatalf("descriptor identities: %v\n%s", combinedOutputError, result)
 	}
 	// Reallocating even the descriptor root defeats the runtime's WeakMap.
 	mutated := regexp.MustCompile(`, (adamicJsonSchema_[0-9]+)\)`).ReplaceAllString(output, ", {...$1})")
-	result, err = exec.Command("node", "--input-type=module", "-e", mutated).CombinedOutput()
-	if err != nil || string(result) != "new\nnew\nnew\nnew\nnew\n" {
-		test.Fatalf("identity mutant failed to execute: %v\n%s", err, result)
+	result, combinedOutputError = exec.Command("node", "--input-type=module", "-e", mutated).CombinedOutput()
+	if combinedOutputError != nil || string(result) != "new\nnew\nnew\nnew\nnew\n" {
+		test.Fatalf("identity mutant failed to execute: %v\n%s", combinedOutputError, result)
 	}
 	test.Log("per-call descriptor allocation mutant caught by Node object identity")
 

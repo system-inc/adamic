@@ -37,9 +37,9 @@ func TestRecordDefineHiddenLowers(test *testing.T) {
 		`function hide(r:Record<string,number[]>, list:number[]):void { Object.defineProperty(r, "main", {enumerable:false, writable:false, value:list}); } hide({}, [1]);`,
 	} {
 		test.Run(source, func(test *testing.T) {
-			program, err := lowerSource(test, source)
-			if err != nil {
-				test.Fatal(err)
+			program, lowerSourceError := lowerSource(test, source)
+			if lowerSourceError != nil {
+				test.Fatal(lowerSourceError)
 			}
 			keys := definedHidden(program)
 			if len(keys) != 1 {
@@ -110,9 +110,9 @@ put(r,'x'); drop(r,'x'); named(r); coalesce(r); other(r); move({x:1});
 		},
 	} {
 		test.Run(probe.source, func(test *testing.T) {
-			program, err := lowerSource(test, probe.source)
-			if err != nil {
-				test.Fatal(err)
+			program, lowerSourceError := lowerSource(test, probe.source)
+			if lowerSourceError != nil {
+				test.Fatal(lowerSourceError)
 			}
 			if (len(program.HiddenRecordKeys) > 0) != (len(probe.throwing) > 0) {
 				test.Fatalf("hidden keys %v", program.HiddenRecordKeys)
@@ -254,19 +254,19 @@ func TestRecordDefineHiddenRefusals(test *testing.T) {
 		},
 	} {
 		test.Run(probe.source, func(test *testing.T) {
-			program, err := lowerSource(test, probe.source)
+			program, lowerSourceError := lowerSource(test, probe.source)
 			var notYet *NotYet
 			var refused *Refused
-			stopped := errors.As(err, &notYet) || errors.As(err, &refused)
+			stopped := errors.As(lowerSourceError, &notYet) || errors.As(lowerSourceError, &refused)
 			if probe.reason == "" {
 				if !stopped {
-					test.Fatalf("got %v, want a stop", err)
+					test.Fatalf("got %v, want a stop", lowerSourceError)
 				}
-			} else if err == nil ||
-				!strings.Contains(err.Error(), probe.reason) ||
-				(probe.notYet && !errors.As(err, &notYet)) ||
-				(!probe.notYet && !errors.As(err, &refused)) {
-				test.Fatalf("got %v, want %q (NotYet=%t)", err, probe.reason, probe.notYet)
+			} else if lowerSourceError == nil ||
+				!strings.Contains(lowerSourceError.Error(), probe.reason) ||
+				(probe.notYet && !errors.As(lowerSourceError, &notYet)) ||
+				(!probe.notYet && !errors.As(lowerSourceError, &refused)) {
+				test.Fatalf("got %v, want %q (NotYet=%t)", lowerSourceError, probe.reason, probe.notYet)
 			}
 			if program != nil {
 				test.Fatalf("a refused program came back lowered")

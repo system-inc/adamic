@@ -305,12 +305,12 @@ function report(name: string, seen: number, sum: number, sign: number, last: num
 		return
 	}
 	path := filepath.Join(test.TempDir(), "counters.ts")
-	if err := os.WriteFile(path, []byte(source.String()), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source.String()), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatalf("Lower: %v", err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatalf("Lower: %v", loweredError)
 	}
 	cacheProbe(test, path, program, "", func() {
 		code := native.C(program)

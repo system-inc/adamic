@@ -34,20 +34,20 @@ func programRegionCountCase(relative string) {
 	additionalFixtureCounts = append(
 		additionalFixtureCounts,
 		countCase{key, func(test *testing.T) (string, func() string) {
-			absolute, err := filepath.Abs(filepath.Join(repository, relative))
-			if err != nil {
-				test.Fatal(err)
+			absolute, absolutePathError := filepath.Abs(filepath.Join(repository, relative))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			code := native.C(programRegionLowered(test, absolute, true))
 			return countPortable(test, code, absolute), func() string {
 				binary := filepath.Join(test.TempDir(), "program-counted")
-				if err := programRegionBuild(
+				if programRegionBuildError := programRegionBuild(
 					test,
 					code,
 					binary,
 					native.Options{ProgramRegion: true, Count: true},
-				); err != nil {
-					test.Fatal(err)
+				); programRegionBuildError != nil {
+					test.Fatal(programRegionBuildError)
 				}
 				name, args := pinnedStack(binary)
 				result := execute(test, name, args...)
@@ -85,9 +85,9 @@ func programRegionRecordedCount(test *testing.T, relative string) {
 		if *updateCounts {
 			measuredCounts.Store(key, row)
 		} else {
-			recorded, err := recordedCounts()
-			if err != nil {
-				test.Fatal(err)
+			recorded, recordedCountsError := recordedCounts()
+			if recordedCountsError != nil {
+				test.Fatal(recordedCountsError)
 			}
 			if row != recorded[key] {
 				test.Fatalf("Program count changed: %s; recorded %s", row, recorded[key])

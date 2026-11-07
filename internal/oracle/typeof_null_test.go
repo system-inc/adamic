@@ -35,13 +35,13 @@ func TestTypeOfNullMutant(test *testing.T) {
 	for _, fixture := range typeofNullFixtures {
 		test.Run(filepath.Base(fixture), func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, fixture))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(filepath.Join(repository, fixture))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			want := onNode(test, path)
 			changed := restoreNullTypeOf(reflect.ValueOf(program))
@@ -110,13 +110,13 @@ func restoreNullTypeOf(value reflect.Value) int {
 // undefined. Only the slot-presence argument is changed; the value and its ownership stay intact.
 func TestTypeOfNullSlotPresenceMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/typeof_null_slots.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/typeof_null_slots.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	want := onNode(test, path)
 	source := native.C(program)
@@ -126,8 +126,8 @@ func TestTypeOfNullSlotPresenceMutant(test *testing.T) {
 		test.Fatal("mutant changed no slot-presence tests")
 	}
 	binary := filepath.Join(test.TempDir(), "mutant")
-	if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(mutant, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	if report := leakChecked(test, mutant, binary); report != "" {
 		test.Fatalf("mutant must not leak: %s", report)

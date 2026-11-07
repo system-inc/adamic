@@ -61,15 +61,15 @@ func hostStatusFile(test *testing.T, index int, wasiOnly bool, statusPath string
 		test.Fatal(err)
 	}
 	var rows []json.RawMessage
-	if err := json.Unmarshal(data, &rows); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &rows); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if len(rows) != 25 {
 		test.Fatalf("want 25 original host fixtures, got %d", len(rows))
 	}
 	var row hostMeasurement
-	if err := json.Unmarshal(rows[index], &row); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(rows[index], &row); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	path, err := filepath.Abs(filepath.Join(repository, "stage3/fixtures/host", row.File))
 	if err != nil {
@@ -95,12 +95,12 @@ func hostStatusFile(test *testing.T, index int, wasiOnly bool, statusPath string
 	observed := hostStage{Outcome: "Compiles"}
 	var code, script string
 	if err == nil {
-		loweredProgram, lowerErr := lower.Lower(context.Background(), program)
-		if lowerErr == nil {
+		loweredProgram, lowerError := lower.Lower(context.Background(), program)
+		if lowerError == nil {
 			code = native.C(loweredProgram)
 			script = javascript.JavaScript(loweredProgram)
 		}
-		err = lowerErr
+		err = lowerError
 	}
 	if err != nil {
 		var checker *load.CheckError
@@ -116,9 +116,9 @@ func hostStatusFile(test *testing.T, index int, wasiOnly bool, statusPath string
 		default:
 			test.Fatal(err)
 		}
-		root, rootErr := filepath.Abs(repository)
-		if rootErr != nil {
-			test.Fatal(rootErr)
+		root, rootError := filepath.Abs(repository)
+		if rootError != nil {
+			test.Fatal(rootError)
 		}
 		observed.What = strings.ReplaceAll(err.Error(), root+string(filepath.Separator), "")
 	} else {
@@ -126,8 +126,8 @@ func hostStatusFile(test *testing.T, index int, wasiOnly bool, statusPath string
 		if !wasiOnly {
 			test.Run("native", func(test *testing.T) {
 				binary := filepath.Join(directory, "program")
-				if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-					test.Fatal(err)
+				if buildError := native.Build(code, binary, native.Options{Sanitize: true}); buildError != nil {
+					test.Fatal(buildError)
 				}
 				actual := executeInput(
 					test,
@@ -141,8 +141,8 @@ func hostStatusFile(test *testing.T, index int, wasiOnly bool, statusPath string
 			})
 			test.Run("javascript", func(test *testing.T) {
 				js := filepath.Join(directory, "program.mjs")
-				if err := os.WriteFile(js, []byte(script), 0600); err != nil {
-					test.Fatal(err)
+				if writeError := os.WriteFile(js, []byte(script), 0600); writeError != nil {
+					test.Fatal(writeError)
 				}
 				if why := hostconfiguration.Skip(index+1, row.Configuration); why != "" {
 					test.Skipf(
@@ -159,16 +159,16 @@ func hostStatusFile(test *testing.T, index int, wasiOnly bool, statusPath string
 		}
 		if wasiOnly {
 			wasm := filepath.Join(directory, "program.wasm")
-			if err := native.Build(code, wasm, native.Options{Target: "wasm32-wasi"}); err != nil {
+			if buildError := native.Build(code, wasm, native.Options{Target: "wasm32-wasi"}); buildError != nil {
 				var refused *native.TargetRefused
-				if !errors.As(err, &refused) {
-					test.Fatal(err)
+				if !errors.As(buildError, &refused) {
+					test.Fatal(buildError)
 				}
 				test.Logf("%s WASI refusal: %v", row.File, refused)
 			} else {
-				runner, runnerErr := filepath.Abs(filepath.Join(repository, "oracle/wasi.mjs"))
-				if runnerErr != nil {
-					test.Fatal(runnerErr)
+				runner, runnerError := filepath.Abs(filepath.Join(repository, "oracle/wasi.mjs"))
+				if runnerError != nil {
+					test.Fatal(runnerError)
 				}
 				test.Run("wasi", func(test *testing.T) {
 					if why := hostconfiguration.Skip(index+1, row.Configuration); why != "" {
@@ -214,12 +214,12 @@ func hostStatusFile(test *testing.T, index int, wasiOnly bool, statusPath string
 	if err != nil {
 		test.Fatal(err)
 	}
-	if err := json.Unmarshal(data, &rows); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &rows); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	var fields map[string]json.RawMessage
-	if err := json.Unmarshal(rows[index], &fields); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(rows[index], &fields); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	replacement, err := json.Marshal(observed)
 	if err != nil {
@@ -240,8 +240,8 @@ func hostStatusFile(test *testing.T, index int, wasiOnly bool, statusPath string
 		raw[position+len(fields["stage0"]):]...,
 	)
 	data = bytes.Replace(data, raw, changed, 1)
-	if err := os.WriteFile(statusPath, data, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(statusPath, data, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 }
 
@@ -348,9 +348,9 @@ func TestHostStatusWASI_024(test *testing.T) { test.Parallel(); hostStatus(test,
 // Both the source oracle and generated JavaScript use the row's named Node build.
 func hostNodeWith(test *testing.T, how inputRun, binary, path string) run {
 	test.Helper()
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return executeInput(test, how, nil, binary, "--disable-warning=ExperimentalWarning", runner, path)
 }

@@ -188,9 +188,9 @@ func stringsSelection(value string, units []stringsUnit) ([]stringsUnit, error) 
 	if len(parts) != 2 {
 		return nil, fmt.Errorf("ADAMIC_TEST_SHARD must be zero-based i/n, got %q", value)
 	}
-	i, errI := strconv.Atoi(parts[0])
-	n, errN := strconv.Atoi(parts[1])
-	if errI != nil || errN != nil || n <= 0 || i < 0 || i >= n {
+	i, iError := strconv.Atoi(parts[0])
+	n, nError := strconv.Atoi(parts[1])
+	if iError != nil || nError != nil || n <= 0 || i < 0 || i >= n {
 		return nil, fmt.Errorf("ADAMIC_TEST_SHARD must satisfy 0 <= i < n, got %q", value)
 	}
 	var selected []stringsUnit
@@ -204,9 +204,9 @@ func stringsSelection(value string, units []stringsUnit) ([]stringsUnit, error) 
 
 func selectedStringsUnits(test *testing.T, units []stringsUnit) []stringsUnit {
 	test.Helper()
-	selected, err := stringsSelection(os.Getenv("ADAMIC_TEST_SHARD"), units)
-	if err != nil {
-		test.Fatal(err)
+	selected, stringsSelectionError := stringsSelection(os.Getenv("ADAMIC_TEST_SHARD"), units)
+	if stringsSelectionError != nil {
+		test.Fatal(stringsSelectionError)
 	}
 	test.Logf("selection: %d/%d units, ADAMIC_TEST_SHARD=%q", len(selected), len(units), os.Getenv("ADAMIC_TEST_SHARD"))
 	return selected
@@ -252,16 +252,20 @@ func stringsProgramInputs(name, main string) stringsInputs {
 func buildStringsProgram(test *testing.T, name, main string) stringsProgram {
 	test.Helper()
 	dir := stringsProduct(test, stringsProgramInputs(name, main), func(dir string) error {
-		loaded, err := load.Load([]string{main})
-		if err != nil {
-			return err
+		loaded, loadError := load.Load([]string{main})
+		if loadError != nil {
+			return loadError
 		}
-		program, err := lower.Lower(context.Background(), loaded)
-		if err != nil {
-			return err
+		program, lowerError := lower.Lower(context.Background(), loaded)
+		if lowerError != nil {
+			return lowerError
 		}
-		if err := os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(program)), 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(
+			filepath.Join(dir, "program.c"),
+			[]byte(native.C(program)),
+			0644,
+		); writeError != nil {
+			return writeError
 		}
 		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
 	})
@@ -278,8 +282,8 @@ func stringsClangToolchain(test *testing.T) string {
 	test.Helper()
 	// Read through childguard.Capture for stringsExecute's reason: a WaitDelay could fail a run that had finished.
 	command, ctx := stringsSetupCommand(test, "clang", "--version")
-	if _, _, err := childguard.Capture(ctx, command); err != nil {
-		test.Fatal(err)
+	if _, _, captureError := childguard.Capture(ctx, command); captureError != nil {
+		test.Fatal(captureError)
 	}
 	return buildcache.Tool("clang", "--version")
 }
@@ -299,9 +303,9 @@ func stringsNativeInputs(test *testing.T, name, programC string, sanitize bool) 
 func buildStringsNative(test *testing.T, name string, program stringsProgram, sanitize bool) string {
 	test.Helper()
 	dir := stringsProduct(test, stringsNativeInputs(test, name, program.c, sanitize), func(dir string) error {
-		source, err := os.ReadFile(program.c)
-		if err != nil {
-			return err
+		source, readError := os.ReadFile(program.c)
+		if readError != nil {
+			return readError
 		}
 		return native.Build(string(source), filepath.Join(dir, "port"), native.Options{Sanitize: sanitize})
 	})
@@ -312,9 +316,9 @@ func buildStringsNative(test *testing.T, name string, program stringsProgram, sa
 // baselines, which nothing links, must keep it.
 func TestCSSStringsCompilerProductsKeyWhatTheCompilerLinks(test *testing.T) {
 	test.Parallel()
-	main, err := filepath.Abs("main.ts")
-	if err != nil {
-		test.Fatal(err)
+	main, absolutePathError := filepath.Abs("main.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	// A native product keys its C by content, so a stand-in C file keys it without lowering anything.
 	programC := filepath.Join(test.TempDir(), "program.c")
@@ -356,12 +360,12 @@ func prepareStringsMutant(test *testing.T, mutation stringsMutation) string {
 	// stringsCacheInputs keys a generated .ts by its directory's name and its own, so the mutant sits in cssstrings/, a
 	// name every checkout gives it, never in the temporary directory's random one (#sgemgmn).
 	scratch := filepath.Join(stringsTopTempDir(test), "cssstrings")
-	if err := os.Mkdir(scratch, 0755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.Mkdir(scratch, 0755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	source, err := os.ReadFile("strings.ts")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("strings.ts")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if strings.Count(string(source), mutation.from) != 1 {
 		test.Fatal("mutant must change one site")
@@ -371,9 +375,9 @@ func prepareStringsMutant(test *testing.T, mutation stringsMutation) string {
 		filepath.Join(scratch, "strings.ts"),
 		[]byte(strings.Replace(string(source), mutation.from, mutation.to, 1)),
 	)
-	source, err = os.ReadFile("main.ts")
-	if err != nil {
-		test.Fatal(err)
+	source, readError = os.ReadFile("main.ts")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	main := filepath.Join(scratch, "main.ts")
 	write(test, main, source)
@@ -462,9 +466,9 @@ func TestCSSStringsUnion(test *testing.T) {
 	for _, n := range []int{1, 2, 7, len(units) + 1} {
 		var union []stringsUnit
 		for i := 0; i < n; i++ {
-			selected, err := stringsSelection(fmt.Sprintf("%d/%d", i, n), units)
-			if err != nil {
-				test.Fatal(err)
+			selected, stringsSelectionError := stringsSelection(fmt.Sprintf("%d/%d", i, n), units)
+			if stringsSelectionError != nil {
+				test.Fatal(stringsSelectionError)
 			}
 			union = append(union, selected...)
 		}
@@ -473,7 +477,7 @@ func TestCSSStringsUnion(test *testing.T) {
 		}
 	}
 	for _, bad := range []string{"0/0", "-1/2", "2/2", "1", "a/2", "1/2/3"} {
-		if _, err := stringsSelection(bad, units); err == nil {
+		if _, stringsSelectionError := stringsSelection(bad, units); stringsSelectionError == nil {
 			test.Fatalf("accepted %q", bad)
 		}
 	}
@@ -520,9 +524,9 @@ func TestCSSStringsPlantedDisagreement(test *testing.T) {
 		}
 		return
 	}
-	binary, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	binary, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
 	r := stringsExecute(
 		test,
@@ -578,22 +582,22 @@ func stringsOracleAnswersWithCommand(
 		Toolchain: buildcache.Tool("node", "--version"),
 	}, func(dir string) error {
 		path := filepath.Join(dir, "input.txt")
-		if err := os.WriteFile(path, data, 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(path, data, 0644); writeError != nil {
+			return writeError
 		}
 		// Read through childguard.Capture for stringsExecute's reason: a WaitDelay could fail a run that had
 		// finished. A run made by stringsCommand ends at its 90 s deadline; one made by stringsSetupCommand has
 		// none, and the unit's own ceiling bounds it.
 		cmd, ctx := makeCommand(test, command, append(append([]string{}, arguments...), path)...)
-		stdout, stderr, err := childguard.Capture(ctx, cmd)
-		if err != nil || len(stderr) != 0 {
-			return fmt.Errorf("%s oracle: %v; %s", name, err, stderr)
+		stdout, stderr, captureError := childguard.Capture(ctx, cmd)
+		if captureError != nil || len(stderr) != 0 {
+			return fmt.Errorf("%s oracle: %v; %s", name, captureError, stderr)
 		}
 		return os.WriteFile(filepath.Join(dir, "answers.txt"), stdout, 0644)
 	})
-	answer, err := os.ReadFile(filepath.Join(dir, "answers.txt"))
-	if err != nil {
-		test.Fatal(err)
+	answer, readError := os.ReadFile(filepath.Join(dir, "answers.txt"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return run{stdout: answer}
 }

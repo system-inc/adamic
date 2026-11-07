@@ -40,13 +40,13 @@ func Find(nameKeys []string) ([]Finding, error) {
 		}
 		return findings, nil
 	}
-	root, err := repositoryRoot()
-	if err != nil {
-		return nil, err
+	root, repositoryRootError := repositoryRoot()
+	if repositoryRootError != nil {
+		return nil, repositoryRootError
 	}
-	cache, err := cacheDirectory()
-	if err != nil {
-		return nil, err
+	cache, cacheDirectoryError := cacheDirectory()
+	if cacheDirectoryError != nil {
+		return nil, cacheDirectoryError
 	}
 	settledTree.Store(&sync.Map{})
 	defer settledTree.Store(nil)
@@ -65,7 +65,11 @@ func Find(nameKeys []string) ([]Finding, error) {
 			for position, key := range looked[index].keys {
 				keys[position] = key[:12]
 			}
-			finding.Why = fmt.Sprintf("%s; the store may hold it under %s, which its test fetches", looked[index].why, strings.Join(keys, ", "))
+			finding.Why = fmt.Sprintf(
+				"%s; the store may hold it under %s, which its test fetches",
+				looked[index].why,
+				strings.Join(keys, ", "),
+			)
 		default:
 			finding.Why = looked[index].why
 		}

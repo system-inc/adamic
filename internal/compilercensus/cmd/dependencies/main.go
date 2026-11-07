@@ -14,19 +14,19 @@ import (
 )
 
 func main() {
-	root, err := os.Getwd()
-	if err != nil {
-		fmt.Fprintln(os.Stderr, "dependencies:", err)
+	root, workingDirectoryError := os.Getwd()
+	if workingDirectoryError != nil {
+		fmt.Fprintln(os.Stderr, "dependencies:", workingDirectoryError)
 		os.Exit(1)
 	}
-	packages, err := compilercensus.Dependencies(root)
-	if err != nil {
-		fmt.Fprintln(os.Stderr, "dependencies:", err)
+	packages, dependenciesError := compilercensus.Dependencies(root)
+	if dependenciesError != nil {
+		fmt.Fprintln(os.Stderr, "dependencies:", dependenciesError)
 		os.Exit(1)
 	}
-	encoded, err := json.MarshalIndent(map[string]any{"version": 1, "packages": packages}, "", "  ")
-	if err != nil {
-		fmt.Fprintln(os.Stderr, "dependencies:", err)
+	encoded, encodeError := json.MarshalIndent(map[string]any{"version": 1, "packages": packages}, "", "  ")
+	if encodeError != nil {
+		fmt.Fprintln(os.Stderr, "dependencies:", encodeError)
 		os.Exit(1)
 	}
 	fmt.Println(string(encoded))

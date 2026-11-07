@@ -40,10 +40,13 @@ func nodeGlobalsOuter(node *ast.Node) *ast.Node {
 // nil when it's none's.
 func nodeGlobalsCall(node *ast.Node) *ast.Node {
 	outer := node
-	for outer.Parent != nil && (outer.Parent.Kind == ast.KindParenthesizedExpression || outer.Parent.Kind == ast.KindNonNullExpression) {
+	for outer.Parent != nil &&
+		(outer.Parent.Kind == ast.KindParenthesizedExpression || outer.Parent.Kind == ast.KindNonNullExpression) {
 		outer = outer.Parent
 	}
-	if outer.Parent == nil || outer.Parent.Kind != ast.KindCallExpression || outer.Parent.AsCallExpression().Expression != outer {
+	if outer.Parent == nil ||
+		outer.Parent.Kind != ast.KindCallExpression ||
+		outer.Parent.AsCallExpression().Expression != outer {
 		return nil
 	}
 	return outer.Parent
@@ -95,11 +98,17 @@ func (l *lowering) nodeCaptureStackTraceRefusal(node *ast.Node) error {
 	}
 	for _, argument := range call.AsCallExpression().Arguments.Nodes {
 		if argument.Kind == ast.KindSpreadElement {
-			return l.notYet(argument, nodeCaptureStackTraceMember+" called with a spread argument (fix: pass its arguments one by one)")
+			return l.notYet(
+				argument,
+				nodeCaptureStackTraceMember+" called with a spread argument (fix: pass its arguments one by one)",
+			)
 		}
 	}
 	if outer := nodeGlobalsOuter(call); outer.Parent == nil || outer.Parent.Kind != ast.KindExpressionStatement {
-		return l.notYet(call, nodeCaptureStackTraceMember+" with its undefined result used as a value (fix: call it as a statement)")
+		return l.notYet(
+			call,
+			nodeCaptureStackTraceMember+" with its undefined result used as a value (fix: call it as a statement)",
+		)
 	}
 	return nil
 }
@@ -127,12 +136,16 @@ func (l *lowering) nodeGarbageCollectorRefusal(node *ast.Node) error {
 	if call := nodeGlobalsCall(node); call != nil {
 		for _, argument := range call.AsCallExpression().Arguments.Nodes {
 			if argument.Kind == ast.KindSpreadElement {
-				return l.notYet(argument, nodeGarbageCollectorMember+" called with a spread argument (fix: pass its arguments one by one)")
+				return l.notYet(
+					argument,
+					nodeGarbageCollectorMember+" called with a spread argument (fix: pass its arguments one by one)",
+				)
 			}
 		}
 		// The call always throws, so its result is never had; a slot that would hold it isn't lowered.
 		if outer := nodeGlobalsOuter(call); outer.Parent == nil || outer.Parent.Kind != ast.KindExpressionStatement {
-			return l.notYet(call, nodeGarbageCollectorMember+" with its result used as a value, which the call's TypeError never gives (fix: call it as a statement)")
+			return l.notYet(call, nodeGarbageCollectorMember+
+				" with its result used as a value, which the call's TypeError never gives (fix: call it as a statement)")
 		}
 	}
 	return nil
@@ -170,13 +183,22 @@ func (l *lowering) nodeGlobalsUseRefusal(node *ast.Node) (bool, error) {
 	case nodeGlobalMember:
 		if node.Kind != ast.KindIdentifier {
 			// A call or new of global itself; the checker refuses both, and global is judged on its own visit.
-			return true, l.notYet(node, nodeGlobalMember+" other than as global.gc's receiver (fix: name the global itself, without global.)")
+			return true, l.notYet(
+				node,
+				nodeGlobalMember+" other than as global.gc's receiver (fix: name the global itself, without global.)",
+			)
 		}
-		if node.Parent != nil && node.Parent.Kind == ast.KindPropertyAccessExpression && node.Parent.AsPropertyAccessExpression().Expression == node && l.nodeLibraryMember(node.Parent) == nodeGarbageCollectorMember {
+		if node.Parent != nil &&
+			node.Parent.Kind == ast.KindPropertyAccessExpression &&
+			node.Parent.AsPropertyAccessExpression().Expression == node &&
+			l.nodeLibraryMember(node.Parent) == nodeGarbageCollectorMember {
 			// The access is judged on its own visit.
 			return true, nil
 		}
-		return true, l.notYet(node, nodeGlobalMember+" other than as global.gc's receiver (fix: name the global itself, without global.)")
+		return true, l.notYet(
+			node,
+			nodeGlobalMember+" other than as global.gc's receiver (fix: name the global itself, without global.)",
+		)
 	}
 	return false, nil
 }
@@ -185,7 +207,10 @@ func (l *lowering) nodeGlobalsUseRefusal(node *ast.Node) (bool, error) {
 // nodeCaptureStackTraceRefusal admits. Its function never reads this, so unlike a method read as a
 // value it loses nothing.
 func (l *lowering) nodeCaptureStackTraceRead(node *ast.Node) bool {
-	return node.Kind == ast.KindPropertyAccessExpression && l.nodeLibraryMember(node) == nodeCaptureStackTraceMember && nodeGlobalsCall(node) == nil && l.nodeCaptureStackTraceRefusal(node) == nil
+	return node.Kind == ast.KindPropertyAccessExpression &&
+		l.nodeLibraryMember(node) == nodeCaptureStackTraceMember &&
+		nodeGlobalsCall(node) == nil &&
+		l.nodeCaptureStackTraceRefusal(node) == nil
 }
 
 // nodeCaptureStackTraceValue is the one function value Error.captureStackTrace reads as: a closure of
@@ -201,22 +226,33 @@ func (l *lowering) nodeCaptureStackTraceValue(node *ast.Node) (ir.Expression, er
 	for _, parameter := range signatures[0].Parameters() {
 		of, known := l.censusCallableParameter(parameter)
 		if !known || censusCallableSlotless(of) {
-			return nil, l.notYet(node, nodeCaptureStackTraceMember+" as a value taking a parameter "+parameter.Name+" with no slot representation")
+			return nil, l.notYet(node, nodeCaptureStackTraceMember+
+				" as a value taking a parameter "+
+				parameter.Name+
+				" with no slot representation")
 		}
 		parameters = append(parameters, of)
 	}
 	if expected := l.slotType(node); expected != nil {
 		viewed := l.checker.GetSignaturesOfType(l.concrete(expected), checker.SignatureKindCall)
-		valid := len(viewed) == 1 && viewed[0].ThisParameter() == nil && viewed[0].Flags()&checker.SignatureFlagsHasRestParameter == 0 && len(viewed[0].TypeParameters()) == 0 && len(viewed[0].Parameters()) <= len(parameters)
+		valid := len(viewed) == 1 &&
+			viewed[0].ThisParameter() == nil &&
+			viewed[0].Flags()&checker.SignatureFlagsHasRestParameter == 0 &&
+			len(viewed[0].TypeParameters()) == 0 &&
+			len(viewed[0].Parameters()) <= len(parameters)
 		if valid {
 			for index, parameter := range viewed[0].Parameters() {
 				of, known := l.censusCallableParameter(parameter)
 				valid = valid && known && of == parameters[index]
 			}
-			valid = valid && l.concrete(l.checker.GetReturnTypeOfSignature(viewed[0])).Flags()&checker.TypeFlagsVoid != 0
+			valid = valid &&
+				l.concrete(l.checker.GetReturnTypeOfSignature(viewed[0])).Flags()&checker.TypeFlagsVoid != 0
 		}
 		if !valid {
-			return nil, l.notYet(node, nodeCaptureStackTraceMember+" as a value in a slot that sees it as "+l.checker.TypeToString(expected)+" (fix: let the slot see (targetObject: object, constructorOpt?: Function) => void)")
+			return nil, l.notYet(node, nodeCaptureStackTraceMember+
+				" as a value in a slot that sees it as "+
+				l.checker.TypeToString(expected)+
+				" (fix: let the slot see (targetObject: object, constructorOpt?: Function) => void)")
 		}
 	}
 	for index, function := range l.result.Functions {
@@ -230,13 +266,22 @@ func (l *lowering) nodeCaptureStackTraceValue(node *ast.Node) (ir.Expression, er
 	function.Source.Role = nodeCaptureStackTraceRole
 	for position, of := range parameters {
 		local := len(l.result.Locals)
-		l.result.Locals = append(l.result.Locals, ir.Local{Name: signatures[0].Parameters()[position].Name, Type: of, Function: index})
+		l.result.Locals = append(
+			l.result.Locals,
+			ir.Local{Name: signatures[0].Parameters()[position].Name, Type: of, Function: index},
+		)
 		function.Parameters = append(function.Parameters, local)
 	}
 	l.result.Functions = append(l.result.Functions, function)
-	l.closureRecords = append(l.closureRecords, closureRecord{proven: l.concrete(l.checker.GetTypeAtLocation(node)), function: index, node: node})
+	l.closureRecords = append(
+		l.closureRecords,
+		closureRecord{proven: l.concrete(l.checker.GetTypeAtLocation(node)), function: index, node: node},
+	)
 	held := len(l.result.Locals)
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: nodeCaptureStackTraceRole + "_value", Type: ir.Closure, Global: true, Function: -1})
+	l.result.Locals = append(
+		l.result.Locals,
+		ir.Local{Name: nodeCaptureStackTraceRole + "_value", Type: ir.Closure, Global: true, Function: -1},
+	)
 	l.forwarderValues = append(l.forwarderValues, ir.Declare{Local: held, Value: ir.MakeClosure{Function: index}})
 	if l.forwarders == nil {
 		l.forwarders = map[int]int{}
@@ -266,8 +311,8 @@ func (l *lowering) nodeGlobalsValue(node *ast.Node) (ir.Expression, bool, error)
 	if name == nodeGarbageCollectorMember {
 		refusal = l.nodeGarbageCollectorRefusal
 	}
-	if err := refusal(member); err != nil {
-		return nil, true, err
+	if refusalError := refusal(member); refusalError != nil {
+		return nil, true, refusalError
 	}
 	if node.Kind != ast.KindCallExpression {
 		if nodeGlobalsCall(node) != nil {
@@ -275,27 +320,36 @@ func (l *lowering) nodeGlobalsValue(node *ast.Node) (ir.Expression, bool, error)
 			return nil, true, l.notYet(node, name+" as a callee lowered apart from its call")
 		}
 		if name == nodeCaptureStackTraceMember {
-			value, err := l.nodeCaptureStackTraceValue(node)
-			return value, true, err
+			value, nodeCaptureStackTraceValueError := l.nodeCaptureStackTraceValue(node)
+			return value, true, nodeCaptureStackTraceValueError
 		}
 		of, known := l.representation(l.checker.GetTypeAtLocation(node))
 		if !known || !of.IsReference() {
-			return nil, true, l.notYet(node, nodeGarbageCollectorMember+" read where its type has no reference representation")
+			return nil, true, l.notYet(
+				node,
+				nodeGarbageCollectorMember+" read where its type has no reference representation",
+			)
 		}
 		return ir.Undefined{Of: of}, true, nil
 	}
 	effects := ir.Effects{Result: ir.Undefined{}}
 	for _, argument := range node.AsCallExpression().Arguments.Nodes {
-		value, err := l.expression(argument)
-		if err != nil {
-			return nil, true, err
+		value, expressionError := l.expression(argument)
+		if expressionError != nil {
+			return nil, true, expressionError
 		}
 		effects.Body = append(effects.Body, ir.Evaluate{Value: value})
 	}
 	if name == nodeGarbageCollectorMember {
 		index := len(l.result.Functions)
-		failure := ir.MakeError{Message: ir.StringConstant{Index: l.constant(nodeGarbageCollectorMissing)}, Name: ir.StringConstant{Index: l.constant("TypeError")}}
-		l.result.Functions = append(l.result.Functions, ir.Function{Name: "global_gc", Body: []ir.Statement{ir.Throw{Value: failure}}})
+		failure := ir.MakeError{
+			Message: ir.StringConstant{Index: l.constant(nodeGarbageCollectorMissing)},
+			Name:    ir.StringConstant{Index: l.constant("TypeError")},
+		}
+		l.result.Functions = append(
+			l.result.Functions,
+			ir.Function{Name: "global_gc", Body: []ir.Statement{ir.Throw{Value: failure}}},
+		)
 		effects.Body = append(effects.Body, ir.Evaluate{Value: ir.Call{Function: index}})
 	}
 	return effects, true, nil

@@ -12,18 +12,19 @@ import (
 // paths in a key and accidental omission of mutable source content.
 func TestRecoveryCacheInputKeys(test *testing.T) {
 	test.Parallel()
-	main, err := filepath.Abs("main.ts")
-	if err != nil {
-		test.Fatal(err)
+	main, absolutePathError := filepath.Abs("main.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	const before = "(scanner.flags & 1) === 0 &&\n        (token"
 	identical := mutantPort(test, "sourceLookahead.ts", before, before)
 	mutant := mutantPort(test, "sourceLookahead.ts", before, "(scanner.flags & 1) >= 0 &&\n        (token")
 	keys := make([]string, 3)
 	for i, path := range []string{main, identical, mutant} {
-		keys[i], err = buildcache.Key(root(test), recoveryCacheInputs(test, path))
-		if err != nil {
-			test.Fatal(err)
+		var keyError error
+		keys[i], keyError = buildcache.Key(root(test), recoveryCacheInputs(test, path))
+		if keyError != nil {
+			test.Fatal(keyError)
 		}
 	}
 	if keys[0] != keys[1] {

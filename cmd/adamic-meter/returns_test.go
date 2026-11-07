@@ -34,16 +34,16 @@ console.log("value " + arrow(0)); console.log("value " + arrow(1)); console.log(
 	for _, extension := range []string{".ts", ".a", ".a.ts"} {
 		test.Run(extension, func(test *testing.T) {
 			path := filepath.Join(test.TempDir(), "main"+extension)
-			if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+				test.Fatal(writeError)
 			}
 			_, before := load.Load([]string{path})
 			if before != nil {
 				test.Fatalf("implicit undefined returns should compile without TS7030: %v", before)
 			}
-			overlay, rewrites, err := adaptations([]string{path}, before)
-			if err != nil {
-				test.Fatal(err)
+			overlay, rewrites, adaptationsError := adaptations([]string{path}, before)
+			if adaptationsError != nil {
+				test.Fatal(adaptationsError)
 			}
 			if len(rewrites) != 0 || len(overlay) != 0 {
 				test.Fatalf("rewrites=%#v", rewrites)
@@ -56,13 +56,13 @@ console.log("value " + arrow(0)); console.log("value " + arrow(1)); console.log(
 			if output := nodeOptionalSource(test, source); string(output) != want {
 				test.Fatalf("implicit return Node output=%q, want=%q", output, want)
 			}
-			disk, err := os.ReadFile(path)
-			if err != nil || string(disk) != source {
-				test.Fatal("source disk changed", err)
+			disk, readError := os.ReadFile(path)
+			if readError != nil || string(disk) != source {
+				test.Fatal("source disk changed", readError)
 			}
-			_, changed, err := returnAdaptations([]string{path}, overlay, after)
-			if err != nil || changed != 0 {
-				test.Fatalf("idempotence: %d %v", changed, err)
+			_, changed, returnAdaptationsError := returnAdaptations([]string{path}, overlay, after)
+			if returnAdaptationsError != nil || changed != 0 {
+				test.Fatalf("idempotence: %d %v", changed, returnAdaptationsError)
 			}
 		})
 	}
@@ -80,8 +80,8 @@ function* generator(flag: boolean): Generator<number, number | undefined> { if (
 function admitted(flag: boolean): number | undefined { if (flag) return 1; }
 `
 	path := filepath.Join(test.TempDir(), "main.ts")
-	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	_, before := load.Load([]string{path})
 	if diagnosticCount(before, "7030") != 0 || diagnosticCount(before, "2366") != 2 {
@@ -91,15 +91,15 @@ function admitted(flag: boolean): number | undefined { if (flag) return 1; }
 	if diagnosticCount(strict, "7030") < 2 {
 		test.Fatalf("strict checker must diagnose admitted and unproven returns: %v", strict)
 	}
-	overlay, changed, err := returnAdaptations([]string{path}, nil, strict)
+	overlay, changed, returnAdaptationsError := returnAdaptations([]string{path}, nil, strict)
 	want := strings.Replace(
 		source,
 		"function admitted(flag: boolean): number | undefined { if (flag) return 1; }",
 		"function admitted(flag: boolean): number | undefined { if (flag) return 1; \nreturn void 0;\n}",
 		1,
 	)
-	if err != nil || changed != 1 || len(overlay) != 1 || overlay[path] != want {
-		test.Fatalf("only the admitted contract may change: %d %#v %v", changed, overlay, err)
+	if returnAdaptationsError != nil || changed != 1 || len(overlay) != 1 || overlay[path] != want {
+		test.Fatalf("only the admitted contract may change: %d %#v %v", changed, overlay, returnAdaptationsError)
 	}
 }
 
@@ -108,16 +108,16 @@ func TestReturnAdaptationOwnsOnlyRoots(test *testing.T) {
 	directory := test.TempDir()
 	root := filepath.Join(directory, "main.ts")
 	external := filepath.Join(directory, "external.ts")
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		external,
 		[]byte(`export function f(flag: boolean): number | undefined { if (flag) return 1; }`),
 		0644,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if err := os.WriteFile(root, []byte(`import {f} from "./external.ts"; console.log('' + f(false));
-function local(flag: boolean): number | undefined { if (flag) return 2; }`), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(root, []byte(`import {f} from "./external.ts"; console.log('' + f(false));
+function local(flag: boolean): number | undefined { if (flag) return 2; }`), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	_, before := load.Load([]string{root})
 	if before != nil {
@@ -127,13 +127,14 @@ function local(flag: boolean): number | undefined { if (flag) return 2; }`), 064
 	if diagnosticCount(strict, "7030") != 2 {
 		test.Fatalf("strict checker must diagnose root and external returns: %v", strict)
 	}
-	overlay, changed, err := returnAdaptations([]string{root}, nil, strict)
+	overlay, changed, returnAdaptationsError := returnAdaptations([]string{root}, nil, strict)
 	const want = "import {f} from \"./external.ts\"; console.log('' + f(false));\nfunction local(flag: boolean): number | undefined { if (flag) return 2; \nreturn void 0;\n}"
-	if err != nil || changed != 1 || len(overlay) != 1 || overlay[root] != want {
-		test.Fatalf("only the root return may change: %d %#v %v", changed, overlay, err)
+	if returnAdaptationsError != nil || changed != 1 || len(overlay) != 1 || overlay[root] != want {
+		test.Fatalf("only the root return may change: %d %#v %v", changed, overlay, returnAdaptationsError)
 	}
-	disk, err := os.ReadFile(external)
-	if err != nil || string(disk) != `export function f(flag: boolean): number | undefined { if (flag) return 1; }` {
-		test.Fatalf("external disk source changed: %q %v", disk, err)
+	disk, readError := os.ReadFile(external)
+	if readError != nil ||
+		string(disk) != `export function f(flag: boolean): number | undefined { if (flag) return 1; }` {
+		test.Fatalf("external disk source changed: %q %v", disk, readError)
 	}
 }

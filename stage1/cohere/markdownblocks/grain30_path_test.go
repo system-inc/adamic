@@ -12,9 +12,9 @@ import (
 )
 
 func grainPathInputs(test *testing.T) (string, []auditInput, int) {
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	inputs, files := blockCorpus(test, root, "whitespace")
 	// This file sweep is small beside the mandatory generated and fixed checks.
@@ -50,12 +50,12 @@ func runGrainPath(test *testing.T, shard int) {
 	nativeCases, want := grainPathCases(test, goBinary, inputs)
 	if keep := os.Getenv("ADAMIC_PATH_KEEP"); keep != "" {
 		keep = filepath.Join(keep, test.Name())
-		if err := os.MkdirAll(keep, 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(keep, 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		data, err := os.ReadFile(nativeCases)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(nativeCases)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		write(test, filepath.Join(keep, "native.txt"), data)
 		write(test, filepath.Join(keep, "want.txt"), want.stdout)
@@ -130,8 +130,8 @@ func runGrainPath(test *testing.T, shard int) {
 		}
 		func(test *testing.T) {
 			scratch := test.TempDir()
-			if err := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); err != nil {
-				test.Fatal(err)
+			if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
 			for _, file := range []string{
 				"astArena.ts",
@@ -142,9 +142,9 @@ func runGrainPath(test *testing.T, shard int) {
 				"pathObserve.ts",
 				"testdata/path_probe.ts",
 			} {
-				data, err := os.ReadFile(file)
-				if err != nil {
-					test.Fatal(err)
+				data, readError := os.ReadFile(file)
+				if readError != nil {
+					test.Fatal(readError)
 				}
 				if file == "astPath.ts" {
 					if !strings.Contains(string(data), m.from) {
@@ -221,8 +221,8 @@ func grainPathCases(test *testing.T, goBinary string, inputs []auditInput) (stri
 	var batch bytes.Buffer
 	encoder := json.NewEncoder(&batch)
 	for _, item := range inputs {
-		if err := encoder.Encode(item); err != nil {
-			test.Fatal(err)
+		if encodeError := encoder.Encode(item); encodeError != nil {
+			test.Fatal(encodeError)
 		}
 	}
 	cases := filepath.Join(dir, "cases.jsonl")
@@ -240,13 +240,13 @@ func grainPathFork(test *testing.T, root string) string {
 	if fork == "" {
 		fork = filepath.Join(cohere, "internal/format/prettier/bundles")
 	}
-	installed, err := os.ReadFile(filepath.Join(fork, "standalone.js"))
-	if err != nil {
-		test.Fatal(err)
+	installed, readError := os.ReadFile(filepath.Join(fork, "standalone.js"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	pinned, err := os.ReadFile(filepath.Join(cohere, "internal/format/prettier/bundles/standalone.js"))
-	if err != nil {
-		test.Fatal(err)
+	pinned, readError := os.ReadFile(filepath.Join(cohere, "internal/format/prettier/bundles/standalone.js"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	equal(test, "pinned standalone", installed, pinned)
 	return fork

@@ -23,15 +23,15 @@ func Request(test testing.TB, repository string) (buildcache.Inputs, func(string
 			"ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch",
 		)
 	}
-	data, err := os.ReadFile(filepath.Join(repository, "stage3/source.json"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(repository, "stage3/source.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var pin struct {
 		Commit string `json:"commit"`
 	}
-	if err := json.Unmarshal(data, &pin); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &pin); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	inputs := buildcache.Inputs{
 		Name: "program-tsc-source",
@@ -44,47 +44,49 @@ func Request(test testing.TB, repository string) (buildcache.Inputs, func(string
 		Toolchain: []string{buildcache.Tool("git", "--version"), buildcache.Tool("node", "--version")},
 	}
 	return inputs, func(directory string) error {
-		files, err := buildcache.PinnedFiles(source, inputs, pin.Commit, "Program compiler", func(path string) bool {
+		files, pinnedFilesError := buildcache.PinnedFiles(source, inputs, pin.Commit, "Program compiler", func(
+			path string,
+		) bool {
 			return strings.HasPrefix(path, "src/compiler/") || path == "scripts/processDiagnosticMessages.mjs"
 		})
-		if err != nil {
-			return err
+		if pinnedFilesError != nil {
+			return pinnedFilesError
 		}
 		for _, file := range files {
 			destination := filepath.Join(directory, filepath.FromSlash(file.Path))
-			if err := os.MkdirAll(filepath.Dir(destination), 0755); err != nil {
-				return err
+			if createDirectoryError := os.MkdirAll(filepath.Dir(destination), 0755); createDirectoryError != nil {
+				return createDirectoryError
 			}
-			if err := os.WriteFile(destination, file.Data, 0644); err != nil {
-				return err
+			if writeError := os.WriteFile(destination, file.Data, 0644); writeError != nil {
+				return writeError
 			}
 		}
 		command := exec.Command("node", "scripts/processDiagnosticMessages.mjs", "src/compiler/diagnosticMessages.json")
 		command.Dir = directory
-		if out, err := command.CombinedOutput(); err != nil {
-			return fmt.Errorf("generate diagnostic messages: %w: %s", err, out)
+		if out, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+			return fmt.Errorf("generate diagnostic messages: %w: %s", combinedOutputError, out)
 		}
-		data, err := os.ReadFile(
+		data, readError := os.ReadFile(
 			filepath.Join(repository, "internal/oracle/testdata/program_region/parse_manifest.json"),
 		)
-		if err != nil {
-			return err
+		if readError != nil {
+			return readError
 		}
 		var manifest struct {
 			Commit string `json:"typescript_commit"`
 			Files  []struct{ Path, SHA256 string }
 		}
-		if err := json.Unmarshal(data, &manifest); err != nil {
-			return err
+		if decodeError := json.Unmarshal(data, &manifest); decodeError != nil {
+			return decodeError
 		}
 		if manifest.Commit != pin.Commit || len(manifest.Files) != 77 {
 			return fmt.Errorf("wrong Program parse corpus: commit %s, %d files", manifest.Commit, len(manifest.Files))
 		}
 		for _, file := range manifest.Files {
 			relative := strings.TrimPrefix(file.Path, "typescript/")
-			data, err := os.ReadFile(filepath.Join(directory, filepath.FromSlash(relative)))
-			if err != nil {
-				return err
+			data, readError := os.ReadFile(filepath.Join(directory, filepath.FromSlash(relative)))
+			if readError != nil {
+				return readError
 			}
 			if fmt.Sprintf("%x", sha256.Sum256(data)) != file.SHA256 {
 				return fmt.Errorf("Program parse corpus hash mismatch: %s", relative)

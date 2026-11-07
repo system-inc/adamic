@@ -51,9 +51,9 @@ func portMatchesPrepareProducts(test *testing.T) {
 	portMatchesShared.script = filepath.Join(loweredDir, "program.mjs")
 	portMatchesShared.release = filepath.Join(portMatchesProduct(test, "release"), "port")
 	portMatchesShared.sanitized = filepath.Join(portMatchesProduct(test, "sanitized"), "port")
-	clangTools, err := portMatchesJsonClangToolchain()
-	if err != nil {
-		test.Fatal(err)
+	clangTools, portMatchesJsonClangToolchainError := portMatchesJsonClangToolchain()
+	if portMatchesJsonClangToolchainError != nil {
+		test.Fatal(portMatchesJsonClangToolchainError)
 	}
 	// The four-digit port wrappers use the same immutable products.
 	// Publish the same products for either independently selected shard family.
@@ -85,22 +85,25 @@ func portMatchesJsonBuildEnvironment(names ...string) []string {
 }
 
 func portMatchesJsonClangToolchain() ([]string, error) {
-	clang, err := exec.LookPath("clang")
-	if err != nil {
-		return nil, err
+	clang, lookPathError := exec.LookPath("clang")
+	if lookPathError != nil {
+		return nil, lookPathError
 	}
-	if _, err := exec.Command(clang, "--version").Output(); err != nil {
-		return nil, err
+	if _, outputError := exec.Command(clang, "--version").Output(); outputError != nil {
+		return nil, outputError
 	}
 	archiver := filepath.Join(filepath.Dir(clang), "llvm-ar")
-	if info, err := os.Stat(archiver); err != nil || !info.Mode().IsRegular() || info.Mode().Perm()&0111 == 0 {
-		archiver, err = exec.LookPath("ar")
-		if err != nil {
-			return nil, err
+	if info, statError := os.Stat(
+		archiver,
+	); statError != nil || !info.Mode().IsRegular() || info.Mode().Perm()&0111 == 0 {
+		var lookPathError error
+		archiver, lookPathError = exec.LookPath("ar")
+		if lookPathError != nil {
+			return nil, lookPathError
 		}
 	}
-	if _, err := exec.Command(archiver, "--version").Output(); err != nil {
-		return nil, err
+	if _, outputError := exec.Command(archiver, "--version").Output(); outputError != nil {
+		return nil, outputError
 	}
 	// Each tool by its report, which names what it is and not where this machine keeps it (#t37sw0f).
 	return []string{
@@ -129,24 +132,24 @@ func portMatchesJsonLoweredPortInputs() portMatchesJsonBuildInputs {
 // fetching this product will avoid loading, checking, lowering and emission.
 func portMatchesBuildJSONLoweredPort(dir string) error {
 	for _, name := range portFiles {
-		contents, err := os.ReadFile(name)
-		if err != nil {
-			return err
+		contents, readError := os.ReadFile(name)
+		if readError != nil {
+			return readError
 		}
-		if err := os.WriteFile(filepath.Join(dir, name), contents, 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(filepath.Join(dir, name), contents, 0644); writeError != nil {
+			return writeError
 		}
 	}
-	program, err := load.Load([]string{filepath.Join(dir, "main.ts")})
-	if err != nil {
-		return fmt.Errorf("Load: %w", err)
+	program, loadError := load.Load([]string{filepath.Join(dir, "main.ts")})
+	if loadError != nil {
+		return fmt.Errorf("Load: %w", loadError)
 	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		return fmt.Errorf("Lower: %w", err)
+	lowered, lowerError := lower.Lower(context.Background(), program)
+	if lowerError != nil {
+		return fmt.Errorf("Lower: %w", lowerError)
 	}
-	if err := os.WriteFile(filepath.Join(dir, "main.c"), []byte(native.C(lowered)), 0644); err != nil {
-		return err
+	if writeError := os.WriteFile(filepath.Join(dir, "main.c"), []byte(native.C(lowered)), 0644); writeError != nil {
+		return writeError
 	}
 	return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(lowered)), 0644)
 }
@@ -219,13 +222,13 @@ func portMatchesProduct(test *testing.T, name string) string {
 			product.dir = buildcache.Product(test, portMatchesJsonLoweredPortInputs(), portMatchesBuildJSONLoweredPort)
 		case "release", "sanitized":
 			lowered := portMatchesProduct(test, "lowered")
-			source, err := os.ReadFile(filepath.Join(lowered, "main.c"))
-			if err != nil {
-				test.Fatal(err)
+			source, readError := os.ReadFile(filepath.Join(lowered, "main.c"))
+			if readError != nil {
+				test.Fatal(readError)
 			}
-			clangTools, err := portMatchesJsonClangToolchain()
-			if err != nil {
-				test.Fatal(err)
+			clangTools, portMatchesJsonClangToolchainError := portMatchesJsonClangToolchain()
+			if portMatchesJsonClangToolchainError != nil {
+				test.Fatal(portMatchesJsonClangToolchainError)
 			}
 			build := portMatchesBuildJSONReleasePort(string(source))
 			if name == "sanitized" {

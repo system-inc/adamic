@@ -28,9 +28,9 @@ var unitKeyFlags = []string{"-O2"}
 // unitKeyCompiler is the clang the units compile with, as buildUnitsWithLibrary finds it.
 func unitKeyCompiler(test *testing.T) string {
 	test.Helper()
-	compiler, err := toolchain.Path("clang")
-	if err != nil {
-		test.Fatal(err)
+	compiler, pathError := toolchain.Path("clang")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
 	return compiler
 }
@@ -61,9 +61,9 @@ func testUnitKeying(
 	environment []string,
 ) *unitKeying {
 	test.Helper()
-	keying, err := newUnitKeying(first, common, flags, compiler, environment, false)
-	if err != nil {
-		test.Fatal(err)
+	keying, newUnitKeyingError := newUnitKeying(first, common, flags, compiler, environment, false)
+	if newUnitKeyingError != nil {
+		test.Fatal(newUnitKeyingError)
 	}
 	return keying
 }
@@ -71,11 +71,11 @@ func testUnitKeying(
 // writeUnitKeyFile writes contents at path, making the directories it sits in.
 func writeUnitKeyFile(test *testing.T, path string, contents string) {
 	test.Helper()
-	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	if err := os.WriteFile(path, []byte(contents), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(contents), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 }
 
@@ -91,12 +91,18 @@ func observeUnitKey(test *testing.T, compiler string, object string) string {
 		"#include <stdio.h>\nint adamic_probe(void);\nint main(void) { printf(\"%d\\n\", adamic_probe()); return 0; }\n",
 	)
 	binary := filepath.Join(directory, "probe")
-	if output, err := toolchain.Command(compiler, main, object, "-o", binary).CombinedOutput(); err != nil {
-		test.Fatalf("link: %v\n%s", err, output)
+	if output, combinedOutputError := toolchain.Command(
+		compiler,
+		main,
+		object,
+		"-o",
+		binary,
+	).CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("link: %v\n%s", combinedOutputError, output)
 	}
-	output, err := exec.Command(binary).CombinedOutput()
-	if err != nil {
-		test.Fatalf("run: %v\n%s", err, output)
+	output, combinedOutputError := exec.Command(binary).CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("run: %v\n%s", combinedOutputError, output)
 	}
 	return strings.TrimSpace(string(output))
 }
@@ -117,7 +123,7 @@ func compileUnitKey(
 	directory string,
 ) string {
 	test.Helper()
-	object, err := compileUnit(
+	object, compileUnitError := compileUnit(
 		unit,
 		common,
 		flags,
@@ -128,8 +134,8 @@ func compileUnitKey(
 		nil,
 		false,
 	)
-	if err != nil {
-		test.Fatal(err)
+	if compileUnitError != nil {
+		test.Fatal(compileUnitError)
 	}
 	return object
 }
@@ -329,8 +335,8 @@ func TestUnitKeyHoldsIncludeNext(test *testing.T) {
 			root := test.TempDir()
 			writeUnitKeyFile(test, filepath.Join(root, "first", "wrap.h"), wrap)
 			writeUnitKeyFile(test, filepath.Join(root, "last", "inner.h"), "#define INNER 3\n")
-			if err := os.MkdirAll(filepath.Join(root, "middle"), 0o755); err != nil {
-				test.Fatal(err)
+			if createDirectoryError := os.MkdirAll(filepath.Join(root, "middle"), 0o755); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
 			common := []runtimeFile{{"units.h", []byte("#include <wrap.h>\n")}}
 			flags := slices.Clone(unitKeyFlags)
@@ -397,9 +403,17 @@ func TestUnitKeyRefusesWhatItCannotFollow(test *testing.T) {
 	} {
 		test.Run(plan.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := newUnitKeying(unitFirst, plan.common, unitKeyFlags, compiler, unitKeyEnvironment(), false)
-			if !errors.Is(err, errUncachedUnit) || !strings.Contains(err.Error(), plan.why) {
-				test.Fatalf("want errUncachedUnit saying %q, got %v", plan.why, err)
+			_, newUnitKeyingError := newUnitKeying(
+				unitFirst,
+				plan.common,
+				unitKeyFlags,
+				compiler,
+				unitKeyEnvironment(),
+				false,
+			)
+			if !errors.Is(newUnitKeyingError, errorUncachedUnit) ||
+				!strings.Contains(newUnitKeyingError.Error(), plan.why) {
+				test.Fatalf("want errUncachedUnit saying %q, got %v", plan.why, newUnitKeyingError)
 			}
 		})
 	}
@@ -415,19 +429,30 @@ func TestUnitKeyReadsAHasIncludeDefinition(test *testing.T) {
 		"units.h",
 		[]byte("#ifndef __has_include\n#define __has_include(x) 0\n#endif\n#  undef  __has_include\n#define VALUE 1\n"),
 	}}
-	if _, err := newUnitKeying(unitFirst, fallback, unitKeyFlags, compiler, unitKeyEnvironment(), false); err != nil {
-		test.Fatalf("a header defining __has_include refused the key: %v", err)
+	if _, newUnitKeyingError := newUnitKeying(
+		unitFirst,
+		fallback,
+		unitKeyFlags,
+		compiler,
+		unitKeyEnvironment(),
+		false,
+	); newUnitKeyingError != nil {
+		test.Fatalf("a header defining __has_include refused the key: %v", newUnitKeyingError)
 	}
 	wrapped := []runtimeFile{{"units.h", []byte("#define ASKS(x) __has_include(x)\n#define VALUE 1\n")}}
-	if _, err := newUnitKeying(
+	if _, newUnitKeyingError := newUnitKeying(
 		unitFirst,
 		wrapped,
 		unitKeyFlags,
 		compiler,
 		unitKeyEnvironment(),
 		false,
-	); !errors.Is(err, errUncachedUnit) || !strings.Contains(err.Error(), "by a macro") {
-		test.Fatalf("a __has_include of a macro's argument: want errUncachedUnit saying by a macro, got %v", err)
+	); !errors.Is(newUnitKeyingError, errorUncachedUnit) ||
+		!strings.Contains(newUnitKeyingError.Error(), "by a macro") {
+		test.Fatalf(
+			"a __has_include of a macro's argument: want errUncachedUnit saying by a macro, got %v",
+			newUnitKeyingError,
+		)
 	}
 }
 
@@ -463,8 +488,8 @@ func TestUnitSourceRefusal(test *testing.T) {
 	if object != filepath.Join(directory, "uncached-probe.c.o") {
 		test.Fatalf("a unit with a directive past its first line compiled to %s, not uncached", object)
 	}
-	if _, err := os.Stat(filepath.Join(directory, "cache")); !errors.Is(err, os.ErrNotExist) {
-		test.Fatalf("a refused unit wrote the cache: %v", err)
+	if _, statError := os.Stat(filepath.Join(directory, "cache")); !errors.Is(statError, os.ErrNotExist) {
+		test.Fatalf("a refused unit wrote the cache: %v", statError)
 	}
 }
 
@@ -475,27 +500,30 @@ func TestUnitSourceRefusal(test *testing.T) {
 // test that rewrites it never writes the toolchain's clang through a link; macOS's caller rewrites nothing.
 func copyUnitKeyProgram(test *testing.T, directory string, compiler string) string {
 	test.Helper()
-	program, err := filepath.EvalSymlinks(compiler)
-	if err != nil {
-		test.Fatal(err)
+	program, resolveSymlinksError := filepath.EvalSymlinks(compiler)
+	if resolveSymlinksError != nil {
+		test.Fatal(resolveSymlinksError)
 	}
 	copied := filepath.Join(directory, "clang")
 	if goruntime.GOOS == "darwin" {
-		if err := os.MkdirAll(directory, 0o755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(directory, 0o755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.Link(program, copied); err != nil {
-			test.Skip("clang's program can't be linked beside the test, and a copy of it would need signing: ", err)
+		if linkError := os.Link(program, copied); linkError != nil {
+			test.Skip(
+				"clang's program can't be linked beside the test, and a copy of it would need signing: ",
+				linkError,
+			)
 		}
 		return copied
 	}
-	contents, err := os.ReadFile(program)
-	if err != nil {
-		test.Fatal(err)
+	contents, readError := os.ReadFile(program)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	writeUnitKeyFile(test, copied, string(contents))
-	if err := os.Chmod(copied, 0o755); err != nil {
-		test.Fatal(err)
+	if changeModeError := os.Chmod(copied, 0o755); changeModeError != nil {
+		test.Fatal(changeModeError)
 	}
 	return copied
 }
@@ -515,9 +543,9 @@ func TestUnitKeyHoldsClangsBuild(test *testing.T) {
 		test.Helper()
 		return testUnitKeying(test, unitFirst, common, unitKeyFlags, compiler, environment).key(unit)
 	}
-	root, err := filepath.EvalSymlinks(test.TempDir())
-	if err != nil {
-		test.Fatal(err)
+	root, resolveSymlinksError := filepath.EvalSymlinks(test.TempDir())
+	if resolveSymlinksError != nil {
+		test.Fatal(resolveSymlinksError)
 	}
 	copied := copyUnitKeyProgram(test, filepath.Join(root, "copied"), compiler)
 	plain := key(copied)
@@ -525,18 +553,18 @@ func TestUnitKeyHoldsClangsBuild(test *testing.T) {
 	if key(copied) == plain {
 		test.Fatal("a config file written beside clang's program left the key")
 	}
-	if err := os.Remove(filepath.Join(root, "copied", "clang.cfg")); err != nil {
-		test.Fatal(err)
+	if removeError := os.Remove(filepath.Join(root, "copied", "clang.cfg")); removeError != nil {
+		test.Fatal(removeError)
 	}
 	if key(copied) != plain {
 		test.Fatal("the config file removed, the key didn't come back")
 	}
 	linked := filepath.Join(root, "linked", "clang")
-	if err := os.MkdirAll(filepath.Dir(linked), 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(filepath.Dir(linked), 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	if err := os.Symlink(copied, linked); err != nil {
-		test.Fatal(err)
+	if symlinkError := os.Symlink(copied, linked); symlinkError != nil {
+		test.Fatal(symlinkError)
 	}
 	beside := key(linked)
 	writeUnitKeyFile(test, filepath.Join(root, "linked", "clang.cfg"), "-DADAMIC_CONFIGURED=1\n")
@@ -545,33 +573,34 @@ func TestUnitKeyHoldsClangsBuild(test *testing.T) {
 	}
 	script := filepath.Join(root, "script", "clang")
 	writeUnitKeyFile(test, script, fmt.Sprintf("#!/bin/sh\nexec '%s' \"$@\"\n", compiler))
-	if err := os.Chmod(script, 0o755); err != nil {
-		test.Fatal(err)
+	if changeModeError := os.Chmod(script, 0o755); changeModeError != nil {
+		test.Fatal(changeModeError)
 	}
-	if _, err := newUnitKeying(
+	if _, newUnitKeyingError := newUnitKeying(
 		unitFirst,
 		common,
 		unitKeyFlags,
 		script,
 		environment,
 		false,
-	); !errors.Is(err, errUncachedUnit) || !strings.Contains(err.Error(), "neither ELF nor Mach-O") {
-		test.Fatalf("a script standing in for clang: want errUncachedUnit, got %v", err)
+	); !errors.Is(newUnitKeyingError, errorUncachedUnit) ||
+		!strings.Contains(newUnitKeyingError.Error(), "neither ELF nor Mach-O") {
+		test.Fatalf("a script standing in for clang: want errUncachedUnit, got %v", newUnitKeyingError)
 	}
 	// A byte past the program's end changes no instruction it runs, so it still runs, and is another program by its
 	// bytes. macOS won't sign a program with bytes past its signature, so there this step is Linux's to show.
 	if goruntime.GOOS == "darwin" {
 		return
 	}
-	program, err := os.OpenFile(copied, os.O_APPEND|os.O_WRONLY, 0)
-	if err != nil {
-		test.Fatal(err)
+	program, openError := os.OpenFile(copied, os.O_APPEND|os.O_WRONLY, 0)
+	if openError != nil {
+		test.Fatal(openError)
 	}
-	if _, err := program.Write([]byte{0}); err != nil {
-		test.Fatal(err)
+	if _, writeError := program.Write([]byte{0}); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if err := program.Close(); err != nil {
-		test.Fatal(err)
+	if closeError := program.Close(); closeError != nil {
+		test.Fatal(closeError)
 	}
 	if key(copied) == plain {
 		test.Fatal("clang's program was rewritten and the key held")
@@ -585,15 +614,16 @@ func TestUnitKeyRefusesModules(test *testing.T) {
 	compiler := unitKeyCompiler(test)
 	common := []runtimeFile{{"units.h", []byte("#define VALUE 1\n")}}
 	for _, flag := range []string{"-fmodules", "-fmodule-map-file=/adamic-none", "-fimplicit-module-maps"} {
-		if _, err := newUnitKeying(
+		if _, newUnitKeyingError := newUnitKeying(
 			unitFirst,
 			common,
 			append(slices.Clone(unitKeyFlags), flag),
 			compiler,
 			unitKeyEnvironment(),
 			false,
-		); !errors.Is(err, errUncachedUnit) || !strings.Contains(err.Error(), "modules") {
-			test.Fatalf("%s: want errUncachedUnit saying modules, got %v", flag, err)
+		); !errors.Is(newUnitKeyingError, errorUncachedUnit) ||
+			!strings.Contains(newUnitKeyingError.Error(), "modules") {
+			test.Fatalf("%s: want errUncachedUnit saying modules, got %v", flag, newUnitKeyingError)
 		}
 	}
 }
@@ -602,20 +632,22 @@ func TestUnitKeyRefusesModules(test *testing.T) {
 // program that isn't there has no libraries to read.
 func TestUnitKeyReadsClangsLibraries(test *testing.T) {
 	test.Parallel()
-	program, err := filepath.EvalSymlinks(unitKeyCompiler(test))
-	if err != nil {
-		test.Fatal(err)
+	program, resolveSymlinksError := filepath.EvalSymlinks(unitKeyCompiler(test))
+	if resolveSymlinksError != nil {
+		test.Fatal(resolveSymlinksError)
 	}
-	libraries, err := programLibraries(program)
-	if err != nil {
-		test.Fatal(err)
+	libraries, programLibrariesError := programLibraries(program)
+	if programLibrariesError != nil {
+		test.Fatal(programLibrariesError)
 	}
 	for _, library := range libraries {
 		if lower := strings.ToLower(library); strings.Contains(lower, "llvm") || strings.Contains(lower, "clang") {
 			test.Fatalf("this box's clang links %s, so every split build here compiles uncached", library)
 		}
 	}
-	if _, err := programLibraries(filepath.Join(test.TempDir(), "absent")); err == nil {
+	if _, programLibrariesError := programLibraries(
+		filepath.Join(test.TempDir(), "absent"),
+	); programLibrariesError == nil {
 		test.Fatal("a program that isn't there read as having no libraries")
 	}
 }
@@ -712,9 +744,9 @@ func TestUnitKeyHoldsEnvironment(test *testing.T) {
 			"DEVELOPER_DIR": {"xcode-select", "-p"},
 			"SDKROOT":       {"xcrun", "--show-sdk-path"},
 		} {
-			output, err := exec.Command(arguments[0], arguments[1:]...).Output()
-			if err != nil {
-				test.Fatalf("%s: %v", strings.Join(arguments, " "), err)
+			output, outputError := exec.Command(arguments[0], arguments[1:]...).Output()
+			if outputError != nil {
+				test.Fatalf("%s: %v", strings.Join(arguments, " "), outputError)
 			}
 			values[name] = strings.TrimSpace(string(output))
 		}
@@ -732,15 +764,15 @@ func TestUnitKeyHoldsEnvironment(test *testing.T) {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
 			set := append(slices.Clone(environment), name+"=/adamic-none")
-			if _, err := newUnitKeying(
+			if _, newUnitKeyingError := newUnitKeying(
 				unitFirst,
 				common,
 				unitKeyFlags,
 				compiler,
 				set,
 				false,
-			); !errors.Is(err, errUncachedUnit) {
-				test.Fatalf("%s was set and the key was read: %v", name, err)
+			); !errors.Is(newUnitKeyingError, errorUncachedUnit) {
+				test.Fatalf("%s was set and the key was read: %v", name, newUnitKeyingError)
 			}
 		})
 	}
@@ -760,8 +792,8 @@ func TestUnitKeyKeepsOtherUnits(test *testing.T) {
 	alpha := compilationUnit{"alpha.c", unitFirst + "int adamic_alpha(void) { return VALUE; }\n"}
 	beta := compilationUnit{"beta.c", unitFirst + "int adamic_beta(void) { return VALUE + 1; }\n"}
 	directory := filepath.Join(root, "units")
-	if err := os.MkdirAll(directory, 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(directory, 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	// As buildUnitsWithLibrary does: one keying a build, and the build's units compiled at once.
 	build := func(units ...compilationUnit) ([]string, *unitKeying) {
@@ -795,8 +827,8 @@ func TestUnitKeyKeepsOtherUnits(test *testing.T) {
 	}
 	before, keying := build(alpha, beta)
 	planted := []byte("beta.c's object, from the cache\n")
-	if err := os.WriteFile(before[1], planted, 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(before[1], planted, 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	changed := compilationUnit{alpha.name, unitFirst + "int adamic_alpha(void) { return VALUE + 2; }\n"}
 	after, rekeyed := build(changed)
@@ -808,13 +840,15 @@ func TestUnitKeyKeepsOtherUnits(test *testing.T) {
 	}
 	for range 5 {
 		objects, _ := build(beta)
-		if contents, err := os.ReadFile(
+		if contents, readError := os.ReadFile(
 			objects[0],
-		); err == nil && objects[0] == before[1] && string(contents) == string(planted) {
+		); readError == nil && objects[0] == before[1] && string(contents) == string(planted) {
 			return
 		}
-		if err := os.Remove(filepath.Join(cache, unitCacheOffName)); err != nil && !errors.Is(err, os.ErrNotExist) {
-			test.Fatal(err)
+		if removeError := os.Remove(
+			filepath.Join(cache, unitCacheOffName),
+		); removeError != nil && !errors.Is(removeError, os.ErrNotExist) {
+			test.Fatal(removeError)
 		}
 	}
 	test.Fatal("beta.c was compiled again on every one of five hits")
@@ -834,9 +868,9 @@ func TestUnitMismatchIsNotedInTheBuildLog(test *testing.T) {
 	writeUnitKeyFile(test, log, "build adamic-runtime 0123456789ab hit 0.01\n")
 	test.Setenv(unitBuildLog, log)
 	noteUnitMismatch(mismatch)
-	contents, err := os.ReadFile(log)
-	if err != nil {
-		test.Fatal(err)
+	contents, readError := os.ReadFile(log)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if want := "build adamic-runtime 0123456789ab hit 0.01\n" +
 		unitMismatchLine(mismatch) +
@@ -870,21 +904,21 @@ func TestUnitCacheColdCheck(test *testing.T) {
 	if _, off := unitCacheOff(cache); off {
 		test.Fatal("a checked hit that matched marked the cache off")
 	}
-	cold, err := os.ReadFile(object)
-	if err != nil {
-		test.Fatal(err)
+	cold, readError := os.ReadFile(object)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	planted := []byte("not the object\n")
-	if err := os.WriteFile(object, planted, 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(object, planted, 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	// The hole is the house's, never the build's: a mismatched hit builds green with the cold object (Node's M2).
-	built, err := compileUnit(unit, common, unitKeyFlags, compiler, keying, cache, directory, nil, false)
-	if err != nil {
-		test.Fatalf("a planted object's checked hit failed the build: %v", err)
+	built, compileUnitError := compileUnit(unit, common, unitKeyFlags, compiler, keying, cache, directory, nil, false)
+	if compileUnitError != nil {
+		test.Fatalf("a planted object's checked hit failed the build: %v", compileUnitError)
 	}
-	if contents, err := os.ReadFile(built); err != nil || string(contents) != string(cold) {
-		test.Fatalf("a planted object's checked hit built %s, not the cold object: %v", built, err)
+	if contents, readError := os.ReadFile(built); readError != nil || string(contents) != string(cold) {
+		test.Fatalf("a planted object's checked hit built %s, not the cold object: %v", built, readError)
 	}
 	want := fmt.Sprintf(
 		"native: unit cache mismatch: unit probe.c key %s cached %x cold %x",
@@ -900,13 +934,13 @@ func TestUnitCacheColdCheck(test *testing.T) {
 	}); line != want {
 		test.Fatalf("the mismatch's line is %q, want %q", line, want)
 	}
-	contents, err := os.ReadFile(filepath.Join(cache, unitCacheOffName))
-	if err != nil {
-		test.Fatal(err)
+	contents, readError := os.ReadFile(filepath.Join(cache, unitCacheOffName))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var mismatch unitMismatch
-	if err := json.Unmarshal(contents, &mismatch); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(contents, &mismatch); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if mismatch.Unit != "probe.c" ||
 		mismatch.Key != keying.key(unit) ||
@@ -926,25 +960,25 @@ func TestUnitCacheColdCheck(test *testing.T) {
 func TestUnitCacheOffCompilesUncached(test *testing.T) {
 	source := "#include \"adamic.h\"\n#include <stdio.h>\nstatic int adamic_answer(void);\nstatic int adamic_answer(void) { return 42; }\nint main(void) { printf(\"%d\\n\", adamic_answer()); return 0; }\n"
 	// The runtime comes from the build cache as every build's does, before this test moves where the cache is written.
-	library, err := RuntimeLibraryForSource("", source, Options{})
-	if err != nil {
-		test.Fatal(err)
+	library, runtimeLibraryForSourceError := RuntimeLibraryForSource("", source, Options{})
+	if runtimeLibraryForSourceError != nil {
+		test.Fatal(runtimeLibraryForSourceError)
 	}
 	test.Setenv(location.OutputDirectoryVariable, test.TempDir())
 	test.Setenv("ADAMIC_GATE_UNCACHED", "")
 	test.Setenv(unitCheckVariable, "")
-	cache, err := cacheDirectory("native-units")
-	if err != nil {
-		test.Fatal(err)
+	cache, cacheDirectoryError := cacheDirectory("native-units")
+	if cacheDirectoryError != nil {
+		test.Fatal(cacheDirectoryError)
 	}
 	entries := func() int {
 		test.Helper()
-		listed, err := os.ReadDir(cache)
-		if errors.Is(err, os.ErrNotExist) {
+		listed, readDirectoryError := os.ReadDir(cache)
+		if errors.Is(readDirectoryError, os.ErrNotExist) {
 			return 0
 		}
-		if err != nil {
-			test.Fatal(err)
+		if readDirectoryError != nil {
+			test.Fatal(readDirectoryError)
 		}
 		count := 0
 		for _, entry := range listed {
@@ -957,22 +991,30 @@ func TestUnitCacheOffCompilesUncached(test *testing.T) {
 	build := func() {
 		test.Helper()
 		binary := filepath.Join(test.TempDir(), "program")
-		if err := buildUnitsWithLibrary(source, binary, Options{}, library, ""); err != nil {
-			test.Fatal(err)
+		if buildUnitsWithLibraryError := buildUnitsWithLibrary(
+			source,
+			binary,
+			Options{},
+			library,
+			"",
+		); buildUnitsWithLibraryError != nil {
+			test.Fatal(buildUnitsWithLibraryError)
 		}
-		if output, err := exec.Command(binary).CombinedOutput(); err != nil || string(output) != "42\n" {
-			test.Fatalf("the program: %v\n%s", err, output)
+		if output, combinedOutputError := exec.Command(
+			binary,
+		).CombinedOutput(); combinedOutputError != nil || string(output) != "42\n" {
+			test.Fatalf("the program: %v\n%s", combinedOutputError, output)
 		}
 	}
-	if err := markUnitCacheOff(cache, unitMismatch{Unit: "planted.c"}); err != nil {
-		test.Fatal(err)
+	if markUnitCacheOffError := markUnitCacheOff(cache, unitMismatch{Unit: "planted.c"}); markUnitCacheOffError != nil {
+		test.Fatal(markUnitCacheOffError)
 	}
 	build()
 	if count := entries(); count != 0 {
 		test.Fatalf("with the mark standing the build kept %d units in the cache", count)
 	}
-	if err := os.Remove(filepath.Join(cache, unitCacheOffName)); err != nil {
-		test.Fatal(err)
+	if removeError := os.Remove(filepath.Join(cache, unitCacheOffName)); removeError != nil {
+		test.Fatal(removeError)
 	}
 	test.Setenv(unitCacheOffVariable, "off")
 	build()
@@ -1001,42 +1043,75 @@ func TestUnitCacheMismatchCompilesEveryUnitCold(test *testing.T) {
 	root := test.TempDir()
 	cache := filepath.Join(root, "cache")
 	directory := filepath.Join(root, "units")
-	if err := os.MkdirAll(directory, 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(directory, 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	never := testUnitKeying(test, unitFirst, common, unitKeyFlags, compiler, environment)
 	never.check = func(compilationUnit) bool { return false }
-	cached, err := compileUnits(units, common, unitKeyFlags, compiler, never, cache, directory, 2, nil, false)
-	if err != nil {
-		test.Fatal(err)
+	cached, compileUnitsError := compileUnits(
+		units,
+		common,
+		unitKeyFlags,
+		compiler,
+		never,
+		cache,
+		directory,
+		2,
+		nil,
+		false,
+	)
+	if compileUnitsError != nil {
+		test.Fatal(compileUnitsError)
 	}
 	for _, object := range cached {
-		if err := os.WriteFile(object, []byte("planted\n"), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(object, []byte("planted\n"), 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	keying := testUnitKeying(test, unitFirst, common, unitKeyFlags, compiler, environment)
 	keying.check = func(unit compilationUnit) bool { return unit.name == "beta.c" }
-	built, err := compileUnits(units, common, unitKeyFlags, compiler, keying, cache, directory, 2, nil, false)
-	if err != nil {
-		test.Fatalf("a mismatched build failed: %v", err)
+	built, compileUnitsError := compileUnits(
+		units,
+		common,
+		unitKeyFlags,
+		compiler,
+		keying,
+		cache,
+		directory,
+		2,
+		nil,
+		false,
+	)
+	if compileUnitsError != nil {
+		test.Fatalf("a mismatched build failed: %v", compileUnitsError)
 	}
 	uncachedDirectory := filepath.Join(root, "uncached")
-	if err := os.MkdirAll(uncachedDirectory, 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(uncachedDirectory, 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	uncached, err := compileUnits(units, common, unitKeyFlags, compiler, nil, cache, uncachedDirectory, 2, nil, false)
-	if err != nil {
-		test.Fatal(err)
+	uncached, compileUnitsError := compileUnits(
+		units,
+		common,
+		unitKeyFlags,
+		compiler,
+		nil,
+		cache,
+		uncachedDirectory,
+		2,
+		nil,
+		false,
+	)
+	if compileUnitsError != nil {
+		test.Fatal(compileUnitsError)
 	}
 	for index, unit := range units {
-		got, err := os.ReadFile(built[index])
-		if err != nil {
-			test.Fatal(err)
+		got, readError := os.ReadFile(built[index])
+		if readError != nil {
+			test.Fatal(readError)
 		}
-		want, err := os.ReadFile(uncached[index])
-		if err != nil {
-			test.Fatal(err)
+		want, readError := os.ReadFile(uncached[index])
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		if string(got) != string(want) {
 			test.Fatalf(

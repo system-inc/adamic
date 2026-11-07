@@ -36,13 +36,13 @@ func TestMatchDestructureLowersOnlyPlainNames(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSourceAs(test, probe.source, ".a")
+			_, lowerSourceAsError := lowerSourceAs(test, probe.source, ".a")
 			var notYet *NotYet
 			switch {
-			case probe.what == "" && err != nil:
-				test.Fatalf("want it to lower, got %v", err)
-			case probe.what != "" && !errors.As(err, &notYet):
-				test.Fatalf("want NotYet %s, got %v", probe.what, err)
+			case probe.what == "" && lowerSourceAsError != nil:
+				test.Fatalf("want it to lower, got %v", lowerSourceAsError)
+			case probe.what != "" && !errors.As(lowerSourceAsError, &notYet):
+				test.Fatalf("want NotYet %s, got %v", probe.what, lowerSourceAsError)
 			case probe.what != "" && notYet.What != probe.what:
 				test.Fatalf("want NotYet %s, got NotYet %s", probe.what, notYet.What)
 			}

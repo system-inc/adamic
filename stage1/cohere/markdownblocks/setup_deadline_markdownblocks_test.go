@@ -18,9 +18,9 @@ func markdownLayoutSetupContext(parent context.Context) (context.Context, contex
 
 func markdownLayoutProductRoot(test *testing.T) string {
 	test.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return root
 }
@@ -35,13 +35,13 @@ func TestMarkdownLayoutSetupHasNoDeadline(test *testing.T) {
 	// The same process-group command path used by shards honors its work context.
 	work, stop := context.WithTimeout(ctx, 25*time.Millisecond)
 	defer stop()
-	binary, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	binary, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
 	command := tableLayoutCommand(work, binary, "-test.run=^TestMarkdownLayoutDeadlineWorker$", "-test.timeout=0")
 	command.Env = append(os.Environ(), "ADAMIC_MARKDOWN_LAYOUT_DEADLINE_WORKER=1")
-	if stdout, stderr, err := childguard.Capture(work, command); err == nil {
+	if stdout, stderr, captureError := childguard.Capture(work, command); captureError == nil {
 		test.Fatalf("work deadline did not stop child: %s%s", stdout, stderr)
 	}
 	if !errors.Is(work.Err(), context.DeadlineExceeded) {

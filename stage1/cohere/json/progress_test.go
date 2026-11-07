@@ -41,11 +41,13 @@ func TestProgressGuard(test *testing.T) {
 		test.Run(fixture.name, func(test *testing.T) {
 			test.Parallel()
 			command := exec.Command("sh", "-c", fixture.source)
-			_, err := childguard.CombinedOutput(command, fixture.policy)
-			if err == nil || !strings.Contains(err.Error(), fixture.message) || !strings.Contains(err.Error(), "sh") {
-				test.Fatalf("guard failed by name: %v", err)
+			_, combinedOutputError := childguard.CombinedOutput(command, fixture.policy)
+			if combinedOutputError == nil ||
+				!strings.Contains(combinedOutputError.Error(), fixture.message) ||
+				!strings.Contains(combinedOutputError.Error(), "sh") {
+				test.Fatalf("guard failed by name: %v", combinedOutputError)
 			}
-			test.Logf("caught %s: %v", fixture.name, err)
+			test.Logf("caught %s: %v", fixture.name, combinedOutputError)
 		})
 	}
 	// Talking for 4 s against a 3 s first-output window and a 60 s stall window: the first-output window
@@ -54,28 +56,28 @@ func TestProgressGuard(test *testing.T) {
 	test.Run("progress outlasts startup", func(test *testing.T) {
 		test.Parallel()
 		command := exec.Command("sh", "-c", "for i in 1 2 3 4 5 6 7 8; do printf x; sleep 0.5; done")
-		output, err := childguard.CombinedOutput(command, talking)
-		if err != nil || string(output) != "xxxxxxxx" {
-			test.Fatalf("progress was killed: %q %v", output, err)
+		output, combinedOutputError := childguard.CombinedOutput(command, talking)
+		if combinedOutputError != nil || string(output) != "xxxxxxxx" {
+			test.Fatalf("progress was killed: %q %v", output, combinedOutputError)
 		}
 	})
 	test.Run("stderr is progress", func(test *testing.T) {
 		test.Parallel()
 		command := exec.Command("sh", "-c", "for i in 1 2 3 4 5 6 7 8; do printf x >&2; sleep 0.5; done")
-		output, err := childguard.CombinedOutput(command, talking)
-		if err != nil || string(output) != "xxxxxxxx" {
-			test.Fatalf("stderr progress was killed: %q %v", output, err)
+		output, combinedOutputError := childguard.CombinedOutput(command, talking)
+		if combinedOutputError != nil || string(output) != "xxxxxxxx" {
+			test.Fatalf("stderr progress was killed: %q %v", output, combinedOutputError)
 		}
 	})
 	test.Run("overall backstop", func(test *testing.T) {
 		test.Parallel()
 		command := exec.Command("sh", "-c", "while :; do printf x; sleep 0.05; done")
-		_, err := childguard.CombinedOutput(
+		_, combinedOutputError := childguard.CombinedOutput(
 			command,
 			childguard.Options{FirstOutput: never, Stall: never, Ceiling: time.Second},
 		)
-		if err == nil || !strings.Contains(err.Error(), "ceiling:") {
-			test.Fatalf("backstop survived: %v", err)
+		if combinedOutputError == nil || !strings.Contains(combinedOutputError.Error(), "ceiling:") {
+			test.Fatalf("backstop survived: %v", combinedOutputError)
 		}
 	})
 }

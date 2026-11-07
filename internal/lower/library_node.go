@@ -11,7 +11,11 @@ import (
 
 // Register only members with real lowering and runtime support. Host units add
 // their names during init; the default is a named NotYet, never erased code.
-var implementedNodeMembers = map[string]bool{"node:console.Console.log": true, "node:console.Console.error": true, "node:console.console": true}
+var implementedNodeMembers = map[string]bool{
+	"node:console.Console.log":   true,
+	"node:console.Console.error": true,
+	"node:console.console":       true,
+}
 
 func RegisterNodeLibraryMembers(names ...string) {
 	for _, name := range names {
@@ -52,10 +56,13 @@ func nodeLibraryName(symbol *ast.Symbol) string {
 		module := ""
 		owners := []string{}
 		for parent := declaration.Parent; parent != nil; parent = parent.Parent {
-			if (parent.Kind == ast.KindClassDeclaration || parent.Kind == ast.KindInterfaceDeclaration) && parent.Name() != nil {
+			if (parent.Kind == ast.KindClassDeclaration || parent.Kind == ast.KindInterfaceDeclaration) &&
+				parent.Name() != nil {
 				owners = append([]string{parent.Name().Text()}, owners...)
 			}
-			if parent.Kind == ast.KindModuleDeclaration && parent.Name() != nil && parent.Name().Kind == ast.KindStringLiteral {
+			if parent.Kind == ast.KindModuleDeclaration &&
+				parent.Name() != nil &&
+				parent.Name().Kind == ast.KindStringLiteral {
 				module = parent.Name().Text()
 				break
 			}
@@ -108,7 +115,12 @@ type nodeHostViewPair struct {
 // and anything callable through its call and construct results. So a container holding one, or a
 // function giving one, is the host object seen through the container's view. A type parameter in
 // the view is seen as its constraint, which is all its body can name.
-func (l *lowering) nodeHostViewReach(own, view *checker.Type, depth int, seen map[nodeHostViewPair]bool, parameter bool) string {
+func (l *lowering) nodeHostViewReach(
+	own, view *checker.Type,
+	depth int,
+	seen map[nodeHostViewPair]bool,
+	parameter bool,
+) string {
 	if own == nil || view == nil || own == view {
 		return ""
 	}
@@ -133,7 +145,9 @@ func (l *lowering) nodeHostViewReach(own, view *checker.Type, depth int, seen ma
 	}
 	if view.Flags()&checker.TypeFlagsTypeParameter != 0 {
 		constraint := l.checker.GetBaseConstraintOfType(view)
-		if constraint == nil || constraint == view || constraint.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown) != 0 {
+		if constraint == nil ||
+			constraint == view ||
+			constraint.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown) != 0 {
 			if parameter && l.nodeHoldsHost(own) {
 				return nodeHostViewOpaque + l.checker.TypeToString(own)
 			}
@@ -147,7 +161,10 @@ func (l *lowering) nodeHostViewReach(own, view *checker.Type, depth int, seen ma
 	view = l.checker.GetNonNullableType(view)
 	registered, host := l.nodeHostObject(own)
 	// A primitive view can't hold an object at all, a host object or one holding it.
-	if own == view || seen[nodeHostViewPair{own, view, parameter}] || !host && !l.nodeHoldsHost(own) && !l.nodeHoldsHost(view) || view.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsUnion|checker.TypeFlagsIntersection) == 0 {
+	if own == view ||
+		seen[nodeHostViewPair{own, view, parameter}] ||
+		!host && !l.nodeHoldsHost(own) && !l.nodeHoldsHost(view) ||
+		view.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsUnion|checker.TypeFlagsIntersection) == 0 {
 		return ""
 	}
 	// A union's properties are only those its members share, so each object member the value fits
@@ -175,7 +192,13 @@ func (l *lowering) nodeHostViewReach(own, view *checker.Type, depth int, seen ma
 	// A function or a class seen as a callable view gives what its calls give: each call or construct
 	// signature's result is paired with the view's, as a callable property's are below.
 	for _, kind := range []checker.SignatureKind{checker.SignatureKindCall, checker.SignatureKindConstruct} {
-		if reached := l.nodeHostSignaturesReach(l.checker.GetSignaturesOfType(own, kind), l.checker.GetSignaturesOfType(view, kind), depth, seen, parameter); reached != "" {
+		if reached := l.nodeHostSignaturesReach(
+			l.checker.GetSignaturesOfType(own, kind),
+			l.checker.GetSignaturesOfType(view, kind),
+			depth,
+			seen,
+			parameter,
+		); reached != "" {
 			return reached
 		}
 	}
@@ -207,14 +230,26 @@ func (l *lowering) nodeHostViewReach(own, view *checker.Type, depth int, seen ma
 		if reached := l.nodeHostViewReach(held, seenAs, depth+1, seen, parameter); reached != "" {
 			return reached
 		}
-		if reached := l.nodeHostSignaturesReach(l.checker.GetSignaturesOfType(held, checker.SignatureKindCall), l.checker.GetSignaturesOfType(seenAs, checker.SignatureKindCall), depth, seen, parameter); reached != "" {
+		if reached := l.nodeHostSignaturesReach(
+			l.checker.GetSignaturesOfType(held, checker.SignatureKindCall),
+			l.checker.GetSignaturesOfType(seenAs, checker.SignatureKindCall),
+			depth,
+			seen,
+			parameter,
+		); reached != "" {
 			return reached
 		}
 	}
 	for _, index := range l.checker.GetIndexInfosOfType(view) {
 		for _, held := range l.checker.GetIndexInfosOfType(own) {
 			if held.KeyType() == index.KeyType() {
-				if reached := l.nodeHostViewReach(held.ValueType(), index.ValueType(), depth+1, seen, parameter); reached != "" {
+				if reached := l.nodeHostViewReach(
+					held.ValueType(),
+					index.ValueType(),
+					depth+1,
+					seen,
+					parameter,
+				); reached != "" {
 					return reached
 				}
 			}
@@ -301,10 +336,18 @@ func (l *lowering) nodeHoldsHost(root *checker.Type) bool {
 // callback hands its declared parameter types to the program's listener, and another function
 // layer swaps that direction again. All overload pairs and every supplied position (including
 // rest elements and optional parameters) are judged, not just a signature selected by its result.
-func (l *lowering) nodeHostSignaturesReach(own, view []*checker.Signature, depth int, seen map[nodeHostViewPair]bool, parameter bool) string {
+func (l *lowering) nodeHostSignaturesReach(
+	own, view []*checker.Signature,
+	depth int,
+	seen map[nodeHostViewPair]bool,
+	parameter bool,
+) string {
 	for _, called := range view {
 		for _, call := range own {
-			called, call := checker.Checker_getCanonicalSignature(l.checker, called), checker.Checker_getCanonicalSignature(l.checker, call)
+			called, call := checker.Checker_getCanonicalSignature(
+				l.checker,
+				called,
+			), checker.Checker_getCanonicalSignature(l.checker, call)
 			result, held := l.checker.GetReturnTypeOfSignature(called), l.checker.GetReturnTypeOfSignature(call)
 			if l.checker.IsTypeAssignableTo(held, result) {
 				if reached := l.nodeHostViewReach(held, result, depth+1, seen, parameter); reached != "" {
@@ -312,7 +355,10 @@ func (l *lowering) nodeHostSignaturesReach(own, view []*checker.Signature, depth
 				}
 			}
 			for position := range l.nodeHostParameterPositions(call, called) {
-				handed, declared := l.checker.GetTypeAtPosition(called, position), l.checker.GetTypeAtPosition(call, position)
+				handed, declared := l.checker.GetTypeAtPosition(
+					called,
+					position,
+				), l.checker.GetTypeAtPosition(call, position)
 				if declared.Flags()&checker.TypeFlagsInstantiableNonPrimitive != 0 && l.nodeHoldsHost(handed) {
 					return nodeHostViewOpaque + l.checker.TypeToString(handed)
 				}
@@ -358,7 +404,10 @@ func (l *lowering) nodeLibraryContainer(proven *checker.Type) bool {
 		return true
 	}
 	symbol := proven.Symbol()
-	return proven.ObjectFlags()&checker.ObjectFlagsReference != 0 && symbol != nil && len(symbol.Declarations) != 0 && load.IsLibrary(ast.GetSourceFileOfNode(symbol.Declarations[0]))
+	return proven.ObjectFlags()&checker.ObjectFlagsReference != 0 &&
+		symbol != nil &&
+		len(symbol.Declarations) != 0 &&
+		load.IsLibrary(ast.GetSourceFileOfNode(symbol.Declarations[0]))
 }
 
 // nodeHostViewKey is a value type and the view it's seen through, as nodeHostViews keys them. It's a
@@ -389,12 +438,25 @@ func (l *lowering) nodeHostViewRefusal(node *ast.Node, own, view *checker.Type, 
 		subject = "a value of type " + l.checker.TypeToString(own) + " holding a host object"
 	}
 	if strings.HasPrefix(reached, nodeHostViewOpaque) {
-		return l.notYet(node, subject+" seen as "+l.checker.TypeToString(view)+", which hides a host object behind any, unknown or an unbound type parameter")
+		return l.notYet(node, subject+
+			" seen as "+
+			l.checker.TypeToString(view)+
+			", which hides a host object behind any, unknown or an unbound type parameter")
 	}
 	if strings.HasPrefix(reached, nodeHostViewTooDeep) {
-		return l.notYet(node, subject+" seen as "+l.checker.TypeToString(view)+", which goes "+reached+", where it may hold a host object")
+		return l.notYet(node, subject+
+			" seen as "+
+			l.checker.TypeToString(view)+
+			", which goes "+
+			reached+
+			", where it may hold a host object")
 	}
-	return l.notYet(node, subject+" seen as "+l.checker.TypeToString(view)+", which reaches "+reached+", a member no host registration names")
+	return l.notYet(node, subject+
+		" seen as "+
+		l.checker.TypeToString(view)+
+		", which reaches "+
+		reached+
+		", a member no host registration names")
 }
 
 // nodeHostCallbackArgument judges a registered call's callback before lowering the argument.
@@ -405,7 +467,9 @@ func (l *lowering) nodeHostCallbackArgument(node *ast.Node) error {
 		outer = outer.Parent
 	}
 	parent := outer.Parent
-	if parent == nil || parent.Kind != ast.KindCallExpression && parent.Kind != ast.KindNewExpression || !nodeLibraryMemberImplemented(l.nodeLibrarySymbol(parent)) {
+	if parent == nil ||
+		parent.Kind != ast.KindCallExpression && parent.Kind != ast.KindNewExpression ||
+		!nodeLibraryMemberImplemented(l.nodeLibrarySymbol(parent)) {
 		return nil
 	}
 	for position, argument := range parent.Arguments() {
@@ -413,14 +477,18 @@ func (l *lowering) nodeHostCallbackArgument(node *ast.Node) error {
 			continue
 		}
 		own := l.checker.GetTypeAtLocation(node)
-		if len(l.checker.GetSignaturesOfType(own, checker.SignatureKindCall)) == 0 && len(l.checker.GetSignaturesOfType(own, checker.SignatureKindConstruct)) == 0 {
+		if len(l.checker.GetSignaturesOfType(own, checker.SignatureKindCall)) == 0 &&
+			len(l.checker.GetSignaturesOfType(own, checker.SignatureKindConstruct)) == 0 {
 			return nil
 		}
 		kind := checker.SignatureKindCall
 		if parent.Kind == ast.KindNewExpression {
 			kind = checker.SignatureKindConstruct
 		}
-		for _, signature := range l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(parent.Expression()), kind) {
+		for _, signature := range l.checker.GetSignaturesOfType(
+			l.checker.GetTypeAtLocation(parent.Expression()),
+			kind,
+		) {
 			if position >= len(signature.Parameters()) && !signature.HasRestParameter() {
 				continue
 			}
@@ -441,7 +509,8 @@ func (l *lowering) nodeHostCallbackArgument(node *ast.Node) error {
 // stay in: an unbound slot cannot prove that the host hands out no object.
 func (l *lowering) nodeHostCallbackOverload(call *ast.Node, signature *checker.Signature) bool {
 	arguments := call.Arguments()
-	if len(arguments) < signature.MinArgumentCount() || len(arguments) > l.nodeHostParameterCount(signature) && !l.checker.HasEffectiveRestParameter(signature) {
+	if len(arguments) < signature.MinArgumentCount() ||
+		len(arguments) > l.nodeHostParameterCount(signature) && !l.checker.HasEffectiveRestParameter(signature) {
 		return false
 	}
 	if len(signature.TypeParameters()) != 0 {
@@ -451,7 +520,10 @@ func (l *lowering) nodeHostCallbackOverload(call *ast.Node, signature *checker.S
 		if argument.Kind == ast.KindSpreadElement {
 			continue
 		}
-		if !l.checker.IsTypeAssignableTo(l.checker.GetTypeAtLocation(argument), l.checker.GetTypeAtPosition(signature, index)) {
+		if !l.checker.IsTypeAssignableTo(
+			l.checker.GetTypeAtLocation(argument),
+			l.checker.GetTypeAtPosition(signature, index),
+		) {
 			return false
 		}
 	}
@@ -481,7 +553,9 @@ func (l *lowering) nodeHostDeclaredArgument(node *ast.Node) *checker.Type {
 	arguments := call.Arguments()
 	parameters := resolved.Declaration().Parameters()
 	for index, argument := range arguments {
-		if argument != outer || index >= len(parameters) || parameters[index].AsParameterDeclaration().DotDotDotToken != nil {
+		if argument != outer ||
+			index >= len(parameters) ||
+			parameters[index].AsParameterDeclaration().DotDotDotToken != nil {
 			continue
 		}
 		return l.checker.GetTypeAtLocation(parameters[index].Name())
@@ -490,38 +564,38 @@ func (l *lowering) nodeHostDeclaredArgument(node *ast.Node) *checker.Type {
 }
 
 func (l *lowering) nodeLibraryRefusal(node *ast.Node) error {
-	if err := l.nodeFSDirectorySignature(node); err != nil {
-		return err
+	if nodeFsDirectorySignatureError := l.nodeFSDirectorySignature(node); nodeFsDirectorySignatureError != nil {
+		return nodeFsDirectorySignatureError
 	}
 	if !ast.IsExpressionNode(node) || ast.IsPartOfTypeNode(node) {
 		return nil
 	}
-	if err := l.nodeHostCallbackArgument(node); err != nil {
-		return err
+	if nodeHostCallbackArgumentError := l.nodeHostCallbackArgument(node); nodeHostCallbackArgumentError != nil {
+		return nodeHostCallbackArgumentError
 	}
-	if found, err := l.nodeStdoutUseRefusal(node); found {
-		return err
+	if found, nodeStdoutUseRefusalError := l.nodeStdoutUseRefusal(node); found {
+		return nodeStdoutUseRefusalError
 	}
-	if found, err := l.nodeEnvironmentUseRefusal(node); found {
-		return err
+	if found, nodeEnvironmentUseRefusalError := l.nodeEnvironmentUseRefusal(node); found {
+		return nodeEnvironmentUseRefusalError
 	}
-	if found, err := l.nodeRealpathUseRefusal(node); found {
-		return err
+	if found, nodeRealpathUseRefusalError := l.nodeRealpathUseRefusal(node); found {
+		return nodeRealpathUseRefusalError
 	}
-	if found, err := l.nodePlatformUseRefusal(node); found {
-		return err
+	if found, nodePlatformUseRefusalError := l.nodePlatformUseRefusal(node); found {
+		return nodePlatformUseRefusalError
 	}
-	if found, err := l.nodeStackTraceLimitUseRefusal(node); found {
-		return err
+	if found, nodeStackTraceLimitUseRefusalError := l.nodeStackTraceLimitUseRefusal(node); found {
+		return nodeStackTraceLimitUseRefusalError
 	}
-	if found, err := l.nodeGlobalsUseRefusal(node); found {
-		return err
+	if found, nodeGlobalsUseRefusalError := l.nodeGlobalsUseRefusal(node); found {
+		return nodeGlobalsUseRefusalError
 	}
-	if err := l.nodeProcessSignature(node); err != nil {
-		return err
+	if nodeProcessSignatureError := l.nodeProcessSignature(node); nodeProcessSignatureError != nil {
+		return nodeProcessSignatureError
 	}
-	if found, err := l.nodeCommonJSUseRefusal(node); found {
-		return err
+	if found, nodeCommonJsUseRefusalError := l.nodeCommonJSUseRefusal(node); found {
+		return nodeCommonJsUseRefusalError
 	}
 	name := l.nodeLibraryMember(node)
 	if name != "" && !nodeLibraryMemberImplemented(l.nodeLibrarySymbol(node)) {

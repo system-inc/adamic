@@ -45,9 +45,11 @@ func TestErrorOwnKeysNotYet(test *testing.T) {
 	} {
 		test.Run(probe.file, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/error_own_keys", probe.file))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/error_own_keys", probe.file),
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			truth := onNode(test, path)
 			// A host call's Error carries enumerable fields of its own (code, errno and the like), so
@@ -55,12 +57,12 @@ func TestErrorOwnKeysNotYet(test *testing.T) {
 			if probe.madeInSource && disagreement(run{stdout: []byte("0\n")}, truth) != "" {
 				test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
-			_, err = lowered(test, path)
+			_, loweredError := lowered(test, path)
 			var notYet *lower.NotYet
-			if !errors.As(err, &notYet) ||
-				!strings.Contains(err.Error(), probe.file) ||
-				!strings.Contains(err.Error(), probe.words) {
-				test.Fatalf("want NotYet with %q, got %v", probe.words, err)
+			if !errors.As(loweredError, &notYet) ||
+				!strings.Contains(loweredError.Error(), probe.file) ||
+				!strings.Contains(loweredError.Error(), probe.words) {
+				test.Fatalf("want NotYet with %q, got %v", probe.words, loweredError)
 			}
 		})
 	}
@@ -87,17 +89,19 @@ func TestErrorOwnPropertyRoadsStop(test *testing.T) {
 	} {
 		test.Run(file, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/error_own_keys", file))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/error_own_keys", file),
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			if truth := onNode(test, path); truth.exitCode != 0 {
 				test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
-			if _, err := lowered(test, path); err == nil {
+			if _, loweredError := lowered(test, path); loweredError == nil {
 				test.Fatal("an own-property road through a view that may hold an Error lowered")
 			} else {
-				test.Logf("stops: %v", err)
+				test.Logf("stops: %v", loweredError)
 			}
 		})
 	}
@@ -120,17 +124,19 @@ func TestErrorOwnKeysPlainTwinsAgree(test *testing.T) {
 	} {
 		test.Run(probe.file, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/error_own_keys", probe.file))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/error_own_keys", probe.file),
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			truth := onNode(test, path)
 			if disagreement(run{stdout: []byte(probe.stdout)}, truth) != "" {
 				test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatalf("a plain object's own keys must lower: %v", err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatalf("a plain object's own keys must lower: %v", loweredError)
 			}
 			native, _ := natively(test, program)
 			for name, got := range map[string]run{

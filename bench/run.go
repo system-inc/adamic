@@ -64,41 +64,55 @@ type measurement struct {
 	failure string
 }
 
-var countsLine = regexp.MustCompile(`adamic: counts: allocations (\d+) frees (\d+) retains (\d+) releases (\d+) peak (\d+) regions (\d+)`)
+var countsLine = regexp.MustCompile(
+	`adamic: counts: allocations (\d+) frees (\d+) retains (\d+) releases (\d+) peak (\d+) regions (\d+)`,
+)
 
 func main() {
 	rounds := flag.Int("rounds", 5, "how many interleaved rounds; the best of them is reported")
-	timeout := flag.Duration("timeout", 120*time.Second, "how long one run may take before it's reported as not finishing")
+	timeout := flag.Duration(
+		"timeout",
+		120*time.Second,
+		"how long one run may take before it's reported as not finishing",
+	)
 	only := flag.String("only", "", "comma-separated benchmark names to run (default: all)")
-	threads := flag.String("threads", "", "comma-separated native thread counts, interleaved within each round (default: pool default)")
+	threads := flag.String(
+		"threads",
+		"",
+		"comma-separated native thread counts, interleaved within each round (default: pool default)",
+	)
 	flag.Parse()
 
-	directory, err := benchDirectory()
-	if err != nil {
-		fail(err)
+	directory, benchDirectoryError := benchDirectory()
+	if benchDirectoryError != nil {
+		fail(benchDirectoryError)
 	}
-	work, err := os.MkdirTemp("", "adamic-bench-")
-	if err != nil {
-		fail(err)
+	work, temporaryDirectoryError := os.MkdirTemp("", "adamic-bench-")
+	if temporaryDirectoryError != nil {
+		fail(temporaryDirectoryError)
 	}
 	defer os.RemoveAll(work)
 
-	programs, err := findPrograms(directory, *only)
-	if err != nil {
-		fail(err)
+	programs, findProgramsError := findPrograms(directory, *only)
+	if findProgramsError != nil {
+		fail(findProgramsError)
 	}
 	// Bun uses ordinary package resolution; its shim is outside the repository and never changes source.
 	modules := filepath.Join(work, "node_modules")
 	packageDirectory := filepath.Join(modules, "adamic")
-	if err := os.MkdirAll(packageDirectory, 0755); err != nil {
-		fail(err)
+	if createDirectoryError := os.MkdirAll(packageDirectory, 0755); createDirectoryError != nil {
+		fail(createDirectoryError)
 	}
-	if err := os.WriteFile(filepath.Join(packageDirectory, "package.json"), []byte(`{"type":"module","exports":"./index.mjs"}`), 0644); err != nil {
-		fail(err)
+	if writeError := os.WriteFile(
+		filepath.Join(packageDirectory, "package.json"),
+		[]byte(`{"type":"module","exports":"./index.mjs"}`),
+		0644,
+	); writeError != nil {
+		fail(writeError)
 	}
 	shim := "export * from " + strconv.Quote(filepath.Join(filepath.Dir(directory), "oracle", "adamic.mjs")) + ";\n"
-	if err := os.WriteFile(filepath.Join(packageDirectory, "index.mjs"), []byte(shim), 0644); err != nil {
-		fail(err)
+	if writeError := os.WriteFile(filepath.Join(packageDirectory, "index.mjs"), []byte(shim), 0644); writeError != nil {
+		fail(writeError)
 	}
 	runtimes := availableRuntimes(*threads, modules)
 
@@ -106,24 +120,42 @@ func main() {
 	fmt.Printf("load before: %s\n\n", loadAverage())
 
 	adamic := filepath.Join(work, "adamic")
-	if output, err := exec.Command("go", "build", "-o", adamic, "./cmd/adamic").CombinedOutput(); err != nil {
-		fail(fmt.Errorf("building adamic: %v\n%s", err, output))
+	if output, combinedOutputError := exec.Command(
+		"go",
+		"build",
+		"-o",
+		adamic,
+		"./cmd/adamic",
+	).CombinedOutput(); combinedOutputError != nil {
+		fail(fmt.Errorf("building adamic: %v\n%s", combinedOutputError, output))
 	}
 	floorSource := filepath.Join(work, "floor.ts")
-	if err := os.WriteFile(floorSource, []byte("console.log(\"0\");\n"), 0644); err != nil {
-		fail(err)
+	if writeError := os.WriteFile(floorSource, []byte("console.log(\"0\");\n"), 0644); writeError != nil {
+		fail(writeError)
 	}
 	floor := program{name: "floor", source: floorSource, native: filepath.Join(work, "floor")}
-	if output, err := exec.Command(adamic, "build", floor.source, "-o", floor.native).CombinedOutput(); err != nil {
-		fail(fmt.Errorf("adamic build %s: %v\n%s", floor.source, err, output))
+	if output, combinedOutputError := exec.Command(
+		adamic,
+		"build",
+		floor.source,
+		"-o",
+		floor.native,
+	).CombinedOutput(); combinedOutputError != nil {
+		fail(fmt.Errorf("adamic build %s: %v\n%s", floor.source, combinedOutputError, output))
 	}
 	for index := range programs {
 		program := &programs[index]
 		program.native = filepath.Join(work, program.name)
 		program.counted = filepath.Join(work, program.name+".counted")
-		for _, build := range [][]string{{"build", program.source, "-o", program.native}, {"build", program.source, "-o", program.counted, "--count"}} {
-			if output, err := exec.Command(adamic, build...).CombinedOutput(); err != nil {
-				fail(fmt.Errorf("adamic %s: %v\n%s", strings.Join(build, " "), err, output))
+		for _, build := range [][]string{
+			{"build", program.source, "-o", program.native},
+			{"build", program.source, "-o", program.counted, "--count"},
+		} {
+			if output, combinedOutputError := exec.Command(
+				adamic,
+				build...,
+			).CombinedOutput(); combinedOutputError != nil {
+				fail(fmt.Errorf("adamic %s: %v\n%s", strings.Join(build, " "), combinedOutputError, output))
 			}
 		}
 	}
@@ -161,12 +193,29 @@ func main() {
 	for runtimeIndex, kind := range runtimes {
 		floorSlowest[runtimeIndex] = slowestOf(floors[runtimeIndex])
 		if floorSlowest[runtimeIndex].failure != "" {
-			fail(fmt.Errorf("%s's floor, a program that only prints, did not run, so no row of its can be judged: %s", kind.name, floorSlowest[runtimeIndex].failure))
+			fail(fmt.Errorf(
+				"%s's floor, a program that only prints, did not run, so no row of its can be judged: %s",
+				kind.name,
+				floorSlowest[runtimeIndex].failure,
+			))
 		}
-		floorCells = append(floorCells, fmt.Sprintf("%s %s to %s", kind.name, seconds(bestOf(floors[runtimeIndex]).elapsed), seconds(floorSlowest[runtimeIndex].elapsed)))
+		floorCells = append(floorCells, fmt.Sprintf(
+			"%s %s to %s",
+			kind.name,
+			seconds(bestOf(floors[runtimeIndex]).elapsed),
+			seconds(floorSlowest[runtimeIndex].elapsed),
+		))
 	}
-	fmt.Printf("wall clock resolution: %s; floor, a program that only prints, fastest to slowest of %d: %s\n", resolution, *rounds, strings.Join(floorCells, ", "))
-	fmt.Printf("best of %d interleaved rounds; time is wall clock, user is that run's CPU time in user mode across every thread, memory is peak resident\n\n", *rounds)
+	fmt.Printf(
+		"wall clock resolution: %s; floor, a program that only prints, fastest to slowest of %d: %s\n",
+		resolution,
+		*rounds,
+		strings.Join(floorCells, ", "),
+	)
+	fmt.Printf(
+		"best of %d interleaved rounds; time is wall clock, user is that run's CPU time in user mode across every thread, memory is peak resident\n\n",
+		*rounds,
+	)
 	header := []string{"benchmark"}
 	for _, kind := range runtimes {
 		header = append(header, kind.name+" time", kind.name+" user", kind.name+" memory")
@@ -178,12 +227,21 @@ func main() {
 		row := []string{program.name}
 		best := make([]measurement, len(runtimes))
 		for runtimeIndex := range runtimes {
-			best[runtimeIndex] = judge(bestOf(results[programIndex][runtimeIndex]), floorSlowest[runtimeIndex], resolution)
+			best[runtimeIndex] = judge(
+				bestOf(results[programIndex][runtimeIndex]),
+				floorSlowest[runtimeIndex],
+				resolution,
+			)
 			if best[runtimeIndex].failure != "" {
 				row = append(row, best[runtimeIndex].failure, "", "")
 				continue
 			}
-			row = append(row, seconds(best[runtimeIndex].elapsed), seconds(best[runtimeIndex].user), megabytes(best[runtimeIndex].peak))
+			row = append(
+				row,
+				seconds(best[runtimeIndex].elapsed),
+				seconds(best[runtimeIndex].user),
+				megabytes(best[runtimeIndex].peak),
+			)
 		}
 		nodeIndex := 0
 		for index, kind := range runtimes {
@@ -196,7 +254,9 @@ func main() {
 	}
 
 	fmt.Println()
-	fmt.Println("counted native build, run once (adamic build --count; parallel programs use ADAMIC_THREADS=1): heap values and reference-count calls")
+	fmt.Println(
+		"counted native build, run once (adamic build --count; parallel programs use ADAMIC_THREADS=1): heap values and reference-count calls",
+	)
 	fmt.Println()
 	fmt.Println("| benchmark | allocations | frees | retains | releases | peak live | in regions |")
 	fmt.Println("|---|---:|---:|---:|---:|---:|---:|")
@@ -208,25 +268,25 @@ func main() {
 
 // benchDirectory is bench/ in the repository, from wherever go run was started inside it.
 func benchDirectory() (string, error) {
-	output, err := exec.Command("git", "rev-parse", "--show-toplevel").Output()
-	if err != nil {
-		return "", fmt.Errorf("bench runs inside the adamic repository: %w", err)
+	output, outputError := exec.Command("git", "rev-parse", "--show-toplevel").Output()
+	if outputError != nil {
+		return "", fmt.Errorf("bench runs inside the adamic repository: %w", outputError)
 	}
 	root := strings.TrimSpace(string(output))
-	if err := os.Chdir(root); err != nil {
-		return "", err
+	if chdirError := os.Chdir(root); chdirError != nil {
+		return "", chdirError
 	}
 	return filepath.Join(root, "bench"), nil
 }
 
 func findPrograms(directory string, only string) ([]program, error) {
-	sources, err := filepath.Glob(filepath.Join(directory, "*.ts"))
-	if err != nil {
-		return nil, err
+	sources, globError := filepath.Glob(filepath.Join(directory, "*.ts"))
+	if globError != nil {
+		return nil, globError
 	}
-	adamicSources, err := filepath.Glob(filepath.Join(directory, "*.a"))
-	if err != nil {
-		return nil, err
+	adamicSources, globError := filepath.Glob(filepath.Join(directory, "*.a"))
+	if globError != nil {
+		return nil, globError
 	}
 	sources = append(sources, adamicSources...)
 	slices.Sort(sources)
@@ -245,11 +305,14 @@ func findPrograms(directory string, only string) ([]program, error) {
 				return nil, fmt.Errorf("duplicate benchmark name %q across source extensions", name)
 			}
 			seen[name] = true
-			contents, err := os.ReadFile(source)
-			if err != nil {
-				return nil, err
+			contents, readError := os.ReadFile(source)
+			if readError != nil {
+				return nil, readError
 			}
-			programs = append(programs, program{name: name, source: source, adamic: strings.Contains(string(contents), "from 'adamic'") || strings.Contains(string(contents), `from "adamic"`)})
+			programs = append(programs, program{name: name, source: source, adamic: strings.Contains(
+				string(contents),
+				"from 'adamic'",
+			) || strings.Contains(string(contents), `from "adamic"`)})
 		}
 	}
 	if len(programs) == 0 {
@@ -262,28 +325,44 @@ func findPrograms(directory string, only string) ([]program, error) {
 func availableRuntimes(threads, modules string) []runtimeKind {
 	runtimes := []runtimeKind{}
 	if threads == "" {
-		runtimes = append(runtimes, runtimeKind{name: "native", command: func(program program) []string { return []string{program.native} }})
+		runtimes = append(
+			runtimes,
+			runtimeKind{name: "native", command: func(program program) []string { return []string{program.native} }},
+		)
 	} else {
 		seen := map[int]bool{}
 		for _, setting := range strings.Split(threads, ",") {
-			count, err := strconv.Atoi(setting)
-			if err != nil || count < 1 || count > 4096 || seen[count] {
+			count, parseError := strconv.Atoi(setting)
+			if parseError != nil || count < 1 || count > 4096 || seen[count] {
 				fail(fmt.Errorf("-threads requires distinct integers from 1 to 4096: %q", threads))
 			}
 			seen[count] = true
-			runtimes = append(runtimes, runtimeKind{name: "native/" + setting, environment: []string{"ADAMIC_THREADS=" + setting}, command: func(program program) []string { return []string{program.native} }})
+			runtimes = append(runtimes, runtimeKind{
+				name:        "native/" + setting,
+				environment: []string{"ADAMIC_THREADS=" + setting},
+				command:     func(program program) []string { return []string{program.native} },
+			})
 		}
 	}
 	runtimes = append(runtimes, runtimeKind{name: "node", command: func(program program) []string {
 		if program.adamic || filepath.Ext(program.source) == ".a" {
-			return []string{"node", "--disable-warning=ExperimentalWarning", filepath.Join(filepath.Dir(filepath.Dir(program.source)), "oracle", "node.mjs"), program.source}
+			return []string{
+				"node",
+				"--disable-warning=ExperimentalWarning",
+				filepath.Join(filepath.Dir(filepath.Dir(program.source)), "oracle", "node.mjs"),
+				program.source,
+			}
 		}
 		return []string{"node", program.source}
 	}})
-	if _, err := exec.LookPath("bun"); err == nil {
-		runtimes = append(runtimes, runtimeKind{name: "bun", environment: []string{"NODE_PATH=" + modules}, command: func(program program) []string {
-			return []string{"bun", program.source}
-		}})
+	if _, lookPathError := exec.LookPath("bun"); lookPathError == nil {
+		runtimes = append(runtimes, runtimeKind{
+			name:        "bun",
+			environment: []string{"NODE_PATH=" + modules},
+			command: func(program program) []string {
+				return []string{"bun", program.source}
+			},
+		})
 	}
 	return runtimes
 }
@@ -298,18 +377,23 @@ func run(command []string, timeout time.Duration, settings ...string) measuremen
 	process.Stdout = &stdout
 	process.Stderr = &stderr
 	start := time.Now()
-	err := process.Run()
+	runError := process.Run()
 	elapsed := time.Since(start)
 	if ctx.Err() != nil {
 		return measurement{failure: "did not finish in " + timeout.String()}
 	}
-	if err != nil {
-		return measurement{failure: fmt.Sprintf("failed: %v %s", err, firstLine(stderr.String()))}
+	if runError != nil {
+		return measurement{failure: fmt.Sprintf("failed: %v %s", runError, firstLine(stderr.String()))}
 	}
 	if strings.TrimSpace(stdout.String()) == "" {
 		return measurement{failure: "printed nothing"}
 	}
-	return measurement{elapsed: elapsed, user: process.ProcessState.UserTime(), peak: peakResident(process.ProcessState), stdout: stdout.String()}
+	return measurement{
+		elapsed: elapsed,
+		user:    process.ProcessState.UserTime(),
+		peak:    peakResident(process.ProcessState),
+		stdout:  stdout.String(),
+	}
 }
 
 // environment is this process's, without what would change how a runtime runs: BUN_OPTIONS
@@ -364,10 +448,18 @@ func judge(best measurement, floor measurement, resolution time.Duration) measur
 		return best
 	}
 	if best.elapsed <= resolution {
-		return measurement{failure: fmt.Sprintf("measured nothing: %s is at or below the clock's resolution, %s", best.elapsed, resolution)}
+		return measurement{failure: fmt.Sprintf(
+			"measured nothing: %s is at or below the clock's resolution, %s",
+			best.elapsed,
+			resolution,
+		)}
 	}
 	if best.elapsed <= floor.elapsed {
-		return measurement{failure: fmt.Sprintf("measured nothing: %s is within its floor, the runtime starting, which ran up to %s", seconds(best.elapsed), seconds(floor.elapsed))}
+		return measurement{failure: fmt.Sprintf(
+			"measured nothing: %s is within its floor, the runtime starting, which ran up to %s",
+			seconds(best.elapsed),
+			seconds(floor.elapsed),
+		)}
 	}
 	return best
 }
@@ -456,14 +548,14 @@ func ratio(native measurement, node measurement) string {
 func describeMachine(runtimes []runtimeKind) {
 	fmt.Printf("date: %s\n", time.Now().UTC().Format(time.RFC3339))
 	fmt.Printf("machine: %s/%s, %d logical CPUs, %s\n", runtime.GOOS, runtime.GOARCH, runtime.NumCPU(), cpuModel())
-	if uname, err := exec.Command("uname", "-srm").Output(); err == nil {
+	if uname, outputError := exec.Command("uname", "-srm").Output(); outputError == nil {
 		fmt.Printf("kernel: %s", uname)
 	}
-	if commit, err := exec.Command("git", "rev-parse", "--short", "HEAD").Output(); err == nil {
+	if commit, outputError := exec.Command("git", "rev-parse", "--short", "HEAD").Output(); outputError == nil {
 		fmt.Printf("adamic: %s", commit)
 	}
 	for _, version := range [][]string{{"clang", "--version"}, {"node", "--version"}, {"bun", "--version"}} {
-		if output, err := exec.Command(version[0], version[1:]...).Output(); err == nil {
+		if output, outputError := exec.Command(version[0], version[1:]...).Output(); outputError == nil {
 			fmt.Printf("%s: %s\n", version[0], firstLine(string(output)))
 		}
 	}
@@ -476,11 +568,15 @@ func describeMachine(runtimes []runtimeKind) {
 
 func cpuModel() string {
 	if runtime.GOOS == "darwin" {
-		if output, err := exec.Command("sysctl", "-n", "machdep.cpu.brand_string").Output(); err == nil {
+		if output, outputError := exec.Command(
+			"sysctl",
+			"-n",
+			"machdep.cpu.brand_string",
+		).Output(); outputError == nil {
 			return strings.TrimSpace(string(output))
 		}
 	}
-	if contents, err := os.ReadFile("/proc/cpuinfo"); err == nil {
+	if contents, readError := os.ReadFile("/proc/cpuinfo"); readError == nil {
 		for _, line := range strings.Split(string(contents), "\n") {
 			if name, found := strings.CutPrefix(line, "model name"); found {
 				return strings.TrimSpace(strings.TrimPrefix(strings.TrimSpace(name), ":"))
@@ -491,13 +587,13 @@ func cpuModel() string {
 }
 
 func loadAverage() string {
-	if contents, err := os.ReadFile("/proc/loadavg"); err == nil {
+	if contents, readError := os.ReadFile("/proc/loadavg"); readError == nil {
 		fields := strings.Fields(string(contents))
 		if len(fields) >= 3 {
 			return strings.Join(fields[:3], " ") + " (1, 5, 15 minutes)"
 		}
 	}
-	if output, err := exec.Command("sysctl", "-n", "vm.loadavg").Output(); err == nil {
+	if output, outputError := exec.Command("sysctl", "-n", "vm.loadavg").Output(); outputError == nil {
 		return strings.Trim(strings.TrimSpace(string(output)), "{} ") + " (1, 5, 15 minutes)"
 	}
 	return "unknown"
@@ -531,7 +627,7 @@ func firstLine(text string) string {
 	return line
 }
 
-func fail(err error) {
-	fmt.Fprintln(os.Stderr, "bench:", err)
+func fail(sourceError error) {
+	fmt.Fprintln(os.Stderr, "bench:", sourceError)
 	os.Exit(1)
 }

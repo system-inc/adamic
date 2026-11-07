@@ -35,8 +35,8 @@ func run(test *testing.T, cwd, command string, args ...string) []byte {
 	var out, err bytes.Buffer
 	c.Stdout = &out
 	c.Stderr = &err
-	if e := c.Run(); e != nil || err.Len() != 0 {
-		test.Fatalf("%s: %v stderr=%s", command, e, err.String())
+	if runError := c.Run(); runError != nil || err.Len() != 0 {
+		test.Fatalf("%s: %v stderr=%s", command, runError, err.String())
 	}
 	return out.Bytes()
 }
@@ -69,19 +69,19 @@ var translationMutant = [2]string{"/PaginationInput(", "/PaginationInputBROKEN("
 
 // writeTranslationMutant writes the runner's source tree into directory with translationMutant applied.
 func writeTranslationMutant(directory string) error {
-	if e := os.MkdirAll(filepath.Join(directory, "testdata"), 0755); e != nil {
-		return e
+	if createDirectoryError := os.MkdirAll(filepath.Join(directory, "testdata"), 0755); createDirectoryError != nil {
+		return createDirectoryError
 	}
 	for _, name := range []string{"patterns.a", "testdata/runner.a", "testdata/corpus.a"} {
-		content, e := os.ReadFile(name)
-		if e != nil {
-			return e
+		content, readError := os.ReadFile(name)
+		if readError != nil {
+			return readError
 		}
 		if name == "patterns.a" {
 			content = bytes.Replace(content, []byte(translationMutant[0]), []byte(translationMutant[1]), 1)
 		}
-		if e := os.WriteFile(filepath.Join(directory, name), content, 0644); e != nil {
-			return e
+		if writeError := os.WriteFile(filepath.Join(directory, name), content, 0644); writeError != nil {
+			return writeError
 		}
 	}
 	return nil
@@ -113,14 +113,14 @@ var runnerProducts [2]struct {
 
 func buildRunnerProduct(test *testing.T, mutant bool) string {
 	test.Helper()
-	compiler, e := buildcache.GoInputs(
+	compiler, goInputsError := buildcache.GoInputs(
 		"regex-runner",
 		"./internal/load ./internal/lower ./internal/javascript ./internal/native",
 		nil,
 		nil,
 	)
-	if e != nil {
-		test.Fatal(e)
+	if goInputsError != nil {
+		test.Fatal(goInputsError)
 	}
 	inputs := buildcache.Inputs{
 		Name: "regex-runner",
@@ -144,26 +144,30 @@ func buildRunnerProduct(test *testing.T, mutant bool) string {
 		)
 	}
 	return buildcache.Product(test, inputs, func(directory string) error {
-		root, e := filepath.Abs(".")
-		if e != nil {
-			return e
+		root, absolutePathError := filepath.Abs(".")
+		if absolutePathError != nil {
+			return absolutePathError
 		}
 		if mutant {
 			root = filepath.Join(directory, "mutant")
-			if e := writeTranslationMutant(root); e != nil {
-				return e
+			if writeTranslationMutantError := writeTranslationMutant(root); writeTranslationMutantError != nil {
+				return writeTranslationMutantError
 			}
 		}
-		p, e := load.Load([]string{filepath.Join(root, "testdata/runner.a")})
-		if e != nil {
-			return e
+		p, loadError := load.Load([]string{filepath.Join(root, "testdata/runner.a")})
+		if loadError != nil {
+			return loadError
 		}
-		ir, e := lower.Lower(context.Background(), p)
-		if e != nil {
-			return e
+		ir, lowerError := lower.Lower(context.Background(), p)
+		if lowerError != nil {
+			return lowerError
 		}
-		if e := os.WriteFile(filepath.Join(directory, "runner.js"), []byte(javascript.JavaScript(ir)), 0644); e != nil {
-			return e
+		if writeError := os.WriteFile(
+			filepath.Join(directory, "runner.js"),
+			[]byte(javascript.JavaScript(ir)),
+			0644,
+		); writeError != nil {
+			return writeError
 		}
 		return native.Build(native.C(ir), filepath.Join(directory, "runner"), native.Options{Sanitize: true})
 	})
@@ -204,8 +208,8 @@ func TestFixedPatterns(test *testing.T) {
 		Pattern *string `json:"go_pattern"`
 	}
 	data, _ := os.ReadFile("table.json")
-	if e := json.Unmarshal(data, &rows); e != nil {
-		test.Fatal(e)
+	if decodeError := json.Unmarshal(data, &rows); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	ids := []string{}
 	for _, r := range rows {
@@ -252,15 +256,15 @@ func TestDynamicPatternGap(test *testing.T) {
 	if string(out) != "true\n" {
 		test.Fatalf("Node %q", out)
 	}
-	p, e := load.Load([]string{entry})
-	if e != nil {
-		test.Fatal(e)
+	p, loadError := load.Load([]string{entry})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	_, e = lower.Lower(context.Background(), p)
-	if e == nil || !strings.Contains(e.Error(), "RegExp with a nonconstant pattern") {
-		test.Fatalf("expected named native gap, got %v", e)
+	_, lowerError := lower.Lower(context.Background(), p)
+	if lowerError == nil || !strings.Contains(lowerError.Error(), "RegExp with a nonconstant pattern") {
+		test.Fatalf("expected named native gap, got %v", lowerError)
 	}
-	test.Log(e)
+	test.Log(lowerError)
 }
 
 func TestOptionDialectGap(test *testing.T) {
@@ -290,9 +294,9 @@ func TestInventoryMatchesPinnedSource(test *testing.T) {
 		cohereProgram(test, "testdata/inventory.go", "regex-inventory"),
 		filepath.Join(cohere, "internal/lint/rules"),
 	)
-	expected, err := os.ReadFile("sites.json")
-	if err != nil {
-		test.Fatal(err)
+	expected, readError := os.ReadFile("sites.json")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if !bytes.Equal(expected, actual) {
 		test.Fatal("regexp census drifted from pinned cohere AST; regenerate and review the table")

@@ -77,15 +77,15 @@ var compilerSites = map[string]string{
 func TestEveryCCompilerRunsThroughNative(test *testing.T) {
 	test.Parallel()
 	// Reads: *.go
-	root, err := filepath.Abs(filepath.Join("..", ".."))
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(filepath.Join("..", ".."))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	seen := map[string]bool{}
 	var unlisted []string
-	err = filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
+	walkError := filepath.WalkDir(root, func(path string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
 		relative, _ := filepath.Rel(root, path)
 		relative = filepath.ToSlash(relative)
@@ -104,9 +104,9 @@ func TestEveryCCompilerRunsThroughNative(test *testing.T) {
 			return nil
 		}
 		files := token.NewFileSet()
-		parsed, err := parser.ParseFile(files, path, nil, parser.SkipObjectResolution)
-		if err != nil {
-			return err
+		parsed, parseFileError := parser.ParseFile(files, path, nil, parser.SkipObjectResolution)
+		if parseFileError != nil {
+			return parseFileError
 		}
 		for _, declaration := range parsed.Decls {
 			function, ok := declaration.(*ast.FuncDecl)
@@ -122,7 +122,9 @@ func TestEveryCCompilerRunsThroughNative(test *testing.T) {
 				if !ok || literal.Kind != token.STRING {
 					return true
 				}
-				if value, err := strconv.Unquote(literal.Value); err == nil && slices.Contains(compilerNames, value) {
+				if value, unquoteError := strconv.Unquote(
+					literal.Value,
+				); unquoteError == nil && slices.Contains(compilerNames, value) {
 					if _, listed := compilerSites[site]; listed {
 						seen[site] = true
 					} else {
@@ -134,8 +136,8 @@ func TestEveryCCompilerRunsThroughNative(test *testing.T) {
 		}
 		return nil
 	})
-	if err != nil {
-		test.Fatal(err)
+	if walkError != nil {
+		test.Fatal(walkError)
 	}
 	for _, place := range unlisted {
 		test.Errorf(

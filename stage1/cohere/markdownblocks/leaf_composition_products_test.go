@@ -7,18 +7,18 @@ import (
 
 func leafCompositionProductRoot(test *testing.T) string {
 	test.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return root
 }
 
 func leafCompositionLoweredProduct(test *testing.T) leafCompositionProducts {
 	test.Helper()
-	main, err := filepath.Abs("testdata/list_probe.ts")
-	if err != nil {
-		test.Fatal(err)
+	main, absolutePathError := filepath.Abs("testdata/list_probe.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	p := leafCompositionProducts{root: leafCompositionProductRoot(test), main: main}
 	prepareLeafCompositionLowered(test, &p)

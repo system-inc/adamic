@@ -70,8 +70,8 @@ func (index *packageIndex) owner(path string) (string, bool) {
 		sort.Strings(lists)
 		for _, list := range lists {
 			name := strings.TrimSuffix(filepath.Base(list), ".list")
-			file, err := openPackageFile(list)
-			if err != nil {
+			file, openPackageFileError := openPackageFile(list)
+			if openPackageFileError != nil {
 				continue
 			}
 			scanner := bufio.NewScanner(file)
@@ -88,8 +88,8 @@ func (index *packageIndex) owner(path string) (string, bool) {
 func (index *packageIndex) version(name string) (string, bool) {
 	index.versionsOnce.Do(func() {
 		index.versions, index.conffiles = map[string]string{}, map[string]string{}
-		file, err := openPackageFile(filepath.Join(dpkgDirectory, "status"))
-		if err != nil {
+		file, openPackageFileError := openPackageFile(filepath.Join(dpkgDirectory, "status"))
+		if openPackageFileError != nil {
 			return
 		}
 		defer file.Close()
@@ -136,7 +136,9 @@ func (index *packageIndex) installed(owner, path string) string {
 	found, ok := index.sums.Load(owner)
 	if !ok {
 		sums := map[string]string{}
-		if file, err := openPackageFile(filepath.Join(dpkgDirectory, "info", owner+".md5sums")); err == nil {
+		if file, openPackageFileError := openPackageFile(
+			filepath.Join(dpkgDirectory, "info", owner+".md5sums"),
+		); openPackageFileError == nil {
 			content, _ := io.ReadAll(file)
 			file.Close()
 			for _, line := range strings.Split(string(content), "\n") {
@@ -195,7 +197,14 @@ var machineZone = []string{"/etc/localtime", "/etc/timezone"}
 // loaderDirectories are the dynamic loader's own search directories, which it tries for a soname its cache doesn't name
 // (glibc's system directories on Debian and Ubuntu, with their glibc-hwcaps subdirectories): a library there is found
 // whether or not the cache names it.
-var loaderDirectories = []string{"/lib/x86_64-linux-gnu", "/usr/lib/x86_64-linux-gnu", "/lib", "/usr/lib", "/lib64", "/usr/lib64"}
+var loaderDirectories = []string{
+	"/lib/x86_64-linux-gnu",
+	"/usr/lib/x86_64-linux-gnu",
+	"/lib",
+	"/usr/lib",
+	"/lib64",
+	"/usr/lib64",
+}
 
 // loaderFlags are the flags an entry must have, exactly, for the build's own loader to take it, by the architecture
 // the build runs as: glibc's _dl_cache_check_flags, which on x86_64 is `(flags) == 0x303` (FLAG_ELF_LIBC6 with
@@ -269,7 +278,10 @@ func ldCacheValueFor(content []byte, wanted int32) (string, bool) {
 			return "", false
 		}
 		flags := int32(word(at))
-		if flags != wanted || library == wslLibraries || strings.HasPrefix(library, wslLibraries+"/") || inLoaderDirectory(library) {
+		if flags != wanted ||
+			library == wslLibraries ||
+			strings.HasPrefix(library, wslLibraries+"/") ||
+			inLoaderDirectory(library) {
 			continue
 		}
 		lines = append(lines, fmt.Sprintf("%d %s %s", flags, soname, library))
@@ -279,7 +291,8 @@ func ldCacheValueFor(content []byte, wanted int32) (string, bool) {
 	return "ld.so.cache " + hex.EncodeToString(sum[:]), true
 }
 
-// inLoaderDirectory says whether library sits directly in one of loaderDirectories or a glibc-hwcaps directory under one.
+// inLoaderDirectory says whether library sits directly in one of loaderDirectories or a glibc-hwcaps directory under
+// one.
 func inLoaderDirectory(library string) bool {
 	directory := filepath.Dir(library)
 	if parent, hwcaps := filepath.Split(filepath.Dir(directory)); hwcaps == "glibc-hwcaps" {
@@ -300,8 +313,8 @@ const houseValuesVariable = "ADAMIC_HOUSE_VALUES"
 // paths more.
 const houseValuesBound = 16 << 20
 
-// A houseStamp is a handed file's values: each machine file the house stamps by its own line, and each place it stamps by
-// one digest, read once a process.
+// A houseStamp is a handed file's values: each machine file the house stamps by its own line, and each place it stamps
+// by one digest, read once a process.
 type houseStamp struct {
 	paths  map[string]string
 	places []housePlace
@@ -357,15 +370,15 @@ func houseValues() (*houseStamp, error) {
 // stamp naming no path is refused too, never read as one that values everything by content, and so is a place that
 // isn't whole: a name not "place:", no digest, or a path that isn't absolute and clean.
 func readHouseValues(path string) (*houseStamp, error) {
-	descriptor, err := syscall.Open(path, syscall.O_RDONLY|syscall.O_NOFOLLOW|syscall.O_CLOEXEC, 0)
-	if err != nil {
-		return nil, fmt.Errorf("house values %s: %w", path, err)
+	descriptor, openError := syscall.Open(path, syscall.O_RDONLY|syscall.O_NOFOLLOW|syscall.O_CLOEXEC, 0)
+	if openError != nil {
+		return nil, fmt.Errorf("house values %s: %w", path, openError)
 	}
 	file := os.NewFile(uintptr(descriptor), path)
 	defer file.Close()
-	info, err := file.Stat()
-	if err != nil {
-		return nil, fmt.Errorf("house values %s: %w", path, err)
+	info, statError := file.Stat()
+	if statError != nil {
+		return nil, fmt.Errorf("house values %s: %w", path, statError)
 	}
 	if !info.Mode().IsRegular() {
 		return nil, fmt.Errorf("house values %s: not a regular file (%s)", path, info.Mode().Type())
@@ -376,9 +389,9 @@ func readHouseValues(path string) (*houseStamp, error) {
 	if why := houseDirectoryWritable(filepath.Dir(path)); why != "" {
 		return nil, fmt.Errorf("house values %s: %s", path, why)
 	}
-	content, err := io.ReadAll(io.LimitReader(file, houseValuesBound+1))
-	if err != nil {
-		return nil, fmt.Errorf("house values %s: %w", path, err)
+	content, readError := io.ReadAll(io.LimitReader(file, houseValuesBound+1))
+	if readError != nil {
+		return nil, fmt.Errorf("house values %s: %w", path, readError)
 	}
 	if len(content) > houseValuesBound {
 		return nil, fmt.Errorf("house values %s: over %d bytes", path, houseValuesBound)
@@ -397,8 +410,8 @@ func readHouseValues(path string) (*houseStamp, error) {
 			Members []string `json:"members"`
 		} `json:"places"`
 	}
-	if err := json.Unmarshal(content, &stamp); err != nil {
-		return nil, fmt.Errorf("house values %s: %w", path, err)
+	if decodeError := json.Unmarshal(content, &stamp); decodeError != nil {
+		return nil, fmt.Errorf("house values %s: %w", path, decodeError)
 	}
 	if len(stamp.Paths) == 0 {
 		return nil, fmt.Errorf("house values %s: names no path", path)
@@ -409,13 +422,24 @@ func readHouseValues(path string) (*houseStamp, error) {
 		if !strings.HasPrefix(name, "place:") || written.Digest == "" {
 			return nil, fmt.Errorf("house values %s: place %q has no name or no digest", path, name)
 		}
-		place := housePlace{name: name, digest: written.Digest, held: written.Held, except: written.Except, members: map[string]bool{}}
+		place := housePlace{
+			name:    name,
+			digest:  written.Digest,
+			held:    written.Held,
+			except:  written.Except,
+			members: map[string]bool{},
+		}
 		for _, member := range written.Members {
 			place.members[member] = true
 		}
 		for _, named := range slices.Concat(written.Held, written.Except, written.Members) {
 			if !filepath.IsAbs(named) || filepath.Clean(named) != named {
-				return nil, fmt.Errorf("house values %s: place %s names %q, not an absolute, clean path", path, name, named)
+				return nil, fmt.Errorf(
+					"house values %s: place %s names %q, not an absolute, clean path",
+					path,
+					name,
+					named,
+				)
 			}
 		}
 		handed.places = append(handed.places, place)
@@ -433,17 +457,17 @@ var houseOwners = []uint32{0}
 // kernel's overflow uid. Vars, so a test can hand a namespace of its own.
 var uidMapFile, overflowUidFile = "/proc/self/uid_map", "/proc/sys/kernel/overflowuid"
 
-// ownersHere are the owners a handed file may show here: each of houseOwners as this namespace maps it, and the overflow
-// uid when one of them isn't mapped (Node's ruling on #4wh8ybq). With no map to read (not Linux) the namespace is the
-// host's. A namespace mapping its root to another host uid shows root's files as the overflow uid, never as 0, so a
-// unit that is root inside can't pass a file of its own.
+// ownersHere are the owners a handed file may show here: each of houseOwners as this namespace maps it, and the
+// overflow uid when one of them isn't mapped (Node's ruling on #4wh8ybq). With no map to read (not Linux) the namespace
+// is the host's. A namespace mapping its root to another host uid shows root's files as the overflow uid, never as 0,
+// so a unit that is root inside can't pass a file of its own.
 func ownersHere() ([]uint32, error) {
-	content, err := os.ReadFile(uidMapFile)
-	if errors.Is(err, fs.ErrNotExist) {
+	content, readError := os.ReadFile(uidMapFile)
+	if errors.Is(readError, fs.ErrNotExist) {
 		return houseOwners, nil
 	}
-	if err != nil {
-		return nil, err
+	if readError != nil {
+		return nil, readError
 	}
 	var owners []uint32
 	unmapped := false
@@ -451,8 +475,8 @@ func ownersHere() ([]uint32, error) {
 		mapped := false
 		for _, line := range strings.Split(strings.TrimSpace(string(content)), "\n") {
 			var inside, outside, count uint64
-			if _, err := fmt.Sscan(line, &inside, &outside, &count); err != nil {
-				return nil, fmt.Errorf("%s: %q: %w", uidMapFile, line, err)
+			if _, scanError := fmt.Sscan(line, &inside, &outside, &count); scanError != nil {
+				return nil, fmt.Errorf("%s: %q: %w", uidMapFile, line, scanError)
 			}
 			if uint64(owner) >= outside && uint64(owner)-outside < count {
 				owners, mapped = append(owners, uint32(inside+uint64(owner)-outside)), true
@@ -462,13 +486,13 @@ func ownersHere() ([]uint32, error) {
 		unmapped = unmapped || !mapped
 	}
 	if unmapped {
-		overflow, err := os.ReadFile(overflowUidFile)
-		if err != nil {
-			return nil, err
+		overflow, readError := os.ReadFile(overflowUidFile)
+		if readError != nil {
+			return nil, readError
 		}
 		var uid uint32
-		if _, err := fmt.Sscan(string(overflow), &uid); err != nil {
-			return nil, fmt.Errorf("%s: %w", overflowUidFile, err)
+		if _, scanError := fmt.Sscan(string(overflow), &uid); scanError != nil {
+			return nil, fmt.Errorf("%s: %w", overflowUidFile, scanError)
 		}
 		owners = append(owners, uid)
 	}
@@ -484,9 +508,9 @@ func houseOwned(info os.FileInfo) string {
 	if !ok {
 		return "its owner can't be read"
 	}
-	owners, err := ownersHere()
-	if err != nil {
-		return fmt.Sprintf("its namespace's owners can't be read: %v", err)
+	owners, ownersHereError := ownersHere()
+	if ownersHereError != nil {
+		return fmt.Sprintf("its namespace's owners can't be read: %v", ownersHereError)
 	}
 	if !slices.Contains(owners, system.Uid) {
 		return fmt.Sprintf("owned by uid %d, not root", system.Uid)
@@ -500,13 +524,16 @@ const writeAccess = 0x2
 // houseDirectoryWritable is why a handed file's directory refuses it: one this process can write, where the code under
 // test could have put the file, or one it can't ask about. "" when it can't write it.
 func houseDirectoryWritable(directory string) string {
-	switch err := syscall.Access(directory, writeAccess); {
-	case err == nil:
+	switch accessError := syscall.Access(directory, writeAccess); {
+	case accessError == nil:
 		return fmt.Sprintf("its directory %s can be written by this process", directory)
-	case errors.Is(err, syscall.EACCES), errors.Is(err, syscall.EROFS), errors.Is(err, syscall.EPERM):
+	case errors.Is(
+		accessError,
+		syscall.EACCES,
+	), errors.Is(accessError, syscall.EROFS), errors.Is(accessError, syscall.EPERM):
 		return ""
 	default:
-		return fmt.Sprintf("its directory %s can't be asked about: %v", directory, err)
+		return fmt.Sprintf("its directory %s can't be asked about: %v", directory, accessError)
 	}
 }
 
@@ -515,9 +542,9 @@ func houseDirectoryWritable(directory string) string {
 // place's one line, never a line a path, so a key and a narrow set part on the same files. Then a path the stamp names,
 // by its line; then anything else by its content, never through dpkg.
 func systemEntryValue(path string) (string, error) {
-	stamp, err := houseValues()
-	if err != nil {
-		return "", err
+	stamp, houseValuesError := houseValues()
+	if houseValuesError != nil {
+		return "", houseValuesError
 	}
 	if stamp == nil {
 		return systemValue(path), nil
@@ -549,18 +576,18 @@ func systemValue(path string) string {
 // machineValue is systemValue, through dpkg's database only when packaged: unpackaged, every file is valued by its
 // content, the way a file the handed house values don't name is (systemEntryValue).
 func machineValue(path string, packaged bool) string {
-	info, err := os.Lstat(path)
+	info, statError := os.Lstat(path)
 	switch {
-	case err != nil:
+	case statError != nil:
 		return "absent"
 	case path == ldCache && info.Mode().IsRegular():
 		// The loader's cache is valued only as the loader reads it. One that won't read that way is unreadable, a miss,
 		// and never the empty cache's value: the loader may read what this can't (a newer format), and a library found
 		// only through it would go unkeyed. Two that don't read value alike only when their bytes are the same, so its
 		// reason and its content's hash are both in the value.
-		content, err := os.ReadFile(path)
-		if err != nil {
-			return "unreadable: " + err.Error()
+		content, readError := os.ReadFile(path)
+		if readError != nil {
+			return "unreadable: " + readError.Error()
 		}
 		value, ok := ldCacheValue(content)
 		if !ok {
@@ -575,9 +602,9 @@ func machineValue(path string, packaged bool) string {
 		target, _ := os.Readlink(path)
 		return "link " + target
 	case info.IsDir():
-		entries, err := os.ReadDir(path)
-		if err != nil {
-			return "unreadable: " + err.Error()
+		entries, readDirectoryError := os.ReadDir(path)
+		if readDirectoryError != nil {
+			return "unreadable: " + readDirectoryError.Error()
 		}
 		var names []string
 		for _, entry := range entries {
@@ -598,20 +625,22 @@ func machineValue(path string, packaged bool) string {
 		}
 		// Kept across processes in the build cache too, under the stamp: a file changed in place gets a new stamp. Read
 		// where this process writes, then in the build cache (location.ReadPlaces), and kept where it writes.
-		name := sha256.Sum256([]byte(fmt.Sprintf("%s\x00%s\x00%d\x00%d\x00%d", stamp.path, stamp.kind, stamp.inode, stamp.size, stamp.time)))
+		name := sha256.Sum256([]byte(
+			fmt.Sprintf("%s\x00%s\x00%d\x00%d\x00%d", stamp.path, stamp.kind, stamp.inode, stamp.size, stamp.time),
+		))
 		var kept string
-		if output, err := outputLocation(); err == nil {
+		if output, outputLocationError := outputLocation(); outputLocationError == nil {
 			kept = filepath.Join(output, "machine", hex.EncodeToString(name[:]))
 			for _, place := range location.ReadPlaces(kept) {
-				if value, err := os.ReadFile(place); err == nil && len(value) > 0 {
+				if value, readError := os.ReadFile(place); readError == nil && len(value) > 0 {
 					systemContents.Store(stamp, string(value))
 					return string(value)
 				}
 			}
 		}
-		content, err := os.ReadFile(path)
-		if err != nil {
-			return "unreadable: " + err.Error()
+		content, readError := os.ReadFile(path)
+		if readError != nil {
+			return "unreadable: " + readError.Error()
 		}
 		var value string
 		if kind == "md5" {
@@ -621,7 +650,10 @@ func machineValue(path string, packaged bool) string {
 		}
 		systemContents.Store(stamp, value)
 		if kept != "" && os.MkdirAll(filepath.Dir(kept), 0o755) == nil {
-			if temporary, err := os.CreateTemp(filepath.Dir(kept), ".value-"); err == nil {
+			if temporary, temporaryFileError := os.CreateTemp(
+				filepath.Dir(kept),
+				".value-",
+			); temporaryFileError == nil {
 				temporary.WriteString(value)
 				temporary.Close()
 				os.Rename(temporary.Name(), kept)

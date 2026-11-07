@@ -8,16 +8,16 @@ import (
 )
 
 // MemoryLimit is the bytes the unit may hold: the smallest cgroup v2 memory.max from this process's own cgroup up to
-// the root, read the way Share reads the unit's CPUs from GOMAXPROCS rather than the host's. A runner starts a unit into
-// a cgroup of its own (memory.max 16 GiB beside 8 CPUs) without a cgroup namespace, so /sys/fs/cgroup/memory.max is the
-// root's, which states none; the unit's limit is under the path /proc/self/cgroup names. A test that admits children by
-// weight sizes its budget from this, not from a constant: json's assumed 8 GiB in a 16 GiB unit and ran one sanitized
-// child at a time, so eight parallel shards queued on one slot until one passed its 90 s deadline (#q2qjes8). ok is
-// false where no limit is stated (macOS, cgroup v1, every memory.max on the path "max"), and the caller keeps its
+// the root, read the way Share reads the unit's CPUs from GOMAXPROCS rather than the host's. A runner starts a unit
+// into a cgroup of its own (memory.max 16 GiB beside 8 CPUs) without a cgroup namespace, so /sys/fs/cgroup/memory.max
+// is the root's, which states none; the unit's limit is under the path /proc/self/cgroup names. A test that admits
+// children by weight sizes its budget from this, not from a constant: json's assumed 8 GiB in a 16 GiB unit and ran one
+// sanitized child at a time, so eight parallel shards queued on one slot until one passed its 90 s deadline (#q2qjes8).
+// ok is false where no limit is stated (macOS, cgroup v1, every memory.max on the path "max"), and the caller keeps its
 // default.
 func MemoryLimit() (bytes int64, ok bool) {
-	membership, err := os.ReadFile("/proc/self/cgroup")
-	if err != nil {
+	membership, readError := os.ReadFile("/proc/self/cgroup")
+	if readError != nil {
 		return 0, false
 	}
 	return memoryLimitOf("/sys/fs/cgroup", string(membership))
@@ -48,12 +48,12 @@ func memoryLimitOf(root, membership string) (int64, bool) {
 }
 
 func memoryMaxOf(path string) (int64, bool) {
-	contents, err := os.ReadFile(path)
-	if err != nil {
+	contents, readError := os.ReadFile(path)
+	if readError != nil {
 		return 0, false
 	}
-	bytes, err := strconv.ParseInt(strings.TrimSpace(string(contents)), 10, 64)
-	if err != nil || bytes <= 0 {
+	bytes, parseError := strconv.ParseInt(strings.TrimSpace(string(contents)), 10, 64)
+	if parseError != nil || bytes <= 0 {
 		return 0, false
 	}
 	return bytes, true

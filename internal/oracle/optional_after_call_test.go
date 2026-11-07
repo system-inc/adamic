@@ -43,14 +43,14 @@ func optionalAfterCall(test *testing.T, name string) {
 	if name == "computed" {
 		fixture = "internal/oracle/testdata/optional_after_call_gaps/computed.a"
 	}
-	path, err := filepath.Abs(filepath.Join(repository, fixture))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, fixture))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	want := onNode(test, path)
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	actual, sanitized := natively(test, program)
 	for backend, got := range map[string]run{

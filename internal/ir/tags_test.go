@@ -11,18 +11,18 @@ import (
 
 func TestTypeTagsComplete(test *testing.T) {
 	test.Parallel()
-	paths, err := filepath.Glob("*.go")
-	if err != nil {
-		test.Fatal(err)
+	paths, globError := filepath.Glob("*.go")
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	var declarations []ast.Decl
 	for _, path := range paths {
 		if strings.HasSuffix(path, "_test.go") {
 			continue
 		}
-		file, err := parser.ParseFile(token.NewFileSet(), path, nil, 0)
-		if err != nil {
-			test.Fatal(err)
+		file, parseFileError := parser.ParseFile(token.NewFileSet(), path, nil, 0)
+		if parseFileError != nil {
+			test.Fatal(parseFileError)
 		}
 		declarations = append(declarations, file.Decls...)
 	}

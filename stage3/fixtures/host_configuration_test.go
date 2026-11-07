@@ -12,40 +12,40 @@ import (
 
 func TestHostConfigurationFixtureReaders(test *testing.T) {
 	test.Parallel()
-	repository, err := filepath.Abs("../..")
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs("../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	// Fetch the existing product before starting a 30-second child proof. A runner
 	// supplies it, while a fresh local proof may need to compile the oracle first.
 	fixtureOracleHook(test, repository)
-	executable, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	executable, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
-	node, err := exec.LookPath("node")
-	if err != nil {
-		test.Fatal(err)
+	node, lookPathError := exec.LookPath("node")
+	if lookPathError != nil {
+		test.Fatal(lookPathError)
 	}
 	stub := filepath.Join(test.TempDir(), "node-stub")
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		stub,
 		[]byte("#!/bin/sh\nif [ \"$1\" = -p ]; then echo 'v24.19.0 false'; exit 0; fi\nexec '"+node+"' \"$@\"\n"),
 		0700,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
-	original, err := os.ReadFile("host/status.json")
-	if err != nil {
-		test.Fatal(err)
+	original, readError := os.ReadFile("host/status.json")
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	template, err := os.ReadFile(filepath.Join(repository, "internal/hostconfiguration/testdata/status.json"))
-	if err != nil {
-		test.Fatal(err)
+	template, readError := os.ReadFile(filepath.Join(repository, "internal/hostconfiguration/testdata/status.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var model []map[string]json.RawMessage
-	if err := json.Unmarshal(template, &model); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(template, &model); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	for _, reader := range []string{"execute", "manifest", "directories"} {
 		modes := []string{"unset", "selected", "unknown"}
@@ -56,9 +56,9 @@ func TestHostConfigurationFixtureReaders(test *testing.T) {
 			test.Run(reader+"/"+mode, func(test *testing.T) {
 				root := test.TempDir()
 				// Metadata readers see the whole union, including configured entries.
-				err := filepath.WalkDir(".", func(path string, entry fs.DirEntry, err error) error {
-					if err != nil {
-						return err
+				walkError := filepath.WalkDir(".", func(path string, entry fs.DirEntry, pathError error) error {
+					if pathError != nil {
+						return pathError
 					}
 					target := filepath.Join(root, path)
 					if entry.IsDir() {
@@ -67,31 +67,35 @@ func TestHostConfigurationFixtureReaders(test *testing.T) {
 					if entry.Name() != "status.json" && filepath.Ext(path) != ".a" && filepath.Ext(path) != ".ts" {
 						return nil
 					}
-					data, err := os.ReadFile(path)
-					if err != nil {
-						return err
+					data, readError := os.ReadFile(path)
+					if readError != nil {
+						return readError
 					}
 					return os.WriteFile(target, data, 0600)
 				})
-				if err != nil {
-					test.Fatal(err)
+				if walkError != nil {
+					test.Fatal(walkError)
 				}
 				var rows []map[string]json.RawMessage
-				if err := json.Unmarshal(original, &rows); err != nil {
-					test.Fatal(err)
+				if decodeError := json.Unmarshal(original, &rows); decodeError != nil {
+					test.Fatal(decodeError)
 				}
 				rows[0] = make(map[string]json.RawMessage, len(model[0]))
 				for key, value := range model[0] {
 					rows[0][key] = value
 				}
-				proof, err := os.ReadFile(
+				proof, readError := os.ReadFile(
 					filepath.Join(repository, "internal/hostconfiguration/testdata/configuration.a"),
 				)
-				if err != nil {
-					test.Fatal(err)
+				if readError != nil {
+					test.Fatal(readError)
 				}
-				if err := os.WriteFile(filepath.Join(root, "host/configuration.a"), proof, 0600); err != nil {
-					test.Fatal(err)
+				if writeError := os.WriteFile(
+					filepath.Join(root, "host/configuration.a"),
+					proof,
+					0600,
+				); writeError != nil {
+					test.Fatal(writeError)
 				}
 				if mode == "unknown" {
 					rows[0]["configuration"] = json.RawMessage(`{"name":"unknown-build"}`)
@@ -99,12 +103,16 @@ func TestHostConfigurationFixtureReaders(test *testing.T) {
 				if mode == "wrong-recorded" {
 					rows[0]["node"] = json.RawMessage(`{"stdout":"wrong recorded bytes\n","stderr":"","exit":0}`)
 				}
-				encoded, err := json.Marshal(rows)
-				if err != nil {
-					test.Fatal(err)
+				encoded, encodeError := json.Marshal(rows)
+				if encodeError != nil {
+					test.Fatal(encodeError)
 				}
-				if err := os.WriteFile(filepath.Join(root, "host/status.json"), encoded, 0600); err != nil {
-					test.Fatal(err)
+				if writeError := os.WriteFile(
+					filepath.Join(root, "host/status.json"),
+					encoded,
+					0600,
+				); writeError != nil {
+					test.Fatal(writeError)
 				}
 				selector := "^TestFixturesHost$/^host$/^configuration.a$"
 				if reader == "manifest" {
@@ -126,23 +134,23 @@ func TestHostConfigurationFixtureReaders(test *testing.T) {
 					selected = stub
 				}
 				cmd.Env = append(os.Environ(), "ADAMIC_HOST_NODE_WITHOUT_INSPECTOR="+selected)
-				out, err := cmd.CombinedOutput()
+				out, combinedOutputError := cmd.CombinedOutput()
 				test.Logf("%s", out)
 				if mode == "wrong-recorded" {
-					if err == nil ||
+					if combinedOutputError == nil ||
 						!strings.Contains(string(out), "--- FAIL: TestFixturesHost/host/configuration.a/native") {
-						test.Fatalf("recorded bytes mismatch wasn't caught: %v\n%s", err, out)
+						test.Fatalf("recorded bytes mismatch wasn't caught: %v\n%s", combinedOutputError, out)
 					}
 					return
 				}
 				if mode == "unknown" {
-					if err == nil || !strings.Contains(string(out), "unknown host configuration") {
-						test.Fatalf("want unknown-name failure: %v\n%s", err, out)
+					if combinedOutputError == nil || !strings.Contains(string(out), "unknown host configuration") {
+						test.Fatalf("want unknown-name failure: %v\n%s", combinedOutputError, out)
 					}
 					return
 				}
-				if err != nil {
-					test.Fatalf("configured reader: %v\n%s", err, out)
+				if combinedOutputError != nil {
+					test.Fatalf("configured reader: %v\n%s", combinedOutputError, out)
 				}
 				if reader == "execute" {
 					for _, backend := range []string{"native", "stage0"} {

@@ -10,9 +10,9 @@ import (
 // the GraphQLPrinter products above are the as-Go copy's.
 func printerInTreeSource(test *testing.T) string {
 	test.Helper()
-	path, err := filepath.Abs("main.ts")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("main.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return path
 }

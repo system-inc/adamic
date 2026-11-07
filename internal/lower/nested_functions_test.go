@@ -33,10 +33,10 @@ func TestNestedFunctionGapsAreLoud(test *testing.T) {
 		},
 	} {
 		test.Run(probe.name, func(test *testing.T) {
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.want) {
-				test.Fatalf("want NotYet %q, got %v", probe.want, err)
+			if !errors.As(lowerSourceError, &notYet) || !strings.Contains(lowerSourceError.Error(), probe.want) {
+				test.Fatalf("want NotYet %q, got %v", probe.want, lowerSourceError)
 			}
 		})
 	}
@@ -157,18 +157,18 @@ func TestClosedFrameInputRejectsMutation(test *testing.T) {
 // behind TypeScript's earlier TS2630 diagnostic. The public fixture pins TS2630.
 func TestNestedRebindingNotYet(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("../oracle/refusals/nested_rebinding.a")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("../oracle/refusals/nested_rebinding.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	source, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	text := strings.Replace(string(source), "    inner =", "    // @ts-expect-error\n    inner =", 1)
-	program, err := load.LoadOverlay([]string{path}, map[string]string{path: text})
-	if err != nil {
-		test.Fatal(err)
+	program, loadOverlayError := load.LoadOverlay([]string{path}, map[string]string{path: text})
+	if loadOverlayError != nil {
+		test.Fatal(loadOverlayError)
 	}
 	file := program.Files()[0]
 	check, release := program.Checker(context.Background(), file)
@@ -189,7 +189,7 @@ func TestNestedRebindingNotYet(test *testing.T) {
 
 func TestNestedCallbackCycleIsRefused(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(test, `function make(): () => number {
+	_, lowerSourceError := lowerSource(test, `function make(): () => number {
  let saved: (() => number) | undefined = undefined;
  function read(): number { return saved === undefined ? 1 : saved(); }
  function factory(): () => number { return () => read(); }
@@ -197,8 +197,8 @@ func TestNestedCallbackCycleIsRefused(test *testing.T) {
  return saved;
 } console.log(String(make()()));`)
 	var refused *Refused
-	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/cycle-capable") {
-		test.Fatalf("want callback environment cycle refusal, got %v", err)
+	if !errors.As(lowerSourceError, &refused) || !strings.Contains(lowerSourceError.Error(), "adamic/cycle-capable") {
+		test.Fatalf("want callback environment cycle refusal, got %v", lowerSourceError)
 	}
 }
 
@@ -210,8 +210,8 @@ func TestNestedBodylessDeclarationsAreLoud(test *testing.T) {
 		want string
 	}{
 		{"missing implementation", func(l *lowering, signature *ast.Node) error {
-			_, err := l.nestedDeclarations([]*ast.Node{signature})
-			return err
+			_, nestedDeclarationsError := l.nestedDeclarations([]*ast.Node{signature})
+			return nestedDeclarationsError
 		}, "a nested function declaration without an implementation"},
 		{
 			"body lowering",
@@ -221,13 +221,13 @@ func TestNestedBodylessDeclarationsAreLoud(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs("../oracle/testdata/scanner_nested_overload.a")
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs("../oracle/testdata/scanner_nested_overload.a")
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			program, err := load.Load([]string{path})
-			if err != nil {
-				test.Fatal(err)
+			program, loadError := load.Load([]string{path})
+			if loadError != nil {
+				test.Fatal(loadError)
 			}
 			file := program.Files()[0]
 			check, release := program.Checker(context.Background(), file)
@@ -245,10 +245,10 @@ func TestNestedBodylessDeclarationsAreLoud(test *testing.T) {
 				functionIndex: 0,
 				this:          -1,
 			}
-			err = probe.run(l, signature)
+			runError := probe.run(l, signature)
 			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.want) {
-				test.Fatalf("want NotYet %q, got %v", probe.want, err)
+			if !errors.As(runError, &notYet) || !strings.Contains(runError.Error(), probe.want) {
+				test.Fatalf("want NotYet %q, got %v", probe.want, runError)
 			}
 		})
 	}

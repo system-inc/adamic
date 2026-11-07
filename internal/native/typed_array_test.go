@@ -13,13 +13,13 @@ import (
 
 func TestTypedArrayRuntime(test *testing.T) {
 	test.Parallel()
-	source, err := os.ReadFile("testdata/typed-arrays/runtime.c")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("testdata/typed-arrays/runtime.c")
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	expected, err := toolchain.Command("node", "testdata/typed-arrays/node.a").CombinedOutput()
-	if err != nil {
-		test.Fatalf("Node: %v\n%s", err, expected)
+	expected, combinedOutputError := toolchain.Command("node", "testdata/typed-arrays/node.a").CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("Node: %v\n%s", combinedOutputError, expected)
 	}
 	for _, sanitized := range []bool{false, true} {
 		name := "release"
@@ -28,16 +28,20 @@ func TestTypedArrayRuntime(test *testing.T) {
 		}
 		test.Run(name, func(test *testing.T) {
 			binary := filepath.Join(test.TempDir(), "typed-arrays")
-			if err := Build(string(source), binary, Options{Sanitize: sanitized, Count: true}); err != nil {
-				test.Fatal(err)
+			if buildError := Build(
+				string(source),
+				binary,
+				Options{Sanitize: sanitized, Count: true},
+			); buildError != nil {
+				test.Fatal(buildError)
 			}
 			command := exec.Command(binary)
 			command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1")
 			var diagnostics bytes.Buffer
 			command.Stderr = &diagnostics
-			got, err := command.Output()
-			if err != nil {
-				test.Fatalf("runtime: %v\n%s", err, diagnostics.String())
+			got, outputError := command.Output()
+			if outputError != nil {
+				test.Fatalf("runtime: %v\n%s", outputError, diagnostics.String())
 			}
 			if string(got) != string(expected) {
 				left, right := strings.Split(string(got), "\n"), strings.Split(string(expected), "\n")
@@ -55,10 +59,10 @@ func TestTypedArrayRuntime(test *testing.T) {
 			}
 			for _, mode := range []string{"write", "check", "write16", "check16"} {
 				for _, index := range []string{"3", "-1", "0.5", "NaN", "Infinity", "-Infinity"} {
-					got, err := exec.Command(binary, mode, index).CombinedOutput()
-					failure, ok := err.(*exec.ExitError)
+					got, combinedOutputError := exec.Command(binary, mode, index).CombinedOutput()
+					failure, ok := combinedOutputError.(*exec.ExitError)
 					if !ok || failure.ExitCode() != 70 {
-						test.Fatalf("%s %s: wanted panic 70, got %v\n%s", mode, index, err, got)
+						test.Fatalf("%s %s: wanted panic 70, got %v\n%s", mode, index, combinedOutputError, got)
 					}
 					want := "adamic: panic: index " + index + " is outside an array of length 3\n"
 					if !strings.HasPrefix(string(got), want) {
@@ -80,7 +84,7 @@ catch (error) { console.log(error.name); }`
 				{"kind"},
 			} {
 				if probe[0] != "kind" {
-					oracle, err := toolchain.Command(
+					oracle, combinedOutputError := toolchain.Command(
 						"node",
 						"-e",
 						rangeOracle,
@@ -88,14 +92,14 @@ catch (error) { console.log(error.name); }`
 						probe[0],
 						probe[1],
 					).CombinedOutput()
-					if err != nil || string(oracle) != "RangeError\n" {
-						test.Fatalf("Node range probe %v: %v %q", probe, err, oracle)
+					if combinedOutputError != nil || string(oracle) != "RangeError\n" {
+						test.Fatalf("Node range probe %v: %v %q", probe, combinedOutputError, oracle)
 					}
 				}
-				got, err := exec.Command(binary, probe...).CombinedOutput()
-				failure, ok := err.(*exec.ExitError)
+				got, combinedOutputError := exec.Command(binary, probe...).CombinedOutput()
+				failure, ok := combinedOutputError.(*exec.ExitError)
 				if !ok || failure.ExitCode() != 70 || !strings.HasPrefix(string(got), "adamic: panic: ") {
-					test.Fatalf("%v: wanted panic 70, got %v\n%s", probe, err, got)
+					test.Fatalf("%v: wanted panic 70, got %v\n%s", probe, combinedOutputError, got)
 				}
 			}
 		})

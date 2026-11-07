@@ -25,21 +25,23 @@ func runtimeNotYetFixture(test *testing.T) ([]byte, runtimeNotYetStop, runtimeNo
 }
 func writeRuntimeNotYetList(test *testing.T, path string, list runtimeNotYetStopList) {
 	test.Helper()
-	data, err := json.Marshal(list)
-	if err != nil {
-		test.Fatal(err)
+	data, encodeError := json.Marshal(list)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
-	if err = os.WriteFile(path, data, 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, data, 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 }
 
 // The list as landed reads: each entry a ruled form, with its ruling and lifting tasks.
 func TestRuntimeNotYetListReads(test *testing.T) {
 	test.Parallel()
-	list, err := readRuntimeNotYetStops(filepath.Join("..", "..", "cloud/admission-corpus/runtime-notyet-stops.json"))
-	if err != nil {
-		test.Fatal(err)
+	list, readRuntimeNotYetStopsError := readRuntimeNotYetStops(
+		filepath.Join("..", "..", "cloud/admission-corpus/runtime-notyet-stops.json"),
+	)
+	if readRuntimeNotYetStopsError != nil {
+		test.Fatal(readRuntimeNotYetStopsError)
 	}
 	if len(list.Stops) == 0 {
 		test.Fatal("the landed list holds no stops")
@@ -75,8 +77,8 @@ func TestRuntimeNotYetRulingMetadata(test *testing.T) {
 	source, stop, list := runtimeNotYetFixture(test)
 	path := filepath.Join(test.TempDir(), "stops.json")
 	writeRuntimeNotYetList(test, path, list)
-	if _, err := readRuntimeNotYetStops(path); err != nil {
-		test.Fatal("ruled stop refused:", err)
+	if _, readRuntimeNotYetStopsError := readRuntimeNotYetStops(path); readRuntimeNotYetStopsError != nil {
+		test.Fatal("ruled stop refused:", readRuntimeNotYetStopsError)
 	}
 	for name, change := range map[string]func(*runtimeNotYetStop, *runtimeNotYetStopList){
 		"no ruling task":            func(s *runtimeNotYetStop, _ *runtimeNotYetStopList) { s.RulingTask = "" },
@@ -115,7 +117,7 @@ func TestRuntimeNotYetRulingMetadata(test *testing.T) {
 			change(&bad, &changed)
 			changed.Stops = map[string]runtimeNotYetStop{contentHash(source): bad}
 			writeRuntimeNotYetList(test, path, changed)
-			if _, err := readRuntimeNotYetStops(path); err == nil {
+			if _, readRuntimeNotYetStopsError := readRuntimeNotYetStops(path); readRuntimeNotYetStopsError == nil {
 				test.Errorf("%s accepted", name)
 			}
 		})
@@ -125,7 +127,7 @@ func TestRuntimeNotYetRulingMetadata(test *testing.T) {
 		path,
 		runtimeNotYetStopList{Comment: list.Comment, Stops: map[string]runtimeNotYetStop{"bad": stop}},
 	)
-	if _, err := readRuntimeNotYetStops(path); err == nil {
+	if _, readRuntimeNotYetStopsError := readRuntimeNotYetStops(path); readRuntimeNotYetStopsError == nil {
 		test.Error("bad content hash accepted")
 	}
 }
@@ -145,16 +147,19 @@ func TestRuntimeNotYetConversionForms(test *testing.T) {
 			Comment: list.Comment,
 			Stops:   map[string]runtimeNotYetStop{contentHash(source): converted},
 		})
-		_, err := readRuntimeNotYetStops(path)
-		return err
+		_, readRuntimeNotYetStopsError := readRuntimeNotYetStops(path)
+		return readRuntimeNotYetStopsError
 	}
 	for _, what := range []string{
 		"an object whose own toString is a function this program can't name",
 		"an array of only numbers, booleans, null or undefined",
 		"a class object",
 	} {
-		if err := read("adamic: panic: converting "+what+" to a string is not yet lowered\n", "#09dvwny"); err != nil {
-			test.Errorf("ruled conversion %q refused: %v", what, err)
+		if readError := read(
+			"adamic: panic: converting "+what+" to a string is not yet lowered\n",
+			"#09dvwny",
+		); readError != nil {
+			test.Errorf("ruled conversion %q refused: %v", what, readError)
 		}
 	}
 	for name, stderr := range map[string]string{
@@ -166,14 +171,14 @@ func TestRuntimeNotYetConversionForms(test *testing.T) {
 		"no panic prefix":     "converting a class object to a string is not yet lowered\n",
 		"a key read after it": "adamic: panic: converting a class object to a string is not yet lowered (reading 'x')\n",
 	} {
-		if err := read(stderr, "#09dvwny"); err == nil {
+		if readError := read(stderr, "#09dvwny"); readError == nil {
 			test.Errorf("%s accepted: %q", name, stderr)
 		}
 	}
-	if err := read(
+	if readError := read(
 		"adamic: panic: converting a class object to a string is not yet lowered\n",
 		"#zhgxzjg",
-	); err == nil {
+	); readError == nil {
 		test.Error("a conversion under another ruling accepted")
 	}
 }
@@ -192,12 +197,12 @@ func TestRuntimeNotYetKeylessForms(test *testing.T) {
 			Comment: list.Comment,
 			Stops:   map[string]runtimeNotYetStop{contentHash(source): keyless},
 		})
-		_, err := readRuntimeNotYetStops(path)
-		return err
+		_, readRuntimeNotYetStopsError := readRuntimeNotYetStops(path)
+		return readRuntimeNotYetStopsError
 	}
 	ruled := "adamic: panic: this runtime value's own keys aren't enumerated yet\n"
-	if err := read(ruled, "#0sps03r"); err != nil {
-		test.Errorf("the ruled keyless message refused: %v", err)
+	if readError := read(ruled, "#0sps03r"); readError != nil {
+		test.Errorf("the ruled keyless message refused: %v", readError)
 	}
 	for name, stderr := range map[string]string{
 		"a message off the list": "adamic: panic: this runtime value's own values aren't enumerated yet\n",
@@ -208,11 +213,11 @@ func TestRuntimeNotYetKeylessForms(test *testing.T) {
 		"a key read after it":    "adamic: panic: this runtime value's own keys aren't enumerated yet (reading 'keys')\n",
 		"as a conversion":        "adamic: panic: converting this runtime value's own keys aren't enumerated yet to a string is not yet lowered\n",
 	} {
-		if err := read(stderr, "#0sps03r"); err == nil {
+		if readError := read(stderr, "#0sps03r"); readError == nil {
 			test.Errorf("%s accepted: %q", name, stderr)
 		}
 	}
-	if err := read(ruled, "#zhgxzjg"); err == nil {
+	if readError := read(ruled, "#zhgxzjg"); readError == nil {
 		test.Error("the keyless message under another ruling accepted")
 	}
 }
@@ -240,7 +245,7 @@ func TestRuntimeNotYetCompilerBugNeverQualifies(test *testing.T) {
 				Comment: list.Comment,
 				Stops:   map[string]runtimeNotYetStop{contentHash(source): bad},
 			})
-			if _, err := readRuntimeNotYetStops(path); err == nil {
+			if _, readRuntimeNotYetStopsError := readRuntimeNotYetStops(path); readRuntimeNotYetStopsError == nil {
 				test.Errorf("listed compiler bug accepted (allowlist widened: %v): %s", widened, bug)
 			}
 		}
@@ -319,9 +324,9 @@ func runtimeNotYetCommand(
 	test.Helper()
 	dir, _, base, head := commandFixture(test)
 	source, stop, list := runtimeNotYetFixture(test)
-	message, err := json.Marshal(strings.TrimSuffix(stop.Stderr, "\n"))
-	if err != nil {
-		test.Fatal(err)
+	message, encodeError := json.Marshal(strings.TrimSuffix(stop.Stderr, "\n"))
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	native := filepath.Join(test.TempDir(), "native")
 	javascript := "// STOP"
@@ -346,29 +351,29 @@ func runtimeNotYetCommand(
 			string(message) +
 			");process.exit(70);}console.log('number');\n",
 	} {
-		if err := os.WriteFile(filepath.Join(dir, path), []byte(data), 0755); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(dir, path), []byte(data), 0755); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	if rewrite != nil {
 		rewrite(&list)
 	}
 	writeRuntimeNotYetList(test, filepath.Join(dir, "cloud/admission-corpus/runtime-notyet-stops.json"), list)
-	if _, err := git(
+	if _, gitError := git(
 		dir,
 		"add",
 		"corpus/input.a",
 		"oracle/node.mjs",
 		"cloud/admission-corpus/runtime-notyet-stops.json",
-	); err != nil {
-		test.Fatal(err)
+	); gitError != nil {
+		test.Fatal(gitError)
 	}
-	if _, err := git(dir, "commit", "-qm", "run-time NotYet input"); err != nil {
-		test.Fatal(err)
+	if _, gitError := git(dir, "commit", "-qm", "run-time NotYet input"); gitError != nil {
+		test.Fatal(gitError)
 	}
-	sha, err := git(dir, "rev-parse", "HEAD")
-	if err != nil {
-		test.Fatal(err)
+	sha, gitError := git(dir, "rev-parse", "HEAD")
+	if gitError != nil {
+		test.Fatal(gitError)
 	}
 	if alreadyAccepted {
 		base = head
@@ -381,8 +386,8 @@ func runtimeNotYetCommand(
 func runtimeNotYetReport(test *testing.T, o observation) report {
 	test.Helper()
 	var r report
-	if err := json.Unmarshal([]byte(o.Stdout), &r); err != nil {
-		test.Fatal(err, o.Stderr, o.Stdout)
+	if decodeError := json.Unmarshal([]byte(o.Stdout), &r); decodeError != nil {
+		test.Fatal(decodeError, o.Stderr, o.Stdout)
 	}
 	return r
 }

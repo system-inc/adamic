@@ -12,9 +12,11 @@ import (
 
 func checkMiscompile2AStop(test *testing.T, name, output, diagnostic string, refused bool) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/miscompile_2a_refused", name+".a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/miscompile_2a_refused", name+".a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	node := onNode(test, path)
 	if node.exitCode != 0 || string(node.stdout) != output || len(node.stderr) != 0 {
@@ -23,17 +25,17 @@ func checkMiscompile2AStop(test *testing.T, name, output, diagnostic string, ref
 	test.Logf("Node: exit=0 stdout=%q", node.stdout)
 	// Both backends share lowering. A stop here prevents C, JavaScript and a
 	// sanitizer build from receiving the unsafe program at all.
-	_, err = lowered(test, path)
+	_, loweredError := lowered(test, path)
 	var pending *lower.NotYet
 	var rejection *lower.Refused
-	if err == nil ||
-		(!refused && !errors.As(err, &pending)) ||
-		(refused && !errors.As(err, &rejection)) ||
-		!strings.Contains(err.Error(), diagnostic) ||
-		!strings.Contains(err.Error(), name+".a:") {
-		test.Fatalf("want path-bearing stop %q, got %v", diagnostic, err)
+	if loweredError == nil ||
+		(!refused && !errors.As(loweredError, &pending)) ||
+		(refused && !errors.As(loweredError, &rejection)) ||
+		!strings.Contains(loweredError.Error(), diagnostic) ||
+		!strings.Contains(loweredError.Error(), name+".a:") {
+		test.Fatalf("want path-bearing stop %q, got %v", diagnostic, loweredError)
 	}
-	test.Log(err)
+	test.Log(loweredError)
 }
 
 func TestMiscompile2AErrorSpread(test *testing.T) {
@@ -104,17 +106,17 @@ func checkMiscompile2AAdmitted(test *testing.T, relative, output string) {
 	if !filepath.IsAbs(path) {
 		path = filepath.Join(repository, relative)
 	}
-	path, err := filepath.Abs(path)
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(path)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	node := onNode(test, path)
 	if node.exitCode != 0 || string(node.stdout) != output || len(node.stderr) != 0 {
 		test.Fatalf("Node: exit=%d stdout=%q stderr=%q", node.exitCode, node.stdout, node.stderr)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	if got := onJavaScriptBackend(test, program); disagreement(node, got) != "" {
 		test.Fatalf("JavaScript: %s", disagreement(node, got))
@@ -152,9 +154,9 @@ func TestMiscompile2AMarker(test *testing.T) {
 // entry point with an omitted argument using a separate test driver.
 func TestMiscompile2AMarkerUndefined(test *testing.T) {
 	test.Parallel()
-	source, err := os.ReadFile(filepath.Join(repository, "internal/oracle/testdata/census_never_rest_marker.a"))
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(filepath.Join(repository, "internal/oracle/testdata/census_never_rest_marker.a"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	path := filepath.Join(test.TempDir(), "marker-undefined.a")
 	source = append(source, []byte(`
@@ -162,8 +164,8 @@ try { fail(); } catch (error) {
  if (error instanceof Error) { console.log('[' + error.message + ']'); }
 }
 `)...)
-	if err := os.WriteFile(path, source, 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, source, 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	checkMiscompile2AAdmitted(
 		test,

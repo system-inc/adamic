@@ -58,14 +58,14 @@ type listedPackage struct {
 // Imports is what product, a GoExports product's directory, holds: each package's export data by its import path
 // (never a variant compiled for a test), the packages of the tree among them, and every package it lists, variants by
 // their own path.
-func Imports(product string) (exports map[string]string, tree []string, listed map[string]bool, err error) {
-	encoded, err := os.ReadFile(filepath.Join(product, "listing.json"))
-	if err != nil {
-		return nil, nil, nil, err
+func Imports(product string) (exports map[string]string, tree []string, listed map[string]bool, importsError error) {
+	encoded, readError := os.ReadFile(filepath.Join(product, "listing.json"))
+	if readError != nil {
+		return nil, nil, nil, readError
 	}
 	var listing []listedPackage
-	if err := json.Unmarshal(encoded, &listing); err != nil {
-		return nil, nil, nil, err
+	if decodeError := json.Unmarshal(encoded, &listing); decodeError != nil {
+		return nil, nil, nil, decodeError
 	}
 	exports, listed = map[string]string{}, map[string]bool{}
 	for _, pkg := range listing {
@@ -103,9 +103,9 @@ func (census Census) Findings() ([]string, error) {
 	// the line builds, so the files it reads and the types it reads them with are one platform's.
 	context := build.Default
 	context.GOOS, context.GOARCH, context.CgoEnabled = runtime.GOOS, runtime.GOARCH, true
-	listed, err := context.ImportDir(census.Directory, 0)
-	if err != nil {
-		return nil, err
+	listed, importDirectoryError := context.ImportDir(census.Directory, 0)
+	if importDirectoryError != nil {
+		return nil, importDirectoryError
 	}
 	findings := map[string]bool{}
 	for _, name := range append(slices.Clone(listed.CgoFiles), listed.SFiles...) {
@@ -115,9 +115,14 @@ func (census Census) Findings() ([]string, error) {
 	var files []*ast.File
 	production := map[*ast.File]bool{}
 	for index, name := range slices.Concat(listed.GoFiles, listed.CgoFiles, listed.TestGoFiles) {
-		file, err := parser.ParseFile(fileSet, filepath.Join(census.Directory, name), nil, parser.ParseComments|parser.SkipObjectResolution)
-		if err != nil {
-			return nil, err
+		file, parseFileError := parser.ParseFile(
+			fileSet,
+			filepath.Join(census.Directory, name),
+			nil,
+			parser.ParseComments|parser.SkipObjectResolution,
+		)
+		if parseFileError != nil {
+			return nil, parseFileError
 		}
 		files = append(files, file)
 		production[file] = index < len(listed.GoFiles)+len(listed.CgoFiles)
@@ -137,13 +142,13 @@ func (census Census) Findings() ([]string, error) {
 		Uses: map[*ast.Ident]types.Object{}, Defs: map[*ast.Ident]types.Object{},
 		Types: map[ast.Expr]types.TypeAndValue{}, Selections: map[*ast.SelectorExpr]*types.Selection{},
 	}
-	checkError := func(err error) {
+	checkError := func(sourceError error) {
 		var typeError types.Error
-		if errors.As(err, &typeError) {
+		if errors.As(sourceError, &typeError) {
 			position := typeError.Fset.Position(typeError.Pos)
-			err = fmt.Errorf("%s:%d: %s", filepath.Base(position.Filename), position.Line, typeError.Msg)
+			sourceError = fmt.Errorf("%s:%d: %s", filepath.Base(position.Filename), position.Line, typeError.Msg)
 		}
-		findings[fmt.Sprintf("a type error, which fails the census closed: %v", err)] = true
+		findings[fmt.Sprintf("a type error, which fails the census closed: %v", sourceError)] = true
 	}
 	checked, _ := (&types.Config{Importer: imports, Error: checkError}).Check(census.ImportPath, fileSet, files, info)
 	if checked == nil {
@@ -171,15 +176,17 @@ func (census Census) Findings() ([]string, error) {
 				}
 				object := info.Defs[declaration.Name]
 				bodies[object] = declaration
-				if production[file] && slices.Contains(census.Entries, receiverName(declaration)+declaration.Name.Name) {
+				if production[file] &&
+					slices.Contains(census.Entries, receiverName(declaration)+declaration.Name.Name) {
 					entries[object] = true
 				}
 			case *ast.GenDecl:
 				for _, spec := range declaration.Specs {
 					switch spec := spec.(type) {
 					case *ast.TypeSpec:
-						// A reached type's declaration is read, so the types its fields, elements and methods' signatures
-						// name are reached with their methods, and the constants its array lengths name (M4).
+						// A reached type's declaration is read, so the types its fields, elements and methods'
+						// signatures name are reached with their methods, and the constants its array lengths name
+						// (M4).
 						bodies[info.Defs[spec.Name]] = spec
 					case *ast.ValueSpec:
 						for index, name := range spec.Names {
@@ -228,8 +235,8 @@ func (census Census) Findings() ([]string, error) {
 		if value, ok := initializers[object]; ok {
 			queue = append(queue, value)
 		}
-		// A reached type's methods are all reached: a value of it handed out as an interface is called back through them,
-		// as fmt calls a field's String when it prints the value holding it (M4).
+		// A reached type's methods are all reached: a value of it handed out as an interface is called back through
+		// them, as fmt calls a field's String when it prints the value holding it (M4).
 		if _, isType := object.(*types.TypeName); isType {
 			if named, ok := object.Type().(*types.Named); ok {
 				for method := range named.Methods() {
@@ -238,22 +245,30 @@ func (census Census) Findings() ([]string, error) {
 			}
 		}
 	}
-	// implementers reaches every type of the package's own files that implements iface (M3): an interface call in reached
-	// code dispatches to any value of it, wherever that value was made. A type of the tree outside Slice that implements
-	// it is a finding, since no lean recipe keys its methods.
+	// implementers reaches every type of the package's own files that implements iface (M3): an interface call in
+	// reached code dispatches to any value of it, wherever that value was made. A type of the tree outside Slice that
+	// implements it is a finding, since no lean recipe keys its methods.
 	implementers := func(iface *types.Interface, what string, node ast.Node) {
 		implements := func(typ types.Type) bool {
 			return types.Implements(typ, iface) || types.Implements(types.NewPointer(typ), iface)
 		}
 		for _, name := range checked.Scope().Names() {
 			object, isType := checked.Scope().Lookup(name).(*types.TypeName)
-			if !isType || object.IsAlias() || types.IsInterface(object.Type()) || !production[fileAt(files, fileSet, object.Pos())] {
+			if !isType ||
+				object.IsAlias() ||
+				types.IsInterface(object.Type()) ||
+				!production[fileAt(files, fileSet, object.Pos())] {
 				continue
 			}
 			if named, ok := object.Type().(*types.Named); ok && named.TypeParams().Len() > 0 {
 				// A generic type implements iface only once instantiated, so one with any of its methods counts.
 				for method := range iface.Methods() {
-					if found, _, _ := types.LookupFieldOrMethod(types.NewPointer(object.Type()), true, checked, method.Name()); found != nil {
+					if found, _, _ := types.LookupFieldOrMethod(
+						types.NewPointer(object.Type()),
+						true,
+						checked,
+						method.Name(),
+					); found != nil {
 						mark(object)
 						break
 					}
@@ -268,14 +283,29 @@ func (census Census) Findings() ([]string, error) {
 			if path == census.ImportPath || slices.Contains(census.Slice, path) {
 				continue
 			}
-			other, err := imports.Import(path)
-			if err != nil {
-				findings[fmt.Sprintf("%s: %s, and the census can't read %s's types: %v", at(node), what, path, err)] = true
+			other, importError := imports.Import(path)
+			if importError != nil {
+				findings[fmt.Sprintf(
+					"%s: %s, and the census can't read %s's types: %v",
+					at(node),
+					what,
+					path,
+					importError,
+				)] = true
 				continue
 			}
 			for _, name := range other.Scope().Names() {
-				if object, isType := other.Scope().Lookup(name).(*types.TypeName); isType && !object.IsAlias() && !types.IsInterface(object.Type()) && implements(object.Type()) {
-					findings[fmt.Sprintf("%s: %s, which %s.%s implements, a package of the tree no lean recipe keys", at(node), what, path, name)] = true
+				if object, isType := other.Scope().Lookup(name).(*types.TypeName); isType &&
+					!object.IsAlias() &&
+					!types.IsInterface(object.Type()) &&
+					implements(object.Type()) {
+					findings[fmt.Sprintf(
+						"%s: %s, which %s.%s implements, a package of the tree no lean recipe keys",
+						at(node),
+						what,
+						path,
+						name,
+					)] = true
 				}
 			}
 		}
@@ -289,16 +319,29 @@ func (census Census) Findings() ([]string, error) {
 					path := object.Imported().Path()
 					switch {
 					case path == "reflect":
-						findings[fmt.Sprintf("%s: reflection (reflect), which the census can't follow", at(node))] = true
+						findings[fmt.Sprintf(
+							"%s: reflection (reflect), which the census can't follow",
+							at(node),
+						)] = true
 					case strings.HasPrefix(path, ModulePath+"/") && !slices.Contains(census.Slice, path):
-						findings[fmt.Sprintf("%s: reaches %s, a package of the tree no lean recipe keys", at(node), path)] = true
+						findings[fmt.Sprintf(
+							"%s: reaches %s, a package of the tree no lean recipe keys",
+							at(node),
+							path,
+						)] = true
 					}
 				case *types.Var:
 					// A function value in a package variable or a field of this package may be set by code outside the
 					// reach, so its use fails closed, called or handed on. One in a parameter or a local came from the
 					// reached code that set it.
-					if _, isFunction := object.Type().Underlying().(*types.Signature); isFunction && object.Pkg() == checked && (object.IsField() || object.Parent() == checked.Scope()) {
-						findings[fmt.Sprintf("%s: the function value %s, held in a package variable or a field, which the census can't follow", at(node), node.Name)] = true
+					if _, isFunction := object.Type().Underlying().(*types.Signature); isFunction &&
+						object.Pkg() == checked &&
+						(object.IsField() || object.Parent() == checked.Scope()) {
+						findings[fmt.Sprintf(
+							"%s: the function value %s, held in a package variable or a field, which the census can't follow",
+							at(node),
+							node.Name,
+						)] = true
 					}
 					mark(object)
 				default:
@@ -314,7 +357,11 @@ func (census Census) Findings() ([]string, error) {
 					return true
 				}
 				if _, isParameter := types.Unalias(selection.Recv()).(*types.TypeParam); isParameter {
-					findings[fmt.Sprintf("%s: a call of %s through a type parameter, which the census can't follow", at(node), method.Name())] = true
+					findings[fmt.Sprintf(
+						"%s: a call of %s through a type parameter, which the census can't follow",
+						at(node),
+						method.Name(),
+					)] = true
 					return true
 				}
 				if iface, ok := method.Signature().Recv().Type().Underlying().(*types.Interface); ok {
@@ -365,7 +412,10 @@ func (census Census) Findings() ([]string, error) {
 		for _, declaration := range inits {
 			if !weighed[declaration] && !pure(declaration.Body, info) {
 				weighed[declaration] = true
-				findings[fmt.Sprintf("init in %s counts as reached", filepath.Base(fileOf(declaration)))] = !declares(fileOf(declaration))
+				findings[fmt.Sprintf(
+					"init in %s counts as reached",
+					filepath.Base(fileOf(declaration)),
+				)] = !declares(fileOf(declaration))
 				queue = append(queue, declaration.Body)
 				grown = true
 			}
@@ -374,7 +424,10 @@ func (census Census) Findings() ([]string, error) {
 			if !weighed[value] && !reached[object] && !pure(value, info) {
 				weighed[value] = true
 				if !declares(fileOf(value)) {
-					findings[fmt.Sprintf("%s: an initializer that calls, which counts as reached, in a file the build's key doesn't declare", at(value))] = true
+					findings[fmt.Sprintf(
+						"%s: an initializer that calls, which counts as reached, in a file the build's key doesn't declare",
+						at(value),
+					)] = true
 				}
 				mark(object)
 				queue = append(queue, value)
@@ -391,19 +444,30 @@ func (census Census) Findings() ([]string, error) {
 			continue
 		}
 		if file := fileSet.Position(object.Pos()).Filename; !declares(file) {
-			findings[fmt.Sprintf("%s, defined in %s, which the build's key doesn't declare", object.Name(), filepath.Base(file))] = true
+			findings[fmt.Sprintf(
+				"%s, defined in %s, which the build's key doesn't declare",
+				object.Name(),
+				filepath.Base(file),
+			)] = true
 		}
 		variable, isVariable := object.(*types.Var)
 		if !isVariable {
 			continue
 		}
-		// The invariant: a package variable the build reads is written only by its own initializer, of literals and pure
-		// constructors, and no package but its own can reach it.
+		// The invariant: a package variable the build reads is written only by its own initializer, of literals and
+		// pure constructors, and no package but its own can reach it.
 		if variable.Exported() {
-			findings[fmt.Sprintf("%s, which the build reads, is exported, so a package the census doesn't read can write it", variable.Name())] = true
+			findings[fmt.Sprintf(
+				"%s, which the build reads, is exported, so a package the census doesn't read can write it",
+				variable.Name(),
+			)] = true
 		}
 		if value, ok := initializers[variable]; ok && !pure(value, info) {
-			findings[fmt.Sprintf("%s: %s, which the build reads, is initialized by a call", at(value), variable.Name())] = true
+			findings[fmt.Sprintf(
+				"%s: %s, which the build reads, is initialized by a call",
+				at(value),
+				variable.Name(),
+			)] = true
 		}
 	}
 	for _, file := range files {
@@ -433,7 +497,11 @@ func (census Census) Findings() ([]string, error) {
 					ast.Inspect(node.Body, func(inner ast.Node) bool {
 						if name, ok := inner.(*ast.Ident); ok {
 							if variable, ok := info.Uses[name].(*types.Var); ok && reached[variable] {
-								findings[fmt.Sprintf("%s: an init names %s, which the build reads", at(inner), variable.Name())] = true
+								findings[fmt.Sprintf(
+									"%s: an init names %s, which the build reads",
+									at(inner),
+									variable.Name(),
+								)] = true
 							}
 						}
 						return true
@@ -444,12 +512,20 @@ func (census Census) Findings() ([]string, error) {
 		})
 		eachWrite(file, info, own, func(root types.Object, node ast.Node) {
 			if variable, ok := root.(*types.Var); ok && reached[variable] {
-				findings[fmt.Sprintf("%s: writes %s, which the build reads and only its initializer may write", at(node), variable.Name())] = true
+				findings[fmt.Sprintf(
+					"%s: writes %s, which the build reads and only its initializer may write",
+					at(node),
+					variable.Name(),
+				)] = true
 			}
 		})
 		eachShare(file, info, own, func(variable *types.Var, node ast.Node) {
 			if reached[variable] {
-				findings[fmt.Sprintf("%s: shares the storage of %s, which the build reads, so a copy can write it", at(node), variable.Name())] = true
+				findings[fmt.Sprintf(
+					"%s: shares the storage of %s, which the build reads, so a copy can write it",
+					at(node),
+					variable.Name(),
+				)] = true
 			}
 		})
 	}
@@ -519,7 +595,10 @@ func pure(code ast.Node, info *types.Info) bool {
 			if typed, ok := info.Types[node.Fun]; ok && (typed.IsType() || typed.IsBuiltin()) {
 				return true
 			}
-			if function := calledFunction(node, info); function == nil || !slices.Contains(PureConstructors, function.FullName()) {
+			if function := calledFunction(
+				node,
+				info,
+			); function == nil || !slices.Contains(PureConstructors, function.FullName()) {
 				clean = false
 			}
 		}
@@ -609,7 +688,12 @@ func eachWrite(code ast.Node, info *types.Info, skip map[ast.Node]bool, visit fu
 // another variable or a literal, passed (a method's receiver included), returned, sent or converted. Reading it through
 // an index or a field, ranging over it, comparing it and asking len or cap share nothing. Taking its address is a
 // write (eachWrite).
-func eachShare(code ast.Node, info *types.Info, skip map[ast.Node]bool, visit func(variable *types.Var, node ast.Node)) {
+func eachShare(
+	code ast.Node,
+	info *types.Info,
+	skip map[ast.Node]bool,
+	visit func(variable *types.Var, node ast.Node),
+) {
 	var parents []ast.Node
 	ast.Inspect(code, func(node ast.Node) bool {
 		if node == nil {
@@ -745,16 +829,20 @@ func writeRoot(expression ast.Expr, info *types.Info) types.Object {
 
 // linknames is a finding for each //go:linkname in a Go file of the tree under root naming a symbol of one of packages,
 // which reaches its variables past every rule (Mentat's N5: another package's linkname wrote a's unexported variable on
-// go1.27.1). As compilercensus walks it: never cohere, another module, nor a testdata, node_modules or hidden directory.
+// go1.27.1). As compilercensus walks it: never cohere, another module, nor a testdata, node_modules or hidden
+// directory.
 func linknames(root string, packages []string) []string {
 	var found []string
-	filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
-		if err != nil {
+	filepath.WalkDir(root, func(path string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil {
 			return nil
 		}
 		relative, _ := filepath.Rel(root, path)
 		if entry.IsDir() {
-			if relative == "cohere" || entry.Name() == "testdata" || entry.Name() == "node_modules" || strings.HasPrefix(entry.Name(), ".") && relative != "." {
+			if relative == "cohere" ||
+				entry.Name() == "testdata" ||
+				entry.Name() == "node_modules" ||
+				strings.HasPrefix(entry.Name(), ".") && relative != "." {
 				return filepath.SkipDir
 			}
 			return nil
@@ -762,8 +850,8 @@ func linknames(root string, packages []string) []string {
 		if !strings.HasSuffix(path, ".go") {
 			return nil
 		}
-		content, err := os.ReadFile(path)
-		if err != nil || !strings.Contains(string(content), "go:linkname") {
+		content, readError := os.ReadFile(path)
+		if readError != nil || !strings.Contains(string(content), "go:linkname") {
 			return nil
 		}
 		for number, line := range strings.Split(string(content), "\n") {
@@ -773,7 +861,12 @@ func linknames(root string, packages []string) []string {
 			}
 			for _, pkg := range packages {
 				if strings.HasPrefix(fields[2], pkg+".") {
-					found = append(found, fmt.Sprintf("%s:%d: a go:linkname names %s, which reaches past the census", filepath.ToSlash(relative), number+1, fields[2]))
+					found = append(found, fmt.Sprintf(
+						"%s:%d: a go:linkname names %s, which reaches past the census",
+						filepath.ToSlash(relative),
+						number+1,
+						fields[2],
+					))
 				}
 			}
 		}
@@ -784,8 +877,8 @@ func linknames(root string, packages []string) []string {
 
 // declares says whether file, an absolute path, is one declared names, relative to root, or under a directory it names.
 func declares(root string, declared []string, file string) bool {
-	relative, err := filepath.Rel(root, file)
-	if err != nil {
+	relative, relativePathError := filepath.Rel(root, file)
+	if relativePathError != nil {
 		return false
 	}
 	relative = filepath.ToSlash(relative)

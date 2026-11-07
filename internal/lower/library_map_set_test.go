@@ -30,10 +30,10 @@ const groups = Map.groupBy(values, (value: number | undefined): number => 0);`, 
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.reason) {
-				test.Fatalf("want %q refusal, got %v", probe.reason, err)
+			if !errors.As(lowerSourceError, &notYet) || !strings.Contains(lowerSourceError.Error(), probe.reason) {
+				test.Fatalf("want %q refusal, got %v", probe.reason, lowerSourceError)
 			}
 		})
 	}
@@ -47,11 +47,11 @@ func TestLibraryMapSetIteratorCopyTypesRefused(test *testing.T) {
 		`const result = { ...(new Set<string>(['a'.repeat(2)]).values()) };`,
 		`function copy(value: MapIterator<number> | SetIterator<string>): void { const result = Object.assign({}, value); }`,
 	} {
-		_, err := lowerSource(test, source)
+		_, lowerSourceError := lowerSource(test, source)
 		var refusal *NotYet
-		if !errors.As(err, &refusal) ||
-			!strings.Contains(err.Error(), "next is inherited, not an own enumerable field") {
-			test.Fatalf("want inherited-next refusal for %s, got %v", source, err)
+		if !errors.As(lowerSourceError, &refusal) ||
+			!strings.Contains(lowerSourceError.Error(), "next is inherited, not an own enumerable field") {
+			test.Fatalf("want inherited-next refusal for %s, got %v", source, lowerSourceError)
 		}
 	}
 }
@@ -76,10 +76,10 @@ console.log(String(collect([[1, 2]])));
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.reason) {
-				test.Fatalf("want %q, got %v", probe.reason, err)
+			if !errors.As(lowerSourceError, &notYet) || !strings.Contains(lowerSourceError.Error(), probe.reason) {
+				test.Fatalf("want %q, got %v", probe.reason, lowerSourceError)
 			}
 		})
 	}

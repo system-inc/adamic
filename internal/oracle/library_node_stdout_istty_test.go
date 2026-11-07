@@ -20,9 +20,9 @@ func stdoutIsTTYAgreement(test *testing.T, transport string) {
 	test.Helper()
 	path, binary, js := sanitized(test, "internal/oracle/testdata/host_stdout/istty.a")
 	loader, _ := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	node, err := toolchain.Path("node")
-	if err != nil {
-		test.Fatal(err)
+	node, pathError := toolchain.Path("node")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
 	variants := []struct {
 		name string
@@ -35,13 +35,17 @@ func stdoutIsTTYAgreement(test *testing.T, transport string) {
 	// The stock units always compare Node/native/JS. WASI is the existing
 	// opt-in oracle overlay, rather than a tool prerequisite for those units.
 	if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
-		program, err := lowered(test, path)
-		if err != nil {
-			test.Fatal(err)
+		program, loweredError := lowered(test, path)
+		if loweredError != nil {
+			test.Fatal(loweredError)
 		}
 		wasm := filepath.Join(test.TempDir(), "program.wasm")
-		if err := native.Build(native.C(program), wasm, native.Options{Target: "wasm32-wasi"}); err != nil {
-			test.Fatal(err)
+		if buildError := native.Build(
+			native.C(program),
+			wasm,
+			native.Options{Target: "wasm32-wasi"},
+		); buildError != nil {
+			test.Fatal(buildError)
 		}
 		wasi, _ := filepath.Abs(filepath.Join(repository, "oracle/wasi.mjs"))
 		variants = append(variants, struct {
@@ -93,17 +97,17 @@ func stdoutIsTTYRun(test *testing.T, transport, name string, args ...string) run
 			"ASAN_OPTIONS=detect_leaks=1",
 			"UBSAN_OPTIONS=halt_on_error=1",
 		}
-		out, errout, err := childguard.Capture(ctx, cmd)
+		out, errout, captureError := childguard.Capture(ctx, cmd)
 		var exited *exec.ExitError
-		if err != nil && !errors.As(err, &exited) {
-			test.Fatal(err)
+		if captureError != nil && !errors.As(captureError, &exited) {
+			test.Fatal(captureError)
 		}
 		if len(errout) != 0 {
 			test.Fatalf("script stderr: %s", errout)
 		}
-		data, err := os.ReadFile(errorFile)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(errorFile)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		return run{stdout: out, stderr: data, exitCode: cmd.ProcessState.ExitCode()}
 	}
@@ -126,15 +130,15 @@ func stdoutIsTTYRun(test *testing.T, transport, name string, args ...string) run
 		defer destination.Close()
 		cmd.Stdout = destination
 	}
-	err := childguard.Run(cmd, childguard.Options{})
+	runError := childguard.Run(cmd, childguard.Options{})
 	var exited *exec.ExitError
-	if err != nil && !errors.As(err, &exited) {
-		test.Fatal(err)
+	if runError != nil && !errors.As(runError, &exited) {
+		test.Fatal(runError)
 	}
 	if transport == "file" {
-		b, err := os.ReadFile(destination.Name())
-		if err != nil {
-			test.Fatal(err)
+		b, readError := os.ReadFile(destination.Name())
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		out.Write(b)
 	}

@@ -19,39 +19,39 @@ var oracleProducer bool
 func EnableProduction() { oracleProducer = true }
 func Printer(test *testing.T) string {
 	test.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	bridge, err := filepath.Abs("testdata/bridge.go")
-	if err != nil {
-		test.Fatal(err)
+	bridge, absolutePathError := filepath.Abs("testdata/bridge.go")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	driver, err := filepath.Abs("testdata/go_driver.go")
-	if err != nil {
-		test.Fatal(err)
+	driver, absolutePathError := filepath.Abs("testdata/go_driver.go")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	cohere := filepath.Join(root, "cohere")
 	mainPath := filepath.Join(cohere, "cmd/adamic_stage_one/main.go")
-	data, err := json.Marshal(map[string]any{"Replace": map[string]string{
+	data, encodeError := json.Marshal(map[string]any{"Replace": map[string]string{
 		filepath.Join(cohere, "internal/format/markdown/adamic_stage_one.go"): bridge,
 		mainPath: driver,
 	}})
-	if err != nil {
-		test.Fatal(err)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	overlayPath := filepath.Join(test.TempDir(), "overlay.json")
-	if err := os.WriteFile(overlayPath, data, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(overlayPath, data, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	const output = "go-printer-oracle-owner-v1"
 	arguments := []string{"-overlay=" + overlayPath}
 	if oracleProducer {
 		return buildcache.GoBuildIn(test, "cohere", output, mainPath, arguments)
 	}
-	inputs, err := buildcache.GoBuildInInputs("cohere", output, mainPath, arguments, nil)
-	if err != nil {
-		test.Fatal(err)
+	inputs, goBuildInInputsError := buildcache.GoBuildInInputs("cohere", output, mainPath, arguments, nil)
+	if goBuildInInputsError != nil {
+		test.Fatal(goBuildInInputsError)
 	}
 	product := buildcache.BuiltElsewhere(
 		test,

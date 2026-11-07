@@ -17,32 +17,32 @@ import (
 // Parse every pinned compiler source again so omissions and new literals fail.
 // Not parallel: writes testdata/capture-tsc.json when ADAMIC_UPDATE_CAPTURE_TABLE=1.
 func TestCaptureFactsCompilerTable(test *testing.T) {
-	data, err := os.ReadFile("testdata/capture-tsc.json")
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile("testdata/capture-tsc.json")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var table []captureLiteral
-	if err = json.Unmarshal(data, &table); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &table); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	// Reads: cohere
 	root := "../../cohere/TypeScript/tsc/testdata/fixtures/compiler"
 	var actual []captureLiteral
-	err = filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {
-		if err != nil {
-			return err
+	walkError := filepath.WalkDir(root, func(path string, entry os.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
 		if entry.IsDir() || !strings.HasSuffix(path, ".ts") {
 			return nil
 		}
-		data, err := os.ReadFile(path)
-		if err != nil {
-			return err
+		data, readError := os.ReadFile(path)
+		if readError != nil {
+			return readError
 		}
 		text := string(data)
-		absolute, err := filepath.Abs(path)
-		if err != nil {
-			return err
+		absolute, absolutePathError := filepath.Abs(path)
+		if absolutePathError != nil {
+			return absolutePathError
 		}
 		file := tsparser.ParseSourceFile(
 			ast.SourceFileParseOptions{FileName: tspath.RootedFilePathFromAbsolute(absolute)},
@@ -54,9 +54,9 @@ func TestCaptureFactsCompilerTable(test *testing.T) {
 			if n.Kind == ast.KindRegularExpressionLiteral {
 				literal := n.Text()
 				end := strings.LastIndex(literal, "/")
-				facts, err := CaptureFacts(literal[1:end], literal[end+1:])
-				if err != nil {
-					test.Errorf("%s: %v", path, err)
+				facts, captureFactsError := CaptureFacts(literal[1:end], literal[end+1:])
+				if captureFactsError != nil {
+					test.Errorf("%s: %v", path, captureFactsError)
 				}
 				pos := strings.Index(text[n.Pos():], literal) + n.Pos()
 				actual = append(actual, captureLiteral{
@@ -73,16 +73,16 @@ func TestCaptureFactsCompilerTable(test *testing.T) {
 		visit(file.AsNode())
 		return nil
 	})
-	if err != nil {
-		test.Fatal(err)
+	if walkError != nil {
+		test.Fatal(walkError)
 	}
 	if os.Getenv("ADAMIC_UPDATE_CAPTURE_TABLE") == "1" {
-		data, err := json.MarshalIndent(actual, "", "  ")
-		if err != nil {
-			test.Fatal(err)
+		data, encodeError := json.MarshalIndent(actual, "", "  ")
+		if encodeError != nil {
+			test.Fatal(encodeError)
 		}
-		if err = os.WriteFile("testdata/capture-tsc.json", append(data, '\n'), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile("testdata/capture-tsc.json", append(data, '\n'), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		return
 	}

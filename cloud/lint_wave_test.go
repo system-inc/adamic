@@ -15,9 +15,9 @@ import (
 func TestLintWaveCheck(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "lint-wave-check-tests.txt")
-	output, err := os.Create(path)
-	if err != nil {
-		test.Fatal(err)
+	output, createError := os.Create(path)
+	if createError != nil {
+		test.Fatal(createError)
 	}
 	command := toolchain.Command("python3", "-B", "lint-wave-check-test.py")
 	if command.Err == nil {
@@ -26,12 +26,12 @@ func TestLintWaveCheck(test *testing.T) {
 	command.Stdout = output
 	command.Stderr = output
 	runError := command.Run()
-	if err := output.Close(); err != nil {
-		test.Fatal(err)
+	if closeError := output.Close(); closeError != nil {
+		test.Fatal(closeError)
 	}
-	data, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if runError != nil {
 		test.Fatalf("worker check CLI tests: %v\n%s", runError, data)

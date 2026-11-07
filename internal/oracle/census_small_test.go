@@ -39,11 +39,11 @@ func TestCensusSmallStoppedSourceOnNode(test *testing.T) {
 	} {
 		test.Run(probe.file, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(
+			path, absolutePathError := filepath.Abs(
 				filepath.Join(repository, "internal/oracle/testdata/census_small_stopped", probe.file),
 			)
-			if err != nil {
-				test.Fatal(err)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			result := onNode(test, path)
 			if result.exitCode != 0 || string(result.stdout) != probe.stdout || len(result.stderr) != 0 {

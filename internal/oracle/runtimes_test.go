@@ -100,13 +100,13 @@ func TestRuntimeSetsAreEachUsed(test *testing.T) {
 			test.Errorf("the set [%s] is in runtimeproducts.Sets twice", name)
 		}
 		seen[name] = true
-		path, err := filepath.Abs(filepath.Join(repository, set.Witness))
-		if err != nil {
-			test.Fatal(err)
+		path, absolutePathError := filepath.Abs(filepath.Join(repository, set.Witness))
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
-		program, err := lowered(test, path)
-		if err != nil {
-			test.Errorf("the witness of [%s], %s: %v", name, set.Witness, err)
+		program, loweredError := lowered(test, path)
+		if loweredError != nil {
+			test.Errorf("the witness of [%s], %s: %v", name, set.Witness, loweredError)
 			continue
 		}
 		if got := native.Features(native.C(program)); !slices.Equal(got, set.Features) {
@@ -127,13 +127,13 @@ func TestRuntimeSetsAreEachUsed(test *testing.T) {
 // (#8k8yzn0). Mutant: a part dropped from runtimeInputs.
 func TestRuntimeProductKeyHoldsEveryPart(test *testing.T) {
 	test.Parallel()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	request, err := native.RuntimeRequestFor(native.Options{}, "ADAMIC_CLOSURE_CONVENTION")
-	if err != nil {
-		test.Fatal(err)
+	request, runtimeRequestForError := native.RuntimeRequestFor(native.Options{}, "ADAMIC_CLOSURE_CONVENTION")
+	if runtimeRequestForError != nil {
+		test.Fatal(runtimeRequestForError)
 	}
 	key := buildcache.NameKey(root, runtimeproducts.Inputs(request))
 	for index, part := range request.Portable {
@@ -168,9 +168,9 @@ func TestRuntimeProductKeyHoldsEveryPart(test *testing.T) {
 // most of 39.9 s (#8k8yzn0). Mutant: a part dropped from runtimeInputs.
 func TestRuntimeProductKeyHoldsEveryFeatureAndOption(test *testing.T) {
 	test.Parallel()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	asks := map[string]func(test *testing.T) native.RuntimeRequest{
 		"the plain release archive": func(
@@ -226,9 +226,9 @@ func TestRuntimeProductKeyHoldsEveryFeatureAndOption(test *testing.T) {
 
 func plain(test *testing.T, options native.Options, features ...string) native.RuntimeRequest {
 	test.Helper()
-	request, err := native.RuntimeRequestFor(options, features...)
-	if err != nil {
-		test.Fatal(err)
+	request, runtimeRequestForError := native.RuntimeRequestFor(options, features...)
+	if runtimeRequestForError != nil {
+		test.Fatal(runtimeRequestForError)
 	}
 	return request
 }
@@ -241,9 +241,9 @@ func TestARuntimeProductKeyIsTheSameThroughEitherLink(test *testing.T) {
 	test.Parallel()
 	const variable = "ADAMIC_TEST_RUNTIME_PRODUCT_KEY"
 	if os.Getenv(variable) == "1" {
-		root, err := filepath.Abs(repository)
-		if err != nil {
-			test.Fatal(err)
+		root, absolutePathError := filepath.Abs(repository)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		for _, features := range [][]string{nil, {"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_REGEXP_REPLACE_CALLBACK"}} {
 			request := plain(test, native.Options{Sanitize: true}, features...)
@@ -256,33 +256,33 @@ func TestARuntimeProductKeyIsTheSameThroughEitherLink(test *testing.T) {
 		}
 		return
 	}
-	compiler, err := toolchain.Path("clang")
-	if err != nil {
-		test.Fatal(err)
+	compiler, pathError := toolchain.Path("clang")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
-	real, err := filepath.EvalSymlinks(compiler)
-	if err != nil {
-		test.Fatal(err)
+	real, resolveSymlinksError := filepath.EvalSymlinks(compiler)
+	if resolveSymlinksError != nil {
+		test.Fatal(resolveSymlinksError)
 	}
-	home, err := filepath.EvalSymlinks(test.TempDir())
-	if err != nil {
-		test.Fatal(err)
+	home, resolveSymlinksError := filepath.EvalSymlinks(test.TempDir())
+	if resolveSymlinksError != nil {
+		test.Fatal(resolveSymlinksError)
 	}
 	tools := filepath.Join(home, "adamic-tools")
-	if err := os.MkdirAll(filepath.Join(tools, "bin"), 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(filepath.Join(tools, "bin"), 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	links := map[string]string{"clang": real}
 	if archiver := filepath.Join(filepath.Dir(real), "llvm-ar"); fileExists(archiver) {
 		links["llvm-ar"] = archiver
 	}
 	for name, target := range links {
-		if err := os.Symlink(target, filepath.Join(tools, "bin", name)); err != nil {
-			test.Fatal(err)
+		if symlinkError := os.Symlink(target, filepath.Join(tools, "bin", name)); symlinkError != nil {
+			test.Fatal(symlinkError)
 		}
 	}
-	if err := os.Symlink("adamic-tools", filepath.Join(home, ".adamic-tools")); err != nil {
-		test.Fatal(err)
+	if symlinkError := os.Symlink("adamic-tools", filepath.Join(home, ".adamic-tools")); symlinkError != nil {
+		test.Fatal(symlinkError)
 	}
 	keys := func(environment ...string) (string, string) {
 		test.Helper()
@@ -294,9 +294,9 @@ func TestARuntimeProductKeyIsTheSameThroughEitherLink(test *testing.T) {
 			}
 		}
 		command.Env = append(command.Env, append(environment, variable+"=1")...)
-		output, err := command.CombinedOutput()
-		if err != nil {
-			test.Fatalf("%v\n%s", err, output)
+		output, combinedOutputError := command.CombinedOutput()
+		if combinedOutputError != nil {
+			test.Fatalf("%v\n%s", combinedOutputError, output)
 		}
 		var compilers, keys []string
 		for _, line := range strings.Split(string(output), "\n") {
@@ -331,8 +331,8 @@ func TestARuntimeProductKeyIsTheSameThroughEitherLink(test *testing.T) {
 }
 
 func fileExists(path string) bool {
-	info, err := os.Stat(path)
-	return err == nil && info.Mode().IsRegular()
+	info, statError := os.Stat(path)
+	return statError == nil && info.Mode().IsRegular()
 }
 
 func TestProduct_NativeRuntimesShipped0(test *testing.T) {

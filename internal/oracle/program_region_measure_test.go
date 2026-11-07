@@ -24,9 +24,9 @@ func programHostMeasuredBuild(test *testing.T, enabled bool) string {
 			"internal/native",
 		},
 	}, func(directory string) error {
-		absolute, err := filepath.Abs("../../stage3/fixtures/host/14_getCurrentDirectory.a")
-		if err != nil {
-			return err
+		absolute, absolutePathError := filepath.Abs("../../stage3/fixtures/host/14_getCurrentDirectory.a")
+		if absolutePathError != nil {
+			return absolutePathError
 		}
 		code := native.C(programRegionLowered(test, absolute, enabled))
 		at := strings.LastIndex(code, "\treturn adamic_host_exit_status();")
@@ -67,9 +67,9 @@ func programHostMeasurement(test *testing.T, sample int) {
 	if runtime.GOOS != "linux" {
 		test.Skip("Linux getrusage measurement")
 	}
-	absolute, err := filepath.Abs("../../stage3/fixtures/host/14_getCurrentDirectory.a")
-	if err != nil {
-		test.Fatal(err)
+	absolute, absolutePathError := filepath.Abs("../../stage3/fixtures/host/14_getCurrentDirectory.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := onNode(test, absolute)
 	for _, enabled := range []bool{false, true} {

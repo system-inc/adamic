@@ -76,9 +76,11 @@ func asyncReview(test *testing.T, name string) {
 		if each.path != name {
 			continue
 		}
-		path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/async_review", each.path))
-		if err != nil {
-			test.Fatal(err)
+		path, absolutePathError := filepath.Abs(
+			filepath.Join(repository, "internal/oracle/testdata/async_review", each.path),
+		)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		source := onNode(test, path)
 		exit, stderr := 0, ""
@@ -88,19 +90,25 @@ func asyncReview(test *testing.T, name string) {
 		if source.exitCode != exit || string(source.stdout) != each.output || string(source.stderr) != stderr {
 			test.Fatalf("Node witness: %+v", source)
 		}
-		program, err := lowered(test, path)
+		program, loweredError := lowered(test, path)
 		if each.reason != "" {
 			var notYet *lower.NotYet
-			if !errors.As(err, &notYet) ||
-				!strings.Contains(err.Error(), each.reason) ||
+			if !errors.As(loweredError, &notYet) ||
+				!strings.Contains(loweredError.Error(), each.reason) ||
 				!strings.Contains(notYet.Where, each.location) {
-				test.Fatalf("want located refusal %q at %s: %v", each.reason, each.location, err)
+				test.Fatalf("want located refusal %q at %s: %v", each.reason, each.location, loweredError)
 			}
-			test.Logf("Node stdout %q, stderr %q, exit %d; %v", source.stdout, source.stderr, source.exitCode, err)
+			test.Logf(
+				"Node stdout %q, stderr %q, exit %d; %v",
+				source.stdout,
+				source.stderr,
+				source.exitCode,
+				loweredError,
+			)
 			return
 		}
-		if err != nil {
-			test.Fatal(err)
+		if loweredError != nil {
+			test.Fatal(loweredError)
 		}
 		actual, leaked, comparable := nativelyCheckingLeaks(test, program, true)
 		if leaked != "" {
@@ -174,13 +182,15 @@ func TestAsyncReviewMaybeBooleanAnd(test *testing.T) {
 
 func asyncReviewProgram(test *testing.T, name string) (string, run) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/async_review/accepted", name+".a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/async_review/accepted", name+".a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	return native.C(program), onNode(test, path)
 }
@@ -195,8 +205,8 @@ func TestAsyncReviewNativeSuspensionRemovedMutant(test *testing.T) {
 	}
 	mutant := control[:location[0]] + "base->resume(base, (adamic_value){.number = 0}, false);" + control[location[1]:]
 	binary := filepath.Join(test.TempDir(), "synchronous-resume")
-	if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(mutant, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	actual := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
 	if disagreement(source, actual) != "stdout differs" || actual.exitCode != 0 || len(actual.stderr) != 0 {
@@ -207,13 +217,15 @@ func TestAsyncReviewNativeSuspensionRemovedMutant(test *testing.T) {
 
 func TestAsyncReviewJavaScriptSuspensionRemovedMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/async_review/accepted/concurrent.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/async_review/accepted/concurrent.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	control := javascript.JavaScript(program)
 	suspension := regexp.MustCompile(`\(await (local_[0-9]+_suspension)\);`)
@@ -223,8 +235,8 @@ func TestAsyncReviewJavaScriptSuspensionRemovedMutant(test *testing.T) {
 	}
 	mutant := control[:location[0]] + control[location[2]:location[3]] + ";" + control[location[1]:]
 	file := filepath.Join(test.TempDir(), "synchronous.mjs")
-	if err := os.WriteFile(file, []byte(mutant), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(file, []byte(mutant), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	actual := execute(
 		test,
@@ -250,8 +262,8 @@ func TestAsyncReviewSnapshotRetainDroppedMutant(test *testing.T) {
 	}
 	mutant := control[:location[0]] + control[location[2]:location[3]] + control[location[1]:]
 	binary := filepath.Join(test.TempDir(), "borrowed-snapshot")
-	if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(mutant, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	actual := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary)
 	if actual.exitCode == 0 || !strings.Contains(string(actual.stderr), "heap-use-after-free") {
@@ -268,8 +280,8 @@ func TestAsyncReviewRejectionSwallowedMutant(test *testing.T) {
 		test.Fatal("missing rejection dispatch")
 	}
 	binary := filepath.Join(test.TempDir(), "swallowed-rejection")
-	if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(mutant, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	actual := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
 	if disagreement(source, actual) != "stdout differs" || actual.exitCode != 0 || len(actual.stderr) != 0 {

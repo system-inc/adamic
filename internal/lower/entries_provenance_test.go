@@ -37,9 +37,9 @@ func TestEntriesAllocationProof(test *testing.T) {
 	} {
 		test.Run(probe.source, func(test *testing.T) {
 			test.Parallel()
-			program, err := lowerSource(test, probe.source)
-			if err != nil {
-				test.Fatal(err)
+			program, lowerSourceError := lowerSource(test, probe.source)
+			if lowerSourceError != nil {
+				test.Fatal(lowerSourceError)
 			}
 			found := 0
 			inspect := func(value any) bool {
@@ -86,16 +86,16 @@ func TestEntriesRecordBoundaries(test *testing.T) {
 		}} {
 		test.Run(probe.reason, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			if probe.admitted {
-				if err != nil {
-					test.Fatal(err)
+				if lowerSourceError != nil {
+					test.Fatal(lowerSourceError)
 				}
 				return
 			}
 			var stopped *NotYet
-			if !errors.As(err, &stopped) || !strings.Contains(stopped.What, probe.reason) {
-				test.Fatalf("want explicit NotYet %q, got %v", probe.reason, err)
+			if !errors.As(lowerSourceError, &stopped) || !strings.Contains(stopped.What, probe.reason) {
+				test.Fatalf("want explicit NotYet %q, got %v", probe.reason, lowerSourceError)
 			}
 		})
 	}
@@ -126,12 +126,12 @@ func TestEntriesRecordMemoAnswersAsAFreshLowering(test *testing.T) {
 		},
 	} {
 		path := filepath.Join(test.TempDir(), "main.a")
-		if err := os.WriteFile(path, []byte(probe.source), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(probe.source), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
-		program, err := load.Load([]string{path})
-		if err != nil {
-			test.Fatal(err)
+		program, loadError := load.Load([]string{path})
+		if loadError != nil {
+			test.Fatal(loadError)
 		}
 		file := program.Files()[0]
 		checked, release := program.Checker(context.Background(), file)

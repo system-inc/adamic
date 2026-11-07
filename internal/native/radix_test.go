@@ -107,8 +107,8 @@ func TestToStringWithARadixMatchesNode(test *testing.T) {
 	}
 
 	binary := filepath.Join(test.TempDir(), "harness")
-	if err := Build(radixHarness, binary, Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(radixHarness, binary, Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	native := strings.Split(strings.TrimSuffix(runWithInput(test, input.String(), binary), "\n"), "\n")
 	oracle := strings.Split(
@@ -162,8 +162,8 @@ int main(int count, char **arguments) {
 }
 `
 	binary := filepath.Join(test.TempDir(), "harness")
-	if err := Build(harness, binary, Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(harness, binary, Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	const message = "toString() radix argument must be between 2 and 36"
 	for _, probe := range []struct {

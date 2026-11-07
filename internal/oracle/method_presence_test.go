@@ -21,9 +21,9 @@ import (
 func TestMethodPresenceAgreesWithNode(test *testing.T) {
 	test.Parallel()
 	directory := "internal/oracle/testdata/method_presence"
-	entries, err := os.ReadDir(filepath.Join(repository, directory))
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(filepath.Join(repository, directory))
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -54,23 +54,23 @@ func TestMethodPresenceAgreesWithNode(test *testing.T) {
 func TestMethodPresenceThroughAViewIsNotYet(test *testing.T) {
 	test.Parallel()
 	relative := "internal/oracle/testdata/method_presence/unproven/view_lacks_method.ts"
-	path, err := filepath.Abs(filepath.Join(repository, relative))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, relative))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	if want := onNode(test, path); string(want.stdout) != "undefined\nfunction\n" || want.exitCode != 0 {
 		test.Fatalf("Node: exit %d, stdout %q, want the view's real object to lack area", want.exitCode, want.stdout)
 	}
-	_, err = lowered(test, path)
+	_, loweredError := lowered(test, path)
 	var notYet *lower.NotYet
-	if errors.As(err, &notYet) && strings.HasSuffix(
-		err.Error(),
+	if errors.As(loweredError, &notYet) && strings.HasSuffix(
+		loweredError.Error(),
 		"a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it yet",
 	) {
 		return
 	}
-	if err != nil {
-		test.Fatalf("got %v, want a not-yet naming the unproven presence", err)
+	if loweredError != nil {
+		test.Fatalf("got %v, want a not-yet naming the unproven presence", loweredError)
 	}
 	generatorAgrees(test, relative)
 	test.Error("lowered, want a not-yet naming the unproven presence")

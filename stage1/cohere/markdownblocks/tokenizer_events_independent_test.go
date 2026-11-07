@@ -57,8 +57,8 @@ func tokenizerEventTopLevelUnit(test *testing.T, unit int) {
 
 		cases, want, names := fullCases, fullWant, fullNames
 		scratch := test.TempDir()
-		if err := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 		for _, file := range []string{
 			"inputChunks.ts",
@@ -67,9 +67,9 @@ func tokenizerEventTopLevelUnit(test *testing.T, unit int) {
 			"codec.ts",
 			"testdata/events_probe.ts",
 		} {
-			data, err := os.ReadFile(file)
-			if err != nil {
-				test.Fatal(err)
+			data, readError := os.ReadFile(file)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			if file == "tokenizerEvents.ts" {
 				if strings.Count(string(data), m.from) != 1 {
@@ -123,13 +123,19 @@ func tokenizerEventTopLevelUnit(test *testing.T, unit int) {
 			want := run{stdout: expected.Bytes()}
 			compare := func(side string, result run) {
 				clean(test, side, result)
-				if err := tokenizerEventDifference(test.Name(), side, want.stdout, result.stdout, rows); err != nil {
-					test.Fatal(err)
+				if tokenizerEventDifferenceError := tokenizerEventDifference(
+					test.Name(),
+					side,
+					want.stdout,
+					result.stdout,
+					rows,
+				); tokenizerEventDifferenceError != nil {
+					test.Fatal(tokenizerEventDifferenceError)
 				}
 			}
-			runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
-			if err != nil {
-				test.Fatal(err)
+			runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			type check struct {
 				name, command     string
@@ -172,9 +178,14 @@ func tokenizerEventTopLevelUnit(test *testing.T, unit int) {
 					started := time.Now()
 					var results []run
 					for repeat := 0; repeat < side.repeats; repeat++ {
-						result, err := pilotExecuteResult(ctx, side.environment, side.command, side.args...)
-						if err != nil {
-							return checked{}, err
+						result, pilotExecuteResultError := pilotExecuteResult(
+							ctx,
+							side.environment,
+							side.command,
+							side.args...,
+						)
+						if pilotExecuteResultError != nil {
+							return checked{}, pilotExecuteResultError
 						}
 						results = append(results, result)
 					}

@@ -23,10 +23,10 @@ func parallelScaling(test *testing.T, options Options) {
 	}
 	command := exec.Command(binary, "high_pointer")
 	command.Env = parallelEnvironment("1", false)
-	out, err := command.CombinedOutput()
-	failure, ok := err.(*exec.ExitError)
+	out, combinedOutputError := command.CombinedOutput()
+	failure, ok := combinedOutputError.(*exec.ExitError)
 	if !ok || failure.ExitCode() != 70 || !strings.Contains(string(out), "shape address exceeds 48 bits") {
-		test.Fatalf("pointer guard: %v: %s", err, out)
+		test.Fatalf("pointer guard: %v: %s", combinedOutputError, out)
 	}
 }
 
@@ -63,33 +63,33 @@ func TestParallelScaling_tsan(test *testing.T) {
 func scalingSnapshot(test *testing.T, harness, file string, rewrite func(string) string, options Options) string {
 	test.Helper()
 	directory := test.TempDir()
-	files, err := fs.ReadDir(runtime, "runtime")
-	if err != nil {
-		test.Fatal(err)
+	files, readDirectoryError := fs.ReadDir(runtime, "runtime")
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	for _, entry := range files {
-		data, err := fs.ReadFile(runtime, "runtime/"+entry.Name())
-		if err != nil {
-			test.Fatal(err)
+		data, readFileError := fs.ReadFile(runtime, "runtime/"+entry.Name())
+		if readFileError != nil {
+			test.Fatal(readFileError)
 		}
 		if entry.Name() == file {
 			data = []byte(rewrite(string(data)))
 		}
-		if err := os.WriteFile(filepath.Join(directory, entry.Name()), data, 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, entry.Name()), data, 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
-	library, err := RuntimeLibrary(directory, options)
-	if err != nil {
-		test.Fatal(err)
+	library, runtimeLibraryError := RuntimeLibrary(directory, options)
+	if runtimeLibraryError != nil {
+		test.Fatal(runtimeLibraryError)
 	}
-	source, err := os.ReadFile(filepath.Join("testdata", "parallel", harness))
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(filepath.Join("testdata", "parallel", harness))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	path := filepath.Join(directory, "main.c")
-	if err := os.WriteFile(path, source, 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, source, 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	name := "harness"
 	if options.ThreadSanitize {
@@ -99,8 +99,8 @@ func scalingSnapshot(test *testing.T, harness, file string, rewrite func(string)
 	arguments := append(Flags(options), "-I", filepath.Dir(library), path, "-o", binary)
 	arguments = append(arguments, RuntimeLinkFlags(library)...)
 	arguments = append(arguments, "-lm")
-	if output, err := exec.Command("clang", arguments...).CombinedOutput(); err != nil {
-		test.Fatalf("snapshot must compile: %v\n%s", err, output)
+	if output, combinedOutputError := exec.Command("clang", arguments...).CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("snapshot must compile: %v\n%s", combinedOutputError, output)
 	}
 	return binary
 }
@@ -161,12 +161,12 @@ func TestParallelScalingGuardMutants(test *testing.T) {
 		}, Options{})
 		command := exec.Command(binary, "high_pointer")
 		command.Env = parallelEnvironment("1", false)
-		output, err := command.CombinedOutput()
-		failure, ok := err.(*exec.ExitError)
+		output, combinedOutputError := command.CombinedOutput()
+		failure, ok := combinedOutputError.(*exec.ExitError)
 		if !ok || failure.ExitCode() == 70 || strings.Contains(string(output), "shape address exceeds 48 bits") {
-			test.Fatalf("pointer mutant did not defeat the guard assertion: %v: %s", err, output)
+			test.Fatalf("pointer mutant did not defeat the guard assertion: %v: %s", combinedOutputError, output)
 		}
-		test.Logf("pointer_guard caught by expected panic status/message: %v", err)
+		test.Logf("pointer_guard caught by expected panic status/message: %v", combinedOutputError)
 	})
 	test.Run("loser_free", func(test *testing.T) {
 		if goruntime.GOOS != "linux" {
@@ -182,11 +182,11 @@ func TestParallelScalingGuardMutants(test *testing.T) {
 		}, Options{Sanitize: true})
 		command := exec.Command(binary)
 		command.Env = parallelEnvironment("4", true)
-		output, err := command.CombinedOutput()
-		if err == nil || !strings.Contains(string(output), "LeakSanitizer: detected memory leaks") {
-			test.Fatalf("loser free mutant not caught: %v\n%s", err, output)
+		output, combinedOutputError := command.CombinedOutput()
+		if combinedOutputError == nil || !strings.Contains(string(output), "LeakSanitizer: detected memory leaks") {
+			test.Fatalf("loser free mutant not caught: %v\n%s", combinedOutputError, output)
 		}
-		test.Logf("loser_free caught by LeakSanitizer: %v", err)
+		test.Logf("loser_free caught by LeakSanitizer: %v", combinedOutputError)
 	})
 }
 

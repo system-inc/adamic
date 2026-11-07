@@ -14,14 +14,14 @@ import (
 func TestMixedTupleSpreadIsNotYet(test *testing.T) {
 	test.Parallel()
 	// Node prints 2:7:word8; one argument slot can't hold both a number and a string representation.
-	_, err := lowerSource(
+	_, lowerSourceError := lowerSource(
 		test,
 		"function read(number: number, text: string): string { return `${arguments.length}:${number}:${text}`; }\nconsole.log(read(...[7, `word${8}`]));\n",
 	)
 	var gap *NotYet
-	if !errors.As(err, &gap) ||
+	if !errors.As(lowerSourceError, &gap) ||
 		!strings.Contains(gap.What, "a call spreading a tuple with differently represented elements") {
-		test.Fatalf("got %v; want the mixed-representation tuple spread refusal", err)
+		test.Fatalf("got %v; want the mixed-representation tuple spread refusal", lowerSourceError)
 	}
 }
 
@@ -44,9 +44,11 @@ func TestArgumentsLengthRefusalFixtures(test *testing.T) {
 	for _, name := range []string{"indexing", "aliasing", "passing", "returning", "spreading", "writing", "arrow"} {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			source, err := os.ReadFile(filepath.Join("..", "oracle", "testdata", "arguments_length_refused", name+".a"))
-			if err != nil {
-				test.Fatal(err)
+			source, readError := os.ReadFile(
+				filepath.Join("..", "oracle", "testdata", "arguments_length_refused", name+".a"),
+			)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			message := other
 			if name == "writing" {
@@ -57,17 +59,18 @@ func TestArgumentsLengthRefusalFixtures(test *testing.T) {
 			}
 			for _, extension := range []string{".a", ".ts"} {
 				path := filepath.Join(test.TempDir(), "main"+extension)
-				if err := os.WriteFile(path, source, 0644); err != nil {
-					test.Fatal(err)
+				if writeError := os.WriteFile(path, source, 0644); writeError != nil {
+					test.Fatal(writeError)
 				}
-				checked, err := load.Load([]string{path})
-				if err != nil {
-					test.Fatal(err)
+				checked, loadError := load.Load([]string{path})
+				if loadError != nil {
+					test.Fatal(loadError)
 				}
-				_, err = Lower(context.Background(), checked)
+				_, lowerError := Lower(context.Background(), checked)
 				var refused *Refused
-				if !errors.As(err, &refused) || !strings.HasSuffix(err.Error(), "Adamic 0.1 refuses "+message) {
-					test.Fatalf("%s: got %v; want pinned refusal %q", extension, err, message)
+				if !errors.As(lowerError, &refused) ||
+					!strings.HasSuffix(lowerError.Error(), "Adamic 0.1 refuses "+message) {
+					test.Fatalf("%s: got %v; want pinned refusal %q", extension, lowerError, message)
 				}
 			}
 		})
@@ -96,18 +99,18 @@ func TestArgumentsCountLocalsAreNumberedTheSameEveryTime(test *testing.T) {
 		fmt.Fprintf(&source, "console.log(`${call%[1]d(new Reader%[1]d())} ${call%[1]d(new Other%[1]d())}`);\n", group)
 	}
 	path := filepath.Join(test.TempDir(), "main.a")
-	if err := os.WriteFile(path, []byte(source.String()), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source.String()), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	checked, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	checked, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	// Each local named argument_count, with the function that holds it, in the order the program numbers them.
 	numbering := func() string {
-		program, err := Lower(context.Background(), checked)
-		if err != nil {
-			test.Fatal(err)
+		program, lowerError := Lower(context.Background(), checked)
+		if lowerError != nil {
+			test.Fatal(lowerError)
 		}
 		var locals []string
 		for _, local := range program.Locals {

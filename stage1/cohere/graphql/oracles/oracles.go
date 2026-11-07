@@ -20,23 +20,23 @@ func EnableProduction() { oracleProducer = true }
 func Parser(test testing.TB) (string, string) {
 	test.Helper()
 	directory := test.TempDir()
-	cohere, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		test.Fatal(err)
+	cohere, absolutePathError := filepath.Abs(filepath.Join(repository, "cohere"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	side, err := filepath.Abs(filepath.Join("testdata", "cohere_side_test.go"))
-	if err != nil {
-		test.Fatal(err)
+	side, absolutePathError := filepath.Abs(filepath.Join("testdata", "cohere_side_test.go"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	packageDirectory := filepath.Join(cohere, "internal", "format", "graphql")
 	replace := map[string]string{filepath.Join(packageDirectory, "adamic_port_side_test.go"): side}
-	overlay, err := json.Marshal(map[string]any{"Replace": replace})
-	if err != nil {
-		test.Fatal(err)
+	overlay, encodeError := json.Marshal(map[string]any{"Replace": replace})
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	overlayPath := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(overlayPath, overlay, 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(overlayPath, overlay, 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	const output = "graphql.test-oracle-owner-v1"
 	arguments := []string{"-overlay=" + overlayPath}
@@ -44,9 +44,15 @@ func Parser(test testing.TB) (string, string) {
 	if oracleProducer {
 		binary = buildcache.GoTest(test, "cohere", output, "./internal/format/graphql", arguments)
 	} else {
-		inputs, err := buildcache.GoTestInputs("cohere", output, "./internal/format/graphql", arguments, nil)
-		if err != nil {
-			test.Fatal(err)
+		inputs, goTestInputsError := buildcache.GoTestInputs(
+			"cohere",
+			output,
+			"./internal/format/graphql",
+			arguments,
+			nil,
+		)
+		if goTestInputsError != nil {
+			test.Fatal(goTestInputsError)
 		}
 		product := buildcache.BuiltElsewhere(
 			test,

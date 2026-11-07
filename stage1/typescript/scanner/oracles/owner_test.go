@@ -6,8 +6,8 @@ import (
 )
 
 func TestMain(m *testing.M) {
-	if err := os.Chdir(".."); err != nil {
-		panic(err)
+	if chdirError := os.Chdir(".."); chdirError != nil {
+		panic(chdirError)
 	}
 	producer = true
 	os.Exit(m.Run())

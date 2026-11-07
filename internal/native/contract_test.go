@@ -34,17 +34,17 @@ func fusingProcessor() (cpu string, why string, ok bool) {
 	case "amd64":
 		switch goruntime.GOOS {
 		case "linux":
-			cpuinfo, err := os.ReadFile("/proc/cpuinfo")
-			if err != nil {
-				return "", "no /proc/cpuinfo to say whether this x86 has FMA: " + err.Error(), false
+			cpuinfo, readError := os.ReadFile("/proc/cpuinfo")
+			if readError != nil {
+				return "", "no /proc/cpuinfo to say whether this x86 has FMA: " + readError.Error(), false
 			}
 			if !strings.Contains(string(cpuinfo), " fma ") {
 				return "", "this x86 has no FMA (/proc/cpuinfo doesn't list fma)", false
 			}
 			return "haswell", "", true
 		case "darwin":
-			output, err := exec.Command("sysctl", "-n", "hw.optional.fma").Output()
-			if err != nil || strings.TrimSpace(string(output)) != "1" {
+			output, outputError := exec.Command("sysctl", "-n", "hw.optional.fma").Output()
+			if outputError != nil || strings.TrimSpace(string(output)) != "1" {
 				return "", "this Intel Mac has no FMA (sysctl hw.optional.fma isn't 1)", false
 			}
 			return "haswell", "", true
@@ -65,16 +65,19 @@ func TestArithmeticIsNeverFused(test *testing.T) {
 		test.Skip(why)
 	}
 	source := filepath.Join(test.TempDir(), "fused.c")
-	if err := os.WriteFile(source, []byte(fusedHarness), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(source, []byte(fusedHarness), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	control := filepath.Join(test.TempDir(), "contracted")
 	arguments := []string{"-std=c11", "-O2", "-ffp-contract=fast", "-o", control, source}
 	if cpu != "" {
 		arguments = append(arguments, "-march="+cpu)
 	}
-	if combined, err := toolchain.Command("clang", arguments...).CombinedOutput(); err != nil {
-		test.Fatalf("clang %v: %v\n%s", arguments, err, combined)
+	if combined, combinedOutputError := toolchain.Command(
+		"clang",
+		arguments...,
+	).CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("clang %v: %v\n%s", arguments, combinedOutputError, combined)
 	}
 	if got := runWithInput(test, "", control); got == "0 0 0\n" {
 		test.Fatalf(
@@ -85,8 +88,8 @@ func TestArithmeticIsNeverFused(test *testing.T) {
 	}
 	for _, sanitize := range []bool{false, true} {
 		binary := filepath.Join(test.TempDir(), "fused")
-		if err := Build(fusedHarness, binary, Options{Sanitize: sanitize, cpu: cpu}); err != nil {
-			test.Fatal(err)
+		if buildError := Build(fusedHarness, binary, Options{Sanitize: sanitize, cpu: cpu}); buildError != nil {
+			test.Fatal(buildError)
 		}
 		if got := runWithInput(test, "", binary); got != "0 0 0\n" {
 			test.Errorf("sanitize %v: got %q, want \"0 0 0\\n\", as JavaScript computes it", sanitize, got)

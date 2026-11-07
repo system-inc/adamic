@@ -87,7 +87,15 @@ func run(arguments []string) (code int) {
 			return code
 		}
 		for _, declaration := range program.Declarations(context.Background()) {
-			fmt.Printf("%s:%d:%d: %s %s: %s\n", relative(declaration.File), declaration.Line, declaration.Column, declaration.Kind, declaration.Name, declaration.Type)
+			fmt.Printf(
+				"%s:%d:%d: %s %s: %s\n",
+				relative(declaration.File),
+				declaration.Line,
+				declaration.Column,
+				declaration.Kind,
+				declaration.Name,
+				declaration.Type,
+			)
 		}
 		return 0
 	case len(arguments) == 2 && arguments[0] == "c":
@@ -112,8 +120,16 @@ func run(arguments []string) (code int) {
 		}
 		fmt.Print(javascript.JavaScript(lowered))
 		return 0
-	case len(arguments) >= 7 && arguments[0] == "build" && arguments[1] == "--target" && arguments[3] == "--reactor" && arguments[5] == "-o":
-		return build(arguments[4], arguments[6], append([]string{"--target", arguments[2], "--reactor"}, arguments[7:]...))
+	case len(arguments) >= 7 &&
+		arguments[0] == "build" &&
+		arguments[1] == "--target" &&
+		arguments[3] == "--reactor" &&
+		arguments[5] == "-o":
+		return build(
+			arguments[4],
+			arguments[6],
+			append([]string{"--target", arguments[2], "--reactor"}, arguments[7:]...),
+		)
 	case len(arguments) >= 6 && arguments[0] == "build" && arguments[1] == "--target" && arguments[4] == "-o":
 		return build(arguments[3], arguments[5], append([]string{"--target", arguments[2]}, arguments[6:]...))
 	case len(arguments) >= 4 && arguments[0] == "build" && arguments[2] == "-o":
@@ -170,13 +186,13 @@ func revision(information *debug.BuildInfo, ok bool) string {
 
 // clangVersion is `clang <path>: <its --version's first line>`, or `clang: not found (<why>)`.
 func clangVersion() string {
-	compiler, err := toolchain.Path("clang")
-	if err != nil {
-		return fmt.Sprintf("clang: not found (%v)", err)
+	compiler, pathError := toolchain.Path("clang")
+	if pathError != nil {
+		return fmt.Sprintf("clang: not found (%v)", pathError)
 	}
-	report, err := toolchain.Command(compiler, "--version").Output()
-	if err != nil {
-		return fmt.Sprintf("clang: not found (%v)", err)
+	report, outputError := toolchain.Command(compiler, "--version").Output()
+	if outputError != nil {
+		return fmt.Sprintf("clang: not found (%v)", outputError)
 	}
 	first, _, _ := strings.Cut(string(report), "\n")
 	return fmt.Sprintf("clang %s: %s", compiler, strings.TrimSpace(first))
@@ -184,16 +200,16 @@ func clangVersion() string {
 
 // check loads a program, printing why when it can't. A nil program comes with the exit code.
 func check(paths []string) (*load.Program, int) {
-	program, err := load.Load(paths)
-	if err != nil {
+	program, loadError := load.Load(paths)
+	if loadError != nil {
 		var checkError *load.CheckError
-		if errors.As(err, &checkError) {
+		if errors.As(loadError, &checkError) {
 			for _, diagnostic := range checkError.Diagnostics {
 				fmt.Fprintln(os.Stderr, relative(diagnostic))
 			}
 			return nil, 1
 		}
-		fmt.Fprintf(os.Stderr, "adamic: %v\n", err)
+		fmt.Fprintf(os.Stderr, "adamic: %v\n", loadError)
 		return nil, 1
 	}
 	return program, 0
@@ -212,10 +228,14 @@ func compileLibrary(path string, tsgo, debug bool) (*ir.Program, int) {
 	if tsgo {
 		program.EnableTSGo()
 	}
-	options := lower.Options{ProgramRegion: programRegionRequested(), OwnershipQuery: os.Getenv("ADAMIC_OWNERSHIP_QUERY") == "1", Debug: debug}
-	lowered, err := lower.LowerWithOptions(context.Background(), program, options)
-	if err != nil {
-		fmt.Fprintln(os.Stderr, relative("adamic: "+err.Error()))
+	options := lower.Options{
+		ProgramRegion:  programRegionRequested(),
+		OwnershipQuery: os.Getenv("ADAMIC_OWNERSHIP_QUERY") == "1",
+		Debug:          debug,
+	}
+	lowered, lowerWithOptionsError := lower.LowerWithOptions(context.Background(), program, options)
+	if lowerWithOptionsError != nil {
+		fmt.Fprintln(os.Stderr, relative("adamic: "+lowerWithOptionsError.Error()))
 		return nil, 1
 	}
 	return lowered, 0
@@ -224,8 +244,8 @@ func compileLibrary(path string, tsgo, debug bool) (*ir.Program, int) {
 // relative shortens a path under the working directory, so output reads the way the command was
 // typed. Anything else passes through unchanged.
 func relative(text string) string {
-	workingDirectory, err := os.Getwd()
-	if err != nil {
+	workingDirectory, workingDirectoryError := os.Getwd()
+	if workingDirectoryError != nil {
 		return text
 	}
 	prefix := filepath.ToSlash(workingDirectory) + "/"

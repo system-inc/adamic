@@ -17,13 +17,15 @@ func TestNodePathBasenameMutants(test *testing.T) {
 	for _, one := range cases {
 		test.Run(one.name, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_path_basename.a"))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/node_path_basename.a"),
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			how := inputRun{directory: filepath.Dir(path)}
 			truth := onNodeWith(test, how, path)
@@ -41,8 +43,8 @@ func TestNodePathBasenameMutants(test *testing.T) {
 				`}`, 1)
 			shared := sharedDirectory(test)
 			binary := filepath.Join(shared, "mutant")
-			if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(source, binary, native.Options{Sanitize: true}); buildError != nil {
+				test.Fatal(buildError)
 			}
 			got := executeInput(test, how, nodeFSDirectorySanitizerEnvironment(), binary)
 			if got.exitCode != 0 || len(got.stderr) != 0 {

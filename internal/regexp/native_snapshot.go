@@ -86,15 +86,15 @@ func (p *Program) NativeBytecodeSnapshot() ([]byte, error) {
 			}
 			boolean(i.look != nil)
 			if i.look != nil {
-				if err := emit(i.look); err != nil {
-					return err
+				if emitError := emit(i.look); emitError != nil {
+					return emitError
 				}
 			}
 		}
 		return nil
 	}
-	if err := emit(p); err != nil {
-		return nil, err
+	if emitError := emit(p); emitError != nil {
+		return nil, emitError
 	}
 	return out, nil
 }

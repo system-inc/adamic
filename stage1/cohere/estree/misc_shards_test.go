@@ -78,9 +78,9 @@ func miscIDs(prefix string, cases []string) []string {
 // Unset runs every shard. Each leaf retains every implementation for its cases.
 func miscRunShards(test *testing.T, count int, ids []string, check func(*testing.T, int)) {
 	test.Helper()
-	shards, err := miscPlan(ids, count)
-	if err != nil {
-		test.Fatal(err)
+	shards, miscPlanError := miscPlan(ids, count)
+	if miscPlanError != nil {
+		test.Fatal(miscPlanError)
 	}
 	selected, boxes := 0, 1
 	if value := os.Getenv("ADAMIC_TEST_SHARD"); value != "" {
@@ -88,12 +88,13 @@ func miscRunShards(test *testing.T, count int, ids []string, check func(*testing
 		if len(parts) != 2 {
 			test.Fatalf("invalid ADAMIC_TEST_SHARD %q", value)
 		}
-		selected, err = strconv.Atoi(parts[0])
-		if err != nil {
-			test.Fatal(err)
+		var parseError error
+		selected, parseError = strconv.Atoi(parts[0])
+		if parseError != nil {
+			test.Fatal(parseError)
 		}
-		boxes, err = strconv.Atoi(parts[1])
-		if err != nil || boxes < 1 || boxes > count || selected < 0 || selected >= boxes {
+		boxes, parseError = strconv.Atoi(parts[1])
+		if parseError != nil || boxes < 1 || boxes > count || selected < 0 || selected >= boxes {
 			test.Fatalf("invalid ADAMIC_TEST_SHARD %q", value)
 		}
 	}
@@ -133,8 +134,8 @@ func miscPlantedProof(test *testing.T, count int, ids []string, check func(bool)
 	marker := "ADAMIC_ESTREE_MISC_PROOF"
 	if os.Getenv(marker) == test.Name() {
 		miscRunShards(test, count, ids, func(test *testing.T, i int) {
-			if err := check(i == planted); err != nil {
-				test.Fatal(err)
+			if checkError := check(i == planted); checkError != nil {
+				test.Fatal(checkError)
 			}
 		})
 		return
@@ -146,12 +147,12 @@ func miscPlantedProof(test *testing.T, count int, ids []string, check func(bool)
 		}
 	}
 	command.Env = append(command.Env, marker+"="+test.Name())
-	output, err := command.CombinedOutput()
+	output, combinedOutputError := command.CombinedOutput()
 	leaf := fmt.Sprintf("%s/shard-%03d", test.Name(), miscShard(ids[planted], count))
-	if err == nil ||
+	if combinedOutputError == nil ||
 		bytes.Count(output, []byte("--- FAIL: "+test.Name()+"/shard-")) != 1 ||
 		!bytes.Contains(output, []byte("--- FAIL: "+leaf+" ")) {
-		test.Fatalf("planted failure must be caught only by %s: exit=%v\n%s", leaf, err, output)
+		test.Fatalf("planted failure must be caught only by %s: exit=%v\n%s", leaf, combinedOutputError, output)
 	}
 	test.Logf("planted case %s caught only by %s", ids[planted], leaf)
 }
@@ -168,20 +169,20 @@ func miscOracle(test *testing.T) string {
 func miscBuild(test *testing.T, path string) (string, string) {
 	test.Helper()
 	product := func(directory string) error {
-		program, err := load.Load([]string{path})
-		if err != nil {
-			return err
+		program, loadError := load.Load([]string{path})
+		if loadError != nil {
+			return loadError
 		}
-		lowered, err := lower.Lower(context.Background(), program)
-		if err != nil {
-			return err
+		lowered, lowerError := lower.Lower(context.Background(), program)
+		if lowerError != nil {
+			return lowerError
 		}
-		if err := native.Build(
+		if buildError := native.Build(
 			native.C(lowered),
 			filepath.Join(directory, "port"),
 			native.Options{Sanitize: true},
-		); err != nil {
-			return err
+		); buildError != nil {
+			return buildError
 		}
 		return os.WriteFile(filepath.Join(directory, "port.mjs"), []byte(javascript.JavaScript(lowered)), 0644)
 	}
@@ -211,11 +212,11 @@ func miscBuild(test *testing.T, path string) (string, string) {
 // CPU includes this test process and all completed child processes.
 func miscCPU() float64 {
 	var self, child syscall.Rusage
-	if err := syscall.Getrusage(syscall.RUSAGE_SELF, &self); err != nil {
-		panic(err)
+	if getrusageError := syscall.Getrusage(syscall.RUSAGE_SELF, &self); getrusageError != nil {
+		panic(getrusageError)
 	}
-	if err := syscall.Getrusage(syscall.RUSAGE_CHILDREN, &child); err != nil {
-		panic(err)
+	if getrusageError := syscall.Getrusage(syscall.RUSAGE_CHILDREN, &child); getrusageError != nil {
+		panic(getrusageError)
 	}
 	return float64(self.Utime.Sec+self.Stime.Sec+child.Utime.Sec+child.Stime.Sec) +
 		float64(self.Utime.Usec+self.Stime.Usec+child.Utime.Usec+child.Stime.Usec)/1e6
@@ -235,7 +236,7 @@ func TestMiscShardUnionRejectsInvalidEnumeration(test *testing.T) {
 	}{
 		{[]string{"a", "a"}, 2}, {[]string{"a", ""}, 2}, {nil, 2}, {[]string{"a"}, 0},
 	} {
-		if _, err := miscPlan(item.ids, item.count); err == nil {
+		if _, miscPlanError := miscPlan(item.ids, item.count); miscPlanError == nil {
 			test.Fatalf("invalid enumeration accepted: %+v", item)
 		}
 	}
@@ -243,9 +244,9 @@ func TestMiscShardUnionRejectsInvalidEnumeration(test *testing.T) {
 
 func miscDigest(test *testing.T, path string) string {
 	test.Helper()
-	data, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return fmt.Sprintf("%x", sha256.Sum256(data))
 }
@@ -261,15 +262,15 @@ func miscMutant(test *testing.T, file, from, to string) string {
 		Toolchain: []string{runtime.Version()},
 	}
 	directory := buildcache.Product(test, inputs, func(directory string) error {
-		files, err := filepath.Glob("*.ts")
-		if err != nil {
-			return err
+		files, globError := filepath.Glob("*.ts")
+		if globError != nil {
+			return globError
 		}
 		found := false
 		for _, name := range files {
-			data, err := os.ReadFile(name)
-			if err != nil {
-				return err
+			data, readError := os.ReadFile(name)
+			if readError != nil {
+				return readError
 			}
 			text := string(data)
 			if name == file {
@@ -284,8 +285,8 @@ func miscMutant(test *testing.T, file, from, to string) string {
 				"'../../typescript/",
 				"'"+filepath.ToSlash(filepath.Join(repo, "stage1/typescript"))+"/",
 			)
-			if err := os.WriteFile(filepath.Join(directory, name), []byte(text), 0644); err != nil {
-				return err
+			if writeError := os.WriteFile(filepath.Join(directory, name), []byte(text), 0644); writeError != nil {
+				return writeError
 			}
 		}
 		if !found {
@@ -320,10 +321,12 @@ func miscTextAnswers(test *testing.T, oracle string, texts []string, extension s
 
 // Match native's archiver selection, including its GNU ar fallback.
 func miscArchiverTool() string {
-	compiler, err := toolchain.Path("clang")
-	if err == nil {
+	compiler, pathError := toolchain.Path("clang")
+	if pathError == nil {
 		candidate := filepath.Join(filepath.Dir(compiler), "llvm-ar")
-		if info, err := os.Stat(candidate); err == nil && info.Mode().IsRegular() && info.Mode().Perm()&0111 != 0 {
+		if info, statError := os.Stat(
+			candidate,
+		); statError == nil && info.Mode().IsRegular() && info.Mode().Perm()&0111 != 0 {
 			return buildcache.Tool(candidate, "--version")
 		}
 	}
@@ -347,9 +350,9 @@ func TestMiscShardGrowthKeepsAssignments(test *testing.T) {
 		"stage1/cohere/estree/exports_test.go:export",
 		[]string{"@d export class C {}", "@d export default class C {}"},
 	)...)
-	before, err := miscPlan(original, shards)
-	if err != nil {
-		test.Fatal(err)
+	before, miscPlanError := miscPlan(original, shards)
+	if miscPlanError != nil {
+		test.Fatal(miscPlanError)
 	}
 	assignments := make(map[string]int)
 	for shard, indexes := range before {
@@ -371,9 +374,9 @@ func TestMiscShardGrowthKeepsAssignments(test *testing.T) {
 		[]string{"new case", "@d export default class C {}", "@d export class C {}"},
 	)
 	grown = append(grown, generated...)
-	after, err := miscPlan(grown, shards)
-	if err != nil {
-		test.Fatal(err)
+	after, miscPlanError := miscPlan(grown, shards)
+	if miscPlanError != nil {
+		test.Fatal(miscPlanError)
 	}
 	seen := 0
 	for shard, indexes := range after {

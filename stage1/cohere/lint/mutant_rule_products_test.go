@@ -33,13 +33,13 @@ func mutantRuleDescriptor(test *testing.T, slug string) registry.Descriptor {
 
 func mutantRuleMutation(test *testing.T, descriptor registry.Descriptor) mutantRuleChange {
 	test.Helper()
-	data, err := os.ReadFile(filepath.Join("rules", descriptor.Slug, "mutant.json"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join("rules", descriptor.Slug, "mutant.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var change mutantRuleChange
-	if err := json.Unmarshal(data, &change); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &change); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if change.File == "" {
 		change.File = descriptor.Module
@@ -96,23 +96,23 @@ func mutantRuleProduct(test *testing.T, slug string) string {
 				change.To,
 				filepath.Join("rules", slug, change.File),
 			)
-			if _, err := registry.Generate(port); err != nil {
-				return err
+			if _, generateError := registry.Generate(port); generateError != nil {
+				return generateError
 			}
-			program, err := load.Load([]string{filepath.Join(port, "main.ts")})
-			if err != nil {
-				return err
+			program, loadError := load.Load([]string{filepath.Join(port, "main.ts")})
+			if loadError != nil {
+				return loadError
 			}
-			lowered, err := lower.Lower(context.Background(), program)
-			if err != nil {
-				return err
+			lowered, lowerError := lower.Lower(context.Background(), program)
+			if lowerError != nil {
+				return lowerError
 			}
-			if err := os.WriteFile(
+			if writeError := os.WriteFile(
 				filepath.Join(out, "program.mjs"),
 				[]byte(javascript.JavaScript(lowered)),
 				0644,
-			); err != nil {
-				return err
+			); writeError != nil {
+				return writeError
 			}
 			test.Logf("cold mutant %s JavaScript=%s", slug, time.Since(started))
 			// The port's imports name this checkout for the build's own lowering; the product names it <repository>
@@ -124,9 +124,9 @@ func mutantRuleProduct(test *testing.T, slug string) string {
 		test.Fatalf("mutant %s product failed earlier in this process", slug)
 	}
 	// Node and the loader read the port, so callers get the copy whose imports name this checkout.
-	directory, err := buildcache.Resolved(value.directory)
-	if err != nil {
-		test.Fatal(err)
+	directory, resolvedError := buildcache.Resolved(value.directory)
+	if resolvedError != nil {
+		test.Fatal(resolvedError)
 	}
 	return directory
 }
@@ -159,9 +159,9 @@ func TestProduct_LintMutantNativeCanary(test *testing.T) {
 // A shard's work uses the runner directly; products have already generated the registry.
 func mutantRuleNode(test *testing.T, ctx context.Context, module, manifest string) execution {
 	test.Helper()
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return ownedWitnessExecute(
 		test,
@@ -228,8 +228,8 @@ func mutantRuleShard(test *testing.T, slug string) {
 		if os.Getenv("ADAMIC_MUTANT_SHARD_PROBE") == slug+":"+side.name {
 			got = want
 		}
-		if err := mutantRuleKilled(change.Name, side.name, got, want); err != nil {
-			test.Fatal(err)
+		if mutantRuleKilledError := mutantRuleKilled(change.Name, side.name, got, want); mutantRuleKilledError != nil {
+			test.Fatal(mutantRuleKilledError)
 		}
 		test.Logf("%s caught on %s: %s", change.Name, side.name, difference(got, want))
 	}

@@ -49,13 +49,13 @@ func init() {
 // Only the leak check exposes the resulting strong cycle.
 func TestNestedSiblingCycleMutantIsCaught(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/nested_mutual.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/nested_mutual.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	bindings := map[int]int{}
 	owner := -1
@@ -119,17 +119,17 @@ func TestNestedSiblingCycleMutantIsCaught(test *testing.T) {
 
 func TestNestedCycleRefusal(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/refusals/nested_cycle.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/refusals/nested_cycle.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
+	program, loweredError := lowered(test, path)
 	var refused *lower.Refused
-	if errors.As(err, &refused) && strings.Contains(err.Error(), "adamic/cycle-capable") {
+	if errors.As(loweredError, &refused) && strings.Contains(loweredError.Error(), "adamic/cycle-capable") {
 		return
 	}
-	if err != nil {
-		test.Fatalf("want cycle-capable refusal, got %v", err)
+	if loweredError != nil {
+		test.Fatalf("want cycle-capable refusal, got %v", loweredError)
 	}
 	oracle := onNode(test, path)
 	actual, binary := nativelyUncached(test, program)
@@ -149,25 +149,27 @@ func TestNestedCycleRefusal(test *testing.T) {
 
 func TestNestedRebindingCheckerRefusal(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/refusals/nested_rebinding.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/refusals/nested_rebinding.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	_, err = load.Load([]string{path})
-	if err == nil || !strings.Contains(err.Error(), "TS2630") {
-		test.Fatalf("want checker refusal, got %v", err)
+	_, loadError := load.Load([]string{path})
+	if loadError == nil || !strings.Contains(loadError.Error(), "TS2630") {
+		test.Fatalf("want checker refusal, got %v", loadError)
 	}
 }
 
 func TestNestedCallbackCarrierMutantIsCaught(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/nested_callback_escaped.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/nested_callback_escaped.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	changed := false
 	for index := range program.Functions {

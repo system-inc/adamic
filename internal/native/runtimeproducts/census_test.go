@@ -127,14 +127,16 @@ func TestProduct_AgreementCensusExports(test *testing.T) {
 // censusImports is what product, a GoExports product's directory, holds: each package's export data by its import path
 // (never a variant compiled for a test), the packages of the tree among them, and every package it lists, variants by
 // their own path.
-func censusImports(product string) (exports map[string]string, tree []string, listed map[string]bool, err error) {
-	encoded, err := os.ReadFile(filepath.Join(product, "listing.json"))
-	if err != nil {
-		return nil, nil, nil, err
+func censusImports(
+	product string,
+) (exports map[string]string, tree []string, listed map[string]bool, censusImportsError error) {
+	encoded, readError := os.ReadFile(filepath.Join(product, "listing.json"))
+	if readError != nil {
+		return nil, nil, nil, readError
 	}
 	var listing []buildcache.ListedPackage
-	if err := json.Unmarshal(encoded, &listing); err != nil {
-		return nil, nil, nil, err
+	if decodeError := json.Unmarshal(encoded, &listing); decodeError != nil {
+		return nil, nil, nil, decodeError
 	}
 	exports, listed = map[string]string{}, map[string]bool{}
 	for _, pkg := range listing {
@@ -198,9 +200,9 @@ func leanCensus(
 ) ([]string, error) {
 	context := build.Default
 	context.GOOS, context.GOARCH, context.CgoEnabled = "linux", "amd64", true
-	listed, err := context.ImportDir(directory, 0)
-	if err != nil {
-		return nil, err
+	listed, importDirectoryError := context.ImportDir(directory, 0)
+	if importDirectoryError != nil {
+		return nil, importDirectoryError
 	}
 	findings := map[string]bool{}
 	for _, name := range append(slices.Clone(listed.CgoFiles), listed.SFiles...) {
@@ -210,14 +212,14 @@ func leanCensus(
 	var files []*ast.File
 	production := map[*ast.File]bool{}
 	for index, name := range slices.Concat(listed.GoFiles, listed.CgoFiles, listed.TestGoFiles) {
-		file, err := parser.ParseFile(
+		file, parseFileError := parser.ParseFile(
 			fileSet,
 			filepath.Join(directory, name),
 			nil,
 			parser.ParseComments|parser.SkipObjectResolution,
 		)
-		if err != nil {
-			return nil, err
+		if parseFileError != nil {
+			return nil, parseFileError
 		}
 		files = append(files, file)
 		production[file] = index < len(listed.GoFiles)+len(listed.CgoFiles)
@@ -237,13 +239,13 @@ func leanCensus(
 		Uses: map[*ast.Ident]types.Object{}, Defs: map[*ast.Ident]types.Object{},
 		Types: map[ast.Expr]types.TypeAndValue{}, Selections: map[*ast.SelectorExpr]*types.Selection{},
 	}
-	checkError := func(err error) {
+	checkError := func(sourceError error) {
 		var typeError types.Error
-		if errors.As(err, &typeError) {
+		if errors.As(sourceError, &typeError) {
 			position := typeError.Fset.Position(typeError.Pos)
-			err = fmt.Errorf("%s:%d: %s", filepath.Base(position.Filename), position.Line, typeError.Msg)
+			sourceError = fmt.Errorf("%s:%d: %s", filepath.Base(position.Filename), position.Line, typeError.Msg)
 		}
-		findings[fmt.Sprintf("a type error, which fails the census closed: %v", err)] = true
+		findings[fmt.Sprintf("a type error, which fails the census closed: %v", sourceError)] = true
 	}
 	checked, _ := (&types.Config{Importer: imports, Error: checkError}).Check(importPath, fileSet, files, info)
 	if checked == nil {
@@ -373,14 +375,14 @@ func leanCensus(
 			if path == importPath || slices.Contains(leanSlice, path) {
 				continue
 			}
-			other, err := imports.Import(path)
-			if err != nil {
+			other, importError := imports.Import(path)
+			if importError != nil {
 				findings[fmt.Sprintf(
 					"%s: an interface call of %s, and the census can't read %s's types: %v",
 					at(node),
 					method,
 					path,
-					err,
+					importError,
 				)] = true
 				continue
 			}
@@ -582,7 +584,9 @@ func leanCensus(
 				filepath.Base(file),
 			)] = true
 		}
-		if content, err := os.ReadFile(file); err == nil && strings.Contains(string(content), "//go:linkname") {
+		if content, readError := os.ReadFile(
+			file,
+		); readError == nil && strings.Contains(string(content), "//go:linkname") {
 			findings[fmt.Sprintf("%s holds a go:linkname, which the census can't follow", filepath.Base(file))] = true
 		}
 		// M2: a reached package variable another package could write is beyond the census, unless scheduling names it.
@@ -919,8 +923,8 @@ func writeRoot(expression ast.Expr, info *types.Info) types.Object {
 
 // declares says whether file, an absolute path, is one declared names, relative to root, or under a directory it names.
 func declares(root string, declared []string, file string) bool {
-	relative, err := filepath.Rel(root, file)
-	if err != nil {
+	relative, relativePathError := filepath.Rel(root, file)
+	if relativePathError != nil {
 		return false
 	}
 	relative = filepath.ToSlash(relative)
@@ -954,9 +958,9 @@ func receiverName(declaration *ast.FuncDecl) string {
 // internal/native's test binary links this package or agreementproducts, the lean callers of native's code.
 func censusTypes(test *testing.T) (exports map[string]string, tree []string, testsBuildLean bool) {
 	test.Helper()
-	exports, tree, listed, err := censusImports(censusExports(test))
-	if err != nil {
-		test.Fatal(err)
+	exports, tree, listed, censusImportsError := censusImports(censusExports(test))
+	if censusImportsError != nil {
+		test.Fatal(censusImportsError)
 	}
 	if !listed[modulePath+"/internal/native"] {
 		test.Fatal("the census's export data doesn't list internal/native")
@@ -968,9 +972,9 @@ func censusTypes(test *testing.T) (exports map[string]string, tree []string, tes
 // repositoryRoot is the tree this package sits in, three directories up.
 func repositoryRoot(test *testing.T) string {
 	test.Helper()
-	root, err := filepath.Abs(filepath.Join("..", "..", ".."))
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(filepath.Join("..", "..", ".."))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return root
 }
@@ -987,7 +991,7 @@ func TestTheRuntimeBuildReachesOnlyItsDeclaredFiles(test *testing.T) {
 	test.Parallel()
 	root := repositoryRoot(test)
 	exports, tree, testsBuildLean := censusTypes(test)
-	census, err := leanCensus(
+	census, leanCensusError := leanCensus(
 		root,
 		filepath.Join(root, "internal", "native"),
 		modulePath+"/internal/native",
@@ -1001,8 +1005,8 @@ func TestTheRuntimeBuildReachesOnlyItsDeclaredFiles(test *testing.T) {
 		false,
 		nil,
 	)
-	if err != nil {
-		test.Fatal(err)
+	if leanCensusError != nil {
+		test.Fatal(leanCensusError)
 	}
 	if len(census) > 0 {
 		test.Fatalf("the runtime archive's build reaches past what its key declares:\n%s", strings.Join(census, "\n"))
@@ -1065,9 +1069,11 @@ func TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds(test *testing.T) {
 	test.Parallel()
 	root := repositoryRoot(test)
 	nativeExports, nativeTree, nativeLean := censusTypes(test)
-	ownExports, ownTree, _, err := censusImports(buildcache.GoExports(test, "./internal/native/runtimeproducts"))
-	if err != nil {
-		test.Fatal(err)
+	ownExports, ownTree, _, censusImportsError := censusImports(
+		buildcache.GoExports(test, "./internal/native/runtimeproducts"),
+	)
+	if censusImportsError != nil {
+		test.Fatal(censusImportsError)
 	}
 	followed := maps.Clone(buildPath)
 	for path, entries := range keyedValues {
@@ -1103,7 +1109,7 @@ func TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds(test *testing.T) {
 		relative := strings.TrimPrefix(path, modulePath+"/")
 		held := packages[path]
 		for _, entry := range buildPath[path] {
-			census, err := leanCensus(
+			census, leanCensusError := leanCensus(
 				root,
 				filepath.Join(root, filepath.FromSlash(relative)),
 				path,
@@ -1117,8 +1123,8 @@ func TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds(test *testing.T) {
 				false,
 				followed,
 			)
-			if err != nil {
-				test.Fatalf("%s %s: %v", relative, entry, err)
+			if leanCensusError != nil {
+				test.Fatalf("%s %s: %v", relative, entry, leanCensusError)
 			}
 			for _, finding := range census {
 				findings = append(findings, relative+" "+entry+": "+finding)
@@ -1141,20 +1147,20 @@ func unfollowedEntries(test *testing.T, root string, entries []string) []string 
 	context := build.Default
 	context.GOOS, context.GOARCH = "linux", "amd64"
 	directory := filepath.Join(root, "internal", "native", "runtimeproducts")
-	listed, err := context.ImportDir(directory, 0)
-	if err != nil {
-		test.Fatal(err)
+	listed, importDirectoryError := context.ImportDir(directory, 0)
+	if importDirectoryError != nil {
+		test.Fatal(importDirectoryError)
 	}
 	var findings []string
 	for _, name := range listed.GoFiles {
-		file, err := parser.ParseFile(
+		file, parseFileError := parser.ParseFile(
 			token.NewFileSet(),
 			filepath.Join(directory, name),
 			nil,
 			parser.SkipObjectResolution,
 		)
-		if err != nil {
-			test.Fatal(err)
+		if parseFileError != nil {
+			test.Fatal(parseFileError)
 		}
 		for _, declaration := range file.Decls {
 			function, ok := declaration.(*ast.FuncDecl)
@@ -1200,9 +1206,9 @@ func TestTheSysrootReadIsTheSysrootFlag(test *testing.T) {
 	for _, installation := range []string{fakeWASISDK(test), fakeWASISDK(test)} {
 		test.Setenv("WASI_SYSROOT", filepath.Join(installation, "share", "wasi-sysroot"))
 		for _, variant := range Variants {
-			request, err := native.RuntimeRequestFor(variant.Options)
-			if err != nil {
-				test.Fatalf("%s: %v", variant.Name, err)
+			request, runtimeRequestForError := native.RuntimeRequestFor(variant.Options)
+			if runtimeRequestForError != nil {
+				test.Fatalf("%s: %v", variant.Name, runtimeRequestForError)
 			}
 			var sysroots, portableSysroots []string
 			for _, part := range request.Parts {
@@ -1262,18 +1268,18 @@ func TestAProgramRegionOnlyRefusesARequest(test *testing.T) {
 	refused := 0
 	for _, variant := range Variants {
 		test.Setenv("ADAMIC_PROGRAM_REGION", "")
-		unset, err := native.RuntimeRequestFor(variant.Options)
-		if err != nil {
-			test.Fatalf("%s, the variable unset: %v", variant.Name, err)
+		unset, runtimeRequestForError := native.RuntimeRequestFor(variant.Options)
+		if runtimeRequestForError != nil {
+			test.Fatalf("%s, the variable unset: %v", variant.Name, runtimeRequestForError)
 		}
 		test.Setenv("ADAMIC_PROGRAM_REGION", "1")
-		set, err := native.RuntimeRequestFor(variant.Options)
-		if err != nil {
-			if !strings.Contains(err.Error(), "Program regions require a one-shot native CLI") {
+		set, runtimeRequestForError := native.RuntimeRequestFor(variant.Options)
+		if runtimeRequestForError != nil {
+			if !strings.Contains(runtimeRequestForError.Error(), "Program regions require a one-shot native CLI") {
 				test.Errorf(
 					"%s, the variable set, failed for another reason than a program region's refusal: %v",
 					variant.Name,
-					err,
+					runtimeRequestForError,
 				)
 			}
 			refused++
@@ -1318,19 +1324,26 @@ func TestAProgramRegionOnlyRefusesARequest(test *testing.T) {
 // no header for a scan, so a request reads only what the census holds of it, with nothing compiled.
 func fakeWASISDK(test *testing.T) string {
 	test.Helper()
-	installation, err := filepath.EvalSymlinks(test.TempDir())
-	if err != nil {
-		test.Fatal(err)
+	installation, resolveSymlinksError := filepath.EvalSymlinks(test.TempDir())
+	if resolveSymlinksError != nil {
+		test.Fatal(resolveSymlinksError)
 	}
-	if err := os.MkdirAll(filepath.Join(installation, "share", "wasi-sysroot"), 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(
+		filepath.Join(installation, "share", "wasi-sysroot"),
+		0o755,
+	); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	if err := os.MkdirAll(filepath.Join(installation, "bin"), 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(filepath.Join(installation, "bin"), 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	clang := "#!/bin/sh\nfor argument in \"$@\"; do\n\tif [ \"$argument\" = --version ]; then\n\t\techo 'clang version 20.1.8-wasi-sdk (a stand-in)'\n\t\texit 0\n\tfi\ndone\n"
-	if err := os.WriteFile(filepath.Join(installation, "bin", "clang"), []byte(clang), 0o755); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(
+		filepath.Join(installation, "bin", "clang"),
+		[]byte(clang),
+		0o755,
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return installation
 }
@@ -1377,13 +1390,13 @@ func TestAProgramRegionKeysItsArchiveApart(test *testing.T) {
 		regions++
 		withoutRegion := variant.Options
 		withoutRegion.ProgramRegion = false
-		region, err := native.RuntimeRequestFor(variant.Options)
-		if err != nil {
-			test.Fatalf("%s: %v", variant.Name, err)
+		region, runtimeRequestForError := native.RuntimeRequestFor(variant.Options)
+		if runtimeRequestForError != nil {
+			test.Fatalf("%s: %v", variant.Name, runtimeRequestForError)
 		}
-		plain, err := native.RuntimeRequestFor(withoutRegion)
-		if err != nil {
-			test.Fatalf("%s without its region: %v", variant.Name, err)
+		plain, runtimeRequestForError := native.RuntimeRequestFor(withoutRegion)
+		if runtimeRequestForError != nil {
+			test.Fatalf("%s without its region: %v", variant.Name, runtimeRequestForError)
 		}
 		regionInputs, plainInputs := Inputs(region), Inputs(plain)
 		if !slices.Contains(regionInputs.Flags, flag) || slices.Contains(plainInputs.Flags, flag) {
@@ -1419,13 +1432,13 @@ func TestAProgramRegionKeysItsArchiveApart(test *testing.T) {
 		if buildcache.NameKey(root, regionInputs) == buildcache.NameKey(root, plainInputs) {
 			test.Errorf("%s: the region's archive and the plain one share a name key", variant.Name)
 		}
-		regionKey, err := buildcache.Key(root, regionInputs)
-		if err != nil {
-			test.Fatal(err)
+		regionKey, keyError := buildcache.Key(root, regionInputs)
+		if keyError != nil {
+			test.Fatal(keyError)
 		}
-		plainKey, err := buildcache.Key(root, plainInputs)
-		if err != nil {
-			test.Fatal(err)
+		plainKey, keyError := buildcache.Key(root, plainInputs)
+		if keyError != nil {
+			test.Fatal(keyError)
 		}
 		if regionKey == plainKey {
 			test.Errorf("%s: the region's archive and the plain one share a key", variant.Name)
@@ -1541,9 +1554,12 @@ func (recorder *stoppingTB) recover() {
 // archives built with buildcache.Product again.
 func TestOracleMakesNoArchiveOfItsOwn(test *testing.T) {
 	test.Parallel()
-	findings, asked, err := archivesMadeIn(filepath.Join(repositoryRoot(test), "internal", "oracle"), "ProgramArchive")
-	if err != nil {
-		test.Fatal(err)
+	findings, asked, archivesMadeInError := archivesMadeIn(
+		filepath.Join(repositoryRoot(test), "internal", "oracle"),
+		"ProgramArchive",
+	)
+	if archivesMadeInError != nil {
+		test.Fatal(archivesMadeInError)
 	}
 	if len(findings) > 0 {
 		test.Errorf(
@@ -1560,14 +1576,21 @@ func TestOracleMakesNoArchiveOfItsOwn(test *testing.T) {
 	old := "package oracle\n\nimport (\n\t\"testing\"\n\n\t\"github.com/system-inc/adamic/internal/buildcache\"\n\t\"github.com/system-inc/adamic/internal/ccjobserver\"\n\t\"github.com/system-inc/adamic/internal/native\"\n\t\"github.com/system-inc/adamic/internal/native/runtimeproducts\"\n)\n\n" +
 		"func programRegionRuntime(t *testing.T, options native.Options, features []string) string {\n\trequest, err := native.RuntimeRequestFor(options, features...)\n\tif err != nil {\n\t\tt.Fatal(err)\n\t}\n\tjobserver, err := ccjobserver.Process()\n\tif err != nil {\n\t\tt.Fatal(err)\n\t}\n" +
 		"\treturn buildcache.Product(t, runtimeproducts.Inputs(request), func(directory string) error { return request.Build(directory, 1, jobserver) })\n}\n"
-	if err := os.WriteFile(filepath.Join(fixture, "program_region_products_test.go"), []byte(old), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(
+		filepath.Join(fixture, "program_region_products_test.go"),
+		[]byte(old),
+		0o644,
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if found, _, err := archivesMadeIn(fixture, "ProgramArchive"); err != nil || len(found) != 1 {
+	if found, _, archivesMadeInError := archivesMadeIn(
+		fixture,
+		"ProgramArchive",
+	); archivesMadeInError != nil || len(found) != 1 {
 		test.Errorf(
 			"the scan of oracle's old program region build found %q (%v), want its one request.Build",
 			found,
-			err,
+			archivesMadeInError,
 		)
 	}
 }
@@ -1580,9 +1603,12 @@ func TestOracleMakesNoArchiveOfItsOwn(test *testing.T) {
 // again.
 func TestCommandMakesNoArchiveOfItsOwn(test *testing.T) {
 	test.Parallel()
-	findings, asked, err := archivesMadeIn(filepath.Join(repositoryRoot(test), "cmd", "adamic"), "CommandArchive")
-	if err != nil {
-		test.Fatal(err)
+	findings, asked, archivesMadeInError := archivesMadeIn(
+		filepath.Join(repositoryRoot(test), "cmd", "adamic"),
+		"CommandArchive",
+	)
+	if archivesMadeInError != nil {
+		test.Fatal(archivesMadeInError)
 	}
 	if len(findings) > 0 {
 		test.Errorf(
@@ -1599,14 +1625,17 @@ func TestCommandMakesNoArchiveOfItsOwn(test *testing.T) {
 	old := "package main\n\nimport (\n\t\"testing\"\n\n\t\"github.com/system-inc/adamic/internal/buildcache\"\n\t\"github.com/system-inc/adamic/internal/ccjobserver\"\n\t\"github.com/system-inc/adamic/internal/native\"\n\t\"github.com/system-inc/adamic/internal/native/runtimeproducts\"\n)\n\n" +
 		"func commandRuntimeProduct(t *testing.T, options native.Options, owner string) {\n\trequest, err := native.RuntimeRequestFor(options)\n\tif err != nil {\n\t\tt.Fatal(err)\n\t}\n\tjobserver, err := ccjobserver.Process()\n\tif err != nil {\n\t\tt.Fatal(err)\n\t}\n" +
 		"\tbuild := func(directory string) error { return request.Build(directory, 4, jobserver) }\n\tif owner != \"\" {\n\t\tbuildcache.BuiltElsewhere(t, \"the archive\", runtimeproducts.Inputs(request), owner, build)\n\t} else {\n\t\tbuildcache.Product(t, runtimeproducts.Inputs(request), build)\n\t}\n}\n"
-	if err := os.WriteFile(filepath.Join(fixture, "runtimes_test.go"), []byte(old), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(fixture, "runtimes_test.go"), []byte(old), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if found, _, err := archivesMadeIn(fixture, "CommandArchive"); err != nil || len(found) != 1 {
+	if found, _, archivesMadeInError := archivesMadeIn(
+		fixture,
+		"CommandArchive",
+	); archivesMadeInError != nil || len(found) != 1 {
 		test.Errorf(
 			"the scan of cmd/adamic's old debug archive build found %q (%v), want its one request.Build",
 			found,
-			err,
+			archivesMadeInError,
 		)
 	}
 }
@@ -1617,19 +1646,24 @@ func TestCommandMakesNoArchiveOfItsOwn(test *testing.T) {
 // CommandArchive) for one. A Build in a function literal handed straight to buildcache.BuiltElsewhere finds an archive
 // and makes none: under the trace that build never runs, and the archive is its owner's, as runtimeproducts' Find finds
 // it.
-func archivesMadeIn(directory, asking string) (findings []string, asked int, err error) {
-	entries, err := os.ReadDir(directory)
-	if err != nil {
-		return nil, 0, err
+func archivesMadeIn(directory, asking string) (findings []string, asked int, archivesMadeInError error) {
+	entries, readDirectoryError := os.ReadDir(directory)
+	if readDirectoryError != nil {
+		return nil, 0, readDirectoryError
 	}
 	fileSet := token.NewFileSet()
 	for _, entry := range entries {
 		if entry.IsDir() || !strings.HasSuffix(entry.Name(), ".go") {
 			continue
 		}
-		file, err := parser.ParseFile(fileSet, filepath.Join(directory, entry.Name()), nil, parser.SkipObjectResolution)
-		if err != nil {
-			return nil, 0, err
+		file, parseFileError := parser.ParseFile(
+			fileSet,
+			filepath.Join(directory, entry.Name()),
+			nil,
+			parser.SkipObjectResolution,
+		)
+		if parseFileError != nil {
+			return nil, 0, parseFileError
 		}
 		nativeName, productsName, buildcacheName := "", "", ""
 		for _, imported := range file.Imports {
@@ -1745,7 +1779,7 @@ func TestTheLeanBuildReachesOnlyItsDeclaredFiles(test *testing.T) {
 	test.Parallel()
 	root := repositoryRoot(test)
 	exports, tree, testsBuildLean := censusTypes(test)
-	census, err := leanCensus(
+	census, leanCensusError := leanCensus(
 		root,
 		filepath.Join(root, "internal", "native"),
 		modulePath+"/internal/native",
@@ -1759,8 +1793,8 @@ func TestTheLeanBuildReachesOnlyItsDeclaredFiles(test *testing.T) {
 		true,
 		nil,
 	)
-	if err != nil {
-		test.Fatal(err)
+	if leanCensusError != nil {
+		test.Fatal(leanCensusError)
 	}
 	if len(census) > 0 {
 		test.Fatalf("an agreement native's build reaches past what its key declares:\n%s", strings.Join(census, "\n"))
@@ -1776,11 +1810,11 @@ func TestTheLeanBuildReachesOnlyItsDeclaredFiles(test *testing.T) {
 func TestTheAgreementCBuildReachesOnlyItsDeclaredFiles(test *testing.T) {
 	test.Parallel()
 	root := repositoryRoot(test)
-	exports, tree, _, err := censusImports(agreementCensusExports(test))
-	if err != nil {
-		test.Fatal(err)
+	exports, tree, _, censusImportsError := censusImports(agreementCensusExports(test))
+	if censusImportsError != nil {
+		test.Fatal(censusImportsError)
 	}
-	census, err := leanCensus(
+	census, leanCensusError := leanCensus(
 		root,
 		filepath.Join(root, "internal", "native", "agreementproducts"),
 		modulePath+"/internal/native/agreementproducts",
@@ -1794,8 +1828,8 @@ func TestTheAgreementCBuildReachesOnlyItsDeclaredFiles(test *testing.T) {
 		true,
 		nil,
 	)
-	if err != nil {
-		test.Fatal(err)
+	if leanCensusError != nil {
+		test.Fatal(leanCensusError)
 	}
 	if len(census) > 0 {
 		test.Fatalf("the lower agreement C's build reaches past what its key declares:\n%s", strings.Join(census, "\n"))
@@ -2001,7 +2035,7 @@ func TestTheLeanCensusFollowsTheBuildAndFailsClosed(test *testing.T) {
 				os.WriteFile(filepath.Join(directory, file), []byte(content), 0o644)
 			}
 		}
-		census, err := leanCensus(
+		census, leanCensusError := leanCensus(
 			root,
 			directory,
 			"example.com/fixture",
@@ -2015,8 +2049,8 @@ func TestTheLeanCensusFollowsTheBuildAndFailsClosed(test *testing.T) {
 			true,
 			nil,
 		)
-		if err != nil {
-			test.Fatalf("%s: %v", name, err)
+		if leanCensusError != nil {
+			test.Fatalf("%s: %v", name, leanCensusError)
 		}
 		switch {
 		case testCase.want == "" && len(census) > 0:
@@ -2040,16 +2074,16 @@ const archiveProbe = "ADAMIC_RUNTIMEPRODUCTS_ARCHIVE_PROBE"
 func TestTheJobserverNeverReachesAnArchivesBytes(test *testing.T) {
 	test.Parallel()
 	if directory := os.Getenv(archiveProbe); directory != "" {
-		request, err := native.RuntimeRequestFor(native.Options{})
-		if err != nil {
-			test.Fatal(err)
+		request, runtimeRequestForError := native.RuntimeRequestFor(native.Options{})
+		if runtimeRequestForError != nil {
+			test.Fatal(runtimeRequestForError)
 		}
-		jobserver, err := ccjobserver.Process()
-		if err != nil {
-			test.Fatal(err)
+		jobserver, processError := ccjobserver.Process()
+		if processError != nil {
+			test.Fatal(processError)
 		}
-		if err := request.Build(directory, 4, jobserver); err != nil {
-			test.Fatal(err)
+		if buildError := request.Build(directory, 4, jobserver); buildError != nil {
+			test.Fatal(buildError)
 		}
 		return
 	}
@@ -2059,33 +2093,33 @@ func TestTheJobserverNeverReachesAnArchivesBytes(test *testing.T) {
 		jobserver := ""
 		if tokens > 0 {
 			jobserver = filepath.Join(test.TempDir(), "jobserver")
-			if err := syscall.Mkfifo(jobserver, 0o600); err != nil {
-				test.Fatal(err)
+			if mkfifoError := syscall.Mkfifo(jobserver, 0o600); mkfifoError != nil {
+				test.Fatal(mkfifoError)
 			}
 			// Held open, as Loom holds it, so the tokens stay in the FIFO while the build takes and gives them back.
-			fifo, err := os.OpenFile(jobserver, os.O_RDWR, 0)
-			if err != nil {
-				test.Fatal(err)
+			fifo, openError := os.OpenFile(jobserver, os.O_RDWR, 0)
+			if openError != nil {
+				test.Fatal(openError)
 			}
 			defer fifo.Close()
-			if _, err := fifo.Write([]byte(strings.Repeat("+", tokens))); err != nil {
-				test.Fatal(err)
+			if _, writeError := fifo.Write([]byte(strings.Repeat("+", tokens))); writeError != nil {
+				test.Fatal(writeError)
 			}
 		}
 		command := exec.Command(os.Args[0], "-test.run=^TestTheJobserverNeverReachesAnArchivesBytes$", "-test.count=1")
 		command.Env = append(os.Environ(), archiveProbe+"="+directory, ccjobserver.Variable+"="+jobserver)
-		if output, err := command.CombinedOutput(); err != nil {
-			test.Fatalf("the release archive with %d tokens: %v\n%s", tokens, err, output)
+		if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+			test.Fatalf("the release archive with %d tokens: %v\n%s", tokens, combinedOutputError, output)
 		}
 		built := map[string][]byte{}
-		entries, err := os.ReadDir(directory)
-		if err != nil {
-			test.Fatal(err)
+		entries, readDirectoryError := os.ReadDir(directory)
+		if readDirectoryError != nil {
+			test.Fatal(readDirectoryError)
 		}
 		for _, entry := range entries {
-			content, err := os.ReadFile(filepath.Join(directory, entry.Name()))
-			if err != nil {
-				test.Fatal(err)
+			content, readError := os.ReadFile(filepath.Join(directory, entry.Name()))
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			built[entry.Name()] = content
 		}
@@ -2124,16 +2158,16 @@ func TestAnArchivesBuildIsJournaledAsRuntimeproducts(test *testing.T) {
 	trace := test.TempDir()
 	test.Setenv("ADAMIC_BUILD_CACHE", "off")
 	test.Setenv("ADAMIC_BUILD_TRACE", trace)
-	if _, err := buildcache.LeanGet(buildcache.Inputs{
+	if _, leanGetError := buildcache.LeanGet(buildcache.Inputs{
 		Name: "runtimeproducts journal probe",
 	}, func(directory string) error {
 		return os.WriteFile(filepath.Join(directory, "probe"), []byte("probe\n"), 0o644)
-	}); err != nil {
-		test.Fatal(err)
+	}); leanGetError != nil {
+		test.Fatal(leanGetError)
 	}
-	content, err := os.ReadFile(filepath.Join(trace, "journal.jsonl"))
-	if err != nil {
-		test.Fatal(err)
+	content, readError := os.ReadFile(filepath.Join(trace, "journal.jsonl"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	for _, line := range strings.Split(strings.TrimSpace(string(content)), "\n") {
 		var entry struct {

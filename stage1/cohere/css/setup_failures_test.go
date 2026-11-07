@@ -13,9 +13,9 @@ import (
 // sanitized", "no traced build has recorded what it reads") or "composition setup did not complete" (#qbbmqfs).
 func TestCSSSetupFailuresNameTheFirst(test *testing.T) {
 	test.Parallel()
-	binary, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	binary, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
 	for _, planted := range []struct {
 		setup, run, earlier string

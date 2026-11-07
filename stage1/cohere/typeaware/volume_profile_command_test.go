@@ -17,11 +17,11 @@ func volumeProfileCommand(ctx context.Context, name string, args ...string) *exe
 		if command.Process == nil {
 			return os.ErrProcessDone
 		}
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
+		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if errors.Is(killError, syscall.ESRCH) {
 			return os.ErrProcessDone
 		}
-		return err
+		return killError
 	}
 	return command
 }

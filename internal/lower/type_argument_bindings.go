@@ -47,12 +47,20 @@ func (l *lowering) typeArgumentBindings(node *ast.Node, visit func(typeArgumentB
 	case ast.KindCallExpression, ast.KindNewExpression, ast.KindTaggedTemplateExpression:
 		// The bindings the call makes, then the value it yields, which may itself be a generic function
 		// its slot instantiates: const put: (target: Options) => void = maker() (g05).
-		if err := l.signatureTypeArgumentBindings(node, l.checker.GetResolvedSignature(node), visit); err != nil {
-			return err
+		if signatureTypeArgumentBindingsError := l.signatureTypeArgumentBindings(
+			node,
+			l.checker.GetResolvedSignature(node),
+			visit,
+		); signatureTypeArgumentBindingsError != nil {
+			return signatureTypeArgumentBindingsError
 		}
 	case ast.KindExpressionWithTypeArguments:
 		clause := node.Parent
-		if clause == nil || clause.Kind != ast.KindHeritageClause || clause.AsHeritageClause().Token != ast.KindExtendsKeyword || clause.Parent == nil || !ast.IsClassLike(clause.Parent) {
+		if clause == nil ||
+			clause.Kind != ast.KindHeritageClause ||
+			clause.AsHeritageClause().Token != ast.KindExtendsKeyword ||
+			clause.Parent == nil ||
+			!ast.IsClassLike(clause.Parent) {
 			return nil
 		}
 		return l.baseTypeArgumentBindings(node, clause.Parent, visit)
@@ -60,7 +68,9 @@ func (l *lowering) typeArgumentBindings(node *ast.Node, visit func(typeArgumentB
 	if node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) || ast.IsDeclarationName(node) {
 		return nil
 	}
-	if node.Parent != nil && node.Parent.Kind == ast.KindPropertyAccessExpression && node.Parent.AsPropertyAccessExpression().Name() == node {
+	if node.Parent != nil &&
+		node.Parent.Kind == ast.KindPropertyAccessExpression &&
+		node.Parent.AsPropertyAccessExpression().Name() == node {
 		return nil // The access is the value, never the name it reads.
 	}
 	return l.valueTypeArgumentBindings(node, visit)
@@ -92,15 +102,29 @@ func (l *lowering) valueTypeArgumentBindings(node *ast.Node, visit func(typeArgu
 			continue
 		}
 		if len(signatures) == 1 && len(slots) == 1 {
-			if resolved := instantiateSignatureInContextOf(l.checker, signatures[0], slots[0], nil, nil); resolved != nil {
-				if err := l.signatureTypeArgumentBindings(node, resolved, visit); err != nil {
-					return err
+			if resolved := instantiateSignatureInContextOf(
+				l.checker,
+				signatures[0],
+				slots[0],
+				nil,
+				nil,
+			); resolved != nil {
+				if signatureTypeArgumentBindingsError := l.signatureTypeArgumentBindings(
+					node,
+					resolved,
+					visit,
+				); signatureTypeArgumentBindingsError != nil {
+					return signatureTypeArgumentBindingsError
 				}
 				continue
 			}
 		}
-		if err := l.unreadTypeArgumentBindings(node, parameters, visit); err != nil {
-			return err
+		if unreadTypeArgumentBindingsError := l.unreadTypeArgumentBindings(
+			node,
+			parameters,
+			visit,
+		); unreadTypeArgumentBindingsError != nil {
+			return unreadTypeArgumentBindingsError
 		}
 	}
 	return nil
@@ -110,7 +134,11 @@ func (l *lowering) valueTypeArgumentBindings(node *ast.Node, visit func(typeArgu
 // parameters, each as its mapper maps it, which the checker keeps unexported and classGenericCall reads
 // the same way. A signature that isn't an instantiation binds nothing. One whose bindings can't be read
 // is visited unread.
-func (l *lowering) signatureTypeArgumentBindings(node *ast.Node, signature *checker.Signature, visit func(typeArgumentBinding) error) error {
+func (l *lowering) signatureTypeArgumentBindings(
+	node *ast.Node,
+	signature *checker.Signature,
+	visit func(typeArgumentBinding) error,
+) error {
 	if signature == nil {
 		return nil
 	}
@@ -136,12 +164,19 @@ func (l *lowering) signatureTypeArgumentBindings(node *ast.Node, signature *chec
 		if constraint == nil {
 			continue
 		}
-		binding := typeArgumentBinding{site: node, parameter: parameter, argument: instantiateType(l.checker, parameter, mapper), constraint: instantiateType(l.checker, constraint, mapper), generic: target, mapper: mapper}
+		binding := typeArgumentBinding{
+			site:       node,
+			parameter:  parameter,
+			argument:   instantiateType(l.checker, parameter, mapper),
+			constraint: instantiateType(l.checker, constraint, mapper),
+			generic:    target,
+			mapper:     mapper,
+		}
 		if index < len(written) {
 			binding.written = written[index]
 		}
-		if err := visit(binding); err != nil {
-			return err
+		if visitError := visit(binding); visitError != nil {
+			return visitError
 		}
 	}
 	return nil
@@ -149,7 +184,11 @@ func (l *lowering) signatureTypeArgumentBindings(node *ast.Node, signature *chec
 
 // baseTypeArgumentBindings visits the type arguments a class's extends clause (node) binds to its base
 // class's type parameters, as the base type the checker resolved for the class carries them.
-func (l *lowering) baseTypeArgumentBindings(node *ast.Node, class *ast.Node, visit func(typeArgumentBinding) error) error {
+func (l *lowering) baseTypeArgumentBindings(
+	node *ast.Node,
+	class *ast.Node,
+	visit func(typeArgumentBinding) error,
+) error {
 	symbol := l.checker.GetSymbolOfDeclaration(class)
 	if symbol == nil {
 		return nil
@@ -183,12 +222,18 @@ func (l *lowering) baseTypeArgumentBindings(node *ast.Node, class *ast.Node, vis
 			if constraint == nil {
 				continue
 			}
-			binding := typeArgumentBinding{site: node, parameter: parameter, argument: arguments[index], constraint: instantiateType(l.checker, constraint, mapper), mapper: mapper}
+			binding := typeArgumentBinding{
+				site:       node,
+				parameter:  parameter,
+				argument:   arguments[index],
+				constraint: instantiateType(l.checker, constraint, mapper),
+				mapper:     mapper,
+			}
 			if index < len(written) {
 				binding.written = written[index]
 			}
-			if err := visit(binding); err != nil {
-				return err
+			if visitError := visit(binding); visitError != nil {
+				return visitError
 			}
 		}
 	}
@@ -197,11 +242,17 @@ func (l *lowering) baseTypeArgumentBindings(node *ast.Node, class *ast.Node, vis
 
 // unreadTypeArgumentBindings visits each constrained one of parameters as a binding at node whose type
 // argument can't be read.
-func (l *lowering) unreadTypeArgumentBindings(node *ast.Node, parameters []*checker.Type, visit func(typeArgumentBinding) error) error {
+func (l *lowering) unreadTypeArgumentBindings(
+	node *ast.Node,
+	parameters []*checker.Type,
+	visit func(typeArgumentBinding) error,
+) error {
 	for _, parameter := range parameters {
 		if constraint := l.checker.GetConstraintOfTypeParameter(parameter); constraint != nil {
-			if err := visit(typeArgumentBinding{site: node, parameter: parameter, constraint: constraint}); err != nil {
-				return err
+			if visitError := visit(
+				typeArgumentBinding{site: node, parameter: parameter, constraint: constraint},
+			); visitError != nil {
+				return visitError
 			}
 		}
 	}

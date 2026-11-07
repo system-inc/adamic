@@ -32,39 +32,43 @@ var reviewIntended = regexp.MustCompile(`^intended: [^:\r\n]+: [^\r\n]+$`)
 func reviewPinned(test *testing.T, path string) *run {
 	test.Helper()
 	base := strings.TrimSuffix(path, filepath.Ext(path))
-	data, err := os.ReadFile(base + ".intended")
-	if errors.Is(err, os.ErrNotExist) {
+	data, readError := os.ReadFile(base + ".intended")
+	if errors.Is(readError, os.ErrNotExist) {
 		return nil
 	}
-	if err != nil {
-		test.Fatal(err)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if message := strings.TrimSuffix(string(data), "\n"); !reviewIntended.MatchString(message) {
 		test.Fatalf("invalid intended sidecar %q; want intended: <ruling>: <what differs>", message)
 	}
-	pin, err := os.ReadFile(base + ".expected.json")
-	if err != nil {
-		test.Fatalf("an intended difference needs its pinned output in %s.expected.json: %v", filepath.Base(base), err)
+	pin, readError := os.ReadFile(base + ".expected.json")
+	if readError != nil {
+		test.Fatalf(
+			"an intended difference needs its pinned output in %s.expected.json: %v",
+			filepath.Base(base),
+			readError,
+		)
 	}
 	var expected struct {
 		Stdout string `json:"stdout"`
 		Stderr string `json:"stderr"`
 		Exit   int    `json:"exit"`
 	}
-	if err := json.Unmarshal(pin, &expected); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(pin, &expected); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	return &run{stdout: []byte(expected.Stdout), stderr: []byte(expected.Stderr), exitCode: expected.Exit}
 }
 
 func reviewSkip(test *testing.T, path string) {
 	test.Helper()
-	data, err := os.ReadFile(strings.TrimSuffix(path, filepath.Ext(path)) + ".pending")
-	if errors.Is(err, os.ErrNotExist) {
+	data, readError := os.ReadFile(strings.TrimSuffix(path, filepath.Ext(path)) + ".pending")
+	if errors.Is(readError, os.ErrNotExist) {
 		return
 	}
-	if err != nil {
-		test.Fatal(err)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	message := strings.TrimSuffix(string(data), "\n")
 	if !reviewPending.MatchString(message) {
@@ -78,9 +82,9 @@ func reviewSkip(test *testing.T, path string) {
 func reviewProgramPaths(directory string) ([]string, error) {
 	var paths []string
 	for _, pattern := range []string{"*.a", "*.ts"} {
-		matches, err := filepath.Glob(filepath.Join(directory, pattern))
-		if err != nil {
-			return nil, err
+		matches, globError := filepath.Glob(filepath.Join(directory, pattern))
+		if globError != nil {
+			return nil, globError
 		}
 		paths = append(paths, matches...)
 	}
@@ -90,9 +94,9 @@ func reviewProgramPaths(directory string) ([]string, error) {
 
 func reviewPrograms(test *testing.T, category string, check func(*testing.T, string)) {
 	test.Helper()
-	paths, err := reviewProgramPaths(filepath.Join(reviewRoot, category))
-	if err != nil {
-		test.Fatal(err)
+	paths, reviewProgramPathsError := reviewProgramPaths(filepath.Join(reviewRoot, category))
+	if reviewProgramPathsError != nil {
+		test.Fatal(reviewProgramPathsError)
 	}
 	if len(paths) == 0 {
 		test.Fatalf("no review programs in %s", category)
@@ -106,9 +110,9 @@ func reviewEach(test *testing.T, paths []string, check func(*testing.T, string))
 		if filepath.Dir(path) != filepath.Join(reviewRoot, "agree") {
 			continue
 		}
-		if _, err := os.Stat(
+		if _, statError := os.Stat(
 			strings.TrimSuffix(path, filepath.Ext(path)) + ".pending",
-		); !errors.Is(err, os.ErrNotExist) {
+		); !errors.Is(statError, os.ErrNotExist) {
 			continue
 		}
 		// Shared per-process setup is not a program's cost and must never count against its 30 s.
@@ -124,9 +128,9 @@ func reviewEach(test *testing.T, paths []string, check func(*testing.T, string))
 					test.Errorf("review unit took %s; must be under 30s", elapsed)
 				}
 			})
-			absolute, err := filepath.Abs(path)
-			if err != nil {
-				test.Fatal(err)
+			absolute, absolutePathError := filepath.Abs(path)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			check(test, absolute)
 		})
@@ -136,9 +140,9 @@ func reviewEach(test *testing.T, paths []string, check func(*testing.T, string))
 // All execution paths use stage 0's existing lowerer and oracle build helpers.
 func reviewAgreement(test *testing.T, path string, expected *run) error {
 	test.Helper()
-	program, err := lowered(test, path)
-	if err != nil {
-		return fmt.Errorf("stage 0: %w", err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		return fmt.Errorf("stage 0: %w", loweredError)
 	}
 	truth := onNode(test, path)
 	if expected != nil {
@@ -183,21 +187,22 @@ func reviewAgreement(test *testing.T, path string, expected *run) error {
 
 func reviewRefusal(test *testing.T, path string) error {
 	test.Helper()
-	_, err := lowered(test, path)
+	_, loweredError := lowered(test, path)
 	// reviewEach passes an absolute path to load.Load without a display mapper.
 	// Program.Where restores an .a program's extension and prints that full path unchanged, as it prints a .ts
 	// program's.
-	return reviewRefusalDiagnostic(path, err)
+	return reviewRefusalDiagnostic(path, loweredError)
 }
 
-func reviewRefusalDiagnostic(path string, err error) error {
+func reviewRefusalDiagnostic(path string, sourceError error) error {
 	var refused *lower.Refused
 	var notYet *lower.NotYet
-	if err == nil {
+	if sourceError == nil {
 		return fmt.Errorf("accepted refused review program %s", path)
 	}
-	if (!errors.As(err, &refused) && !errors.As(err, &notYet)) || strings.TrimSpace(err.Error()) == "" {
-		return fmt.Errorf("want compiler refusal with diagnostic, got %v", err)
+	if (!errors.As(sourceError, &refused) && !errors.As(sourceError, &notYet)) ||
+		strings.TrimSpace(sourceError.Error()) == "" {
+		return fmt.Errorf("want compiler refusal with diagnostic, got %v", sourceError)
 	}
 	where := ""
 	if refused != nil {
@@ -207,7 +212,12 @@ func reviewRefusalDiagnostic(path string, err error) error {
 	}
 	location := regexp.MustCompile(`^` + regexp.QuoteMeta(filepath.ToSlash(path)) + `:[1-9][0-9]*:[1-9][0-9]*$`)
 	if !location.MatchString(where) {
-		return fmt.Errorf("want refusal location %s:<positive line>:<positive column>, got %q: %w", path, where, err)
+		return fmt.Errorf(
+			"want refusal location %s:<positive line>:<positive column>, got %q: %w",
+			path,
+			where,
+			sourceError,
+		)
 	}
 	return nil
 }
@@ -245,8 +255,8 @@ func runReviewAgreeShard(test *testing.T, shard int) {
 			wrong.stdout = append(append([]byte(nil), wrong.stdout...), '!')
 			expected = &wrong
 		}
-		if err := reviewAgreement(test, path, expected); err != nil {
-			test.Fatal(err)
+		if reviewAgreementError := reviewAgreement(test, path, expected); reviewAgreementError != nil {
+			test.Fatal(reviewAgreementError)
 		}
 	})
 }
@@ -254,8 +264,8 @@ func runReviewAgreeShard(test *testing.T, shard int) {
 func TestReviewProgramsRefuse(test *testing.T) {
 	test.Parallel()
 	reviewPrograms(test, "refused", func(test *testing.T, path string) {
-		if err := reviewRefusal(test, path); err != nil {
-			test.Fatal(err)
+		if reviewRefusalError := reviewRefusal(test, path); reviewRefusalError != nil {
+			test.Fatal(reviewRefusalError)
 		}
 	})
 }
@@ -264,16 +274,16 @@ func TestReviewProgramsRefuse(test *testing.T) {
 // their sidecars.
 func reviewLayout(root string) error {
 	stems := map[string]bool{}
-	return filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
+	return filepath.WalkDir(root, func(path string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
 		if entry.IsDir() || !slices.Contains([]string{".a", ".ts"}, filepath.Ext(path)) {
 			return nil
 		}
-		relative, err := filepath.Rel(root, path)
-		if err != nil {
-			return err
+		relative, relativePathError := filepath.Rel(root, path)
+		if relativePathError != nil {
+			return relativePathError
 		}
 		parts := strings.Split(relative, string(filepath.Separator))
 		if len(parts) != 2 || (parts[0] != "agree" && parts[0] != "refused") {
@@ -290,8 +300,8 @@ func reviewLayout(root string) error {
 
 func TestReviewProgramsNoLooseFiles(test *testing.T) {
 	test.Parallel()
-	if err := reviewLayout(reviewRoot); err != nil {
-		test.Fatal(err)
+	if reviewLayoutError := reviewLayout(reviewRoot); reviewLayoutError != nil {
+		test.Fatal(reviewLayoutError)
 	}
 }
 
@@ -299,31 +309,35 @@ func TestReviewProgramsNoLooseFiles(test *testing.T) {
 func TestReviewProgramsSelfTest(test *testing.T) {
 	test.Parallel()
 	test.Run("wrong_output", func(test *testing.T) {
-		path, err := filepath.Abs(filepath.Join(reviewRoot, "agree", "smoke.a"))
-		if err != nil {
-			test.Fatal(err)
+		path, absolutePathError := filepath.Abs(filepath.Join(reviewRoot, "agree", "smoke.a"))
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		wrong := onNode(test, path)
 		wrong.stdout = append(append([]byte(nil), wrong.stdout...), '!')
-		err = reviewAgreement(test, path, &wrong)
-		if err == nil {
+		reviewAgreementError := reviewAgreement(test, path, &wrong)
+		if reviewAgreementError == nil {
 			test.Fatal("wrong expected output passed")
 		}
-		test.Logf("caught planted expected output: %v", err)
+		test.Logf("caught planted expected output: %v", reviewAgreementError)
 		for _, name := range []string{"native", "JavaScript", "release"} {
-			if !strings.Contains(err.Error(), name+": stdout differs") {
-				test.Errorf("%s comparison did not catch planted output: %v", name, err)
+			if !strings.Contains(reviewAgreementError.Error(), name+": stdout differs") {
+				test.Errorf("%s comparison did not catch planted output: %v", name, reviewAgreementError)
 			}
 		}
 	})
 	test.Run("stale_intended", func(test *testing.T) {
-		path, err := filepath.Abs(filepath.Join(reviewRoot, "agree", "smoke.a"))
-		if err != nil {
-			test.Fatal(err)
+		path, absolutePathError := filepath.Abs(filepath.Join(reviewRoot, "agree", "smoke.a"))
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		same := onNode(test, path)
-		if err := reviewAgreement(test, path, &same); err == nil || !strings.Contains(err.Error(), "stale") {
-			test.Fatalf("a pin equal to Node's output passed: %v", err)
+		if reviewAgreementError := reviewAgreement(
+			test,
+			path,
+			&same,
+		); reviewAgreementError == nil || !strings.Contains(reviewAgreementError.Error(), "stale") {
+			test.Fatalf("a pin equal to Node's output passed: %v", reviewAgreementError)
 		}
 	})
 	test.Run("sidecar_forms", func(test *testing.T) {
@@ -347,18 +361,19 @@ func TestReviewProgramsSelfTest(test *testing.T) {
 	test.Run("accepted_refused", func(test *testing.T) {
 		root := test.TempDir()
 		root = filepath.Join(root, "refused")
-		if err := os.Mkdir(root, 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.Mkdir(root, 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 		path := filepath.Join(root, "accepted.a")
-		if err := os.WriteFile(path, []byte("console.log(\"accepted\");\n"), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte("console.log(\"accepted\");\n"), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
-		if err := reviewRefusal(
+		if reviewRefusalError := reviewRefusal(
 			test,
 			path,
-		); err == nil || !strings.Contains(err.Error(), "accepted refused review program") {
-			test.Fatalf("accepted program was not caught: %v", err)
+		); reviewRefusalError == nil ||
+			!strings.Contains(reviewRefusalError.Error(), "accepted refused review program") {
+			test.Fatalf("accepted program was not caught: %v", reviewRefusalError)
 		}
 	})
 	test.Run("refusal_location", func(test *testing.T) {
@@ -399,34 +414,36 @@ func TestReviewProgramsSelfTest(test *testing.T) {
 	test.Run("loose_file", func(test *testing.T) {
 		for _, name := range []string{"loose.a", "loose.ts"} {
 			root := test.TempDir()
-			if err := os.WriteFile(
+			if writeError := os.WriteFile(
 				filepath.Join(root, name),
 				[]byte("console.log(\"accepted\");\n"),
 				0644,
-			); err != nil {
-				test.Fatal(err)
+			); writeError != nil {
+				test.Fatal(writeError)
 			}
-			if err := reviewLayout(root); err == nil {
+			if reviewLayoutError := reviewLayout(root); reviewLayoutError == nil {
 				test.Errorf("loose program %s passed", name)
 			}
 		}
 	})
 	test.Run("one_name_twice", func(test *testing.T) {
 		root := test.TempDir()
-		if err := os.Mkdir(filepath.Join(root, "agree"), 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.Mkdir(filepath.Join(root, "agree"), 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 		for _, name := range []string{"twin.a", "twin.ts"} {
-			if err := os.WriteFile(
+			if writeError := os.WriteFile(
 				filepath.Join(root, "agree", name),
 				[]byte("console.log(\"accepted\");\n"),
 				0644,
-			); err != nil {
-				test.Fatal(err)
+			); writeError != nil {
+				test.Fatal(writeError)
 			}
 		}
-		if err := reviewLayout(root); err == nil || !strings.Contains(err.Error(), "both .a and .ts") {
-			test.Fatalf("an .a and a .ts of one name passed: %v", err)
+		if reviewLayoutError := reviewLayout(
+			root,
+		); reviewLayoutError == nil || !strings.Contains(reviewLayoutError.Error(), "both .a and .ts") {
+			test.Fatalf("an .a and a .ts of one name passed: %v", reviewLayoutError)
 		}
 	})
 }

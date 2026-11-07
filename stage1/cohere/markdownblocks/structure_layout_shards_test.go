@@ -49,9 +49,9 @@ var structureLayoutOnce sync.Once
 var structureLayoutComplete *structureLayoutState
 
 func structureLayoutEnumeration(test *testing.T) *structureLayoutState {
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	inputs, _ := blockCorpus(test, root, "whitespace")
 	state := &structureLayoutState{inputs: inputs, shards: make([][]auditInput, testMarkdownStructureLayoutShards)}
@@ -213,9 +213,9 @@ func buildStructureLayoutProducts(test *testing.T, root string) structureLayoutP
 
 func structureLayoutBuildProduct(test *testing.T, root, target string) structureLayoutProducts {
 	p := structureLayoutProducts{root: root}
-	main, err := filepath.Abs("testdata/list_probe.ts")
-	if err != nil {
-		test.Fatal(err)
+	main, absolutePathError := filepath.Abs("testdata/list_probe.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	files := []string{
 		"stage1/cohere/markdownblocks/testdata/list_probe.ts",
@@ -225,9 +225,9 @@ func structureLayoutBuildProduct(test *testing.T, root, target string) structure
 		"cohere/TypeScript-shim",
 		"go.mod",
 	}
-	sources, err := filepath.Glob("*.ts")
-	if err != nil {
-		test.Fatal(err)
+	sources, globError := filepath.Glob("*.ts")
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	for _, source := range sources {
 		files = append(files, "stage1/cohere/markdownblocks/"+source)
@@ -238,22 +238,26 @@ func structureLayoutBuildProduct(test *testing.T, root, target string) structure
 		Flags:     []string{main},
 		Toolchain: []string{runtime.Version()},
 	}, func(dir string) error {
-		program, err := loweredResult(main)
-		if err != nil {
-			return err
+		program, loweredResultError := loweredResult(main)
+		if loweredResultError != nil {
+			return loweredResultError
 		}
-		if err := os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(program)), 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(
+			filepath.Join(dir, "program.c"),
+			[]byte(native.C(program)),
+			0644,
+		); writeError != nil {
+			return writeError
 		}
 		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
 	})
-	source, err := os.ReadFile(filepath.Join(lowerDir, "program.c"))
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(filepath.Join(lowerDir, "program.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	p.javascript, err = os.ReadFile(filepath.Join(lowerDir, "program.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	p.javascript, readError = os.ReadFile(filepath.Join(lowerDir, "program.mjs"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if target == "lowered" {
 		return p
@@ -287,11 +291,11 @@ func structureLayoutBuildProduct(test *testing.T, root, target string) structure
 				return struct{}{}, native.Build(string(source), filepath.Join(dir, "release"), native.Options{})
 			})
 			workers.Wait()
-			if _, err := sanitized.result(); err != nil {
-				return err
+			if _, resultError := sanitized.result(); resultError != nil {
+				return resultError
 			}
-			_, err := release.result()
-			return err
+			_, resultError := release.result()
+			return resultError
 		})
 		p.sanitized = filepath.Join(nativeDir, "sanitized")
 		p.release = filepath.Join(nativeDir, "release")
@@ -321,16 +325,19 @@ func structureLayoutMutants(test *testing.T, fixture *layoutFixture) {
 			nativeCases, inputs := fixture.mutantNativeCases, fixture.mutantInputs
 			want := run{stdout: fixture.mutantWant}
 			scratch := test.TempDir()
-			if err := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); err != nil {
-				test.Fatal(err)
+			if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
-			if err := os.Mkdir(filepath.Join(scratch, "markdowninline"), 0755); err != nil {
-				test.Fatal(err)
+			if createDirectoryError := os.Mkdir(
+				filepath.Join(scratch, "markdowninline"),
+				0755,
+			); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
 			for _, name := range []string{"inline.ts", "classes.ts"} {
-				content, err := os.ReadFile(filepath.Join("../markdowninline", name))
-				if err != nil {
-					test.Fatal(err)
+				content, readError := os.ReadFile(filepath.Join("../markdowninline", name))
+				if readError != nil {
+					test.Fatal(readError)
 				}
 				write(test, filepath.Join(scratch, "markdowninline", name), content)
 			}
@@ -358,9 +365,9 @@ func structureLayoutMutants(test *testing.T, fixture *layoutFixture) {
 				"whitespace.ts",
 				"whitespaceCodec.ts",
 			} {
-				content, err := os.ReadFile(name)
-				if err != nil {
-					test.Fatal(err)
+				content, readError := os.ReadFile(name)
+				if readError != nil {
+					test.Fatal(readError)
 				}
 				if name == "leaves.ts" {
 					content = []byte(strings.Replace(
@@ -378,9 +385,9 @@ func structureLayoutMutants(test *testing.T, fixture *layoutFixture) {
 				}
 				write(test, filepath.Join(scratch, name), content)
 			}
-			content, err := os.ReadFile(main)
-			if err != nil {
-				test.Fatal(err)
+			content, readError := os.ReadFile(main)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			content = []byte(
 				strings.Replace(string(content), "../../markdowninline/inline.ts", "../markdowninline/inline.ts", 1),
@@ -420,8 +427,8 @@ func structureLayoutFixture(test *testing.T, inputs []auditInput, products struc
 	var batch bytes.Buffer
 	encoder := json.NewEncoder(&batch)
 	for _, input := range inputs {
-		if err := encoder.Encode(input); err != nil {
-			test.Fatal(err)
+		if encodeError := encoder.Encode(input); encodeError != nil {
+			test.Fatal(encodeError)
 		}
 	}
 	cases := filepath.Join(dir, "cases.jsonl")
@@ -432,8 +439,8 @@ func structureLayoutFixture(test *testing.T, inputs []auditInput, products struc
 		var fullBatch bytes.Buffer
 		fullEncoder := json.NewEncoder(&fullBatch)
 		for _, input := range fullInputs {
-			if err := fullEncoder.Encode(input); err != nil {
-				test.Fatal(err)
+			if encodeError := fullEncoder.Encode(input); encodeError != nil {
+				test.Fatal(encodeError)
 			}
 		}
 		write(test, fullCases, fullBatch.Bytes())
@@ -445,8 +452,8 @@ func structureLayoutFixture(test *testing.T, inputs []auditInput, products struc
 	listTask := startFixtureTask(&workers, func() (run, error) {
 		if selection.Sample {
 			mutantNativeCases = filepath.Join(dir, "mutant-native.txt")
-			var err error
-			mutantWant, err = executeResult(
+			var executeResultError error
+			mutantWant, executeResultError = executeResult(
 				test,
 				nil,
 				goBinary,
@@ -454,30 +461,30 @@ func structureLayoutFixture(test *testing.T, inputs []auditInput, products struc
 				mutantNativeCases,
 				filepath.Join(dir, "mutant-canonical.txt"),
 			)
-			if err != nil {
-				return run{}, err
+			if executeResultError != nil {
+				return run{}, executeResultError
 			}
 		}
 		return executeResult(test, nil, goBinary, cases, nativeCases, canonicalCases)
 	})
 	goLayout := products.goLayout
 	docBuild := startFixtureTask(&workers, func() (struct{}, error) { return struct{}{}, nil })
-	main, err := filepath.Abs("testdata/list_probe.ts")
-	if err != nil {
-		test.Fatal(err)
+	main, absolutePathError := filepath.Abs("testdata/list_probe.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 
 	fork := os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")
 	if fork == "" {
 		fork = filepath.Join(root, "cohere/internal/format/prettier/bundles")
 	}
-	script, err := filepath.Abs("testdata/document_library.mjs")
-	if err != nil {
-		test.Fatal(err)
+	script, absolutePathError := filepath.Abs("testdata/document_library.mjs")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	markdownScript, err := filepath.Abs("testdata/library.mjs")
-	if err != nil {
-		test.Fatal(err)
+	markdownScript, absolutePathError := filepath.Abs("testdata/library.mjs")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	libraryTask := startFixtureTask(&workers, func() (run, error) {
 		return executeResult(test, nil, "node", markdownScript, fork, cases, "fork", "off-only")
@@ -499,9 +506,9 @@ func structureLayoutFixture(test *testing.T, inputs []auditInput, products struc
 		protocolPaths = append(protocolPaths, mutantNativeCases)
 	}
 	for _, protocolPath := range protocolPaths {
-		raw, err := os.ReadFile(protocolPath)
-		if err != nil {
-			test.Fatal(err)
+		raw, readError := os.ReadFile(protocolPath)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		lines := strings.Split(string(raw), "\n")
 		for index, line := range lines {
@@ -538,27 +545,27 @@ func structureLayoutFixture(test *testing.T, inputs []auditInput, products struc
 		write(test, protocolPath, []byte(strings.Join(lines, "\n")))
 	}
 	if keep := os.Getenv("ADAMIC_MARKDOWNLISTS_KEEP"); keep != "" {
-		if err := os.MkdirAll(keep, 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(keep, 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 		write(test, filepath.Join(keep, "cases.jsonl"), batch.Bytes())
 		write(test, filepath.Join(keep, "want.txt"), want.stdout)
 		for _, name := range []string{"native.txt", "canonical.txt"} {
-			value, err := os.ReadFile(filepath.Join(dir, name))
-			if err != nil {
-				test.Fatal(err)
+			value, readError := os.ReadFile(filepath.Join(dir, name))
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			write(test, filepath.Join(keep, name), value)
 		}
 	}
 	docTask := startFixtureTask(&workers, func() (run, error) {
-		if _, err := docBuild.result(); err != nil {
-			return run{}, err
+		if _, resultError := docBuild.result(); resultError != nil {
+			return run{}, resultError
 		}
 		return executeResult(test, nil, goLayout, canonicalCases)
 	})
 	sourceTask := startFixtureTask(&workers, func() (run, error) {
-		result, err := onNodeResult(test, main, nativeCases)
+		result, onNodeResultError := onNodeResult(test, main, nativeCases)
 		if os.Getenv("ADAMIC_STRUCTURE_LAYOUT_PLANT") == "1" {
 			for index, input := range inputs {
 				if input.Name == products.plantedName {
@@ -568,7 +575,7 @@ func structureLayoutFixture(test *testing.T, inputs []auditInput, products struc
 				}
 			}
 		}
-		return result, err
+		return result, onNodeResultError
 	})
 	backendPath := filepath.Join(dir, "program.mjs")
 	write(test, backendPath, products.javascript)
@@ -577,9 +584,9 @@ func structureLayoutFixture(test *testing.T, inputs []auditInput, products struc
 		func() (run, error) { return onNodeResult(test, backendPath, nativeCases) },
 	)
 	nativeTask := startFixtureTask(&workers, func() (run, error) {
-		binary, err := sanitizedBuild.result()
-		if err != nil {
-			return run{}, err
+		binary, resultError := sanitizedBuild.result()
+		if resultError != nil {
+			return run{}, resultError
 		}
 		var environment []string
 		if runtime.GOOS == "linux" {
@@ -588,9 +595,9 @@ func structureLayoutFixture(test *testing.T, inputs []auditInput, products struc
 		return executeResult(test, environment, binary, nativeCases)
 	})
 	releaseTask := startFixtureTask(&workers, func() (run, error) {
-		binary, err := releaseBuild.result()
-		if err != nil {
-			return run{}, err
+		binary, resultError := releaseBuild.result()
+		if resultError != nil {
+			return run{}, resultError
 		}
 		return executeResult(test, nil, binary, nativeCases)
 	})
@@ -688,11 +695,11 @@ func structureLayoutCommand(name string, arguments ...string) (*exec.Cmd, contex
 	command := exec.CommandContext(ctx, name, arguments...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
+		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if errors.Is(killError, syscall.ESRCH) {
 			return os.ErrProcessDone
 		}
-		return err
+		return killError
 	}
 	return command, cancel
 }

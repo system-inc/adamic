@@ -36,11 +36,11 @@ func TestDependenciesFollowTheMarkers(test *testing.T) {
 	}
 	for name, content := range files {
 		path := filepath.Join(root, filepath.FromSlash(name))
-		if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0o755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.WriteFile(path, []byte(content), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(content), 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	for _, arguments := range [][]string{{"init", "-q"}, {"add", "."}, {
@@ -54,30 +54,33 @@ func TestDependenciesFollowTheMarkers(test *testing.T) {
 		"-qm",
 		"stand-in",
 	}} {
-		if output, err := toolchain.GitCommandIn(root, arguments...).CombinedOutput(); err != nil {
-			test.Fatalf("git %v: %v\n%s", arguments, err, output)
+		if output, combinedOutputError := toolchain.GitCommandIn(
+			root,
+			arguments...,
+		).CombinedOutput(); combinedOutputError != nil {
+			test.Fatalf("git %v: %v\n%s", arguments, combinedOutputError, output)
 		}
 	}
 	// A runner's source: the tracked files and the manifest build-tree writes, with no .git.
 	source := test.TempDir()
 	for name, content := range files {
 		path := filepath.Join(source, filepath.FromSlash(name))
-		if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0o755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.WriteFile(path, []byte(content), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(content), 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
-	if err := tracked.Write(root, source); err != nil {
-		test.Fatal(err)
+	if writeError := tracked.Write(root, source); writeError != nil {
+		test.Fatal(writeError)
 	}
 	want := append([]string{"fixture", "imports", "launches"}, Compiler...)
 	sort.Strings(want)
 	for _, directory := range []string{root, source} {
-		dependencies, err := Dependencies(directory)
-		if err != nil {
-			test.Fatal(err)
+		dependencies, dependenciesError := Dependencies(directory)
+		if dependenciesError != nil {
+			test.Fatal(dependenciesError)
 		}
 		var got []string
 		for consumer, inputs := range dependencies {
@@ -98,26 +101,26 @@ func TestDependenciesFollowTheMarkers(test *testing.T) {
 // internal/buildcache/cmd/traced, each declared, are missed).
 func TestDependenciesCoverTheDeclaredMap(test *testing.T) {
 	test.Parallel()
-	root, err := filepath.Abs(filepath.Join("..", ".."))
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(filepath.Join("..", ".."))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	content, err := os.ReadFile(filepath.Join(root, "cloud", "fast-gate", "compiler-dependencies.json"))
-	if os.IsNotExist(err) {
+	content, readError := os.ReadFile(filepath.Join(root, "cloud", "fast-gate", "compiler-dependencies.json"))
+	if os.IsNotExist(readError) {
 		test.Skip("no hand-kept map to cover: the census is the map")
 	}
-	if err != nil {
-		test.Fatal(err)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var declared struct {
 		Packages map[string][]string `json:"packages"`
 	}
-	if err := json.Unmarshal(content, &declared); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(content, &declared); decodeError != nil {
+		test.Fatal(decodeError)
 	}
-	dependencies, err := Dependencies(root)
-	if err != nil {
-		test.Fatal(err)
+	dependencies, dependenciesError := Dependencies(root)
+	if dependenciesError != nil {
+		test.Fatal(dependenciesError)
 	}
 	var missed []string
 	for directory := range declared.Packages {

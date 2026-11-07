@@ -9,12 +9,18 @@ import (
 // certification is sound only if the implementation and view use the same ABI.
 func (l *lowering) untaggedCallableABI(index int, contract ir.ViewContract) bool {
 	function := l.result.Functions[index]
-	if !function.Closure || function.Receiver || function.RestElement != 0 || len(function.Parameters) != len(contract.Parameters) {
+	if !function.Closure ||
+		function.Receiver ||
+		function.RestElement != 0 ||
+		len(function.Parameters) != len(contract.Parameters) {
 		return false
 	}
 	// The producer registry records only fixed scalar or void results. A
 	// discarded result still needs a recorded implementation signature.
-	if function.Returns != 0 && function.Returns != ir.Number && function.Returns != ir.Boolean && function.Returns != ir.String {
+	if function.Returns != 0 &&
+		function.Returns != ir.Number &&
+		function.Returns != ir.Boolean &&
+		function.Returns != ir.String {
 		return false
 	}
 	for i, local := range function.Parameters {
@@ -23,7 +29,8 @@ func (l *lowering) untaggedCallableABI(index int, contract ir.ViewContract) bool
 			return false
 		}
 	}
-	return contract.DiscardResult || contract.Result != 0 && function.Returns == l.result.ViewContracts[contract.Result-1].Of
+	return contract.DiscardResult ||
+		contract.Result != 0 && function.Returns == l.result.ViewContracts[contract.Result-1].Of
 }
 
 // Use the allocation graph's joins and projections to find known implementations.
@@ -130,20 +137,33 @@ func (l *lowering) callableProducerViewRefusal(graph *allocationFlowGraph, read 
 				// as an unsupported representation conversion, and so does this, rather than compile a read that only
 				// fails at run time where Node succeeds (bad_callable.a, ruling (b) on #aecx10a).
 				if known && len(assignableMembers) == 0 && l.allCallableTargets(members) {
-					return &Refused{Where: read.ViewWhere, What: "checked view read of field " + read.Name + " with unsupported representation conversion contract", Fix: "prove or implement the representation conversion contract before reading this field"}
+					return &Refused{
+						Where: read.ViewWhere,
+						What: "checked view read of field " +
+							read.Name +
+							" with unsupported representation conversion contract",
+						Fix: "prove or implement the representation conversion contract before reading this field",
+					}
 				}
 				if len(assignableMembers) > 1 {
 					// A producer identical to one member is carried by that member, the
 					// representation that needs no adaptation. Otherwise nothing selects one.
 					if len(exactMembers) != 1 {
-						return &Refused{Where: read.ViewWhere, What: "a checked callable producer assignable to more than one union member", Fix: "wrap the producer in an arrow with parameters and result that select exactly one view member"}
+						return &Refused{
+							Where: read.ViewWhere,
+							What:  "a checked callable producer assignable to more than one union member",
+							Fix:   "wrap the producer in an arrow with parameters and result that select exactly one view member",
+						}
 					}
 					for member := range exactMembers {
 						compatible = l.untaggedCallableABI(function, l.result.ViewContracts[member-1])
 					}
 				}
 				if len(assignableMembers) != 0 && !compatible {
-					return &NotYet{Where: read.ViewWhere, What: "a checked callable producer with a different scalar storage, arity, or receiver convention; wrap the producer in an arrow with the view member's exact parameters and result"}
+					return &NotYet{
+						Where: read.ViewWhere,
+						What:  "a checked callable producer with a different scalar storage, arity, or receiver convention; wrap the producer in an arrow with the view member's exact parameters and result",
+					}
 				}
 			}
 			return nil
@@ -153,22 +173,23 @@ func (l *lowering) callableProducerViewRefusal(graph *allocationFlowGraph, read 
 		if contract.Kind == ir.ViewObject {
 			for _, field := range contract.Fields {
 				child := l.result.ViewContracts[field.Contract-1]
-				if !field.Optional && child.Kind == ir.ViewScalar && (len(child.Allowed) != 0 || field.Name == "kind" && (child.Of == ir.Number || child.Of == ir.Boolean || child.Of == ir.String)) {
+				if !field.Optional && child.Kind == ir.ViewScalar && (len(child.Allowed) != 0 || field.Name == "kind" &&
+					(child.Of == ir.Number || child.Of == ir.Boolean || child.Of == ir.String)) {
 					return nil
 				}
 			}
 		}
 
 		for _, member := range contract.Members {
-			if err := inspect(member, value); err != nil {
-				return err
+			if inspectError := inspect(member, value); inspectError != nil {
+				return inspectError
 			}
 		}
 		for _, field := range contract.Fields {
 			child := l.result.ViewContracts[field.Contract-1]
 			projected := ir.Property{Object: value, Name: field.Name, Of: child.Of}
-			if err := inspect(field.Contract, projected); err != nil {
-				return err
+			if inspectError := inspect(field.Contract, projected); inspectError != nil {
+				return inspectError
 			}
 		}
 		return nil
@@ -193,7 +214,8 @@ func (l *lowering) uniquelyAssignableCallable(producer *checker.Type, member ir.
 		}
 		matches, exacts, exact := 0, 0, ir.ViewContractID(0)
 		for _, child := range union.Members {
-			if target := l.untaggedCallableTargets[child]; target != nil && l.checker.IsTypeAssignableTo(producer, target) {
+			if target := l.untaggedCallableTargets[child]; target != nil &&
+				l.checker.IsTypeAssignableTo(producer, target) {
 				matches++
 				if checker.Checker_isTypeIdenticalTo(l.checker, producer, target) {
 					exacts, exact = exacts+1, child

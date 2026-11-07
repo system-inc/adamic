@@ -30,8 +30,8 @@ func constantTableConfiguredWitness(
 	test.Helper()
 	directory := test.TempDir()
 	entry := filepath.Join(directory, "tables.a")
-	if err := os.WriteFile(entry, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(entry, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	program := namedProgram(test, entry, nil)
 	if configure != nil {
@@ -45,12 +45,12 @@ func constantTableConfiguredWitness(
 		test.Fatal("missing constant template " + template)
 	}
 	binary := filepath.Join(directory, "tables")
-	if err := Build(
+	if buildError := Build(
 		code,
 		binary,
 		Options{Split: split, Sanitize: sanitize, Count: true, Jobs: 1, ProgramRegion: program.ProgramRegion},
-	); err != nil {
-		test.Fatal(err)
+	); buildError != nil {
+		test.Fatal(buildError)
 	}
 	run := func(name string, args ...string) (string, string) {
 		test.Helper()
@@ -61,8 +61,8 @@ func constantTableConfiguredWitness(
 		var out, errors bytes.Buffer
 		cmd.Stdout = &out
 		cmd.Stderr = &errors
-		if err := cmd.Run(); err != nil {
-			test.Fatalf("%s: %v\n%s", name, err, errors.String())
+		if runError := cmd.Run(); runError != nil {
+			test.Fatalf("%s: %v\n%s", name, runError, errors.String())
 		}
 		return out.String(), errors.String()
 	}
@@ -72,8 +72,8 @@ func constantTableConfiguredWitness(
 		test.Fatalf("native %q Node %q", actual, truth)
 	}
 	js := filepath.Join(directory, "program.mjs")
-	if err := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	if actual, _ := run("node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", js); actual != truth {
 		test.Fatal("JavaScript differs from Node")
@@ -96,9 +96,9 @@ func constantTableConfiguredWitness(
 }
 func constantFixture(test *testing.T) string {
 	test.Helper()
-	data, err := os.ReadFile("testdata/constant_tables.a")
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile("testdata/constant_tables.a")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return string(data)
 }
@@ -146,9 +146,9 @@ func TestConstantRecordConstructorsStayBounded(test *testing.T) {
 	if strings.Contains(code, "adamic_record_table_") {
 		test.Fatal("wide record specialized")
 	}
-	declarations, err := splitDeclarations(code)
-	if err != nil {
-		test.Fatal(err)
+	declarations, splitDeclarationsError := splitDeclarations(code)
+	if splitDeclarationsError != nil {
+		test.Fatal(splitDeclarationsError)
 	}
 	for _, d := range declarations {
 		if d.function && strings.HasPrefix(d.name, "adamic_initialize_") {
@@ -214,9 +214,9 @@ func TestConstantNumbersKeepPlacement(test *testing.T) {
 
 func TestConstantTablesLoopFreshness(test *testing.T) {
 	test.Parallel()
-	source, err := os.ReadFile("testdata/constant_tables_fresh.a")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("testdata/constant_tables_fresh.a")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	constantTableWitness(test, string(source), "adamic_record_table_", true, true)
 }
@@ -327,9 +327,9 @@ func TestConstantNumbersSmallFunctionsInline(test *testing.T) {
 		true,
 		func(p *ir.Program) { program = p },
 	)
-	declarations, err := splitDeclarations(code)
-	if err != nil {
-		test.Fatal(err)
+	declarations, splitDeclarationsError := splitDeclarations(code)
+	if splitDeclarationsError != nil {
+		test.Fatal(splitDeclarationsError)
 	}
 	names := &emitter{program: program}
 	seen := 0

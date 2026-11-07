@@ -64,13 +64,13 @@ int main(int count, char **arguments) {
 }
 `
 	binary := filepath.Join(test.TempDir(), "resources")
-	if err := Build(harness, binary, Options{}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(harness, binary, Options{}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	run := func(test *testing.T, mode string) string {
 		test.Helper()
 		// Fork after exec to avoid inheriting the Go process's resident high-water mark.
-		output, err := exec.Command(
+		output, combinedOutputError := exec.Command(
 			"/bin/sh",
 			"-c",
 			`"$@" & child=$!; wait "$child"`,
@@ -78,16 +78,16 @@ int main(int count, char **arguments) {
 			binary,
 			mode,
 		).CombinedOutput()
-		if err != nil {
-			test.Fatalf("%s: %v\n%s", mode, err, output)
+		if combinedOutputError != nil {
+			test.Fatalf("%s: %v\n%s", mode, combinedOutputError, output)
 		}
 		return strings.TrimSpace(string(output))
 	}
 	test.Run("peak", func(test *testing.T) {
 		peak := func(mode string) int {
-			value, err := strconv.Atoi(run(test, mode))
-			if err != nil {
-				test.Fatal(err)
+			value, parseError := strconv.Atoi(run(test, mode))
+			if parseError != nil {
+				test.Fatal(parseError)
 			}
 			return residentKibibytes(value, goruntime.GOOS)
 		}
@@ -100,9 +100,9 @@ int main(int count, char **arguments) {
 	})
 	test.Run("count", func(test *testing.T) { run(test, "count") })
 	test.Run("speed", func(test *testing.T) {
-		seconds, err := strconv.ParseFloat(run(test, "speed"), 64)
-		if err != nil {
-			test.Fatal(err)
+		seconds, parseError := strconv.ParseFloat(run(test, "speed"), 64)
+		if parseError != nil {
+			test.Fatal(parseError)
 		}
 		// Recorded gate: 2 million successful 0..999 lookups take at most 0.35 CPU seconds.
 		// CPU time excludes scheduling delays. The all-zero hash mutant must cross this bound.

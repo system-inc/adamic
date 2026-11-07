@@ -51,9 +51,9 @@ var whitespaceLayoutShared whitespaceLayoutProducts
 func whitespaceLayoutSetup(test *testing.T, ctx context.Context) whitespaceLayoutProducts {
 	whitespaceLayoutOnce.Do(func() {
 		started := time.Now()
-		root, err := filepath.Abs(repository)
-		if err != nil {
-			test.Fatal(err)
+		root, absolutePathError := filepath.Abs(repository)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		whitespaceLayoutShared = whitespaceLayoutBuild(test, ctx, root)
 		test.Logf("TestMarkdownWhitespaceLayout (Go and lowered products): %.3fs", time.Since(started).Seconds())
@@ -100,9 +100,9 @@ func whitespaceLayoutNativeSetup(
 }
 
 func whitespaceLayoutEnumerate(test *testing.T) ([]auditInput, [testMarkdownWhitespaceLayoutShards][]int) {
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	inputs, _ := blockCorpus(test, root, "whitespace")
 	var shards [testMarkdownWhitespaceLayoutShards][]int
@@ -134,11 +134,15 @@ func whitespaceLayoutPrepare(test *testing.T) {
 		if policy.sanitized == "" {
 			return fmt.Errorf("whitespace policy setup failed")
 		}
-		if err := os.WriteFile(filepath.Join(directory, "layout.mjs"), products.backend, 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(
+			filepath.Join(directory, "layout.mjs"),
+			products.backend,
+			0644,
+		); writeError != nil {
+			return writeError
 		}
-		if err := os.WriteFile(filepath.Join(directory, "policy.mjs"), policy.backend, 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(filepath.Join(directory, "policy.mjs"), policy.backend, 0644); writeError != nil {
+			return writeError
 		}
 		// Each is another product, named by its key so a runner finds it in its own cache (#tqrqx60).
 		paths := map[string]string{
@@ -151,9 +155,9 @@ func whitespaceLayoutPrepare(test *testing.T) {
 		for name, path := range paths {
 			paths[name] = buildcache.Relative(path)
 		}
-		data, err := json.Marshal(paths)
-		if err != nil {
-			return err
+		data, encodeError := json.Marshal(paths)
+		if encodeError != nil {
+			return encodeError
 		}
 		return os.WriteFile(filepath.Join(directory, "products.json"), data, 0644)
 	})
@@ -163,9 +167,9 @@ func whitespaceLayoutPrepare(test *testing.T) {
 func TestMarkdownWhitespaceLayoutUnion(test *testing.T) {
 	test.Parallel()
 
-	tree, err := parser.ParseFile(token.NewFileSet(), "whitespace_layout_split_test.go", nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	tree, parseFileError := parser.ParseFile(token.NewFileSet(), "whitespace_layout_split_test.go", nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	declared := make([]bool, testMarkdownWhitespaceLayoutShards)
 	for _, declaration := range tree.Decls {
@@ -176,8 +180,8 @@ func TestMarkdownWhitespaceLayoutUnion(test *testing.T) {
 		if !ok || !strings.HasPrefix(function.Name.Name, "TestMarkdownWhitespaceLayout_") {
 			continue
 		}
-		index, err := strconv.Atoi(strings.TrimPrefix(function.Name.Name, "TestMarkdownWhitespaceLayout_"))
-		if err != nil || index < 0 || index >= len(declared) || declared[index] {
+		index, parseError := strconv.Atoi(strings.TrimPrefix(function.Name.Name, "TestMarkdownWhitespaceLayout_"))
+		if parseError != nil || index < 0 || index >= len(declared) || declared[index] {
 			test.Fatal("shard function enumeration mismatch")
 		}
 		declared[index] = true
@@ -316,9 +320,9 @@ func whitespaceLayoutBuildProduct(
 	ctx context.Context,
 	root, probe, target string,
 ) whitespaceLayoutProducts {
-	main, err := filepath.Abs(filepath.Join("testdata", probe))
-	if err != nil {
-		test.Fatal(err)
+	main, absolutePathError := filepath.Abs(filepath.Join("testdata", probe))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	inputs := buildcache.Inputs{
 		Name:      "markdown-whitespace-layout-lowered-" + probe,
@@ -327,22 +331,26 @@ func whitespaceLayoutBuildProduct(
 		Toolchain: []string{runtime.Version()},
 	}
 	loweredDir := buildcache.Product(test, inputs, func(dir string) error {
-		program, err := loweredResult(main)
-		if err != nil {
-			return err
+		program, loweredResultError := loweredResult(main)
+		if loweredResultError != nil {
+			return loweredResultError
 		}
-		if err := os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(program)), 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(
+			filepath.Join(dir, "program.c"),
+			[]byte(native.C(program)),
+			0644,
+		); writeError != nil {
+			return writeError
 		}
 		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
 	})
-	source, err := os.ReadFile(filepath.Join(loweredDir, "program.c"))
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(filepath.Join(loweredDir, "program.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	backend, err := os.ReadFile(filepath.Join(loweredDir, "program.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	backend, readError := os.ReadFile(filepath.Join(loweredDir, "program.mjs"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	products := whitespaceLayoutProducts{backend: backend, source: string(source), inputs: inputs}
 	if target == "lowered" {
@@ -375,16 +383,16 @@ func whitespaceLayoutMutant(
 	main, nativeCases, inputs := fixture.main, fixture.nativeCases, fixture.inputs
 	want := run{stdout: fixture.want}
 	scratch := test.TempDir()
-	if err := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	if err := os.Mkdir(filepath.Join(scratch, "markdowninline"), 0755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.Mkdir(filepath.Join(scratch, "markdowninline"), 0755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	for _, name := range []string{"inline.ts", "classes.ts"} {
-		content, err := os.ReadFile(filepath.Join("../markdowninline", name))
-		if err != nil {
-			test.Fatal(err)
+		content, readError := os.ReadFile(filepath.Join("../markdowninline", name))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		write(test, filepath.Join(scratch, "markdowninline", name), content)
 	}
@@ -412,9 +420,9 @@ func whitespaceLayoutMutant(
 		"whitespace.ts",
 		"whitespaceCodec.ts",
 	} {
-		content, err := os.ReadFile(name)
-		if err != nil {
-			test.Fatal(err)
+		content, readError := os.ReadFile(name)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		if name == "leaves.ts" {
 			content = []byte(
@@ -429,9 +437,9 @@ func whitespaceLayoutMutant(
 		}
 		write(test, filepath.Join(scratch, name), content)
 	}
-	content, err := os.ReadFile(main)
-	if err != nil {
-		test.Fatal(err)
+	content, readError := os.ReadFile(main)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	content = []byte(
 		strings.Replace(string(content), "../../markdowninline/inline.ts", "../markdowninline/inline.ts", 1),
@@ -440,8 +448,11 @@ func whitespaceLayoutMutant(
 	write(test, mutantMain, content)
 	result := whitespaceLayoutNode(test, ctx, mutantMain, nativeCases)
 	clean(test, "source Node layout mutant", result)
-	if err := whitespaceLayoutMutantSurvived(result.stdout, want.stdout); err != nil {
-		test.Fatalf("whitespace mutant %s: %v", mutation.name, err)
+	if whitespaceLayoutMutantSurvivedError := whitespaceLayoutMutantSurvived(
+		result.stdout,
+		want.stdout,
+	); whitespaceLayoutMutantSurvivedError != nil {
+		test.Fatalf("whitespace mutant %s: %v", mutation.name, whitespaceLayoutMutantSurvivedError)
 	}
 	offset := firstDifference(string(result.stdout), string(want.stdout))
 	index := bytes.Count(want.stdout[:offset], []byte("\n"))
@@ -458,19 +469,19 @@ func whitespaceLayoutFixture(
 	defer workers.Wait()
 	// This last cumulative corpus contains every earlier layout milestone's inputs.
 
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	dir := test.TempDir()
-	if err := os.MkdirAll(dir, 0755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(dir, 0755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	var batch bytes.Buffer
 	encoder := json.NewEncoder(&batch)
 	for _, input := range inputs {
-		if err := encoder.Encode(input); err != nil {
-			test.Fatal(err)
+		if encodeError := encoder.Encode(input); encodeError != nil {
+			test.Fatal(encodeError)
 		}
 	}
 	cases := filepath.Join(dir, "cases.jsonl")
@@ -481,21 +492,21 @@ func whitespaceLayoutFixture(
 		return whitespaceLayoutExecuteResult(ctx, nil, goBinary, cases, nativeCases, canonicalCases)
 	})
 	goLayout := products.goLayout
-	main, err := filepath.Abs("testdata/list_probe.ts")
-	if err != nil {
-		test.Fatal(err)
+	main, absolutePathError := filepath.Abs("testdata/list_probe.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	fork := os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")
 	if fork == "" {
 		fork = filepath.Join(root, "cohere/internal/format/prettier/bundles")
 	}
-	script, err := filepath.Abs("testdata/document_library.mjs")
-	if err != nil {
-		test.Fatal(err)
+	script, absolutePathError := filepath.Abs("testdata/document_library.mjs")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	markdownScript, err := filepath.Abs("testdata/library.mjs")
-	if err != nil {
-		test.Fatal(err)
+	markdownScript, absolutePathError := filepath.Abs("testdata/library.mjs")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	libraryTask := startFixtureTask(&workers, func() (run, error) {
 		return whitespaceLayoutExecuteResult(ctx, nil, "node", markdownScript, fork, cases, "fork", "off-only")
@@ -506,9 +517,9 @@ func whitespaceLayoutFixture(
 	// Poison every text-width field in the native protocol to prove no oracle service remains.
 	protocolPaths := []string{nativeCases}
 	for _, protocolPath := range protocolPaths {
-		raw, err := os.ReadFile(protocolPath)
-		if err != nil {
-			test.Fatal(err)
+		raw, readError := os.ReadFile(protocolPath)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		lines := strings.Split(string(raw), "\n")
 		for index, line := range lines {
@@ -545,15 +556,15 @@ func whitespaceLayoutFixture(
 		write(test, protocolPath, []byte(strings.Join(lines, "\n")))
 	}
 	if keep := os.Getenv("ADAMIC_MARKDOWNLISTS_KEEP"); keep != "" {
-		if err := os.MkdirAll(keep, 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(keep, 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 		write(test, filepath.Join(keep, "cases.jsonl"), batch.Bytes())
 		write(test, filepath.Join(keep, "want.txt"), want.stdout)
 		for _, name := range []string{"native.txt", "canonical.txt"} {
-			value, err := os.ReadFile(filepath.Join(dir, name))
-			if err != nil {
-				test.Fatal(err)
+			value, readError := os.ReadFile(filepath.Join(dir, name))
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			write(test, filepath.Join(keep, name), value)
 		}
@@ -643,9 +654,9 @@ func whitespaceLayoutFixture(
 	// Repeat timings only on request; all corpus and mutant comparisons ran above.
 	if os.Getenv("ADAMIC_MARKDOWN_BENCH") != "" {
 		fast := products.release
-		runner, err := filepath.Abs(filepath.Join(root, "oracle/node.mjs"))
-		if err != nil {
-			test.Fatal(err)
+		runner, absolutePathError := filepath.Abs(filepath.Join(root, "oracle/node.mjs"))
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		for _, side := range []struct {
 			name, command string
@@ -688,9 +699,9 @@ func whitespaceLayoutFixture(
 // number of whitespace nodes it names.
 func whitespaceLayoutPolicyWant(test *testing.T, cases string) ([]byte, int) {
 	test.Helper()
-	raw, err := os.ReadFile(cases)
-	if err != nil {
-		test.Fatal(err)
+	raw, readError := os.ReadFile(cases)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var expected strings.Builder
 	count := 0
@@ -713,9 +724,9 @@ func whitespaceLayoutPolicy(
 ) {
 	test.Helper()
 	want, count := whitespaceLayoutPolicyWant(test, cases)
-	main, err := filepath.Abs("testdata/whitespace_probe.ts")
-	if err != nil {
-		test.Fatal(err)
+	main, absolutePathError := filepath.Abs("testdata/whitespace_probe.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	binary := products.sanitized
 	answer := whitespaceLayoutExecute(test, ctx, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary, cases)
@@ -760,8 +771,8 @@ func whitespaceLayoutPolicyMutant(
 	test.Helper()
 	want, _ := whitespaceLayoutPolicyWant(test, cases)
 	scratch := test.TempDir()
-	if err := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	for _, file := range []string{
 		"whitespace.ts",
@@ -775,9 +786,9 @@ func whitespaceLayoutPolicyMutant(
 		"emojiMatcher.ts",
 		"testdata/whitespace_probe.ts",
 	} {
-		b, err := os.ReadFile(file)
-		if err != nil {
-			test.Fatal(err)
+		b, readError := os.ReadFile(file)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		if file == "whitespace.ts" {
 			if strings.Count(string(b), m.from) != 1 {
@@ -789,8 +800,11 @@ func whitespaceLayoutPolicyMutant(
 	}
 	result := whitespaceLayoutNode(test, ctx, filepath.Join(scratch, "testdata/whitespace_probe.ts"), cases)
 	clean(test, m.name, result)
-	if err := whitespaceLayoutMutantSurvived(result.stdout, want); err != nil {
-		test.Fatalf("%s: %v", m.name, err)
+	if whitespaceLayoutMutantSurvivedError := whitespaceLayoutMutantSurvived(
+		result.stdout,
+		want,
+	); whitespaceLayoutMutantSurvivedError != nil {
+		test.Fatalf("%s: %v", m.name, whitespaceLayoutMutantSurvivedError)
 	}
 	test.Logf("%s caught by Go policy document classification", m.name)
 }
@@ -805,9 +819,9 @@ var loweringCompilerInputs = []string{
 func whitespaceLayoutBuildFiles() []string {
 	files := append([]string(nil), loweringCompilerInputs...)
 	for _, directory := range []string{".", "../markdowninline", "testdata"} {
-		entries, err := os.ReadDir(directory)
-		if err != nil {
-			panic(err)
+		entries, readDirectoryError := os.ReadDir(directory)
+		if readDirectoryError != nil {
+			panic(readDirectoryError)
 		}
 		for _, entry := range entries {
 			if !entry.IsDir() && (strings.HasSuffix(entry.Name(), ".ts") ||
@@ -841,16 +855,16 @@ func TestLoweringInputsCoverCompilerDependencies(test *testing.T) {
 		"./internal/native",
 		"./internal/javascript",
 	)
-	listing, err := combinedOutput(command)
-	if err != nil {
-		test.Fatalf("go list: %v\n%s", err, listing)
+	listing, combinedOutputError := combinedOutput(command)
+	if combinedOutputError != nil {
+		test.Fatalf("go list: %v\n%s", combinedOutputError, listing)
 	}
 	needed := map[string]bool{"go.work": true}
 	inside := func(path string) (string, bool) {
-		relative, err := filepath.Rel(root, path)
+		relative, relativePathError := filepath.Rel(root, path)
 		return filepath.ToSlash(
 			relative,
-		), err == nil && relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator))
+		), relativePathError == nil && relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator))
 	}
 	for _, line := range strings.Split(strings.TrimSpace(string(listing)), "\n") {
 		directory, goMod, _ := strings.Cut(line, "\t")
@@ -859,7 +873,7 @@ func TestLoweringInputsCoverCompilerDependencies(test *testing.T) {
 		}
 		if relative, ok := inside(goMod); ok && goMod != "" {
 			needed[relative] = true
-			if _, err := os.Stat(filepath.Join(filepath.Dir(goMod), "go.sum")); err == nil {
+			if _, statError := os.Stat(filepath.Join(filepath.Dir(goMod), "go.sum")); statError == nil {
 				needed[filepath.ToSlash(filepath.Join(filepath.Dir(relative), "go.sum"))] = true
 			}
 		}
@@ -905,9 +919,9 @@ var whitespaceLayoutPolicyProducts whitespaceLayoutProducts
 func whitespaceLayoutPolicySetup(test *testing.T, ctx context.Context) whitespaceLayoutProducts {
 	whitespaceLayoutPolicyOnce.Do(func() {
 		started := time.Now()
-		root, err := filepath.Abs(repository)
-		if err != nil {
-			test.Fatal(err)
+		root, absolutePathError := filepath.Abs(repository)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		products := whitespaceLayoutBuildProbe(test, ctx, root, "whitespace_probe.ts", false)
 		inputs := products.inputs
@@ -963,8 +977,8 @@ func whitespaceLayoutMutantsExpected(
 		var batch bytes.Buffer
 		encoder := json.NewEncoder(&batch)
 		for _, input := range inputs {
-			if err := encoder.Encode(input); err != nil {
-				test.Fatal(err)
+			if encodeError := encoder.Encode(input); encodeError != nil {
+				test.Fatal(encodeError)
 			}
 		}
 		cases := filepath.Join(dir, "cases.jsonl")
@@ -974,9 +988,9 @@ func whitespaceLayoutMutantsExpected(
 		clean(test, "Go mutant fixtures", want)
 		// Go writes the port's cases into the first caller's temporary directory, gone when that test ends, so their
 		// bytes are kept.
-		encoded, err := os.ReadFile(nativeCases)
-		if err != nil {
-			test.Fatal(err)
+		encoded, readError := os.ReadFile(nativeCases)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		whitespaceLayoutMutantsAnswers.want, whitespaceLayoutMutantsAnswers.inputs = want.stdout, inputs
 		whitespaceLayoutMutantsAnswers.nativeCases = encoded
@@ -1003,17 +1017,17 @@ func whitespaceLayoutMutantsShard(test *testing.T, index int) {
 	encoded, want, inputs := whitespaceLayoutMutantsExpected(test, ctx, products)
 	nativeCases := filepath.Join(test.TempDir(), "native.txt")
 	write(test, nativeCases, encoded)
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	fork := os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")
 	if fork == "" {
 		fork = filepath.Join(root, "cohere/internal/format/prettier/bundles")
 	}
-	main, err := filepath.Abs("testdata/list_probe.ts")
-	if err != nil {
-		test.Fatal(err)
+	main, absolutePathError := filepath.Abs("testdata/list_probe.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	layout, policy := len(whitespaceLayoutMutations), len(whitespaceLayoutPolicyMutations)
 	switch {
@@ -1040,9 +1054,9 @@ func whitespaceLayoutMutantsEnumeration(test *testing.T) []int {
 			whitespaceLayoutMutantsShards,
 		)
 	}
-	file, err := parser.ParseFile(token.NewFileSet(), "whitespace_layout_split_test.go", nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	file, parseFileError := parser.ParseFile(token.NewFileSet(), "whitespace_layout_split_test.go", nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	var plan []int
 	for _, declaration := range file.Decls {
@@ -1050,9 +1064,11 @@ func whitespaceLayoutMutantsEnumeration(test *testing.T) []int {
 		if !ok || !strings.HasPrefix(function.Name.Name, "TestMarkdownWhitespaceLayoutMutants_") {
 			continue
 		}
-		shard, err := strconv.Atoi(strings.TrimPrefix(function.Name.Name, "TestMarkdownWhitespaceLayoutMutants_"))
-		if err != nil {
-			test.Fatal(err)
+		shard, parseError := strconv.Atoi(
+			strings.TrimPrefix(function.Name.Name, "TestMarkdownWhitespaceLayoutMutants_"),
+		)
+		if parseError != nil {
+			test.Fatal(parseError)
 		}
 		calls := 0
 		ast.Inspect(function.Body, func(node ast.Node) bool {
@@ -1071,7 +1087,7 @@ func whitespaceLayoutMutantsEnumeration(test *testing.T) []int {
 			if !ok {
 				test.Fatalf("%s: shard index must be a literal", function.Name.Name)
 			}
-			if index, err := strconv.Atoi(literal.Value); err != nil || index != shard {
+			if index, parseError := strconv.Atoi(literal.Value); parseError != nil || index != shard {
 				test.Fatalf("%s runs part %s", function.Name.Name, literal.Value)
 			}
 			calls++
@@ -1214,9 +1230,9 @@ var whitespaceLayoutReadyOnce sync.Once
 var whitespaceLayoutPrepared, whitespaceLayoutPolicyPrepared whitespaceLayoutProducts
 
 func whitespaceLayoutSetupInputs(test *testing.T) buildcache.Inputs {
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	files := whitespaceLayoutBuildFiles()
 	files = append(files, "stage1/cohere/markdownblocks/whitespace_layout_split_test.go", "cohere/internal")
@@ -1252,24 +1268,24 @@ func whitespaceLayoutReadProducts(
 	test *testing.T,
 	directory string,
 ) (whitespaceLayoutProducts, whitespaceLayoutProducts) {
-	data, err := os.ReadFile(filepath.Join(directory, "products.json"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(directory, "products.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var paths map[string]string
-	if err := json.Unmarshal(data, &paths); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &paths); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	for name, path := range paths {
 		paths[name] = buildcache.Absolute(path)
 	}
-	backend, err := os.ReadFile(filepath.Join(directory, "layout.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	backend, readError := os.ReadFile(filepath.Join(directory, "layout.mjs"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	policy, err := os.ReadFile(filepath.Join(directory, "policy.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	policy, readError := os.ReadFile(filepath.Join(directory, "policy.mjs"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return whitespaceLayoutProducts{
 		goBinary:  paths["go"],
@@ -1283,11 +1299,11 @@ func whitespaceLayoutReadProducts(
 func whitespaceLayoutCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
 	command := exec.CommandContext(ctx, name, args...)
 	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
+		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if errors.Is(killError, syscall.ESRCH) {
 			return os.ErrProcessDone
 		}
-		return err
+		return killError
 	}
 	return command
 }
@@ -1305,10 +1321,10 @@ func whitespaceLayoutExecuteResult(
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	var exitError *exec.ExitError
-	if err != nil && !errors.As(err, &exitError) {
-		return run{}, fmt.Errorf("running %s: %w", name, err)
+	if captureError != nil && !errors.As(captureError, &exitError) {
+		return run{}, fmt.Errorf("running %s: %w", name, captureError)
 	}
 	return run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}, nil
 }
@@ -1320,16 +1336,16 @@ func whitespaceLayoutExecute(
 	args ...string,
 ) run {
 	test.Helper()
-	result, err := whitespaceLayoutExecuteResult(ctx, environment, name, args...)
-	if err != nil {
-		test.Fatal(err)
+	result, whitespaceLayoutExecuteResultError := whitespaceLayoutExecuteResult(ctx, environment, name, args...)
+	if whitespaceLayoutExecuteResultError != nil {
+		test.Fatal(whitespaceLayoutExecuteResultError)
 	}
 	return result
 }
 func whitespaceLayoutNodeResult(ctx context.Context, path string, args ...string) (run, error) {
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		return run{}, err
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		return run{}, absolutePathError
 	}
 	return whitespaceLayoutExecuteResult(
 		ctx,
@@ -1340,9 +1356,9 @@ func whitespaceLayoutNodeResult(ctx context.Context, path string, args ...string
 }
 func whitespaceLayoutNode(test *testing.T, ctx context.Context, path string, args ...string) run {
 	test.Helper()
-	result, err := whitespaceLayoutNodeResult(ctx, path, args...)
-	if err != nil {
-		test.Fatal(err)
+	result, whitespaceLayoutNodeResultError := whitespaceLayoutNodeResult(ctx, path, args...)
+	if whitespaceLayoutNodeResultError != nil {
+		test.Fatal(whitespaceLayoutNodeResultError)
 	}
 	return result
 }
@@ -1356,17 +1372,19 @@ type whitespaceLayoutBuildRequest struct {
 
 func whitespaceLayoutNativeBuild(ctx context.Context, source, output string, options native.Options) error {
 	sourcePath := output + ".c"
-	if err := os.WriteFile(sourcePath, []byte(source), 0644); err != nil {
-		return err
+	if writeError := os.WriteFile(sourcePath, []byte(source), 0644); writeError != nil {
+		return writeError
 	}
 	defer os.Remove(sourcePath)
-	request, err := json.Marshal(whitespaceLayoutBuildRequest{Source: sourcePath, Output: output, Options: options})
-	if err != nil {
-		return err
+	request, encodeError := json.Marshal(
+		whitespaceLayoutBuildRequest{Source: sourcePath, Output: output, Options: options},
+	)
+	if encodeError != nil {
+		return encodeError
 	}
-	executable, err := os.Executable()
-	if err != nil {
-		return err
+	executable, executableError := os.Executable()
+	if executableError != nil {
+		return executableError
 	}
 	command := whitespaceLayoutCommand(
 		ctx,
@@ -1377,8 +1395,8 @@ func whitespaceLayoutNativeBuild(ctx context.Context, source, output string, opt
 	command.Env = append(os.Environ(), "ADAMIC_WHITESPACE_BUILD="+string(request))
 	// Read through childguard.Capture for whitespaceLayoutExecuteResult's reason. The worker starts compilers of its
 	// own, and Capture kills the group once it exits, so none of them holds a pipe after it.
-	if stdout, stderr, err := childguard.Capture(ctx, command); err != nil {
-		return fmt.Errorf("native build: %w\n%s%s", err, stdout, stderr)
+	if stdout, stderr, captureError := childguard.Capture(ctx, command); captureError != nil {
+		return fmt.Errorf("native build: %w\n%s%s", captureError, stdout, stderr)
 	}
 	return nil
 }
@@ -1389,15 +1407,15 @@ func TestMarkdownWhitespaceLayoutBuildWorker(test *testing.T) {
 		return
 	}
 	var build whitespaceLayoutBuildRequest
-	if err := json.Unmarshal([]byte(request), &build); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal([]byte(request), &build); decodeError != nil {
+		test.Fatal(decodeError)
 	}
-	source, err := os.ReadFile(build.Source)
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(build.Source)
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	if err := native.Build(string(source), build.Output, build.Options); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(string(source), build.Output, build.Options); buildError != nil {
+		test.Fatal(buildError)
 	}
 }
 

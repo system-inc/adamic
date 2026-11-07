@@ -21,9 +21,9 @@ import (
 
 func TestRuntimeKeyIncludesEveryInput(test *testing.T) {
 	test.Parallel()
-	files, err := readRuntime(runtime, "runtime")
-	if err != nil {
-		test.Fatal(err)
+	files, readRuntimeError := readRuntime(runtime, "runtime")
+	if readRuntimeError != nil {
+		test.Fatal(readRuntimeError)
 	}
 	flags := Flags(Options{Sanitize: true, Count: true, slabs: true, cpu: "haswell"})
 	key := runtimeKey(files, flags, "clang", "version 1", "")
@@ -89,12 +89,12 @@ func TestRuntimeCacheKeepsCountFlags(test *testing.T) {
 	const source = "int main(void) { return 0; }\n"
 	for _, count := range []bool{false, true, false} {
 		binary := filepath.Join(test.TempDir(), "main")
-		if err := Build(source, binary, Options{Count: count}); err != nil {
-			test.Fatal(err)
+		if buildError := Build(source, binary, Options{Count: count}); buildError != nil {
+			test.Fatal(buildError)
 		}
-		output, err := exec.Command(binary).CombinedOutput()
-		if err != nil {
-			test.Fatalf("run: %v\n%s", err, output)
+		output, combinedOutputError := exec.Command(binary).CombinedOutput()
+		if combinedOutputError != nil {
+			test.Fatalf("run: %v\n%s", combinedOutputError, output)
 		}
 		want := ""
 		if count {
@@ -108,13 +108,13 @@ func TestRuntimeCacheKeepsCountFlags(test *testing.T) {
 
 func smallRuntime(test *testing.T, sources fstest.MapFS, cache string, compiler string) string {
 	test.Helper()
-	files, err := readRuntime(sources, ".")
-	if err != nil {
-		test.Fatal(err)
+	files, readRuntimeError := readRuntime(sources, ".")
+	if readRuntimeError != nil {
+		test.Fatal(readRuntimeError)
 	}
-	library, err := cachedRuntime(files, Flags(Options{}), compiler, "test compiler", cache)
-	if err != nil {
-		test.Fatal(err)
+	library, cachedRuntimeError := cachedRuntime(files, Flags(Options{}), compiler, "test compiler", cache)
+	if cachedRuntimeError != nil {
+		test.Fatal(cachedRuntimeError)
 	}
 	return library
 }
@@ -123,17 +123,20 @@ func runLibrary(test *testing.T, library string, want string) {
 	test.Helper()
 	directory := test.TempDir()
 	source := filepath.Join(directory, "main.c")
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		source,
 		[]byte("#include <stdio.h>\nint answer(void);\nint main(void) { printf(\"%d\\n\", answer()); return 0; }\n"),
 		0o644,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
 	binary := filepath.Join(directory, "main")
 	arguments := append([]string{"-o", binary, source}, RuntimeLinkFlags(library)...)
-	if output, err := toolchain.Command("clang", arguments...).CombinedOutput(); err != nil {
-		test.Fatalf("link: %v\n%s", err, output)
+	if output, combinedOutputError := toolchain.Command(
+		"clang",
+		arguments...,
+	).CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("link: %v\n%s", combinedOutputError, output)
 	}
 	if got := runWithInput(test, "", binary); got != want {
 		test.Errorf("got %q, want %q", got, want)
@@ -149,9 +152,9 @@ func TestRuntimeCacheRebuildsChangedSources(test *testing.T) {
 		"answer.c": &fstest.MapFile{Data: []byte("#include \"answer.h\"\nint answer(void) { return ANSWER + 0; }\n")},
 		"answer.h": &fstest.MapFile{Data: []byte("#define ANSWER 1\n")},
 	}
-	compiler, err := toolchain.Path("clang")
-	if err != nil {
-		test.Fatal(err)
+	compiler, pathError := toolchain.Path("clang")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
 	first := smallRuntime(test, sources, cache, compiler)
 	sources["answer.c"].Data = []byte("#include \"answer.h\"\nint answer(void) { return ANSWER + 1; }\n")
@@ -183,25 +186,25 @@ func TestARuntimeTheCacheHoldsIsReadThereAndANewOneWrittenToTheOutputDirectory(t
 		"answer.c": &fstest.MapFile{Data: []byte("#include \"answer.h\"\nint answer(void) { return ANSWER + 0; }\n")},
 		"answer.h": &fstest.MapFile{Data: []byte("#define ANSWER 5\n")},
 	}
-	compiler, err := toolchain.Path("clang")
-	if err != nil {
-		test.Fatal(err)
+	compiler, pathError := toolchain.Path("clang")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
-	written, err := cacheDirectory("native-runtime")
-	if err != nil {
-		test.Fatal(err)
+	written, cacheDirectoryError := cacheDirectory("native-runtime")
+	if cacheDirectoryError != nil {
+		test.Fatal(cacheDirectoryError)
 	}
 	held := smallRuntime(test, sources, written, compiler)
 	test.Setenv(location.OutputDirectoryVariable, output)
-	if written, err = cacheDirectory(
+	if written, cacheDirectoryError = cacheDirectory(
 		"native-runtime",
-	); err != nil || written != filepath.Join(output, "native-runtime") {
-		test.Fatalf("with an output directory the runtime cache is written at %q (%v)", written, err)
+	); cacheDirectoryError != nil || written != filepath.Join(output, "native-runtime") {
+		test.Fatalf("with an output directory the runtime cache is written at %q (%v)", written, cacheDirectoryError)
 	}
 	if found := smallRuntime(test, sources, written, compiler); found != held {
 		test.Fatalf("the runtime the cache holds was taken from %s, want %s", found, held)
 	}
-	if _, err := os.Stat(output); err == nil {
+	if _, statError := os.Stat(output); statError == nil {
 		test.Error("finding a runtime the cache holds wrote into the output directory")
 	}
 	sources["answer.h"].Data = []byte("#define ANSWER 6\n")
@@ -218,9 +221,9 @@ func TestARuntimeTheCacheHoldsIsReadThereAndANewOneWrittenToTheOutputDirectory(t
 // Not parallel: publish the executable wrapper before other tests fork.
 func TestRuntimeCacheConcurrentBuilders(test *testing.T) {
 	directory := test.TempDir()
-	compiler, err := toolchain.Path("clang")
-	if err != nil {
-		test.Fatal(err)
+	compiler, pathError := toolchain.Path("clang")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
 	wrapper := filepath.Join(directory, "clang")
 	log := filepath.Join(directory, "compiled")
@@ -232,8 +235,8 @@ func TestRuntimeCacheConcurrentBuilders(test *testing.T) {
 		quote(log),
 		quote(compiler),
 	)
-	if err := os.WriteFile(wrapper, []byte(script), 0o755); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(wrapper, []byte(script), 0o755); writeError != nil {
+		test.Fatal(writeError)
 	}
 	files := []runtimeFile{{"answer.c", []byte("int answer(void) { return 42; }\n")}}
 	cache := filepath.Join(directory, "cache")
@@ -258,9 +261,9 @@ func TestRuntimeCacheConcurrentBuilders(test *testing.T) {
 			test.Fatal("callers got different libraries")
 		}
 	}
-	compiled, err := os.ReadFile(log)
-	if err != nil {
-		test.Fatal(err)
+	compiled, readError := os.ReadFile(log)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if string(compiled) != "compiled\n" {
 		test.Fatalf("want one compilation, got %q", compiled)
@@ -282,18 +285,18 @@ func TestRuntimeCacheConcurrentProcesses(test *testing.T) {
 		{"answer.c", []byte("#include \"answer.h\"\nint answer(void) { return ANSWER; }\n")},
 		{"answer.h", []byte("#define ANSWER 42\n")},
 	}
-	compiler, err := toolchain.Path("clang")
-	if err != nil {
-		test.Fatal(err)
+	compiler, pathError := toolchain.Path("clang")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
 	if cache := os.Getenv(variable); cache != "" {
-		library, err := cachedRuntime(files, Flags(Options{}), compiler, "process test", cache)
-		if err != nil {
-			test.Fatal(err)
+		library, cachedRuntimeError := cachedRuntime(files, Flags(Options{}), compiler, "process test", cache)
+		if cachedRuntimeError != nil {
+			test.Fatal(cachedRuntimeError)
 		}
-		header, err := os.ReadFile(filepath.Join(filepath.Dir(library), "answer.h"))
-		if err != nil || string(header) != "#define ANSWER 42\n" {
-			test.Fatalf("published header: %q, %v", header, err)
+		header, readError := os.ReadFile(filepath.Join(filepath.Dir(library), "answer.h"))
+		if readError != nil || string(header) != "#define ANSWER 42\n" {
+			test.Fatalf("published header: %q, %v", header, readError)
 		}
 		runLibrary(test, library, "42\n")
 		return
@@ -324,9 +327,9 @@ func TestRuntimeCacheConcurrentProcesses(test *testing.T) {
 // publishedEntries are the names in a runtime cache other than the locks beside its entries (lockRuntime).
 func publishedEntries(test *testing.T, cache string) []string {
 	test.Helper()
-	entries, err := os.ReadDir(cache)
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(cache)
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	var names []string
 	for _, entry := range entries {
@@ -355,27 +358,27 @@ func TestProcessesAskingForOneRuntimeBuildItOnce(test *testing.T) {
 			[]byte(fmt.Sprintf("int unit%d(void) { return %d; }\n", index, index)),
 		})
 	}
-	compiler, err := toolchain.Path("clang")
-	if err != nil {
-		test.Fatal(err)
+	compiler, pathError := toolchain.Path("clang")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
 	if asked := os.Getenv(variable); asked != "" {
 		cache, start, _ := strings.Cut(asked, "|")
-		if _, err := headersRead(files, Flags(Options{}), compiler); err != nil {
-			test.Fatal(err)
+		if _, headersReadError := headersRead(files, Flags(Options{}), compiler); headersReadError != nil {
+			test.Fatal(headersReadError)
 		}
-		at, err := strconv.ParseInt(start, 10, 64)
-		if err != nil {
-			test.Fatal(err)
+		at, parseError := strconv.ParseInt(start, 10, 64)
+		if parseError != nil {
+			test.Fatal(parseError)
 		}
 		time.Sleep(time.Until(time.Unix(0, at)))
-		library, err := cachedRuntime(files, Flags(Options{}), compiler, "one build test", cache)
-		if err != nil {
-			test.Fatal(err)
+		library, cachedRuntimeError := cachedRuntime(files, Flags(Options{}), compiler, "one build test", cache)
+		if cachedRuntimeError != nil {
+			test.Fatal(cachedRuntimeError)
 		}
-		archive, err := os.ReadFile(library)
-		if err != nil {
-			test.Fatal(err)
+		archive, readError := os.ReadFile(library)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		fmt.Printf("runtime.a %s %x\n", filepath.Base(filepath.Dir(library)), sha256.Sum256(archive))
 		return
@@ -433,9 +436,9 @@ func TestProcessesAskingForOneRuntimeBuildItOnce(test *testing.T) {
 			test.Fatalf("processes asking for one archive read different ones: %q", together)
 		}
 	}
-	written, err := os.ReadFile(log)
-	if err != nil {
-		test.Fatal(err)
+	written, readError := os.ReadFile(log)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	outcomes := map[string]int{}
 	for _, line := range strings.Split(strings.TrimSuffix(string(written), "\n"), "\n") {
@@ -486,9 +489,9 @@ func TestProcessesAskingForOneRuntimeBuildItOnce(test *testing.T) {
 // scanHeaders skipping what is outside the sources; headersRead's memo shared across flags.
 // Not parallel: it clears headerScans, the process's memo every runtime build reads.
 func TestARuntimeIsKeyedByTheSystemHeadersItsCompileReads(test *testing.T) {
-	compiler, err := toolchain.Path("clang")
-	if err != nil {
-		test.Fatal(err)
+	compiler, pathError := toolchain.Path("clang")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
 	system := test.TempDir()
 	header := filepath.Join(system, "answer_system.h")
@@ -497,21 +500,21 @@ func TestARuntimeIsKeyedByTheSystemHeadersItsCompileReads(test *testing.T) {
 	cache := test.TempDir()
 	build := func(value string) string {
 		test.Helper()
-		if err := os.WriteFile(header, []byte("#define ANSWER "+value+"\n"), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(header, []byte("#define ANSWER "+value+"\n"), 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		// As a new process does, with nothing held (TestARewrittenHeaderMovesAHeldScan holds one across a rewrite).
 		headerScans.Clear()
-		headers, err := headersRead(files, flags, compiler)
-		if err != nil {
-			test.Fatal(err)
+		headers, headersReadError := headersRead(files, flags, compiler)
+		if headersReadError != nil {
+			test.Fatal(headersReadError)
 		}
 		if !strings.Contains(headers, header) {
 			test.Fatalf("the headers the compile reads don't name %s:\n%s", header, headers)
 		}
-		library, err := cachedRuntime(files, flags, compiler, "test compiler", cache)
-		if err != nil {
-			test.Fatal(err)
+		library, cachedRuntimeError := cachedRuntime(files, flags, compiler, "test compiler", cache)
+		if cachedRuntimeError != nil {
+			test.Fatal(cachedRuntimeError)
 		}
 		return filepath.Dir(library)
 	}
@@ -523,9 +526,13 @@ func TestARuntimeIsKeyedByTheSystemHeadersItsCompileReads(test *testing.T) {
 		test.Fatalf("the same system header made another runtime: %s, then %s", first, again)
 	}
 	// The scan with -isystem is still held; the same sources without it are another scan, which can't find the header.
-	plain, err := headersRead(files, Flags(Options{}), compiler)
-	if err == nil || strings.Contains(plain, header) {
-		test.Fatalf("without -isystem the compile can't find the header, so listing it must fail: %q, %v", plain, err)
+	plain, headersReadError := headersRead(files, Flags(Options{}), compiler)
+	if headersReadError == nil || strings.Contains(plain, header) {
+		test.Fatalf(
+			"without -isystem the compile can't find the header, so listing it must fail: %q, %v",
+			plain,
+			headersReadError,
+		)
 	}
 }
 
@@ -535,9 +542,9 @@ func TestARuntimeIsKeyedByTheSystemHeadersItsCompileReads(test *testing.T) {
 // headersRead handing out a held scan without headersHold.
 // Not parallel: it reads headerScans across a rewrite, and clears it first so the scan is this test's.
 func TestARewrittenHeaderMovesAHeldScan(test *testing.T) {
-	compiler, err := toolchain.Path("clang")
-	if err != nil {
-		test.Fatal(err)
+	compiler, pathError := toolchain.Path("clang")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
 	system := test.TempDir()
 	header := filepath.Join(system, "answer_system.h")
@@ -546,12 +553,12 @@ func TestARewrittenHeaderMovesAHeldScan(test *testing.T) {
 	headerScans.Clear()
 	read := func(value string) string {
 		test.Helper()
-		if err := os.WriteFile(header, []byte("#define ANSWER "+value+"\n"), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(header, []byte("#define ANSWER "+value+"\n"), 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
-		headers, err := headersRead(files, flags, compiler)
-		if err != nil {
-			test.Fatal(err)
+		headers, headersReadError := headersRead(files, flags, compiler)
+		if headersReadError != nil {
+			test.Fatal(headersReadError)
 		}
 		if !strings.Contains(headers, header) {
 			test.Fatalf("the headers the compile reads don't name %s:\n%s", header, headers)
@@ -601,19 +608,27 @@ func TestARuntimeIsTheSameOnAnyNumberOfWorkers(test *testing.T) {
 			[]byte(fmt.Sprintf("int unit%d(void) { return %d; }\n", index, index)),
 		})
 	}
-	compiler, err := toolchain.Path("clang")
-	if err != nil {
-		test.Fatal(err)
+	compiler, pathError := toolchain.Path("clang")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
 	var archives [][]byte
 	for _, workers := range []int{1, 4, 8} {
 		directory := test.TempDir()
-		if err := compileRuntime(files, Flags(Options{}), compiler, directory, workers, nil, ""); err != nil {
-			test.Fatal(err)
+		if compileRuntimeError := compileRuntime(
+			files,
+			Flags(Options{}),
+			compiler,
+			directory,
+			workers,
+			nil,
+			"",
+		); compileRuntimeError != nil {
+			test.Fatal(compileRuntimeError)
 		}
-		archive, err := os.ReadFile(filepath.Join(directory, "runtime.a"))
-		if err != nil {
-			test.Fatal(err)
+		archive, readError := os.ReadFile(filepath.Join(directory, "runtime.a"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		archives = append(archives, archive)
 	}
@@ -638,8 +653,8 @@ func TestASuppliedRuntimeIsAskedOncePerKey(test *testing.T) {
 				return "", fmt.Errorf("no counted runtime here")
 			}
 			held := filepath.Join(directory, fmt.Sprint(asked.Load()))
-			if err := os.MkdirAll(held, 0o755); err != nil {
-				return "", err
+			if createDirectoryError := os.MkdirAll(held, 0o755); createDirectoryError != nil {
+				return "", createDirectoryError
 			}
 			return held, os.WriteFile(filepath.Join(held, "runtime.a"), nil, 0o644)
 		})
@@ -647,9 +662,9 @@ func TestASuppliedRuntimeIsAskedOncePerKey(test *testing.T) {
 		var callers sync.WaitGroup
 		for index := range libraries {
 			callers.Go(func() {
-				library, err := RuntimeLibrary("", Options{})
-				if err != nil {
-					test.Error(err)
+				library, runtimeLibraryError := RuntimeLibrary("", Options{})
+				if runtimeLibraryError != nil {
+					test.Error(runtimeLibraryError)
 				}
 				libraries[index] = library
 			})
@@ -660,22 +675,22 @@ func TestASuppliedRuntimeIsAskedOncePerKey(test *testing.T) {
 				test.Fatalf("got %s, want the supplier's first archive", library)
 			}
 		}
-		if _, err := RuntimeLibrary(
+		if _, runtimeLibraryError := RuntimeLibrary(
 			"",
 			Options{Count: true},
-		); err == nil || !strings.Contains(err.Error(), "no counted runtime here") {
-			test.Fatalf("the supplier's error isn't the build's: %v", err)
+		); runtimeLibraryError == nil || !strings.Contains(runtimeLibraryError.Error(), "no counted runtime here") {
+			test.Fatalf("the supplier's error isn't the build's: %v", runtimeLibraryError)
 		}
 		checkout := test.TempDir()
-		if err := os.WriteFile(
+		if writeError := os.WriteFile(
 			filepath.Join(checkout, "answer.c"),
 			[]byte("int answer(void) { return 42; }\n"),
 			0o644,
-		); err != nil {
-			test.Fatal(err)
+		); writeError != nil {
+			test.Fatal(writeError)
 		}
-		if _, err := RuntimeLibrary(checkout, Options{}); err != nil {
-			test.Fatal(err)
+		if _, runtimeLibraryError := RuntimeLibrary(checkout, Options{}); runtimeLibraryError != nil {
+			test.Fatal(runtimeLibraryError)
 		}
 		if got := asked.Load(); got != 2 {
 			test.Fatalf("the supplier was asked %d times, want 2 (the plain runtime once, the counted once)", got)
@@ -689,8 +704,8 @@ func TestASuppliedRuntimeIsAskedOncePerKey(test *testing.T) {
 		"ADAMIC_BUILD_CACHE_DIR="+test.TempDir(),
 		"ADAMIC_BUILD_OUTPUT_DIR=",
 	)
-	if output, err := command.CombinedOutput(); err != nil {
-		test.Fatalf("%v\n%s", err, output)
+	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("%v\n%s", combinedOutputError, output)
 	}
 }
 
@@ -700,29 +715,32 @@ func TestASuppliedRuntimeIsAskedOncePerKey(test *testing.T) {
 // header outside the installation keeps its path. Mutant: portableKeyParts naming paths as reached.
 func TestARuntimesPortablePartsAreTheSameThroughEitherLink(test *testing.T) {
 	test.Parallel()
-	home, err := filepath.EvalSymlinks(test.TempDir())
-	if err != nil {
-		test.Fatal(err)
+	home, resolveSymlinksError := filepath.EvalSymlinks(test.TempDir())
+	if resolveSymlinksError != nil {
+		test.Fatal(resolveSymlinksError)
 	}
 	tools := filepath.Join(home, "adamic-tools")
 	for _, directory := range []string{"llvm/bin", "llvm/lib/clang/20/include", "bin"} {
-		if err := os.MkdirAll(filepath.Join(tools, directory), 0o755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(filepath.Join(tools, directory), 0o755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 	}
 	for name, mode := range map[string]os.FileMode{
 		"llvm/bin/clang-20":                  0o755,
 		"llvm/lib/clang/20/include/stddef.h": 0o644,
 	} {
-		if err := os.WriteFile(filepath.Join(tools, name), []byte("#!/bin/sh\n"), mode); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(tools, name), []byte("#!/bin/sh\n"), mode); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
-	if err := os.Symlink(filepath.Join(tools, "llvm/bin/clang-20"), filepath.Join(tools, "bin/clang")); err != nil {
-		test.Fatal(err)
+	if symlinkError := os.Symlink(
+		filepath.Join(tools, "llvm/bin/clang-20"),
+		filepath.Join(tools, "bin/clang"),
+	); symlinkError != nil {
+		test.Fatal(symlinkError)
 	}
-	if err := os.Symlink("adamic-tools", filepath.Join(home, ".adamic-tools")); err != nil {
-		test.Fatal(err)
+	if symlinkError := os.Symlink("adamic-tools", filepath.Join(home, ".adamic-tools")); symlinkError != nil {
+		test.Fatal(symlinkError)
 	}
 	files := []runtimeFile{{"answer.c", []byte("int answer(void) { return 42; }\n")}}
 	parts := func(root string) []string {

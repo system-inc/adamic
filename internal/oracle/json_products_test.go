@@ -24,13 +24,13 @@ func TestProduct_JSONOracleRuntimes(test *testing.T) {
 		if jsonDecodeEnumerationRefused(name) {
 			continue
 		}
-		path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", name))
-		if err != nil {
-			test.Fatal(err)
+		path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", name))
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
-		program, err := lowered(test, path)
-		if err != nil {
-			test.Fatal(err)
+		program, loweredError := lowered(test, path)
+		if loweredError != nil {
+			test.Fatal(loweredError)
 		}
 		features := native.Features(native.C(program))
 		sets[strings.Join(features, ",")] = features

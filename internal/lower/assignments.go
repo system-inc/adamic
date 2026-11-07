@@ -10,9 +10,9 @@ import (
 
 // assignment lowers =, and the compound assignments, to a local.
 func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
-	if value, known, err := l.processValue(node); known {
-		if err != nil {
-			return nil, err
+	if value, known, processValueError := l.processValue(node); known {
+		if processValueError != nil {
+			return nil, processValueError
 		}
 		return []ir.Statement{ir.Evaluate{Value: value}}, nil
 	}
@@ -22,17 +22,19 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 		return nil, l.notYet(node, describe(node)+" as a statement")
 	}
 	target := ast.SkipParentheses(binary.Left)
-	if l.uninitializedInitializer(binary.Right) && !ast.IsIdentifier(target) && target.Kind != ast.KindPropertyAccessExpression {
+	if l.uninitializedInitializer(binary.Right) &&
+		!ast.IsIdentifier(target) &&
+		target.Kind != ast.KindPropertyAccessExpression {
 		return nil, l.notYet(target, "a placeholder reset without a represented variable or field slot")
 	}
 	if isCompound && l.enumNeverIdentity(target, map[*ast.Node]bool{}) != nil {
-		value, err := l.expression(target)
-		return []ir.Statement{ir.Evaluate{Value: value}}, err
+		value, expressionError := l.expression(target)
+		return []ir.Statement{ir.Evaluate{Value: value}}, expressionError
 	}
 	if target.Kind == ast.KindPropertyAccessExpression && !l.namespaceMember(target) {
 		if !isCompound {
-			if body, handled, err := l.entriesRecordWrite(target, binary.Right); handled {
-				return body, err
+			if body, handled, entriesRecordWriteError := l.entriesRecordWrite(target, binary.Right); handled {
+				return body, entriesRecordWriteError
 			}
 		}
 		if isCompound {
@@ -43,11 +45,11 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 	// array[index] += value never reaches here: the element may be missing, so the checker refuses it
 	// (noUncheckedIndexedAccess).
 	if target.Kind == ast.KindElementAccessExpression && binary.OperatorToken.Kind == ast.KindEqualsToken {
-		if body, handled, err := l.constructionIndexWrite(target, binary.Right); handled {
-			return body, err
+		if body, handled, constructionIndexWriteError := l.constructionIndexWrite(target, binary.Right); handled {
+			return body, constructionIndexWriteError
 		}
-		if body, handled, err := l.typedArrayWrite(target, binary.Right); handled {
-			return body, err
+		if body, handled, typedArrayWriteError := l.typedArrayWrite(target, binary.Right); handled {
+			return body, typedArrayWriteError
 		}
 		return l.setIndex(target, binary.Right)
 	}
@@ -75,26 +77,39 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 		return nil, l.notYet(target, "assigning to a parameter that only ever receives undefined")
 	}
 	if !isCompound && l.uninitializedInitializer(binary.Right) {
-		if err := l.placeholderResetRefusal(target, local); err != nil {
-			return nil, err
+		if placeholderResetRefusalError := l.placeholderResetRefusal(
+			target,
+			local,
+		); placeholderResetRefusalError != nil {
+			return nil, placeholderResetRefusalError
 		}
 		l.result.Locals[local].Uninitialized = true
-		return []ir.Statement{ir.Assign{Local: local, Value: l.placeholderInitialValue(binary.Right, l.result.Locals[local].Type), Checked: l.checked(local), Uninitialized: true}}, nil
+		return []ir.Statement{ir.Assign{
+			Local:         local,
+			Value:         l.placeholderInitialValue(binary.Right, l.result.Locals[local].Type),
+			Checked:       l.checked(local),
+			Uninitialized: true,
+		}}, nil
 	}
-	value, err := l.expression(binary.Right)
-	if err != nil {
-		return nil, err
+	value, expressionError := l.expression(binary.Right)
+	if expressionError != nil {
+		return nil, expressionError
 	}
 	if isCompound {
 		current := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checked(local)})
 		if origin := l.result.Locals[local].Placeholder; origin != "" {
-			current = l.placeholderRead(target, ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checked(local), Unset: true}, origin)
+			current = l.placeholderRead(
+				target,
+				ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checked(local), Unset: true},
+				origin,
+			)
 		}
 		if operator == ast.KindPlusToken {
 			current, value = l.spelled(target, current), l.spelled(binary.Right, value)
 		}
-		if value, err = l.combine(node, operator, current, value); err != nil {
-			return nil, err
+		var combineError error
+		if value, combineError = l.combine(node, operator, current, value); combineError != nil {
+			return nil, combineError
 		}
 	}
 	statements := l.namespaceReadyStatements(target, false)
@@ -103,28 +118,45 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 		// an undefined receiver. Earlier containers in a nested chain are reads.
 		statements = l.namespaceReadyStatements(target.Expression(), false)
 		temporary := len(l.result.Locals)
-		l.result.Locals = append(l.result.Locals, ir.Local{Name: "namespace_assignment", Type: value.Type(), Function: l.functionIndex})
+		l.result.Locals = append(
+			l.result.Locals,
+			ir.Local{Name: "namespace_assignment", Type: value.Type(), Function: l.functionIndex},
+		)
 		statements = append(statements, ir.Declare{Local: temporary, Value: value})
 		statements = append(statements, l.namespaceReadyStatements(target, true)...)
 		value = ir.Read{Local: temporary, Of: value.Type()}
 	}
-	return append(statements, ir.Assign{Local: local, Value: fit(value, l.result.Locals[local].Type), Checked: l.checked(local) && !l.result.Locals[local].NamespaceState}), nil
+	return append(statements, ir.Assign{
+		Local:   local,
+		Value:   fit(value, l.result.Locals[local].Type),
+		Checked: l.checked(local) && !l.result.Locals[local].NamespaceState,
+	}), nil
 }
 
 // tupleField reads element index of the tuple value, held in the local held, as the element is stored
 // (tupleElementStorage), and makes it what the name it goes to holds: a string element going to a
 // string | number name is boxed on the way.
-func (l *lowering) tupleField(where *ast.Node, valueNode *ast.Node, value ir.Expression, held int, index int, to ir.Type) (ir.Expression, error) {
-	of, slot, err := l.tupleElementStorage(where, valueNode, value, index)
-	if err != nil {
-		return nil, err
+func (l *lowering) tupleField(
+	where *ast.Node,
+	valueNode *ast.Node,
+	value ir.Expression,
+	held int,
+	index int,
+	to ir.Type,
+) (ir.Expression, error) {
+	of, slot, tupleElementStorageError := l.tupleElementStorage(where, valueNode, value, index)
+	if tupleElementStorageError != nil {
+		return nil, tupleElementStorageError
 	}
 	// A union is one counted reference, read as destructureFrom reads one: when every member is one a
 	// template writes.
 	if slotless(of) && !(of == ir.Union && l.writable(slot)) {
 		return nil, l.notYet(where, "a tuple element of type "+l.checker.TypeToString(slot))
 	}
-	field := fit(ir.Expression(ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: strconv.Itoa(index), Of: of}), to)
+	field := fit(
+		ir.Expression(ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: strconv.Itoa(index), Of: of}),
+		to,
+	)
 	if field.Type() != to {
 		return nil, l.notYet(where, "a tuple element of type "+l.checker.TypeToString(slot)+" given to a "+typeName(to))
 	}
@@ -139,7 +171,12 @@ func (l *lowering) tupleField(where *ast.Node, valueNode *ast.Node, value ir.Exp
 // was made for must say the same. A value read from where it's held (a local, a field, an element, a
 // call's result) is stored as its own type. Anything else may hold a literal the checker narrows the
 // same way ((0, [second, first]), or a conditional between two), so it is not yet.
-func (l *lowering) tupleElementStorage(where *ast.Node, valueNode *ast.Node, value ir.Expression, index int) (ir.Type, *checker.Type, error) {
+func (l *lowering) tupleElementStorage(
+	where *ast.Node,
+	valueNode *ast.Node,
+	value ir.Expression,
+	index int,
+) (ir.Type, *checker.Type, error) {
 	written := ast.SkipParentheses(valueNode)
 	var elements []*checker.Type
 	if literal, isLiteral := value.(ir.ObjectLiteral); isLiteral {
@@ -185,9 +222,9 @@ func (l *lowering) destructuringAssignment(pattern *ast.Node, valueNode *ast.Nod
 	if !checker.IsTupleType(l.checker.GetTypeAtLocation(valueNode)) {
 		return nil, l.notYet(pattern, "destructuring other than a tuple")
 	}
-	value, err := l.expression(valueNode)
-	if err != nil {
-		return nil, err
+	value, expressionError := l.expression(valueNode)
+	if expressionError != nil {
+		return nil, expressionError
 	}
 	if value.Type() != ir.Object {
 		return nil, l.notYet(pattern, "destructuring a "+typeName(value.Type()))
@@ -206,9 +243,9 @@ func (l *lowering) destructuringAssignment(pattern *ast.Node, valueNode *ast.Nod
 		if l.result.Locals[local].NestedFunction != 0 {
 			return nil, l.notYet(element, "rebinding a nested function declaration")
 		}
-		field, err := l.tupleField(element, valueNode, value, held, index, l.result.Locals[local].Type)
-		if err != nil {
-			return nil, err
+		field, tupleFieldError := l.tupleField(element, valueNode, value, held, index, l.result.Locals[local].Type)
+		if tupleFieldError != nil {
+			return nil, tupleFieldError
 		}
 		statements = append(statements, ir.Assign{Local: local, Value: field, Checked: l.checked(local)})
 	}
@@ -235,15 +272,18 @@ func (l *lowering) objectDestructuringAssignment(pattern *ast.Node, valueNode *a
 		// the box as a number.
 		return nil, l.notYet(valueNode, "destructuring a value made in the assignment itself")
 	}
-	value, err := l.expression(valueNode)
-	if err != nil {
-		return nil, err
+	value, expressionError := l.expression(valueNode)
+	if expressionError != nil {
+		return nil, expressionError
 	}
 	if value.Type() != ir.Object {
 		return nil, l.notYet(pattern, "destructuring a "+typeName(value.Type()))
 	}
 	held := len(l.result.Locals)
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: "destructured", Type: ir.Object, Function: l.functionIndex})
+	l.result.Locals = append(
+		l.result.Locals,
+		ir.Local{Name: "destructured", Type: ir.Object, Function: l.functionIndex},
+	)
 	statements := []ir.Statement{ir.Declare{Local: held, Value: value}}
 	for _, property := range pattern.AsObjectLiteralExpression().Properties.Nodes {
 		var target *ast.Node
@@ -280,16 +320,21 @@ func (l *lowering) objectDestructuringAssignment(pattern *ast.Node, valueNode *a
 			return nil, l.notYet(target, "assigning to what a catch caught")
 		}
 		field := name.Text()
-		symbol, err := l.destructuredField(property, destructured, field)
-		if err != nil {
-			return nil, err
+		symbol, destructuredFieldError := l.destructuredField(property, destructured, field)
+		if destructuredFieldError != nil {
+			return nil, destructuredFieldError
 		}
 		fieldType := l.checker.GetTypeOfSymbol(symbol)
 		of, isKnown := l.representation(fieldType)
 		if !isKnown || slotless(of) {
 			return nil, l.notYet(property, "a destructured field of type "+l.checker.TypeToString(fieldType))
 		}
-		read := ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: field, Of: of, Absent: symbol.Flags&ast.SymbolFlagsOptional != 0}
+		read := ir.Property{
+			Object: ir.Read{Local: held, Of: ir.Object},
+			Name:   field,
+			Of:     of,
+			Absent: symbol.Flags&ast.SymbolFlagsOptional != 0,
+		}
 		read.View = sourceExpression(property) + " (field " + field + ")"
 		read.ViewReceiverTypeID = l.viewFieldReceiverTypeID(nil, destructured)
 		read.ViewTypeID = l.viewTypeID(fieldType)
@@ -299,7 +344,10 @@ func (l *lowering) objectDestructuringAssignment(pattern *ast.Node, valueNode *a
 		to := l.result.Locals[local].Type
 		assigned := fit(ir.Expression(read), to)
 		if assigned.Type() != to {
-			return nil, l.notYet(property, "a destructured field of type "+l.checker.TypeToString(fieldType)+" given to a "+typeName(to))
+			return nil, l.notYet(
+				property,
+				"a destructured field of type "+l.checker.TypeToString(fieldType)+" given to a "+typeName(to),
+			)
 		}
 		statements = append(statements, ir.Assign{Local: local, Value: assigned, Checked: l.checked(local)})
 	}
@@ -347,9 +395,9 @@ func (l *lowering) increment(node *ast.Node) ([]ir.Statement, error) {
 		if target.Kind != ast.KindPropertyAccessExpression {
 			return nil, l.notYet(target, "incrementing a non-null target other than a stored numeric field")
 		}
-		object, err := l.expression(target.AsPropertyAccessExpression().Expression)
-		if err != nil {
-			return nil, err
+		object, expressionError := l.expression(target.AsPropertyAccessExpression().Expression)
+		if expressionError != nil {
+			return nil, expressionError
 		}
 		if object.Type() != ir.Object {
 			return nil, l.notYet(target, "incrementing a non-null field of a "+typeName(object.Type()))
@@ -364,15 +412,22 @@ func (l *lowering) increment(node *ast.Node) ([]ir.Statement, error) {
 		}
 		// Hold the receiver once. Check the stored value before updating the slot.
 		held := len(l.result.Locals)
-		l.result.Locals = append(l.result.Locals, ir.Local{Name: "increment_object", Type: ir.Object, Function: l.functionIndex})
-		l.noteLocal(held, l.concrete(l.checker.GetTypeAtLocation(target.AsPropertyAccessExpression().Expression)), target)
+		l.result.Locals = append(
+			l.result.Locals,
+			ir.Local{Name: "increment_object", Type: ir.Object, Function: l.functionIndex},
+		)
+		l.noteLocal(
+			held,
+			l.concrete(l.checker.GetTypeAtLocation(target.AsPropertyAccessExpression().Expression)),
+			target,
+		)
 		object = l.privateStaticReceiver(target.Name(), object, false)
 		read := ir.Read{Local: held, Of: ir.Object}
 		name := l.fieldName(target.Name())
 		current := l.readObjectField(target, ir.Property{Object: read, Name: name, Of: of, Class: l.classOf(target)})
-		current, err = l.nonNullValue(assertion, current)
-		if err != nil {
-			return nil, err
+		current, nonNullValueError := l.nonNullValue(assertion, current)
+		if nonNullValueError != nil {
+			return nil, nonNullValueError
 		}
 		if current.Type() != ir.Number {
 			return nil, l.notYet(target, "incrementing a non-null field whose checked value is not a number")
@@ -380,12 +435,23 @@ func (l *lowering) increment(node *ast.Node) ([]ir.Statement, error) {
 		updated := ir.Binary{Operator: step, Left: current, Right: ir.NumberConstant{Value: 1}}
 		return []ir.Statement{ir.Block{Body: []ir.Statement{
 			ir.Declare{Local: held, Value: object},
-			ir.SetProperty{Object: read, Name: name, Value: fit(updated, of), Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression), ViewReceiverTypeID: l.viewWriteReceiverTypeID(target, target.AsPropertyAccessExpression().Expression, name)},
+			ir.SetProperty{
+				Object: read,
+				Name:   name,
+				Value:  fit(updated, of),
+				Class:  l.classOf(target),
+				Site:   l.writeSite(target.AsPropertyAccessExpression().Expression),
+				ViewReceiverTypeID: l.viewWriteReceiverTypeID(
+					target,
+					target.AsPropertyAccessExpression().Expression,
+					name,
+				),
+			},
 		}}}, nil
 	}
 	if l.enumNeverIdentity(operand, map[*ast.Node]bool{}) != nil {
-		value, err := l.expression(operand)
-		return []ir.Statement{ir.Evaluate{Value: value}}, err
+		value, expressionError := l.expression(operand)
+		return []ir.Statement{ir.Evaluate{Value: value}}, expressionError
 	}
 	if operand.Kind == ast.KindPropertyAccessExpression && !l.namespaceMember(operand) {
 		step := ast.KindPlusToken
@@ -403,5 +469,9 @@ func (l *lowering) increment(node *ast.Node) ([]ir.Statement, error) {
 		step = ir.Subtract
 	}
 	current := ir.Read{Local: local, Of: ir.Number, Checked: l.checked(local)}
-	return append(l.namespaceReadyStatements(operand, false), ir.Assign{Local: local, Value: ir.Binary{Operator: step, Left: current, Right: ir.NumberConstant{Value: 1}}, Checked: l.checked(local)}), nil
+	return append(l.namespaceReadyStatements(operand, false), ir.Assign{
+		Local:   local,
+		Value:   ir.Binary{Operator: step, Left: current, Right: ir.NumberConstant{Value: 1}},
+		Checked: l.checked(local),
+	}), nil
 }

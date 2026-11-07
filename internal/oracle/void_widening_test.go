@@ -23,9 +23,9 @@ func init() {
 func TestVoidWideningIsRefused(test *testing.T) {
 	test.Parallel()
 	directory := "internal/oracle/testdata/void_widening_refused"
-	entries, err := os.ReadDir(filepath.Join(repository, directory))
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(filepath.Join(repository, directory))
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -37,29 +37,29 @@ func TestVoidWideningIsRefused(test *testing.T) {
 		test.Run(entry.Name(), func(test *testing.T) {
 			test.Parallel()
 			path := filepath.Join(directory, entry.Name())
-			absolute, err := filepath.Abs(filepath.Join(repository, path))
-			if err != nil {
-				test.Fatal(err)
+			absolute, absolutePathError := filepath.Abs(filepath.Join(repository, path))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			if truth := onNode(test, absolute); truth.exitCode != 0 || len(truth.stderr) != 0 {
 				test.Fatalf("source Node: exit %d stderr %q", truth.exitCode, truth.stderr)
 			}
-			_, err = lowered(test, absolute)
+			_, loweredError := lowered(test, absolute)
 			var refused *lower.Refused
-			if !errors.As(err, &refused) {
-				test.Fatalf("want a void widening refusal, got %v", err)
+			if !errors.As(loweredError, &refused) {
+				test.Fatalf("want a void widening refusal, got %v", loweredError)
 			}
-			expected, err := os.ReadFile(absolute + ".refused")
-			if err != nil {
-				test.Fatal(err)
+			expected, readError := os.ReadFile(absolute + ".refused")
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			got := strings.ReplaceAll(refused.Error(), strings.TrimSuffix(absolute, path), "")
 			if got != strings.TrimSpace(string(expected)) {
 				test.Fatalf("diagnostic: got %q, want %q", got, strings.TrimSpace(string(expected)))
 			}
-			source, err := os.ReadFile(absolute)
-			if err != nil {
-				test.Fatal(err)
+			source, readError := os.ReadFile(absolute)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			if header := "// a-check: refused " + refused.What + "\n"; !strings.HasPrefix(string(source), header) {
 				test.Fatalf("want first line %q", header)

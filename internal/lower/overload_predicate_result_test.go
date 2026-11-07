@@ -75,13 +75,13 @@ func TestPredicateOverloadReturnsAnotherRead(test *testing.T) {
 	test.Parallel()
 	source := strings.Replace(predicateOverloadFind, "            return value;", "            return array[i];", 1) +
 		predicateOverloadCall
-	_, err := lowerSourceAs(test, source, ".ts")
+	_, lowerSourceAsError := lowerSourceAs(test, source, ".ts")
 	var refused *Refused
-	if !errors.As(err, &refused) ||
+	if !errors.As(lowerSourceAsError, &refused) ||
 		!strings.Contains(refused.What, "(return at ") ||
 		!strings.Contains(refused.What, predicateOverloadReturnFailed) ||
 		!strings.Contains(refused.What, "isn't the value its predicate checked)") {
-		test.Fatalf("want the overload refused at the return of array[i], got %v", err)
+		test.Fatalf("want the overload refused at the return of array[i], got %v", lowerSourceAsError)
 	}
 }
 
@@ -98,12 +98,12 @@ func TestPredicateOverloadLocalWrittenAfterTheCall(test *testing.T) {
 	if !strings.Contains(source, "let value") {
 		test.Fatal("the replacement didn't apply")
 	}
-	_, err := lowerSourceAs(test, source, ".ts")
+	_, lowerSourceAsError := lowerSourceAs(test, source, ".ts")
 	var refused *Refused
-	if !errors.As(err, &refused) ||
+	if !errors.As(lowerSourceAsError, &refused) ||
 		!strings.Contains(refused.What, predicateOverloadReturnFailed) ||
 		!strings.Contains(refused.What, "isn't the value its predicate checked)") {
-		test.Fatalf("want the overload refused at the return of the written let, got %v", err)
+		test.Fatalf("want the overload refused at the return of the written let, got %v", lowerSourceAsError)
 	}
 }
 
@@ -121,12 +121,12 @@ function pick<T>(array: readonly T[], predicate: (element: T) => boolean): T | u
 }
 console.log("never");
 `
-	_, err := lowerSourceAs(test, source, ".ts")
+	_, lowerSourceAsError := lowerSourceAs(test, source, ".ts")
 	var refused *Refused
-	if !errors.As(err, &refused) ||
+	if !errors.As(lowerSourceAsError, &refused) ||
 		!strings.Contains(refused.What, "cannot be served by implementation result") ||
 		strings.Contains(refused.What, "isn't the value its predicate checked") {
-		test.Fatalf("want the result check's refusal unchanged, got %v", err)
+		test.Fatalf("want the result check's refusal unchanged, got %v", lowerSourceAsError)
 	}
 }
 
@@ -145,18 +145,25 @@ console.log(circle === undefined ? "none" : ` +
 		"`radius ${circle.radius}`" +
 		`);
 `
-	_, err := lowerSourceAs(test, source, ".ts")
+	_, lowerSourceAsError := lowerSourceAs(test, source, ".ts")
 	var refused *Refused
-	if !errors.As(err, &refused) ||
+	if !errors.As(lowerSourceAsError, &refused) ||
 		!strings.HasPrefix(refused.What, "an unproven predicate argument for parameter predicate") {
-		test.Fatalf("want predicateArguments' refusal of the parameter passed as find's callback, got %v", err)
+		test.Fatalf(
+			"want predicateArguments' refusal of the parameter passed as find's callback, got %v",
+			lowerSourceAsError,
+		)
 	}
 }
 
 // In .a a predicate value is refused, so the in-place program .ts admits still doesn't lower there.
 func TestPredicateOverloadStaysOutOfA(test *testing.T) {
 	test.Parallel()
-	if _, err := lowerSourceAs(test, predicateOverloadFind+predicateOverloadCall, ".a"); err == nil {
+	if _, lowerSourceAsError := lowerSourceAs(
+		test,
+		predicateOverloadFind+predicateOverloadCall,
+		".a",
+	); lowerSourceAsError == nil {
 		test.Fatal("want the .a program not lowered, got it lowered")
 	}
 }
@@ -178,10 +185,11 @@ function isSquareish(x: Shape): x is Circle { return x.kind === "square"; }
 			shapes +
 			"const checker = { test: isCircle }; checker.test = (x: Shape): x is Circle => true; const circle = find(shapes, checker.test);\n" +
 			show
-		_, err := lowerSourceAs(test, source, ".ts")
+		_, lowerSourceAsError := lowerSourceAs(test, source, ".ts")
 		var refused *Refused
-		if !errors.As(err, &refused) || !strings.HasPrefix(refused.What, "an unproven predicate argument") {
-			test.Fatalf("want an unproven predicate argument, got %v", err)
+		if !errors.As(lowerSourceAsError, &refused) ||
+			!strings.HasPrefix(refused.What, "an unproven predicate argument") {
+			test.Fatalf("want an unproven predicate argument, got %v", lowerSourceAsError)
 		}
 	})
 	test.Run("or beside the call", func(test *testing.T) {
@@ -195,18 +203,19 @@ function isSquareish(x: Shape): x is Circle { return x.kind === "square"; }
 		if !strings.Contains(source, "|| i === 0") {
 			test.Fatal("the replacement didn't apply")
 		}
-		_, err := lowerSourceAs(test, source, ".ts")
+		_, lowerSourceAsError := lowerSourceAs(test, source, ".ts")
 		var refused *Refused
-		if !errors.As(err, &refused) || !strings.Contains(refused.What, "isn't the value its predicate checked") {
-			test.Fatalf("want the overload refused at its return, got %v", err)
+		if !errors.As(lowerSourceAsError, &refused) ||
+			!strings.Contains(refused.What, "isn't the value its predicate checked") {
+			test.Fatalf("want the overload refused at its return, got %v", lowerSourceAsError)
 		}
 	})
 	test.Run("lying named predicate", func(test *testing.T) {
 		test.Parallel()
 		source := predicateOverloadFind + shapes + "const circle = find(shapes, isSquareish);\n" + show
-		program, err := lowerSourceAs(test, source, ".ts")
-		if err != nil {
-			test.Fatalf("want it lowered with the predicate's own check, got %v", err)
+		program, lowerSourceAsError := lowerSourceAs(test, source, ".ts")
+		if lowerSourceAsError != nil {
+			test.Fatalf("want it lowered with the predicate's own check, got %v", lowerSourceAsError)
 		}
 		if code, stdout, stderr := brandedNative(
 			test,

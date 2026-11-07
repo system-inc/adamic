@@ -23,9 +23,9 @@ type mutantRuleOwner struct{ name, slug string }
 // maintained list could agree with itself while a real wrapper dropped a rule.
 func mutantRuleDeclarations(test *testing.T, prefix, helper string) []mutantRuleOwner {
 	test.Helper()
-	file, err := parser.ParseFile(token.NewFileSet(), "mutant_rule_shards_test.go", nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	file, parseFileError := parser.ParseFile(token.NewFileSet(), "mutant_rule_shards_test.go", nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	var owners []mutantRuleOwner
 	for _, decl := range file.Decls {
@@ -72,9 +72,9 @@ func mutantRuleDeclarations(test *testing.T, prefix, helper string) []mutantRule
 		if !ok || literal.Kind != token.STRING {
 			test.Fatalf("%s needs a literal rule slug", fn.Name.Name)
 		}
-		slug, err := strconv.Unquote(literal.Value)
-		if err != nil {
-			test.Fatal(err)
+		slug, unquoteError := strconv.Unquote(literal.Value)
+		if unquoteError != nil {
+			test.Fatal(unquoteError)
 		}
 		owners = append(owners, mutantRuleOwner{fn.Name.Name, slug})
 	}
@@ -124,8 +124,12 @@ func TestMutantsUnion(test *testing.T) {
 		owners []mutantRuleOwner
 		prefix string
 	}{{shards, "TestMutants_"}, {products, "TestProduct_LintMutant_"}} {
-		if err := checkMutantRuleUnion(descriptors, group.owners, group.prefix); err != nil {
-			test.Fatal(err)
+		if checkMutantRuleUnionError := checkMutantRuleUnion(
+			descriptors,
+			group.owners,
+			group.prefix,
+		); checkMutantRuleUnionError != nil {
+			test.Fatal(checkMutantRuleUnionError)
 		}
 	}
 	if checkMutantRuleUnion(descriptors, shards[1:], "TestMutants_") == nil {
@@ -162,9 +166,9 @@ func TestMutantsPlantedFailure(test *testing.T) {
 	// Prepare the same declared products independently before the probe's work.
 	lintGoOracleProduct(test)
 	mutantRuleProduct(test, slug)
-	binary, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	binary, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
 	for _, side := range []string{"Node", "emitted JavaScript"} {
 		// No timeout context surrounds a setup child. Its test timeout and Loom's
@@ -179,27 +183,27 @@ func TestMutantsPlantedFailure(test *testing.T) {
 		)
 		command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 		command.Cancel = func() error {
-			err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-			if err == syscall.ESRCH {
+			killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+			if killError == syscall.ESRCH {
 				return os.ErrProcessDone
 			}
-			return err
+			return killError
 		}
 		command.Env = append(os.Environ(), "ADAMIC_MUTANT_SHARD_PROBE="+slug+":"+side)
 		// Read through childguard.Capture, to its end with no WaitDelay deciding when: exec's copying under a
 		// one-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF a second after the
 		// child exited, an error that reads as the child's failure here whatever it exited with, beside output cut
 		// short (#n3gk22h's shape).
-		stdout, stderr, err := childguard.Capture(test.Context(), command)
+		stdout, stderr, captureError := childguard.Capture(test.Context(), command)
 		output := append(stdout, stderr...)
-		if err == nil {
+		if captureError == nil {
 			test.Fatalf("planted %s mutant survivor passed", side)
 		}
 		message := change.Name + " mutant survived on " + side
 		if !bytes.Contains(output, []byte(message)) ||
 			bytes.Count(output, []byte("--- FAIL: "+shard+" ")) != 1 ||
 			bytes.Count(output, []byte("--- FAIL:")) != 1 {
-			test.Fatalf("wrong failure for planted %s survivor: %v\n%s", side, err, output)
+			test.Fatalf("wrong failure for planted %s survivor: %v\n%s", side, captureError, output)
 		}
 		test.Logf("planted %s survivor caught by %s", side, shard)
 	}

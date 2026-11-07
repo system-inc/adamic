@@ -41,8 +41,8 @@ int main(void) {
 }
 `, initializer, expression, expression, len(value)+1)
 	path := filepath.Join(directory, "names.c")
-	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
@@ -59,25 +59,25 @@ int main(void) {
 		"-o",
 		binary,
 	)
-	if output, err := command.CombinedOutput(); err != nil {
-		test.Fatalf("compile: %v\n%s", err, output)
+	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("compile: %v\n%s", combinedOutputError, output)
 	}
-	output, err := exec.CommandContext(ctx, binary).Output()
-	if err != nil || string(output) != value {
-		test.Fatalf("name bytes differ: exit %v, got %d bytes, want %d", err, len(output), len(value))
+	output, outputError := exec.CommandContext(ctx, binary).Output()
+	if outputError != nil || string(output) != value {
+		test.Fatalf("name bytes differ: exit %v, got %d bytes, want %d", outputError, len(output), len(value))
 	}
 }
 
 // Inspect before clang so an overlong literal is caught by this guard itself.
 func TestLongCNameEmission(test *testing.T) {
 	test.Parallel()
-	checked, err := load.Load([]string{"../oracle/testdata/long_field_name.a"})
-	if err != nil {
-		test.Fatal(err)
+	checked, loadError := load.Load([]string{"../oracle/testdata/long_field_name.a"})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := lower.Lower(context.Background(), checked)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerError := lower.Lower(context.Background(), checked)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	source := C(program)
 	if strings.Contains(source, "static const char message[] = ((const char[])") {

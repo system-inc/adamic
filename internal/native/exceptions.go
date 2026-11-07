@@ -233,9 +233,9 @@ func (e *emitter) closeLadder(frame ladderFrame) {
 		if length < 0 {
 			panic("native: compiler bug: an unterminated throw marker")
 		}
-		serial, index, err := throwMarker(text[start+1 : start+1+length])
-		if err != nil {
-			panic("native: compiler bug: a throw marker that doesn't read: " + err.Error())
+		serial, index, throwMarkerError := throwMarker(text[start+1 : start+1+length])
+		if throwMarkerError != nil {
+			panic("native: compiler bug: a throw marker that doesn't read: " + throwMarkerError.Error())
 		}
 		if serial != ladder.serial {
 			// An enclosing statement's check: its marker passes through for that statement's own end.
@@ -272,12 +272,12 @@ func throwMarker(text string) (int, int, error) {
 	if !found {
 		return 0, 0, fmt.Errorf("%q has no serial", text)
 	}
-	serial, err := strconv.Atoi(serialText)
-	if err != nil {
-		return 0, 0, err
+	serial, parseError := strconv.Atoi(serialText)
+	if parseError != nil {
+		return 0, 0, parseError
 	}
-	index, err := strconv.Atoi(indexText)
-	return serial, index, err
+	index, parseError := strconv.Atoi(indexText)
+	return serial, index, parseError
 }
 
 // settleThrows decides, where the statement's own temporaries have just been let go of, between the
@@ -367,7 +367,10 @@ func (e *emitter) ladderText(base string, ways []string, chains []*ladderChain, 
 	return e.captured(e.indent, func() {
 		e.line("goto %s_done;", base)
 		for way, text := range ways {
-			jumped := slices.ContainsFunc(batch, func(site *throwSite) bool { return site.chain < 0 && site.way == text })
+			jumped := slices.ContainsFunc(
+				batch,
+				func(site *throwSite) bool { return site.chain < 0 && site.way == text },
+			)
 			var own []*ladderChain
 			for _, chain := range chains {
 				if chain.way == way {

@@ -63,9 +63,9 @@ func overlayAnchorGaps(read func(file string) (string, error)) []string {
 		if text, ok := sources[file]; ok {
 			return text, true
 		}
-		text, err := read(file)
-		if err != nil {
-			gaps = append(gaps, err.Error())
+		text, readError := read(file)
+		if readError != nil {
+			gaps = append(gaps, readError.Error())
 			return "", false
 		}
 		sources[file] = text
@@ -126,8 +126,8 @@ func overlayAnchorGaps(read func(file string) (string, error)) []string {
 
 // readMainLower reads a file from main's own internal/lower.
 func readMainLower(file string) (string, error) {
-	text, err := os.ReadFile(filepath.Join("../../../../internal/lower", file))
-	return string(text), err
+	text, readError := os.ReadFile(filepath.Join("../../../../internal/lower", file))
+	return string(text), readError
 }
 
 // Main's own internal/lower holds every anchor make_overlay.py edits by text, as many times as it asserts.
@@ -178,9 +178,9 @@ func TestMakeOverlayTextEditsNameAReshape(test *testing.T) {
 	}
 	for _, mutant := range mutants {
 		gaps := overlayAnchorGaps(func(file string) (string, error) {
-			text, err := readMainLower(file)
-			if err != nil || file != mutant.file {
-				return text, err
+			text, readMainLowerError := readMainLower(file)
+			if readMainLowerError != nil || file != mutant.file {
+				return text, readMainLowerError
 			}
 			if !strings.Contains(text, mutant.old) {
 				return "", fmt.Errorf("mutant %s: main's %s no longer holds %q", mutant.name, file, mutant.old)

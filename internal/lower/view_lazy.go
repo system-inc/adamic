@@ -18,8 +18,15 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 		return id, nil
 	}
 	family := l.unsupportedViewFamily(target)
-	if of, known := l.viewRepresentation(target); target.Flags()&checker.TypeFlagsUnion != 0 && (!interfaceScalar(target) || !known || of == ir.Union) {
-		return viewUnionContractHook(l, node, target, func(child *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, child) })
+	if of, known := l.viewRepresentation(
+		target,
+	); target.Flags()&checker.TypeFlagsUnion != 0 && (!interfaceScalar(target) || !known || of == ir.Union) {
+		return viewUnionContractHook(
+			l,
+			node,
+			target,
+			func(child *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, child) },
+		)
 	}
 	if l.isArrayType(target) || checker.IsTupleType(target) {
 		return l.unionAggregateContract(node, target)
@@ -31,11 +38,11 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 		if target.Flags()&checker.TypeFlagsIntersection != 0 {
 			l.intersectionViewDepth++
 		}
-		id, err := l.strictViewContract(node, target)
+		id, strictViewContractError := l.strictViewContract(node, target)
 		if target.Flags()&checker.TypeFlagsIntersection != 0 {
 			l.intersectionViewDepth--
 		}
-		if err == nil {
+		if strictViewContractError == nil {
 			return id, nil
 		}
 		family = "representation conversion"
@@ -82,7 +89,9 @@ func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
 		return "collection"
 	case checker.IsTupleType(target):
 		return "tuple"
-	case flags&checker.TypeFlagsObject != 0 && len(l.checker.GetIndexInfosOfType(target)) != 0 && !l.isArrayType(target):
+	case flags&checker.TypeFlagsObject != 0 &&
+		len(l.checker.GetIndexInfosOfType(target)) != 0 &&
+		!l.isArrayType(target):
 		return "dictionary"
 	}
 
@@ -94,7 +103,8 @@ func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
 const intersectionViewDepthBound = 8
 
 // intersectionPastDepthBound is the family of an intersection nested past intersectionViewDepthBound.
-var intersectionPastDepthBound = "intersection nested past the depth bound of " + strconv.Itoa(intersectionViewDepthBound)
+var intersectionPastDepthBound = "intersection nested past the depth bound of " +
+	strconv.Itoa(intersectionViewDepthBound)
 
 // An intersection of plain object types is described by its resolved properties, each with its
 // refined type: the checker gives true for boolean & true and Identifier for DeclarationName &
@@ -119,7 +129,10 @@ func (l *lowering) plainObjectIntersection(target *checker.Type) bool {
 		return false
 	}
 	for _, member := range target.Types() {
-		if member.Flags()&checker.TypeFlagsObject == 0 || l.isArrayType(member) || l.callableViewContract(member) || l.unsupportedViewFamily(member) != "" {
+		if member.Flags()&checker.TypeFlagsObject == 0 ||
+			l.isArrayType(member) ||
+			l.callableViewContract(member) ||
+			l.unsupportedViewFamily(member) != "" {
 			return false
 		}
 	}
@@ -161,8 +174,11 @@ func (l *lowering) checkLazyViewReads() error {
 			if viewReadOf(program, read) != viewReadChecks {
 				return true
 			}
-			if err := l.callableProducerViewRefusal(graph, read); err != nil {
-				refused = err
+			if callableProducerViewRefusalError := l.callableProducerViewRefusal(
+				graph,
+				read,
+			); callableProducerViewRefusalError != nil {
+				refused = callableProducerViewRefusalError
 				return false
 			}
 			receiver, typeID, field, where = read.Object, read.ViewTypeID, read.Name, read.ViewWhere
@@ -199,7 +215,11 @@ func (l *lowering) checkLazyViewReads() error {
 				refused = &NotYet{Where: where, What: "a checked view read of field " + field + " through an " + family}
 				return false
 			}
-			refused = &Refused{Where: where, What: "checked view read of field " + field + " with unsupported " + family + " contract", Fix: "prove or implement the " + family + " contract before reading this field"}
+			refused = &Refused{
+				Where: where,
+				What:  "checked view read of field " + field + " with unsupported " + family + " contract",
+				Fix:   "prove or implement the " + family + " contract before reading this field",
+			}
 		}
 		return true
 	}
@@ -301,27 +321,46 @@ func unemittableCheckedViewRead(program *ir.Program) error {
 		contract := emittedViewContract(program, read)
 		if contract > 0 && int(contract) <= len(program.ViewContracts) {
 			descriptor := program.ViewContracts[contract-1]
-			if descriptor.Kind == ir.ViewUnion || descriptor.FixedTuple || descriptor.Kind == ir.ViewCallable && descriptor.ProducerCertified {
+			if descriptor.Kind == ir.ViewUnion ||
+				descriptor.FixedTuple ||
+				descriptor.Kind == ir.ViewCallable && descriptor.ProducerCertified {
 				if (read.Optional || read.Absent) && (descriptor.Of == ir.Closure || read.Of == ir.Closure) {
-					refused = &NotYet{Where: read.ViewWhere, What: "a checked view read of optional field " + read.Name + " of callable type " + read.ViewType}
+					refused = &NotYet{Where: read.ViewWhere, What: "a checked view read of optional field " +
+						read.Name +
+						" of callable type " +
+						read.ViewType}
 					return false
 				}
 				if read.Absent && !descriptor.Undefined {
-					refused = &NotYet{Where: read.ViewWhere, What: "a checked view read of optional field " + read.Name + " whose type " + read.ViewType + " doesn't hold undefined"}
+					refused = &NotYet{Where: read.ViewWhere, What: "a checked view read of optional field " +
+						read.Name +
+						" whose type " +
+						read.ViewType +
+						" doesn't hold undefined"}
 					return false
 				}
 				return true
 			}
 		}
 		if read.Absent {
-			refused = &NotYet{Where: read.ViewWhere, What: "a checked view read of optional field " + read.Name + " of type " + read.ViewType + " outside a union view contract"}
+			refused = &NotYet{Where: read.ViewWhere, What: "a checked view read of optional field " +
+				read.Name +
+				" of type " +
+				read.ViewType +
+				" outside a union view contract"}
 			return false
 		}
 		switch read.Of {
 		case ir.Number, ir.Boolean, ir.String, ir.Object, ir.Array, ir.Map:
 			return true
 		}
-		refused = &NotYet{Where: read.ViewWhere, What: "a checked view read of field " + read.Name + " of type " + read.ViewType + ", which is a " + typeName(read.Of) + " outside a union view contract"}
+		refused = &NotYet{Where: read.ViewWhere, What: "a checked view read of field " +
+			read.Name +
+			" of type " +
+			read.ViewType +
+			", which is a " +
+			typeName(read.Of) +
+			" outside a union view contract"}
 		return false
 	}
 	walk(program.Main, inspect)

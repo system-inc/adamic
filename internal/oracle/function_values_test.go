@@ -28,13 +28,15 @@ func init() {
 // in that word is not an alternate representation of the same value.
 func TestFunctionValueBoundaryBoxing(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/function_values_boundary.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/function_values_boundary.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	calls, boxedReturns := 0, 0
 	mutateReadiness(program.Main, func(node any) any {

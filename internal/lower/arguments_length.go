@@ -31,8 +31,8 @@ func (l *lowering) argumentsObjectRefusal(node *ast.Node) error {
 	if node.Kind == ast.KindIdentifier && node.Text() == "arguments" {
 		// JavaScript's arguments object, not a variable the program named arguments.
 		if symbol := l.checker.GetSymbolAtLocation(node); symbol != nil && len(symbol.Declarations) == 0 {
-			if err := l.argumentsRefusal(node); err != nil {
-				return err
+			if argumentsRefusalError := l.argumentsRefusal(node); argumentsRefusalError != nil {
+				return argumentsRefusalError
 			}
 		}
 	}
@@ -47,7 +47,11 @@ func (l *lowering) argumentsRefusal(node *ast.Node) error {
 	for owner := node.Parent; owner != nil; owner = owner.Parent {
 		if ast.IsFunctionLike(owner) {
 			if owner.Kind == ast.KindArrowFunction {
-				return &Refused{Where: l.program.Where(node), What: "arguments inside an arrow function", Fix: "read arguments.length in the enclosing non-arrow function and capture that number"}
+				return &Refused{
+					Where: l.program.Where(node),
+					What:  "arguments inside an arrow function",
+					Fix:   "read arguments.length in the enclosing non-arrow function and capture that number",
+				}
 			}
 			break
 		}
@@ -64,9 +68,17 @@ func (l *lowering) argumentsRefusal(node *ast.Node) error {
 		if !ast.IsAssignmentTarget(length) {
 			return nil
 		}
-		return &Refused{Where: l.program.Where(node), What: "writing arguments.length", Fix: "keep the count read-only; write an explicit local number instead"}
+		return &Refused{
+			Where: l.program.Where(node),
+			What:  "writing arguments.length",
+			Fix:   "keep the count read-only; write an explicit local number instead",
+		}
 	}
-	return &Refused{Where: l.program.Where(node), What: "arguments other than a read of arguments.length", Fix: "name the parameters, or take a rest parameter; only arguments.length may be read"}
+	return &Refused{
+		Where: l.program.Where(node),
+		What:  "arguments other than a read of arguments.length",
+		Fix:   "name the parameters, or take a rest parameter; only arguments.length may be read",
+	}
 }
 
 func (l *lowering) readArgumentsCount() ir.Expression {
@@ -76,7 +88,10 @@ func (l *lowering) readArgumentsCount() ir.Expression {
 	l.function.ReadsArguments = true
 	if l.function.ArgumentsCount == 0 {
 		local := len(l.result.Locals)
-		l.result.Locals = append(l.result.Locals, ir.Local{Name: "argument_count", Type: ir.Number, Function: l.functionIndex})
+		l.result.Locals = append(
+			l.result.Locals,
+			ir.Local{Name: "argument_count", Type: ir.Number, Function: l.functionIndex},
+		)
 		l.function.ArgumentsCount = local + 1
 	}
 	return ir.Read{Local: l.function.ArgumentsCount - 1, Of: ir.Number}
@@ -99,13 +114,18 @@ func (l *lowering) callArguments(nodes []*ast.Node) ([]ir.Expression, []bool, er
 				for position, provenElement := range elements {
 					of, known := l.representation(provenElement)
 					if !known || slotless(of) || position > 0 && of != element {
-						return nil, nil, l.notYet(node, "a call spreading a tuple with differently represented elements")
+						return nil, nil, l.notYet(
+							node,
+							"a call spreading a tuple with differently represented elements",
+						)
 					}
 					element = of
 				}
-				values, nested, err := l.callArguments(ast.SkipParentheses(value).AsArrayLiteralExpression().Elements.Nodes)
-				if err != nil {
-					return nil, nil, err
+				values, nested, callArgumentsError := l.callArguments(
+					ast.SkipParentheses(value).AsArrayLiteralExpression().Elements.Nodes,
+				)
+				if callArgumentsError != nil {
+					return nil, nil, callArgumentsError
 				}
 				arguments = append(arguments, ir.ArrayLiteral{Element: element, Elements: values, Spread: nested})
 				spread[index], anySpread = true, true
@@ -124,9 +144,9 @@ func (l *lowering) callArguments(nodes []*ast.Node) ([]ir.Expression, []bool, er
 			}
 			spread[index], anySpread = true, true
 		}
-		lowered, err := l.expression(value)
-		if err != nil {
-			return nil, nil, err
+		lowered, expressionError := l.expression(value)
+		if expressionError != nil {
+			return nil, nil, expressionError
 		}
 		arguments = append(arguments, lowered)
 	}
@@ -180,7 +200,9 @@ func (l *lowering) resolveCountTypes(modules []*ast.SourceFile) {
 		changed = false
 		for index := range l.result.Functions {
 			function := &l.result.Functions[index]
-			if function.ForwardsArguments != 0 && !function.ReadsArguments && l.result.Functions[function.ForwardsArguments-1].ReadsArguments {
+			if function.ForwardsArguments != 0 &&
+				!function.ReadsArguments &&
+				l.result.Functions[function.ForwardsArguments-1].ReadsArguments {
 				function.ReadsArguments = true
 				changed = true
 			}
@@ -194,11 +216,16 @@ func (l *lowering) resolveCountTypes(modules []*ast.SourceFile) {
 		changed = false
 		for index := range l.result.Functions {
 			function := &l.result.Functions[index]
-			if function.ForwardsArguments == 0 || function.ArgumentsCount != 0 || l.result.Functions[function.ForwardsArguments-1].ArgumentsCount == 0 {
+			if function.ForwardsArguments == 0 ||
+				function.ArgumentsCount != 0 ||
+				l.result.Functions[function.ForwardsArguments-1].ArgumentsCount == 0 {
 				continue
 			}
 			local := len(l.result.Locals)
-			l.result.Locals = append(l.result.Locals, ir.Local{Name: "argument_count", Type: ir.Number, Function: index})
+			l.result.Locals = append(
+				l.result.Locals,
+				ir.Local{Name: "argument_count", Type: ir.Number, Function: index},
+			)
 			function.ArgumentsCount = local + 1
 			changed = true
 		}
@@ -215,7 +242,10 @@ func (l *lowering) resolveCountTypes(modules []*ast.SourceFile) {
 			for _, target := range targets {
 				if l.result.Functions[target].ArgumentsCount == 0 {
 					local := len(l.result.Locals)
-					l.result.Locals = append(l.result.Locals, ir.Local{Name: "argument_count", Type: ir.Number, Function: target})
+					l.result.Locals = append(
+						l.result.Locals,
+						ir.Local{Name: "argument_count", Type: ir.Number, Function: target},
+					)
 					l.result.Functions[target].ArgumentsCount = local + 1
 					changed = true
 				}
@@ -277,17 +307,25 @@ func (l *lowering) resolveStructuralMethodThunks(modules []*ast.SourceFile) {
 					access := callee.AsPropertyAccessExpression()
 					receiver := l.concrete(l.checker.GetTypeAtLocation(access.Expression))
 					method := l.checker.GetSymbolAtLocation(callee)
-					nativeMethod := method != nil && len(method.Declarations) > 0 && method.Declarations[0].Kind == ast.KindMethodDeclaration && access.QuestionDotToken == nil
+					nativeMethod := method != nil &&
+						len(method.Declarations) > 0 &&
+						method.Declarations[0].Kind == ast.KindMethodDeclaration &&
+						access.QuestionDotToken == nil
 					if !nativeMethod {
 						for index, function := range l.result.Functions {
-							if !function.Receiver || function.MethodName != access.Name().Text() || len(function.Parameters) == 0 {
+							if !function.Receiver ||
+								function.MethodName != access.Name().Text() ||
+								len(function.Parameters) == 0 {
 								continue
 							}
 							local := function.Parameters[0]
 							actuals := append([]*checker.Type{l.localTypes[local]}, l.localAlso[local]...)
 							actuals = append(actuals, actualReceivers[index]...)
 							for _, actual := range actuals {
-								if actual == nil || finder.template(receiver) || finder.template(actual) || l.checker.IsTypeAssignableTo(actual, receiver) {
+								if actual == nil ||
+									finder.template(receiver) ||
+									finder.template(actual) ||
+									l.checker.IsTypeAssignableTo(actual, receiver) {
 									l.result.StructuralMethodThunks[index] = true
 								}
 							}

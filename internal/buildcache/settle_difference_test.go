@@ -38,13 +38,13 @@ func TestASecondCopyOfAKeyIsComparedWithTheKeptOne(test *testing.T) {
 					test.Fatalf("placeSettled returned %s, not the product at %s", placed, product)
 				}
 			}
-			if content, err := os.ReadFile(
+			if content, readError := os.ReadFile(
 				filepath.Join(product, "product"),
-			); err != nil || string(content) != "built" {
-				test.Errorf("the kept copy reads %q, %v, want the first's", content, err)
+			); readError != nil || string(content) != "built" {
+				test.Errorf("the kept copy reads %q, %v, want the first's", content, readError)
 			}
-			if _, err := os.Stat(second); !os.IsNotExist(err) {
-				test.Errorf("the second copy stayed at %s: %v", second, err)
+			if _, statError := os.Stat(second); !os.IsNotExist(statError) {
+				test.Errorf("the second copy stayed at %s: %v", second, statError)
 			}
 			lines, _ := os.ReadFile(log)
 			want := check.want

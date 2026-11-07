@@ -21,9 +21,9 @@ func TestNoLookupThatOnlyRefusesGoesThroughGet(test *testing.T) {
 	// Reads: *_test.go
 	root := parallelCheckRoot(test)
 	positions := token.NewFileSet()
-	err := filepath.WalkDir(root, func(path string, entry fs.DirEntry, walkErr error) error {
-		if walkErr != nil {
-			return walkErr
+	walkError := filepath.WalkDir(root, func(path string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
 		if entry.IsDir() {
 			if entry.Name() == ".git" ||
@@ -37,16 +37,16 @@ func TestNoLookupThatOnlyRefusesGoesThroughGet(test *testing.T) {
 		if !strings.HasSuffix(entry.Name(), "_test.go") {
 			return nil
 		}
-		source, err := os.ReadFile(path)
-		if err != nil {
-			return err
+		source, readError := os.ReadFile(path)
+		if readError != nil {
+			return readError
 		}
 		if !strings.Contains(string(source), "not built ahead") {
 			return nil
 		}
-		file, err := parser.ParseFile(positions, path, source, 0)
-		if err != nil {
-			return err
+		file, parseFileError := parser.ParseFile(positions, path, source, 0)
+		if parseFileError != nil {
+			return parseFileError
 		}
 		ast.Inspect(file, func(node ast.Node) bool {
 			call, isCall := node.(*ast.CallExpr)
@@ -59,9 +59,9 @@ func TestNoLookupThatOnlyRefusesGoesThroughGet(test *testing.T) {
 			}
 			ast.Inspect(literal.Body, func(inner ast.Node) bool {
 				if text, isText := inner.(*ast.BasicLit); isText && text.Kind == token.STRING {
-					if value, err := strconv.Unquote(
+					if value, unquoteError := strconv.Unquote(
 						text.Value,
-					); err == nil && strings.Contains(value, "not built ahead") {
+					); unquoteError == nil && strings.Contains(value, "not built ahead") {
 						test.Errorf(
 							"%s: a lookup whose only build refuses (%q) goes through buildcache.Get; use buildcache.BuiltAhead",
 							positions.Position(call.Pos()),
@@ -75,8 +75,8 @@ func TestNoLookupThatOnlyRefusesGoesThroughGet(test *testing.T) {
 		})
 		return nil
 	})
-	if err != nil {
-		test.Fatal(err)
+	if walkError != nil {
+		test.Fatal(walkError)
 	}
 }
 

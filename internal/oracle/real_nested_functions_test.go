@@ -37,27 +37,27 @@ func realNestedFixture(name string) string {
 	return "stage3/fixtures/nested-functions/" + name + extension
 }
 
-func errorText(err error) string {
-	if err == nil {
+func errorText(sourceError error) string {
+	if sourceError == nil {
 		return ""
 	}
-	return err.Error()
+	return sourceError.Error()
 }
 
 // The newly closed recursive constituent gap must retain the source's count,
 // not merely compile. This mutant produces valid C and has no leak or sanitizer failure.
 func TestClosedNestedConstituentMutant(test *testing.T) {
 	test.Parallel()
-	path, pathErr := filepath.Abs(
+	path, pathError := filepath.Abs(
 		filepath.Join(repository, "stage3/fixtures/nested-functions/09_checker_constituent_recursion.ts"),
 	)
-	if pathErr != nil {
-		test.Fatal(pathErr)
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
 	expected := onNode(test, path)
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	changed := 0
 	for index := range program.Functions {

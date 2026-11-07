@@ -104,20 +104,22 @@ func TestCheckedViewObjectPrimitiveSource(test *testing.T) {
 				// Array membership needs V3 element-kind metadata and hole-aware reads.
 				test.Skip("awaits compiler/views-v3: array element kind and holes (b065fa576)")
 			}
-			path, err := filepath.Abs(filepath.Join(repository, interfaceFixturePath("lane4b/fixtures/"+sample.name)))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, interfaceFixturePath("lane4b/fixtures/"+sample.name)),
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			if diff := disagreement(run{stdout: []byte(sample.source)}, onNode(test, path)); diff != "" {
 				test.Fatal("source Node: " + diff)
 			}
-			loaded, err := load.Load([]string{path})
-			if err != nil {
-				test.Fatal(err)
+			loaded, loadError := load.Load([]string{path})
+			if loadError != nil {
+				test.Fatal(loadError)
 			}
-			program, err := lower.Lower(context.Background(), loaded)
-			if err != nil {
-				test.Fatalf("source admission: %v", err)
+			program, lowerError := lower.Lower(context.Background(), loaded)
+			if lowerError != nil {
+				test.Fatalf("source admission: %v", lowerError)
 			}
 			want := run{stdout: []byte(sample.output)}
 			if sample.message != "" {

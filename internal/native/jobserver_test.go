@@ -28,21 +28,21 @@ import (
 func jobserverWith(test *testing.T, count int) (*Jobserver, string) {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "jobserver")
-	if err := syscall.Mkfifo(path, 0o600); err != nil {
-		test.Fatal(err)
+	if mkfifoError := syscall.Mkfifo(path, 0o600); mkfifoError != nil {
+		test.Fatal(mkfifoError)
 	}
 	// Opened for reading and writing, as native opens it, so filling it doesn't wait for a reader.
-	filler, err := os.OpenFile(path, os.O_RDWR, 0)
-	if err != nil {
-		test.Fatal(err)
+	filler, openError := os.OpenFile(path, os.O_RDWR, 0)
+	if openError != nil {
+		test.Fatal(openError)
 	}
 	test.Cleanup(func() { filler.Close() })
-	if _, err := filler.Write([]byte(strings.Repeat("+", count))); err != nil {
-		test.Fatal(err)
+	if _, writeError := filler.Write([]byte(strings.Repeat("+", count))); writeError != nil {
+		test.Fatal(writeError)
 	}
-	jobserver, err := OpenJobserver(path)
-	if err != nil {
-		test.Fatal(err)
+	jobserver, openJobserverError := OpenJobserver(path)
+	if openJobserverError != nil {
+		test.Fatal(openJobserverError)
 	}
 	test.Cleanup(func() { jobserver.fifo.Close() })
 	return jobserver, path
@@ -59,7 +59,7 @@ func TestCompilesHoldAJobserverTokenEach(test *testing.T) {
 		group.Add(1)
 		go func() {
 			defer group.Done()
-			err := jobserver.Hold(func() error {
+			holdError := jobserver.Hold(func() error {
 				now := running.Add(1)
 				for {
 					seen := most.Load()
@@ -71,8 +71,8 @@ func TestCompilesHoldAJobserverTokenEach(test *testing.T) {
 				running.Add(-1)
 				return nil
 			})
-			if err != nil {
-				test.Error(err)
+			if holdError != nil {
+				test.Error(holdError)
 			}
 		}()
 	}
@@ -88,8 +88,8 @@ func TestAFailedOrPanickingCompileGivesItsTokenBack(test *testing.T) {
 	test.Parallel()
 	jobserver, _ := jobserverWith(test, 1)
 	failed := errors.New("clang failed")
-	if err := jobserver.Hold(func() error { return failed }); !errors.Is(err, failed) {
-		test.Fatalf("the compile's error came back as %v", err)
+	if holdError := jobserver.Hold(func() error { return failed }); !errors.Is(holdError, failed) {
+		test.Fatalf("the compile's error came back as %v", holdError)
 	}
 	func() {
 		defer func() { recover() }()
@@ -113,14 +113,14 @@ func TestAJobserverThatCantBeOpenedFailsNamingIt(test *testing.T) {
 	test.Parallel()
 	ran := false
 	var none *Jobserver
-	if err := none.Hold(func() error { ran = true; return nil }); err != nil || !ran {
-		test.Fatalf("no jobserver: ran %v, %v", ran, err)
+	if holdError := none.Hold(func() error { ran = true; return nil }); holdError != nil || !ran {
+		test.Fatalf("no jobserver: ran %v, %v", ran, holdError)
 	}
 	missing := filepath.Join(test.TempDir(), "absent")
-	if jobserver, err := OpenJobserver(
+	if jobserver, openJobserverError := OpenJobserver(
 		missing,
-	); err == nil || jobserver != nil || !strings.Contains(err.Error(), missing) {
-		test.Fatalf("a missing jobserver: %v, %v", jobserver, err)
+	); openJobserverError == nil || jobserver != nil || !strings.Contains(openJobserverError.Error(), missing) {
+		test.Fatalf("a missing jobserver: %v, %v", jobserver, openJobserverError)
 	}
 }
 
@@ -131,14 +131,14 @@ func TestNativeReadsNoJobserverVariable(test *testing.T) {
 	test.Parallel()
 	// The name spelled in two pieces, so this file doesn't name it either.
 	variable := "ADAMIC_CC_" + "JOBSERVER"
-	files, err := filepath.Glob("*.go")
-	if err != nil || len(files) == 0 {
-		test.Fatal(files, err)
+	files, globError := filepath.Glob("*.go")
+	if globError != nil || len(files) == 0 {
+		test.Fatal(files, globError)
 	}
 	for _, name := range files {
-		parsed, err := parser.ParseFile(token.NewFileSet(), name, nil, 0)
-		if err != nil {
-			test.Fatal(err)
+		parsed, parseFileError := parser.ParseFile(token.NewFileSet(), name, nil, 0)
+		if parseFileError != nil {
+			test.Fatal(parseFileError)
 		}
 		ast.Inspect(parsed, func(node ast.Node) bool {
 			switch node := node.(type) {
@@ -183,12 +183,12 @@ func inChild(t *testing.T, test string, bound time.Duration, environment ...stri
 		func(entry string) bool { return strings.HasPrefix(entry, variable+"=") },
 	)
 	command.Env = append(append(inherited, childVariable+"=1"), environment...)
-	output, err := command.CombinedOutput()
+	output, combinedOutputError := command.CombinedOutput()
 	if runContext.Err() != nil {
 		t.Fatalf("%s ran past %s, waiting on a token it shouldn't need:\n%s", test, bound, output)
 	}
-	if err != nil || !strings.Contains(string(output), "--- PASS: "+test) {
-		t.Fatalf("%s: %v\n%s", test, err, output)
+	if combinedOutputError != nil || !strings.Contains(string(output), "--- PASS: "+test) {
+		t.Fatalf("%s: %v\n%s", test, combinedOutputError, output)
 	}
 	return string(output)
 }
@@ -214,17 +214,17 @@ func TestTheProcessJobserverIsSetOnceChild(test *testing.T) {
 	}
 	first, _ := jobserverWith(test, 1)
 	second, _ := jobserverWith(test, 1)
-	if err := UseJobserver(first, nil); err != nil {
-		test.Fatal(err)
+	if useJobserverError := UseJobserver(first, nil); useJobserverError != nil {
+		test.Fatal(useJobserverError)
 	}
-	if err := UseJobserver(first, nil); err != nil {
-		test.Fatalf("the same jobserver again: %v", err)
+	if useJobserverError := UseJobserver(first, nil); useJobserverError != nil {
+		test.Fatalf("the same jobserver again: %v", useJobserverError)
 	}
-	if err := UseJobserver(second, nil); !errors.Is(err, ErrJobserverSet) {
-		test.Fatalf("another jobserver: %v", err)
+	if useJobserverError := UseJobserver(second, nil); !errors.Is(useJobserverError, ErrJobserverSet) {
+		test.Fatalf("another jobserver: %v", useJobserverError)
 	}
-	if got, err := defaultJobserver(); got != first || err != nil {
-		test.Fatalf("the process's jobserver is %v, %v, want the first", got, err)
+	if got, defaultJobserverError := defaultJobserver(); got != first || defaultJobserverError != nil {
+		test.Fatalf("the process's jobserver is %v, %v, want the first", got, defaultJobserverError)
 	}
 }
 
@@ -241,12 +241,12 @@ func TestAProcessJobserverThatCouldntBeOpenedFailsTheBuildChild(test *testing.T)
 		return
 	}
 	_, failed := OpenJobserver(filepath.Join(test.TempDir(), "absent"))
-	if err := UseJobserver(nil, failed); err != nil {
-		test.Fatal(err)
+	if useJobserverError := UseJobserver(nil, failed); useJobserverError != nil {
+		test.Fatal(useJobserverError)
 	}
-	err := Build("int main(void) { return 0; }\n", filepath.Join(test.TempDir(), "program"), Options{})
-	if err == nil || !errors.Is(err, failed) && !strings.Contains(err.Error(), "absent") {
-		test.Fatalf("a build under a jobserver that couldn't be opened: %v", err)
+	buildError := Build("int main(void) { return 0; }\n", filepath.Join(test.TempDir(), "program"), Options{})
+	if buildError == nil || !errors.Is(buildError, failed) && !strings.Contains(buildError.Error(), "absent") {
+		test.Fatalf("a build under a jobserver that couldn't be opened: %v", buildError)
 	}
 }
 
@@ -264,16 +264,16 @@ func TestTheArchiveBuildNeverFallsBackToTheProcessJobserverChild(test *testing.T
 		return
 	}
 	// The request first: its header scan runs under the process's jobserver, which is none yet.
-	request, err := RuntimeRequestFor(Options{})
-	if err != nil {
-		test.Fatal(err)
+	request, runtimeRequestForError := RuntimeRequestFor(Options{})
+	if runtimeRequestForError != nil {
+		test.Fatal(runtimeRequestForError)
 	}
 	empty, _ := jobserverWith(test, 0)
-	if err := UseJobserver(empty, nil); err != nil {
-		test.Fatal(err)
+	if useJobserverError := UseJobserver(empty, nil); useJobserverError != nil {
+		test.Fatal(useJobserverError)
 	}
-	if err := request.Build(test.TempDir(), 4, nil); err != nil {
-		test.Fatal(err)
+	if buildError := request.Build(test.TempDir(), 4, nil); buildError != nil {
+		test.Fatal(buildError)
 	}
 }
 
@@ -286,17 +286,17 @@ func TestTheArchiveBuildNeverFallsBackToTheProcessJobserverChild(test *testing.T
 // reaching an argument.
 func TestTheJobserverNeverReachesTheBytes(test *testing.T) {
 	test.Parallel()
-	clang, err := toolchain.Path("clang")
-	if err != nil {
-		test.Skip("no clang: ", err)
+	clang, pathError := toolchain.Path("clang")
+	if pathError != nil {
+		test.Skip("no clang: ", pathError)
 	}
 	tools := filepath.Join(test.TempDir(), "tools")
-	if err := os.MkdirAll(filepath.Join(tools, "bin"), 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(filepath.Join(tools, "bin"), 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	if archiver := filepath.Join(filepath.Dir(clang), "llvm-ar"); fileRuns(archiver) {
-		if err := os.Symlink(archiver, filepath.Join(tools, "bin", "llvm-ar")); err != nil {
-			test.Fatal(err)
+		if symlinkError := os.Symlink(archiver, filepath.Join(tools, "bin", "llvm-ar")); symlinkError != nil {
+			test.Fatal(symlinkError)
 		}
 	}
 	_, one := jobserverWith(test, 1)
@@ -311,33 +311,33 @@ func TestTheJobserverNeverReachesTheBytes(test *testing.T) {
 		log := filepath.Join(test.TempDir(), "clang")
 		wrapper := "#!/bin/sh\n{ printf 'directory %s\\n' \"$PWD\"; for argument in \"$@\"; do printf 'argument %s\\n' \"$argument\"; done; printf 'end\\n'; } > " +
 			strconv.Quote(log) + "/$$\nexec " + strconv.Quote(clang) + " \"$@\"\n"
-		if err := os.MkdirAll(log, 0o755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(log, 0o755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.WriteFile(filepath.Join(tools, "bin", "clang"), []byte(wrapper), 0o755); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(tools, "bin", "clang"), []byte(wrapper), 0o755); writeError != nil {
+			test.Fatal(writeError)
 		}
 		inChild(test, "TestTheJobserverNeverReachesTheBytesChild", 5*time.Minute, "ADAMIC_TOOLS="+tools,
 			"ADAMIC_NATIVE_JOBSERVER_FIFO="+jobserver.path, "ADAMIC_NATIVE_ARCHIVE="+directory)
-		files, err := os.ReadDir(directory)
-		if err != nil || len(files) == 0 {
-			test.Fatal(jobserver.name, files, err)
+		files, readDirectoryError := os.ReadDir(directory)
+		if readDirectoryError != nil || len(files) == 0 {
+			test.Fatal(jobserver.name, files, readDirectoryError)
 		}
 		var listing strings.Builder
 		for _, file := range files {
-			content, err := os.ReadFile(filepath.Join(directory, file.Name()))
-			if err != nil {
-				test.Fatal(err)
+			content, readError := os.ReadFile(filepath.Join(directory, file.Name()))
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			fmt.Fprintf(&listing, "%s %x\n", file.Name(), sha256.Sum256(content))
 		}
-		commands, err := readCommands(log)
-		if err != nil {
-			test.Fatal(err)
+		commands, readCommandsError := readCommands(log)
+		if readCommandsError != nil {
+			test.Fatal(readCommandsError)
 		}
-		parts, err := os.ReadFile(directory + ".parts")
-		if err != nil {
-			test.Fatal(err)
+		parts, readError := os.ReadFile(directory + ".parts")
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		runs[jobserver.name] = built{listing.String(), sameDirectories(string(commands), directory), string(parts)}
 	}
@@ -377,32 +377,32 @@ func TestTheJobserverNeverReachesTheBytesChild(test *testing.T) {
 	}
 	var jobserver *Jobserver
 	if path := os.Getenv("ADAMIC_NATIVE_JOBSERVER_FIFO"); path != "" {
-		var err error
-		if jobserver, err = OpenJobserver(path); err != nil {
-			test.Fatal(err)
+		var openJobserverError error
+		if jobserver, openJobserverError = OpenJobserver(path); openJobserverError != nil {
+			test.Fatal(openJobserverError)
 		}
 	}
-	if err := UseJobserver(jobserver, nil); err != nil {
-		test.Fatal(err)
+	if useJobserverError := UseJobserver(jobserver, nil); useJobserverError != nil {
+		test.Fatal(useJobserverError)
 	}
-	request, err := RuntimeRequestFor(Options{})
-	if err != nil {
-		test.Fatal(err)
+	request, runtimeRequestForError := RuntimeRequestFor(Options{})
+	if runtimeRequestForError != nil {
+		test.Fatal(runtimeRequestForError)
 	}
 	directory := os.Getenv("ADAMIC_NATIVE_ARCHIVE")
-	if err := request.Build(directory, 4, jobserver); err != nil {
-		test.Fatal(err)
+	if buildError := request.Build(directory, 4, jobserver); buildError != nil {
+		test.Fatal(buildError)
 	}
 	parts := strings.Join(request.Parts, "\n") + "\n--\n" + strings.Join(request.Portable, "\n") + "\n"
-	if err := os.WriteFile(directory+".parts", []byte(parts), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(directory+".parts", []byte(parts), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 }
 
 // fileRuns says whether path is a file anyone may run.
 func fileRuns(path string) bool {
-	info, err := os.Stat(path)
-	return err == nil && info.Mode().IsRegular() && info.Mode().Perm()&0o111 != 0
+	info, statError := os.Stat(path)
+	return statError == nil && info.Mode().IsRegular() && info.Mode().Perm()&0o111 != 0
 }
 
 // temporaryName is a random name a build gives its own directories (os.MkdirTemp's), which differ run to run.
@@ -413,7 +413,7 @@ var temporaryName = regexp.MustCompile(`(adamic-[a-z-]+-|\.build-|\.unit-)[0-9]+
 // the archive's units compile in whatever order they start.
 func sameDirectories(commands, archive string) string {
 	commands = strings.ReplaceAll(commands, archive, "<archive>")
-	if resolved, err := filepath.EvalSymlinks(archive); err == nil {
+	if resolved, resolveSymlinksError := filepath.EvalSymlinks(archive); resolveSymlinksError == nil {
 		commands = strings.ReplaceAll(commands, resolved, "<archive>")
 	}
 	commands = temporaryName.ReplaceAllString(commands, "${1}<random>")
@@ -424,15 +424,15 @@ func sameDirectories(commands, archive string) string {
 
 // readCommands is every clang command line a run recorded, one file each in directory.
 func readCommands(directory string) (string, error) {
-	entries, err := os.ReadDir(directory)
-	if err != nil {
-		return "", err
+	entries, readDirectoryError := os.ReadDir(directory)
+	if readDirectoryError != nil {
+		return "", readDirectoryError
 	}
 	var commands strings.Builder
 	for _, entry := range entries {
-		content, err := os.ReadFile(filepath.Join(directory, entry.Name()))
-		if err != nil {
-			return "", err
+		content, readError := os.ReadFile(filepath.Join(directory, entry.Name()))
+		if readError != nil {
+			return "", readError
 		}
 		commands.Write(content)
 	}

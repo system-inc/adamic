@@ -57,7 +57,10 @@ func (l *lowering) generatorDeclarationNotYet(declaration *ast.Node, what string
 // inPlaceNotYet stops a generator written in place and called whose call is used any other way: a
 // value no slot can hold yet, as a named generator's call used so is.
 func (l *lowering) inPlaceNotYet(node *ast.Node) error {
-	return l.notYet(node, "a generator written in place and called, used other than by a for-of over its call, a call as a statement or a one-read Iterable parameter (#qk8rztp)")
+	return l.notYet(
+		node,
+		"a generator written in place and called, used other than by a for-of over its call, a call as a statement or a one-read Iterable parameter (#qk8rztp)",
+	)
 }
 
 // generatorDeclaration reports whether a function-like node is a synchronous generator.
@@ -95,8 +98,14 @@ func loweredGenerator(node *ast.Node) bool {
 // no rule here covers, so a named one stays not yet built (Lower). That the function it's written in
 // doesn't suspend is a fact of lowering, so inPlaceGenerator says it there.
 func generatorInPlace(node *ast.Node) bool {
-	return node.Kind == ast.KindFunctionExpression && node.AsFunctionExpression().AsteriskToken != nil && node.Name() == nil && node.Body() != nil &&
-		len(node.TypeParameters()) == 0 && !genericScope(node.Parent) && !ast.HasSyntacticModifier(node, ast.ModifierFlagsAsync) && calledInPlace(node) != nil
+	return node.Kind == ast.KindFunctionExpression &&
+		node.AsFunctionExpression().AsteriskToken != nil &&
+		node.Name() == nil &&
+		node.Body() != nil &&
+		len(node.TypeParameters()) == 0 &&
+		!genericScope(node.Parent) &&
+		!ast.HasSyntacticModifier(node, ast.ModifierFlagsAsync) &&
+		calledInPlace(node) != nil
 }
 
 // calledInPlace is the call a function expression is the callee of, any parentheses around it
@@ -132,8 +141,13 @@ func nestedGenerator(node *ast.Node) bool {
 // nestedGeneratorShape is a named function* declared directly in a function's body, the place
 // nestedDeclarations binds a nested declaration, generic or not.
 func nestedGeneratorShape(node *ast.Node) bool {
-	return node.Kind == ast.KindFunctionDeclaration && node.AsFunctionDeclaration().AsteriskToken != nil && node.Name() != nil && node.Body() != nil &&
-		node.Parent != nil && node.Parent.Kind == ast.KindBlock && ast.IsFunctionLike(node.Parent.Parent)
+	return node.Kind == ast.KindFunctionDeclaration &&
+		node.AsFunctionDeclaration().AsteriskToken != nil &&
+		node.Name() != nil &&
+		node.Body() != nil &&
+		node.Parent != nil &&
+		node.Parent.Kind == ast.KindBlock &&
+		ast.IsFunctionLike(node.Parent.Parent)
 }
 
 // genericScope reports whether a type parameter is in scope at node: some function or class around
@@ -141,7 +155,9 @@ func nestedGeneratorShape(node *ast.Node) bool {
 // that can't have any.
 func genericScope(node *ast.Node) bool {
 	for scope := node; scope != nil; scope = scope.Parent {
-		if (ast.IsFunctionLike(scope) || scope.Kind == ast.KindClassDeclaration || scope.Kind == ast.KindClassExpression) && len(scope.TypeParameters()) != 0 {
+		if (ast.IsFunctionLike(scope) ||
+			scope.Kind == ast.KindClassDeclaration ||
+			scope.Kind == ast.KindClassExpression) && len(scope.TypeParameters()) != 0 {
 			return true
 		}
 	}
@@ -174,7 +190,9 @@ func generatorForm(node *ast.Node) string {
 		return "written in place inside a generic function or class"
 	case node.Kind == ast.KindFunctionExpression:
 		return "written as an expression"
-	case node.Kind == ast.KindMethodDeclaration && node.Parent != nil && node.Parent.Kind == ast.KindObjectLiteralExpression:
+	case node.Kind == ast.KindMethodDeclaration &&
+		node.Parent != nil &&
+		node.Parent.Kind == ast.KindObjectLiteralExpression:
 		return "written as an object literal's method"
 	case node.Kind == ast.KindMethodDeclaration && ast.HasSyntacticModifier(node, ast.ModifierFlagsStatic):
 		return "written as a static method"
@@ -202,7 +220,11 @@ func generatorForm(node *ast.Node) string {
 func (l *lowering) generatorSignature(function *ir.Function, declaration *ast.Node) error {
 	for _, parameter := range declaration.Parameters() {
 		declared := parameter.AsParameterDeclaration()
-		if !ast.IsIdentifier(parameter.Name()) || declared.Initializer != nil || declared.QuestionToken != nil || declared.DotDotDotToken != nil || parameter.Name().Text() == "this" {
+		if !ast.IsIdentifier(parameter.Name()) ||
+			declared.Initializer != nil ||
+			declared.QuestionToken != nil ||
+			declared.DotDotDotToken != nil ||
+			parameter.Name().Text() == "this" {
 			return l.generatorNotYet(parameter, "with a parameter that isn't a plain required name")
 		}
 	}
@@ -235,7 +257,10 @@ func (l *lowering) generatorSignature(function *ir.Function, declaration *ast.No
 		function.AsyncSite = l.asyncSite(declaration)
 		return nil
 	}
-	return l.generatorDeclarationNotYet(declaration, "yielding "+l.checker.TypeToString(yielded)+" (each yielded value must be one present slot)")
+	return l.generatorDeclarationNotYet(
+		declaration,
+		"yielding "+l.checker.TypeToString(yielded)+" (each yielded value must be one present slot)",
+	)
 }
 
 // checkGeneratorBody stops what a lowered generator body holds that its frame can't yet: a local a
@@ -260,7 +285,10 @@ func (l *lowering) checkGeneratorBody(index int, declaration *ast.Node) error {
 			if node := l.localNodes[local]; node != nil {
 				where = node
 			}
-			return l.notYet(where, title+" whose local '"+declared.Name+"' a closure captures (a frame cell can't be a closure's environment yet) (#qk8rztp)")
+			return l.notYet(where, title+
+				" whose local '"+
+				declared.Name+
+				"' a closure captures (a frame cell can't be a closure's environment yet) (#qk8rztp)")
 		}
 	}
 	if function.Closure {
@@ -291,7 +319,9 @@ func (l *lowering) nestedGeneratorWrites(index int, declaration *ast.Node) error
 		walk(l.result.Functions[bodies[position]].Body, func(node any) bool {
 			// A helper lowering makes with no declaration of its own, as a prefix update's, is
 			// inside when a function inside makes it.
-			if made, isMade := node.(ir.MakeClosure); isMade && !inside[made.Function] && l.functionNodes[made.Function] == nil {
+			if made, isMade := node.(ir.MakeClosure); isMade &&
+				!inside[made.Function] &&
+				l.functionNodes[made.Function] == nil {
 				inside[made.Function] = true
 				bodies = append(bodies, made.Function)
 			}
@@ -321,7 +351,10 @@ func (l *lowering) nestedGeneratorWrites(index int, declaration *ast.Node) error
 				if declaration.Kind == ast.KindFunctionExpression {
 					writer = "it"
 				}
-				return l.generatorDeclarationNotYet(declaration, "where '"+declared.Name+"', a captured local, is written inside "+writer)
+				return l.generatorDeclarationNotYet(
+					declaration,
+					"where '"+declared.Name+"', a captured local, is written inside "+writer,
+				)
 			}
 		}
 	}
@@ -356,9 +389,9 @@ func (l *lowering) yieldStatement(node *ast.Node) ([]ir.Statement, error) {
 			return nil, l.generatorNotYet(node, "yielding inside try")
 		}
 	}
-	value, err := l.expression(yield.Expression)
-	if err != nil {
-		return nil, err
+	value, expressionError := l.expression(yield.Expression)
+	if expressionError != nil {
+		return nil, expressionError
 	}
 	value = fit(value, l.function.Yields)
 	if value.Type() != l.function.Yields {
@@ -382,15 +415,18 @@ func (l *lowering) generatorCallee(node *ast.Node) (int, bool, error) {
 	}
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
 	if generatorInPlace(callee) {
-		index, err := l.inPlaceGenerator(callee)
-		return index, err == nil, err
+		index, inPlaceGeneratorError := l.inPlaceGenerator(callee)
+		return index, inPlaceGeneratorError == nil, inPlaceGeneratorError
 	}
 	named := callee
 	if !ast.IsIdentifier(callee) {
 		// A generator written in place is the callee itself, above, so a declaration with no name
 		// reached here is one this call doesn't place, and it fails closed (Adamic on #qk8rztp S3b).
 		signature := l.checker.GetResolvedSignature(node)
-		if signature == nil || signature.Declaration() == nil || !loweredGenerator(signature.Declaration()) || signature.Declaration().Name() == nil {
+		if signature == nil ||
+			signature.Declaration() == nil ||
+			!loweredGenerator(signature.Declaration()) ||
+			signature.Declaration().Name() == nil {
 			return 0, false, nil
 		}
 		named = signature.Declaration().Name()
@@ -399,9 +435,9 @@ func (l *lowering) generatorCallee(node *ast.Node) (int, bool, error) {
 		return index, true, nil
 	}
 	if declaration, isGeneric := l.generics[l.symbol(named)]; isGeneric && loweredGenerator(declaration) {
-		index, err := l.instantiateFunction(node, declaration)
-		if err != nil {
-			return 0, false, err
+		index, instantiateFunctionError := l.instantiateFunction(node, declaration)
+		if instantiateFunctionError != nil {
+			return 0, false, instantiateFunctionError
 		}
 		return index, l.result.Functions[index].Generator, nil
 	}
@@ -482,9 +518,9 @@ func (l *lowering) nestedGeneratorCall(call *ast.CallExpression, function int) (
 	}
 	arguments := []ir.Expression{}
 	for position, argument := range call.Arguments.Nodes {
-		value, err := l.expression(argument)
-		if err != nil {
-			return nil, err
+		value, expressionError := l.expression(argument)
+		if expressionError != nil {
+			return nil, expressionError
 		}
 		arguments = append(arguments, fit(value, l.result.Locals[parameters[position]].Type))
 	}
@@ -504,7 +540,10 @@ type inPlaceGeneratorKey struct {
 // and the array literal asks again through iterated), so one call may be asked about more than once,
 // and the expression must still be one function (TestInPlaceGeneratorIsLoweredOncePerSite).
 func (l *lowering) inPlaceGenerator(expression *ast.Node) (int, error) {
-	if index, lowered := l.inPlaceGenerators[inPlaceGeneratorKey{expression: expression, function: l.functionIndex}]; lowered {
+	if index, lowered := l.inPlaceGenerators[inPlaceGeneratorKey{
+		expression: expression,
+		function:   l.functionIndex,
+	}]; lowered {
 		return index, nil
 	}
 	return l.lowerInPlaceGenerator(expression)
@@ -519,7 +558,11 @@ func (l *lowering) inPlaceGenerator(expression *ast.Node) (int, error) {
 func (l *lowering) lowerInPlaceGenerator(expression *ast.Node) (int, error) {
 	key := inPlaceGeneratorKey{expression: expression, function: l.functionIndex}
 	if index, lowered := l.inPlaceGenerators[key]; lowered {
-		return 0, fmt.Errorf("lower: compiler bug: the generator written in place at %s lowered again, where function %d already is it", l.program.Where(expression), index)
+		return 0, fmt.Errorf(
+			"lower: compiler bug: the generator written in place at %s lowered again, where function %d already is it",
+			l.program.Where(expression),
+			index,
+		)
 	}
 	switch {
 	case l.function == nil:
@@ -527,13 +570,16 @@ func (l *lowering) lowerInPlaceGenerator(expression *ast.Node) (int, error) {
 	case l.function.Suspends():
 		return 0, l.generatorNotYet(expression, "written in place inside an async function or a generator")
 	}
-	made, err := l.closureExpression(expression)
-	if err != nil {
-		return 0, err
+	made, closureExpressionError := l.closureExpression(expression)
+	if closureExpressionError != nil {
+		return 0, closureExpressionError
 	}
 	closure, isClosure := made.(ir.MakeClosure)
 	if !isClosure || !l.result.Functions[closure.Function].Generator {
-		return 0, fmt.Errorf("lower: compiler bug: the generator written in place at %s lowered to no generator's closure", l.program.Where(expression))
+		return 0, fmt.Errorf(
+			"lower: compiler bug: the generator written in place at %s lowered to no generator's closure",
+			l.program.Where(expression),
+		)
 	}
 	if l.inPlaceGenerators == nil {
 		l.inPlaceGenerators = map[inPlaceGeneratorKey]int{}
@@ -600,7 +646,11 @@ func (l *lowering) iterableParameter(node *ast.Node) (bool, bool) {
 	}
 	parameter := parameters[position]
 	declared := parameter.AsParameterDeclaration()
-	if !ast.IsIdentifier(parameter.Name()) || parameter.Name().Text() == "this" || declared.DotDotDotToken != nil || declared.QuestionToken != nil || declared.Initializer != nil {
+	if !ast.IsIdentifier(parameter.Name()) ||
+		parameter.Name().Text() == "this" ||
+		declared.DotDotDotToken != nil ||
+		declared.QuestionToken != nil ||
+		declared.Initializer != nil {
 		return false, false
 	}
 	parameterType := l.checker.GetTypeAtLocation(parameter.Name())
@@ -617,7 +667,8 @@ func (l *lowering) iterableParameter(node *ast.Node) (bool, bool) {
 			missing++
 		}
 	}
-	nullable := missing == 1 && l.isLibraryType(l.checker.GetNonNullableType(parameterType), "Iterable", "IterableIterator")
+	nullable := missing == 1 &&
+		l.isLibraryType(l.checker.GetNonNullableType(parameterType), "Iterable", "IterableIterator")
 	return nullable, nullable
 }
 
@@ -630,7 +681,9 @@ func (l *lowering) iterableCallee(symbol *ast.Symbol) *ast.Node {
 	}
 	var implementation *ast.Node
 	for _, declaration := range symbol.Declarations {
-		if declaration.Kind != ast.KindFunctionDeclaration || declaration.Parent == nil || declaration.Parent.Kind != ast.KindSourceFile {
+		if declaration.Kind != ast.KindFunctionDeclaration ||
+			declaration.Parent == nil ||
+			declaration.Parent.Kind != ast.KindSourceFile {
 			return nil
 		}
 		if declaration.Body() == nil {
@@ -641,7 +694,9 @@ func (l *lowering) iterableCallee(symbol *ast.Symbol) *ast.Node {
 		}
 		implementation = declaration
 	}
-	if implementation == nil || generatorDeclaration(implementation) || ast.HasSyntacticModifier(implementation, ast.ModifierFlagsAsync) {
+	if implementation == nil ||
+		generatorDeclaration(implementation) ||
+		ast.HasSyntacticModifier(implementation, ast.ModifierFlagsAsync) {
 		return nil
 	}
 	return implementation
@@ -652,11 +707,14 @@ func (l *lowering) iterableCallee(symbol *ast.Symbol) *ast.Node {
 // holds, and the site is kept for checkIterableViews to prove and to name.
 func (l *lowering) iterableOfGenerator(node *ast.Node, function int) (ir.Expression, error) {
 	if l.function != nil && l.function.Suspends() {
-		return nil, l.generatorNotYet(node, "passed into an Iterable<T> parameter inside an async function or a generator")
+		return nil, l.generatorNotYet(
+			node,
+			"passed into an Iterable<T> parameter inside an async function or a generator",
+		)
 	}
-	made, err := l.generatorCall(node, function)
-	if err != nil {
-		return nil, err
+	made, generatorCallError := l.generatorCall(node, function)
+	if generatorCallError != nil {
+		return nil, generatorCallError
 	}
 	argument := generatorArgument{node: node, generator: function}
 	argument.key, argument.value, argument.pair = l.generatorPairTypes(node)
@@ -685,10 +743,16 @@ type generatorArgument struct {
 func (l *lowering) forOfGenerator(node *ast.Node, function int, name *ast.Node) ([]ir.Statement, error) {
 	statement := node.AsForInOrOfStatement()
 	if l.function != nil && l.function.Suspends() {
-		return nil, l.generatorNotYet(statement.Expression, "consumed by a for-of inside an async function or a generator")
+		return nil, l.generatorNotYet(
+			statement.Expression,
+			"consumed by a for-of inside an async function or a generator",
+		)
 	}
 	if l.function == nil && moduleAwaits(ast.GetSourceFileOfNode(node).AsNode()) {
-		return nil, l.generatorNotYet(statement.Expression, "consumed by a for-of in a module that awaits at its top level")
+		return nil, l.generatorNotYet(
+			statement.Expression,
+			"consumed by a for-of in a module that awaits at its top level",
+		)
 	}
 	var awaits ast.Visitor
 	awaits = func(child *ast.Node) bool {
@@ -703,23 +767,23 @@ func (l *lowering) forOfGenerator(node *ast.Node, function int, name *ast.Node) 
 	if !ast.IsIdentifier(name) {
 		return nil, l.generatorNotYet(name, "consumed by a for-of that destructures")
 	}
-	made, err := l.generatorCall(statement.Expression, function)
-	if err != nil {
-		return nil, err
+	made, generatorCallError := l.generatorCall(statement.Expression, function)
+	if generatorCallError != nil {
+		return nil, generatorCallError
 	}
 	yields := l.result.Functions[function].Yields
 	generator := l.iterationLocal("generator", ir.Generator, l.functionIndex)
 	step := l.iterationLocal("generator_step", yields, l.functionIndex)
-	local, err := l.declareLocal(name)
-	if err != nil {
-		return nil, err
+	local, declareLocalError := l.declareLocal(name)
+	if declareLocalError != nil {
+		return nil, declareLocalError
 	}
 	if l.result.Locals[local].Type != yields {
 		return nil, l.generatorNotYet(name, "consumed into a variable held differently from what it yields")
 	}
-	body, err := l.statement(statement.Statement)
-	if err != nil {
-		return nil, err
+	body, statementError := l.statement(statement.Statement)
+	if statementError != nil {
+		return nil, statementError
 	}
 	held := ir.Read{Local: generator, Of: ir.Generator}
 	pass := []ir.Statement{
@@ -835,21 +899,37 @@ func checkGeneratorRoads(program *ir.Program) error {
 		visit(reflect.ValueOf(function.Body))
 	}
 	if counted != allowed {
-		return fmt.Errorf("lower: compiler bug: %d generator values where only %d are a consuming loop's or a dropped call's", counted, allowed)
+		return fmt.Errorf(
+			"lower: compiler bug: %d generator values where only %d are a consuming loop's or a dropped call's",
+			counted,
+			allowed,
+		)
 	}
 	if iterables != handed {
-		return fmt.Errorf("lower: compiler bug: %d generators seen as objects where only %d are a call's own argument", iterables, handed)
+		return fmt.Errorf(
+			"lower: compiler bug: %d generators seen as objects where only %d are a call's own argument",
+			iterables,
+			handed,
+		)
 	}
 	for local := range dispatched {
 		// One read of next per collection test, the arm's own step (Lower's must on #qk8rztp S2c-1,
 		// her option (b)): any other next of the local isn't the dispatch's.
 		if nexts[local] != collectionTests[local] || reads[local] != stepped[local]+nexts[local] {
-			return fmt.Errorf("lower: compiler bug: the iterable view's local %s is read %d times where only its dispatch's %d kind tests and steps may read it", program.Locals[local].Name, reads[local], stepped[local]+nexts[local])
+			return fmt.Errorf(
+				"lower: compiler bug: the iterable view's local %s is read %d times where only its dispatch's %d kind tests and steps may read it",
+				program.Locals[local].Name,
+				reads[local],
+				stepped[local]+nexts[local],
+			)
 		}
 	}
 	for local, declared := range program.Locals {
 		if declared.Type == ir.Generator && (!held[local] || declared.Global || declared.Captured) {
-			return fmt.Errorf("lower: compiler bug: the generator local %s is held outside its consuming loop", declared.Name)
+			return fmt.Errorf(
+				"lower: compiler bug: the generator local %s is held outside its consuming loop",
+				declared.Name,
+			)
 		}
 	}
 	return nil
@@ -878,11 +958,14 @@ func (l *lowering) collectGenerator(node *ast.Node, function int) (ir.Expression
 		return nil, 0, l.nestedCollectNotYet(node, function)
 	}
 	if l.function != nil && l.function.Suspends() {
-		return nil, 0, l.generatorNotYet(node, "consumed by spread or Array.from inside an async function or a generator")
+		return nil, 0, l.generatorNotYet(
+			node,
+			"consumed by spread or Array.from inside an async function or a generator",
+		)
 	}
-	made, err := l.generatorCall(node, function)
-	if err != nil {
-		return nil, 0, err
+	made, generatorCallError := l.generatorCall(node, function)
+	if generatorCallError != nil {
+		return nil, 0, generatorCallError
 	}
 	call := made.(ir.Call)
 	yields := l.result.Functions[function].Yields
@@ -907,14 +990,27 @@ func (l *lowering) collectGenerator(node *ast.Node, function int) (ir.Expression
 	loop := ir.Loop{Condition: ir.BooleanConstant{Value: true}, Body: []ir.Statement{
 		ir.Declare{Local: step, Value: ir.GeneratorNext{Generator: held, Function: function, Of: yields}},
 		ir.If{Condition: ir.GeneratorDone{Generator: held}, Then: []ir.Statement{ir.Break{}}},
-		ir.Evaluate{Value: ir.ArrayPush{Array: collected, Value: ir.Read{Local: step, Of: yields}, Element: yields, Site: l.iterationArrayWriteSite(node)}},
+		ir.Evaluate{Value: ir.ArrayPush{
+			Array:   collected,
+			Value:   ir.Read{Local: step, Of: yields},
+			Element: yields,
+			Site:    l.iterationArrayWriteSite(node),
+		}},
 	}}
 	body := []ir.Statement{
 		ir.Declare{Local: output, Value: ir.ArrayLiteral{Element: yields}},
-		ir.Block{Body: []ir.Statement{ir.Declare{Local: generator, Value: ir.Call{Function: function, Arguments: arguments, Returns: ir.Generator}}, loop}},
+		ir.Block{Body: []ir.Statement{ir.Declare{
+			Local: generator,
+			Value: ir.Call{Function: function, Arguments: arguments, Returns: ir.Generator},
+		}, loop}},
 		ir.Return{Value: collected},
 	}
-	l.result.Functions[helper] = ir.Function{Name: "collect_generator", Returns: ir.Array, Parameters: parameters, Body: body}
+	l.result.Functions[helper] = ir.Function{
+		Name:       "collect_generator",
+		Returns:    ir.Array,
+		Parameters: parameters,
+		Body:       body,
+	}
 	return ir.Call{Function: helper, Arguments: call.Arguments, Returns: ir.Array}, yields, nil
 }
 
@@ -938,7 +1034,12 @@ func (l *lowering) nestedCollectNotYet(node *ast.Node, function int) error {
 // set on a fresh built-in Map can't throw. A step that throws leaves the helper before any Map is
 // made, and the pairs it had are let go of with it. The pair's types are read from what the
 // generator yields, never from its declared iterator type.
-func (l *lowering) newMapFromGenerator(source *ast.Node, function int, key ir.Type, value ir.Type) (ir.Expression, error) {
+func (l *lowering) newMapFromGenerator(
+	source *ast.Node,
+	function int,
+	key ir.Type,
+	value ir.Type,
+) (ir.Expression, error) {
 	if l.result.Functions[function].Closure {
 		return nil, l.nestedCollectNotYet(source, function)
 	}
@@ -951,9 +1052,9 @@ func (l *lowering) newMapFromGenerator(source *ast.Node, function int, key ir.Ty
 	if pairKey != key || pairValue != value {
 		return nil, l.notYet(source, "new Map from pairs held otherwise than the Map's keys and values")
 	}
-	pairs, yields, err := l.collectGenerator(source, function)
-	if err != nil {
-		return nil, err
+	pairs, yields, collectGeneratorError := l.collectGenerator(source, function)
+	if collectGeneratorError != nil {
+		return nil, collectGeneratorError
 	}
 	if yields != ir.Object {
 		return nil, l.notYet(source, "new Map from something that isn't [key, value] pairs")
@@ -971,7 +1072,10 @@ func (l *lowering) generatorPairTypes(source *ast.Node) (ir.Type, ir.Type, bool)
 	}
 	elements := l.checker.GetTypeArguments(arguments[0])
 	flags := arguments[0].TargetTupleType().ElementFlags()
-	if len(elements) != 2 || len(flags) != 2 || flags[0] != checker.ElementFlagsRequired || flags[1] != checker.ElementFlagsRequired {
+	if len(elements) != 2 ||
+		len(flags) != 2 ||
+		flags[0] != checker.ElementFlagsRequired ||
+		flags[1] != checker.ElementFlagsRequired {
 		return 0, 0, false
 	}
 	key, keyKnown := l.representation(elements[0])
@@ -1043,11 +1147,20 @@ func (l *lowering) steppedSite(node *ast.Node) bool {
 	switch {
 	case parent == nil:
 		return false
-	case parent.Kind == ast.KindSpreadElement && parent.Parent != nil && parent.Parent.Kind == ast.KindArrayLiteralExpression:
+	case parent.Kind == ast.KindSpreadElement &&
+		parent.Parent != nil &&
+		parent.Parent.Kind == ast.KindArrayLiteralExpression:
 		return true
-	case parent.Kind == ast.KindCallExpression && l.arrayFromCall(parent) && len(parent.AsCallExpression().Arguments.Nodes) == 1 && parent.AsCallExpression().Arguments.Nodes[0] == site:
+	case parent.Kind == ast.KindCallExpression &&
+		l.arrayFromCall(parent) &&
+		len(parent.AsCallExpression().Arguments.Nodes) == 1 &&
+		parent.AsCallExpression().Arguments.Nodes[0] == site:
 		return true
-	case parent.Kind == ast.KindNewExpression && l.collectionConstructor(parent) && parent.AsNewExpression().Arguments != nil && len(parent.AsNewExpression().Arguments.Nodes) == 1 && parent.AsNewExpression().Arguments.Nodes[0] == site:
+	case parent.Kind == ast.KindNewExpression &&
+		l.collectionConstructor(parent) &&
+		parent.AsNewExpression().Arguments != nil &&
+		len(parent.AsNewExpression().Arguments.Nodes) == 1 &&
+		parent.AsNewExpression().Arguments.Nodes[0] == site:
 		return true
 	}
 	return false
@@ -1062,5 +1175,7 @@ func (l *lowering) collectionConstructor(created *ast.Node) bool {
 // arrayFromCall is a call of the library's Array.from.
 func (l *lowering) arrayFromCall(call *ast.Node) bool {
 	callee := ast.SkipParentheses(call.AsCallExpression().Expression)
-	return callee.Kind == ast.KindPropertyAccessExpression && callee.Name().Text() == "from" && l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Array")
+	return callee.Kind == ast.KindPropertyAccessExpression &&
+		callee.Name().Text() == "from" &&
+		l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Array")
 }

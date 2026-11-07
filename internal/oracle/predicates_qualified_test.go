@@ -40,11 +40,11 @@ func qualifiedPredicateAgreement(test *testing.T, shape string) {
 	test.Helper()
 	for _, suffix := range []string{"_truth", "_lie"} {
 		test.Run(shape+suffix, func(test *testing.T) {
-			path, err := filepath.Abs(
+			path, absolutePathError := filepath.Abs(
 				filepath.Join(repository, "internal/oracle/testdata/predicate_qualified", shape+suffix, "main.ts"),
 			)
-			if err != nil {
-				test.Fatal(err)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			node := onNode(test, path)
 			sourceOut := "called\nafter\n"
@@ -54,9 +54,9 @@ func qualifiedPredicateAgreement(test *testing.T, shape string) {
 			if d := disagreement(run{stdout: []byte(sourceOut)}, node); d != "" {
 				test.Fatal("source Node: " + d)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			js := onJavaScriptBackend(test, program)
 			native, _ := nativelyUncached(test, program)
@@ -133,17 +133,19 @@ func TestQualifiedPredicateFalseDirection(test *testing.T) {
 
 func TestQualifiedPredicateVoidOverloadDoesNotCheck(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/predicate_qualified/void/main.ts"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/predicate_qualified/void/main.ts"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	node := onNode(test, path)
 	if d := disagreement(run{stdout: []byte("called\nafter\n")}, node); d != "" {
 		test.Fatal(d)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	js := onJavaScriptBackend(test, program)
 	if d := disagreement(node, js); d != "" {

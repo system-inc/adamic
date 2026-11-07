@@ -25,7 +25,13 @@ func stableName(prefix, readable, identity string) string {
 }
 
 func sourceKey(source ir.SourceIdentity) string {
-	return strconv.Quote(source.Module) + "/" + fmt.Sprintf("%q", source.Declaration) + "/" + strconv.Quote(source.Specialization) + "/" + strconv.Quote(source.Role)
+	return strconv.Quote(source.Module) +
+		"/" +
+		fmt.Sprintf("%q", source.Declaration) +
+		"/" +
+		strconv.Quote(source.Specialization) +
+		"/" +
+		strconv.Quote(source.Role)
 }
 
 func (e *emitter) functionKey(index int, visiting map[int]bool) string {
@@ -87,7 +93,8 @@ func (e *emitter) semanticKey(value reflect.Value, visiting map[int]bool) string
 					continue
 				case "Class":
 					if index > 0 {
-						if value.Type() == reflect.TypeOf(ir.Property{}) || value.Type() == reflect.TypeOf(ir.SetProperty{}) {
+						if value.Type() == reflect.TypeOf(ir.Property{}) ||
+							value.Type() == reflect.TypeOf(ir.SetProperty{}) {
 							out.WriteString(e.functionKey(index-1, visiting))
 						} else {
 							out.WriteString(e.classKey(index, visiting))
@@ -212,8 +219,8 @@ func (e *emitter) accessorStorageName(function int) string {
 }
 func (e *emitter) printedFieldName(field ir.Field) string {
 	if field.Private && strings.HasPrefix(field.Name, "#accessor:") {
-		index, err := strconv.Atoi(strings.TrimPrefix(field.Name, "#accessor:"))
-		if err != nil || index < 0 || index >= len(e.program.Functions) {
+		index, parseError := strconv.Atoi(strings.TrimPrefix(field.Name, "#accessor:"))
+		if parseError != nil || index < 0 || index >= len(e.program.Functions) {
 			panic("native: invalid accessor storage identity")
 		}
 		return e.accessorStorageName(index)

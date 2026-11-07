@@ -17,23 +17,23 @@ import (
 
 func ownershipAgreement(test *testing.T, path string) {
 	test.Helper()
-	checked, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	checked, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	old, oldErr := LowerWithOptions(context.Background(), checked, Options{})
-	checked, err = load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	old, oldError := LowerWithOptions(context.Background(), checked, Options{})
+	checked, loadError = load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	_, newErr := LowerWithOptions(context.Background(), checked, Options{OwnershipQuery: true})
-	if (oldErr == nil) != (newErr == nil) {
-		test.Fatalf("move/query disagreement: old=%v query=%v", oldErr, newErr)
+	_, newError := LowerWithOptions(context.Background(), checked, Options{OwnershipQuery: true})
+	if (oldError == nil) != (newError == nil) {
+		test.Fatalf("move/query disagreement: old=%v query=%v", oldError, newError)
 	}
-	if oldErr != nil && oldErr.Error() != newErr.Error() {
-		test.Fatalf("refusal changed: %v vs %v", oldErr, newErr)
+	if oldError != nil && oldError.Error() != newError.Error() {
+		test.Fatalf("refusal changed: %v vs %v", oldError, newError)
 	}
-	if oldErr == nil {
+	if oldError == nil {
 		for _, answer := range fresh.OwnershipTransfers(old) {
 			if answer.Answer.Verdict != fresh.Proven {
 				test.Fatalf("admitted move not Proven: %+v", answer)
@@ -45,9 +45,9 @@ func ownershipAgreement(test *testing.T, path string) {
 func TestOwnershipQuerySiteDemand(test *testing.T) {
 	test.Parallel()
 	path := "../oracle/testdata/ownership-query/flat.a"
-	loaded, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	loaded, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	entry := loaded.Files()[0]
 	checker, release := loaded.Checker(context.Background(), entry)
@@ -85,13 +85,13 @@ func TestOwnershipQuerySiteDemand(test *testing.T) {
 
 func TestOwnershipQueryValidation(test *testing.T) {
 	test.Parallel()
-	loaded, err := load.Load([]string{"../oracle/testdata/ownership-query/flat.a"})
-	if err != nil {
-		test.Fatal(err)
+	loaded, loadError := load.Load([]string{"../oracle/testdata/ownership-query/flat.a"})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	p, err := LowerWithOptions(context.Background(), loaded, Options{OwnershipQuery: true})
-	if err != nil {
-		test.Fatal(err)
+	p, lowerWithOptionsError := LowerWithOptions(context.Background(), loaded, Options{OwnershipQuery: true})
+	if lowerWithOptionsError != nil {
+		test.Fatal(lowerWithOptionsError)
 	}
 	answers := fresh.QueryOwnershipTransfers(p)
 	if len(answers) != 1 || answers[0].Site < 1 || answers[0].At == nil || answers[0].Answer.Verdict != fresh.Proven {
@@ -117,15 +117,19 @@ func BenchmarkOwnershipQueryLowering(benchmark *testing.B) {
 		benchmark.Run(name, func(benchmark *testing.B) {
 			for i := 0; i < benchmark.N; i++ {
 				benchmark.StopTimer()
-				checked, err := load.Load([]string{path})
-				if err != nil {
-					benchmark.Fatal(err)
+				checked, loadError := load.Load([]string{path})
+				if loadError != nil {
+					benchmark.Fatal(loadError)
 				}
 				checked.EnableTSGo()
 				benchmark.StartTimer()
-				p, err := LowerWithOptions(context.Background(), checked, Options{OwnershipQuery: enabled})
-				if err != nil {
-					benchmark.Fatal(err)
+				p, lowerWithOptionsError := LowerWithOptions(
+					context.Background(),
+					checked,
+					Options{OwnershipQuery: enabled},
+				)
+				if lowerWithOptionsError != nil {
+					benchmark.Fatal(lowerWithOptionsError)
 				}
 				benchmark.StopTimer()
 				benchmark.Logf("functions=%d locals=%d", len(p.Functions), len(p.Locals))
@@ -456,9 +460,9 @@ func TestProduct_OwnershipObjectsAgreement(test *testing.T) {
 func TestOwnershipObjectsAgreementRecorded(test *testing.T) {
 	test.Parallel()
 	directory := ownershipObjectsAgreementProduct(test)
-	data, err := os.ReadFile(filepath.Join(directory, "agreement"))
-	if err != nil || string(data) != "admission and extracted query agree\n" {
-		test.Fatalf("agreement evidence: %v %q", err, data)
+	data, readError := os.ReadFile(filepath.Join(directory, "agreement"))
+	if readError != nil || string(data) != "admission and extracted query agree\n" {
+		test.Fatalf("agreement evidence: %v %q", readError, data)
 	}
 }
 
@@ -466,12 +470,12 @@ func TestOwnershipQueryDemandDoesNotCrossSites(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "sites.a")
 	source := "import { parallelMap } from 'adamic'; const objects = [{value: 1}]; const numbers = [1]; parallelMap(objects, item => item); parallelMap(numbers, item => item);"
-	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	loaded, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	loaded, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	entry := loaded.Files()[0]
 	checker, release := loaded.Checker(context.Background(), entry)

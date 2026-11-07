@@ -18,13 +18,14 @@ func TestAsyncPromiseConsumptionPaths(test *testing.T) {
 		`const pending = fail(); const read = async (): Promise<number> => await pending; console.log(typeof read);`,
 		`const pending = fail(); const other = fail(); await other; await pending;`,
 	} {
-		_, err := lowerSource(
+		_, lowerSourceError := lowerSource(
 			test,
 			`async function fail(): Promise<number> { await Promise.resolve(); throw new Error("lost"); }`+tail,
 		)
 		var gap *NotYet
-		if !errors.As(err, &gap) || !strings.Contains(gap.What, "a promise not awaited in the same function") {
-			test.Fatalf("unproved observer admitted: %s: %v", tail, err)
+		if !errors.As(lowerSourceError, &gap) ||
+			!strings.Contains(gap.What, "a promise not awaited in the same function") {
+			test.Fatalf("unproved observer admitted: %s: %v", tail, lowerSourceError)
 		}
 	}
 }

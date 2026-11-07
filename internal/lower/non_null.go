@@ -13,9 +13,9 @@ import (
 // in its result representation. Calls may invalidate the original narrowing.
 func (l *lowering) nonNull(node *ast.Node) (ir.Expression, error) {
 	operand := node.AsNonNullExpression().Expression
-	value, err := l.expression(operand)
-	if err != nil {
-		return nil, err
+	value, expressionError := l.expression(operand)
+	if expressionError != nil {
+		return nil, expressionError
 	}
 	return l.nonNullValue(node, value)
 }
@@ -23,7 +23,7 @@ func (l *lowering) nonNull(node *ast.Node) (ir.Expression, error) {
 // nonNullValue also checks an already-held assignment target read.
 func (l *lowering) nonNullValue(node *ast.Node, value ir.Expression) (ir.Expression, error) {
 	operand := node.AsNonNullExpression().Expression
-	var err error
+	var typeOfError error
 	for {
 		switch narrowed := value.(type) {
 		case ir.Unwrap:
@@ -43,7 +43,8 @@ stored:
 		target.Present = false
 		value, weakOperand = target, true
 	}
-	if property, ok := value.(ir.Property); ok && ast.SkipParentheses(operand).Kind == ast.KindPropertyAccessExpression {
+	if property, ok := value.(ir.Property); ok &&
+		ast.SkipParentheses(operand).Kind == ast.KindPropertyAccessExpression {
 		if symbol := l.checker.GetSymbolAtLocation(ast.SkipParentheses(operand).Name()); symbol != nil {
 			if declared, known := l.representation(l.checker.GetTypeOfSymbol(symbol)); known {
 				property.Of = declared
@@ -51,9 +52,9 @@ stored:
 			}
 		}
 	}
-	of, err := l.typeOf(node)
+	of, typeOfError := l.typeOf(node)
 	flags := l.checker.GetTypeAtLocation(operand).Flags()
-	if err != nil && (flags == checker.TypeFlagsUndefined || flags == checker.TypeFlagsNull) {
+	if typeOfError != nil && (flags == checker.TypeFlagsUndefined || flags == checker.TypeFlagsNull) {
 		of = ir.Object
 		if contextual := l.slotType(node); contextual != nil {
 			if representation, known := l.representation(contextual); known {
@@ -71,10 +72,10 @@ stored:
 		} else {
 			value = ir.Undefined{Of: of}
 		}
-		err = nil
+		typeOfError = nil
 	}
-	if err != nil {
-		return nil, err
+	if typeOfError != nil {
+		return nil, typeOfError
 	}
 	// A checked narrowing helper can already return a plain scalar. Its result
 	// has no nullish representation and must never receive a pointer test.
@@ -83,7 +84,11 @@ stored:
 		return value, nil
 	}
 	proven := l.checker.GetTypeAtLocation(operand)
-	if !weakOperand && !l.includesUndefined(proven) && !l.includesNull(proven) && !l.narrowedAway(ast.SkipParentheses(operand)) && !value.Type().IsMaybe() {
+	if !weakOperand &&
+		!l.includesUndefined(proven) &&
+		!l.includesNull(proven) &&
+		!l.narrowedAway(ast.SkipParentheses(operand)) &&
+		!value.Type().IsMaybe() {
 		if value.Type() == ir.Union && of != ir.Union {
 			l.recordNonNullCheck(node, true)
 			return ir.Narrow{Value: value, To: of}, nil
@@ -93,7 +98,9 @@ stored:
 	}
 	file := ast.GetSourceFileOfNode(node)
 	text := file.Text()[scanner.GetTokenPosOfNode(node, file, false):node.End()]
-	message := ir.StringConstant{Index: l.constant("non-null assertion failed at " + l.program.Where(node) + ": " + text + " is null or undefined")}
+	message := ir.StringConstant{Index: l.constant(
+		"non-null assertion failed at " + l.program.Where(node) + ": " + text + " is null or undefined",
+	)}
 	result := ir.Expression(ir.Coalesce{Value: value, Panic: message, Of: value.Type().Present()})
 	if result.Type() == ir.Union && of != ir.Union {
 		result = ir.Narrow{Value: result, To: of}
@@ -113,5 +120,8 @@ func (l *lowering) recordNonNullCheck(node *ast.Node, proven bool) {
 	} else {
 		counts.Checked++
 	}
-	counts.Sites = append(counts.Sites, ir.NonNullCheck{Where: l.program.Where(node), Expression: sourceExpression(node), Proven: proven})
+	counts.Sites = append(
+		counts.Sites,
+		ir.NonNullCheck{Where: l.program.Where(node), Expression: sourceExpression(node), Proven: proven},
+	)
 }

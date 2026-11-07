@@ -26,7 +26,7 @@ func executeShards(test *testing.T, environment []string, name string, arguments
 	}
 	// Tiny pinned upstream probes have JSON only and stay a single process.
 	path := arguments[position]
-	if _, err := os.Stat(strings.TrimSuffix(path, filepath.Ext(path)) + ".txt"); os.IsNotExist(err) {
+	if _, statError := os.Stat(strings.TrimSuffix(path, filepath.Ext(path)) + ".txt"); os.IsNotExist(statError) {
 		return oracles.Run{}, false
 	}
 	plan := oracles.PlanCorpus(test, path)
@@ -76,9 +76,9 @@ func executeShards(test *testing.T, environment []string, name string, arguments
 			)
 		}
 	}
-	stdout, err := oracles.MergeCorpus(plan, outputs)
-	if err != nil {
-		test.Fatalf("%s: %v", name, err)
+	stdout, mergeCorpusError := oracles.MergeCorpus(plan, outputs)
+	if mergeCorpusError != nil {
+		test.Fatalf("%s: %v", name, mergeCorpusError)
 	}
 	return oracles.Run{Stdout: stdout}, true
 }
@@ -142,11 +142,11 @@ func TestCorpusShardCoverage(test *testing.T) {
 		},
 	} {
 		test.Run(testCase.name, func(test *testing.T) {
-			if _, err := oracles.MergeCorpus(
+			if _, mergeCorpusError := oracles.MergeCorpus(
 				plan,
 				testCase.output,
-			); err == nil || !strings.Contains(err.Error(), testCase.want) {
-				test.Fatalf("error %v, want %s", err, testCase.want)
+			); mergeCorpusError == nil || !strings.Contains(mergeCorpusError.Error(), testCase.want) {
+				test.Fatalf("error %v, want %s", mergeCorpusError, testCase.want)
 			}
 		})
 	}
@@ -169,15 +169,15 @@ func TestCorpusShardTransport(test *testing.T) {
 		input.WriteString(">" + source + "\n")
 		expected.WriteString("ok\t" + source + "\n")
 	}
-	data, err := json.Marshal(cases)
-	if err != nil {
-		test.Fatal(err)
+	data, encodeError := json.Marshal(cases)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
-	if err := os.WriteFile(path, []byte(input.String()), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(input.String()), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if err := os.WriteFile(filepath.Join(directory, "cases.json"), data, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(directory, "cases.json"), data, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	script := filepath.Join(directory, "driver.mjs")
 	source := `import {readFileSync} from 'node:fs';
@@ -185,8 +185,8 @@ for(const row of readFileSync(process.argv[2],'utf8').trimEnd().split('\n')) {
  process.stdout.write('ok\t'+row.slice(1)+'\n');
 }
 `
-	if err := os.WriteFile(script, []byte(source), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(script, []byte(source), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	result := execute(test, nil, "node", script, path)
 	if result.ExitCode != 0 || len(result.Stderr) != 0 || string(result.Stdout) != expected.String() {

@@ -143,15 +143,15 @@ console.log(String(decoder.pos) + " " + String(plain.pos));
 func accessorReachNative(test *testing.T, program *ir.Program, want string) {
 	test.Helper()
 	binary := filepath.Join(test.TempDir(), "native")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	command := exec.Command(binary)
 	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1")
 	var out, errs bytes.Buffer
 	command.Stdout, command.Stderr = &out, &errs
-	if err := command.Run(); err != nil {
-		test.Fatalf("native: %v, stdout %q stderr %q", err, out.String(), errs.String())
+	if runError := command.Run(); runError != nil {
+		test.Fatalf("native: %v, stdout %q stderr %q", runError, out.String(), errs.String())
 	}
 	if out.String() != want || errs.Len() != 0 {
 		test.Fatalf("native: stdout %q stderr %q; want %q, as Node prints", out.String(), errs.String(), want)
@@ -217,10 +217,11 @@ ids.forEach((id) => console.log(String(id.pos)));
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerTypeScriptAssertionSource(test, probe.source)
+			_, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(test, probe.source)
 			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.what) {
-				test.Fatalf("want NotYet %q, got %v", probe.what, err)
+			if !errors.As(lowerTypeScriptAssertionSourceError, &notYet) ||
+				!strings.Contains(lowerTypeScriptAssertionSourceError.Error(), probe.what) {
+				test.Fatalf("want NotYet %q, got %v", probe.what, lowerTypeScriptAssertionSourceError)
 			}
 		})
 	}
@@ -254,12 +255,18 @@ console.log(show(Clock));
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerTypeScriptAssertionSource(test, probe.source)
+			_, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(test, probe.source)
 			var notYet *NotYet
-			if !errors.As(err, &notYet) ||
-				!strings.Contains(err.Error(), "a getter in a checked field contract") ||
+			if !errors.As(lowerTypeScriptAssertionSourceError, &notYet) ||
+				!strings.Contains(
+					lowerTypeScriptAssertionSourceError.Error(),
+					"a getter in a checked field contract",
+				) ||
 				!strings.HasSuffix(notYet.Where, "main.ts:3:32") {
-				test.Fatalf("want NotYet at the static getter, main.ts:3:32, got %v", err)
+				test.Fatalf(
+					"want NotYet at the static getter, main.ts:3:32, got %v",
+					lowerTypeScriptAssertionSourceError,
+				)
 			}
 		})
 	}
@@ -269,7 +276,9 @@ console.log(show(Clock));
 // is written, at its receiver, as a checked read's is at the read.
 func TestCheckedWriteThroughAccessorRewriteIsLocated(test *testing.T) {
 	test.Parallel()
-	_, err := lowerTypeScriptAssertionSource(test, `interface Node { readonly kind: number; pos: number; }
+	_, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(
+		test,
+		`interface Node { readonly kind: number; pos: number; }
 interface Identifier extends Node { readonly kind: 80; readonly text: string; }
 function idText(node: Node): string { if (node.kind === 80) { const id = node as Identifier; return id.text; } return "?"; }
 const ident = { kind: 80 as const, pos: 3, text: "x" };
@@ -279,13 +288,14 @@ const decoder = { get pos() { return at; }, set pos(value: number) { at = value;
 console.log(String(decoder.pos));
 const ids: Identifier[] = [ident];
 ids.forEach((id) => { id.pos = 4; });
-`)
+`,
+	)
 	var notYet *NotYet
-	if !errors.As(err, &notYet) || !strings.Contains(
-		err.Error(),
+	if !errors.As(lowerTypeScriptAssertionSourceError, &notYet) || !strings.Contains(
+		lowerTypeScriptAssertionSourceError.Error(),
 		"a checked view write of pos whose receiver may own an accessor of the same name",
 	) || !strings.HasSuffix(notYet.Where, "main.ts:10:23") {
-		test.Fatalf("want the checked write NotYet at main.ts:10:23, got %v", err)
+		test.Fatalf("want the checked write NotYet at main.ts:10:23, got %v", lowerTypeScriptAssertionSourceError)
 	}
 }
 
@@ -309,20 +319,20 @@ function idText(node: Node): string {
 console.log(idText(ident));
 `,
 	} {
-		if err := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
-	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{filepath.Join(directory, "main.ts")})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	_, err = Lower(context.Background(), program)
+	_, lowerError := Lower(context.Background(), program)
 	var notYet *NotYet
-	if !errors.As(err, &notYet) ||
-		!strings.Contains(err.Error(), "a getter in a checked field contract") ||
+	if !errors.As(lowerError, &notYet) ||
+		!strings.Contains(lowerError.Error(), "a getter in a checked field contract") ||
 		!strings.Contains(notYet.Where, "nodes.ts") {
-		test.Fatalf("want NotYet at nodes.ts's getter, got %v", err)
+		test.Fatalf("want NotYet at nodes.ts's getter, got %v", lowerError)
 	}
 }
 

@@ -47,22 +47,26 @@ func jsxManifest(test *testing.T) (string, int) {
 	for i, source := range cases {
 		for j, variant := range []string{source, "/* é 😀 */\r\n" + strings.ReplaceAll(source, "\n", "\r\n")} {
 			path := filepath.Join(directory, fmt.Sprintf("jsx-%d-%d.tsx", i, j))
-			if err := os.WriteFile(path, []byte(variant), 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, []byte(variant), 0644); writeError != nil {
+				test.Fatal(writeError)
 			}
 			rows = append(rows, path)
 		}
 	}
 	for _, extension := range []string{".jsx", ".js", ".mjs", ".cjs"} {
 		path := filepath.Join(directory, "javascript"+extension)
-		if err := os.WriteFile(path, []byte(`const x = <div data-x='raw\n'>{value}</div>;`), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(
+			path,
+			[]byte(`const x = <div data-x='raw\n'>{value}</div>;`),
+			0644,
+		); writeError != nil {
+			test.Fatal(writeError)
 		}
 		rows = append(rows, path)
 	}
 	path := filepath.Join(directory, "manifest")
-	if err := os.WriteFile(path, []byte(strings.Join(rows, "\n")+"\n"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(strings.Join(rows, "\n")+"\n"), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return path, len(rows)
 }

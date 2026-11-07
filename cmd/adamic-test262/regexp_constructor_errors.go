@@ -55,11 +55,11 @@ func regexpPureConstructor(t []token, start, end, depth int) (string, string, in
 			if !ok || inner != a[1]-1 {
 				return "", "", 0, false
 			}
-			program, err := regex.Compile(pattern, flags)
-			if err != nil {
+			program, compileError := regex.Compile(pattern, flags)
+			if compileError != nil {
 				return "", "", 0, false
 			}
-			if _, err = program.NativeDeclarations("pure"); err != nil {
+			if _, nativeDeclarationsError := program.NativeDeclarations("pure"); nativeDeclarationsError != nil {
 				return "", "", 0, false
 			}
 		}
@@ -136,14 +136,22 @@ func adaptRegExpConstructorErrors(source string) adapted {
 		return unchanged
 	}
 	var syntax *regex.SyntaxError
-	if _, err := regex.Compile(pattern, flags); !errors.As(err, &syntax) {
+	if _, compileError := regex.Compile(pattern, flags); !errors.As(compileError, &syntax) {
 		return unchanged
 	}
 	at := throwClose + 1
 	if at < len(t) && t[at].text == ";" {
 		at++
 	}
-	if at+7 >= len(t) || t[at].text != "}" || t[at+1].text != "catch" || t[at+2].text != "(" || t[at+3].kind != "ident" || t[at+4].text != ")" || t[at+5].text != "{" || t[at+6].text != "assert" || t[at+7].text != "." {
+	if at+7 >= len(t) ||
+		t[at].text != "}" ||
+		t[at+1].text != "catch" ||
+		t[at+2].text != "(" ||
+		t[at+3].kind != "ident" ||
+		t[at+4].text != ")" ||
+		t[at+5].text != "{" ||
+		t[at+6].text != "assert" ||
+		t[at+7].text != "." {
 		return unchanged
 	}
 	name := t[at+3].text
@@ -156,10 +164,16 @@ func adaptRegExpConstructorErrors(source string) adapted {
 		return unchanged
 	}
 	first := args[0]
-	if first[1]-first[0] != 3 || t[first[0]].text != name || t[first[0]+1].text != "instanceof" || t[first[0]+2].text != "SyntaxError" {
+	if first[1]-first[0] != 3 ||
+		t[first[0]].text != name ||
+		t[first[0]+1].text != "instanceof" ||
+		t[first[0]+2].text != "SyntaxError" {
 		return unchanged
 	}
-	if args[1][1]-args[1][0] != 1 || t[args[1][0]].text != "true" || args[2][1]-args[2][0] != 1 || t[args[2][0]].kind != "str" {
+	if args[1][1]-args[1][0] != 1 ||
+		t[args[1][0]].text != "true" ||
+		args[2][1]-args[2][0] != 1 ||
+		t[args[2][0]].kind != "str" {
 		return unchanged
 	}
 	end++
@@ -172,5 +186,11 @@ func adaptRegExpConstructorErrors(source string) adapted {
 	p, _ := json.Marshal(pattern)
 	f, _ := json.Marshal(flags)
 	counts["regex-unreachable-constructor-diagnostic"] = 1
-	return adapted{Source: "assert.throws(SyntaxError, function() { new RegExp(" + string(p) + ", " + string(f) + "); }, " + t[args[2][0]].text + ");", Counts: counts}
+	return adapted{Source: "assert.throws(SyntaxError, function() { new RegExp(" +
+		string(p) +
+		", " +
+		string(f) +
+		"); }, " +
+		t[args[2][0]].text +
+		");", Counts: counts}
 }

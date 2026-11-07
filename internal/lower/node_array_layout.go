@@ -36,26 +36,39 @@ func NodeArrayLayout(element ir.Type, extras []FieldContract) (ArrayLayout, erro
 	}{{"pos", ir.Number}, {"end", ir.Number}, {"hasTrailingComma", ir.Boolean}, {"transformFlags", ir.Number}}
 	byName := map[string]FieldContract{}
 	for _, field := range extras {
-		if _, err := strconv.ParseUint(field.Name, 10, 32); err == nil || strings.ContainsRune(field.Name, 0) || field.Name == "__proto__" || strings.HasPrefix(field.Name, "#") {
+		if _, parseError := strconv.ParseUint(field.Name, 10, 32); parseError == nil ||
+			strings.ContainsRune(field.Name, 0) ||
+			field.Name == "__proto__" ||
+			strings.HasPrefix(field.Name, "#") {
 			return ArrayLayout{}, fmt.Errorf("stage 0 can't lower NodeArray metadata key %s yet", field.Name)
 		}
 		if _, duplicate := byName[field.Name]; duplicate {
 			return ArrayLayout{}, fmt.Errorf("duplicate NodeArray metadata field %s", field.Name)
 		}
 		if field.Of != ir.Number && field.Of != ir.Boolean && field.Of != ir.String {
-			return ArrayLayout{}, fmt.Errorf("stage 0 can't lower NodeArray metadata field %s of type %s yet", field.Name, field.DeclaredType)
+			return ArrayLayout{}, fmt.Errorf(
+				"stage 0 can't lower NodeArray metadata field %s of type %s yet",
+				field.Name,
+				field.DeclaredType,
+			)
 		}
 		byName[field.Name] = field
 	}
 	layout := ArrayLayout{}
 	add := func(field FieldContract) {
 		slot := len(layout.Fields)
-		layout.Fields = append(layout.Fields, NodeArrayField{FieldContract: field, Slot: slot, PresenceBit: slot, InitializationBit: slot})
+		layout.Fields = append(
+			layout.Fields,
+			NodeArrayField{FieldContract: field, Slot: slot, PresenceBit: slot, InitializationBit: slot},
+		)
 	}
 	for _, want := range required {
 		field, exists := byName[want.name]
 		if !exists || field.Optional || field.Of != want.of {
-			return ArrayLayout{}, fmt.Errorf("NodeArray requires %s with its declared required representation", want.name)
+			return ArrayLayout{}, fmt.Errorf(
+				"NodeArray requires %s with its declared required representation",
+				want.name,
+			)
 		}
 		add(field)
 		delete(byName, want.name)

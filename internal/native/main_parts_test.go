@@ -113,8 +113,8 @@ type mainPartsRun struct {
 func runMainParts(test *testing.T, source string) mainPartsRun {
 	test.Helper()
 	binary := filepath.Join(test.TempDir(), "program")
-	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(source, binary, Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
@@ -125,10 +125,10 @@ func runMainParts(test *testing.T, source string) mainPartsRun {
 	}
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
-	err := command.Run()
+	runError := command.Run()
 	var exit *exec.ExitError
-	if err != nil && !errors.As(err, &exit) {
-		test.Fatal(err)
+	if runError != nil && !errors.As(runError, &exit) {
+		test.Fatal(runError)
 	}
 	return mainPartsRun{stdout.String(), stderr.String(), command.ProcessState.ExitCode()}
 }

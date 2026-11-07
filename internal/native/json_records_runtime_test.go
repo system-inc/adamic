@@ -12,9 +12,9 @@ import (
 
 func jsonRecordsRuntimeBinary(test *testing.T, mutant string) string {
 	test.Helper()
-	encoder, err := os.ReadFile("runtime/json_stringify.c")
-	if err != nil {
-		test.Fatal(err)
+	encoder, readError := os.ReadFile("runtime/json_stringify.c")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	source := string(encoder)
 	var old, replacement string
@@ -39,9 +39,9 @@ func jsonRecordsRuntimeBinary(test *testing.T, mutant string) string {
 	for _, name := range []string{"adamic_json_stringify_runtime", "adamic_json_stringify"} {
 		source = strings.ReplaceAll(source, name+"(", "probe_"+name+"(")
 	}
-	harness, err := os.ReadFile("testdata/json-record-runtime/harness.c")
-	if err != nil {
-		test.Fatal(err)
+	harness, readError := os.ReadFile("testdata/json-record-runtime/harness.c")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	probe := strings.ReplaceAll(
 		string(harness),
@@ -49,8 +49,8 @@ func jsonRecordsRuntimeBinary(test *testing.T, mutant string) string {
 		"probe_adamic_json_stringify_runtime(",
 	)
 	binary := filepath.Join(test.TempDir(), "records")
-	if err := Build(source+"\n"+probe, binary, Options{Sanitize: true, Count: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(source+"\n"+probe, binary, Options{Sanitize: true, Count: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	return binary
 }
@@ -58,15 +58,19 @@ func jsonRecordsRuntimeBinary(test *testing.T, mutant string) string {
 func jsonRecordsRuntimeCheck(test *testing.T, mutant string) {
 	test.Helper()
 	binary := jsonRecordsRuntimeBinary(test, mutant)
-	path, err := filepath.Abs("testdata/json-record-runtime/oracle.a")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("testdata/json-record-runtime/oracle.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	want, nodeError, err := recordNodeRun("--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", path)
-	if err != nil || nodeError != "" {
-		test.Fatalf("source Node: %v\n%s", err, nodeError)
+	want, nodeError, recordNodeRunError := recordNodeRun(
+		"--disable-warning=ExperimentalWarning",
+		"../../oracle/node.mjs",
+		path,
+	)
+	if recordNodeRunError != nil || nodeError != "" {
+		test.Fatalf("source Node: %v\n%s", recordNodeRunError, nodeError)
 	}
-	got, stderr, err := recordRun(binary)
+	got, stderr, recordRunError := recordRun(binary)
 	if mutant == "ownership" || mutant == "throw" {
 		counts := recordCounts.FindStringSubmatch(stderr)
 		if got != want ||
@@ -75,7 +79,7 @@ func jsonRecordsRuntimeCheck(test *testing.T, mutant string) {
 			(counts == nil || counts[1] == counts[2]) && !strings.Contains(stderr, "LeakSanitizer") {
 			test.Fatalf(
 				"ownership mutant must preserve Node output and fail counts or leaks: %v\n%s\n%s",
-				err,
+				recordRunError,
 				got,
 				stderr,
 			)
@@ -83,8 +87,8 @@ func jsonRecordsRuntimeCheck(test *testing.T, mutant string) {
 		test.Log("ownership mutant caught by allocation/free balance or LeakSanitizer")
 		return
 	}
-	if err != nil {
-		test.Fatalf("native: %v\n%s", err, stderr)
+	if recordRunError != nil {
+		test.Fatalf("native: %v\n%s", recordRunError, stderr)
 	}
 	recordCheckCounts(test, stderr)
 	if mutant == "prepare" {
@@ -128,12 +132,17 @@ func TestJSONRecordsRuntimeCycleGuard(test *testing.T) {
 			"ASAN_OPTIONS=detect_leaks=0:halt_on_error=1",
 			"UBSAN_OPTIONS=halt_on_error=1",
 		)
-		output, err := command.CombinedOutput()
+		output, combinedOutputError := command.CombinedOutput()
 		cancel()
 		if ctx.Err() == context.DeadlineExceeded ||
-			err == nil ||
+			combinedOutputError == nil ||
 			strings.Contains(string(output), "NotYet: JSON.stringify cyclic container") != (mutant == "") {
-			test.Fatalf("cycle mutant=%q: want cycle guard only for control: %v\n%s", mutant, err, output)
+			test.Fatalf(
+				"cycle mutant=%q: want cycle guard only for control: %v\n%s",
+				mutant,
+				combinedOutputError,
+				output,
+			)
 		}
 	}
 }

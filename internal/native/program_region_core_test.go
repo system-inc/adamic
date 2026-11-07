@@ -20,9 +20,9 @@ import (
 
 func programCoreCode(test *testing.T) string {
 	test.Helper()
-	data, err := os.ReadFile("testdata/program_region/core.c")
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile("testdata/program_region/core.c")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return string(data)
 }
@@ -33,9 +33,9 @@ func programCoreRun(environment []string, command string, arguments ...string) l
 	process.Env = append(os.Environ(), environment...)
 	var stdout, stderr bytes.Buffer
 	process.Stdout, process.Stderr = &stdout, &stderr
-	err := process.Run()
+	runError := process.Run()
 	exit := 0
-	if err != nil {
+	if runError != nil {
 		exit = -1
 		if process.ProcessState != nil {
 			exit = process.ProcessState.ExitCode()
@@ -45,11 +45,11 @@ func programCoreRun(environment []string, command string, arguments ...string) l
 }
 func programCoreLeaks(test *testing.T, code, binary, mode string, build func(string, string) error) string {
 	test.Helper()
-	report, err := leakcheck.Check(leakcheck.Program{C: code, Sanitized: binary,
+	report, checkError := leakcheck.Check(leakcheck.Program{C: code, Sanitized: binary,
 		Counted: filepath.Join(test.TempDir(), "counted"), BuildCounted: build,
 		Arguments: func() []string { return []string{mode} }, Execute: programCoreRun})
-	if err != nil {
-		test.Fatal(err)
+	if checkError != nil {
+		test.Fatal(checkError)
 	}
 	return report
 }
@@ -61,9 +61,9 @@ func TestProgramRegionCoreASanSlabs(test *testing.T) { test.Parallel(); programR
 func TestProgramRegionCoreCounted(test *testing.T)   { test.Parallel(); programRegionCoreUnit(test, 2) }
 func TestProgramRegionCoreUnion(test *testing.T) {
 	test.Parallel()
-	file, err := parser.ParseFile(token.NewFileSet(), "program_region_core_test.go", nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	file, parseFileError := parser.ParseFile(token.NewFileSet(), "program_region_core_test.go", nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	seen := map[int]bool{}
 	for _, declaration := range file.Decls {
@@ -93,8 +93,8 @@ func TestProgramRegionCoreUnion(test *testing.T) {
 		if !ok {
 			test.Fatal("option index must be literal")
 		}
-		index, err := strconv.Atoi(literal.Value)
-		if err != nil || index < 0 || index >= programRegionCoreOptionCount || seen[index] {
+		index, parseError := strconv.Atoi(literal.Value)
+		if parseError != nil || index < 0 || index >= programRegionCoreOptionCount || seen[index] {
 			test.Fatalf("duplicate or invalid option index %s", literal.Value)
 		}
 		seen[index] = true
@@ -141,18 +141,18 @@ func programRegionCoreUnit(test *testing.T, index int) {
 	// ASan malloc owns individual storage, so it is the independent Linux leak proof.
 	if index == 0 {
 		if report := programCoreLeaks(test, code, binary, "end", func(code, output string) error {
-			data, err := os.ReadFile(native.ProgramCoreBinary(test, 2, "control"))
-			if err != nil {
-				return err
+			data, readError := os.ReadFile(native.ProgramCoreBinary(test, 2, "control"))
+			if readError != nil {
+				return readError
 			}
 			return os.WriteFile(output, data, 0755)
 		}); report != "" {
 			test.Fatal(report)
 		}
 		if report := programCoreLeaks(test, code, binary, "exit", func(code, output string) error {
-			data, err := os.ReadFile(native.ProgramCoreBinary(test, 2, "control"))
-			if err != nil {
-				return err
+			data, readError := os.ReadFile(native.ProgramCoreBinary(test, 2, "control"))
+			if readError != nil {
+				return readError
 			}
 			return os.WriteFile(output, data, 0755)
 		}); report != "" {
@@ -191,12 +191,12 @@ func TestProgramRegionTarget(test *testing.T) {
 		{ProgramRegion: true, Target: "wasm32-wasi"},
 		{ProgramRegion: true, Request: true},
 	} {
-		if err := native.Build(
+		if buildError := native.Build(
 			"int main(void) {return 0;}",
 			filepath.Join(test.TempDir(), "refused"),
 			options,
-		); err == nil || err.Error() != refusal {
-			test.Fatalf("want %q, got %v", refusal, err)
+		); buildError == nil || buildError.Error() != refusal {
+			test.Fatalf("want %q, got %v", refusal, buildError)
 		}
 	}
 	if !strings.Contains(
@@ -209,8 +209,10 @@ func TestProgramRegionTarget(test *testing.T) {
 		test.Fatal("default enabled Program region")
 	}
 	test.Setenv("ADAMIC_PROGRAM_REGION", "1")
-	if err := native.ValidateOptions(native.Options{Target: "wasm32-wasi"}); err == nil || err.Error() != refusal {
-		test.Fatalf("environment switch bypassed refusal: %v", err)
+	if validateOptionsError := native.ValidateOptions(
+		native.Options{Target: "wasm32-wasi"},
+	); validateOptionsError == nil || validateOptionsError.Error() != refusal {
+		test.Fatalf("environment switch bypassed refusal: %v", validateOptionsError)
 	}
 }
 

@@ -15,22 +15,22 @@ var producer bool
 func StaticSingleAssignment(test testing.TB) (string, string) {
 	test.Helper()
 	directory := test.TempDir()
-	module, err := filepath.Abs(filepath.Join("../../..", "cohere", "static_single_assignment"))
-	if err != nil {
-		test.Fatal(err)
+	module, absolutePathError := filepath.Abs(filepath.Join("../../..", "cohere", "static_single_assignment"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	side, err := filepath.Abs(filepath.Join("testdata", "cohere_side_test.go"))
-	if err != nil {
-		test.Fatal(err)
+	side, absolutePathError := filepath.Abs(filepath.Join("testdata", "cohere_side_test.go"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	replace := map[string]string{filepath.Join(module, "adamic_port_side_test.go"): side}
-	overlay, err := json.Marshal(map[string]any{"Replace": replace})
-	if err != nil {
-		test.Fatal(err)
+	overlay, encodeError := json.Marshal(map[string]any{"Replace": replace})
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	overlayPath := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(overlayPath, overlay, 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(overlayPath, overlay, 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	// Built under GOWORK=off as before.
 	binary := stock(
@@ -49,7 +49,7 @@ func stock(test testing.TB, output, pkg string, arguments []string, environment 
 	if producer {
 		return buildcache.GoTest(test, "cohere/static_single_assignment", output, pkg, arguments, environment...)
 	}
-	inputs, err := buildcache.GoTestInputs(
+	inputs, goTestInputsError := buildcache.GoTestInputs(
 		"cohere/static_single_assignment",
 		output,
 		pkg,
@@ -57,8 +57,8 @@ func stock(test testing.TB, output, pkg string, arguments []string, environment 
 		nil,
 		environment...,
 	)
-	if err != nil {
-		test.Fatal(err)
+	if goTestInputsError != nil {
+		test.Fatal(goTestInputsError)
 	}
 	directory := buildcache.BuiltElsewhere(
 		test,

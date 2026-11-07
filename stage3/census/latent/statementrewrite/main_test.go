@@ -15,23 +15,28 @@ func TestMissingStatementFailsWithMethodName(test *testing.T) {
 	root := test.TempDir()
 	input := filepath.Join(root, "source.go")
 	output := filepath.Join(root, "output.go")
-	if err := os.WriteFile(input, []byte("package lower\nfunc (l *lowering) another() {}\n"), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(
+		input,
+		[]byte("package lower\nfunc (l *lowering) another() {}\n"),
+		0600,
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
-	log, err := os.Create(filepath.Join(root, "rewrite.log"))
-	if err != nil {
-		test.Fatal(err)
+	log, createError := os.Create(filepath.Join(root, "rewrite.log"))
+	if createError != nil {
+		test.Fatal(createError)
 	}
 	command := exec.Command(statementrewrite(test), input, output)
 	command.Stdout = log
 	command.Stderr = log
-	err = command.Run()
+	runError := command.Run()
 	log.Close()
 	text, _ := os.ReadFile(filepath.Join(root, "rewrite.log"))
-	if err == nil || !strings.Contains(string(text), "lowering.statement: expected exactly one function, found 0") {
-		test.Fatalf("missing statement mutant survived: %v %s", err, text)
+	if runError == nil ||
+		!strings.Contains(string(text), "lowering.statement: expected exactly one function, found 0") {
+		test.Fatalf("missing statement mutant survived: %v %s", runError, text)
 	}
-	if _, err := os.Stat(output); !os.IsNotExist(err) {
+	if _, statError := os.Stat(output); !os.IsNotExist(statError) {
 		test.Fatal("rewrite published partial output")
 	}
 }
@@ -42,26 +47,26 @@ func rewritten(test *testing.T, source string) (string, string, error) {
 	root := test.TempDir()
 	input := filepath.Join(root, "source.go")
 	output := filepath.Join(root, "output.go")
-	if err := os.WriteFile(input, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(input, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return rewrittenFile(test, input, output)
 }
 
 func rewrittenFile(test *testing.T, input, output string) (string, string, error) {
 	test.Helper()
-	log, err := os.Create(output + ".log")
-	if err != nil {
-		test.Fatal(err)
+	log, createError := os.Create(output + ".log")
+	if createError != nil {
+		test.Fatal(createError)
 	}
 	command := exec.Command(statementrewrite(test), input, output)
 	command.Stdout = log
 	command.Stderr = log
-	err = command.Run()
+	runError := command.Run()
 	log.Close()
 	text, _ := os.ReadFile(output + ".log")
 	result, _ := os.ReadFile(output)
-	return string(result), string(text), err
+	return string(result), string(text), runError
 }
 
 // The signature's types are the contract, not its names: the named results Diagnostics' debug source lines need
@@ -74,12 +79,12 @@ func TestStatementRewriteAcceptsNamedAndUnnamedResults(test *testing.T) {
 	} {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			output, log, err := rewritten(
+			output, log, rewrittenError := rewritten(
 				test,
 				"package lower\nfunc (l *lowering) statement"+signature+" { return nil, nil }\n",
 			)
-			if err != nil {
-				test.Fatalf("%s signature refused: %v %s", name, err, log)
+			if rewrittenError != nil {
+				test.Fatalf("%s signature refused: %v %s", name, rewrittenError, log)
 			}
 			if !strings.Contains(output, "func (l *lowering) latentStatementRaw"+signature) {
 				test.Fatalf("the raw method lost its signature:\n%s", output)
@@ -102,12 +107,12 @@ func TestStatementRewriteRefusesOtherSignatures(test *testing.T) {
 	} {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			output, log, err := rewritten(
+			output, log, rewrittenError := rewritten(
 				test,
 				"package lower\nfunc (l *lowering) statement"+signature+" { panic(0) }\n",
 			)
-			if err == nil || !strings.Contains(log, "lowering.statement: unsupported signature") {
-				test.Fatalf("%s survived: %v %s", name, err, log)
+			if rewrittenError == nil || !strings.Contains(log, "lowering.statement: unsupported signature") {
+				test.Fatalf("%s survived: %v %s", name, rewrittenError, log)
 			}
 			if output != "" {
 				test.Fatal("rewrite published partial output")
@@ -121,13 +126,13 @@ func TestStatementRewriteRefusesOtherSignatures(test *testing.T) {
 func TestStatementRewriteReadsMainStatements(test *testing.T) {
 	test.Parallel()
 	// Reads: internal/lower/statements.go
-	input, err := filepath.Abs("../../../../internal/lower/statements.go")
-	if err != nil {
-		test.Fatal(err)
+	input, absolutePathError := filepath.Abs("../../../../internal/lower/statements.go")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	output, log, err := rewrittenFile(test, input, filepath.Join(test.TempDir(), "statements.go"))
-	if err != nil || !strings.Contains(output, "func (l *lowering) latentStatementRaw(") {
-		test.Fatalf("main's lowering.statement doesn't rewrite: %v %s", err, log)
+	output, log, rewrittenFileError := rewrittenFile(test, input, filepath.Join(test.TempDir(), "statements.go"))
+	if rewrittenFileError != nil || !strings.Contains(output, "func (l *lowering) latentStatementRaw(") {
+		test.Fatalf("main's lowering.statement doesn't rewrite: %v %s", rewrittenFileError, log)
 	}
 }
 

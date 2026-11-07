@@ -36,18 +36,22 @@ var ownershipProvenPaths = []string{
 
 func ownershipProgram(test *testing.T, path string) (string, run) {
 	test.Helper()
-	absolute, err := filepath.Abs(filepath.Join(repository, path))
-	if err != nil {
-		test.Fatal(err)
+	absolute, absolutePathError := filepath.Abs(filepath.Join(repository, path))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := onNode(test, absolute)
-	checked, err := load.Load([]string{absolute})
-	if err != nil {
-		test.Fatal(err)
+	checked, loadError := load.Load([]string{absolute})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	p, err := lower.LowerWithOptions(context.Background(), checked, lower.Options{OwnershipQuery: true})
-	if err != nil {
-		test.Fatal(err)
+	p, lowerWithOptionsError := lower.LowerWithOptions(
+		context.Background(),
+		checked,
+		lower.Options{OwnershipQuery: true},
+	)
+	if lowerWithOptionsError != nil {
+		test.Fatal(lowerWithOptionsError)
 	}
 	answers := fresh.OwnershipTransfers(p)
 	if len(answers) == 0 {
@@ -59,8 +63,8 @@ func ownershipProgram(test *testing.T, path string) (string, run) {
 		}
 	}
 	script := filepath.Join(test.TempDir(), "main.mjs")
-	if err := os.WriteFile(script, []byte(javascript.JavaScript(p)), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(script, []byte(javascript.JavaScript(p)), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	if difference := disagreement(truth, onNode(test, script)); difference != "" {
 		test.Fatal("JavaScript: " + difference)
@@ -80,9 +84,9 @@ func ownershipProduct(test *testing.T, tsan bool) string {
 	for _, path := range ownershipProvenPaths {
 		inputs.Files = append(inputs.Files, path)
 	}
-	request, err := native.RuntimeRequestFor(options, "ADAMIC_CANONICAL_CLOSURES")
-	if err != nil {
-		test.Fatal(err)
+	request, runtimeRequestForError := native.RuntimeRequestFor(options, "ADAMIC_CANONICAL_CLOSURES")
+	if runtimeRequestForError != nil {
+		test.Fatal(runtimeRequestForError)
 	}
 	inputs.Flags = append(inputs.Flags, request.Portable...)
 	inputs.Toolchain = []string{
@@ -93,16 +97,20 @@ func ownershipProduct(test *testing.T, tsan bool) string {
 	return buildcache.Product(test, inputs, func(directory string) error {
 		for i, path := range ownershipProvenPaths {
 			code, truth := ownershipProgram(test, path)
-			if err := os.WriteFile(
+			if writeError := os.WriteFile(
 				filepath.Join(directory, fmt.Sprintf("truth%d", i)),
 				truth.stdout,
 				0600,
-			); err != nil {
-				return err
+			); writeError != nil {
+				return writeError
 			}
 
-			if err := native.Build(code, filepath.Join(directory, fmt.Sprintf("case%d", i)), options); err != nil {
-				return err
+			if buildError := native.Build(
+				code,
+				filepath.Join(directory, fmt.Sprintf("case%d", i)),
+				options,
+			); buildError != nil {
+				return buildError
 			}
 		}
 		return nil
@@ -123,9 +131,9 @@ func ownershipNative(test *testing.T, index int, tsan bool) {
 		test.Skip("Linux TSan")
 	}
 	directory := ownershipProduct(test, tsan)
-	output, err := os.ReadFile(filepath.Join(directory, fmt.Sprintf("truth%d", index)))
-	if err != nil {
-		test.Fatal(err)
+	output, readError := os.ReadFile(filepath.Join(directory, fmt.Sprintf("truth%d", index)))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	truth := run{stdout: output}
 	binary := filepath.Join(directory, fmt.Sprintf("case%d", index))
@@ -153,9 +161,11 @@ func TestOwnershipQueryObjectsTSan(test *testing.T) { test.Parallel(); ownership
 
 func ownershipRefused(test *testing.T, name, want string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/ownership-query", name+".a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/ownership-query", name+".a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := onNode(test, path)
 	if truth.exitCode != 0 || string(truth.stdout) != want {
@@ -163,19 +173,23 @@ func ownershipRefused(test *testing.T, name, want string) {
 	}
 	var previous string
 	for _, enabled := range []bool{false, true} {
-		checked, err := load.Load([]string{path})
-		if err != nil {
-			test.Fatal(err)
+		checked, loadError := load.Load([]string{path})
+		if loadError != nil {
+			test.Fatal(loadError)
 		}
-		_, err = lower.LowerWithOptions(context.Background(), checked, lower.Options{OwnershipQuery: enabled})
+		_, lowerWithOptionsError := lower.LowerWithOptions(
+			context.Background(),
+			checked,
+			lower.Options{OwnershipQuery: enabled},
+		)
 		var refused *lower.Refused
-		if !errors.As(err, &refused) {
-			test.Fatalf("expected named move refusal, got %v", err)
+		if !errors.As(lowerWithOptionsError, &refused) {
+			test.Fatalf("expected named move refusal, got %v", lowerWithOptionsError)
 		}
 		if !enabled {
-			previous = err.Error()
-		} else if previous != err.Error() {
-			test.Fatalf("refusal changed: %v", err)
+			previous = lowerWithOptionsError.Error()
+		} else if previous != lowerWithOptionsError.Error() {
+			test.Fatalf("refusal changed: %v", lowerWithOptionsError)
 		}
 	}
 	test.Logf("Node %q; unchanged refusal: %s", want, previous)

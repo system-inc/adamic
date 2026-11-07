@@ -46,20 +46,20 @@ func TestElementAccessCompilerAreaBoundaries(test *testing.T) {
 	for _, name := range elementAccessBoundaries {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(
+			path, absolutePathError := filepath.Abs(
 				filepath.Join(repository, "internal/oracle/testdata/notyet_element_access/"+name+".a"),
 			)
-			if err != nil {
-				test.Fatal(err)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			truth := onNode(test, path)
 			if truth.exitCode != 0 || string(truth.stdout) != "witness\n" || len(truth.stderr) != 0 {
 				test.Fatalf("Node: %#v", truth)
 			}
-			program, err := lowered(test, path)
+			program, loweredError := lowered(test, path)
 			if name == "nodearray" || name == "sorted" {
-				if err != nil {
-					test.Fatal(err)
+				if loweredError != nil {
+					test.Fatal(loweredError)
 				}
 				sanitized, binary := nativelyUncached(test, program)
 				for mode, result := range map[string]run{
@@ -77,8 +77,8 @@ func TestElementAccessCompilerAreaBoundaries(test *testing.T) {
 				return
 			}
 			if name == "string_dictionary" {
-				if err != nil {
-					test.Fatal(err)
+				if loweredError != nil {
+					test.Fatal(loweredError)
 				}
 				actual, binary := natively(test, program)
 				for _, got := range []run{actual, releasedUncached(test, program), onJavaScriptBackend(test, program)} {
@@ -99,10 +99,10 @@ func TestElementAccessCompilerAreaBoundaries(test *testing.T) {
 				"template":       "a value of type TemplateStringsArray",
 				"paths":          "a value of type Readonly<PathPathComponents>",
 			}[name]
-			if !errors.As(err, &stop) || stop.What != want {
-				test.Fatalf("expected explicit NotYet representation/read boundary %q, got %v", want, err)
+			if !errors.As(loweredError, &stop) || stop.What != want {
+				test.Fatalf("expected explicit NotYet representation/read boundary %q, got %v", want, loweredError)
 			}
-			test.Logf("%s", err)
+			test.Logf("%s", loweredError)
 		})
 	}
 }

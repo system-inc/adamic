@@ -18,21 +18,23 @@ import (
 // different lengths, must be byte for byte the same. Sanitized, so the debug info is in them.
 // Not parallel: points HOME, XDG_CACHE_HOME, ADAMIC_BUILD_CACHE_DIR and TMPDIR at this test through test.Setenv.
 func TestBuildIsTheSameFromAnyDirectory(test *testing.T) {
-	checked, err := load.Load([]string{filepath.Join("..", "oracle", "testdata", "arguments_length_value_count.a")})
-	if err != nil {
-		test.Fatal(err)
+	checked, loadError := load.Load(
+		[]string{filepath.Join("..", "oracle", "testdata", "arguments_length_value_count.a")},
+	)
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := lower.Lower(context.Background(), checked)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerError := lower.Lower(context.Background(), checked)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	source := C(program)
 	var binaries [][]byte
 	for _, name := range []string{"a", "a-much-longer-second-root"} {
 		root := filepath.Join(test.TempDir(), name)
 		for _, directory := range []string{"home", "cache", "tmp", "out"} {
-			if err := os.MkdirAll(filepath.Join(root, directory), 0o755); err != nil {
-				test.Fatal(err)
+			if createDirectoryError := os.MkdirAll(filepath.Join(root, directory), 0o755); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
 		}
 		test.Setenv("HOME", filepath.Join(root, "home"))
@@ -41,12 +43,12 @@ func TestBuildIsTheSameFromAnyDirectory(test *testing.T) {
 		test.Setenv("ADAMIC_BUILD_OUTPUT_DIR", "") // its writes too: an inherited output directory would take them
 		test.Setenv("TMPDIR", filepath.Join(root, "tmp"))
 		binary := filepath.Join(root, "out", "program")
-		if err := Build(source, binary, Options{Sanitize: true}); err != nil {
-			test.Fatal(err)
+		if buildError := Build(source, binary, Options{Sanitize: true}); buildError != nil {
+			test.Fatal(buildError)
 		}
-		content, err := os.ReadFile(binary)
-		if err != nil {
-			test.Fatal(err)
+		content, readError := os.ReadFile(binary)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		binaries = append(binaries, content)
 	}

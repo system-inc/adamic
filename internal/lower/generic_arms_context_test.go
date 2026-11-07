@@ -14,13 +14,13 @@ import (
 // outer nullable context. No syntax-based propagation is used in this check.
 func TestGenericFunctionValueOperandContexts(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("../oracle/testdata/generic_function_value_arms.a")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("../oracle/testdata/generic_function_value_arms.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	typeChecker, release := program.Checker(context.Background(), program.Files()[0])
 	defer release()

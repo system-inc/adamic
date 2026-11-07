@@ -75,9 +75,9 @@ func Compile(pattern, flags string) (*Program, error) {
 
 // CompileWithProperties supplies the Unicode data seam used by UCD tables.
 func CompileWithProperties(pattern, flags string, properties PropertyProvider) (*Program, error) {
-	tree, err := parsePattern(pattern, flags, true)
-	if err != nil {
-		return nil, err
+	tree, parsePatternError := parsePattern(pattern, flags, true)
+	if parsePatternError != nil {
+		return nil, parsePatternError
 	}
 	return compilePattern(tree, properties)
 }
@@ -89,9 +89,9 @@ func CompileUTF16(pattern []uint16, flags string) (*Program, error) {
 
 // CompileUTF16WithProperties combines exact pattern strings and the UCD seam.
 func CompileUTF16WithProperties(pattern []uint16, flags string, properties PropertyProvider) (*Program, error) {
-	tree, err := parsePattern(patternFromUTF16(pattern), flags, true)
-	if err != nil {
-		return nil, err
+	tree, parsePatternError := parsePattern(patternFromUTF16(pattern), flags, true)
+	if parsePatternError != nil {
+		return nil, parsePatternError
 	}
 	return compilePattern(tree, properties)
 }
@@ -122,8 +122,8 @@ func compilePattern(tree *Pattern, properties PropertyProvider) (*Program, error
 	}
 	number(tree.Body)
 	c := compiler{p: p, groups: groups, properties: properties}
-	if err := c.disjunction(tree.Body, tree.Flags, 1); err != nil {
-		return nil, err
+	if disjunctionError := c.disjunction(tree.Body, tree.Flags, 1); disjunctionError != nil {
+		return nil, disjunctionError
 	}
 	p.code = append(p.code, instruction{op: opAccept})
 	p.firstASCII, p.filterFirst = p.nativeFirstASCII()
@@ -178,8 +178,8 @@ func (c *compiler) disjunction(d *Disjunction, f Flags, dir int) error {
 			slices.Reverse(terms)
 		}
 		for _, n := range terms {
-			if err := c.node(n, f, dir); err != nil {
-				return err
+			if nodeError := c.node(n, f, dir); nodeError != nil {
+				return nodeError
 			}
 		}
 		if split >= 0 {
@@ -198,17 +198,17 @@ func (c *compiler) node(n Node, f Flags, dir int) error {
 	case *Disjunction:
 		return c.disjunction(n, f, dir)
 	case *Character:
-		set, err := compileCharacter(n, f, c.properties)
-		if err != nil {
-			return err
+		set, compileCharacterError := compileCharacter(n, f, c.properties)
+		if compileCharacterError != nil {
+			return compileCharacterError
 		}
 		base.op = opSet
 		base.set = set
 		c.emit(base)
 	case *CharacterClass:
-		set, err := compileClass(n.Expr, f, c.properties)
-		if err != nil {
-			return err
+		set, compileClassError := compileClass(n.Expr, f, c.properties)
+		if compileClassError != nil {
+			return compileClassError
 		}
 		if n.Negated {
 			set = negateSet(set, f)
@@ -246,8 +246,8 @@ func (c *compiler) node(n Node, f Flags, dir int) error {
 			}
 			sub := &Program{flags: f, captures: c.p.captures, names: c.p.names}
 			child := compiler{p: sub, groups: c.groups, properties: c.properties}
-			if err := child.disjunction(n.Body, f, direction); err != nil {
-				return err
+			if disjunctionError := child.disjunction(n.Body, f, direction); disjunctionError != nil {
+				return disjunctionError
 			}
 			child.emit(instruction{op: opAccept})
 			base.op = opLook
@@ -259,8 +259,8 @@ func (c *compiler) node(n Node, f Flags, dir int) error {
 			if id != 0 {
 				c.emit(instruction{op: opSave, x: 2*id + boolInt(dir < 0)})
 			}
-			if err := c.disjunction(n.Body, f, dir); err != nil {
-				return err
+			if disjunctionError := c.disjunction(n.Body, f, dir); disjunctionError != nil {
+				return disjunctionError
 			}
 			if id != 0 {
 				c.emit(instruction{op: opSave, x: 2*id + boolInt(dir > 0)})
@@ -290,8 +290,8 @@ func (c *compiler) node(n Node, f Flags, dir int) error {
 			}
 		}
 		collect(n.Atom)
-		if err := c.node(n.Atom, f, dir); err != nil {
-			return err
+		if nodeError := c.node(n.Atom, f, dir); nodeError != nil {
+			return nodeError
 		}
 		c.emit(instruction{op: opRepeatEnd, x: id, y: choice, min: n.Min})
 		c.p.code[choice].y = len(c.p.code)
@@ -384,9 +384,9 @@ func (r *RegExp) Exec(input []uint16) (*Match, error) {
 			caps[i] = -1
 		}
 		caps[0] = position
-		state, ok, err := p.run(input, position, caps, &budget)
-		if err != nil {
-			return nil, err
+		state, ok, runError := p.run(input, position, caps, &budget)
+		if runError != nil {
+			return nil, runError
 		}
 		if ok {
 			state.caps[1] = state.pos
@@ -455,8 +455,8 @@ func (p *Program) run(input []uint16, pos int, caps []int, budget *executionBudg
 	var stack []machineState
 	one := big.NewInt(1)
 	for {
-		if err := budget.step(); err != nil {
-			return s, false, err
+		if stepError := budget.step(); stepError != nil {
+			return s, false, stepError
 		}
 		i := p.code[s.pc]
 		failed := false
@@ -511,9 +511,9 @@ func (p *Program) run(input []uint16, pos int, caps []int, budget *executionBudg
 				failed = boundary == (i.assertion == NotWordBoundary)
 			}
 		case opLook:
-			sub, ok, err := i.look.run(input, s.pos, s.caps, budget)
-			if err != nil {
-				return s, false, err
+			sub, ok, runError := i.look.run(input, s.pos, s.caps, budget)
+			if runError != nil {
+				return s, false, runError
 			}
 			failed = ok == i.negative
 			if ok && !i.negative {

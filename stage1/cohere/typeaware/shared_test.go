@@ -28,15 +28,15 @@ type product struct {
 
 // Not parallel: package-wide build product directory.
 func TestMain(m *testing.M) {
-	directory, err := os.MkdirTemp("", "typeaware-products-")
-	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
+	directory, temporaryDirectoryError := os.MkdirTemp("", "typeaware-products-")
+	if temporaryDirectoryError != nil {
+		fmt.Fprintln(os.Stderr, temporaryDirectoryError)
 		os.Exit(1)
 	}
 	productDirectory = directory
 	code := m.Run()
-	if err := os.RemoveAll(directory); err != nil {
-		fmt.Fprintln(os.Stderr, err)
+	if removeError := os.RemoveAll(directory); removeError != nil {
+		fmt.Fprintln(os.Stderr, removeError)
 		code = 1
 	}
 	os.Exit(code)
@@ -46,9 +46,9 @@ func sharedProduct(key string, build func(string) (string, error)) (string, erro
 	stored, _ := products.LoadOrStore(key, &product{})
 	value := stored.(*product)
 	value.once.Do(func() {
-		directory, err := os.MkdirTemp(productDirectory, "product-")
-		if err != nil {
-			value.err = err
+		directory, temporaryDirectoryError := os.MkdirTemp(productDirectory, "product-")
+		if temporaryDirectoryError != nil {
+			value.err = temporaryDirectoryError
 			return
 		}
 		value.value, value.err = build(directory)
@@ -60,31 +60,31 @@ func sharedProduct(key string, build func(string) (string, error)) (string, erro
 // their diagnostics to every waiter instead of leaving an empty cached path.
 func buildProduct(test *testing.T, name string, command *exec.Cmd, directory string) error {
 	test.Helper()
-	stdout, err := os.Create(filepath.Join(directory, "build.stdout"))
-	if err != nil {
-		return err
+	stdout, createError := os.Create(filepath.Join(directory, "build.stdout"))
+	if createError != nil {
+		return createError
 	}
 	defer stdout.Close()
-	stderr, err := os.Create(filepath.Join(directory, "build.stderr"))
-	if err != nil {
-		return err
+	stderr, createError := os.Create(filepath.Join(directory, "build.stderr"))
+	if createError != nil {
+		return createError
 	}
 	defer stderr.Close()
 	command.Stdout, command.Stderr = stdout, stderr
 	started := time.Now()
-	err = typeAwareRunBuildCommand(command)
+	typeAwareRunBuildCommandError := typeAwareRunBuildCommand(command)
 	test.Logf("phase command %s %.6fs", name, time.Since(started).Seconds())
-	if err != nil {
+	if typeAwareRunBuildCommandError != nil {
 		out, _ := os.ReadFile(stdout.Name())
 		report, _ := os.ReadFile(stderr.Name())
-		return fmt.Errorf("%s: %w\n%s\n%s", name, err, out, report)
+		return fmt.Errorf("%s: %w\n%s\n%s", name, typeAwareRunBuildCommandError, out, report)
 	}
 	return nil
 }
 
 func (h *harness) stage0() string {
 	h.t.Helper()
-	path, err := cachedTypeAwareProduct("stage0", func(directory string) (string, error) {
+	path, cachedTypeAwareProductError := cachedTypeAwareProduct("stage0", func(directory string) (string, error) {
 		binary := filepath.Join(directory, "adamic")
 		command := toolchain.CommandIn(
 			h.repository,
@@ -93,8 +93,8 @@ func (h *harness) stage0() string {
 		)
 		return binary, buildProduct(h.t, "stage0", command, directory)
 	})
-	if err != nil {
-		h.t.Fatal(err)
+	if cachedTypeAwareProductError != nil {
+		h.t.Fatal(cachedTypeAwareProductError)
 	}
 	return path
 }
@@ -104,8 +104,8 @@ func (h *harness) stage0() string {
 func (h *harness) child(test *testing.T) *harness {
 	test.Helper()
 	directory := filepath.Join(h.directory, filepath.Base(test.Name()))
-	if err := os.MkdirAll(directory, 0755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	return &harness{t: test, repository: h.repository, directory: directory, parallel: true}
 }
@@ -123,20 +123,20 @@ func TestSharedProductPublication(test *testing.T) {
 		wait.Add(1)
 		go func() {
 			defer wait.Done()
-			answer, err := sharedProduct(key+" good", func(directory string) (string, error) {
+			answer, sharedProductError := sharedProduct(key+" good", func(directory string) (string, error) {
 				lock.Lock()
 				builds++
 				lock.Unlock()
 				path := filepath.Join(directory, "ready")
 				return path, os.WriteFile(path, []byte("complete"), 0644)
 			})
-			if err != nil {
-				test.Error(err)
+			if sharedProductError != nil {
+				test.Error(sharedProductError)
 				return
 			}
-			data, err := os.ReadFile(answer)
-			if err != nil || string(data) != "complete" {
-				test.Errorf("incomplete product: %q, %v", data, err)
+			data, readError := os.ReadFile(answer)
+			if readError != nil || string(data) != "complete" {
+				test.Errorf("incomplete product: %q, %v", data, readError)
 			}
 			answers <- answer
 		}()
@@ -155,14 +155,20 @@ func TestSharedProductPublication(test *testing.T) {
 			test.Fatal("waiters received different products")
 		}
 	}
-	other, err := sharedProduct(key+" other", func(directory string) (string, error) { return directory, nil })
-	if err != nil || other == first {
-		test.Fatalf("different keys shared a product: %s, %v", other, err)
+	other, sharedProductError := sharedProduct(
+		key+" other",
+		func(directory string) (string, error) { return directory, nil },
+	)
+	if sharedProductError != nil || other == first {
+		test.Fatalf("different keys shared a product: %s, %v", other, sharedProductError)
 	}
 	for range 2 {
-		_, err := sharedProduct(key+" failed", func(_ string) (string, error) { return "", fmt.Errorf("broken build") })
-		if err == nil || err.Error() != "broken build" {
-			test.Fatalf("lost build failure: %v", err)
+		_, sharedProductError := sharedProduct(
+			key+" failed",
+			func(_ string) (string, error) { return "", fmt.Errorf("broken build") },
+		)
+		if sharedProductError == nil || sharedProductError.Error() != "broken build" {
+			test.Fatalf("lost build failure: %v", sharedProductError)
 		}
 	}
 }

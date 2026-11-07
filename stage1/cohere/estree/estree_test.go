@@ -21,29 +21,29 @@ func execute(test *testing.T, dir, name string, args ...string) []byte {
 	test.Helper()
 	command := exec.Command(name, args...)
 	command.Dir = dir
-	output, err := os.CreateTemp(test.TempDir(), "output")
-	if err != nil {
-		test.Fatal(err)
+	output, temporaryFileError := os.CreateTemp(test.TempDir(), "output")
+	if temporaryFileError != nil {
+		test.Fatal(temporaryFileError)
 	}
 	defer output.Close()
 	command.Stdout = output
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
-	if err := command.Run(); err != nil || stderr.Len() != 0 {
-		test.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
+	if runError := command.Run(); runError != nil || stderr.Len() != 0 {
+		test.Fatalf("%s %v: %v\n%s", name, args, runError, &stderr)
 	}
-	data, err := os.ReadFile(output.Name())
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(output.Name())
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return data
 }
 func root(test *testing.T) string {
 	test.Helper()
 	// Reads: internal/native/runtime/*.[ch]
-	path, err := filepath.Abs("../../..")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("../../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return path
 }
@@ -57,22 +57,22 @@ func build(test *testing.T, path string, sanitize bool) (string, string) {
 	if sanitize {
 		return miscBuild(test, path)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		test.Fatal(err)
+	lowered, lowerError := lower.Lower(context.Background(), program)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	dir := test.TempDir()
 	binary := filepath.Join(dir, "port")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: sanitize}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(lowered), binary, native.Options{Sanitize: sanitize}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	script := filepath.Join(dir, "port.mjs")
-	if err := os.WriteFile(script, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(script, []byte(javascript.JavaScript(lowered)), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return binary, script
 }
@@ -170,14 +170,14 @@ func manifest(test *testing.T, cases []string) string {
 	var listing strings.Builder
 	for index, text := range cases {
 		path := filepath.Join(dir, fmt.Sprintf("%04d.ts", index))
-		if err := os.WriteFile(path, []byte(text), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(text), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		listing.WriteString(path + "\n")
 	}
 	path := filepath.Join(dir, "manifest")
-	if err := os.WriteFile(path, []byte(listing.String()), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(listing.String()), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return path
 }
@@ -196,9 +196,9 @@ func firstDifference(want, got []byte) string {
 
 // Not parallel: miscBuild writes the shared adamic-build and adamic/runtime cache directories
 func TestGeneratedAgreement(test *testing.T) {
-	path, err := filepath.Abs("main.ts")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("main.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	cases := generated()
 	list := manifest(test, cases)
@@ -223,14 +223,14 @@ func TestGeneratedAgreement(test *testing.T) {
 func mutantPort(test *testing.T, file, from, to string) string {
 	test.Helper()
 	directory := test.TempDir()
-	files, err := filepath.Glob("*.ts")
-	if err != nil {
-		test.Fatal(err)
+	files, globError := filepath.Glob("*.ts")
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	for _, name := range files {
-		data, err := os.ReadFile(name)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(name)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		text := string(data)
 		if name == file {
@@ -244,8 +244,8 @@ func mutantPort(test *testing.T, file, from, to string) string {
 			"'../../typescript/",
 			"'"+filepath.ToSlash(filepath.Join(root(test), "stage1/typescript"))+"/",
 		)
-		if err := os.WriteFile(filepath.Join(directory, name), []byte(text), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, name), []byte(text), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	return filepath.Join(directory, "main.ts")
@@ -255,9 +255,9 @@ func mutantPort(test *testing.T, file, from, to string) string {
 // node and the loader read; the product itself names it <repository> (#tqrqx60).
 func resolvedPort(test *testing.T, product, name string) string {
 	test.Helper()
-	directory, err := buildcache.Resolved(product)
-	if err != nil {
-		test.Fatal(err)
+	directory, resolvedError := buildcache.Resolved(product)
+	if resolvedError != nil {
+		test.Fatal(resolvedError)
 	}
 	return filepath.Join(directory, name)
 }
@@ -284,9 +284,9 @@ func checkOriginalManifest(test *testing.T, list string, cases []string, postpro
 			flag = "--json"
 		}
 		want := strings.Split(strings.TrimSpace(string(execute(test, "", oracle, flag, list))), "\n")
-		script, err := filepath.Abs("testdata/library.mjs")
-		if err != nil {
-			test.Fatal(err)
+		script, absolutePathError := filepath.Abs("testdata/library.mjs")
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		got := strings.Split(strings.TrimSpace(string(execute(test, "", "node", script, library, mode, list))), "\n")
 		if len(got) != len(want) {
@@ -295,11 +295,11 @@ func checkOriginalManifest(test *testing.T, list string, cases []string, postpro
 		differences := 0
 		for index := range want {
 			var left, right any
-			if err := json.Unmarshal([]byte(want[index]), &left); err != nil {
-				test.Fatal(err)
+			if decodeError := json.Unmarshal([]byte(want[index]), &left); decodeError != nil {
+				test.Fatal(decodeError)
 			}
-			if err := json.Unmarshal([]byte(got[index]), &right); err != nil {
-				test.Fatal(err)
+			if decodeError := json.Unmarshal([]byte(got[index]), &right); decodeError != nil {
+				test.Fatal(decodeError)
 			}
 			leftBytes, _ := json.Marshal(left)
 			rightBytes, _ := json.Marshal(right)
@@ -351,9 +351,9 @@ func checkOriginalManifest(test *testing.T, list string, cases []string, postpro
 
 func mustJSON(test *testing.T, value any) []byte {
 	test.Helper()
-	data, err := json.Marshal(value)
-	if err != nil {
-		test.Fatal(err)
+	data, encodeError := json.Marshal(value)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	return data
 }

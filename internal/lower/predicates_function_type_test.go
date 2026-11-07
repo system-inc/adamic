@@ -27,9 +27,9 @@ func TestFunctionTypeClaimIsCheckedAtTheCall(test *testing.T) {
 	for _, name := range []string{"param_honest", "iface_honest", "trycast"} {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			source, err := os.ReadFile("testdata/predicates_function_type/" + name + ".ts")
-			if err != nil {
-				test.Fatal(err)
+			source, readError := os.ReadFile("testdata/predicates_function_type/" + name + ".ts")
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			lowersAndAgreesWithNodeAs(test, string(source), ".ts")
 		})
@@ -41,26 +41,30 @@ func TestFunctionTypeClaimIsCheckedAtTheCall(test *testing.T) {
 	} {
 		test.Run(lie.name, func(test *testing.T) {
 			test.Parallel()
-			source, err := os.ReadFile("testdata/predicates_function_type/" + lie.name + ".ts")
-			if err != nil {
-				test.Fatal(err)
+			source, readError := os.ReadFile("testdata/predicates_function_type/" + lie.name + ".ts")
+			if readError != nil {
+				test.Fatal(readError)
 			}
-			program, err := lowerTypeScriptAssertionSource(test, string(source))
-			if err != nil {
-				test.Fatal(err)
+			program, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(test, string(source))
+			if lowerTypeScriptAssertionSourceError != nil {
+				test.Fatal(lowerTypeScriptAssertionSourceError)
 			}
 			directory := test.TempDir()
 			binary := filepath.Join(directory, "native")
-			if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(
+				native.C(program),
+				binary,
+				native.Options{Sanitize: true},
+			); buildError != nil {
+				test.Fatal(buildError)
 			}
-			runner, err := filepath.Abs("../../oracle/node.mjs")
-			if err != nil {
-				test.Fatal(err)
+			runner, absolutePathError := filepath.Abs("../../oracle/node.mjs")
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			generated := filepath.Join(directory, "generated.mjs")
-			if err := os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0o644); writeError != nil {
+				test.Fatal(writeError)
 			}
 			prefix := "adamic: panic: predicate " + lie.callee + " at "
 			suffix := lie.where + " asserts branch: source Node, target Identifier\n"
@@ -72,10 +76,10 @@ func TestFunctionTypeClaimIsCheckedAtTheCall(test *testing.T) {
 				var out, errs bytes.Buffer
 				command.Stdout, command.Stderr = &out, &errs
 				code := 0
-				if err := command.Run(); err != nil {
+				if runError := command.Run(); runError != nil {
 					var exit *exec.ExitError
-					if !errors.As(err, &exit) {
-						test.Fatal(err)
+					if !errors.As(runError, &exit) {
+						test.Fatal(runError)
 					}
 					code = exit.ExitCode()
 				}
@@ -111,9 +115,9 @@ func TestFunctionTypeClaimIsCheckedAtTheCall(test *testing.T) {
 func TestFunctionTypeClaimKeepsWhatTheCallCantCheck(test *testing.T) {
 	test.Parallel()
 	read := func(name string) string {
-		source, err := os.ReadFile("testdata/predicates_function_type/" + name + ".ts")
-		if err != nil {
-			test.Fatal(err)
+		source, readError := os.ReadFile("testdata/predicates_function_type/" + name + ".ts")
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		return string(source)
 	}
@@ -129,10 +133,15 @@ func TestFunctionTypeClaimKeepsWhatTheCallCantCheck(test *testing.T) {
 			`an unproven predicate argument for parameter assert (argument "(node: Node): void => {}")`,
 		},
 	} {
-		_, err := lowerTypeScriptAssertionSource(test, read(refusal.name))
+		_, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(test, read(refusal.name))
 		var refused *Refused
-		if !errors.As(err, &refused) || refused.What != refusal.what {
-			test.Errorf("%s: want refused as %q in .ts, got %v", refusal.name, refusal.what, err)
+		if !errors.As(lowerTypeScriptAssertionSourceError, &refused) || refused.What != refusal.what {
+			test.Errorf(
+				"%s: want refused as %q in .ts, got %v",
+				refusal.name,
+				refusal.what,
+				lowerTypeScriptAssertionSourceError,
+			)
 		}
 	}
 	// A method's check reads the method off the receiver after the arguments, and JavaScript reads it
@@ -148,17 +157,23 @@ func TestFunctionTypeClaimKeepsWhatTheCallCantCheck(test *testing.T) {
 		{"getter_order", "a checked method claim whose arguments can run code before the method is read"},
 		{"union", "a call narrowing through a union or intersection of callables"},
 	} {
-		_, err := lowerTypeScriptAssertionSource(test, read(pending.name))
+		_, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(test, read(pending.name))
 		var notYet *NotYet
-		if !errors.As(err, &notYet) || !strings.Contains(err.Error(), pending.what) {
-			test.Errorf("%s: want NotYet with %q, got %v", pending.name, pending.what, err)
+		if !errors.As(lowerTypeScriptAssertionSourceError, &notYet) ||
+			!strings.Contains(lowerTypeScriptAssertionSourceError.Error(), pending.what) {
+			test.Errorf(
+				"%s: want NotYet with %q, got %v",
+				pending.name,
+				pending.what,
+				lowerTypeScriptAssertionSourceError,
+			)
 		}
 	}
-	_, err := lowerSource(test, read("iface_honest"))
+	_, lowerSourceError := lowerSource(test, read("iface_honest"))
 	var refused *Refused
-	if !errors.As(err, &refused) ||
+	if !errors.As(lowerSourceError, &refused) ||
 		refused.What != "a type predicate whose return is not proven (there is no body proving this parameter)" {
-		test.Errorf("iface_honest in .a: want the claim refused, got %v", err)
+		test.Errorf("iface_honest in .a: want the claim refused, got %v", lowerSourceError)
 	}
 }
 
@@ -215,13 +230,13 @@ console.log(String(getParseTreeNode(undefined, isModuleDeclaration) === undefine
 // is refused as an unproven argument and the honest and lying .ts rows stop matching their twins.
 func TestOptionalPredicateParameterMatchesItsRequiredTwin(test *testing.T) {
 	test.Parallel()
-	outcome := func(err error) string {
+	outcome := func(sourceError error) string {
 		var refused *Refused
-		if errors.As(err, &refused) {
+		if errors.As(sourceError, &refused) {
 			return "refused: " + refused.What
 		}
-		if err != nil {
-			return err.Error()
+		if sourceError != nil {
+			return sourceError.Error()
 		}
 		return "admitted"
 	}
@@ -238,9 +253,9 @@ console.log(found === undefined ? "none" : String(found.kind));`, `refused: an u
 		for _, mode := range []struct{ extension, want string }{{".ts", probe.typeScript}, {".a", probe.adamic}} {
 			test.Run(probe.name+mode.extension, func(test *testing.T) {
 				test.Parallel()
-				_, optionalErr := lowerSourceAs(test, fmt.Sprintf(parseTreeSource, "?", probe.calls), mode.extension)
-				_, requiredErr := lowerSourceAs(test, fmt.Sprintf(parseTreeSource, "", probe.calls), mode.extension)
-				optional, required := outcome(optionalErr), outcome(requiredErr)
+				_, optionalError := lowerSourceAs(test, fmt.Sprintf(parseTreeSource, "?", probe.calls), mode.extension)
+				_, requiredError := lowerSourceAs(test, fmt.Sprintf(parseTreeSource, "", probe.calls), mode.extension)
+				optional, required := outcome(optionalError), outcome(requiredError)
 				if optional != required {
 					test.Fatalf("optional %q, required twin %q; want them to match", optional, required)
 				}
@@ -308,13 +323,13 @@ func TestOverloadPredicateOverOptionalCallback(test *testing.T) {
 	})
 	test.Run("assertNode on T", func(test *testing.T) {
 		test.Parallel()
-		_, err := lowerSourceAs(test, fmt.Sprintf(assertNodeSource, "T"), ".ts")
+		_, lowerSourceAsError := lowerSourceAs(test, fmt.Sprintf(assertNodeSource, "T"), ".ts")
 		var refused *Refused
-		if !errors.As(err, &refused) || !strings.Contains(
-			err.Error(),
+		if !errors.As(lowerSourceAsError, &refused) || !strings.Contains(
+			lowerSourceAsError.Error(),
 			"overload 1 of assertNode parameter test cannot be served by implementation parameter test",
 		) {
-			test.Fatalf("want the census overload proof's refusal, got %v", err)
+			test.Fatalf("want the census overload proof's refusal, got %v", lowerSourceAsError)
 		}
 	})
 	test.Run("visitArrayWorker", func(test *testing.T) {
@@ -337,13 +352,13 @@ console.log(String(visitArrayWorker(nodes, isIdentifier, 2, 2).length));`,
 // "there is no body proving this parameter", and stop matching their twins.
 func TestOverloadPredicateOverOptionalCallbackMatchesItsPlainTwin(test *testing.T) {
 	test.Parallel()
-	outcome := func(err error) string {
+	outcome := func(sourceError error) string {
 		var refused *Refused
-		if errors.As(err, &refused) {
+		if errors.As(sourceError, &refused) {
 			return "refused: " + refused.What
 		}
-		if err != nil {
-			return err.Error()
+		if sourceError != nil {
+			return sourceError.Error()
 		}
 		return "admitted"
 	}
@@ -362,18 +377,18 @@ console.log(String(visitArrayWorker(nodes, test, 0, 4).length));`, `refused: an 
 		for _, mode := range []struct{ extension, want string }{{".ts", probe.typeScript}, {".a", probe.adamic}} {
 			test.Run(probe.name+mode.extension, func(test *testing.T) {
 				test.Parallel()
-				_, optionalErr := lowerSourceAs(test, fmt.Sprintf(
+				_, optionalError := lowerSourceAs(test, fmt.Sprintf(
 					visitArraySource,
 					"((node: Node) => boolean) | undefined",
 					"test === undefined || test(node)",
 					probe.calls,
 				), mode.extension)
-				_, plainErr := lowerSourceAs(
+				_, plainError := lowerSourceAs(
 					test,
 					fmt.Sprintf(visitArraySource, "(node: Node) => boolean", "test(node)", probe.calls),
 					mode.extension,
 				)
-				optional, plain := outcome(optionalErr), outcome(plainErr)
+				optional, plain := outcome(optionalError), outcome(plainError)
 				if optional != plain {
 					test.Fatalf("optional %q, plain twin %q; want them to match", optional, plain)
 				}
@@ -403,16 +418,16 @@ func TestOverloadPredicateOverNullableCallbackStaysRefused(test *testing.T) {
 		for _, extension := range []string{".ts", ".a"} {
 			test.Run(implementation.name+extension, func(test *testing.T) {
 				test.Parallel()
-				_, err := lowerSourceAs(test, fmt.Sprintf(
+				_, lowerSourceAsError := lowerSourceAs(test, fmt.Sprintf(
 					visitArraySource,
 					implementation.test,
 					implementation.guard,
 					`console.log(String(visitArrayWorker(nodes, isIdentifier, 0, 4).length));`,
 				), extension)
 				var refused *Refused
-				if !errors.As(err, &refused) ||
+				if !errors.As(lowerSourceAsError, &refused) ||
 					refused.What != "a type predicate whose return is not proven (there is no body proving this parameter)" {
-					test.Fatalf("want the overload's claim refused, got %v", err)
+					test.Fatalf("want the overload's claim refused, got %v", lowerSourceAsError)
 				}
 			})
 		}

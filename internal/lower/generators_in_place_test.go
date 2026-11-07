@@ -34,11 +34,11 @@ func inPlaceGeneratorFunctions(program *ir.Program) []int {
 
 // lowerInPlaceProbe is lowerSource with a panic turned into the row's error, so a stop site that
 // reads a name an anonymous generator hasn't fails its own row, never the run.
-func lowerInPlaceProbe(test *testing.T, source string) (program *ir.Program, err error) {
+func lowerInPlaceProbe(test *testing.T, source string) (program *ir.Program, lowerInPlaceProbeError error) {
 	test.Helper()
 	defer func() {
 		if recovered := recover(); recovered != nil {
-			err = fmt.Errorf("panicked: %v", recovered)
+			lowerInPlaceProbeError = fmt.Errorf("panicked: %v", recovered)
 		}
 	}()
 	return lowerSource(test, source)
@@ -48,16 +48,16 @@ func lowerInPlaceProbe(test *testing.T, source string) (program *ir.Program, err
 // ends, so a test can ask it what a consumer asks.
 func lowerInPlaceKept(test *testing.T, source string) *lowering {
 	test.Helper()
-	loaded, err := load.Load([]string{writeAgreementSource(test, "main.a", source)})
-	if err != nil {
-		test.Fatalf("Load: %v", err)
+	loaded, loadError := load.Load([]string{writeAgreementSource(test, "main.a", source)})
+	if loadError != nil {
+		test.Fatalf("Load: %v", loadError)
 	}
 	entry := loaded.Files()[0]
 	check, release := loaded.Checker(context.Background(), entry)
 	test.Cleanup(release)
-	lowered, err := lowerChecked(loaded, check, entry, nil, false, false)
-	if err != nil {
-		test.Fatal(err)
+	lowered, lowerCheckedError := lowerChecked(loaded, check, entry, nil, false, false)
+	if lowerCheckedError != nil {
+		test.Fatal(lowerCheckedError)
 	}
 	return lowered
 }
@@ -72,7 +72,7 @@ func lowerInPlaceKept(test *testing.T, source string) *lowering {
 // stop as not yet built, as a call used some other way.
 func TestInPlaceGeneratorsLower(test *testing.T) {
 	test.Parallel()
-	program, err := lowerSource(test, `function consume(items: Iterable<string>): string {
+	program, lowerSourceError := lowerSource(test, `function consume(items: Iterable<string>): string {
 	let joined = '';
 	for (const item of items) {
 		joined += item;
@@ -89,8 +89,8 @@ function host(seed: string): string {
 }
 console.log(host('s'));
 `)
-	if err != nil {
-		test.Fatal(err)
+	if lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
 	generators := inPlaceGeneratorFunctions(program)
 	if len(generators) != 3 {
@@ -166,8 +166,8 @@ console.log(host('s'));
 	if iterables != 1 {
 		test.Errorf("%d generators written in place handed in through IterableOf, want 1", iterables)
 	}
-	if err := checkGeneratorRoads(program); err != nil {
-		test.Errorf("the lowered program's roads: %v", err)
+	if checkGeneratorRoadsError := checkGeneratorRoads(program); checkGeneratorRoadsError != nil {
+		test.Errorf("the lowered program's roads: %v", checkGeneratorRoadsError)
 	}
 }
 
@@ -211,14 +211,14 @@ console.log(host('s'));
 		functions := len(lowered.result.Functions)
 		lowered.functionIndex = key.function
 		for ask := 1; ask <= 2; ask++ {
-			index, isGenerator, err := lowered.generatorCallee(call)
-			if err != nil || !isGenerator || index != function {
+			index, isGenerator, generatorCalleeError := lowered.generatorCallee(call)
+			if generatorCalleeError != nil || !isGenerator || index != function {
 				test.Errorf(
 					"ask %d: %d, %t, %v; want the function already made, %d",
 					ask,
 					index,
 					isGenerator,
-					err,
+					generatorCalleeError,
 					function,
 				)
 			}
@@ -421,19 +421,19 @@ func TestInPlaceGeneratorRoadsAreNotYet(test *testing.T) {
 	for _, probe := range probes {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerInPlaceProbe(test, probe.source)
+			_, lowerInPlaceProbeError := lowerInPlaceProbe(test, probe.source)
 			var gap *NotYet
-			if !errors.As(err, &gap) || !strings.Contains(gap.What, probe.reason) {
-				test.Fatalf("got %v, want a NotYet saying %q", err, probe.reason)
+			if !errors.As(lowerInPlaceProbeError, &gap) || !strings.Contains(gap.What, probe.reason) {
+				test.Fatalf("got %v, want a NotYet saying %q", lowerInPlaceProbeError, probe.reason)
 			}
 		})
 	}
 	// new of it is no call: TypeScript's checker stops it before Adamic sees it, an implicit any.
-	_, err := load.Load([]string{writeAgreementSource(test, "main.a", host(
+	_, loadError := load.Load([]string{writeAgreementSource(test, "main.a", host(
 		"const made = new (function* (): "+generator+" { yield 1; })();\nconsole.log(String(made === undefined));",
 	))})
-	if err == nil || !strings.Contains(err.Error(), "TS7009") {
-		test.Errorf("new of a generator written in place: got %v, want TypeScript's TS7009", err)
+	if loadError == nil || !strings.Contains(loadError.Error(), "TS7009") {
+		test.Errorf("new of a generator written in place: got %v, want TypeScript's TS7009", loadError)
 	}
 }
 
@@ -494,10 +494,10 @@ func TestInPlaceGeneratorDeclarationStopsNameTheExpression(test *testing.T) {
 	for _, probe := range probes {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerInPlaceProbe(test, probe.source)
+			_, lowerInPlaceProbeError := lowerInPlaceProbe(test, probe.source)
 			var gap *NotYet
-			if !errors.As(err, &gap) || !strings.Contains(gap.What, probe.reason) {
-				test.Fatalf("got %v, want a NotYet saying %q", err, probe.reason)
+			if !errors.As(lowerInPlaceProbeError, &gap) || !strings.Contains(gap.What, probe.reason) {
+				test.Fatalf("got %v, want a NotYet saying %q", lowerInPlaceProbeError, probe.reason)
 			}
 			if probe.where != "" && !strings.HasSuffix(gap.Where, probe.where) {
 				test.Errorf("stopped at %s, want the expression, at %s", gap.Where, probe.where)
@@ -528,8 +528,8 @@ func TestInPlaceGeneratorVoidExemptionIsPlacedByItsBody(test *testing.T) {
 		{"written in place", into("(function* () { yield 1; yield 2; })()")},
 		{"through three pairs of parentheses", into("(((function* () { yield 1; })))()")},
 	} {
-		if _, err := lowerInPlaceProbe(test, control.source); err != nil {
-			test.Errorf("%s, into an Iterable<number> parameter: %v", control.name, err)
+		if _, lowerInPlaceProbeError := lowerInPlaceProbe(test, control.source); lowerInPlaceProbeError != nil {
+			test.Errorf("%s, into an Iterable<number> parameter: %v", control.name, lowerInPlaceProbeError)
 		}
 	}
 	const voidRule = "adamic/no-void"
@@ -565,10 +565,10 @@ func TestInPlaceGeneratorVoidExemptionIsPlacedByItsBody(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerInPlaceProbe(test, probe.source)
+			_, lowerInPlaceProbeError := lowerInPlaceProbe(test, probe.source)
 			var refused *Refused
-			if !errors.As(err, &refused) || !strings.Contains(refused.Error(), probe.rule) {
-				test.Fatalf("got %v, want a refusal saying %q", err, probe.rule)
+			if !errors.As(lowerInPlaceProbeError, &refused) || !strings.Contains(refused.Error(), probe.rule) {
+				test.Fatalf("got %v, want a refusal saying %q", lowerInPlaceProbeError, probe.rule)
 			}
 		})
 	}
@@ -587,9 +587,9 @@ func TestProgramRegionInPlaceGeneratorCarrierIsNoMember(test *testing.T) {
 		programRegionGeneratorRun(
 			" for (const tree of (function* (): Generator<Tree, void, undefined> { let at: Tree | undefined = branch; while (at !== undefined) { yield at; at = at.next; } })()) { console.log(tree.name); }\n console.log(names((function* (): Generator<Tree, void, undefined> { yield branch; yield root; })()));",
 		)
-	program, err := programLowerSource(test, source)
-	if err != nil {
-		test.Fatal(err)
+	program, programLowerSourceError := programLowerSource(test, source)
+	if programLowerSourceError != nil {
+		test.Fatal(programLowerSourceError)
 	}
 	if len(program.ProgramTypes) == 0 {
 		test.Fatal("no Program types: the region must engage")

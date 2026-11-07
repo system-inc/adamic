@@ -31,9 +31,9 @@ func TestGetterReachedByAStructuralReadIsACall(test *testing.T) {
 		{"field_borrow", "start3-1\nnext1-2\n"},
 		{"escape", "-made1\n-made2\nmade1\nmade2\n"},
 	} {
-		source, err := os.ReadFile("testdata/getter_structural_read/" + fixture.name + ".ts")
-		if err != nil {
-			test.Fatal(err)
+		source, readError := os.ReadFile("testdata/getter_structural_read/" + fixture.name + ".ts")
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		for _, extension := range []string{".a", ".ts"} {
 			test.Run(fixture.name+extension, func(test *testing.T) {
@@ -71,16 +71,24 @@ func TestGetterReachedByAStructuralReadIsACall(test *testing.T) {
 				}
 				directory := test.TempDir()
 				binary := filepath.Join(directory, "native")
-				if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-					test.Fatal(err)
+				if buildError := native.Build(
+					native.C(program),
+					binary,
+					native.Options{Sanitize: true},
+				); buildError != nil {
+					test.Fatal(buildError)
 				}
-				runner, err := filepath.Abs("../../oracle/node.mjs")
-				if err != nil {
-					test.Fatal(err)
+				runner, absolutePathError := filepath.Abs("../../oracle/node.mjs")
+				if absolutePathError != nil {
+					test.Fatal(absolutePathError)
 				}
 				generated := filepath.Join(directory, "generated.mjs")
-				if err := os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-					test.Fatal(err)
+				if writeError := os.WriteFile(
+					generated,
+					[]byte(javascript.JavaScript(program)),
+					0o644,
+				); writeError != nil {
+					test.Fatal(writeError)
 				}
 				for _, command := range []*exec.Cmd{
 					exec.Command(binary),
@@ -89,10 +97,10 @@ func TestGetterReachedByAStructuralReadIsACall(test *testing.T) {
 					command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1")
 					var out, errs bytes.Buffer
 					command.Stdout, command.Stderr = &out, &errs
-					if err := command.Run(); err != nil {
+					if runError := command.Run(); runError != nil {
 						var exit *exec.ExitError
-						if !errors.As(err, &exit) {
-							test.Fatal(err)
+						if !errors.As(runError, &exit) {
+							test.Fatal(runError)
 						}
 					}
 					if out.String() != fixture.stdout || errs.Len() != 0 {

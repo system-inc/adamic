@@ -19,18 +19,18 @@ func programCommand(ctx context.Context, directory, name string, arguments ...st
 		command.Dir = directory
 		return command
 	}
-	path, err := toolchain.Path(name)
-	if err != nil {
+	path, pathError := toolchain.Path(name)
+	if pathError != nil {
 		command := exec.CommandContext(ctx, name, arguments...)
-		command.Err = err
+		command.Err = pathError
 		return command
 	}
 	command := exec.CommandContext(ctx, path, arguments...)
 	command.Env = toolchain.Env()
 	if directory != "" {
-		absolute, err := filepath.Abs(directory)
-		if err != nil {
-			command.Err = err
+		absolute, absolutePathError := filepath.Abs(directory)
+		if absolutePathError != nil {
+			command.Err = absolutePathError
 			return command
 		}
 		command.Dir = directory

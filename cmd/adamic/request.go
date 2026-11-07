@@ -19,14 +19,14 @@ func compileWASI(path string) (*ir.Program, int, int) {
 	if program == nil {
 		return nil, -1, code
 	}
-	name, err := requestFunction(program)
-	if err != nil {
-		fmt.Fprintln(os.Stderr, "adamic: "+err.Error())
+	name, requestFunctionError := requestFunction(program)
+	if requestFunctionError != nil {
+		fmt.Fprintln(os.Stderr, "adamic: "+requestFunctionError.Error())
 		return nil, -1, 1
 	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		fmt.Fprintln(os.Stderr, relative("adamic: "+err.Error()))
+	lowered, lowerError := lower.Lower(context.Background(), program)
+	if lowerError != nil {
+		fmt.Fprintln(os.Stderr, relative("adamic: "+lowerError.Error()))
 		return nil, -1, 1
 	}
 	handler := -1
@@ -36,7 +36,10 @@ func compileWASI(path string) (*ir.Program, int, int) {
 				continue
 			}
 			if handler >= 0 {
-				fmt.Fprintln(os.Stderr, "adamic: not yet: request handler name is ambiguous across modules; give its declaration a unique name")
+				fmt.Fprintln(
+					os.Stderr,
+					"adamic: not yet: request handler name is ambiguous across modules; give its declaration a unique name",
+				)
 				return nil, -1, 1
 			}
 			handler = index
@@ -64,19 +67,27 @@ func requestFunction(program *load.Program) (string, error) {
 		if symbol.Flags&ast.SymbolFlagsAlias != 0 {
 			symbol = typeChecker.GetAliasedSymbol(symbol)
 		}
-		if symbol == nil || len(symbol.Declarations) != 1 || symbol.Declarations[0].Kind != ast.KindFunctionDeclaration {
+		if symbol == nil ||
+			len(symbol.Declarations) != 1 ||
+			symbol.Declarations[0].Kind != ast.KindFunctionDeclaration {
 			return "", fmt.Errorf("not yet: handleRequest must export a named function declaration")
 		}
 		declaration := symbol.Declarations[0]
 		invalid := func() (string, error) {
-			return "", fmt.Errorf("%s: request handler must take one required string parameter and return a string", program.Where(declaration))
+			return "", fmt.Errorf(
+				"%s: request handler must take one required string parameter and return a string",
+				program.Where(declaration),
+			)
 		}
 		if len(declaration.TypeParameters()) != 0 || len(declaration.Parameters()) != 1 {
 			return invalid()
 		}
 		parameter := declaration.Parameters()[0]
 		details := parameter.AsParameterDeclaration()
-		if !ast.IsIdentifier(parameter.Name()) || details.DotDotDotToken != nil || details.QuestionToken != nil || details.Initializer != nil {
+		if !ast.IsIdentifier(parameter.Name()) ||
+			details.DotDotDotToken != nil ||
+			details.QuestionToken != nil ||
+			details.Initializer != nil {
 			return invalid()
 		}
 		if typeChecker.GetTypeAtLocation(parameter).Flags() != checker.TypeFlagsString {

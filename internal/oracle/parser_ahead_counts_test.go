@@ -30,9 +30,9 @@ func assertParserAheadCount(test *testing.T, path string) {
 	test.Helper()
 	_, measure := counted(test, path, false, nil, false, false)
 	row := measure()
-	recorded, err := readCountRow(countsDirectory, "runtime", path)
-	if err != nil {
-		test.Fatalf("missing counts %s: %v", row, err)
+	recorded, readCountRowError := readCountRow(countsDirectory, "runtime", path)
+	if readCountRowError != nil {
+		test.Fatalf("missing counts %s: %v", row, readCountRowError)
 	}
 	if recorded != row {
 		test.Fatalf("recorded %s, measured %s", recorded, row)

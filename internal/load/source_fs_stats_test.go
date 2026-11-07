@@ -33,12 +33,12 @@ func (c *countingFS) FileExists(path tspath.RootedFilePath) bool {
 func TestALoadStatsAnAdamicFileOnce(test *testing.T) {
 	test.Parallel()
 	directory := test.TempDir()
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		filepath.Join(directory, "shapes.a"),
 		[]byte("export const shape = 1;\n"),
 		0o644,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
 	disk := &countingFS{FS: osvfs.FS(), counts: map[string]int{}}
 	fs := &sourceFS{FS: disk}
@@ -68,14 +68,14 @@ func TestAFileMadeBetweenTwoLoadsIsFound(test *testing.T) {
 		test,
 		[2]string{"main.a", "import { value } from './late.a';\nconsole.log(value.toString());\n"},
 	)
-	if _, err := Load(paths); err == nil || !strings.Contains(err.Error(), "late.a") {
-		test.Fatalf("the first load, before late.a exists, gave %v; want the unresolved import", err)
+	if _, loadError := Load(paths); loadError == nil || !strings.Contains(loadError.Error(), "late.a") {
+		test.Fatalf("the first load, before late.a exists, gave %v; want the unresolved import", loadError)
 	}
 	late := filepath.Join(filepath.Dir(paths[0]), "late.a")
-	if err := os.WriteFile(late, []byte("export const value = 7;\n"), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(late, []byte("export const value = 7;\n"), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if _, err := Load(paths); err != nil {
-		test.Fatalf("the second load, after late.a was written, gave %v; want it found", err)
+	if _, loadError := Load(paths); loadError != nil {
+		test.Fatalf("the second load, after late.a was written, gave %v; want it found", loadError)
 	}
 }

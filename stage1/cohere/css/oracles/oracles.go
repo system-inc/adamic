@@ -54,21 +54,21 @@ func CompositionOracle(test *testing.T, name, sidePath, overlayTarget, packagePa
 	test.Helper()
 	repo, _ := filepath.Abs(repository)
 	side, _ := filepath.Abs(sidePath)
-	sideRelative, err := filepath.Rel(repo, side)
-	if err != nil {
-		test.Fatal(err)
+	sideRelative, relativePathError := filepath.Rel(repo, side)
+	if relativePathError != nil {
+		test.Fatal(relativePathError)
 	}
 	inputs := CompositionOracleInputs(name, sideRelative, overlayTarget, packagePath, GoCompilerConfiguration())
 	directory := oracleProduct(test, inputs, func(dir string) error {
-		overlay, err := json.Marshal(
+		overlay, encodeError := json.Marshal(
 			map[string]any{"Replace": map[string]string{filepath.Join(repo, "cohere", overlayTarget): side}},
 		)
-		if err != nil {
-			return err
+		if encodeError != nil {
+			return encodeError
 		}
 		overlayPath := filepath.Join(dir, "overlay.json")
-		if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(overlayPath, overlay, 0644); writeError != nil {
+			return writeError
 		}
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 		defer os.Remove(overlayPath)
@@ -84,9 +84,9 @@ func CompositionOracle(test *testing.T, name, sidePath, overlayTarget, packagePa
 		// CombinedOutput's copying under a one-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't
 		// reached EOF a second after go exited, so a product whose build had finished could fail under load (#n3gk22h's
 		// shape).
-		stdout, stderr, err := childguard.Capture(test.Context(), command)
-		if err != nil {
-			return fmt.Errorf("Go oracle: %w\n%s%s", err, stdout, stderr)
+		stdout, stderr, captureError := childguard.Capture(test.Context(), command)
+		if captureError != nil {
+			return fmt.Errorf("Go oracle: %w\n%s%s", captureError, stdout, stderr)
 		}
 		return nil
 	})
@@ -131,9 +131,9 @@ type ParserCorpus struct{ Inputs, Answers, CaseKeys []string }
 
 func readCSSParserCorpus(test *testing.T, path, answers string) ParserCorpus {
 	test.Helper()
-	data, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	inputs := strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")
 	lines := strings.Split(strings.TrimSuffix(answers, "\n"), "\n")
@@ -141,12 +141,12 @@ func readCSSParserCorpus(test *testing.T, path, answers string) ParserCorpus {
 		test.Fatalf("oracle has %d lines for %d cases", len(lines), len(inputs))
 	}
 	corpus := ParserCorpus{Inputs: inputs}
-	manifest, err := os.ReadFile(filepath.Join(filepath.Dir(path), "ids.json"))
-	if err != nil {
-		test.Fatal(err)
+	manifest, readError := os.ReadFile(filepath.Join(filepath.Dir(path), "ids.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	if err := json.Unmarshal(manifest, &corpus.CaseKeys); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(manifest, &corpus.CaseKeys); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if len(corpus.CaseKeys) != len(inputs) {
 		test.Fatal("stable IDs differ from live enumeration")
@@ -244,8 +244,8 @@ func WriteParserSlice(test *testing.T, corpus ParserCorpus, indices []int) (stri
 		fmt.Fprintf(&inputs, "%s\n", corpus.Inputs[i])
 		fmt.Fprintf(&answers, "case %d\n%s\n", local, corpus.Answers[i])
 	}
-	if err := os.WriteFile(path, []byte(inputs.String()), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(inputs.String()), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return path, answers.String()
 }
@@ -307,9 +307,9 @@ func ParserOracleInputs(name string, compilers CompilerConfiguration) buildcache
 // directory names never enter a key; repository inputs stay repository-relative.
 func cssParserCacheInputs(test *testing.T, inputs ParserProductInputs) buildcache.Inputs {
 	test.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	keyed := buildcache.Inputs{
 		Name:      "css " + inputs.Name,
@@ -320,18 +320,18 @@ func cssParserCacheInputs(test *testing.T, inputs ParserProductInputs) buildcach
 	keyed.Flags = append(keyed.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 
 	for _, name := range inputs.Files {
-		absolute, err := filepath.Abs(name)
-		if err != nil {
-			test.Fatal(err)
+		absolute, absolutePathError := filepath.Abs(name)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
-		relative, err := filepath.Rel(root, absolute)
-		if err != nil {
-			test.Fatal(err)
+		relative, relativePathError := filepath.Rel(root, absolute)
+		if relativePathError != nil {
+			test.Fatal(relativePathError)
 		}
 		if relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
-			content, err := os.ReadFile(name)
-			if err != nil {
-				test.Fatal(err)
+			content, readError := os.ReadFile(name)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			logical := filepath.Base(name)
 			if filepath.Ext(name) == ".ts" {
@@ -355,15 +355,15 @@ func cssParserOracle(test *testing.T) string {
 	cohere := filepath.Join(repo, "cohere")
 	side, _ := filepath.Abs("testdata/cohere_side_test.go")
 	dir := cssParserGoProduct(test, "Go parser oracle", func(dir string) error {
-		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{
+		overlay, encodeError := json.Marshal(map[string]any{"Replace": map[string]string{
 			filepath.Join(cohere, "internal/format/css/postcss/adamic_port_side_test.go"): side,
 		}})
-		if err != nil {
-			return err
+		if encodeError != nil {
+			return encodeError
 		}
 		path := filepath.Join(dir, "overlay.json")
-		if err := os.WriteFile(path, overlay, 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(path, overlay, 0644); writeError != nil {
+			return writeError
 		}
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 		defer os.Remove(path)
@@ -378,8 +378,8 @@ func cssParserOracle(test *testing.T) string {
 		// Read through childguard.Capture for CompositionOracle's reason. It drops childguard.Run's stall guard and
 		// loses nothing by it: a go build writes nothing until it fails, so only the guard's 30-minute first-output
 		// window could fire, and the unit's own ceiling (600 s for a product unit) ends a hung build sooner.
-		if stdout, stderr, err := childguard.Capture(test.Context(), command); err != nil {
-			return fmt.Errorf("Go oracle: %w\n%s%s", err, stdout, stderr)
+		if stdout, stderr, captureError := childguard.Capture(test.Context(), command); captureError != nil {
+			return fmt.Errorf("Go oracle: %w\n%s%s", captureError, stdout, stderr)
 		}
 		return nil
 	})
@@ -390,9 +390,9 @@ func cssParserOracle(test *testing.T) string {
 func ContentIdentity(test *testing.T, path string) string {
 	test.Helper()
 	hash := sha256.New()
-	err := filepath.WalkDir(path, func(name string, entry os.DirEntry, err error) error {
-		if err != nil {
-			return err
+	walkError := filepath.WalkDir(path, func(name string, entry os.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
 		if entry.IsDir() {
 			if entry.Name() == ".git" {
@@ -400,19 +400,19 @@ func ContentIdentity(test *testing.T, path string) string {
 			}
 			return nil
 		}
-		content, err := os.ReadFile(name)
-		if err != nil {
-			return err
+		content, readError := os.ReadFile(name)
+		if readError != nil {
+			return readError
 		}
-		relative, err := filepath.Rel(path, name)
-		if err != nil {
-			return err
+		relative, relativePathError := filepath.Rel(path, name)
+		if relativePathError != nil {
+			return relativePathError
 		}
 		fmt.Fprintf(hash, "%s\x00%x\n", filepath.ToSlash(relative), sha256.Sum256(content))
 		return nil
 	})
-	if err != nil {
-		test.Fatal(err)
+	if walkError != nil {
+		test.Fatal(walkError)
 	}
 	return fmt.Sprintf("oracle-content-sha256=%x", hash.Sum(nil))
 }
@@ -425,13 +425,13 @@ func CachedParserOutputs(test *testing.T) (string, string) {
 	// Reads: *.[lL][eE][sS][sS]
 	// Reads: *.[sS][cC][sS][sS]
 	// Reads: cohere
-	repo, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	repo, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	side, err := filepath.Abs("testdata/cohere_side_test.go")
-	if err != nil {
-		test.Fatal(err)
+	side, absolutePathError := filepath.Abs("testdata/cohere_side_test.go")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	inputs := ParserProductInputs{
 		Name:      "Go parser oracle answers",
@@ -442,16 +442,16 @@ func CachedParserOutputs(test *testing.T) (string, string) {
 	// The repository's corpus files come from its corpus roots alone (cssCorpusRoots), never a walk of the whole
 	// repository, whose listings would enter every corpus-reading product's read set (#t128y5x).
 	inputs.Flags = append(inputs.Flags, "corpus-roots="+strings.Join(cssCorpusRoots, ","))
-	if err := WalkCorpusRoots(
+	if walkCorpusRootsError := WalkCorpusRoots(
 		repo,
 		func(path string) error { inputs.Files = append(inputs.Files, path); return nil },
-	); err != nil {
-		test.Fatal(err)
+	); walkCorpusRootsError != nil {
+		test.Fatal(walkCorpusRootsError)
 	}
 	if fixtures := os.Getenv("ADAMIC_CSS_FIXTURES"); fixtures != "" {
-		err := filepath.WalkDir(fixtures, func(path string, entry os.DirEntry, err error) error {
-			if err != nil {
-				return err
+		walkError := filepath.WalkDir(fixtures, func(path string, entry os.DirEntry, pathError error) error {
+			if pathError != nil {
+				return pathError
 			}
 			if entry.IsDir() {
 				if entry.Name() == ".git" || entry.Name() == "node_modules" {
@@ -462,13 +462,13 @@ func CachedParserOutputs(test *testing.T) (string, string) {
 			if !IsCorpusFile(path) {
 				return nil
 			}
-			content, err := os.ReadFile(path)
-			if err != nil {
-				return err
+			content, readError := os.ReadFile(path)
+			if readError != nil {
+				return readError
 			}
-			relative, err := filepath.Rel(fixtures, path)
-			if err != nil {
-				return err
+			relative, relativePathError := filepath.Rel(fixtures, path)
+			if relativePathError != nil {
+				return relativePathError
 			}
 			inputs.Flags = append(
 				inputs.Flags,
@@ -476,8 +476,8 @@ func CachedParserOutputs(test *testing.T) (string, string) {
 			)
 			return nil
 		})
-		if err != nil {
-			test.Fatal(err)
+		if walkError != nil {
+			test.Fatal(walkError)
 		}
 	}
 	dir := oracleParserProduct(test, inputs, func(dir string) error {
@@ -489,13 +489,13 @@ func CachedParserOutputs(test *testing.T) (string, string) {
 			"roots":      cssCorpusRoots,
 			"fixtures":   os.Getenv("ADAMIC_CSS_FIXTURES"),
 		}
-		data, err := json.Marshal(request)
-		if err != nil {
-			return err
+		data, encodeError := json.Marshal(request)
+		if encodeError != nil {
+			return encodeError
 		}
 		requestPath := filepath.Join(TemporaryDirectory(test), "request.json")
-		if err := os.WriteFile(requestPath, data, 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(requestPath, data, 0644); writeError != nil {
+			return writeError
 		}
 		cmd := toolchain.CommandContextIn(
 			test.Context(),
@@ -511,30 +511,30 @@ func CachedParserOutputs(test *testing.T) (string, string) {
 		// Read through childguard.Capture for CompositionOracle's reason. The oracle writes no progress, only its
 		// test's start and end, so childguard.Run's four-minute silence window was a ceiling for it, and the unit's
 		// own ceiling bounds it instead.
-		stdout, stderr, err := childguard.Capture(test.Context(), cmd)
-		if err != nil {
-			return fmt.Errorf("Go oracle: %w\n%s%s", err, stdout, stderr)
+		stdout, stderr, captureError := childguard.Capture(test.Context(), cmd)
+		if captureError != nil {
+			return fmt.Errorf("Go oracle: %w\n%s%s", captureError, stdout, stderr)
 		}
 		test.Logf("Go oracle: %s%s", stdout, stderr)
 		return nil
 	})
 	cases := filepath.Join(dir, "cases.txt")
-	answers, err := os.ReadFile(filepath.Join(dir, "answers.txt"))
-	if err != nil {
-		test.Fatal(err)
+	answers, readError := os.ReadFile(filepath.Join(dir, "answers.txt"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if keep := os.Getenv("ADAMIC_CSS_KEEP_RAW"); keep != "" {
-		if err := os.WriteFile(keep, answers, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(keep, answers, 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	if keep := os.Getenv("ADAMIC_CSS_KEEP"); keep != "" {
-		content, err := os.ReadFile(cases)
-		if err != nil {
-			test.Fatal(err)
+		content, readError := os.ReadFile(cases)
+		if readError != nil {
+			test.Fatal(readError)
 		}
-		if err := os.WriteFile(keep, content, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(keep, content, 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	return cases, string(answers)
@@ -543,9 +543,9 @@ func CachedParserOutputs(test *testing.T) (string, string) {
 // CachedPostCSSAnswers returns the cached PostCSS answers for the supplied cases.
 func CachedPostCSSAnswers(test *testing.T, script, library, path, identity string) string {
 	test.Helper()
-	data, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	dir := oracleParserProduct(test, ParserProductInputs{
 		Name:      "PostCSS oracle answers",
@@ -554,8 +554,8 @@ func CachedPostCSSAnswers(test *testing.T, script, library, path, identity strin
 		Toolchain: buildcache.Tool("node", "--version"),
 	}, func(dir string) error {
 		input := filepath.Join(dir, "input.txt")
-		if err := os.WriteFile(input, data, 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(input, data, 0644); writeError != nil {
+			return writeError
 		}
 		// Read through childguard.Capture for CompositionOracle's reason: a WaitDelay could fail a run that had
 		// finished. The 90 s ceiling it ran under is now its context's deadline; childguard.Run's four-minute stall
@@ -564,15 +564,15 @@ func CachedPostCSSAnswers(test *testing.T, script, library, path, identity strin
 		defer cancel()
 		cmd := toolchain.CommandContextIn(ctx, "", "node", script, library, input)
 		cmd.Env = os.Environ()
-		stdout, stderr, err := childguard.Capture(ctx, cmd)
-		if err != nil || len(stderr) != 0 {
-			return fmt.Errorf("PostCSS oracle: %v; %s", err, stderr)
+		stdout, stderr, captureError := childguard.Capture(ctx, cmd)
+		if captureError != nil || len(stderr) != 0 {
+			return fmt.Errorf("PostCSS oracle: %v; %s", captureError, stderr)
 		}
 		return os.WriteFile(filepath.Join(dir, "answers.txt"), stdout, 0644)
 	})
-	answer, err := os.ReadFile(filepath.Join(dir, "answers.txt"))
-	if err != nil {
-		test.Fatal(err)
+	answer, readError := os.ReadFile(filepath.Join(dir, "answers.txt"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return string(answer)
 }
@@ -590,9 +590,9 @@ func ParserPostCSSAnswers(test *testing.T, part int) {
 	if library == "" {
 		test.Skip("set ADAMIC_CSS_LIBRARY to the pinned npm scratch directory")
 	}
-	script, err := filepath.Abs("testdata/library.mjs")
-	if err != nil {
-		test.Fatal(err)
+	script, absolutePathError := filepath.Abs("testdata/library.mjs")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	identity := ContentIdentity(test, library)
 	prepareCSSParserTopCorpus(test)
@@ -629,9 +629,9 @@ func ComparisonOracle(test *testing.T, printer bool) string {
 		index = 1
 	}
 	cssOracleOnce[index].Do(func() {
-		repo, err := filepath.Abs(repository)
-		if err != nil {
-			test.Fatal(err)
+		repo, absolutePathError := filepath.Abs(repository)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		side, pkg, target := "cohere_side_test.go", "postcss", "adamic_port_side_test.go"
 		if printer {
@@ -657,15 +657,15 @@ func ComparisonOracle(test *testing.T, printer bool) string {
 			Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH},
 		}
 		directory := oracleProduct(test, inputs, func(dir string) error {
-			overlay, err := json.Marshal(map[string]any{
+			overlay, encodeError := json.Marshal(map[string]any{
 				"Replace": map[string]string{filepath.Join(repo, "cohere/internal/format/css", pkg, target): sidePath},
 			})
-			if err != nil {
-				return err
+			if encodeError != nil {
+				return encodeError
 			}
 			overlayPath := filepath.Join(dir, "overlay.json")
-			if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-				return err
+			if writeError := os.WriteFile(overlayPath, overlay, 0644); writeError != nil {
+				return writeError
 			}
 			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 			defer os.Remove(overlayPath)
@@ -681,9 +681,9 @@ func ComparisonOracle(test *testing.T, printer bool) string {
 			)...)
 			// This printer build historically inherited the caller environment.
 			cmd.Env = nil
-			output, err := childguard.CombinedOutput(cmd, childguard.Options{Unbounded: true})
-			if err != nil {
-				return fmt.Errorf("Go oracle build: %w\n%s", err, output)
+			output, combinedOutputError := childguard.CombinedOutput(cmd, childguard.Options{Unbounded: true})
+			if combinedOutputError != nil {
+				return fmt.Errorf("Go oracle build: %w\n%s", combinedOutputError, output)
 			}
 			return nil
 		})
@@ -713,9 +713,9 @@ func TemporaryDirectory(test *testing.T) string {
 	if cssParserTopRootError != nil {
 		test.Fatal(cssParserTopRootError)
 	}
-	dir, err := os.MkdirTemp(cssParserTopRoot, "input-")
-	if err != nil {
-		test.Fatal(err)
+	dir, temporaryDirectoryError := os.MkdirTemp(cssParserTopRoot, "input-")
+	if temporaryDirectoryError != nil {
+		test.Fatal(temporaryDirectoryError)
 	}
 	return dir
 }
@@ -797,12 +797,12 @@ func IsCorpusFile(name string) bool {
 // .git and node_modules, and calls visit with each corpus file's absolute path.
 func WalkCorpusRoots(repo string, visit func(path string) error) error {
 	for _, root := range cssCorpusRoots {
-		err := filepath.WalkDir(filepath.Join(
+		walkError := filepath.WalkDir(filepath.Join(
 			repo,
 			filepath.FromSlash(root),
-		), func(path string, entry os.DirEntry, err error) error {
-			if err != nil {
-				return err
+		), func(path string, entry os.DirEntry, pathError error) error {
+			if pathError != nil {
+				return pathError
 			}
 			if entry.IsDir() {
 				if entry.Name() == ".git" || entry.Name() == "node_modules" {
@@ -815,8 +815,8 @@ func WalkCorpusRoots(repo string, visit func(path string) error) error {
 			}
 			return visit(path)
 		})
-		if err != nil {
-			return err
+		if walkError != nil {
+			return walkError
 		}
 	}
 	return nil

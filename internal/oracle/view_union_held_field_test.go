@@ -17,18 +17,18 @@ import (
 // where the cast is refused first, since its tag test, kind === 'Holder', is one every Root passes (#q97a1rr).
 func TestViewFieldHeldAsUnionStopsAtTheRead(test *testing.T) {
 	test.Parallel()
-	reviewed, err := filepath.Abs(
+	reviewed, absolutePathError := filepath.Abs(
 		filepath.Join(reviewRoot, "refused", "fxspptb_oct9_views_p70_length_view_over_tuple.a"),
 	)
-	if err != nil {
-		test.Fatal(err)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	_, err = lowered(test, reviewed)
+	_, loweredError := lowered(test, reviewed)
 	var refused *lower.Refused
-	if !errors.As(err, &refused) ||
+	if !errors.As(loweredError, &refused) ||
 		refused.Where != reviewed+":8:16" ||
 		refused.What != `a downcast to View whose tag test is vacuous: every Root has kind "Holder"` {
-		test.Fatalf("want the cast's vacuous downcast refusal at %s:8:16, got %v", reviewed, err)
+		test.Fatalf("want the cast's vacuous downcast refusal at %s:8:16, got %v", reviewed, loweredError)
 	}
 	twin := typeScriptTwin(test, reviewed)
 	direct := filepath.Join(test.TempDir(), "direct.ts")
@@ -44,8 +44,8 @@ const value = direct.value;
 console.log(` + "`${value.length}`" + `);
 console.log(` + "`${viewed.kind}`" + `);
 `
-	if err := os.WriteFile(direct, []byte(source), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(direct, []byte(source), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	for _, probe := range []struct{ path, stdout, where string }{
 		{twin, "2\n", twin + ":9:15"},
@@ -55,12 +55,12 @@ console.log(` + "`${viewed.kind}`" + `);
 		if node.exitCode != 0 || string(node.stdout) != probe.stdout || len(node.stderr) != 0 {
 			test.Fatalf("Node on %s: exit=%d stdout=%q stderr=%q", probe.path, node.exitCode, node.stdout, node.stderr)
 		}
-		_, err := lowered(test, probe.path)
+		_, loweredError := lowered(test, probe.path)
 		var pending *lower.NotYet
-		if !errors.As(err, &pending) ||
+		if !errors.As(loweredError, &pending) ||
 			pending.Where != probe.where ||
 			pending.What != "a checked view read of field value of type Sized, which is a union of differently held members outside a union view contract" {
-			test.Fatalf("want the read's NotYet at %s, got %v", probe.where, err)
+			test.Fatalf("want the read's NotYet at %s, got %v", probe.where, loweredError)
 		}
 	}
 }

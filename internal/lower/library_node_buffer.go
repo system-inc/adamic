@@ -17,11 +17,14 @@ func nodeBufferModule(symbol *ast.Symbol) string {
 	}
 	for _, declaration := range symbol.Declarations {
 		source := ast.GetSourceFileOfNode(declaration)
-		if source == nil || !strings.Contains(strings.ReplaceAll(source.FileName().AsString(), "\\", "/"), "/@types/node/") {
+		if source == nil ||
+			!strings.Contains(strings.ReplaceAll(source.FileName().AsString(), "\\", "/"), "/@types/node/") {
 			continue
 		}
 		for parent := declaration; parent != nil; parent = parent.Parent {
-			if parent.Kind == ast.KindModuleDeclaration && parent.Name() != nil && parent.Name().Kind == ast.KindStringLiteral {
+			if parent.Kind == ast.KindModuleDeclaration &&
+				parent.Name() != nil &&
+				parent.Name().Kind == ast.KindStringLiteral {
 				switch name := parent.Name().Text(); name {
 				case "node:buffer", "node:crypto":
 					return name
@@ -45,9 +48,10 @@ func (l *lowering) nodeBufferType(proven *checker.Type, name string) bool {
 
 // nodeBufferAccessRefusal checks a member read that isn't called.
 func (l *lowering) nodeBufferAccessRefusal(node *ast.Node) error {
-	if (node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression) && !called(node) {
-		if err := l.nodeBufferUnsupportedUse(node); err != nil {
-			return err
+	if (node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression) &&
+		!called(node) {
+		if nodeBufferUnsupportedUseError := l.nodeBufferUnsupportedUse(node); nodeBufferUnsupportedUseError != nil {
+			return nodeBufferUnsupportedUseError
 		}
 	}
 	return nil
@@ -82,16 +86,23 @@ func (l *lowering) nodeBufferUnsupportedUse(node *ast.Node) error {
 		receiver := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression))
 		if member.Kind == ast.KindStringLiteral {
 			for _, name := range []string{"Buffer", "Hash"} {
-				if l.nodeBufferType(receiver, name) || (name == "Buffer" && l.nodeBufferSymbol(access.Expression, name)) {
+				if l.nodeBufferType(receiver, name) ||
+					(name == "Buffer" && l.nodeBufferSymbol(access.Expression, name)) {
 					return l.notYet(node, name+"."+member.Text()+" accessed through a string index")
 				}
 			}
 		}
 	}
-	if node.Kind == ast.KindIdentifier || node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression {
+	if node.Kind == ast.KindIdentifier ||
+		node.Kind == ast.KindPropertyAccessExpression ||
+		node.Kind == ast.KindElementAccessExpression {
 		symbol := l.symbol(node)
 		if module := nodeBufferModule(symbol); module != "" {
-			if symbol.Name == "Buffer" && node.Parent != nil && node.Parent.Kind == ast.KindPropertyAccessExpression && node.Parent.Name().Text() == "from" && called(node.Parent) {
+			if symbol.Name == "Buffer" &&
+				node.Parent != nil &&
+				node.Parent.Kind == ast.KindPropertyAccessExpression &&
+				node.Parent.Name().Text() == "from" &&
+				called(node.Parent) {
 				return nil
 			}
 			return l.notYet(node, module+"."+symbol.Name+" read as a value")
@@ -116,7 +127,11 @@ func (l *lowering) nodeBufferReadArgument(node *ast.Node) bool {
 	}
 	call := parent.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
-	return len(call.Arguments.Nodes) > 0 && call.Arguments.Nodes[0] == outer && callee.Kind == ast.KindPropertyAccessExpression && callee.Name().Text() == "from" && l.nodeBufferSymbol(callee.AsPropertyAccessExpression().Expression, "Buffer")
+	return len(call.Arguments.Nodes) > 0 &&
+		call.Arguments.Nodes[0] == outer &&
+		callee.Kind == ast.KindPropertyAccessExpression &&
+		callee.Name().Text() == "from" &&
+		l.nodeBufferSymbol(callee.AsPropertyAccessExpression().Expression, "Buffer")
 }
 func (l *lowering) nodeBufferView(from, to *checker.Type) bool {
 	for _, name := range []string{"Buffer", "Hash"} {
@@ -207,15 +222,15 @@ func (l *lowering) libraryNodeBuffer(node *ast.Node) (ir.Expression, bool, error
 	} else if len(args) > 1 {
 		encodingNode = args[1]
 	}
-	var err error
-	if encoding, err = l.nodeBufferEncoding(encodingNode, 0); err != nil {
-		return nil, true, err
+	var nodeBufferEncodingError error
+	if encoding, nodeBufferEncodingError = l.nodeBufferEncoding(encodingNode, 0); nodeBufferEncodingError != nil {
+		return nil, true, nodeBufferEncodingError
 	}
 	values := []ir.Expression{}
 	if receiver != nil {
-		value, err := l.expression(receiver)
-		if err != nil {
-			return nil, true, err
+		value, expressionError := l.expression(receiver)
+		if expressionError != nil {
+			return nil, true, expressionError
 		}
 		values = append(values, value)
 	}
@@ -226,9 +241,10 @@ func (l *lowering) libraryNodeBuffer(node *ast.Node) (ir.Expression, bool, error
 				value = ir.NumberConstant{Value: math.Inf(1)}
 			}
 			if len(args) > index {
-				value, err = l.expression(args[index])
-				if err != nil {
-					return nil, true, err
+				var expressionError error
+				value, expressionError = l.expression(args[index])
+				if expressionError != nil {
+					return nil, true, expressionError
 				}
 				if value.Type() != ir.Number {
 					return nil, true, l.notYet(args[index], "a non-number Buffer byte offset")
@@ -238,17 +254,17 @@ func (l *lowering) libraryNodeBuffer(node *ast.Node) (ir.Expression, bool, error
 		}
 	} else {
 		if operation != "hash_digest" {
-			value, err := l.expression(args[0])
-			if err != nil {
-				return nil, true, err
+			value, expressionError := l.expression(args[0])
+			if expressionError != nil {
+				return nil, true, expressionError
 			}
 			if operation == "buffer_from" && value.Type() == ir.Array {
 				if len(args) != 1 {
 					return nil, true, l.notYet(node, "Buffer.from(array) with an encoding")
 				}
-				element, err := l.elementType(args[0])
-				if err != nil {
-					return nil, true, err
+				element, elementTypeError := l.elementType(args[0])
+				if elementTypeError != nil {
+					return nil, true, elementTypeError
 				}
 				if element != ir.Number {
 					return nil, true, l.notYet(node, "Buffer.from with non-number elements")

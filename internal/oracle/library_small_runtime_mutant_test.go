@@ -12,17 +12,17 @@ import (
 // Mutate the stack's existing runtime callback protocol, keeping its counted ABI.
 func librarySmallRuntimeMutant(test *testing.T, fixture, rule string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
-	runtime, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/regexp_replace.c"))
-	if err != nil {
-		test.Fatal(err)
+	runtime, readError := os.ReadFile(filepath.Join(repository, "internal/native/runtime/regexp_replace.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	mutations := map[string][2]string{
 		"collection-order": {
@@ -59,8 +59,8 @@ func librarySmallRuntimeMutant(test *testing.T, fixture, rule string) {
 		"\n" +
 		strings.ReplaceAll(native.C(program), "adamic_regex_replace_callback", "adamic_regex_replace_callback_mutant")
 	binary := filepath.Join(test.TempDir(), "mutant")
-	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(source, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	actual := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=1:halt_on_error=1"}, binary)
 	if actual.exitCode != 0 || len(actual.stderr) != 0 {

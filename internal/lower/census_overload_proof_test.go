@@ -29,9 +29,9 @@ console.log(choose('no'));`, true},
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			program, err := lowerSource(test, probe.source)
-			if err != nil {
-				test.Fatal(err)
+			program, lowerSourceError := lowerSource(test, probe.source)
+			if lowerSourceError != nil {
+				test.Fatal(lowerSourceError)
 			}
 			checked := false
 			for _, constant := range program.Strings {

@@ -46,9 +46,9 @@ func tableLayoutReady(test *testing.T) {
 		// Setup has no deadline; Loom's kill covers the whole unit.
 		started := time.Now()
 		tableLayoutSharedProducts = tableLayoutBuild(test)
-		root, err := filepath.Abs(repository)
-		if err != nil {
-			test.Fatal(err)
+		root, absolutePathError := filepath.Abs(repository)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		tableLayoutInputs, _ = blockCorpus(test, root, "whitespace")
 		tableLayoutSetupElapsed = time.Since(started)
@@ -79,9 +79,9 @@ func tableLayoutPartition(inputs []auditInput) [][]auditInput {
 
 func TestMarkdownTableLayoutUnion(test *testing.T) {
 	test.Parallel()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	inputs, _ := blockCorpus(test, root, "whitespace")
 	shards := tableLayoutPartition(inputs)
@@ -159,13 +159,13 @@ func tableLayoutBuild(test *testing.T) tableLayoutProducts {
 func tableLayoutBuildProduct(test *testing.T, target string) tableLayoutProducts {
 	test.Helper()
 	var products tableLayoutProducts
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	products.main, err = filepath.Abs("testdata/list_probe.ts")
-	if err != nil {
-		test.Fatal(err)
+	products.main, absolutePathError = filepath.Abs("testdata/list_probe.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	inputs := buildcache.Inputs{
 		Name:      "markdown table lowered",
@@ -173,22 +173,26 @@ func tableLayoutBuildProduct(test *testing.T, target string) tableLayoutProducts
 		Toolchain: []string{runtime.Version()},
 	}
 	loweredDirectory := buildcache.Product(test, inputs, func(directory string) error {
-		program, err := loweredResult(products.main)
-		if err != nil {
-			return err
+		program, loweredResultError := loweredResult(products.main)
+		if loweredResultError != nil {
+			return loweredResultError
 		}
-		if err := os.WriteFile(filepath.Join(directory, "program.c"), []byte(native.C(program)), 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(
+			filepath.Join(directory, "program.c"),
+			[]byte(native.C(program)),
+			0644,
+		); writeError != nil {
+			return writeError
 		}
 		return os.WriteFile(filepath.Join(directory, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
 	})
-	source, err := os.ReadFile(filepath.Join(loweredDirectory, "program.c"))
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(filepath.Join(loweredDirectory, "program.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	backend, err := os.ReadFile(filepath.Join(loweredDirectory, "program.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	backend, readError := os.ReadFile(filepath.Join(loweredDirectory, "program.mjs"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	products.backend = string(backend)
 	if target == "lowered" {
@@ -245,9 +249,9 @@ func tableLayoutFixture(
 ) *layoutFixture {
 	var workers sync.WaitGroup
 	defer workers.Wait()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	files := 0
 	fullInputs := inputs
@@ -256,8 +260,8 @@ func tableLayoutFixture(
 	var batch bytes.Buffer
 	encoder := json.NewEncoder(&batch)
 	for _, input := range inputs {
-		if err := encoder.Encode(input); err != nil {
-			test.Fatal(err)
+		if encodeError := encoder.Encode(input); encodeError != nil {
+			test.Fatal(encodeError)
 		}
 	}
 	cases := filepath.Join(dir, "cases.jsonl")
@@ -268,8 +272,8 @@ func tableLayoutFixture(
 		var fullBatch bytes.Buffer
 		fullEncoder := json.NewEncoder(&fullBatch)
 		for _, input := range fullInputs {
-			if err := fullEncoder.Encode(input); err != nil {
-				test.Fatal(err)
+			if encodeError := fullEncoder.Encode(input); encodeError != nil {
+				test.Fatal(encodeError)
 			}
 		}
 		write(test, fullCases, fullBatch.Bytes())
@@ -281,8 +285,8 @@ func tableLayoutFixture(
 	listTask := startFixtureTask(&workers, func() (run, error) {
 		if selection.Sample {
 			mutantNativeCases = filepath.Join(dir, "mutant-native.txt")
-			var err error
-			mutantWant, err = tableLayoutExecute(
+			var tableLayoutExecuteError error
+			mutantWant, tableLayoutExecuteError = tableLayoutExecute(
 				ctx,
 				nil,
 				goBinary,
@@ -290,8 +294,8 @@ func tableLayoutFixture(
 				mutantNativeCases,
 				filepath.Join(dir, "mutant-canonical.txt"),
 			)
-			if err != nil {
-				return run{}, err
+			if tableLayoutExecuteError != nil {
+				return run{}, tableLayoutExecuteError
 			}
 		}
 		return tableLayoutExecute(ctx, nil, goBinary, cases, nativeCases, canonicalCases)
@@ -302,13 +306,13 @@ func tableLayoutFixture(
 	if fork == "" {
 		fork = filepath.Join(root, "cohere/internal/format/prettier/bundles")
 	}
-	script, err := filepath.Abs("testdata/document_library.mjs")
-	if err != nil {
-		test.Fatal(err)
+	script, absolutePathError := filepath.Abs("testdata/document_library.mjs")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	markdownScript, err := filepath.Abs("testdata/library.mjs")
-	if err != nil {
-		test.Fatal(err)
+	markdownScript, absolutePathError := filepath.Abs("testdata/library.mjs")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	libraryTask := startFixtureTask(&workers, func() (run, error) {
 		return tableLayoutExecute(ctx, nil, "node", markdownScript, fork, cases, "fork", "off-only")
@@ -339,9 +343,9 @@ func tableLayoutFixture(
 		protocolPaths = append(protocolPaths, mutantNativeCases)
 	}
 	for _, protocolPath := range protocolPaths {
-		raw, err := os.ReadFile(protocolPath)
-		if err != nil {
-			test.Fatal(err)
+		raw, readError := os.ReadFile(protocolPath)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		lines := strings.Split(string(raw), "\n")
 		for index, line := range lines {
@@ -378,15 +382,15 @@ func tableLayoutFixture(
 		write(test, protocolPath, []byte(strings.Join(lines, "\n")))
 	}
 	if keep := os.Getenv("ADAMIC_MARKDOWNLISTS_KEEP"); keep != "" {
-		if err := os.MkdirAll(keep, 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(keep, 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 		write(test, filepath.Join(keep, "cases.jsonl"), batch.Bytes())
 		write(test, filepath.Join(keep, "want.txt"), want.stdout)
 		for _, name := range []string{"native.txt", "canonical.txt"} {
-			value, err := os.ReadFile(filepath.Join(dir, name))
-			if err != nil {
-				test.Fatal(err)
+			value, readError := os.ReadFile(filepath.Join(dir, name))
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			write(test, filepath.Join(keep, name), value)
 		}
@@ -453,9 +457,9 @@ func tableLayoutFixture(
 		leakArgs = []string{"--atExit", "--", products.release, nativeCases}
 		leakEnv = nil
 	}
-	leakResult, err := tableLayoutExecute(ctx, leakEnv, leakCommand, leakArgs...)
-	if err != nil {
-		test.Fatal(err)
+	leakResult, tableLayoutExecuteError := tableLayoutExecute(ctx, leakEnv, leakCommand, leakArgs...)
+	if tableLayoutExecuteError != nil {
+		test.Fatal(tableLayoutExecuteError)
 	}
 	clean(test, "native leak check", leakResult)
 	original := originalTask.await(test)
@@ -522,16 +526,19 @@ func tableLayoutChecks(
 		nativeCases, inputs := fixture.mutantNativeCases, fixture.mutantInputs
 		want := run{stdout: fixture.mutantWant}
 		scratch := test.TempDir()
-		if err := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.Mkdir(filepath.Join(scratch, "markdowninline"), 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.Mkdir(
+			filepath.Join(scratch, "markdowninline"),
+			0755,
+		); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 		for _, name := range []string{"inline.ts", "classes.ts"} {
-			content, err := os.ReadFile(filepath.Join("../markdowninline", name))
-			if err != nil {
-				test.Fatal(err)
+			content, readError := os.ReadFile(filepath.Join("../markdowninline", name))
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			write(test, filepath.Join(scratch, "markdowninline", name), content)
 		}
@@ -559,9 +566,9 @@ func tableLayoutChecks(
 			"whitespace.ts",
 			"whitespaceCodec.ts",
 		} {
-			content, err := os.ReadFile(name)
-			if err != nil {
-				test.Fatal(err)
+			content, readError := os.ReadFile(name)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			if name == "leaves.ts" {
 				content = []byte(
@@ -576,18 +583,18 @@ func tableLayoutChecks(
 			}
 			write(test, filepath.Join(scratch, name), content)
 		}
-		content, err := os.ReadFile(main)
-		if err != nil {
-			test.Fatal(err)
+		content, readError := os.ReadFile(main)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		content = []byte(
 			strings.Replace(string(content), "../../markdowninline/inline.ts", "../markdowninline/inline.ts", 1),
 		)
 		mutantMain := filepath.Join(scratch, "testdata/list_probe.ts")
 		write(test, mutantMain, content)
-		result, err := tableLayoutNode(ctx, mutantMain, nativeCases)
-		if err != nil {
-			test.Fatal(err)
+		result, tableLayoutNodeError := tableLayoutNode(ctx, mutantMain, nativeCases)
+		if tableLayoutNodeError != nil {
+			test.Fatal(tableLayoutNodeError)
 		}
 		clean(test, "source Node layout mutant", result)
 		if bytes.Equal(result.stdout, want.stdout) {
@@ -601,9 +608,9 @@ func tableLayoutChecks(
 	// Repeat timings only on request; all corpus and mutant comparisons ran above.
 	if os.Getenv("ADAMIC_MARKDOWN_BENCH") != "" {
 		fast := products.release
-		runner, err := filepath.Abs(filepath.Join(root, "oracle/node.mjs"))
-		if err != nil {
-			test.Fatal(err)
+		runner, absolutePathError := filepath.Abs(filepath.Join(root, "oracle/node.mjs"))
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		for _, side := range []struct {
 			name, command string
@@ -621,9 +628,9 @@ func tableLayoutChecks(
 			var elapsed time.Duration
 			for round := 0; round < 3; round++ {
 				start := time.Now()
-				result, err := tableLayoutExecute(ctx, nil, side.command, side.args...)
-				if err != nil {
-					test.Fatal(err)
+				result, tableLayoutExecuteError := tableLayoutExecute(ctx, nil, side.command, side.args...)
+				if tableLayoutExecuteError != nil {
+					test.Fatal(tableLayoutExecuteError)
 				}
 				elapsed += time.Since(start)
 				clean(test, side.name, result)
@@ -637,9 +644,9 @@ func tableLayoutChecks(
 			)
 		}
 	}
-	data, err := os.ReadFile(nativeCases)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(nativeCases)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	test.Logf(
 		"%d physical files, %d generated, %d whole-document contexts; %d native list frames, %d composed word nodes; Go/source/native/backend/original doc bytes identical",
@@ -660,9 +667,9 @@ func tableLayoutBuildFiles(test *testing.T) []string {
 	test.Helper()
 	files := []string{"internal", "cohere", "go.mod", "go.work"}
 	for _, pattern := range []string{"*.ts", "testdata/*.ts", "../markdowninline/*.ts"} {
-		matches, err := filepath.Glob(pattern)
-		if err != nil {
-			test.Fatal(err)
+		matches, globError := filepath.Glob(pattern)
+		if globError != nil {
+			test.Fatal(globError)
 		}
 		for _, path := range matches {
 			files = append(files, filepath.ToSlash(filepath.Clean(filepath.Join("stage1/cohere/markdownblocks", path))))

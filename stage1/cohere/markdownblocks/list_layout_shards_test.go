@@ -52,9 +52,9 @@ type listLayoutManifest struct {
 
 func listLayoutSetupInputs(test *testing.T) buildcache.Inputs {
 	test.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	files := append([]string{
 		"go.mod",
@@ -117,17 +117,17 @@ func buildListLayoutSetup(test *testing.T) {
 		started := time.Now()
 		defer func() { test.Logf("Markdown list layout setup: %.3fs", time.Since(started).Seconds()) }()
 		// Reads: internal/native/*.go
-		root, err := filepath.Abs(repository)
-		if err != nil {
-			test.Fatal(err)
+		root, absolutePathError := filepath.Abs(repository)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		directory := buildcache.Product(test, listLayoutSetupInputs(test), func(directory string) error {
 			products := prepareListLayoutProducts(test, root, directory)
 			mutants := make([]string, len(products.mutants))
 			for i, path := range products.mutants {
-				relative, err := filepath.Rel(directory, path)
-				if err != nil {
-					return err
+				relative, relativePathError := filepath.Rel(directory, path)
+				if relativePathError != nil {
+					return relativePathError
 				}
 				mutants[i] = relative
 			}
@@ -141,18 +141,18 @@ func buildListLayoutSetup(test *testing.T) {
 			// Go binaries are stored inside this product; native products are named by their keys, which a runner finds
 			// in its own cache (#tqrqx60).
 			for i := 0; i < 2; i++ {
-				relative, err := filepath.Rel(directory, manifest.Paths[i])
-				if err != nil {
-					return err
+				relative, relativePathError := filepath.Rel(directory, manifest.Paths[i])
+				if relativePathError != nil {
+					return relativePathError
 				}
 				manifest.Paths[i] = relative
 			}
 			for i := 2; i < len(manifest.Paths); i++ {
 				manifest.Paths[i] = buildcache.Relative(manifest.Paths[i])
 			}
-			data, err := json.Marshal(manifest)
-			if err != nil {
-				return err
+			data, encodeError := json.Marshal(manifest)
+			if encodeError != nil {
+				return encodeError
 			}
 			return os.WriteFile(filepath.Join(directory, "manifest.json"), data, 0644)
 		})
@@ -199,9 +199,9 @@ func listLayoutDeadline(test *testing.T, unit string) func() {
 
 func TestMarkdownListLayoutUnion(test *testing.T) {
 	test.Parallel()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	inputs, _ := listLayoutInputs(test, root)
 	shards := []func(*testing.T){
@@ -362,27 +362,27 @@ func TestMarkdownListLayout_015(test *testing.T) {
 func prepareListLayoutProducts(test *testing.T, root, dir string) listLayoutProducts {
 	test.Helper()
 	var p listLayoutProducts
-	if err := os.MkdirAll(dir, 0755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(dir, 0755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	cohere := filepath.Join(root, "cohere")
 	buildGo := func(name, driver string, bridge bool) string {
 		main := filepath.Join(cohere, "cmd", name, "main.go")
-		absDriver, err := filepath.Abs(driver)
-		if err != nil {
-			test.Fatal(err)
+		absDriver, absolutePathError := filepath.Abs(driver)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		replace := map[string]string{main: absDriver}
 		if bridge {
-			absBridge, err := filepath.Abs("testdata/list_bridge.go")
-			if err != nil {
-				test.Fatal(err)
+			absBridge, absolutePathError := filepath.Abs("testdata/list_bridge.go")
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			replace[filepath.Join(cohere, "internal/format/markdown/adamic_lists.go")] = absBridge
 		}
-		overlay, err := json.Marshal(map[string]any{"Replace": replace})
-		if err != nil {
-			test.Fatal(err)
+		overlay, encodeError := json.Marshal(map[string]any{"Replace": replace})
+		if encodeError != nil {
+			test.Fatal(encodeError)
 		}
 		overlayPath := filepath.Join(dir, name+".json")
 		write(test, overlayPath, overlay)
@@ -400,8 +400,8 @@ func prepareListLayoutProducts(test *testing.T, root, dir string) listLayoutProd
 		// Read through childguard.Capture for listLayoutExecuteResult's reason. go build writes nothing until it
 		// fails, so of childguard.Run's windows only the 30-minute first-output one could have fired, and the unit's
 		// own ceiling ends a hung build sooner.
-		if stdout, stderr, err := childguard.Capture(ctx, command); err != nil {
-			test.Fatalf("Go bridge: %v\n%s%s", err, stdout, stderr)
+		if stdout, stderr, captureError := childguard.Capture(ctx, command); captureError != nil {
+			test.Fatalf("Go bridge: %v\n%s%s", captureError, stdout, stderr)
 		}
 		return binary
 	}
@@ -421,9 +421,9 @@ func prepareListLayoutProducts(test *testing.T, root, dir string) listLayoutProd
 		"internal/native/runtime",
 	}, listLayoutSources(test, root, true)...)
 	nativeFiles := []string{"internal/native/runtime"}
-	entries, err := os.ReadDir(filepath.Join(root, "internal/native"))
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(filepath.Join(root, "internal/native"))
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	for _, entry := range entries {
 		if !entry.IsDir() && strings.HasSuffix(entry.Name(), ".go") {
@@ -437,20 +437,24 @@ func prepareListLayoutProducts(test *testing.T, root, dir string) listLayoutProd
 			Flags:     []string{main},
 			Toolchain: []string{runtime.Version()},
 		}, func(directory string) error {
-			program, err := loweredResult(main)
-			if err != nil {
-				return err
+			program, loweredResultError := loweredResult(main)
+			if loweredResultError != nil {
+				return loweredResultError
 			}
-			if err := os.WriteFile(filepath.Join(directory, "program.c"), []byte(native.C(program)), 0644); err != nil {
-				return err
+			if writeError := os.WriteFile(
+				filepath.Join(directory, "program.c"),
+				[]byte(native.C(program)),
+				0644,
+			); writeError != nil {
+				return writeError
 			}
 			return os.WriteFile(filepath.Join(directory, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
 		})
 	}
 	buildNative := func(emitted, name string, sanitize bool) string {
-		source, err := os.ReadFile(filepath.Join(emitted, "program.c"))
-		if err != nil {
-			test.Fatal(err)
+		source, readError := os.ReadFile(filepath.Join(emitted, "program.c"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		sum := sha256.Sum256(source)
 		// v3: built alone (#kfjqsnh), so a v2 set, which may hold a build that ran beside it, isn't one this reads; v2
@@ -465,31 +469,31 @@ func prepareListLayoutProducts(test *testing.T, root, dir string) listLayoutProd
 			),
 			Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.Version()},
 		}, func(directory string) error {
-			if err := os.WriteFile(filepath.Join(directory, "main.c"), source, 0644); err != nil {
-				return err
+			if writeError := os.WriteFile(filepath.Join(directory, "main.c"), source, 0644); writeError != nil {
+				return writeError
 			}
 			// native.Build compiles in a directory of its own and gives clang no absolute path, so the binary names no
 			// build directory: given <build directory>/main.c, a sanitized binary kept it in its globals' metadata,
 			// random per build (landable-14b's tree, Oct 11: markdown-list-layout-sanitized and -canary-sanitized).
-			if err := native.Build(
+			if buildError := native.Build(
 				string(source),
 				filepath.Join(directory, "binary"),
 				native.Options{Sanitize: sanitize},
-			); err != nil {
-				return fmt.Errorf("native build: %w", err)
+			); buildError != nil {
+				return fmt.Errorf("native build: %w", buildError)
 			}
 			return nil
 		})
 		return filepath.Join(product, "binary")
 	}
-	main, err := filepath.Abs("testdata/list_probe.ts")
-	if err != nil {
-		test.Fatal(err)
+	main, absolutePathError := filepath.Abs("testdata/list_probe.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	emitted := emit(main, "markdown-list-layout-lowered-v2")
-	script, err := os.ReadFile(filepath.Join(emitted, "program.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	script, readError := os.ReadFile(filepath.Join(emitted, "program.mjs"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	p.javascript = script
 	p.sanitized = buildNative(emitted, "markdown-list-layout-sanitized", true)
@@ -501,16 +505,19 @@ func prepareListLayoutProducts(test *testing.T, root, dir string) listLayoutProd
 	}
 	for i, mutation := range mutations {
 		scratch := filepath.Join(dir, fmt.Sprintf("mutant-%d", i))
-		if err := os.MkdirAll(filepath.Join(scratch, "testdata"), 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.Mkdir(filepath.Join(scratch, "markdowninline"), 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.Mkdir(
+			filepath.Join(scratch, "markdowninline"),
+			0755,
+		); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 		for _, name := range []string{"inline.ts", "classes.ts"} {
-			content, err := os.ReadFile(filepath.Join("../markdowninline", name))
-			if err != nil {
-				test.Fatal(err)
+			content, readError := os.ReadFile(filepath.Join("../markdowninline", name))
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			write(test, filepath.Join(scratch, "markdowninline", name), content)
 		}
@@ -538,9 +545,9 @@ func prepareListLayoutProducts(test *testing.T, root, dir string) listLayoutProd
 			"whitespace.ts",
 			"whitespaceCodec.ts",
 		} {
-			content, err := os.ReadFile(name)
-			if err != nil {
-				test.Fatal(err)
+			content, readError := os.ReadFile(name)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			if name == "leaves.ts" {
 				content = []byte(
@@ -555,9 +562,9 @@ func prepareListLayoutProducts(test *testing.T, root, dir string) listLayoutProd
 			}
 			write(test, filepath.Join(scratch, name), content)
 		}
-		content, err := os.ReadFile(main)
-		if err != nil {
-			test.Fatal(err)
+		content, readError := os.ReadFile(main)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		content = []byte(
 			strings.Replace(string(content), "../../markdowninline/inline.ts", "../markdowninline/inline.ts", 1),
@@ -573,15 +580,15 @@ func prepareListLayoutProducts(test *testing.T, root, dir string) listLayoutProd
 				Flags:     []string{mutation.from, mutation.to},
 				Toolchain: []string{runtime.Version()},
 			}, func(directory string) error {
-				program, err := loweredResult(mutantMain)
-				if err != nil {
-					return err
+				program, loweredResultError := loweredResult(mutantMain)
+				if loweredResultError != nil {
+					return loweredResultError
 				}
 				return os.WriteFile(filepath.Join(directory, "program.c"), []byte(native.C(program)), 0644)
 			})
-			source, err := os.ReadFile(filepath.Join(product, "program.c"))
-			if err != nil {
-				test.Fatal(err)
+			source, readError := os.ReadFile(filepath.Join(product, "program.c"))
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			sum := sha256.Sum256(source)
 			flags := native.Flags(native.Options{Sanitize: true})
@@ -597,16 +604,16 @@ func prepareListLayoutProducts(test *testing.T, root, dir string) listLayoutProd
 				Flags:     append(append([]string{}, flags...), fmt.Sprintf("source=%x", sum)),
 				Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.Version()},
 			}, func(directory string) error {
-				if err := os.WriteFile(filepath.Join(directory, "main.c"), source, 0644); err != nil {
-					return err
+				if writeError := os.WriteFile(filepath.Join(directory, "main.c"), source, 0644); writeError != nil {
+					return writeError
 				}
-				if err := native.BuildFlags(
+				if buildFlagsError := native.BuildFlags(
 					string(source),
 					filepath.Join(directory, "binary"),
 					native.Options{Sanitize: true},
 					flags,
-				); err != nil {
-					return fmt.Errorf("mutant build: %w", err)
+				); buildFlagsError != nil {
+					return fmt.Errorf("mutant build: %w", buildFlagsError)
 				}
 				return nil
 			})
@@ -621,9 +628,9 @@ func listLayoutShardFixture(test *testing.T, products listLayoutProducts, inputs
 	defer workers.Wait()
 	// This last cumulative corpus contains every earlier layout milestone's inputs.
 
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	files := 0
 	for _, input := range inputs {
@@ -635,14 +642,14 @@ func listLayoutShardFixture(test *testing.T, products listLayoutProducts, inputs
 	selection := gatesample.Selection{}
 	inputs, files = selectedMarkdownInputs(inputs, files, selection)
 	dir := test.TempDir()
-	if err := os.MkdirAll(dir, 0755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(dir, 0755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	var batch bytes.Buffer
 	encoder := json.NewEncoder(&batch)
 	for _, input := range inputs {
-		if err := encoder.Encode(input); err != nil {
-			test.Fatal(err)
+		if encodeError := encoder.Encode(input); encodeError != nil {
+			test.Fatal(encodeError)
 		}
 	}
 	cases := filepath.Join(dir, "cases.jsonl")
@@ -653,8 +660,8 @@ func listLayoutShardFixture(test *testing.T, products listLayoutProducts, inputs
 		var fullBatch bytes.Buffer
 		fullEncoder := json.NewEncoder(&fullBatch)
 		for _, input := range fullInputs {
-			if err := fullEncoder.Encode(input); err != nil {
-				test.Fatal(err)
+			if encodeError := fullEncoder.Encode(input); encodeError != nil {
+				test.Fatal(encodeError)
 			}
 		}
 		write(test, fullCases, fullBatch.Bytes())
@@ -667,8 +674,8 @@ func listLayoutShardFixture(test *testing.T, products listLayoutProducts, inputs
 	listTask := startFixtureTask(&workers, func() (run, error) {
 		if selection.Sample {
 			mutantNativeCases = filepath.Join(dir, "mutant-native.txt")
-			var err error
-			mutantWant, err = listLayoutExecuteResult(
+			var listLayoutExecuteResultError error
+			mutantWant, listLayoutExecuteResultError = listLayoutExecuteResult(
 				test,
 				nil,
 				goBinary,
@@ -676,29 +683,29 @@ func listLayoutShardFixture(test *testing.T, products listLayoutProducts, inputs
 				mutantNativeCases,
 				filepath.Join(dir, "mutant-canonical.txt"),
 			)
-			if err != nil {
-				return run{}, err
+			if listLayoutExecuteResultError != nil {
+				return run{}, listLayoutExecuteResultError
 			}
 		}
 		return listLayoutExecuteResult(test, nil, goBinary, cases, nativeCases, canonicalCases)
 	})
 	goLayout := products.goLayout
-	main, err := filepath.Abs("testdata/list_probe.ts")
-	if err != nil {
-		test.Fatal(err)
+	main, absolutePathError := filepath.Abs("testdata/list_probe.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 
 	fork := os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")
 	if fork == "" {
 		fork = filepath.Join(cohere, "internal/format/prettier/bundles")
 	}
-	script, err := filepath.Abs("testdata/document_library.mjs")
-	if err != nil {
-		test.Fatal(err)
+	script, absolutePathError := filepath.Abs("testdata/document_library.mjs")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	markdownScript, err := filepath.Abs("testdata/library.mjs")
-	if err != nil {
-		test.Fatal(err)
+	markdownScript, absolutePathError := filepath.Abs("testdata/library.mjs")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	libraryTask := startFixtureTask(&workers, func() (run, error) {
 		return listLayoutExecuteResult(test, nil, "node", markdownScript, fork, cases, "fork", "off-only")
@@ -719,9 +726,9 @@ func listLayoutShardFixture(test *testing.T, products listLayoutProducts, inputs
 		protocolPaths = append(protocolPaths, mutantNativeCases)
 	}
 	for _, protocolPath := range protocolPaths {
-		raw, err := os.ReadFile(protocolPath)
-		if err != nil {
-			test.Fatal(err)
+		raw, readError := os.ReadFile(protocolPath)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		lines := strings.Split(string(raw), "\n")
 		for index, line := range lines {
@@ -759,15 +766,15 @@ func listLayoutShardFixture(test *testing.T, products listLayoutProducts, inputs
 	}
 	if keep := os.Getenv("ADAMIC_MARKDOWNLISTS_KEEP"); keep != "" {
 		keep = filepath.Join(keep, filepath.Base(test.Name()))
-		if err := os.MkdirAll(keep, 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(keep, 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 		write(test, filepath.Join(keep, "cases.jsonl"), batch.Bytes())
 		write(test, filepath.Join(keep, "want.txt"), want.stdout)
 		for _, name := range []string{"native.txt", "canonical.txt"} {
-			value, err := os.ReadFile(filepath.Join(dir, name))
-			if err != nil {
-				test.Fatal(err)
+			value, readError := os.ReadFile(filepath.Join(dir, name))
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			write(test, filepath.Join(keep, name), value)
 		}
@@ -786,9 +793,9 @@ func listLayoutShardFixture(test *testing.T, products listLayoutProducts, inputs
 		func() (run, error) { return listLayoutNodeResult(test, backendPath, nativeCases) },
 	)
 	nativeTask := startFixtureTask(&workers, func() (run, error) {
-		binary, err := sanitizedBuild.result()
-		if err != nil {
-			return run{}, err
+		binary, resultError := sanitizedBuild.result()
+		if resultError != nil {
+			return run{}, resultError
 		}
 		var environment []string
 		if runtime.GOOS == "linux" {
@@ -797,9 +804,9 @@ func listLayoutShardFixture(test *testing.T, products listLayoutProducts, inputs
 		return listLayoutExecuteResult(test, environment, binary, nativeCases)
 	})
 	releaseTask := startFixtureTask(&workers, func() (run, error) {
-		binary, err := releaseBuild.result()
-		if err != nil {
-			return run{}, err
+		binary, resultError := releaseBuild.result()
+		if resultError != nil {
+			return run{}, resultError
 		}
 		return listLayoutExecuteResult(test, nil, binary, nativeCases)
 	})
@@ -908,11 +915,11 @@ func listLayoutCommand(test *testing.T, name string, arguments ...string) (*exec
 		if command.Process == nil {
 			return os.ErrProcessDone
 		}
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
+		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if errors.Is(killError, syscall.ESRCH) {
 			return os.ErrProcessDone
 		}
-		return err
+		return killError
 	}
 	return command, ctx
 }
@@ -926,26 +933,26 @@ func listLayoutExecuteResult(test *testing.T, environment []string, name string,
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	var exitError *exec.ExitError
-	if err != nil && !errors.As(err, &exitError) {
-		return run{}, fmt.Errorf("running %s: %w", name, err)
+	if captureError != nil && !errors.As(captureError, &exitError) {
+		return run{}, fmt.Errorf("running %s: %w", name, captureError)
 	}
 	return run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}, nil
 }
 func listLayoutExecute(test *testing.T, environment []string, name string, arguments ...string) run {
 	test.Helper()
-	result, err := listLayoutExecuteResult(test, environment, name, arguments...)
-	if err != nil {
-		test.Fatal(err)
+	result, listLayoutExecuteResultError := listLayoutExecuteResult(test, environment, name, arguments...)
+	if listLayoutExecuteResultError != nil {
+		test.Fatal(listLayoutExecuteResultError)
 	}
 	return result
 }
 func listLayoutNodeResult(test *testing.T, path string, arguments ...string) (run, error) {
 	test.Helper()
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		return run{}, err
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		return run{}, absolutePathError
 	}
 	return listLayoutExecuteResult(
 		test,
@@ -956,22 +963,22 @@ func listLayoutNodeResult(test *testing.T, path string, arguments ...string) (ru
 }
 func listLayoutNode(test *testing.T, path string, arguments ...string) run {
 	test.Helper()
-	result, err := listLayoutNodeResult(test, path, arguments...)
-	if err != nil {
-		test.Fatal(err)
+	result, listLayoutNodeResultError := listLayoutNodeResult(test, path, arguments...)
+	if listLayoutNodeResultError != nil {
+		test.Fatal(listLayoutNodeResultError)
 	}
 	return result
 }
 
 func loadListLayoutSetup(test *testing.T, directory string) {
 	test.Helper()
-	data, err := os.ReadFile(filepath.Join(directory, "manifest.json"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(directory, "manifest.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var manifest listLayoutManifest
-	if err := json.Unmarshal(data, &manifest); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &manifest); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if len(manifest.Paths) != 5 {
 		test.Fatal("incomplete shared setup manifest")
@@ -987,9 +994,9 @@ func loadListLayoutSetup(test *testing.T, directory string) {
 	for _, path := range manifest.Mutants {
 		listLayoutShared.mutants = append(listLayoutShared.mutants, filepath.Join(directory, path))
 	}
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	inputs, _ := listLayoutInputs(test, root)
 	listLayoutBuckets = make([][]auditInput, testMarkdownListLayoutShards)

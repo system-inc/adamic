@@ -20,7 +20,8 @@ func (l *lowering) unionSlotWriteRefusal(node *ast.Node) error {
 			return nil
 		}
 		target := ast.SkipParentheses(binary.Left)
-		if operator == ast.KindEqualsToken && (target.Kind == ast.KindObjectLiteralExpression || target.Kind == ast.KindArrayLiteralExpression) {
+		if operator == ast.KindEqualsToken &&
+			(target.Kind == ast.KindObjectLiteralExpression || target.Kind == ast.KindArrayLiteralExpression) {
 			return l.unionSlotDestructuringRefusal(target)
 		}
 		// A compound write stores its result; a logical one stores its right side.
@@ -71,17 +72,24 @@ func (l *lowering) unionSlotDestructuringRefusal(pattern *ast.Node) error {
 	for _, element := range elements {
 		element = ast.SkipParentheses(element)
 		// { value: cell.value = fallback } defaults the target, which is still the left side.
-		if element.Kind == ast.KindBinaryExpression && element.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken {
+		if element.Kind == ast.KindBinaryExpression &&
+			element.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken {
 			element = ast.SkipParentheses(element.AsBinaryExpression().Left)
 		}
 		if element.Kind == ast.KindObjectLiteralExpression || element.Kind == ast.KindArrayLiteralExpression {
-			if err := l.unionSlotDestructuringRefusal(element); err != nil {
-				return err
+			if unionSlotDestructuringRefusalError := l.unionSlotDestructuringRefusal(
+				element,
+			); unionSlotDestructuringRefusalError != nil {
+				return unionSlotDestructuringRefusalError
 			}
 			continue
 		}
-		if err := l.unionSlotWrite(element, element, l.checker.GetTypeAtLocation(element)); err != nil {
-			return err
+		if unionSlotWriteError := l.unionSlotWrite(
+			element,
+			element,
+			l.checker.GetTypeAtLocation(element),
+		); unionSlotWriteError != nil {
+			return unionSlotWriteError
 		}
 	}
 	return nil
@@ -112,12 +120,23 @@ func (l *lowering) unionSlotWrite(where, target *ast.Node, value *checker.Type) 
 		for _, name := range names {
 			slot := l.unionWriteSlot(member, name, key)
 			if slot == nil {
-				return &Refused{Where: l.program.Where(where), What: "a write through a union to a slot " + l.checker.TypeToString(member) + " doesn't name", Fix: "narrow to one member before writing (union-write)"}
+				return &Refused{
+					Where: l.program.Where(where),
+					What:  "a write through a union to a slot " + l.checker.TypeToString(member) + " doesn't name",
+					Fix:   "narrow to one member before writing (union-write)",
+				}
 			}
 			if !l.checker.IsTypeAssignableTo(value, slot) {
-				return &Refused{Where: l.program.Where(where),
-					What: "a write through a union of " + l.checker.TypeToString(value) + " into a slot that holds " + l.checker.TypeToString(slot) + " in " + l.checker.TypeToString(member),
-					Fix:  "narrow to one member before writing, so the value fits the slot it lands in; a discriminant is written only after narrowing (union-write)"}
+				return &Refused{
+					Where: l.program.Where(where),
+					What: "a write through a union of " +
+						l.checker.TypeToString(value) +
+						" into a slot that holds " +
+						l.checker.TypeToString(slot) +
+						" in " +
+						l.checker.TypeToString(member),
+					Fix: "narrow to one member before writing, so the value fits the slot it lands in; a discriminant is written only after narrowing (union-write)",
+				}
 			}
 		}
 	}
@@ -142,7 +161,9 @@ func (l *lowering) unionWriteMembers(receiver *ast.Node) []*checker.Type {
 // unionWriteKeys is the property names an element write's key can be: a literal's own name, each
 // literal of a union key (a type parameter through its constraint), or "" for an index.
 func (l *lowering) unionWriteKeys(key *ast.Node) []string {
-	if key.Kind == ast.KindStringLiteral || key.Kind == ast.KindNoSubstitutionTemplateLiteral || key.Kind == ast.KindNumericLiteral {
+	if key.Kind == ast.KindStringLiteral ||
+		key.Kind == ast.KindNoSubstitutionTemplateLiteral ||
+		key.Kind == ast.KindNumericLiteral {
 		return []string{key.Text()}
 	}
 	proven := l.checker.GetTypeAtLocation(key)
@@ -178,7 +199,8 @@ func (l *lowering) unionWriteSlot(member *checker.Type, name string, key *ast.No
 		}
 	}
 	indexKey := l.checker.GetStringType()
-	if key != nil && l.checker.GetTypeAtLocation(key).Flags()&checker.TypeFlagsNumberLike != 0 || name != "" && isArrayIndexName(name) {
+	if key != nil && l.checker.GetTypeAtLocation(key).Flags()&checker.TypeFlagsNumberLike != 0 ||
+		name != "" && isArrayIndexName(name) {
 		indexKey = l.checker.GetNumberType()
 	}
 	return l.checker.GetIndexTypeOfType(member, indexKey)

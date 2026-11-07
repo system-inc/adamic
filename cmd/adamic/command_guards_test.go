@@ -53,10 +53,10 @@ func TestVersionNamesCommitGoAndClang(test *testing.T) {
 	test.Parallel()
 	information, ok := debug.ReadBuildInfo()
 	clang := ""
-	if compiler, err := toolchain.Path("clang"); err != nil {
-		clang = "clang: not found (" + err.Error() + ")"
-	} else if report, err := toolchain.Command(compiler, "--version").Output(); err != nil {
-		clang = "clang: not found (" + err.Error() + ")"
+	if compiler, pathError := toolchain.Path("clang"); pathError != nil {
+		clang = "clang: not found (" + pathError.Error() + ")"
+	} else if report, outputError := toolchain.Command(compiler, "--version").Output(); outputError != nil {
+		clang = "clang: not found (" + outputError.Error() + ")"
 	} else {
 		clang = "clang " + compiler + ": " + strings.TrimSpace(strings.SplitN(string(report), "\n", 2)[0])
 	}
@@ -208,11 +208,11 @@ func runGuardCommandIn(test *testing.T, environment []string, arguments []string
 	var output, diagnostic bytes.Buffer
 	command.Stdout, command.Stderr = &output, &diagnostic
 	code := 0
-	if err := command.Run(); err != nil {
-		if exit, ok := err.(*exec.ExitError); ok {
+	if runError := command.Run(); runError != nil {
+		if exit, ok := runError.(*exec.ExitError); ok {
 			code = exit.ExitCode()
 		} else {
-			test.Fatal(err)
+			test.Fatal(runError)
 		}
 	}
 	return code, output.String(), diagnostic.String()

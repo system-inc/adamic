@@ -45,9 +45,9 @@ func TestVolumeProfilePartition(test *testing.T) {
 		{"volume_profile_Mutants_test.go", "TestVolumeProfileMutants", testVolumeProfileMutantsShards},
 		{"volume_profile_Overlays_test.go", "TestVolumeProfileOverlays", testVolumeProfileOverlaysShards},
 	} {
-		tree, err := parser.ParseFile(token.NewFileSet(), filepath.Clean(slice.file), nil, 0)
-		if err != nil {
-			test.Fatal(err)
+		tree, parseFileError := parser.ParseFile(token.NewFileSet(), filepath.Clean(slice.file), nil, 0)
+		if parseFileError != nil {
+			test.Fatal(parseFileError)
 		}
 		tops := map[string]bool{}
 		union := false
@@ -106,9 +106,9 @@ func TestVolumeProfilePartition(test *testing.T) {
 				if !ok || name.Kind != token.STRING {
 					continue
 				}
-				key, err := strconv.Unquote(name.Value)
-				if err != nil {
-					test.Fatal(err)
+				key, unquoteError := strconv.Unquote(name.Value)
+				if unquoteError != nil {
+					test.Fatal(unquoteError)
 				}
 				if strings.HasPrefix(key, "typeaware ") {
 					continue
@@ -130,9 +130,9 @@ func TestVolumeProfilePartition(test *testing.T) {
 			test.Errorf("unexpected check %s owned by %v", check, actual)
 		}
 	}
-	legacy, err := parser.ParseFile(token.NewFileSet(), "profile_test.go", nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	legacy, parseFileError := parser.ParseFile(token.NewFileSet(), "profile_test.go", nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	for _, declaration := range legacy.Decls {
 		if f, ok := declaration.(*ast.FuncDecl); ok && f.Name.Name == "TestVolumeProfileAgreementAndMutants" {

@@ -86,9 +86,9 @@ func printerAsGoNative(test *testing.T, sanitize bool) string {
 	}
 	return once.get(test, func() string {
 		lowered := printerAsGoLowered(test)
-		data, err := os.ReadFile(lowered + "/port.c")
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(lowered + "/port.c")
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		options := native.Options{Sanitize: sanitize, Split: true, Jobs: 4}
 		flags := append(native.Flags(options), "split=true", "jobs=4")
@@ -164,9 +164,9 @@ func TestPrinterAsGoCohere_011(test *testing.T)   { test.Parallel(); printerAsGo
 // TestPrinterAsGoCohere_000 on without a gap, each running its own shard.
 func TestPrinterAsGoCohereWrappers(test *testing.T) {
 	test.Parallel()
-	file, err := parser.ParseFile(token.NewFileSet(), "grain_asgo_test.go", nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	file, parseFileError := parser.ParseFile(token.NewFileSet(), "grain_asgo_test.go", nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	wrapped := map[int]string{}
 	for _, declaration := range file.Decls {
@@ -177,8 +177,8 @@ func TestPrinterAsGoCohereWrappers(test *testing.T) {
 			continue
 		}
 		suffix := strings.TrimPrefix(function.Name.Name, "TestPrinterAsGoCohere_")
-		number, err := strconv.Atoi(suffix)
-		if err != nil || fmt.Sprintf("%03d", number) != suffix {
+		number, parseError := strconv.Atoi(suffix)
+		if parseError != nil || fmt.Sprintf("%03d", number) != suffix {
 			test.Fatalf("%s: not a three-digit shard wrapper", function.Name.Name)
 		}
 		runs := -1
@@ -235,32 +235,32 @@ func printerAsGoRun(ctx context.Context, job printerAsGoJob) printerAsGoResult {
 		// plus the job's settings, not PATH's, as toolchain.Command runs one under a context it has no form for. A
 		// program a test built (a port) runs as named, with this process's environment. An error resolving it fails the
 		// command as it starts.
-		if path, err := toolchain.Path(job.command); err != nil {
-			command.Err = err
+		if path, pathError := toolchain.Path(job.command); pathError != nil {
+			command.Err = pathError
 		} else {
 			command = exec.CommandContext(ctx, path, job.args...)
 			command.Env = toolchain.Env(job.environment...)
 		}
 	}
 	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
+		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if errors.Is(killError, syscall.ESRCH) {
 			return os.ErrProcessDone
 		}
-		return err
+		return killError
 	}
 	// Its own group, its output read to the end once the group is gone: no delay decides when the reads are done, so a
 	// slow finish under load is never red (#n3gk22h, a leak pass's "WaitDelay expired before I/O complete" on Home).
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	var exitError *exec.ExitError
-	if errors.As(err, &exitError) {
-		err = nil
+	if errors.As(captureError, &exitError) {
+		captureError = nil
 	}
 	result := run{stdout: stdout, stderr: stderr, exitCode: -1}
 	if command.ProcessState != nil {
 		result.exitCode = command.ProcessState.ExitCode()
 	}
-	return printerAsGoResult{job, result, err, time.Since(start)}
+	return printerAsGoResult{job, result, captureError, time.Since(start)}
 }
 
 // A job whose process leaves a descendant holding its output (a shell's background sleep, standing in for a helper a
@@ -330,8 +330,8 @@ func printerShardFile(test *testing.T, shard printerShard) string {
 		protocol.WriteString(item.input + "\n")
 	}
 	path := filepath.Join(test.TempDir(), "cases.txt")
-	if err := os.WriteFile(path, []byte(protocol.String()), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(protocol.String()), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return path
 }
@@ -361,16 +361,16 @@ func printerAsGoUnit(test *testing.T, unit int) {
 	if len(shards) != testPrinterAsGoCohereShards {
 		test.Fatalf("enumerated %d shards, declared %d", len(shards), testPrinterAsGoCohereShards)
 	}
-	if err := printerShardUnion(whole, shards); err != nil {
-		test.Fatal(err)
+	if printerShardUnionError := printerShardUnion(whole, shards); printerShardUnionError != nil {
+		test.Fatal(printerShardUnionError)
 	}
 	test.Logf("union: %d unique mode/case ids across %d shards", len(whole), len(shards))
 	if unit < 0 {
 		return
 	}
-	selected, err := printerShardSelection(os.Getenv("ADAMIC_TEST_SHARD"), len(shards))
-	if err != nil {
-		test.Fatal(err)
+	selected, printerShardSelectionError := printerShardSelection(os.Getenv("ADAMIC_TEST_SHARD"), len(shards))
+	if printerShardSelectionError != nil {
+		test.Fatal(printerShardSelectionError)
 	}
 	for number, shard := range shards {
 		if number != unit || !selected[number] {
@@ -397,9 +397,9 @@ func printerAsGoUnit(test *testing.T, unit int) {
 			)
 			ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 			defer cancel()
-			runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-			if err != nil {
-				test.Fatal(err)
+			runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			args := []string{"--cases", shard.path, shard.mode}
 			jobs := []printerAsGoJob{
@@ -465,8 +465,12 @@ func printerAsGoUnit(test *testing.T, unit int) {
 							result.run.stderr,
 						)
 					}
-				} else if err := printerShardDisagreement(number, shard, result.run); err != nil {
-					test.Errorf("%s: %v", result.job.name, err)
+				} else if printerShardDisagreementError := printerShardDisagreement(
+					number,
+					shard,
+					result.run,
+				); printerShardDisagreementError != nil {
+					test.Errorf("%s: %v", result.job.name, printerShardDisagreementError)
 				}
 			}
 		}
@@ -493,8 +497,12 @@ func TestPrinterShardPlantedDisagreement(test *testing.T) {
 			continue
 		}
 		results[number] = onNode(test, path, "--cases", printerShardFile(test, shard), shard.mode)
-		if err := printerShardDisagreement(number, shard, results[number]); err != nil {
-			test.Fatal(err)
+		if printerShardDisagreementError := printerShardDisagreement(
+			number,
+			shard,
+			results[number],
+		); printerShardDisagreementError != nil {
+			test.Fatal(printerShardDisagreementError)
 		}
 	}
 	planted := enumerations[0][1]
@@ -509,12 +517,19 @@ func TestPrinterShardPlantedDisagreement(test *testing.T) {
 		if len(shard.cases) == 0 {
 			continue
 		}
-		if err := printerShardDisagreement(number, shard, results[number]); err != nil {
+		if printerShardDisagreementError := printerShardDisagreement(
+			number,
+			shard,
+			results[number],
+		); printerShardDisagreementError != nil {
 			caught++
-			if number != owner || !strings.Contains(err.Error(), fmt.Sprintf("shard-%03d %s", owner, planted.id)) {
-				test.Fatalf("wrong owner: %v", err)
+			if number != owner || !strings.Contains(
+				printerShardDisagreementError.Error(),
+				fmt.Sprintf("shard-%03d %s", owner, planted.id),
+			) {
+				test.Fatalf("wrong owner: %v", printerShardDisagreementError)
 			}
-			test.Logf("planted disagreement caught: %v", err)
+			test.Logf("planted disagreement caught: %v", printerShardDisagreementError)
 		}
 	}
 	if caught != 1 {
@@ -543,11 +558,17 @@ func TestPrinterAsGoShardGrowth(test *testing.T) {
 	if len(before) != testPrinterAsGoCohereShards || len(after) != len(before) {
 		test.Fatal("growth changed shard count")
 	}
-	if err := printerShardUnion(append(append([]printerCase(nil), original...), tabs...), before); err != nil {
-		test.Fatal(err)
+	if printerShardUnionError := printerShardUnion(
+		append(append([]printerCase(nil), original...), tabs...),
+		before,
+	); printerShardUnionError != nil {
+		test.Fatal(printerShardUnionError)
 	}
-	if err := printerShardUnion(append(append([]printerCase(nil), grown...), tabs...), after); err != nil {
-		test.Fatal(err)
+	if printerShardUnionError := printerShardUnion(
+		append(append([]printerCase(nil), grown...), tabs...),
+		after,
+	); printerShardUnionError != nil {
+		test.Fatal(printerShardUnionError)
 	}
 	tabsIndex := (len(asGoModes) - 1) * testPrinterAsGoCohereBuckets
 	for number := range testPrinterAsGoCohereBuckets {

@@ -22,11 +22,11 @@ var commitPattern = regexp.MustCompile(`^[0-9a-f]{40}$`)
 var pinnedKeying = keying
 
 // PinnedGit runs git with arguments on root's own objects as key-time work (Keying), for a product built from a pinned
-// commit's files (json's pinned corpus, #jwn3n9q). A traced build may not read .git, since nothing there is a file a key
-// can name; but a commit id names its tree and every blob under it, so a key that names the commit names all of it, and
-// the build reads git's answer, never .git. It refuses a commit that isn't a full 40-hex id, or that no flag of inputs
-// names, so the product's key always moves with the pin. git runs with replace objects and grafts off, no system or
-// global configuration and no transport (protocol.allow=never, GIT_NO_LAZY_FETCH), so its answer about the commit is
+// commit's files (json's pinned corpus, #jwn3n9q). A traced build may not read .git, since nothing there is a file a
+// key can name; but a commit id names its tree and every blob under it, so a key that names the commit names all of it,
+// and the build reads git's answer, never .git. It refuses a commit that isn't a full 40-hex id, or that no flag of
+// inputs names, so the product's key always moves with the pin. git runs with replace objects and grafts off, no system
+// or global configuration and no transport (protocol.allow=never, GIT_NO_LAZY_FETCH), so its answer about the commit is
 // the commit's alone: a replace ref or a graft could answer with another commit's bytes under this id, a user's config
 // could change how it prints, and a fetch would read the network. arguments must ask only about commit and the objects
 // under it; stdin, when given, is git's standard input.
@@ -35,20 +35,33 @@ func PinnedGit(root string, inputs Inputs, commit string, stdin []byte, argument
 		return nil, fmt.Errorf("pinned git for %s: %q isn't a full commit id", inputs.Name, commit)
 	}
 	if !slices.ContainsFunc(inputs.Flags, func(flag string) bool { return strings.Contains(flag, commit) }) {
-		return nil, fmt.Errorf("pinned git for %s: no flag of its key names commit %s, so its key wouldn't move with the pin", inputs.Name, commit)
+		return nil, fmt.Errorf(
+			"pinned git for %s: no flag of its key names commit %s, so its key wouldn't move with the pin",
+			inputs.Name,
+			commit,
+		)
 	}
 	var output []byte
 	var err error
 	pinnedKeying(func() {
-		command := toolchain.GitCommandIn(root, append([]string{"-c", "protocol.allow=never", "-c", "core.quotePath=true"}, arguments...)...)
+		command := toolchain.GitCommandIn(
+			root,
+			append([]string{"-c", "protocol.allow=never", "-c", "core.quotePath=true"}, arguments...)...,
+		)
 		if command.Err != nil {
 			err = command.Err
 			return
 		}
-		command.Env = append(command.Env, "GIT_NO_REPLACE_OBJECTS=1", "GIT_GRAFT_FILE=/dev/null", "GIT_CONFIG_NOSYSTEM=1",
-			"GIT_CONFIG_GLOBAL=/dev/null", "GIT_NO_LAZY_FETCH=1")
-		// The caller's trace2 event target, when it sets one, goes through: it observes git and can't change its answer,
-		// and json's tests read it to prove the corpus never fetches.
+		command.Env = append(
+			command.Env,
+			"GIT_NO_REPLACE_OBJECTS=1",
+			"GIT_GRAFT_FILE=/dev/null",
+			"GIT_CONFIG_NOSYSTEM=1",
+			"GIT_CONFIG_GLOBAL=/dev/null",
+			"GIT_NO_LAZY_FETCH=1",
+		)
+		// The caller's trace2 event target, when it sets one, goes through: it observes git and can't change its
+		// answer, and json's tests read it to prove the corpus never fetches.
 		if target := os.Getenv("GIT_TRACE2_EVENT"); target != "" {
 			command.Env = append(command.Env, "GIT_TRACE2_EVENT="+target)
 		}
@@ -56,7 +69,13 @@ func PinnedGit(root string, inputs Inputs, commit string, stdin []byte, argument
 		var stderr bytes.Buffer
 		command.Stderr = &stderr
 		if output, err = command.Output(); err != nil {
-			err = fmt.Errorf("pinned git %s for %s: %w: %s", strings.Join(arguments, " "), inputs.Name, err, strings.TrimSpace(stderr.String()))
+			err = fmt.Errorf(
+				"pinned git %s for %s: %w: %s",
+				strings.Join(arguments, " "),
+				inputs.Name,
+				err,
+				strings.TrimSpace(stderr.String()),
+			)
 		}
 	})
 	return output, err
@@ -77,12 +96,27 @@ func PinnedFiles(root string, inputs Inputs, pin, corpus string, keep func(path 
 	if !commitPattern.MatchString(pin) {
 		return nil, fmt.Errorf("repository %s: invalid commit pin %q", corpus, pin)
 	}
-	if _, err := PinnedGit(root, inputs, pin, nil, "cat-file", "-e", pin+"^{commit}"); err != nil {
-		return nil, fmt.Errorf("repository %s pin %s: environment: the commit is not in the checkout at %s, and the corpus never fetches; a shallow checkout carries it with git fetch --depth=1 origin %s before the run (%w)", corpus, pin, root, pin, err)
+	if _, pinnedGitError := PinnedGit(
+		root,
+		inputs,
+		pin,
+		nil,
+		"cat-file",
+		"-e",
+		pin+"^{commit}",
+	); pinnedGitError != nil {
+		return nil, fmt.Errorf(
+			"repository %s pin %s: environment: the commit is not in the checkout at %s, and the corpus never fetches; a shallow checkout carries it with git fetch --depth=1 origin %s before the run (%w)",
+			corpus,
+			pin,
+			root,
+			pin,
+			pinnedGitError,
+		)
 	}
-	tree, err := PinnedGit(root, inputs, pin, nil, "ls-tree", "-r", "-z", pin)
-	if err != nil {
-		return nil, fmt.Errorf("repository %s pin %s: %w", corpus, pin, err)
+	tree, pinnedGitError := PinnedGit(root, inputs, pin, nil, "ls-tree", "-r", "-z", pin)
+	if pinnedGitError != nil {
+		return nil, fmt.Errorf("repository %s pin %s: %w", corpus, pin, pinnedGitError)
 	}
 	var names []string
 	blobs := map[string]string{}
@@ -99,8 +133,15 @@ func PinnedFiles(root string, inputs Inputs, pin, corpus string, keep func(path 
 		return nil, fmt.Errorf("repository %s pin %s has no %s files", corpus, pin, corpus)
 	}
 	sort.Strings(names)
-	if err := pinnedBlobsPresent(root, inputs, pin, corpus, names, blobs); err != nil {
-		return nil, err
+	if pinnedBlobsPresentError := pinnedBlobsPresent(
+		root,
+		inputs,
+		pin,
+		corpus,
+		names,
+		blobs,
+	); pinnedBlobsPresentError != nil {
+		return nil, pinnedBlobsPresentError
 	}
 	var requests strings.Builder
 	for _, name := range names {
@@ -109,36 +150,36 @@ func PinnedFiles(root string, inputs Inputs, pin, corpus string, keep func(path 
 		}
 		fmt.Fprintf(&requests, "%s:%s\n", pin, name)
 	}
-	batch, err := PinnedGit(root, inputs, pin, []byte(requests.String()), "cat-file", "--batch")
-	if err != nil {
-		return nil, fmt.Errorf("repository %s pin %s: %w", corpus, pin, err)
+	batch, pinnedGitError := PinnedGit(root, inputs, pin, []byte(requests.String()), "cat-file", "--batch")
+	if pinnedGitError != nil {
+		return nil, fmt.Errorf("repository %s pin %s: %w", corpus, pin, pinnedGitError)
 	}
 	reader := bufio.NewReader(bytes.NewReader(batch))
 	files := make([]PinnedFile, 0, len(names))
 	for _, name := range names {
-		header, err := reader.ReadString('\n')
-		if err != nil {
-			return nil, fmt.Errorf("repository %s pin %s path %s: %w", corpus, pin, name, err)
+		header, readStringError := reader.ReadString('\n')
+		if readStringError != nil {
+			return nil, fmt.Errorf("repository %s pin %s path %s: %w", corpus, pin, name, readStringError)
 		}
 		fields := strings.Fields(header)
 		if len(fields) != 3 || fields[1] != "blob" {
 			return nil, fmt.Errorf("repository %s pin %s path %s: invalid blob header %q", corpus, pin, name, header)
 		}
-		size, err := strconv.Atoi(fields[2])
-		if err != nil || size < 0 {
+		size, parseError := strconv.Atoi(fields[2])
+		if parseError != nil || size < 0 {
 			return nil, fmt.Errorf("repository %s pin %s path %s: invalid blob size %q", corpus, pin, name, fields[2])
 		}
 		data := make([]byte, size)
-		if _, err := io.ReadFull(reader, data); err != nil {
-			return nil, fmt.Errorf("repository %s pin %s path %s: %w", corpus, pin, name, err)
+		if _, readError := io.ReadFull(reader, data); readError != nil {
+			return nil, fmt.Errorf("repository %s pin %s path %s: %w", corpus, pin, name, readError)
 		}
-		newline, err := reader.ReadByte()
-		if err != nil || newline != '\n' {
+		newline, readByteError := reader.ReadByte()
+		if readByteError != nil || newline != '\n' {
 			return nil, fmt.Errorf("repository %s pin %s path %s: missing blob terminator", corpus, pin, name)
 		}
 		files = append(files, PinnedFile{Path: name, Data: data})
 	}
-	if _, err := reader.ReadByte(); err != io.EOF {
+	if _, readByteError := reader.ReadByte(); readByteError != io.EOF {
 		return nil, fmt.Errorf("repository %s pin %s: trailing batch output", corpus, pin)
 	}
 	return files, nil
@@ -150,9 +191,19 @@ func PinnedFiles(root string, inputs Inputs, pin, corpus string, keep func(path 
 func pinnedBlobsPresent(root string, inputs Inputs, pin, corpus string, names []string, blobs map[string]string) error {
 	// --no-walk: the pin's own tree, not every object reachable through its history. --missing=print lists an absent
 	// object rather than fetching it.
-	objects, err := PinnedGit(root, inputs, pin, nil, "rev-list", "--objects", "--no-walk", "--missing=print", pin)
-	if err != nil {
-		return fmt.Errorf("repository %s pin %s: %w", corpus, pin, err)
+	objects, pinnedGitError := PinnedGit(
+		root,
+		inputs,
+		pin,
+		nil,
+		"rev-list",
+		"--objects",
+		"--no-walk",
+		"--missing=print",
+		pin,
+	)
+	if pinnedGitError != nil {
+		return fmt.Errorf("repository %s pin %s: %w", corpus, pin, pinnedGitError)
 	}
 	absent := map[string]bool{}
 	for _, line := range strings.Split(string(objects), "\n") {
@@ -173,5 +224,14 @@ func pinnedBlobsPresent(root string, inputs Inputs, pin, corpus string, names []
 	if len(missing) > 5 {
 		named = strings.Join(missing[:5], ", ") + fmt.Sprintf(" and %d more", len(missing)-5)
 	}
-	return fmt.Errorf("repository %s pin %s: environment: %d of its %d %s files have no blob in the checkout at %s, and the corpus never fetches: %s", corpus, pin, len(missing), len(names), corpus, root, named)
+	return fmt.Errorf(
+		"repository %s pin %s: environment: %d of its %d %s files have no blob in the checkout at %s, and the corpus never fetches: %s",
+		corpus,
+		pin,
+		len(missing),
+		len(names),
+		corpus,
+		root,
+		named,
+	)
 }

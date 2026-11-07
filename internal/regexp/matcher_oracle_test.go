@@ -34,7 +34,7 @@ type executionResult struct {
 }
 
 func matcherResult(r *RegExp, input []uint16) (executionResult, error) {
-	m, err := r.Exec(input)
+	m, execError := r.Exec(input)
 	out := executionResult{LastIndex: r.LastIndex}
 	if m != nil {
 		out.Captures = make([][]int, len(m.Captures))
@@ -54,13 +54,13 @@ func matcherResult(r *RegExp, input []uint16) (executionResult, error) {
 			}
 		}
 	}
-	return out, err
+	return out, execError
 }
 func nodeResults(test *testing.T, cases []executionCase) []executionResult {
 	test.Helper()
-	data, err := json.Marshal(cases)
-	if err != nil {
-		test.Fatal(err)
+	data, encodeError := json.Marshal(cases)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	command := exec.Command("node", "-e", `
 const cases=JSON.parse(require('fs').readFileSync(0,'utf8'));
@@ -77,12 +77,12 @@ const results=cases.map((c,index)=>{
 	command.Stdin = bytes.NewReader(data)
 	var output, progress bytes.Buffer
 	command.Stdout, command.Stderr = &output, &progress
-	if err := childguard.Run(command, childguard.Options{}); err != nil {
-		test.Fatalf("Node execution oracle: %v\n%s\n%s", err, progress.Bytes(), output.Bytes())
+	if runError := childguard.Run(command, childguard.Options{}); runError != nil {
+		test.Fatalf("Node execution oracle: %v\n%s\n%s", runError, progress.Bytes(), output.Bytes())
 	}
 	var results []executionResult
-	if err = json.Unmarshal(output.Bytes(), &results); err != nil {
-		test.Fatalf("Node decode: %v\n%s", err, output.Bytes())
+	if decodeError := json.Unmarshal(output.Bytes(), &results); decodeError != nil {
+		test.Fatalf("Node decode: %v\n%s", decodeError, output.Bytes())
 	}
 	if len(results) != len(cases) {
 		test.Fatal("Node result count")
@@ -135,12 +135,12 @@ func compareExecutionCases(test *testing.T, cases []executionCase, external bool
 				r.StepLimit = 10_000_000
 			}
 			r.DisableRegular = mode == 2
-			got, err := matcherResult(r, c.Input)
+			got, matcherResultError := matcherResult(r, c.Input)
 			want := c.Expected
 			if external {
 				want = results[i]
 			}
-			if err != nil {
+			if matcherResultError != nil {
 				test.Errorf(
 					"execution source=%s pattern=%q flags=%q input=%v lastIndex=%d: %v",
 					c.Source,
@@ -148,7 +148,7 @@ func compareExecutionCases(test *testing.T, cases []executionCase, external bool
 					c.Flags,
 					c.Input,
 					c.LastIndex,
-					err,
+					matcherResultError,
 				)
 				continue
 			}
@@ -319,7 +319,7 @@ func runMatcherRandomNode(test *testing.T, shard int) {
 			}
 			pattern += atom + quantifiers[random.Intn(len(quantifiers))]
 		}
-		if _, err := Parse(pattern, flag); err != nil {
+		if _, parseError := Parse(pattern, flag); parseError != nil {
 			continue
 		}
 		var input []rune
@@ -338,22 +338,22 @@ func runMatcherRandomNode(test *testing.T, shard int) {
 }
 func runMatcherTest262Executions(test *testing.T, shard int) {
 	test.Helper()
-	data, err := os.ReadFile("testdata/matches.json.gz")
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile("testdata/matches.json.gz")
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	reader, err := gzip.NewReader(bytes.NewReader(data))
-	if err != nil {
-		test.Fatal(err)
+	reader, gzipError := gzip.NewReader(bytes.NewReader(data))
+	if gzipError != nil {
+		test.Fatal(gzipError)
 	}
 	defer reader.Close()
-	data, err = io.ReadAll(reader)
-	if err != nil {
-		test.Fatal(err)
+	data, readError = io.ReadAll(reader)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var cases []executionCase
-	if err = json.Unmarshal(data, &cases); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &cases); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	compareExecutionCases(test, matcherExecutionShard(cases, shard), false)
 }
@@ -417,21 +417,27 @@ func TestMatcherPropertyProviderStrings(test *testing.T) {
 	}
 	expected := nodeResults(test, cases)
 	for i, c := range cases {
-		p, err := CompileWithProperties(c.Pattern, c.Flags, emojiTestProvider{})
-		if err != nil {
-			test.Fatal(err)
+		p, compileWithPropertiesError := CompileWithProperties(c.Pattern, c.Flags, emojiTestProvider{})
+		if compileWithPropertiesError != nil {
+			test.Fatal(compileWithPropertiesError)
 		}
 		r := p.New()
 		r.StepLimit = 10000
-		got, err := matcherResult(r, c.Input)
-		if err != nil || !reflect.DeepEqual(got, expected[i]) {
-			test.Errorf("property strings %q got=%+v node=%+v error=%v", c.Pattern, got, expected[i], err)
+		got, matcherResultError := matcherResult(r, c.Input)
+		if matcherResultError != nil || !reflect.DeepEqual(got, expected[i]) {
+			test.Errorf(
+				"property strings %q got=%+v node=%+v error=%v",
+				c.Pattern,
+				got,
+				expected[i],
+				matcherResultError,
+			)
 		}
 	}
-	_, err := CompileWithProperties("\\p{ASCII}", "u", GoProperties{})
+	_, compileWithPropertiesError := CompileWithProperties("\\p{ASCII}", "u", GoProperties{})
 	var unavailable *UnavailablePropertyError
-	if !errors.As(err, &unavailable) {
-		test.Fatalf("missing property silently compiled: %v", err)
+	if !errors.As(compileWithPropertiesError, &unavailable) {
+		test.Fatalf("missing property silently compiled: %v", compileWithPropertiesError)
 	}
 }
 
@@ -491,16 +497,16 @@ func TestMatcherProviderSnapshot(test *testing.T) {
 	}
 	expected := nodeResults(test, []executionCase{c})[0]
 	data := PropertySet{Strings: [][]rune{[]rune("👩‍💻")}}
-	p, err := CompileWithProperties(c.Pattern, c.Flags, storedPropertyProvider{data})
-	if err != nil {
-		test.Fatal(err)
+	p, compileWithPropertiesError := CompileWithProperties(c.Pattern, c.Flags, storedPropertyProvider{data})
+	if compileWithPropertiesError != nil {
+		test.Fatal(compileWithPropertiesError)
 	}
 	data.Strings[0][0] = 'x'
 	r := p.New()
 	r.StepLimit = 10000
-	got, err := matcherResult(r, c.Input)
-	if err != nil || !reflect.DeepEqual(got, expected) {
-		test.Errorf("property provider snapshot got=%+v node=%+v error=%v", got, expected, err)
+	got, matcherResultError := matcherResult(r, c.Input)
+	if matcherResultError != nil || !reflect.DeepEqual(got, expected) {
+		test.Errorf("property provider snapshot got=%+v node=%+v error=%v", got, expected, matcherResultError)
 	}
 }
 

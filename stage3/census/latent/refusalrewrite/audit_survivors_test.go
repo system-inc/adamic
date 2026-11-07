@@ -14,22 +14,22 @@ import (
 
 func minimalRefusalSource(test *testing.T) []byte {
 	test.Helper()
-	source, err := os.ReadFile("testdata/two-outer-returns.go.txt")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("testdata/two-outer-returns.go.txt")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return source
 }
 
 func TestFullOwnerGuardRequiresFunctionDeclaration(test *testing.T) {
 	test.Parallel()
-	output, err := Rewrite(minimalRefusalSource(test))
-	if err != nil {
-		test.Fatal(err)
+	output, rewriteError := Rewrite(minimalRefusalSource(test))
+	if rewriteError != nil {
+		test.Fatal(rewriteError)
 	}
-	file, err := parser.ParseFile(token.NewFileSet(), "rewritten.go", output, 0)
-	if err != nil {
-		test.Fatal(err)
+	file, parseFileError := parser.ParseFile(token.NewFileSet(), "rewritten.go", output, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	guards := 0
 	for _, declaration := range file.Decls {
@@ -65,9 +65,9 @@ func TestFullOwnerGuardRequiresFunctionDeclaration(test *testing.T) {
 					"ast.KindFunctionDeclaration",
 					"1",
 				).Replace(condition)
-				value, err := types.Eval(token.NewFileSet(), nil, token.NoPos, expression)
-				if err != nil {
-					test.Fatalf("evaluating emitted owner guard %q: %v", expression, err)
+				value, evalError := types.Eval(token.NewFileSet(), nil, token.NoPos, expression)
+				if evalError != nil {
+					test.Fatalf("evaluating emitted owner guard %q: %v", expression, evalError)
 				}
 				if value.Value == nil || value.Value.Kind() != constant.Bool {
 					test.Fatalf("owner guard is not boolean: %q", expression)
@@ -94,9 +94,9 @@ func TestFullOwnerGuardRequiresFunctionDeclaration(test *testing.T) {
 func TestRewriteAcceptsTwoOuterRefusalReturns(test *testing.T) {
 	test.Parallel()
 	source := minimalRefusalSource(test)
-	before, err := parser.ParseFile(token.NewFileSet(), "before.go", source, 0)
-	if err != nil {
-		test.Fatal(err)
+	before, parseFileError := parser.ParseFile(token.NewFileSet(), "before.go", source, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	returns := 0
 	ast.Inspect(before, func(node ast.Node) bool {
@@ -111,13 +111,13 @@ func TestRewriteAcceptsTwoOuterRefusalReturns(test *testing.T) {
 	if returns != 2 {
 		test.Fatalf("minimal supported refusal input has %d outer returns, want 2", returns)
 	}
-	output, err := Rewrite(source)
-	if err != nil {
-		test.Fatalf("supported two-return refusal rejected: %v", err)
+	output, rewriteError := Rewrite(source)
+	if rewriteError != nil {
+		test.Fatalf("supported two-return refusal rejected: %v", rewriteError)
 	}
-	after, err := parser.ParseFile(token.NewFileSet(), "after.go", output, 0)
-	if err != nil {
-		test.Fatal(err)
+	after, parseFileError := parser.ParseFile(token.NewFileSet(), "after.go", output, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	var original, production *ast.FuncDecl
 	latent := false

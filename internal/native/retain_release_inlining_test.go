@@ -21,14 +21,18 @@ func TestRetainReleaseInliningBoundary(test *testing.T) {
 	} {
 		test.Run(profile.name, func(test *testing.T) {
 			directory := test.TempDir()
-			files, flags, compiler, _, err := runtimeInputs("", profile.options, nil)
-			if err != nil {
-				test.Fatal(err)
+			files, flags, compiler, _, runtimeInputsError := runtimeInputs("", profile.options, nil)
+			if runtimeInputsError != nil {
+				test.Fatal(runtimeInputsError)
 			}
 			for _, file := range files {
 				if strings.HasSuffix(file.name, ".h") {
-					if err := os.WriteFile(filepath.Join(directory, file.name), file.contents, 0644); err != nil {
-						test.Fatal(err)
+					if writeError := os.WriteFile(
+						filepath.Join(directory, file.name),
+						file.contents,
+						0644,
+					); writeError != nil {
+						test.Fatal(writeError)
 					}
 				}
 			}
@@ -36,8 +40,12 @@ func TestRetainReleaseInliningBoundary(test *testing.T) {
 void *retain_probe(void *value) { return adamic_retain(value); }
 void release_probe(void *value) { adamic_release(value); }
 `
-			if err := os.WriteFile(filepath.Join(directory, "probe.c"), []byte(source), 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(
+				filepath.Join(directory, "probe.c"),
+				[]byte(source),
+				0644,
+			); writeError != nil {
+				test.Fatal(writeError)
 			}
 			compile := func(source, output string, extra ...string) {
 				test.Helper()
@@ -55,14 +63,14 @@ void release_probe(void *value) { adamic_release(value); }
 				command, release := boundedrun.Command(time.Minute, compiler, arguments...)
 				defer release()
 				command.Dir = directory
-				if output, err := command.CombinedOutput(); err != nil {
-					test.Fatalf("clang: %v\n%s", err, output)
+				if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+					test.Fatalf("clang: %v\n%s", combinedOutputError, output)
 				}
 			}
 			compile("probe.c", "probe.ll")
-			data, err := os.ReadFile(filepath.Join(directory, "probe.ll"))
-			if err != nil {
-				test.Fatal(err)
+			data, readError := os.ReadFile(filepath.Join(directory, "probe.ll"))
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			ir := string(data)
 			for _, name := range []string{"adamic_retain", "adamic_release"} {
@@ -83,12 +91,12 @@ void release_probe(void *value) { adamic_release(value); }
 					test.Fatalf("%s %s was not inlined", profile.name, name)
 				}
 			}
-			if err := os.WriteFile(
+			if writeError := os.WriteFile(
 				filepath.Join(directory, "unused.c"),
 				[]byte("#include \"adamic.h\"\n"),
 				0644,
-			); err != nil {
-				test.Fatal(err)
+			); writeError != nil {
+				test.Fatal(writeError)
 			}
 			compile("unused.c", "unused.ll", "-Wunused-function", "-Werror")
 		})

@@ -36,7 +36,10 @@ var SignatureKinds = []string{"panic", "mismatch", "refusal", "crash"}
 func ParseSignature(written string) (Signature, error) {
 	kind, text, found := strings.Cut(written, ":")
 	if !found || text == "" {
-		return Signature{}, fmt.Errorf("a signature is <kind>:<text>, with kind one of %s", strings.Join(SignatureKinds, ", "))
+		return Signature{}, fmt.Errorf(
+			"a signature is <kind>:<text>, with kind one of %s",
+			strings.Join(SignatureKinds, ", "),
+		)
 	}
 	for _, known := range SignatureKinds {
 		if kind == known {
@@ -90,11 +93,11 @@ func (c *Checkout) Observe(source string, name string, directory string, kind st
 }
 
 func (c *Checkout) observe(source string, name string, directory string, kind string) (Observation, Outcome) {
-	if err := os.MkdirAll(directory, 0o755); err != nil {
+	if createDirectoryError := os.MkdirAll(directory, 0o755); createDirectoryError != nil {
 		return Observation{Verdict: Finding, Lines: map[string]string{}}, Outcome{Verdict: Finding}
 	}
 	path := filepath.Join(directory, name)
-	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 		return Observation{Verdict: Finding, Lines: map[string]string{}}, Outcome{Verdict: Finding}
 	}
 	lowered := execute(directory, nil, 30*time.Second, c.adamic, "c", path)
@@ -145,7 +148,8 @@ var diagnosticLocation = regexp.MustCompile(`^(?:adamic: )?[^ ]+:[0-9]+:[0-9]+: 
 // refusalLine is a NotYet or Refused diagnostic without its location.
 func refusalLine(stderr string) string {
 	for line := range strings.SplitSeq(stderr, "\n") {
-		if strings.Contains(line, "Adamic 0.1 refuses") || (strings.Contains(line, "can't lower") && strings.Contains(line, "yet")) {
+		if strings.Contains(line, "Adamic 0.1 refuses") ||
+			(strings.Contains(line, "can't lower") && strings.Contains(line, "yet")) {
 			return diagnosticLocation.ReplaceAllString(line, "")
 		}
 	}
@@ -204,7 +208,13 @@ func firstDifference(node Run, other Run, name string) string {
 	case node.ExitCode != other.ExitCode:
 		return fmt.Sprintf("%s exit: node %d, %s %d", name, node.ExitCode, name, other.ExitCode)
 	case string(node.Stderr) != string(other.Stderr):
-		return fmt.Sprintf("%s stderr: node %q, %s %q", name, firstLines(string(node.Stderr), 1), name, firstLines(string(other.Stderr), 1))
+		return fmt.Sprintf(
+			"%s stderr: node %q, %s %q",
+			name,
+			firstLines(string(node.Stderr), 1),
+			name,
+			firstLines(string(other.Stderr), 1),
+		)
 	}
 	return ""
 }
@@ -217,13 +227,18 @@ func Derive(observation Observation) (Signature, error) {
 	case observation.Lines["refusal"] != "":
 		return Signature{Kind: "refusal", Text: observation.Lines["refusal"], Exact: true}, nil
 	case len(observation.Checker) > 0:
-		return Signature{}, fmt.Errorf("the checker refuses it (%s): it isn't Adamic, so there is nothing to reduce", strings.Join(observation.Checker, ", "))
+		return Signature{}, fmt.Errorf(
+			"the checker refuses it (%s): it isn't Adamic, so there is nothing to reduce",
+			strings.Join(observation.Checker, ", "),
+		)
 	case observation.Lines["panic"] != "":
 		return Signature{Kind: "panic", Text: observation.Lines["panic"], Exact: true}, nil
 	case observation.Lines["mismatch"] != "":
 		return Signature{Kind: "mismatch", Text: observation.Lines["mismatch"], Exact: true}, nil
 	case observation.Verdict == Finding:
-		return Signature{}, errors.New("it fails in a way no signature names (a sanitizer report, a leak, or C clang refused)")
+		return Signature{}, errors.New(
+			"it fails in a way no signature names (a sanitizer report, a leak, or C clang refused)",
+		)
 	}
 	return Signature{}, fmt.Errorf("it doesn't fail: %s", observation.Verdict)
 }
@@ -239,7 +254,15 @@ type Reduction struct {
 // and comes to the same verdict: a candidate that fails some other way, or no longer fails, is never
 // kept, so the reduction can't drift to a different failure. observe runs a candidate; slot names
 // which of the workers runs it, so each can have a directory of its own.
-func Reduce(path string, source string, signature Signature, original Observation, observe func(source string, slot int) Observation, workers int, budget int) Reduction {
+func Reduce(
+	path string,
+	source string,
+	signature Signature,
+	original Observation,
+	observe func(source string, slot int) Observation,
+	workers int,
+	budget int,
+) Reduction {
 	slots := make(chan int, workers)
 	for slot := range workers {
 		slots <- slot
@@ -282,5 +305,7 @@ func withoutBlankLines(text string) string {
 // keeps is the test every candidate passes to be kept: the same verdict, the same checker
 // diagnostics, and the signature.
 func keeps(signature Signature, original Observation, candidate Observation) bool {
-	return candidate.Verdict == original.Verdict && strings.Join(candidate.Checker, ",") == strings.Join(original.Checker, ",") && candidate.Has(signature)
+	return candidate.Verdict == original.Verdict &&
+		strings.Join(candidate.Checker, ",") == strings.Join(original.Checker, ",") &&
+		candidate.Has(signature)
 }

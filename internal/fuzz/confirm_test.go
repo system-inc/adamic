@@ -15,8 +15,8 @@ func flakyCheckout(test *testing.T, stage string, always bool, silent bool) (*Ch
 	test.Helper()
 	root := test.TempDir()
 	tools := filepath.Join(root, "tools", "bin")
-	if err := os.MkdirAll(tools, 0755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(tools, 0755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	test.Setenv("ADAMIC_TOOLS", filepath.Dir(tools))
 	test.Setenv("FUZZ_FAIL_STAGE", stage)
@@ -48,8 +48,8 @@ fi
 	)
 	write := func(path, body string) {
 		test.Helper()
-		if err := os.WriteFile(path, []byte("#!/bin/sh\n"+settings+body), 0755); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte("#!/bin/sh\n"+settings+body), 0755); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	adamic := filepath.Join(tools, "adamic")
@@ -101,9 +101,9 @@ func TestFindingReproducesAlone(test *testing.T) {
 			if outcome.Verdict != testCase.want {
 				test.Fatalf("got %s %s: %s; want %s", outcome.Verdict, outcome.Key, outcome.Detail, testCase.want)
 			}
-			attempts, err := os.ReadFile(calls)
-			if err != nil {
-				test.Fatal(err)
+			attempts, readError := os.ReadFile(calls)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			if count := strings.Count(string(attempts), "attempt\n"); count != 2 {
 				test.Fatalf("got %d attempts, want exactly 2", count)
@@ -199,12 +199,16 @@ func TestCompileFindingConfirmation(test *testing.T) {
 		test.Run(testCase.name, func(test *testing.T) {
 			directory := test.TempDir()
 			compiler := filepath.Join(directory, "compiler")
-			if err := os.WriteFile(compiler, []byte("#!/bin/sh\n"+testCase.body+"\n"), 0755); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(compiler, []byte("#!/bin/sh\n"+testCase.body+"\n"), 0755); writeError != nil {
+				test.Fatal(writeError)
 			}
 			path := filepath.Join(directory, "program.a")
-			if err := os.WriteFile(path, []byte("// parallel-refuse: expected path\n"), 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(
+				path,
+				[]byte("// parallel-refuse: expected path\n"),
+				0644,
+			); writeError != nil {
+				test.Fatal(writeError)
 			}
 			checkout := &Checkout{adamic: compiler}
 			attempts := 0

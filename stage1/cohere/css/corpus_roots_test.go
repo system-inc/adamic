@@ -25,14 +25,14 @@ func TestCSSCorpusRootsHoldEveryCorpusFile(test *testing.T) {
 	// Reads: *.[lL][eE][sS][sS]
 	// Reads: *.[sS][cC][sS][sS]
 	// Reads: cohere
-	repo, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	repo, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	var whole, rooted []string
-	err = filepath.WalkDir(repo, func(path string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
+	walkError := filepath.WalkDir(repo, func(path string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
 		if entry.IsDir() {
 			if entry.Name() == ".git" || entry.Name() == "node_modules" {
@@ -45,14 +45,14 @@ func TestCSSCorpusRootsHoldEveryCorpusFile(test *testing.T) {
 		}
 		return nil
 	})
-	if err != nil {
-		test.Fatal(err)
+	if walkError != nil {
+		test.Fatal(walkError)
 	}
-	if err := oracles.WalkCorpusRoots(
+	if walkCorpusRootsError := oracles.WalkCorpusRoots(
 		repo,
 		func(path string) error { rooted = append(rooted, path); return nil },
-	); err != nil {
-		test.Fatal(err)
+	); walkCorpusRootsError != nil {
+		test.Fatal(walkCorpusRootsError)
 	}
 	for _, path := range whole {
 		if !slices.Contains(rooted, path) {

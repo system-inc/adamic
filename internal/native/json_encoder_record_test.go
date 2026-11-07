@@ -18,9 +18,9 @@ func jsonEncoderRecordView(test *testing.T, wasm bool) {
 		}
 		options = Options{Target: "wasm32-wasi", Count: true}
 	}
-	encoder, err := os.ReadFile("runtime/json_stringify.c")
-	if err != nil {
-		test.Fatal(err)
+	encoder, readError := os.ReadFile("runtime/json_stringify.c")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	source := strings.ReplaceAll(string(encoder), "adamic_json_stringify", "probe_adamic_json_stringify")
 	// Keep the real header name; rename only the exported entry points.
@@ -41,8 +41,12 @@ func jsonEncoderRecordView(test *testing.T, wasm bool) {
 			)
 		}
 		binary := filepath.Join(test.TempDir(), "record-view")
-		if err := Build("#define _POSIX_C_SOURCE 200809L\n"+code+"\n"+harness, binary, options); err != nil {
-			test.Fatal(err)
+		if buildError := Build(
+			"#define _POSIX_C_SOURCE 200809L\n"+code+"\n"+harness,
+			binary,
+			options,
+		); buildError != nil {
+			test.Fatal(buildError)
 		}
 		modes := []string{"semantics", "two-indices", "prototypes", "iteration"}
 		if mutant {

@@ -14,14 +14,14 @@ import (
 
 func clean(source []byte) ([]byte, error) {
 	fs := token.NewFileSet()
-	file, err := parser.ParseFile(fs, "overlay.go", source, parser.ParseComments)
-	if err != nil {
-		return nil, err
+	file, parseFileError := parser.ParseFile(fs, "overlay.go", source, parser.ParseComments)
+	if parseFileError != nil {
+		return nil, parseFileError
 	}
 	for _, spec := range append(file.Imports[:0:0], file.Imports...) {
-		path, err := strconv.Unquote(spec.Path.Value)
-		if err != nil {
-			return nil, err
+		path, unquoteError := strconv.Unquote(spec.Path.Value)
+		if unquoteError != nil {
+			return nil, unquoteError
 		}
 		// Blank and dot imports cannot be judged by selector use; preserve their semantics.
 		if spec.Name != nil && (spec.Name.Name == "_" || spec.Name.Name == ".") {
@@ -36,24 +36,24 @@ func clean(source []byte) ([]byte, error) {
 		}
 	}
 	var output bytes.Buffer
-	if err := format.Node(&output, fs, file); err != nil {
-		return nil, err
+	if nodeError := format.Node(&output, fs, file); nodeError != nil {
+		return nil, nodeError
 	}
 	return output.Bytes(), nil
 }
 
 func main() {
 	for _, path := range os.Args[1:] {
-		source, err := os.ReadFile(path)
-		if err != nil {
-			panic(err)
+		source, readError := os.ReadFile(path)
+		if readError != nil {
+			panic(readError)
 		}
-		output, err := clean(source)
-		if err != nil {
-			panic(err)
+		output, cleanError := clean(source)
+		if cleanError != nil {
+			panic(cleanError)
 		}
-		if err := os.WriteFile(path, output, 0600); err != nil {
-			panic(err)
+		if writeError := os.WriteFile(path, output, 0600); writeError != nil {
+			panic(writeError)
 		}
 	}
 }

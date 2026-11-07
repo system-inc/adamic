@@ -52,18 +52,18 @@ func jsonPinnedCorpusInputsAt(pin string) (buildcache.Inputs, error) {
 // at the pin is a different commit id, so it is this case too. Keying builds nothing.
 func TestJSONPinnedCorpusRekeysWithThePin(test *testing.T) {
 	test.Parallel()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	keys := func(pin string) (string, string) {
-		inputs, err := jsonPinnedCorpusInputsAt(pin)
-		if err != nil {
-			test.Fatal(err)
+		inputs, jsonPinnedCorpusInputsAtError := jsonPinnedCorpusInputsAt(pin)
+		if jsonPinnedCorpusInputsAtError != nil {
+			test.Fatal(jsonPinnedCorpusInputsAtError)
 		}
-		declared, err := buildcache.Key(root, inputs)
-		if err != nil {
-			test.Fatal(err)
+		declared, keyError := buildcache.Key(root, inputs)
+		if keyError != nil {
+			test.Fatal(keyError)
 		}
 		return buildcache.NameKey(root, inputs), declared
 	}
@@ -99,9 +99,9 @@ func buildJSONPinnedCorpus(inputs buildcache.Inputs) func(directory string) erro
 // The product test and every corpus reader share one recipe and key.
 func TestProduct_JSONPinnedCorpus(test *testing.T) {
 	test.Parallel()
-	inputs, err := jsonPinnedCorpusInputs()
-	if err != nil {
-		test.Fatal(err)
+	inputs, jsonPinnedCorpusInputsError := jsonPinnedCorpusInputs()
+	if jsonPinnedCorpusInputsError != nil {
+		test.Fatal(jsonPinnedCorpusInputsError)
 	}
 	buildcache.Product(test, inputs, buildJSONPinnedCorpus(inputs))
 }
@@ -120,8 +120,8 @@ func writeCorpusRecords(path string, cases []textCase) error {
 }
 
 func readCorpusRecords(path string) ([]textCase, error) {
-	cases, err := oracles.ReadCorpusRecords(path)
-	return localCases(cases), err
+	cases, readCorpusRecordsError := oracles.ReadCorpusRecords(path)
+	return localCases(cases), readCorpusRecordsError
 }
 
 // The corpus.pin manifest beside this file, read from the repository root.
@@ -136,8 +136,8 @@ func readCorpusRecords(path string) ([]textCase, error) {
 // It runs git with no transport and no lazy fetch, so the corpus never fetches. The TypeScript corpusfiles selector
 // returns live paths, not pinned bytes.
 func repositoryCasesAtPin(root string, inputs buildcache.Inputs, pin string) ([]textCase, error) {
-	cases, err := oracles.RepositoryCasesAtPin(root, inputs, pin)
-	return localCases(cases), err
+	cases, repositoryCasesAtPinError := oracles.RepositoryCasesAtPin(root, inputs, pin)
+	return localCases(cases), repositoryCasesAtPinError
 }
 
 // pinnedCorpusFiles is every non-generated input: the pin's repository JSON and the provisioned files from the
@@ -169,23 +169,23 @@ func fixtureCasesAtPin(root, pin string) ([]textCase, error) {
 func TestPinnedRepositoryCorpusIgnoresWorkingTree(test *testing.T) {
 	test.Parallel()
 	fixture := newRepositoryFixture(test)
-	pin, err := gitCorpus(fixture.root, "rev-parse", "HEAD")
-	if err != nil {
-		test.Fatal(err)
+	pin, gitCorpusError := gitCorpus(fixture.root, "rev-parse", "HEAD")
+	if gitCorpusError != nil {
+		test.Fatal(gitCorpusError)
 	}
-	before, err := fixtureCasesAtPin(fixture.root, strings.TrimSpace(string(pin)))
-	if err != nil {
-		test.Fatal(err)
+	before, fixtureCasesAtPinError := fixtureCasesAtPin(fixture.root, strings.TrimSpace(string(pin)))
+	if fixtureCasesAtPinError != nil {
+		test.Fatal(fixtureCasesAtPinError)
 	}
 	fixtureWrite(test, fixture.root, "tracked.json", "{changed:true}")
 	fixtureWrite(test, fixture.root, "added.json", "[42]")
 	fixtureGit(test, fixture.root, "add", "tracked.json", "added.json")
-	if err := os.Remove(filepath.Join(fixture.root, "nested/second.json")); err != nil {
-		test.Fatal(err)
+	if removeError := os.Remove(filepath.Join(fixture.root, "nested/second.json")); removeError != nil {
+		test.Fatal(removeError)
 	}
-	after, err := fixtureCasesAtPin(fixture.root, strings.TrimSpace(string(pin)))
-	if err != nil {
-		test.Fatal(err)
+	after, fixtureCasesAtPinError := fixtureCasesAtPin(fixture.root, strings.TrimSpace(string(pin)))
+	if fixtureCasesAtPinError != nil {
+		test.Fatal(fixtureCasesAtPinError)
 	}
 	if fmt.Sprint(before) != fmt.Sprint(after) {
 		test.Fatal("working-tree/index mutation changed pinned names or bytes")
@@ -196,23 +196,23 @@ func TestPinnedRepositoryCorpusIgnoresWorkingTree(test *testing.T) {
 func TestPinnedRepositoryCorpusPinMutant(test *testing.T) {
 	test.Parallel()
 	fixture := newRepositoryFixture(test)
-	pin, err := gitCorpus(fixture.root, "rev-parse", "HEAD")
-	if err != nil {
-		test.Fatal(err)
+	pin, gitCorpusError := gitCorpus(fixture.root, "rev-parse", "HEAD")
+	if gitCorpusError != nil {
+		test.Fatal(gitCorpusError)
 	}
-	before, err := fixtureCasesAtPin(fixture.root, strings.TrimSpace(string(pin)))
-	if err != nil {
-		test.Fatal(err)
+	before, fixtureCasesAtPinError := fixtureCasesAtPin(fixture.root, strings.TrimSpace(string(pin)))
+	if fixtureCasesAtPinError != nil {
+		test.Fatal(fixtureCasesAtPinError)
 	}
 	fixtureWrite(test, fixture.root, "pin-added.json", "[42]")
 	commitFixtureJSON(test, fixture.root, "pin-added.json")
-	mutant, err := gitCorpus(fixture.root, "rev-parse", "HEAD")
-	if err != nil {
-		test.Fatal(err)
+	mutant, gitCorpusError := gitCorpus(fixture.root, "rev-parse", "HEAD")
+	if gitCorpusError != nil {
+		test.Fatal(gitCorpusError)
 	}
-	after, err := fixtureCasesAtPin(fixture.root, strings.TrimSpace(string(mutant)))
-	if err != nil {
-		test.Fatal(err)
+	after, fixtureCasesAtPinError := fixtureCasesAtPin(fixture.root, strings.TrimSpace(string(mutant)))
+	if fixtureCasesAtPinError != nil {
+		test.Fatal(fixtureCasesAtPinError)
 	}
 	if pinForCases(before).SHA256 == pinForCases(after).SHA256 || len(after) != len(before)+1 {
 		test.Fatal("pin mutant did not change its JSON set and identity")
@@ -245,30 +245,35 @@ func TestJSONPinnedCorpusRecords(test *testing.T) {
 		{"d.json", "7 e.json\n"},
 	}
 	path := filepath.Join(test.TempDir(), "records")
-	if err := writeCorpusRecords(path, cases); err != nil {
-		test.Fatal(err)
+	if writeCorpusRecordsError := writeCorpusRecords(path, cases); writeCorpusRecordsError != nil {
+		test.Fatal(writeCorpusRecordsError)
 	}
-	read, err := readCorpusRecords(path)
-	if err != nil || fmt.Sprint(read) != fmt.Sprint(cases) {
-		test.Fatalf("records changed names or bytes: %v %q", err, read)
+	read, readCorpusRecordsError := readCorpusRecords(path)
+	if readCorpusRecordsError != nil || fmt.Sprint(read) != fmt.Sprint(cases) {
+		test.Fatalf("records changed names or bytes: %v %q", readCorpusRecordsError, read)
 	}
-	encoded, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	encoded, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	// A product cut short, or a record whose size is off by one, is refused rather than read as fewer or other cases.
 	for _, mutant := range []struct{ name, text string }{
 		{"truncated", string(encoded[:len(encoded)-1])},
 		{"size", strings.Replace(string(encoded), "2 a.json", "1 a.json", 1)},
 	} {
-		if err := os.WriteFile(path, []byte(mutant.text), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(mutant.text), 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
-		if _, err := readCorpusRecords(path); err == nil || !strings.Contains(err.Error(), "malformed record") {
-			test.Fatalf("%s product read without error: %v", mutant.name, err)
+		if _, readCorpusRecordsError := readCorpusRecords(
+			path,
+		); readCorpusRecordsError == nil || !strings.Contains(readCorpusRecordsError.Error(), "malformed record") {
+			test.Fatalf("%s product read without error: %v", mutant.name, readCorpusRecordsError)
 		}
 	}
-	if err := writeCorpusRecords(path, []textCase{{"new\nline.json", "{}"}}); err == nil {
+	if writeCorpusRecordsError := writeCorpusRecords(
+		path,
+		[]textCase{{"new\nline.json", "{}"}},
+	); writeCorpusRecordsError == nil {
 		test.Fatal("a name with a newline was written")
 	}
 }
@@ -321,9 +326,9 @@ func gitFetchesTracing(test *testing.T, run func()) int {
 	trace := filepath.Join(test.TempDir(), "trace2.json")
 	test.Setenv("GIT_TRACE2_EVENT", trace)
 	run()
-	encoded, err := os.ReadFile(trace)
-	if err != nil {
-		test.Fatal(err)
+	encoded, readError := os.ReadFile(trace)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	fetches := 0
 	for _, line := range strings.Split(string(encoded), "\n") {

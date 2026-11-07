@@ -32,9 +32,12 @@ func wholeMutantBuildFiles(test *testing.T) []string {
 	files := []string{"go.mod", "go.work"}
 	for _, root := range []string{"internal", "cohere"} {
 		// Reads: cohere
-		err := filepath.WalkDir(filepath.Join(repository, root), func(path string, entry fs.DirEntry, err error) error {
-			if err != nil {
-				return err
+		walkError := filepath.WalkDir(filepath.Join(
+			repository,
+			root,
+		), func(path string, entry fs.DirEntry, pathError error) error {
+			if pathError != nil {
+				return pathError
 			}
 			if entry.IsDir() {
 				if entry.Name() == ".git" {
@@ -50,16 +53,16 @@ func wholeMutantBuildFiles(test *testing.T) []string {
 				strings.HasSuffix(name, ".json.gz") ||
 				name == "go.mod" ||
 				name == "go.sum" {
-				relative, err := filepath.Rel(repository, path)
-				if err != nil {
-					return err
+				relative, relativePathError := filepath.Rel(repository, path)
+				if relativePathError != nil {
+					return relativePathError
 				}
 				files = append(files, filepath.ToSlash(relative))
 			}
 			return nil
 		})
-		if err != nil {
-			test.Fatal(err)
+		if walkError != nil {
+			test.Fatal(walkError)
 		}
 	}
 	return files
@@ -111,13 +114,13 @@ func wholeMutantLowerProduct(test *testing.T, directory string) string {
 		Toolchain: []string{runtime.Version()},
 	}
 	lowered := buildcache.Product(test, inputs, func(dir string) error {
-		program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-		if err != nil {
-			return err
+		program, loadError := load.Load([]string{filepath.Join(directory, "main.ts")})
+		if loadError != nil {
+			return loadError
 		}
-		lowered, err := lower.Lower(context.Background(), program)
-		if err != nil {
-			return err
+		lowered, lowerError := lower.Lower(context.Background(), program)
+		if lowerError != nil {
+			return lowerError
 		}
 		return os.WriteFile(filepath.Join(dir, "main.c"), []byte(native.C(lowered)), 0644)
 	})
@@ -128,9 +131,9 @@ func wholeMutantBuildPortProduct(test *testing.T, directory string, sanitize boo
 	test.Helper()
 	lowered := wholeMutantLowerProduct(test, directory)
 	files, flags := wholeMutantPortInputs(test, directory)
-	source, err := os.ReadFile(filepath.Join(lowered, "main.c"))
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(filepath.Join(lowered, "main.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	options := native.Options{Sanitize: sanitize}
 	nativeInputs := buildcache.Inputs{
@@ -157,9 +160,9 @@ func wholeMutantShardSelected(test *testing.T, index int) bool {
 	if len(parts) != 2 {
 		test.Fatalf("invalid ADAMIC_TEST_SHARD %q", selection)
 	}
-	i, firstErr := strconv.Atoi(parts[0])
-	n, secondErr := strconv.Atoi(parts[1])
-	if firstErr != nil || secondErr != nil || n <= 0 || i < 0 || i >= n {
+	i, firstError := strconv.Atoi(parts[0])
+	n, secondError := strconv.Atoi(parts[1])
+	if firstError != nil || secondError != nil || n <= 0 || i < 0 || i >= n {
 		test.Fatalf("invalid ADAMIC_TEST_SHARD %q", selection)
 	}
 	return index%n == i
@@ -285,11 +288,11 @@ func wholeMutantCommandContext(ctx context.Context, name string, args ...string)
 	// Cancellation cleans up the whole process group, including descendants.
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if err == syscall.ESRCH {
+		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if killError == syscall.ESRCH {
 			return os.ErrProcessDone
 		}
-		return err
+		return killError
 	}
 	return command
 }
@@ -321,12 +324,12 @@ func TestWholeMutantsRejectsSurvivor(test *testing.T) {
 		wholeMutantsCaseChildEnv+"=1",
 	)
 	// Read through childguard.Capture for wholeMutantCommandContext's reason, stdout then stderr.
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	output := append(stdout, stderr...)
 	if ctx.Err() != nil {
 		test.Fatal("cooked: survivor proof exceeded 90-second command deadline")
 	}
-	if err == nil {
+	if captureError == nil {
 		test.Fatalf("planted surviving mutant escaped\n%s", output)
 	}
 	var failed []string
@@ -340,7 +343,7 @@ func TestWholeMutantsRejectsSurvivor(test *testing.T) {
 	if len(failed) != 1 ||
 		failed[0] != owner ||
 		!bytes.Contains(output, []byte("native planted mutant survived: keyof becomes readonly")) {
-		test.Fatalf("plant must fail exactly %s, got %v: %v\n%s", owner, failed, err, output)
+		test.Fatalf("plant must fail exactly %s, got %v: %v\n%s", owner, failed, captureError, output)
 	}
 	test.Logf("planted surviving keyof mutant caught only by %s", owner)
 }

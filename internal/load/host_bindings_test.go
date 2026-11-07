@@ -13,13 +13,13 @@ import (
 // ruling dropped from the JSON goes red here.
 func TestHostBindingsAudit(test *testing.T) {
 	test.Parallel()
-	rows, err := HostBindings()
-	if err != nil {
-		test.Fatal(err)
+	rows, hostBindingsError := HostBindings()
+	if hostBindingsError != nil {
+		test.Fatal(hostBindingsError)
 	}
-	audited, err := hostBindingsAudited("../../docs/axioms/host-bindings.md")
-	if err != nil {
-		test.Fatal(err)
+	audited, hostBindingsAuditedError := hostBindingsAudited("../../docs/axioms/host-bindings.md")
+	if hostBindingsAuditedError != nil {
+		test.Fatal(hostBindingsAuditedError)
 	}
 	table := map[string]bool{}
 	for _, row := range rows {
@@ -95,9 +95,9 @@ func hostBindingCells(row HostBinding) []string {
 
 // hostBindingsAudited reads the audit's Rows table: each row's cells by its name, with `\|` unescaped.
 func hostBindingsAudited(file string) (map[string][]string, error) {
-	data, err := os.ReadFile(file)
-	if err != nil {
-		return nil, err
+	data, readError := os.ReadFile(file)
+	if readError != nil {
+		return nil, readError
 	}
 	rows := map[string][]string{}
 	section, found, heading := false, false, false
@@ -154,8 +154,8 @@ func hostBindingsAudited(file string) (map[string][]string, error) {
 func TestHostBindingsRefuseAnUntrustedRow(test *testing.T) {
 	test.Parallel()
 	const row = `{"name": "onProfilerEvent", "declaration": {"file": "performance.ts", "keyword": "let", "type": "number"}, "node": {"version": "v24.21.0", "module": "ES", "typeof": "undefined"}, "native": {"answer": "Absent"}, "javascript": {"answer": "Absent"}, "wasm32": {"answer": "Absent"}, "model": {"path": "", "task": ""}, "divergence": "", "ruling": "#00qn5az"}`
-	if _, err := parseHostBindings([]byte("[" + row + "]")); err != nil {
-		test.Fatalf("the control row: %v", err)
+	if _, parseHostBindingsError := parseHostBindings([]byte("[" + row + "]")); parseHostBindingsError != nil {
+		test.Fatalf("the control row: %v", parseHostBindingsError)
 	}
 	for _, probe := range []struct{ name, from, to, want string }{
 		{"no ruling", `"ruling": "#00qn5az"`, `"ruling": " "`, "no ruling or task names what made the row"},
@@ -210,16 +210,16 @@ func TestHostBindingsRefuseAnUntrustedRow(test *testing.T) {
 			if changed == row {
 				test.Fatalf("%q isn't in the control row", probe.from)
 			}
-			if _, err := parseHostBindings(
+			if _, parseHostBindingsError := parseHostBindings(
 				[]byte("[" + changed + "]"),
-			); err == nil || !strings.Contains(err.Error(), probe.want) {
-				test.Errorf("got %v, want an error containing %q", err, probe.want)
+			); parseHostBindingsError == nil || !strings.Contains(parseHostBindingsError.Error(), probe.want) {
+				test.Errorf("got %v, want an error containing %q", parseHostBindingsError, probe.want)
 			}
 		})
 	}
-	if _, err := parseHostBindings(
+	if _, parseHostBindingsError := parseHostBindings(
 		[]byte("[" + row + ", " + row + "]"),
-	); err == nil || !strings.Contains(err.Error(), "a second row for the name") {
-		test.Errorf("two rows for one name: got %v", err)
+	); parseHostBindingsError == nil || !strings.Contains(parseHostBindingsError.Error(), "a second row for the name") {
+		test.Errorf("two rows for one name: got %v", parseHostBindingsError)
 	}
 }

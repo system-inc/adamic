@@ -71,9 +71,9 @@ func volumeGuardNative(h *volumeGuardHarness, stage0, name, entry, archive strin
 	inputs := volumeGuardInputs(h.ctx, name, sanitize)
 	// Include the exact archive and compiler bytes, including mutant products.
 	for _, path := range []string{stage0, archive} {
-		data, err := os.ReadFile(path)
-		if err != nil {
-			h.t.Fatal(err)
+		data, readError := os.ReadFile(path)
+		if readError != nil {
+			h.t.Fatal(readError)
 		}
 		inputs.Flags = append(inputs.Flags, fmt.Sprintf("%x", sha256.Sum256(data)))
 	}
@@ -249,9 +249,9 @@ func runVolumeConfigGuardShard(test *testing.T, shard int) {
 
 func volumeGuardPreparationHarness(test *testing.T) *volumeGuardHarness {
 	test.Helper()
-	repository, err := filepath.Abs("../../..")
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs("../../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return &volumeGuardHarness{
 		harness: &harness{t: test, repository: repository, directory: test.TempDir()},
@@ -274,9 +274,9 @@ func volumeGuardProduct(h *volumeGuardHarness, name string) string {
 			defer cancel()
 			cmd.Dir = h.repository
 			cmd.Env = append(cmd.Env, "PWD="+h.repository)
-			output, err := volumeGuardOutput(cmd)
-			if err != nil {
-				return fmt.Errorf("stage0: %w: %s", err, output)
+			output, volumeGuardOutputError := volumeGuardOutput(cmd)
+			if volumeGuardOutputError != nil {
+				return fmt.Errorf("stage0: %w: %s", volumeGuardOutputError, output)
 			}
 			return nil
 		})
@@ -438,11 +438,11 @@ func volumeGuardCommand(parent context.Context, name string, args ...string) (*e
 		if cmd.Process == nil {
 			return os.ErrProcessDone
 		}
-		err := syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
-		if err == syscall.ESRCH {
+		killError := syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
+		if killError == syscall.ESRCH {
 			return os.ErrProcessDone
 		}
-		return err
+		return killError
 	}
 	// No WaitDelay: exec reads volumeGuardOutput's buffer to its end, where one closed it a second after go exited and
 	// failed a build that had finished but was slow to drain under load (#n3gk22h's shape). Not childguard.Capture,
@@ -465,29 +465,29 @@ func volumeGuardRun(h *volumeGuardHarness, name string, original *exec.Cmd) resu
 		cmd.Env = append(cmd.Env, "PWD="+cmd.Dir)
 	}
 	stem := filepath.Join(h.directory, fmt.Sprintf("%03d-%s", h.next, strings.ReplaceAll(name, "/", "-")))
-	out, err := os.Create(stem + ".stdout")
-	if err != nil {
-		h.t.Fatal(err)
+	out, createError := os.Create(stem + ".stdout")
+	if createError != nil {
+		h.t.Fatal(createError)
 	}
 	defer out.Close()
-	report, err := os.Create(stem + ".stderr")
-	if err != nil {
-		h.t.Fatal(err)
+	report, createError := os.Create(stem + ".stderr")
+	if createError != nil {
+		h.t.Fatal(createError)
 	}
 	defer report.Close()
 	cmd.Stdout, cmd.Stderr = out, report
 	started := time.Now()
-	runErr := volumeGuardExecute(cmd)
+	runError := volumeGuardExecute(cmd)
 	elapsed := time.Since(started)
-	stdout, err := os.ReadFile(out.Name())
-	if err != nil {
-		h.t.Fatal(err)
+	stdout, readError := os.ReadFile(out.Name())
+	if readError != nil {
+		h.t.Fatal(readError)
 	}
-	stderr, err := os.ReadFile(report.Name())
-	if err != nil {
-		h.t.Fatal(err)
+	stderr, readError := os.ReadFile(report.Name())
+	if readError != nil {
+		h.t.Fatal(readError)
 	}
-	observed := result{stdout: stdout, stderr: stderr, elapsed: elapsed, err: runErr}
+	observed := result{stdout: stdout, stderr: stderr, elapsed: elapsed, err: runError}
 	if h.ctx.Err() != nil {
 		h.t.Fatalf("%s cooked: child deadline exceeded (over budget)", name)
 	}
@@ -505,8 +505,8 @@ func volumeGuardMust(h *volumeGuardHarness, name string, cmd *exec.Cmd) result {
 var volumeGuardCommandGroups sync.Map
 
 func volumeGuardExecute(cmd *exec.Cmd) error {
-	if err := cmd.Start(); err != nil {
-		return err
+	if startError := cmd.Start(); startError != nil {
+		return startError
 	}
 	volumeGuardCommandGroups.Store(cmd.Process.Pid, struct{}{})
 	defer volumeGuardCommandGroups.Delete(cmd.Process.Pid)
@@ -515,8 +515,8 @@ func volumeGuardExecute(cmd *exec.Cmd) error {
 func volumeGuardOutput(cmd *exec.Cmd) ([]byte, error) {
 	var output bytes.Buffer
 	cmd.Stdout, cmd.Stderr = &output, &output
-	err := volumeGuardExecute(cmd)
-	return output.Bytes(), err
+	volumeGuardExecuteError := volumeGuardExecute(cmd)
+	return output.Bytes(), volumeGuardExecuteError
 }
 
 // Cover time spent hashing cache inputs or waiting on a product lock as well as

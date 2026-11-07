@@ -15,9 +15,9 @@ func wasiEmptySymlinkAgreesWithNode(test *testing.T, index int) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	path := filepath.Join(root, "internal/oracle/testdata/wasi/symlink_empty.a")
 	expected := onNodeWith(test, inputRun{}, path)
@@ -64,8 +64,8 @@ int main(void) {
 		for _, target := range []string{"", "wasm32-wasi"}[index : index+1] {
 			test.Run("control/"+target, func(test *testing.T) {
 				binary := filepath.Join(test.TempDir(), "program")
-				if err := native.Build(source, binary, native.Options{Target: target}); err != nil {
-					test.Fatal(err)
+				if buildError := native.Build(source, binary, native.Options{Target: target}); buildError != nil {
+					test.Fatal(buildError)
 				}
 				var actual run
 				if target == "" {

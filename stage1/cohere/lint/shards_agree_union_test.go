@@ -17,9 +17,9 @@ var shardsAgreeHeavyWrapper = regexp.MustCompile(
 
 func TestShardsAgree_Union(test *testing.T) {
 	test.Parallel()
-	data, err := os.ReadFile("shards_agree_split_test.go")
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile("shards_agree_split_test.go")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	for i := 0; i < testShardsAgreeShards; i++ {
 		name := fmt.Sprintf("func TestShardsAgree_%03d(", i)

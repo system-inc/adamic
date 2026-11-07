@@ -108,13 +108,13 @@ func snakeCase(name string) string {
 func TestDynamicKeyedNamesHeaderIsCurrent(test *testing.T) {
 	want := dynamicKeyedNamesHeader()
 	if *updateDynamicKeyedNames {
-		if err := os.WriteFile("runtime/dynamic_keyed_names.h", want, 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile("runtime/dynamic_keyed_names.h", want, 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		return
 	}
-	got, err := os.ReadFile("runtime/dynamic_keyed_names.h")
-	if err != nil || !bytes.Equal(got, want) {
-		test.Fatal("runtime/dynamic_keyed_names.h is stale; run with -update-dynamic-keyed-names", err)
+	got, readError := os.ReadFile("runtime/dynamic_keyed_names.h")
+	if readError != nil || !bytes.Equal(got, want) {
+		test.Fatal("runtime/dynamic_keyed_names.h is stale; run with -update-dynamic-keyed-names", readError)
 	}
 }

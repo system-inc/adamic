@@ -53,10 +53,10 @@ func TestTypedArrayGaps(test *testing.T) {
 			"a try around typed array length conversion",
 		},
 	} {
-		_, err := lowerSource(test, probe.source)
+		_, lowerSourceError := lowerSource(test, probe.source)
 		var gap *NotYet
-		if !errors.As(err, &gap) || !strings.Contains(err.Error(), probe.message) {
-			test.Errorf("%s: want %q, got %v", probe.source, probe.message, err)
+		if !errors.As(lowerSourceError, &gap) || !strings.Contains(lowerSourceError.Error(), probe.message) {
+			test.Errorf("%s: want %q, got %v", probe.source, probe.message, lowerSourceError)
 		}
 	}
 }
@@ -68,10 +68,10 @@ func TestTypedArrayViewsCannotChangeRepresentation(test *testing.T) {
 		"const narrow = new Uint8Array(2); const shape = narrow as {readonly length: number};",
 		"const source = {data: new Uint8Array(2)}; const wide: {readonly data: {readonly length: number}} = source;",
 	} {
-		_, err := lowerSource(test, source)
+		_, lowerSourceError := lowerSource(test, source)
 		var gap *NotYet
-		if !errors.As(err, &gap) {
-			test.Errorf("representation change accepted: %s: %v", source, err)
+		if !errors.As(lowerSourceError, &gap) {
+			test.Errorf("representation change accepted: %s: %v", source, lowerSourceError)
 		}
 	}
 }

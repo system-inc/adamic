@@ -64,8 +64,8 @@ func TestAbsentOptionalWriteIsNotYetWhateverSpellsTheType(test *testing.T) {
 			test.Run(probe.name+extension, func(test *testing.T) {
 				test.Parallel()
 				path := filepath.Join(test.TempDir(), probe.name+extension)
-				if err := os.WriteFile(path, []byte(probe.source), 0o644); err != nil {
-					test.Fatal(err)
+				if writeError := os.WriteFile(path, []byte(probe.source), 0o644); writeError != nil {
+					test.Fatal(writeError)
 				}
 				truth := onNode(test, path)
 				if truth.exitCode != 0 || !strings.HasSuffix(string(truth.stdout), "w\n") {
@@ -76,11 +76,11 @@ func TestAbsentOptionalWriteIsNotYetWhateverSpellsTheType(test *testing.T) {
 						truth.stderr,
 					)
 				}
-				_, err := lowered(test, path)
+				_, loweredError := lowered(test, path)
 				var notYet *lower.NotYet
-				if !errors.As(err, &notYet) ||
-					!strings.Contains(err.Error(), "writing a possibly absent optional own field") {
-					test.Fatalf("want the write NotYet as a possibly absent optional own field, got %v", err)
+				if !errors.As(loweredError, &notYet) ||
+					!strings.Contains(loweredError.Error(), "writing a possibly absent optional own field") {
+					test.Fatalf("want the write NotYet as a possibly absent optional own field, got %v", loweredError)
 				}
 			})
 		}
@@ -103,8 +103,8 @@ func TestAbsentOptionalWriteIsNotYetWhateverSpellsTheType(test *testing.T) {
 			test.Run(control.name+extension, func(test *testing.T) {
 				test.Parallel()
 				path := filepath.Join(test.TempDir(), control.name+extension)
-				if err := os.WriteFile(path, []byte(control.source), 0o644); err != nil {
-					test.Fatal(err)
+				if writeError := os.WriteFile(path, []byte(control.source), 0o644); writeError != nil {
+					test.Fatal(writeError)
 				}
 				truth := onNode(test, path)
 				if disagreement(run{stdout: []byte(control.node)}, truth) != "" {
@@ -115,9 +115,9 @@ func TestAbsentOptionalWriteIsNotYetWhateverSpellsTheType(test *testing.T) {
 						truth.stderr,
 					)
 				}
-				program, err := lowered(test, path)
-				if err != nil {
-					test.Fatalf("want it lowered, got %v", err)
+				program, loweredError := lowered(test, path)
+				if loweredError != nil {
+					test.Fatalf("want it lowered, got %v", loweredError)
 				}
 				sanitized, _ := nativelyUncached(test, program)
 				for backend, got := range map[string]run{

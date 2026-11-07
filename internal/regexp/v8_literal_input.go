@@ -5,14 +5,14 @@ import "unicode/utf8"
 // NativeLiteralTestDeclarations permits only a fresh literal's test on this exact
 // literal input. The pattern-wide refusal still applies to every other use.
 func NativeLiteralTestDeclarations(pattern, flags, input, name string) (string, error) {
-	tree, err := parsePattern(pattern, flags, true)
-	if err != nil {
-		return "", err
+	tree, parsePatternError := parsePattern(pattern, flags, true)
+	if parsePatternError != nil {
+		return "", parsePatternError
 	}
 	properties := UnicodeProperties{}
-	program, err := compilePattern(tree, properties)
-	if err != nil {
-		return "", err
+	program, compilePatternError := compilePattern(tree, properties)
+	if compilePatternError != nil {
+		return "", compilePatternError
 	}
 	if program.v8Refusal == nil {
 		return program.NativeDeclarations(name)
@@ -37,12 +37,12 @@ func literalClassTestAgrees(tree *Pattern, refusal error, input string, properti
 	if !ok || class.Negated {
 		return false
 	}
-	expected, err := compileClass(class.Expr, tree.Flags, properties)
-	if err != nil {
+	expected, compileClassError := compileClass(class.Expr, tree.Flags, properties)
+	if compileClassError != nil {
 		return false
 	}
-	actual, err := v8Class(class.Expr, tree.Flags, properties)
-	if err != nil {
+	actual, v8ClassError := v8Class(class.Expr, tree.Flags, properties)
+	if v8ClassError != nil {
 		return false
 	}
 	actual.strings = foldSet(characterSet{strings: actual.strings}, tree.Flags).strings
@@ -50,7 +50,9 @@ func literalClassTestAgrees(tree *Pattern, refusal error, input string, properti
 		return false
 	}
 	expected = matchedCharacters(expected, tree.Flags)
-	difference := characterSet{ranges: normalizeRanges(append(subtractRanges(expected.ranges, actual.ranges), subtractRanges(actual.ranges, expected.ranges)...))}
+	difference := characterSet{ranges: normalizeRanges(
+		append(subtractRanges(expected.ranges, actual.ranges), subtractRanges(actual.ranges, expected.ranges)...),
+	)}
 	for _, point := range input {
 		if difference.contains(point) {
 			return false

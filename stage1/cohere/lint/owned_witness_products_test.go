@@ -44,9 +44,12 @@ func ownedWitnessInputs(test *testing.T) ([]string, []string) {
 		// Reads: stage1/typescript/scanner/tokens.ts
 		// Reads: internal/load/prelude.d.ts
 		// Reads: internal/native/runtime/*.[ch]
-		err := filepath.WalkDir(filepath.Join(repository, root), func(path string, entry fs.DirEntry, err error) error {
-			if err != nil {
-				return err
+		walkError := filepath.WalkDir(filepath.Join(
+			repository,
+			root,
+		), func(path string, entry fs.DirEntry, pathError error) error {
+			if pathError != nil {
+				return pathError
 			}
 			if entry.IsDir() {
 				if entry.Name() == ".git" {
@@ -62,16 +65,16 @@ func ownedWitnessInputs(test *testing.T) ([]string, []string) {
 				ext == ".a" ||
 				entry.Name() == "go.mod" ||
 				entry.Name() == "go.sum" {
-				relative, err := filepath.Rel(repository, path)
-				if err != nil {
-					return err
+				relative, relativePathError := filepath.Rel(repository, path)
+				if relativePathError != nil {
+					return relativePathError
 				}
 				files = append(files, filepath.ToSlash(relative))
 			}
 			return nil
 		})
-		if err != nil {
-			test.Fatal(err)
+		if walkError != nil {
+			test.Fatal(walkError)
 		}
 	}
 	for _, file := range portFiles(test) {
@@ -110,20 +113,20 @@ func buildOwnedWitnessLowered(test *testing.T, directory string) string {
 		Toolchain: tools,
 	}, func(dir string) error {
 		started := time.Now()
-		program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-		if err != nil {
-			return err
+		program, loadError := load.Load([]string{filepath.Join(directory, "main.ts")})
+		if loadError != nil {
+			return loadError
 		}
-		ir, err := lower.Lower(context.Background(), program)
-		if err != nil {
-			return err
+		ir, lowerError := lower.Lower(context.Background(), program)
+		if lowerError != nil {
+			return lowerError
 		}
-		if err = os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(ir)), 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(ir)), 0644); writeError != nil {
+			return writeError
 		}
-		err = os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(ir)), 0644)
+		writeError := os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(ir)), 0644)
 		test.Logf("cold build lowered=%s", time.Since(started))
-		return err
+		return writeError
 	})
 	return lowered
 }
@@ -145,18 +148,18 @@ func buildOwnedWitnessNative(test *testing.T, directory string) string {
 		Flags:     flags,
 		Toolchain: tools,
 	}, func(dir string) error {
-		source, err := os.ReadFile(filepath.Join(lowered, "program.c"))
-		if err != nil {
-			return err
+		source, readError := os.ReadFile(filepath.Join(lowered, "program.c"))
+		if readError != nil {
+			return readError
 		}
 		started := time.Now()
-		err = native.Build(
+		buildError := native.Build(
 			string(source),
 			filepath.Join(dir, "native"),
 			native.Options{Sanitize: true, Split: true, Jobs: 4},
 		)
 		test.Logf("cold build sanitized=%s", time.Since(started))
-		return err
+		return buildError
 	})
 	return filepath.Join(binary, "native")
 }

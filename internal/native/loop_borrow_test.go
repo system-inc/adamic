@@ -13,13 +13,13 @@ import (
 
 func loopProgram(test *testing.T, path string) *ir.Program {
 	test.Helper()
-	loaded, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	loaded, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := lower.Lower(context.Background(), loaded)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerError := lower.Lower(context.Background(), loaded)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	return program
 }

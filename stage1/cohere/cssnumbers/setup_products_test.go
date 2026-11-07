@@ -32,9 +32,9 @@ func numbersPreparedProgram(test *testing.T, mutation int) numbersProgram {
 	test.Helper()
 	state := &numbersPreparedPrograms[mutation+1]
 	state.once.Do(func() {
-		main, err := filepath.Abs("main.ts")
-		if err != nil {
-			test.Fatal(err)
+		main, absolutePathError := filepath.Abs("main.ts")
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		name := "port"
 		if mutation >= 0 {
@@ -172,8 +172,13 @@ func numbersAnswerDirectory(
 				go func() {
 					defer workers.Done()
 					for each := range pending {
-						if err := numbersAnswerRun(test, dir, each, command); err != nil {
-							failures <- err
+						if numbersAnswerRunError := numbersAnswerRun(
+							test,
+							dir,
+							each,
+							command,
+						); numbersAnswerRunError != nil {
+							failures <- numbersAnswerRunError
 						}
 					}
 				}()
@@ -206,14 +211,14 @@ func numbersAnswerRun(
 	oracleCommand func(test *testing.T, input string) (*exec.Cmd, context.Context),
 ) error {
 	input := filepath.Join(dir, each.file+".input")
-	if err := os.WriteFile(input, each.input, 0644); err != nil {
-		return err
+	if writeError := os.WriteFile(input, each.input, 0644); writeError != nil {
+		return writeError
 	}
 	defer os.Remove(input)
 	command, ctx := oracleCommand(test, input)
-	stdout, stderr, err := childguard.Capture(ctx, command)
-	if err != nil || len(stderr) != 0 {
-		return fmt.Errorf("oracle on %s: %v; %s", each.file, err, stderr)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
+	if captureError != nil || len(stderr) != 0 {
+		return fmt.Errorf("oracle on %s: %v; %s", each.file, captureError, stderr)
 	}
 	return os.WriteFile(filepath.Join(dir, each.file), stdout, 0644)
 }
@@ -233,9 +238,9 @@ func numbersPrettierBatchAnswersDirectory(
 	corpus numbersCorpus,
 ) string {
 	test.Helper()
-	script, err := filepath.Abs("testdata/library.mjs")
-	if err != nil {
-		test.Fatal(err)
+	script, absolutePathError := filepath.Abs("testdata/library.mjs")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return numbersAnswerDirectory(test, &numbersPrettierBatchAnswers, func() (numbersInputs, []numbersAnswerCase) {
 		cases := numbersBatchCases(corpus)
@@ -262,9 +267,9 @@ func numbersGoRawAnswersDirectory(test *testing.T, oracle, oracleIdentity string
 
 func numbersAnswer(test *testing.T, directory, file string) run {
 	test.Helper()
-	answer, err := os.ReadFile(filepath.Join(directory, file))
-	if err != nil {
-		test.Fatal(err)
+	answer, readError := os.ReadFile(filepath.Join(directory, file))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return run{stdout: answer}
 }
@@ -350,9 +355,9 @@ func prepareNumbersAnswerInputs(test *testing.T) {
 // changed Go oracle or Prettier library never serves stale answers.
 func TestCSSNumbersAnswerProductsRekey(test *testing.T) {
 	test.Parallel()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	corpus := enumerateNumbers(test)
 	edited := numbersCorpus{texts: append([]string{}, corpus.texts...), raw: append([]string{}, corpus.raw...)}
@@ -372,9 +377,9 @@ func TestCSSNumbersAnswerProductsRekey(test *testing.T) {
 				test,
 				numbersAnswerProductInputs(product.name, identity, "toolchain", product.files, product.cases(corpus)),
 			)
-			declared, err := buildcache.Key(root, inputs)
-			if err != nil {
-				test.Fatal(err)
+			declared, keyError := buildcache.Key(root, inputs)
+			if keyError != nil {
+				test.Fatal(keyError)
 			}
 			return buildcache.NameKey(root, inputs), declared
 		}
@@ -410,9 +415,9 @@ func TestCSSNumbersAnswerProductsRekey(test *testing.T) {
 // must keep it.
 func TestCSSNumbersCompilerProductsKeyWhatTheCompilerLinks(test *testing.T) {
 	test.Parallel()
-	main, err := filepath.Abs("main.ts")
-	if err != nil {
-		test.Fatal(err)
+	main, absolutePathError := filepath.Abs("main.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	// A native product is keyed by its C's content and the toolchain's report; any C and any report stand in, since
 	// only Files are checked.

@@ -88,7 +88,7 @@ func LeanProductOf(test testing.TB, handed Handed, build func(handed Handed, dir
 func handedRoots(paths []string) []string {
 	roots := []string{}
 	for _, path := range paths {
-		if absolute, err := filepath.Abs(path); err == nil {
+		if absolute, absolutePathError := filepath.Abs(path); absolutePathError == nil {
 			roots = append(roots, filepath.Clean(absolute))
 		}
 	}
@@ -97,8 +97,8 @@ func handedRoots(paths []string) []string {
 
 // LeanGet is Get for a lean build (LeanProduct).
 func LeanGet(inputs Inputs, build func(directory string) error) (string, error) {
-	directory, _, err := get(inputs, build, leanCalled(1), false)
-	return directory, err
+	directory, _, getError := get(inputs, build, leanCalled(1), false)
+	return directory, getError
 }
 
 // A leanBuild is a build Settle keys by its own window (LeanProduct). A lean build's window counts a file its test
@@ -226,15 +226,15 @@ func leanRecipeTaken(caller string) bool {
 
 func product(test testing.TB, inputs Inputs, build func(directory string) error, lean *leanBuild) string {
 	test.Helper()
-	directory, line, err := get(inputs, build, lean, false)
+	directory, line, getError := get(inputs, build, lean, false)
 	if line != "" {
 		test.Log(line)
 	}
-	if errors.Is(err, ErrNotBuilt) {
-		test.Fatal(err)
+	if errors.Is(getError, ErrNotBuilt) {
+		test.Fatal(getError)
 	}
-	if err != nil {
-		test.Fatalf("build %s: %v", inputs.Name, err)
+	if getError != nil {
+		test.Fatalf("build %s: %v", inputs.Name, getError)
 	}
 	return directory
 }
@@ -247,8 +247,8 @@ var ErrNotBuilt = errors.New("not built")
 
 // Get is Product for TestMain and tools.
 func Get(inputs Inputs, build func(directory string) error) (string, error) {
-	directory, _, err := get(inputs, build, nil, false)
-	return directory, err
+	directory, _, getError := get(inputs, build, nil, false)
+	return directory, getError
 }
 
 // BuiltAhead looks up inputs' product exactly as Get does and never builds it: on a miss it returns missing, the error
@@ -259,8 +259,8 @@ func Get(inputs Inputs, build func(directory string) error) (string, error) {
 // that builds the product audits it, so a tree still checks what it built. Every lookup whose only build is a "not
 // built ahead" refusal is a BuiltAhead (cmd/adamic-gate/parallelcensus's TestNoLookupThatOnlyRefusesGoesThroughGet).
 func BuiltAhead(inputs Inputs, missing error) (string, error) {
-	directory, _, err := get(inputs, func(string) error { return missing }, nil, true)
-	return directory, err
+	directory, _, getError := get(inputs, func(string) error { return missing }, nil, true)
+	return directory, getError
 }
 
 // ErrUntraced is a product Workshop's tree builder (ADAMIC_BUILD_STORE=traced) would build outside cmd/traced: what it
@@ -281,8 +281,8 @@ func get(inputs Inputs, build func(directory string) error, lean *leanBuild, fin
 	// on every untraced build after it landed (lint's jsx owners, #j9st2ff; markdownblocks' answers, #y6ff7ea;
 	// #r7cb4bd).
 	for _, name := range inputs.Files {
-		if err := declaredFile(name); err != nil {
-			return "", "", err
+		if declaredFileError := declaredFile(name); declaredFileError != nil {
+			return "", "", declaredFileError
 		}
 	}
 	var nameKey string
@@ -291,20 +291,20 @@ func get(inputs Inputs, build func(directory string) error, lean *leanBuild, fin
 	// returned is held under its name key: a product names itself and every other product by name key (relative.go).
 	build = relocating(inputs, nameKey, build)
 	if os.Getenv("ADAMIC_BUILD_CACHE") == "off" {
-		directory, err := os.MkdirTemp("", "adamic-build-")
-		if err != nil {
-			return "", "", err
+		directory, temporaryDirectoryError := os.MkdirTemp("", "adamic-build-")
+		if temporaryDirectoryError != nil {
+			return "", "", temporaryDirectoryError
 		}
 		if traceDirectory() == "" {
-			if err = build(directory); err != nil {
-				return "", "", err
+			if buildError := build(directory); buildError != nil {
+				return "", "", buildError
 			}
 			return holding(nameKey, directory), record(inputs.Name, "uncached", "off", started), nil
 		}
 		// Traced and uncached (main's own gate on Workshop): built fresh, and settled from where it was built.
-		_, id, err := tracedBuild(root, inputs, directory, build)
-		if err != nil {
-			return "", "", err
+		_, id, tracedBuildError := tracedBuild(root, inputs, directory, build)
+		if tracedBuildError != nil {
+			return "", "", tracedBuildError
 		}
 		journalBuilt(root, inputs, nameKey, id, directory, lean)
 		return holding(nameKey, directory), record(inputs.Name, "uncached", "off", started), nil
@@ -342,9 +342,9 @@ func get(inputs Inputs, build func(directory string) error, lean *leanBuild, fin
 	if storeAddress() != "" {
 		for index, key := range looked.keys {
 			outcome := "fetched"
-			product, _, err := filled(filepath.Join(cache, key), described, func(scratch string) error {
-				if err := fetch(key, scratch); err != nil {
-					return err
+			product, _, filledError := filled(filepath.Join(cache, key), described, func(scratch string) error {
+				if fetchError := fetch(key, scratch); fetchError != nil {
+					return fetchError
 				}
 				// An audit rebuilds, so it runs only where building may: under a trace.
 				if traceDirectory() != "" && !finding && auditing() {
@@ -353,12 +353,12 @@ func get(inputs Inputs, build func(directory string) error, lean *leanBuild, fin
 				}
 				return nil
 			})
-			if errors.Is(err, errNotStored) {
-				note("store %s %s: %v", inputs.Name, key[:12], err)
+			if errors.Is(filledError, errorNotStored) {
+				note("store %s %s: %v", inputs.Name, key[:12], filledError)
 				continue
 			}
-			if err != nil {
-				return "", "", err
+			if filledError != nil {
+				return "", "", filledError
 			}
 			journalFound(nameKey, inputs.Name, product, looked.keyUpstreams[index])
 			rerecord(cache, nameKey, inputs.Name, looked.keyRefound[index])
@@ -379,15 +379,15 @@ func get(inputs Inputs, build func(directory string) error, lean *leanBuild, fin
 	case traceDirectory() != "":
 		// Built here under the trace, and found by every process under it, until Settle keys it by what it read.
 		var id string
-		product, built, err := filled(filepath.Join(
+		product, built, filledError := filled(filepath.Join(
 			pendingDirectory(cache),
 			nameKey,
 		), described, func(scratch string) (err error) {
 			_, id, err = tracedBuild(root, inputs, scratch, build)
 			return err
 		})
-		if err != nil {
-			return "", "", err
+		if filledError != nil {
+			return "", "", filledError
 		}
 		outcome := "hit"
 		if built {
@@ -437,8 +437,8 @@ func tracedBuild(
 ) (string, string, error) {
 	var nameKey string
 	keying(func() { nameKey = NameKey(root, inputs) })
-	id, err := traced(nameKey, func() error { return build(directory) })
-	return nameKey, id, err
+	id, tracedError := traced(nameKey, func() error { return build(directory) })
+	return nameKey, id, tracedError
 }
 
 // journalBuilt journals a traced build where its product now is, for Settle to key and place, and whether it is lean.
@@ -472,37 +472,37 @@ func filled(target, inputs string, fill func(scratch string) error) (string, boo
 	if placed, ok := existingPlace(target); ok {
 		return placed, false, nil
 	}
-	if err := os.MkdirAll(filepath.Dir(target), 0o755); err != nil {
-		return "", false, err
+	if createDirectoryError := os.MkdirAll(filepath.Dir(target), 0o755); createDirectoryError != nil {
+		return "", false, createDirectoryError
 	}
-	unlock, err := lockTarget(target)
-	if err != nil {
-		return "", false, err
+	unlock, lockTargetError := lockTarget(target)
+	if lockTargetError != nil {
+		return "", false, lockTargetError
 	}
 	defer unlock()
 	if placed, ok := existingPlace(target); ok {
 		return placed, false, nil
 	}
 	name := filepath.Base(target)
-	scratch, err := os.MkdirTemp(filepath.Dir(target), ".building-"+name[:min(12, len(name))]+"-")
-	if err != nil {
-		return "", false, err
+	scratch, temporaryDirectoryError := os.MkdirTemp(filepath.Dir(target), ".building-"+name[:min(12, len(name))]+"-")
+	if temporaryDirectoryError != nil {
+		return "", false, temporaryDirectoryError
 	}
-	if err = fill(scratch); err != nil {
+	if fillError := fill(scratch); fillError != nil {
 		os.RemoveAll(scratch)
-		return "", false, err
+		return "", false, fillError
 	}
-	if err = os.WriteFile(target+".inputs", []byte(inputs), 0o644); err != nil {
+	if writeError := os.WriteFile(target+".inputs", []byte(inputs), 0o644); writeError != nil {
 		os.RemoveAll(scratch)
-		return "", false, err
+		return "", false, writeError
 	}
-	if err = os.Rename(scratch, target); err != nil {
+	if renameError := os.Rename(scratch, target); renameError != nil {
 		os.RemoveAll(scratch)
 		// A product another placer put there whole is the product: found, not a failure (#bcae1e2).
 		if placed, ok := existingPlace(target); ok {
 			return placed, false, nil
 		}
-		return "", false, err
+		return "", false, renameError
 	}
 	return target, true, nil
 }
@@ -512,13 +512,13 @@ func filled(target, inputs string, fill func(scratch string) error) (string, boo
 // settlement of one key each saw it missing, and the one whose rename lost failed its test with "file exists" while the
 // product sat there (#bcae1e2). It returns the release.
 func lockTarget(target string) (func(), error) {
-	lock, err := os.OpenFile(target+".lock", os.O_CREATE|os.O_RDWR, 0o644)
-	if err != nil {
-		return nil, err
+	lock, openError := os.OpenFile(target+".lock", os.O_CREATE|os.O_RDWR, 0o644)
+	if openError != nil {
+		return nil, openError
 	}
-	if err = syscall.Flock(int(lock.Fd()), syscall.LOCK_EX); err != nil {
+	if flockError := syscall.Flock(int(lock.Fd()), syscall.LOCK_EX); flockError != nil {
 		lock.Close()
-		return nil, err
+		return nil, flockError
 	}
 	return func() {
 		syscall.Flock(int(lock.Fd()), syscall.LOCK_UN)
@@ -557,8 +557,8 @@ func keyAt(version, root string, inputs Inputs) (string, error) {
 	field("buildcache", version)
 	field("name", portable(root, inputs.Name))
 	for _, name := range inputs.Files {
-		if err := hashPath(hash, root, name, field); err != nil {
-			return "", err
+		if hashPathError := hashPath(hash, root, name, field); hashPathError != nil {
+			return "", hashPathError
 		}
 	}
 	for _, flag := range inputs.Flags {
@@ -611,20 +611,21 @@ func places(root string) []place {
 	if root != "" {
 		add(root, "<repository>", resolvedOnce)
 	}
-	cache, cacheErr := cacheLocation()
-	if cacheErr == nil {
+	cache, cacheError := cacheLocation()
+	if cacheError == nil {
 		add(cache, "<build cache>", resolvedOnce)
 	}
 	// The output directory is <build cache> too: Loom copies what this process writes there into the cache, so a key
 	// that names a product by its path names it alike from either.
-	if output, err := outputLocation(); err == nil && (cacheErr != nil || output != cache) {
+	if output, outputLocationError := outputLocation(); outputLocationError == nil &&
+		(cacheError != nil || output != cache) {
 		add(output, "<build cache>", resolvedOnce)
 	}
-	home, homeErr := os.UserHomeDir()
+	home, homeError := os.UserHomeDir()
 	for _, tools := range toolsPlaces(home) {
 		add(tools, "<tools>", resolvedOnce)
 	}
-	if homeErr == nil {
+	if homeError == nil {
 		add(home, "~", resolvedOnce)
 	}
 	for _, products := range []*sync.Map{&productDirectories, &resolvedCopies} {
@@ -766,18 +767,18 @@ func declaredFile(name string) error {
 }
 
 func hashPath(hash io.Writer, root, name string, field func(kind, value string)) error {
-	if err := declaredFile(name); err != nil {
-		return err
+	if declaredFileError := declaredFile(name); declaredFileError != nil {
+		return declaredFileError
 	}
 	start := filepath.Join(root, name)
 	// WalkDir visits in lexical order, so the same tree always hashes the same.
-	return filepath.WalkDir(start, func(path string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
+	return filepath.WalkDir(start, func(path string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
-		relative, err := filepath.Rel(root, path)
-		if err != nil {
-			return err
+		relative, relativePathError := filepath.Rel(root, path)
+		if relativePathError != nil {
+			return relativePathError
 		}
 		relative = filepath.ToSlash(relative)
 		// Git's own record is never an input: a .git directory, or a submodule's .git file, whose content is the path
@@ -801,25 +802,25 @@ func hashPath(hash io.Writer, root, name string, field func(kind, value string))
 			}
 			return nil
 		}
-		info, err := entry.Info()
-		if err != nil {
-			return err
+		info, infoError := entry.Info()
+		if infoError != nil {
+			return infoError
 		}
 		switch {
 		case entry.IsDir():
 			field("directory", relative)
 		case info.Mode()&fs.ModeSymlink != 0:
-			target, err := os.Readlink(path)
-			if err != nil {
-				return err
+			target, readLinkError := os.Readlink(path)
+			if readLinkError != nil {
+				return readLinkError
 			}
 			field("symlink", relative+" -> "+target)
 		case info.Mode().IsRegular():
 			// As a read set values it: a clean tracked file by the id git's index holds, unread, anything else hashed
 			// as git hashes a blob, so a checkout and an unpacked source key the same.
-			value, err := gitValue(root, path, info)
-			if err != nil {
-				return err
+			value, gitValueError := gitValue(root, path, info)
+			if gitValueError != nil {
+				return gitValueError
 			}
 			field("file", relative+" "+value)
 		default:
@@ -871,8 +872,8 @@ func Tracked(root, name string, directory bool) bool {
 		if files.all {
 			return true
 		}
-		relative, err := filepath.Rel(at, name)
-		if err != nil {
+		relative, relativePathError := filepath.Rel(at, name)
+		if relativePathError != nil {
 			return true
 		}
 		relative = filepath.ToSlash(relative)
@@ -900,8 +901,8 @@ func repositoryAt(directory string) *trackedFiles {
 	// listing is: a build that asks Tracked of a directory never reads .git (#1p6sent, a traced walk of the tree).
 	repository := false
 	keying(func() {
-		_, err := statGit(filepath.Join(directory, ".git"))
-		repository = err == nil
+		_, statGitError := statGit(filepath.Join(directory, ".git"))
+		repository = statGitError == nil
 	})
 	if repository {
 		files = &trackedFiles{
@@ -1017,24 +1018,26 @@ var openManifest = os.Open
 // modification time), when the manifest records directory as a repository; a directory it doesn't record isn't one.
 func manifestListing(directory string) ([]byte, time.Time, bool) {
 	for root := directory; ; root = filepath.Dir(root) {
-		if info, err := statManifest(filepath.Join(root, trackedManifestDirectory)); err == nil && info.IsDir() {
-			relative, err := filepath.Rel(root, directory)
-			if err != nil ||
+		if info, statManifestError := statManifest(
+			filepath.Join(root, trackedManifestDirectory),
+		); statManifestError == nil && info.IsDir() {
+			relative, relativePathError := filepath.Rel(root, directory)
+			if relativePathError != nil ||
 				relative == trackedManifestDirectory ||
 				strings.HasPrefix(relative, trackedManifestDirectory+string(filepath.Separator)) {
 				return nil, time.Time{}, false
 			}
-			file, err := openManifest(filepath.Join(root, trackedManifestDirectory, relative, "files"))
-			if err != nil {
+			file, openManifestError := openManifest(filepath.Join(root, trackedManifestDirectory, relative, "files"))
+			if openManifestError != nil {
 				return nil, time.Time{}, false
 			}
 			defer file.Close()
-			info, err := file.Stat()
-			if err != nil {
+			info, statError := file.Stat()
+			if statError != nil {
 				return nil, time.Time{}, false
 			}
-			listing, err := io.ReadAll(file)
-			return listing, info.ModTime(), err == nil
+			listing, readError := io.ReadAll(file)
+			return listing, info.ModTime(), readError == nil
 		}
 		if filepath.Dir(root) == root {
 			return nil, time.Time{}, false
@@ -1089,18 +1092,19 @@ type toolRun struct {
 func toolValue(name, label string, arguments, environment []string) string {
 	var value string
 	if filepath.Base(name) == "go" && len(arguments) > 0 && arguments[0] == "env" {
-		settings, _, err := goSettings("", environment, arguments[1:])
+		settings, _, goSettingsError := goSettings("", environment, arguments[1:])
 		value = label + ": " + strings.Join(settings, "\n")
-		if err != nil {
-			value += " (" + err.Error() + ")"
+		if goSettingsError != nil {
+			value += " (" + goSettingsError.Error() + ")"
 		}
 	} else {
 		var output, diagnostics bytes.Buffer
-		path, err := toolchain.Path(name)
-		if err != nil {
+		path, pathError := toolchain.Path(name)
+		if pathError != nil {
 			// As a run that couldn't start reports it: no output, then the error.
-			return label + ":  (" + err.Error() + ")"
+			return label + ":  (" + pathError.Error() + ")"
 		}
+		var runError error
 		// A tool written a moment ago can be busy for a moment more (ETXTBSY): a process forked meanwhile, by a test
 		// running beside this one, holds the writer's descriptor until it execs, and exec refuses a file open for
 		// writing. That says nothing of the tool, so it is asked again rather than named by the error and its path
@@ -1111,7 +1115,7 @@ func toolValue(name, label string, arguments, environment []string) string {
 			run := exec.Command(path, arguments...)
 			run.Env = environment
 			run.Stdout, run.Stderr = &output, &diagnostics
-			if err = run.Run(); !errors.Is(err, syscall.ETXTBSY) || attempt == toolBusyAttempts {
+			if runError = run.Run(); !errors.Is(runError, syscall.ETXTBSY) || attempt == toolBusyAttempts {
 				break
 			}
 			time.Sleep(toolBusyWait)
@@ -1121,8 +1125,8 @@ func toolValue(name, label string, arguments, environment []string) string {
 			report = diagnostics.String()
 		}
 		value = label + ": " + toolReport(installedAs(path, report))
-		if err != nil {
-			value += " (" + err.Error() + ")"
+		if runError != nil {
+			value += " (" + runError.Error() + ")"
 		}
 	}
 	return value
@@ -1174,9 +1178,9 @@ func installedAs(path, report string) string {
 // the output directory ADAMIC_BUILD_OUTPUT_DIR names, never both, so a build cache this process only reads is never
 // made or touched. Every lookup reads it first and the build cache after it (location.ReadPlaces).
 func cacheDirectory() (string, error) {
-	directory, err := outputLocation()
-	if err != nil {
-		return "", err
+	directory, outputLocationError := outputLocation()
+	if outputLocationError != nil {
+		return "", outputLocationError
 	}
 	return directory, os.MkdirAll(directory, 0o755)
 }
@@ -1202,7 +1206,7 @@ func describe(root string, inputs Inputs) string {
 // note appends a line about the store to $ADAMIC_BUILD_LOG when set, beside the census lines.
 func note(format string, arguments ...any) {
 	if path := os.Getenv("ADAMIC_BUILD_LOG"); path != "" {
-		if file, err := os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o644); err == nil {
+		if file, openError := os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o644); openError == nil {
 			fmt.Fprintf(file, format+"\n", arguments...)
 			file.Close()
 		}
@@ -1221,7 +1225,7 @@ func record(name, key, outcome string, started time.Time) string {
 		time.Since(started).Seconds(),
 	)
 	if path := os.Getenv("ADAMIC_BUILD_LOG"); path != "" {
-		if file, err := os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o644); err == nil {
+		if file, openError := os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o644); openError == nil {
 			file.WriteString(line + "\n")
 			file.Close()
 		}

@@ -208,14 +208,14 @@ func TestAsyncLabelsAsyncGapFinallyReturnAdmission(test *testing.T) {
 // the source oracle may catch the lost completion, snapshot or destination.
 func asyncLabelsMutation(test *testing.T, name, kind string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/"+name+".a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/"+name+".a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := onNode(test, path)
-	p, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	p, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	changed := false
 	label := ""
@@ -300,8 +300,8 @@ func asyncLabelsMutation(test *testing.T, name, kind string) {
 	}
 	code := native.C(p)
 	binary := filepath.Join(test.TempDir(), "wrong-completion")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(code, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	if report := leakcheck.Report(test, code, binary); report != "" {
 		test.Fatal(report)

@@ -57,13 +57,13 @@ func oracleProduct(test *testing.T, inputs buildcache.Inputs, build func(string)
 func LeafCompositionGoProduct(test *testing.T, root, name, driverName string) string {
 	test.Helper()
 	cohere := filepath.Join(root, "cohere")
-	bridge, err := filepath.Abs("testdata/list_bridge.go")
-	if err != nil {
-		test.Fatal(err)
+	bridge, absolutePathError := filepath.Abs("testdata/list_bridge.go")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	driver, err := filepath.Abs(filepath.Join("testdata", driverName))
-	if err != nil {
-		test.Fatal(err)
+	driver, absolutePathError := filepath.Abs(filepath.Join("testdata", driverName))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	main := filepath.Join(cohere, "cmd", name, "main.go")
 	inputs := buildcache.Inputs{Name: "markdown-leaf-go-" + name, Files: []string{
@@ -82,26 +82,26 @@ func LeafCompositionGoProduct(test *testing.T, root, name, driverName string) st
 		if name == "adamic_markdown_lists" {
 			replacements[filepath.Join(cohere, "internal/format/markdown/adamic_lists.go")] = bridge
 		}
-		overlay, err := json.Marshal(map[string]any{"Replace": replacements})
-		if err != nil {
-			return err
+		overlay, encodeError := json.Marshal(map[string]any{"Replace": replacements})
+		if encodeError != nil {
+			return encodeError
 		}
 		overlayPath := filepath.Join(out, "overlay.json")
-		if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(overlayPath, overlay, 0644); writeError != nil {
+			return writeError
 		}
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 		defer os.Remove(overlayPath)
 		ctx, cancel := context.WithCancel(context.Background())
 		test.Cleanup(cancel)
-		if output, err := toolchainGo(ctx, cohere, append(
+		if output, toolchainGoError := toolchainGo(ctx, cohere, append(
 			append([]string{"build"}, buildcache.ReproducibleGoFlags()...),
 			"-overlay="+overlayPath,
 			"-o",
 			filepath.Join(out, "oracle"),
 			main,
-		)...); err != nil {
-			return fmt.Errorf("Go bridge: %v\n%s", err, output)
+		)...); toolchainGoError != nil {
+			return fmt.Errorf("Go bridge: %v\n%s", toolchainGoError, output)
 		}
 		return nil
 	})
@@ -121,22 +121,22 @@ func QuoteLayoutGoProducts(test *testing.T, root, target string) LayoutGoProduct
 		if target != "" && target != mode.name {
 			continue
 		}
-		driver, err := filepath.Abs(filepath.Join("testdata", mode.driver))
-		if err != nil {
-			test.Fatal(err)
+		driver, absolutePathError := filepath.Abs(filepath.Join("testdata", mode.driver))
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		mainPath := filepath.Join(cohere, "cmd", mode.command, "main.go")
 		replace := map[string]string{mainPath: driver}
 		if mode.name == "lists" {
-			bridge, err := filepath.Abs("testdata/list_bridge.go")
-			if err != nil {
-				test.Fatal(err)
+			bridge, absolutePathError := filepath.Abs("testdata/list_bridge.go")
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			replace[filepath.Join(cohere, "internal/format/markdown/adamic_lists.go")] = bridge
 		}
-		overlay, err := json.Marshal(map[string]any{"Replace": replace})
-		if err != nil {
-			test.Fatal(err)
+		overlay, encodeError := json.Marshal(map[string]any{"Replace": replace})
+		if encodeError != nil {
+			test.Fatal(encodeError)
 		}
 		goInputs := buildcache.Inputs{
 			Name: "markdown-quote-layout-go-" + mode.name,
@@ -160,19 +160,19 @@ func QuoteLayoutGoProducts(test *testing.T, root, target string) LayoutGoProduct
 		}
 		dir := oracleProduct(test, goInputs, func(dir string) error {
 			overlayPath := filepath.Join(dir, mode.name+".json")
-			if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-				return err
+			if writeError := os.WriteFile(overlayPath, overlay, 0644); writeError != nil {
+				return writeError
 			}
 			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 			defer os.Remove(overlayPath)
-			if output, err := toolchainGo(test.Context(), cohere, append(
+			if output, toolchainGoError := toolchainGo(test.Context(), cohere, append(
 				append([]string{"build"}, buildcache.ReproducibleGoFlags()...),
 				"-overlay="+overlayPath,
 				"-o",
 				filepath.Join(dir, mode.name),
 				mainPath,
-			)...); err != nil {
-				return fmt.Errorf("Go %s: %w\n%s", mode.name, err, output)
+			)...); toolchainGoError != nil {
+				return fmt.Errorf("Go %s: %w\n%s", mode.name, toolchainGoError, output)
 			}
 			return nil
 		})
@@ -199,22 +199,22 @@ func StructureLayoutGoProducts(test *testing.T, root, target string) LayoutGoPro
 		if target != "" && target != item.command {
 			continue
 		}
-		driver, err := filepath.Abs(filepath.Join("testdata", item.driver))
-		if err != nil {
-			test.Fatal(err)
+		driver, absolutePathError := filepath.Abs(filepath.Join("testdata", item.driver))
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		main := filepath.Join(cohere, "cmd", item.command, "main.go")
 		replace := map[string]string{main: driver}
 		if item.bridge {
-			bridge, err := filepath.Abs("testdata/list_bridge.go")
-			if err != nil {
-				test.Fatal(err)
+			bridge, absolutePathError := filepath.Abs("testdata/list_bridge.go")
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			replace[filepath.Join(cohere, "internal/format/markdown/adamic_lists.go")] = bridge
 		}
-		overlay, err := json.Marshal(map[string]any{"Replace": replace})
-		if err != nil {
-			test.Fatal(err)
+		overlay, encodeError := json.Marshal(map[string]any{"Replace": replace})
+		if encodeError != nil {
+			test.Fatal(encodeError)
 		}
 		// Keep overlay files inside the content-addressed product. Their source
 		// paths are stable, so warm setup fetches the Go oracle instead of
@@ -250,21 +250,21 @@ func StructureLayoutGoProducts(test *testing.T, root, target string) LayoutGoPro
 			Toolchain: []string{buildcache.Tool("go", "version")},
 		}, func(dir string) error {
 			overlayPath := filepath.Join(dir, "overlay.json")
-			if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-				return err
+			if writeError := os.WriteFile(overlayPath, overlay, 0644); writeError != nil {
+				return writeError
 			}
 			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 			defer os.Remove(overlayPath)
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
-			if output, err := toolchainGo(ctx, cohere, append(
+			if output, toolchainGoError := toolchainGo(ctx, cohere, append(
 				append([]string{"build"}, buildcache.ReproducibleGoFlags()...),
 				"-overlay="+overlayPath,
 				"-o",
 				filepath.Join(dir, "oracle"),
 				main,
-			)...); err != nil {
-				return fmt.Errorf("Go bridge: %w\n%s", err, output)
+			)...); toolchainGoError != nil {
+				return fmt.Errorf("Go bridge: %w\n%s", toolchainGoError, output)
 			}
 			return nil
 		})
@@ -294,22 +294,22 @@ func TableLayoutGoProducts(test *testing.T, root, target string) LayoutGoProduct
 			driver = "document_go.go"
 			command = "adamic_markdown_doclayout"
 		}
-		driverPath, err := filepath.Abs(filepath.Join("testdata", driver))
-		if err != nil {
-			test.Fatal(err)
+		driverPath, absolutePathError := filepath.Abs(filepath.Join("testdata", driver))
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		main := filepath.Join(cohere, "cmd", command, "main.go")
 		replacements := map[string]string{main: driverPath}
 		if mode == "list" {
-			bridge, err := filepath.Abs("testdata/list_bridge.go")
-			if err != nil {
-				test.Fatal(err)
+			bridge, absolutePathError := filepath.Abs("testdata/list_bridge.go")
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			replacements[filepath.Join(cohere, "internal/format/markdown/adamic_lists.go")] = bridge
 		}
-		overlay, err := json.Marshal(map[string]any{"Replace": replacements})
-		if err != nil {
-			test.Fatal(err)
+		overlay, encodeError := json.Marshal(map[string]any{"Replace": replacements})
+		if encodeError != nil {
+			test.Fatal(encodeError)
 		}
 
 		goInputs := buildcache.Inputs{
@@ -323,20 +323,20 @@ func TableLayoutGoProducts(test *testing.T, root, target string) LayoutGoProduct
 		}
 		product := oracleProduct(test, goInputs, func(product string) error {
 			overlayPath := filepath.Join(product, mode+".json")
-			if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-				return err
+			if writeError := os.WriteFile(overlayPath, overlay, 0644); writeError != nil {
+				return writeError
 			}
 			defer os.Remove(overlayPath)
 			ctx, cancel := context.WithCancel(test.Context())
 			defer cancel()
-			if output, err := toolchainGo(ctx, cohere, append(
+			if output, toolchainGoError := toolchainGo(ctx, cohere, append(
 				append([]string{"build"}, buildcache.ReproducibleGoFlags()...),
 				"-overlay="+overlayPath,
 				"-o",
 				filepath.Join(product, "oracle"),
 				main,
-			)...); err != nil {
-				return fmt.Errorf("Go %s: %w\n%s", mode, err, output)
+			)...); toolchainGoError != nil {
+				return fmt.Errorf("Go %s: %w\n%s", mode, toolchainGoError, output)
 			}
 			return nil
 		})
@@ -363,22 +363,22 @@ func WhitespaceLayoutGoProducts(test *testing.T, ctx context.Context, root, targ
 		if target != "" && target != mode.name {
 			continue
 		}
-		driver, err := filepath.Abs(filepath.Join("testdata", mode.driver))
-		if err != nil {
-			test.Fatal(err)
+		driver, absolutePathError := filepath.Abs(filepath.Join("testdata", mode.driver))
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		mainPath := filepath.Join(cohere, "cmd", mode.command, "main.go")
 		replace := map[string]string{mainPath: driver}
 		if mode.name == "lists" {
-			bridge, err := filepath.Abs("testdata/list_bridge.go")
-			if err != nil {
-				test.Fatal(err)
+			bridge, absolutePathError := filepath.Abs("testdata/list_bridge.go")
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			replace[filepath.Join(cohere, "internal/format/markdown/adamic_lists.go")] = bridge
 		}
-		overlay, err := json.Marshal(map[string]any{"Replace": replace})
-		if err != nil {
-			test.Fatal(err)
+		overlay, encodeError := json.Marshal(map[string]any{"Replace": replace})
+		if encodeError != nil {
+			test.Fatal(encodeError)
 		}
 
 		goInputs := whitespaceGoInputs(test, root)
@@ -392,18 +392,18 @@ func WhitespaceLayoutGoProducts(test *testing.T, ctx context.Context, root, targ
 		)
 		product := oracleProduct(test, goInputs, func(product string) error {
 			overlayPath := filepath.Join(product, mode.name+".json")
-			if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-				return err
+			if writeError := os.WriteFile(overlayPath, overlay, 0644); writeError != nil {
+				return writeError
 			}
 			defer os.Remove(overlayPath)
-			if output, err := toolchainGo(ctx, cohere, append(
+			if output, toolchainGoError := toolchainGo(ctx, cohere, append(
 				append([]string{"build"}, buildcache.ReproducibleGoFlags()...),
 				"-overlay="+overlayPath,
 				"-o",
 				filepath.Join(product, "oracle"),
 				mainPath,
-			)...); err != nil {
-				return fmt.Errorf("Go %s: %w\n%s", mode.name, err, output)
+			)...); toolchainGoError != nil {
+				return fmt.Errorf("Go %s: %w\n%s", mode.name, toolchainGoError, output)
 			}
 			return nil
 		})
@@ -449,14 +449,14 @@ func whitespaceGoInputs(test *testing.T, root string) buildcache.Inputs {
 func TextFormatterProduct(test *testing.T, root string) string {
 	test.Helper()
 	directory := oracleProduct(test, textToolInputs("formatter"), func(dir string) error {
-		output, err := toolchainGo(test.Context(), filepath.Join(root, "cohere"), append(
+		output, toolchainGoError := toolchainGo(test.Context(), filepath.Join(root, "cohere"), append(
 			append([]string{"build"}, buildcache.ReproducibleGoFlags()...),
 			"-o",
 			filepath.Join(dir, "cohere"),
 			"./command/cohere",
 		)...)
-		if err != nil {
-			return fmt.Errorf("formatter: %w\n%s", err, output)
+		if toolchainGoError != nil {
+			return fmt.Errorf("formatter: %w\n%s", toolchainGoError, output)
 		}
 		return nil
 	})
@@ -467,14 +467,14 @@ func TextFormatterProduct(test *testing.T, root string) string {
 func TextGeneratorProduct(test *testing.T, root string) string {
 	test.Helper()
 	directory := oracleProduct(test, textToolInputs("generator"), func(dir string) error {
-		output, err := toolchainGo(test.Context(), root, append(
+		output, toolchainGoError := toolchainGo(test.Context(), root, append(
 			append([]string{"build"}, buildcache.ReproducibleGoFlags()...),
 			"-o",
 			filepath.Join(dir, "generate"),
 			"./stage1/cohere/markdownblocks/tools/generate_classes",
 		)...)
-		if err != nil {
-			return fmt.Errorf("generator: %w\n%s", err, output)
+		if toolchainGoError != nil {
+			return fmt.Errorf("generator: %w\n%s", toolchainGoError, output)
 		}
 		return nil
 	})
@@ -502,13 +502,13 @@ func AuditCorpus(test *testing.T, root string) ([]AuditInput, int) {
 	var inputs []AuditInput
 	paths := auditCorpusFiles(test, root)
 	for _, path := range paths {
-		content, err := os.ReadFile(path)
-		if err != nil {
-			test.Fatal(err)
+		content, readError := os.ReadFile(path)
+		if readError != nil {
+			test.Fatal(readError)
 		}
-		name, err := filepath.Rel(root, path)
-		if err != nil {
-			test.Fatal(err)
+		name, relativePathError := filepath.Rel(root, path)
+		if relativePathError != nil {
+			test.Fatal(relativePathError)
 		}
 		inputs = append(inputs, AuditInput{Name: filepath.ToSlash(name), Text: string(content)})
 	}
@@ -553,9 +553,9 @@ func AuditCorpus(test *testing.T, root string) ([]AuditInput, int) {
 		inputs = append(inputs, AuditInput{Name: "generated/embedding/" + code, Text: "```tsx\n" + code + "\n```\n"})
 	}
 	for _, name := range []string{"embedded_jsonc.md", "embedded_flow.md"} {
-		content, err := os.ReadFile(filepath.Join("gaps", name))
-		if err != nil {
-			test.Fatal(err)
+		content, readError := os.ReadFile(filepath.Join("gaps", name))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		inputs = append(inputs, AuditInput{Name: "generated/" + name, Text: string(content)})
 	}
@@ -907,9 +907,9 @@ func NumericBatch(inputs [][]uint16) []byte {
 }
 
 func TokenizerEventLiveEnumeration(test *testing.T) (string, [][]uint16, []string, int) {
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	corpus, files := BlockCorpus(test, root, "whitespace")
 	// Upstream selection verifies the two fixed checkout pins against Git.
@@ -970,9 +970,9 @@ func TokenizerEventLiveEnumeration(test *testing.T) (string, [][]uint16, []strin
 }
 
 func GrainWidthInputs(test *testing.T) (string, []AuditInput, int) {
-	root, e := filepath.Abs(repository)
-	if e != nil {
-		test.Fatal(e)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	inputs, files := AuditCorpus(test, root)
 	original := append([]AuditInput(nil), inputs...)
@@ -1059,16 +1059,16 @@ func GrainWidthFork(root string) string {
 
 func root(test testing.TB) string {
 	test.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return root
 }
 
 const ownerDirectory = "stage1/cohere/markdownblocks/oracles"
 
-var errOwnedHere = errors.New("built by " + ownerDirectory + "'s product tests")
+var errorOwnedHere = errors.New("built by " + ownerDirectory + "'s product tests")
 
 func goOracle(test *testing.T, owner, module, output, pkg string, arguments []string) string {
 	test.Helper()
@@ -1079,24 +1079,24 @@ func goOracle(test *testing.T, owner, module, output, pkg string, arguments []st
 		}
 		return buildcache.GoBuildIn(test, module, output, pkg, arguments)
 	}
-	inputs, err := buildcache.GoBuildInInputs(module, output, pkg, arguments, nil)
-	if err != nil {
-		test.Fatalf("go build %s: %v", pkg, err)
+	inputs, goBuildInInputsError := buildcache.GoBuildInInputs(module, output, pkg, arguments, nil)
+	if goBuildInInputsError != nil {
+		test.Fatalf("go build %s: %v", pkg, goBuildInInputsError)
 	}
 	directory := buildcache.BuiltElsewhere(
 		test,
 		output,
 		inputs,
 		ownerDirectory+" "+owner,
-		func(string) error { return errOwnedHere },
+		func(string) error { return errorOwnedHere },
 	)
 	return filepath.Join(directory, output)
 }
 
 func writeOverlay(directory, name string, replace map[string]string) (string, error) {
-	overlay, err := json.Marshal(map[string]any{"Replace": replace})
-	if err != nil {
-		return "", err
+	overlay, encodeError := json.Marshal(map[string]any{"Replace": replace})
+	if encodeError != nil {
+		return "", encodeError
 	}
 	overlayPath := filepath.Join(directory, name)
 	return overlayPath, os.WriteFile(overlayPath, overlay, 0644)
@@ -1110,8 +1110,11 @@ func writeOverlay(directory, name string, replace map[string]string) (string, er
 // (30 minutes) could fire, and ctx and the unit's own ceiling end it sooner (Loom kills a test unit at 90 s and a
 // product unit at 600 s).
 func toolchainGo(ctx context.Context, directory string, arguments ...string) ([]byte, error) {
-	stdout, stderr, err := childguard.Capture(ctx, toolchain.CommandContextIn(ctx, directory, "go", arguments...))
-	return append(stdout, stderr...), err
+	stdout, stderr, captureError := childguard.Capture(
+		ctx,
+		toolchain.CommandContextIn(ctx, directory, "go", arguments...),
+	)
+	return append(stdout, stderr...), captureError
 }
 
 // callerGo is toolchainGo with the caller's environment.
@@ -1119,8 +1122,8 @@ func callerGo(ctx context.Context, directory string, arguments ...string) ([]byt
 	command := toolchain.CommandContextIn(ctx, directory, "go", arguments...)
 	// The caller's environment, with PWD set to the directory, as a command with no environment of its own gets.
 	command.Env = nil
-	stdout, stderr, err := childguard.Capture(ctx, command)
-	return append(stdout, stderr...), err
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
+	return append(stdout, stderr...), captureError
 }
 
 type run struct {
@@ -1137,12 +1140,12 @@ func execute(ctx context.Context, environment []string, name string, arguments .
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	if ctx.Err() != nil {
 		return run{}, ctx.Err()
 	}
-	if err != nil && command.ProcessState == nil {
-		return run{}, fmt.Errorf("running %s: %w", name, err)
+	if captureError != nil && command.ProcessState == nil {
+		return run{}, fmt.Errorf("running %s: %w", name, captureError)
 	}
 	return run{stdout, stderr, command.ProcessState.ExitCode()}, nil
 }
@@ -1172,9 +1175,9 @@ func overlayGoOracle(test *testing.T, owner, command, output string, replacement
 	mainPath := filepath.Join(cohere, "cmd", command, "main.go")
 	replace := map[string]string{}
 	for target, source := range replacements {
-		absolute, err := filepath.Abs(filepath.Join("testdata", source))
-		if err != nil {
-			test.Fatal(err)
+		absolute, absolutePathError := filepath.Abs(filepath.Join("testdata", source))
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		if target == "" {
 			target = mainPath
@@ -1183,9 +1186,9 @@ func overlayGoOracle(test *testing.T, owner, command, output string, replacement
 		}
 		replace[target] = absolute
 	}
-	overlayPath, err := writeOverlay(test.TempDir(), "overlay.json", replace)
-	if err != nil {
-		test.Fatal(err)
+	overlayPath, writeOverlayError := writeOverlay(test.TempDir(), "overlay.json", replace)
+	if writeOverlayError != nil {
+		test.Fatal(writeOverlayError)
 	}
 	return goOracle(test, owner, "cohere", output, mainPath, []string{"-overlay=" + overlayPath})
 }
@@ -1263,20 +1266,20 @@ func PilotGoProduct(test *testing.T, family string) string {
 		Flags:     flags,
 		Toolchain: []string{buildcache.Tool("go", "version")},
 	}, func(dir string) error {
-		overlayPath, err := writeOverlay(dir, "overlay.json", replace)
-		if err != nil {
-			return err
+		overlayPath, writeOverlayError := writeOverlay(dir, "overlay.json", replace)
+		if writeOverlayError != nil {
+			return writeOverlayError
 		}
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 		defer os.Remove(overlayPath)
-		if result, err := callerGo(test.Context(), cohere, append(
+		if result, callerGoError := callerGo(test.Context(), cohere, append(
 			append([]string{"build"}, buildcache.ReproducibleGoFlags()...),
 			"-overlay="+overlayPath,
 			"-o",
 			filepath.Join(dir, output),
 			filepath.Join(cohere, "cmd", command, "main.go"),
-		)...); err != nil {
-			return fmt.Errorf("%s Go product: %w\n%s", family, err, result)
+		)...); callerGoError != nil {
+			return fmt.Errorf("%s Go product: %w\n%s", family, callerGoError, result)
 		}
 		return nil
 	})
@@ -1285,9 +1288,9 @@ func PilotGoProduct(test *testing.T, family string) string {
 
 func TokenizerEventAnswers(test *testing.T, goBinary string, batch []byte) []byte {
 	test.Helper()
-	binary, err := os.ReadFile(goBinary)
-	if err != nil {
-		test.Fatal(err)
+	binary, readError := os.ReadFile(goBinary)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	inputs := buildcache.Inputs{
 		Name:  "markdownblocks-tokenizer-events-answers",
@@ -1302,9 +1305,9 @@ func TokenizerEventAnswers(test *testing.T, goBinary string, batch []byte) []byt
 	// AuditCorpus reads, so convert here (#y6ff7ea).
 	repositoryRoot := root(test)
 	for _, path := range auditCorpusFiles(test, repositoryRoot) {
-		relative, err := filepath.Rel(repositoryRoot, path)
-		if err != nil {
-			test.Fatal(err)
+		relative, relativePathError := filepath.Rel(repositoryRoot, path)
+		if relativePathError != nil {
+			test.Fatal(relativePathError)
 		}
 		if relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
 			test.Fatalf("markdown corpus file %s is outside the repository", path)
@@ -1312,27 +1315,27 @@ func TokenizerEventAnswers(test *testing.T, goBinary string, batch []byte) []byt
 		inputs.Files = append(inputs.Files, filepath.ToSlash(relative))
 	}
 	directory := oracleProduct(test, inputs, func(directory string) error {
-		scratch, err := os.MkdirTemp("", "markdown-events-cases-")
-		if err != nil {
-			return err
+		scratch, temporaryDirectoryError := os.MkdirTemp("", "markdown-events-cases-")
+		if temporaryDirectoryError != nil {
+			return temporaryDirectoryError
 		}
 		defer os.RemoveAll(scratch)
 		cases := filepath.Join(scratch, "cases.txt")
-		if err := os.WriteFile(cases, batch, 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(cases, batch, 0644); writeError != nil {
+			return writeError
 		}
-		want, err := execute(test.Context(), nil, goBinary, cases)
-		if err != nil {
-			return err
+		want, executeError := execute(test.Context(), nil, goBinary, cases)
+		if executeError != nil {
+			return executeError
 		}
 		if want.exitCode != 0 || len(want.stderr) > 0 {
 			return fmt.Errorf("full Go mutant oracle exit %d stderr %s", want.exitCode, want.stderr)
 		}
 		return os.WriteFile(filepath.Join(directory, "answers.txt"), want.stdout, 0644)
 	})
-	answers, err := os.ReadFile(filepath.Join(directory, "answers.txt"))
-	if err != nil {
-		test.Fatal(err)
+	answers, readError := os.ReadFile(filepath.Join(directory, "answers.txt"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return answers
 }
@@ -1399,26 +1402,26 @@ func TextGoBuild(test *testing.T, target string) string {
 	dir := oracleProduct(test, textGoInputs(target, goCompilerIdentity()), func(dir string) error {
 		arguments := append([]string{"build"}, buildcache.ReproducibleGoFlags()...)
 		if target == "go" {
-			overlayPath, err := writeOverlay(dir, "overlay.json", map[string]string{
+			overlayPath, writeOverlayError := writeOverlay(dir, "overlay.json", map[string]string{
 				pkg: filepath.Join(root, "stage1/cohere/markdownblocks/testdata/text_go.go"),
 				filepath.Join(
 					cohere,
 					"internal/format/markdown/adamic_text.go",
 				): filepath.Join(root, "stage1/cohere/markdownblocks/testdata/text_bridge.go"),
 			})
-			if err != nil {
-				return err
+			if writeOverlayError != nil {
+				return writeOverlayError
 			}
 			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 			defer os.Remove(overlayPath)
 			arguments = append(arguments, "-overlay="+overlayPath)
 		}
-		if output, err := toolchainGo(
+		if output, toolchainGoError := toolchainGo(
 			test.Context(),
 			directory,
 			append(arguments, "-o", filepath.Join(dir, binary), pkg)...,
-		); err != nil {
-			return fmt.Errorf("text %s: %w\n%s", target, err, output)
+		); toolchainGoError != nil {
+			return fmt.Errorf("text %s: %w\n%s", target, toolchainGoError, output)
 		}
 		return nil
 	})
@@ -1457,26 +1460,26 @@ func MalformedEventsGoOracle(test *testing.T) string {
 				"testdata/events_transport.go",
 			},
 		} {
-			source, err := filepath.Abs(p.source)
-			if err != nil {
-				return err
+			source, absolutePathError := filepath.Abs(p.source)
+			if absolutePathError != nil {
+				return absolutePathError
 			}
 			replace[p.target] = source
 		}
-		overlayPath, err := writeOverlay(dir, "overlay.json", replace)
-		if err != nil {
-			return err
+		overlayPath, writeOverlayError := writeOverlay(dir, "overlay.json", replace)
+		if writeOverlayError != nil {
+			return writeOverlayError
 		}
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 		defer os.Remove(overlayPath)
-		if output, err := callerGo(test.Context(), cohere, append(
+		if output, callerGoError := callerGo(test.Context(), cohere, append(
 			append([]string{"build"}, buildcache.ReproducibleGoFlags()...),
 			"-overlay="+overlayPath,
 			"-o",
 			filepath.Join(dir, "go-errors"),
 			mainPath,
-		)...); err != nil {
-			return fmt.Errorf("Go errors: %w\n%s", err, output)
+		)...); callerGoError != nil {
+			return fmt.Errorf("Go errors: %w\n%s", callerGoError, output)
 		}
 		return nil
 	})
@@ -1555,20 +1558,20 @@ func GrainGoOracle(test *testing.T, name string) string {
 			}
 			replace[target] = filepath.Join(root, "stage1/cohere/markdownblocks/testdata", from)
 		}
-		overlayPath, err := writeOverlay(dir, "overlay.json", replace)
-		if err != nil {
-			return err
+		overlayPath, writeOverlayError := writeOverlay(dir, "overlay.json", replace)
+		if writeOverlayError != nil {
+			return writeOverlayError
 		}
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 		defer os.Remove(overlayPath)
-		if output, err := toolchainGo(test.Context(), cohere, append(
+		if output, toolchainGoError := toolchainGo(test.Context(), cohere, append(
 			append([]string{"build"}, buildcache.ReproducibleGoFlags()...),
 			"-overlay="+overlayPath,
 			"-o",
 			filepath.Join(dir, "oracle"),
 			filepath.Join(cohere, "cmd", recipe.command, "main.go"),
-		)...); err != nil {
-			return fmt.Errorf("Go oracle: %w\n%s", err, output)
+		)...); toolchainGoError != nil {
+			return fmt.Errorf("Go oracle: %w\n%s", toolchainGoError, output)
 		}
 		return nil
 	})
@@ -1602,13 +1605,13 @@ func GrainTool(test *testing.T, name string) string {
 
 func GrainWidthFullAnswers(test *testing.T, goBinary, fork string, batch []byte) ([]byte, []byte) {
 	test.Helper()
-	binary, err := os.ReadFile(goBinary)
-	if err != nil {
-		test.Fatal(err)
+	binary, readError := os.ReadFile(goBinary)
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	standalone, err := os.ReadFile(filepath.Join(fork, "standalone.js"))
-	if err != nil {
-		test.Fatal(err)
+	standalone, readError := os.ReadFile(filepath.Join(fork, "standalone.js"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	inputs := buildcache.Inputs{
 		Name: "markdown-grain-width-full-answers",
@@ -1624,14 +1627,14 @@ func GrainWidthFullAnswers(test *testing.T, goBinary, fork string, batch []byte)
 		Toolchain: []string{runtime.GOOS, runtime.GOARCH, buildcache.Tool("node", "--version")},
 	}
 	directory := oracleProduct(test, inputs, func(directory string) error {
-		scratch, err := os.MkdirTemp("", "markdown-width-cases-")
-		if err != nil {
-			return err
+		scratch, temporaryDirectoryError := os.MkdirTemp("", "markdown-width-cases-")
+		if temporaryDirectoryError != nil {
+			return temporaryDirectoryError
 		}
 		defer os.RemoveAll(scratch)
 		cases := filepath.Join(scratch, "cases.txt")
-		if err := os.WriteFile(cases, batch, 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(cases, batch, 0644); writeError != nil {
+			return writeError
 		}
 		for _, side := range []struct {
 			name, file, command string
@@ -1640,23 +1643,23 @@ func GrainWidthFullAnswers(test *testing.T, goBinary, fork string, batch []byte)
 			{"Go StringWidth", "go.txt", goBinary, []string{cases}},
 			{"actual fork group-fit widths", "fork.txt", "node", []string{"testdata/width_fork.mjs", fork, cases}},
 		} {
-			result, err := execute(test.Context(), nil, side.command, side.args...)
-			if err != nil {
-				return err
+			result, executeError := execute(test.Context(), nil, side.command, side.args...)
+			if executeError != nil {
+				return executeError
 			}
 			if result.exitCode != 0 || len(result.stderr) > 0 {
 				return fmt.Errorf("%s exit %d stderr %s", side.name, result.exitCode, result.stderr)
 			}
-			if err := os.WriteFile(filepath.Join(directory, side.file), result.stdout, 0644); err != nil {
-				return err
+			if writeError := os.WriteFile(filepath.Join(directory, side.file), result.stdout, 0644); writeError != nil {
+				return writeError
 			}
 		}
 		return nil
 	})
 	read := func(file string) []byte {
-		data, err := os.ReadFile(filepath.Join(directory, file))
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(filepath.Join(directory, file))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		return data
 	}
@@ -1690,17 +1693,17 @@ func PreflightGoProducts(test *testing.T) (string, []string) {
 	budget := newPreflightProductBudget(test)
 	defer budget.close()
 	root := root(test)
-	driver, err := filepath.Abs("testdata/go_driver.go")
-	if err != nil {
-		test.Fatal(err)
+	driver, absolutePathError := filepath.Abs("testdata/go_driver.go")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	cohere := filepath.Join(root, "cohere")
 	mainPath := filepath.Join(cohere, "cmd/adamic_markdown_blocks/main.go")
 	alteredSources := make([][]byte, len(preflightMutations))
 	for index, mutation := range preflightMutations {
-		content, err := os.ReadFile(filepath.Join(cohere, "internal/format/markdown", mutation.path))
-		if err != nil {
-			test.Fatal(err)
+		content, readError := os.ReadFile(filepath.Join(cohere, "internal/format/markdown", mutation.path))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		if strings.Count(string(content), mutation.from) != 1 {
 			test.Fatal("mutant must alter exactly one site")
@@ -1715,10 +1718,10 @@ func PreflightGoProducts(test *testing.T) (string, []string) {
 		"stage1/cohere/markdownblocks/oracles/oracles.go",
 	}
 	for _, name := range []string{"go.sum", "go.work.sum"} {
-		if _, err := os.Stat(filepath.Join(root, name)); err == nil {
+		if _, statError := os.Stat(filepath.Join(root, name)); statError == nil {
 			buildFiles = append(buildFiles, name)
-		} else if !os.IsNotExist(err) {
-			test.Fatal(err)
+		} else if !os.IsNotExist(statError) {
+			test.Fatal(statError)
 		}
 	}
 	product := oracleProduct(test, buildcache.Inputs{
@@ -1743,37 +1746,41 @@ func PreflightGoProducts(test *testing.T) (string, []string) {
 
 		build := func(replacements map[string]string, binary string) error {
 			replacements[mainPath] = driver
-			overlayPath, err := writeOverlay(filepath.Dir(binary), filepath.Base(binary)+".overlay.json", replacements)
-			if err != nil {
-				return err
+			overlayPath, writeOverlayError := writeOverlay(
+				filepath.Dir(binary),
+				filepath.Base(binary)+".overlay.json",
+				replacements,
+			)
+			if writeOverlayError != nil {
+				return writeOverlayError
 			}
 			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 			defer os.Remove(overlayPath)
-			if output, err := preflightGo(budget, cohere, append(
+			if output, preflightGoError := preflightGo(budget, cohere, append(
 				append([]string{"build"}, buildcache.ReproducibleGoFlags()...),
 				"-overlay="+overlayPath,
 				"-o",
 				binary,
 				mainPath,
-			)...); err != nil {
-				return fmt.Errorf("build: %w\n%s", err, output)
+			)...); preflightGoError != nil {
+				return fmt.Errorf("build: %w\n%s", preflightGoError, output)
 			}
 			return nil
 		}
-		if err := build(map[string]string{}, filepath.Join(dir, "go-printer")); err != nil {
-			return err
+		if buildError := build(map[string]string{}, filepath.Join(dir, "go-printer")); buildError != nil {
+			return buildError
 		}
 		for index, mutation := range preflightMutations {
 			altered := filepath.Join(dir, mutation.path)
-			if err := os.WriteFile(altered, alteredSources[index], 0644); err != nil {
-				return err
+			if writeError := os.WriteFile(altered, alteredSources[index], 0644); writeError != nil {
+				return writeError
 			}
 			source := filepath.Join(cohere, "internal/format/markdown", mutation.path)
-			if err := build(
+			if buildError := build(
 				map[string]string{source: altered},
 				filepath.Join(dir, fmt.Sprintf("mutant-%d", index)),
-			); err != nil {
-				return err
+			); buildError != nil {
+				return buildError
 			}
 		}
 		return nil

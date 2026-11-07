@@ -126,8 +126,8 @@ func assertRequiredViewFieldPrimitive(t *testing.T, test requiredViewProbe) {
 			source = "const node = {value: \"name\"}; console.log(String(node.value));\n"
 		}
 		path := filepath.Join(t.TempDir(), "field.a")
-		if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-			t.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+			t.Fatal(writeError)
 		}
 		if difference := disagreement(test.want, onSliceNode(t, path)); difference != "" {
 			t.Fatal("Node source oracle: " + difference)
@@ -187,8 +187,8 @@ func TestRequiredViewFieldOperandOnce(test *testing.T) {
 	}
 	source := "let calls = 0; function make() { calls++; return {value: 7}; } console.log(String(make().value)); console.log(String(calls));\n"
 	path := filepath.Join(test.TempDir(), "once.a")
-	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	want := onSliceNode(test, path)
 	if want.exitCode != 0 || string(want.stdout) != "7\n1\n" {
@@ -265,13 +265,15 @@ func assertNarrowedFieldUsesSharedReadiness(test *testing.T, probe narrowedReadi
 
 func TestViewFieldInheritedStaticReadiness(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_static_initialized.ts"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/non_null_static_initialized.ts"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	want := onSliceNode(test, path)
 	native, _ := nativelyUncached(test, program)

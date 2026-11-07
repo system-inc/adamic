@@ -23,9 +23,9 @@ func programMillionMeasured(test *testing.T, enabled, sanitized bool) string {
 			"internal/native",
 		},
 	}, func(directory string) error {
-		path, err := filepath.Abs("testdata/program_region/million.a")
-		if err != nil {
-			return err
+		path, absolutePathError := filepath.Abs("testdata/program_region/million.a")
+		if absolutePathError != nil {
+			return absolutePathError
 		}
 		code := native.C(programRegionLowered(test, path, enabled))
 		at := strings.LastIndex(code, "\treturn adamic_host_exit_status();")
@@ -46,9 +46,9 @@ func programMillionMeasurement(test *testing.T, enabled, sanitized bool) {
 	if runtime.GOOS != "linux" {
 		test.Skip("Linux RSS witness")
 	}
-	path, err := filepath.Abs("testdata/program_region/million.a")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("testdata/program_region/million.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := execute(
 		test,

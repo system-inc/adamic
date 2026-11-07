@@ -39,18 +39,18 @@ const (
 func TestEveryNativeBuildIsBoundedByTheProcessJobserver(test *testing.T) {
 	test.Parallel()
 	// Reads: *.go
-	root, err := filepath.Abs(filepath.Join("..", ".."))
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(filepath.Join("..", ".."))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	type directory struct {
 		callsCode, callsTest     []string
 		importsCode, importsTest bool
 	}
 	directories := map[string]*directory{}
-	err = filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
+	walkError := filepath.WalkDir(root, func(path string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
 		relative, _ := filepath.Rel(root, path)
 		relative = filepath.ToSlash(relative)
@@ -69,9 +69,9 @@ func TestEveryNativeBuildIsBoundedByTheProcessJobserver(test *testing.T) {
 			return nil
 		}
 		files := token.NewFileSet()
-		parsed, err := parser.ParseFile(files, path, nil, parser.SkipObjectResolution)
-		if err != nil {
-			return err
+		parsed, parseFileError := parser.ParseFile(files, path, nil, parser.SkipObjectResolution)
+		if parseFileError != nil {
+			return parseFileError
 		}
 		test := strings.HasSuffix(relative, "_test.go")
 		place := filepath.ToSlash(filepath.Dir(relative))
@@ -119,8 +119,8 @@ func TestEveryNativeBuildIsBoundedByTheProcessJobserver(test *testing.T) {
 		})
 		return nil
 	})
-	if err != nil {
-		test.Fatal(err)
+	if walkError != nil {
+		test.Fatal(walkError)
 	}
 	places := make([]string, 0, len(directories))
 	for place := range directories {

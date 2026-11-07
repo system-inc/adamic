@@ -69,9 +69,9 @@ func regexpGlobalSymbols(output string, archive bool) (map[string]regexpMemberSy
 
 func regexpClosureTool(test testing.TB, tool string, args ...string) string {
 	test.Helper()
-	output, err := toolchain.Command(tool, args...).Output()
-	if err != nil {
-		test.Fatalf("%s %v: %v", tool, args, err)
+	output, outputError := toolchain.Command(tool, args...).Output()
+	if outputError != nil {
+		test.Fatalf("%s %v: %v", tool, args, outputError)
 	}
 	return strings.TrimSpace(string(output))
 }
@@ -109,13 +109,13 @@ func regexpWitnessClosureInventory(test testing.TB) string {
 		test.Skip("RegExp witness symbol closure is held on Linux")
 	}
 	options := Options{Sanitize: true}
-	files, flags, compiler, version, err := runtimeInputs("", options, nil)
-	if err != nil {
-		test.Fatal(err)
+	files, flags, compiler, version, runtimeInputsError := runtimeInputs("", options, nil)
+	if runtimeInputsError != nil {
+		test.Fatal(runtimeInputsError)
 	}
-	request, err := runtimeRequest(files, flags, compiler, version, options)
-	if err != nil {
-		test.Fatal(err)
+	request, runtimeRequestError := runtimeRequest(files, flags, compiler, version, options)
+	if runtimeRequestError != nil {
+		test.Fatal(runtimeRequestError)
 	}
 	libraries := regexpClosureLibraries(test, compiler)
 	inputs := buildcache.Inputs{
@@ -137,9 +137,9 @@ func regexpWitnessClosureInventory(test testing.TB) string {
 		},
 	}
 	for _, path := range libraries {
-		data, err := os.ReadFile(path)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(path)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		inputs.Flags = append(
 			inputs.Flags,
@@ -150,9 +150,12 @@ func regexpWitnessClosureInventory(test testing.TB) string {
 		inventory := regexpClosureInventory{Members: map[string]regexpMemberSymbols{}}
 		scanArchive := func(path string) map[string]regexpMemberSymbols {
 			test.Helper()
-			symbols, err := regexpGlobalSymbols(regexpClosureTool(test, "nm", "-A", "-g", "-P", path), true)
-			if err != nil {
-				test.Fatal(err)
+			symbols, regexpGlobalSymbolsError := regexpGlobalSymbols(
+				regexpClosureTool(test, "nm", "-A", "-g", "-P", path),
+				true,
+			)
+			if regexpGlobalSymbolsError != nil {
+				test.Fatal(regexpGlobalSymbolsError)
 			}
 			// nm prints no rows for a genuinely empty object. Keep its member
 			// identity too, so an empty C unit is not mistaken for a stale name.
@@ -170,9 +173,9 @@ func regexpWitnessClosureInventory(test testing.TB) string {
 				inventory.Members[name] = symbols
 			}
 		}
-		all, err := readRuntime(runtime, "runtime")
-		if err != nil {
-			return err
+		all, readRuntimeError := readRuntime(runtime, "runtime")
+		if readRuntimeError != nil {
+			return readRuntimeError
 		}
 		for _, file := range all {
 			if strings.HasSuffix(file.name, ".c") {
@@ -198,31 +201,31 @@ func regexpWitnessClosureInventory(test testing.TB) string {
 			}
 		}
 		build := func(subdirectory string, snapshot []runtimeFile) (string, error) {
-			request, err := runtimeRequest(snapshot, flags, compiler, version, options)
-			if err != nil {
-				return "", err
+			request, runtimeRequestError := runtimeRequest(snapshot, flags, compiler, version, options)
+			if runtimeRequestError != nil {
+				return "", runtimeRequestError
 			}
 			root := filepath.Join(directory, subdirectory)
-			if err := os.MkdirAll(root, 0700); err != nil {
-				return "", err
+			if createDirectoryError := os.MkdirAll(root, 0700); createDirectoryError != nil {
+				return "", createDirectoryError
 			}
-			if err := request.Build(root, 4, nil); err != nil {
-				return "", err
+			if buildError := request.Build(root, 4, nil); buildError != nil {
+				return "", buildError
 			}
 			return filepath.Join(root, "runtime.a"), nil
 		}
 		if slices.ContainsFunc(omitted, func(file runtimeFile) bool { return strings.HasSuffix(file.name, ".c") }) {
-			archive, err := build("omitted", omitted)
-			if err != nil {
-				return err
+			archive, buildError := build("omitted", omitted)
+			if buildError != nil {
+				return buildError
 			}
 			for name, symbols := range scanArchive(archive) {
 				inventory.Members[name] = symbols
 			}
 		}
-		archive, err := build("call-mutant", mutated)
-		if err != nil {
-			return err
+		archive, buildError := build("call-mutant", mutated)
+		if buildError != nil {
+			return buildError
 		}
 		inventory.MutatedWeak = scanArchive(archive)["weak.c"]
 		var librarySymbols []map[string]regexpMemberSymbols
@@ -236,15 +239,15 @@ func regexpWitnessClosureInventory(test testing.TB) string {
 			if archive {
 				args = append([]string{"-A"}, args...)
 			}
-			symbols, err := regexpGlobalSymbols(regexpClosureTool(test, "nm", args...), archive)
-			if err != nil {
-				return err
+			symbols, regexpGlobalSymbolsError := regexpGlobalSymbols(regexpClosureTool(test, "nm", args...), archive)
+			if regexpGlobalSymbolsError != nil {
+				return regexpGlobalSymbolsError
 			}
 			librarySymbols = append(librarySymbols, symbols)
 		}
-		data, err := regexpWitnessClosureBytes(inventory, librarySymbols)
-		if err != nil {
-			return err
+		data, regexpWitnessClosureBytesError := regexpWitnessClosureBytes(inventory, librarySymbols)
+		if regexpWitnessClosureBytesError != nil {
+			return regexpWitnessClosureBytesError
 		}
 		return os.WriteFile(filepath.Join(directory, "symbols.json"), data, 0600)
 	})
@@ -286,9 +289,9 @@ func TestRegExpWitnessClosureBytesDeterministic(test *testing.T) {
 	}
 	var first []byte
 	for run := range 20 {
-		data, err := regexpWitnessClosureBytes(inventory, libraries)
-		if err != nil {
-			test.Fatal(err)
+		data, regexpWitnessClosureBytesError := regexpWitnessClosureBytes(inventory, libraries)
+		if regexpWitnessClosureBytesError != nil {
+			test.Fatal(regexpWitnessClosureBytesError)
 		}
 		if run == 0 {
 			first = data
@@ -297,8 +300,8 @@ func TestRegExpWitnessClosureBytesDeterministic(test *testing.T) {
 		}
 	}
 	var decoded regexpClosureInventory
-	if err := json.Unmarshal(first, &decoded); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(first, &decoded); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if len(decoded.External) != 66 ||
 		!slices.IsSorted(decoded.External) ||
@@ -371,13 +374,13 @@ func regexpWitnessClosureGaps(selected map[string]bool, inventory regexpClosureI
 func TestRegExpWitnessRuntimeClosure(test *testing.T) {
 	test.Parallel()
 	directory := regexpWitnessClosureInventory(test)
-	data, err := os.ReadFile(filepath.Join(directory, "symbols.json"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(directory, "symbols.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var inventory regexpClosureInventory
-	if err := json.Unmarshal(data, &inventory); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &inventory); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	selected := map[string]bool{}
 	for name, included := range regexWitnessRuntimeSources {
@@ -403,13 +406,13 @@ func regexpWitnessClosureMutant(test *testing.T, name string) {
 	if goruntime.GOOS != "linux" {
 		test.Skip("RegExp witness symbol closure is held on Linux")
 	}
-	data, err := os.ReadFile("testdata/regexp-witness-closure-mutants.json")
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile("testdata/regexp-witness-closure-mutants.json")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var cases []struct{ Name, Test, Diagnostic string }
-	if err := json.Unmarshal(data, &cases); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &cases); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	for _, one := range cases {
 		if one.Name != name {
@@ -423,11 +426,11 @@ func regexpWitnessClosureMutant(test *testing.T, name string) {
 			"-test.v",
 			"-regexp-witness-closure-mutant="+name,
 		)
-		output, err := command.CombinedOutput()
-		if err == nil ||
+		output, combinedOutputError := command.CombinedOutput()
+		if combinedOutputError == nil ||
 			!strings.Contains(string(output), one.Diagnostic) ||
 			!strings.Contains(string(output), "--- FAIL: "+one.Test) {
-			test.Fatalf("closure mutant %s must fail its own test by name: %v\n%s", name, err, output)
+			test.Fatalf("closure mutant %s must fail its own test by name: %v\n%s", name, combinedOutputError, output)
 		}
 		test.Logf("%s", output)
 		return
@@ -455,12 +458,12 @@ func TestRegExpWitnessClosureStaleSource(test *testing.T) {
 
 func TestRegExpWitnessGlobalSymbols(test *testing.T) {
 	test.Parallel()
-	symbols, err := regexpGlobalSymbols(
+	symbols, regexpGlobalSymbolsError := regexpGlobalSymbols(
 		"/cache/runtime.a[weak.o]: global T 0 10\n/cache/runtime.a[weak.o]: shared C 8 8\n/cache/runtime.a[weak.o]: call U\n/cache/runtime.a[weak.o]: optional w\n",
 		true,
 	)
-	if err != nil {
-		test.Fatal(err)
+	if regexpGlobalSymbolsError != nil {
+		test.Fatal(regexpGlobalSymbolsError)
 	}
 	weak := symbols["weak.c"]
 	if len(symbols) != 1 ||
@@ -468,11 +471,11 @@ func TestRegExpWitnessGlobalSymbols(test *testing.T) {
 		strings.Join(weak.Undefined, ",") != "call,optional" {
 		test.Fatalf("lost globals or member provenance: %+v", symbols)
 	}
-	dynamic, err := regexpGlobalSymbols("malloc@@GLIBC_2.2.5 T 0 10\n", false)
-	if err != nil || strings.Join(dynamic["external"].Defined, ",") != "malloc" {
-		test.Fatalf("lost versioned definition: %v %+v", err, dynamic)
+	dynamic, regexpGlobalSymbolsError := regexpGlobalSymbols("malloc@@GLIBC_2.2.5 T 0 10\n", false)
+	if regexpGlobalSymbolsError != nil || strings.Join(dynamic["external"].Defined, ",") != "malloc" {
+		test.Fatalf("lost versioned definition: %v %+v", regexpGlobalSymbolsError, dynamic)
 	}
-	if _, err := regexpGlobalSymbols("global T 0 10\n", true); err == nil {
+	if _, regexpGlobalSymbolsError := regexpGlobalSymbols("global T 0 10\n", true); regexpGlobalSymbolsError == nil {
 		test.Fatal("accepted globals without archive member provenance")
 	}
 }

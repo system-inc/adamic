@@ -68,29 +68,33 @@ func acceptanceMutantProducts(test *testing.T, item acceptanceMutant, compile bo
 	}
 	lowered := buildcache.Product(test, inputs, func(dir string) error {
 		main := mutantPort(test, item.file, item.from, item.to)
-		program, err := load.Load([]string{main})
-		if err != nil {
-			return err
+		program, loadError := load.Load([]string{main})
+		if loadError != nil {
+			return loadError
 		}
-		lowered, err := lower.Lower(context.Background(), program)
-		if err != nil {
-			return err
+		lowered, lowerError := lower.Lower(context.Background(), program)
+		if lowerError != nil {
+			return lowerError
 		}
-		if err := os.WriteFile(filepath.Join(dir, "port.c"), []byte(native.C(lowered)), 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(
+			filepath.Join(dir, "port.c"),
+			[]byte(native.C(lowered)),
+			0644,
+		); writeError != nil {
+			return writeError
 		}
 		// Source remains usable after the building test's temporary directories disappear.
-		files, err := filepath.Glob(filepath.Join(filepath.Dir(main), "*.ts"))
-		if err != nil {
-			return err
+		files, globError := filepath.Glob(filepath.Join(filepath.Dir(main), "*.ts"))
+		if globError != nil {
+			return globError
 		}
 		for _, file := range files {
-			data, err := os.ReadFile(file)
-			if err != nil {
-				return err
+			data, readError := os.ReadFile(file)
+			if readError != nil {
+				return readError
 			}
-			if err := os.WriteFile(filepath.Join(dir, filepath.Base(file)), data, 0644); err != nil {
-				return err
+			if writeError := os.WriteFile(filepath.Join(dir, filepath.Base(file)), data, 0644); writeError != nil {
+				return writeError
 			}
 		}
 		// mutantPort's imports name this checkout; the product names it <repository> (#tqrqx60).
@@ -103,9 +107,9 @@ func acceptanceMutantProducts(test *testing.T, item acceptanceMutant, compile bo
 	inputs.Flags = append(inputs.Flags, native.Flags(native.Options{Sanitize: true, Split: true})...)
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
 	product := buildcache.Product(test, inputs, func(dir string) error {
-		data, err := os.ReadFile(filepath.Join(lowered, "port.c"))
-		if err != nil {
-			return err
+		data, readError := os.ReadFile(filepath.Join(lowered, "port.c"))
+		if readError != nil {
+			return readError
 		}
 		return native.Build(string(data), filepath.Join(dir, "port"), native.Options{Sanitize: true, Split: true})
 	})
@@ -162,20 +166,20 @@ func acceptanceMutantsCommand(ctx context.Context, executable string, args ...st
 	command := exec.CommandContext(ctx, executable, args...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
+		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if errors.Is(killError, syscall.ESRCH) {
 			return os.ErrProcessDone
 		}
-		return err
+		return killError
 	}
 	return command
 }
 
 func acceptanceMutantsExecute(test *testing.T, ctx context.Context, name string, args ...string) []byte {
 	test.Helper()
-	output, stderr, err := childguard.Capture(ctx, acceptanceMutantsCommand(ctx, name, args...))
-	if err != nil || len(stderr) != 0 {
-		test.Fatalf("%s %v: %v\n%s", name, args, err, stderr)
+	output, stderr, captureError := childguard.Capture(ctx, acceptanceMutantsCommand(ctx, name, args...))
+	if captureError != nil || len(stderr) != 0 {
+		test.Fatalf("%s %v: %v\n%s", name, args, captureError, stderr)
 	}
 	return output
 }
@@ -227,8 +231,8 @@ func runAcceptanceMutantShard(test *testing.T, shard int) {
 			gotCases[witness] = wantCases[witness]
 			got = []byte(strings.Join(gotCases, ""))
 		}
-		if err := acceptanceMutantCheck(want, got); err != nil {
-			test.Fatal(name + " " + err.Error())
+		if acceptanceMutantCheckError := acceptanceMutantCheck(want, got); acceptanceMutantCheckError != nil {
+			test.Fatal(name + " " + acceptanceMutantCheckError.Error())
 		}
 		test.Log(name + ": " + firstDifference(want, got))
 	}
@@ -267,32 +271,32 @@ func TestAcceptanceMutantsUnion(test *testing.T) {
 // surviving native witness, and shard 001 to retain its original passing verdict.
 func proveAcceptanceMutantShard(test *testing.T, index int) {
 	test.Helper()
-	executable, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	executable, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
 	name := fmt.Sprintf("TestAcceptanceMutants_%03d", index)
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	command := acceptanceMutantsCommand(ctx, executable, "-test.run=^"+name+"$", "-test.timeout=90s", "-test.v")
 	command.Env = append(os.Environ(), "ADAMIC_ACCEPTANCE_MUTANTS_PROOF=1")
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	output := append(stdout, stderr...)
 	test.Logf("isolated planted proof:\n%s", output)
 	if ctx.Err() != nil {
 		test.Fatalf("%s exceeded child deadline: %v", name, ctx.Err())
 	}
 	if index == 0 {
-		exit, ok := err.(*exec.ExitError)
+		exit, ok := captureError.(*exec.ExitError)
 		if !ok ||
 			exit.ExitCode() != 1 ||
 			!strings.Contains(string(output), "native mutant survived") ||
 			!strings.Contains(string(output), "--- FAIL: "+name) {
-			test.Fatalf("planted surviving mutant must fail only %s: %v\n%s", name, err, output)
+			test.Fatalf("planted surviving mutant must fail only %s: %v\n%s", name, captureError, output)
 		}
 		test.Log("planted native witness caught by " + name)
-	} else if err != nil {
-		test.Fatalf("unplanted shard %s must pass: %v\n%s", name, err, output)
+	} else if captureError != nil {
+		test.Fatalf("unplanted shard %s must pass: %v\n%s", name, captureError, output)
 	} else {
 		test.Log("planted witness has no ownership in " + name)
 	}

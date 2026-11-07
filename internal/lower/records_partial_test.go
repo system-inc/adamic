@@ -33,13 +33,13 @@ func TestPartialRecordStorageRefusals(test *testing.T) {
 			probe.extension = ".a"
 		}
 		test.Run(probe.extension+" "+probe.source, func(test *testing.T) {
-			_, err := lowerSourceAs(test, probe.source, probe.extension)
+			_, lowerSourceAsError := lowerSourceAs(test, probe.source, probe.extension)
 			var ny *NotYet
 			var refused *Refused
-			if err == nil ||
-				(!errors.As(err, &ny) && !errors.As(err, &refused)) ||
-				!strings.Contains(err.Error(), probe.reason) {
-				test.Fatalf("got %v, want %s refusal", err, probe.reason)
+			if lowerSourceAsError == nil ||
+				(!errors.As(lowerSourceAsError, &ny) && !errors.As(lowerSourceAsError, &refused)) ||
+				!strings.Contains(lowerSourceAsError.Error(), probe.reason) {
+				test.Fatalf("got %v, want %s refusal", lowerSourceAsError, probe.reason)
 			}
 		})
 	}

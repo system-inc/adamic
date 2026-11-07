@@ -19,9 +19,11 @@ import (
 // checkedNamesPath is a fixture of records_checked_names, absolute, as a stop's Where names it.
 func checkedNamesPath(test *testing.T, name string) string {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_checked_names", name))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/records_checked_names", name),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return path
 }
@@ -38,9 +40,9 @@ func checkedNamesShown(got run) string {
 func TestCheckedNamesClassThroughGeneric(test *testing.T) {
 	test.Parallel()
 	path := checkedNamesPath(test, "class_through_generic.ts")
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatalf("must lower: %v", err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatalf("must lower: %v", loweredError)
 	}
 	viewed := 0
 	look := func(expression ir.Expression) ir.Expression {
@@ -79,11 +81,11 @@ func TestCheckedNamesClassThroughGeneric(test *testing.T) {
 func TestCheckedNamesStructuralLiteralRefused(test *testing.T) {
 	test.Parallel()
 	path := checkedNamesPath(test, "structural_literal.ts")
-	_, err := lowered(test, path)
+	_, loweredError := lowered(test, path)
 	const want = ":16:27: Adamic 0.1 refuses a value without nominal ancestry seen as Settings; construct that class or a subclass; use an interface for structural values (adamic/nominal-class)"
 	var refused *lower.Refused
-	if !errors.As(err, &refused) || err.Error() != path+want {
-		test.Fatalf("want the literal refused, %q, got %v", want, err)
+	if !errors.As(loweredError, &refused) || loweredError.Error() != path+want {
+		test.Fatalf("want the literal refused, %q, got %v", want, loweredError)
 	}
 }
 
@@ -92,9 +94,9 @@ func TestCheckedNamesStructuralLiteralRefused(test *testing.T) {
 func checkedNamesStops(test *testing.T, name, printed, stopped, nativeStop, javascriptStop string) {
 	test.Helper()
 	path := checkedNamesPath(test, name)
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatalf("must lower: %v", err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatalf("must lower: %v", loweredError)
 	}
 	node := onNode(test, path)
 	if node.exitCode != 0 || string(node.stdout) != printed {

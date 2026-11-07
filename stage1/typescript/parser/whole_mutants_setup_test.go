@@ -54,15 +54,15 @@ var wholeMutantsTreeScanner = regexp.MustCompile(`/[^'"\s]*/stage1/typescript/sc
 
 func wholeMutantsSourceHash(test *testing.T, directory string) string {
 	test.Helper()
-	scanner, err := filepath.Abs("../scanner/scanner.ts")
-	if err != nil {
-		test.Fatal(err)
+	scanner, absolutePathError := filepath.Abs("../scanner/scanner.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	var sources strings.Builder
 	for _, name := range portFiles {
-		data, err := os.ReadFile(filepath.Join(directory, name))
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(filepath.Join(directory, name))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		normalized := wholeMutantsTreeScanner.ReplaceAllString(
 			strings.ReplaceAll(string(data), scanner, "../scanner/scanner.ts"),
@@ -74,12 +74,12 @@ func wholeMutantsSourceHash(test *testing.T, directory string) string {
 	}
 	// That scanner's bytes, including its changed site, are inputs like the port's.
 	for _, name := range []string{"scanner.ts", "characters.ts", "tokens.ts"} {
-		data, err := os.ReadFile(filepath.Join(directory, "scanner", name))
-		if errors.Is(err, fs.ErrNotExist) {
+		data, readError := os.ReadFile(filepath.Join(directory, "scanner", name))
+		if errors.Is(readError, fs.ErrNotExist) {
 			continue
 		}
-		if err != nil {
-			test.Fatal(err)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		fmt.Fprintf(&sources, "scanner/%s %d\n%s", name, len(data), data)
 	}
@@ -106,9 +106,9 @@ func wholeMutantsPrepare(test *testing.T) {
 func wholeMutantsBuildInputs(test *testing.T) {
 	test.Helper()
 	started := time.Now()
-	directory, err := filepath.Abs(".")
-	if err != nil {
-		test.Fatal(err)
+	directory, absolutePathError := filepath.Abs(".")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	inputs := &wholeMutantsPreparedInputs{
 		Oracle:   wholeMutantBuildOracleProduct(test),
@@ -146,8 +146,8 @@ func wholeMutantsCheckInputs(test *testing.T) {
 		test.Fatal("shared setup must finish before a whole-mutant leaf runs")
 	}
 	for _, path := range append([]string{wholeMutantsPrepared.Oracle}, wholeMutantsBinaryPaths()...) {
-		if _, err := os.Stat(path); err != nil {
-			test.Fatalf("prepared input %s: %v", path, err)
+		if _, statError := os.Stat(path); statError != nil {
+			test.Fatalf("prepared input %s: %v", path, statError)
 		}
 	}
 }
@@ -196,13 +196,13 @@ func wholeMutantsRunShard(test *testing.T, index int) {
 	command := wholeMutantCommandContext(ctx, os.Args[0], "-test.run=^"+test.Name()+"$", "-test.v", "-test.timeout=90s")
 	command.Env = append(environment, wholeMutantsCaseChildEnv+"=1")
 	// Read through childguard.Capture for wholeMutantCommandContext's reason, stdout then stderr.
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	output := append(stdout, stderr...)
 	if ctx.Err() != nil {
 		test.Fatalf("cooked: %s exceeded 90 seconds", test.Name())
 	}
-	if err != nil {
-		test.Fatalf("%s: %v\n%s", test.Name(), err, output)
+	if captureError != nil {
+		test.Fatalf("%s: %v\n%s", test.Name(), captureError, output)
 	}
 	if strings.Contains(string(output), "build typescript-parser-") {
 		test.Fatalf("leaf attempted a product build after its deadline started\n%s", output)
@@ -214,13 +214,13 @@ func wholeMutantsRunShard(test *testing.T, index int) {
 func wholeMutantsChildEnvironment(test *testing.T) []string {
 	test.Helper()
 	wholeMutantsPrepare(test)
-	data, err := json.Marshal(wholeMutantsPrepared)
-	if err != nil {
-		test.Fatal(err)
+	data, encodeError := json.Marshal(wholeMutantsPrepared)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	descriptor := filepath.Join(test.TempDir(), "inputs.json")
-	if err := os.WriteFile(descriptor, data, 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(descriptor, data, 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	var environment []string
 	for _, entry := range os.Environ() {

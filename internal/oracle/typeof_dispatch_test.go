@@ -24,13 +24,13 @@ func init() {
 // their answer; constructors, including those held in unions, must fail Node's stdout comparison.
 func TestTypeOfConstructorMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, typeofDispatchFixture))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, typeofDispatchFixture))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	want := onNode(test, path)
 	source := native.C(program)
@@ -45,8 +45,8 @@ static adamic_string *typeof_constructor_mutant(const adamic_heap *value, bool n
 }
 ` + mutant
 	binary := filepath.Join(test.TempDir(), "mutant")
-	if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(mutant, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	if report := leakChecked(test, mutant, binary); report != "" {
 		test.Fatalf("mutant must not leak: %s", report)
@@ -64,13 +64,15 @@ static adamic_string *typeof_constructor_mutant(const adamic_heap *value, bool n
 // A wrong classification of the static string must be caught by Node's output alone.
 func TestTypeOfStringLiteralMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/typeof_string_literal.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/typeof_string_literal.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	want := onNode(test, path)
 	source := native.C(program)
@@ -85,8 +87,8 @@ static adamic_string *typeof_string_mutant(const adamic_heap *value, bool null) 
 }
 ` + mutant
 	binary := filepath.Join(test.TempDir(), "mutant")
-	if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(mutant, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	if report := leakChecked(test, mutant, binary); report != "" {
 		test.Fatalf("mutant must not leak: %s", report)

@@ -67,16 +67,16 @@ func TestObjectIntersectionFields(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			if probe.admitted {
-				if err != nil {
-					test.Fatal(err)
+				if lowerSourceError != nil {
+					test.Fatal(lowerSourceError)
 				}
 				return
 			}
 			var stop *NotYet
-			if !errors.As(err, &stop) {
-				test.Fatalf("want NotYet, got %v", err)
+			if !errors.As(lowerSourceError, &stop) {
+				test.Fatalf("want NotYet, got %v", lowerSourceError)
 			}
 		})
 	}
@@ -94,10 +94,11 @@ func TestObjectAssignKeepsFieldsHeldAlike(test *testing.T) {
 	} {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, source)
+			_, lowerSourceError := lowerSource(test, source)
 			var refusal *Refused
-			if !errors.As(err, &refusal) || !strings.Contains(err.Error(), "intersection result") {
-				test.Fatalf("want the intersection result refusal, got %v", err)
+			if !errors.As(lowerSourceError, &refusal) ||
+				!strings.Contains(lowerSourceError.Error(), "intersection result") {
+				test.Fatalf("want the intersection result refusal, got %v", lowerSourceError)
 			}
 		})
 	}

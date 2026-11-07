@@ -41,12 +41,12 @@ func expressionGateShard(test *testing.T, number int) {
 		// family's ~1,292 CPU seconds a run (test audit).
 		libraryHash := oracles.StatementDirectoryHash(test, library)
 		for side := 0; side < 2; side++ {
-			answers, err := os.ReadFile(filepath.Join(
+			answers, readError := os.ReadFile(filepath.Join(
 				oracles.ExpressionLibraryOracle(test, number, side, shard, libraryHash, library),
 				"answers.txt",
 			))
-			if err != nil {
-				test.Fatal(err)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			oracleAnswers[side] = answers
 		}
@@ -62,9 +62,9 @@ func expressionGateShard(test *testing.T, number int) {
 		return tscAgreementExecute(test, ctx, environment, name, args...)
 	}
 	node := func(path string, args ...string) oracles.Run {
-		runner, err := filepath.Abs(filepath.Join(oracles.Repository, "oracle/node.mjs"))
-		if err != nil {
-			test.Fatal(err)
+		runner, absolutePathError := filepath.Abs(filepath.Join(oracles.Repository, "oracle/node.mjs"))
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		return runCommand(
 			nil,
@@ -74,8 +74,13 @@ func expressionGateShard(test *testing.T, number int) {
 	}
 	if number < len(plan.Shards) {
 		check := func(name string, result oracles.Run) {
-			if err := expressionDisagreement(plan, number, answers[number], result); err != nil {
-				test.Fatalf("%s: %v", name, err)
+			if expressionDisagreementError := expressionDisagreement(
+				plan,
+				number,
+				answers[number],
+				result,
+			); expressionDisagreementError != nil {
+				test.Fatalf("%s: %v", name, expressionDisagreementError)
 			}
 		}
 		check("Node", node(port, "--cases", shard.Text, "80"))

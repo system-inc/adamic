@@ -31,9 +31,9 @@ func TestUntaggedViewMemberTags(test *testing.T) {
 		{Kind: ir.ViewObject, Of: ir.Object, Fields: []ir.ViewFieldContract{{Name: "label", Contract: 7}}},
 		{Kind: ir.ViewScalar, Of: ir.String},
 	}
-	members, err := UntaggedViewMembers(contracts, 1)
-	if err != nil {
-		test.Fatal(err)
+	members, untaggedViewMembersError := UntaggedViewMembers(contracts, 1)
+	if untaggedViewMembersError != nil {
+		test.Fatal(untaggedViewMembersError)
 	}
 	if len(members) != 2 || members[0].Contract != 2 || members[1].Contract != 3 {
 		test.Fatalf("member identity lost: %#v", members)
@@ -61,19 +61,19 @@ func TestUntaggedViewStructuralFallback(test *testing.T) {
 		{Kind: ir.ViewObject, Of: ir.Object},
 		{Kind: ir.ViewObject, Of: ir.Object},
 	}
-	members, err := UntaggedViewMembers(contracts, 1)
-	if err != nil || len(members) != 2 || len(members[0].Tags) != 0 || len(members[1].Tags) != 0 {
-		test.Fatalf("structural fallback lost: %v %#v", err, members)
+	members, untaggedViewMembersError := UntaggedViewMembers(contracts, 1)
+	if untaggedViewMembersError != nil || len(members) != 2 || len(members[0].Tags) != 0 || len(members[1].Tags) != 0 {
+		test.Fatalf("structural fallback lost: %v %#v", untaggedViewMembersError, members)
 	}
 	for _, kind := range []ir.ViewKind{ir.ViewUnknown, ir.ViewArray, ir.ViewCallable} {
 		contracts[2].Kind = kind
-		if _, err := UntaggedViewMembers(contracts, 1); err == nil {
+		if _, untaggedViewMembersError := UntaggedViewMembers(contracts, 1); untaggedViewMembersError == nil {
 			test.Fatalf("member kind %d admitted without its adapter", kind)
 		}
 	}
 	contracts[2].Kind = ir.ViewObject
 	contracts[0].Members[1] = 99
-	if _, err := UntaggedViewMembers(contracts, 1); err == nil {
+	if _, untaggedViewMembersError := UntaggedViewMembers(contracts, 1); untaggedViewMembersError == nil {
 		test.Fatal("invalid member id admitted")
 	}
 }

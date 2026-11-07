@@ -24,7 +24,9 @@ func (l *lowering) speculativeCast(node *ast.Node) bool {
 		return false
 	}
 	signature := l.checker.GetResolvedSignature(call)
-	if signature == nil || len(signature.Parameters()) == 0 || len(l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(signature.Parameters()[0]), checker.SignatureKindCall)) != 1 {
+	if signature == nil || len(signature.Parameters()) == 0 || len(
+		l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(signature.Parameters()[0]), checker.SignatureKindCall),
+	) != 1 {
 		return false
 	}
 	return l.concrete(l.checker.GetTypeAtLocation(call)).Flags()&checker.TypeFlagsUnknown != 0
@@ -37,24 +39,38 @@ func (l *lowering) checkedSpeculativeResult(node *ast.Node) (ir.Expression, erro
 	target := l.concrete(l.checker.GetTypeAtLocation(node))
 	present := l.checker.GetNonNullableType(target)
 	held, known := l.representation(present)
-	if !known || (held != ir.Number && held != ir.Boolean && held != ir.String && held != ir.Object) || l.includesNull(target) {
+	if !known ||
+		(held != ir.Number && held != ir.Boolean && held != ir.String && held != ir.Object) ||
+		l.includesNull(target) {
 		return nil, l.notYet(node, "a checked speculative result of type "+l.checker.TypeToString(target))
 	}
 	if held == ir.Object {
-		if l.checker.GetIndexTypeOfType(present, l.checker.GetStringType()) != nil || l.checker.GetIndexTypeOfType(present, l.checker.GetNumberType()) != nil || isClassInstance(present) || len(l.checker.GetPropertiesOfType(present)) == 0 || len(l.checker.GetSignaturesOfType(present, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(present, checker.SignatureKindConstruct)) != 0 {
+		if l.checker.GetIndexTypeOfType(present, l.checker.GetStringType()) != nil ||
+			l.checker.GetIndexTypeOfType(present, l.checker.GetNumberType()) != nil ||
+			isClassInstance(present) ||
+			len(l.checker.GetPropertiesOfType(present)) == 0 ||
+			len(l.checker.GetSignaturesOfType(present, checker.SignatureKindCall)) != 0 ||
+			len(l.checker.GetSignaturesOfType(present, checker.SignatureKindConstruct)) != 0 {
 			return nil, l.notYet(node, "a speculative object result without a fixed scalar field contract")
 		}
 		for _, field := range l.checker.GetPropertiesOfType(present) {
-			if field.Flags&ast.SymbolFlagsOptional != 0 || !interfaceScalar(l.checker.GetTypeOfSymbol(field)) || accessorSymbol(field) {
+			if field.Flags&ast.SymbolFlagsOptional != 0 ||
+				!interfaceScalar(l.checker.GetTypeOfSymbol(field)) ||
+				accessorSymbol(field) {
 				return nil, l.notYet(node, "a speculative object result with an unreifiable field "+field.Name)
 			}
 		}
 	}
-	value, err := l.expression(call)
-	if err != nil {
-		return nil, err
+	value, expressionError := l.expression(call)
+	if expressionError != nil {
+		return nil, expressionError
 	}
-	message := "speculative result failed: callback " + sourceExpression(call.AsCallExpression().Arguments.Nodes[0]) + " at " + l.program.Where(call) + "; expected " + l.checker.TypeToString(target)
+	message := "speculative result failed: callback " +
+		sourceExpression(call.AsCallExpression().Arguments.Nodes[0]) +
+		" at " +
+		l.program.Where(call) +
+		"; expected " +
+		l.checker.TypeToString(target)
 	b := l.libraryArrayBuilder([]ir.Expression{fit(value, ir.Union)})
 	observed := b.read(b.parameters[0])
 	if l.includesUndefined(target) {
@@ -62,19 +78,29 @@ func (l *lowering) checkedSpeculativeResult(node *ast.Node) (ir.Expression, erro
 		if held == ir.Number || held == ir.Boolean {
 			absent = ir.MaybeOf{Of: ir.Maybe(held)}
 		}
-		b.body = append(b.body, ir.If{Condition: ir.IsUndefined{Value: observed}, Then: []ir.Statement{ir.Return{Value: absent}}})
+		b.body = append(
+			b.body,
+			ir.If{Condition: ir.IsUndefined{Value: observed}, Then: []ir.Statement{ir.Return{Value: absent}}},
+		)
 	}
 	checked := ir.Expression(ir.Narrow{Value: observed, To: held, Checked: true, Message: message})
 	if held == ir.Object {
 		local := b.declare("speculative_result", checked)
 		checked = b.read(local)
 		// The speculation's own result is unknown, so the view vouches for nothing before it.
-		if _, err := l.view(node, checked, nil, present); err != nil {
-			return nil, err
+		if _, viewError := l.view(node, checked, nil, present); viewError != nil {
+			return nil, viewError
 		}
 		for _, field := range l.checker.GetPropertiesOfType(present) {
 			of, _ := l.representation(l.checker.GetTypeOfSymbol(field))
-			b.body = append(b.body, ir.Evaluate{Value: ir.Property{Object: checked, Name: field.Name, Of: of, View: message, ViewType: l.checker.TypeToString(l.checker.GetTypeOfSymbol(field)), ViewAllowed: l.viewLiterals(l.checker.GetTypeOfSymbol(field))}})
+			b.body = append(b.body, ir.Evaluate{Value: ir.Property{
+				Object:      checked,
+				Name:        field.Name,
+				Of:          of,
+				View:        message,
+				ViewType:    l.checker.TypeToString(l.checker.GetTypeOfSymbol(field)),
+				ViewAllowed: l.viewLiterals(l.checker.GetTypeOfSymbol(field)),
+			}})
 		}
 	} else if allowed := l.viewLiterals(present); len(allowed) != 0 {
 		local := b.declare("speculative_result", checked)
@@ -88,7 +114,10 @@ func (l *lowering) checkedSpeculativeResult(node *ast.Node) (ir.Expression, erro
 				fits = ir.Binary{Operator: ir.Or, Left: fits, Right: test}
 			}
 		}
-		b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: fits}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
+		b.body = append(b.body, ir.If{
+			Condition: ir.Unary{Operator: ir.Not, Operand: fits},
+			Then:      []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}},
+		})
 	}
 	if l.includesUndefined(target) && (held == ir.Number || held == ir.Boolean) {
 		checked = ir.MaybeOf{Of: ir.Maybe(held), Value: checked}

@@ -15,20 +15,20 @@ import (
 func TestCompilerCacheIncludesSHA(test *testing.T) {
 	test.Parallel()
 	root := test.TempDir()
-	a, err := buildcache.Key(root, compilerInputs("base-sha"))
-	if err != nil {
-		test.Fatal(err)
+	a, keyError := buildcache.Key(root, compilerInputs("base-sha"))
+	if keyError != nil {
+		test.Fatal(keyError)
 	}
-	b, err := buildcache.Key(root, compilerInputs("head-sha"))
-	if err != nil {
-		test.Fatal(err)
+	b, keyError := buildcache.Key(root, compilerInputs("head-sha"))
+	if keyError != nil {
+		test.Fatal(keyError)
 	}
 	if a == b {
 		test.Fatal("revision SHA missing from compiler cache key")
 	}
-	again, err := buildcache.Key(root, compilerInputs("base-sha"))
-	if err != nil || a != again {
-		test.Fatal("cache key is not stable", err)
+	again, keyError := buildcache.Key(root, compilerInputs("base-sha"))
+	if keyError != nil || a != again {
+		test.Fatal("cache key is not stable", keyError)
 	}
 }
 
@@ -52,9 +52,9 @@ func TestExecutableForkIsolation(test *testing.T) {
 	test.Parallel()
 	dir := test.TempDir()
 	// The forks run this test binary with no test selected, so the pressure needs no host tool.
-	self, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	self, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 45*time.Second)
 	var forks sync.WaitGroup
@@ -66,8 +66,12 @@ func TestExecutableForkIsolation(test *testing.T) {
 			defer forks.Done()
 			ready <- struct{}{}
 			for ctx.Err() == nil {
-				if err := exec.CommandContext(ctx, self, "-test.run=^$").Run(); err != nil && ctx.Err() == nil {
-					failures <- err
+				if runError := exec.CommandContext(
+					ctx,
+					self,
+					"-test.run=^$",
+				).Run(); runError != nil && ctx.Err() == nil {
+					failures <- runError
 					return
 				}
 			}
@@ -101,19 +105,19 @@ func TestCompilerCacheIgnoresBuildPolicy(test *testing.T) {
 	root := test.TempDir()
 	test.Setenv("GOTOOLCHAIN", "auto")
 	test.Setenv("GOFLAGS", "-trimpath -buildvcs=false -p=4")
-	built, err := buildcache.Key(root, compilerInputs("revision"))
-	if err != nil {
-		test.Fatal(err)
+	built, keyError := buildcache.Key(root, compilerInputs("revision"))
+	if keyError != nil {
+		test.Fatal(keyError)
 	}
 	test.Setenv("GOTOOLCHAIN", "local")
 	test.Setenv("GOFLAGS", "-buildvcs=false")
-	read, err := buildcache.Key(root, compilerInputs("revision"))
-	if err != nil || built != read {
-		test.Fatalf("build and read policies key different compilers: %s != %s: %v", built, read, err)
+	read, keyError := buildcache.Key(root, compilerInputs("revision"))
+	if keyError != nil || built != read {
+		test.Fatalf("build and read policies key different compilers: %s != %s: %v", built, read, keyError)
 	}
 	test.Setenv("GOFLAGS", "-tags=other")
-	changed, err := buildcache.Key(root, compilerInputs("revision"))
-	if err != nil || changed == read {
-		test.Fatal("output-changing build flags lost", err)
+	changed, keyError := buildcache.Key(root, compilerInputs("revision"))
+	if keyError != nil || changed == read {
+		test.Fatal("output-changing build flags lost", keyError)
 	}
 }

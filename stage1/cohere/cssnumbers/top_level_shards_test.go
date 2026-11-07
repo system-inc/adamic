@@ -22,9 +22,9 @@ func numbersTopTempDir(test *testing.T) string {
 	if numbersTopRootError != nil {
 		test.Fatal(numbersTopRootError)
 	}
-	dir, err := os.MkdirTemp(numbersTopRoot, "input-")
-	if err != nil {
-		test.Fatal(err)
+	dir, temporaryDirectoryError := os.MkdirTemp(numbersTopRoot, "input-")
+	if temporaryDirectoryError != nil {
+		test.Fatal(temporaryDirectoryError)
 	}
 	return dir
 }
@@ -34,7 +34,7 @@ func numbersTopTempDir(test *testing.T) string {
 func TestMain(m *testing.M) {
 	code := m.Run()
 	if numbersTopRoot != "" {
-		if err := os.RemoveAll(numbersTopRoot); err != nil {
+		if removeError := os.RemoveAll(numbersTopRoot); removeError != nil {
 			if code == 0 {
 				code = 1
 			}

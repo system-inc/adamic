@@ -73,13 +73,17 @@ func ProgramCoreBinary(test *testing.T, index int, name string) string {
 func programCoreProduct(test *testing.T, index int) string {
 	test.Helper()
 	options := programCoreOptions[index]
-	files, flags, compiler, _, err := runtimeInputs("", options, []string{"-DADAMIC_CANONICAL_CLOSURES=1"})
-	if err != nil {
-		test.Fatal(err)
+	files, flags, compiler, _, runtimeInputsError := runtimeInputs(
+		"",
+		options,
+		[]string{"-DADAMIC_CANONICAL_CLOSURES=1"},
+	)
+	if runtimeInputsError != nil {
+		test.Fatal(runtimeInputsError)
 	}
-	headers, err := headersRead(files, flags, compiler)
-	if err != nil {
-		test.Fatal(err)
+	headers, headersReadError := headersRead(files, flags, compiler)
+	if headersReadError != nil {
+		test.Fatal(headersReadError)
 	}
 	inputs := buildcache.Inputs{
 		Name: fmt.Sprintf("program-region-core-%d", index),
@@ -110,19 +114,19 @@ func programCoreProduct(test *testing.T, index int) string {
 		))
 	}
 	return buildcache.Product(test, inputs, func(directory string) error {
-		scratch, err := os.MkdirTemp("", "adamic-program-core-")
-		if err != nil {
-			return err
+		scratch, temporaryDirectoryError := os.MkdirTemp("", "adamic-program-core-")
+		if temporaryDirectoryError != nil {
+			return temporaryDirectoryError
 		}
 		defer os.RemoveAll(scratch)
 		within := filepath.Join(scratch, "runtime")
-		if err := os.MkdirAll(within, 0755); err != nil {
-			return err
+		if createDirectoryError := os.MkdirAll(within, 0755); createDirectoryError != nil {
+			return createDirectoryError
 		}
 		var sources []string
 		for _, file := range files {
-			if err := os.WriteFile(filepath.Join(within, file.name), file.contents, 0644); err != nil {
-				return err
+			if writeError := os.WriteFile(filepath.Join(within, file.name), file.contents, 0644); writeError != nil {
+				return writeError
 			}
 			if strings.HasSuffix(file.name, ".c") {
 				sources = append(sources, file.name)
@@ -132,17 +136,20 @@ func programCoreProduct(test *testing.T, index int) string {
 			args := append(slices.Clone(flags), prefixMaps(root, "/adamic-runtime")...)
 			args = append(args, "-c", source, "-o", strings.TrimSuffix(source, ".c")+".o")
 			command := toolchain.CommandIn(root, compiler, args...)
-			if output, err := command.CombinedOutput(); err != nil {
-				return fmt.Errorf("compile %s: %w\n%s", source, err, output)
+			if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+				return fmt.Errorf("compile %s: %w\n%s", source, combinedOutputError, output)
 			}
 			return nil
 		}
-		if err := eachInParallel(len(sources), func(i int) error { return compile(within, sources[i]) }); err != nil {
-			return err
+		if eachInParallelError := eachInParallel(
+			len(sources),
+			func(i int) error { return compile(within, sources[i]) },
+		); eachInParallelError != nil {
+			return eachInParallelError
 		}
 		link := func(name, changed, object, source string) error {
-			if err := os.WriteFile(filepath.Join(scratch, "main.c"), []byte(source), 0644); err != nil {
-				return err
+			if writeError := os.WriteFile(filepath.Join(scratch, "main.c"), []byte(source), 0644); writeError != nil {
+				return writeError
 			}
 			args := append(slices.Clone(flags), prefixMaps(scratch, "/adamic-build")...)
 			args = append(args, "-I", "runtime", "-o", filepath.Join(directory, name), "main.c")
@@ -155,17 +162,21 @@ func programCoreProduct(test *testing.T, index int) string {
 			}
 			args = append(args, objectPrefixFlags()...)
 			args = append(args, "-lm")
-			if output, err := toolchain.CommandIn(scratch, compiler, args...).CombinedOutput(); err != nil {
-				return fmt.Errorf("link %s: %w\n%s", name, err, output)
+			if output, combinedOutputError := toolchain.CommandIn(
+				scratch,
+				compiler,
+				args...,
+			).CombinedOutput(); combinedOutputError != nil {
+				return fmt.Errorf("link %s: %w\n%s", name, combinedOutputError, output)
 			}
 			return nil
 		}
-		code, err := os.ReadFile("testdata/program_region/core.c")
-		if err != nil {
-			return err
+		code, readError := os.ReadFile("testdata/program_region/core.c")
+		if readError != nil {
+			return readError
 		}
-		if err := link("control", "", "", string(code)); err != nil {
-			return err
+		if linkError := link("control", "", "", string(code)); linkError != nil {
+			return linkError
 		}
 		unsafe := strings.Replace(
 			string(code),
@@ -177,8 +188,8 @@ func programCoreProduct(test *testing.T, index int) string {
 			if unsafe == string(code) {
 				return fmt.Errorf("missing fallback retain mutant")
 			}
-			if err := link("fallback-retain-dropped", "", "", unsafe); err != nil {
-				return err
+			if linkError := link("fallback-retain-dropped", "", "", unsafe); linkError != nil {
+				return linkError
 			}
 		}
 		if index != 0 {
@@ -186,8 +197,8 @@ func programCoreProduct(test *testing.T, index int) string {
 		}
 		for _, mutation := range programCoreMutations {
 			changed := filepath.Join(scratch, mutation.name)
-			if err := os.MkdirAll(changed, 0755); err != nil {
-				return err
+			if createDirectoryError := os.MkdirAll(changed, 0755); createDirectoryError != nil {
+				return createDirectoryError
 			}
 			for _, file := range files {
 				if file.name != mutation.file && !strings.HasSuffix(file.name, ".h") {
@@ -200,16 +211,16 @@ func programCoreProduct(test *testing.T, index int) string {
 					}
 					data = []byte(strings.Replace(string(data), mutation.before, mutation.after, 1))
 				}
-				if err := os.WriteFile(filepath.Join(changed, file.name), data, 0644); err != nil {
-					return err
+				if writeError := os.WriteFile(filepath.Join(changed, file.name), data, 0644); writeError != nil {
+					return writeError
 				}
 			}
-			if err := compile(changed, mutation.file); err != nil {
-				return err
+			if compileError := compile(changed, mutation.file); compileError != nil {
+				return compileError
 			}
 			object := filepath.Join(mutation.name, strings.TrimSuffix(mutation.file, ".c")+".o")
-			if err := link(mutation.name, mutation.file, object, string(code)); err != nil {
-				return err
+			if linkError := link(mutation.name, mutation.file, object, string(code)); linkError != nil {
+				return linkError
 			}
 		}
 		return nil

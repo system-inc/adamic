@@ -15,13 +15,15 @@ import (
 
 func TestNodeFSDirectoryStatConstOptionsMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_fs_directory_stat_options.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/node_fs_directory_stat_options.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	how := inputRun{directory: filepath.Dir(path)}
 	truth := onNodeWith(test, how, path)
@@ -37,8 +39,8 @@ func TestNodeFSDirectoryStatConstOptionsMutant(test *testing.T) {
 	source = strings.Replace(source, `#include "adamic.h"`, `#include "adamic.h"`+"\n"+helper, 1)
 	shared := sharedDirectory(test)
 	binary := filepath.Join(shared, "mutant")
-	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(source, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	got := executeInput(test, how, nodeFSDirectorySanitizerEnvironment(), binary)
 	if got.exitCode != 0 || len(got.stderr) != 0 {
@@ -62,34 +64,39 @@ func nodeFSDirectorySanitizerEnvironment() []string {
 // Latin1 and UTF8 remain valid strings, so only Node's bytes catch the mutant.
 func TestNodeFSRealpathClosureOptionsMutant(test *testing.T) {
 	test.Parallel()
-	input, err := filepath.Abs("testdata/node_fs_directory_inputs/é.txt")
-	if err != nil {
-		test.Fatal(err)
+	input, absolutePathError := filepath.Abs("testdata/node_fs_directory_inputs/é.txt")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	source := "import {realpathSync} from 'node:fs'; const resolve=realpathSync.native; console.log(resolve(" +
 		strconv.Quote(input) +
 		",'latin1'));"
 	path := filepath.Join(test.TempDir(), "main.a")
-	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	_, err = lowered(test, path)
+	_, loweredError := lowered(test, path)
 	var missing *lower.NotYet
-	if !errors.As(err, &missing) || !strings.Contains(missing.What, "is called with zero or multiple arguments") {
-		test.Fatalf("want explicit closure overload refusal, got %v", err)
+	if !errors.As(loweredError, &missing) ||
+		!strings.Contains(missing.What, "is called with zero or multiple arguments") {
+		test.Fatalf("want explicit closure overload refusal, got %v", loweredError)
 	}
 	truth := onNode(test, path)
 	mutantPath := filepath.Join(test.TempDir(), "main.a")
-	if err := os.WriteFile(mutantPath, []byte(strings.Replace(source, ",'latin1'", "", 1)), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(
+		mutantPath,
+		[]byte(strings.Replace(source, ",'latin1'", "", 1)),
+		0600,
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := lowered(test, mutantPath)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, mutantPath)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	binary := filepath.Join(test.TempDir(), "mutant")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	got := executeWith(test, nodeFSDirectorySanitizerEnvironment(), binary)
 	if truth.exitCode != 0 || len(truth.stderr) != 0 || got.exitCode != 0 || len(got.stderr) != 0 {

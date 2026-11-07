@@ -20,13 +20,13 @@ func init() {
 // The fractional cases must reach number.c rather than a folded Go constant.
 func TestFractionalPowersReachRuntime(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/pow_fractional.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/pow_fractional.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	code := native.C(program)
 	quarter := regexp.MustCompile(`adamic_power\([^\n]+, \(0x1p-0?2\)\)`)

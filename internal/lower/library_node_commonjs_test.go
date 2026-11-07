@@ -68,14 +68,16 @@ func TestNodeCommonJSNamesItsReasons(test *testing.T) {
 	for _, one := range commonJSReasonPrograms {
 		test.Run(one.name, func(test *testing.T) {
 			test.Parallel()
-			source, err := os.ReadFile(filepath.Join("testdata/commonjs_reasons", one.name+".ts"))
-			if err != nil {
-				test.Fatal(err)
+			source, readError := os.ReadFile(filepath.Join("testdata/commonjs_reasons", one.name+".ts"))
+			if readError != nil {
+				test.Fatal(readError)
 			}
-			_, err = lowerSourceAs(test, string(source), ".ts")
+			_, lowerSourceAsError := lowerSourceAs(test, string(source), ".ts")
 			var notYet *NotYet
-			if !errors.As(err, &notYet) || filepath.Base(notYet.Where) != one.where || notYet.What != one.what {
-				test.Fatalf("want NotYet at %s: %s, got %v", one.where, one.what, err)
+			if !errors.As(lowerSourceAsError, &notYet) ||
+				filepath.Base(notYet.Where) != one.where ||
+				notYet.What != one.what {
+				test.Fatalf("want NotYet at %s: %s, got %v", one.where, one.what, lowerSourceAsError)
 			}
 		})
 	}
@@ -86,13 +88,13 @@ func TestNodeCommonJSRequiresLowerAsThrows(test *testing.T) {
 	for _, one := range commonJSThrowPrograms {
 		test.Run(one.name, func(test *testing.T) {
 			test.Parallel()
-			source, err := os.ReadFile(filepath.Join("testdata/commonjs_reasons", one.name+".ts"))
-			if err != nil {
-				test.Fatal(err)
+			source, readError := os.ReadFile(filepath.Join("testdata/commonjs_reasons", one.name+".ts"))
+			if readError != nil {
+				test.Fatal(readError)
 			}
-			program, err := lowerSourceAs(test, string(source), ".ts")
-			if err != nil {
-				test.Fatal(err)
+			program, lowerSourceAsError := lowerSourceAs(test, string(source), ".ts")
+			if lowerSourceAsError != nil {
+				test.Fatal(lowerSourceAsError)
 			}
 			if sites := commonJSSites(test, one.name); len(sites) != 0 {
 				test.Fatalf("admitted require still counted by the meter: %v", sites)
@@ -134,14 +136,14 @@ func TestNodeCommonJSSiteCountsOnce(test *testing.T) {
 // testdata/commonjs_reasons, as where and what.
 func commonJSSites(test *testing.T, name string) []string {
 	test.Helper()
-	source, err := os.ReadFile(filepath.Join("testdata/commonjs_reasons", name+".ts"))
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(filepath.Join("testdata/commonjs_reasons", name+".ts"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	path := writeAgreementSource(test, "main.ts", string(source))
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	var file *ast.SourceFile
 	for _, candidate := range program.Files() {
@@ -159,7 +161,7 @@ func commonJSSites(test *testing.T, name string) []string {
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
 		var notYet *NotYet
-		if err := l.nodeLibraryRefusal(node); errors.As(err, &notYet) {
+		if nodeLibraryRefusalError := l.nodeLibraryRefusal(node); errors.As(nodeLibraryRefusalError, &notYet) {
 			site := filepath.Base(notYet.Where) + ": " + notYet.What
 			if !slices.Contains(sites, site) {
 				sites = append(sites, site)

@@ -12,33 +12,38 @@ import (
 const parallelMoveFix = "make the whole reachable value readonly and bind captures with const; moving mutable values into tasks belongs to concurrency part 2 (#p286ycm)"
 
 func (l *lowering) parallelMap(node *ast.Node) (ir.Expression, error) {
-	if err := l.checkParallelMap(node); err != nil {
-		return nil, err
+	if checkParallelMapError := l.checkParallelMap(node); checkParallelMapError != nil {
+		return nil, checkParallelMapError
 	}
 	arguments := node.AsCallExpression().Arguments.Nodes
 	moved := l.parallelMoves(node)
-	items, err := l.expression(arguments[0])
-	if err != nil {
-		return nil, err
+	items, expressionError := l.expression(arguments[0])
+	if expressionError != nil {
+		return nil, expressionError
 	}
-	work, err := l.expression(arguments[1])
-	if err != nil {
-		return nil, err
+	work, expressionError := l.expression(arguments[1])
+	if expressionError != nil {
+		return nil, expressionError
 	}
 	if items.Type() != ir.Array || work.Type() != ir.Closure {
 		return nil, l.notYet(node, "parallelMap operands without array and closure representations")
 	}
-	result, err := l.elementType(node)
-	if err != nil {
-		return nil, err
+	result, elementTypeError := l.elementType(node)
+	if elementTypeError != nil {
+		return nil, elementTypeError
 	}
 	// Globals are ordinarily direct loads, not closure cells. Carry every reference
 	// the task's transitive call graph reads so runtime marking reaches them too.
-	proof := &parallelProof{l: l, active: map[*ast.Node]bool{}, checked: map[*ast.Node]bool{}, shareableFunctions: map[*ast.Node]bool{}}
+	proof := &parallelProof{
+		l:                  l,
+		active:             map[*ast.Node]bool{},
+		checked:            map[*ast.Node]bool{},
+		shareableFunctions: map[*ast.Node]bool{},
+	}
 	body := proof.functionValue(arguments[1], map[*ast.Symbol]bool{})
 	if !moved {
-		if err := proof.function(body, nil); err != nil {
-			return nil, err
+		if functionError := proof.function(body, nil); functionError != nil {
+			return nil, functionError
 		}
 	}
 	shared := []ir.Expression{}
@@ -49,9 +54,9 @@ func (l *lowering) parallelMap(node *ast.Node) (ir.Expression, error) {
 			continue
 		}
 		seen[symbol] = true
-		value, err := l.expression(global)
-		if err != nil {
-			return nil, err
+		value, expressionError := l.expression(global)
+		if expressionError != nil {
+			return nil, expressionError
 		}
 		if !value.Type().IsReference() {
 			continue
@@ -66,7 +71,14 @@ func (l *lowering) parallelMap(node *ast.Node) (ir.Expression, error) {
 	}
 	l.hasMovedParallelMap = l.hasMovedParallelMap || moved
 	l.moveSites = append(l.moveSites, node)
-	return ir.ParallelMap{Site: len(l.moveSites), Items: items, Work: work, Shared: shared, Result: result, Moved: moved}, nil
+	return ir.ParallelMap{
+		Site:   len(l.moveSites),
+		Items:  items,
+		Work:   work,
+		Shared: shared,
+		Result: result,
+		Moved:  moved,
+	}, nil
 }
 
 // Run before general refusals, so async work gets its concurrency diagnostic even
@@ -78,7 +90,8 @@ func (l *lowering) parallelPreflight(module *ast.SourceFile) error {
 		if found != nil || ast.IsPartOfTypeNode(node) {
 			return false
 		}
-		if node.Kind == ast.KindCallExpression && l.isPreludeFunction(node.AsCallExpression().Expression, "parallelMap") {
+		if node.Kind == ast.KindCallExpression &&
+			l.isPreludeFunction(node.AsCallExpression().Expression, "parallelMap") {
 			found = l.checkParallelMap(node)
 			if found != nil {
 				return false
@@ -97,22 +110,39 @@ func (l *lowering) checkParallelMap(node *ast.Node) error {
 	}
 	items := l.concrete(l.checker.GetTypeAtLocation(arguments[0]))
 	if !l.isArrayType(items) {
-		return &Refused{Where: l.program.Where(arguments[0]), What: "parallelMap items must be an array", Fix: parallelMoveFix}
+		return &Refused{
+			Where: l.program.Where(arguments[0]),
+			What:  "parallelMap items must be an array",
+			Fix:   parallelMoveFix,
+		}
 	}
 	if l.parallelMoves(node) {
 		return l.checkMove(node)
 	}
 	// Even primitive elements need an immutable array: every task can capture the array itself.
 	if !l.isLibraryType(items, "ReadonlyArray") {
-		return &Refused{Where: l.program.Where(arguments[0]), What: "parallelMap items are not shareable: items is a mutable " + l.checker.TypeToString(items), Fix: parallelMoveFix}
+		return &Refused{
+			Where: l.program.Where(arguments[0]),
+			What:  "parallelMap items are not shareable: items is a mutable " + l.checker.TypeToString(items),
+			Fix:   parallelMoveFix,
+		}
 	}
 	for _, element := range l.checker.GetTypeArguments(items) {
 		path := l.checker.TypeToString(element)
 		if why := l.shareable(element, path, arguments[0]); why != "" {
-			return &Refused{Where: l.program.Where(arguments[0]), What: "parallelMap items are not shareable: " + why, Fix: parallelMoveFix}
+			return &Refused{
+				Where: l.program.Where(arguments[0]),
+				What:  "parallelMap items are not shareable: " + why,
+				Fix:   parallelMoveFix,
+			}
 		}
 	}
-	proof := &parallelProof{l: l, active: map[*ast.Node]bool{}, checked: map[*ast.Node]bool{}, shareableFunctions: map[*ast.Node]bool{}}
+	proof := &parallelProof{
+		l:                  l,
+		active:             map[*ast.Node]bool{},
+		checked:            map[*ast.Node]bool{},
+		shareableFunctions: map[*ast.Node]bool{},
+	}
 	work := proof.functionValue(arguments[1], map[*ast.Symbol]bool{})
 	if work == nil {
 		return proof.effect(arguments[1], []string{"work"}, "calls a closure whose body isn't known")
@@ -134,7 +164,11 @@ type parallelProof struct {
 }
 
 func (p *parallelProof) effect(where *ast.Node, chain []string, what string) error {
-	return &Refused{Where: p.l.program.Where(where), What: "parallelMap work writes state another task can reach: " + strings.Join(chain, " -> ") + " " + what, Fix: "keep work and everything it calls pure; write only task locals and fresh objects"}
+	return &Refused{
+		Where: p.l.program.Where(where),
+		What:  "parallelMap work writes state another task can reach: " + strings.Join(chain, " -> ") + " " + what,
+		Fix:   "keep work and everything it calls pure; write only task locals and fresh objects",
+	}
 }
 
 func parallelInside(declaration, function *ast.Node) bool {
@@ -256,13 +290,26 @@ func (p *parallelProof) capture(node, owner *ast.Node, chain []string) error {
 	name := node.Text()
 	p.global(node)
 	if !p.immutable(declaration) {
-		return &Refused{Where: p.l.program.Where(node), What: "task capture '" + name + "' is not shareable: " + name + " is not an immutable binding", Fix: parallelMoveFix}
+		return &Refused{
+			Where: p.l.program.Where(node),
+			What:  "task capture '" + name + "' is not shareable: " + name + " is not an immutable binding",
+			Fix:   parallelMoveFix,
+		}
 	}
 	if work := p.functionValue(node, map[*ast.Symbol]bool{}); work != nil {
 		return p.function(work, chain)
 	}
-	if why := p.l.shareableWith(p.l.concrete(p.l.checker.GetTypeOfSymbol(p.symbol(node))), name, node, p.shareableFunctions); why != "" {
-		return &Refused{Where: p.l.program.Where(node), What: "task capture '" + name + "' is not shareable: " + why, Fix: parallelMoveFix}
+	if why := p.l.shareableWith(
+		p.l.concrete(p.l.checker.GetTypeOfSymbol(p.symbol(node))),
+		name,
+		node,
+		p.shareableFunctions,
+	); why != "" {
+		return &Refused{
+			Where: p.l.program.Where(node),
+			What:  "task capture '" + name + "' is not shareable: " + why,
+			Fix:   parallelMoveFix,
+		}
 	}
 	return nil
 }
@@ -279,7 +326,11 @@ func (p *parallelProof) function(node *ast.Node, chain []string) error {
 	}
 	chain = append(append([]string{}, chain...), name)
 	if ast.HasSyntacticModifier(node, ast.ModifierFlagsAsync) {
-		return &Refused{Where: p.l.program.Where(node), What: "async work in parallelMap is part 3 (#p286ycm)", Fix: "use synchronous work until concurrency part 3"}
+		return &Refused{
+			Where: p.l.program.Where(node),
+			What:  "async work in parallelMap is part 3 (#p286ycm)",
+			Fix:   "use synchronous work until concurrency part 3",
+		}
 	}
 	var found error
 	var captures []*ast.Node
@@ -289,7 +340,11 @@ func (p *parallelProof) function(node *ast.Node, chain []string) error {
 			return false
 		}
 		if child.Kind == ast.KindAwaitExpression {
-			found = &Refused{Where: p.l.program.Where(child), What: "async work in parallelMap is part 3 (#p286ycm)", Fix: "use synchronous work until concurrency part 3"}
+			found = &Refused{
+				Where: p.l.program.Where(child),
+				What:  "async work in parallelMap is part 3 (#p286ycm)",
+				Fix:   "use synchronous work until concurrency part 3",
+			}
 			return false
 		}
 		if target := parallelWrite(child); target != nil {
@@ -329,11 +384,12 @@ func (p *parallelProof) function(node *ast.Node, chain []string) error {
 		return found
 	}
 	for _, capture := range captures {
-		if p.l.checker.GetTypeAtLocation(capture).Flags()&checker.TypeFlagsUndefined != 0 && capture.Text() == "undefined" {
+		if p.l.checker.GetTypeAtLocation(capture).Flags()&checker.TypeFlagsUndefined != 0 &&
+			capture.Text() == "undefined" {
 			continue
 		}
-		if err := p.capture(capture, node, chain); err != nil {
-			return err
+		if captureError := p.capture(capture, node, chain); captureError != nil {
+			return captureError
 		}
 	}
 	p.checked[node] = true
@@ -351,7 +407,10 @@ func (p *parallelProof) fresh(node, owner *ast.Node) bool {
 		return false
 	}
 	declaration := p.declaration(node)
-	if declaration == nil || !parallelInside(declaration, owner) || declaration.Kind != ast.KindVariableDeclaration || p.reassigned(declaration) {
+	if declaration == nil ||
+		!parallelInside(declaration, owner) ||
+		declaration.Kind != ast.KindVariableDeclaration ||
+		p.reassigned(declaration) {
 		return false
 	}
 	initializer := declaration.AsVariableDeclaration().Initializer
@@ -360,7 +419,10 @@ func (p *parallelProof) fresh(node, owner *ast.Node) bool {
 	}
 	initializer = ast.SkipParentheses(initializer)
 	return initializer.Kind == ast.KindObjectLiteralExpression || initializer.Kind == ast.KindArrayLiteralExpression ||
-		(initializer.Kind == ast.KindNewExpression && (p.l.isLibraryGlobal(initializer.AsNewExpression().Expression, "Map") || p.l.isLibraryGlobal(initializer.AsNewExpression().Expression, "Set")))
+		(initializer.Kind == ast.KindNewExpression && (p.l.isLibraryGlobal(
+			initializer.AsNewExpression().Expression,
+			"Map",
+		) || p.l.isLibraryGlobal(initializer.AsNewExpression().Expression, "Set")))
 }
 
 func (p *parallelProof) write(target, owner *ast.Node, chain []string) error {
@@ -385,7 +447,8 @@ func (p *parallelProof) write(target, owner *ast.Node, chain []string) error {
 		}
 		return p.effect(target, chain, "writes the "+kind+" '"+target.Text()+"'")
 	}
-	if target.Kind == ast.KindPropertyAccessExpression && p.fresh(target.AsPropertyAccessExpression().Expression, owner) {
+	if target.Kind == ast.KindPropertyAccessExpression &&
+		p.fresh(target.AsPropertyAccessExpression().Expression, owner) {
 		return nil
 	}
 	if target.Kind == ast.KindElementAccessExpression && p.fresh(target.AsElementAccessExpression().Expression, owner) {
@@ -406,11 +469,13 @@ func (p *parallelProof) call(node, owner *ast.Node, chain []string) error {
 	}
 	// Every argument's evaluation and every callback body must be proved too.
 	for _, argument := range arguments {
-		if len(p.l.checker.GetSignaturesOfType(p.l.checker.GetTypeAtLocation(argument), checker.SignatureKindCall)) > 0 && p.functionValue(argument, map[*ast.Symbol]bool{}) == nil {
+		if len(
+			p.l.checker.GetSignaturesOfType(p.l.checker.GetTypeAtLocation(argument), checker.SignatureKindCall),
+		) > 0 && p.functionValue(argument, map[*ast.Symbol]bool{}) == nil {
 			return p.effect(node, chain, "calls a closure whose body isn't known")
 		}
-		if err := p.expression(argument, owner, chain); err != nil {
-			return err
+		if expressionError := p.expression(argument, owner, chain); expressionError != nil {
+			return expressionError
 		}
 	}
 	if p.l.isPreludeFunction(callee, "parallelMap") {
@@ -441,15 +506,19 @@ func (p *parallelProof) call(node, owner *ast.Node, chain []string) error {
 		if p.l.isLibraryGlobal(receiver, "Date") {
 			return p.effect(node, chain, "calls effectful Date."+method)
 		}
-		if p.l.isLibraryGlobal(receiver, "Math") || p.l.isLibraryGlobal(receiver, "Number") || p.l.isLibraryGlobal(receiver, "String") {
+		if p.l.isLibraryGlobal(receiver, "Math") ||
+			p.l.isLibraryGlobal(receiver, "Number") ||
+			p.l.isLibraryGlobal(receiver, "String") {
 			if p.l.libraryMember(callee) {
 				return nil
 			}
 		}
-		if err := p.expression(receiver, owner, chain); err != nil {
-			return err
+		if expressionError := p.expression(receiver, owner, chain); expressionError != nil {
+			return expressionError
 		}
-		if symbol := p.l.symbol(callee); symbol != nil && len(symbol.Declarations) > 0 && load.IsLibrary(ast.GetSourceFileOfNode(symbol.Declarations[0])) {
+		if symbol := p.l.symbol(callee); symbol != nil &&
+			len(symbol.Declarations) > 0 &&
+			load.IsLibrary(ast.GetSourceFileOfNode(symbol.Declarations[0])) {
 			t := p.l.checker.GetNonNullableType(p.l.checker.GetTypeAtLocation(receiver))
 			if t.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsNumberLike) != 0 {
 				return nil
@@ -460,11 +529,18 @@ func (p *parallelProof) call(node, owner *ast.Node, chain []string) error {
 					if p.fresh(receiver, owner) {
 						return nil
 					}
-					return p.effect(node, chain, "calls mutating "+method+" on an object not proven allocated by the task")
+					return p.effect(
+						node,
+						chain,
+						"calls mutating "+method+" on an object not proven allocated by the task",
+					)
 				case "get", "has", "at", "join", "slice", "concat", "includes", "indexOf", "lastIndexOf", "map", "filter", "find", "findIndex", "every", "some", "forEach", "reduce", "keys", "values", "entries":
 					// A callback argument must have a body we can inspect, not merely a Shareable type.
 					for _, argument := range arguments {
-						if len(p.l.checker.GetSignaturesOfType(p.l.checker.GetTypeAtLocation(argument), checker.SignatureKindCall)) > 0 && p.functionValue(argument, map[*ast.Symbol]bool{}) == nil {
+						if len(p.l.checker.GetSignaturesOfType(
+							p.l.checker.GetTypeAtLocation(argument),
+							checker.SignatureKindCall,
+						)) > 0 && p.functionValue(argument, map[*ast.Symbol]bool{}) == nil {
 							return p.effect(node, chain, "calls a closure whose body isn't known")
 						}
 					}
@@ -501,8 +577,8 @@ func (p *parallelProof) expression(node, owner *ast.Node, chain []string) error 
 		return p.function(node, chain)
 	}
 	if target := parallelWrite(node); target != nil {
-		if err := p.write(target, owner, chain); err != nil {
-			return err
+		if writeError := p.write(target, owner, chain); writeError != nil {
+			return writeError
 		}
 	}
 	if node.Kind == ast.KindCallExpression || node.Kind == ast.KindNewExpression {
@@ -552,7 +628,8 @@ func (p *parallelProof) symbol(node *ast.Node) *ast.Symbol {
 // does not put them in a closure's environment. Their bindings are proven const.
 func (p *parallelProof) global(node *ast.Node) {
 	declaration := p.declaration(node)
-	if declaration == nil || (declaration.Kind != ast.KindVariableDeclaration && declaration.Kind != ast.KindBindingElement) {
+	if declaration == nil ||
+		(declaration.Kind != ast.KindVariableDeclaration && declaration.Kind != ast.KindBindingElement) {
 		return
 	}
 	for parent := declaration.Parent; parent != nil; parent = parent.Parent {

@@ -124,9 +124,9 @@ func selectCSSParserShards(value string, units []oracles.ParserShard) ([]oracles
 	if len(parts) != 2 {
 		return nil, fmt.Errorf("ADAMIC_TEST_SHARD must be zero-based i/n, got %q", value)
 	}
-	i, errI := strconv.Atoi(parts[0])
-	n, errN := strconv.Atoi(parts[1])
-	if errI != nil || errN != nil || n <= 0 || i < 0 || i >= n {
+	i, iError := strconv.Atoi(parts[0])
+	n, nError := strconv.Atoi(parts[1])
+	if iError != nil || nError != nil || n <= 0 || i < 0 || i >= n {
 		return nil, fmt.Errorf("ADAMIC_TEST_SHARD must satisfy 0 <= i < n, got %q", value)
 	}
 	var selected []oracles.ParserShard
@@ -139,9 +139,9 @@ func selectCSSParserShards(value string, units []oracles.ParserShard) ([]oracles
 }
 func selectedCSSParserShards(test *testing.T, units []oracles.ParserShard) []oracles.ParserShard {
 	test.Helper()
-	selected, err := selectCSSParserShards(os.Getenv("ADAMIC_TEST_SHARD"), units)
-	if err != nil {
-		test.Fatal(err)
+	selected, selectCssParserShardsError := selectCSSParserShards(os.Getenv("ADAMIC_TEST_SHARD"), units)
+	if selectCssParserShardsError != nil {
+		test.Fatal(selectCssParserShardsError)
 	}
 	test.Logf("selected %d/%d shards, ADAMIC_TEST_SHARD=%q", len(selected), len(units), os.Getenv("ADAMIC_TEST_SHARD"))
 	return selected
@@ -194,9 +194,9 @@ func buildCSSParserProgram(test *testing.T, name, directory string) cssParserPro
 	main := filepath.Join(directory, "main.ts")
 	var files []string
 	for _, slice := range []string{"css", "selector", "values", "mediaquery", "cssstrings", "cssnumbers"} {
-		paths, err := filepath.Glob(filepath.Join(filepath.Dir(directory), slice, "*.ts"))
-		if err != nil {
-			test.Fatal(err)
+		paths, globError := filepath.Glob(filepath.Join(filepath.Dir(directory), slice, "*.ts"))
+		if globError != nil {
+			test.Fatal(globError)
 		}
 		files = append(files, paths...)
 	}
@@ -213,16 +213,20 @@ func buildCSSParserProgram(test *testing.T, name, directory string) cssParserPro
 		Flags:     []string{"lower", "C", "JavaScript"},
 		Toolchain: runtime.Version() + "; checker " + corpusfiles.TypeScriptGoCommit,
 	}, func(dir string) error {
-		loaded, err := load.Load([]string{main})
-		if err != nil {
-			return err
+		loaded, loadError := load.Load([]string{main})
+		if loadError != nil {
+			return loadError
 		}
-		program, err := lower.Lower(context.Background(), loaded)
-		if err != nil {
-			return err
+		program, lowerError := lower.Lower(context.Background(), loaded)
+		if lowerError != nil {
+			return lowerError
 		}
-		if err := os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(program)), 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(
+			filepath.Join(dir, "program.c"),
+			[]byte(native.C(program)),
+			0644,
+		); writeError != nil {
+			return writeError
 		}
 		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
 	})
@@ -244,9 +248,9 @@ func buildCSSParserBinaries(test *testing.T, programs []cssParserProgram) []stri
 			Flags:     native.Flags(options),
 			Toolchain: buildcache.Tool("clang", "--version"),
 		}, func(dir string) error {
-			source, err := os.ReadFile(program.c)
-			if err != nil {
-				return err
+			source, readError := os.ReadFile(program.c)
+			if readError != nil {
+				return readError
 			}
 			return native.Build(string(source), filepath.Join(dir, "parser"), options)
 		})
@@ -264,9 +268,9 @@ func buildCSSParserUnsanitized(test *testing.T, program cssParserProgram) string
 		Flags:     native.Flags(options),
 		Toolchain: buildcache.Tool("clang", "--version"),
 	}, func(dir string) error {
-		source, err := os.ReadFile(program.c)
-		if err != nil {
-			return err
+		source, readError := os.ReadFile(program.c)
+		if readError != nil {
+			return readError
 		}
 		return native.Build(string(source), filepath.Join(dir, "parser"), options)
 	})
@@ -404,9 +408,9 @@ func TestThePortParsesAsGoCohereDoesUnion(test *testing.T) {
 	for _, n := range []int{1, 2, 7, len(units) + 1} {
 		var all []oracles.ParserShard
 		for i := 0; i < n; i++ {
-			selected, err := selectCSSParserShards(fmt.Sprintf("%d/%d", i, n), units)
-			if err != nil {
-				test.Fatal(err)
+			selected, selectCssParserShardsError := selectCSSParserShards(fmt.Sprintf("%d/%d", i, n), units)
+			if selectCssParserShardsError != nil {
+				test.Fatal(selectCssParserShardsError)
 			}
 			all = append(all, selected...)
 		}
@@ -415,7 +419,7 @@ func TestThePortParsesAsGoCohereDoesUnion(test *testing.T) {
 		}
 	}
 	for _, bad := range []string{"1", "0/0", "-1/2", "2/2", "x/2", "0/1/2"} {
-		if _, err := selectCSSParserShards(bad, units); err == nil {
+		if _, selectCssParserShardsError := selectCSSParserShards(bad, units); selectCssParserShardsError == nil {
 			test.Fatalf("accepted %q", bad)
 		}
 	}
@@ -439,9 +443,9 @@ func TestCSSParserPlantedDisagreement(test *testing.T) {
 	if owner == "" {
 		test.Fatal("planted case absent")
 	}
-	binary, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	binary, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
 	result := cssParserExecute(
 		test,

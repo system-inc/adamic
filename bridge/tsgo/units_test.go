@@ -29,12 +29,12 @@ func bridgeShard() (int, int, error) {
 	if len(parts) != 2 {
 		return 0, 0, fmt.Errorf("ADAMIC_TEST_SHARD must be i/n")
 	}
-	index, err := strconv.Atoi(parts[0])
-	if err != nil {
-		return 0, 0, err
+	index, parseError := strconv.Atoi(parts[0])
+	if parseError != nil {
+		return 0, 0, parseError
 	}
-	count, err := strconv.Atoi(parts[1])
-	if err != nil || count < 1 || index < 0 || index >= count {
+	count, parseError := strconv.Atoi(parts[1])
+	if parseError != nil || count < 1 || index < 0 || index >= count {
 		return 0, 0, fmt.Errorf("ADAMIC_TEST_SHARD must satisfy 0 <= i < n")
 	}
 	return index, count, nil
@@ -44,15 +44,15 @@ func bridgeFileActive(file string) bool {
 	return file == "" || (file == "sample.ts") == (os.Getenv("ADAMIC_TSGO_CORPUS") == "")
 }
 func bridgeCaseActive(index int) bool {
-	shard, count, err := bridgeShard()
-	return err == nil && bridgeFileActive(bridgeCases[index].file) && index%count == shard
+	shard, count, bridgeShardError := bridgeShard()
+	return bridgeShardError == nil && bridgeFileActive(bridgeCases[index].file) && index%count == shard
 }
 
 // Not parallel: bridge subprocess timing and sanitizer probes share the machine.
 // Each root is independently selectable; corpus pieces also have one shard owner.
 func runBridgeCase(test *testing.T, index int) {
-	if _, _, err := bridgeShard(); err != nil {
-		test.Fatal(err)
+	if _, _, bridgeShardError := bridgeShard(); bridgeShardError != nil {
+		test.Fatal(bridgeShardError)
 	}
 	if !bridgeCaseActive(index) {
 		test.Skip("piece belongs to another corpus mode or shard")
@@ -61,9 +61,9 @@ func runBridgeCase(test *testing.T, index int) {
 	// the reference box, and only a stuck process should fail here.
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 	defer cancel()
-	repository, err := filepath.Abs("../..")
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs("../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	run := &bridgeRun{t: test, repository: repository, scratch: test.TempDir(), ctx: ctx}
 	unit := bridgeCases[index]
@@ -110,20 +110,20 @@ func (r *bridgeRun) command(binary string, arguments ...string) *exec.Cmd {
 }
 func (r *bridgeRun) run(name string, command *exec.Cmd) ([]byte, error) {
 	r.t.Helper()
-	output, err := command.CombinedOutput()
+	output, combinedOutputError := command.CombinedOutput()
 	if write := os.WriteFile(filepath.Join(r.scratch, name+".log"), output, 0o644); write != nil {
 		r.t.Fatal(write)
 	}
 	if r.ctx.Err() != nil {
 		r.t.Fatalf("bridge subprocess exceeded five minutes: %v", r.ctx.Err())
 	}
-	return output, err
+	return output, combinedOutputError
 }
 func (r *bridgeRun) mustRun(name string, command *exec.Cmd) []byte {
 	r.t.Helper()
-	output, err := r.run(name, command)
-	if err != nil {
-		r.t.Fatalf("%s: %v\n%s", name, err, output)
+	output, runError := r.run(name, command)
+	if runError != nil {
+		r.t.Fatalf("%s: %v\n%s", name, runError, output)
 	}
 	return output
 }
@@ -154,9 +154,9 @@ func (r *bridgeRun) arguments(file string) []string {
 		if filepath.Base(path) != file {
 			continue
 		}
-		text, err := os.ReadFile(path)
-		if err != nil {
-			r.t.Fatal(err)
+		text, readError := os.ReadFile(path)
+		if readError != nil {
+			r.t.Fatal(readError)
 		}
 		for _, position := range bridgePositions(text) {
 			fmt.Fprintf(&queries, "%s\t%d\n", path, position)
@@ -167,8 +167,8 @@ func (r *bridgeRun) arguments(file string) []string {
 		r.t.Fatal("no queries in the active corpus piece")
 	}
 	manifest := filepath.Join(r.scratch, "queries.tsv")
-	if err := os.WriteFile(manifest, []byte(queries.String()), 0o644); err != nil {
-		r.t.Fatal(err)
+	if writeError := os.WriteFile(manifest, []byte(queries.String()), 0o644); writeError != nil {
+		r.t.Fatal(writeError)
 	}
 	r.t.Logf("queries: %s, %d positions, %d unchanged program roots", file, count, len(roots))
 	return append([]string{r.config(), manifest}, roots...)
@@ -181,12 +181,12 @@ func (r *bridgeRun) answers(name, binary string, arguments []string, timing bool
 	}
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
-	stdout, err := command.Output()
+	stdout, outputError := command.Output()
 	if write := os.WriteFile(filepath.Join(r.scratch, name+".log"), stderr.Bytes(), 0o644); write != nil {
 		r.t.Fatal(write)
 	}
-	if err != nil {
-		r.t.Fatalf("%s: %v\n%s", name, err, stderr.String())
+	if outputError != nil {
+		r.t.Fatalf("%s: %v\n%s", name, outputError, stderr.String())
 	}
 	if timing {
 		r.t.Logf("%s: %s", name, strings.TrimSpace(stderr.String()))
@@ -201,9 +201,9 @@ func bridgeABI(r *bridgeRun, _ string, _ int) {
 }
 func bridgeExpectedFailure(r *bridgeRun, name, driver, mode, message string) {
 	r.t.Helper()
-	output, err := r.run(name, r.command(r.product(driver), r.config(), r.sample(), mode))
-	if err == nil || !bytes.Contains(output, []byte(message)) {
-		r.t.Fatalf("%s escaped: %v\n%s", name, err, output)
+	output, runError := r.run(name, r.command(r.product(driver), r.config(), r.sample(), mode))
+	if runError == nil || !bytes.Contains(output, []byte(message)) {
+		r.t.Fatalf("%s escaped: %v\n%s", name, runError, output)
 	}
 	r.t.Logf("%s: %s", name, message)
 }
@@ -230,9 +230,9 @@ func bridgeUnlinked(r *bridgeRun, mode string, _ int) {
 	if mode == "build" {
 		arguments = append(arguments, "-o", filepath.Join(r.scratch, "unlinked"))
 	}
-	output, err := r.run("refusal-"+mode, r.command(r.product("stage0"), arguments...))
-	if err == nil || !bytes.Contains(output, []byte("unlinked typescript-go library call")) {
-		r.t.Fatalf("unlinked %s was not refused: %v\n%s", mode, err, output)
+	output, runError := r.run("refusal-"+mode, r.command(r.product("stage0"), arguments...))
+	if runError == nil || !bytes.Contains(output, []byte("unlinked typescript-go library call")) {
+		r.t.Fatalf("unlinked %s was not refused: %v\n%s", mode, runError, output)
 	}
 	r.t.Logf("%s refuses unlinked checker calls", mode)
 }
@@ -275,16 +275,16 @@ func bridgeLinkage(r *bridgeRun, _ string, _ int) {
 		"-test.timeout=5m",
 	)
 	command.Dir = filepath.Join(r.repository, "bridge/tsgo")
-	output, err := r.run("linkage-mutant", command)
-	if err == nil || !bytes.Contains(output, []byte("lowering accepted an unlinked checker call")) {
-		r.t.Fatalf("linkage mutant escaped refusal test: %v\n%s", err, output)
+	output, runError := r.run("linkage-mutant", command)
+	if runError == nil || !bytes.Contains(output, []byte("lowering accepted an unlinked checker call")) {
+		r.t.Fatalf("linkage mutant escaped refusal test: %v\n%s", runError, output)
 	}
 	r.t.Log("linkage mutant: refusal test catches the missing guard")
 }
 func bridgeRegion(r *bridgeRun, _ string, _ int) {
 	manifest := filepath.Join(r.scratch, "region.tsv")
-	if err := os.WriteFile(manifest, []byte(r.sample()+"\t14\n"), 0o644); err != nil {
-		r.t.Fatal(err)
+	if writeError := os.WriteFile(manifest, []byte(r.sample()+"\t14\n"), 0o644); writeError != nil {
+		r.t.Fatal(writeError)
 	}
 	arguments := []string{r.config(), manifest, r.sample()}
 	r.mustRun("region-oracle", r.command(r.product("oracle"), arguments...))
@@ -294,8 +294,8 @@ func bridgeRegion(r *bridgeRun, _ string, _ int) {
 	if len(frame) != 2 {
 		r.t.Fatal("invalid region oracle frame")
 	}
-	if _, err := fmt.Sscanf(string(frame[0]), "%d %d %d", &kind, &symbolLength, &typeLength); err != nil {
-		r.t.Fatal(err)
+	if _, scanError := fmt.Sscanf(string(frame[0]), "%d %d %d", &kind, &symbolLength, &typeLength); scanError != nil {
+		r.t.Fatal(scanError)
 	}
 	if symbolLength+typeLength > len(frame[1]) {
 		r.t.Fatal("short region oracle frame")
@@ -304,11 +304,11 @@ func bridgeRegion(r *bridgeRun, _ string, _ int) {
 	command := r.command(r.product("healthy-region"), r.config(), r.sample())
 	var report bytes.Buffer
 	command.Stderr = &report
-	answer, err := command.Output()
-	if err != nil || string(answer) != expected || !strings.HasSuffix(report.String(), " regions 1\n") {
+	answer, outputError := command.Output()
+	if outputError != nil || string(answer) != expected || !strings.HasSuffix(report.String(), " regions 1\n") {
 		r.t.Fatalf(
 			"region probe did not use one region and agree with Go: %v stdout=%q stderr=%s",
-			err,
+			outputError,
 			answer,
 			report.String(),
 		)
@@ -332,15 +332,15 @@ func bridgeRegionOwnership(r *bridgeRun, _ string, _ int) {
 	// below is the unowned result's, not the options' (Markup's review).
 	control := r.command(r.product("healthy-region"), r.config(), r.sample())
 	control.Env = append(os.Environ(), options)
-	if output, err := r.run(
+	if output, runError := r.run(
 		"region-ownership-control",
 		control,
-	); err != nil || bytes.Contains(output, []byte("LeakSanitizer")) {
-		r.t.Fatalf("owned region variant reported under %s: %v\n%s", options, err, output)
+	); runError != nil || bytes.Contains(output, []byte("LeakSanitizer")) {
+		r.t.Fatalf("owned region variant reported under %s: %v\n%s", options, runError, output)
 	}
-	output, err := r.run("region-ownership", command)
-	if err == nil || !bytes.Contains(output, []byte("LeakSanitizer: detected memory leaks")) {
-		r.t.Fatalf("heap result in region variant escaped LSan: %v\n%s", err, output)
+	output, runError := r.run("region-ownership", command)
+	if runError == nil || !bytes.Contains(output, []byte("LeakSanitizer: detected memory leaks")) {
+		r.t.Fatalf("heap result in region variant escaped LSan: %v\n%s", runError, output)
 	}
 	r.t.Log("region ownership: LeakSanitizer catches the unowned heap result")
 }

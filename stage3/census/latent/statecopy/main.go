@@ -62,8 +62,8 @@ var loweringFieldPolicies = map[string]loweringFieldPolicy{
 
 func printed(n ast.Node) string {
 	var b bytes.Buffer
-	if err := format.Node(&b, token.NewFileSet(), n); err != nil {
-		panic(err)
+	if nodeError := format.Node(&b, token.NewFileSet(), n); nodeError != nil {
+		panic(nodeError)
 	}
 	return b.String()
 }
@@ -103,7 +103,8 @@ func (g *generator) copy(t ast.Expr, value string) string {
 		if name, ok := t.X.(*ast.SelectorExpr); ok && printed(name.X) == "ir" {
 			return "latentCopyIR(" + value + ", seen)"
 		}
-		if name, ok := t.X.(*ast.SelectorExpr); ok && (printed(name.X) == "ast" || printed(name.X) == "checker" || printed(name) == "load.Program") {
+		if name, ok := t.X.(*ast.SelectorExpr); ok &&
+			(printed(name.X) == "ast" || printed(name.X) == "checker" || printed(name) == "load.Program") {
 			return value
 		}
 		panic("state copy: foreign or unrecognized pointer " + printed(t) + " requires an explicit copier")
@@ -112,13 +113,27 @@ func (g *generator) copy(t ast.Expr, value string) string {
 			panic("state copy: fixed array " + printed(t) + " requires an explicit copier")
 		}
 		ty := printed(t)
-		return "func(value " + ty + ") " + ty + " {if value==nil{return nil}; result:=make(" + ty + ",len(value)); for i,item:=range value {result[i]=" + g.copy(t.Elt, "item") + "}; return result}(" + value + ")"
+		return "func(value " +
+			ty +
+			") " +
+			ty +
+			" {if value==nil{return nil}; result:=make(" +
+			ty +
+			",len(value)); for i,item:=range value {result[i]=" +
+			g.copy(t.Elt, "item") +
+			"}; return result}(" +
+			value +
+			")"
 	case *ast.MapType:
 		ty := printed(t)
 		return g.copyMap(ty, t.Key, t.Value, value)
 	case *ast.IndexListExpr:
 		selector, ok := t.X.(*ast.SelectorExpr)
-		if ok && printed(selector.X) == "ir" && selector.Sel.Name == "SortedMap" && len(t.Indices) == 2 && g.sortedMap != nil {
+		if ok &&
+			printed(selector.X) == "ir" &&
+			selector.Sel.Name == "SortedMap" &&
+			len(t.Indices) == 2 &&
+			g.sortedMap != nil {
 			definition, ok := g.sortedMap.Type.(*ast.MapType)
 			if !ok || printed(definition.Key) != "K" || printed(definition.Value) != "V" {
 				panic("state copy: ir.SortedMap definition is no longer map[K]V")
@@ -141,23 +156,40 @@ func (g *generator) copyField(owner string, id *ast.Ident, field *ast.Field) (re
 	return g.copy(field.Type, "value."+id.Name)
 }
 func (g *generator) copyMap(ty string, key, item ast.Expr, value string) string {
-	return "func(value " + ty + ") " + ty + " {if value==nil{return nil}; result:=make(" + ty + ",len(value)); for key,item:=range value {result[" + g.copy(key, "key") + "]=" + g.copy(item, "item") + "}; return result}(" + value + ")"
+	return "func(value " +
+		ty +
+		") " +
+		ty +
+		" {if value==nil{return nil}; result:=make(" +
+		ty +
+		",len(value)); for key,item:=range value {result[" +
+		g.copy(key, "key") +
+		"]=" +
+		g.copy(item, "item") +
+		"}; return result}(" +
+		value +
+		")"
 }
 func loadGenerator(repository, lowerInput string) generator {
-	g := generator{irTypes: map[string]ast.Expr{}, types: map[string]ast.Expr{}, needed: map[string]bool{"lowering": true}, positions: token.NewFileSet()}
+	g := generator{
+		irTypes:   map[string]ast.Expr{},
+		types:     map[string]ast.Expr{},
+		needed:    map[string]bool{"lowering": true},
+		positions: token.NewFileSet(),
+	}
 
-	irFiles, err := filepath.Glob(filepath.Join(repository, "internal/ir/*.go"))
-	if err != nil {
-		panic(err)
+	irFiles, globError := filepath.Glob(filepath.Join(repository, "internal/ir/*.go"))
+	if globError != nil {
+		panic(globError)
 	}
 	irPositions := token.NewFileSet()
 	for _, path := range irFiles {
 		if strings.HasSuffix(path, "_test.go") {
 			continue
 		}
-		file, err := parser.ParseFile(irPositions, path, nil, 0)
-		if err != nil {
-			panic(err)
+		file, parseFileError := parser.ParseFile(irPositions, path, nil, 0)
+		if parseFileError != nil {
+			panic(parseFileError)
 		}
 		for _, decl := range file.Decls {
 			if group, ok := decl.(*ast.GenDecl); ok {
@@ -182,7 +214,11 @@ func loadGenerator(repository, lowerInput string) generator {
 							}
 							key := spec.Name.Name + "." + id.Name
 							if _, ok := irPrivateFields[key]; !ok {
-								panic(fmt.Sprintf("%s: state copy: unexported IR field %s isn't named in statecopy's irPrivateFields; say how a latent copy treats it", irPositions.Position(id.Pos()), key))
+								panic(fmt.Sprintf(
+									"%s: state copy: unexported IR field %s isn't named in statecopy's irPrivateFields; say how a latent copy treats it",
+									irPositions.Position(id.Pos()),
+									key,
+								))
 							}
 							g.privateIRFields = append(g.privateIRFields, key)
 						}
@@ -192,9 +228,9 @@ func loadGenerator(repository, lowerInput string) generator {
 		}
 	}
 	g.checkIRFields(irPositions, irSpecFields)
-	paths, err := filepath.Glob(filepath.Join(repository, "internal/lower/*.go"))
-	if err != nil {
-		panic(err)
+	paths, globError := filepath.Glob(filepath.Join(repository, "internal/lower/*.go"))
+	if globError != nil {
+		panic(globError)
 	}
 	for _, path := range paths {
 		if strings.HasSuffix(path, "_test.go") {
@@ -204,9 +240,9 @@ func loadGenerator(repository, lowerInput string) generator {
 		if filepath.Base(path) == "lower.go" {
 			input = lowerInput
 		}
-		file, err := parser.ParseFile(g.positions, input, nil, 0)
-		if err != nil {
-			panic(err)
+		file, parseFileError := parser.ParseFile(g.positions, input, nil, 0)
+		if parseFileError != nil {
+			panic(parseFileError)
 		}
 		for _, decl := range file.Decls {
 			if group, ok := decl.(*ast.GenDecl); ok {
@@ -248,13 +284,21 @@ func generate(repository, lowerInput string) []byte {
 				}
 				for _, id := range field.Names {
 					var expr string
-					if name == "lowering" && id.Name == "impliedTargetQuery" && printed(field.Type) == "func(*ast.Node) *checker.Type" {
+					if name == "lowering" &&
+						id.Name == "impliedTargetQuery" &&
+						printed(field.Type) == "func(*ast.Node) *checker.Type" {
 						// Production leaves this test query nil. A closure needs an audited copier.
-						fmt.Fprint(&body, "if value.impliedTargetQuery != nil {panic(\"latent state copy: populated impliedTargetQuery is unsupported\")};")
+						fmt.Fprint(
+							&body,
+							"if value.impliedTargetQuery != nil {panic(\"latent state copy: populated impliedTargetQuery is unsupported\")};",
+						)
 						expr = "value." + id.Name
-					} else if name == "lowering" && id.Name == "sourceIdentities" && printed(field.Type) == "map[*ast.Node]ir.SourceIdentity" {
+					} else if name == "lowering" &&
+						id.Name == "sourceIdentities" &&
+						printed(field.Type) == "map[*ast.Node]ir.SourceIdentity" {
 						// Shared on purpose: a cache of identities that are functions of the program alone, one map for
-						// every lowering of a latent run (lower.go.txt's latentRun), so a copy reads and fills the same one.
+						// every lowering of a latent run (lower.go.txt's latentRun), so a copy reads and fills the same
+						// one.
 						expr = "value." + id.Name
 					} else {
 						expr = g.copyField(name, id, field)
@@ -265,7 +309,16 @@ func generate(repository, lowerInput string) []byte {
 				}
 			}
 			body.WriteString("return result}\n")
-			fmt.Fprintf(&body, "func latentCopyPointer_%s(value *%s, seen map[any]any) *%s {if value==nil{return nil}; if prior,ok:=seen[value];ok{return prior.(*%s)};result:=new(%s);seen[value]=result; *result=latentCopy_%s(*value,seen);return result}\n", name, name, name, name, name, name)
+			fmt.Fprintf(
+				&body,
+				"func latentCopyPointer_%s(value *%s, seen map[any]any) *%s {if value==nil{return nil}; if prior,ok:=seen[value];ok{return prior.(*%s)};result:=new(%s);seen[value]=result; *result=latentCopy_%s(*value,seen);return result}\n",
+				name,
+				name,
+				name,
+				name,
+				name,
+				name,
+			)
 		}
 	}
 	// Capture/install only the fields explicitly marked as carried program facts.
@@ -293,7 +346,9 @@ func generate(repository, lowerInput string) []byte {
 				}
 			}
 		}
-		body.WriteString("}\nfunc latentCaptureProgramFacts(value *lowering) latentProgramFacts { return latentProgramFacts{")
+		body.WriteString(
+			"}\nfunc latentCaptureProgramFacts(value *lowering) latentProgramFacts { return latentProgramFacts{",
+		)
 		for _, field := range facts {
 			fmt.Fprintf(&body, "%s:value.%s,", field, field)
 		}
@@ -309,20 +364,29 @@ func generate(repository, lowerInput string) []byte {
 		keys = append(keys, key)
 	}
 	sort.Strings(keys)
-	body.WriteString("// latentPrivateIRField is whether the full copy leaves an unexported IR field at its zero value.\n")
+	body.WriteString(
+		"// latentPrivateIRField is whether the full copy leaves an unexported IR field at its zero value.\n",
+	)
 	body.WriteString("func latentPrivateIRField(v reflect.Value, index int) bool {field:=v.Type().Field(index).Name;")
 	for _, key := range keys {
 		owner, field, _ := strings.Cut(key, ".")
 		test := "v.Type()==reflect.TypeFor[ir." + owner + "]()&&field==" + fmt.Sprintf("%q", field)
 		switch irPrivateFields[key] {
 		case privateNil:
-			fmt.Fprintf(&body, "if %s {if !v.Field(index).IsNil(){panic(%q)}; return true};", test, "latent state copy: populated IR cache "+key+" is unsupported")
+			fmt.Fprintf(
+				&body,
+				"if %s {if !v.Field(index).IsNil(){panic(%q)}; return true};",
+				test,
+				"latent state copy: populated IR cache "+key+" is unsupported",
+			)
 		case privateEmpty:
 			fmt.Fprintf(&body, "if %s {return true};", test)
 		}
 	}
 	body.WriteString("return false}\n")
-	body.WriteString("// latentSharedIRPointer is whether the full copy shares an IR pointer rather than copying what it points to.\n")
+	body.WriteString(
+		"// latentSharedIRPointer is whether the full copy shares an IR pointer rather than copying what it points to.\n",
+	)
 	body.WriteString("func latentSharedIRPointer(t reflect.Type) bool {")
 	for _, key := range keys {
 		if irPrivateFields[key] == privateShared {
@@ -336,15 +400,19 @@ func generate(repository, lowerInput string) []byte {
 	// Only imports actually mentioned in generated field types are needed.
 	var header strings.Builder
 	header.WriteString("package lower\nimport(\n\"reflect\"\n")
-	for _, pair := range [][2]string{{"ast", "github.com/microsoft/TypeScript/tsc/shim/ast"}, {"checker", "github.com/microsoft/TypeScript/tsc/shim/checker"}, {"ir", "github.com/system-inc/adamic/internal/ir"}} {
+	for _, pair := range [][2]string{
+		{"ast", "github.com/microsoft/TypeScript/tsc/shim/ast"},
+		{"checker", "github.com/microsoft/TypeScript/tsc/shim/checker"},
+		{"ir", "github.com/system-inc/adamic/internal/ir"},
+	} {
 		if strings.Contains(body.String(), pair[0]+".") {
 			fmt.Fprintf(&header, "%q\n", pair[1])
 		}
 	}
 	header.WriteString(")\n")
-	text, err := format.Source([]byte(header.String() + body.String()))
-	if err != nil {
-		panic(err)
+	text, formatError := format.Source([]byte(header.String() + body.String()))
+	if formatError != nil {
+		panic(formatError)
 	}
 	return text
 }
@@ -353,7 +421,7 @@ func main() {
 		panic("usage: statecopy repository overlaid-lower.go output.go")
 	}
 	text := generate(os.Args[1], os.Args[2])
-	if err := os.WriteFile(os.Args[3], text, 0600); err != nil {
-		panic(err)
+	if writeError := os.WriteFile(os.Args[3], text, 0600); writeError != nil {
+		panic(writeError)
 	}
 }

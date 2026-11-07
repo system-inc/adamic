@@ -26,9 +26,9 @@ var carryReplayBodies = map[string]string{
 
 func carryReplayBodyGaps(source []byte) []string {
 	const proof = "carry replay was proven against the old bodies; re-prove it with the subset byte-identity run in stage3/census/latent/evidence/carry-facts/report.md"
-	file, err := parser.ParseFile(token.NewFileSet(), "entries_records.go", source, 0)
-	if err != nil {
-		return []string{fmt.Sprintf("entries_records.go: %v; %s", err, proof)}
+	file, parseFileError := parser.ParseFile(token.NewFileSet(), "entries_records.go", source, 0)
+	if parseFileError != nil {
+		return []string{fmt.Sprintf("entries_records.go: %v; %s", parseFileError, proof)}
 	}
 	actual := map[string]string{}
 	for _, decl := range file.Decls {
@@ -48,8 +48,8 @@ func carryReplayBodyGaps(source []byte) []string {
 			continue
 		}
 		var body bytes.Buffer
-		if err := format.Node(&body, token.NewFileSet(), fn.Body); err != nil {
-			return []string{fmt.Sprintf("entries_records.go: %s: %v; %s", fn.Name.Name, err, proof)}
+		if nodeError := format.Node(&body, token.NewFileSet(), fn.Body); nodeError != nil {
+			return []string{fmt.Sprintf("entries_records.go: %s: %v; %s", fn.Name.Name, nodeError, proof)}
 		}
 		actual[fn.Name.Name] = fmt.Sprintf("%x", sha256.Sum256(body.Bytes()))
 	}
@@ -75,9 +75,9 @@ func carryReplayBodyGaps(source []byte) []string {
 
 func TestLatentCarryFactsReplayBodiesMatchMain(test *testing.T) {
 	test.Parallel()
-	source, err := os.ReadFile(filepath.Join("../../../../internal/lower", "entries_records.go"))
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(filepath.Join("../../../../internal/lower", "entries_records.go"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	for _, gap := range carryReplayBodyGaps(source) {
 		test.Error(gap)

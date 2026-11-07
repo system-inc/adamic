@@ -16,13 +16,13 @@ func init() {
 
 func TestJSONStringifyShorthand(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("testdata/json_shorthand.a")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("testdata/json_shorthand.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	truth := onNode(test, path)
 	got, binary := natively(test, program)
@@ -42,13 +42,13 @@ func TestJSONStringifyShorthand(test *testing.T) {
 
 func TestJSONStringifyShorthandWrongBindingMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("testdata/json_shorthand.a")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("testdata/json_shorthand.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	outer := -1
 	for index, local := range program.Locals {

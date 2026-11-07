@@ -54,9 +54,9 @@ func (l *lowering) brandedSupertypeViews(node *ast.Node, source, target *checker
 	if err, done := proofs.brandedViews[key]; done {
 		return predicateFailureCopy(err)
 	}
-	err := l.registerBrandedSupertypeViews(node, source, target)
-	proofs.brandedViews[key] = err
-	return predicateFailureCopy(err)
+	registerBrandedSupertypeViewsError := l.registerBrandedSupertypeViews(node, source, target)
+	proofs.brandedViews[key] = registerBrandedSupertypeViewsError
+	return predicateFailureCopy(registerBrandedSupertypeViewsError)
 }
 
 // brandedMembership is whether target's membership check, as predicateMembership builds it, holds a
@@ -79,17 +79,24 @@ func (l *lowering) brandedMembership(target *checker.Type, visited map[*checker.
 	if l.isArrayType(target) {
 		return l.brandedMembership(l.elementTypeOfArray(target), visited)
 	}
-	return target.Flags()&checker.TypeFlagsObject != 0 && !isClassInstance(target) && l.fieldLiteral(target, "kind") == nil && l.brandedSupertype(target)
+	return target.Flags()&checker.TypeFlagsObject != 0 &&
+		!isClassInstance(target) &&
+		l.fieldLiteral(target, "kind") == nil &&
+		l.brandedSupertype(target)
 }
 
 func (l *lowering) registerBrandedSupertypeViews(node *ast.Node, source, target *checker.Type) error {
 	if classes := l.brandedClasses(target); len(classes) != 0 {
-		return l.notYet(node, "a checked predicate target "+l.checker.TypeToString(target)+" that class "+l.checker.TypeToString(classes[0])+" is assignable to")
+		return l.notYet(node, "a checked predicate target "+
+			l.checker.TypeToString(target)+
+			" that class "+
+			l.checker.TypeToString(classes[0])+
+			" is assignable to")
 	}
 	// The claim's source is what the view vouches for through a wider type, and the value enters the view
 	// wherever a read is narrowed to S, as a tag-proven predicate's view does (view_widened.go).
-	if _, err := l.view(node, nil, source, target); err != nil {
-		return err
+	if _, viewError := l.view(node, nil, source, target); viewError != nil {
+		return viewError
 	}
 	l.viewSources[len(l.viewSources)-1].narrows = true
 	return nil
@@ -128,12 +135,14 @@ func (l *lowering) judgeBrandedCalls(scope *ast.Node) error {
 		if found != nil {
 			return true
 		}
-		if n != scope && (n.Kind == ast.KindFunctionDeclaration || n.Kind == ast.KindClassDeclaration || n.Kind == ast.KindClassExpression) {
+		if n != scope && (n.Kind == ast.KindFunctionDeclaration ||
+			n.Kind == ast.KindClassDeclaration ||
+			n.Kind == ast.KindClassExpression) {
 			return false
 		}
 		if n.Kind == ast.KindCallExpression {
-			if err := l.brandedCall(n); err != nil {
-				found = err
+			if brandedCallError := l.brandedCall(n); brandedCallError != nil {
+				found = brandedCallError
 				return true
 			}
 		}
@@ -179,13 +188,18 @@ func (l *lowering) brandedCall(call *ast.Node) error {
 		return nil
 	}
 	if parameter := l.unknownInstance(l.concrete(claim.Type())); parameter != nil {
-		return l.notYet(call, "a checked predicate claim of "+l.checker.TypeToString(l.concrete(claim.Type()))+", over "+l.checker.TypeToString(parameter)+", which this body is lowered without knowing")
+		return l.notYet(call, "a checked predicate claim of "+
+			l.checker.TypeToString(l.concrete(claim.Type()))+
+			", over "+
+			l.checker.TypeToString(parameter)+
+			", which this body is lowered without knowing")
 	}
 	if !l.brandedMembership(claim.Type(), map[*checker.Type]bool{}) {
 		return nil
 	}
 	target := l.checker.TypeToString(l.concrete(claim.Type()))
-	if claim.Kind() != checker.TypePredicateKindIdentifier && claim.Kind() != checker.TypePredicateKindAssertsIdentifier {
+	if claim.Kind() != checker.TypePredicateKindIdentifier &&
+		claim.Kind() != checker.TypePredicateKindAssertsIdentifier {
 		return l.notYet(call, "a checked predicate target "+target+" claimed of this")
 	}
 	index := int(claim.ParameterIndex())
@@ -243,9 +257,12 @@ func (l *lowering) brandedNarrowedRead(call, argument *ast.Node) *checker.Type {
 		}
 		switch {
 		case parent.Kind == ast.KindParenthesizedExpression:
-		case parent.Kind == ast.KindPrefixUnaryExpression && parent.AsPrefixUnaryExpression().Operator == ast.KindExclamationToken:
+		case parent.Kind == ast.KindPrefixUnaryExpression &&
+			parent.AsPrefixUnaryExpression().Operator == ast.KindExclamationToken:
 			negated = !negated
-		case parent.Kind == ast.KindBinaryExpression && parent.AsBinaryExpression().OperatorToken.Kind == ast.KindAmpersandAmpersandToken && !negated:
+		case parent.Kind == ast.KindBinaryExpression &&
+			parent.AsBinaryExpression().OperatorToken.Kind == ast.KindAmpersandAmpersandToken &&
+			!negated:
 			if parent.AsBinaryExpression().Left == node {
 				regions = []*ast.Node{parent.AsBinaryExpression().Right}
 			}
@@ -263,7 +280,10 @@ func (l *lowering) brandedNarrowedRead(call, argument *ast.Node) *checker.Type {
 				return nil
 			}
 			regions = []*ast.Node{region}
-		case parent.Kind == ast.KindExpressionStatement && !negated && parent.Parent != nil && parent.Parent.Kind == ast.KindBlock:
+		case parent.Kind == ast.KindExpressionStatement &&
+			!negated &&
+			parent.Parent != nil &&
+			parent.Parent.Kind == ast.KindBlock:
 			statements := parent.Parent.AsBlock().Statements.Nodes
 			for position, statement := range statements {
 				if statement == parent {
@@ -284,7 +304,9 @@ func (l *lowering) brandedNarrowedRead(call, argument *ast.Node) *checker.Type {
 		if found != nil {
 			return true
 		}
-		if (n.Kind == ast.KindIdentifier || n.Kind == ast.KindPropertyAccessExpression || n.Kind == ast.KindThisKeyword) && predicateMatchingReference(l.checker, argument, n) {
+		if (n.Kind == ast.KindIdentifier ||
+			n.Kind == ast.KindPropertyAccessExpression ||
+			n.Kind == ast.KindThisKeyword) && predicateMatchingReference(l.checker, argument, n) {
 			found = l.checker.GetTypeAtLocation(n)
 			return true
 		}
@@ -330,17 +352,30 @@ func (l *lowering) brandedNarrowing(node, argument *ast.Node, claim *checker.Typ
 	// tryCast and cast read their value, stands too (brandedIntersection). An instance that's a union or an
 	// array narrows its members or elements by rules this read doesn't see, and no read found says nothing,
 	// so both are NotYet.
-	if declared := l.checker.GetTypeAtLocation(argument); l.concrete(declared) != declared || l.mentionsTypeParameter(declared, map[*checker.Type]bool{}) {
+	if declared := l.checker.GetTypeAtLocation(
+		argument,
+	); l.concrete(declared) != declared || l.mentionsTypeParameter(declared, map[*checker.Type]bool{}) {
 		instance := l.concrete(claim)
 		narrowed := l.brandedNarrowedRead(node, argument)
 		if narrowed == nil {
-			return l.notYet(node, "a checked predicate target "+l.checker.TypeToString(instance)+" over a generic argument "+l.checker.TypeToString(declared)+", with no read of it on the true side")
+			return l.notYet(node, "a checked predicate target "+
+				l.checker.TypeToString(instance)+
+				" over a generic argument "+
+				l.checker.TypeToString(declared)+
+				", with no read of it on the true side")
 		}
 		read := l.concrete(narrowed)
-		if (read.Id() == instance.Id() || l.brandedIntersection(read, instance)) && instance.Flags()&checker.TypeFlagsUnion == 0 && !l.isArrayType(instance) {
+		if (read.Id() == instance.Id() || l.brandedIntersection(read, instance)) &&
+			instance.Flags()&checker.TypeFlagsUnion == 0 &&
+			!l.isArrayType(instance) {
 			return nil
 		}
-		return l.notYet(node, "a checked predicate target "+l.checker.TypeToString(instance)+" over a generic argument "+l.checker.TypeToString(declared)+", read on the true side as "+l.checker.TypeToString(read))
+		return l.notYet(node, "a checked predicate target "+
+			l.checker.TypeToString(instance)+
+			" over a generic argument "+
+			l.checker.TypeToString(declared)+
+			", read on the true side as "+
+			l.checker.TypeToString(read))
 	}
 	claim = l.concrete(claim)
 	source := l.concrete(l.checker.GetTypeAtLocation(argument))
@@ -357,7 +392,11 @@ func (l *lowering) brandedNarrowing(node, argument *ast.Node, claim *checker.Typ
 		}
 		for _, member := range members {
 			if !l.checker.IsTypeAssignableTo(target, member) {
-				return l.notYet(node, "a checked predicate target "+l.checker.TypeToString(target)+" that narrows "+l.checker.TypeToString(member)+", which isn't its supertype")
+				return l.notYet(node, "a checked predicate target "+
+					l.checker.TypeToString(target)+
+					" that narrows "+
+					l.checker.TypeToString(member)+
+					", which isn't its supertype")
 			}
 		}
 	}
@@ -400,12 +439,16 @@ func (l *lowering) brandedIntersection(read, target *checker.Type) bool {
 // Language, Nov 2). A member with an index signature, or a call or construct signature, never counts:
 // neither is a property, and either could route a read through target's id raw (Compiler, Nov 2).
 func (l *lowering) brandedSupertypeMember(member, target *checker.Type) bool {
-	if !l.checker.IsTypeAssignableTo(target, member) || len(l.checker.GetIndexInfosOfType(member)) != 0 || len(l.checker.GetSignaturesOfType(member, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(member, checker.SignatureKindConstruct)) != 0 {
+	if !l.checker.IsTypeAssignableTo(target, member) ||
+		len(l.checker.GetIndexInfosOfType(member)) != 0 ||
+		len(l.checker.GetSignaturesOfType(member, checker.SignatureKindCall)) != 0 ||
+		len(l.checker.GetSignaturesOfType(member, checker.SignatureKindConstruct)) != 0 {
 		return false
 	}
 	for _, property := range l.checker.GetPropertiesOfType(member) {
 		own := l.checker.GetPropertyOfType(target, property.Name)
-		if own == nil || !l.checker.IsTypeAssignableTo(l.checker.GetTypeOfSymbol(own), l.checker.GetTypeOfSymbol(property)) {
+		if own == nil ||
+			!l.checker.IsTypeAssignableTo(l.checker.GetTypeOfSymbol(own), l.checker.GetTypeOfSymbol(property)) {
 			return false
 		}
 	}
@@ -424,7 +467,11 @@ func (l *lowering) brandedIntersectionReceiver(receiver *checker.Type) *checker.
 		return receiver
 	}
 	for _, member := range receiver.Types() {
-		if member.Flags()&checker.TypeFlagsObject != 0 && !isClassInstance(member) && l.fieldLiteral(member, "kind") == nil && l.brandedSupertype(member) && l.brandedIntersection(receiver, member) {
+		if member.Flags()&checker.TypeFlagsObject != 0 &&
+			!isClassInstance(member) &&
+			l.fieldLiteral(member, "kind") == nil &&
+			l.brandedSupertype(member) &&
+			l.brandedIntersection(receiver, member) {
 			return member
 		}
 	}
@@ -520,7 +567,9 @@ func (l *lowering) programFiles() []*ast.SourceFile {
 			if specifier == nil {
 				continue
 			}
-			if target := l.checker.GetSymbolAtLocation(specifier); target != nil && len(target.Declarations) > 0 && target.Declarations[0].Kind == ast.KindSourceFile {
+			if target := l.checker.GetSymbolAtLocation(
+				specifier,
+			); target != nil && len(target.Declarations) > 0 && target.Declarations[0].Kind == ast.KindSourceFile {
 				visit(target.Declarations[0].AsSourceFile())
 			}
 		}

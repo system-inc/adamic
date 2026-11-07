@@ -11,7 +11,11 @@ import (
 
 func (l *lowering) jsonCall(node *ast.Node, name string) (ir.Expression, bool, error) {
 	if name == "parse" {
-		return nil, true, &Refused{Where: l.program.Where(node), What: "JSON.parse: its result's type can't be proven from the text", Fix: "a checked parse against a declared type is a later design; construct typed values explicitly for now"}
+		return nil, true, &Refused{
+			Where: l.program.Where(node),
+			What:  "JSON.parse: its result's type can't be proven from the text",
+			Fix:   "a checked parse against a declared type is a later design; construct typed values explicitly for now",
+		}
 	}
 	if name != "stringify" {
 		return nil, true, l.notYet(node, "JSON."+name)
@@ -21,20 +25,25 @@ func (l *lowering) jsonCall(node *ast.Node, name string) (ir.Expression, bool, e
 		return nil, true, l.notYet(node, "JSON.stringify with spread or extra arguments")
 	}
 	result := ir.JSONStringify{Value: ir.Undefined{}, Schema: &ir.JSONSchema{Kind: "undefined"}}
-	var err error
+	var jsonInputError error
 	if len(args) > 0 {
-		result.Value, result.Schema, err = l.jsonInput(args[0])
-		if err != nil {
-			return nil, true, err
+		result.Value, result.Schema, jsonInputError = l.jsonInput(args[0])
+		if jsonInputError != nil {
+			return nil, true, jsonInputError
 		}
 	}
 	if len(args) > 1 {
-		if t := l.checker.GetTypeAtLocation(args[1]); len(l.checker.GetSignaturesOfType(t, checker.SignatureKindCall)) != 0 {
-			return nil, true, l.notYet(args[1], "JSON.stringify replacer functions (the callback must have a proven type for every visited value and its holder)")
+		if t := l.checker.GetTypeAtLocation(
+			args[1],
+		); len(l.checker.GetSignaturesOfType(t, checker.SignatureKindCall)) != 0 {
+			return nil, true, l.notYet(
+				args[1],
+				"JSON.stringify replacer functions (the callback must have a proven type for every visited value and its holder)",
+			)
 		}
-		result.Replacer, result.ReplacerSchema, err = l.jsonInput(args[1])
-		if err != nil {
-			return nil, true, err
+		result.Replacer, result.ReplacerSchema, jsonInputError = l.jsonInput(args[1])
+		if jsonInputError != nil {
+			return nil, true, jsonInputError
 		}
 		k := result.ReplacerSchema.Kind
 		if k != "array" && k != "tuple" && k != "null" && k != "undefined" {
@@ -53,9 +62,9 @@ func (l *lowering) jsonCall(node *ast.Node, name string) (ir.Expression, bool, e
 		}
 	}
 	if len(args) > 2 {
-		result.Space, result.SpaceSchema, err = l.jsonInput(args[2])
-		if err != nil {
-			return nil, true, err
+		result.Space, result.SpaceSchema, jsonInputError = l.jsonInput(args[2])
+		if jsonInputError != nil {
+			return nil, true, jsonInputError
 		}
 		if !jsonScalar(result.SpaceSchema) {
 			return nil, true, l.notYet(args[2], "JSON.stringify space requiring object coercion")
@@ -64,7 +73,14 @@ func (l *lowering) jsonCall(node *ast.Node, name string) (ir.Expression, bool, e
 	return result, true, nil
 }
 func jsonScalar(s *ir.JSONSchema) bool {
-	return s.Kind == "number" || s.Kind == "boolean" || s.Kind == "string" || s.Kind == "undefined" || s.Kind == "null" || s.Kind == "union" || s.Kind == "maybe_number" || s.Kind == "maybe_boolean"
+	return s.Kind == "number" ||
+		s.Kind == "boolean" ||
+		s.Kind == "string" ||
+		s.Kind == "undefined" ||
+		s.Kind == "null" ||
+		s.Kind == "union" ||
+		s.Kind == "maybe_number" ||
+		s.Kind == "maybe_boolean"
 }
 
 // Direct literals establish their complete shape, and preserve evaluation order. Anything read
@@ -82,16 +98,16 @@ func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, err
 		return ir.JSONNull{}, &ir.JSONSchema{Kind: "null"}, nil
 	}
 	if n.Kind == ast.KindObjectLiteralExpression && l.recordLiteralElement(n) != nil {
-		value, err := l.expression(n)
-		if err != nil {
-			return nil, nil, err
+		value, expressionError := l.expression(n)
+		if expressionError != nil {
+			return nil, nil, expressionError
 		}
 		proven := l.slotType(n)
 		if l.recordElement(proven) == nil {
 			proven = l.checker.GetTypeAtLocation(n)
 		}
-		schema, err := l.jsonType(node, proven, 0)
-		return value, schema, err
+		schema, jsonTypeError := l.jsonType(node, proven, 0)
+		return value, schema, jsonTypeError
 	}
 	if n.Kind == ast.KindArrayLiteralExpression || n.Kind == ast.KindObjectLiteralExpression {
 		literal := ir.ObjectLiteral{Tuple: n.Kind == ast.KindArrayLiteralExpression}
@@ -108,15 +124,23 @@ func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, err
 					return l.notYet(v, "JSON.stringify duplicate literal keys")
 				}
 			}
-			value, child, err := l.jsonLiteralField(v)
-			if err != nil {
-				return err
+			value, child, jsonLiteralFieldError := l.jsonLiteralField(v)
+			if jsonLiteralFieldError != nil {
+				return jsonLiteralFieldError
 			}
 			if value.Type() == ir.MaybeBoolean {
 				return l.notYet(v, "JSON.stringify a literal field with a two-word representation")
 			}
-			schema.Fields = append(schema.Fields, ir.JSONField{Name: l.constant(name), Slot: len(literal.Fields), Schema: child})
-			literal.Fields = append(literal.Fields, ir.Field{Name: name, Value: value, Uninitialized: l.uninitializedInitializer(v), Unset: l.uninitializedInitializer(v)})
+			schema.Fields = append(
+				schema.Fields,
+				ir.JSONField{Name: l.constant(name), Slot: len(literal.Fields), Schema: child},
+			)
+			literal.Fields = append(literal.Fields, ir.Field{
+				Name:          name,
+				Value:         value,
+				Uninitialized: l.uninitializedInitializer(v),
+				Unset:         l.uninitializedInitializer(v),
+			})
 			return nil
 		}
 		if literal.Tuple {
@@ -124,8 +148,8 @@ func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, err
 				if v.Kind == ast.KindSpreadElement || v.Kind == ast.KindOmittedExpression {
 					return nil, nil, l.notYet(v, "JSON.stringify a spread or hole in a literal")
 				}
-				if err := add(strconv.Itoa(i), v); err != nil {
-					return nil, nil, err
+				if addError := add(strconv.Itoa(i), v); addError != nil {
+					return nil, nil, addError
 				}
 			}
 		} else {
@@ -139,21 +163,24 @@ func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, err
 				}
 				name := key.Text()
 				if key.Kind == ast.KindNumericLiteral {
-					v, err := strconv.ParseFloat(name, 64)
-					if err != nil {
+					v, parseError := strconv.ParseFloat(name, 64)
+					if parseError != nil {
 						return nil, nil, l.notYet(key, "JSON.stringify this numeric key")
 					}
 					name = strconv.FormatFloat(v, 'f', -1, 64)
 					if _, ok := jsonIndex(name); !ok {
-						return nil, nil, l.notYet(key, "JSON.stringify a numeric key outside the array-index range (spell it as a string)")
+						return nil, nil, l.notYet(
+							key,
+							"JSON.stringify a numeric key outside the array-index range (spell it as a string)",
+						)
 					}
 				}
 				value := f
 				if f.Kind == ast.KindPropertyAssignment {
 					value = f.AsPropertyAssignment().Initializer
 				}
-				if err := add(name, value); err != nil {
-					return nil, nil, err
+				if addError := add(name, value); addError != nil {
+					return nil, nil, addError
 				}
 			}
 			// Integer indexes precede other strings, whose order is their insertion order.
@@ -169,19 +196,19 @@ func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, err
 		return literal, schema, nil
 	}
 	if schema, known := l.constructionJSON(n); known {
-		value, err := l.expression(node)
-		return value, schema, err
+		value, expressionError := l.expression(node)
+		return value, schema, expressionError
 	}
-	schema, err := l.jsonType(node, l.checker.GetTypeAtLocation(node), 0)
-	if err != nil {
-		return nil, nil, err
+	schema, jsonTypeError := l.jsonType(node, l.checker.GetTypeAtLocation(node), 0)
+	if jsonTypeError != nil {
+		return nil, nil, jsonTypeError
 	}
-	value, err := l.expression(node)
-	return value, schema, err
+	value, expressionError := l.expression(node)
+	return value, schema, expressionError
 }
 func jsonIndex(name string) (uint64, bool) {
-	n, err := strconv.ParseUint(name, 10, 32)
-	return n, err == nil && n < 4294967295 && strconv.FormatUint(n, 10) == name
+	n, parseError := strconv.ParseUint(name, 10, 32)
+	return n, parseError == nil && n < 4294967295 && strconv.FormatUint(n, 10) == name
 }
 func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSONSchema, error) {
 	if depth == 0 && l.censusCallReturnsUndefined(node) {
@@ -200,11 +227,20 @@ func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSO
 	if !known {
 		return nil, l.notYet(node, "JSON.stringify a value of type "+l.checker.TypeToString(t))
 	}
-	kinds := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Map: "map", ir.Closure: "function", ir.MaybeNumber: "maybe_number", ir.MaybeBoolean: "maybe_boolean", ir.Union: "union"}
+	kinds := map[ir.Type]string{
+		ir.Number:       "number",
+		ir.Boolean:      "boolean",
+		ir.String:       "string",
+		ir.Map:          "map",
+		ir.Closure:      "function",
+		ir.MaybeNumber:  "maybe_number",
+		ir.MaybeBoolean: "maybe_boolean",
+		ir.Union:        "union",
+	}
 	if of == ir.Record {
-		child, err := l.jsonType(node, l.recordElement(l.checker.GetNonNullableType(t)), depth+1)
-		if err != nil {
-			return nil, err
+		child, jsonTypeError := l.jsonType(node, l.recordElement(l.checker.GetNonNullableType(t)), depth+1)
+		if jsonTypeError != nil {
+			return nil, jsonTypeError
 		}
 		if child.Kind == "function" || child.Kind == "union" {
 			return nil, l.notYet(node, "JSON.stringify record values that may provide a callable toJSON")
@@ -219,20 +255,27 @@ func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSO
 		if element == nil {
 			return nil, l.notYet(node, "JSON.stringify an array without a proven element type")
 		}
-		child, err := l.jsonType(node, element, depth+1)
-		return &ir.JSONSchema{Kind: "array", Element: child}, err
+		child, jsonTypeError := l.jsonType(node, element, depth+1)
+		return &ir.JSONSchema{Kind: "array", Element: child}, jsonTypeError
 	}
 	if of == ir.Object || of == ir.Weak {
-		return nil, l.notYet(node, "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)")
+		return nil, l.notYet(
+			node,
+			"JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)",
+		)
 	}
 	if t.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, m := range t.Types() {
-			child, err := l.jsonType(node, m, depth+1)
-			if err != nil {
-				return nil, err
+			child, jsonTypeError := l.jsonType(node, m, depth+1)
+			if jsonTypeError != nil {
+				return nil, jsonTypeError
 			}
-			if of == ir.Union && (child.Kind == "array" || child.Kind == "object" || child.Kind == "tuple" || child.Kind == "record") {
-				return nil, l.notYet(node, "JSON.stringify a union containing containers without runtime element metadata")
+			if of == ir.Union &&
+				(child.Kind == "array" || child.Kind == "object" || child.Kind == "tuple" || child.Kind == "record") {
+				return nil, l.notYet(
+					node,
+					"JSON.stringify a union containing containers without runtime element metadata",
+				)
 			}
 		}
 	}
@@ -250,9 +293,9 @@ func (l *lowering) jsonLiteralField(node *ast.Node) (ir.Expression, *ir.JSONSche
 	if node.Kind != ast.KindShorthandPropertyAssignment {
 		return l.jsonInput(node)
 	}
-	value, err := l.shorthand(node)
-	if err != nil {
-		return nil, nil, err
+	value, shorthandError := l.shorthand(node)
+	if shorthandError != nil {
+		return nil, nil, shorthandError
 	}
 	symbol := l.checker.GetShorthandAssignmentValueSymbol(node)
 	if symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 {
@@ -261,6 +304,6 @@ func (l *lowering) jsonLiteralField(node *ast.Node) (ir.Expression, *ir.JSONSche
 	if symbol == nil {
 		return nil, nil, l.notYet(node, "JSON.stringify shorthand without a value binding")
 	}
-	schema, err := l.jsonType(node.Name(), l.checker.GetTypeOfSymbol(symbol), 0)
-	return value, schema, err
+	schema, jsonTypeError := l.jsonType(node.Name(), l.checker.GetTypeOfSymbol(symbol), 0)
+	return value, schema, jsonTypeError
 }

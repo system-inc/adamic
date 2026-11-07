@@ -21,18 +21,18 @@ func TestShardsMatchManifest(test *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
 	command := boundedCommand(ctx, root, "python3", "-B", "stage3/lane/generate_shards.py", "--check")
-	if output, err := command.CombinedOutput(); err != nil {
-		test.Fatalf("manifest generation: %v: %s", err, output)
+	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("manifest generation: %v: %s", combinedOutputError, output)
 	}
-	data, err := os.ReadFile(filepath.Join(root, "stage3/lane/shards.json"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(root, "stage3/lane/shards.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var manifest struct {
 		Units []unit `json:"units"`
 	}
-	if err := json.Unmarshal(data, &manifest); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &manifest); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	var expected, actual []string
 	for _, row := range manifest.Units {
@@ -42,14 +42,14 @@ func TestShardsMatchManifest(test *testing.T) {
 		}
 		expected = append(expected, "TestShard_"+strings.Join(parts, ""))
 	}
-	files, err := filepath.Glob(filepath.Join(root, "stage3/lane/*_test.go"))
-	if err != nil {
-		test.Fatal(err)
+	files, globError := filepath.Glob(filepath.Join(root, "stage3/lane/*_test.go"))
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	for _, path := range files {
-		source, err := parser.ParseFile(token.NewFileSet(), path, nil, 0)
-		if err != nil {
-			test.Fatal(err)
+		source, parseFileError := parser.ParseFile(token.NewFileSet(), path, nil, 0)
+		if parseFileError != nil {
+			test.Fatal(parseFileError)
 		}
 		for _, declaration := range source.Decls {
 			if function, ok := declaration.(*ast.FuncDecl); ok &&

@@ -122,12 +122,12 @@ func TestPredicateBodyProof(test *testing.T) {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
 			path := filepath.Join(test.TempDir(), "main.a")
-			if err := os.WriteFile(path, []byte(probe.source), 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, []byte(probe.source), 0644); writeError != nil {
+				test.Fatal(writeError)
 			}
-			program, err := load.Load([]string{path})
-			if err != nil {
-				test.Fatal(err)
+			program, loadError := load.Load([]string{path})
+			if loadError != nil {
+				test.Fatal(loadError)
 			}
 			file := program.Files()[0]
 			checked, release := program.Checker(context.Background(), file)
@@ -144,15 +144,20 @@ func TestPredicateBodyProof(test *testing.T) {
 				return false
 			}
 			file.AsNode().ForEachChild(visit)
-			proof, err := l.provePredicate(predicate)
+			proof, provePredicateError := l.provePredicate(predicate)
 			if probe.failure != "" {
-				if err == nil ||
-					!strings.Contains(err.Error(), probe.failure) ||
-					!strings.Contains(err.Error(), "return a boolean and narrow at the caller") {
-					test.Fatalf("want %q refusal with caller fix, got %+v, %v", probe.failure, proof, err)
+				if provePredicateError == nil ||
+					!strings.Contains(provePredicateError.Error(), probe.failure) ||
+					!strings.Contains(provePredicateError.Error(), "return a boolean and narrow at the caller") {
+					test.Fatalf(
+						"want %q refusal with caller fix, got %+v, %v",
+						probe.failure,
+						proof,
+						provePredicateError,
+					)
 				}
-			} else if err != nil || proof.TaggedView != probe.tagged {
-				test.Fatalf("want proof tagged=%v, got %+v, %v", probe.tagged, proof, err)
+			} else if provePredicateError != nil || proof.TaggedView != probe.tagged {
+				test.Fatalf("want proof tagged=%v, got %+v, %v", probe.tagged, proof, provePredicateError)
 			}
 			if probe.failure == "" && probe.tagged {
 				l.result = &ir.Program{}
@@ -237,13 +242,14 @@ func TestPredicateCallbackContracts(test *testing.T) {
 				lowersAndAgreesWithNode(test, probe.source)
 				return
 			}
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			if probe.refused {
-				if err == nil || !strings.Contains(err.Error(), "unproven predicate argument for parameter callback") {
-					test.Fatalf("want pinned callback argument refusal, got %v", err)
+				if lowerSourceError == nil ||
+					!strings.Contains(lowerSourceError.Error(), "unproven predicate argument for parameter callback") {
+					test.Fatalf("want pinned callback argument refusal, got %v", lowerSourceError)
 				}
-			} else if err != nil {
-				test.Fatal(err)
+			} else if lowerSourceError != nil {
+				test.Fatal(lowerSourceError)
 			}
 		})
 	}
@@ -251,25 +257,25 @@ func TestPredicateCallbackContracts(test *testing.T) {
 
 func TestEveryNeedsCallbackEffects(test *testing.T) {
 	test.Parallel()
-	source, err := os.ReadFile("testdata/predicates/every_alias.ts")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("testdata/predicates/every_alias.ts")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	path := filepath.Join(test.TempDir(), "every.a")
-	if err = os.WriteFile(path, source, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, source, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	file := program.Files()[0]
 	checked, release := program.Checker(context.Background(), file)
 	defer release()
 	l := &lowering{program: program, checker: checked, result: &ir.Program{}}
-	err = l.refuse(file)
-	if err == nil || !strings.Contains(err.Error(), "type predicate") {
-		test.Fatalf("want array proof refusal without callback effects, got %v", err)
+	refuseError := l.refuse(file)
+	if refuseError == nil || !strings.Contains(refuseError.Error(), "type predicate") {
+		test.Fatalf("want array proof refusal without callback effects, got %v", refuseError)
 	}
 }
 
@@ -402,12 +408,12 @@ function some<T>(xs: readonly T[] | undefined): boolean { return xs !== undefine
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
 			path := filepath.Join(test.TempDir(), "uses.a")
-			if err := os.WriteFile(path, []byte(prefix+probe.body), 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, []byte(prefix+probe.body), 0644); writeError != nil {
+				test.Fatal(writeError)
 			}
-			program, err := load.Load([]string{path})
-			if err != nil {
-				test.Fatal(err)
+			program, loadError := load.Load([]string{path})
+			if loadError != nil {
+				test.Fatal(loadError)
 			}
 			file := program.Files()[0]
 			checked, release := program.Checker(context.Background(), file)
@@ -445,12 +451,12 @@ function use(xs: readonly number[] | undefined): void {
  if (some(xs)) console.log(xs.length.toString());
  if (some(xs)) {} else { const later = () => xs === undefined ? "no" : "yes"; console.log(later()); }
 }`
-	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	file := program.Files()[0]
 	checked, release := program.Checker(context.Background(), file)
@@ -497,12 +503,12 @@ function lies(x: unknown): x is number { return typeof x === "string"; }
 function recursive(x: unknown): x is number { return recursive(x); }
 `
 	path := filepath.Join(test.TempDir(), "main.a")
-	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	file := program.Files()[0]
 	checked, release := program.Checker(context.Background(), file)
@@ -520,9 +526,9 @@ function recursive(x: unknown): x is number { return recursive(x); }
 	if len(predicates) != 7 {
 		test.Fatalf("found %d predicates, want 7", len(predicates))
 	}
-	answer := func(proof predicateProof, err error) string {
-		if err != nil {
-			return "refused: " + err.Error()
+	answer := func(proof predicateProof, sourceError error) string {
+		if sourceError != nil {
+			return "refused: " + sourceError.Error()
 		}
 		return fmt.Sprintf("proved, tagged=%v", proof.TaggedView)
 	}

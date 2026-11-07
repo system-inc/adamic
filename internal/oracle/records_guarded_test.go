@@ -15,13 +15,15 @@ const recordGuardedReason = "a union or optional field read in a program with re
 // receiver, and matches Node natively and on the JavaScript backend (entries_records.go).
 func TestRecordGuardedReadAdmitted(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_guarded/admitted.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/records_guarded/admitted.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatalf("a read no record can reach must lower: %v", err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatalf("a read no record can reach must lower: %v", loweredError)
 	}
 	node := onNode(test, path)
 	if node.exitCode != 0 {
@@ -51,14 +53,16 @@ func TestRecordGuardedReadRefused(test *testing.T) {
 	} {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_guarded/"+name+".a"))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/records_guarded/"+name+".a"),
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			_, err = lowered(test, path)
+			_, loweredError := lowered(test, path)
 			var notYet *lower.NotYet
-			if !errors.As(err, &notYet) || notYet.What != recordGuardedReason || notYet.Where != path+where {
-				test.Fatalf("want NotYet %q at %s, got %v", recordGuardedReason, where, err)
+			if !errors.As(loweredError, &notYet) || notYet.What != recordGuardedReason || notYet.Where != path+where {
+				test.Fatalf("want NotYet %q at %s, got %v", recordGuardedReason, where, loweredError)
 			}
 		})
 	}
@@ -76,22 +80,24 @@ func TestRecordGuardedReadStopsEarlier(test *testing.T) {
 	} {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_guarded/"+name+".a"))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/records_guarded/"+name+".a"),
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			_, err = lowered(test, path)
+			_, loweredError := lowered(test, path)
 			var refused *lower.Refused
 			var notYet *lower.NotYet
 			switch {
-			case errors.As(err, &refused) &&
+			case errors.As(loweredError, &refused) &&
 				refused.Where == path+want.where &&
 				strings.HasPrefix(refused.What, want.what):
-			case errors.As(err, &notYet) &&
+			case errors.As(loweredError, &notYet) &&
 				notYet.Where == path+want.where &&
 				strings.HasPrefix(notYet.What, want.what):
 			default:
-				test.Fatalf("want the earlier stop %q at %s, got %v", want.what, want.where, err)
+				test.Fatalf("want the earlier stop %q at %s, got %v", want.what, want.where, loweredError)
 			}
 		})
 	}

@@ -26,17 +26,19 @@ func init() {
 
 func TestNullableStringFieldCheckMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/scout_nullable_string_stale_field.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/scout_nullable_string_stale_field.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	source := onNode(test, path)
 	if difference := disagreement(run{stdout: []byte("null\n")}, source); difference != "" {
 		test.Fatal(difference)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	want := run{exitCode: 70, stderr: []byte(
 		"adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n",

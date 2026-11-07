@@ -41,16 +41,16 @@ func TestProduct_NoUnderscoreDangleProfileRelease(test *testing.T) {
 
 func TestNoUnderscoreDangleProfileEmitsJavaScript(test *testing.T) {
 	test.Parallel()
-	lowered, err := profileLowered()
-	if err != nil {
-		test.Fatal(err)
+	lowered, profileLoweredError := profileLowered()
+	if profileLoweredError != nil {
+		test.Fatal(profileLoweredError)
 	}
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		filepath.Join(test.TempDir(), "emitted.mjs"),
 		[]byte(javascript.JavaScript(lowered)),
 		0644,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
 	test.Log("standalone profile: emitted JavaScript compiled")
 }
@@ -80,9 +80,9 @@ func profileNative(test *testing.T, options native.Options) string {
 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version")},
 	}
 	return buildcache.Product(test, inputs, func(directory string) error {
-		lowered, err := profileLowered()
-		if err != nil {
-			return err
+		lowered, profileLoweredError := profileLowered()
+		if profileLoweredError != nil {
+			return profileLoweredError
 		}
 		return native.Build(native.C(lowered), filepath.Join(directory, "native"), options)
 	})
@@ -96,13 +96,13 @@ var profileImport = regexp.MustCompile(`(?:from|import)\s+['"](\.[^'"]*)['"]`)
 // file, profile.a and everything it imports, followed import by import.
 func profileSources(test *testing.T) []string {
 	test.Helper()
-	root, err := filepath.Abs("../../../../..")
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs("../../../../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	entry, err := filepath.Abs("profile.a")
-	if err != nil {
-		test.Fatal(err)
+	entry, absolutePathError := filepath.Abs("profile.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	seen := map[string]bool{filepath.Join(root, "stage1/cohere/lint/rules", profileRule, "build_test.go"): true}
 	pending := []string{entry}
@@ -113,9 +113,9 @@ func profileSources(test *testing.T) []string {
 			continue
 		}
 		seen[path] = true
-		source, err := os.ReadFile(path)
-		if err != nil {
-			test.Fatal(err)
+		source, readError := os.ReadFile(path)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		for _, match := range profileImport.FindAllStringSubmatch(string(source), -1) {
 			pending = append(pending, filepath.Join(filepath.Dir(path), match[1]))
@@ -123,9 +123,9 @@ func profileSources(test *testing.T) []string {
 	}
 	var sources []string
 	for path := range seen {
-		relative, err := filepath.Rel(root, path)
-		if err != nil {
-			test.Fatal(err)
+		relative, relativePathError := filepath.Rel(root, path)
+		if relativePathError != nil {
+			test.Fatal(relativePathError)
 		}
 		sources = append(sources, filepath.ToSlash(relative))
 	}
@@ -135,13 +135,13 @@ func profileSources(test *testing.T) []string {
 
 // profileLowered loads and lowers profile.a, about a second.
 func profileLowered() (*ir.Program, error) {
-	entry, err := filepath.Abs("profile.a")
-	if err != nil {
-		return nil, err
+	entry, absolutePathError := filepath.Abs("profile.a")
+	if absolutePathError != nil {
+		return nil, absolutePathError
 	}
-	program, err := load.Load([]string{entry})
-	if err != nil {
-		return nil, err
+	program, loadError := load.Load([]string{entry})
+	if loadError != nil {
+		return nil, loadError
 	}
 	return lower.Lower(context.Background(), program)
 }

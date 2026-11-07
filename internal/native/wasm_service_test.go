@@ -92,9 +92,9 @@ func tileRequests(ranges [][2]int, total int) error {
 
 func serviceRepository(test *testing.T) string {
 	test.Helper()
-	repository, err := filepath.Abs("../..")
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs("../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return repository
 }
@@ -142,9 +142,9 @@ func runServiceHost(repository, host, module, directory, counted, regions string
 // without them it would keep a product a changed compiler made.
 func serviceCompiledInputs(test *testing.T, repository, name, compiler string) buildcache.Inputs {
 	test.Helper()
-	adamic, err := buildcache.GoBuildInInputs("", "adamic", "./cmd/adamic", nil, nil)
-	if err != nil {
-		test.Fatal(err)
+	adamic, goBuildInInputsError := buildcache.GoBuildInInputs("", "adamic", "./cmd/adamic", nil, nil)
+	if goBuildInInputsError != nil {
+		test.Fatal(goBuildInInputsError)
 	}
 	return buildcache.Inputs{
 		Name:      name,
@@ -178,9 +178,9 @@ func serviceModules(test *testing.T) string {
 	return buildcache.Product(test, inputs, func(directory string) error {
 		compiler := buildcache.Adamic(test)
 		source := filepath.Join(repository, serviceSource)
-		contents, err := os.ReadFile(source)
-		if err != nil {
-			return err
+		contents, readError := os.ReadFile(source)
+		if readError != nil {
+			return readError
 		}
 		wasiCommand(
 			test,
@@ -206,9 +206,9 @@ func serviceModules(test *testing.T) string {
 			"--count",
 		)
 		// Each mutant's source is written outside the product, which holds modules alone.
-		scratch, err := os.MkdirTemp("", "adamic-service-")
-		if err != nil {
-			return err
+		scratch, temporaryDirectoryError := os.MkdirTemp("", "adamic-service-")
+		if temporaryDirectoryError != nil {
+			return temporaryDirectoryError
 		}
 		defer os.RemoveAll(scratch)
 		for _, mutant := range serviceMutants {
@@ -216,12 +216,12 @@ func serviceModules(test *testing.T) string {
 				return fmt.Errorf("mutant %s must change exactly one source location", mutant.name)
 			}
 			mutantSource := filepath.Join(scratch, mutant.name+".a")
-			if err := os.WriteFile(
+			if writeError := os.WriteFile(
 				mutantSource,
 				[]byte(strings.Replace(string(contents), mutant.before, mutant.after, 1)+mutant.appended),
 				0o644,
-			); err != nil {
-				return err
+			); writeError != nil {
+				return writeError
 			}
 			wasiCommand(
 				test,
@@ -248,9 +248,9 @@ func serviceModules(test *testing.T) string {
 // run then requires to advance.
 func serviceRegions(test *testing.T, modules string) string {
 	test.Helper()
-	regions, err := os.ReadFile(filepath.Join(modules, "regions"))
-	if err != nil {
-		test.Fatal(err)
+	regions, readError := os.ReadFile(filepath.Join(modules, "regions"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if string(regions) != "0" && string(regions) != "1" {
 		test.Fatalf("the service modules answer regions %q, want 0 or 1", regions)
@@ -287,9 +287,9 @@ func serviceNative(test *testing.T) string {
 // generatedLines is the lines of a file the host generated, which holds only one part's span, so a part never holds
 // the whole request file, about 400 MB.
 func generatedLines(path string) ([]string, error) {
-	contents, err := os.ReadFile(path)
-	if err != nil {
-		return nil, err
+	contents, readError := os.ReadFile(path)
+	if readError != nil {
+		return nil, readError
 	}
 	if len(contents) == 0 {
 		return nil, nil
@@ -301,17 +301,17 @@ func generatedLines(path string) ([]string, error) {
 func serviceReportLine(output []byte) (map[string]any, error) {
 	lines := strings.Split(strings.TrimSpace(string(output)), "\n")
 	var report map[string]any
-	if err := json.Unmarshal([]byte(lines[len(lines)-1]), &report); err != nil {
-		return nil, fmt.Errorf("service report: %v\n%s", err, output)
+	if decodeError := json.Unmarshal([]byte(lines[len(lines)-1]), &report); decodeError != nil {
+		return nil, fmt.Errorf("service report: %v\n%s", decodeError, output)
 	}
 	return report, nil
 }
 
 // serviceReport reads the host's closing line; a run that served fewer than all the requests is no evidence.
 func serviceReport(output []byte, counted bool) error {
-	report, err := serviceReportLine(output)
-	if err != nil {
-		return err
+	report, serviceReportLineError := serviceReportLine(output)
+	if serviceReportLineError != nil {
+		return serviceReportLineError
 	}
 	if requests, _ := report["requests"].(float64); requests != serviceRequests {
 		return fmt.Errorf("service served %v requests, want %d\n%s", report["requests"], serviceRequests, output)
@@ -331,7 +331,7 @@ func wasmLeg(test *testing.T, counted string) {
 	if counted == "1" {
 		module = "service-counted.wasm"
 	}
-	output, err := runServiceHost(
+	output, runServiceHostError := runServiceHost(
 		repository,
 		filepath.Join(repository, serviceHost),
 		filepath.Join(modules, module),
@@ -340,11 +340,11 @@ func wasmLeg(test *testing.T, counted string) {
 		serviceRegions(test, modules),
 		[2]int{0, serviceRequests},
 	)
-	if err != nil {
-		test.Fatalf("service counted=%s: %v\n%s", counted, err, output)
+	if runServiceHostError != nil {
+		test.Fatalf("service counted=%s: %v\n%s", counted, runServiceHostError, output)
 	}
-	if err := serviceReport(output, counted == "1"); err != nil {
-		test.Fatal(err)
+	if serviceReportError := serviceReport(output, counted == "1"); serviceReportError != nil {
+		test.Fatal(serviceReportError)
 	}
 	test.Logf("service counted=%s: %s", counted, output)
 }
@@ -363,22 +363,30 @@ func TestWASIServiceCounted(test *testing.T) {
 // the product's sanitized native command answer that request file, each line held to Node's response line for it.
 func nativePart(test *testing.T, part int) {
 	test.Helper()
-	if err := tileRequests(serviceParts, serviceRequests); err != nil {
-		test.Fatal(err)
+	if tileRequestsError := tileRequests(serviceParts, serviceRequests); tileRequestsError != nil {
+		test.Fatal(tileRequestsError)
 	}
 	repository := serviceOptedIn(test)
 	directory := test.TempDir()
 	span := serviceParts[part]
-	output, err := runServiceHost(repository, filepath.Join(repository, serviceHost), "-", directory, "0", "0", span)
-	if err != nil {
-		test.Fatalf("generate: %v\n%s", err, output)
+	output, runServiceHostError := runServiceHost(
+		repository,
+		filepath.Join(repository, serviceHost),
+		"-",
+		directory,
+		"0",
+		"0",
+		span,
+	)
+	if runServiceHostError != nil {
+		test.Fatalf("generate: %v\n%s", runServiceHostError, output)
 	}
-	if err := serviceReport(output, false); err != nil {
-		test.Fatal(err)
+	if serviceReportError := serviceReport(output, false); serviceReportError != nil {
+		test.Fatal(serviceReportError)
 	}
-	report, err := serviceReportLine(output)
-	if err != nil {
-		test.Fatal(err)
+	report, serviceReportLineError := serviceReportLine(output)
+	if serviceReportLineError != nil {
+		test.Fatal(serviceReportLineError)
 	}
 	generated, _ := report["range"].([]any)
 	if len(generated) != 2 ||
@@ -396,13 +404,13 @@ func nativePart(test *testing.T, part int) {
 		)
 	}
 	partRequests := filepath.Join(directory, "requests.jsonl")
-	requestLines, err := generatedLines(partRequests)
-	if err != nil {
-		test.Fatal(err)
+	requestLines, generatedLinesError := generatedLines(partRequests)
+	if generatedLinesError != nil {
+		test.Fatal(generatedLinesError)
 	}
-	responseLines, err := generatedLines(filepath.Join(directory, "responses.jsonl"))
-	if err != nil {
-		test.Fatal(err)
+	responseLines, generatedLinesError := generatedLines(filepath.Join(directory, "responses.jsonl"))
+	if generatedLinesError != nil {
+		test.Fatal(generatedLinesError)
 	}
 	if len(requestLines) != span[1]-span[0] || len(responseLines) != span[1]-span[0] {
 		test.Fatalf(
@@ -417,12 +425,12 @@ func nativePart(test *testing.T, part int) {
 	binary := serviceNative(test)
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
 	defer cancel()
-	native, err := exec.CommandContext(ctx, binary, partRequests).Output()
-	if err != nil {
-		if failed, ok := err.(*exec.ExitError); ok {
-			test.Fatalf("native service: %v\n%s", err, failed.Stderr)
+	native, outputError := exec.CommandContext(ctx, binary, partRequests).Output()
+	if outputError != nil {
+		if failed, ok := outputError.(*exec.ExitError); ok {
+			test.Fatalf("native service: %v\n%s", outputError, failed.Stderr)
 		}
-		test.Fatalf("native service: %v", err)
+		test.Fatalf("native service: %v", outputError)
 	}
 	actualLines := strings.Split(strings.TrimSuffix(string(native), "\n"), "\n")
 	for index := span[0]; index < span[1]; index++ {
@@ -489,9 +497,9 @@ func TestWASIServiceNativeAgrees_7(test *testing.T) {
 func serviceAgreementParts(test *testing.T) []int {
 	test.Helper()
 	files := token.NewFileSet()
-	parsed, err := parser.ParseFile(files, "wasm_service_test.go", nil, parser.SkipObjectResolution)
-	if err != nil {
-		test.Fatal(err)
+	parsed, parseFileError := parser.ParseFile(files, "wasm_service_test.go", nil, parser.SkipObjectResolution)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	var parts []int
 	for _, declaration := range parsed.Decls {
@@ -503,8 +511,8 @@ func serviceAgreementParts(test *testing.T) []int {
 		if !found {
 			continue
 		}
-		part, err := strconv.Atoi(suffix)
-		if err != nil {
+		part, parseError := strconv.Atoi(suffix)
+		if parseError != nil {
 			test.Fatalf("%s names no part", function.Name.Name)
 		}
 		runs := false
@@ -542,8 +550,8 @@ func TestWASIServicePartsTile(test *testing.T) {
 			)
 		}
 	}
-	if err := tileRequests(serviceParts, serviceRequests); err != nil {
-		test.Fatal(err)
+	if tileRequestsError := tileRequests(serviceParts, serviceRequests); tileRequestsError != nil {
+		test.Fatal(tileRequestsError)
 	}
 	changed := func(change func(ranges [][2]int)) [][2]int {
 		ranges := slices.Clone(serviceParts)
@@ -575,7 +583,7 @@ func serviceMutant(test *testing.T, name string) {
 		test.Fatalf("no service mutant %s", name)
 	}
 	modules := serviceModules(test)
-	output, err := runServiceHost(
+	output, runServiceHostError := runServiceHost(
 		repository,
 		filepath.Join(repository, serviceHost),
 		filepath.Join(modules, name+".wasm"),
@@ -584,8 +592,8 @@ func serviceMutant(test *testing.T, name string) {
 		serviceRegions(test, modules),
 		[2]int{0, serviceRequests},
 	)
-	if err == nil || !strings.Contains(string(output), serviceMutants[index].caught) {
-		test.Fatalf("mutant not caught by %q: %v\n%s", serviceMutants[index].caught, err, output)
+	if runServiceHostError == nil || !strings.Contains(string(output), serviceMutants[index].caught) {
+		test.Fatalf("mutant not caught by %q: %v\n%s", serviceMutants[index].caught, runServiceHostError, output)
 	}
 	test.Logf("mutant compiled and was caught by %q\n%s", serviceMutants[index].caught, output)
 }
@@ -610,9 +618,9 @@ func TestWASIServiceMutantUnicodeEscape(test *testing.T) {
 func TestWASIServiceMutantShrunkCount(test *testing.T) {
 	test.Parallel()
 	repository := serviceOptedIn(test)
-	original, err := os.ReadFile(filepath.Join(repository, serviceHost))
-	if err != nil {
-		test.Fatal(err)
+	original, readError := os.ReadFile(filepath.Join(repository, serviceHost))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if strings.Count(string(original), "const requestCount = 100000;") != 1 {
 		test.Fatal("shrunk-count mutant must change the host's one request count")
@@ -621,9 +629,9 @@ func TestWASIServiceMutantShrunkCount(test *testing.T) {
 	directory := test.TempDir()
 	host := filepath.Join(directory, "host-shrunk.mjs")
 	writeWASIFile(test, host, shrunk)
-	output, err := runServiceHost(repository, host, "-", directory, "0", "0", [2]int{0, 1000})
-	if err != nil {
-		test.Fatalf("shrunk host: %v\n%s", err, output)
+	output, runServiceHostError := runServiceHost(repository, host, "-", directory, "0", "0", [2]int{0, 1000})
+	if runServiceHostError != nil {
+		test.Fatalf("shrunk host: %v\n%s", runServiceHostError, output)
 	}
 	if serviceReport(output, false) == nil {
 		test.Fatalf("a run of fewer than %d requests passed the report check\n%s", serviceRequests, output)

@@ -58,23 +58,23 @@ func resolvedProducts() (map[string]resolvedEntry, bool, error) {
 		read := held.(resolvedMap)
 		return read.products, true, read.err
 	}
-	products, err := readResolved(path)
-	resolvedMaps.Store(path, resolvedMap{products: products, err: err})
-	return products, true, err
+	products, readResolvedError := readResolved(path)
+	resolvedMaps.Store(path, resolvedMap{products: products, err: readResolvedError})
+	return products, true, readResolvedError
 }
 
 // readResolved reads the map at path strictly: an unknown field, another version, trailing bytes, or a name key or
 // key that isn't 64 hex digits refuses the whole map, since a key is joined into a path under the cache.
 func readResolved(path string) (map[string]resolvedEntry, error) {
-	content, err := os.ReadFile(path)
-	if err != nil {
-		return nil, err
+	content, readError := os.ReadFile(path)
+	if readError != nil {
+		return nil, readError
 	}
 	decoder := json.NewDecoder(bytes.NewReader(content))
 	decoder.DisallowUnknownFields()
 	var file resolvedFile
-	if err := decoder.Decode(&file); err != nil {
-		return nil, fmt.Errorf("%s: %v", path, err)
+	if decodeError := decoder.Decode(&file); decodeError != nil {
+		return nil, fmt.Errorf("%s: %v", path, decodeError)
 	}
 	if decoder.More() {
 		return nil, fmt.Errorf("%s: more than one map", path)
@@ -92,9 +92,9 @@ func readResolved(path string) (map[string]resolvedEntry, error) {
 
 // resolvedLookup is nameKey's product as the map answers it: the key it names, when that product is laid in the cache,
 // or why not. It gives no keys for the store to try, so a miss builds, as a name key with no read set does today.
-func resolvedLookup(cache, nameKey string, products map[string]resolvedEntry, err error) found {
-	if err != nil {
-		return found{why: fmt.Sprintf("the resolved map doesn't read: %v", err)}
+func resolvedLookup(cache, nameKey string, products map[string]resolvedEntry, resolvedProductsError error) found {
+	if resolvedProductsError != nil {
+		return found{why: fmt.Sprintf("the resolved map doesn't read: %v", resolvedProductsError)}
 	}
 	entry, named := products[nameKey]
 	if !named {

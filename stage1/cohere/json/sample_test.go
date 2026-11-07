@@ -20,15 +20,15 @@ func sampledCorpusCases(test *testing.T, stride int) []textCase {
 			names = append(names, item.Name)
 		}
 	}
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	// This recorded upstream witness is a fixed check in both modes. Keeping it
 	// also leaves the exact known-discrepancy report and its comparisons untouched.
-	selection, err := gatesample.Select(root, names, stride, "stage1/cohere/json/gaps/numeric-separators.json")
-	if err != nil {
-		test.Fatalf("%s: %v", test.Name(), err)
+	selection, selectError := gatesample.Select(root, names, stride, "stage1/cohere/json/gaps/numeric-separators.json")
+	if selectError != nil {
+		test.Fatalf("%s: %v", test.Name(), selectError)
 	}
 	if !selection.Sample {
 		return cases

@@ -55,9 +55,9 @@ func TestLibraryMethodValueBoundaries(test *testing.T) {
 	} {
 		test.Run(testCase.reason, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, testCase.source)
-			if err == nil || !strings.Contains(err.Error(), testCase.reason) {
-				test.Fatalf("want %s, got %v", testCase.reason, err)
+			_, lowerSourceError := lowerSource(test, testCase.source)
+			if lowerSourceError == nil || !strings.Contains(lowerSourceError.Error(), testCase.reason) {
+				test.Fatalf("want %s, got %v", testCase.reason, lowerSourceError)
 			}
 		})
 	}
@@ -145,15 +145,20 @@ func TestLibraryMethodValueSafety(test *testing.T) {
 	for name, testCase := range cases {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, testCase.source)
+			_, lowerSourceError := lowerSource(test, testCase.source)
 			var missing *NotYet
 			var refused *Refused
-			correctKind := errors.As(err, &missing)
+			correctKind := errors.As(lowerSourceError, &missing)
 			if testCase.refused {
-				correctKind = errors.As(err, &refused)
+				correctKind = errors.As(lowerSourceError, &refused)
 			}
-			if !correctKind || !strings.Contains(err.Error(), testCase.reason) {
-				test.Fatalf("want method-value refusal %q (Refused=%t), got %v", testCase.reason, testCase.refused, err)
+			if !correctKind || !strings.Contains(lowerSourceError.Error(), testCase.reason) {
+				test.Fatalf(
+					"want method-value refusal %q (Refused=%t), got %v",
+					testCase.reason,
+					testCase.refused,
+					lowerSourceError,
+				)
 			}
 		})
 	}

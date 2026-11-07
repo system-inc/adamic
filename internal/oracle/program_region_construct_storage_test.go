@@ -29,9 +29,9 @@ var programConstructSite = regexp.MustCompile(
 // returns the constructed object's name too, for the size mutant.
 func programConstructed(test *testing.T) (run, string, string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, programConstructFixture))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, programConstructFixture))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	oracle := onNode(test, path)
 	want := "size\nsize,weight,label\nbranch2\n"
@@ -69,19 +69,19 @@ func TestProgramRegionConstructedMemberStorage(test *testing.T) {
 	test.Parallel()
 	oracle, checked, _ := programConstructed(test)
 	binary := filepath.Join(test.TempDir(), "construct")
-	if err := programRegionBuild(
+	if programRegionBuildError := programRegionBuild(
 		test,
 		checked,
 		binary,
 		native.Options{ProgramRegion: true, Sanitize: true},
-	); err != nil {
-		test.Fatal(err)
+	); programRegionBuildError != nil {
+		test.Fatal(programRegionBuildError)
 	}
 	result := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
 	if difference := disagreement(oracle, result); difference != "" {
 		test.Fatalf("constructed member: %s %s", difference, result.stderr)
 	}
-	report, err := leakcheck.Check(leakcheck.Program{
+	report, checkError := leakcheck.Check(leakcheck.Program{
 		C: checked, Sanitized: binary, Counted: filepath.Join(test.TempDir(), "counted"),
 		BuildCounted: func(code, output string) error {
 			return programRegionBuild(test, code, output, native.Options{ProgramRegion: true, Count: true})
@@ -90,18 +90,18 @@ func TestProgramRegionConstructedMemberStorage(test *testing.T) {
 			return leakRun(executeWith(test, environment, name, args...))
 		},
 	})
-	if err != nil || report != "" {
-		test.Fatalf("leak check: %v %s", err, report)
+	if checkError != nil || report != "" {
+		test.Fatalf("leak check: %v %s", checkError, report)
 	}
 	// LeakSanitizer is the Linux leak proof; counters independently account for every member.
 	countedBinary := filepath.Join(test.TempDir(), "construct-counts")
-	if err := programRegionBuild(
+	if programRegionBuildError := programRegionBuild(
 		test,
 		checked,
 		countedBinary,
 		native.Options{ProgramRegion: true, Count: true},
-	); err != nil {
-		test.Fatal(err)
+	); programRegionBuildError != nil {
+		test.Fatal(programRegionBuildError)
 	}
 	command, args := pinnedStack(countedBinary)
 	counted := execute(test, command, args...)
@@ -124,9 +124,9 @@ func TestProgramRegionConstructedOrderMutant(test *testing.T) {
 	directory := test.TempDir()
 	sources := filepath.Join(repository, "internal/native/runtime")
 	// Reads: internal/native/runtime/*
-	entries, err := os.ReadDir(sources)
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(sources)
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	before := "\t\t((adamic_object *)heap)->write_order = (size_t *)(void *)((unsigned char *)heap + order_offset);\n"
 	changed := false
@@ -134,9 +134,9 @@ func TestProgramRegionConstructedOrderMutant(test *testing.T) {
 		if entry.IsDir() {
 			continue
 		}
-		data, err := os.ReadFile(filepath.Join(sources, entry.Name()))
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(filepath.Join(sources, entry.Name()))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		if entry.Name() == "heap.c" {
 			if strings.Count(string(data), before) != 1 {
@@ -145,21 +145,26 @@ func TestProgramRegionConstructedOrderMutant(test *testing.T) {
 			data = []byte(strings.Replace(string(data), before, "\t\t(void)order_offset;\n", 1))
 			changed = true
 		}
-		if err := os.WriteFile(filepath.Join(directory, entry.Name()), data, 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, entry.Name()), data, 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	if !changed {
 		test.Fatal("runtime mutation changed nothing")
 	}
 	options := native.Options{ProgramRegion: true, Sanitize: true}
-	archive, err := native.RuntimeLibraryForSource(directory, checked, options)
-	if err != nil {
-		test.Fatal(err)
+	archive, runtimeLibraryForSourceError := native.RuntimeLibraryForSource(directory, checked, options)
+	if runtimeLibraryForSourceError != nil {
+		test.Fatal(runtimeLibraryForSourceError)
 	}
 	binary := filepath.Join(test.TempDir(), "order-mutant")
-	if err := native.BuildWithRuntime(checked, binary, options, archive); err != nil {
-		test.Fatalf("mutant must compile: %v", err)
+	if buildWithRuntimeError := native.BuildWithRuntime(
+		checked,
+		binary,
+		options,
+		archive,
+	); buildWithRuntimeError != nil {
+		test.Fatalf("mutant must compile: %v", buildWithRuntimeError)
 	}
 	result := executeWith(
 		test,
@@ -183,13 +188,13 @@ func TestProgramRegionConstructedSizeMutant(test *testing.T) {
 	}
 	mutant := strings.Replace(checked, before, "adamic_object_size("+object+"->shape->count)", 1)
 	binary := filepath.Join(test.TempDir(), "size-mutant")
-	if err := programRegionBuild(
+	if programRegionBuildError := programRegionBuild(
 		test,
 		mutant,
 		binary,
 		native.Options{ProgramRegion: true, Sanitize: true},
-	); err != nil {
-		test.Fatal(err)
+	); programRegionBuildError != nil {
+		test.Fatal(programRegionBuildError)
 	}
 	result := executeWith(
 		test,

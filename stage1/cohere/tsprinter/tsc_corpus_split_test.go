@@ -41,11 +41,11 @@ func TestTSCAgreementKeyIsItsCorpusAndRecipe(test *testing.T) {
 	write := func(name, content string) {
 		test.Helper()
 		path := filepath.Join(root, filepath.FromSlash(name))
-		if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0o755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.WriteFile(path, []byte(content), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(content), 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	corpus := "stage3/drivers/tsc/corpus/case.ts"
@@ -56,9 +56,9 @@ func TestTSCAgreementKeyIsItsCorpusAndRecipe(test *testing.T) {
 	write("internal/unrelated.go", "package unrelated")
 	key := func(oracle string) string {
 		test.Helper()
-		key, err := buildcache.Key(root, oracles.TSCAgreementKeyInputs(oracle))
-		if err != nil {
-			test.Fatal(err)
+		key, keyError := buildcache.Key(root, oracles.TSCAgreementKeyInputs(oracle))
+		if keyError != nil {
+			test.Fatal(keyError)
 		}
 		return key
 	}
@@ -87,22 +87,22 @@ func tscAgreementLoad(test *testing.T) oracles.TSCAgreementData {
 		test.Fatal("shared corpus preparation failed")
 	}
 
-	encoded, err := os.ReadFile(filepath.Join(directory, "manifest.json"))
-	if err != nil {
-		test.Fatal(err)
+	encoded, readError := os.ReadFile(filepath.Join(directory, "manifest.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var data oracles.TSCAgreementData
-	if err := json.Unmarshal(encoded, &data); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(encoded, &data); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	for i := range data.Families {
 		data.Families[i].Directory = filepath.Join(directory, data.Families[i].Directory)
 		for j := range data.Families[i].Cases {
 			data.Families[i].Cases[j].Label = buildcache.Absolute(data.Families[i].Cases[j].Label)
 		}
-		source, err := filepath.Abs(data.Families[i].Source)
-		if err != nil {
-			test.Fatal(err)
+		source, absolutePathError := filepath.Abs(data.Families[i].Source)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		data.Families[i].Source = source
 	}
@@ -142,8 +142,8 @@ func tscAgreementPartition(
 	}
 	for i := range shards {
 		shards[i].Text = filepath.Join(test.TempDir(), fmt.Sprintf("%s-%03d.txt", family, i))
-		if err := os.WriteFile(shards[i].Text, []byte(inputs[i].String()), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(shards[i].Text, []byte(inputs[i].String()), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	return shards, answers, whole.String()
@@ -166,8 +166,12 @@ func tscAgreementPlan(test *testing.T, data oracles.TSCAgreementData) (*oracles.
 	if len(plan.Shards) != oracles.TSCCorpusAgreementShards {
 		test.Fatalf("enumerated %d shards, declared %d", len(plan.Shards), oracles.TSCCorpusAgreementShards)
 	}
-	if err := oracles.ExpressionUnion(plan, answers, []byte(whole.String())); err != nil {
-		test.Fatal(err)
+	if expressionUnionError := oracles.ExpressionUnion(
+		plan,
+		answers,
+		[]byte(whole.String()),
+	); expressionUnionError != nil {
+		test.Fatal(expressionUnionError)
 	}
 	test.Logf("union: %d unique family/case ids across %d shards", len(plan.Labels), len(plan.Shards))
 	return plan, answers
@@ -198,9 +202,9 @@ func tscAgreementRun(test *testing.T, number int) {
 	started := time.Now()
 	defer func() { test.Logf("case work: %.3fs", time.Since(started).Seconds()) }()
 	node := func(path string, arguments ...string) oracles.Run {
-		runner, err := filepath.Abs(filepath.Join(oracles.Repository, "oracle/node.mjs"))
-		if err != nil {
-			test.Fatal(err)
+		runner, absolutePathError := filepath.Abs(filepath.Join(oracles.Repository, "oracle/node.mjs"))
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		return tscAgreementExecute(
 			test,
@@ -214,8 +218,13 @@ func tscAgreementRun(test *testing.T, number int) {
 	args := []string{"--cases", shard.Text, "80"}
 	var report []map[string]string
 	check := func(name string, result oracles.Run) {
-		if err := expressionDisagreement(plan, number, answers[number], result); err != nil {
-			test.Errorf("%s: %v", name, err)
+		if expressionDisagreementError := expressionDisagreement(
+			plan,
+			number,
+			answers[number],
+			result,
+		); expressionDisagreementError != nil {
+			test.Errorf("%s: %v", name, expressionDisagreementError)
 		}
 		lines := strings.Split(strings.TrimSuffix(string(result.Stdout), "\n"), "\n")
 		expected := strings.Split(strings.TrimSuffix(string(answers[number]), "\n"), "\n")
@@ -248,13 +257,13 @@ func tscAgreementRun(test *testing.T, number int) {
 	check("backend", node(products.backend, args...))
 	switch runtime.GOOS {
 	case "linux":
-		if err := expressionDisagreement(
+		if expressionDisagreementError := expressionDisagreement(
 			plan,
 			number,
 			answers[number],
 			tscAgreementExecute(test, ctx, []string{"ASAN_OPTIONS=detect_leaks=1"}, products.sanitized, args...),
-		); err != nil {
-			test.Errorf("leaks: %v", err)
+		); expressionDisagreementError != nil {
+			test.Errorf("leaks: %v", expressionDisagreementError)
 		}
 	case "darwin":
 		result := tscAgreementExecute(
@@ -271,33 +280,37 @@ func tscAgreementRun(test *testing.T, number int) {
 		test.Fatalf("no leak check for %s", runtime.GOOS)
 	}
 	if keep := os.Getenv("ADAMIC_TSC_PRINTER_AUDIT"); keep != "" {
-		if err := os.MkdirAll(keep, 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(keep, 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		cases, err := json.Marshal(family.Cases)
-		if err != nil {
-			test.Fatal(err)
+		cases, encodeError := json.Marshal(family.Cases)
+		if encodeError != nil {
+			test.Fatal(encodeError)
 		}
-		if err := os.WriteFile(filepath.Join(keep, family.Name+"-cases.json"), cases, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(keep, family.Name+"-cases.json"), cases, 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
-		coverage, err := os.ReadFile(filepath.Join(family.Directory, "coverage.json"))
-		if err != nil {
-			test.Fatal(err)
+		coverage, readError := os.ReadFile(filepath.Join(family.Directory, "coverage.json"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
-		if err := os.WriteFile(filepath.Join(keep, family.Name+"-coverage.json"), coverage, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(
+			filepath.Join(keep, family.Name+"-coverage.json"),
+			coverage,
+			0644,
+		); writeError != nil {
+			test.Fatal(writeError)
 		}
-		encoded, err := json.MarshalIndent(report, "", "  ")
-		if err != nil {
-			test.Fatal(err)
+		encoded, encodeError := json.MarshalIndent(report, "", "  ")
+		if encodeError != nil {
+			test.Fatal(encodeError)
 		}
-		if err := os.WriteFile(
+		if writeError := os.WriteFile(
 			filepath.Join(keep, fmt.Sprintf("%s-%03d.json", family.Name, number)),
 			encoded,
 			0644,
-		); err != nil {
-			test.Fatal(err)
+		); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 }
@@ -319,19 +332,29 @@ func TestTSCCorpusAgreement_PlantedDisagreement(test *testing.T) {
 	for i := range answers {
 		family := data.Families[i/(oracles.TSCCorpusAgreementShards/2)]
 		results[i] = onNode(test, family.Source, "--cases", plan.Shards[i].Text, "80")
-		if err := expressionDisagreement(plan, i, answers[i], results[i]); err != nil {
-			test.Fatal(err)
+		if expressionDisagreementError := expressionDisagreement(
+			plan,
+			i,
+			answers[i],
+			results[i],
+		); expressionDisagreementError != nil {
+			test.Fatal(expressionDisagreementError)
 		}
 	}
 	results[number].Stdout[0] = 'X'
 	caught := 0
 	for i, result := range results {
-		if err := expressionDisagreement(plan, i, answers[i], result); err != nil {
+		if expressionDisagreementError := expressionDisagreement(
+			plan,
+			i,
+			answers[i],
+			result,
+		); expressionDisagreementError != nil {
 			caught++
 			if i != number {
-				test.Fatalf("wrong owner: %v", err)
+				test.Fatalf("wrong owner: %v", expressionDisagreementError)
 			}
-			test.Logf("planted disagreement caught by TestTSCCorpusAgreement_%03d: %v", i, err)
+			test.Logf("planted disagreement caught by TestTSCCorpusAgreement_%03d: %v", i, expressionDisagreementError)
 		}
 	}
 	if caught != 1 {
@@ -360,13 +383,13 @@ func tscAgreementExecute(
 	}
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
-	err := childguard.Run(command, childguard.Options{})
+	runError := childguard.Run(command, childguard.Options{})
 	if ctx.Err() != nil {
 		test.Fatalf("case deadline: %v", ctx.Err())
 	}
 	var exitError *exec.ExitError
-	if err != nil && !errors.As(err, &exitError) {
-		test.Fatalf("running %s: %v", name, err)
+	if runError != nil && !errors.As(runError, &exitError) {
+		test.Fatalf("running %s: %v", name, runError)
 	}
 	return oracles.Run{Stdout: stdout.Bytes(), Stderr: stderr.Bytes(), ExitCode: command.ProcessState.ExitCode()}
 }

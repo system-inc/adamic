@@ -74,21 +74,31 @@ func expressionGateProofShard(test *testing.T, number int) {
 		}
 	}
 	path := filepath.Join(test.TempDir(), "proof.txt")
-	if err := os.WriteFile(path, []byte(input.String()), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(input.String()), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	port, _ := filepath.Abs("main.ts")
 	result := onNode(test, port, "--cases", path, "80")
-	if err := expressionDisagreement(plan, number, []byte(want.String()), result); err != nil {
-		test.Fatal(err)
+	if expressionDisagreementError := expressionDisagreement(
+		plan,
+		number,
+		[]byte(want.String()),
+		result,
+	); expressionDisagreementError != nil {
+		test.Fatal(expressionDisagreementError)
 	}
 	if local >= 0 {
 		rows := strings.Split(string(result.Stdout), "\n")
 		rows[local] = "ok\tplanted disagreement"
 		result.Stdout = []byte(strings.Join(rows, "\n"))
 	}
-	if err := expressionDisagreement(plan, number, []byte(want.String()), result); err != nil {
-		test.Fatal(err)
+	if expressionDisagreementError := expressionDisagreement(
+		plan,
+		number,
+		[]byte(want.String()),
+		result,
+	); expressionDisagreementError != nil {
+		test.Fatal(expressionDisagreementError)
 	}
 }
 func TestExpressionsShardPlantedDisagreement(test *testing.T) {
@@ -104,9 +114,9 @@ func TestExpressionsShardPlantedDisagreement(test *testing.T) {
 			}
 		}
 	}
-	binary, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	binary, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
 	result := oracles.StatementExecute(
 		test,

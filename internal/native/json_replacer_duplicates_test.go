@@ -24,27 +24,27 @@ func TestJSONReplacerDuplicatesObjectMutant(test *testing.T) {
 
 func jsonReplacerDedupMutant(test *testing.T, fixture string) {
 	test.Helper()
-	path, err := filepath.Abs("../oracle/testdata/" + fixture + ".a")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("../oracle/testdata/" + fixture + ".a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	loaded, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	loaded, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := lower.Lower(test.Context(), loaded)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerError := lower.Lower(test.Context(), loaded)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	source := C(program)
-	runner, err := filepath.Abs("../../oracle/node.mjs")
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs("../../oracle/node.mjs")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	want := jsonReplacerRun(test, "node", "--disable-warning=ExperimentalWarning", runner, path)
-	files, err := readRuntime(runtime, "runtime")
-	if err != nil {
-		test.Fatal(err)
+	files, readRuntimeError := readRuntime(runtime, "runtime")
+	if readRuntimeError != nil {
+		test.Fatal(readRuntimeError)
 	}
 	before := "if (adamic_string_equal(key, w->keys[previous]))"
 	changed := false
@@ -71,40 +71,44 @@ func jsonReplacerDedupMutant(test *testing.T, fixture string) {
 	if !changed {
 		test.Fatal("mutant did not change runtime")
 	}
-	compiler, err := exec.LookPath("clang")
-	if err != nil {
-		test.Fatal(err)
+	compiler, lookPathError := exec.LookPath("clang")
+	if lookPathError != nil {
+		test.Fatal(lookPathError)
 	}
-	version, err := exec.CommandContext(test.Context(), compiler, "--version").CombinedOutput()
-	if err != nil {
-		test.Fatal(err)
+	version, combinedOutputError := exec.CommandContext(test.Context(), compiler, "--version").CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatal(combinedOutputError)
 	}
-	cache, err := os.UserCacheDir()
-	if err != nil {
-		test.Fatal(err)
+	cache, userCacheDirectoryError := os.UserCacheDir()
+	if userCacheDirectoryError != nil {
+		test.Fatal(userCacheDirectoryError)
 	}
 	flags := sourceFlags(source, Options{Sanitize: true})
-	library, err := cachedRuntime(
+	library, cachedRuntimeError := cachedRuntime(
 		kept,
 		flags,
 		compiler,
 		string(version),
 		filepath.Join(cache, "adamic", "json-replacer-mutants"),
 	)
-	if err != nil {
-		test.Fatal(err)
+	if cachedRuntimeError != nil {
+		test.Fatal(cachedRuntimeError)
 	}
 	directory := test.TempDir()
 	main := filepath.Join(directory, "main.c")
 	binary := filepath.Join(directory, "mutant")
-	if err := os.WriteFile(main, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(main, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	arguments := append(append([]string{}, flags...), "-I", filepath.Dir(library), main, "-o", binary)
 	arguments = append(arguments, RuntimeLinkFlags(library)...)
 	arguments = append(arguments, "-lm")
-	if output, err := exec.CommandContext(test.Context(), compiler, arguments...).CombinedOutput(); err != nil {
-		test.Fatalf("mutant compile: %v\n%s", err, output)
+	if output, combinedOutputError := exec.CommandContext(
+		test.Context(),
+		compiler,
+		arguments...,
+	).CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("mutant compile: %v\n%s", combinedOutputError, output)
 	}
 	got := jsonReplacerRun(test, binary)
 	if bytes.Equal(got, want) {
@@ -120,9 +124,9 @@ func jsonReplacerDedupMutant(test *testing.T, fixture string) {
 // c-portability's test-only portabilityRun helper.
 func jsonReplacerRun(test *testing.T, name string, arguments ...string) []byte {
 	test.Helper()
-	stdout, stderr, err := recordRun(name, arguments...)
-	if err != nil || stderr != "" {
-		test.Fatalf("%s: %v\n%s", name, err, stderr)
+	stdout, stderr, recordRunError := recordRun(name, arguments...)
+	if recordRunError != nil || stderr != "" {
+		test.Fatalf("%s: %v\n%s", name, recordRunError, stderr)
 	}
 	return []byte(stdout)
 }

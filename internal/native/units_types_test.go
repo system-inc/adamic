@@ -21,9 +21,9 @@ func TestSplitGeneratedTypesSharedAcrossUnits(test *testing.T) {
 static int adamic_read(adamic_generated_frame_0 *frame) { return frame->link->value + frame->values[0] + frame->values[1]; }
 int main(void) { adamic_generated_link link = {30}; adamic_generated_frame_alias frame = {&link, {5, 7}}; int result = adamic_read(&frame); printf("%d\n", result); return result == 42 ? 0 : 1; }
 `
-	header, units, err := splitC(source)
-	if err != nil {
-		test.Fatal(err)
+	header, units, splitCError := splitC(source)
+	if splitCError != nil {
+		test.Fatal(splitCError)
 	}
 	previous := -1
 	for _, declaration := range declarations {
@@ -42,13 +42,13 @@ int main(void) { adamic_generated_link link = {30}; adamic_generated_frame_alias
 		test.Fatalf("expected state, function and main units, got %d", len(units))
 	}
 	binary := filepath.Join(test.TempDir(), "types")
-	if err := Build(source, binary, Options{Split: true, Sanitize: true, Jobs: 2}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(source, binary, Options{Split: true, Sanitize: true, Jobs: 2}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	command, release := boundedrun.Command(5*time.Second, binary)
 	defer release()
-	if output, err := command.CombinedOutput(); err != nil || string(output) != "42\n" {
-		test.Fatalf("shared types: %v\n%s", err, output)
+	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil || string(output) != "42\n" {
+		test.Fatalf("shared types: %v\n%s", combinedOutputError, output)
 	}
 }
 
@@ -59,7 +59,7 @@ func TestSplitTypesDoNotAdmitUnownedStorage(test *testing.T) {
 		"struct adamic_generated_link *adamic_storage;",
 		"int adamic_storage;",
 	} {
-		if _, _, err := splitC(declaration + "\nint main(void) { return 0; }\n"); err == nil {
+		if _, _, splitCError := splitC(declaration + "\nint main(void) { return 0; }\n"); splitCError == nil {
 			test.Fatalf("unowned storage admitted: %s", declaration)
 		}
 	}

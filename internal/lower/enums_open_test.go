@@ -79,11 +79,12 @@ func TestStringEnumsStayClosed(test *testing.T) {
 		"enum E { A = 'a', B = 'b' } function word(value: string): E { return value as E; }",
 		"enum E { A = 'a', B = 'b' } const value: E = 'a' as E;",
 	} {
-		_, err := lowerSource(test, source)
+		_, lowerSourceError := lowerSource(test, source)
 		var refused *Refused
-		if !errors.As(err, &refused) ||
-			(!strings.Contains(err.Error(), "enum-members") && !strings.Contains(err.Error(), "no-unchecked-cast")) {
-			test.Fatalf("want closed string enum refusal, got %v", err)
+		if !errors.As(lowerSourceError, &refused) ||
+			(!strings.Contains(lowerSourceError.Error(), "enum-members") &&
+				!strings.Contains(lowerSourceError.Error(), "no-unchecked-cast")) {
+			test.Fatalf("want closed string enum refusal, got %v", lowerSourceError)
 		}
 	}
 }
@@ -121,9 +122,9 @@ func TestNumericEnumNeverProof(test *testing.T) {
 		},
 	} {
 		test.Run(probe.name, func(test *testing.T) {
-			program, err := lowerSource(test, probe.source)
-			if err != nil {
-				test.Fatal(err)
+			program, lowerSourceError := lowerSource(test, probe.source)
+			if lowerSourceError != nil {
+				test.Fatal(lowerSourceError)
 			}
 			guarded := false
 			for _, function := range program.Functions {
@@ -168,10 +169,10 @@ func TestNumericEnumLiteralPromises(test *testing.T) {
 		},
 	} {
 		test.Run(probe.name, func(test *testing.T) {
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var refused *Refused
-			if !errors.As(err, &refused) {
-				test.Fatalf("want literal-promise refusal, got %v", err)
+			if !errors.As(lowerSourceError, &refused) {
+				test.Fatalf("want literal-promise refusal, got %v", lowerSourceError)
 			}
 		})
 	}

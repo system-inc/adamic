@@ -27,9 +27,9 @@ type Jobserver struct {
 // OpenJobserver opens the jobserver whose FIFO is at path, for reading and writing, as make opens its own: a FIFO
 // opened so never blocks on its other end. One that can't be opened is an error naming it.
 func OpenJobserver(path string) (*Jobserver, error) {
-	fifo, err := os.OpenFile(path, os.O_RDWR, 0)
-	if err != nil {
-		return nil, fmt.Errorf("native: the compile jobserver %s: %w", path, err)
+	fifo, openError := os.OpenFile(path, os.O_RDWR, 0)
+	if openError != nil {
+		return nil, fmt.Errorf("native: the compile jobserver %s: %w", path, openError)
 	}
 	return &Jobserver{path: path, fifo: fifo}, nil
 }
@@ -42,8 +42,8 @@ func (jobserver *Jobserver) Hold(compile func() error) error {
 		return compile()
 	}
 	token := make([]byte, 1)
-	if _, err := jobserver.fifo.Read(token); err != nil {
-		return fmt.Errorf("native: taking a compile token from the jobserver %s: %w", jobserver.path, err)
+	if _, readError := jobserver.fifo.Read(token); readError != nil {
+		return fmt.Errorf("native: taking a compile token from the jobserver %s: %w", jobserver.path, readError)
 	}
 	defer jobserver.fifo.Write(token)
 	return compile()
@@ -64,19 +64,19 @@ var ErrJobserverSet = errors.New("native: the process's compile jobserver is set
 // UseJobserver sets the jobserver Build, BuildFlags, BuildTSGo, BuildSplitTSGo, the runtime cache and the header scan
 // behind RuntimeRequestFor compile under: jobserver, or err, why the one named couldn't be opened, which each of those
 // compiles then fails with rather than running unbounded. It's set once a process: the same again changes nothing, and
-// anything else is ErrJobserverSet, so two packages can't name two FIFOs and nothing swaps the bound mid-run (Compiler's
-// condition on #yzwm4rj). The archive's build, RuntimeRequest.Build, never reads it: it compiles under the jobserver
-// it's handed, unbounded when that's nil.
-func UseJobserver(jobserver *Jobserver, err error) error {
+// anything else is ErrJobserverSet, so two packages can't name two FIFOs and nothing swaps the bound mid-run
+// (Compiler's condition on #yzwm4rj). The archive's build, RuntimeRequest.Build, never reads it: it compiles under the
+// jobserver it's handed, unbounded when that's nil.
+func UseJobserver(jobserver *Jobserver, sourceError error) error {
 	processJobserver.mutex.Lock()
 	defer processJobserver.mutex.Unlock()
 	if processJobserver.set {
-		if processJobserver.jobserver == jobserver && processJobserver.err == err {
+		if processJobserver.jobserver == jobserver && processJobserver.err == sourceError {
 			return nil
 		}
 		return ErrJobserverSet
 	}
-	processJobserver.set, processJobserver.jobserver, processJobserver.err = true, jobserver, err
+	processJobserver.set, processJobserver.jobserver, processJobserver.err = true, jobserver, sourceError
 	return nil
 }
 

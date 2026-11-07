@@ -30,18 +30,18 @@ func init() {
 func TestArrayIsArrayTypedReadIsRejected(test *testing.T) {
 	test.Parallel()
 	path := "internal/oracle/testdata/library_array_is_array_refused/typed_read.a"
-	absolute, err := filepath.Abs(filepath.Join(repository, path))
-	if err != nil {
-		test.Fatal(err)
+	absolute, absolutePathError := filepath.Abs(filepath.Join(repository, path))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	contents, err := os.ReadFile(absolute)
-	if err != nil {
-		test.Fatal(err)
+	contents, readError := os.ReadFile(absolute)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	// onNode loads the program to find its imports, and this one doesn't load: stock Node runs a .ts copy.
 	stock := filepath.Join(test.TempDir(), "typed_read.ts")
-	if err := os.WriteFile(stock, contents, 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(stock, contents, 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	if truth := execute(
 		test,
@@ -51,14 +51,14 @@ func TestArrayIsArrayTypedReadIsRejected(test *testing.T) {
 	); disagreement(run{stdout: []byte("-1\nundefined\n")}, truth) != "" {
 		test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 	}
-	_, err = load.Load([]string{absolute})
+	_, loadError := load.Load([]string{absolute})
 	var checkError *load.CheckError
-	if !errors.As(err, &checkError) {
-		test.Fatalf("want the checker to reject the typed reads, got %v", err)
+	if !errors.As(loadError, &checkError) {
+		test.Fatalf("want the checker to reject the typed reads, got %v", loadError)
 	}
-	expected, err := os.ReadFile(strings.TrimSuffix(absolute, ".a") + ".refused")
-	if err != nil {
-		test.Fatal(err)
+	expected, readError := os.ReadFile(strings.TrimSuffix(absolute, ".a") + ".refused")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	got := strings.ReplaceAll(checkError.Error(), strings.TrimSuffix(absolute, path), "")
 	if got != strings.TrimSpace(string(expected)) {

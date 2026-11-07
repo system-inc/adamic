@@ -27,23 +27,23 @@ func TestLibraryMapSetIteratorCopiesRefused(test *testing.T) {
 				name := collection + "_" + part + "_" + copy
 				test.Run(name, func(test *testing.T) {
 					test.Parallel()
-					path, err := filepath.Abs(filepath.Join(
+					path, absolutePathError := filepath.Abs(filepath.Join(
 						repository,
 						"internal/oracle/testdata/library_map_set_iterator_refuse/library_map_set_iterator_"+name+".a",
 					))
-					if err != nil {
-						test.Fatal(err)
+					if absolutePathError != nil {
+						test.Fatal(absolutePathError)
 					}
 					// Source Node is the independent oracle: inherited next is absent from the copy.
 					node := onNode(test, path)
 					if node.exitCode == 0 || !strings.Contains(string(node.stderr), "copy.next is not a function") {
 						test.Fatalf("Node must reject copy.next: exit %d, stderr %s", node.exitCode, node.stderr)
 					}
-					_, err = lowered(test, path)
+					_, loweredError := lowered(test, path)
 					var refusal *lower.NotYet
-					if !errors.As(err, &refusal) ||
-						!strings.Contains(err.Error(), "next is inherited, not an own enumerable field") {
-						test.Fatalf("want inherited-next refusal, got %v", err)
+					if !errors.As(loweredError, &refusal) ||
+						!strings.Contains(loweredError.Error(), "next is inherited, not an own enumerable field") {
+						test.Fatalf("want inherited-next refusal, got %v", loweredError)
 					}
 				})
 			}

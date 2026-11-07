@@ -12,22 +12,22 @@ import (
 func TestClassFeaturesPrivateChecker(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "main.a")
-	if err := os.WriteFile(path, []byte(
+	if writeError := os.WriteFile(path, []byte(
 		`class Box { #value = 'private'; #method(): string { return this.#value; } read(): string { return this.#method(); } } const box = new Box(); console.log(box.#value); console.log(box.#method());`,
-	), 0644); err != nil {
-		test.Fatal(err)
+	), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	_, err := load.Load([]string{path})
-	if err == nil || !strings.Contains(err.Error(), "private identifier") {
-		test.Fatalf("want tsc private scope diagnostic, got %v", err)
+	_, loadError := load.Load([]string{path})
+	if loadError == nil || !strings.Contains(loadError.Error(), "private identifier") {
+		test.Fatalf("want tsc private scope diagnostic, got %v", loadError)
 	}
 }
 
 func TestClassFeaturesPrivateStorage(test *testing.T) {
 	test.Parallel()
-	source, err := os.ReadFile("../oracle/testdata/class_features_private.a")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("../oracle/testdata/class_features_private.a")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	lowersAndAgreesWithNode(test, string(source))
 }
@@ -39,9 +39,9 @@ func TestClassFeaturesAccessorRefusals(test *testing.T) {
 		`class Base { get value(): string { return 'base'; } set value(value: string) {} } class Child extends Base { get value(): string { return 'child'; } } const child = new Child(); console.log(child.value);`,
 		`class Base { get value(): 'one' | 'two' { return 'one'; } set value(value: 'one' | 'two') {} } class Child extends Base { get value(): 'one' { return 'one'; } set value(value: 'one') {} } const child = new Child(); console.log(child.value);`,
 	} {
-		_, err := lowerSource(test, source)
-		if err == nil || !strings.Contains(err.Error(), "accessor override") {
-			test.Fatalf("want unsafe accessor override refused, got %v", err)
+		_, lowerSourceError := lowerSource(test, source)
+		if lowerSourceError == nil || !strings.Contains(lowerSourceError.Error(), "accessor override") {
+			test.Fatalf("want unsafe accessor override refused, got %v", lowerSourceError)
 		}
 	}
 }
@@ -76,8 +76,8 @@ func TestClassFeaturesStaticSoundness(test *testing.T) {
 			graphAccepted(test, source)
 			continue
 		}
-		_, err := lowerSource(test, source)
-		if err == nil {
+		_, lowerSourceError := lowerSource(test, source)
+		if lowerSourceError == nil {
 			test.Errorf("unsafe static program accepted: %s", source)
 		}
 	}
@@ -98,12 +98,12 @@ func TestClassFeaturesAccessorCaptureCycle(test *testing.T) {
 
 func TestClassFeaturesNarrowedAccessor(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(
+	_, lowerSourceError := lowerSource(
 		test,
 		`let calls = 0; const source: { readonly value: string | undefined } = { get value(): string | undefined { calls++; return calls === 1 ? 'first' : undefined; } }; if (source.value !== undefined) console.log(source.value);`,
 	)
-	if err == nil || !strings.Contains(err.Error(), "narrowed accessor reread") {
-		test.Fatalf("want changing getter reread refused, got %v", err)
+	if lowerSourceError == nil || !strings.Contains(lowerSourceError.Error(), "narrowed accessor reread") {
+		test.Fatalf("want changing getter reread refused, got %v", lowerSourceError)
 	}
 }
 

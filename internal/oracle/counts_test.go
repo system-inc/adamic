@@ -60,9 +60,9 @@ const countsHarness = "counts-harness-v1"
 // countsShared is what every row's digest reads besides the row's own: the harness, the runtime's sources and the
 // counted build's flags, none of them spelled by the machine.
 var countsShared = sync.OnceValues(func() (string, error) {
-	runtime, err := native.RuntimeSourceDigest()
-	if err != nil {
-		return "", err
+	runtime, runtimeSourceDigestError := native.RuntimeSourceDigest()
+	if runtimeSourceDigestError != nil {
+		return "", runtimeSourceDigestError
 	}
 	return cacheKey(countsHarness, runtime, strings.Join(native.Flags(native.Options{Count: true}), " ")), nil
 })
@@ -72,9 +72,9 @@ var countsShared = sync.OnceValues(func() (string, error) {
 // path is a temporary directory, so the source file's path becomes <source> and the repository's becomes <repository>.
 func countPortable(test *testing.T, source string, absolute string) string {
 	test.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	if absolute != "" {
 		source = strings.ReplaceAll(source, absolute, "<source>")
@@ -89,37 +89,37 @@ func countPortable(test *testing.T, source string, absolute string) string {
 var countInputs = sync.OnceValues(func() (string, error) {
 	parts := []string{"count-inputs-v1"}
 	for _, name := range []string{"reading", "walking"} {
-		err := filepath.WalkDir(filepath.Join(
+		walkError := filepath.WalkDir(filepath.Join(
 			repository,
 			"internal",
 			"oracle",
 			"testdata",
 			name,
-		), func(path string, entry os.DirEntry, err error) error {
-			if err != nil {
-				return err
+		), func(path string, entry os.DirEntry, pathError error) error {
+			if pathError != nil {
+				return pathError
 			}
-			relative, err := filepath.Rel(repository, path)
-			if err != nil {
-				return err
+			relative, relativePathError := filepath.Rel(repository, path)
+			if relativePathError != nil {
+				return relativePathError
 			}
-			info, err := os.Lstat(path)
-			if err != nil {
-				return err
+			info, statError := os.Lstat(path)
+			if statError != nil {
+				return statError
 			}
 			switch {
 			case info.Mode()&os.ModeSymlink != 0:
-				target, err := os.Readlink(path)
-				if err != nil {
-					return err
+				target, readLinkError := os.Readlink(path)
+				if readLinkError != nil {
+					return readLinkError
 				}
 				parts = append(parts, "link "+filepath.ToSlash(relative)+" "+target)
 			case info.IsDir():
 				parts = append(parts, "directory "+filepath.ToSlash(relative))
 			default:
-				contents, err := os.ReadFile(path)
-				if err != nil {
-					return err
+				contents, readError := os.ReadFile(path)
+				if readError != nil {
+					return readError
 				}
 				parts = append(parts, fmt.Sprintf(
 					"file %s executable %v %x",
@@ -130,8 +130,8 @@ var countInputs = sync.OnceValues(func() (string, error) {
 			}
 			return nil
 		})
-		if err != nil {
-			return "", err
+		if walkError != nil {
+			return "", walkError
 		}
 	}
 	return cacheKey(parts...), nil
@@ -140,9 +140,9 @@ var countInputs = sync.OnceValues(func() (string, error) {
 // countDigest is the digest of the row keyed key that runs runs, as its last column holds it.
 func countDigest(test *testing.T, key string, runs string) string {
 	test.Helper()
-	shared, err := countsShared()
-	if err != nil {
-		test.Fatal(err)
+	shared, countsSharedError := countsShared()
+	if countsSharedError != nil {
+		test.Fatal(countsSharedError)
 	}
 	return cacheKey(shared, key, runs)[:16]
 }
@@ -182,25 +182,25 @@ func counted(
 	writes bool,
 ) (string, func() string) {
 	test.Helper()
-	absolute, err := filepath.Abs(filepath.Join(repository, path))
-	if err != nil {
-		test.Fatal(err)
+	absolute, absolutePathError := filepath.Abs(filepath.Join(repository, path))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	// Name sources before lowering: a diagnostic string's encoded length also
 	// carries its path, so replacing paths in the emitted C is too late.
-	loaded, err := load.LoadDisplayed([]string{absolute}, func(name string) string {
+	loaded, loadDisplayedError := load.LoadDisplayed([]string{absolute}, func(name string) string {
 		if name == absolute {
 			// The extension selects the checked TypeScript assertion frontend.
 			return "<source>" + filepath.Ext(name)
 		}
 		return countPortable(test, name, "")
 	})
-	if err != nil {
-		test.Fatalf("Load: %v", err)
+	if loadDisplayedError != nil {
+		test.Fatalf("Load: %v", loadDisplayedError)
 	}
-	program, err := lower.Lower(context.Background(), loaded)
-	if err != nil {
-		test.Fatalf("Lower: %v", err)
+	program, lowerError := lower.Lower(context.Background(), loaded)
+	if lowerError != nil {
+		test.Fatalf("Lower: %v", lowerError)
 	}
 	source := native.C(program)
 	runs := fmt.Sprintf(
@@ -212,9 +212,9 @@ func counted(
 		countPortable(test, source, absolute),
 	)
 	if input {
-		inputs, err := countInputs()
-		if err != nil {
-			test.Fatal(err)
+		inputs, countInputsError := countInputs()
+		if countInputsError != nil {
+			test.Fatal(countInputsError)
 		}
 		runs = "inputs " + inputs + "\n" + runs
 	}
@@ -249,8 +249,8 @@ func countedRun(
 			}
 			if unreadable {
 				path := filepath.Join(shared, "unreadable.txt")
-				if err := os.WriteFile(path, []byte("secret\n"), 0o000); err != nil {
-					test.Fatal(err)
+				if writeError := os.WriteFile(path, []byte("secret\n"), 0o000); writeError != nil {
+					test.Fatal(writeError)
 				}
 				how.arguments = append(append([]string{}, how.arguments...), path)
 			}
@@ -261,8 +261,8 @@ func countedRun(
 				how = fsFilePrepare(test, shared, "counted")
 			}
 			binary := filepath.Join(shared, "program")
-			if err := native.Build(source, binary, native.Options{Count: true}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(source, binary, native.Options{Count: true}); buildError != nil {
+				test.Fatal(buildError)
 			}
 			name, pinned := pinnedStack(binary, how.arguments...)
 			result = executeInput(test, how, nil, name, pinned...)
@@ -275,8 +275,8 @@ func countedRun(
 			}
 		} else {
 			binary := filepath.Join(test.TempDir(), "program")
-			if err := native.Build(source, binary, native.Options{Count: true}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(source, binary, native.Options{Count: true}); buildError != nil {
+				test.Fatal(buildError)
 			}
 			name, pinned := pinnedStack(binary)
 			if emitsParallelMap(source) {
@@ -370,9 +370,9 @@ const countProductShards = 16
 // and the C is emitted before it, so the digest carries what the row runs into the key.
 func countMeasurementInputs(test *testing.T, shard int) (buildcache.Inputs, []countCase, []func() string) {
 	test.Helper()
-	compiler, err := toolchain.Path("clang")
-	if err != nil {
-		test.Fatal(err)
+	compiler, pathError := toolchain.Path("clang")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
 	inputs := buildcache.Inputs{
 		Name:      "count-measurements",
@@ -405,9 +405,9 @@ func countMeasurements(test *testing.T, shard int) map[string]string {
 		}
 		return os.WriteFile(filepath.Join(directory, "rows.tsv"), []byte(rows.String()), 0o644)
 	})
-	contents, err := os.ReadFile(filepath.Join(directory, "rows.tsv"))
-	if err != nil {
-		test.Fatal(err)
+	contents, readError := os.ReadFile(filepath.Join(directory, "rows.tsv"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	measured := map[string]string{}
 	for _, line := range strings.Split(strings.TrimSuffix(string(contents), "\n"), "\n") {
@@ -540,9 +540,9 @@ func runCountsShard(test *testing.T, shard int) {
 				measuredCounts.Store(each.key, measure())
 				return
 			}
-			recorded, err := recordedCounts()
-			if err != nil {
-				test.Fatalf("%v: record the counts with -update-counts", err)
+			recorded, recordedCountsError := recordedCounts()
+			if recordedCountsError != nil {
+				test.Fatalf("%v: record the counts with -update-counts", recordedCountsError)
 			}
 			want := recorded[each.key]
 			if probing && each.key == planted {
@@ -615,12 +615,12 @@ func TestCountsAreRecordedTable(test *testing.T) {
 		}
 		return
 	}
-	keys, err := predicateCountKeys()
-	if err != nil {
-		test.Fatal(err)
+	keys, predicateCountKeysError := predicateCountKeys()
+	if predicateCountKeysError != nil {
+		test.Fatal(predicateCountKeysError)
 	}
-	if _, err := readCountRows(countsDirectory, "predicates", keys); err != nil {
-		test.Fatal(err)
+	if _, readCountRowsError := readCountRows(countsDirectory, "predicates", keys); readCountRowsError != nil {
+		test.Fatal(readCountRowsError)
 	}
 }
 
@@ -634,9 +634,9 @@ func writeCounts() error {
 			rows[key] = row.(string)
 			measured++
 		} else {
-			row, err := readCountRow(countsDirectory, "runtime", key)
-			if err != nil {
-				return err
+			row, readCountRowError := readCountRow(countsDirectory, "runtime", key)
+			if readCountRowError != nil {
+				return readCountRowError
 			}
 			rows[key] = row
 		}
@@ -646,18 +646,18 @@ func writeCounts() error {
 			"-update-counts measured no runtime record: select the shards with -run TestCountsAreRecorded, unanchored",
 		)
 	}
-	keys, err := predicateCountKeys()
-	if err != nil {
-		return err
+	keys, predicateCountKeysError := predicateCountKeys()
+	if predicateCountKeysError != nil {
+		return predicateCountKeysError
 	}
 	predicates := map[string]string{}
 	for _, key := range keys {
 		if row, ok := measuredPredicateCounts.Load(key); ok {
 			predicates[key] = row.(string)
 		} else {
-			row, err := readCountRow(countsDirectory, "predicates", key)
-			if err != nil {
-				return err
+			row, readCountRowError := readCountRow(countsDirectory, "predicates", key)
+			if readCountRowError != nil {
+				return readCountRowError
 			}
 			predicates[key] = row
 		}

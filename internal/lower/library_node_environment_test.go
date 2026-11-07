@@ -37,10 +37,11 @@ func TestProcessEnvironmentRejectsNonReadUses(test *testing.T) {
 	} {
 		test.Run(one.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, `import process from 'node:process'; `+one.source)
+			_, lowerSourceError := lowerSource(test, `import process from 'node:process'; `+one.source)
 			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(notYet.What, "node:process.Process.env "+one.want) {
-				test.Fatalf("want env NotYet %s, got %v", one.want, err)
+			if !errors.As(lowerSourceError, &notYet) ||
+				!strings.Contains(notYet.What, "node:process.Process.env "+one.want) {
+				test.Fatalf("want env NotYet %s, got %v", one.want, lowerSourceError)
 			}
 		})
 	}
@@ -51,13 +52,16 @@ func TestProcessEnvironmentRefusesLiteralPrototypeNames(test *testing.T) {
 	for _, key := range ir.NodeEnvironmentPrototypeKeys {
 		test.Run(key, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, `import process from 'node:process'; console.log(process.env.`+key+`);`)
+			_, lowerSourceError := lowerSource(
+				test,
+				`import process from 'node:process'; console.log(process.env.`+key+`);`,
+			)
 			var notYet *NotYet
-			if !errors.As(err, &notYet) ||
+			if !errors.As(lowerSourceError, &notYet) ||
 				!strings.Contains(notYet.What, "literal prototype key "+key) ||
 				!strings.Contains(notYet.What, "process.env['NAME']") ||
 				!strings.Contains(notYet.What, "plain object") {
-				test.Fatalf("want located prototype NotYet with fix, got %v", err)
+				test.Fatalf("want located prototype NotYet with fix, got %v", lowerSourceError)
 			}
 		})
 	}
@@ -78,8 +82,11 @@ func TestProcessEnvironmentAdmitsStringWritesAndDeletes(test *testing.T) {
 	} {
 		test.Run(source, func(test *testing.T) {
 			test.Parallel()
-			if _, err := lowerSource(test, `import process from 'node:process'; `+source); err != nil {
-				test.Fatal(err)
+			if _, lowerSourceError := lowerSource(
+				test,
+				`import process from 'node:process'; `+source,
+			); lowerSourceError != nil {
+				test.Fatal(lowerSourceError)
 			}
 		})
 	}

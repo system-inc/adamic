@@ -11,18 +11,18 @@ import (
 )
 
 func main() {
-	program, err := load.Load(os.Args[1:])
-	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
+	program, loadError := load.Load(os.Args[1:])
+	if loadError != nil {
+		fmt.Fprintln(os.Stderr, loadError)
 		os.Exit(1)
 	}
-	sources, err := lower.DecodeJsonSources(context.Background(), program)
-	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
+	sources, decodeJsonSourcesError := lower.DecodeJsonSources(context.Background(), program)
+	if decodeJsonSourcesError != nil {
+		fmt.Fprintln(os.Stderr, decodeJsonSourcesError)
 		os.Exit(1)
 	}
-	if err = json.NewEncoder(os.Stdout).Encode(sources); err != nil {
-		fmt.Fprintln(os.Stderr, err)
+	if encodeError := json.NewEncoder(os.Stdout).Encode(sources); encodeError != nil {
+		fmt.Fprintln(os.Stderr, encodeError)
 		os.Exit(1)
 	}
 }

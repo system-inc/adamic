@@ -16,9 +16,9 @@ type CaptureParticipation struct {
 // ECMA-262 CompileSubpattern and RepeatMatcher's capture-reset semantics.
 // Runtime-built patterns must not use these literal-specific proofs.
 func CaptureFacts(pattern, flags string) (CaptureParticipation, error) {
-	tree, err := Parse(pattern, flags)
-	if err != nil {
-		return CaptureParticipation{}, err
+	tree, parseError := Parse(pattern, flags)
+	if parseError != nil {
+		return CaptureParticipation{}, parseError
 	}
 	ids := map[*Group]int{}
 	names := map[string]bool{}

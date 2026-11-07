@@ -45,10 +45,10 @@ func TestParameterPropertiesSoundness(test *testing.T) {
 		},
 	} {
 		test.Run(probe.name, func(test *testing.T) {
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var refused *Refused
-			if !errors.As(err, &refused) || !strings.Contains(err.Error(), probe.reason) {
-				test.Fatalf("got %v, want refusal %s", err, probe.reason)
+			if !errors.As(lowerSourceError, &refused) || !strings.Contains(lowerSourceError.Error(), probe.reason) {
+				test.Fatalf("got %v, want refusal %s", lowerSourceError, probe.reason)
 			}
 		})
 	}
@@ -62,13 +62,13 @@ func TestParameterPropertyCheckerContracts(test *testing.T) {
 		"class C {constructor(protected value:number){}} const c=new C(1); console.log(`${c.value}`);",
 	} {
 		path := filepath.Join(test.TempDir(), "main.a")
-		if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
-		_, err := load.Load([]string{path})
+		_, loadError := load.Load([]string{path})
 		var rejected *load.CheckError
-		if !errors.As(err, &rejected) {
-			test.Fatalf("got %v, want checker rejection", err)
+		if !errors.As(loadError, &rejected) {
+			test.Fatalf("got %v, want checker rejection", loadError)
 		}
 	}
 	lowersAndAgreesWithNode(
@@ -79,12 +79,13 @@ func TestParameterPropertyCheckerContracts(test *testing.T) {
 
 func TestParameterPropertyCallbackReceiver(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(
+	_, lowerSourceError := lowerSource(
 		test,
 		"class C {constructor(readonly run:(this:C)=>number){} read():number{return this.run();}} function callback(this:C):number{return 1;} const c=new C(callback); console.log(`${c.read()}`);",
 	)
 	var notYet *NotYet
-	if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "this parameter used as a value") {
-		test.Fatalf("got %v, want NotYet dynamic receiver", err)
+	if !errors.As(lowerSourceError, &notYet) ||
+		!strings.Contains(lowerSourceError.Error(), "this parameter used as a value") {
+		test.Fatalf("got %v, want NotYet dynamic receiver", lowerSourceError)
 	}
 }

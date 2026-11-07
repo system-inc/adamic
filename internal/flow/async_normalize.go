@@ -20,7 +20,13 @@ func NormalizeAsync(program *ir.Program) error {
 				program.Locals[local].Function = index
 			}
 		}
-		program.Functions = append(program.Functions, ir.Function{Name: "module", Async: true, AsyncSite: asyncSourceSite(program.Main), Returns: ir.Promise, Body: program.Main})
+		program.Functions = append(program.Functions, ir.Function{
+			Name:      "module",
+			Async:     true,
+			AsyncSite: asyncSourceSite(program.Main),
+			Returns:   ir.Promise,
+			Body:      program.Main,
+		})
 		program.AsyncEntry = index + 1
 		program.Main = nil
 		// The top level's own locals (a catch binding, a block's let) belong to the module
@@ -37,20 +43,26 @@ func NormalizeAsync(program *ir.Program) error {
 			continue
 		}
 		if function.NestedFrame || function.FrameIdentity != 0 {
-			return &AsyncError{Site: function.AsyncSite, What: suspending(*function, "nested declarations need a canonical suspension environment")}
+			return &AsyncError{
+				Site: function.AsyncSite,
+				What: suspending(*function, "nested declarations need a canonical suspension environment"),
+			}
 		}
 		normalizer := asyncNormalizer{program: program, function: index}
 		completion := asyncCompletion{n: &normalizer, loops: map[int]bool{}, names: map[int]string{}}
 		completed := completion.statements(function.Body)
-		body, err := normalizer.statements(append(completion.locals, completed...))
-		if err != nil {
-			return err
+		body, statementsError := normalizer.statements(append(completion.locals, completed...))
+		if statementsError != nil {
+			return statementsError
 		}
 		var cells []int
 		for local, declared := range program.Locals {
 			if !declared.Global && declared.Function == index {
 				if declared.Type == ir.MaybeBoolean {
-					return &AsyncError{Site: function.AsyncSite, What: suspending(*function, "slots holding boolean or undefined are not yet proven")}
+					return &AsyncError{
+						Site: function.AsyncSite,
+						What: suspending(*function, "slots holding boolean or undefined are not yet proven"),
+					}
 				}
 				if declared.Captured && !declared.IterationCell {
 					program.Locals[local].Preallocated = true
@@ -157,9 +169,9 @@ func (n *asyncNormalizer) expression(value ir.Expression, out *[]ir.Statement, s
 	}
 	switch value := value.(type) {
 	case ir.Effects:
-		body, err := n.statements(value.Body)
-		if err != nil {
-			n.failure = err
+		body, statementsError := n.statements(value.Body)
+		if statementsError != nil {
+			n.failure = statementsError
 			return value
 		}
 		*out = append(*out, body...)
@@ -180,7 +192,12 @@ func (n *asyncNormalizer) expression(value ir.Expression, out *[]ir.Statement, s
 		return changed
 	case ir.ObjectLiteral:
 		if value.Spread != nil {
-			value.Spread = ir.ObjectLiteral{Spread: value.Spread, NoReuse: true, SpreadMaybeUndefined: value.SpreadMaybeUndefined, Empty: value.Empty}
+			value.Spread = ir.ObjectLiteral{
+				Spread:               value.Spread,
+				NoReuse:              true,
+				SpreadMaybeUndefined: value.SpreadMaybeUndefined,
+				Empty:                value.Empty,
+			}
 		}
 		changed := n.operands(reflect.ValueOf(value), out).Interface().(ir.Expression)
 		if snapshot {
@@ -214,7 +231,9 @@ func (n *asyncNormalizer) expression(value ir.Expression, out *[]ir.Statement, s
 		} else {
 			missing = append(missing, ir.Assign{Local: local, Value: fallback})
 		}
-		present := []ir.Statement{ir.Assign{Local: local, Value: ir.Coalesce{Value: held, Fallback: result, Of: value.Of}}}
+		present := []ir.Statement{
+			ir.Assign{Local: local, Value: ir.Coalesce{Value: held, Fallback: result, Of: value.Of}},
+		}
 		*out = append(*out, ir.If{Condition: ir.IsUndefined{Value: held}, Then: missing, Else: present})
 		return result
 	case ir.Binary:
@@ -291,16 +310,16 @@ func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement,
 	var out []ir.Statement
 	for _, statement := range statements {
 		var before []ir.Statement
-		var err error
+		var statementsError error
 		switch value := statement.(type) {
 		case ir.Return:
 			value.Value = n.expression(value.Value, &before, true)
 			statement = value
 		case ir.If:
 			value.Condition = n.expression(value.Condition, &before, true)
-			value.Then, err = n.statements(value.Then)
-			if err == nil {
-				value.Else, err = n.statements(value.Else)
+			value.Then, statementsError = n.statements(value.Then)
+			if statementsError == nil {
+				value.Else, statementsError = n.statements(value.Else)
 			}
 			statement = value
 		case ir.Loop:
@@ -326,31 +345,35 @@ func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement,
 			for _, local := range value.PerIteration {
 				mark(local)
 				if n.program.Locals[local].Captured {
-					copies = append(copies, ir.Declare{Local: local, CopyCell: true, Value: ir.Read{Local: local, Of: n.program.Locals[local].Type}})
+					copies = append(copies, ir.Declare{
+						Local:    local,
+						CopyCell: true,
+						Value:    ir.Read{Local: local, Of: n.program.Locals[local].Type},
+					})
 				}
 			}
 			value.Update = append(copies, value.Update...)
 			value.PerIteration = nil
 			value.Condition = n.expression(value.Condition, &value.Test, true)
-			value.Body, err = n.statements(value.Body)
-			if err == nil {
-				value.Update, err = n.statements(value.Update)
+			value.Body, statementsError = n.statements(value.Body)
+			if statementsError == nil {
+				value.Update, statementsError = n.statements(value.Update)
 			}
 			statement = value
 		case ir.Block:
-			value.Body, err = n.statements(value.Body)
+			value.Body, statementsError = n.statements(value.Body)
 			statement = value
 		case ir.Try:
 			if value.HasFinally {
 				return nil, n.errorAt(value, "async finally escaped completion normalization")
 			}
-			value.Body, err = n.statements(value.Body)
-			if err == nil {
-				value.Catch, err = n.statements(value.Catch)
+			value.Body, statementsError = n.statements(value.Body)
+			if statementsError == nil {
+				value.Catch, statementsError = n.statements(value.Catch)
 			}
 			statement = value
 		case ir.Labeled:
-			value.Body, err = n.statements(value.Body)
+			value.Body, statementsError = n.statements(value.Body)
 			statement = value
 		case ir.Evaluate:
 			if yield, ok := value.Value.(ir.Yield); ok {
@@ -364,15 +387,25 @@ func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement,
 				statement = n.operands(reflect.ValueOf(statement), &before).Interface().(ir.Statement)
 			}
 		case ir.ForOf:
-			if value.RegexIterator || (value.Iterable.Type() != ir.Array && value.Iterable.Type() != ir.String && value.Iterable.Type() != ir.Map) || (value.Pattern != nil && value.MapPart == "") {
-				return nil, n.errorAt(value, suspending(n.program.Functions[n.function], "for-of over this iterable or pattern is not yet proven"))
+			if value.RegexIterator || (value.Iterable.Type() != ir.Array &&
+				value.Iterable.Type() != ir.String &&
+				value.Iterable.Type() != ir.Map) || (value.Pattern != nil && value.MapPart == "") {
+				return nil, n.errorAt(value, suspending(
+					n.program.Functions[n.function],
+					"for-of over this iterable or pattern is not yet proven",
+				))
 			}
 			if value.Iterable.Type() != ir.Array {
 				iterable := n.expression(value.Iterable, &before, true)
 				var iterator ir.Expression = ir.StringIterator{Value: iterable}
 				element := value.Element
 				if value.MapPart != "" {
-					iterator = ir.CollectionIterator{Collection: iterable, Part: value.MapPart, Key: value.Key, Value: value.Value}
+					iterator = ir.CollectionIterator{
+						Collection: iterable,
+						Part:       value.MapPart,
+						Key:        value.Key,
+						Value:      value.Value,
+					}
 					switch value.MapPart {
 					case "keys":
 						element = value.Key
@@ -386,8 +419,14 @@ func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement,
 				stepLocal := n.temporary(ir.Object)
 				step := ir.Read{Local: stepLocal, Of: ir.Object}
 				body := []ir.Statement{
-					ir.Declare{Local: stepLocal, Value: ir.CallClosure{Closure: ir.Property{Object: held, Name: "next", Of: ir.Closure}, Returns: ir.Object}},
-					ir.If{Condition: ir.Property{Object: step, Name: "done", Of: ir.Boolean}, Then: []ir.Statement{ir.Break{}}},
+					ir.Declare{Local: stepLocal, Value: ir.CallClosure{
+						Closure: ir.Property{Object: held, Name: "next", Of: ir.Closure},
+						Returns: ir.Object,
+					}},
+					ir.If{
+						Condition: ir.Property{Object: step, Name: "done", Of: ir.Boolean},
+						Then:      []ir.Statement{ir.Break{}},
+					},
 				}
 				var item ir.Expression = ir.Property{Object: step, Name: "value", Of: element}
 				if element == ir.Number {
@@ -397,11 +436,17 @@ func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement,
 					body = append(body, ir.Declare{Local: value.Local, Value: item})
 				} else {
 					for _, binding := range value.Pattern {
-						body = append(body, ir.Declare{Local: binding.Local, Value: ir.Property{Object: item, Name: binding.Field, Of: n.program.Locals[binding.Local].Type}})
+						body = append(body, ir.Declare{Local: binding.Local, Value: ir.Property{
+							Object: item,
+							Name:   binding.Field,
+							Of:     n.program.Locals[binding.Local].Type,
+						}})
 					}
 				}
 				body = append(body, value.Body...)
-				normalized, failure := n.statements([]ir.Statement{ir.Loop{Labels: value.Labels, Condition: ir.BooleanConstant{Value: true}, Body: body}})
+				normalized, failure := n.statements([]ir.Statement{
+					ir.Loop{Labels: value.Labels, Condition: ir.BooleanConstant{Value: true}, Body: body},
+				})
 				if failure != nil {
 					return nil, failure
 				}
@@ -425,13 +470,16 @@ func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement,
 				Labels:    value.Labels,
 				Condition: ir.Binary{Operator: ir.Less, Left: position, Right: ir.Length{Array: array}},
 				Body:      append([]ir.Statement{ir.Declare{Local: value.Local, Value: element}}, value.Body...),
-				Update:    []ir.Statement{ir.Assign{Local: index, Value: ir.Binary{Operator: ir.Add, Left: position, Right: ir.NumberConstant{Value: 1}}}},
+				Update: []ir.Statement{ir.Assign{
+					Local: index,
+					Value: ir.Binary{Operator: ir.Add, Left: position, Right: ir.NumberConstant{Value: 1}},
+				}},
 			}
 			// Loop normalization marks the element declaration as a fresh iteration
 			// cell when captured, so closures keep their binding across suspension.
 			var normalized []ir.Statement
-			normalized, err = n.statements([]ir.Statement{loop})
-			if err == nil {
+			normalized, statementsError = n.statements([]ir.Statement{loop})
+			if statementsError == nil {
 				statement = normalized[0]
 			}
 		case ir.Switch:
@@ -440,13 +488,13 @@ func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement,
 				if containsAwait(reflect.ValueOf(value.Cases[index].Tests)) {
 					return nil, n.errorAt(value, "await in switch case tests is not yet proven")
 				}
-				value.Cases[index].Body, err = n.statements(value.Cases[index].Body)
-				if err != nil {
+				value.Cases[index].Body, statementsError = n.statements(value.Cases[index].Body)
+				if statementsError != nil {
 					break
 				}
 			}
-			if err == nil {
-				value.Default, err = n.statements(value.Default)
+			if statementsError == nil {
+				value.Default, statementsError = n.statements(value.Default)
 			}
 			statement = value
 		default:
@@ -454,8 +502,8 @@ func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement,
 				statement = n.operands(reflect.ValueOf(statement), &before).Interface().(ir.Statement)
 			}
 		}
-		if err != nil {
-			return nil, err
+		if statementsError != nil {
+			return nil, statementsError
 		}
 		if n.failure != nil {
 			return nil, n.failure

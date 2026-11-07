@@ -16,20 +16,20 @@ import (
 // Keep its actual selector output explicit instead of calling these trees.
 func TestProgramRegionHost14MemberSites(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("../../stage3/fixtures/host/14_getCurrentDirectory.a")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("../../stage3/fixtures/host/14_getCurrentDirectory.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	loaded, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	loaded, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	entry := loaded.Files()[0]
 	typeChecker, release := loaded.Checker(context.Background(), entry)
 	defer release()
-	discovery, err := lowerChecked(loaded, typeChecker, entry, nil, true, false)
-	if err != nil {
-		test.Fatal(err)
+	discovery, lowerCheckedError := lowerChecked(loaded, typeChecker, entry, nil, true, false)
+	if lowerCheckedError != nil {
+		test.Fatal(lowerCheckedError)
 	}
 	members := []string{}
 	for local, selected := range discovery.programPlan.cells {
@@ -46,9 +46,9 @@ func TestProgramRegionHost14MemberSites(test *testing.T) {
 	}
 	// Allocation membership also uses contextual types, so the input callback
 	// closure can be adopted even though its function declaration is not a member.
-	built, err := lowerChecked(loaded, typeChecker, entry, discovery.programPlan, false, false)
-	if err != nil {
-		test.Fatal(err)
+	built, lowerCheckedError := lowerChecked(loaded, typeChecker, entry, discovery.programPlan, false, false)
+	if lowerCheckedError != nil {
+		test.Fatal(lowerCheckedError)
 	}
 	closureMembers := map[int]bool{}
 	inspect := func(node any) bool {

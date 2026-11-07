@@ -26,9 +26,9 @@ func scalarsMatchGoPartition(cases []string) [][]int {
 func scalarsMatchGoCases(test *testing.T) ([]string, int) {
 	test.Helper()
 	path, _, count := scalarCases(test)
-	data, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	cases := strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")
 	if len(cases) != count {
@@ -40,8 +40,8 @@ func scalarsMatchGoCases(test *testing.T) ([]string, int) {
 func scalarsMatchGoWriteCases(test *testing.T, cases []string) string {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "cases.txt")
-	if err := os.WriteFile(path, []byte(strings.Join(cases, "\n")+"\n"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(strings.Join(cases, "\n")+"\n"), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return path
 }
@@ -57,17 +57,17 @@ func scalarsMatchGoRun(test *testing.T, ctx context.Context, environment []strin
 		// caller's settings, not PATH's, as toolchain.Command runs one under a context it has no form for. A program a
 		// test built (the Go oracle, the port) runs as named, with this process's environment. Path's error fails the
 		// command as it starts.
-		if path, err := toolchain.Path(name); err != nil {
-			command.Err = err
+		if path, pathError := toolchain.Path(name); pathError != nil {
+			command.Err = pathError
 		} else {
 			command = exec.CommandContext(ctx, path, args...)
 			command.Env = toolchain.Env(environment...)
 		}
 	}
 	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
-	output, errors, err := childguard.Capture(ctx, command)
-	if err != nil {
-		test.Fatalf("%s: %v\n%s", name, err, errors)
+	output, errors, captureError := childguard.Capture(ctx, command)
+	if captureError != nil {
+		test.Fatalf("%s: %v\n%s", name, captureError, errors)
 	}
 	if len(errors) != 0 {
 		test.Fatalf("%s stderr: %s", name, errors)
@@ -94,13 +94,13 @@ func scalarsMatchGoRunShard(test *testing.T, shard int) {
 		test.Fatal("empty shard")
 	}
 	path := scalarsMatchGoWriteCases(test, cases)
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	entry, err := filepath.Abs("scalar_main.ts")
-	if err != nil {
-		test.Fatal(err)
+	entry, absolutePathError := filepath.Abs("scalar_main.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	test.Logf("setup %.3fs; %d/%d cases", time.Since(setup).Seconds(), len(cases), len(all))
 	started := time.Now()

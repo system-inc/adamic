@@ -16,8 +16,8 @@ import (
 func buildDecodeMutant(test *testing.T, code string) string {
 	test.Helper()
 	binary := filepath.Join(test.TempDir(), "mutant")
-	if err := native.Build(code, binary, native.Options{Sanitize: runtime.GOOS == "linux"}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(code, binary, native.Options{Sanitize: runtime.GOOS == "linux"}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	return binary
 }
@@ -145,9 +145,9 @@ func jsonDecodeValidationKeys() []string {
 }
 
 func runJSONDecodeValidationMutantsShard(test *testing.T, shard int) {
-	original, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_decode.c"))
-	if err != nil {
-		test.Fatal(err)
+	original, readError := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_decode.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	cases := jsonDecodeValidationCases()
 	for _, index := range familyCases(test, "TestJSONDecodeValidationMutants", shard, jsonDecodeValidationKeys()) {
@@ -169,12 +169,16 @@ func runJSONDecodeValidationMutantsShard(test *testing.T, shard int) {
 				)
 			}
 			path := filepath.Join(test.TempDir(), "mutant.a")
-			if err := os.WriteFile(path, []byte("import { decodeJson } from 'adamic';\n"+c.source), 0600); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(
+				path,
+				[]byte("import { decodeJson } from 'adamic';\n"+c.source),
+				0600,
+			); writeError != nil {
+				test.Fatal(writeError)
 			}
-			p, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			p, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			code := inlineDecodeMutant(mutated, native.C(p))
 			got := runDecodeMutant(test, code, buildDecodeMutant(test, code))
@@ -193,9 +197,9 @@ func inlineDecodeMutant(runtime, code string) string {
 }
 func TestJSONDecodeParserMutants(test *testing.T) {
 	test.Parallel()
-	original, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_decode.c"))
-	if err != nil {
-		test.Fatal(err)
+	original, readError := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_decode.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	cases := []struct{ name, fixture, from, to string }{
 		{
@@ -220,13 +224,13 @@ func TestJSONDecodeParserMutants(test *testing.T) {
 	}
 	for _, c := range cases {
 		test.Run(c.name, func(test *testing.T) {
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", c.fixture))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", c.fixture))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			p, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			p, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			mutated := strings.Replace(string(original), c.from, c.to, 1)
 			if mutated == string(original) {
@@ -244,9 +248,9 @@ func TestJSONDecodeParserMutants(test *testing.T) {
 }
 func TestJSONDecodeErrorLeakMutant(test *testing.T) {
 	test.Parallel()
-	original, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_decode.c"))
-	if err != nil {
-		test.Fatal(err)
+	original, readError := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_decode.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	from := `if (!ok) { adamic_release(a); return false; }`
 	mutated := strings.Replace(string(original), from, `if (!ok) { return false; }`, 1)
@@ -254,14 +258,14 @@ func TestJSONDecodeErrorLeakMutant(test *testing.T) {
 		test.Fatal("mutant changed nothing")
 	}
 	path := filepath.Join(test.TempDir(), "error.a")
-	if err := os.WriteFile(path, []byte(
+	if writeError := os.WriteFile(path, []byte(
 		`import {decodeJson} from 'adamic'; const r=decodeJson<readonly string[]>('["half built",42]'); console.log(r.kind);`,
-	), 0600); err != nil {
-		test.Fatal(err)
+	), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	p, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	p, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	code := inlineDecodeMutant(mutated, native.C(p))
 	binary := buildDecodeMutant(test, code)
@@ -280,9 +284,9 @@ func TestJSONDecodeErrorLeakMutant(test *testing.T) {
 
 func TestJSONDecodeFieldPresenceMutants(test *testing.T) {
 	test.Parallel()
-	original, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_decode.c"))
-	if err != nil {
-		test.Fatal(err)
+	original, readError := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_decode.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	cases := []struct {
 		name, source string
@@ -332,12 +336,16 @@ func TestJSONDecodeFieldPresenceMutants(test *testing.T) {
 	for _, c := range cases {
 		test.Run(c.name, func(test *testing.T) {
 			path := filepath.Join(test.TempDir(), "mutant.a")
-			if err := os.WriteFile(path, []byte("import {decodeJson} from 'adamic';\n"+c.source), 0600); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(
+				path,
+				[]byte("import {decodeJson} from 'adamic';\n"+c.source),
+				0600,
+			); writeError != nil {
+				test.Fatal(writeError)
 			}
-			p, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			p, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			mutated := c.mutate(string(original))
 			if mutated == string(original) {
@@ -360,23 +368,23 @@ func TestJSONDecodeEmptyFieldsMutant(test *testing.T) {
 	test.Parallel()
 	for _, name := range []string{"json_decode_empty_tuple.a", "json_decode_empty_object.a"} {
 		test.Run(name, func(test *testing.T) {
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", name))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", name))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			if jsonDecodeEnumerationRefused(name) {
-				_, err := lowered(test, path)
-				assertJSONDecodeEnumerationRefusal(test, err)
+				_, loweredError := lowered(test, path)
+				assertJSONDecodeEnumerationRefusal(test, loweredError)
 				// Retain the empty-object descriptor witness without Object.keys, which main refuses.
 				path = filepath.Join(test.TempDir(), "empty-object.a")
 				source := "import { decodeJson } from 'adamic'; console.log(decodeJson<{}>('{}').kind);"
-				if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-					test.Fatal(err)
+				if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+					test.Fatal(writeError)
 				}
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			truth := onNode(test, path)
 			if truth.exitCode != 0 || len(truth.stderr) != 0 {
@@ -388,8 +396,8 @@ func TestJSONDecodeEmptyFieldsMutant(test *testing.T) {
 				test.Fatal("mutant changed nothing")
 			}
 			mutantPath := filepath.Join(test.TempDir(), "omitted-fields.mjs")
-			if err := os.WriteFile(mutantPath, []byte(mutant), 0600); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(mutantPath, []byte(mutant), 0600); writeError != nil {
+				test.Fatal(writeError)
 			}
 			got := onNode(test, mutantPath)
 			if got.exitCode != 70 ||

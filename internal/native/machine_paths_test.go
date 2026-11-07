@@ -29,24 +29,28 @@ func TestNativeCachesWriteNothingUnderHome(test *testing.T) {
 	test.Parallel()
 	const variable = "ADAMIC_TEST_NATIVE_HOME"
 	if os.Getenv(variable) == "1" {
-		if _, err := RuntimeLibrary("", Options{}); err != nil {
-			test.Fatal(err)
+		if _, runtimeLibraryError := RuntimeLibrary("", Options{}); runtimeLibraryError != nil {
+			test.Fatal(runtimeLibraryError)
 		}
-		if err := Build(splitProbe, filepath.Join(test.TempDir(), "split"), Options{Split: true, Jobs: 1}); err != nil {
-			test.Fatal(err)
+		if buildError := Build(
+			splitProbe,
+			filepath.Join(test.TempDir(), "split"),
+			Options{Split: true, Jobs: 1},
+		); buildError != nil {
+			test.Fatal(buildError)
 		}
-		if _, err := splitTSGoRuntime(splitProbe, Options{}); err != nil {
-			test.Fatal(err)
+		if _, splitTsGoRuntimeError := splitTSGoRuntime(splitProbe, Options{}); splitTsGoRuntimeError != nil {
+			test.Fatal(splitTsGoRuntimeError)
 		}
 		return
 	}
-	cache, err := location.BuildCache()
-	if err != nil {
-		test.Fatal(err)
+	cache, buildCacheError := location.BuildCache()
+	if buildCacheError != nil {
+		test.Fatal(buildCacheError)
 	}
 	home := test.TempDir()
-	if err := os.Chmod(home, 0o500); err != nil {
-		test.Fatal(err)
+	if changeModeError := os.Chmod(home, 0o500); changeModeError != nil {
+		test.Fatal(changeModeError)
 	}
 	// Cleanups run last first: HOME is writable again before test.TempDir removes it.
 	test.Cleanup(func() { os.Chmod(home, 0o700) })
@@ -63,12 +67,12 @@ func TestNativeCachesWriteNothingUnderHome(test *testing.T) {
 			command.Env = append(command.Env, name+"="+value)
 		}
 	}
-	if output, err := command.CombinedOutput(); err != nil {
-		test.Fatalf("native builds under an empty read-only HOME: %v\n%s", err, output)
+	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("native builds under an empty read-only HOME: %v\n%s", combinedOutputError, output)
 	}
-	entries, err := os.ReadDir(home)
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(home)
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	for _, entry := range entries {
 		test.Errorf("a native build wrote %s under HOME", entry.Name())
@@ -84,13 +88,13 @@ func TestNativeCachesWriteNothingUnderHome(test *testing.T) {
 // absolute path back on BuildTSGo's link line, or on buildUnitsWithLibrary's; objectPrefixFlags off.
 func TestCheckerBuildsNameNoPlaceOfTheArchive(test *testing.T) {
 	test.Parallel()
-	compiler, err := toolchain.Path(compilerName(Options{}))
-	if err != nil {
-		test.Fatal(err)
+	compiler, pathError := toolchain.Path(compilerName(Options{}))
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
 	place := filepath.Join(test.TempDir(), "checker-archive-place")
-	if err := os.Mkdir(place, 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.Mkdir(place, 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	var stubs strings.Builder
 	var names []string
@@ -103,8 +107,8 @@ func TestCheckerBuildsNameNoPlaceOfTheArchive(test *testing.T) {
 	if len(names) == 0 {
 		test.Fatal("the checker header declares no tsgo_ function")
 	}
-	if err := os.WriteFile(filepath.Join(place, "stubs.c"), []byte(stubs.String()), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(place, "stubs.c"), []byte(stubs.String()), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	// The stubs' own debug info names where they were compiled as /checker-stubs, as Go's names no place of this
 	// build's, so only the link can put the archive's directory in a binary.
@@ -113,16 +117,16 @@ func TestCheckerBuildsNameNoPlaceOfTheArchive(test *testing.T) {
 		compiler,
 		append(prefixMaps(place, "/checker-stubs"), "-g", "-c", "stubs.c", "-o", "stubs.o")...,
 	)
-	if output, err := compile.CombinedOutput(); err != nil {
-		test.Fatalf("compiling the stubs: %v\n%s", err, output)
+	if output, combinedOutputError := compile.CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("compiling the stubs: %v\n%s", combinedOutputError, output)
 	}
 	archiver := toolchain.CommandIn(place, archiverName(compiler), "rcs", "tsgo.a", "stubs.o")
-	if output, err := archiver.CombinedOutput(); err != nil {
-		test.Fatalf("archiving the stubs: %v\n%s", err, output)
+	if output, combinedOutputError := archiver.CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("archiving the stubs: %v\n%s", combinedOutputError, output)
 	}
 	archive := filepath.Join(place, "tsgo.a")
 	spellings := [][]byte{[]byte(place)}
-	if real, err := filepath.EvalSymlinks(place); err == nil && real != place {
+	if real, resolveSymlinksError := filepath.EvalSymlinks(place); resolveSymlinksError == nil && real != place {
 		spellings = append(spellings, []byte(real))
 	}
 	builds := map[string]func(output string) error{
@@ -138,9 +142,9 @@ func TestCheckerBuildsNameNoPlaceOfTheArchive(test *testing.T) {
 		if err := builds[name](binary); err != nil {
 			test.Fatalf("%s: %v", name, err)
 		}
-		content, err := os.ReadFile(binary)
-		if err != nil {
-			test.Fatal(err)
+		content, readError := os.ReadFile(binary)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		// On macOS the debug map names the stubs' object, so the archive was linked with its debug info, and names it
 		// by the link's name alone, a whole string of the string table: neither the archive's place nor the build
@@ -164,21 +168,21 @@ func TestCheckerBuildsNameNoPlaceOfTheArchive(test *testing.T) {
 // link line, or the runtime library's; objectPrefixFlags off.
 func TestSplitBuildsNameNoPlaceOfTheirInputs(test *testing.T) {
 	test.Parallel()
-	cache, err := location.BuildCache()
-	if err != nil {
-		test.Fatal(err)
+	cache, buildCacheError := location.BuildCache()
+	if buildCacheError != nil {
+		test.Fatal(buildCacheError)
 	}
 	spellings := [][]byte{[]byte(cache), []byte("adamic-units-")}
-	if real, err := filepath.EvalSymlinks(cache); err == nil && real != cache {
+	if real, resolveSymlinksError := filepath.EvalSymlinks(cache); resolveSymlinksError == nil && real != cache {
 		spellings = append(spellings, []byte(real))
 	}
 	binary := filepath.Join(test.TempDir(), "split")
-	if err := Build(splitProbe, binary, Options{Split: true, Jobs: 2, Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(splitProbe, binary, Options{Split: true, Jobs: 2, Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
-	content, err := os.ReadFile(binary)
-	if err != nil {
-		test.Fatal(err)
+	content, readError := os.ReadFile(binary)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	// The debug map names a unit's object and a runtime member, so both were linked with their debug info, each by the
 	// link's name alone (unit-0 holds only declarations, so it has none).

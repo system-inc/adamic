@@ -14,7 +14,9 @@ func (l *lowering) processPath(node *ast.Node) string {
 	}
 	if ast.IsIdentifier(node) {
 		symbol := l.symbol(node)
-		if symbol != nil && symbol.Name == "process" && len(symbol.Declarations) > 0 && (load.IsPrelude(ast.GetSourceFileOfNode(symbol.Declarations[0])) || load.IsNodeLibrary(ast.GetSourceFileOfNode(symbol.Declarations[0]))) {
+		if symbol != nil && symbol.Name == "process" && len(symbol.Declarations) > 0 && (load.IsPrelude(
+			ast.GetSourceFileOfNode(symbol.Declarations[0]),
+		) || load.IsNodeLibrary(ast.GetSourceFileOfNode(symbol.Declarations[0]))) {
 			return "process"
 		}
 		if path := l.nodeProcessPath(node); path == "process" || strings.HasPrefix(path, "process.") {
@@ -50,20 +52,20 @@ func (l *lowering) isProcessExit(node *ast.Node) bool {
 // into ordinary object storage, whose slots could not model this live external state.
 func (l *lowering) processValue(node *ast.Node) (ir.Expression, bool, error) {
 	node = ast.SkipParentheses(node)
-	if value, known, err := l.nodeStdoutWrite(node); known {
-		return value, known, err
+	if value, known, nodeStdoutWriteError := l.nodeStdoutWrite(node); known {
+		return value, known, nodeStdoutWriteError
 	}
-	if value, known, err := l.nodeStdoutIsTTYRead(node); known {
-		return value, known, err
+	if value, known, nodeStdoutIsTtyReadError := l.nodeStdoutIsTTYRead(node); known {
+		return value, known, nodeStdoutIsTtyReadError
 	}
-	if value, known, err := l.nodePlatformRead(node); known {
-		return value, known, err
+	if value, known, nodePlatformReadError := l.nodePlatformRead(node); known {
+		return value, known, nodePlatformReadError
 	}
-	if value, known, err := l.nodeProcessValue(node); known {
-		return value, known, err
+	if value, known, nodeProcessValueError := l.nodeProcessValue(node); known {
+		return value, known, nodeProcessValueError
 	}
-	if value, known, err := l.nodeEnvironmentRead(node); known {
-		return value, known, err
+	if value, known, nodeEnvironmentReadError := l.nodeEnvironmentRead(node); known {
+		return value, known, nodeEnvironmentReadError
 	}
 	if l.isProcessExit(node) {
 		arguments := node.AsCallExpression().Arguments.Nodes
@@ -72,9 +74,9 @@ func (l *lowering) processValue(node *ast.Node) (ir.Expression, bool, error) {
 		}
 		code := ir.Expression(ir.ProcessCall{Operation: "exitCode", Of: ir.MaybeNumber})
 		if len(arguments) == 1 {
-			value, err := l.expression(arguments[0])
-			if err != nil {
-				return nil, true, err
+			value, expressionError := l.expression(arguments[0])
+			if expressionError != nil {
+				return nil, true, expressionError
 			}
 			code = fit(value, ir.MaybeNumber)
 			if code.Type() != ir.MaybeNumber {
@@ -89,9 +91,9 @@ func (l *lowering) processValue(node *ast.Node) (ir.Expression, bool, error) {
 			if binary.OperatorToken.Kind != ast.KindEqualsToken {
 				return nil, true, l.notYet(node, "a compound process.exitCode assignment")
 			}
-			value, err := l.expression(binary.Right)
-			if err != nil {
-				return nil, true, err
+			value, expressionError := l.expression(binary.Right)
+			if expressionError != nil {
+				return nil, true, expressionError
 			}
 			code := fit(value, ir.MaybeNumber)
 			if code.Type() != ir.MaybeNumber {

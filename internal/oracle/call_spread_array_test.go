@@ -16,13 +16,13 @@ func init() {
 
 func TestCallSpreadArray(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("testdata/call_spread_array.a")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("testdata/call_spread_array.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	truth := onNode(test, path)
 	got, binary := natively(test, program)
@@ -42,13 +42,13 @@ func TestCallSpreadArray(test *testing.T) {
 
 func TestCallSpreadEvaluatedTwiceMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("testdata/call_spread_array.a")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("testdata/call_spread_array.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	target := -1
 	for index, function := range program.Functions {

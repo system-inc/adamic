@@ -13,21 +13,30 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 }
 
 func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
-	if value, handled, err := l.recordObjectCallArguments(node, name, written); handled {
-		return value, true, err
+	if value, handled, recordObjectCallArgumentsError := l.recordObjectCallArguments(node, name, written); handled {
+		return value, true, recordObjectCallArgumentsError
 	}
 	refused := func(reason string) (ir.Expression, bool, error) {
 		return nil, true, &Refused{Where: l.program.Where(node), What: "Object." + name, Fix: reason}
 	}
 	switch name {
 	case "defineProperty", "defineProperties", "getOwnPropertyDescriptor", "getOwnPropertyDescriptors":
-		return refused("property descriptors can change the presence, type or access behavior of fields; Adamic fields have a fixed shape and are plain loads and stores")
+		return refused(
+			"property descriptors can change the presence, type or access behavior of fields; Adamic fields have a fixed shape and are plain loads and stores",
+		)
 	case "getPrototypeOf", "setPrototypeOf", "create":
-		return refused("prototypes expose or replace fields outside the declared shape; use a declared object or class with composition")
+		return refused(
+			"prototypes expose or replace fields outside the declared shape; use a declared object or class with composition",
+		)
 	case "fromEntries":
-		return refused("tsc returns an index-signature object with unproven keys; Adamic fixes object shapes and refuses index signatures; use Map")
+		return refused(
+			"tsc returns an index-signature object with unproven keys; Adamic fixes object shapes and refuses index signatures; use Map",
+		)
 	case "groupBy":
-		return nil, true, l.notYet(node, "Object.groupBy's partial record with dynamically present keys (use Map and an explicitly typed grouping loop)")
+		return nil, true, l.notYet(
+			node,
+			"Object.groupBy's partial record with dynamically present keys (use Map and an explicitly typed grouping loop)",
+		)
 	}
 	count := 1
 	if name == "is" || name == "hasOwn" {
@@ -43,32 +52,32 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 	if name == "freeze" {
 		proven := l.checker.GetTypeAtLocation(written[0])
 		if proven.Flags()&(checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike|checker.TypeFlagsStringLike|checker.TypeFlagsUndefined) != 0 {
-			value, err := l.expression(written[0])
-			return value, true, err
+			value, expressionError := l.expression(written[0])
+			return value, true, expressionError
 		}
 	}
 	call := ir.ObjectCall{Method: name, Returns: ir.Boolean}
 	switch name {
 	case "is":
 		for _, argument := range written {
-			value, err := l.expression(argument)
-			if err != nil {
-				return nil, true, err
+			value, expressionError := l.expression(argument)
+			if expressionError != nil {
+				return nil, true, expressionError
 			}
 			call.Arguments = append(call.Arguments, fit(value, ir.Union))
 		}
 	case "isFrozen":
-		value, err := l.expression(written[0])
-		if err != nil {
-			return nil, true, err
+		value, expressionError := l.expression(written[0])
+		if expressionError != nil {
+			return nil, true, expressionError
 		}
 		call.Arguments = []ir.Expression{fit(value, ir.Union)}
 	case "keys", "values", "entries", "freeze", "hasOwn", "assign":
 		if name == "keys" && !l.includesUndefined(l.checker.GetTypeAtLocation(written[0])) {
 			if _, _, known := l.nodeArrayLayoutOf(l.checker.GetTypeAtLocation(written[0])); known {
-				value, err := l.expression(written[0])
-				if err != nil {
-					return nil, true, err
+				value, expressionError := l.expression(written[0])
+				if expressionError != nil {
+					return nil, true, expressionError
 				}
 				call.Arguments = []ir.Expression{value}
 				call.Returns = ir.Array
@@ -80,25 +89,39 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 		shape := ast.SkipParentheses(written[0])
 		if shape.Kind == ast.KindAsExpression {
 			assertion := shape.AsAsExpression()
-			if assertion.Type.Kind == ast.KindTypeReference && assertion.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
+			if assertion.Type.Kind == ast.KindTypeReference &&
+				assertion.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
 				shape = ast.SkipParentheses(assertion.Expression)
 			}
 		}
 		if name == "keys" || name == "values" || name == "entries" {
 			// As in objectKeys: Node enumerates none of an Error's own properties.
 			if !l.exactObject(shape, 0) && l.errorMayHide(written[0]) {
-				return nil, true, l.notYet(node, "Object."+name+" of a value that may hold an Error, whose own properties Node doesn't enumerate")
+				return nil, true, l.notYet(
+					node,
+					"Object."+name+" of a value that may hold an Error, whose own properties Node doesn't enumerate",
+				)
 			}
-			if err := l.enumerationDescriptors(node, false); err != nil {
-				return nil, true, err
+			if enumerationDescriptorsError := l.enumerationDescriptors(
+				node,
+				false,
+			); enumerationDescriptorsError != nil {
+				return nil, true, enumerationDescriptorsError
 			}
 		}
-		if name != "keys" && name != "values" && name != "entries" && !l.exactObject(shape, 0) && !(name == "hasOwn" && isClassInstance(l.checker.GetTypeAtLocation(written[0]))) {
-			return nil, true, l.notYet(written[0], "Object."+name+" on a shape not proven by a plain literal or its const binding")
+		if name != "keys" &&
+			name != "values" &&
+			name != "entries" &&
+			!l.exactObject(shape, 0) &&
+			!(name == "hasOwn" && isClassInstance(l.checker.GetTypeAtLocation(written[0]))) {
+			return nil, true, l.notYet(
+				written[0],
+				"Object."+name+" on a shape not proven by a plain literal or its const binding",
+			)
 		}
-		value, err := l.expression(written[0])
-		if err != nil {
-			return nil, true, err
+		value, expressionError := l.expression(written[0])
+		if expressionError != nil {
+			return nil, true, expressionError
 		}
 		if name == "keys" && value.Type() == ir.Array {
 			if _, _, known := l.nodeArrayLayoutOf(l.checker.GetTypeAtLocation(written[0])); known {
@@ -107,19 +130,25 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 				return call, true, nil
 			}
 		}
-		if value.Type() != ir.Object || l.includesUndefined(l.checker.GetTypeAtLocation(written[0])) || checker.IsTupleType(l.checker.GetTypeAtLocation(written[0])) {
+		if value.Type() != ir.Object ||
+			l.includesUndefined(l.checker.GetTypeAtLocation(written[0])) ||
+			checker.IsTupleType(l.checker.GetTypeAtLocation(written[0])) {
 			return nil, true, l.notYet(written[0], "Object."+name+" on other than a present plain object")
 		}
 		call.Arguments = []ir.Expression{value}
 		switch name {
 		case "hasOwn":
 			key := ast.SkipParentheses(written[1])
-			if key.Kind != ast.KindStringLiteral || !l.hasProperty(written[0], key.Text()) || len(key.Text()) > 0 && key.Text()[0] == '#' {
-				return refused("hasOwn requires a string literal naming a declared public field or method; use Map for arbitrary keys")
+			if key.Kind != ast.KindStringLiteral ||
+				!l.hasProperty(written[0], key.Text()) ||
+				len(key.Text()) > 0 && key.Text()[0] == '#' {
+				return refused(
+					"hasOwn requires a string literal naming a declared public field or method; use Map for arbitrary keys",
+				)
 			}
-			keyValue, err := l.expression(key)
-			if err != nil {
-				return nil, true, err
+			keyValue, expressionError := l.expression(key)
+			if expressionError != nil {
+				return nil, true, expressionError
 			}
 			call.Arguments = append(call.Arguments, keyValue)
 		case "freeze":
@@ -147,7 +176,8 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 				// asking anything else for them (#egxccg8). It isn't read through a Weak: entries makes
 				// strong pairs, and tsc lets them into an element of Weak<[string, V]>.
 				var pair []*checker.Type
-				if element.Flags()&checker.TypeFlagsObject != 0 && element.ObjectFlags()&checker.ObjectFlagsReference != 0 {
+				if element.Flags()&checker.TypeFlagsObject != 0 &&
+					element.ObjectFlags()&checker.ObjectFlagsReference != 0 {
 					pair = l.checker.GetTypeArguments(element)
 				}
 				if len(pair) != 2 {
@@ -157,23 +187,29 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 			}
 			call.Element, _ = l.representation(element)
 			if call.Element != ir.Number && call.Element != ir.String && call.Element != ir.Boolean {
-				return refused("tsc's result must have one homogeneous number, string or boolean value type; any and widened field views are unsound")
+				return refused(
+					"tsc's result must have one homogeneous number, string or boolean value type; any and widened field views are unsound",
+				)
 			}
 			if declaration := l.enumObject(written[0]); declaration != nil {
-				fields, err := l.enumFields(declaration)
-				if err != nil {
-					return nil, true, err
+				fields, enumFieldsError := l.enumFields(declaration)
+				if enumFieldsError != nil {
+					return nil, true, enumFieldsError
 				}
 				for _, field := range fields {
 					if field.Value.Type() != call.Element {
-						return refused("numeric enum reverse mappings add string values; use Object.keys or read members individually")
+						return refused(
+							"numeric enum reverse mappings add string values; use Object.keys or read members individually",
+						)
 					}
 				}
 			}
 			for _, field := range l.checker.GetPropertiesOfType(l.checker.GetTypeAtLocation(written[0])) {
 				of, known := l.representation(l.checker.GetTypeOfSymbol(field))
 				if !known || of != call.Element || field.Flags&ast.SymbolFlagsOptional != 0 {
-					return refused("every present field must have tsc's result element representation; optional or heterogeneous fields cannot be read soundly")
+					return refused(
+						"every present field must have tsc's result element representation; optional or heterogeneous fields cannot be read soundly",
+					)
 				}
 			}
 			call.Checked = !l.enumerationProven(written[0], element, 0)
@@ -186,19 +222,26 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 				return nil, true, l.notYet(node, "checked Object enumeration of a non-primitive value contract")
 			}
 			if call.Checked {
-				if err := l.enumerationDescriptors(node, true); err != nil {
-					return nil, true, err
+				if enumerationDescriptorsError := l.enumerationDescriptors(
+					node,
+					true,
+				); enumerationDescriptorsError != nil {
+					return nil, true, enumerationDescriptorsError
 				}
 			}
 			call.Returns = ir.Array
 		case "assign":
 			if l.checker.GetTypeAtLocation(node).Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown) != 0 {
-				return refused("tsc's result is any or unknown, not a proven object type; use one to three typed sources")
+				return refused(
+					"tsc's result is any or unknown, not a proven object type; use one to three typed sources",
+				)
 			}
 			target := l.checker.GetTypeAtLocation(written[0])
 			for _, argument := range written[1:] {
 				if !l.exactObject(argument, 0) {
-					return refused("each source must have its complete shape proven by a literal or const binding; a widened source can hide overwriting fields")
+					return refused(
+						"each source must have its complete shape proven by a literal or const binding; a widened source can hide overwriting fields",
+					)
 				}
 				source := l.checker.GetTypeAtLocation(argument)
 				for _, field := range l.checker.GetPropertiesOfType(source) {
@@ -208,15 +251,25 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 					}
 					fromType, toType := l.checker.GetTypeOfSymbol(field), l.checker.GetTypeOfSymbol(into)
 					of, known := l.representation(fromType)
-					if !known || (of != ir.Number && of != ir.Boolean && of != ir.String) || !l.enumAssignable(fromType, toType) || !l.enumAssignable(toType, fromType) || !l.checker.IsTypeAssignableTo(fromType, toType) || !l.checker.IsTypeAssignableTo(toType, fromType) {
-						return refused("source and target field types must agree in both directions with tsc's intersection result; widening, conflicting fields and reference cycles are refused")
+					if !known ||
+						(of != ir.Number && of != ir.Boolean && of != ir.String) ||
+						!l.enumAssignable(fromType, toType) ||
+						!l.enumAssignable(toType, fromType) ||
+						!l.checker.IsTypeAssignableTo(fromType, toType) ||
+						!l.checker.IsTypeAssignableTo(toType, fromType) {
+						return refused(
+							"source and target field types must agree in both directions with tsc's intersection result; widening, conflicting fields and reference cycles are refused",
+						)
 					}
 				}
-				lowered, err := l.expression(argument)
-				if err != nil {
-					return nil, true, err
+				lowered, expressionError := l.expression(argument)
+				if expressionError != nil {
+					return nil, true, expressionError
 				}
-				l.wholeObjectCopies = append(l.wholeObjectCopies, wholeObjectCopy{node: argument, source: lowered, copied: l.concrete(source)})
+				l.wholeObjectCopies = append(
+					l.wholeObjectCopies,
+					wholeObjectCopy{node: argument, source: lowered, copied: l.concrete(source)},
+				)
 				call.Arguments = append(call.Arguments, lowered)
 			}
 			call.Returns = ir.Object
@@ -248,7 +301,9 @@ func (l *lowering) exactObject(node *ast.Node, depth int) bool {
 			if field.Name().Kind != ast.KindIdentifier && field.Name().Kind != ast.KindStringLiteral {
 				return false
 			}
-			if strings.ContainsRune(field.Name().Text(), 0) || field.Name().Text() == "__proto__" || len(field.Name().Text()) > 0 && field.Name().Text()[0] == '#' {
+			if strings.ContainsRune(field.Name().Text(), 0) ||
+				field.Name().Text() == "__proto__" ||
+				len(field.Name().Text()) > 0 && field.Name().Text()[0] == '#' {
 				return false
 			}
 		}
@@ -302,7 +357,11 @@ func (l *lowering) objectCanFreeze() bool {
 // field that holds the intersection itself is the object being proven.
 func (l *lowering) objectIntersection(proven *checker.Type) (ir.Type, bool) {
 	for _, part := range proven.Types() {
-		if part.Flags()&checker.TypeFlagsObject == 0 || l.isArrayType(part) || len(l.checker.GetSignaturesOfType(part, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(part, checker.SignatureKindConstruct)) != 0 || l.unsupportedViewFamily(part) != "" {
+		if part.Flags()&checker.TypeFlagsObject == 0 ||
+			l.isArrayType(part) ||
+			len(l.checker.GetSignaturesOfType(part, checker.SignatureKindCall)) != 0 ||
+			len(l.checker.GetSignaturesOfType(part, checker.SignatureKindConstruct)) != 0 ||
+			l.unsupportedViewFamily(part) != "" {
 			return 0, false
 		}
 	}

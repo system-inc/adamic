@@ -30,9 +30,9 @@ var instanceTableWriters = map[string]string{
 // is named here.
 func TestBrandedRequestHoldsEveryInstanceDoor(test *testing.T) {
 	test.Parallel()
-	entries, err := os.ReadDir(".")
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(".")
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	files := token.NewFileSet()
 	var unjudged []string
@@ -41,9 +41,9 @@ func TestBrandedRequestHoldsEveryInstanceDoor(test *testing.T) {
 		if entry.IsDir() || !strings.HasSuffix(entry.Name(), ".go") || strings.HasSuffix(entry.Name(), "_test.go") {
 			continue
 		}
-		file, err := parser.ParseFile(files, entry.Name(), nil, 0)
-		if err != nil {
-			test.Fatal(err)
+		file, parseFileError := parser.ParseFile(files, entry.Name(), nil, 0)
+		if parseFileError != nil {
+			test.Fatal(parseFileError)
 		}
 		for _, declaration := range file.Decls {
 			function, isFunction := declaration.(*ast.FuncDecl)

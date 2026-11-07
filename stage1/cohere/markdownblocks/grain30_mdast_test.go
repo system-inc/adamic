@@ -11,9 +11,9 @@ import (
 )
 
 func grainMdastInputs(test *testing.T) (string, []auditInput, int) {
-	root, e := filepath.Abs(repository)
-	if e != nil {
-		test.Fatal(e)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	inputs, files := blockCorpus(test, root, "whitespace")
 	smokeStart := len(inputs)
@@ -83,8 +83,8 @@ func runGrainMdast(test *testing.T, shard int) {
 	var b bytes.Buffer
 	enc := json.NewEncoder(&b)
 	for _, i := range inputs {
-		if e := enc.Encode(i); e != nil {
-			test.Fatal(e)
+		if encodeError := enc.Encode(i); encodeError != nil {
+			test.Fatal(encodeError)
 		}
 	}
 	cases := filepath.Join(dir, "cases.jsonl")
@@ -97,12 +97,12 @@ func runGrainMdast(test *testing.T, shard int) {
 	clean(test, "actual Go mdast", want)
 	if keep := os.Getenv("ADAMIC_MDAST_KEEP"); keep != "" {
 		keep = filepath.Join(keep, test.Name())
-		if e := os.MkdirAll(keep, 0755); e != nil {
-			test.Fatal(e)
+		if createDirectoryError := os.MkdirAll(keep, 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		data, e := os.ReadFile(transport)
-		if e != nil {
-			test.Fatal(e)
+		data, readError := os.ReadFile(transport)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		write(test, filepath.Join(keep, "events.txt"), data)
 		write(test, filepath.Join(keep, "want.txt"), want.stdout)
@@ -112,13 +112,13 @@ func runGrainMdast(test *testing.T, shard int) {
 	if fork == "" {
 		fork = filepath.Join(cohere, "internal/format/prettier/bundles")
 	}
-	installed, e := os.ReadFile(filepath.Join(fork, "plugins/markdown.js"))
-	if e != nil {
-		test.Fatal(e)
+	installed, readError := os.ReadFile(filepath.Join(fork, "plugins/markdown.js"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	pinned, e := os.ReadFile(filepath.Join(cohere, "internal/format/prettier/bundles/plugins/markdown.js"))
-	if e != nil {
-		test.Fatal(e)
+	pinned, readError := os.ReadFile(filepath.Join(cohere, "internal/format/prettier/bundles/plugins/markdown.js"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	equal(test, "pinned fork", installed, pinned)
 	main := products.main
@@ -181,8 +181,8 @@ func runGrainMdast(test *testing.T, shard int) {
 		}
 		func(test *testing.T) {
 			scratch := test.TempDir()
-			if e := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); e != nil {
-				test.Fatal(e)
+			if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
 			for _, file := range []string{
 				"tokenizerEvents.ts",
@@ -204,9 +204,9 @@ func runGrainMdast(test *testing.T, shard int) {
 				"lowerEntityValues.ts",
 				"testdata/mdast_probe.ts",
 			} {
-				data, e := os.ReadFile(file)
-				if e != nil {
-					test.Fatal(e)
+				data, readError := os.ReadFile(file)
+				if readError != nil {
+					test.Fatal(readError)
 				}
 				if file == m.file {
 					if !strings.Contains(string(data), m.from) {

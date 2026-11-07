@@ -19,12 +19,12 @@ import (
 func enumGuardProof(test *testing.T, source string) (*lowering, []*ast.Node) {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "proof.a")
-	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	loaded, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	loaded, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	checked, release := loaded.Checker(context.Background(), loaded.Files()[0])
 	test.Cleanup(release)
@@ -69,14 +69,14 @@ func TestEnumMemberValuesAndReverseNameMatchNode(test *testing.T) {
 	source := `enum E { A = 1, B = 2, Alias = A } console.log(E.A + ' ' + E.B + ' ' + E.Alias + ' ' + E[1]);`
 	program := lowersAndAgreesWithNode(test, source)
 	binary := filepath.Join(test.TempDir(), "native")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	output, err := exec.CommandContext(ctx, binary).CombinedOutput()
-	if err != nil || string(output) != "1 2 1 Alias\n" {
-		test.Fatalf("native: %v, output %q", err, output)
+	output, combinedOutputError := exec.CommandContext(ctx, binary).CombinedOutput()
+	if combinedOutputError != nil || string(output) != "1 2 1 Alias\n" {
+		test.Fatalf("native: %v, output %q", combinedOutputError, output)
 	}
 }
 

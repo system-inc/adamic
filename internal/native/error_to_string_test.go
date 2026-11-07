@@ -40,8 +40,8 @@ int main(void) {
 		test.Fatalf("Node changed: %q", want)
 	}
 	binary := filepath.Join(test.TempDir(), "error-to-string")
-	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(source, binary, Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	if got := runWithInput(test, "", binary); got != want {
 		test.Fatalf("native %q; Node %q", got, want)
@@ -101,8 +101,8 @@ int main(void) {
 `
 	const want = "error true\nerror-without-message true\ndirectory true\ndirectory-coded true\nfile true\nfile-coded true\nrealpath true\nchdir true\nexit-code true\nplain false\n"
 	binary := filepath.Join(test.TempDir(), "error-is")
-	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(source, binary, Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	if got := runWithInput(test, "", binary); got != want {
 		test.Fatalf("native %q; want %q", got, want)
@@ -179,8 +179,8 @@ int main(void) {
 		test.Fatalf("Node changed: %q", want)
 	}
 	binary := filepath.Join(test.TempDir(), "coded-error-to-string")
-	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(source, binary, Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	got, wanted := strings.Split(runWithInput(test, "", binary), "\n"), strings.Split(want, "\n")
 	if len(got) != len(wanted) {
@@ -217,11 +217,11 @@ const codedErrorTexts = `[TypeError [ERR_INVALID_ARG_VALUE]: The argument 'path'
 func TestStringTooLongErrorIsPlain(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "long")
-	if err := os.WriteFile(path, nil, 0o600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, nil, 0o600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if err := os.Truncate(path, 0x1fffffe8); err != nil {
-		test.Fatal(err)
+	if truncateError := os.Truncate(path, 0x1fffffe8); truncateError != nil {
+		test.Fatal(truncateError)
 	}
 	const source = `#include "adamic.h"
 #include <stdio.h>
@@ -248,8 +248,8 @@ int main(int argc, char **argv) {
 		test.Fatalf("Node changed: %q", want)
 	}
 	binary := filepath.Join(test.TempDir(), "string-too-long")
-	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(source, binary, Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	if got := runWithInput(test, "", binary, path); got != want {
 		test.Fatalf("native %q; Node %q", got, want)

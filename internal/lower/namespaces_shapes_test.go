@@ -37,23 +37,23 @@ func TestTscNamespaceDeclarationShapes(test *testing.T) {
 		test.Run(testCase.name, func(test *testing.T) {
 			test.Parallel()
 			path := filepath.Join("../../stage3/namespaces/shapes", testCase.name+".a")
-			source, err := os.ReadFile(path)
-			if err != nil {
-				test.Fatal(err)
+			source, readError := os.ReadFile(path)
+			if readError != nil {
+				test.Fatal(readError)
 			}
-			_, err = lowerSource(test, string(source))
+			_, lowerSourceError := lowerSource(test, string(source))
 			if testCase.reason == "" {
-				if err != nil {
-					test.Fatal(err)
+				if lowerSourceError != nil {
+					test.Fatal(lowerSourceError)
 				}
 				test.Log("declaration shape lowers")
 				return
 			}
 			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), testCase.reason) {
-				test.Fatalf("got %v, want NotYet %s", err, testCase.reason)
+			if !errors.As(lowerSourceError, &notYet) || !strings.Contains(lowerSourceError.Error(), testCase.reason) {
+				test.Fatalf("got %v, want NotYet %s", lowerSourceError, testCase.reason)
 			}
-			test.Log(err)
+			test.Log(lowerSourceError)
 		})
 	}
 }

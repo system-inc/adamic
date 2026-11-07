@@ -38,18 +38,18 @@ func printerKey(test *testing.T, inputs printerBuildInputs) buildcache.Inputs {
 func printerInputFiles(test *testing.T, roots ...string) []string {
 	test.Helper()
 	seen := map[string]bool{}
-	tree, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	tree, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	for _, root := range roots {
-		absolute, err := filepath.Abs(root)
-		if err != nil {
-			test.Fatal(err)
+		absolute, absolutePathError := filepath.Abs(root)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
-		files, err := printerWalk(tree, absolute)
-		if err != nil {
-			test.Fatal(err)
+		files, printerWalkError := printerWalk(tree, absolute)
+		if printerWalkError != nil {
+			test.Fatal(printerWalkError)
 		}
 		for _, path := range files {
 			seen[path] = true
@@ -77,19 +77,19 @@ func TestPrinterLoweredKeyFollowsALinkedSource(test *testing.T) {
 		product := filepath.Join(directory, "products", mutant)
 		for _, file := range printerPortFiles {
 			path := filepath.Join(product, filepath.FromSlash(file))
-			if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
-				test.Fatal(err)
+			if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0o755); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
-			if err := os.WriteFile(path, []byte(file+" of mutant "+mutant), 0o644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, []byte(file+" of mutant "+mutant), 0o644); writeError != nil {
+				test.Fatal(writeError)
 			}
 		}
 		link := filepath.Join(directory, "links", mutant)
-		if err := os.MkdirAll(filepath.Dir(link), 0o755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(filepath.Dir(link), 0o755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.Symlink(product, link); err != nil {
-			test.Fatal(err)
+		if symlinkError := os.Symlink(product, link); symlinkError != nil {
+			test.Fatal(symlinkError)
 		}
 		keys[mutant] = key(filepath.Join(link, "graphql/printer/main.ts"))
 		if direct := key(filepath.Join(product, "graphql/printer/main.ts")); direct != keys[mutant] {
@@ -112,9 +112,9 @@ func TestPrinterLoweredKeyFollowsALinkedSource(test *testing.T) {
 func TestPrinterLoweredKeysOnlyTheCompilerAndThePort(test *testing.T) {
 	test.Parallel()
 	inputs := printerLoweredInputs(test, printerInTreeSource(test))
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	want := map[string]bool{}
 	for _, input := range compilerinputs.Lowering() {
@@ -136,8 +136,8 @@ func TestPrinterLoweredKeysOnlyTheCompilerAndThePort(test *testing.T) {
 		return
 	}
 	for _, file := range printerPortFiles {
-		if _, err := os.Stat(filepath.Join(root, "stage1/cohere", filepath.FromSlash(file))); err != nil {
-			test.Error(err)
+		if _, statError := os.Stat(filepath.Join(root, "stage1/cohere", filepath.FromSlash(file))); statError != nil {
+			test.Error(statError)
 		}
 	}
 }
@@ -146,9 +146,9 @@ func TestPrinterLoweredKeysOnlyTheCompilerAndThePort(test *testing.T) {
 // list would be lowered without being keyed, and a file the list names that nothing imports keys what isn't read.
 func TestPrinterPortFilesAreMainsImports(test *testing.T) {
 	test.Parallel()
-	root, err := filepath.Abs(filepath.Join(repository, "stage1/cohere"))
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(filepath.Join(repository, "stage1/cohere"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	importLine := regexp.MustCompile(`(?m)^\s*(?:import|export)\b[^;]*?\bfrom\s+'([^']+)'`)
 	reached := map[string]bool{}
@@ -160,9 +160,9 @@ func TestPrinterPortFilesAreMainsImports(test *testing.T) {
 			continue
 		}
 		reached[file] = true
-		source, err := os.ReadFile(filepath.Join(root, filepath.FromSlash(file)))
-		if err != nil {
-			test.Fatal(err)
+		source, readError := os.ReadFile(filepath.Join(root, filepath.FromSlash(file)))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		for _, match := range importLine.FindAllStringSubmatch(string(source), -1) {
 			if !strings.HasPrefix(match[1], ".") {
@@ -190,18 +190,18 @@ func TestPrinterPortFilesAreMainsImports(test *testing.T) {
 // absolute as given: walked as the link itself it lists nothing, and mega's run 2 keyed all three mutants' lowered
 // products by the repository alone, so they ran one sanitized binary and escaped the oracle.
 func printerWalk(tree, absolute string) ([]string, error) {
-	start, err := buildcache.ProductRoot(absolute)
-	if err != nil {
-		return nil, err
+	start, productRootError := buildcache.ProductRoot(absolute)
+	if productRootError != nil {
+		return nil, productRootError
 	}
 	var files []string
-	err = filepath.WalkDir(start, func(path string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
+	walkError := filepath.WalkDir(start, func(path string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
-		relative, err := filepath.Rel(start, path)
-		if err != nil {
-			return err
+		relative, relativePathError := filepath.Rel(start, path)
+		if relativePathError != nil {
+			return relativePathError
 		}
 		path = filepath.Join(absolute, relative)
 		// Only what the tree carries: a checkout's untracked files aren't in a runner's source (#smkk3et).
@@ -218,7 +218,7 @@ func printerWalk(tree, absolute string) ([]string, error) {
 		}
 		return nil
 	})
-	return files, err
+	return files, walkError
 }
 
 // printerPortFiles are the port's sources by their path under a source root: stage1/cohere for the package's own
@@ -243,9 +243,9 @@ var printerPortFiles = []string{
 // GraphQL printer products (#7zhyjz6).
 func printerLoweredInputs(test *testing.T, path string) printerBuildInputs {
 	test.Helper()
-	tree, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	tree, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	root := filepath.Dir(filepath.Dir(filepath.Dir(path)))
 	var files []string
@@ -267,8 +267,8 @@ func printerLoweredProduct(test *testing.T, path string) string {
 		start = time.Now()
 		source := native.C(program)
 		test.Logf("C emission wall %.3fs", time.Since(start).Seconds())
-		if err := os.WriteFile(dir+"/port.c", []byte(source), 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(dir+"/port.c", []byte(source), 0644); writeError != nil {
+			return writeError
 		}
 		return os.WriteFile(dir+"/program.mjs", []byte(javascript.JavaScript(program)), 0644)
 	})
@@ -276,9 +276,9 @@ func printerLoweredProduct(test *testing.T, path string) string {
 
 func printerCompiledProduct(test *testing.T, loweredProduct string, options native.Options) string {
 	test.Helper()
-	data, err := os.ReadFile(loweredProduct + "/port.c")
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(loweredProduct + "/port.c")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	clang := buildcache.Tool("clang", "--version")
 	name := "release GraphQL printer"
@@ -293,9 +293,9 @@ func printerCompiledProduct(test *testing.T, loweredProduct string, options nati
 		Toolchain: clang,
 	}, func(dir string) error {
 		start := time.Now()
-		err := native.Build(string(data), dir+"/port", options)
+		buildError := native.Build(string(data), dir+"/port", options)
 		test.Logf("clang wall %.3fs", time.Since(start).Seconds())
-		return err
+		return buildError
 	}) + "/port"
 }
 
@@ -325,9 +325,9 @@ type printerShard struct {
 
 func enumeratePrinter(test *testing.T, mode, path, want string) []printerCase {
 	test.Helper()
-	data, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if !strings.HasSuffix(string(data), "\n") || !strings.HasSuffix(want, "\n") {
 		test.Fatal("corpus protocol lacks final newline")
@@ -381,13 +381,13 @@ func printerShardSelection(value string, count int) ([]bool, error) {
 		if len(parts) != 2 {
 			return nil, fmt.Errorf("ADAMIC_TEST_SHARD=%q: want i/n", value)
 		}
-		var err error
-		index, err = strconv.Atoi(parts[0])
-		if err != nil {
-			return nil, err
+		var parseError error
+		index, parseError = strconv.Atoi(parts[0])
+		if parseError != nil {
+			return nil, parseError
 		}
-		boxes, err = strconv.Atoi(parts[1])
-		if err != nil || boxes <= 0 || index < 0 || index >= boxes {
+		boxes, parseError = strconv.Atoi(parts[1])
+		if parseError != nil || boxes <= 0 || index < 0 || index >= boxes {
 			return nil, fmt.Errorf("ADAMIC_TEST_SHARD=%q: require 0 <= i < n", value)
 		}
 	}
@@ -431,15 +431,15 @@ func TestPrinterShardUnionRejectsMissingAndRepeated(test *testing.T) {
 		{id: "tabs/case-000000", input: ">query{b}", want: "ok"},
 	}
 	shards := []printerShard{{cases: whole[:1]}, {cases: whole[1:]}}
-	if err := printerShardUnion(whole, shards); err != nil {
-		test.Fatal(err)
+	if printerShardUnionError := printerShardUnion(whole, shards); printerShardUnionError != nil {
+		test.Fatal(printerShardUnionError)
 	}
 	for _, invalid := range [][]printerShard{
 		{{cases: whole[:1]}},
 		{{cases: []printerCase{whole[0], whole[0]}}},
 		{{cases: []printerCase{{id: whole[0].id, input: "changed", want: "ok"}, whole[1]}}},
 	} {
-		if err := printerShardUnion(whole, invalid); err == nil {
+		if printerShardUnionError := printerShardUnion(whole, invalid); printerShardUnionError == nil {
 			test.Fatal("invalid union accepted")
 		}
 	}
@@ -450,9 +450,9 @@ func TestPrinterShardSelection(test *testing.T) {
 	for _, boxes := range []int{1, 2, 7, 100} {
 		seen := make([]int, testPrinterAsGoCohereShards)
 		for box := 0; box < boxes; box++ {
-			selected, err := printerShardSelection(fmt.Sprintf("%d/%d", box, boxes), len(seen))
-			if err != nil {
-				test.Fatal(err)
+			selected, printerShardSelectionError := printerShardSelection(fmt.Sprintf("%d/%d", box, boxes), len(seen))
+			if printerShardSelectionError != nil {
+				test.Fatal(printerShardSelectionError)
 			}
 			for i, runs := range selected {
 				if runs {
@@ -467,13 +467,13 @@ func TestPrinterShardSelection(test *testing.T) {
 		}
 	}
 	for _, invalid := range []string{"1", "x/2", "0/0", "-1/2", "2/2", "0/x"} {
-		if _, err := printerShardSelection(invalid, 4); err == nil {
+		if _, printerShardSelectionError := printerShardSelection(invalid, 4); printerShardSelectionError == nil {
 			test.Fatalf("invalid selector accepted: %s", invalid)
 		}
 	}
-	selected, err := printerShardSelection("", 4)
-	if err != nil {
-		test.Fatal(err)
+	selected, printerShardSelectionError := printerShardSelection("", 4)
+	if printerShardSelectionError != nil {
+		test.Fatal(printerShardSelectionError)
 	}
 	for i, runs := range selected {
 		if !runs {

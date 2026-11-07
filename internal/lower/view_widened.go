@@ -80,7 +80,7 @@ func (l *lowering) checkViewWidenedReads() error {
 	for key := range l.result.CheckedFields {
 		// A record's field is checked under its bare name, and is no view's.
 		receiver, name, keyed := strings.Cut(key, ":")
-		if _, err := strconv.Atoi(receiver); !keyed || err != nil {
+		if _, parseError := strconv.Atoi(receiver); !keyed || parseError != nil {
 			continue
 		}
 		names[name] = true
@@ -119,7 +119,8 @@ func (l *lowering) checkViewWidenedReads() error {
 				return viewedValueSite
 			}
 		case ir.Property:
-			if l.result.CheckedFields[ir.CheckedFieldKey(value.ViewReceiverTypeID, value.Name)] && viewAggregate(value) {
+			if l.result.CheckedFields[ir.CheckedFieldKey(value.ViewReceiverTypeID, value.Name)] &&
+				viewAggregate(value) {
 				return viewedFieldSite
 			}
 		}
@@ -142,7 +143,8 @@ func (l *lowering) checkViewWidenedReads() error {
 		field := l.viewTypes[read.ViewTypeID]
 		reaches := entered.ReachingAllocations(read.Object)
 		inside := reaches.Unknown || slices.Contains(reaches.Sites, viewedFieldSite)
-		demanded := inside && !viewVouched(lies, read.Name, field, true, l.checker) || slices.Contains(reaches.Sites, viewedValueSite) && !viewVouched(lies, read.Name, field, false, l.checker)
+		demanded := inside && !viewVouched(lies, read.Name, field, true, l.checker) ||
+			slices.Contains(reaches.Sites, viewedValueSite) && !viewVouched(lies, read.Name, field, false, l.checker)
 		if !demanded && len(unentered) != 0 && !viewVouched(unentered, read.Name, field, true, l.checker) {
 			if graph == nil {
 				var reachUnknown bool
@@ -160,7 +162,11 @@ func (l *lowering) checkViewWidenedReads() error {
 			if receiver := l.viewTypes[read.ViewReceiverTypeID]; receiver != nil {
 				through = "type " + l.checker.TypeToString(receiver)
 			}
-			refused = &NotYet{Where: read.ViewWhere, What: "a read of field " + read.Name + " through " + through + ", which may hold a checked view's value"}
+			refused = &NotYet{Where: read.ViewWhere, What: "a read of field " +
+				read.Name +
+				" through " +
+				through +
+				", which may hold a checked view's value"}
 			return false
 		}
 		return true
@@ -178,7 +184,11 @@ func (l *lowering) checkViewWidenedReads() error {
 		if whole.reader == "" {
 			continue
 		}
-		demanded := deepReach(entered, whole.source, func(site int) bool { return site == viewedValueSite || site == viewedFieldSite })
+		demanded := deepReach(
+			entered,
+			whole.source,
+			func(site int) bool { return site == viewedValueSite || site == viewedFieldSite },
+		)
 		if !demanded && len(unentered) != 0 {
 			if graph == nil {
 				var reachUnknown bool
@@ -188,7 +198,11 @@ func (l *lowering) checkViewWidenedReads() error {
 			demanded = unknown || deepReach(graph, whole.source, func(site int) bool { return viewed[site] })
 		}
 		if demanded {
-			return l.notYet(whole.node, "a read of every field of a value of type "+l.checker.TypeToString(whole.copied)+" by "+whole.reader+", which may hold a checked view's value")
+			return l.notYet(whole.node, "a read of every field of a value of type "+
+				l.checker.TypeToString(whole.copied)+
+				" by "+
+				whole.reader+
+				", which may hold a checked view's value")
 		}
 	}
 	return nil
@@ -307,7 +321,12 @@ func (l *lowering) narrowedRead(node *ast.Node, local int) {
 // viewLie is what a view checks that its source doesn't guarantee: its target's own fields, and
 // the fields of the contracts inside them.
 func (l *lowering) viewLie(view viewSource) viewLie {
-	lie := viewLie{liedTop: map[string]bool{}, liedInside: map[string]bool{}, honest: map[string]bool{}, held: map[string]*checker.Type{}}
+	lie := viewLie{
+		liedTop:    map[string]bool{},
+		liedInside: map[string]bool{},
+		honest:     map[string]bool{},
+		held:       map[string]*checker.Type{},
+	}
 	var source *checker.Type
 	if view.source != nil {
 		source = l.checker.GetNonNullableType(l.concrete(view.source))
@@ -328,7 +347,8 @@ func (l *lowering) viewLie(view viewSource) viewLie {
 		} else {
 			lie.held[property.Name] = l.checker.GetTypeOfSymbol(held)
 		}
-		if held == nil || !l.checker.IsTypeAssignableTo(l.checker.GetTypeOfSymbol(held), l.checker.GetTypeOfSymbol(property)) {
+		if held == nil ||
+			!l.checker.IsTypeAssignableTo(l.checker.GetTypeOfSymbol(held), l.checker.GetTypeOfSymbol(property)) {
 			l.viewContractNames(contracts[property.Name], lie.liedInside, map[ir.ViewContractID]bool{})
 		} else {
 			l.viewContractNames(contracts[property.Name], lie.honest, map[ir.ViewContractID]bool{})

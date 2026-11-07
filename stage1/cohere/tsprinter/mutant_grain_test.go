@@ -38,9 +38,9 @@ func testMutant(test *testing.T, i int) {
 	}
 	if change.Name == "hashbang loses its refusal" {
 		cases = filepath.Join(filepath.Dir(cases), "gaps.txt")
-		gapWant, err := os.ReadFile(filepath.Join(filepath.Dir(cases), "gap-answers.txt"))
-		if err != nil {
-			test.Fatal(err)
+		gapWant, readError := os.ReadFile(filepath.Join(filepath.Dir(cases), "gap-answers.txt"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		want = string(gapWant)
 		arguments = []string{"--cases", cases, "80"}
@@ -50,9 +50,9 @@ func testMutant(test *testing.T, i int) {
 		arguments = []string{"--cases", cases, "80"}
 	}
 	test.Logf("mutant %d/%d: %s", i+1, oracles.MutantsShards, change.Name)
-	runner, err := filepath.Abs(filepath.Join(oracles.Repository, "oracle", "node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(oracles.Repository, "oracle", "node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	node := mutantExecute(
 		test,
@@ -109,13 +109,13 @@ func mutantExecute(
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	if ctx.Err() != nil {
 		test.Fatalf("mutant own-work deadline: %v", ctx.Err())
 	}
 	var exitError *exec.ExitError
-	if err != nil && !errors.As(err, &exitError) {
-		test.Fatalf("running %s: %v", name, err)
+	if captureError != nil && !errors.As(captureError, &exitError) {
+		test.Fatalf("running %s: %v", name, captureError)
 	}
 	return oracles.Run{Stdout: stdout, Stderr: stderr, ExitCode: command.ProcessState.ExitCode()}
 }

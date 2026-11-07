@@ -25,9 +25,14 @@ func printed(node ast.Node) string {
 
 // statements parses our fixed instrumentation, never compiler source substitutions.
 func statements(text string) []ast.Stmt {
-	f, err := parser.ParseFile(token.NewFileSet(), "instrument.go", "package lower\nfunc instrument(){"+text+"}", 0)
-	if err != nil {
-		panic(err)
+	f, parseFileError := parser.ParseFile(
+		token.NewFileSet(),
+		"instrument.go",
+		"package lower\nfunc instrument(){"+text+"}",
+		0,
+	)
+	if parseFileError != nil {
+		panic(parseFileError)
 	}
 	return f.Decls[0].(*ast.FuncDecl).Body.List
 }
@@ -36,14 +41,18 @@ func statements(text string) []ast.Stmt {
 // Every supported walker must have its own error binding and exactly one child walk.
 func Rewrite(source []byte) ([]byte, error) {
 	fs := token.NewFileSet()
-	file, err := parser.ParseFile(fs, "refusals.go", source, 0)
-	if err != nil {
-		return nil, fail("cannot parse refusals.go: %v", err)
+	file, parseFileError := parser.ParseFile(fs, "refusals.go", source, 0)
+	if parseFileError != nil {
+		return nil, fail("cannot parse refusals.go: %v", parseFileError)
 	}
 	var matches []*ast.FuncDecl
 	for _, declaration := range file.Decls {
 		fn, ok := declaration.(*ast.FuncDecl)
-		if ok && fn.Name.Name == "refuse" && fn.Recv != nil && len(fn.Recv.List) == 1 && printed(fn.Recv.List[0].Type) == "*lowering" {
+		if ok &&
+			fn.Name.Name == "refuse" &&
+			fn.Recv != nil &&
+			len(fn.Recv.List) == 1 &&
+			printed(fn.Recv.List[0].Type) == "*lowering" {
 			matches = append(matches, fn)
 		}
 		if ok && fn.Name.Name == "latentRefuse" {
@@ -54,16 +63,18 @@ func Rewrite(source []byte) ([]byte, error) {
 		return nil, fail("expected exactly one function, found %d", len(matches))
 	}
 	original := matches[0]
-	if printed(original.Type) != "func(module *ast.SourceFile) error" || len(original.Recv.List[0].Names) != 1 || original.Recv.List[0].Names[0].Name != "l" {
+	if printed(original.Type) != "func(module *ast.SourceFile) error" ||
+		len(original.Recv.List[0].Names) != 1 ||
+		original.Recv.List[0].Names[0].Name != "l" {
 		return nil, fail("unsupported signature")
 	}
 	var text bytes.Buffer
-	if err := format.Node(&text, fs, original); err != nil {
-		return nil, fail("cannot clone: %v", err)
+	if nodeError := format.Node(&text, fs, original); nodeError != nil {
+		return nil, fail("cannot clone: %v", nodeError)
 	}
-	cloneFile, err := parser.ParseFile(fs, "latent-refuse.go", "package lower\n"+text.String(), 0)
-	if err != nil {
-		return nil, fail("cannot clone: %v", err)
+	cloneFile, parseFileError := parser.ParseFile(fs, "latent-refuse.go", "package lower\n"+text.String(), 0)
+	if parseFileError != nil {
+		return nil, fail("cannot clone: %v", parseFileError)
 	}
 	clone := cloneFile.Decls[0].(*ast.FuncDecl)
 	clone.Name.Name = "latentRefuse"
@@ -140,7 +151,9 @@ func Rewrite(source []byte) ([]byte, error) {
 			}
 			if expr, ok := node.(*ast.ExprStmt); ok {
 				if call, ok := expr.X.(*ast.CallExpr); ok && len(call.Args) == 1 && ident(call.Args[0], name) {
-					if sel, ok := call.Fun.(*ast.SelectorExpr); ok && ident(sel.X, "node") && sel.Sel.Name == "ForEachChild" {
+					if sel, ok := call.Fun.(*ast.SelectorExpr); ok &&
+						ident(sel.X, "node") &&
+						sel.Sel.Name == "ForEachChild" {
 						expr.X = ast.NewIdent("nil")
 						count++
 					}
@@ -178,10 +191,21 @@ if latentFullEnabled() && node.Kind == ast.KindFunctionDeclaration {
 			return nil, fail("unsupported directive loop")
 		}
 		first, ok := conditional.Body.List[0].(*ast.AssignStmt)
-		if !ok || first.Tok != token.DEFINE || len(first.Lhs) != 1 || !ident(first.Lhs[0], "directive") || len(first.Rhs) != 1 || printed(first.Rhs[0]) != "module.CommentDirectives[0]" {
+		if !ok ||
+			first.Tok != token.DEFINE ||
+			len(first.Lhs) != 1 ||
+			!ident(first.Lhs[0], "directive") ||
+			len(first.Rhs) != 1 ||
+			printed(first.Rhs[0]) != "module.CommentDirectives[0]" {
 			return nil, fail("missing directive binding")
 		}
-		clone.Body.List[index] = &ast.RangeStmt{Key: ast.NewIdent("_"), Value: ast.NewIdent("directive"), Tok: token.DEFINE, X: statements("_ = module.CommentDirectives")[0].(*ast.AssignStmt).Rhs[0], Body: &ast.BlockStmt{List: conditional.Body.List[1:]}}
+		clone.Body.List[index] = &ast.RangeStmt{
+			Key:   ast.NewIdent("_"),
+			Value: ast.NewIdent("directive"),
+			Tok:   token.DEFINE,
+			X:     statements("_ = module.CommentDirectives")[0].(*ast.AssignStmt).Rhs[0],
+			Body:  &ast.BlockStmt{List: conditional.Body.List[1:]},
+		}
 		directives++
 	}
 	if directives != 1 {
@@ -249,8 +273,8 @@ if latentFullEnabled() && node.Kind == ast.KindFunctionDeclaration {
 	clone.Body.List = append(clone.Body.List, &ast.ReturnStmt{Results: []ast.Expr{ast.NewIdent("nil")}})
 	file.Decls = append(file.Decls, clone)
 	var output bytes.Buffer
-	if err := format.Node(&output, fs, file); err != nil {
-		return nil, fail("cannot format: %v", err)
+	if nodeError := format.Node(&output, fs, file); nodeError != nil {
+		return nil, fail("cannot format: %v", nodeError)
 	}
 	return output.Bytes(), nil
 }

@@ -40,9 +40,9 @@ func recordUnionSlotsProduct(test *testing.T) string {
 		{"counted", native.Options{Count: true}},
 	}
 	for _, variant := range variants {
-		request, err := native.RuntimeRequestFor(variant.options)
-		if err != nil {
-			test.Fatal(err)
+		request, runtimeRequestForError := native.RuntimeRequestFor(variant.options)
+		if runtimeRequestForError != nil {
+			test.Fatal(runtimeRequestForError)
 		}
 		inputs.Flags = append(inputs.Flags, request.Portable...)
 		inputs.Toolchain = append(
@@ -53,22 +53,24 @@ func recordUnionSlotsProduct(test *testing.T) string {
 	}
 	return buildcache.Product(test, inputs, func(directory string) error {
 		for _, name := range []string{"null", "presence"} {
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_union_"+name+".a"))
-			if err != nil {
-				return err
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/records_union_"+name+".a"),
+			)
+			if absolutePathError != nil {
+				return absolutePathError
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				return err
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				return loweredError
 			}
 			code := native.C(program)
 			for _, variant := range variants {
-				if err := native.Build(
+				if buildError := native.Build(
 					code,
 					filepath.Join(directory, name+"-"+variant.name),
 					variant.options,
-				); err != nil {
-					return err
+				); buildError != nil {
+					return buildError
 				}
 			}
 			if name == "null" {
@@ -78,12 +80,12 @@ func recordUnionSlotsProduct(test *testing.T) string {
 					return fmt.Errorf("expected one null store, found %d", strings.Count(code, store))
 				}
 				mutant := strings.Replace(code, store, " = NULL;", 1)
-				if err := native.Build(
+				if buildError := native.Build(
 					mutant,
 					filepath.Join(directory, "null-mutant"),
 					native.Options{Sanitize: true},
-				); err != nil {
-					return err
+				); buildError != nil {
+					return buildError
 				}
 			}
 		}
@@ -98,9 +100,11 @@ func TestProduct_RecordUnionSlots(test *testing.T) {
 
 func checkRecordUnionSlots(test *testing.T, name, expected string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_union_"+name+".a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/records_union_"+name+".a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := onNode(test, path)
 	if truth.exitCode != 0 || len(truth.stderr) != 0 || string(truth.stdout) != expected {
@@ -135,9 +139,9 @@ func checkRecordUnionSlots(test *testing.T, name, expected string) {
 			)
 		}
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	if got := onJavaScriptBackend(test, program); disagreement(truth, got) != "" {
 		test.Fatalf("JavaScript versus Node: %+v; want %+v", got, truth)

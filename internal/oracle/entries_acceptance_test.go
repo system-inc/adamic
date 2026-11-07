@@ -32,14 +32,14 @@ func TestEntriesAcceptance(test *testing.T) {
 	if directory == "" {
 		directory = filepath.Join(repository, "stage3/fixtures/entries")
 	}
-	contents, err := os.ReadFile(filepath.Join(directory, "expectations.json"))
-	if errors.Is(err, os.ErrNotExist) {
+	contents, readError := os.ReadFile(filepath.Join(directory, "expectations.json"))
+	if errors.Is(readError, os.ErrNotExist) {
 		test.Skip(
 			"awaits compiler/entries-fixtures: typescript's Object.entries acceptance programs (8d864f9c) and the provenance fix they test (compiler/entries-provenance 05a60066), stage3/fixtures/entries, #tsdh6nb",
 		)
 	}
-	if err != nil {
-		test.Fatal(err)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var contracts []struct {
 		File     string                    `json:"file"`
@@ -50,13 +50,13 @@ func TestEntriesAcceptance(test *testing.T) {
 			Expected entriesAcceptanceContract `json:"expected"`
 		} `json:"mutant"`
 	}
-	if err := json.Unmarshal(contents, &contracts); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(contents, &contracts); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	for _, contract := range contracts {
-		source, err := os.ReadFile(filepath.Join(directory, contract.File))
-		if err != nil {
-			test.Fatal(err)
+		source, readError := os.ReadFile(filepath.Join(directory, contract.File))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		if strings.Count(string(source), contract.Mutant.Find) != 1 {
 			test.Fatal("mutant site must occur once")
@@ -75,18 +75,18 @@ func TestEntriesAcceptance(test *testing.T) {
 			test.Run(contract.File+"/"+variant.name, func(test *testing.T) {
 				test.Parallel()
 				path := filepath.Join(test.TempDir(), contract.File)
-				if err := os.WriteFile(path, []byte(variant.source), 0600); err != nil {
-					test.Fatal(err)
+				if writeError := os.WriteFile(path, []byte(variant.source), 0600); writeError != nil {
+					test.Fatal(writeError)
 				}
 				node := onNode(test, path)
 				if node.exitCode != 0 || len(node.stderr) != 0 {
 					test.Fatalf("source Node: %#v", node)
 				}
-				program, err := lowered(test, path)
+				program, loweredError := lowered(test, path)
 				if variant.expected.Outcome == "Refused" {
 					var refusal *lower.Refused
-					if !errors.As(err, &refusal) {
-						test.Fatalf("want Refused, got %v", err)
+					if !errors.As(loweredError, &refusal) {
+						test.Fatalf("want Refused, got %v", loweredError)
 					}
 					reason := strings.ToLower(refusal.What + " " + refusal.Fix)
 					for _, accepted := range variant.expected.Diagnostic {
@@ -94,10 +94,10 @@ func TestEntriesAcceptance(test *testing.T) {
 							return
 						}
 					}
-					test.Fatalf("refusal must name excluded property form: %v", err)
+					test.Fatalf("refusal must name excluded property form: %v", loweredError)
 				}
-				if err != nil {
-					test.Fatal(err)
+				if loweredError != nil {
+					test.Fatal(loweredError)
 				}
 				checks := 0
 				inspect := func(value any) any {

@@ -8,21 +8,22 @@ import (
 
 func (l *lowering) ifStatement(node *ast.Node) ([]ir.Statement, error) {
 	statement := node.AsIfStatement()
-	condition, err := l.condition(statement.Expression)
-	if err != nil {
-		return nil, err
+	condition, conditionError := l.condition(statement.Expression)
+	if conditionError != nil {
+		return nil, conditionError
 	}
 	var then []ir.Statement
+	var statementError error
 	if symbol := l.hostBindingGuard(statement.Expression); symbol != nil {
 		// A guard proves an Absent host binding missing, so the then-branch is dead (host_bindings.go).
 		then = []ir.Statement{l.hostBindingDeadRead(symbol)}
-	} else if then, err = l.statement(statement.ThenStatement); err != nil {
-		return nil, err
+	} else if then, statementError = l.statement(statement.ThenStatement); statementError != nil {
+		return nil, statementError
 	}
 	lowered := ir.If{Condition: condition, Then: then}
 	if statement.ElseStatement != nil {
-		if lowered.Else, err = l.statement(statement.ElseStatement); err != nil {
-			return nil, err
+		if lowered.Else, statementError = l.statement(statement.ElseStatement); statementError != nil {
+			return nil, statementError
 		}
 	}
 	return []ir.Statement{lowered}, nil
@@ -53,22 +54,22 @@ func (l *lowering) forStatement(node *ast.Node) ([]ir.Statement, error) {
 		}
 	}
 	if statement.Condition != nil {
-		condition, err := l.condition(statement.Condition)
-		if err != nil {
-			return nil, err
+		condition, conditionError := l.condition(statement.Condition)
+		if conditionError != nil {
+			return nil, conditionError
 		}
 		loop.Condition = condition
 	}
 	if statement.Incrementor != nil {
-		update, err := l.expressionStatement(statement.Incrementor)
-		if err != nil {
-			return nil, err
+		update, expressionStatementError := l.expressionStatement(statement.Incrementor)
+		if expressionStatementError != nil {
+			return nil, expressionStatementError
 		}
 		loop.Update = update
 	}
-	body, err := l.statement(statement.Statement)
-	if err != nil {
-		return nil, err
+	body, statementError := l.statement(statement.Statement)
+	if statementError != nil {
+		return nil, statementError
 	}
 	loop.Body = body
 	block.Body = append(block.Body, loop)
@@ -84,25 +85,25 @@ func (l *lowering) whileStatement(node *ast.Node) ([]ir.Statement, error) {
 	} else {
 		expression, body = node.AsWhileStatement().Expression, node.AsWhileStatement().Statement
 	}
-	condition, err := l.condition(expression)
-	if err != nil {
-		return nil, err
+	condition, conditionError := l.condition(expression)
+	if conditionError != nil {
+		return nil, conditionError
 	}
-	loweredBody, err := l.statement(body)
-	if err != nil {
-		return nil, err
+	loweredBody, statementError := l.statement(body)
+	if statementError != nil {
+		return nil, statementError
 	}
 	return []ir.Statement{ir.Loop{Condition: condition, Body: loweredBody, CheckAfter: checkAfter}}, nil
 }
 
 // condition applies JavaScript ToBoolean to one evaluation of its operand.
 func (l *lowering) condition(node *ast.Node) (ir.Expression, error) {
-	if test, handled, err := l.methodPresenceCondition(node); handled {
-		return test, err
+	if test, handled, methodPresenceConditionError := l.methodPresenceCondition(node); handled {
+		return test, methodPresenceConditionError
 	}
-	value, err := l.expression(node)
-	if err != nil {
-		return nil, err
+	value, expressionError := l.expression(node)
+	if expressionError != nil {
+		return nil, expressionError
 	}
 	return censusCondition(value), nil
 }
@@ -111,5 +112,7 @@ func (l *lowering) condition(node *ast.Node) (ir.Expression, error) {
 // a fresh binding each iteration (const can't change, so a copy would be the same).
 func initializerIsLet(_ ir.Statement, node *ast.Node) bool {
 	initializer := node.AsForStatement().Initializer
-	return initializer != nil && initializer.Kind == ast.KindVariableDeclarationList && initializer.Flags&ast.NodeFlagsLet != 0
+	return initializer != nil &&
+		initializer.Kind == ast.KindVariableDeclarationList &&
+		initializer.Flags&ast.NodeFlagsLet != 0
 }

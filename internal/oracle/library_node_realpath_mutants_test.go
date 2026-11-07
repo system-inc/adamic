@@ -20,9 +20,9 @@ func realpathMutant(test *testing.T, fixture string, change func(*ir.Program, st
 	cwd := realpathDirectory(test)
 	loader, _ := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	truth := realpathRun(test, cwd, "node", "--disable-warning=ExperimentalWarning", loader, path)
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	original := native.C(program)
 	source := change(program, original)
@@ -30,8 +30,8 @@ func realpathMutant(test *testing.T, fixture string, change func(*ir.Program, st
 		test.Fatal("mutant changed nothing")
 	}
 	binary := filepath.Join(test.TempDir(), "mutant")
-	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(source, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	got := realpathRun(test, cwd, binary)
 	if truth.exitCode != 0 || got.exitCode != 0 || len(truth.stderr) != 0 || len(got.stderr) != 0 {

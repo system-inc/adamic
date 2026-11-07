@@ -19,7 +19,7 @@ func runRuntimeStaticsParallel(test *testing.T, unit int) {
 	if goruntime.GOOS != "linux" {
 		test.Skip("runtime static race proofs require Linux ThreadSanitizer")
 	}
-	if _, err := os.Stat(filepath.Join(*runtimeStaticsDirectory, "parallel.c")); os.IsNotExist(err) {
+	if _, statError := os.Stat(filepath.Join(*runtimeStaticsDirectory, "parallel.c")); os.IsNotExist(statError) {
 		test.Skip("concurrency-area has not been merged; parallel.c is absent")
 	}
 	library, root := staticsRaceLibrary(test, "", "", "")
@@ -53,7 +53,7 @@ func runRuntimeStaticsProtectionMutant(test *testing.T, unit int) {
 	if goruntime.GOOS != "linux" {
 		test.Skip("runtime static race proofs require Linux ThreadSanitizer")
 	}
-	if _, err := os.Stat(filepath.Join(*runtimeStaticsDirectory, "parallel.c")); os.IsNotExist(err) {
+	if _, statError := os.Stat(filepath.Join(*runtimeStaticsDirectory, "parallel.c")); os.IsNotExist(statError) {
 		test.Skip("concurrency-area has not been merged; parallel.c is absent")
 	}
 	mutants := []struct{ name, file, old, changed, fixture string }{
@@ -231,11 +231,11 @@ func TestRuntimeStaticsStopWholeLines(test *testing.T) {
 		"-e",
 		"console.log('first whole line'); console.log('second whole line'); process.kill(process.pid, 'SIGUSR2');",
 	)
-	expected, err := node.Output()
-	if err == nil ||
+	expected, outputError := node.Output()
+	if outputError == nil ||
 		string(expected) != "first whole line\nsecond whole line\n" ||
 		node.ProcessState.Sys().(syscall.WaitStatus).Signal() != syscall.SIGUSR2 {
-		test.Fatalf("unexpected Node observation: %v %q", err, expected)
+		test.Fatalf("unexpected Node observation: %v %q", outputError, expected)
 	}
 	for _, mutant := range []bool{false, true} {
 		test.Run(fmt.Sprintf("drop_flush_%t", mutant), func(test *testing.T) {
@@ -251,14 +251,14 @@ func TestRuntimeStaticsStopWholeLines(test *testing.T) {
 				var errors strings.Builder
 				command.Stderr = &errors
 				command.Env = append(os.Environ(), "TSAN_OPTIONS=halt_on_error=1")
-				actual, err := command.Output()
+				actual, outputError := command.Output()
 				timedOut := ctx.Err() != nil
 				cancel()
-				if err == nil ||
+				if outputError == nil ||
 					timedOut ||
 					command.ProcessState.Sys().(syscall.WaitStatus).Signal() != syscall.SIGUSR2 ||
 					errors.Len() != 0 {
-					test.Fatalf("unexpected stop: %v %s", err, errors.String())
+					test.Fatalf("unexpected stop: %v %s", outputError, errors.String())
 				}
 				if mutant {
 					if len(actual) != 0 {
@@ -277,9 +277,9 @@ func TestRuntimeStaticsStopWholeLines(test *testing.T) {
 // the mutant's sole unsafe change is one direct flush in the actual signal handler.
 func staticsSignalRaceLibrary(test *testing.T, mutant bool) (string, string) {
 	test.Helper()
-	source, err := os.ReadFile(filepath.Join(*runtimeStaticsDirectory, "adamic.c"))
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(filepath.Join(*runtimeStaticsDirectory, "adamic.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	changed := string(source)
 	patch := func(old, replacement string) {
@@ -322,14 +322,14 @@ func staticsSignalRun(test *testing.T, binary string, worker bool, signal syscal
 			command.Env = append(command.Env, "ADAMIC_STOP_WORKER=1")
 		}
 		started := time.Now()
-		output, err := command.CombinedOutput()
+		output, combinedOutputError := command.CombinedOutput()
 		test.Logf("signal process attempt %d: %s (%d bytes)", attempt+1, time.Since(started), len(output))
 		timedOut := ctx.Err() != nil
 		cancel()
 		race := strings.Contains(string(output), "WARNING: ThreadSanitizer: data race")
 		if mutant {
-			if err == nil || timedOut || !race {
-				test.Fatalf("signal mutant not caught (attempt %d): %v\n%s", attempt+1, err, output)
+			if combinedOutputError == nil || timedOut || !race {
+				test.Fatalf("signal mutant not caught (attempt %d): %v\n%s", attempt+1, combinedOutputError, output)
 			}
 			for _, line := range strings.Split(string(output), "\n") {
 				if strings.Contains(line, "SUMMARY: ThreadSanitizer:") {
@@ -339,16 +339,16 @@ func staticsSignalRun(test *testing.T, binary string, worker bool, signal syscal
 			continue
 		}
 		if timedOut || race || !strings.Contains(string(output), "signal worker line\n") {
-			test.Fatalf("signal fixture failed: %v\n%s", err, output)
+			test.Fatalf("signal fixture failed: %v\n%s", combinedOutputError, output)
 		}
 		if signal == 0 {
-			if err != nil {
-				test.Fatalf("exit fixture failed: %v\n%s", err, output)
+			if combinedOutputError != nil {
+				test.Fatalf("exit fixture failed: %v\n%s", combinedOutputError, output)
 			}
 		} else {
 			status, ok := command.ProcessState.Sys().(syscall.WaitStatus)
 			if !ok || !status.Signaled() || status.Signal() != signal {
-				test.Fatalf("wanted signal %d, got %v\n%s", signal, err, output)
+				test.Fatalf("wanted signal %d, got %v\n%s", signal, combinedOutputError, output)
 			}
 		}
 	}
@@ -357,17 +357,17 @@ func staticsSignalRun(test *testing.T, binary string, worker bool, signal syscal
 func staticsRaceLibrary(test *testing.T, mutantFile, old, changed string) (string, string) {
 	test.Helper()
 	root := test.TempDir()
-	files, err := filepath.Glob(filepath.Join(*runtimeStaticsDirectory, "*"))
-	if err != nil {
-		test.Fatal(err)
+	files, globError := filepath.Glob(filepath.Join(*runtimeStaticsDirectory, "*"))
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	for _, file := range files {
 		if filepath.Ext(file) != ".c" && filepath.Ext(file) != ".h" {
 			continue
 		}
-		source, err := os.ReadFile(file)
-		if err != nil {
-			test.Fatal(err)
+		source, readError := os.ReadFile(file)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		if filepath.Base(file) == mutantFile {
 			if !strings.Contains(string(source), old) {
@@ -411,42 +411,42 @@ func staticsRaceLibrary(test *testing.T, mutantFile, old, changed string) (strin
 				))
 			}
 		}
-		if err := os.WriteFile(filepath.Join(root, filepath.Base(file)), source, 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(root, filepath.Base(file)), source, 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
-	header, err := os.ReadFile("../../bridge/tsgo/tsgo.h")
-	if err != nil {
-		test.Fatal(err)
+	header, readError := os.ReadFile("../../bridge/tsgo/tsgo.h")
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	if err := os.WriteFile(filepath.Join(root, "tsgo.h"), header, 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(root, "tsgo.h"), header, 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	filesSnapshot, err := readRuntime(os.DirFS(root), ".")
-	if err != nil {
-		test.Fatal(err)
+	filesSnapshot, readRuntimeError := readRuntime(os.DirFS(root), ".")
+	if readRuntimeError != nil {
+		test.Fatal(readRuntimeError)
 	}
 	// The baseline archive is shared; only the changed C unit is recompiled for a mutant.
-	baseline, err := readRuntime(runtime, "runtime")
-	if err != nil {
-		test.Fatal(err)
+	baseline, readRuntimeError := readRuntime(runtime, "runtime")
+	if readRuntimeError != nil {
+		test.Fatal(readRuntimeError)
 	}
 	baseline = append(baseline, runtimeFile{"tsgo.h", header})
-	compiler, err := exec.LookPath("clang")
-	if err != nil {
-		test.Fatal(err)
+	compiler, lookPathError := exec.LookPath("clang")
+	if lookPathError != nil {
+		test.Fatal(lookPathError)
 	}
-	version, err := exec.Command(compiler, "--version").CombinedOutput()
-	if err != nil {
-		test.Fatal(err)
+	version, combinedOutputError := exec.Command(compiler, "--version").CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatal(combinedOutputError)
 	}
-	cache, err := cacheDirectory("runtime-statics")
-	if err != nil {
-		test.Fatal(err)
+	cache, cacheDirectoryError := cacheDirectory("runtime-statics")
+	if cacheDirectoryError != nil {
+		test.Fatal(cacheDirectoryError)
 	}
-	original, err := cachedRuntime(baseline, staticsRaceFlags(), compiler, string(version), cache)
-	if err != nil {
-		test.Fatal(err)
+	original, cachedRuntimeError := cachedRuntime(baseline, staticsRaceFlags(), compiler, string(version), cache)
+	if cachedRuntimeError != nil {
+		test.Fatal(cachedRuntimeError)
 	}
 	if mutantFile == "" {
 		return original, filepath.Dir(original)
@@ -495,8 +495,8 @@ func staticsCompile(test *testing.T, tool string, arguments ...string) {
 	if strings.HasPrefix(filepath.Base(tool), "clang") {
 		command = productCompilerCommand(test, ctx, tool, arguments...)
 	}
-	if output, err := command.CombinedOutput(); err != nil {
-		test.Fatalf("fixture and mutant must compile: %v\n%s", err, output)
+	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("fixture and mutant must compile: %v\n%s", combinedOutputError, output)
 	}
 }
 
@@ -558,8 +558,8 @@ func staticsRaceFixture(test *testing.T, root, library, fixture string) string {
 	flags := staticsRaceFlags()
 	if fixture == "shape_types_contended" {
 		source = filepath.Join(test.TempDir(), "shape_types.c")
-		if err := os.WriteFile(source, []byte(staticsShapeTypesContended), 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(source, []byte(staticsShapeTypesContended), 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 		flags = append(flags, "-I", "testdata/runtime-statics")
 	}
@@ -603,21 +603,21 @@ func staticsRaceRun(test *testing.T, binary string, mutant bool) {
 			"ADAMIC_TSGO_TIMING=1",
 			"ADAMIC_TSGO_PROFILE=1",
 		)
-		output, err := command.CombinedOutput()
+		output, combinedOutputError := command.CombinedOutput()
 		timedOut := ctx.Err() != nil
 		cancel()
 		race := strings.Contains(string(output), "WARNING: ThreadSanitizer: data race")
 		if mutant {
-			if err == nil || timedOut || !race {
-				test.Fatalf("race mutant was not caught (attempt %d): %v\n%s", attempt+1, err, output)
+			if combinedOutputError == nil || timedOut || !race {
+				test.Fatalf("race mutant was not caught (attempt %d): %v\n%s", attempt+1, combinedOutputError, output)
 			}
 			for _, line := range strings.Split(string(output), "\n") {
 				if strings.Contains(line, "SUMMARY: ThreadSanitizer:") {
 					test.Log(line)
 				}
 			}
-		} else if err != nil || race || !strings.Contains(string(output), "runtime statics clean\n") {
-			test.Fatalf("fixture failed (attempt %d): %v\n%s", attempt+1, err, output)
+		} else if combinedOutputError != nil || race || !strings.Contains(string(output), "runtime statics clean\n") {
+			test.Fatalf("fixture failed (attempt %d): %v\n%s", attempt+1, combinedOutputError, output)
 		}
 	}
 }

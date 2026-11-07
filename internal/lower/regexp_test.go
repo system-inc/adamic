@@ -16,11 +16,11 @@ func TestRegExpNativeRefusals(test *testing.T) {
 		"const regex = /a/; regex.exec = (input: string): RegExpExecArray | null => null;",
 		"const regex = /a/; const copy = {...regex};",
 	} {
-		_, err := lowerSource(test, source)
+		_, lowerSourceError := lowerSource(test, source)
 		var notYet *NotYet
 		var refused *Refused
-		if !errors.As(err, &notYet) && !errors.As(err, &refused) {
-			test.Fatalf("expected loud NotYet for %s: %v", source, err)
+		if !errors.As(lowerSourceError, &notYet) && !errors.As(lowerSourceError, &refused) {
+			test.Fatalf("expected loud NotYet for %s: %v", source, lowerSourceError)
 		}
 	}
 }
@@ -42,9 +42,9 @@ func TestRegExpSourceNode(test *testing.T) {
 		{"\u2028\u2029", ""},
 		{"K🌍", "iu"},
 	}
-	data, err := json.Marshal(cases)
-	if err != nil {
-		test.Fatal(err)
+	data, encodeError := json.Marshal(cases)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	command := toolchain.Command(
 		"node",
@@ -52,13 +52,13 @@ func TestRegExpSourceNode(test *testing.T) {
 		`if(!process.version.startsWith('v24.'))throw Error('Node 24 required');const cases=JSON.parse(require('fs').readFileSync(0,'utf8'));const lone=new RegExp(String.fromCharCode(0xd800)).source;if(lone.length!==1 || lone.charCodeAt(0)!==0xd800)throw Error('unexpected lone-surrogate source');process.stdout.write(JSON.stringify(cases.map(([p,f])=>new RegExp(p,f).source)));`,
 	)
 	command.Stdin = bytes.NewReader(data)
-	output, err := command.CombinedOutput()
-	if err != nil {
-		test.Fatalf("Node source oracle: %v\n%s", err, output)
+	output, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("Node source oracle: %v\n%s", combinedOutputError, output)
 	}
 	var expected []string
-	if err = json.Unmarshal(output, &expected); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(output, &expected); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	for index, c := range cases {
 		if got := escapeRegexSource(c[0], c[1]); got != expected[index] {
@@ -91,7 +91,10 @@ func TestRegExpEscapedSlashSourceAgreesWithNode(test *testing.T) {
 
 func TestRegExpV8QuantifierBoundsLower(test *testing.T) {
 	test.Parallel()
-	if _, err := lowerSource(test, "const matches = /a{18446744073709551616}/.test('a');"); err != nil {
-		test.Fatal(err)
+	if _, lowerSourceError := lowerSource(
+		test,
+		"const matches = /a{18446744073709551616}/.test('a');",
+	); lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
 }

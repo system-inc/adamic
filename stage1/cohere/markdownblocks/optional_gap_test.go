@@ -9,9 +9,9 @@ import (
 // Not parallel: shared markdownMemory configuration; existing helper controls parallel execution.
 func TestOptionalStringInitializationWitness(test *testing.T) {
 	parallelMarkdownMemory(test, 1)
-	path, err := filepath.Abs("gaps/6_uninitialized_optional_string.ts")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("gaps/6_uninitialized_optional_string.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	source := onNode(test, path)
 	clean(test, "Node truth", source)

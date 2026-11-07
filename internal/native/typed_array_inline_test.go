@@ -32,11 +32,11 @@ func inlineArrayRun(test *testing.T, command string, arguments ...string) inline
 	)
 	var stdout, stderr bytes.Buffer
 	process.Stdout, process.Stderr = &stdout, &stderr
-	err := process.Run()
+	runError := process.Run()
 	exit := 0
-	if err != nil {
+	if runError != nil {
 		if process.ProcessState == nil {
-			test.Fatal(err)
+			test.Fatal(runError)
 		}
 		exit = process.ProcessState.ExitCode()
 	}
@@ -47,9 +47,9 @@ func inlineArrayRun(test *testing.T, command string, arguments ...string) inline
 // unit under a new name. Only its check changes; all other runtime code is shared.
 func typedArrayInlineCheck(test *testing.T, mode, helper, before, after, diagnostic string) {
 	test.Helper()
-	source, err := os.ReadFile("testdata/typed-arrays/runtime.c")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("testdata/typed-arrays/runtime.c")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	node := inlineArrayRun(test, "node", "testdata/typed-arrays/node.a", mode)
 	if node.exit != 0 || len(node.stderr) != 0 {
@@ -57,8 +57,8 @@ func typedArrayInlineCheck(test *testing.T, mode, helper, before, after, diagnos
 	}
 	options := Options{Sanitize: true, Count: true}
 	control := filepath.Join(test.TempDir(), "control")
-	if err := Build(string(source), control, options); err != nil {
-		test.Fatal(err)
+	if buildError := Build(string(source), control, options); buildError != nil {
+		test.Fatal(buildError)
 	}
 	actual := inlineArrayRun(test, control, mode)
 	if strings.HasSuffix(mode, "write") {
@@ -73,9 +73,9 @@ func typedArrayInlineCheck(test *testing.T, mode, helper, before, after, diagnos
 		!strings.HasPrefix(string(actual.stderr), "adamic: counts:") {
 		test.Fatalf("control differs from Node: Node %+v native %+v", node, actual)
 	}
-	header, err := runtime.ReadFile("runtime/adamic.h")
-	if err != nil {
-		test.Fatal(err)
+	header, readFileError := runtime.ReadFile("runtime/adamic.h")
+	if readFileError != nil {
+		test.Fatal(readFileError)
 	}
 	start := strings.Index(string(header), " "+helper+"(")
 	if start < 0 {
@@ -96,8 +96,8 @@ func typedArrayInlineCheck(test *testing.T, mode, helper, before, after, diagnos
 	code := strings.ReplaceAll(string(source), helper+"(", "mutant_"+helper+"(")
 	code = strings.Replace(code, "#include \"adamic.h\"", "#include \"adamic.h\"\n"+body, 1)
 	mutant := filepath.Join(test.TempDir(), "mutant")
-	if err := Build(code, mutant, options); err != nil {
-		test.Fatal("mutant must compile:", err)
+	if buildError := Build(code, mutant, options); buildError != nil {
+		test.Fatal("mutant must compile:", buildError)
 	}
 	changed := inlineArrayRun(test, mutant, mode)
 	if diagnostic == "Node" {

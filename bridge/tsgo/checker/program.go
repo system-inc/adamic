@@ -38,19 +38,25 @@ func Path(path string) (string, error) {
 	if !utf8.ValidString(path) || strings.ContainsRune(path, 0) {
 		return "", fmt.Errorf("path must be UTF-8 without NUL")
 	}
-	absolute, err := filepath.Abs(path)
-	return filepath.ToSlash(absolute), err
+	absolute, absolutePathError := filepath.Abs(path)
+	return filepath.ToSlash(absolute), absolutePathError
 }
 
 func Open(configPath string, files []string) (*Program, error) {
-	configPath, err := Path(configPath)
-	if err != nil {
-		return nil, err
+	configPath, pathError := Path(configPath)
+	if pathError != nil {
+		return nil, pathError
 	}
 	directory := filepath.ToSlash(filepath.Dir(configPath))
 	fs := cachedvfs.From(bundled.WrapFS(osvfs.FS()))
 	host := compiler.NewCachedFSCompilerHost(fs, bundled.LibPath(), nil, nil, nil)
-	config, diagnostics := tsoptions.GetParsedCommandLineOfConfigFile(tspath.RootedFilePathFromAbsolute(configPath), nil, nil, fs, nil)
+	config, diagnostics := tsoptions.GetParsedCommandLineOfConfigFile(
+		tspath.RootedFilePathFromAbsolute(configPath),
+		nil,
+		nil,
+		fs,
+		nil,
+	)
 	if config == nil {
 		return nil, fmt.Errorf("cannot parse %s: %s", configPath, diagnosticText(diagnostics))
 	}
@@ -66,9 +72,9 @@ func Open(configPath string, files []string) (*Program, error) {
 			if !filepath.IsAbs(file) {
 				file = filepath.Join(directory, file)
 			}
-			path, err := Path(file)
-			if err != nil {
-				return nil, err
+			path, pathError := Path(file)
+			if pathError != nil {
+				return nil, pathError
 			}
 			roots[index] = tspath.RootedFilePathFromAbsolute(path)
 			if !fs.FileExists(roots[index]) {
@@ -128,9 +134,9 @@ func diagnosticText(diagnostics []*ast.Diagnostic) string {
 // Ranges are half open; leading trivia belongs to the following node. EOF is refused.
 // Type errors in the queried TypeScript are allowed, as they are in a lint checker.
 func (p *Program) Query(file string, position uint64) (Result, error) {
-	file, err := Path(file)
-	if err != nil {
-		return Result{}, err
+	file, pathError := Path(file)
+	if pathError != nil {
+		return Result{}, pathError
 	}
 	source := p.Compiler.GetSourceFile(tspath.RootedFilePathFromAbsolute(file))
 	if source == nil {
@@ -153,9 +159,9 @@ func (p *Program) Query(file string, position uint64) (Result, error) {
 // position. A mismatch between parsers is refused instead of querying a neighbor.
 // Frames are flags LF UTF-16-length LF TypeToString, with no trailing separator.
 func (p *Program) TypeParts(file string, start, end uint64, kind string) (string, error) {
-	file, err := Path(file)
-	if err != nil {
-		return "", err
+	file, pathError := Path(file)
+	if pathError != nil {
+		return "", pathError
 	}
 	source := p.Compiler.GetSourceFile(tspath.RootedFilePathFromAbsolute(file))
 	if source == nil {
@@ -172,7 +178,9 @@ func (p *Program) TypeParts(file string, start, end uint64, kind string) (string
 		if uint64(candidate.Pos()) > start || uint64(candidate.End()) < end {
 			return false
 		}
-		if uint64(candidate.Pos()) == start && uint64(candidate.End()) == end && strings.TrimPrefix(candidate.Kind.String(), "Kind") == kind {
+		if uint64(candidate.Pos()) == start &&
+			uint64(candidate.End()) == end &&
+			strings.TrimPrefix(candidate.Kind.String(), "Kind") == kind {
 			node = candidate
 			return true
 		}

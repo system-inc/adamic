@@ -56,13 +56,13 @@ func TestCorpusPinDiagnostics(test *testing.T) {
 func TestCorpusPinRejectsMissingProvisionedInputs(test *testing.T) {
 	test.Parallel()
 	cases := corpusCases(test)
-	encoded, err := os.ReadFile("testdata/corpus.pin")
-	if err != nil {
-		test.Fatal(err)
+	encoded, readError := os.ReadFile("testdata/corpus.pin")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var full corpusPin
-	if err := json.Unmarshal(encoded, &full); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(encoded, &full); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	var short []textCase
 	for _, item := range cases {
@@ -73,14 +73,17 @@ func TestCorpusPinRejectsMissingProvisionedInputs(test *testing.T) {
 	if len(cases)-len(short) != 18 {
 		test.Fatal("provisioned input witness changed")
 	}
-	_, _, err = validatePinnedCorpus(test, short, full)
-	if err == nil ||
-		!strings.Contains(err.Error(), "missing stage3/api/node_modules/typescript/package.json") ||
-		!strings.Contains(err.Error(), "provisioned: got 0, pinned 18") {
-		test.Fatalf("short-box pin mutant survived: %v", err)
+	_, _, validatePinnedCorpusError := validatePinnedCorpus(test, short, full)
+	if validatePinnedCorpusError == nil ||
+		!strings.Contains(
+			validatePinnedCorpusError.Error(),
+			"missing stage3/api/node_modules/typescript/package.json",
+		) ||
+		!strings.Contains(validatePinnedCorpusError.Error(), "provisioned: got 0, pinned 18") {
+		test.Fatalf("short-box pin mutant survived: %v", validatePinnedCorpusError)
 	}
 
-	test.Logf("caught the 18-input provisioning mutant: %v", err)
+	test.Logf("caught the 18-input provisioning mutant: %v", validatePinnedCorpusError)
 }
 
 // Not parallel: this proves the process-wide sample switch cannot bypass the pin.
@@ -88,8 +91,8 @@ func TestCorpusPinBeforeSampling(test *testing.T) {
 	test.Setenv("ADAMIC_GATE_SAMPLE", "00000008"+strings.Repeat("0", 32))
 	changed := test.TempDir() + "/changed.txt"
 	named := "stage3/api/node_modules/typescript/package.json"
-	if err := os.WriteFile(changed, []byte(named+"\n"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(changed, []byte(named+"\n"), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	test.Setenv("ADAMIC_GATE_CHANGED", changed)
 	total := len(corpusCases(test))

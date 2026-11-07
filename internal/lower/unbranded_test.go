@@ -54,11 +54,11 @@ console.log(String(total));
 func TestUnbrandedNarrowLiteralMintIsRefused(test *testing.T) {
 	test.Parallel()
 	const want = "union-typed array built from a narrower literal"
-	_, err := lowerSourceAs(test, brandMintPrelude+
+	_, lowerSourceAsError := lowerSourceAs(test, brandMintPrelude+
 		"const mixed = [0, 1] as unknown as SortedArray<number | string>;\nconsole.log(String(mixed.length));\n", ".ts")
 	var refused *Refused
-	if !errors.As(err, &refused) || !strings.Contains(refused.Error(), want) {
-		test.Fatalf("got %v, want a refusal containing %q", err, want)
+	if !errors.As(lowerSourceAsError, &refused) || !strings.Contains(refused.Error(), want) {
+		test.Fatalf("got %v, want a refusal containing %q", lowerSourceAsError, want)
 	}
 }
 
@@ -68,14 +68,14 @@ func TestUnbrandedNarrowLiteralMintIsRefused(test *testing.T) {
 // the program stops NotYet at sorted's value.
 func TestUnbrandedMintLowersToItsOperand(test *testing.T) {
 	test.Parallel()
-	program, err := lowerSourceAs(
+	program, lowerSourceAsError := lowerSourceAs(
 		test,
 		brandMintPrelude+
 			"const xs: number[] = [1, 2];\nconst sorted = xs as unknown as SortedArray<number>;\nconsole.log(String(sorted.length));\n",
 		".ts",
 	)
-	if err != nil {
-		test.Fatal(err)
+	if lowerSourceAsError != nil {
+		test.Fatal(lowerSourceAsError)
 	}
 	xs, sorted := -1, -1
 	for index, local := range program.Locals {
@@ -119,9 +119,9 @@ func TestUnbrandedPlainArrayIsNoBrand(test *testing.T) {
 	test.Parallel()
 	source := brandMintPrelude +
 		"function first(xs: SortedArray<number>): number { return xs.length; }\nconst plain: number[] = [2, 1];\nconsole.log(String(first(plain)));\n"
-	_, err := load.Load([]string{writeAgreementSource(test, "main.ts", source)})
-	if err == nil || !strings.Contains(err.Error(), "__sortedArrayBrand") {
-		test.Fatalf("got %v, want the checker's error naming the missing brand member", err)
+	_, loadError := load.Load([]string{writeAgreementSource(test, "main.ts", source)})
+	if loadError == nil || !strings.Contains(loadError.Error(), "__sortedArrayBrand") {
+		test.Fatalf("got %v, want the checker's error naming the missing brand member", loadError)
 	}
 }
 
@@ -150,10 +150,10 @@ func TestUnbrandedOnlyPhantomExtensions(test *testing.T) {
 			"\nfunction count(xs: " +
 			row.typed +
 			" | undefined): number { return xs === undefined ? 0 : xs.length; }\nconsole.log(String(count(undefined)));\n"
-		_, err := lowerSourceAs(test, source, ".ts")
+		_, lowerSourceAsError := lowerSourceAs(test, source, ".ts")
 		var stopped *NotYet
-		if !errors.As(err, &stopped) {
-			test.Errorf("%s: got %v, want NotYet at the value", row.name, err)
+		if !errors.As(lowerSourceAsError, &stopped) {
+			test.Errorf("%s: got %v, want NotYet at the value", row.name, lowerSourceAsError)
 		}
 	}
 }
@@ -273,10 +273,10 @@ func TestUnbrandedPresenceIsRefused(test *testing.T) {
 			"an observation of Marked<number>'s phantom member __marked (a write)",
 		},
 	} {
-		_, err := lowerSourceAs(test, row.source, ".ts")
+		_, lowerSourceAsError := lowerSourceAs(test, row.source, ".ts")
 		var refused *Refused
-		if !errors.As(err, &refused) || !strings.Contains(refused.Error(), row.want) {
-			test.Errorf("%s: got %v, want a refusal containing %q", row.name, err, row.want)
+		if !errors.As(lowerSourceAsError, &refused) || !strings.Contains(refused.Error(), row.want) {
+			test.Errorf("%s: got %v, want a refusal containing %q", row.name, lowerSourceAsError, row.want)
 		}
 	}
 }
@@ -295,10 +295,10 @@ func TestUnbrandedPresenceControls(test *testing.T) {
 		},
 		{"an element write at a number", sortedValue + "sorted[0] = 5;\nconsole.log(String(sorted[0]));\n"},
 	} {
-		_, err := lowerSourceAs(test, row.source, ".ts")
+		_, lowerSourceAsError := lowerSourceAs(test, row.source, ".ts")
 		var refused *Refused
-		if errors.As(err, &refused) && strings.Contains(refused.Error(), "phantom member") {
-			test.Errorf("%s: refused as an observation of a brand member: %v", row.name, err)
+		if errors.As(lowerSourceAsError, &refused) && strings.Contains(refused.Error(), "phantom member") {
+			test.Errorf("%s: refused as an observation of a brand member: %v", row.name, lowerSourceAsError)
 		}
 	}
 }
@@ -327,15 +327,15 @@ func TestUnbrandedVoidBrandStops(test *testing.T) {
 			"function count(xs: VoidSorted<number> | undefined): number { " +
 			row.body +
 			" }\nconsole.log(String(count(undefined)));\nconsole.log(String(count([1, 2] as unknown as VoidSorted<number>)));\n"
-		_, err := lowerSourceAs(test, source, ".ts")
-		test.Logf("%s: %v", row.name, err)
+		_, lowerSourceAsError := lowerSourceAs(test, source, ".ts")
+		test.Logf("%s: %v", row.name, lowerSourceAsError)
 		var stopped *NotYet
 		var refused *Refused
 		switch {
-		case row.refused && (!errors.As(err, &refused) || !strings.Contains(refused.Error(), row.want)):
-			test.Errorf("%s: got %v, want a refusal containing %q", row.name, err, row.want)
-		case !row.refused && (!errors.As(err, &stopped) || !strings.Contains(stopped.Error(), row.want)):
-			test.Errorf("%s: got %v, want NotYet containing %q", row.name, err, row.want)
+		case row.refused && (!errors.As(lowerSourceAsError, &refused) || !strings.Contains(refused.Error(), row.want)):
+			test.Errorf("%s: got %v, want a refusal containing %q", row.name, lowerSourceAsError, row.want)
+		case !row.refused && (!errors.As(lowerSourceAsError, &stopped) || !strings.Contains(stopped.Error(), row.want)):
+			test.Errorf("%s: got %v, want NotYet containing %q", row.name, lowerSourceAsError, row.want)
 		}
 	}
 }
@@ -349,9 +349,9 @@ func TestUnbrandedCastSeesTheBrand(test *testing.T) {
 	test.Parallel()
 	source := brandMintPrelude +
 		"function kinds(sortedReadonly: SortedReadonlyArray<number>, sorted: SortedArray<number>, readonlyPlain: readonly number[], plain: number[]): number { return sortedReadonly.length + sorted.length + readonlyPlain.length + plain.length; }\nconsole.log(String(kinds([] as unknown as SortedReadonlyArray<number>, [] as unknown as SortedArray<number>, [], [])));\n"
-	program, err := load.Load([]string{writeAgreementSource(test, "main.ts", source)})
-	if err != nil {
-		test.Fatalf("Load: %v", err)
+	program, loadError := load.Load([]string{writeAgreementSource(test, "main.ts", source)})
+	if loadError != nil {
+		test.Fatalf("Load: %v", loadError)
 	}
 	checked, release := program.Checker(context.Background(), program.Files()[0])
 	test.Cleanup(release)
@@ -434,14 +434,14 @@ func TestUnbrandedPresenceHeldElsewhere(test *testing.T) {
 			"Adamic 0.1 refuses delete; fixed objects cannot lose fields",
 		},
 	} {
-		_, err := lowerSourceAs(test, row.source, ".ts")
-		if err == nil {
+		_, lowerSourceAsError := lowerSourceAs(test, row.source, ".ts")
+		if lowerSourceAsError == nil {
 			test.Errorf("%s: lowers, but it observes the brand member and must stop", row.name)
 			continue
 		}
-		test.Logf("%s: %v", row.name, err)
-		if !strings.Contains(err.Error(), row.want) {
-			test.Errorf("%s: got %v, want a stop containing %q", row.name, err, row.want)
+		test.Logf("%s: %v", row.name, lowerSourceAsError)
+		if !strings.Contains(lowerSourceAsError.Error(), row.want) {
+			test.Errorf("%s: got %v, want a stop containing %q", row.name, lowerSourceAsError, row.want)
 		}
 	}
 }

@@ -62,7 +62,8 @@ func (l *lowering) castAssignableAt(operand *ast.Node, source, target *checker.T
 	// #yth65gz): it refused a T[] seen as ReadonlyArray<T> by the array's lib members, and a { a: 1 }
 	// missing an optional b. So it's skipped for an array seen as an array and for an object literal,
 	// where optionalRelationFailure is the judge. A type with no value (castAssignable) keeps both.
-	if !(operand != nil && (l.arrayLikeType(source) && l.arrayLikeType(target) || ast.SkipParentheses(operand).Kind == ast.KindObjectLiteralExpression)) {
+	if !(operand != nil && (l.arrayLikeType(source) && l.arrayLikeType(target) ||
+		ast.SkipParentheses(operand).Kind == ast.KindObjectLiteralExpression)) {
 		if !l.castOptionalFields(source, target, map[[2]*checker.Type]bool{}) {
 			return false
 		}
@@ -109,19 +110,33 @@ func (l *lowering) castOptionalFields(source, target *checker.Type, seen map[[2]
 	if !l.structured(source) || !l.structured(target) {
 		return true
 	}
-	from, to := l.checker.GetSignaturesOfType(source, checker.SignatureKindCall), l.checker.GetSignaturesOfType(target, checker.SignatureKindCall)
+	from, to := l.checker.GetSignaturesOfType(
+		source,
+		checker.SignatureKindCall,
+	), l.checker.GetSignaturesOfType(target, checker.SignatureKindCall)
 	if len(from) == 1 && len(to) == 1 {
-		if !l.castOptionalFields(l.checker.GetReturnTypeOfSignature(from[0]), l.checker.GetReturnTypeOfSignature(to[0]), seen) {
+		if !l.castOptionalFields(
+			l.checker.GetReturnTypeOfSignature(from[0]),
+			l.checker.GetReturnTypeOfSignature(to[0]),
+			seen,
+		) {
 			return false
 		}
 		for index, parameter := range to[0].Parameters() {
-			if index < len(from[0].Parameters()) && !l.castOptionalFields(l.checker.GetTypeOfSymbol(parameter), l.checker.GetTypeOfSymbol(from[0].Parameters()[index]), seen) {
+			if index < len(from[0].Parameters()) && !l.castOptionalFields(
+				l.checker.GetTypeOfSymbol(parameter),
+				l.checker.GetTypeOfSymbol(from[0].Parameters()[index]),
+				seen,
+			) {
 				return false
 			}
 		}
 		return true
 	}
-	if source.Flags()&checker.TypeFlagsObject != 0 && target.Flags()&checker.TypeFlagsObject != 0 && source.ObjectFlags()&checker.ObjectFlagsReference != 0 && target.ObjectFlags()&checker.ObjectFlagsReference != 0 {
+	if source.Flags()&checker.TypeFlagsObject != 0 &&
+		target.Flags()&checker.TypeFlagsObject != 0 &&
+		source.ObjectFlags()&checker.ObjectFlagsReference != 0 &&
+		target.ObjectFlags()&checker.ObjectFlagsReference != 0 {
 		fromArguments, toArguments := l.checker.GetTypeArguments(source), l.checker.GetTypeArguments(target)
 		for index, argument := range toArguments {
 			if index < len(fromArguments) && !l.castOptionalFields(fromArguments[index], argument, seen) {
@@ -155,9 +170,9 @@ func castMembers(proven *checker.Type) []*checker.Type {
 // l.refusal.checkedCasts for stringWideningRefusal (3100).
 func (l *lowering) castRefusal(node *ast.Node) error {
 	if node.Kind == ast.KindAsExpression && l.processPath(node.AsAsExpression().Expression) == "" {
-		proof, err := l.castProof(node)
-		if err != nil {
-			return err
+		proof, castProofError := l.castProof(node)
+		if castProofError != nil {
+			return castProofError
 		}
 		if proof.interfaceView || len(proof.allowed) > 0 || len(proof.classes) > 0 {
 			if l.refusal.checkedCasts == nil {
@@ -173,7 +188,9 @@ func init() { refusalRules.register(1900, "castRefusal", (*lowering).castRefusal
 
 func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	as := node.AsAsExpression()
-	if as.Type.Kind == ast.KindTypeReference && ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
+	if as.Type.Kind == ast.KindTypeReference &&
+		ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) &&
+		as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
 		return castProof{}, nil
 	}
 	source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
@@ -216,30 +233,33 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	var upcastFailure error
 	// A structural assignability result is only an upcast candidate. Nominal
 	// downcasts may also look assignable, but still need their runtime identity check.
-	if l.checker.IsTypeAssignableTo(source, target) || l.checker.IsTypeAssignableTo(l.checker.GetWidenedType(source), target) {
-		err := l.provenRelation(node, as.Expression, l.checker.GetTypeAtLocation(node))
-		if err == nil {
+	if l.checker.IsTypeAssignableTo(source, target) ||
+		l.checker.IsTypeAssignableTo(l.checker.GetWidenedType(source), target) {
+		provenRelationError := l.provenRelation(node, as.Expression, l.checker.GetTypeAtLocation(node))
+		if provenRelationError == nil {
 			return castProof{}, nil
 		}
 		rawSource, rawTarget := l.checker.GetTypeAtLocation(as.Expression), l.checker.GetTypeAtLocation(node)
-		if !allClasses || l.optionalRelationFailure(rawSource, rawTarget, as.Expression, map[[2]*checker.Type]bool{}) != "" || l.freshOrWidened(as.Expression, rawSource, rawTarget) != nil {
-			if reason, ok := err.(*Refused); ok {
+		if !allClasses ||
+			l.optionalRelationFailure(rawSource, rawTarget, as.Expression, map[[2]*checker.Type]bool{}) != "" ||
+			l.freshOrWidened(as.Expression, rawSource, rawTarget) != nil {
+			if reason, ok := provenRelationError.(*Refused); ok {
 				reason.Fix += "; " + l.castRepair(node)
 			}
-			return castProof{}, err
+			return castProof{}, provenRelationError
 		}
-		if reason, ok := err.(*Refused); ok {
+		if reason, ok := provenRelationError.(*Refused); ok {
 			reason.Fix += "; " + l.castRepair(node)
 		}
-		upcastFailure = err
+		upcastFailure = provenRelationError
 	}
 
 	if !allClasses && l.checker.IsTypeAssignableTo(source, target) {
-		if err := l.refuseWidening(node); err != nil {
-			if reason, ok := err.(*Refused); ok {
+		if refuseWideningError := l.refuseWidening(node); refuseWideningError != nil {
+			if reason, ok := refuseWideningError.(*Refused); ok {
 				reason.Fix += "; " + l.castRepair(node)
 			}
-			return castProof{}, err
+			return castProof{}, refuseWideningError
 		}
 	}
 	if allClasses {
@@ -254,7 +274,8 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 				}
 				// An erased identity cannot distinguish incompatible arguments of the same
 				// generic class, even if another source member provides a valid ancestor.
-				if l.classView(member, l.classNodeFor(wanted)) != nil && !l.nominalAncestor(member, wanted, map[[2]*checker.Type]bool{}) {
+				if l.classView(member, l.classNodeFor(wanted)) != nil &&
+					!l.nominalAncestor(member, wanted, map[[2]*checker.Type]bool{}) {
 					return castProof{}, refused
 				}
 			}
@@ -275,17 +296,31 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 			l.result.ViewOrigins = l.result.ViewOrigins[:origins]
 			l.contractGetters = l.contractGetters[:getters]
 		}()
-		if checked, err := l.interfaceCast(node, ir.Read{Of: ir.Object}, source, target); checked != nil || err != nil {
+		if checked, interfaceCastError := l.interfaceCast(
+			node,
+			ir.Read{Of: ir.Object},
+			source,
+			target,
+		); checked != nil || interfaceCastError != nil {
 			proof := castProof{interfaceView: checked != nil}
 			// The tag the view tests, which .a's refusal names in the narrowing it offers.
 			if cast, isCast := checked.(ir.CheckedCast); isCast {
 				proof.field = cast.Field
 			}
-			return proof, err
+			return proof, interfaceCastError
 		}
 		from, fromKnown := l.representation(source)
 		to, toKnown := l.representation(target)
-		if source.Flags()&checker.TypeFlagsObject != 0 && target.Flags()&checker.TypeFlagsObject != 0 && fromKnown && toKnown && from == ir.Object && to == ir.Object && !isClassInstance(target) && l.checker.IsTypeAssignableTo(target, source) && l.widened(target, source, map[[2]*checker.Type]bool{}) == nil && len(l.checker.GetIndexInfosOfType(target)) == 0 {
+		if source.Flags()&checker.TypeFlagsObject != 0 &&
+			target.Flags()&checker.TypeFlagsObject != 0 &&
+			fromKnown &&
+			toKnown &&
+			from == ir.Object &&
+			to == ir.Object &&
+			!isClassInstance(target) &&
+			l.checker.IsTypeAssignableTo(target, source) &&
+			l.widened(target, source, map[[2]*checker.Type]bool{}) == nil &&
+			len(l.checker.GetIndexInfosOfType(target)) == 0 {
 			return castProof{structuralView: true}, nil
 		}
 
@@ -319,7 +354,8 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 			// Enum aliases compare by runtime value, including aliases from different enums.
 			for _, previous := range literals {
 				mask := checker.TypeFlagsStringLiteral | checker.TypeFlagsNumberLiteral | checker.TypeFlagsBooleanLiteral
-				if previous.Flags()&mask != literal.Flags()&mask || reflect.DeepEqual(previous.AsLiteralType().Value(), literal.AsLiteralType().Value()) {
+				if previous.Flags()&mask != literal.Flags()&mask ||
+					reflect.DeepEqual(previous.AsLiteralType().Value(), literal.AsLiteralType().Value()) {
 					valid = false
 				}
 			}
@@ -383,19 +419,28 @@ func (l *lowering) classCastArguments(source, target *checker.Type) bool {
 
 // Ordinary IR exposes the check to both backends and ownership analyses. The operand is one call
 // argument; the helper only rereads its parameter, never the source expression.
-func (l *lowering) checkedClassCast(node *ast.Node, value ir.Expression, targets []*checker.Type, message string) (ir.Expression, error) {
+func (l *lowering) checkedClassCast(
+	node *ast.Node,
+	value ir.Expression,
+	targets []*checker.Type,
+	message string,
+) (ir.Expression, error) {
 	identities := []int{}
 	for _, target := range targets {
 		declaration := l.classNodeFor(target)
 		if declaration == nil || declaration.Kind != ast.KindClassDeclaration {
-			return nil, &Refused{Where: l.program.Where(node), What: "a cast without a declared class identity", Fix: l.castRepair(node)}
+			return nil, &Refused{
+				Where: l.program.Where(node),
+				What:  "a cast without a declared class identity",
+				Fix:   l.castRepair(node),
+			}
 		}
 		if len(declaration.TypeParameters()) > 0 {
 			identities = append(identities, l.classIdentity(declaration))
 		} else {
-			instance, err := l.instantiate(declaration, target, node)
-			if err != nil {
-				return nil, err
+			instance, instantiateError := l.instantiate(declaration, target, node)
+			if instantiateError != nil {
+				return nil, instantiateError
 			}
 			identities = append(identities, instance.class)
 		}
@@ -413,9 +458,12 @@ func (l *lowering) checkedClassCast(node *ast.Node, value ir.Expression, targets
 			condition = ir.Binary{Operator: ir.Or, Left: condition, Right: test}
 		}
 	}
-	l.result.Functions = append(l.result.Functions, ir.Function{Name: "checked_class_cast", Parameters: []int{local}, Returns: ir.Object, Body: []ir.Statement{
-		ir.If{Condition: condition, Then: []ir.Statement{ir.Return{Value: read}}},
-		ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}},
-	}})
+	l.result.Functions = append(
+		l.result.Functions,
+		ir.Function{Name: "checked_class_cast", Parameters: []int{local}, Returns: ir.Object, Body: []ir.Statement{
+			ir.If{Condition: condition, Then: []ir.Statement{ir.Return{Value: read}}},
+			ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}},
+		}},
+	)
 	return ir.Call{Function: function, Arguments: []ir.Expression{value}, Returns: ir.Object}, nil
 }

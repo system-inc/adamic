@@ -19,10 +19,17 @@ func CheckPure(program *ir.Program, function int) error {
 			return nil
 		}
 		visited[index] = true
-		if err := walk(reflect.ValueOf(program.Functions[index].Body)); err != nil {
+		if walkError := walk(reflect.ValueOf(program.Functions[index].Body)); walkError != nil {
 			function := program.Functions[index]
 			position := function.Position
-			return fmt.Errorf("%s:%d:%d: %s: %w", position.File, position.Line, position.Column, function.Name, err)
+			return fmt.Errorf(
+				"%s:%d:%d: %s: %w",
+				position.File,
+				position.Line,
+				position.Column,
+				function.Name,
+				walkError,
+			)
 		}
 		return nil
 	}
@@ -55,13 +62,13 @@ func CheckPure(program *ir.Program, function int) error {
 			case ir.Read:
 				return global(node.Local)
 			case ir.Assign:
-				if err := global(node.Local); err != nil {
-					return err
+				if globalError := global(node.Local); globalError != nil {
+					return globalError
 				}
 			case ir.Call:
 				for _, target := range program.CallTargets(node) {
-					if err := inspect(target); err != nil {
-						return err
+					if inspectError := inspect(target); inspectError != nil {
+						return inspectError
 					}
 				}
 			case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach, ir.ArraySort:
@@ -70,8 +77,8 @@ func CheckPure(program *ir.Program, function int) error {
 					return fmt.Errorf("calls an unbounded function value")
 				}
 				for _, target := range targets.Functions {
-					if err := inspect(target); err != nil {
-						return err
+					if inspectError := inspect(target); inspectError != nil {
+						return inspectError
 					}
 				}
 			}
@@ -83,21 +90,24 @@ func CheckPure(program *ir.Program, function int) error {
 			}
 		case reflect.Struct:
 			for index := 0; index < value.NumField(); index++ {
-				if err := walk(value.Field(index)); err != nil {
-					return err
+				if walkError := walk(value.Field(index)); walkError != nil {
+					return walkError
 				}
 			}
 		case reflect.Slice, reflect.Array:
 			for index := 0; index < value.Len(); index++ {
-				if err := walk(value.Index(index)); err != nil {
-					return err
+				if walkError := walk(value.Index(index)); walkError != nil {
+					return walkError
 				}
 			}
 		}
 		return nil
 	}
-	if err := inspect(function); err != nil {
-		return fmt.Errorf("worker: refused Wasm function %w; fix: remove I/O and module-global access and use statically known callees", err)
+	if inspectError := inspect(function); inspectError != nil {
+		return fmt.Errorf(
+			"worker: refused Wasm function %w; fix: remove I/O and module-global access and use statically known callees",
+			inspectError,
+		)
 	}
 	return nil
 }

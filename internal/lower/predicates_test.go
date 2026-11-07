@@ -117,13 +117,17 @@ func TestUnprovenPredicateReturnsAreRefused(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var refusal *Refused
-			if !errors.As(err, &refusal) ||
+			if !errors.As(lowerSourceError, &refusal) ||
 				!strings.Contains(refusal.What, "return is not proven") ||
 				!strings.Contains(refusal.What, probe.reason) ||
 				!strings.Contains(refusal.Fix, "return a discriminant comparison") {
-				test.Fatalf("got %v, want a predicate refusal naming %q and its rewrite", err, probe.reason)
+				test.Fatalf(
+					"got %v, want a predicate refusal naming %q and its rewrite",
+					lowerSourceError,
+					probe.reason,
+				)
 			}
 		})
 	}
@@ -144,9 +148,9 @@ func TestPredicateBodiesAreProven(test *testing.T) {
 		`import { panic } from 'adamic'; function assertNumber(x: number | string): asserts x is number { if (typeof x !== 'number') { panic('bad'); } }`,
 		`const isText = (x: string | undefined): x is string => x !== undefined;`,
 	} {
-		_, err := lowerSource(test, source)
-		if err != nil {
-			test.Errorf("%s: %v", source, err)
+		_, lowerSourceError := lowerSource(test, source)
+		if lowerSourceError != nil {
+			test.Errorf("%s: %v", source, lowerSourceError)
 		}
 	}
 }

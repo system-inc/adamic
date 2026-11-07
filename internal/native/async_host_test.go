@@ -14,22 +14,22 @@ func asyncHostPromises(test *testing.T, sanitizer string) {
 		test.Skip("host promise sanitizer evidence currently requires Linux LeakSanitizer")
 	}
 	logPath := filepath.Join(test.TempDir(), "host-promises.log")
-	log, err := os.Create(logPath)
-	if err != nil {
-		test.Fatal(err)
+	log, createError := os.Create(logPath)
+	if createError != nil {
+		test.Fatal(createError)
 	}
 	command := exec.Command("python3", "testdata/async_host/check.py", "--sanitizer", sanitizer)
 	command.Stdout, command.Stderr = log, log
-	err = command.Run()
-	if closeErr := log.Close(); closeErr != nil {
-		test.Fatal(closeErr)
+	runError := command.Run()
+	if closeError := log.Close(); closeError != nil {
+		test.Fatal(closeError)
 	}
-	output, readErr := os.ReadFile(logPath)
-	if readErr != nil {
-		test.Fatal(readErr)
+	output, readError := os.ReadFile(logPath)
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	if err != nil {
-		test.Fatalf("host bridge checks: %v\n%s", err, output)
+	if runError != nil {
+		test.Fatalf("host bridge checks: %v\n%s", runError, output)
 	}
 	test.Logf("%s", output)
 }

@@ -13,9 +13,9 @@ func TestReduceRejectsDifferentRefusal(test *testing.T) {
 	// the same verdict and checker diagnostics; only the refusal text differs.
 	const source = "originalFailure();\notherFailure();\n"
 	original := Observation{Verdict: NotYet, Lines: map[string]string{"refusal": "original refusal"}}
-	signature, err := Derive(original)
-	if err != nil {
-		test.Fatal(err)
+	signature, deriveError := Derive(original)
+	if deriveError != nil {
+		test.Fatal(deriveError)
 	}
 	var sawDifferent atomic.Bool
 	observe := func(candidate string, slot int) Observation {

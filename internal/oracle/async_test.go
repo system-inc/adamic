@@ -16,13 +16,13 @@ import (
 // Generated-C mutants keep the lowering and runtime builds unchanged; warning failures are not kills.
 func TestAsyncCompilerChecksCatchMutants(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/async_three.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/async_three.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	control := native.C(program)
 	oracle := onNode(test, path)
@@ -32,8 +32,8 @@ func TestAsyncCompilerChecksCatchMutants(test *testing.T) {
 			test.Fatal("mutant did not change input")
 		}
 		binary := filepath.Join(test.TempDir(), "mutant")
-		if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-			test.Fatal(err)
+		if buildError := native.Build(code, binary, native.Options{Sanitize: true}); buildError != nil {
+			test.Fatal(buildError)
 		}
 		result := execute(test, binary)
 		if disagreement(oracle, result) != "stdout differs" || result.exitCode != 0 || len(result.stderr) != 0 {
@@ -57,8 +57,8 @@ func TestAsyncCompilerChecksCatchMutants(test *testing.T) {
 			test.Fatal("mutant did not change input")
 		}
 		binary := filepath.Join(test.TempDir(), "mutant")
-		if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-			test.Fatal(err)
+		if buildError := native.Build(code, binary, native.Options{Sanitize: true}); buildError != nil {
+			test.Fatal(buildError)
 		}
 		result := execute(test, binary)
 		if result.exitCode == 0 || !strings.Contains(string(result.stderr), "heap-use-after-free") {
@@ -72,13 +72,13 @@ func TestAsyncCompilerChecksCatchMutants(test *testing.T) {
 // instead of panicking, so the shared leak checker can check frame cleanup on Linux and Darwin.
 func TestAsyncThrowReleasesFrame(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/async_throw.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/async_throw.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	code := native.C(program)
 	begin := strings.Index(code, "if (root->rejected) {")
@@ -104,14 +104,14 @@ func TestAsyncThrowReleasesFrame(test *testing.T) {
 					source[location[1]:]
 			}
 			binary := filepath.Join(test.TempDir(), "throw")
-			if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(source, binary, native.Options{Sanitize: true}); buildError != nil {
+				test.Fatal(buildError)
 			}
 			report := leakcheck.Report(test, source, binary)
 			// Exercise Darwin's counted rule on Linux too, using this actual frame mutant.
 			counted := filepath.Join(test.TempDir(), "counted-proof")
-			if err := native.Build(source, counted, native.Options{Count: true}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(source, counted, native.Options{Count: true}); buildError != nil {
+				test.Fatal(buildError)
 			}
 			countedReport := leakcheck.Unbalanced(leakRun(execute(test, counted)))
 			if mutant {
@@ -134,13 +134,13 @@ func TestAsyncThrowReleasesFrame(test *testing.T) {
 // wrong. The source on Node must independently catch the mistaken async function classification.
 func TestAsyncTypeOfWrongKindMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/async_typeof.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/async_typeof.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	oracle := onNode(test, path)
 	want := "function\nfunction\nnested: function\nstring\nnumber\nshadow after await: number\ninside: function\nfunction\n"
@@ -192,8 +192,8 @@ func TestAsyncTypeOfWrongKindMutant(test *testing.T) {
 		test.Fatal("mutant did not change an async typeof operand")
 	}
 	binary := filepath.Join(test.TempDir(), "wrong-kind")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	if report := leakcheck.Report(test, native.C(program), binary); report != "" {
 		test.Fatal(report)
@@ -239,17 +239,17 @@ func init() {
 // build also holds generated declarations and frame cleanup to the source oracle.
 func asyncLoopWitness(test *testing.T, name, want string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/"+name+".a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/"+name+".a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := onNode(test, path)
 	if truth.exitCode != 0 || len(truth.stderr) != 0 || (want != "" && string(truth.stdout) != want) {
 		test.Fatalf("Node: %+v", truth)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	if diff := disagreement(truth, onJavaScriptBackend(test, program)); diff != "" {
 		test.Fatal("JavaScript: " + diff)
@@ -262,8 +262,12 @@ func asyncLoopWitness(test *testing.T, name, want string) {
 		test.Fatalf("native: %s: %+v", diff, got)
 	}
 	binary := filepath.Join(test.TempDir(), "split-counted")
-	if err := native.Build(native.C(program), binary, native.Options{Split: true, Count: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(
+		native.C(program),
+		binary,
+		native.Options{Split: true, Count: true},
+	); buildError != nil {
+		test.Fatal(buildError)
 	}
 	got = execute(test, binary)
 	if report := leakcheck.Unbalanced(leakRun(got)); report != "" {
@@ -385,19 +389,21 @@ func init() {
 
 func asyncLoopsRefusal(test *testing.T, name, want, output string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/async_refused/"+name+".a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/async_refused/"+name+".a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := onNode(test, path)
 	if truth.exitCode != 0 || string(truth.stdout) != output || len(truth.stderr) != 0 {
 		test.Fatalf("Node: %+v", truth)
 	}
-	_, err = lowered(test, path)
-	if err == nil || !strings.Contains(err.Error(), want) {
-		test.Fatalf("want %s: %v", want, err)
+	_, loweredError := lowered(test, path)
+	if loweredError == nil || !strings.Contains(loweredError.Error(), want) {
+		test.Fatalf("want %s: %v", want, loweredError)
 	}
-	test.Logf("Node %q; compiler %v", truth.stdout, err)
+	test.Logf("Node %q; compiler %v", truth.stdout, loweredError)
 }
 func TestAsyncLoopsCallableReturnRemainsRefused(test *testing.T) {
 	test.Parallel()
@@ -414,14 +420,14 @@ func init() {
 // one counted binding. Both compile cleanly and must fail only against Node output.
 func asyncLoopMutation(test *testing.T, name, kind string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/"+name+".a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/"+name+".a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := onNode(test, path)
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	changed := false
 	if kind == "iteration" || kind == "top-iteration" || kind == "copy" || kind == "switch" {
@@ -558,8 +564,8 @@ func asyncLoopMutation(test *testing.T, name, kind string) {
 		test.Fatal("mutant did not change its input")
 	}
 	binary := filepath.Join(test.TempDir(), "mutant")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(code, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	got := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
 	if kind == "release" {

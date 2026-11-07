@@ -31,9 +31,9 @@ func TestWASIReleaseSections(test *testing.T) {
 		if code := run(arguments); code != 0 {
 			test.Fatalf("build (count=%t): %d", count, code)
 		}
-		module, err := os.ReadFile(output)
-		if err != nil {
-			test.Fatal(err)
+		module, readError := os.ReadFile(output)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		if len(module) < 8 || !bytes.Equal(module[:8], []byte{0, 'a', 's', 'm', 1, 0, 0, 0}) {
 			test.Fatal("invalid wasm header")
@@ -41,29 +41,29 @@ func TestWASIReleaseSections(test *testing.T) {
 		reader := bytes.NewReader(module[8:])
 		var sections []string
 		for reader.Len() > 0 {
-			id, err := reader.ReadByte()
-			if err != nil {
-				test.Fatal(err)
+			id, readByteError := reader.ReadByte()
+			if readByteError != nil {
+				test.Fatal(readByteError)
 			}
-			size, err := binary.ReadUvarint(reader)
-			if err != nil || size > uint64(reader.Len()) {
-				test.Fatalf("invalid section size: %d, %v", size, err)
+			size, readUvarintError := binary.ReadUvarint(reader)
+			if readUvarintError != nil || size > uint64(reader.Len()) {
+				test.Fatalf("invalid section size: %d, %v", size, readUvarintError)
 			}
 			payload := make([]byte, int(size))
-			if _, err := io.ReadFull(reader, payload); err != nil {
-				test.Fatal(err)
+			if _, readError := io.ReadFull(reader, payload); readError != nil {
+				test.Fatal(readError)
 			}
 			if id != 0 {
 				continue
 			}
 			custom := bytes.NewReader(payload)
-			size, err = binary.ReadUvarint(custom)
-			if err != nil || size > uint64(custom.Len()) {
-				test.Fatalf("invalid custom section name: %d, %v", size, err)
+			size, readUvarintError = binary.ReadUvarint(custom)
+			if readUvarintError != nil || size > uint64(custom.Len()) {
+				test.Fatalf("invalid custom section name: %d, %v", size, readUvarintError)
 			}
 			name := make([]byte, int(size))
-			if _, err := io.ReadFull(custom, name); err != nil {
-				test.Fatal(err)
+			if _, readError := io.ReadFull(custom, name); readError != nil {
+				test.Fatal(readError)
 			}
 			sections = append(sections, string(name))
 		}

@@ -25,15 +25,15 @@ func init() {
 			runtimeproducts.Variant{Name: "parallel_tsan", Options: native.Options{ThreadSanitize: true}},
 		)
 	}
-	paths, err := filepath.Glob(filepath.Join(repository, "internal/oracle/testdata/concurrency/accepted/*.a"))
-	if err != nil {
-		panic(err)
+	paths, globError := filepath.Glob(filepath.Join(repository, "internal/oracle/testdata/concurrency/accepted/*.a"))
+	if globError != nil {
+		panic(globError)
 	}
 	paths = append(paths, filepath.Join(repository, "bench/parallel_files.a"))
 	for _, path := range paths {
-		relative, err := filepath.Rel(repository, path)
-		if err != nil {
-			panic(err)
+		relative, relativePathError := filepath.Rel(repository, path)
+		if relativePathError != nil {
+			panic(relativePathError)
 		}
 		fixtures = append(fixtures, struct {
 			path    string
@@ -213,10 +213,10 @@ func executeParallelDeadline(
 		}
 		command.Env = append(command.Env, fmt.Sprintf("ASAN_OPTIONS=detect_leaks=%d", flag))
 	}
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	var failure *exec.ExitError
-	if err != nil && !errors.As(err, &failure) {
-		test.Fatalf("%s: %v", name, err)
+	if captureError != nil && !errors.As(captureError, &failure) {
+		test.Fatalf("%s: %v", name, captureError)
 	}
 	result := run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}
 	rememberRun(test, result)
@@ -226,13 +226,15 @@ func executeParallelDeadline(
 // Reordering still compiles, finishes and leaks nothing. Only Node's ordered output catches it.
 func TestParallelOracleCatchesResultOrder(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/concurrency/accepted/numbers.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/concurrency/accepted/numbers.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	source := native.C(program)
 	if !strings.Contains(source, "adamic_parallel_map(") {
@@ -247,8 +249,8 @@ adamic_array *oracle_reordered_map(adamic_array *items, adamic_closure *work, en
 }
 ` + source
 	binary := filepath.Join(test.TempDir(), "mutant")
-	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(source, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	for _, threads := range []string{"1", ""} {
 		observed := executeParallel(test, threads, runtime.GOOS == "linux", binary)
@@ -274,13 +276,13 @@ adamic_array *oracle_reordered_map(adamic_array *items, adamic_closure *work, en
 
 func parallelFixtureUnit(test *testing.T, path, build, threads string, attempt int) {
 	test.Helper()
-	absolute, err := filepath.Abs(filepath.Join(repository, path))
-	if err != nil {
-		test.Fatal(err)
+	absolute, absolutePathError := filepath.Abs(filepath.Join(repository, path))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, absolute)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, absolute)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	oracle := onNode(test, absolute)
 	if diff := disagreement(oracle, onJavaScriptBackend(test, program)); diff != "" {
@@ -419,39 +421,39 @@ func TestParallelBenchmark_tsan_Default_2(test *testing.T) {
 func buildParallelProgram(test *testing.T, code, binary string, options native.Options, allocator string) {
 	test.Helper()
 	if allocator == "" {
-		if err := native.Build(code, binary, options); err != nil {
-			test.Fatal(err)
+		if buildError := native.Build(code, binary, options); buildError != nil {
+			test.Fatal(buildError)
 		}
 		return
 	}
 	directory := test.TempDir()
 	// Reads: internal/native/runtime/regexp_replace.c
 	root := filepath.Join(repository, "internal/native/runtime")
-	files, err := os.ReadDir(root)
-	if err != nil {
-		test.Fatal(err)
+	files, readDirectoryError := os.ReadDir(root)
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	for _, file := range files {
 		if file.IsDir() {
 			continue
 		}
-		data, err := os.ReadFile(filepath.Join(root, file.Name()))
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(filepath.Join(root, file.Name()))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		if file.Name() == "adamic.h" || filepath.Ext(file.Name()) == ".c" {
 			data = append([]byte("#define "+allocator+" 1\n"), data...)
 		}
-		if err := os.WriteFile(filepath.Join(directory, file.Name()), data, 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, file.Name()), data, 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
-	library, err := native.RuntimeLibraryForSource(directory, code, options)
-	if err != nil {
-		test.Fatal(err)
+	library, runtimeLibraryForSourceError := native.RuntimeLibraryForSource(directory, code, options)
+	if runtimeLibraryForSourceError != nil {
+		test.Fatal(runtimeLibraryForSourceError)
 	}
-	if err := native.BuildWithRuntime(code, binary, options, library); err != nil {
-		test.Fatalf("slab fixture build: %v", err)
+	if buildWithRuntimeError := native.BuildWithRuntime(code, binary, options, library); buildWithRuntimeError != nil {
+		test.Fatalf("slab fixture build: %v", buildWithRuntimeError)
 	}
 }
 

@@ -39,9 +39,9 @@ func findTestReads(test *testing.T) Finding {
 	test.Helper()
 	forgetHeldForLife()
 	forgetTracked()
-	findings, err := Find([]string{testReadSetKey})
-	if err != nil {
-		test.Fatal(err)
+	findings, findError := Find([]string{testReadSetKey})
+	if findError != nil {
+		test.Fatal(findError)
 	}
 	return findings[0]
 }
@@ -166,14 +166,14 @@ func TestATestReadSetsMarkerNeverWritesThroughALink(test *testing.T) {
 	seed, cache := test.TempDir(), test.TempDir()
 	key := strings.Repeat("8", 64)
 	seeded := filepath.Join(seed, "test-read-set")
-	if err := os.WriteFile(seeded, []byte("the seed's\n"), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(seeded, []byte("the seed's\n"), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if err := os.MkdirAll(filepath.Join(cache, key), 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(filepath.Join(cache, key), 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	if err := os.Link(seeded, filepath.Join(cache, key, "test-read-set")); err != nil {
-		test.Fatal(err)
+	if linkError := os.Link(seeded, filepath.Join(cache, key, "test-read-set")); linkError != nil {
+		test.Fatal(linkError)
 	}
 	marker := placeTestMarker(cache, key, testReadSetKey)
 	if content, _ := os.ReadFile(seeded); string(content) != "the seed's\n" {

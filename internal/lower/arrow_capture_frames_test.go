@@ -24,13 +24,13 @@ func TestArrowStoredCaptureFrames(test *testing.T) {
 // Inspect the capture before emission so a malformed C build cannot kill the mutant.
 func arrowCaptureFrames(test *testing.T, fixture string, empty, receivers int) {
 	test.Helper()
-	source, err := os.ReadFile("../oracle/testdata/" + fixture)
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("../oracle/testdata/" + fixture)
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	program, err := lowerSource(test, string(source))
-	if err != nil {
-		test.Fatal(err)
+	program, lowerSourceError := lowerSource(test, string(source))
+	if lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
 	gotEmpty, gotReceivers := 0, 0
 	for _, function := range program.Functions {

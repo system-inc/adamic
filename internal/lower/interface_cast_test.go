@@ -104,13 +104,13 @@ func TestDefaultTaggedInterfaceAdmission(test *testing.T) {
 			if testCase.name == "in .a" {
 				extension = ".a"
 			}
-			_, err := lowerSourceAs(test, interfaceCastSource+testCase.source, extension)
+			_, lowerSourceAsError := lowerSourceAs(test, interfaceCastSource+testCase.source, extension)
 			if testCase.reason == "" {
-				if err != nil {
-					test.Fatal(err)
+				if lowerSourceAsError != nil {
+					test.Fatal(lowerSourceAsError)
 				}
-			} else if err == nil || !strings.Contains(err.Error(), testCase.reason) {
-				test.Fatalf("want refusal containing %q, got %v", testCase.reason, err)
+			} else if lowerSourceAsError == nil || !strings.Contains(lowerSourceAsError.Error(), testCase.reason) {
+				test.Fatalf("want refusal containing %q, got %v", testCase.reason, lowerSourceAsError)
 			}
 		})
 	}

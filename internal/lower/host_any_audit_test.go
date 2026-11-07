@@ -58,12 +58,12 @@ func newHostAnyAudit(test *testing.T) *hostAnyAudit {
 import 'node:fs'; import 'node:perf_hooks'; import 'node:console';
 import 'node:buffer'; import 'node:tty'; import 'node:stream';
 import 'node:net'; import 'node:path'; import 'node:os';`
-	if err := os.WriteFile(file, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(file, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := load.Load([]string{file})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{file})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	c, release := program.Checker(context.Background(), program.Files()[0])
 	test.Cleanup(release)
@@ -151,9 +151,9 @@ import 'node:net'; import 'node:path'; import 'node:os';`
 // parallel Go allow-list. Locations are declaration file:line, as in the table.
 func hostAnyModelled(test *testing.T) map[string]bool {
 	test.Helper()
-	data, err := os.ReadFile("../../docs/axioms/host-any.md")
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile("../../docs/axioms/host-any.md")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	found := false
 	active := false

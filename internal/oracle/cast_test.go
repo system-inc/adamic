@@ -70,16 +70,16 @@ type B = { readonly kind: Kind.B; readonly n: string };
 function cast(value: A | B): A { return value as A; }
 console.log(String(cast({ kind: Kind.B, n: 'wrong'.repeat(2) }).n + 1));
 `
-	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := lowered(test, path)
+	program, loweredError := lowered(test, path)
 	var refused *lower.Refused
-	if errors.As(err, &refused) && strings.Contains(err.Error(), "adamic/no-unchecked-cast") {
+	if errors.As(loweredError, &refused) && strings.Contains(loweredError.Error(), "adamic/no-unchecked-cast") {
 		return
 	}
-	if err != nil {
-		test.Fatalf("want cast refusal, got %v", err)
+	if loweredError != nil {
+		test.Fatalf("want cast refusal, got %v", loweredError)
 	}
 	result, _ := natively(test, program)
 	node := onNode(test, path)
@@ -115,15 +115,15 @@ func TestCheckedCastRunsNoCatchOrFinally(test *testing.T) {
 				)
 			}
 			path := filepath.Join(directory, "program.mjs")
-			if err := os.WriteFile(path, []byte(code), 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, []byte(code), 0644); writeError != nil {
+				test.Fatal(writeError)
 			}
 			result := onNode(test, path)
 			if result.exitCode != 70 || string(result.stdout) != "casting\n" {
 				test.Fatalf("panic failed: exit %d stdout %q stderr %q", result.exitCode, result.stdout, result.stderr)
 			}
-			if _, err := os.Stat(marker); !os.IsNotExist(err) {
-				test.Fatalf("catch or finally ran after cast panic: %v", err)
+			if _, statError := os.Stat(marker); !os.IsNotExist(statError) {
+				test.Fatalf("catch or finally ran after cast panic: %v", statError)
 			}
 		})
 	}
@@ -154,13 +154,13 @@ func init() {
 
 func castFixture(test *testing.T, file string) (*ir.Program, string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", file))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", file))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	return program, path
 }

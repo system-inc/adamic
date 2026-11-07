@@ -29,9 +29,9 @@ func cssParserWitnessKey(test *testing.T, mutation int, port, cases, answers str
 	test.Helper()
 	flags := []string{"mutation=" + strconv.Itoa(mutation)}
 	for _, input := range []struct{ name, path string }{{"port", port}, {"cases", cases}, {"answers", answers}} {
-		content, err := os.ReadFile(input.path)
-		if err != nil {
-			test.Fatal(err)
+		content, readError := os.ReadFile(input.path)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		flags = append(flags, fmt.Sprintf("%s-sha256=%x", input.name, sha256.Sum256(content)))
 	}
@@ -61,9 +61,9 @@ func cssParserWitnesses(test *testing.T, mutation int) []int {
 	cssParserWitnessOnce[mutation].Do(func() {
 		port := cssParserPreparedProgram(test, mutation).main
 		directory := buildcache.Product(test, cssParserWitnessInputs(test, mutation), func(dir string) error {
-			ids, err := cssParserDeriveWitnesses(test, port)
-			if err != nil {
-				return err
+			ids, cssParserDeriveWitnessesError := cssParserDeriveWitnesses(test, port)
+			if cssParserDeriveWitnessesError != nil {
+				return cssParserDeriveWitnessesError
 			}
 			var b strings.Builder
 			for _, id := range ids {
@@ -71,15 +71,15 @@ func cssParserWitnesses(test *testing.T, mutation int) []int {
 			}
 			return os.WriteFile(filepath.Join(dir, "witnesses.txt"), []byte(b.String()), 0644)
 		})
-		data, err := os.ReadFile(filepath.Join(directory, "witnesses.txt"))
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(filepath.Join(directory, "witnesses.txt"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		ids := []int{}
 		for _, field := range strings.Fields(string(data)) {
-			id, err := strconv.Atoi(field)
-			if err != nil {
-				test.Fatal(err)
+			id, parseError := strconv.Atoi(field)
+			if parseError != nil {
+				test.Fatal(parseError)
 			}
 			ids = append(ids, id)
 		}
@@ -169,9 +169,9 @@ func TestProduct_CSSParserClosingBraceMutantWitnesses(test *testing.T) {
 // The witnesses' key moves with each input they're derived from: the mutant's port, the corpus and Go's answers.
 func TestCSSParserMutantWitnessesRekey(test *testing.T) {
 	test.Parallel()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	cases, _ := oracles.CachedParserOutputs(test)
 	inputs := map[string]string{
@@ -187,13 +187,13 @@ func TestCSSParserMutantWitnessesRekey(test *testing.T) {
 		test.Fatal("another mutant kept the witnesses' key")
 	}
 	for _, name := range []string{"port", "cases", "answers"} {
-		content, err := os.ReadFile(inputs[name])
-		if err != nil {
-			test.Fatal(err)
+		content, readError := os.ReadFile(inputs[name])
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		edited := filepath.Join(test.TempDir(), name)
-		if err := os.WriteFile(edited, append(content, 'x'), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(edited, append(content, 'x'), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		moved := map[string]string{"port": inputs["port"], "cases": inputs["cases"], "answers": inputs["answers"]}
 		moved[name] = edited
@@ -212,9 +212,9 @@ func TestCSSParserMutantWitnessesRekey(test *testing.T) {
 // The derivation still finds a difference planted in one answer.
 func TestCSSParserMutantThatDiffersNowhereFails(test *testing.T) {
 	test.Parallel()
-	ids, err := cssParserDeriveWitnesses(test, cssParserPreparedProgram(test, -1).main)
-	if err != nil {
-		test.Fatal(err)
+	ids, cssParserDeriveWitnessesError := cssParserDeriveWitnesses(test, cssParserPreparedProgram(test, -1).main)
+	if cssParserDeriveWitnessesError != nil {
+		test.Fatal(cssParserDeriveWitnessesError)
 	}
 	if len(ids) != 0 {
 		test.Fatalf("the unmutated parser differs from Go on %d cases", len(ids))
@@ -222,20 +222,26 @@ func TestCSSParserMutantThatDiffersNowhereFails(test *testing.T) {
 	keys := oracles.LoadParserCorpus(test).CaseKeys
 	witnesses := cssParserAllWitnesses(test)
 	witnesses[0] = ids
-	err = cssParserUnionError(
+	cssParserUnionError := cssParserUnionError(
 		keys,
 		oracles.ParserWithMutants(oracles.ParserAgreementShards(keys), keys, witnesses),
 		witnesses,
 	)
-	if err == nil || !strings.Contains(err.Error(), "differs from Go nowhere") {
-		test.Fatalf("a mutant with no witnesses read as %v", err)
+	if cssParserUnionError == nil || !strings.Contains(cssParserUnionError.Error(), "differs from Go nowhere") {
+		test.Fatalf("a mutant with no witnesses read as %v", cssParserUnionError)
 	}
-	test.Logf("refused: %v", err)
-	differing, err := cssParserDifferingCases("case 0\na\ncase 1\nc\n", "case 0\na\ncase 1\nb\n")
-	if err != nil || len(differing) != 1 || differing[0] != 1 {
-		test.Fatalf("one changed answer read as %v, %v", differing, err)
+	test.Logf("refused: %v", cssParserUnionError)
+	differing, cssParserDifferingCasesError := cssParserDifferingCases(
+		"case 0\na\ncase 1\nc\n",
+		"case 0\na\ncase 1\nb\n",
+	)
+	if cssParserDifferingCasesError != nil || len(differing) != 1 || differing[0] != 1 {
+		test.Fatalf("one changed answer read as %v, %v", differing, cssParserDifferingCasesError)
 	}
-	if _, err := cssParserDifferingCases("case 0\na\n", "case 0\na\ncase 1\nb\n"); err == nil {
+	if _, cssParserDifferingCasesError := cssParserDifferingCases(
+		"case 0\na\n",
+		"case 0\na\ncase 1\nb\n",
+	); cssParserDifferingCasesError == nil {
 		test.Fatal("a missing case read as no difference")
 	}
 }

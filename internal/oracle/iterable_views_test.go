@@ -22,9 +22,9 @@ import (
 func TestIterableViewsAgreeWithNode(test *testing.T) {
 	test.Parallel()
 	directory := "internal/oracle/testdata/iterable_views"
-	entries, err := os.ReadDir(filepath.Join(repository, directory))
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(filepath.Join(repository, directory))
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	programs := 0
 	for _, entry := range entries {

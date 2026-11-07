@@ -24,16 +24,16 @@ func TestParameterPropertyValueMatchesNode(test *testing.T) {
 		command := exec.CommandContext(ctx, executable, arguments...)
 		var stderr bytes.Buffer
 		command.Stderr = &stderr
-		stdout, err := command.Output()
-		if err != nil || stderr.Len() != 0 {
-			test.Fatalf("%s: error %v, stdout %q, stderr %q", name, err, stdout, stderr.Bytes())
+		stdout, outputError := command.Output()
+		if outputError != nil || stderr.Len() != 0 {
+			test.Fatalf("%s: error %v, stdout %q, stderr %q", name, outputError, stdout, stderr.Bytes())
 		}
 		return stdout
 	}
 	want := []byte("7\n")
 	binary := filepath.Join(directory, "native")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	if got := run("native backend with ASan/UBSan", binary); !bytes.Equal(got, want) {
 		test.Errorf("native backend stdout = %q, source Node = %q", got, want)

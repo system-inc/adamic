@@ -95,13 +95,16 @@ const b = new Box(); b.name = "w"; console.log("written");`, viewOptionalWriteRe
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			program, err := lowerTypeScriptAssertionSource(test, viewOptionalWritePrelude+probe.source)
+			program, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(
+				test,
+				viewOptionalWritePrelude+probe.source,
+			)
 			if os.Getenv("ADAMIC_VIEW_OPTIONAL_WRITE_MUTANT") == "1" {
 				if probe.name != "v1 assigned" {
 					test.Skip("the mutant is shown on v1")
 				}
-				if err != nil {
-					test.Fatalf("the mutant must admit the program: %v", err)
+				if lowerTypeScriptAssertionSourceError != nil {
+					test.Fatalf("the mutant must admit the program: %v", lowerTypeScriptAssertionSourceError)
 				}
 				code, out, errs := brandedNative(test, program)
 				if code == 0 && out == "w\n" {
@@ -117,12 +120,13 @@ const b = new Box(); b.name = "w"; console.log("written");`, viewOptionalWriteRe
 			}
 			var pending *NotYet
 			var refused *Refused
-			if !errors.As(err, &pending) && !errors.As(err, &refused) ||
-				!strings.Contains(err.Error(), probe.want) ||
-				strings.Contains(err.Error(), "yet yet") {
-				test.Fatalf("want NotYet or Refused with %q, got %v", probe.want, err)
+			if !errors.As(lowerTypeScriptAssertionSourceError, &pending) &&
+				!errors.As(lowerTypeScriptAssertionSourceError, &refused) ||
+				!strings.Contains(lowerTypeScriptAssertionSourceError.Error(), probe.want) ||
+				strings.Contains(lowerTypeScriptAssertionSourceError.Error(), "yet yet") {
+				test.Fatalf("want NotYet or Refused with %q, got %v", probe.want, lowerTypeScriptAssertionSourceError)
 			}
-			test.Logf("stops: %v", err)
+			test.Logf("stops: %v", lowerTypeScriptAssertionSourceError)
 		})
 	}
 	test.Run("required field", func(test *testing.T) {
@@ -145,9 +149,9 @@ var viewWriteProducers = []string{"increment", "setProperty", "updateProperty", 
 // and it's named here.
 func TestViewWriteReceiverHoldsEveryWrite(test *testing.T) {
 	test.Parallel()
-	entries, err := os.ReadDir(".")
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(".")
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	files := token.NewFileSet()
 	var skipped []string
@@ -156,9 +160,9 @@ func TestViewWriteReceiverHoldsEveryWrite(test *testing.T) {
 		if entry.IsDir() || !strings.HasSuffix(entry.Name(), ".go") || strings.HasSuffix(entry.Name(), "_test.go") {
 			continue
 		}
-		file, err := parser.ParseFile(files, entry.Name(), nil, 0)
-		if err != nil {
-			test.Fatal(err)
+		file, parseFileError := parser.ParseFile(files, entry.Name(), nil, 0)
+		if parseFileError != nil {
+			test.Fatal(parseFileError)
 		}
 		for _, declaration := range file.Decls {
 			function, isFunction := declaration.(*ast.FuncDecl)

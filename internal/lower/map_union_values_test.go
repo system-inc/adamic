@@ -33,17 +33,17 @@ func TestMapUnionValueBoundaries(test *testing.T) {
 		{"union_keys", `const map = new Map<string | number, string>();`, "a Map whose keys", false},
 	} {
 		test.Run(probe.name, func(test *testing.T) {
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			if probe.refused {
 				var refused *Refused
-				if !errors.As(err, &refused) || !strings.Contains(err.Error(), probe.reason) {
-					test.Fatalf("want Refused containing %q, got %v", probe.reason, err)
+				if !errors.As(lowerSourceError, &refused) || !strings.Contains(lowerSourceError.Error(), probe.reason) {
+					test.Fatalf("want Refused containing %q, got %v", probe.reason, lowerSourceError)
 				}
 				return
 			}
 			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.reason) {
-				test.Fatalf("want NotYet containing %q, got %v", probe.reason, err)
+			if !errors.As(lowerSourceError, &notYet) || !strings.Contains(lowerSourceError.Error(), probe.reason) {
+				test.Fatalf("want NotYet containing %q, got %v", probe.reason, lowerSourceError)
 			}
 		})
 	}

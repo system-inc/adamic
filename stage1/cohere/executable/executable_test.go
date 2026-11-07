@@ -14,9 +14,9 @@ func TestWriteLeavesNoWritableDescriptorForSiblingForksToExec(test *testing.T) {
 	test.Parallel()
 	dir := test.TempDir()
 	// The forks run this test binary with no test selected, so the pressure needs no host tool.
-	self, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	self, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 45*time.Second)
 	var forks sync.WaitGroup
@@ -28,8 +28,12 @@ func TestWriteLeavesNoWritableDescriptorForSiblingForksToExec(test *testing.T) {
 			defer forks.Done()
 			ready <- struct{}{}
 			for ctx.Err() == nil {
-				if err := exec.CommandContext(ctx, self, "-test.run=^$").Run(); err != nil && ctx.Err() == nil {
-					failures <- err
+				if runError := exec.CommandContext(
+					ctx,
+					self,
+					"-test.run=^$",
+				).Run(); runError != nil && ctx.Err() == nil {
+					failures <- runError
 					return
 				}
 			}
@@ -44,12 +48,12 @@ func TestWriteLeavesNoWritableDescriptorForSiblingForksToExec(test *testing.T) {
 			test.Fatal("fork stress deadline", err)
 		}
 		path := filepath.Join(dir, "compiler")
-		if err := Write(path, []byte("#!/bin/sh\necho ready\n")); err != nil {
-			test.Fatal(err)
+		if writeError := Write(path, []byte("#!/bin/sh\necho ready\n")); writeError != nil {
+			test.Fatal(writeError)
 		}
-		output, err := exec.CommandContext(ctx, path).CombinedOutput()
-		if err != nil || string(output) != "ready\n" {
-			test.Fatalf("executable %d under concurrent forks: %v, output %q", program, err, output)
+		output, combinedOutputError := exec.CommandContext(ctx, path).CombinedOutput()
+		if combinedOutputError != nil || string(output) != "ready\n" {
+			test.Fatalf("executable %d under concurrent forks: %v, output %q", program, combinedOutputError, output)
 		}
 	}
 	cancel()

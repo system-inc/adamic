@@ -63,16 +63,16 @@ func TestExecuteFailsOnStderrOtherThanModuleDownloads(test *testing.T) {
 		// execute resolves go through toolchain, under ADAMIC_TOOLS and toolchain's environment, so the fake is the
 		// tools directory's go and carries its stderr in a file of its own rather than in an environment variable.
 		tools := test.TempDir()
-		if err := os.MkdirAll(filepath.Join(tools, "bin"), 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(filepath.Join(tools, "bin"), 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 		stderr := filepath.Join(tools, "stderr")
-		if err := os.WriteFile(stderr, []byte(lines), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(stderr, []byte(lines), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		script := "#!/bin/sh\ncat '" + stderr + "' >&2\n"
-		if err := executable.Write(filepath.Join(tools, "bin", "go"), []byte(script)); err != nil {
-			test.Fatal(err)
+		if writeError := executable.Write(filepath.Join(tools, "bin", "go"), []byte(script)); writeError != nil {
+			test.Fatal(writeError)
 		}
 		test.Setenv("ADAMIC_TOOLS", tools)
 		execute(test, "", "go", "version")
@@ -96,12 +96,17 @@ func TestExecuteFailsOnStderrOtherThanModuleDownloads(test *testing.T) {
 	} {
 		command := exec.Command(os.Args[0], "-test.run=^TestExecuteFailsOnStderrOtherThanModuleDownloads$", "-test.v")
 		command.Env = append(os.Environ(), "ADAMIC_LINT_STDERR_PROBE="+row.stderr)
-		output, err := command.CombinedOutput()
-		if row.passes && err != nil {
-			test.Errorf("%s: execute failed on module downloads alone: %v\n%s", row.name, err, output)
+		output, combinedOutputError := command.CombinedOutput()
+		if row.passes && combinedOutputError != nil {
+			test.Errorf("%s: execute failed on module downloads alone: %v\n%s", row.name, combinedOutputError, output)
 		}
-		if !row.passes && (err == nil || !strings.Contains(string(output), "planted stderr")) {
-			test.Errorf("%s: execute passed, or failed without naming the stderr: %v\n%s", row.name, err, output)
+		if !row.passes && (combinedOutputError == nil || !strings.Contains(string(output), "planted stderr")) {
+			test.Errorf(
+				"%s: execute passed, or failed without naming the stderr: %v\n%s",
+				row.name,
+				combinedOutputError,
+				output,
+			)
 		}
 	}
 }

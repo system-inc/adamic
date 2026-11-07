@@ -8,14 +8,14 @@ import (
 // Each witness runs independently, including the release build and the leak check.
 func checkRuntimeWitness(test *testing.T, fixture string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	want := onNode(test, path)
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	got, leaked, comparable := nativelyCheckingLeaks(test, program, want.exitCode == 0)
 	if leaked != "" {

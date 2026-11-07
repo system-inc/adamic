@@ -18,11 +18,16 @@ import (
 func (l *lowering) reflectGet(node *ast.Node) (ir.Expression, bool, error) {
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
-	if callee.Kind != ast.KindPropertyAccessExpression || callee.Name().Text() != "get" || !l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Reflect") {
+	if callee.Kind != ast.KindPropertyAccessExpression ||
+		callee.Name().Text() != "get" ||
+		!l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Reflect") {
 		return nil, false, nil
 	}
 	const shape = "Reflect.get other than Reflect.get(Object(value), key, value) with one identifier as value"
-	if call.QuestionDotToken != nil || callee.AsPropertyAccessExpression().QuestionDotToken != nil || len(call.Arguments.Nodes) != 3 || hasSpread(node) {
+	if call.QuestionDotToken != nil ||
+		callee.AsPropertyAccessExpression().QuestionDotToken != nil ||
+		len(call.Arguments.Nodes) != 3 ||
+		hasSpread(node) {
 		return nil, true, l.notYet(node, shape)
 	}
 	arguments := call.Arguments.Nodes
@@ -31,40 +36,64 @@ func (l *lowering) reflectGet(node *ast.Node) (ir.Expression, bool, error) {
 		return nil, true, l.notYet(node, shape)
 	}
 	wrapper := wrapped.AsCallExpression()
-	if wrapper.QuestionDotToken != nil || !l.isLibraryGlobal(wrapper.Expression, "Object") || len(wrapper.Arguments.Nodes) != 1 || hasSpread(wrapped) {
+	if wrapper.QuestionDotToken != nil ||
+		!l.isLibraryGlobal(wrapper.Expression, "Object") ||
+		len(wrapper.Arguments.Nodes) != 1 ||
+		hasSpread(wrapped) {
 		return nil, true, l.notYet(node, shape)
 	}
 	value := ast.SkipParentheses(wrapper.Arguments.Nodes[0])
 	receiver := ast.SkipParentheses(arguments[2])
-	if !ast.IsIdentifier(value) || !ast.IsIdentifier(receiver) || l.symbol(value) == nil || l.symbol(value) != l.symbol(receiver) {
+	if !ast.IsIdentifier(value) ||
+		!ast.IsIdentifier(receiver) ||
+		l.symbol(value) == nil ||
+		l.symbol(value) != l.symbol(receiver) {
 		return nil, true, l.notYet(node, shape)
 	}
 	// Object(null) and Object(undefined) are a new empty object, which no backend's read sees: the
 	// node is only ever made for a value the checker proved is neither.
 	proven := l.checker.GetTypeAtLocation(value)
-	if proven.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsNull|checker.TypeFlagsUndefined|checker.TypeFlagsVoid) != 0 || l.includesNull(proven) || l.includesUndefined(proven) {
-		return nil, true, l.notYet(value, "Reflect.get of a value that may be null or undefined (Object(value) is then a new object)")
+	if proven.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsNull|checker.TypeFlagsUndefined|checker.TypeFlagsVoid) != 0 ||
+		l.includesNull(proven) ||
+		l.includesUndefined(proven) {
+		return nil, true, l.notYet(
+			value,
+			"Reflect.get of a value that may be null or undefined (Object(value) is then a new object)",
+		)
 	}
 	keyType := l.checker.GetTypeAtLocation(arguments[1])
-	if held, known := l.representation(keyType); !known || held != ir.String || l.includesNull(keyType) || l.includesUndefined(keyType) {
-		return nil, true, l.notYet(arguments[1], "Reflect.get by a key that isn't a string (symbol keys and key coercion)")
+	if held, known := l.representation(
+		keyType,
+	); !known || held != ir.String || l.includesNull(keyType) || l.includesUndefined(keyType) {
+		return nil, true, l.notYet(
+			arguments[1],
+			"Reflect.get by a key that isn't a string (symbol keys and key coercion)",
+		)
 	}
-	object, err := l.expression(value)
-	if err != nil {
-		return nil, true, err
+	object, expressionError := l.expression(value)
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
 	if object.Type() != ir.Union {
-		return nil, true, l.notYet(value, "Reflect.get of a value not held as unknown (a read by its runtime shape needs the union's tag)")
+		return nil, true, l.notYet(
+			value,
+			"Reflect.get of a value not held as unknown (a read by its runtime shape needs the union's tag)",
+		)
 	}
-	key, err := l.expression(arguments[1])
-	if err != nil {
-		return nil, true, err
+	key, expressionError := l.expression(arguments[1])
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
 	if key.Type() != ir.String {
-		return nil, true, l.notYet(arguments[1], "Reflect.get by a key that isn't a string (symbol keys and key coercion)")
+		return nil, true, l.notYet(
+			arguments[1],
+			"Reflect.get by a key that isn't a string (symbol keys and key coercion)",
+		)
 	}
-	if err := l.checkDynamicKeyedGetterSyntax(node); err != nil {
-		return nil, true, err
+	if checkDynamicKeyedGetterSyntaxError := l.checkDynamicKeyedGetterSyntax(
+		node,
+	); checkDynamicKeyedGetterSyntaxError != nil {
+		return nil, true, checkDynamicKeyedGetterSyntaxError
 	}
 	if l.dynamicKeyedSite == nil {
 		l.dynamicKeyedSite = node
@@ -76,7 +105,17 @@ func (l *lowering) reflectGet(node *ast.Node) (ir.Expression, bool, error) {
 // dynamicKeyedGetterReturns are the representations a class getter's result can have where a
 // run-time key read calls it: the runtime boxes each into the union it gives (union.c, keyed_getter).
 var dynamicKeyedGetterReturns = []ir.Type{
-	ir.Number, ir.Boolean, ir.String, ir.Object, ir.Array, ir.Map, ir.MaybeNumber, ir.Closure, ir.MaybeBoolean, ir.Union, ir.Record,
+	ir.Number,
+	ir.Boolean,
+	ir.String,
+	ir.Object,
+	ir.Array,
+	ir.Map,
+	ir.MaybeNumber,
+	ir.Closure,
+	ir.MaybeBoolean,
+	ir.Union,
+	ir.Record,
 }
 
 // A run-time key read calls whichever class getter its key names, from inside the runtime, where no
@@ -132,7 +171,8 @@ func (l *lowering) checkDynamicKeyedGetters() error {
 				continue
 			}
 			if !slices.Contains(dynamicKeyedGetterReturns, l.result.Functions[accessor.Getter].Returns) {
-				return l.notYet(l.dynamicKeyedSite, dynamicKeyedRead(l.dynamicKeyedSite)+" in a program with a class getter whose result has no union form yet")
+				return l.notYet(l.dynamicKeyedSite, dynamicKeyedRead(l.dynamicKeyedSite)+
+					" in a program with a class getter whose result has no union form yet")
 			}
 			declaration := l.getterDeclarations[accessor.Getter]
 			if declaration == nil {
@@ -143,7 +183,8 @@ func (l *lowering) checkDynamicKeyedGetters() error {
 			}
 			result := l.checker.GetTypeAtLocation(declaration.Name())
 			if held, known := l.representation(result); l.includesNull(result) && (!known || held != ir.Union) {
-				return l.notYet(l.dynamicKeyedSite, dynamicKeyedRead(l.dynamicKeyedSite)+" in a program with a class getter that may give null held bare (null and undefined slot tags)")
+				return l.notYet(l.dynamicKeyedSite, dynamicKeyedRead(l.dynamicKeyedSite)+
+					" in a program with a class getter that may give null held bare (null and undefined slot tags)")
 			}
 		}
 	}
@@ -168,10 +209,24 @@ func (l *lowering) dynamicKeyedGetterBody(declaration *ast.Node) string {
 // that convert an operand: arithmetic, ordering, loose equality and bitwise. Each runs ToPrimitive on
 // an object, which calls its toString or valueOf, so their operands must be primitives.
 var dynamicKeyedGetterConverting = []ast.Kind{
-	ast.KindPlusToken, ast.KindMinusToken, ast.KindAsteriskToken, ast.KindSlashToken, ast.KindPercentToken, ast.KindAsteriskAsteriskToken,
-	ast.KindLessThanToken, ast.KindGreaterThanToken, ast.KindLessThanEqualsToken, ast.KindGreaterThanEqualsToken,
-	ast.KindEqualsEqualsToken, ast.KindExclamationEqualsToken,
-	ast.KindAmpersandToken, ast.KindBarToken, ast.KindCaretToken, ast.KindLessThanLessThanToken, ast.KindGreaterThanGreaterThanToken, ast.KindGreaterThanGreaterThanGreaterThanToken,
+	ast.KindPlusToken,
+	ast.KindMinusToken,
+	ast.KindAsteriskToken,
+	ast.KindSlashToken,
+	ast.KindPercentToken,
+	ast.KindAsteriskAsteriskToken,
+	ast.KindLessThanToken,
+	ast.KindGreaterThanToken,
+	ast.KindLessThanEqualsToken,
+	ast.KindGreaterThanEqualsToken,
+	ast.KindEqualsEqualsToken,
+	ast.KindExclamationEqualsToken,
+	ast.KindAmpersandToken,
+	ast.KindBarToken,
+	ast.KindCaretToken,
+	ast.KindLessThanLessThanToken,
+	ast.KindGreaterThanGreaterThanToken,
+	ast.KindGreaterThanGreaterThanGreaterThanToken,
 }
 
 // dynamicKeyedGetterPassing are the binary operators that never convert an operand: strict equality

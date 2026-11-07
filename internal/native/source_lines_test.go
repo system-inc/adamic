@@ -28,9 +28,9 @@ import (
 
 func debugProgram(test *testing.T, path string, debug bool) (*ir.Program, error) {
 	test.Helper()
-	loaded, err := load.Load([]string{path})
-	if err != nil {
-		return nil, err
+	loaded, loadError := load.Load([]string{path})
+	if loadError != nil {
+		return nil, loadError
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
@@ -82,12 +82,12 @@ func stripSourceLines(value reflect.Value) reflect.Value {
 
 func debugPendingProgram(test *testing.T, path string) bool {
 	test.Helper()
-	_, err := os.Stat(strings.TrimSuffix(path, filepath.Ext(path)) + ".pending")
-	if err == nil {
+	_, statError := os.Stat(strings.TrimSuffix(path, filepath.Ext(path)) + ".pending")
+	if statError == nil {
 		return true
 	}
-	if !errors.Is(err, os.ErrNotExist) {
-		test.Fatal(err)
+	if !errors.Is(statError, os.ErrNotExist) {
+		test.Fatal(statError)
 	}
 	return false
 }
@@ -100,16 +100,16 @@ func debugRefusedProgram(path string) bool {
 func reviewPrograms(test *testing.T) []string {
 	test.Helper()
 	paths := []string{}
-	err := filepath.WalkDir("../oracle/testdata/review", func(path string, d fs.DirEntry, err error) error {
-		if err == nil && !d.IsDir() && (strings.HasSuffix(path, ".a") || strings.HasSuffix(path, ".ts")) {
+	walkError := filepath.WalkDir("../oracle/testdata/review", func(path string, d fs.DirEntry, pathError error) error {
+		if pathError == nil && !d.IsDir() && (strings.HasSuffix(path, ".a") || strings.HasSuffix(path, ".ts")) {
 			if !debugPendingProgram(test, path) {
 				paths = append(paths, path)
 			}
 		}
-		return err
+		return pathError
 	})
-	if err != nil {
-		test.Fatal(err)
+	if walkError != nil {
+		test.Fatal(walkError)
 	}
 	return paths
 }
@@ -117,9 +117,9 @@ func reviewPrograms(test *testing.T) []string {
 func debugCorpus(test *testing.T) []string {
 	test.Helper()
 	paths := reviewPrograms(test)
-	graph, err := filepath.Glob("../oracle/testdata/graph_regions*.a")
-	if err != nil {
-		test.Fatal(err)
+	graph, globError := filepath.Glob("../oracle/testdata/graph_regions*.a")
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	for _, path := range graph {
 		if !debugPendingProgram(test, path) {
@@ -133,21 +133,21 @@ func runDebugStrippedIR(test *testing.T, shard int) {
 	classAllocators := 0
 	for _, path := range debugFamilyPaths(debugCorpus(test), shard, true) {
 		test.Run(path, func(test *testing.T) {
-			release, err := debugProgram(test, path, false)
-			debug, debugErr := debugProgram(test, path, true)
+			release, debugProgramError := debugProgram(test, path, false)
+			debug, debugError := debugProgram(test, path, true)
 			if debugRefusedProgram(path) {
-				if err == nil || debugErr == nil {
+				if debugProgramError == nil || debugError == nil {
 					test.Fatal("review/refused program unexpectedly lowered")
 				}
-				requireDebugDiagnostic(test, err)
-				requireDebugDiagnostic(test, debugErr)
+				requireDebugDiagnostic(test, debugProgramError)
+				requireDebugDiagnostic(test, debugError)
 				return
 			}
-			if err != nil {
-				test.Fatalf("agree/smoke program failed to lower: %v", err)
+			if debugProgramError != nil {
+				test.Fatalf("agree/smoke program failed to lower: %v", debugProgramError)
 			}
-			if debugErr != nil {
-				test.Fatal(debugErr)
+			if debugError != nil {
+				test.Fatal(debugError)
 			}
 			// Module boundaries count all physical statements. Translate the counts before stripping.
 			offset := len(debug.Main)
@@ -210,38 +210,41 @@ func TestDebugTwoDirectories(test *testing.T) {
 			var firstKeys []string
 			for i := 0; i < 2; i++ {
 				path := filepath.Join(test.TempDir(), "fixture.a")
-				if err := os.Mkdir(filepath.Join(filepath.Dir(path), "lib"), 0755); err != nil {
-					test.Fatal(err)
+				if createDirectoryError := os.Mkdir(
+					filepath.Join(filepath.Dir(path), "lib"),
+					0755,
+				); createDirectoryError != nil {
+					test.Fatal(createDirectoryError)
 				}
-				if err := os.WriteFile(
+				if writeError := os.WriteFile(
 					filepath.Join(filepath.Dir(path), "lib", "value.a"),
 					[]byte("export function f(n: number): number { return n + 1; }\n"),
 					0644,
-				); err != nil {
-					test.Fatal(err)
+				); writeError != nil {
+					test.Fatal(writeError)
 				}
-				if err := os.WriteFile(
+				if writeError := os.WriteFile(
 					path,
 					[]byte("import { f } from './lib/value.a';\nconsole.log((f(4)).toString());\n"),
 					0644,
-				); err != nil {
-					test.Fatal(err)
+				); writeError != nil {
+					test.Fatal(writeError)
 				}
 				options := mode.options
 				options.DebugDirectory = filepath.Dir(path)
-				program, err := debugProgram(test, path, options.Debug)
-				if err != nil {
-					test.Fatal(err)
+				program, debugProgramError := debugProgram(test, path, options.Debug)
+				if debugProgramError != nil {
+					test.Fatal(debugProgramError)
 				}
 				source := CWithOptions(program, options)
 				binary := filepath.Join(filepath.Dir(path), "program")
-				if err := BuildWithRuntime(
+				if buildWithRuntimeError := BuildWithRuntime(
 					source,
 					binary,
 					options,
 					debugArchiveProduct(test, options, false),
-				); err != nil {
-					test.Fatal(err)
+				); buildWithRuntimeError != nil {
+					test.Fatal(buildWithRuntimeError)
 				}
 				if options.Debug && !strings.Contains(source, `#line 1 "lib/value.a"`) {
 					test.Fatal("missing entry-relative imported marker")
@@ -249,9 +252,9 @@ func TestDebugTwoDirectories(test *testing.T) {
 				if options.Debug && !strings.Contains(source, `#line 2 "fixture.a"`) {
 					test.Fatal("missing relative entry marker")
 				}
-				contents, err := os.ReadFile(binary)
-				if err != nil {
-					test.Fatal(err)
+				contents, readError := os.ReadFile(binary)
+				if readError != nil {
+					test.Fatal(readError)
 				}
 				if i == 0 {
 					firstBinary = contents
@@ -268,23 +271,23 @@ func TestDebugTwoDirectories(test *testing.T) {
 					test.Fatal("C differs between directories")
 				}
 				// Splitting is deterministic too, including each unit's resolved reset.
-				header, units, err := splitC(source)
-				if err != nil {
-					test.Fatal(err)
+				header, units, splitCError := splitC(source)
+				if splitCError != nil {
+					test.Fatal(splitCError)
 				}
-				header2, units2, err := splitC(first)
-				if err != nil {
-					test.Fatal(err)
+				header2, units2, splitCError := splitC(first)
+				if splitCError != nil {
+					test.Fatal(splitCError)
 				}
 				if header != header2 || !reflect.DeepEqual(units, units2) {
 					test.Fatal("split unit bytes differ")
 				}
-				common, err := readRuntime(runtime, "runtime")
-				if err != nil {
-					test.Fatal(err)
+				common, readRuntimeError := readRuntime(runtime, "runtime")
+				if readRuntimeError != nil {
+					test.Fatal(readRuntimeError)
 				}
 				common = append(common, runtimeFile{name: "units.h", contents: []byte(header)})
-				keying, err := newUnitKeying(
+				keying, newUnitKeyingError := newUnitKeying(
 					unitFirst,
 					common,
 					append(SourceFlags(source, options), programDebugFlags(options)...),
@@ -292,8 +295,8 @@ func TestDebugTwoDirectories(test *testing.T) {
 					unitKeyEnvironment(),
 					options.Sanitize || options.ThreadSanitize,
 				)
-				if err != nil {
-					test.Fatal(err)
+				if newUnitKeyingError != nil {
+					test.Fatal(newUnitKeyingError)
 				}
 				var keys []string
 				for _, unit := range units {
@@ -324,15 +327,15 @@ func TestDebugTwoDirectories(test *testing.T) {
 func TestDebugCounterType(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "counter.a")
-	if err := os.WriteFile(path, []byte(
+	if writeError := os.WriteFile(path, []byte(
 		"function sum(n: number): number { let total = 0; for (let i = 0; i < 10; i++) { total += i; } return total + n; }\nconsole.log((sum(2)).toString());\n",
-	), 0644); err != nil {
-		test.Fatal(err)
+	), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	for _, debug := range []bool{false, true} {
-		program, err := debugProgram(test, path, debug)
-		if err != nil {
-			test.Fatal(err)
+		program, debugProgramError := debugProgram(test, path, debug)
+		if debugProgramError != nil {
+			test.Fatal(debugProgramError)
 		}
 		found := false
 		for i, local := range program.Locals {
@@ -392,9 +395,9 @@ func debugByteIdentityPaths(test *testing.T) []string {
 	for _, path := range reviewPrograms(test) {
 		paths[path] = true
 	}
-	smoke, err := os.ReadFile("../../cloud/fast-gate/smoke.txt")
-	if err != nil {
-		test.Fatal(err)
+	smoke, readError := os.ReadFile("../../cloud/fast-gate/smoke.txt")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	for _, line := range strings.Split(string(smoke), "\n") {
 		fields := strings.Fields(line)
@@ -413,33 +416,33 @@ func debugByteIdentityPaths(test *testing.T) []string {
 	return ordered
 }
 
-func requireDebugDiagnostic(test *testing.T, err error) {
+func requireDebugDiagnostic(test *testing.T, sourceError error) {
 	test.Helper()
 	var refused *lower.Refused
 	var notYet *lower.NotYet
-	if !errors.As(err, &refused) && !errors.As(err, &notYet) {
-		test.Fatalf("non-compiling program must return Refused or NotYet, got %T: %v", err, err)
+	if !errors.As(sourceError, &refused) && !errors.As(sourceError, &notYet) {
+		test.Fatalf("non-compiling program must return Refused or NotYet, got %T: %v", sourceError, sourceError)
 	}
-	if strings.TrimSpace(err.Error()) == "" {
+	if strings.TrimSpace(sourceError.Error()) == "" {
 		test.Fatal("non-compiling program has an empty diagnostic")
 	}
-	test.Logf("typed lowering diagnostic: %v", err)
+	test.Logf("typed lowering diagnostic: %v", sourceError)
 }
 
 // Review's refused family proves its diagnostic claim. Every other program
 // must lower and prove the C and IR claims; pending programs were not enumerated.
 func checkDebugByteIdentity(test *testing.T, path string) bool {
 	test.Helper()
-	program, err := debugProgram(test, path, false)
+	program, debugProgramError := debugProgram(test, path, false)
 	if debugRefusedProgram(path) {
-		if err == nil {
+		if debugProgramError == nil {
 			test.Fatal("review/refused program unexpectedly lowered")
 		}
-		requireDebugDiagnostic(test, err)
+		requireDebugDiagnostic(test, debugProgramError)
 		return false
 	}
-	if err != nil {
-		test.Fatalf("agree/smoke program failed to lower: %v", err)
+	if debugProgramError != nil {
+		test.Fatalf("agree/smoke program failed to lower: %v", debugProgramError)
 	}
 	if sourceLineIn(reflect.ValueOf(program.Main)) {
 		test.Fatal("non-debug main contains SourceLine")
@@ -482,43 +485,44 @@ func runDebugByteIdentity(test *testing.T, shard int) {
 func TestDebugLineTable(test *testing.T) {
 	test.Parallel()
 	binary := filepath.Join(debugLineProduct(test, false), "program")
-	tool, err := toolchain.Path("llvm-dwarfdump")
-	if err != nil {
-		clang, clangErr := toolchain.Path("clang")
-		if clangErr == nil {
-			clang, clangErr = filepath.EvalSymlinks(clang)
+	tool, pathError := toolchain.Path("llvm-dwarfdump")
+	if pathError != nil {
+		clang, clangError := toolchain.Path("clang")
+		if clangError == nil {
+			clang, clangError = filepath.EvalSymlinks(clang)
 		}
-		if clangErr != nil {
-			test.Fatal(clangErr)
+		if clangError != nil {
+			test.Fatal(clangError)
 		}
 		tool = filepath.Join(filepath.Dir(clang), "llvm-dwarfdump")
-		if _, statErr := os.Stat(tool); statErr != nil {
+		if _, statError := os.Stat(tool); statError != nil {
 			test.Fatal("toolchain has no llvm-dwarfdump: stop line-table proof")
 		}
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	output, err := exec.CommandContext(ctx, tool, "--debug-line", binary).CombinedOutput()
-	if err != nil {
-		test.Fatalf("dwarfdump: %v: %s", err, output)
+	output, combinedOutputError := exec.CommandContext(ctx, tool, "--debug-line", binary).CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("dwarfdump: %v: %s", combinedOutputError, output)
 	}
 	if !bytes.Contains(output, []byte("fixture.a")) {
 		test.Fatal("dwarfdump has no fixture.a")
 	}
 	var dwarfData *dwarf.Data
-	if object, openErr := elf.Open(binary); openErr == nil {
+	var dwarfError error
+	if object, openError := elf.Open(binary); openError == nil {
 		defer object.Close()
-		dwarfData, err = object.DWARF()
+		dwarfData, dwarfError = object.DWARF()
 	} else {
-		object, openErr := macho.Open(binary)
-		if openErr != nil {
-			test.Fatal(openErr)
+		object, openError := macho.Open(binary)
+		if openError != nil {
+			test.Fatal(openError)
 		}
 		defer object.Close()
-		dwarfData, err = object.DWARF()
+		dwarfData, dwarfError = object.DWARF()
 	}
-	if err != nil {
-		test.Fatal(err)
+	if dwarfError != nil {
+		test.Fatal(dwarfError)
 	}
 	var symbols []struct {
 		Name        string
@@ -526,9 +530,9 @@ func TestDebugLineTable(test *testing.T) {
 	}
 	functions := dwarfData.Reader()
 	for {
-		entry, err := functions.Next()
-		if err != nil {
-			test.Fatal(err)
+		entry, nextError := functions.Next()
+		if nextError != nil {
+			test.Fatal(nextError)
 		}
 		if entry == nil {
 			break
@@ -537,9 +541,9 @@ func TestDebugLineTable(test *testing.T) {
 			continue
 		}
 		name, _ := entry.Val(dwarf.AttrName).(string)
-		ranges, err := dwarfData.Ranges(entry)
-		if err != nil {
-			test.Fatal(err)
+		ranges, rangesError := dwarfData.Ranges(entry)
+		if rangesError != nil {
+			test.Fatal(rangesError)
 		}
 		for _, span := range ranges {
 			symbols = append(symbols, struct {
@@ -560,9 +564,9 @@ func TestDebugLineTable(test *testing.T) {
 		right := map[int]bool{}
 		reader := dwarfData.Reader()
 		for {
-			unit, err := reader.Next()
-			if err != nil {
-				test.Fatal(err)
+			unit, nextError := reader.Next()
+			if nextError != nil {
+				test.Fatal(nextError)
 			}
 			if unit == nil {
 				break
@@ -570,21 +574,21 @@ func TestDebugLineTable(test *testing.T) {
 			if unit.Tag != dwarf.TagCompileUnit {
 				continue
 			}
-			lines, err := dwarfData.LineReader(unit)
-			if err != nil {
-				test.Fatal(err)
+			lines, lineReaderError := dwarfData.LineReader(unit)
+			if lineReaderError != nil {
+				test.Fatal(lineReaderError)
 			}
 			if lines == nil {
 				continue
 			}
 			var row dwarf.LineEntry
 			for {
-				err := lines.Next(&row)
-				if err == io.EOF {
+				nextError := lines.Next(&row)
+				if nextError == io.EOF {
 					break
 				}
-				if err != nil {
-					test.Fatal(err)
+				if nextError != nil {
+					test.Fatal(nextError)
 				}
 				if row.EndSequence || row.Address < symbol.Value || row.Address >= symbol.Value+symbol.Size {
 					continue
@@ -642,12 +646,12 @@ func debugRunBinary(test *testing.T, binary string) mainPartsRun {
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
-	err := command.Run()
+	runError := command.Run()
 	if ctx.Err() != nil {
 		test.Fatal(ctx.Err())
 	}
 	if command.ProcessState == nil {
-		test.Fatal(err)
+		test.Fatal(runError)
 	}
 	return mainPartsRun{stdout.String(), stderr.String(), command.ProcessState.ExitCode()}
 }

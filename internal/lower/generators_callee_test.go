@@ -43,18 +43,22 @@ func TestGeneratorCalledOtherThanByItsNameIsNotYet(test *testing.T) {
 			test.Parallel()
 			directory := test.TempDir()
 			for name, source := range map[string]string{"library.ts": library, "main.ts": probe.main} {
-				if err := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); err != nil {
-					test.Fatal(err)
+				if writeError := os.WriteFile(
+					filepath.Join(directory, name),
+					[]byte(source),
+					0o644,
+				); writeError != nil {
+					test.Fatal(writeError)
 				}
 			}
-			program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-			if err != nil {
-				test.Fatalf("Load: %v", err)
+			program, loadError := load.Load([]string{filepath.Join(directory, "main.ts")})
+			if loadError != nil {
+				test.Fatalf("Load: %v", loadError)
 			}
-			_, err = Lower(context.Background(), program)
+			_, lowerError := Lower(context.Background(), program)
 			var gap *NotYet
-			if !errors.As(err, &gap) || !strings.Contains(gap.What, "called other than by its name") {
-				test.Fatalf("got %v, want the generator's called-other-than-by-its-name stop", err)
+			if !errors.As(lowerError, &gap) || !strings.Contains(gap.What, "called other than by its name") {
+				test.Fatalf("got %v, want the generator's called-other-than-by-its-name stop", lowerError)
 			}
 		})
 	}

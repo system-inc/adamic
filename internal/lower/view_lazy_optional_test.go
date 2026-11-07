@@ -75,13 +75,14 @@ func TestOptionalCheckedReadsReachOnlyWhatEmissionCanSay(test *testing.T) {
 				CheckedFields:     map[string]bool{ir.CheckedFieldKey(3, "name"): true},
 				Main:              []ir.Statement{ir.Evaluate{Value: read}},
 			}
-			err := unemittableCheckedViewRead(program)
+			unemittableCheckedViewReadError := unemittableCheckedViewRead(program)
 			var notYet *NotYet
-			if testCase.emitted && err != nil {
-				test.Fatalf("want the read handed to emission, got %v", err)
+			if testCase.emitted && unemittableCheckedViewReadError != nil {
+				test.Fatalf("want the read handed to emission, got %v", unemittableCheckedViewReadError)
 			}
-			if !testCase.emitted && (!errors.As(err, &notYet) || notYet.Where != "fixture.ts:1:1") {
-				test.Fatalf("want a NotYet at the read, got %v", err)
+			if !testCase.emitted &&
+				(!errors.As(unemittableCheckedViewReadError, &notYet) || notYet.Where != "fixture.ts:1:1") {
+				test.Fatalf("want a NotYet at the read, got %v", unemittableCheckedViewReadError)
 			}
 		})
 	}

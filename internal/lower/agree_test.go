@@ -118,29 +118,29 @@ func TestNativeAgreementLeanBuildIsBuildsBytes(test *testing.T) {
 		test.Skip("ADAMIC_NATIVE_SPLIT=1 splits native.Build, and a lean build is one translation unit")
 	}
 	options := native.Options{}
-	compiler, err := toolchain.Path("clang")
-	if err != nil {
-		test.Fatal(err)
+	compiler, pathError := toolchain.Path("clang")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
 	jobservers := map[int]*native.Jobserver{0: nil, 1: agreementJobserver(test, 1), 8: agreementJobserver(test, 8)}
 	product := agreementC(test)
 	for _, name := range agreementproducts.Programs() {
 		source := filepath.Join(product, name, "main.c")
-		held, err := os.ReadFile(source)
-		if err != nil {
-			test.Fatal(err)
+		held, readError := os.ReadFile(source)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		code := string(held)
-		program, err := os.ReadFile(filepath.Join(product, name, "main.a"))
-		if err != nil {
-			test.Fatal(err)
+		program, readError := os.ReadFile(filepath.Join(product, name, "main.a"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
-		lowered, err := agreementproducts.Plant(
+		lowered, plantError := agreementproducts.Plant(
 			name,
 			native.C(lowerAgreementEntry(test, writeAgreementSource(test, "main.a", string(program)))),
 		)
-		if err != nil {
-			test.Fatal(err)
+		if plantError != nil {
+			test.Fatal(plantError)
 		}
 		if lowered != code {
 			test.Errorf(
@@ -153,20 +153,20 @@ func TestNativeAgreementLeanBuildIsBuildsBytes(test *testing.T) {
 		}
 		directory := test.TempDir()
 		for _, output := range []string{"built", "lean", "another-output-directory", "product"} {
-			if err := os.Mkdir(filepath.Join(directory, output), 0o755); err != nil {
-				test.Fatal(err)
+			if createDirectoryError := os.Mkdir(filepath.Join(directory, output), 0o755); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
 		}
-		if err := native.Build(code, filepath.Join(directory, "built", "native"), options); err != nil {
-			test.Fatalf("%s: native.Build: %v", name, err)
+		if buildError := native.Build(code, filepath.Join(directory, "built", "native"), options); buildError != nil {
+			test.Fatalf("%s: native.Build: %v", name, buildError)
 		}
-		built, err := os.ReadFile(filepath.Join(directory, "built", "native"))
-		if err != nil {
-			test.Fatal(err)
+		built, readError := os.ReadFile(filepath.Join(directory, "built", "native"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
-		library, err := native.RuntimeLibraryForSource("", code, options)
-		if err != nil {
-			test.Fatal(err)
+		library, runtimeLibraryForSourceError := native.RuntimeLibraryForSource("", code, options)
+		if runtimeLibraryForSourceError != nil {
+			test.Fatal(runtimeLibraryForSourceError)
 		}
 		archive := runtimeproducts.Archive(
 			test,
@@ -187,19 +187,19 @@ func TestNativeAgreementLeanBuildIsBuildsBytes(test *testing.T) {
 			{"with the product's archive", "product", archive, 0},
 		} {
 			output := filepath.Join(directory, way.output, "native")
-			if err := native.BuildLean(
+			if buildLeanError := native.BuildLean(
 				compiler,
 				source,
 				way.archive,
 				output,
 				options,
 				jobservers[way.tokens],
-			); err != nil {
-				test.Fatalf("%s: native.BuildLean %s: %v", name, way.name, err)
+			); buildLeanError != nil {
+				test.Fatalf("%s: native.BuildLean %s: %v", name, way.name, buildLeanError)
 			}
-			binary, err := os.ReadFile(output)
-			if err != nil {
-				test.Fatal(err)
+			binary, readError := os.ReadFile(output)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			if !bytes.Equal(binary, built) {
 				same = false
@@ -211,8 +211,10 @@ func TestNativeAgreementLeanBuildIsBuildsBytes(test *testing.T) {
 					len(built),
 				)
 			}
-			if _, err := os.Stat(filepath.Join(directory, way.output, "build")); !errors.Is(err, os.ErrNotExist) {
-				test.Errorf("%s: native.BuildLean %s left its build directory behind: %v", name, way.name, err)
+			if _, statError := os.Stat(
+				filepath.Join(directory, way.output, "build"),
+			); !errors.Is(statError, os.ErrNotExist) {
+				test.Errorf("%s: native.BuildLean %s left its build directory behind: %v", name, way.name, statError)
 			}
 		}
 		if same {
@@ -225,21 +227,21 @@ func TestNativeAgreementLeanBuildIsBuildsBytes(test *testing.T) {
 func agreementJobserver(test *testing.T, tokens int) *native.Jobserver {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "jobserver")
-	if err := syscall.Mkfifo(path, 0o600); err != nil {
-		test.Fatal(err)
+	if mkfifoError := syscall.Mkfifo(path, 0o600); mkfifoError != nil {
+		test.Fatal(mkfifoError)
 	}
 	// Opened for reading and writing, as native opens it, so filling it doesn't wait for a reader.
-	filler, err := os.OpenFile(path, os.O_RDWR, 0)
-	if err != nil {
-		test.Fatal(err)
+	filler, openError := os.OpenFile(path, os.O_RDWR, 0)
+	if openError != nil {
+		test.Fatal(openError)
 	}
 	test.Cleanup(func() { filler.Close() })
-	if _, err := filler.Write([]byte(strings.Repeat("+", tokens))); err != nil {
-		test.Fatal(err)
+	if _, writeError := filler.Write([]byte(strings.Repeat("+", tokens))); writeError != nil {
+		test.Fatal(writeError)
 	}
-	jobserver, err := native.OpenJobserver(path)
-	if err != nil {
-		test.Fatal(err)
+	jobserver, openJobserverError := native.OpenJobserver(path)
+	if openJobserverError != nil {
+		test.Fatal(openJobserverError)
 	}
 	return jobserver
 }
@@ -252,9 +254,9 @@ func agreementJobserver(test *testing.T, tokens int) *native.Jobserver {
 func agreeSourceNative(test testing.TB, name string) *ir.Program {
 	test.Helper()
 	product := agreementC(test)
-	source, err := os.ReadFile(filepath.Join(product, name, "main.a"))
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(filepath.Join(product, name, "main.a"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	path := writeAgreementSource(test, "main.a", string(source))
 	program := agreeEntry(test, path, lowerAgreementEntry(test, path), 0, nil, nil)
@@ -294,9 +296,9 @@ func agreementC(test testing.TB) string {
 func buildAgreementNative(test testing.TB, product, name string) string {
 	test.Helper()
 	source := filepath.Join(product, name, "main.c")
-	code, err := os.ReadFile(source)
-	if err != nil {
-		test.Fatal(err)
+	code, readError := os.ReadFile(source)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	archive := runtimeproducts.Archive(
 		test,
@@ -316,15 +318,15 @@ func runAgreementNative(test testing.TB, product, name string) nodeObservation {
 	command := exec.CommandContext(ctx, binary)
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
-	err := command.Run()
+	runError := command.Run()
 	exit := 0
 	if ctx.Err() != nil {
 		test.Fatalf("Native %s: %v", binary, ctx.Err())
 	}
-	if err != nil {
-		failure, ok := err.(*exec.ExitError)
+	if runError != nil {
+		failure, ok := runError.(*exec.ExitError)
 		if !ok {
-			test.Fatalf("Native %s: %v", binary, err)
+			test.Fatalf("Native %s: %v", binary, runError)
 		}
 		exit = failure.ExitCode()
 	}
@@ -353,21 +355,21 @@ func agreeSource(t agreementTesting, source string, exit int, mutate func(*ir.Pr
 func writeAgreementSource(t agreementTesting, file, source string) string {
 	t.Helper()
 	path := filepath.Join(t.TempDir(), file)
-	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-		t.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
+		t.Fatal(writeError)
 	}
 	return path
 }
 
 func lowerAgreementEntry(t agreementTesting, path string) *ir.Program {
 	t.Helper()
-	checked, err := load.Load([]string{path})
-	if err != nil {
-		t.Fatalf("Load: %v", err)
+	checked, loadError := load.Load([]string{path})
+	if loadError != nil {
+		t.Fatalf("Load: %v", loadError)
 	}
-	program, err := Lower(context.Background(), checked)
-	if err != nil {
-		t.Fatalf("Lower refused acceptance row: %v", err)
+	program, lowerError := Lower(context.Background(), checked)
+	if lowerError != nil {
+		t.Fatalf("Lower refused acceptance row: %v", lowerError)
 	}
 	return program
 }
@@ -390,8 +392,8 @@ func agreeEntry(
 		mutate(program)
 	}
 	generated := filepath.Join(t.TempDir(), "generated.mjs")
-	if err := os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-		t.Fatal(err)
+	if writeError := os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0o644); writeError != nil {
+		t.Fatal(writeError)
 	}
 	want := runAgreementNode(t, path)
 	if len(want.stdout) == 0 {
@@ -414,14 +416,14 @@ func agreeEntry(
 
 func runAgreementNode(t agreementTesting, path string) nodeObservation {
 	t.Helper()
-	runner, err := filepath.Abs("../../oracle/node.mjs")
-	if err != nil {
-		t.Fatal(err)
+	runner, absolutePathError := filepath.Abs("../../oracle/node.mjs")
+	if absolutePathError != nil {
+		t.Fatal(absolutePathError)
 	}
 	// The node toolchain.Path finds, under toolchain's environment, as every other site of lower's runs it.
-	node, err := toolchain.Path("node")
-	if err != nil {
-		t.Fatal(err)
+	node, pathError := toolchain.Path("node")
+	if pathError != nil {
+		t.Fatal(pathError)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
@@ -429,15 +431,15 @@ func runAgreementNode(t agreementTesting, path string) nodeObservation {
 	command.Env = toolchain.Env()
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
-	err = command.Run()
+	runError := command.Run()
 	code := 0
 	if ctx.Err() != nil {
 		t.Fatalf("Node %s: %v", path, ctx.Err())
 	}
-	if err != nil {
-		failure, ok := err.(*exec.ExitError)
+	if runError != nil {
+		failure, ok := runError.(*exec.ExitError)
 		if !ok {
-			t.Fatalf("Node %s: %v", path, err)
+			t.Fatalf("Node %s: %v", path, runError)
 		}
 		code = failure.ExitCode()
 	}
@@ -612,16 +614,16 @@ func TestNativeAgreementRowsNameRegisteredPrograms(test *testing.T) {
 		"buildAgreementNative": {"runAgreementNative": true, "TestProduct_LowerAgreementNative": true},
 	}
 	rows := map[string]bool{"lowersAndAgreesWithNodeNative": true, "recordNativeAgreementFailure": true}
-	files, err := filepath.Glob("*_test.go")
-	if err != nil {
-		test.Fatal(err)
+	files, globError := filepath.Glob("*_test.go")
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	fileSet := token.NewFileSet()
 	used := map[string]bool{}
 	for _, name := range files {
-		file, err := parser.ParseFile(fileSet, name, nil, 0)
-		if err != nil {
-			test.Fatal(err)
+		file, parseFileError := parser.ParseFile(fileSet, name, nil, 0)
+		if parseFileError != nil {
+			test.Fatal(parseFileError)
 		}
 		for _, declaration := range file.Decls {
 			function, ok := declaration.(*ast.FuncDecl)

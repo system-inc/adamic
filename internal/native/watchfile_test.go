@@ -34,9 +34,9 @@ func watchProviderProduct(test *testing.T, variant string) string {
 	inputs := watchProviderInputs(variant, options)
 
 	directory := buildcache.Product(test, inputs, func(directory string) error {
-		code, err := os.ReadFile("testdata/watchfile/hooks.c")
-		if err != nil {
-			return err
+		code, readError := os.ReadFile("testdata/watchfile/hooks.c")
+		if readError != nil {
+			return readError
 		}
 		output := filepath.Join(directory, "probe")
 		if variant == "control" || variant == "sanitized" {
@@ -60,9 +60,13 @@ func watchProviderProduct(test *testing.T, variant string) string {
 		} else {
 			changed = timerMutant(test, "timers_impl.h", "if (host_wait_hook != host_default_wait)", "if (false)")
 		}
-		library, err := native.RuntimeLibraryForSource(changed.directory, string(code), options)
-		if err != nil {
-			return err
+		library, runtimeLibraryForSourceError := native.RuntimeLibraryForSource(
+			changed.directory,
+			string(code),
+			options,
+		)
+		if runtimeLibraryForSourceError != nil {
+			return runtimeLibraryForSourceError
 		}
 		return native.BuildWithRuntime(string(code), output, options, library)
 	})
@@ -108,9 +112,9 @@ func watchProviderRun(test *testing.T, name string, arguments ...string) leakche
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
-	err := command.Run()
+	runError := command.Run()
 	if command.ProcessState == nil {
-		test.Fatal(err)
+		test.Fatal(runError)
 	}
 	if ctx.Err() != nil {
 		test.Fatal("watchFile provider own deadline")
@@ -120,13 +124,13 @@ func watchProviderRun(test *testing.T, name string, arguments ...string) leakche
 func watchBatchNode(test *testing.T) leakcheck.Run { return watchProviderNode(test, "batch") }
 func watchProviderNode(test *testing.T, mode string) leakcheck.Run {
 	test.Helper()
-	node, err := exec.LookPath("node")
-	if err != nil {
-		test.Fatal(err)
+	node, lookPathError := exec.LookPath("node")
+	if lookPathError != nil {
+		test.Fatal(lookPathError)
 	}
-	script, err := filepath.Abs("testdata/watchfile/oracle.a")
-	if err != nil {
-		test.Fatal(err)
+	script, absolutePathError := filepath.Abs("testdata/watchfile/oracle.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return watchProviderRun(
 		test,
@@ -203,16 +207,16 @@ func TestWatchFileProductKeyIncludesBuildEnvironment(test *testing.T) {
 	test.Setenv("CPATH", "/first/include")
 	first := watchProviderInputs("control", native.Options{Release: true})
 	first.Files = nil
-	before, err := buildcache.Key(root, first)
-	if err != nil {
-		test.Fatal(err)
+	before, keyError := buildcache.Key(root, first)
+	if keyError != nil {
+		test.Fatal(keyError)
 	}
 	test.Setenv("CPATH", "/second/include")
 	second := watchProviderInputs("control", native.Options{Release: true})
 	second.Files = nil
-	after, err := buildcache.Key(root, second)
-	if err != nil {
-		test.Fatal(err)
+	after, keyError := buildcache.Key(root, second)
+	if keyError != nil {
+		test.Fatal(keyError)
 	}
 	if before == after {
 		test.Fatal("changed compiler include environment reused the old product key")
@@ -235,26 +239,26 @@ func TestWatchFileProductKeyIncludesItsHarness(test *testing.T) {
 	inputs.Files = []string{harness}
 	root := test.TempDir()
 	path := filepath.Join(root, harness)
-	if err := os.MkdirAll(filepath.Dir(path), 0700); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0700); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	code, err := os.ReadFile("testdata/watchfile/hooks.c")
-	if err != nil {
-		test.Fatal(err)
+	code, readError := os.ReadFile("testdata/watchfile/hooks.c")
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	if err := os.WriteFile(path, code, 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, code, 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	before, err := buildcache.Key(root, inputs)
-	if err != nil {
-		test.Fatal(err)
+	before, keyError := buildcache.Key(root, inputs)
+	if keyError != nil {
+		test.Fatal(keyError)
 	}
-	if err := os.WriteFile(path, append(code, []byte("\n/* changed harness */\n")...), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, append(code, []byte("\n/* changed harness */\n")...), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	after, err := buildcache.Key(root, inputs)
-	if err != nil {
-		test.Fatal(err)
+	after, keyError := buildcache.Key(root, inputs)
+	if keyError != nil {
+		test.Fatal(keyError)
 	}
 	if before == after {
 		test.Fatal("changed harness reused the old product key")

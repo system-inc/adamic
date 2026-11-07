@@ -27,9 +27,9 @@ func TestProduct_JSONTypes(test *testing.T) {
 // waits on the build. Without it node.mjs would go run the tool itself, unkeyed.
 func jsonTypesEnvironment(test testing.TB, path string) []string {
 	test.Helper()
-	source, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if !strings.Contains(string(source), "decodeJson") && !strings.Contains(string(source), "encodeJson") {
 		return nil

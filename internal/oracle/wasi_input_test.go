@@ -39,9 +39,9 @@ var v8Engine = wasmEngine{run: onV8Input}
 // building the whole compiler at once ran each past its 60 s budget.
 func buildEngineFixture(test *testing.T, path, directory string) (string, string) {
 	test.Helper()
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	binary := filepath.Join(directory, "program.wasm")
 	return binary, buildWASI(test, native.C(program), binary)
@@ -55,9 +55,9 @@ func runWASIInputFixture(
 	engine wasmEngine,
 ) (bool, bool) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, fixture))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, fixture))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	shared := sharedDirectory(test)
 	binary, reason := buildEngineFixture(test, path, shared)
@@ -71,8 +71,8 @@ func runWASIInputFixture(
 	}
 	if unreadable {
 		file := filepath.Join(shared, "unreadable.txt")
-		if err := os.WriteFile(file, []byte("secret\n"), 0); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(file, []byte("secret\n"), 0); writeError != nil {
+			test.Fatal(writeError)
 		}
 		how.arguments = append(how.arguments, file)
 	}
@@ -83,8 +83,8 @@ func runWASIInputFixture(
 	var files map[string]string
 	if writes {
 		files = snapshot(test, how.arguments[0])
-		if err := os.RemoveAll(how.arguments[0]); err != nil {
-			test.Fatal(err)
+		if removeError := os.RemoveAll(how.arguments[0]); removeError != nil {
+			test.Fatal(removeError)
 		}
 		writableDirectory(test, shared, "written", plainNames)
 	}
@@ -140,8 +140,10 @@ func runWASIInputShard(test *testing.T, shard int) {
 		return
 	}
 	planted, probing := familyProbe("TestWASIInputAgreesWithNode")
-	if err := native.ValidateOptions(native.Options{Target: "wasm32-wasi"}); err != nil {
-		test.Fatal(err)
+	if validateOptionsError := native.ValidateOptions(
+		native.Options{Target: "wasm32-wasi"},
+	); validateOptionsError != nil {
+		test.Fatal(validateOptionsError)
 	}
 	pass, limits, refused, fail, skip := 0, 0, 0, 0, 0
 	defer func() {
@@ -204,21 +206,21 @@ func TestWASIInputRunnerCatchesMutants(test *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
-	path, err := filepath.Abs(filepath.Join(repository, "dedication/dedication.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "dedication/dedication.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	original := native.C(program)
 	expected := onNodeWith(test, inputRun{}, path)
 	probe := func(source string) run {
 		shared := sharedDirectory(test)
 		binary := filepath.Join(shared, "probe.wasm")
-		if err := native.Build(source, binary, native.Options{Target: "wasm32-wasi"}); err != nil {
-			test.Fatal(err)
+		if buildError := native.Build(source, binary, native.Options{Target: "wasm32-wasi"}); buildError != nil {
+			test.Fatal(buildError)
 		}
 		return onV8Input(test, inputRun{directory: filepath.Dir(path)}, binary)
 	}
@@ -255,9 +257,9 @@ func TestWASIWalkBehaviorCatchesMutants(test *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/walk.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/walk.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	shared := sharedDirectory(test)
 	how := inputRun{directory: filepath.Dir(path), arguments: []string{writable(test, shared, "written")}}

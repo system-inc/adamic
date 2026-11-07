@@ -105,15 +105,15 @@ func Run(cmd *exec.Cmd, options Options) error {
 			if cmd.Process == nil {
 				return os.ErrProcessDone
 			}
-			err := syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
-			if errors.Is(err, syscall.ESRCH) {
+			killError := syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
+			if errors.Is(killError, syscall.ESRCH) {
 				return os.ErrProcessDone
 			}
-			return err
+			return killError
 		}
 	}
-	originalOut, originalErr := cmd.Stdout, cmd.Stderr
-	defer func() { cmd.Stdout, cmd.Stderr = originalOut, originalErr }()
+	originalOut, originalError := cmd.Stdout, cmd.Stderr
+	defer func() { cmd.Stdout, cmd.Stderr = originalOut, originalError }()
 	start := time.Now()
 	a := &activity{last: start, progress: make(chan struct{}, 1)}
 	wrap := func(dst io.Writer) io.Writer {
@@ -124,13 +124,13 @@ func Run(cmd *exec.Cmd, options Options) error {
 	}
 	cmd.Stdout = wrap(originalOut)
 	// Preserve exec's serialization when both streams share a writer.
-	if originalOut != nil && reflect.TypeOf(originalOut).Comparable() && originalOut == originalErr {
+	if originalOut != nil && reflect.TypeOf(originalOut).Comparable() && originalOut == originalError {
 		cmd.Stderr = cmd.Stdout
 	} else {
-		cmd.Stderr = wrap(originalErr)
+		cmd.Stderr = wrap(originalError)
 	}
-	if err := cmd.Start(); err != nil {
-		return err
+	if startError := cmd.Start(); startError != nil {
+		return startError
 	}
 	if options.Started != nil {
 		options.Started(cmd.Process.Pid)
@@ -172,17 +172,24 @@ func Run(cmd *exec.Cmd, options Options) error {
 				reason = "stalled"
 			}
 			if reason != "" {
-				if err := syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL); err != nil {
+				if killError := syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL); killError != nil {
 					return <-done
 				}
 				<-done
 				load := "unavailable"
-				if data, err := os.ReadFile("/proc/loadavg"); err == nil {
+				if data, readError := os.ReadFile("/proc/loadavg"); readError == nil {
 					if fields := strings.Fields(string(data)); len(fields) > 0 {
 						load = fields[0]
 					}
 				}
-				return &Error{Reason: reason, Window: window, FirstOutput: firstOutput, Command: cmd.Path, Elapsed: elapsed, Load: load}
+				return &Error{
+					Reason:      reason,
+					Window:      window,
+					FirstOutput: firstOutput,
+					Command:     cmd.Path,
+					Elapsed:     elapsed,
+					Load:        load,
+				}
 			}
 			timer.Reset(min(window-idle, options.Ceiling-elapsed))
 		}
@@ -199,17 +206,17 @@ func Run(cmd *exec.Cmd, options Options) error {
 // ctx bounds it: when ctx is done the group is killed, and a writer outside the group (one that left it with setsid)
 // ends the reads with ctx's error. A command bound to ctx should be exec.CommandContext with the same ctx. Its exit
 // status is err's, as cmd.Run reports it.
-func Capture(ctx context.Context, cmd *exec.Cmd) (stdout, stderr []byte, err error) {
+func Capture(ctx context.Context, cmd *exec.Cmd) (stdout, stderr []byte, captureError error) {
 	var out, diagnostic bytes.Buffer
-	err = CaptureTo(ctx, cmd, &out, &diagnostic)
-	return out.Bytes(), diagnostic.Bytes(), err
+	captureToError := CaptureTo(ctx, cmd, &out, &diagnostic)
+	return out.Bytes(), diagnostic.Bytes(), captureToError
 }
 
 // CaptureTo is Capture with caller-provided destinations, allowing bounded output
 // retention without a timer on either drain. Nil destinations discard output.
 // Destinations are written concurrently and must not share unsynchronized state.
 // A destination error is reported after draining the remainder to discard.
-func CaptureTo(ctx context.Context, cmd *exec.Cmd, stdout, stderr io.Writer) (err error) {
+func CaptureTo(ctx context.Context, cmd *exec.Cmd, stdout, stderr io.Writer) (captureToError error) {
 	if cmd.Stdout != nil || cmd.Stderr != nil {
 		return fmt.Errorf("childguard: output already configured")
 	}
@@ -221,7 +228,7 @@ func CaptureTo(ctx context.Context, cmd *exec.Cmd, stdout, stderr io.Writer) (er
 	type pipe struct {
 		read, write *os.File
 		output      io.Writer
-		copyErr     error
+		copyError   error
 	}
 	pipes := make([]*pipe, 2)
 	closeAll := func() {
@@ -233,10 +240,10 @@ func CaptureTo(ctx context.Context, cmd *exec.Cmd, stdout, stderr io.Writer) (er
 		}
 	}
 	for i := range pipes {
-		read, write, err := os.Pipe()
-		if err != nil {
+		read, write, pipeError := os.Pipe()
+		if pipeError != nil {
 			closeAll()
-			return err
+			return pipeError
 		}
 		destination := []io.Writer{stdout, stderr}[i]
 		if destination == nil {
@@ -248,9 +255,9 @@ func CaptureTo(ctx context.Context, cmd *exec.Cmd, stdout, stderr io.Writer) (er
 	// process; this process's write ends close once the child holds its own.
 	cmd.Stdout, cmd.Stderr = pipes[0].write, pipes[1].write
 	defer func() { cmd.Stdout, cmd.Stderr = nil, nil }()
-	if err := cmd.Start(); err != nil {
+	if startError := cmd.Start(); startError != nil {
 		closeAll()
-		return err
+		return startError
 	}
 	var reads sync.WaitGroup
 	for _, p := range pipes {
@@ -258,8 +265,8 @@ func CaptureTo(ctx context.Context, cmd *exec.Cmd, stdout, stderr io.Writer) (er
 		reads.Add(1)
 		go func() {
 			defer reads.Done()
-			_, p.copyErr = io.Copy(p.output, p.read)
-			if p.copyErr != nil {
+			_, p.copyError = io.Copy(p.output, p.read)
+			if p.copyError != nil {
 				// A failing destination must not leave the child blocked on a full pipe.
 				_, _ = io.Copy(io.Discard, p.read)
 			}
@@ -268,7 +275,7 @@ func CaptureTo(ctx context.Context, cmd *exec.Cmd, stdout, stderr io.Writer) (er
 	finished := make(chan struct{})
 	go func() { reads.Wait(); close(finished) }()
 	stop := context.AfterFunc(ctx, func() { _ = syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL) })
-	err = cmd.Wait()
+	captureToError = cmd.Wait()
 	stop()
 	// The leader is reaped, but while any member of its group lives the group's id can't be reused, so this reaches
 	// exactly the processes it left behind, and none when it left none.
@@ -278,16 +285,20 @@ func CaptureTo(ctx context.Context, cmd *exec.Cmd, stdout, stderr io.Writer) (er
 			p.read.Close()
 		}
 	}
-	if held := captureEnd(ctx, finished, closeReads); err == nil && held != nil {
-		err = fmt.Errorf("childguard: %s's output is still held by a process outside its group: %w", cmd.Path, held)
+	if held := captureEnd(ctx, finished, closeReads); captureToError == nil && held != nil {
+		captureToError = fmt.Errorf(
+			"childguard: %s's output is still held by a process outside its group: %w",
+			cmd.Path,
+			held,
+		)
 	}
 	closeReads()
 	for _, p := range pipes {
-		if err == nil {
-			err = p.copyErr
+		if captureToError == nil {
+			captureToError = p.copyError
 		}
 	}
-	return err
+	return captureToError
 }
 
 // captureEnd waits for Capture's reads to finish, or for ctx: then it closes the reads, waits for them to stop and
@@ -315,7 +326,7 @@ func CombinedOutput(cmd *exec.Cmd, options Options) ([]byte, error) {
 	}
 	var buffer bytes.Buffer
 	cmd.Stdout, cmd.Stderr = &buffer, &buffer
-	err := Run(cmd, options)
+	runError := Run(cmd, options)
 	cmd.Stdout, cmd.Stderr = nil, nil
-	return buffer.Bytes(), err
+	return buffer.Bytes(), runError
 }

@@ -19,23 +19,23 @@ func processEnvironmentRun(test *testing.T, environment []string, name string, a
 	test.Helper()
 	ctx, command := bounded(test, name, arguments...)
 	command.Env = append([]string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}, environment...)
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	var exited *exec.ExitError
-	if err != nil && !errors.As(err, &exited) {
-		test.Fatal(err)
+	if captureError != nil && !errors.As(captureError, &exited) {
+		test.Fatal(captureError)
 	}
 	return run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}
 }
 
 func processEnvironmentBackends(test *testing.T, fixture string, environment []string, expected run) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join("testdata/process_env", fixture))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join("testdata/process_env", fixture))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	for _, mode := range []struct {
 		name    string
@@ -44,8 +44,8 @@ func processEnvironmentBackends(test *testing.T, fixture string, environment []s
 		{"native", native.Options{}}, {"ASan", native.Options{Sanitize: true}},
 	} {
 		binary := filepath.Join(test.TempDir(), mode.name)
-		if err := native.Build(native.C(program), binary, mode.options); err != nil {
-			test.Fatal(err)
+		if buildError := native.Build(native.C(program), binary, mode.options); buildError != nil {
+			test.Fatal(buildError)
 		}
 		got := processEnvironmentRun(test, environment, binary)
 		if difference := disagreement(expected, got); difference != "" {
@@ -60,8 +60,8 @@ func processEnvironmentBackends(test *testing.T, fixture string, environment []s
 		}
 	}
 	js := filepath.Join(test.TempDir(), "program.mjs")
-	if err := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	got := processEnvironmentRun(
 		test,
@@ -143,9 +143,9 @@ func TestProcessEnvironmentNULFixtureMatchesNode(test *testing.T) {
 	} {
 		test.Run(one.name, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs("testdata/process_env/nul.a")
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs("testdata/process_env/nul.a")
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			truth := processEnvironmentRun(
 				test,
@@ -166,9 +166,9 @@ func TestProcessEnvironmentNULFixtureMatchesNode(test *testing.T) {
 
 func processEnvironmentMutationAgreement(test *testing.T, fixture, want string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join("testdata/process_env", fixture))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join("testdata/process_env", fixture))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := processEnvironmentRun(
 		test,
@@ -182,13 +182,13 @@ func processEnvironmentMutationAgreement(test *testing.T, fixture, want string) 
 		test.Fatalf("Node mutation witness changed: %+v", truth)
 	}
 	processEnvironmentBackends(test, fixture, nil, truth)
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	binary := filepath.Join(test.TempDir(), "counted")
-	if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), binary, native.Options{Count: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	got := processEnvironmentRun(test, nil, binary)
 	if got.exitCode != truth.exitCode ||

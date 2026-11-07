@@ -30,8 +30,8 @@ int main(int argc,char **argv){
 	for _, sanitized := range []bool{false, true} {
 		test.Run(strconv.FormatBool(sanitized), func(test *testing.T) {
 			binary := filepath.Join(test.TempDir(), "mixed-union")
-			if err := Build(source+"\n", binary, Options{Sanitize: sanitized}); err != nil {
-				test.Fatal(err)
+			if buildError := Build(source+"\n", binary, Options{Sanitize: sanitized}); buildError != nil {
+				test.Fatal(buildError)
 			}
 			for _, sample := range []struct{ argument, declared, found string }{
 				{"0", "number | string", "unsupported representation"},
@@ -46,8 +46,8 @@ int main(int argc,char **argv){
 					var out, errout bytes.Buffer
 					command.Stdout = &out
 					command.Stderr = &errout
-					err := command.Run()
-					failure, ok := err.(*exec.ExitError)
+					runError := command.Run()
+					failure, ok := runError.(*exec.ExitError)
 					want := "adamic: panic: field read failed: view.value matches no member of " +
 						sample.declared +
 						"; expected " +
@@ -58,7 +58,7 @@ int main(int argc,char **argv){
 					if !ok || failure.ExitCode() != 70 || out.Len() != 0 || errout.String() != want {
 						test.Fatalf(
 							"got %v, stdout %q, stderr %q; want exit 70 and %q",
-							err,
+							runError,
 							out.String(),
 							errout.String(),
 							want,

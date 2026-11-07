@@ -20,9 +20,9 @@ import (
 // or change a word of usage, or of the page's block.
 func TestDocumentedUsageIsTheCommands(test *testing.T) {
 	test.Parallel()
-	page, err := os.ReadFile(filepath.Join("..", "..", "docs", "cli.md"))
-	if err != nil {
-		test.Fatal(err)
+	page, readError := os.ReadFile(filepath.Join("..", "..", "docs", "cli.md"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if !strings.Contains(string(page), "```text\n"+usage+"\n```\n") {
 		test.Errorf("docs/cli.md's usage block is not the usage cmd/adamic prints:\n%s", usage)
@@ -43,9 +43,9 @@ func TestDocumentedUsageIsTheCommands(test *testing.T) {
 // buildWithNativeExports without it noticing, and --debug was parsed with no usage to name it.
 func matchedWords(test *testing.T) []string {
 	test.Helper()
-	sources, err := filepath.Glob("*.go")
-	if err != nil {
-		test.Fatal(err)
+	sources, globError := filepath.Glob("*.go")
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	files := token.NewFileSet()
 	var matched []string
@@ -53,9 +53,9 @@ func matchedWords(test *testing.T) []string {
 		if strings.HasSuffix(name, "_test.go") {
 			continue
 		}
-		file, err := parser.ParseFile(files, name, nil, 0)
-		if err != nil {
-			test.Fatal(err)
+		file, parseFileError := parser.ParseFile(files, name, nil, 0)
+		if parseFileError != nil {
+			test.Fatal(parseFileError)
 		}
 		for _, declaration := range file.Decls {
 			function, ok := declaration.(*ast.FuncDecl)
@@ -91,9 +91,9 @@ func matchedWords(test *testing.T) []string {
 				}
 				for _, expression := range literals {
 					if literal, ok := expression.(*ast.BasicLit); ok && literal.Kind == token.STRING {
-						word, err := strconv.Unquote(literal.Value)
-						if err != nil {
-							test.Fatal(err)
+						word, unquoteError := strconv.Unquote(literal.Value)
+						if unquoteError != nil {
+							test.Fatal(unquoteError)
 						}
 						// An empty string is a value not yet given, never a word typed.
 						if word != "" {
@@ -137,9 +137,9 @@ func isArgument(expression ast.Expr, taken map[string]bool) bool {
 func TestDocumentedCitationsResolve(test *testing.T) {
 	test.Parallel()
 	root := filepath.Join("..", "..")
-	page, err := os.ReadFile(filepath.Join(root, "docs", "cli.md"))
-	if err != nil {
-		test.Fatal(err)
+	page, readError := os.ReadFile(filepath.Join(root, "docs", "cli.md"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	lineCitations := 0
 	for _, match := range treewalk.Citation.FindAllStringSubmatch(string(page), -1) {
@@ -148,14 +148,14 @@ func TestDocumentedCitationsResolve(test *testing.T) {
 			continue
 		}
 		if anchor == "" {
-			if _, err := os.Stat(filepath.Join(root, path)); err != nil {
+			if _, statError := os.Stat(filepath.Join(root, path)); statError != nil {
 				test.Errorf("docs/cli.md names %s, which isn't in the tree", path)
 			}
 			continue
 		}
 		lineCitations++
-		text, err := os.ReadFile(filepath.Join(root, path))
-		if err != nil {
+		text, readError := os.ReadFile(filepath.Join(root, path))
+		if readError != nil {
 			test.Errorf("docs/cli.md cites %s:%s, which isn't in the tree", path, anchor)
 			continue
 		}
@@ -164,7 +164,7 @@ func TestDocumentedCitationsResolve(test *testing.T) {
 			anchor,
 			func(character rune) bool { return character == ',' || character == '-' },
 		) {
-			if line, err := strconv.Atoi(number); err != nil || line < 1 || line > lines {
+			if line, parseError := strconv.Atoi(number); parseError != nil || line < 1 || line > lines {
 				test.Errorf("docs/cli.md cites %s:%s, past its %d lines", path, anchor, lines)
 			}
 		}

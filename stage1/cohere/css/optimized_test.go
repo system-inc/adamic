@@ -54,17 +54,17 @@ func cssOptimizedNative(test *testing.T, index int) string {
 			Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version"), runtime.GOOS, runtime.GOARCH},
 		}
 		directory := buildcache.Product(test, inputs, func(dir string) error {
-			main, err := filepath.Abs(cssOptimizedMains[index])
-			if err != nil {
-				return err
+			main, absolutePathError := filepath.Abs(cssOptimizedMains[index])
+			if absolutePathError != nil {
+				return absolutePathError
 			}
-			checked, err := load.Load([]string{main})
-			if err != nil {
-				return err
+			checked, loadError := load.Load([]string{main})
+			if loadError != nil {
+				return loadError
 			}
-			program, err := lower.Lower(test.Context(), checked)
-			if err != nil {
-				return err
+			program, lowerError := lower.Lower(test.Context(), checked)
+			if lowerError != nil {
+				return lowerError
 			}
 			return native.Build(native.C(program), filepath.Join(dir, "native"), native.Options{})
 		})

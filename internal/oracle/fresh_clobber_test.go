@@ -27,17 +27,19 @@ var freshClobberOutputs = map[string]string{
 
 func freshClobberWitness(test *testing.T, name string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/fresh_refused", name+".a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/fresh_refused", name+".a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	result := onNode(test, path)
 	if result.exitCode != 0 || string(result.stdout) != freshClobberOutputs[name+".a"] || len(result.stderr) != 0 {
 		test.Fatalf("Node: exit %d stdout %q stderr %q", result.exitCode, result.stdout, result.stderr)
 	}
-	source, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	marked := 0
 	for index, line := range strings.Split(string(source), "\n") {
@@ -48,18 +50,18 @@ func freshClobberWitness(test *testing.T, name string) {
 	if marked == 0 {
 		test.Fatal("no closing write marked")
 	}
-	program, err := lowered(test, path)
-	if err == nil {
+	program, loweredError := lowered(test, path)
+	if loweredError == nil {
 		checkGraphAdmission(test, path, program)
 		return
 	}
 	var refused *lower.Refused
-	if !errors.As(err, &refused) ||
-		!strings.Contains(err.Error(), "adamic/cycle-capable") ||
-		!strings.Contains(err.Error(), fmt.Sprintf("the write at %s:%d:", path, marked)) {
-		test.Fatalf("want marked cycle refusal, got %v", err)
+	if !errors.As(loweredError, &refused) ||
+		!strings.Contains(loweredError.Error(), "adamic/cycle-capable") ||
+		!strings.Contains(loweredError.Error(), fmt.Sprintf("the write at %s:%d:", path, marked)) {
+		test.Fatalf("want marked cycle refusal, got %v", loweredError)
 	}
-	test.Logf("Node stdout %q; %v", result.stdout, err)
+	test.Logf("Node stdout %q; %v", result.stdout, loweredError)
 }
 
 func TestFreshClobberAliasFill(test *testing.T) {

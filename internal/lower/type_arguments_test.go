@@ -107,22 +107,22 @@ func TestTypeArgumentsAreReadOnlyFromReferences(test *testing.T) {
 						test.Fatalf("panicked: %v", failure)
 					}
 				}()
-				_, err := lowerSourceAs(test, probe.source, extension)
+				_, lowerSourceAsError := lowerSourceAs(test, probe.source, extension)
 				var notYet *NotYet
 				var refused *Refused
 				got, where := "lowers", ""
 				switch {
-				case errors.As(err, &notYet):
+				case errors.As(lowerSourceAsError, &notYet):
 					got, where = "NotYet "+notYet.What, notYet.Where
-				case errors.As(err, &refused) && strings.HasPrefix(refused.What, "Object."):
+				case errors.As(lowerSourceAsError, &refused) && strings.HasPrefix(refused.What, "Object."):
 					got, where = "Refused "+refused.What+": "+refused.Fix, refused.Where
-				case errors.As(err, &refused):
+				case errors.As(lowerSourceAsError, &refused):
 					got, where = "Refused "+refused.What, refused.Where
-				case err != nil:
-					got = err.Error()
+				case lowerSourceAsError != nil:
+					got = lowerSourceAsError.Error()
 				}
 				if got != probe.what || !strings.HasSuffix(where, probe.where) {
-					test.Fatalf("want %s at %s, got %v", probe.what, probe.where, err)
+					test.Fatalf("want %s at %s, got %v", probe.what, probe.where, lowerSourceAsError)
 				}
 			})
 		}

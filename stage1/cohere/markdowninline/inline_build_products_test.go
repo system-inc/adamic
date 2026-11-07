@@ -52,9 +52,9 @@ func inlineNativeProduct(test *testing.T, index int, sanitize bool) string {
 }
 func inlineNodeProduct(test *testing.T) string {
 	test.Helper()
-	source, err := filepath.Abs(".")
-	if err != nil {
-		test.Fatal(err)
+	source, absolutePathError := filepath.Abs(".")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return inlineBuild(
 		test,

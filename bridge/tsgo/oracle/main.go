@@ -21,8 +21,8 @@ import (
 )
 
 func main() {
-	if err := run(); err != nil {
-		fmt.Fprintln(os.Stderr, err)
+	if runError := run(); runError != nil {
+		fmt.Fprintln(os.Stderr, runError)
 		os.Exit(1)
 	}
 }
@@ -30,18 +30,24 @@ func run() error {
 	if len(os.Args) < 3 {
 		return fmt.Errorf("usage: oracle tsconfig manifest [root files...]")
 	}
-	configPath, err := filepath.Abs(os.Args[1])
-	if err != nil {
-		return err
+	configPath, absolutePathError := filepath.Abs(os.Args[1])
+	if absolutePathError != nil {
+		return absolutePathError
 	}
-	manifest, err := os.ReadFile(os.Args[2])
-	if err != nil {
-		return err
+	manifest, readError := os.ReadFile(os.Args[2])
+	if readError != nil {
+		return readError
 	}
 	start := time.Now()
 	fs := bundled.WrapFS(osvfs.FS())
 	host := compiler.NewCachedFSCompilerHost(fs, bundled.LibPath(), nil, nil, nil)
-	config, diagnostics := tsoptions.GetParsedCommandLineOfConfigFile(tspath.RootedFilePathFromAbsolute(filepath.ToSlash(configPath)), nil, nil, fs, nil)
+	config, diagnostics := tsoptions.GetParsedCommandLineOfConfigFile(
+		tspath.RootedFilePathFromAbsolute(filepath.ToSlash(configPath)),
+		nil,
+		nil,
+		fs,
+		nil,
+	)
 	if config == nil || len(diagnostics) > 0 || len(config.Errors) > 0 {
 		return fmt.Errorf("cannot parse config %s", configPath)
 	}
@@ -67,14 +73,14 @@ func run() error {
 		if len(fields) != 2 {
 			return fmt.Errorf("invalid query line")
 		}
-		position, err := strconv.Atoi(fields[1])
-		if err != nil {
-			return err
+		position, parseError := strconv.Atoi(fields[1])
+		if parseError != nil {
+			return parseError
 		}
 		start = time.Now()
-		path, err := filepath.Abs(fields[0])
-		if err != nil {
-			return err
+		path, absolutePathError := filepath.Abs(fields[0])
+		if absolutePathError != nil {
+			return absolutePathError
 		}
 		file := program.GetSourceFile(tspath.RootedFilePathFromAbsolute(filepath.ToSlash(path)))
 		if file == nil || position < 0 || position >= len(file.Text()) {
@@ -92,6 +98,12 @@ func run() error {
 		count++
 		fmt.Printf("%d %d %d\n%s%s\n", node.Kind, len(symbolName), len(typeName), symbolName, typeName)
 	}
-	fmt.Fprintf(os.Stderr, "tsgo: load_ns=%d query_ns=%d queries=%d\n", loadTime.Nanoseconds(), queryTime.Nanoseconds(), count)
+	fmt.Fprintf(
+		os.Stderr,
+		"tsgo: load_ns=%d query_ns=%d queries=%d\n",
+		loadTime.Nanoseconds(),
+		queryTime.Nanoseconds(),
+		count,
+	)
 	return nil
 }

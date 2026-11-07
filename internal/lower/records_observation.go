@@ -23,7 +23,9 @@ func (l *lowering) recordReadDiscarded(node *ast.Node) bool {
 		return false
 	}
 	declaration := at.Parent
-	if declaration.AsVariableDeclaration().Initializer != at || !ast.IsIdentifier(declaration.Name()) || declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
+	if declaration.AsVariableDeclaration().Initializer != at ||
+		!ast.IsIdentifier(declaration.Name()) ||
+		declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
 		return false
 	}
 	symbol := l.checker.GetSymbolAtLocation(declaration.Name())
@@ -82,7 +84,9 @@ func (l *lowering) recordReadOwnGuarded(node *ast.Node) bool {
 		case ast.KindCallExpression:
 			call := parent.AsCallExpression()
 			callee := ast.SkipParentheses(call.Expression)
-			if len(call.Arguments.Nodes) == 0 || call.Arguments.Nodes[0] != at || (!ast.IsIdentifier(callee) && !l.isConsole(callee)) {
+			if len(call.Arguments.Nodes) == 0 ||
+				call.Arguments.Nodes[0] != at ||
+				(!ast.IsIdentifier(callee) && !l.isConsole(callee)) {
 				return false
 			}
 		case ast.KindReturnStatement, ast.KindExpressionStatement:
@@ -118,7 +122,9 @@ func (l *lowering) recordOwnCheck(condition, read *ast.Node) bool {
 	}
 	call := condition.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
-	ordinary := callee.Kind == ast.KindPropertyAccessExpression && callee.Name().Text() == "hasOwn" && l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Object")
+	ordinary := callee.Kind == ast.KindPropertyAccessExpression &&
+		callee.Name().Text() == "hasOwn" &&
+		l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Object")
 	if (!ordinary && l.detachedOwnCallReceiver(condition) == nil) || len(call.Arguments.Nodes) != 2 {
 		return false
 	}
@@ -131,7 +137,9 @@ func (l *lowering) recordOwnCheck(condition, read *ast.Node) bool {
 			return l.checker.GetSymbolAtLocation(a) == l.checker.GetSymbolAtLocation(b)
 		}
 		literal := func(n *ast.Node) bool {
-			return n.Kind == ast.KindStringLiteral || n.Kind == ast.KindNoSubstitutionTemplateLiteral || n.Kind == ast.KindNumericLiteral
+			return n.Kind == ast.KindStringLiteral ||
+				n.Kind == ast.KindNoSubstitutionTemplateLiteral ||
+				n.Kind == ast.KindNumericLiteral
 		}
 		return literal(a) && literal(b) && a.Text() == b.Text()
 	}
@@ -144,8 +152,14 @@ func (l *lowering) recordOwnRead(record, key ir.Expression, element ir.Type) ir.
 	of := ir.Maybe(element)
 	return b.finish("record_own_read", ir.Conditional{
 		Condition: ir.RecordCall{Method: "hasOwn", Arguments: []ir.Expression{r, k}, Returns: ir.Boolean},
-		WhenTrue:  ir.RecordCall{Method: "get", OwnOnly: true, Arguments: []ir.Expression{r, k}, Element: element, Returns: of},
-		WhenNot:   fit(ir.Undefined{}, of), Of: of,
+		WhenTrue: ir.RecordCall{
+			Method:    "get",
+			OwnOnly:   true,
+			Arguments: []ir.Expression{r, k},
+			Element:   element,
+			Returns:   of,
+		},
+		WhenNot: fit(ir.Undefined{}, of), Of: of,
 	})
 }
 
@@ -170,16 +184,17 @@ func (l *lowering) recordScalarComparison(node *ast.Node) (ir.Expression, bool, 
 		return nil, false, nil
 	}
 	proven := l.checker.GetTypeAtLocation(other)
-	if proven.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike) == 0 || l.includesUndefined(proven) {
+	if proven.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike) == 0 ||
+		l.includesUndefined(proven) {
 		return nil, false, nil
 	}
-	r, k, element, err := l.recordAccess(access, false)
-	if err != nil {
-		return nil, true, err
+	r, k, element, recordAccessError := l.recordAccess(access, false)
+	if recordAccessError != nil {
+		return nil, true, recordAccessError
 	}
-	value, err := l.expression(other)
-	if err != nil {
-		return nil, true, err
+	value, expressionError := l.expression(other)
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
 	arguments := []ir.Expression{r, k}
 	if reversed {
@@ -191,18 +206,32 @@ func (l *lowering) recordScalarComparison(node *ast.Node) (ir.Expression, bool, 
 		offset = 1
 	}
 	record, key := b.read(b.parameters[offset]), b.read(b.parameters[offset+1])
-	present := b.declare("own", ir.RecordCall{Method: "hasOwn", Arguments: []ir.Expression{record, key}, Returns: ir.Boolean})
+	present := b.declare(
+		"own",
+		ir.RecordCall{Method: "hasOwn", Arguments: []ir.Expression{record, key}, Returns: ir.Boolean},
+	)
 	// Snapshot before evaluating the right operand, which may delete or overwrite.
-	observed := b.declare("value", ir.Conditional{Condition: b.read(present), WhenTrue: ir.RecordCall{Method: "get", OwnOnly: true, Arguments: []ir.Expression{record, key}, Element: element, Returns: ir.Maybe(element)}, WhenNot: fit(ir.Undefined{}, ir.Maybe(element)), Of: ir.Maybe(element)})
+	observed := b.declare("value", ir.Conditional{Condition: b.read(present), WhenTrue: ir.RecordCall{
+		Method:    "get",
+		OwnOnly:   true,
+		Arguments: []ir.Expression{record, key},
+		Element:   element,
+		Returns:   ir.Maybe(element),
+	}, WhenNot: fit(ir.Undefined{}, ir.Maybe(element)), Of: ir.Maybe(element)})
 	var otherRead ir.Expression
 	if reversed {
 		otherRead = b.read(b.parameters[0])
 	} else {
 		otherRead = b.read(b.declare("other", value))
 	}
-	result, err := l.combine(node, operator, b.read(observed), otherRead)
-	if err != nil {
-		return nil, true, err
+	result, combineError := l.combine(node, operator, b.read(observed), otherRead)
+	if combineError != nil {
+		return nil, true, combineError
 	}
-	return b.finish("record_scalar_comparison", ir.Conditional{Condition: b.read(present), WhenTrue: result, WhenNot: ir.BooleanConstant{Value: operator == ast.KindExclamationEqualsEqualsToken}, Of: ir.Boolean}), true, nil
+	return b.finish("record_scalar_comparison", ir.Conditional{
+		Condition: b.read(present),
+		WhenTrue:  result,
+		WhenNot:   ir.BooleanConstant{Value: operator == ast.KindExclamationEqualsEqualsToken},
+		Of:        ir.Boolean,
+	}), true, nil
 }

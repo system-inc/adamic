@@ -29,13 +29,13 @@ func comparePrinterLibraryCases(
 	if result.ExitCode != 0 || len(result.Stderr) != 0 {
 		test.Fatalf("%s: exit %d stderr %s", name, result.ExitCode, result.Stderr)
 	}
-	data, err := os.ReadFile(specs)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(specs)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var cases []oracles.PrinterCase
-	if err := json.Unmarshal(data, &cases); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &cases); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	lines := strings.Split(strings.TrimSuffix(string(result.Stdout), "\n"), "\n")
 	if len(lines) != len(cases) {
@@ -55,13 +55,13 @@ func comparePrinterLibraryCases(
 				test.Fatalf("%s: recorded Go outcome changed", record.Label)
 			}
 			seen[record.Label] = true
-			errText := record.PrettierError
+			textError := record.PrettierError
 			want = record.Prettier
 			if embedded {
-				want, errText = record.Embedded, record.EmbeddedError
+				want, textError = record.Embedded, record.EmbeddedError
 			}
-			if errText != "" {
-				status, want = "error", errText
+			if textError != "" {
+				status, want = "error", textError
 				refusals++
 			} else {
 				differences++
@@ -105,8 +105,8 @@ func TestTSCCorpusUpstreamDifferences(test *testing.T) {
 		}
 		data, _ := json.Marshal(cases)
 		specs := filepath.Join(test.TempDir(), "cases.json")
-		if err := os.WriteFile(specs, data, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(specs, data, 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		npm, _ := filepath.Abs("testdata/expressions.mjs")
 		comparePrinterLibrary(

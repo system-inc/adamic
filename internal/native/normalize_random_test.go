@@ -100,8 +100,12 @@ for (let sample = 0; sample < 100000; sample++) {
 process.stdout.write(chunk);
 `
 	binary := filepath.Join(test.TempDir(), "harness")
-	if err := Build(strings.Replace(harness, "ALPHABET", alphabet, 1), binary, Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(
+		strings.Replace(harness, "ALPHABET", alphabet, 1),
+		binary,
+		Options{Sanitize: true},
+	); buildError != nil {
+		test.Fatal(buildError)
 	}
 	compareStreams(
 		test,

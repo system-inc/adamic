@@ -65,8 +65,12 @@ func decorationOptionMutantShard(test *testing.T, shard int) {
 	default:
 		test.Fatalf("decoration option mutant shard %d runs no backend", shard)
 	}
-	if err := decorationOptionMutantCheck(side, run.output, want); err != nil {
-		test.Fatal(err)
+	if decorationOptionMutantCheckError := decorationOptionMutantCheck(
+		side,
+		run.output,
+		want,
+	); decorationOptionMutantCheckError != nil {
+		test.Fatal(decorationOptionMutantCheckError)
 	}
 	test.Logf("decoration hyphen dropped from the class caught on %s: %s", side, difference(run.output, want))
 }
@@ -96,9 +100,9 @@ func decorationOptionMutantJavaScript(test *testing.T) string {
 		Toolchain: []string{runtime.Version()},
 	}
 	product := buildcache.Product(test, inputs, func(directory string) error {
-		source, err := os.MkdirTemp("", "decoration-option-mutant-")
-		if err != nil {
-			return err
+		source, temporaryDirectoryError := os.MkdirTemp("", "decoration-option-mutant-")
+		if temporaryDirectoryError != nil {
+			return temporaryDirectoryError
 		}
 		defer os.RemoveAll(source)
 		copyPort(test, source, decorationOptionMutantFrom, decorationOptionMutantTo, decorationOptionMutantFile)
@@ -119,9 +123,9 @@ func TestDecorationOptionMutantUnion(test *testing.T) {
 	test.Parallel()
 	// Read actual top-level registrations: a missing, repeated, or misnumbered wrapper must fail even if the side list
 	// still names every backend.
-	file, err := parser.ParseFile(token.NewFileSet(), "decoration_option_mutant_shards_test.go", nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	file, parseFileError := parser.ParseFile(token.NewFileSet(), "decoration_option_mutant_shards_test.go", nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	registrations := map[int]int{}
 	const prefix = "TestDecorationOptionMutant_"
@@ -131,8 +135,8 @@ func TestDecorationOptionMutantUnion(test *testing.T) {
 			continue
 		}
 		suffix := strings.TrimPrefix(function.Name.Name, prefix)
-		shard, err := strconv.Atoi(suffix)
-		if err != nil ||
+		shard, parseError := strconv.Atoi(suffix)
+		if parseError != nil ||
 			shard < 0 ||
 			shard >= testDecorationOptionMutantShards ||
 			suffix != fmt.Sprintf("%03d", shard) {
@@ -191,8 +195,12 @@ func TestDecorationOptionMutantPlantedFailure(test *testing.T) {
 	var caught []int
 	for shard, side := range decorationOptionMutantSides() {
 		got := []byte("case 0\nfixed\tmutated\n")
-		if err := decorationOptionMutantCheck(side, got, want); err != nil {
-			test.Fatalf("caught mutant failed on %s: %v", side, err)
+		if decorationOptionMutantCheckError := decorationOptionMutantCheck(
+			side,
+			got,
+			want,
+		); decorationOptionMutantCheckError != nil {
+			test.Fatalf("caught mutant failed on %s: %v", side, decorationOptionMutantCheckError)
 		}
 		if shard == planted {
 			got = append([]byte(nil), want...)

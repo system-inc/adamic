@@ -45,10 +45,10 @@ var formatfilesSetupRoot string
 // Keep the shared fixtures alive until every parallel leaf has finished.
 // Not parallel: TestMain owns only the process-wide fixture lifetime.
 func TestMain(m *testing.M) {
-	var err error
-	formatfilesSetupRoot, err = os.MkdirTemp("", "formatfiles-shared-")
-	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
+	var temporaryDirectoryError error
+	formatfilesSetupRoot, temporaryDirectoryError = os.MkdirTemp("", "formatfiles-shared-")
+	if temporaryDirectoryError != nil {
+		fmt.Fprintln(os.Stderr, temporaryDirectoryError)
 		os.Exit(1)
 	}
 	code := m.Run()
@@ -65,8 +65,12 @@ func formatfilesPreparePort(test *testing.T, applied *mutant) formatfilesPrepare
 	prepared.binary = formatfilesBinary(test, prepared.program, applied)
 	if applied == nil {
 		prepared.javascript = filepath.Join(formatfilesSetupDirectory(test), "program.mjs")
-		if err := os.WriteFile(prepared.javascript, []byte(javascript.JavaScript(prepared.program)), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(
+			prepared.javascript,
+			[]byte(javascript.JavaScript(prepared.program)),
+			0644,
+		); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	return prepared
@@ -125,9 +129,9 @@ func formatfilesUnsanitized(test *testing.T) string {
 
 func formatfilesSetupDirectory(test *testing.T) string {
 	test.Helper()
-	directory, err := os.MkdirTemp(formatfilesSetupRoot, "fixture-")
-	if err != nil {
-		test.Fatal(err)
+	directory, temporaryDirectoryError := os.MkdirTemp(formatfilesSetupRoot, "fixture-")
+	if temporaryDirectoryError != nil {
+		test.Fatal(temporaryDirectoryError)
 	}
 	return directory
 }
@@ -162,11 +166,11 @@ func formatfilesContextCommand(ctx context.Context, name string, args ...string)
 	command := exec.CommandContext(ctx, name, args...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
+		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if errors.Is(killError, syscall.ESRCH) {
 			return os.ErrProcessDone
 		}
-		return err
+		return killError
 	}
 	return command
 }
@@ -181,22 +185,22 @@ func formatfilesExecute(test *testing.T, ctx context.Context, environment []stri
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	if ctx.Err() != nil {
 		test.Fatalf("cooked: 90 s shard deadline: %v", ctx.Err())
 	}
 	var exitError *exec.ExitError
-	if err != nil && !errors.As(err, &exitError) {
-		test.Fatalf("running %s: %v", name, err)
+	if captureError != nil && !errors.As(captureError, &exitError) {
+		test.Fatalf("running %s: %v", name, captureError)
 	}
 	return run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}
 }
 
 func formatfilesNode(test *testing.T, ctx context.Context, path string, args ...string) run {
 	test.Helper()
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return formatfilesExecute(
 		test,
@@ -256,8 +260,8 @@ func init() {
 
 func formatfilesBuildNative(test *testing.T, source, output string, sanitize bool) error {
 	path := filepath.Join(filepath.Dir(output), "program.c")
-	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-		return err
+	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+		return writeError
 	}
 	command := formatfilesContextCommand(test.Context(), os.Args[0])
 	command.Env = append(
@@ -269,9 +273,9 @@ func formatfilesBuildNative(test *testing.T, source, output string, sanitize boo
 	// Read through childguard.Capture for formatfilesExecute's reason: a WaitDelay could fail a build that had
 	// finished. The test's context has no deadline, so the build stays outside the leaf's; the unit's ceiling bounds
 	// it.
-	stdout, stderr, err := childguard.Capture(test.Context(), command)
-	if err != nil {
-		return fmt.Errorf("native builder: %w\n%s%s", err, stdout, stderr)
+	stdout, stderr, captureError := childguard.Capture(test.Context(), command)
+	if captureError != nil {
+		return fmt.Errorf("native builder: %w\n%s%s", captureError, stdout, stderr)
 	}
 	return nil
 }
@@ -281,23 +285,23 @@ func formatfilesSetupPort(test *testing.T, applied *mutant) string {
 	port := filepath.Join(directory, "formatfiles")
 	gitignore := filepath.Join(directory, "gitignore")
 	for _, made := range []string{port, gitignore} {
-		if err := os.Mkdir(made, 0o755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.Mkdir(made, 0o755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 	}
 	for _, name := range gitignoreFiles {
-		contents, err := os.ReadFile(filepath.Join("..", "gitignore", name))
-		if err != nil {
-			test.Fatal(err)
+		contents, readError := os.ReadFile(filepath.Join("..", "gitignore", name))
+		if readError != nil {
+			test.Fatal(readError)
 		}
-		if err := os.WriteFile(filepath.Join(gitignore, name), contents, 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(gitignore, name), contents, 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	for _, name := range portFiles {
-		contents, err := os.ReadFile(name)
-		if err != nil {
-			test.Fatal(err)
+		contents, readError := os.ReadFile(name)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		source := string(contents)
 		if applied != nil && applied.file == name {
@@ -306,8 +310,8 @@ func formatfilesSetupPort(test *testing.T, applied *mutant) string {
 			}
 			source = strings.Replace(source, applied.from, applied.to, 1)
 		}
-		if err := os.WriteFile(filepath.Join(port, name), []byte(source), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(port, name), []byte(source), 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	return port

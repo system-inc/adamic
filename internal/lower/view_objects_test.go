@@ -9,12 +9,12 @@ import (
 func TestViewObjectContractsAreAvailableToEraser(test *testing.T) {
 	test.Parallel()
 	// .ts, where the cast stays a checked view: in .a a downcast whose checks no proof erases is refused (#m8dvvmf).
-	program, err := lowerSourceAs(test, `interface Base {readonly kind:'box'|'other'}
+	program, lowerSourceAsError := lowerSourceAs(test, `interface Base {readonly kind:'box'|'other'}
  interface Box extends Base {readonly kind:'box';readonly child:{readonly ready:boolean}}
  function visit(node:Base):boolean {return (node as Box).child.ready}
  const raw={kind:'box' as const,child:{ready:true}}; console.log(String(visit(raw)));`, ".ts")
-	if err != nil {
-		test.Fatal(err)
+	if lowerSourceAsError != nil {
+		test.Fatal(lowerSourceAsError)
 	}
 	found := false
 	for _, function := range program.Functions {
@@ -47,12 +47,12 @@ func TestViewObjectWritesNeedSourceCertificate(test *testing.T) {
 		`view.child={ready:true};`,
 		`({child:view.child}={child:{ready:true}});`,
 	} {
-		_, err := lowerSource(test, `interface Base {readonly kind:'box'|'other'}
+		_, lowerSourceError := lowerSource(test, `interface Base {readonly kind:'box'|'other'}
   interface Box extends Base {readonly kind:'box';child:{ready:boolean}}
   const raw={kind:'box' as const,child:{ready:true,other:42}};
   const held:Base=raw;const view=held as Box;`+assignment+`console.log(String(raw.child.other));`)
-		if err == nil || !strings.Contains(err.Error(), "source-slot type certificate") {
-			test.Fatalf("unchecked write could invalidate another alias: %v", err)
+		if lowerSourceError == nil || !strings.Contains(lowerSourceError.Error(), "source-slot type certificate") {
+			test.Fatalf("unchecked write could invalidate another alias: %v", lowerSourceError)
 		}
 	}
 }

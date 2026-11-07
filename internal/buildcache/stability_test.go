@@ -21,9 +21,9 @@ func TestTwoRunsOfOneTreeClassWhatTheyLookForAlike(test *testing.T) {
 		directory := filepath.Join("/work", run, "e329")
 		cache := filepath.Join(directory, "cache")
 		test.Setenv("ADAMIC_TRACE_REPORT", filepath.Join(directory, "logs", "product-388.trace.jsonl"))
-		facts, err := settleFacts(root, cache, filepath.Join(cache, "trace-1"))
-		if err != nil {
-			test.Fatal(err)
+		facts, settleFactsError := settleFacts(root, cache, filepath.Join(cache, "trace-1"))
+		if settleFactsError != nil {
+			test.Fatal(settleFactsError)
 		}
 		// Neither run sits in a temporary directory, as Home's trees don't.
 		facts.temporary = nil
@@ -66,28 +66,28 @@ func TestTwoRunsOfOneTreeClassWhatTheyLookForAlike(test *testing.T) {
 // fails the test on any box, not only a loaded one. Mutant: no mode file.
 func quietHome(test *testing.T) string {
 	test.Helper()
-	home, err := filepath.EvalSymlinks(test.TempDir())
-	if err != nil {
-		test.Fatal(err)
+	home, resolveSymlinksError := filepath.EvalSymlinks(test.TempDir())
+	if resolveSymlinksError != nil {
+		test.Fatal(resolveSymlinksError)
 	}
 	test.Setenv("HOME", home)
 	test.Setenv("XDG_CONFIG_HOME", filepath.Join(home, ".config"))
-	configuration, err := os.UserConfigDir()
-	if err != nil {
-		test.Fatal(err)
+	configuration, userConfigurationDirectoryError := os.UserConfigDir()
+	if userConfigurationDirectoryError != nil {
+		test.Fatal(userConfigurationDirectoryError)
 	}
 	telemetry := filepath.Join(configuration, "go", "telemetry")
-	if err := os.MkdirAll(telemetry, 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(telemetry, 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	if err := os.WriteFile(filepath.Join(telemetry, "mode"), []byte("off\n"), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(telemetry, "mode"), []byte("off\n"), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	// Registered after TempDir's, so it runs before the home is removed.
 	test.Cleanup(func() {
-		entries, err := os.ReadDir(telemetry)
-		if err != nil {
-			test.Error(err)
+		entries, readDirectoryError := os.ReadDir(telemetry)
+		if readDirectoryError != nil {
+			test.Error(readDirectoryError)
 			return
 		}
 		for _, entry := range entries {
@@ -117,14 +117,18 @@ func TestAListingOfTheCachesParentsIsKeyedBesideTheCache(test *testing.T) {
 			filepath.Join(home, "elsewhere"),
 			filepath.Join(home, extra),
 		} {
-			if err := os.MkdirAll(made, 0o755); err != nil {
-				test.Fatal(err)
+			if createDirectoryError := os.MkdirAll(made, 0o755); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
 		}
 		os.WriteFile(filepath.Join(home, "package.json"), []byte("{}\n"), 0o644)
-		facts, err := settleFacts(filepath.Join(home, "loom-trees", "adamic"), cache, filepath.Join(cache, "trace-1"))
-		if err != nil {
-			test.Fatal(err)
+		facts, settleFactsError := settleFacts(
+			filepath.Join(home, "loom-trees", "adamic"),
+			cache,
+			filepath.Join(cache, "trace-1"),
+		)
+		if settleFactsError != nil {
+			test.Fatal(settleFactsError)
 		}
 		// A home in no temporary directory, as a builder's isn't.
 		facts.temporary = nil
@@ -168,12 +172,12 @@ func TestALookupBelowTheCachesChainUnderTheHomeIsKeyedBesideTheCache(test *testi
 	classes := func(label string) []classed {
 		test.Helper()
 		cache := filepath.Join(home, "tests-proof", "hc", label, "cache")
-		if err := os.MkdirAll(cache, 0o755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(cache, 0o755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		facts, err := settleFacts(filepath.Join(home, "tree"), cache, filepath.Join(cache, "trace-1"))
-		if err != nil {
-			test.Fatal(err)
+		facts, settleFactsError := settleFacts(filepath.Join(home, "tree"), cache, filepath.Join(cache, "trace-1"))
+		if settleFactsError != nil {
+			test.Fatal(settleFactsError)
 		}
 		facts.temporary = nil
 		parent := filepath.Dir(cache)
@@ -211,13 +215,13 @@ func TestGoLookingForItsCachedTestMainIsNoTreeRead(test *testing.T) {
 	var classes [][]classed
 	for _, cache := range []string{"/home/ahra/.cache/go-build", "/home/ahra/loom-sums/s1/gocache"} {
 		test.Setenv("GOCACHE", cache)
-		facts, err := settleFacts(
+		facts, settleFactsError := settleFacts(
 			root,
 			filepath.Join(test.TempDir(), "cache"),
 			filepath.Join(test.TempDir(), "trace-1"),
 		)
-		if err != nil {
-			test.Fatal(err)
+		if settleFactsError != nil {
+			test.Fatal(settleFactsError)
 		}
 		testMain := "/28/28079cc4cf0088b656dc5dcec5353d6596c309cc5a5d1e4eea57b8c285139d88-d"
 		classes = append(classes, []classed{
@@ -249,20 +253,27 @@ func TestAPathAboveTheCacheIsValuedBesideIt(test *testing.T) {
 	test.Parallel()
 	root, cache := filepath.Join(test.TempDir(), "adamic"), filepath.Join(test.TempDir(), "trees-2", "e329", "cache")
 	for _, directory := range []string{root, cache, filepath.Join(filepath.Dir(root), "beside-the-cache")} {
-		if err := os.MkdirAll(directory, 0o755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(directory, 0o755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 	}
 	entry := readEntry{Kind: "above cache", Path: "../beside-the-cache"}
-	before, err := treeEntryValue(root, cache, entry)
-	if err != nil || before != "absent" {
-		test.Fatalf("nothing beside the cache: %q, %v", before, err)
+	before, treeEntryValueError := treeEntryValue(root, cache, entry)
+	if treeEntryValueError != nil || before != "absent" {
+		test.Fatalf("nothing beside the cache: %q, %v", before, treeEntryValueError)
 	}
-	if err := os.Mkdir(filepath.Join(filepath.Dir(cache), "beside-the-cache"), 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.Mkdir(
+		filepath.Join(filepath.Dir(cache), "beside-the-cache"),
+		0o755,
+	); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	if after, err := treeEntryValue(root, cache, entry); err != nil || after != "directory" {
-		test.Fatalf("a directory beside the cache: %q, %v", after, err)
+	if after, treeEntryValueError := treeEntryValue(
+		root,
+		cache,
+		entry,
+	); treeEntryValueError != nil || after != "directory" {
+		test.Fatalf("a directory beside the cache: %q, %v", after, treeEntryValueError)
 	}
 }
 
@@ -283,9 +294,9 @@ func TestALookupThatClimbsToHomeOrPastItIsKeyedWhereItLands(test *testing.T) {
 			"ADAMIC_TRACE_REPORT",
 			filepath.Join(home, "loom-builder", "trees", "e329", "logs", "product-1.trace.jsonl"),
 		)
-		facts, err := settleFacts(root, cache, filepath.Join(cache, "trace-1"))
-		if err != nil {
-			test.Fatal(err)
+		facts, settleFactsError := settleFacts(root, cache, filepath.Join(cache, "trace-1"))
+		if settleFactsError != nil {
+			test.Fatal(settleFactsError)
 		}
 		facts.temporary, facts.home = nil, home
 		var found []classed
@@ -331,28 +342,35 @@ func TestALookupThatClimbsToHomeOrPastItIsKeyedWhereItLands(test *testing.T) {
 // Not parallel: points the home directory and ADAMIC_TOOLS at each layout's through test.Setenv.
 func TestAReadThroughEveryToolsSpellingIsTheRootsRead(test *testing.T) {
 	box := quietHome(test)
-	unit, err := filepath.EvalSymlinks(test.TempDir())
-	if err != nil {
-		test.Fatal(err)
+	unit, resolveSymlinksError := filepath.EvalSymlinks(test.TempDir())
+	if resolveSymlinksError != nil {
+		test.Fatal(resolveSymlinksError)
 	}
 	tools := filepath.Join(box, "adamic-tools")
-	if err := os.MkdirAll(filepath.Join(tools, "wasi-sdk", "share", "wasi-sysroot", "include"), 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(
+		filepath.Join(tools, "wasi-sdk", "share", "wasi-sysroot", "include"),
+		0o755,
+	); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	if err := os.Symlink("adamic-tools", filepath.Join(box, ".adamic-tools")); err != nil {
-		test.Fatal(err)
+	if symlinkError := os.Symlink("adamic-tools", filepath.Join(box, ".adamic-tools")); symlinkError != nil {
+		test.Fatal(symlinkError)
 	}
 	header := filepath.Join("wasi-sdk", "share", "wasi-sysroot", "include", "stdatomic.h")
 	cache := filepath.Join(test.TempDir(), "cache")
-	if err := os.MkdirAll(cache, 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(cache, 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	test.Setenv("ADAMIC_TOOLS", tools)
 	for _, home := range []string{box, unit} {
 		test.Setenv("HOME", home)
-		facts, err := settleFacts(filepath.Join(test.TempDir(), "adamic"), cache, filepath.Join(cache, "trace-1"))
-		if err != nil {
-			test.Fatal(err)
+		facts, settleFactsError := settleFacts(
+			filepath.Join(test.TempDir(), "adamic"),
+			cache,
+			filepath.Join(cache, "trace-1"),
+		)
+		if settleFactsError != nil {
+			test.Fatal(settleFactsError)
 		}
 		for _, spelling := range []string{tools, filepath.Join(box, ".adamic-tools")} {
 			if got := facts.classifyPath(
@@ -370,9 +388,13 @@ func TestAReadThroughEveryToolsSpellingIsTheRootsRead(test *testing.T) {
 	}
 	test.Setenv("ADAMIC_TOOLS", "")
 	test.Setenv("HOME", box)
-	facts, err := settleFacts(filepath.Join(test.TempDir(), "adamic"), cache, filepath.Join(cache, "trace-1"))
-	if err != nil {
-		test.Fatal(err)
+	facts, settleFactsError := settleFacts(
+		filepath.Join(test.TempDir(), "adamic"),
+		cache,
+		filepath.Join(cache, "trace-1"),
+	)
+	if settleFactsError != nil {
+		test.Fatal(settleFactsError)
 	}
 	// A home in no temporary directory, as a builder's isn't: this one is under the test's.
 	facts.temporary = nil

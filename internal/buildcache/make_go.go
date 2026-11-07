@@ -15,8 +15,8 @@ import (
 )
 
 // A Mutation is one planted change a product is built with: File, a file of the repository the build reads (a
-// package's source or an overlay's replacement), relative to the repository, with Before, which must occur in it exactly
-// once, replaced by After. It is how a test proves a check can fail, built ahead like any other product.
+// package's source or an overlay's replacement), relative to the repository, with Before, which must occur in it
+// exactly once, replaced by After. It is how a test proves a check can fail, built ahead like any other product.
 type Mutation struct{ File, Before, After string }
 
 // A goRequest is one go invocation a product is built by: 'go build', or 'go test -c', of pkg in module (a directory
@@ -35,14 +35,19 @@ func (request goRequest) mutated(root string) (map[string]string, error) {
 	for _, mutation := range request.mutations {
 		text, ok := texts[mutation.File]
 		if !ok {
-			content, err := os.ReadFile(filepath.Join(root, mutation.File))
-			if err != nil {
-				return nil, fmt.Errorf("mutation of %s: %v", mutation.File, err)
+			content, readError := os.ReadFile(filepath.Join(root, mutation.File))
+			if readError != nil {
+				return nil, fmt.Errorf("mutation of %s: %v", mutation.File, readError)
 			}
 			text = string(content)
 		}
 		if count := strings.Count(text, mutation.Before); count != 1 {
-			return nil, fmt.Errorf("mutation of %s: %q occurs %d times, not once", mutation.File, mutation.Before, count)
+			return nil, fmt.Errorf(
+				"mutation of %s: %q occurs %d times, not once",
+				mutation.File,
+				mutation.Before,
+				count,
+			)
 		}
 		texts[mutation.File] = strings.Replace(text, mutation.Before, mutation.After, 1)
 	}
@@ -66,8 +71,12 @@ func ReproducibleGoFlags() []string {
 func reproducible(arguments []string) []string {
 	kept := ReproducibleGoFlags()
 	for _, argument := range arguments {
-		if argument == "-trimpath" || strings.HasPrefix(argument, "-ldflags") || strings.HasPrefix(argument, "-buildvcs") {
-			panic("buildcache.GoBuild and GoTest set -trimpath, -ldflags and -buildvcs themselves, for a product that's the same from any checkout path and commit")
+		if argument == "-trimpath" ||
+			strings.HasPrefix(argument, "-ldflags") ||
+			strings.HasPrefix(argument, "-buildvcs") {
+			panic(
+				"buildcache.GoBuild and GoTest set -trimpath, -ldflags and -buildvcs themselves, for a product that's the same from any checkout path and commit",
+			)
 		}
 	}
 	return append(kept, arguments...)
@@ -78,34 +87,38 @@ func reproducible(arguments []string) []string {
 // keeps only packages themselves, their test variants and external tests, and what any of those imports directly
 // (GoDirectExports): the rest of -deps is listed by go and dropped, so neither its file nor its listing entry is kept.
 func goExports(root string, packages []string, listingName, directory string, direct bool) error {
-	command := toolchain.Command("go", append([]string{"list", "-trimpath", "-buildvcs=false", "-export", "-deps", "-test", "-json"}, packages...)...)
+	command := toolchain.Command(
+		"go",
+		append([]string{"list", "-trimpath", "-buildvcs=false", "-export", "-deps", "-test", "-json"}, packages...)...,
+	)
 	command.Dir = root
-	output, err := command.Output()
-	if err != nil {
+	output, outputError := command.Output()
+	if outputError != nil {
 		var exit *exec.ExitError
-		if errors.As(err, &exit) {
-			return fmt.Errorf("go list -export: %v\n%s", err, exit.Stderr)
+		if errors.As(outputError, &exit) {
+			return fmt.Errorf("go list -export: %v\n%s", outputError, exit.Stderr)
 		}
-		return err
+		return outputError
 	}
-	if err := os.Mkdir(filepath.Join(directory, "exports"), 0o755); err != nil {
-		return err
+	if createDirectoryError := os.Mkdir(filepath.Join(directory, "exports"), 0o755); createDirectoryError != nil {
+		return createDirectoryError
 	}
 	real := resolved(root)
 	var listing []ListedPackage
 	keep := func(string) bool { return true }
 	if direct {
-		if keep, err = directPackages(root, real, packages, output); err != nil {
-			return err
+		var directPackagesError error
+		if keep, directPackagesError = directPackages(root, real, packages, output); directPackagesError != nil {
+			return directPackagesError
 		}
 	}
 	decoder := json.NewDecoder(strings.NewReader(string(output)))
 	for {
 		var listed ListedPackage
-		if err := decoder.Decode(&listed); err == io.EOF {
+		if decodeError := decoder.Decode(&listed); decodeError == io.EOF {
 			break
-		} else if err != nil {
-			return err
+		} else if decodeError != nil {
+			return decodeError
 		}
 		if !keep(listed.ImportPath) {
 			continue
@@ -132,20 +145,20 @@ func goExports(root string, packages []string, listingName, directory string, di
 			listed.Export = ""
 		}
 		if listed.Export != "" {
-			content, err := os.ReadFile(listed.Export)
-			if err != nil {
-				return err
+			content, readError := os.ReadFile(listed.Export)
+			if readError != nil {
+				return readError
 			}
 			listed.Export = fmt.Sprintf("exports/%d.a", len(listing))
-			if err := os.WriteFile(filepath.Join(directory, listed.Export), content, 0o644); err != nil {
-				return err
+			if writeError := os.WriteFile(filepath.Join(directory, listed.Export), content, 0o644); writeError != nil {
+				return writeError
 			}
 		}
 		listing = append(listing, listed)
 	}
-	encoded, err := json.MarshalIndent(listing, "", "\t")
-	if err != nil {
-		return err
+	encoded, encodeError := json.MarshalIndent(listing, "", "\t")
+	if encodeError != nil {
+		return encodeError
 	}
 	return os.WriteFile(filepath.Join(directory, listingName), encoded, 0o644)
 }
@@ -166,10 +179,10 @@ func directPackages(root, real string, packages []string, output []byte) (func(s
 			ImportPath, Dir string
 			Imports         []string
 		}
-		if err := decoder.Decode(&listed); err == io.EOF {
+		if decodeError := decoder.Decode(&listed); decodeError == io.EOF {
 			break
-		} else if err != nil {
-			return nil, err
+		} else if decodeError != nil {
+			return nil, decodeError
 		}
 		relative := ""
 		for _, spelling := range []string{root, real} {
@@ -203,8 +216,11 @@ type ListedPackage struct {
 }
 
 func inside(root, path string) bool {
-	relative, err := filepath.Rel(root, path)
-	return err == nil && relative != ".." && !strings.HasPrefix(relative, "../") && !filepath.IsAbs(relative)
+	relative, relativePathError := filepath.Rel(root, path)
+	return relativePathError == nil &&
+		relative != ".." &&
+		!strings.HasPrefix(relative, "../") &&
+		!filepath.IsAbs(relative)
 }
 
 func mustRelative(root, path string) string {

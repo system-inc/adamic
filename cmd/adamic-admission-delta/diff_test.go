@@ -15,41 +15,44 @@ func TestDiffCoverage(test *testing.T) {
 	dir, base, _, compiler := commandFixture(test)
 	write := func(path, text string) {
 		test.Helper()
-		if err := os.MkdirAll(filepath.Dir(filepath.Join(dir, path)), 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(
+			filepath.Dir(filepath.Join(dir, path)),
+			0755,
+		); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.WriteFile(filepath.Join(dir, path), []byte(text), 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(dir, path), []byte(text), 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	write("deleted.a", "console.log(1);\n")
-	if _, err := git(dir, "add", "deleted.a"); err != nil {
-		test.Fatal(err)
+	if _, gitError := git(dir, "add", "deleted.a"); gitError != nil {
+		test.Fatal(gitError)
 	}
-	if _, err := git(dir, "commit", "-qm", "baseline deletion"); err != nil {
-		test.Fatal(err)
+	if _, gitError := git(dir, "commit", "-qm", "baseline deletion"); gitError != nil {
+		test.Fatal(gitError)
 	}
 	base, _ = git(dir, "rev-parse", "HEAD")
-	if err := os.Remove(filepath.Join(dir, "deleted.a")); err != nil {
-		test.Fatal(err)
+	if removeError := os.Remove(filepath.Join(dir, "deleted.a")); removeError != nil {
+		test.Fatal(removeError)
 	}
 	write("corpus/input.a", "console.log('43');\n")
 	write("outside/deep/added.a", "console.log('44');\n")
 	write("outside/ignored.ts", "console.log('45');\n")
-	if _, err := git(dir, "add", "corpus/input.a", "outside", "deleted.a"); err != nil {
-		test.Fatal(err)
+	if _, gitError := git(dir, "add", "corpus/input.a", "outside", "deleted.a"); gitError != nil {
+		test.Fatal(gitError)
 	}
-	if _, err := git(dir, "commit", "-qm", "changed inputs"); err != nil {
-		test.Fatal(err)
+	if _, gitError := git(dir, "commit", "-qm", "changed inputs"); gitError != nil {
+		test.Fatal(gitError)
 	}
-	head, err := git(dir, "rev-parse", "HEAD")
-	if err != nil {
-		test.Fatal(err)
+	head, gitError := git(dir, "rev-parse", "HEAD")
+	if gitError != nil {
+		test.Fatal(gitError)
 	}
 	write("outside/deep/added.a", "dirty working tree\n")
-	programs, unmatched, err := changedPrograms(dir, base, head, map[string]bool{})
-	if err != nil {
-		test.Fatal(err)
+	programs, unmatched, changedProgramsError := changedPrograms(dir, base, head, map[string]bool{})
+	if changedProgramsError != nil {
+		test.Fatal(changedProgramsError)
 	}
 	if !reflect.DeepEqual(unmatched, []string{"outside/ignored.ts"}) {
 		test.Fatalf("a .ts no manifest lists: unmatched %q, want outside/ignored.ts", unmatched)
@@ -57,8 +60,8 @@ func TestDiffCoverage(test *testing.T) {
 	paths := []string{}
 	for _, p := range programs {
 		paths = append(paths, p.Path)
-		blob, err := git(dir, "rev-parse", head+":"+p.Path)
-		if err != nil || blob != p.Blob {
+		blob, gitError := git(dir, "rev-parse", head+":"+p.Path)
+		if gitError != nil || blob != p.Blob {
 			test.Fatal("wrong head blob", p)
 		}
 	}
@@ -81,8 +84,8 @@ func TestDiffCoverage(test *testing.T) {
 		"--json",
 	)
 	var r report
-	if err := json.Unmarshal([]byte(o.Stdout), &r); err != nil {
-		test.Fatal(err, o.Stderr)
+	if decodeError := json.Unmarshal([]byte(o.Stdout), &r); decodeError != nil {
+		test.Fatal(decodeError, o.Stderr)
 	}
 	if o.Exit != 0 ||
 		r.Admitted != 0 ||
@@ -100,8 +103,8 @@ func TestDiffCoverage(test *testing.T) {
 		test.Fatalf("diff_ts_unmatched %q, want outside/ignored.ts", r.DiffTSUnmatched)
 	}
 	var raw map[string]json.RawMessage
-	if err := json.Unmarshal([]byte(o.Stdout), &raw); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal([]byte(o.Stdout), &raw); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if string(raw["admitted"]) != "0" {
 		test.Fatal("zero admission omitted")
@@ -133,36 +136,39 @@ func TestDiffCoverageTakesListedTSPrograms(test *testing.T) {
 		{"library/module.ts", "export const value = 1;\n"},
 		{"library/types.d.ts", "declare const typed: number;\n"},
 	} {
-		if err := os.MkdirAll(filepath.Dir(filepath.Join(dir, step.path)), 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(
+			filepath.Dir(filepath.Join(dir, step.path)),
+			0755,
+		); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.WriteFile(filepath.Join(dir, step.path), []byte(step.text), 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(dir, step.path), []byte(step.text), 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	for _, args := range [][]string{{"add", "programs", "library"}, {"commit", "-qm", "a .ts program and a module"}} {
-		if _, err := git(dir, args...); err != nil {
-			test.Fatal(err)
+		if _, gitError := git(dir, args...); gitError != nil {
+			test.Fatal(gitError)
 		}
 	}
-	head, err := git(dir, "rev-parse", "HEAD")
-	if err != nil {
-		test.Fatal(err)
+	head, gitError := git(dir, "rev-parse", "HEAD")
+	if gitError != nil {
+		test.Fatal(gitError)
 	}
-	blob, err := git(dir, "rev-parse", head+":programs/added.ts")
-	if err != nil {
-		test.Fatal(err)
+	blob, gitError := git(dir, "rev-parse", head+":programs/added.ts")
+	if gitError != nil {
+		test.Fatal(gitError)
 	}
-	data, err := json.Marshal(manifest{
+	data, encodeError := json.Marshal(manifest{
 		SHA:     head,
 		Corpora: []corpus{{Name: "fixtures", Programs: []program{{Path: "programs/added.ts", Blob: blob}}}},
 	})
-	if err != nil {
-		test.Fatal(err)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	listing := filepath.Join(test.TempDir(), "manifest.json")
-	if err := os.WriteFile(listing, data, 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(listing, data, 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	o := invokeCommand(
 		test,
@@ -180,8 +186,8 @@ func TestDiffCoverageTakesListedTSPrograms(test *testing.T) {
 		"--json",
 	)
 	var r report
-	if err := json.Unmarshal([]byte(o.Stdout), &r); err != nil {
-		test.Fatal(err, o.Stderr)
+	if decodeError := json.Unmarshal([]byte(o.Stdout), &r); decodeError != nil {
+		test.Fatal(decodeError, o.Stderr)
 	}
 	diff := []string{}
 	for _, p := range r.Diff {

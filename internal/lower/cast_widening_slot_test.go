@@ -70,10 +70,11 @@ func TestCastWideningSlotIsRefused(test *testing.T) {
 	} {
 		test.Run(row.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSourceAs(test, row.source, row.extension)
+			_, lowerSourceAsError := lowerSourceAs(test, row.source, row.extension)
 			var refused *Refused
-			if !errors.As(err, &refused) || !strings.HasSuffix(err.Error(), "/"+row.want) {
-				test.Fatalf("want refusal ending %q, got %v", row.want, err)
+			if !errors.As(lowerSourceAsError, &refused) ||
+				!strings.HasSuffix(lowerSourceAsError.Error(), "/"+row.want) {
+				test.Fatalf("want refusal ending %q, got %v", row.want, lowerSourceAsError)
 			}
 		})
 	}

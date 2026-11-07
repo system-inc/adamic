@@ -64,9 +64,9 @@ func TestScanningReferenceCallsEveryPass(test *testing.T) {
 // and fresh, and to package functions other than Go's builtins.
 func pipelineCalls(test *testing.T, path, function string) []string {
 	test.Helper()
-	file, err := parser.ParseFile(token.NewFileSet(), path, nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	file, parseFileError := parser.ParseFile(token.NewFileSet(), path, nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	builtins := map[string]bool{
 		"append": true,

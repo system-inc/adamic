@@ -16,17 +16,17 @@ func TestThroughput(test *testing.T) {
 	if os.Getenv("ADAMIC_ESTREE_BENCHMARK") != "1" {
 		test.Skip("set ADAMIC_ESTREE_BENCHMARK=1 for full-output throughput")
 	}
-	path, err := filepath.Abs("main.ts")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("main.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	list := manifest(test, generated())
-	listing, err := os.ReadFile(list)
-	if err != nil {
-		test.Fatal(err)
+	listing, readError := os.ReadFile(list)
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	if err = os.WriteFile(list, []byte(strings.Repeat(string(listing), 20)), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(list, []byte(strings.Repeat(string(listing), 20)), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	count := len(generated()) * 20
 	binary, _ := build(test, path, false)

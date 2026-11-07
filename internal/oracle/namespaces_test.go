@@ -107,13 +107,13 @@ func TestNamespaceSemanticMutants(test *testing.T) {
 			if family == "wrong namespace enum" {
 				fixture = "namespaces_parser_enums.a"
 			}
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			changed := false
 			if family == "wrong debug initialization" {
@@ -232,8 +232,12 @@ func TestNamespaceSemanticMutants(test *testing.T) {
 				test.Fatal("mutant changed no namespace binding")
 			}
 			binary := filepath.Join(test.TempDir(), "mutant")
-			if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(
+				native.C(program),
+				binary,
+				native.Options{Sanitize: true},
+			); buildError != nil {
+				test.Fatal(buildError)
 			}
 			result := executeWith(
 				test,
@@ -260,13 +264,13 @@ func TestNamespaceStateMutants(test *testing.T) {
 	} {
 		test.Run(testCase.name, func(test *testing.T) {
 			test.Parallel()
-			path, pathErr := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", testCase.path))
-			if pathErr != nil {
-				test.Fatal(pathErr)
+			path, pathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", testCase.path))
+			if pathError != nil {
+				test.Fatal(pathError)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			changed := false
 			if testCase.name == "lose hoisting" {
@@ -303,8 +307,12 @@ func TestNamespaceStateMutants(test *testing.T) {
 				test.Fatal("mutant changed nothing")
 			}
 			binary := filepath.Join(test.TempDir(), "mutant")
-			if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(
+				native.C(program),
+				binary,
+				native.Options{Sanitize: true},
+			); buildError != nil {
+				test.Fatal(buildError)
 			}
 			observed := executeWith(
 				test,
@@ -329,9 +337,9 @@ func TestNamespaceStateMutants(test *testing.T) {
 	}
 }
 func mustLowerNamespace(test *testing.T, path string) *ir.Program {
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	return program
 }

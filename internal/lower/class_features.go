@@ -64,7 +64,9 @@ func (l *lowering) hasPrivateStorage(proven *checker.Type) bool {
 
 func (l *lowering) objectKeys(node *ast.Node) (ir.Expression, bool, error) {
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
-	if callee.Kind != ast.KindPropertyAccessExpression || callee.Name().Text() != "keys" || !l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Object") {
+	if callee.Kind != ast.KindPropertyAccessExpression ||
+		callee.Name().Text() != "keys" ||
+		!l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Object") {
 		return nil, false, nil
 	}
 	arguments := nodesOf(node.AsCallExpression().Arguments)
@@ -74,10 +76,13 @@ func (l *lowering) objectKeys(node *ast.Node) (ir.Expression, bool, error) {
 	// Node enumerates none of an Error's own properties, and natively they're fields like any other's
 	// (errorMayHide). A literal, or a const bound to one, is never an Error.
 	if !l.exactObject(arguments[0], 0) && l.errorMayHide(arguments[0]) {
-		return nil, true, l.notYet(node, "Object.keys of a value that may hold an Error, whose own properties Node doesn't enumerate")
+		return nil, true, l.notYet(
+			node,
+			"Object.keys of a value that may hold an Error, whose own properties Node doesn't enumerate",
+		)
 	}
-	if value, handled, err := l.recordObjectCall(node, "keys"); handled {
-		return value, true, err
+	if value, handled, recordObjectCallError := l.recordObjectCall(node, "keys"); handled {
+		return value, true, recordObjectCallError
 	}
 	// A spread of a possibly absent plain object has synthetic optional slots, not real keys.
 	// Class and accessor descriptors provide the public shape for their stored fields.
@@ -98,9 +103,9 @@ func (l *lowering) objectKeys(node *ast.Node) (ir.Expression, bool, error) {
 		}
 	}
 	if !fresh && !isClassInstance(proven) && !l.isStaticType(proven) && l.iteratorMember(proven) == nil {
-		modules, err := l.moduleOrder(l.program.Files()[0])
-		if err != nil {
-			return nil, true, err
+		modules, moduleOrderError := l.moduleOrder(l.program.Files()[0])
+		if moduleOrderError != nil {
+			return nil, true, moduleOrderError
 		}
 		var hazard error
 		var visit ast.Visitor
@@ -108,7 +113,11 @@ func (l *lowering) objectKeys(node *ast.Node) (ir.Expression, bool, error) {
 			if candidate.Kind == ast.KindObjectLiteralExpression {
 				shape := l.checker.GetTypeAtLocation(candidate)
 				if l.iteratorMember(shape) != nil && l.iterationShapeFits(shape, proven) {
-					hazard = &Refused{Where: l.program.Where(node), What: "a structural Object.keys view that can hide an iterable literal's symbol-key storage (adamic/symbol-key-view)", Fix: "pass a new plain object containing only the desired string-keyed fields to Object.keys"}
+					hazard = &Refused{
+						Where: l.program.Where(node),
+						What:  "a structural Object.keys view that can hide an iterable literal's symbol-key storage (adamic/symbol-key-view)",
+						Fix:   "pass a new plain object containing only the desired string-keyed fields to Object.keys",
+					}
 					return true
 				}
 			}
@@ -131,9 +140,9 @@ func (l *lowering) objectKeys(node *ast.Node) (ir.Expression, bool, error) {
 			}
 		}
 	}
-	value, err := l.expression(arguments[0])
-	if err != nil {
-		return nil, true, err
+	value, expressionError := l.expression(arguments[0])
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
 	if value.Type() != ir.Object {
 		return nil, true, l.notYet(node, "Object.keys on a non-object")

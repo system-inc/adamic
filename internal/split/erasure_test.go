@@ -20,54 +20,54 @@ import (
 // like their const and readonly twins. Element types must now remain distinguishable.
 func TestBoundaryPreservesErasedFacts(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("testdata/erased.a")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("testdata/erased.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	contents, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	contents, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	source := string(contents)
 	compile := func(text string) *ir.Program {
 		test.Helper()
-		loaded, err := load.LoadOverlay([]string{path}, map[string]string{path: text})
-		if err != nil {
-			test.Fatal(err)
+		loaded, loadOverlayError := load.LoadOverlay([]string{path}, map[string]string{path: text})
+		if loadOverlayError != nil {
+			test.Fatal(loadOverlayError)
 		}
-		program, err := lower.Lower(context.Background(), loaded)
-		if err != nil {
-			test.Fatal(err)
+		program, lowerError := lower.Lower(context.Background(), loaded)
+		if lowerError != nil {
+			test.Fatal(lowerError)
 		}
 		directory := test.TempDir()
 		ordinary := filepath.Join(directory, "ordinary.a")
 		module := filepath.Join(directory, "compiled.mjs")
 		binary := filepath.Join(directory, "compiled")
 		for path, content := range map[string]string{ordinary: text, module: javascript.JavaScript(program)} {
-			if err := os.WriteFile(path, []byte(content), 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, []byte(content), 0644); writeError != nil {
+				test.Fatal(writeError)
 			}
 		}
-		runner, err := filepath.Abs("../../oracle/node.mjs")
-		if err != nil {
-			test.Fatal(err)
+		runner, absolutePathError := filepath.Abs("../../oracle/node.mjs")
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		truthCommand := exec.Command("node", "--disable-warning=ExperimentalWarning", runner, ordinary)
 		truthCommand.Env = append(os.Environ(), jsonTypesEnvironment(test, ordinary)...)
-		truth, err := truthCommand.CombinedOutput()
-		if err != nil {
-			test.Fatalf("source oracle: %v: %s", err, truth)
+		truth, combinedOutputError := truthCommand.CombinedOutput()
+		if combinedOutputError != nil {
+			test.Fatalf("source oracle: %v: %s", combinedOutputError, truth)
 		}
-		if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-			test.Fatal(err)
+		if buildError := native.Build(native.C(program), binary, native.Options{Sanitize: true}); buildError != nil {
+			test.Fatal(buildError)
 		}
 		for _, command := range []*exec.Cmd{
 			exec.Command("node", "--disable-warning=ExperimentalWarning", runner, module),
 			exec.Command(binary),
 		} {
-			output, err := command.CombinedOutput()
-			if err != nil || string(output) != string(truth) {
-				test.Fatalf("%v: %v: got %q, oracle %q", command.Args, err, output, truth)
+			output, combinedOutputError := command.CombinedOutput()
+			if combinedOutputError != nil || string(output) != string(truth) {
+				test.Fatalf("%v: %v: got %q, oracle %q", command.Args, combinedOutputError, output, truth)
 			}
 		}
 		test.Logf("source Node, emitted JavaScript, sanitized native agree: %q", truth)

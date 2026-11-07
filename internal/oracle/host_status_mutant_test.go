@@ -31,21 +31,21 @@ func TestOracleHostStatusMutants(test *testing.T) {
 		test.Fatal(err)
 	}
 	var rows []json.RawMessage
-	if err := json.Unmarshal(data, &rows); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &rows); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if len(rows) != 25 {
 		test.Fatalf("want 25 host fixtures, got %d", len(rows))
 	}
 	var first map[string]json.RawMessage
-	if err := json.Unmarshal(rows[hostStatusMutantRow], &first); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(rows[hostStatusMutantRow], &first); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	// This getDirectories row changes in host-6. Node runs it, then lowering
 	// refuses its overload contract. Change only the stage, not Node's observation.
 	var recorded hostMeasurement
-	if err := json.Unmarshal(rows[hostStatusMutantRow], &recorded); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(rows[hostStatusMutantRow], &recorded); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if recorded.Stage.Outcome != "Refused" {
 		test.Fatalf("wrong-stage witness changed: %+v", recorded.Stage)
@@ -73,10 +73,10 @@ func TestOracleHostStatusMutants(test *testing.T) {
 				want = "want 25 original host fixtures, got 24"
 			case "missing-file":
 				name := "missing-host-status-mutant-fixture.a"
-				if _, statErr := os.Stat(
+				if _, statError := os.Stat(
 					filepath.Join(repository, "stage3/fixtures/host", name),
-				); !os.IsNotExist(statErr) {
-					test.Fatalf("missing fixture exists or cannot be checked: %v", statErr)
+				); !os.IsNotExist(statError) {
+					test.Fatalf("missing fixture exists or cannot be checked: %v", statError)
 				}
 				fields["file"], err = json.Marshal(name)
 				if err == nil {
@@ -88,13 +88,13 @@ func TestOracleHostStatusMutants(test *testing.T) {
 				test.Fatal(err)
 			}
 			if mutation != "real-file" {
-				planted, marshalErr := json.Marshal(changed)
-				if marshalErr != nil {
-					test.Fatal(marshalErr)
+				planted, marshalError := json.Marshal(changed)
+				if marshalError != nil {
+					test.Fatal(marshalError)
 				}
 				input = filepath.Join(test.TempDir(), "status.json")
-				if err := os.WriteFile(input, planted, 0600); err != nil {
-					test.Fatal(err)
+				if writeError := os.WriteFile(input, planted, 0600); writeError != nil {
+					test.Fatal(writeError)
 				}
 			}
 			ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
@@ -108,20 +108,20 @@ func TestOracleHostStatusMutants(test *testing.T) {
 				"-test.timeout=20s",
 			)
 			command.Env = append(os.Environ(), hostStatusProbeInput+"="+input)
-			output, runErr := command.CombinedOutput()
+			output, runError := command.CombinedOutput()
 			if ctx.Err() != nil {
 				test.Fatalf("status probe exceeded 20s: %v\n%s", ctx.Err(), output)
 			}
 			if want == "" {
-				if runErr != nil || !strings.Contains(string(output), "stage=Refused") {
-					test.Fatalf("real file must pass the same check: %v\n%s", runErr, output)
+				if runError != nil || !strings.Contains(string(output), "stage=Refused") {
+					test.Fatalf("real file must pass the same check: %v\n%s", runError, output)
 				}
 				test.Log("real status file passes after all planted failures")
 				return
 			}
-			exit, ok := runErr.(*exec.ExitError)
+			exit, ok := runError.(*exec.ExitError)
 			if !ok || exit.ExitCode() != 1 || !strings.Contains(string(output), want) {
-				test.Fatalf("want checker failure %q and exit 1: %v\n%s", want, runErr, output)
+				test.Fatalf("want checker failure %q and exit 1: %v\n%s", want, runError, output)
 			}
 			if mutation == "wrong-stage" && !strings.Contains(string(output), "stage=Refused") {
 				test.Fatalf("wrong stage failed before observing its real outcome:\n%s", output)

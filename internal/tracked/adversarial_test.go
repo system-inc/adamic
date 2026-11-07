@@ -19,9 +19,9 @@ func gg(test *testing.T, dir string, args ...string) string {
 		[]string{"-C", dir, "-c", "user.name=x", "-c", "user.email=x@x", "-c", "commit.gpgsign=false"},
 		args...,
 	)...)
-	out, err := c.CombinedOutput()
-	if err != nil {
-		test.Fatalf("git %v: %v %s", args, err, out)
+	out, combinedOutputError := c.CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("git %v: %v %s", args, combinedOutputError, out)
 	}
 	return string(out)
 }
@@ -47,27 +47,27 @@ func TestAdversarialEntries(test *testing.T) {
 	gg(test, repo, "add", ".")
 	gg(test, repo, "commit", "-qm", "1")
 	source := test.TempDir()
-	if err := Write(repo, source); err != nil {
-		test.Fatal(err)
+	if writeError := Write(repo, source); writeError != nil {
+		test.Fatal(writeError)
 	}
 	// unpack via git archive
 	arch := exec.Command("sh", "-c", "git -C "+repo+" archive HEAD | tar -x -C "+source)
 	arch.Env = toolchain.GitEnv()
-	if out, err := arch.CombinedOutput(); err != nil {
-		test.Fatal(err, string(out))
+	if out, combinedOutputError := arch.CombinedOutput(); combinedOutputError != nil {
+		test.Fatal(combinedOutputError, string(out))
 	}
-	entries, err := Files(source)
-	if err != nil {
-		test.Fatal(err)
+	entries, filesError := Files(source)
+	if filesError != nil {
+		test.Fatal(filesError)
 	}
 	var paths []string
 	for _, e := range entries {
 		paths = append(paths, e.Mode+" "+e.Path)
 	}
 	test.Logf("entries: %q", paths)
-	missing, changed, err := Changed(source, entries)
-	test.Logf("clean: missing=%q changed=%q err=%v", missing, changed, err)
-	if len(missing)+len(changed) != 0 || err != nil {
+	missing, changed, changedError := Changed(source, entries)
+	test.Logf("clean: missing=%q changed=%q err=%v", missing, changed, changedError)
+	if len(missing)+len(changed) != 0 || changedError != nil {
 		test.Errorf("clean tree not clean")
 	}
 	if len(entries) != len(names)+2 {
@@ -76,9 +76,9 @@ func TestAdversarialEntries(test *testing.T) {
 	check := func(name string, mutate func(), want ...string) {
 		test.Helper()
 		mutate()
-		m, c, err := Changed(source, entries)
-		test.Logf("%s: missing=%q changed=%q err=%v", name, m, c, err)
-		if err != nil || len(m) != 0 || strings.Join(c, "|") != strings.Join(want, "|") {
+		m, c, changedError := Changed(source, entries)
+		test.Logf("%s: missing=%q changed=%q err=%v", name, m, c, changedError)
+		if changedError != nil || len(m) != 0 || strings.Join(c, "|") != strings.Join(want, "|") {
 			test.Errorf("%s: changed %q, git would say %q", name, c, want)
 		}
 	}

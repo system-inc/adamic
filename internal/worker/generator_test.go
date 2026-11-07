@@ -15,13 +15,13 @@ func TestGeneratorsThroughSymlink(test *testing.T) {
 		test.Run(script, func(test *testing.T) {
 			test.Parallel()
 			directory := test.TempDir()
-			template, err := filepath.Abs("wasm")
-			if err != nil {
-				test.Fatal(err)
+			template, absolutePathError := filepath.Abs("wasm")
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			link := filepath.Join(directory, "linked")
-			if err := os.Symlink(template, link); err != nil {
-				test.Fatal(err)
+			if symlinkError := os.Symlink(template, link); symlinkError != nil {
+				test.Fatal(symlinkError)
 			}
 			output := filepath.Join(directory, "output")
 			arguments := []string{filepath.Join(link, script), output}
@@ -33,11 +33,11 @@ func TestGeneratorsThroughSymlink(test *testing.T) {
 				arguments = []string{filepath.Join(link, script), abi, generated}
 			}
 			command := exec.Command("node", arguments...)
-			if output, err := command.CombinedOutput(); err != nil {
-				test.Fatalf("%s through symlink: %v\n%s", script, err, output)
+			if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+				test.Fatalf("%s through symlink: %v\n%s", script, combinedOutputError, output)
 			}
-			if _, err := os.Stat(generated); err != nil {
-				test.Fatalf("%s exited successfully without output through symlink: %v", script, err)
+			if _, statError := os.Stat(generated); statError != nil {
+				test.Fatalf("%s exited successfully without output through symlink: %v", script, statError)
 			}
 		})
 	}
@@ -47,17 +47,17 @@ func TestGenerateCrossingThroughSymlink(test *testing.T) {
 	test.Parallel()
 	directory := test.TempDir()
 	link := filepath.Join(test.TempDir(), "linked")
-	if err := os.Symlink(directory, link); err != nil {
-		test.Fatal(err)
+	if symlinkError := os.Symlink(directory, link); symlinkError != nil {
+		test.Fatal(symlinkError)
 	}
 	abi := filepath.Join(link, "abi.json")
 	write(test, abi, `{"version":1,"exports":[]}`)
 	output := filepath.Join(link, "crossing.mjs")
-	if err := generateCrossing(abi, output); err != nil {
-		test.Fatal(err)
+	if generateCrossingError := generateCrossing(abi, output); generateCrossingError != nil {
+		test.Fatal(generateCrossingError)
 	}
-	if _, err := os.Stat(output); err != nil {
-		test.Fatalf("embedded generator exited successfully without output through symlink: %v", err)
+	if _, statError := os.Stat(output); statError != nil {
+		test.Fatalf("embedded generator exited successfully without output through symlink: %v", statError)
 	}
 }
 
@@ -67,14 +67,16 @@ func TestGenerateCrossingMissingOutput(test *testing.T) {
 	directory := test.TempDir()
 	node := filepath.Join(directory, "node")
 	write(test, node, "#!/bin/sh\nexit 0\n")
-	if err := os.Chmod(node, 0755); err != nil {
-		test.Fatal(err)
+	if changeModeError := os.Chmod(node, 0755); changeModeError != nil {
+		test.Fatal(changeModeError)
 	}
 	test.Setenv("PATH", directory)
 	abi := filepath.Join(directory, "abi.json")
 	write(test, abi, `{"version":1,"exports":[]}`)
-	err := generateCrossing(abi, filepath.Join(directory, "crossing.mjs"))
-	if err == nil || !errors.Is(err, os.ErrNotExist) || !strings.Contains(err.Error(), "generate-crossing.mjs") {
-		test.Fatalf("missing output must name the generator and preserve the file error: %v", err)
+	generateCrossingError := generateCrossing(abi, filepath.Join(directory, "crossing.mjs"))
+	if generateCrossingError == nil ||
+		!errors.Is(generateCrossingError, os.ErrNotExist) ||
+		!strings.Contains(generateCrossingError.Error(), "generate-crossing.mjs") {
+		test.Fatalf("missing output must name the generator and preserve the file error: %v", generateCrossingError)
 	}
 }

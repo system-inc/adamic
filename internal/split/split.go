@@ -57,7 +57,16 @@ func (a *analysis) merge(into, from roots) {
 // the may sets Analyze judges each function by.
 func summarize(program *ir.Program) *analysis {
 	n := len(program.Functions)
-	a := &analysis{program: program, aliases: make([]roots, len(program.Locals)), contents: make([]roots, len(program.Locals)), returns: make([]roots, n), writes: make([]roots, n), edges: make([][]int, n), direct: make([]string, n), globals: roots{}}
+	a := &analysis{
+		program:  program,
+		aliases:  make([]roots, len(program.Locals)),
+		contents: make([]roots, len(program.Locals)),
+		returns:  make([]roots, n),
+		writes:   make([]roots, n),
+		edges:    make([][]int, n),
+		direct:   make([]string, n),
+		globals:  roots{},
+	}
 	for i, local := range program.Locals {
 		a.aliases[i] = roots{}
 		a.contents[i] = roots{}
@@ -105,7 +114,10 @@ func Analyze(program *ir.Program) []Function {
 		reasons[i] = a.direct[i]
 		a.current = i
 		walk(function.Body, func(node any) {
-			if read, ok := node.(ir.Read); ok && program.Locals[read.Local].Global && a.globals[read.Local] && reasons[i] == "" {
+			if read, ok := node.(ir.Read); ok &&
+				program.Locals[read.Local].Global &&
+				a.globals[read.Local] &&
+				reasons[i] == "" {
 				reasons[i] = "impure: mutable global " + program.Locals[read.Local].Name
 			}
 			switch node.(type) {
@@ -194,7 +206,13 @@ func Analyze(program *ir.Program) []Function {
 				reason = "too small to cross"
 			}
 		}
-		result[i] = Function{Index: i, Name: function.Name, Position: function.Position, Eligible: reason == "", Reason: reason}
+		result[i] = Function{
+			Index:    i,
+			Name:     function.Name,
+			Position: function.Position,
+			Eligible: reason == "",
+			Reason:   reason,
+		}
 	}
 	for caller, targets := range a.edges {
 		if !result[caller].Eligible {
@@ -236,8 +254,15 @@ func Print(output io.Writer, functions []Function) error {
 		if function.Reason != "" {
 			reason = " " + function.Reason
 		}
-		if _, err := fmt.Fprintf(output, "%s %s%s%s\n", function.Name, state, entry, reason); err != nil {
-			return err
+		if _, fprintfError := fmt.Fprintf(
+			output,
+			"%s %s%s%s\n",
+			function.Name,
+			state,
+			entry,
+			reason,
+		); fprintfError != nil {
+			return fprintfError
 		}
 	}
 	return nil
@@ -264,7 +289,10 @@ func crossable(schema *ir.JSONDecodeSchema) bool {
 				return false
 			}
 			child := schema.Nodes[node.Children[0]]
-			return child.Kind == "number" || child.Kind == "string" || child.Kind == "boolean" || child.Kind == "literal" && (child.Of == ir.Number || child.Of == ir.Boolean || child.Of == ir.String)
+			return child.Kind == "number" ||
+				child.Kind == "string" ||
+				child.Kind == "boolean" ||
+				child.Kind == "literal" && (child.Of == ir.Number || child.Of == ir.Boolean || child.Of == ir.String)
 		case "object":
 			if depth >= 2 {
 				return false
@@ -562,7 +590,11 @@ func (a *analysis) origins(value ir.Expression) roots {
 	case ir.ArrayReduce:
 		add(result, a.origins(node.Initial))
 		for _, target := range a.closureTargets(node).Functions {
-			add(result, a.substitute(target, a.returns[target], []ir.Expression{node.Initial, node.Array, node.Array, node.Array}))
+			add(result, a.substitute(
+				target,
+				a.returns[target],
+				[]ir.Expression{node.Initial, node.Array, node.Array, node.Array},
+			))
 		}
 	case ir.ArrayReverse:
 		add(result, a.origins(node.Array))
@@ -771,7 +803,9 @@ func knownExpression(expression ir.Expression) bool {
 // Only TypedArrayNew is reviewed; Fill, Sort, Set and sharing Subarray remain unknown.
 var knownExpressions = func() map[string]bool {
 	result := map[string]bool{}
-	for _, name := range strings.Fields(`ArrayConcat ArrayFill ArrayFrom ArrayIndex ArrayJoin ArrayLiteral ArrayMap ArrayPop ArrayPush ArrayReduce ArrayReverse ArraySearch ArraySlice ArraySort ArraySplice ArrayVisit Binary BooleanConstant BooleanToString Box Call CallClosure CharCodeAt CheckedCast ClosureSelf Coalesce CodePoints CollectionIterator Concat Conditional Defined FileStatus HasAccessor HasOwn InstanceOf IsNull IsUndefined JSONDecode JSONEncode JSONNull JSONStringify Length LibraryGlobal MakeClosure MakeError MapClear MapDelete MapEntries MapForEach MapGet MapHas MapKeys MapNew MapSet MapSize MapValues MathCall MaybeOf MaybeToString Narrow Null NumberCall NumberConstant NumberFormat NumberToString ObjectCall ObjectKeys ObjectLiteral ProgramArguments Property Read ReadDirectory ReadTextFile RegExpCall RegExpGroup RegExpNew RegExpProperty SetAdd SetNew SetValues StringCall StringConstant StringFromCodes StringIndex StringLength ToFixed Trim TypeOf TypedArrayNew Unary Undefined UnionToString Unwrap Utf8At Utf8Length WeakOf WeakTarget WriteTextFile`) {
+	for _, name := range strings.Fields(
+		`ArrayConcat ArrayFill ArrayFrom ArrayIndex ArrayJoin ArrayLiteral ArrayMap ArrayPop ArrayPush ArrayReduce ArrayReverse ArraySearch ArraySlice ArraySort ArraySplice ArrayVisit Binary BooleanConstant BooleanToString Box Call CallClosure CharCodeAt CheckedCast ClosureSelf Coalesce CodePoints CollectionIterator Concat Conditional Defined FileStatus HasAccessor HasOwn InstanceOf IsNull IsUndefined JSONDecode JSONEncode JSONNull JSONStringify Length LibraryGlobal MakeClosure MakeError MapClear MapDelete MapEntries MapForEach MapGet MapHas MapKeys MapNew MapSet MapSize MapValues MathCall MaybeOf MaybeToString Narrow Null NumberCall NumberConstant NumberFormat NumberToString ObjectCall ObjectKeys ObjectLiteral ProgramArguments Property Read ReadDirectory ReadTextFile RegExpCall RegExpGroup RegExpNew RegExpProperty SetAdd SetNew SetValues StringCall StringConstant StringFromCodes StringIndex StringLength ToFixed Trim TypeOf TypedArrayNew Unary Undefined UnionToString Unwrap Utf8At Utf8Length WeakOf WeakTarget WriteTextFile`,
+	) {
 		result[name] = true
 	}
 	return result
@@ -779,7 +813,9 @@ var knownExpressions = func() map[string]bool {
 
 var knownStatements = func() map[string]bool {
 	result := map[string]bool{}
-	for _, name := range strings.Fields("Assign Block Break Continue Declare Evaluate ForOf If Loop Panic Return SetIndex SetProperty Switch Throw Try WriteLine") {
+	for _, name := range strings.Fields(
+		"Assign Block Break Continue Declare Evaluate ForOf If Loop Panic Return SetIndex SetProperty Switch Throw Try WriteLine",
+	) {
 		result[name] = true
 	}
 	return result

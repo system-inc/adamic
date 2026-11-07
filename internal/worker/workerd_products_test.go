@@ -14,9 +14,9 @@ import (
 // The two products compile inputs only: corpus observations always run fresh.
 func workerdComputeProduct(test *testing.T, wasm, build bool) string {
 	test.Helper()
-	inputs, err := buildcache.GoBuildInInputs("", "adamic", "./cmd/adamic", nil, nil)
-	if err != nil {
-		test.Fatal(err)
+	inputs, goBuildInInputsError := buildcache.GoBuildInInputs("", "adamic", "./cmd/adamic", nil, nil)
+	if goBuildInInputsError != nil {
+		test.Fatal(goBuildInInputsError)
 	}
 	inputs.Files = slices.Clone(inputs.Files)
 	inputs.Flags = slices.Clone(inputs.Flags)
@@ -26,9 +26,11 @@ func workerdComputeProduct(test *testing.T, wasm, build bool) string {
 	inputs.Flags = append(inputs.Flags, fmt.Sprintf("wasm=%t", wasm))
 	if wasm {
 		requireWasm(test)
-		request, err := native.RuntimeRequestFor(native.Options{Release: true, Target: "wasm32-wasi"})
-		if err != nil {
-			test.Fatal(err)
+		request, runtimeRequestForError := native.RuntimeRequestFor(
+			native.Options{Release: true, Target: "wasm32-wasi"},
+		)
+		if runtimeRequestForError != nil {
+			test.Fatal(runtimeRequestForError)
 		}
 		inputs.Flags = append(inputs.Flags, request.Portable...)
 		inputs.Toolchain = append(
@@ -41,9 +43,9 @@ func workerdComputeProduct(test *testing.T, wasm, build bool) string {
 		return filepath.Join(findWorkerProduct(test, inputs), "worker")
 	}
 	compiler := workerCompilerProduct(test, nil, false)
-	root, err := filepath.Abs("../..")
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs("../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	directory := buildcache.Product(test, inputs, func(directory string) error {
 		args := []string{"worker", "workers/compute/handler.a", "--out", filepath.Join(directory, "worker")}
@@ -52,8 +54,8 @@ func workerdComputeProduct(test *testing.T, wasm, build bool) string {
 		}
 		command := exec.CommandContext(test.Context(), compiler, args...)
 		command.Dir = root
-		if output, err := command.CombinedOutput(); err != nil {
-			return fmt.Errorf("compute build: %w\n%s", err, output)
+		if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+			return fmt.Errorf("compute build: %w\n%s", combinedOutputError, output)
 		}
 		return nil
 	})

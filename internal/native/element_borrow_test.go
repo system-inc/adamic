@@ -15,17 +15,17 @@ import (
 // bindings; count only the indexed declarations here.
 func TestNbodyIndexedElementsBorrow(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("../../bench/nbody.ts")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("../../bench/nbody.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	loaded, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	loaded, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := lower.Lower(context.Background(), loaded)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerError := lower.Lower(context.Background(), loaded)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	borrows, _ := planElementBorrows(program)
 	declarations := 0
@@ -65,17 +65,17 @@ func TestNbodyIndexedElementsBorrow(test *testing.T) {
 // calls in the message and removals in the catch still prevent borrowing.
 func TestThrowElementBorrowPlan(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("../oracle/testdata/borrow_element_throw.a")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("../oracle/testdata/borrow_element_throw.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	loaded, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	loaded, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := lower.Lower(context.Background(), loaded)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerError := lower.Lower(context.Background(), loaded)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	borrows, _ := planElementBorrows(program)
 	got := map[string]bool{}
@@ -103,13 +103,13 @@ func TestThrowElementBorrowPlan(test *testing.T) {
 // unknown function value must keep the element counted across the call.
 func TestCallTargetsElementBorrowPlan(test *testing.T) {
 	test.Parallel()
-	loaded, err := load.Load([]string{"../oracle/testdata/call_targets_element.a"})
-	if err != nil {
-		test.Fatal(err)
+	loaded, loadError := load.Load([]string{"../oracle/testdata/call_targets_element.a"})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := lower.Lower(context.Background(), loaded)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerError := lower.Lower(context.Background(), loaded)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	borrows, _ := planElementBorrows(program)
 	borrowed := map[string]bool{}
@@ -129,13 +129,13 @@ func TestCallTargetsElementBorrowPlan(test *testing.T) {
 
 func TestDevirtualizeBorrowDocClaim(test *testing.T) {
 	test.Parallel()
-	loaded, err := load.Load([]string{"../oracle/testdata/devirt_borrow_doc_claim.a"})
-	if err != nil {
-		test.Fatal(err)
+	loaded, loadError := load.Load([]string{"../oracle/testdata/devirt_borrow_doc_claim.a"})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := lower.Lower(context.Background(), loaded)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerError := lower.Lower(context.Background(), loaded)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	borrows, _ := planElementBorrows(program)
 	found := map[string]bool{}

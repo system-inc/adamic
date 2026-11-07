@@ -15,14 +15,17 @@ func writeInstall(test *testing.T, directory string) {
 	test.Helper()
 	write(test, directory, "node_modules/a/index.js", "module.exports = 1\n")
 	write(test, directory, "node_modules/a/cli.js", "#!/usr/bin/env node\n")
-	if err := os.Chmod(filepath.Join(directory, "node_modules/a/cli.js"), 0o755); err != nil {
-		test.Fatal(err)
+	if changeModeError := os.Chmod(filepath.Join(directory, "node_modules/a/cli.js"), 0o755); changeModeError != nil {
+		test.Fatal(changeModeError)
 	}
-	if err := os.MkdirAll(filepath.Join(directory, "node_modules/.bin"), 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(
+		filepath.Join(directory, "node_modules/.bin"),
+		0o755,
+	); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	if err := os.Symlink("../a/cli.js", filepath.Join(directory, "node_modules/.bin/a")); err != nil {
-		test.Fatal(err)
+	if symlinkError := os.Symlink("../a/cli.js", filepath.Join(directory, "node_modules/.bin/a")); symlinkError != nil {
+		test.Fatal(symlinkError)
 	}
 }
 
@@ -107,12 +110,12 @@ func TestAReadUnderAnInstalledNodeModulesKeysAsItsInstall(test *testing.T) {
 		slices.ContainsFunc(entries, func(entry string) bool { return strings.Contains(entry, "web/node_modules") }) {
 		test.Fatalf("entries %q: want the install as one entry and the tracked node_modules as a content read", entries)
 	}
-	if _, err := reading(test, port); err != nil {
-		test.Fatalf("an unchanged install: %v", err)
+	if _, readingError := reading(test, port); readingError != nil {
+		test.Fatalf("an unchanged install: %v", readingError)
 	}
 	write(test, r.root, "web/node_modules/a/index.js", "module.exports = 2\n")
-	if _, err := reading(test, port); !errors.Is(err, ErrNotBuilt) {
-		test.Fatalf("a changed file in the install: %v", err)
+	if _, readingError := reading(test, port); !errors.Is(readingError, ErrNotBuilt) {
+		test.Fatalf("a changed file in the install: %v", readingError)
 	}
 }
 
@@ -129,8 +132,11 @@ func TestAReadThroughALinkInAnInstalledNodeModulesKeysAsItsInstall(test *testing
 	gitIn(test, r.root, "commit", "-q", "-m", "a project's lockfile")
 	forgetTracked()
 	writeInstall(test, filepath.Join(r.root, "web"))
-	if err := os.Symlink("../../../source/a.c", filepath.Join(r.root, "web/node_modules/.bin/out")); err != nil {
-		test.Fatal(err)
+	if symlinkError := os.Symlink(
+		"../../../source/a.c",
+		filepath.Join(r.root, "web/node_modules/.bin/out"),
+	); symlinkError != nil {
+		test.Fatal(symlinkError)
 	}
 	Product(test, port, building("built"))
 	r.window(r.built(test)["port"].Build, func() {
@@ -146,15 +152,15 @@ func TestAReadThroughALinkInAnInstalledNodeModulesKeysAsItsInstall(test *testing
 		slices.ContainsFunc(entries, func(entry string) bool { return strings.Contains(entry, "web/node_modules") }) {
 		test.Fatalf("entries %q: want the install and the tree file the outward link reads", entries)
 	}
-	if _, err := reading(test, port); err != nil {
-		test.Fatalf("an unchanged install: %v", err)
+	if _, readingError := reading(test, port); readingError != nil {
+		test.Fatalf("an unchanged install: %v", readingError)
 	}
 	link := filepath.Join(r.root, "web/node_modules/.bin/a")
 	os.Remove(link)
-	if err := os.Symlink("../a/index.js", link); err != nil {
-		test.Fatal(err)
+	if symlinkError := os.Symlink("../a/index.js", link); symlinkError != nil {
+		test.Fatal(symlinkError)
 	}
-	if _, err := reading(test, port); !errors.Is(err, ErrNotBuilt) {
-		test.Fatalf("a .bin link pointed elsewhere: %v", err)
+	if _, readingError := reading(test, port); !errors.Is(readingError, ErrNotBuilt) {
+		test.Fatalf("a .bin link pointed elsewhere: %v", readingError)
 	}
 }

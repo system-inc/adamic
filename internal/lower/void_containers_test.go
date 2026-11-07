@@ -74,19 +74,19 @@ func TestVoidContainerReadsAreRefused(test *testing.T) {
 		for _, extension := range []string{".a", ".ts"} {
 			test.Run(probe.name+extension, func(test *testing.T) {
 				test.Parallel()
-				_, err := lowerVoidProbe(test, extension, voidContainerMark+"\n"+probe.source)
+				_, lowerVoidProbeError := lowerVoidProbe(test, extension, voidContainerMark+"\n"+probe.source)
 				var refused *Refused
 				if probe.role == voidWidenedFirst {
-					if !errors.As(err, &refused) || !strings.HasPrefix(refused.What, voidWidenedFirst) {
-						test.Fatalf("want part 1's widening to refuse it first, got %v", err)
+					if !errors.As(lowerVoidProbeError, &refused) || !strings.HasPrefix(refused.What, voidWidenedFirst) {
+						test.Fatalf("want part 1's widening to refuse it first, got %v", lowerVoidProbeError)
 					}
 					return
 				}
-				if !errors.As(err, &refused) ||
+				if !errors.As(lowerVoidProbeError, &refused) ||
 					!strings.HasPrefix(refused.What, "a read of a void container's elements") ||
 					!strings.Contains(refused.What, probe.role) ||
 					!strings.Contains(refused.Fix, "discard them with forEach") {
-					test.Fatalf("want a void container read refused %s, got %v", probe.role, err)
+					test.Fatalf("want a void container read refused %s, got %v", probe.role, lowerVoidProbeError)
 				}
 			})
 		}
@@ -106,12 +106,12 @@ func TestVoidElementsBesideUndefinedAreRefused(test *testing.T) {
 		for _, extension := range []string{".a", ".ts"} {
 			test.Run(probe.name+extension, func(test *testing.T) {
 				test.Parallel()
-				_, err := lowerVoidProbe(test, extension, voidContainerMark+"\n"+probe.source)
+				_, lowerVoidProbeError := lowerVoidProbe(test, extension, voidContainerMark+"\n"+probe.source)
 				var refused *Refused
-				if !errors.As(err, &refused) ||
+				if !errors.As(lowerVoidProbeError, &refused) ||
 					!strings.HasPrefix(refused.What, "a read of a void") ||
 					!strings.Contains(refused.What, "operand of ===") {
-					test.Fatalf("want a void read refused as an operand of ===, got %v", err)
+					test.Fatalf("want a void read refused as an operand of ===, got %v", lowerVoidProbeError)
 				}
 			})
 		}
@@ -191,12 +191,12 @@ func TestVoidContainerThisIsJudged(test *testing.T) {
 		for _, extension := range []string{".a", ".ts"} {
 			test.Run(probe.name+extension, func(test *testing.T) {
 				test.Parallel()
-				_, err := lowerVoidProbe(test, extension, voidContainerMark+"\n"+probe.source)
+				_, lowerVoidProbeError := lowerVoidProbe(test, extension, voidContainerMark+"\n"+probe.source)
 				var refused *Refused
-				if !errors.As(err, &refused) ||
+				if !errors.As(lowerVoidProbeError, &refused) ||
 					!strings.HasPrefix(refused.What, "a read of a void container's elements") ||
 					!strings.Contains(refused.What, probe.role) {
-					test.Fatalf("want this judged and refused %s, got %v", probe.role, err)
+					test.Fatalf("want this judged and refused %s, got %v", probe.role, lowerVoidProbeError)
 				}
 			})
 		}
@@ -210,11 +210,12 @@ func TestVoidContainerClassValueIsNoHolder(test *testing.T) {
 	for _, extension := range []string{".a", ".ts"} {
 		test.Run(extension, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerVoidProbe(test, extension, voidContainerMark+
+			_, lowerVoidProbeError := lowerVoidProbe(test, extension, voidContainerMark+
 				"\nfunction register(c: unknown): void { console.log(typeof c); }\nclass Box { constructor(public items: void[]) {} }\nregister(Box);")
 			var refused *Refused
-			if errors.As(err, &refused) && strings.HasPrefix(refused.What, "a read of a void container's elements") {
-				test.Fatalf("want the class value kept, got %v", err)
+			if errors.As(lowerVoidProbeError, &refused) &&
+				strings.HasPrefix(refused.What, "a read of a void container's elements") {
+				test.Fatalf("want the class value kept, got %v", lowerVoidProbeError)
 			}
 		})
 	}
@@ -228,13 +229,13 @@ func TestVoidContainerClassWithStaticHolderIsRead(test *testing.T) {
 	for _, extension := range []string{".a", ".ts"} {
 		test.Run(extension, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerVoidProbe(test, extension, voidContainerMark+
+			_, lowerVoidProbeError := lowerVoidProbe(test, extension, voidContainerMark+
 				"\nfunction register(c: unknown): void { console.log(typeof c); }\nclass Box { static spare: void[] = all; constructor(public items: void[]) {} }\nregister(Box);")
 			var refused *Refused
-			if !errors.As(err, &refused) ||
+			if !errors.As(lowerVoidProbeError, &refused) ||
 				!strings.HasPrefix(refused.What, "a read of a void container's elements") ||
 				!strings.Contains(refused.What, "as an argument") {
-				test.Fatalf("want the class value refused as an argument, got %v", err)
+				test.Fatalf("want the class value refused as an argument, got %v", lowerVoidProbeError)
 			}
 		})
 	}
@@ -255,10 +256,10 @@ func TestVoidFieldHoldersAreRead(test *testing.T) {
 		for _, extension := range []string{".a", ".ts"} {
 			test.Run(probe.name+extension, func(test *testing.T) {
 				test.Parallel()
-				_, err := lowerVoidProbe(test, extension, probe.source)
+				_, lowerVoidProbeError := lowerVoidProbe(test, extension, probe.source)
 				var refused *Refused
-				if !errors.As(err, &refused) || !strings.Contains(refused.Fix, "adamic/no-void") {
-					test.Fatalf("want the void field's object refused, got %v", err)
+				if !errors.As(lowerVoidProbeError, &refused) || !strings.Contains(refused.Fix, "adamic/no-void") {
+					test.Fatalf("want the void field's object refused, got %v", lowerVoidProbeError)
 				}
 			})
 		}

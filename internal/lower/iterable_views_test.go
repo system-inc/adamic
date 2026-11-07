@@ -49,8 +49,8 @@ func TestIterableViewsOverCollectionIteratorsLower(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			if _, err := lowerSource(test, probe.source); err != nil {
-				test.Fatalf("want it to lower, got %v", err)
+			if _, lowerSourceError := lowerSource(test, probe.source); lowerSourceError != nil {
+				test.Fatalf("want it to lower, got %v", lowerSourceError)
 			}
 		})
 	}
@@ -151,10 +151,10 @@ func TestIterableViewsOfOtherOriginsAreNotYet(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var gap *NotYet
-			if !errors.As(err, &gap) || !strings.Contains(gap.What, probe.reason) {
-				test.Fatalf("got %v, want a NotYet saying %q", err, probe.reason)
+			if !errors.As(lowerSourceError, &gap) || !strings.Contains(gap.What, probe.reason) {
+				test.Fatalf("got %v, want a NotYet saying %q", lowerSourceError, probe.reason)
 			}
 		})
 	}
@@ -167,9 +167,9 @@ func TestIterableViewsOfOtherOriginsAreNotYet(test *testing.T) {
 // goes red.
 func TestIterableViewHeldAsAUnionIsReadThroughACheckedUnbox(test *testing.T) {
 	test.Parallel()
-	program, err := lowerSource(test, iterableViewWords+iterableViewShout+"shout(words.values());")
-	if err != nil {
-		test.Fatal(err)
+	program, lowerSourceError := lowerSource(test, iterableViewWords+iterableViewShout+"shout(words.values());")
+	if lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
 	checked := 0
 	inspect := func(node any) bool {
@@ -210,11 +210,11 @@ func TestIterableViewProtocolCallsDontLower(test *testing.T) {
 				"function show(items: IterableIterator<number>): void { " +
 				probe.call +
 				" for (const value of items) { console.log(String(value)); } }\nshow(counts.values());"
-			_, err := lowerSource(test, source)
+			_, lowerSourceError := lowerSource(test, source)
 			var gap *NotYet
 			var refused *Refused
-			if !errors.As(err, &gap) && !errors.As(err, &refused) {
-				test.Fatalf("got %v, want it stopped", err)
+			if !errors.As(lowerSourceError, &gap) && !errors.As(lowerSourceError, &refused) {
+				test.Fatalf("got %v, want it stopped", lowerSourceError)
 			}
 		})
 	}

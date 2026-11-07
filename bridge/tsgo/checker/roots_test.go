@@ -17,17 +17,17 @@ func TestAdamicRootKeepsConfigDeclarations(test *testing.T) {
 		declaration: `declare const ambient: "世界🌍";`,
 		source:      "ambient;\n",
 	} {
-		if err := os.WriteFile(path, []byte(text), 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(text), 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
-	program, err := Open(config, []string{source})
-	if err != nil {
-		test.Fatal(err)
+	program, openError := Open(config, []string{source})
+	if openError != nil {
+		test.Fatal(openError)
 	}
-	facts, err := program.Inspect(source, 0, 7, "Identifier", "raw-type")
-	if err != nil {
-		test.Fatal(err)
+	facts, inspectError := program.Inspect(source, 0, 7, "Identifier", "raw-type")
+	if inspectError != nil {
+		test.Fatal(inspectError)
 	}
 	values := decodedFields(test, facts)
 	if len(values) != 19 || values[10] != `"世界🌍"` {

@@ -21,8 +21,8 @@ func TestReadonlyFieldsAreJudgedByTheirConstructorsWrites(test *testing.T) {
 			"class Node {\n\treadonly name: string;\n\treadonly parent: Node | undefined;\n\tconstructor(name: string, parent: Node | undefined) {\n\t\tthis.name = name;\n\t\tthis.parent = parent;\n\t}\n}\nconst root = new Node('root', undefined);\nconst child = new Node('child', root);\nconsole.log(child.parent === undefined ? 'none' : child.parent.name);\n",
 		},
 	} {
-		if _, err := lowerSource(test, sound.source); err != nil {
-			test.Errorf("%s: want it to compile, got %v", sound.name, err)
+		if _, lowerSourceError := lowerSource(test, sound.source); lowerSourceError != nil {
+			test.Errorf("%s: want it to compile, got %v", sound.name, lowerSourceError)
 		}
 	}
 }

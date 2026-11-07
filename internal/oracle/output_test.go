@@ -29,22 +29,22 @@ import (
 // the source's path, the binary and the JavaScript.
 func sanitized(test *testing.T, fixture string) (string, string, string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, fixture))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, fixture))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatalf("Lower: %v", err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatalf("Lower: %v", loweredError)
 	}
 	directory := test.TempDir()
 	binary := filepath.Join(directory, "program")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	script := filepath.Join(directory, "program.mjs")
-	if err := os.WriteFile(script, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(script, []byte(javascript.JavaScript(program)), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return path, binary, script
 }
@@ -59,8 +59,8 @@ func withStreams(test *testing.T, stdout *os.File, stderr *os.File, name string,
 	if runtime.GOOS == "linux" {
 		command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
 	}
-	if err := command.Start(); err != nil {
-		test.Fatal(err)
+	if startError := command.Start(); startError != nil {
+		test.Fatal(startError)
 	}
 	command.Wait()
 	return command.ProcessState.ExitCode()
@@ -87,15 +87,15 @@ func TestOneFileHoldsNodesOrder(test *testing.T) {
 				path, binary, script := sanitized(test, fixture.path)
 				runner := filepath.Join(repository, "oracle", "node.mjs")
 				landed := func(name string, arguments ...string) (int, []byte) {
-					file, err := os.Create(filepath.Join(test.TempDir(), "both"))
-					if err != nil {
-						test.Fatal(err)
+					file, createError := os.Create(filepath.Join(test.TempDir(), "both"))
+					if createError != nil {
+						test.Fatal(createError)
 					}
 					defer file.Close()
 					exitCode := withStreams(test, file, file, name, arguments...)
-					contents, err := os.ReadFile(file.Name())
-					if err != nil {
-						test.Fatal(err)
+					contents, readError := os.ReadFile(file.Name())
+					if readError != nil {
+						test.Fatal(readError)
 					}
 					rememberRun(test, run{stdout: contents, exitCode: exitCode})
 					return exitCode, contents
@@ -149,21 +149,21 @@ func TestClosedStdoutEndsAsOnNode(test *testing.T) {
 				path, binary, _ := sanitized(test, fixture)
 				runner := filepath.Join(repository, "oracle", "node.mjs")
 				ended := func(name string, arguments ...string) (int, []byte) {
-					reader, writer, err := os.Pipe()
-					if err != nil {
-						test.Fatal(err)
+					reader, writer, pipeError := os.Pipe()
+					if pipeError != nil {
+						test.Fatal(pipeError)
 					}
 					reader.Close()
 					defer writer.Close()
-					stderr, err := os.Create(filepath.Join(test.TempDir(), "stderr"))
-					if err != nil {
-						test.Fatal(err)
+					stderr, createError := os.Create(filepath.Join(test.TempDir(), "stderr"))
+					if createError != nil {
+						test.Fatal(createError)
 					}
 					defer stderr.Close()
 					exitCode := withStreams(test, writer, stderr, name, arguments...)
-					said, err := os.ReadFile(stderr.Name())
-					if err != nil {
-						test.Fatal(err)
+					said, readError := os.ReadFile(stderr.Name())
+					if readError != nil {
+						test.Fatal(readError)
 					}
 					rememberRun(test, run{stderr: said, exitCode: exitCode})
 					return exitCode, said
@@ -219,8 +219,8 @@ func onePipe(test *testing.T, name string, arguments ...string) (int, []byte) {
 	if runtime.GOOS == "linux" {
 		command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
 	}
-	if err := command.Run(); err != nil && command.ProcessState == nil {
-		test.Fatal(err)
+	if runError := command.Run(); runError != nil && command.ProcessState == nil {
+		test.Fatal(runError)
 	}
 	rememberRun(test, run{stdout: both.Bytes(), exitCode: command.ProcessState.ExitCode()})
 	return command.ProcessState.ExitCode(), both.Bytes()
@@ -282,16 +282,16 @@ func TestAPromptComesBeforeTheRead(test *testing.T) {
 			if runtime.GOOS == "linux" {
 				command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
 			}
-			stdin, err := command.StdinPipe()
-			if err != nil {
-				test.Fatal(err)
+			stdin, stdinPipeError := command.StdinPipe()
+			if stdinPipeError != nil {
+				test.Fatal(stdinPipeError)
 			}
-			stdout, err := command.StdoutPipe()
-			if err != nil {
-				test.Fatal(err)
+			stdout, stdoutPipeError := command.StdoutPipe()
+			if stdoutPipeError != nil {
+				test.Fatal(stdoutPipeError)
 			}
-			if err := command.Start(); err != nil {
-				test.Fatal(err)
+			if startError := command.Start(); startError != nil {
+				test.Fatal(startError)
 			}
 			reader := bufio.NewReader(stdout)
 			first := make(chan string, 1)
@@ -373,15 +373,15 @@ func (b *lockedBuffer) String() string { return string(b.Bytes()) }
 func asleep(test *testing.T, pid int) bool {
 	test.Helper()
 	if runtime.GOOS == "linux" {
-		data, err := os.ReadFile(fmt.Sprintf("/proc/%d/stat", pid))
-		if err != nil {
+		data, readError := os.ReadFile(fmt.Sprintf("/proc/%d/stat", pid))
+		if readError != nil {
 			return false
 		}
 		fields := strings.Fields(string(data[bytes.LastIndexByte(data, ')')+1:]))
 		return len(fields) != 0 && fields[0] == "S"
 	}
-	output, err := exec.Command("ps", "-o", "state=", "-p", strconv.Itoa(pid)).Output()
-	if err != nil {
+	output, outputError := exec.Command("ps", "-o", "state=", "-p", strconv.Itoa(pid)).Output()
+	if outputError != nil {
 		return false
 	}
 	state := strings.TrimSpace(string(output))
@@ -393,8 +393,8 @@ func asleep(test *testing.T, pid int) bool {
 func cpuSeconds(test *testing.T, pid int) float64 {
 	test.Helper()
 	if runtime.GOOS == "linux" {
-		data, err := os.ReadFile(fmt.Sprintf("/proc/%d/stat", pid))
-		if err != nil {
+		data, readError := os.ReadFile(fmt.Sprintf("/proc/%d/stat", pid))
+		if readError != nil {
 			return 0
 		}
 		// Fields after the command name, which is in parentheses and may hold spaces: utime and
@@ -404,8 +404,8 @@ func cpuSeconds(test *testing.T, pid int) float64 {
 		system, _ := strconv.ParseFloat(fields[12], 64)
 		return (user + system) / 100
 	}
-	output, err := exec.Command("ps", "-o", "time=", "-p", strconv.Itoa(pid)).Output()
-	if err != nil {
+	output, outputError := exec.Command("ps", "-o", "time=", "-p", strconv.Itoa(pid)).Output()
+	if outputError != nil {
 		return 0
 	}
 	// macOS prints minutes:seconds.hundredths, as 0:00.52.

@@ -14,9 +14,9 @@ import (
 
 func tokenizerSource(test *testing.T) string {
 	test.Helper()
-	source, err := os.ReadFile("tokenizer.ts")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("tokenizer.ts")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return string(source)
 }
@@ -27,9 +27,9 @@ func runTokenizer(test *testing.T, source string) string {
 	defer cancel()
 	command.Env = environment()
 	command.Stdin = strings.NewReader(source)
-	output, err := command.CombinedOutput()
-	if err != nil {
-		test.Fatalf("tokenizer must run: %v\n%s", err, output)
+	output, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("tokenizer must run: %v\n%s", combinedOutputError, output)
 	}
 	return string(output)
 }
@@ -55,9 +55,9 @@ func readTokenizerCounts(test *testing.T, output string) tokenizerCounts {
 		&counts.strings,
 		&counts.symbols,
 	} {
-		value, err := strconv.Atoi(match[index+1])
-		if err != nil {
-			test.Fatal(err)
+		value, parseError := strconv.Atoi(match[index+1])
+		if parseError != nil {
+			test.Fatal(parseError)
 		}
 		*field = value
 	}
@@ -83,8 +83,8 @@ func TestTokenizerInputMix(test *testing.T) {
 		test.Fatalf("fixed seed is not deterministic:\n%s\n%s", output, again)
 	}
 	counts := readTokenizerCounts(test, output)
-	if err := tokenizerIdentifierShare(counts); err != nil {
-		test.Fatal(err)
+	if tokenizerIdentifierShareError := tokenizerIdentifierShare(counts); tokenizerIdentifierShareError != nil {
+		test.Fatal(tokenizerIdentifierShareError)
 	}
 	total := counts.identifiers + counts.numbers + counts.strings + counts.symbols
 	if total < 600000 || total > 650000 || counts.length < 2000000 || counts.lines < 10000 {
@@ -116,9 +116,9 @@ func TestTokenizerOverflowMutant(test *testing.T) {
 	}
 	mutant := strings.Replace(source, safe, "seed = (seed * 1103515245 + 12345) % 2147483648;", 1)
 	counts := readTokenizerCounts(test, runTokenizer(test, mutant))
-	err := tokenizerIdentifierShare(counts)
-	if err == nil {
+	tokenizerIdentifierShareError := tokenizerIdentifierShare(counts)
+	if tokenizerIdentifierShareError == nil {
 		test.Fatalf("overflow mutant survived identifier floor: %+v", counts)
 	}
-	test.Logf("overflow mutant ran successfully and was caught: %v", err)
+	test.Logf("overflow mutant ran successfully and was caught: %v", tokenizerIdentifierShareError)
 }

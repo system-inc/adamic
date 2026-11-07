@@ -116,12 +116,12 @@ func assertParserFactoryCompletion(test *testing.T, body string, proven, unknown
 	source := `interface Target {kind:number;pos:number;end:number;text:string;} function expose(value:Target):void{} function factory(flag:boolean):Target {` +
 		body +
 		`}`
-	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	p, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	p, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	c, release := p.Checker(context.Background(), p.Files()[0])
 	defer release()
@@ -148,12 +148,12 @@ func TestParserFactoryReadBeforeCompletion(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "read.a")
 	source := `interface Target {text:string;} function factory():Target {const node={} as Target; const earlier=node.text; node.text='ready'; return node;}`
-	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	p, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	p, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	c, release := p.Checker(context.Background(), p.Files()[0])
 	defer release()

@@ -40,13 +40,13 @@ func runJSONEncodeShard(test *testing.T, shard int) {
 	for _, index := range familyCases(test, "TestJSONEncode", shard, jsonEncodeKeys()) {
 		name := jsonEncodeFixtures[index]
 		test.Run(name, func(test *testing.T) {
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", name))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", name))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			truth := onNode(test, path)
 			if _, probing := familyProbe("TestJSONEncode"); probing {
@@ -106,37 +106,37 @@ func TestJSONEncodeRefusals(test *testing.T) {
 	for _, testCase := range cases {
 		test.Run(testCase.name, func(test *testing.T) {
 			if testCase.name == "class" {
-				data, err := os.ReadFile(
+				data, readError := os.ReadFile(
 					filepath.Join(repository, "internal/oracle/testdata/json_encode_refused/class_notyet.a"),
 				)
-				if err != nil {
-					test.Fatal(err)
+				if readError != nil {
+					test.Fatal(readError)
 				}
 				testCase.source = strings.TrimPrefix(string(data), "import {encodeJson} from 'adamic';\n")
 			}
 			path := filepath.Join(test.TempDir(), "probe.a")
-			if err := os.WriteFile(
+			if writeError := os.WriteFile(
 				path,
 				[]byte("import {encodeJson} from 'adamic';\n"+testCase.source),
 				0600,
-			); err != nil {
-				test.Fatal(err)
+			); writeError != nil {
+				test.Fatal(writeError)
 			}
-			program, err := load.Load([]string{path})
-			if err != nil {
-				test.Fatal(err)
+			program, loadError := load.Load([]string{path})
+			if loadError != nil {
+				test.Fatal(loadError)
 			}
-			_, err = lower.Lower(context.Background(), program)
-			if err == nil || !strings.Contains(err.Error(), testCase.want) {
-				test.Fatalf("want refusal %q, got %v", testCase.want, err)
+			_, lowerError := lower.Lower(context.Background(), program)
+			if lowerError == nil || !strings.Contains(lowerError.Error(), testCase.want) {
+				test.Fatalf("want refusal %q, got %v", testCase.want, lowerError)
 			}
-			if strings.Contains(err.Error(), "decodeJson") {
-				test.Fatalf("encoder diagnostic names decoder: %v", err)
+			if strings.Contains(lowerError.Error(), "decodeJson") {
+				test.Fatalf("encoder diagnostic names decoder: %v", lowerError)
 			}
 			if testCase.name == "class" || testCase.name == "nested_class" {
 				var notYet *lower.NotYet
-				if !errors.As(err, &notYet) {
-					test.Fatalf("class refusal must be NotYet: %T", err)
+				if !errors.As(lowerError, &notYet) {
+					test.Fatalf("class refusal must be NotYet: %T", lowerError)
 				}
 			}
 		})
@@ -147,17 +147,17 @@ func TestJSONEncodeRefusals(test *testing.T) {
 // implementations of JSON writing. The source descriptors contain types only.
 func encodeWitnessSource(test *testing.T, name string, witness string, selectSource ...func(string) string) string {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", name))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", name))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	sources, err := lower.DecodeJsonSources(context.Background(), program)
-	if err != nil {
-		test.Fatal(err)
+	sources, decodeJsonSourcesError := lower.DecodeJsonSources(context.Background(), program)
+	if decodeJsonSourcesError != nil {
+		test.Fatal(decodeJsonSourcesError)
 	}
 	selected := sources[path]
 	for _, selectOne := range selectSource {
@@ -169,17 +169,17 @@ func encodeWitnessSource(test *testing.T, name string, witness string, selectSou
 		witness +
 		"\n" +
 		source
-	encoded, err := json.Marshal(source)
-	if err != nil {
-		test.Fatal(err)
+	encoded, encodeError := json.Marshal(source)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	script := `import {stripTypeScriptTypes} from 'node:module';
 const source=stripTypeScriptTypes(` + string(encoded) + `);
 await import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));
 `
 	file := filepath.Join(test.TempDir(), "witness.mjs")
-	if err := os.WriteFile(file, []byte(script), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(file, []byte(script), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return file
 }
@@ -279,26 +279,26 @@ func runJSONEncodeNonfinitePinnedShard(test *testing.T, shard int) {
 func jsonEncodeNonfinitePinned(test *testing.T, key string) {
 	dir := test.TempDir()
 	witness := filepath.Join(dir, "witness.mjs")
-	if err := os.WriteFile(witness, []byte(`console.log(JSON.stringify(`+key+`));`), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(witness, []byte(`console.log(JSON.stringify(`+key+`));`), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	truth := onNode(test, witness)
 	if truth.exitCode != 0 || string(truth.stdout) != "null\n" {
 		test.Fatalf("Node nonfinite pin differs: %d %q %s", truth.exitCode, truth.stdout, truth.stderr)
 	}
 	path := filepath.Join(dir, "nonfinite.a")
-	if err := os.WriteFile(path, []byte(`import {encodeJson,decodeJson,panic} from 'adamic';
+	if writeError := os.WriteFile(path, []byte(`import {encodeJson,decodeJson,panic} from 'adamic';
 for (const value of [`+key+`]) {
  const text=encodeJson<number>(value);
  if (text !== 'null') panic('nonfinite encoding must be null');
  if (decodeJson<number>(text).kind !== 'Error') panic('numeric decode must reject null');
  console.log(text);
-}`), 0600); err != nil {
-		test.Fatal(err)
+}`), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	source := onNode(test, path)
 	if _, probing := familyProbe("TestJSONEncodeNonfinitePinned"); probing {
@@ -323,20 +323,22 @@ for (const value of [`+key+`]) {
 // hidden by Data, and native serialization would read a nonexistent data slot.
 func TestJSONEncodeAccessorRefusal(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/json_encode_refused/getter.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/json_encode_refused/getter.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	source, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	source, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	_, err = lower.Lower(context.Background(), source)
+	_, lowerError := lower.Lower(context.Background(), source)
 	var refused *lower.Refused
-	if !errors.As(err, &refused) || !strings.Contains(
-		err.Error(),
+	if !errors.As(lowerError, &refused) || !strings.Contains(
+		lowerError.Error(),
 		"Object enumeration with getter or accessor descriptors; use own data properties for this first reflection implementation",
 	) {
-		test.Fatalf("want shared accessor descriptor refusal, got %v", err)
+		test.Fatalf("want shared accessor descriptor refusal, got %v", lowerError)
 	}
 }

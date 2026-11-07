@@ -14,7 +14,9 @@ func (l *lowering) detachedOwnMethod(node *ast.Node) bool {
 		return false
 	}
 	node = ast.SkipParentheses(node)
-	if node.Kind != ast.KindPropertyAccessExpression || node.Name().Text() != "hasOwnProperty" || !l.libraryMember(node) {
+	if node.Kind != ast.KindPropertyAccessExpression ||
+		node.Name().Text() != "hasOwnProperty" ||
+		!l.libraryMember(node) {
 		return false
 	}
 	receiver := ast.SkipParentheses(node.AsPropertyAccessExpression().Expression)
@@ -23,7 +25,12 @@ func (l *lowering) detachedOwnMethod(node *ast.Node) bool {
 }
 
 func (l *lowering) detachedOwnDeclaration(node *ast.Node) bool {
-	if node == nil || node.Kind != ast.KindVariableDeclaration || !ast.IsIdentifier(node.Name()) || node.Parent == nil || node.Parent.Flags&ast.NodeFlagsConst == 0 || node.AsVariableDeclaration().Initializer == nil {
+	if node == nil ||
+		node.Kind != ast.KindVariableDeclaration ||
+		!ast.IsIdentifier(node.Name()) ||
+		node.Parent == nil ||
+		node.Parent.Flags&ast.NodeFlagsConst == 0 ||
+		node.AsVariableDeclaration().Initializer == nil {
 		return false
 	}
 	method, known := l.libraryMethod(node.AsVariableDeclaration().Initializer, map[*ast.Symbol]bool{})
@@ -48,8 +55,11 @@ func (l *lowering) detachedOwnCallReceiver(node *ast.Node) *ast.Node {
 	}
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
-	if call.QuestionDotToken != nil || callee.Kind != ast.KindPropertyAccessExpression || callee.Name().Text() != "call" ||
-		callee.AsPropertyAccessExpression().QuestionDotToken != nil || !l.libraryMember(callee) {
+	if call.QuestionDotToken != nil ||
+		callee.Kind != ast.KindPropertyAccessExpression ||
+		callee.Name().Text() != "call" ||
+		callee.AsPropertyAccessExpression().QuestionDotToken != nil ||
+		!l.libraryMember(callee) {
 		return nil
 	}
 	receiver := ast.SkipParentheses(callee.AsPropertyAccessExpression().Expression)
@@ -85,7 +95,9 @@ func (l *lowering) detachedOwnRefusal(node *ast.Node) error {
 				contextual = nil
 			}
 		}
-		if contextual != nil && contextual.Flags()&checker.TypeFlagsNonPrimitive != 0 && l.detachedOwnOpaqueArgument(at) {
+		if contextual != nil &&
+			contextual.Flags()&checker.TypeFlagsNonPrimitive != 0 &&
+			l.detachedOwnOpaqueArgument(at) {
 			of, known := l.representation(l.checker.GetTypeAtLocation(node))
 			if l.detachedOwnObjectParameter(ast.SkipParentheses(node)) {
 				of, known = ir.Object, true
@@ -125,7 +137,9 @@ func (l *lowering) detachedOwnRefusal(node *ast.Node) error {
 	}
 	if at.Parent != nil && at.Parent.Kind == ast.KindPropertyAccessExpression {
 		member := at.Parent
-		if member.AsPropertyAccessExpression().Expression == at && member.Name().Text() == "apply" && l.libraryMethodReadAllowed(node) {
+		if member.AsPropertyAccessExpression().Expression == at &&
+			member.Name().Text() == "apply" &&
+			l.libraryMethodReadAllowed(node) {
 			return nil
 		}
 		if member.AsPropertyAccessExpression().Expression == at && member.Name().Text() == "call" {
@@ -150,7 +164,11 @@ func (l *lowering) detachedOwnCall(node *ast.Node) (ir.Expression, bool, error) 
 	}
 	args := node.AsCallExpression().Arguments.Nodes
 	if len(args) != 2 || args[0].Kind == ast.KindSpreadElement || args[1].Kind == ast.KindSpreadElement {
-		return nil, true, &Refused{Where: l.program.Where(node), What: "detached hasOwnProperty call arguments", Fix: "use exactly .call(target, key)"}
+		return nil, true, &Refused{
+			Where: l.program.Where(node),
+			What:  "detached hasOwnProperty call arguments",
+			Fix:   "use exactly .call(target, key)",
+		}
 	}
 	arguments := []ir.Expression{}
 	if l.detachedOwnAlias(receiver) != nil {
@@ -178,20 +196,28 @@ func (l *lowering) detachedOwnCall(node *ast.Node) (ir.Expression, bool, error) 
 			return nil, true, l.notYet(args[0], "detached hasOwnProperty through an object view ("+reason+")")
 		}
 	}
-	target, err := l.expression(args[0])
-	if err != nil {
-		return nil, true, err
+	target, expressionError := l.expression(args[0])
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
-	key, err := l.recordKey(args[1], false)
-	if err != nil {
-		return nil, true, err
+	key, recordKeyError := l.recordKey(args[1], false)
+	if recordKeyError != nil {
+		return nil, true, recordKeyError
 	}
 	arguments = append(arguments, target, key)
 	b := l.libraryArrayBuilder(arguments)
 	offset := len(arguments) - 2
-	var result ir.Expression = ir.ObjectCall{Method: "hasOwn", Arguments: []ir.Expression{b.read(b.parameters[offset]), b.read(b.parameters[offset+1])}, Returns: ir.Boolean}
+	var result ir.Expression = ir.ObjectCall{
+		Method:    "hasOwn",
+		Arguments: []ir.Expression{b.read(b.parameters[offset]), b.read(b.parameters[offset+1])},
+		Returns:   ir.Boolean,
+	}
 	if of == ir.Record {
-		result = ir.RecordCall{Method: "hasOwn", Arguments: []ir.Expression{b.read(b.parameters[offset]), b.read(b.parameters[offset+1])}, Returns: ir.Boolean}
+		result = ir.RecordCall{
+			Method:    "hasOwn",
+			Arguments: []ir.Expression{b.read(b.parameters[offset]), b.read(b.parameters[offset+1])},
+			Returns:   ir.Boolean,
+		}
 	}
 	return b.finish("detached_has_own", result), true, nil
 }
@@ -215,7 +241,8 @@ func (l *lowering) detachedOwnObjectParameter(node *ast.Node) bool {
 	safe, used := true, false
 	var visit ast.Visitor
 	visit = func(use *ast.Node) bool {
-		if use.Kind == ast.KindShorthandPropertyAssignment && l.checker.GetShorthandAssignmentValueSymbol(use) == symbol {
+		if use.Kind == ast.KindShorthandPropertyAssignment &&
+			l.checker.GetShorthandAssignmentValueSymbol(use) == symbol {
 			safe = false
 		}
 		if ast.IsIdentifier(use) && l.symbol(use) == symbol {
@@ -225,8 +252,11 @@ func (l *lowering) detachedOwnObjectParameter(node *ast.Node) bool {
 				at = at.Parent
 			}
 			parent := at.Parent
-			if parent == nil || parent.Kind != ast.KindCallExpression || l.detachedOwnCallReceiver(parent) == nil ||
-				len(parent.AsCallExpression().Arguments.Nodes) != 2 || parent.AsCallExpression().Arguments.Nodes[0] != at {
+			if parent == nil ||
+				parent.Kind != ast.KindCallExpression ||
+				l.detachedOwnCallReceiver(parent) == nil ||
+				len(parent.AsCallExpression().Arguments.Nodes) != 2 ||
+				parent.AsCallExpression().Arguments.Nodes[0] != at {
 				safe = false
 			}
 		}

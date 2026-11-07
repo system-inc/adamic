@@ -280,9 +280,9 @@ func TestEveryExpressionIsClassified(test *testing.T) {
 func irExpressions(test *testing.T) map[string]bool {
 	test.Helper()
 	// Reads: internal/ir/*.go
-	paths, err := filepath.Glob("../ir/*.go")
-	if err != nil {
-		test.Fatal(err)
+	paths, globError := filepath.Glob("../ir/*.go")
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	files := token.NewFileSet()
 	var expressions []string
@@ -292,9 +292,9 @@ func irExpressions(test *testing.T) map[string]bool {
 		if strings.HasSuffix(path, "_test.go") {
 			continue
 		}
-		file, err := parser.ParseFile(files, path, nil, 0)
-		if err != nil {
-			test.Fatal(err)
+		file, parseFileError := parser.ParseFile(files, path, nil, 0)
+		if parseFileError != nil {
+			test.Fatal(parseFileError)
 		}
 		ast.Inspect(file, func(node ast.Node) bool {
 			switch node := node.(type) {
@@ -382,9 +382,9 @@ func typeSignature(signature *ast.FuncType) bool {
 // valueCaseNames is every IR type the switch in inference.value gives a case of its own.
 func valueCaseNames(test *testing.T) map[string]bool {
 	test.Helper()
-	file, err := parser.ParseFile(token.NewFileSet(), "infer.go", nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	file, parseFileError := parser.ParseFile(token.NewFileSet(), "infer.go", nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	names := map[string]bool{}
 	for _, declaration := range file.Decls {

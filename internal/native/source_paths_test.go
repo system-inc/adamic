@@ -29,11 +29,11 @@ func debugPathFixture(test *testing.T, root string) string {
 			"value.a",
 		): "export function imported(n: number): number {\n if (n > 0) return imported(n - 1) + n;\n return n + 2;\n}\n",
 	} {
-		if err := os.MkdirAll(filepath.Dir(name), 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(filepath.Dir(name), 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.WriteFile(name, []byte(contents), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(name, []byte(contents), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	return entry
@@ -45,20 +45,20 @@ func debugPathFixture(test *testing.T, root string) string {
 func debugSourcePaths(test *testing.T, binary, entry string) bool {
 	test.Helper()
 	var data *dwarf.Data
-	var err error
-	if object, openErr := elf.Open(binary); openErr == nil {
+	var dwarfError error
+	if object, openError := elf.Open(binary); openError == nil {
 		defer object.Close()
-		data, err = object.DWARF()
+		data, dwarfError = object.DWARF()
 	} else {
-		object, openErr := macho.Open(binary)
-		if openErr != nil {
-			test.Fatal(openErr)
+		object, openError := macho.Open(binary)
+		if openError != nil {
+			test.Fatal(openError)
 		}
 		defer object.Close()
-		data, err = object.DWARF()
+		data, dwarfError = object.DWARF()
 	}
-	if err != nil {
-		test.Fatal(err)
+	if dwarfError != nil {
+		test.Fatal(dwarfError)
 	}
 	wanted := map[string]bool{entry: false, filepath.Clean(filepath.Join(filepath.Dir(entry), "../lib/value.a")): false}
 	seen := map[string]bool{}
@@ -66,9 +66,9 @@ func debugSourcePaths(test *testing.T, binary, entry string) bool {
 	generatedRows, headerRows := 0, 0
 	reader := data.Reader()
 	for {
-		unit, err := reader.Next()
-		if err != nil {
-			test.Fatal(err)
+		unit, nextError := reader.Next()
+		if nextError != nil {
+			test.Fatal(nextError)
 		}
 		if unit == nil {
 			break
@@ -77,21 +77,21 @@ func debugSourcePaths(test *testing.T, binary, entry string) bool {
 			continue
 		}
 		directory, _ := unit.Val(dwarf.AttrCompDir).(string)
-		lines, err := data.LineReader(unit)
-		if err != nil {
-			test.Fatal(err)
+		lines, lineReaderError := data.LineReader(unit)
+		if lineReaderError != nil {
+			test.Fatal(lineReaderError)
 		}
 		if lines == nil {
 			continue
 		}
 		var row dwarf.LineEntry
 		for {
-			err := lines.Next(&row)
-			if err == io.EOF {
+			nextError := lines.Next(&row)
+			if nextError == io.EOF {
 				break
 			}
-			if err != nil {
-				test.Fatal(err)
+			if nextError != nil {
+				test.Fatal(nextError)
 			}
 			if row.EndSequence || row.File == nil {
 				continue
@@ -129,12 +129,12 @@ func debugSourcePaths(test *testing.T, binary, entry string) bool {
 				continue
 			}
 			seen[path] = true
-			_, statErr := os.Stat(path)
-			test.Logf("comp_dir=%q row=%q resolved=%q os.Stat=%v", directory, row.File.Name, path, statErr)
-			if statErr != nil {
+			_, statError := os.Stat(path)
+			test.Logf("comp_dir=%q row=%q resolved=%q os.Stat=%v", directory, row.File.Name, path, statError)
+			if statError != nil {
 				ok = false
 			}
-			if _, exists := wanted[path]; exists && statErr == nil {
+			if _, exists := wanted[path]; exists && statError == nil {
 				wanted[path] = true
 			}
 		}
@@ -168,11 +168,11 @@ func checkDebugSourcePaths(test *testing.T, split bool) {
 	entry := debugPathFixture(test, test.TempDir())
 	for _, relative := range []string{"main.c", "runtime/adamic.h"} {
 		path := filepath.Join(filepath.Dir(entry), relative)
-		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.WriteFile(path, []byte("decoy, never generated code\n"), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte("decoy, never generated code\n"), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	binary := filepath.Join(test.TempDir(), "program")
@@ -202,16 +202,16 @@ func debugCLI(test *testing.T, entry, binary string, environment ...string) {
 		test,
 		append(append(os.Environ(), "ADAMIC_BUILD_DEBUG_DRIVER=1"), environment...),
 	)
-	if output, err := command.CombinedOutput(); err != nil {
-		test.Fatalf("build --debug: %v: %s", err, output)
+	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("build --debug: %v: %s", combinedOutputError, output)
 	}
 }
 
 func TestDebugRuntimeArchiveShared(test *testing.T) {
 	test.Parallel()
-	contents, err := os.ReadFile(filepath.Join(debugSharingProduct(test, false), "build.log"))
-	if err != nil {
-		test.Fatal(err)
+	contents, readError := os.ReadFile(filepath.Join(debugSharingProduct(test, false), "build.log"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var outcomes, keys []string
 	for _, line := range strings.Split(string(contents), "\n") {
@@ -232,18 +232,18 @@ func TestDebugSanitizedUnitInputs(test *testing.T) {
 	options := Options{Debug: true, Sanitize: true, Split: true, DebugDirectory: test.TempDir()}
 	source := "#include \"adamic.h\"\nstatic int adamic_value = 1;\nstatic int *adamic_probe(void) { return &adamic_value; }\nint main(int argc, char **argv) { (void)argv; return *adamic_probe() == argc ? 0 : 1; }\n"
 	binary := filepath.Join(test.TempDir(), "program")
-	if err := buildUnitsWithLibrary(
+	if buildUnitsWithLibraryError := buildUnitsWithLibrary(
 		source,
 		binary,
 		options,
 		debugArchiveProduct(test, options, false),
 		"",
-	); err != nil {
-		test.Fatal(err)
+	); buildUnitsWithLibraryError != nil {
+		test.Fatal(buildUnitsWithLibraryError)
 	}
-	contents, err := os.ReadFile(binary)
-	if err != nil {
-		test.Fatal(err)
+	contents, readError := os.ReadFile(binary)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	// ASan's global metadata preserves the input spelling even when debug prefix
 	// maps remove the build directory elsewhere in the binary.

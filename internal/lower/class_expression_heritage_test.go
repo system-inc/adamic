@@ -53,19 +53,19 @@ func TestClassExpressionHeritageIsNotYet(test *testing.T) {
 						test.Fatalf("panicked: %v", failure)
 					}
 				}()
-				_, err := lowerSourceAs(test, probe.source, extension)
+				_, lowerSourceAsError := lowerSourceAs(test, probe.source, extension)
 				if probe.where == "" {
-					if err == nil {
+					if lowerSourceAsError == nil {
 						test.Fatalf("lowered, where Node throws on reading N.B before its assignment")
 					}
-					test.Logf("stops: %v", err)
+					test.Logf("stops: %v", lowerSourceAsError)
 					return
 				}
 				var notYet *NotYet
-				if !errors.As(err, &notYet) ||
+				if !errors.As(lowerSourceAsError, &notYet) ||
 					notYet.What != "a ClassExpression" ||
 					!strings.HasSuffix(notYet.Where, probe.where) {
-					test.Fatalf("want NotYet a ClassExpression at %s, got %v", probe.where, err)
+					test.Fatalf("want NotYet a ClassExpression at %s, got %v", probe.where, lowerSourceAsError)
 				}
 			})
 		}
@@ -81,8 +81,8 @@ func TestClassDeclarationHeritageBesideANamespaceLowers(test *testing.T) {
 	for _, extension := range []string{".ts", ".a"} {
 		test.Run(extension, func(test *testing.T) {
 			test.Parallel()
-			if _, err := lowerSourceAs(test, source, extension); err != nil {
-				test.Fatalf("the class declaration control must lower: %v", err)
+			if _, lowerSourceAsError := lowerSourceAs(test, source, extension); lowerSourceAsError != nil {
+				test.Fatalf("the class declaration control must lower: %v", lowerSourceAsError)
 			}
 		})
 	}

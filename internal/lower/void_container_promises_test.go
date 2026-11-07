@@ -40,11 +40,11 @@ func TestVoidPromiseMovesAreNotContainerReads(test *testing.T) {
 		for _, extension := range []string{".a", ".ts"} {
 			test.Run(probe.name+extension, func(test *testing.T) {
 				test.Parallel()
-				_, err := lowerVoidProbe(test, extension, voidPromiseMark+"\n"+probe.source)
+				_, lowerVoidProbeError := lowerVoidProbe(test, extension, voidPromiseMark+"\n"+probe.source)
 				var refused *Refused
-				if errors.As(err, &refused) &&
+				if errors.As(lowerVoidProbeError, &refused) &&
 					strings.HasPrefix(refused.What, "a read of a void container's elements") {
-					test.Fatalf("want this move kept, got %v", err)
+					test.Fatalf("want this move kept, got %v", lowerVoidProbeError)
 				}
 			})
 		}
@@ -101,18 +101,18 @@ func TestVoidPromiseReadsAreRefused(test *testing.T) {
 		for _, extension := range []string{".a", ".ts"} {
 			test.Run(probe.name+extension, func(test *testing.T) {
 				test.Parallel()
-				_, err := lowerVoidProbe(test, extension, voidPromiseMark+"\n"+probe.source)
+				_, lowerVoidProbeError := lowerVoidProbe(test, extension, voidPromiseMark+"\n"+probe.source)
 				var refused *Refused
 				if probe.role == voidWidenedFirst {
-					if !errors.As(err, &refused) || !strings.HasPrefix(refused.What, voidWidenedFirst) {
-						test.Fatalf("want part 1's widening to refuse it first, got %v", err)
+					if !errors.As(lowerVoidProbeError, &refused) || !strings.HasPrefix(refused.What, voidWidenedFirst) {
+						test.Fatalf("want part 1's widening to refuse it first, got %v", lowerVoidProbeError)
 					}
 					return
 				}
-				if !errors.As(err, &refused) ||
+				if !errors.As(lowerVoidProbeError, &refused) ||
 					!strings.HasPrefix(refused.What, "a read of a void container's elements") ||
 					!strings.Contains(refused.What, probe.role) {
-					test.Fatalf("want a void container read refused %s, got %v", probe.role, err)
+					test.Fatalf("want a void container read refused %s, got %v", probe.role, lowerVoidProbeError)
 				}
 			})
 		}

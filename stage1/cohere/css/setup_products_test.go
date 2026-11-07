@@ -37,9 +37,9 @@ func cssParserPreparedProgram(test *testing.T, mutation int) cssParserProgram {
 	state.once.Do(func() {
 		state.failed = test.Name()
 		cssPlantedSetupFailure(test, "program")
-		main, err := filepath.Abs("main.ts")
-		if err != nil {
-			test.Fatal(err)
+		main, absolutePathError := filepath.Abs("main.ts")
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		name, directory := "parser", filepath.Dir(main)
 		if mutation >= 0 {
@@ -85,9 +85,9 @@ func cssParserPreparedLeaks(test *testing.T) string {
 // changed compiler misses rather than reading a product another one built.
 func TestCSSGoOraclesRekeyCompiler(test *testing.T) {
 	test.Parallel()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	compilers := oracles.CompilerConfiguration{
 		CCompiler:         "clang",
@@ -138,9 +138,9 @@ func TestCSSGoOraclesRekeyCompiler(test *testing.T) {
 // caller's: with CC and CXX unset that is clang and clang++, which a reader of os.Getenv would key as empty while go
 // ran clang, and a CC the caller sets moves the key. Not parallel: it sets CC and CXX.
 func TestCSSGoOraclesKeyTheCompilersEnvGivesGo(test *testing.T) {
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	test.Setenv("CC", "")
 	test.Setenv("CXX", "")

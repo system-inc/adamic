@@ -30,9 +30,9 @@ func TestLibraryStringRefusals(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
-			if err == nil || !strings.Contains(err.Error(), probe.reason) {
-				test.Fatalf("want refusal containing %q, got %v", probe.reason, err)
+			_, lowerSourceError := lowerSource(test, probe.source)
+			if lowerSourceError == nil || !strings.Contains(lowerSourceError.Error(), probe.reason) {
+				test.Fatalf("want refusal containing %q, got %v", probe.reason, lowerSourceError)
 			}
 		})
 	}

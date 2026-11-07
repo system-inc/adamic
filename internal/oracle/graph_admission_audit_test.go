@@ -18,22 +18,22 @@ import (
 // with ASan, UBSan and the ordinary leak check enabled.
 func checkRecordedGraphAdmission(test *testing.T, name string) run {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, name))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, name))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	source, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	header, _, _ := strings.Cut(string(source), "\n")
 	if strings.HasPrefix(header, "// a-check:") && header != "// a-check: checked" {
 		test.Fatalf("admitted program still promises %q; use // a-check: checked", header)
 	}
 	truth := onNode(test, path)
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	got, binary := nativelyUncached(test, program)
 	if d := disagreement(truth, got); d != "" {
@@ -96,8 +96,8 @@ func TestRecordedGraphAdmissionNamespaceCurrentDirectory(test *testing.T) {
 func checkGraphAdmissionCounts(test *testing.T, program *ir.Program, truth run) {
 	test.Helper()
 	binary := filepath.Join(test.TempDir(), "counted")
-	if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), binary, native.Options{Count: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	actual := execute(test, binary)
 	if actual.exitCode != truth.exitCode || !bytes.Equal(actual.stdout, truth.stdout) {
@@ -139,17 +139,17 @@ type graphAuditNative struct {
 func TestObjectFixtureNativeSummaryMatchesCompiledCases(test *testing.T) {
 	test.Parallel()
 	directory := filepath.Join(repository, "stage3/fixtures/objects")
-	data, err := os.ReadFile(filepath.Join(directory, "status.json"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(directory, "status.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var cases []struct {
 		File   string
 		Stage0 struct{ Outcome string }
 		Node   graphAuditOutput
 	}
-	if err := json.Unmarshal(data, &cases); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &cases); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	var observed []graphAuditNative
 	for _, each := range cases {
@@ -171,22 +171,22 @@ func TestObjectFixtureNativeSummaryMatchesCompiledCases(test *testing.T) {
 	}
 	path := filepath.Join(directory, "native.json")
 	if *updateGraphObjectNative {
-		data, err := json.MarshalIndent(observed, "", "  ")
-		if err != nil {
-			test.Fatal(err)
+		data, encodeError := json.MarshalIndent(observed, "", "  ")
+		if encodeError != nil {
+			test.Fatal(encodeError)
 		}
-		if err := os.WriteFile(path, append(data, '\n'), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, append(data, '\n'), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		return
 	}
-	data, err = os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	data, readError = os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var expected []graphAuditNative
-	if err := json.Unmarshal(data, &expected); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &expected); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if !slices.Equal(observed, expected) {
 		test.Fatal(

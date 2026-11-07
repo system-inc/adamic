@@ -11,16 +11,22 @@ import (
 func (l *lowering) enumerationRecordStorageType(t *checker.Type) bool {
 	infos := l.checker.GetIndexInfosOfType(t)
 	properties := l.checker.GetPropertiesOfType(t)
-	if len(infos) != 1 || infos[0].IsReadonly() || infos[0].KeyType().Flags() != checker.TypeFlagsString || infos[0].ValueType().Flags()&checker.TypeFlagsUnion == 0 || len(properties) == 0 {
+	if len(infos) != 1 ||
+		infos[0].IsReadonly() ||
+		infos[0].KeyType().Flags() != checker.TypeFlagsString ||
+		infos[0].ValueType().Flags()&checker.TypeFlagsUnion == 0 ||
+		len(properties) == 0 {
 		return false
 	}
 	for _, property := range properties {
-		if property.Flags&ast.SymbolFlagsOptional != 0 || l.checker.GetTypeOfSymbol(property).Flags()&(checker.TypeFlagsNumberLike|checker.TypeFlagsStringLike|checker.TypeFlagsBooleanLike) == 0 {
+		if property.Flags&ast.SymbolFlagsOptional != 0 || l.checker.GetTypeOfSymbol(
+			property,
+		).Flags()&(checker.TypeFlagsNumberLike|checker.TypeFlagsStringLike|checker.TypeFlagsBooleanLike) == 0 {
 			return false
 		}
 	}
-	modules, err := l.moduleOrder(l.program.Files()[0])
-	if err != nil {
+	modules, moduleOrderError := l.moduleOrder(l.program.Files()[0])
+	if moduleOrderError != nil {
 		return false
 	}
 	found := false
@@ -29,7 +35,10 @@ func (l *lowering) enumerationRecordStorageType(t *checker.Type) bool {
 		if found {
 			return true
 		}
-		if node.Kind == ast.KindObjectLiteralExpression && l.slotType(node) == t && l.enumerationInModule(ast.GetSourceFileOfNode(node).AsSourceFile()) && l.entriesRecordLiteral(node) {
+		if node.Kind == ast.KindObjectLiteralExpression &&
+			l.slotType(node) == t &&
+			l.enumerationInModule(ast.GetSourceFileOfNode(node).AsSourceFile()) &&
+			l.entriesRecordLiteral(node) {
 			found = true
 			return true
 		}
@@ -48,8 +57,8 @@ func (l *lowering) enumerationReadonlyType(t *checker.Type) bool {
 	if len(infos) != 1 || !infos[0].IsReadonly() || infos[0].KeyType().Flags() != checker.TypeFlagsString {
 		return false
 	}
-	modules, err := l.moduleOrder(l.program.Files()[0])
-	if err != nil {
+	modules, moduleOrderError := l.moduleOrder(l.program.Files()[0])
+	if moduleOrderError != nil {
 		return false
 	}
 	for _, module := range modules {
@@ -65,5 +74,9 @@ func (l *lowering) enumerationReadonlyType(t *checker.Type) bool {
 // enumeration proof keeps it there (enumerationReadonlyType). Such a view is the object it views:
 // tsc's getEnumMembers reads an enum's table through one (#52zja36).
 func (l *lowering) readonlyObjectView(t *checker.Type) bool {
-	return t.Flags()&checker.TypeFlagsObject != 0 && len(l.checker.GetPropertiesOfType(t)) == 0 && len(l.checker.GetSignaturesOfType(t, checker.SignatureKindCall)) == 0 && len(l.checker.GetSignaturesOfType(t, checker.SignatureKindConstruct)) == 0 && l.enumerationReadonlyType(t)
+	return t.Flags()&checker.TypeFlagsObject != 0 &&
+		len(l.checker.GetPropertiesOfType(t)) == 0 &&
+		len(l.checker.GetSignaturesOfType(t, checker.SignatureKindCall)) == 0 &&
+		len(l.checker.GetSignaturesOfType(t, checker.SignatureKindConstruct)) == 0 &&
+		l.enumerationReadonlyType(t)
 }

@@ -178,9 +178,9 @@ func TestPlaceholderTypedBoundaryPlaceholderFieldCopy(test *testing.T) {
 
 func assertPlaceholderTypedBoundary(test *testing.T, source, use string, expectedChecks int) {
 	test.Helper()
-	program, err := lowerTypeScriptAssertionSource(test, source)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(test, source)
+	if lowerTypeScriptAssertionSourceError != nil {
+		test.Fatal(lowerTypeScriptAssertionSourceError)
 	}
 	checked := 0
 	for _, site := range program.PlaceholderChecks {
@@ -198,9 +198,12 @@ func assertPlaceholderTypedBoundary(test *testing.T, source, use string, expecte
 
 func TestPlaceholderWeakSlotStaysNotYet(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(test, `import type { Weak } from 'adamic'; let value: Weak<{value:number}> = undefined!;`)
+	_, lowerSourceError := lowerSource(
+		test,
+		`import type { Weak } from 'adamic'; let value: Weak<{value:number}> = undefined!;`,
+	)
 	var notYet *NotYet
-	if !errors.As(err, &notYet) || !strings.Contains(notYet.What, "a placeholder slot holding Weak") {
-		test.Fatalf("unsupported weak placeholder: %v", err)
+	if !errors.As(lowerSourceError, &notYet) || !strings.Contains(notYet.What, "a placeholder slot holding Weak") {
+		test.Fatalf("unsupported weak placeholder: %v", lowerSourceError)
 	}
 }

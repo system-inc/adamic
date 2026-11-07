@@ -19,22 +19,22 @@ func refusedBeforeDeadline(test *testing.T, argv []string, diagnostic string) {
 
 func refusedWithin(test *testing.T, argv []string, diagnostic string, budget time.Duration) {
 	test.Helper()
-	output, err := os.CreateTemp(test.TempDir(), "stdout")
-	if err != nil {
-		test.Fatal(err)
+	output, temporaryFileError := os.CreateTemp(test.TempDir(), "stdout")
+	if temporaryFileError != nil {
+		test.Fatal(temporaryFileError)
 	}
 	var stderr bytes.Buffer
-	err, timedOut, cpu := runWithCPUBudget(test, argv, output, &stderr, budget)
+	runWithCpuBudgetError, timedOut, cpu := runWithCPUBudget(test, argv, output, &stderr, budget)
 	output.Close()
 	info, _ := os.Stat(output.Name())
-	if timedOut || err == nil || info.Size() != 0 || !strings.Contains(stderr.String(), diagnostic) {
+	if timedOut || runWithCpuBudgetError == nil || info.Size() != 0 || !strings.Contains(stderr.String(), diagnostic) {
 		test.Fatalf(
 			"%v: timeout=%v cpu=%s budget=%s exit=%v stdout=%d stderr=%s",
 			argv,
 			timedOut,
 			cpu,
 			budget,
-			err,
+			runWithCpuBudgetError,
 			info.Size(),
 			&stderr,
 		)
@@ -77,9 +77,9 @@ func boundedPortParserShard(test *testing.T, shard int) {
 		finishSetup()
 		return
 	}
-	main, err := filepath.Abs("main.ts")
-	if err != nil {
-		test.Fatal(err)
+	main, absolutePathError := filepath.Abs("main.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	binary, script := miscBuild(test, main)
 	oracle := miscOracle(test)
@@ -93,8 +93,8 @@ func boundedPortParserShard(test *testing.T, shard int) {
 	for _, i := range indexes {
 		item := cases[i]
 		path := filepath.Join(test.TempDir(), item.filename)
-		if err := os.WriteFile(path, []byte(item.text), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(item.text), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		accepted := item.audit && byID[item.id].Status == "ok"
 		if accepted {
@@ -104,8 +104,8 @@ func boundedPortParserShard(test *testing.T, shard int) {
 				"native":  estreeScopedExecute(test, binary, path),
 				"emitted": estreeScopedNode(test, script, path),
 			} {
-				if err := miscCompare(want, got, false); err != nil {
-					test.Fatalf("%s %s: %v", item.id, name, err)
+				if miscCompareError := miscCompare(want, got, false); miscCompareError != nil {
+					test.Fatalf("%s %s: %v", item.id, name, miscCompareError)
 				}
 			}
 		} else {
@@ -144,9 +144,9 @@ func TestBoundedPortParserPlantedDisagreement(test *testing.T) {
 
 const testPortStallControlShards = 1
 
-func portStallControlResult(timedOut bool, err error) error {
+func portStallControlResult(timedOut bool, sourceError error) error {
 	if !timedOut {
-		return fmt.Errorf("stall control must hit deadline, got %v", err)
+		return fmt.Errorf("stall control must hit deadline, got %v", sourceError)
 	}
 	return nil
 }
@@ -166,8 +166,8 @@ func portStallControlShard(test *testing.T, shard int) {
 	finishSetup()
 	for range indexes {
 		path := filepath.Join(test.TempDir(), "input.ts")
-		if err := os.WriteFile(path, []byte("class C { ) }"), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte("class C { ) }"), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		// The guard-disabled port held to the calibrated budget a refusal gets: it must run until the budget stops it.
 		// A 500 ms wall deadline caught it before, and Node's startup alone outlasts that whether the guard holds or
@@ -177,14 +177,17 @@ func portStallControlShard(test *testing.T, shard int) {
 			{binary, path},
 		} {
 			budget := estreeRefusalBudget(test, argv)
-			output, err := os.CreateTemp(test.TempDir(), "control-log")
-			if err != nil {
-				test.Fatal(err)
+			output, temporaryFileError := os.CreateTemp(test.TempDir(), "control-log")
+			if temporaryFileError != nil {
+				test.Fatal(temporaryFileError)
 			}
-			err, timedOut, cpu := runWithCPUBudget(test, argv, output, output, budget)
+			runWithCpuBudgetError, timedOut, cpu := runWithCPUBudget(test, argv, output, output, budget)
 			output.Close()
-			if err := portStallControlResult(timedOut, err); err != nil {
-				test.Fatal(err)
+			if portStallControlResultError := portStallControlResult(
+				timedOut,
+				runWithCpuBudgetError,
+			); portStallControlResultError != nil {
+				test.Fatal(portStallControlResultError)
 			}
 			test.Logf(
 				"%s guard-disabled control ran to its budget: %s of CPU against a budget of %s",

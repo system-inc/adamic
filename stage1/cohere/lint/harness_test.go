@@ -23,16 +23,20 @@ func TestEmittedJavaScriptMismatch_Setup(test *testing.T) {
 func serializationPort(test *testing.T) string {
 	directory := mutant(test, "", "")
 	for _, name := range []string{"rule.a", "oracle.go"} {
-		data, err := os.ReadFile(filepath.Join("testdata/serialization", name))
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(filepath.Join("testdata/serialization", name))
+		if readError != nil {
+			test.Fatal(readError)
 		}
-		if err := os.WriteFile(filepath.Join(directory, "rules/no-debugger", name), data, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(
+			filepath.Join(directory, "rules/no-debugger", name),
+			data,
+			0644,
+		); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
-	if err := os.Remove(filepath.Join(directory, "rules/no-debugger/rule.ts")); err != nil {
-		test.Fatal(err)
+	if removeError := os.Remove(filepath.Join(directory, "rules/no-debugger/rule.ts")); removeError != nil {
+		test.Fatal(removeError)
 	}
 	return directory
 }

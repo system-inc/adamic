@@ -26,8 +26,8 @@ var wasiHostRefusals = map[string]TargetRefused{
 }
 
 func validateBuild(source string, options Options) error {
-	if err := ValidateOptions(options); err != nil {
-		return err
+	if validateOptionsError := ValidateOptions(options); validateOptionsError != nil {
+		return validateOptionsError
 	}
 	if options.Target != "wasm32-wasi" {
 		return nil

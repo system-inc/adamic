@@ -17,12 +17,12 @@ import (
 // even a cold runner must not compile a CLI or runtime inside its unit's clock.
 func findWorkerProduct(test testing.TB, inputs buildcache.Inputs) string {
 	test.Helper()
-	directory, err := buildcache.BuiltAhead(
+	directory, builtAheadError := buildcache.BuiltAhead(
 		inputs,
 		fmt.Errorf("Worker product %s not built ahead; run TestProduct_Worker tests first", inputs.Name),
 	)
-	if err != nil {
-		test.Fatal(err)
+	if builtAheadError != nil {
+		test.Fatal(builtAheadError)
 	}
 	return directory
 }
@@ -52,9 +52,9 @@ func workerCompilerProduct(test *testing.T, mutant *workerMutation, build bool) 
 		}
 		return buildcache.GoBuildInMutated(test, "", "adamic", "./cmd/adamic", nil, mutationOf(mutant))
 	}
-	inputs, err := buildcache.GoBuildInInputs("", "adamic", "./cmd/adamic", nil, mutationOf(mutant))
-	if err != nil {
-		test.Fatal(err)
+	inputs, goBuildInInputsError := buildcache.GoBuildInInputs("", "adamic", "./cmd/adamic", nil, mutationOf(mutant))
+	if goBuildInInputsError != nil {
+		test.Fatal(goBuildInInputsError)
 	}
 	return filepath.Join(findWorkerProduct(test, inputs), "adamic")
 }
@@ -64,9 +64,15 @@ func workerTestProduct(test *testing.T, mutant *workerMutation, build bool) stri
 	if build {
 		return buildcache.GoTestMutated(test, "", "worker.test", "./internal/worker", nil, mutationOf(mutant))
 	}
-	inputs, err := buildcache.GoTestInputs("", "worker.test", "./internal/worker", nil, mutationOf(mutant))
-	if err != nil {
-		test.Fatal(err)
+	inputs, goTestInputsError := buildcache.GoTestInputs(
+		"",
+		"worker.test",
+		"./internal/worker",
+		nil,
+		mutationOf(mutant),
+	)
+	if goTestInputsError != nil {
+		test.Fatal(goTestInputsError)
 	}
 	return filepath.Join(findWorkerProduct(test, inputs), "worker.test")
 }
@@ -100,9 +106,9 @@ func wasmVariantNamed(test *testing.T, key string) wasmVariant {
 func workerWasmInputs(test *testing.T, key string, mutant *workerMutation) buildcache.Inputs {
 	test.Helper()
 	variant := wasmVariantNamed(test, key)
-	inputs, err := buildcache.GoBuildInInputs("", "adamic", "./cmd/adamic", nil, mutationOf(mutant))
-	if err != nil {
-		test.Fatal(err)
+	inputs, goBuildInInputsError := buildcache.GoBuildInInputs("", "adamic", "./cmd/adamic", nil, mutationOf(mutant))
+	if goBuildInInputsError != nil {
+		test.Fatal(goBuildInInputsError)
 	}
 	// Go input keys are memoized and share their slices across callers. Detach
 	// before extending: concurrent variants must not overwrite each other's
@@ -117,11 +123,11 @@ func workerWasmInputs(test *testing.T, key string, mutant *workerMutation) build
 		"internal/worker/testdata/wasm/"+variant.entry+".a",
 	)
 	inputs.Flags = append(inputs.Flags, "selected "+variant.selected, fmt.Sprintf("counted %t", variant.counted))
-	request, err := native.RuntimeRequestFor(
+	request, runtimeRequestForError := native.RuntimeRequestFor(
 		native.Options{Release: true, Target: "wasm32-wasi", Count: variant.counted},
 	)
-	if err != nil {
-		test.Fatal(err)
+	if runtimeRequestForError != nil {
+		test.Fatal(runtimeRequestForError)
 	}
 	inputs.Flags = append(inputs.Flags, request.Portable...)
 	inputs.Toolchain = append(
@@ -142,9 +148,9 @@ func workerWasmProduct(test *testing.T, key string, mutant *workerMutation, buil
 	}
 	binary := workerCompilerProduct(test, mutant, false)
 	variant := wasmVariantNamed(test, key)
-	root, err := filepath.Abs("../..")
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs("../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	directory := buildcache.Product(test, inputs, func(directory string) error {
 		output := filepath.Join(directory, "worker")
@@ -152,8 +158,8 @@ func workerWasmProduct(test *testing.T, key string, mutant *workerMutation, buil
 		run := func(arguments ...string) error {
 			command := exec.CommandContext(test.Context(), binary, arguments...)
 			command.Dir = root
-			if report, err := command.CombinedOutput(); err != nil {
-				return fmt.Errorf("%v: %w\n%s", arguments, err, report)
+			if report, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+				return fmt.Errorf("%v: %w\n%s", arguments, combinedOutputError, report)
 			}
 			return nil
 		}
@@ -163,8 +169,8 @@ func workerWasmProduct(test *testing.T, key string, mutant *workerMutation, buil
 		// Reuse the ordinary Worker, then replace just the module with the counted
 		// build. Do not compile the same ordinary module again in the memory unit.
 		ordinary := workerWasmProduct(test, "transform", mutant, false)
-		if err := os.CopyFS(output, os.DirFS(ordinary)); err != nil {
-			return err
+		if copyFsError := os.CopyFS(output, os.DirFS(ordinary)); copyFsError != nil {
+			return copyFsError
 		}
 		return run(
 			"build",

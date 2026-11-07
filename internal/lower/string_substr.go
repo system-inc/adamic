@@ -13,9 +13,9 @@ func (l *lowering) stringSubstr(node *ast.Node, value ir.Expression, written []*
 	}
 	values := []ir.Expression{value}
 	for _, argument := range written {
-		lowered, err := l.expression(argument)
-		if err != nil {
-			return nil, err
+		lowered, expressionError := l.expression(argument)
+		if expressionError != nil {
+			return nil, expressionError
 		}
 		if _, missing := lowered.(ir.Undefined); missing {
 			lowered = fit(lowered, ir.MaybeNumber)
@@ -41,14 +41,21 @@ func (l *lowering) stringSubstr(node *ast.Node, value ir.Expression, written []*
 	position := argument(1, zero)
 	start := ir.Conditional{
 		Condition: ir.Binary{Operator: ir.Less, Left: position, Right: zero},
-		WhenTrue:  ir.MathCall{Function: "max", Arguments: []ir.Expression{ir.Binary{Operator: ir.Add, Left: length, Right: position}, zero}},
-		WhenNot:   ir.MathCall{Function: "min", Arguments: []ir.Expression{position, length}},
+		WhenTrue: ir.MathCall{
+			Function:  "max",
+			Arguments: []ir.Expression{ir.Binary{Operator: ir.Add, Left: length, Right: position}, zero},
+		},
+		WhenNot: ir.MathCall{Function: "min", Arguments: []ir.Expression{position, length}},
 	}
 	count := ir.MathCall{Function: "min", Arguments: []ir.Expression{
 		ir.MathCall{Function: "max", Arguments: []ir.Expression{argument(2, length), zero}},
 		ir.Binary{Operator: ir.Subtract, Left: length, Right: start},
 	}}
-	result := ir.StringCall{Method: "slice", Value: reads[0], Arguments: []ir.Expression{start, ir.Binary{Operator: ir.Add, Left: start, Right: count}}}
+	result := ir.StringCall{
+		Method:    "slice",
+		Value:     reads[0],
+		Arguments: []ir.Expression{start, ir.Binary{Operator: ir.Add, Left: start, Right: count}},
+	}
 	l.result.Functions[function].Body = []ir.Statement{ir.Return{Value: result}}
 	return ir.Call{Function: function, Arguments: values, Returns: ir.String}, nil
 }

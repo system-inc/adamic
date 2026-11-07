@@ -23,8 +23,8 @@ func requireLintArtifacts(test *testing.T, directory string, names ...string) {
 func requireLintExecutable(test *testing.T, binary string) {
 	test.Helper()
 	manifest := filepath.Join(test.TempDir(), "empty-manifest")
-	if err := os.WriteFile(manifest, nil, 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(manifest, nil, 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	buildcache.RequireArtifacts(test, filepath.Dir(binary), buildcache.Artifact{
 		Name: filepath.Base(binary), Executable: true, Arguments: []string{"--manifest", manifest},

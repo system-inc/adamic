@@ -44,8 +44,8 @@ func jsxAgreementShard(test *testing.T, shard int) {
 			"native":     scalarEdgeExecute(test, ctx, ready.Binary, "--manifest", list),
 			"emitted JS": scalarEdgeNode(test, ctx, ready.Script, "--manifest", list),
 		} {
-			if err := miscCompare(want, got, false); err != nil {
-				test.Fatalf("%s %s: %v", ids[i], name, err)
+			if miscCompareError := miscCompare(want, got, false); miscCompareError != nil {
+				test.Fatalf("%s %s: %v", ids[i], name, miscCompareError)
 			}
 		}
 	}
@@ -88,8 +88,8 @@ func TestJSXAgreement_031(test *testing.T) { test.Parallel(); jsxAgreementShard(
 func TestJSXAgreementPlantedDisagreement(test *testing.T) {
 	test.Parallel()
 	ids := jsxAgreementIDs()
-	if _, err := miscPlan(ids, testJSXAgreementShards); err != nil {
-		test.Fatal(err)
+	if _, miscPlanError := miscPlan(ids, testJSXAgreementShards); miscPlanError != nil {
+		test.Fatal(miscPlanError)
 	}
 	expected := miscShard(ids[len(ids)-1], testJSXAgreementShards)
 	failures := 0
@@ -105,21 +105,21 @@ func TestJSXAgreementPlantedDisagreement(test *testing.T) {
 		}
 		command.Env = append(command.Env, "ADAMIC_ESTREE_TOP_PROOF=TestJSXAgreement")
 		// Read through childguard.Capture for threePortCommand's reason, stdout then stderr.
-		stdout, stderr, err := childguard.Capture(ctx, command)
+		stdout, stderr, captureError := childguard.Capture(ctx, command)
 		output := append(stdout, stderr...)
-		deadlineErr := ctx.Err()
+		deadlineError := ctx.Err()
 		cancel()
-		if deadlineErr != nil {
-			test.Fatalf("%s proof exceeded 90s: %v", name, deadlineErr)
+		if deadlineError != nil {
+			test.Fatalf("%s proof exceeded 90s: %v", name, deadlineError)
 		}
-		if err != nil {
+		if captureError != nil {
 			failures++
-			exit, ok := err.(*exec.ExitError)
+			exit, ok := captureError.(*exec.ExitError)
 			if !ok ||
 				exit.ExitCode() != 1 ||
 				shard != expected ||
 				!strings.Contains(string(output), "--- FAIL: "+name+" ") {
-				test.Fatalf("unexpected failure in %s: %v\n%s", name, err, output)
+				test.Fatalf("unexpected failure in %s: %v\n%s", name, captureError, output)
 			}
 		}
 	}

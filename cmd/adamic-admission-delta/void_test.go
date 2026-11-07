@@ -27,9 +27,9 @@ func TestGivenSeedReplacesHead(test *testing.T) {
 	}
 	selection := func(head, given string) []int {
 		test.Helper()
-		seed, err := samplingSeed(head, given)
-		if err != nil {
-			test.Fatal(err)
+		seed, samplingSeedError := samplingSeed(head, given)
+		if samplingSeedError != nil {
+			test.Fatal(samplingSeedError)
 		}
 		selected, _ := sample(programs, seed, 50, time.Second)
 		return selected
@@ -47,7 +47,7 @@ func TestGivenSeedReplacesHead(test *testing.T) {
 		test.Fatal("two given seeds sampled the same programs")
 	}
 	for _, bad := range []string{"zz", "0123456789abcd", "0123456789abcdeg"} {
-		if _, err := samplingSeed("head", bad); err == nil {
+		if _, samplingSeedError := samplingSeed("head", bad); samplingSeedError == nil {
 			test.Errorf("seed %q accepted", bad)
 		}
 	}
@@ -81,8 +81,8 @@ func TestSeedIsRecorded(test *testing.T) {
 		}
 		o := invokeCommand(test, dir, run...)
 		var r report
-		if err := json.Unmarshal([]byte(o.Stdout), &r); err != nil {
-			test.Fatal(err, o.Stderr)
+		if decodeError := json.Unmarshal([]byte(o.Stdout), &r); decodeError != nil {
+			test.Fatal(decodeError, o.Stderr)
 		}
 		if o.Exit != 0 || r.SamplingSeed != c.want || r.SeedGiven != (c.given != "") {
 			test.Fatalf(
@@ -163,8 +163,8 @@ func TestTimeoutsAndMissingToolchainAreVoid(test *testing.T) {
 			}, c.extra...)
 			o := invokeCommandWith(test, dir, environment, args...)
 			var r report
-			if err := json.Unmarshal([]byte(o.Stdout), &r); err != nil {
-				test.Fatalf("%v: %s %s", err, o.Stdout, o.Stderr)
+			if decodeError := json.Unmarshal([]byte(o.Stdout), &r); decodeError != nil {
+				test.Fatalf("%v: %s %s", decodeError, o.Stdout, o.Stderr)
 			}
 			if o.Exit != 3 || !r.Void || r.Verdict != "void" || !strings.HasPrefix(r.VoidReason, c.reason) {
 				test.Fatalf(
@@ -203,8 +203,8 @@ func TestUnrecognisedCompilerErrorStaysRed(test *testing.T) {
 		"--json",
 	)
 	var r report
-	if err := json.Unmarshal([]byte(o.Stdout), &r); err != nil {
-		test.Fatal(err, o.Stderr)
+	if decodeError := json.Unmarshal([]byte(o.Stdout), &r); decodeError != nil {
+		test.Fatal(decodeError, o.Stderr)
 	}
 	if o.Exit != 1 || r.Void || r.Verdict != "fail" || r.Programs[0].Class != "compiler-error" {
 		test.Fatalf(
@@ -216,12 +216,16 @@ func TestUnrecognisedCompilerErrorStaysRed(test *testing.T) {
 		)
 	}
 	// A second program whose compile times out, beside the first's error.
-	if err := os.WriteFile(filepath.Join(dir, "corpus/slow.a"), []byte("console.log('slow');\n"), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(
+		filepath.Join(dir, "corpus/slow.a"),
+		[]byte("console.log('slow');\n"),
+		0600,
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
 	for _, args := range [][]string{{"add", "corpus/slow.a"}, {"commit", "-qm", "slow"}} {
-		if _, err := git(dir, args...); err != nil {
-			test.Fatal(err)
+		if _, gitError := git(dir, args...); gitError != nil {
+			test.Fatal(gitError)
 		}
 	}
 	writeExecutable(
@@ -245,8 +249,8 @@ func TestUnrecognisedCompilerErrorStaysRed(test *testing.T) {
 		"300ms",
 	)
 	r = report{}
-	if err := json.Unmarshal([]byte(o.Stdout), &r); err != nil {
-		test.Fatal(err, o.Stderr)
+	if decodeError := json.Unmarshal([]byte(o.Stdout), &r); decodeError != nil {
+		test.Fatal(decodeError, o.Stderr)
 	}
 	if o.Exit != 1 ||
 		r.Void ||

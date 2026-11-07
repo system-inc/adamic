@@ -59,15 +59,15 @@ func TestStatementsShardAssignmentStable(test *testing.T) {
 		{Label: upstream + "/src/compiler/b.ts:0:SourceFile"},
 		{Label: "program-sequence"}, {Label: "program-sequence"},
 	}
-	before, err := oracles.StatementCaseKeys(items, root, upstream)
-	if err != nil {
-		test.Fatal(err)
+	before, statementCaseKeysError := oracles.StatementCaseKeys(items, root, upstream)
+	if statementCaseKeysError != nil {
+		test.Fatal(statementCaseKeysError)
 	}
 	grown := append([]oracles.PrinterCase{{Label: root + "/bench/new.ts:0:SourceFile"}}, items...)
 	grown = append(grown, oracles.PrinterCase{Label: root + "/stage1/last.ts:0:SourceFile"})
-	after, err := oracles.StatementCaseKeys(grown, root, upstream)
-	if err != nil {
-		test.Fatal(err)
+	after, statementCaseKeysError := oracles.StatementCaseKeys(grown, root, upstream)
+	if statementCaseKeysError != nil {
+		test.Fatal(statementCaseKeysError)
 	}
 	for i, key := range before {
 		if key != after[i+1] {
@@ -77,22 +77,27 @@ func TestStatementsShardAssignmentStable(test *testing.T) {
 	// Workshop builds the oracle's outputs with its checkout and TypeScript source; a runner reads that product with
 	// both somewhere else, and Workshop's paths are gone (#tqrqx60). Every case keys as it did on Workshop.
 	product := test.TempDir()
-	data, err := json.Marshal(items)
-	if err != nil {
-		test.Fatal(err)
+	data, encodeError := json.Marshal(items)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
-	if err = os.WriteFile(filepath.Join(product, "cases.json"), data, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(product, "cases.json"), data, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if err = os.WriteFile(
+	if writeError := os.WriteFile(
 		filepath.Join(product, "coverage.json"),
 		[]byte(`{"file_refusals":{"`+root+`/stage1/bad.ts":"`+root+`/stage1/bad.ts: refused"}}`),
 		0644,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if err = oracles.TSPrinterRewriteMetadata(product, root, upstream, true); err != nil {
-		test.Fatal(err)
+	if tsPrinterRewriteMetadataError := oracles.TSPrinterRewriteMetadata(
+		product,
+		root,
+		upstream,
+		true,
+	); tsPrinterRewriteMetadataError != nil {
+		test.Fatal(tsPrinterRewriteMetadataError)
 	}
 	for _, name := range []string{"cases.json", "coverage.json"} {
 		if stored, _ := os.ReadFile(
@@ -101,31 +106,35 @@ func TestStatementsShardAssignmentStable(test *testing.T) {
 			test.Fatalf("the product's %s names Workshop's paths: %s", name, stored)
 		}
 	}
-	data, err = os.ReadFile(filepath.Join(product, "cases.json"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(product, "cases.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var stored []oracles.PrinterCase
-	if err = json.Unmarshal(data, &stored); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &stored); decodeError != nil {
+		test.Fatal(decodeError)
 	}
-	runner, err := oracles.StatementCaseKeys(stored, "/srv/runner/adamic", "/opt/adamic-tools/typescript")
-	if err != nil {
-		test.Fatalf("a runner reading Workshop's product: %v", err)
+	runner, statementCaseKeysError := oracles.StatementCaseKeys(
+		stored,
+		"/srv/runner/adamic",
+		"/opt/adamic-tools/typescript",
+	)
+	if statementCaseKeysError != nil {
+		test.Fatalf("a runner reading Workshop's product: %v", statementCaseKeysError)
 	}
 	if strings.Join(runner, "\n") != strings.Join(before, "\n") {
 		test.Fatalf("a runner keys Workshop's product %q, Workshop %q", runner, before)
 	}
 	// Exercise actual modulo assignment and its union, with enough cases for all shards.
 	keys := statementProofKeys(256)
-	old, err := oracles.StatementPartition(keys)
-	if err != nil {
-		test.Fatal(err)
+	old, statementPartitionError := oracles.StatementPartition(keys)
+	if statementPartitionError != nil {
+		test.Fatal(statementPartitionError)
 	}
 	added := append([]string{"stage1/new.ts:SourceFile:0"}, keys...)
-	next, err := oracles.StatementPartition(added)
-	if err != nil {
-		test.Fatal(err)
+	next, statementPartitionError := oracles.StatementPartition(added)
+	if statementPartitionError != nil {
+		test.Fatal(statementPartitionError)
 	}
 	owners := map[string]int{}
 	for n, ids := range old {
@@ -140,16 +149,16 @@ func TestStatementsShardAssignmentStable(test *testing.T) {
 			}
 		}
 	}
-	if _, err := oracles.StatementPartition(append(keys, keys[0])); err == nil {
+	if _, statementPartitionError := oracles.StatementPartition(append(keys, keys[0])); statementPartitionError == nil {
 		test.Fatal("repeated stable key accepted")
 	}
 }
 
 func statementShardSelection(test *testing.T) func(int) bool {
 	test.Helper()
-	selected, err := statementSelection(os.Getenv("ADAMIC_TEST_SHARD"))
-	if err != nil {
-		test.Fatal(err)
+	selected, statementSelectionError := statementSelection(os.Getenv("ADAMIC_TEST_SHARD"))
+	if statementSelectionError != nil {
+		test.Fatal(statementSelectionError)
 	}
 	return selected
 }
@@ -175,9 +184,9 @@ func TestStatementsShardSelection(test *testing.T) {
 	for n := 1; n <= 2*oracles.StatementsAgainstGoAndPrettierShards; n++ {
 		counts := make([]int, oracles.StatementsAgainstGoAndPrettierShards)
 		for i := 0; i < n; i++ {
-			selected, err := statementSelection(fmt.Sprintf("%d/%d", i, n))
-			if err != nil {
-				test.Fatal(err)
+			selected, statementSelectionError := statementSelection(fmt.Sprintf("%d/%d", i, n))
+			if statementSelectionError != nil {
+				test.Fatal(statementSelectionError)
 			}
 			for shard := range counts {
 				if selected(shard) {
@@ -191,9 +200,9 @@ func TestStatementsShardSelection(test *testing.T) {
 			}
 		}
 	}
-	selected, err := statementSelection("")
-	if err != nil {
-		test.Fatal(err)
+	selected, statementSelectionError := statementSelection("")
+	if statementSelectionError != nil {
+		test.Fatal(statementSelectionError)
 	}
 	for shard := 0; shard < oracles.StatementsAgainstGoAndPrettierShards; shard++ {
 		if !selected(shard) {
@@ -201,7 +210,7 @@ func TestStatementsShardSelection(test *testing.T) {
 		}
 	}
 	for _, value := range []string{"bad", "0", "-1/2", "2/2", "0/0", "0/2/3"} {
-		if _, err := statementSelection(value); err == nil {
+		if _, statementSelectionError := statementSelection(value); statementSelectionError == nil {
 			test.Fatalf("accepted invalid selector %q", value)
 		}
 	}
@@ -239,9 +248,9 @@ func statementDisagreement(name string, result oracles.Run, want string, labels 
 func TestStatementsShardDisagreement(test *testing.T) {
 	test.Parallel()
 	const count, plantedID = 256, 17
-	partition, err := oracles.StatementPartition(statementProofKeys(count))
-	if err != nil {
-		test.Fatal(err)
+	partition, statementPartitionError := oracles.StatementPartition(statementProofKeys(count))
+	if statementPartitionError != nil {
+		test.Fatal(statementPartitionError)
 	}
 	target := -1
 	for number, ids := range partition {
@@ -254,9 +263,9 @@ func TestStatementsShardDisagreement(test *testing.T) {
 	if target < 0 {
 		test.Fatal("planted case absent")
 	}
-	binary, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	binary, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
 	result := oracles.StatementExecute(
 		test,
@@ -288,9 +297,9 @@ func TestStatementsShardDisagreement(test *testing.T) {
 func statementRunShardProof(test *testing.T, number int) {
 	test.Helper()
 	const count, plantedID = 256, 17
-	partition, err := oracles.StatementPartition(statementProofKeys(count))
-	if err != nil {
-		test.Fatal(err)
+	partition, statementPartitionError := oracles.StatementPartition(statementProofKeys(count))
+	if statementPartitionError != nil {
+		test.Fatal(statementPartitionError)
 	}
 	ids := partition[number]
 
@@ -307,29 +316,39 @@ func statementRunShardProof(test *testing.T, number int) {
 		}
 	}
 	path := filepath.Join(test.TempDir(), "proof.txt")
-	if err := os.WriteFile(path, []byte(input.String()), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(input.String()), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	result := statementOnNode(test, port, "--cases", path, "80")
-	if err := statementDisagreement("Node", result, want.String(), labels); err != nil {
-		test.Fatal(err)
+	if statementDisagreementError := statementDisagreement(
+		"Node",
+		result,
+		want.String(),
+		labels,
+	); statementDisagreementError != nil {
+		test.Fatal(statementDisagreementError)
 	}
 	if local >= 0 {
 		rows := strings.Split(string(result.Stdout), "\n")
 		rows[local] = "ok\tplanted disagreement"
 		result.Stdout = []byte(strings.Join(rows, "\n"))
 	}
-	if err := statementDisagreement("Node", result, want.String(), labels); err != nil {
-		test.Fatal(err)
+	if statementDisagreementError := statementDisagreement(
+		"Node",
+		result,
+		want.String(),
+		labels,
+	); statementDisagreementError != nil {
+		test.Fatal(statementDisagreementError)
 	}
 }
 
 func TestStatementsShardUnionRejectsMissingAndRepeatedIDs(test *testing.T) {
 	test.Parallel()
 	keys := statementProofKeys(256)
-	shards, err := oracles.StatementPartition(keys)
-	if err != nil {
-		test.Fatal(err)
+	shards, statementPartitionError := oracles.StatementPartition(keys)
+	if statementPartitionError != nil {
+		test.Fatal(statementPartitionError)
 	}
 	for _, name := range []string{"missing", "repeated", "extra", "shard-count"} {
 		test.Run(name, func(test *testing.T) {
@@ -347,7 +366,7 @@ func TestStatementsShardUnionRejectsMissingAndRepeatedIDs(test *testing.T) {
 			case "shard-count":
 				changed = changed[1:]
 			}
-			if err := oracles.StatementUnion(len(keys), changed); err == nil {
+			if statementUnionError := oracles.StatementUnion(len(keys), changed); statementUnionError == nil {
 				test.Fatal("invalid union accepted")
 			}
 		})
@@ -360,13 +379,13 @@ func statementPrinterLibrary(test *testing.T, name string, result oracles.Run, s
 	if result.ExitCode != 0 || len(result.Stderr) != 0 {
 		test.Fatalf("%s: exit %d stderr %s", name, result.ExitCode, result.Stderr)
 	}
-	data, err := os.ReadFile(specs)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(specs)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var cases []oracles.PrinterCase
-	if err := json.Unmarshal(data, &cases); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &cases); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	lines := strings.Split(strings.TrimSuffix(string(result.Stdout), "\n"), "\n")
 	if len(lines) != len(cases) {
@@ -388,13 +407,13 @@ func statementPrinterLibrary(test *testing.T, name string, result oracles.Run, s
 				test.Fatalf("%s: recorded Go outcome changed", record.Label)
 			}
 
-			errText := record.PrettierError
+			textError := record.PrettierError
 			want = record.Prettier
 			if embedded {
-				want, errText = record.Embedded, record.EmbeddedError
+				want, textError = record.Embedded, record.EmbeddedError
 			}
-			if errText != "" {
-				status, want = "error", errText
+			if textError != "" {
+				status, want = "error", textError
 				refusals++
 			} else {
 				differences++
@@ -422,9 +441,9 @@ func statementShardProofEnabled() bool { return os.Getenv("ADAMIC_STATEMENTS_SHA
 
 func statementOnNode(test *testing.T, path string, arguments ...string) oracles.Run {
 	test.Helper()
-	runner, err := filepath.Abs(filepath.Join(oracles.Repository, "oracle", "node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(oracles.Repository, "oracle", "node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return oracles.StatementExecute(
 		test,

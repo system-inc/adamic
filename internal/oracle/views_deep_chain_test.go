@@ -12,13 +12,13 @@ import (
 func TestViewsDeepChain(test *testing.T) {
 	test.Parallel()
 	loomViewsDAgrees(test, "internal/oracle/testdata/views_deep_chain.ts")
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/views_deep_chain.ts"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/views_deep_chain.ts"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	got, binary := nativelyUncached(test, program)
 	if got.exitCode != 0 || string(got.stdout) != "true\n" {
@@ -36,13 +36,13 @@ func TestViewsDeepChainRecursiveWalkMutant(test *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/views_deep_chain.ts"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/views_deep_chain.ts"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	want := onNode(test, path)
 	if want.exitCode != 0 || string(want.stdout) != "true\n" {
@@ -57,21 +57,23 @@ func TestViewsDeepChainRecursiveWalkMutant(test *testing.T) {
 	}
 	directory := test.TempDir()
 	// Reads: internal/native/runtime/*
-	files, err := os.ReadDir(filepath.Join(repository, "internal/native/runtime"))
-	if err != nil {
-		test.Fatal(err)
+	files, readDirectoryError := os.ReadDir(filepath.Join(repository, "internal/native/runtime"))
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
-	recursive, err := os.ReadFile(filepath.Join(repository, "internal/oracle/testdata/views_recursive_walk.c.txt"))
-	if err != nil {
-		test.Fatal(err)
+	recursive, readError := os.ReadFile(
+		filepath.Join(repository, "internal/oracle/testdata/views_recursive_walk.c.txt"),
+	)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	for _, file := range files {
 		if file.IsDir() {
 			continue
 		}
-		data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime", file.Name()))
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(filepath.Join(repository, "internal/native/runtime", file.Name()))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		if file.Name() == "view_unions_untagged.c" {
 			text := string(data)
@@ -84,18 +86,23 @@ func TestViewsDeepChainRecursiveWalkMutant(test *testing.T) {
 			}
 			data = []byte(text[:start] + string(recursive) + text[end:])
 		}
-		if err := os.WriteFile(filepath.Join(directory, file.Name()), data, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, file.Name()), data, 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	options := native.Options{Target: "wasm32-wasi"}
-	library, err := native.RuntimeLibraryForSource(directory, source, options)
-	if err != nil {
-		test.Fatal(err)
+	library, runtimeLibraryForSourceError := native.RuntimeLibraryForSource(directory, source, options)
+	if runtimeLibraryForSourceError != nil {
+		test.Fatal(runtimeLibraryForSourceError)
 	}
 	binary := filepath.Join(test.TempDir(), "mutant.wasm")
-	if err := native.BuildWithRuntime(source, binary, options, library); err != nil {
-		test.Fatal(err)
+	if buildWithRuntimeError := native.BuildWithRuntime(
+		source,
+		binary,
+		options,
+		library,
+	); buildWithRuntimeError != nil {
+		test.Fatal(buildWithRuntimeError)
 	}
 	got := execute(
 		test,

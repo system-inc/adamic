@@ -71,9 +71,9 @@ func TestLargeQuantifierBoundsNode(test *testing.T) {
 
 func compareSyntaxCases(test *testing.T, cases []oracleCase) {
 	test.Helper()
-	input, err := json.Marshal(cases)
-	if err != nil {
-		test.Fatal(err)
+	input, encodeError := json.Marshal(cases)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
@@ -84,28 +84,28 @@ func compareSyntaxCases(test *testing.T, cases []oracleCase) {
 		`process.stdout.write(JSON.stringify(JSON.parse(require('fs').readFileSync(0,'utf8')).map(c=>{try{new RegExp(c.Pattern,c.Flags);return true}catch(e){if(!(e instanceof SyntaxError))throw e;return false}})))`,
 	)
 	cmd.Stdin = bytes.NewReader(input)
-	out, err := cmd.CombinedOutput()
-	if err != nil {
-		test.Fatalf("Node: %v %s", err, out)
+	out, combinedOutputError := cmd.CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("Node: %v %s", combinedOutputError, out)
 	}
 	var valid []bool
-	if err := json.Unmarshal(out, &valid); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(out, &valid); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if len(valid) != len(cases) {
 		test.Fatal("Node answer count")
 	}
 	for i, c := range cases {
-		_, err := Parse(c.Pattern, c.Flags)
+		_, parseError := Parse(c.Pattern, c.Flags)
 		var divergence *V8DivergenceError
-		if errors.As(err, &divergence) {
+		if errors.As(parseError, &divergence) {
 			if !valid[i] {
-				test.Errorf("Node unexpectedly rejects divergence %s: %v", c.Pattern, err)
+				test.Errorf("Node unexpectedly rejects divergence %s: %v", c.Pattern, parseError)
 			}
 			continue
 		}
-		if (err == nil) != valid[i] {
-			test.Errorf("DISAGREEMENT %s/%s parser=%v Node=%v", c.Pattern, c.Flags, err, valid[i])
+		if (parseError == nil) != valid[i] {
+			test.Errorf("DISAGREEMENT %s/%s parser=%v Node=%v", c.Pattern, c.Flags, parseError, valid[i])
 		}
 	}
 	test.Logf("syntax totals: %d cases", len(cases))

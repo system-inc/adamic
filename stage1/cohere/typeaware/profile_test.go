@@ -15,18 +15,18 @@ import (
 func profileSourceMutant(h *harness, stage0, archive, name, from, to string) string {
 	h.t.Helper()
 	directory := filepath.Join(h.directory, name+"-source")
-	if err := os.MkdirAll(directory, 0755); err != nil {
-		h.t.Fatal(err)
+	if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+		h.t.Fatal(createDirectoryError)
 	}
 	sourceDirectory := filepath.Join(h.repository, "stage1/cohere/typeaware")
-	files, err := filepath.Glob(filepath.Join(sourceDirectory, "*.ts"))
-	if err != nil {
-		h.t.Fatal(err)
+	files, globError := filepath.Glob(filepath.Join(sourceDirectory, "*.ts"))
+	if globError != nil {
+		h.t.Fatal(globError)
 	}
 	for _, path := range files {
-		data, err := os.ReadFile(path)
-		if err != nil {
-			h.t.Fatal(err)
+		data, readError := os.ReadFile(path)
+		if readError != nil {
+			h.t.Fatal(readError)
 		}
 		source := string(data)
 		if filepath.Base(path) == "shadow.ts" {
@@ -37,14 +37,18 @@ func profileSourceMutant(h *harness, stage0, archive, name, from, to string) str
 		}
 		source = strings.ReplaceAll(source, "../../typescript/", filepath.Join(h.repository, "stage1/typescript")+"/")
 		source = strings.ReplaceAll(source, "../lint/", filepath.Join(h.repository, "stage1/cohere/lint")+"/")
-		if err := os.WriteFile(filepath.Join(directory, filepath.Base(path)), []byte(source), 0600); err != nil {
-			h.t.Fatal(err)
+		if writeError := os.WriteFile(
+			filepath.Join(directory, filepath.Base(path)),
+			[]byte(source),
+			0600,
+		); writeError != nil {
+			h.t.Fatal(writeError)
 		}
 	}
 	binary := h.build(stage0, name, filepath.Join(directory, "volume_suite.ts"), archive, false)
 	// The source's imports name this checkout for the build above; the product names it <repository> (#tqrqx60).
-	if err := buildcache.RelativeFiles(directory); err != nil {
-		h.t.Fatal(err)
+	if relativeFilesError := buildcache.RelativeFiles(directory); relativeFilesError != nil {
+		h.t.Fatal(relativeFilesError)
 	}
 	return binary
 }

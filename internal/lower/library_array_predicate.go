@@ -16,7 +16,13 @@ func (l *lowering) isArrayPredicateCall(node *ast.Node) bool {
 	}
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
-	return call.QuestionDotToken == nil && len(call.Arguments.Nodes) == 1 && callee.Kind == ast.KindPropertyAccessExpression && callee.AsPropertyAccessExpression().QuestionDotToken == nil && callee.Name().Text() == "isArray" && l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Array") && l.arrayPredicateMember(callee)
+	return call.QuestionDotToken == nil &&
+		len(call.Arguments.Nodes) == 1 &&
+		callee.Kind == ast.KindPropertyAccessExpression &&
+		callee.AsPropertyAccessExpression().QuestionDotToken == nil &&
+		callee.Name().Text() == "isArray" &&
+		l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Array") &&
+		l.arrayPredicateMember(callee)
 }
 
 // The prelude's readonly unknown[] overload merges into the library's isArray, so the builtin is
@@ -51,9 +57,9 @@ func (l *lowering) arrayIsArray(node *ast.Node) (ir.Expression, bool, error) {
 	if !l.arrayPredicateDomain(l.checker.GetTypeAtLocation(argument)) && !l.exactObject(argument, 0) {
 		return nil, true, l.notYet(argument, "Array.isArray on a tuple or an erased object/any/unknown view")
 	}
-	value, err := l.expression(argument)
-	if err != nil {
-		return nil, true, err
+	value, expressionError := l.expression(argument)
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
 	return ir.ArrayIsArray{Value: fit(value, ir.Union)}, true, nil
 }
@@ -107,7 +113,8 @@ func (l *lowering) arrayPredicateDomain(proven *checker.Type) bool {
 	if proven.Flags()&checker.TypeFlagsUnknown != 0 {
 		return true
 	}
-	if proven.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsTypeParameter|checker.TypeFlagsIntersection) != 0 || checker.IsTupleType(proven) {
+	if proven.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsTypeParameter|checker.TypeFlagsIntersection) != 0 ||
+		checker.IsTupleType(proven) {
 		return false
 	}
 	if _, _, known := l.nodeArrayLayoutOf(proven); known {
@@ -116,7 +123,9 @@ func (l *lowering) arrayPredicateDomain(proven *checker.Type) bool {
 	if l.isArrayType(proven) {
 		return true
 	}
-	return proven.Flags()&checker.TypeFlagsObject == 0 || isClassInstance(proven) || l.isLibraryType(proven, "Uint8Array", "Int32Array", "Float64Array")
+	return proven.Flags()&checker.TypeFlagsObject == 0 ||
+		isClassInstance(proven) ||
+		l.isLibraryType(proven, "Uint8Array", "Int32Array", "Float64Array")
 }
 
 // The pinned checker owns construction of the readonly array type, just as it

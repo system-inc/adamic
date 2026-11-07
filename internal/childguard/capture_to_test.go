@@ -30,8 +30,8 @@ func TestCaptureToBoundedWriters(test *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	out, diagnostic := capturePrefix{limit: 4096}, capturePrefix{limit: 4096}
-	if err := CaptureTo(ctx, child("large"), &out, &diagnostic); err != nil {
-		test.Fatal(err)
+	if captureToError := CaptureTo(ctx, child("large"), &out, &diagnostic); captureToError != nil {
+		test.Fatal(captureToError)
 	}
 	want := strings.Repeat(strings.Repeat("x", 1023)+"\n", 4)
 	for name, writer := range map[string]*capturePrefix{"stdout": &out, "stderr": &diagnostic} {
@@ -53,11 +53,14 @@ func TestCaptureToDrainsAfterWriterError(test *testing.T) {
 	failure := errors.New("destination failed")
 	out := capturePrefix{failure: failure}
 	cmd := child("large")
-	err := CaptureTo(ctx, cmd, &out, nil)
-	if !errors.Is(err, failure) || ctx.Err() != nil || cmd.ProcessState == nil || !cmd.ProcessState.Success() {
+	captureToError := CaptureTo(ctx, cmd, &out, nil)
+	if !errors.Is(captureToError, failure) ||
+		ctx.Err() != nil ||
+		cmd.ProcessState == nil ||
+		!cmd.ProcessState.Success() {
 		test.Fatalf(
 			"destination failure must still drain and reap child: err=%v context=%v state=%v",
-			err,
+			captureToError,
 			ctx.Err(),
 			cmd.ProcessState,
 		)

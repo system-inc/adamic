@@ -71,22 +71,22 @@ func oracleInputs() buildcache.Inputs {
 }
 
 func buildOracle(test *testing.T, directory string) error {
-	root, err := filepath.Abs("../../../cohere/TypeScript/tsc")
-	if err != nil {
-		return err
+	root, absolutePathError := filepath.Abs("../../../cohere/TypeScript/tsc")
+	if absolutePathError != nil {
+		return absolutePathError
 	}
-	source, err := filepath.Abs("testdata/oracle.go")
-	if err != nil {
-		return err
+	source, absolutePathError := filepath.Abs("testdata/oracle.go")
+	if absolutePathError != nil {
+		return absolutePathError
 	}
 	virtual := filepath.Join(root, "adamic_parser_oracle.go")
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source}})
-	if err != nil {
-		return err
+	overlay, encodeError := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source}})
+	if encodeError != nil {
+		return encodeError
 	}
 	path := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		return err
+	if writeError := os.WriteFile(path, overlay, 0644); writeError != nil {
+		return writeError
 	}
 	// Checkout paths are build inputs, never artifacts.
 	defer os.Remove(path)
@@ -99,8 +99,8 @@ func buildOracle(test *testing.T, directory string) error {
 	)...)
 	var output bytes.Buffer
 	command.Stdout, command.Stderr = &output, &output
-	if err := childguard.Run(command, childguard.Options{Unbounded: true}); err != nil {
-		return fmt.Errorf("Go oracle: %w\n%s", err, &output)
+	if runError := childguard.Run(command, childguard.Options{Unbounded: true}); runError != nil {
+		return fmt.Errorf("Go oracle: %w\n%s", runError, &output)
 	}
 	return nil
 }

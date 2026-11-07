@@ -52,12 +52,12 @@ func TestRestParametersThatArentArraysAreNotYet(test *testing.T) {
 						test.Fatalf("panicked: %v", failure)
 					}
 				}()
-				_, err := lowerSourceAs(test, probe.source, extension)
+				_, lowerSourceAsError := lowerSourceAs(test, probe.source, extension)
 				var notYet *NotYet
-				if !errors.As(err, &notYet) ||
+				if !errors.As(lowerSourceAsError, &notYet) ||
 					notYet.What != probe.what ||
 					!strings.HasSuffix(notYet.Where, probe.where) {
-					test.Fatalf("want NotYet %q at %s, got %v", probe.what, probe.where, err)
+					test.Fatalf("want NotYet %q at %s, got %v", probe.what, probe.where, lowerSourceAsError)
 				}
 			})
 		}

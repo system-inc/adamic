@@ -29,9 +29,9 @@ func TestProduct_EstreeFindsRecoveryLibraryGapsAnswers(test *testing.T) {
 
 func TestProduct_RecoveryPort(test *testing.T) {
 	test.Parallel()
-	main, err := filepath.Abs("main.ts")
-	if err != nil {
-		test.Fatal(err)
+	main, absolutePathError := filepath.Abs("main.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	recoveryBuild(test, main, true)
 }

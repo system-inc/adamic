@@ -36,24 +36,24 @@ show({ kind: 7 } as Node);`, ".ts")
 	})
 	test.Run("lie", func(test *testing.T) {
 		test.Parallel()
-		program, err := lowerTypeScriptAssertionSource(test, unionTargetPrelude+
+		program, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(test, unionTargetPrelude+
 			`function isNameLike(node: Node): node is Identifier | StringLiteral { return tagOf(node) !== 0; }
 show({ kind: 7 } as Node);`)
-		if err != nil {
-			test.Fatal(err)
+		if lowerTypeScriptAssertionSourceError != nil {
+			test.Fatal(lowerTypeScriptAssertionSourceError)
 		}
 		directory := test.TempDir()
 		binary := filepath.Join(directory, "native")
-		if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-			test.Fatal(err)
+		if buildError := native.Build(native.C(program), binary, native.Options{Sanitize: true}); buildError != nil {
+			test.Fatal(buildError)
 		}
-		runner, err := filepath.Abs("../../oracle/node.mjs")
-		if err != nil {
-			test.Fatal(err)
+		runner, absolutePathError := filepath.Abs("../../oracle/node.mjs")
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		generated := filepath.Join(directory, "generated.mjs")
-		if err := os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		for _, command := range []*exec.Cmd{
 			exec.Command(binary),
@@ -63,10 +63,10 @@ show({ kind: 7 } as Node);`)
 			var out, errs bytes.Buffer
 			command.Stdout, command.Stderr = &out, &errs
 			code := 0
-			if err := command.Run(); err != nil {
+			if runError := command.Run(); runError != nil {
 				var exit *exec.ExitError
-				if !errors.As(err, &exit) {
-					test.Fatal(err)
+				if !errors.As(runError, &exit) {
+					test.Fatal(runError)
 				}
 				code = exit.ExitCode()
 			}
@@ -148,10 +148,11 @@ func TestCheckedPredicateTargetCause(test *testing.T) {
 				"\nfunction isTarget(value: object): value is " +
 				probe.target +
 				" { return value !== null; }\nfunction show(value: object): void { if (isTarget(value)) { console.log(\"yes\"); } else { console.log(\"no\"); } }\nshow({ version: \"1\" });"
-			_, err := lowerTypeScriptAssertionSource(test, source)
+			_, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(test, source)
 			var pending *NotYet
-			if !errors.As(err, &pending) || !strings.Contains(err.Error(), probe.want) {
-				test.Fatalf("want NotYet with %q, got %v", probe.want, err)
+			if !errors.As(lowerTypeScriptAssertionSourceError, &pending) ||
+				!strings.Contains(lowerTypeScriptAssertionSourceError.Error(), probe.want) {
+				test.Fatalf("want NotYet with %q, got %v", probe.want, lowerTypeScriptAssertionSourceError)
 			}
 		})
 	}

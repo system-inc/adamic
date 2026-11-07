@@ -54,13 +54,13 @@ func TestWholeNodeCountAgrees_000(test *testing.T) {
 	manifest := wholeManifest(test, []string{`const x = 1;`})
 	args := []string{"--manifest", manifest, "--whole", "--count"}
 	want := expressionExecute(test, ctx, "", oracle, args...).output
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	source, err := filepath.Abs("main.ts")
-	if err != nil {
-		test.Fatal(err)
+	source, absolutePathError := filepath.Abs("main.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	for _, side := range []struct {
 		name   string

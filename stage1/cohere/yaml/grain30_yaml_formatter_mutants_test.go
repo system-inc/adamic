@@ -79,10 +79,10 @@ func formatterMutantsCommand(ctx context.Context, directory, name string, args .
 		// in directory with PWD to match, as toolchain.CommandIn runs one under a context it has no form for. A program
 		// a test built (the Go oracle, a mutant) runs as named, with this process's environment. An error resolving it
 		// fails the command as it starts.
-		if path, err := toolchain.Path(name); err != nil {
-			command.Err = err
-		} else if absolute, err := filepath.Abs(directory); err != nil {
-			command.Err = err
+		if path, pathError := toolchain.Path(name); pathError != nil {
+			command.Err = pathError
+		} else if absolute, absolutePathError := filepath.Abs(directory); absolutePathError != nil {
+			command.Err = absolutePathError
 		} else {
 			command = exec.CommandContext(ctx, path, args...)
 			command.Dir = directory
@@ -91,19 +91,19 @@ func formatterMutantsCommand(ctx context.Context, directory, name string, args .
 	}
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if err == syscall.ESRCH {
+		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if killError == syscall.ESRCH {
 			return os.ErrProcessDone
 		}
-		return err
+		return killError
 	}
-	var out, errOut bytes.Buffer
-	command.Stdout, command.Stderr = &out, &errOut
-	if err := command.Run(); err != nil {
-		return nil, fmt.Errorf("%s: %w\n%s", name, err, errOut.Bytes())
+	var out, outError bytes.Buffer
+	command.Stdout, command.Stderr = &out, &outError
+	if runError := command.Run(); runError != nil {
+		return nil, fmt.Errorf("%s: %w\n%s", name, runError, outError.Bytes())
 	}
-	if errOut.Len() != 0 {
-		return nil, fmt.Errorf("%s stderr: %s", name, errOut.Bytes())
+	if outError.Len() != 0 {
+		return nil, fmt.Errorf("%s stderr: %s", name, outError.Bytes())
 	}
 	return out.Bytes(), nil
 }
@@ -129,13 +129,13 @@ func TestProduct_YamlFindsFormatterMutantsOracle(test *testing.T) {
 
 func formatterMutantsReadCorpus(test *testing.T, product string) ([]byte, []byte) {
 	test.Helper()
-	cases, err := os.ReadFile(filepath.Join(product, "cases.txt"))
-	if err != nil {
-		test.Fatal(err)
+	cases, readError := os.ReadFile(filepath.Join(product, "cases.txt"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	expected, err := os.ReadFile(filepath.Join(product, "expected.txt"))
-	if err != nil {
-		test.Fatal(err)
+	expected, readError := os.ReadFile(filepath.Join(product, "expected.txt"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return cases, expected
 }
@@ -168,9 +168,9 @@ func formatterMutantsUnion(test *testing.T, cases []byte) {
 // shard cannot silently make the claimed union complete.
 func formatterMutantsEnumeration(test *testing.T) []int {
 	test.Helper()
-	file, err := parser.ParseFile(token.NewFileSet(), "grain30_yaml_formatter_mutants_test.go", nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	file, parseFileError := parser.ParseFile(token.NewFileSet(), "grain30_yaml_formatter_mutants_test.go", nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	plan := map[int]int{}
 	for _, declaration := range file.Decls {
@@ -180,9 +180,9 @@ func formatterMutantsEnumeration(test *testing.T) []int {
 			!strings.HasPrefix(function.Name.Name, "TestFormatterMutants_") {
 			continue
 		}
-		shard, err := strconv.Atoi(strings.TrimPrefix(function.Name.Name, "TestFormatterMutants_"))
-		if err != nil {
-			test.Fatal(err)
+		shard, parseError := strconv.Atoi(strings.TrimPrefix(function.Name.Name, "TestFormatterMutants_"))
+		if parseError != nil {
+			test.Fatal(parseError)
 		}
 		calls := 0
 		ast.Inspect(function.Body, func(node ast.Node) bool {
@@ -201,8 +201,8 @@ func formatterMutantsEnumeration(test *testing.T) []int {
 			if !ok {
 				test.Fatal("shard index must be literal")
 			}
-			index, err := strconv.Atoi(literal.Value)
-			if err != nil || index != shard {
+			index, parseError := strconv.Atoi(literal.Value)
+			if parseError != nil || index != shard {
 				test.Fatal("shard index disagrees with its name")
 			}
 			plan[shard] = index
@@ -249,12 +249,12 @@ func formatterMutantsShard(test *testing.T, index int) {
 	formatterMutantsUnion(test, corpus)
 	entry := filepath.Join(sources, "main.ts")
 	cases := filepath.Join(test.TempDir(), "cases.txt")
-	if err := os.WriteFile(cases, corpus, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(cases, corpus, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	for _, side := range []struct {
 		name, command string
@@ -263,12 +263,12 @@ func formatterMutantsShard(test *testing.T, index int) {
 		{"native", filepath.Join(product, "mutant"), []string{"--cases", cases}},
 		{"Node", "node", []string{"--disable-warning=ExperimentalWarning", runner, entry, "--cases", cases}},
 	} {
-		out, err := formatterMutantsCommand(ctx, "", side.command, side.args...)
-		if err != nil {
-			test.Fatal(err)
+		out, formatterMutantsCommandError := formatterMutantsCommand(ctx, "", side.command, side.args...)
+		if formatterMutantsCommandError != nil {
+			test.Fatal(formatterMutantsCommandError)
 		}
-		if err := formatterMutantSurvived(out, expected); err != nil {
-			test.Fatalf("%s: %v", side.name, err)
+		if formatterMutantSurvivedError := formatterMutantSurvived(out, expected); formatterMutantSurvivedError != nil {
+			test.Fatalf("%s: %v", side.name, formatterMutantSurvivedError)
 		}
 		test.Logf("%s successful execution, wrong bytes caught: %s", side.name, firstDifference(out, expected))
 	}
@@ -298,9 +298,9 @@ func formatterMutantsBuildProduct(test *testing.T, index, level int) (string, st
 	// Shared setup is bounded by the product unit, before shard own work starts.
 	ctx := context.Background()
 	mutant := testFormatterMutants[index]
-	entries, err := filepath.Glob("*.ts")
-	if err != nil {
-		test.Fatal(err)
+	entries, globError := filepath.Glob("*.ts")
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	// The sources product copies the .ts files and reads nothing else; the lowered and native products are the
 	// compiler's, so they name it too.
@@ -322,9 +322,9 @@ func formatterMutantsBuildProduct(test *testing.T, index, level int) (string, st
 			Toolchain: tools,
 		}, func(directory string) error {
 			for _, file := range entries {
-				source, err := os.ReadFile(file)
-				if err != nil {
-					return err
+				source, readError := os.ReadFile(file)
+				if readError != nil {
+					return readError
 				}
 				if file == mutant.file {
 					if strings.Count(string(source), mutant.from) != 1 {
@@ -332,8 +332,8 @@ func formatterMutantsBuildProduct(test *testing.T, index, level int) (string, st
 					}
 					source = []byte(strings.Replace(string(source), mutant.from, mutant.to, 1))
 				}
-				if err := os.WriteFile(filepath.Join(directory, file), source, 0644); err != nil {
-					return err
+				if writeError := os.WriteFile(filepath.Join(directory, file), source, 0644); writeError != nil {
+					return writeError
 				}
 			}
 			return nil
@@ -353,13 +353,13 @@ func formatterMutantsBuildProduct(test *testing.T, index, level int) (string, st
 			Flags:     flags,
 			Toolchain: tools,
 		}, func(directory string) error {
-			program, err := load.Load([]string{entry})
-			if err != nil {
-				return err
+			program, loadError := load.Load([]string{entry})
+			if loadError != nil {
+				return loadError
 			}
-			lowered, err := lower.Lower(ctx, program)
-			if err != nil {
-				return err
+			lowered, lowerError := lower.Lower(ctx, program)
+			if lowerError != nil {
+				return lowerError
 			}
 			return os.WriteFile(filepath.Join(directory, "mutant.c"), []byte(native.C(lowered)), 0644)
 		})
@@ -374,9 +374,9 @@ func formatterMutantsBuildProduct(test *testing.T, index, level int) (string, st
 		Flags:     append(flags, native.Flags(options)...),
 		Toolchain: append(tools, buildcache.Tool("clang", "--version")),
 	}, func(directory string) error {
-		code, err := os.ReadFile(filepath.Join(lowered, "mutant.c"))
-		if err != nil {
-			return err
+		code, readError := os.ReadFile(filepath.Join(lowered, "mutant.c"))
+		if readError != nil {
+			return readError
 		}
 		return native.Build(string(code), filepath.Join(directory, "mutant"), options)
 	})

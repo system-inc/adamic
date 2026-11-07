@@ -72,25 +72,25 @@ int main(int count, char **arguments) {
 `
 	name := "f_" + strings.Repeat("0123456789", 19) + "_end"
 	binary := filepath.Join(test.TempDir(), "assign")
-	if err := native.Build(harness, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(harness, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	for _, mode := range []string{"mismatch", "reverse"} {
 		command := exec.Command(binary, mode)
 		command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1")
-		output, err := command.CombinedOutput()
-		exit, ok := err.(*exec.ExitError)
+		output, combinedOutputError := command.CombinedOutput()
+		exit, ok := combinedOutputError.(*exec.ExitError)
 		if !ok || exit.ExitCode() != 70 || !strings.Contains(
 			string(output),
 			"compiler bug: Object.assign of field "+name+", held as a reference on one side only\n",
 		) || strings.Contains(string(output), "Sanitizer") {
-			test.Fatalf("%s: want the named panic and exit 70: %v\n%s", mode, err, output)
+			test.Fatalf("%s: want the named panic and exit 70: %v\n%s", mode, combinedOutputError, output)
 		}
 	}
 	command := exec.Command(binary, "agree")
 	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1")
-	if output, err := command.CombinedOutput(); err != nil {
-		test.Fatalf("agree: %v\n%s", err, output)
+	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("agree: %v\n%s", combinedOutputError, output)
 	}
 	if report := leakcheck.Report(test, harness, binary, "agree"); report != "" {
 		test.Fatalf("agree leaked: %s", report)
@@ -104,17 +104,17 @@ func TestObjectAssignOntoAStaticClassIsRefusedInLowering(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "main.a")
 	source := "class Base { static count = 1; }\nclass Child extends Base {}\nObject.assign(Child, { count: 2 });\nconsole.log(Base.count + ' ' + Child.count);\n"
-	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	checked, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	checked, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	_, err = lower.Lower(context.Background(), checked)
+	_, lowerError := lower.Lower(context.Background(), checked)
 	var notYet *lower.NotYet
-	if !errors.As(err, &notYet) ||
+	if !errors.As(lowerError, &notYet) ||
 		notYet.What != "Object.assign on a shape not proven by a plain literal or its const binding" {
-		test.Fatalf("want Object.assign onto a class refused in lowering, got %v", err)
+		test.Fatalf("want Object.assign onto a class refused in lowering, got %v", lowerError)
 	}
 }

@@ -25,10 +25,10 @@ func TestNodeLibraryNamesUnimplementedMembers(test *testing.T) {
 	} {
 		test.Run(one.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, one.source)
+			_, lowerSourceError := lowerSource(test, one.source)
 			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(notYet.What, one.name) {
-				test.Fatalf("want named NotYet %s, got %v", one.name, err)
+			if !errors.As(lowerSourceError, &notYet) || !strings.Contains(notYet.What, one.name) {
+				test.Fatalf("want named NotYet %s, got %v", one.name, lowerSourceError)
 			}
 		})
 	}
@@ -49,12 +49,12 @@ func TestNodeLibraryDistinguishesReceiverOwners(test *testing.T) {
 	test.Parallel()
 	file := filepath.Join(test.TempDir(), "main.a")
 	source := `import type {Stats,Dirent} from 'node:fs'; function stats(value:Stats):void{value.isFile();} function dirent(value:Dirent):void{value.isFile();}`
-	if err := os.WriteFile(file, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(file, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := load.Load([]string{file})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{file})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	checked, release := program.Checker(context.Background(), program.Files()[0])
 	defer release()
@@ -78,12 +78,13 @@ func TestNodeLibraryDistinguishesReceiverOwners(test *testing.T) {
 
 func TestNodeLibraryQualifiedTypeAssertion(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(
+	_, lowerSourceError := lowerSource(
 		test,
 		`import type {Stats} from 'node:fs'; const error=(new Error('plain') as NodeJS.ErrnoException); console.log('checked');`,
 	)
 	var refused *Refused
-	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/no-optional-widening") {
-		test.Fatalf("want the qualified name checked without inventing optional fields, got %v", err)
+	if !errors.As(lowerSourceError, &refused) ||
+		!strings.Contains(lowerSourceError.Error(), "adamic/no-optional-widening") {
+		test.Fatalf("want the qualified name checked without inventing optional fields, got %v", lowerSourceError)
 	}
 }

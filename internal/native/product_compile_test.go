@@ -35,9 +35,9 @@ func productCompilerArguments(test *testing.T, working string, arguments []strin
 			source++
 		}
 		if directory != "" {
-			absolute, err := filepath.Abs(directory)
-			if err != nil {
-				test.Fatal(err)
+			absolute, absolutePathError := filepath.Abs(directory)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			mapped = append(mapped, prefixMaps(absolute, name)...)
 		}
@@ -55,12 +55,12 @@ func productCompilerCommand(test *testing.T, ctx context.Context, compiler strin
 	include, source := 0, 0
 	alias := func(path, name string) string {
 		test.Helper()
-		absolute, err := filepath.Abs(path)
-		if err != nil {
-			test.Fatal(err)
+		absolute, absolutePathError := filepath.Abs(path)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
-		if err := os.Symlink(absolute, filepath.Join(directory, name)); err != nil {
-			test.Fatal(err)
+		if symlinkError := os.Symlink(absolute, filepath.Join(directory, name)); symlinkError != nil {
+			test.Fatal(symlinkError)
 		}
 		return name
 	}
@@ -72,9 +72,9 @@ func productCompilerCommand(test *testing.T, ctx context.Context, compiler strin
 			mapped[index] = "-I" + alias(argument[2:], fmt.Sprintf("include-%d", include))
 			include++
 		} else if filepath.Ext(argument) == ".c" {
-			absolute, err := filepath.Abs(argument)
-			if err != nil {
-				test.Fatal(err)
+			absolute, absolutePathError := filepath.Abs(argument)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			relative := filepath.Join(
 				alias(filepath.Dir(absolute), fmt.Sprintf("source-%d", source)),
@@ -93,13 +93,13 @@ func productCompilerCommand(test *testing.T, ctx context.Context, compiler strin
 // and harness link as remoteScanProduct, without depending on a warm runtime cache.
 func TestProductCompilerBytesAreIndependentOfDirectory(test *testing.T) {
 	test.Parallel()
-	compiler, err := exec.LookPath("clang")
-	if err != nil {
-		test.Fatal(err)
+	compiler, lookPathError := exec.LookPath("clang")
+	if lookPathError != nil {
+		test.Fatal(lookPathError)
 	}
-	working, err := os.Getwd()
-	if err != nil {
-		test.Fatal(err)
+	working, workingDirectoryError := os.Getwd()
+	if workingDirectoryError != nil {
+		test.Fatal(workingDirectoryError)
 	}
 	var products []map[string][]byte
 	var directoryLengths []int
@@ -111,14 +111,14 @@ func TestProductCompilerBytesAreIndependentOfDirectory(test *testing.T) {
 			extra := filepath.Join(root, "extra")
 			scratch := filepath.Join(root, "scratch")
 			for _, directory := range []string{include, extra, scratch} {
-				if err := os.MkdirAll(directory, 0755); err != nil {
-					test.Fatal(err)
+				if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+					test.Fatal(createDirectoryError)
 				}
 			}
 			write := func(name, text string) {
 				test.Helper()
-				if err := os.WriteFile(name, []byte(text), 0600); err != nil {
-					test.Fatal(err)
+				if writeError := os.WriteFile(name, []byte(text), 0600); writeError != nil {
+					test.Fatal(writeError)
 				}
 			}
 			write(
@@ -158,9 +158,9 @@ func TestProductCompilerBytesAreIndependentOfDirectory(test *testing.T) {
 				{"harness", binary},
 				{"main.c", filepath.Join(filepath.Dir(binary), "main.c")},
 			} {
-				data, err := os.ReadFile(file.path)
-				if err != nil {
-					test.Fatal(err)
+				data, readError := os.ReadFile(file.path)
+				if readError != nil {
+					test.Fatal(readError)
 				}
 				for _, directory := range []string{root, filepath.Dir(binary), working} {
 					if bytes.Contains(data, []byte(directory)) {

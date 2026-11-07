@@ -43,9 +43,9 @@ import (
 func TestRecordDeclaredKeysAreRefusedInA(test *testing.T) {
 	test.Parallel()
 	directory := "internal/oracle/testdata/record_declared_keys_refused"
-	entries, err := os.ReadDir(filepath.Join(repository, directory))
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(filepath.Join(repository, directory))
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -56,13 +56,13 @@ func TestRecordDeclaredKeysAreRefusedInA(test *testing.T) {
 		test.Run(entry.Name(), func(test *testing.T) {
 			test.Parallel()
 			path := filepath.Join(directory, entry.Name())
-			absolute, err := filepath.Abs(filepath.Join(repository, path))
-			if err != nil {
-				test.Fatal(err)
+			absolute, absolutePathError := filepath.Abs(filepath.Join(repository, path))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			source, err := os.ReadFile(absolute)
-			if err != nil {
-				test.Fatal(err)
+			source, readError := os.ReadFile(absolute)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			truth := onNode(test, absolute)
 			if truth.exitCode != 0 || len(truth.stderr) != 0 {
@@ -72,14 +72,14 @@ func TestRecordDeclaredKeysAreRefusedInA(test *testing.T) {
 				string(truth.stdout) != "number\n" {
 				test.Fatalf("source Node: stdout %q, want the lie, number", truth.stdout)
 			}
-			_, err = lowered(test, absolute)
+			_, loweredError := lowered(test, absolute)
 			var refused *lower.Refused
-			if !errors.As(err, &refused) {
-				test.Fatalf("want a declared-key refusal, got %v", err)
+			if !errors.As(loweredError, &refused) {
+				test.Fatalf("want a declared-key refusal, got %v", loweredError)
 			}
-			expected, err := os.ReadFile(strings.TrimSuffix(absolute, ".a") + ".refused")
-			if err != nil {
-				test.Fatal(err)
+			expected, readError := os.ReadFile(strings.TrimSuffix(absolute, ".a") + ".refused")
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			got := strings.ReplaceAll(refused.Error(), strings.TrimSuffix(absolute, path), "")
 			if got != strings.TrimSpace(string(expected)) {
@@ -123,9 +123,9 @@ func TestRecordDeclaredKeysAreRefusedInA(test *testing.T) {
 func TestRecordDeclaredKeyStopsArePinned(test *testing.T) {
 	test.Parallel()
 	directory := "internal/oracle/testdata/record_declared_keys_stops"
-	entries, err := os.ReadDir(filepath.Join(repository, directory))
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(filepath.Join(repository, directory))
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -136,26 +136,30 @@ func TestRecordDeclaredKeyStopsArePinned(test *testing.T) {
 		test.Run(entry.Name(), func(test *testing.T) {
 			test.Parallel()
 			path := filepath.Join(directory, entry.Name())
-			absolute, err := filepath.Abs(filepath.Join(repository, path))
-			if err != nil {
-				test.Fatal(err)
+			absolute, absolutePathError := filepath.Abs(filepath.Join(repository, path))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			expected, err := os.ReadFile(absolute + ".stop")
-			if err != nil {
-				test.Fatal(err)
+			expected, readError := os.ReadFile(absolute + ".stop")
+			if readError != nil {
+				test.Fatal(readError)
 			}
-			program, err := lowered(test, absolute)
+			program, loweredError := lowered(test, absolute)
 			if stop := strings.TrimSpace(string(expected)); stop != "lowers" {
-				if err == nil {
+				if loweredError == nil {
 					test.Fatalf("lowered, want %q", stop)
 				}
-				if got := strings.ReplaceAll(err.Error(), strings.TrimSuffix(absolute, path), ""); got != stop {
+				if got := strings.ReplaceAll(
+					loweredError.Error(),
+					strings.TrimSuffix(absolute, path),
+					"",
+				); got != stop {
 					test.Fatalf("stop: got %q, want %q", got, stop)
 				}
 				return
 			}
-			if err != nil {
-				test.Fatalf("Lower: %v", err)
+			if loweredError != nil {
+				test.Fatalf("Lower: %v", loweredError)
 			}
 			truth := onNode(test, absolute)
 			sanitized, _ := natively(test, program)

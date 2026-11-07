@@ -87,8 +87,8 @@ func TestGeneratorIntoAnIterableParameterLowers(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			if _, err := lowerSource(test, probe.source); err != nil {
-				test.Fatalf("want it to lower, got %v", err)
+			if _, lowerSourceError := lowerSource(test, probe.source); lowerSourceError != nil {
+				test.Fatalf("want it to lower, got %v", lowerSourceError)
 			}
 		})
 	}
@@ -222,10 +222,10 @@ func TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad(test *testing.T) 
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var gap *NotYet
-			if !errors.As(err, &gap) || !strings.Contains(gap.What, probe.reason) {
-				test.Fatalf("got %v, want a NotYet saying %q", err, probe.reason)
+			if !errors.As(lowerSourceError, &gap) || !strings.Contains(gap.What, probe.reason) {
+				test.Fatalf("got %v, want a NotYet saying %q", lowerSourceError, probe.reason)
 			}
 		})
 	}
@@ -241,11 +241,11 @@ func TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad(test *testing.T) 
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var gap *NotYet
-			if !errors.As(err, &gap) ||
+			if !errors.As(lowerSourceError, &gap) ||
 				!strings.Contains(gap.What, "a for-of beside a hand-driven next() over the same parameter") {
-				test.Fatalf("got %v, want a NotYet saying a for-of beside a hand-driven next()", err)
+				test.Fatalf("got %v, want a NotYet saying a for-of beside a hand-driven next()", lowerSourceError)
 			}
 		})
 	}
@@ -272,11 +272,11 @@ func TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad(test *testing.T) 
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var gap *NotYet
 			var refused *Refused
-			if !errors.As(err, &gap) && !errors.As(err, &refused) {
-				test.Fatalf("got %v, want it stopped", err)
+			if !errors.As(lowerSourceError, &gap) && !errors.As(lowerSourceError, &refused) {
+				test.Fatalf("got %v, want it stopped", lowerSourceError)
 			}
 		})
 	}
@@ -375,10 +375,10 @@ func TestNullishIterableParameterStopsOnEveryOtherRoad(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var gap *NotYet
-			if !errors.As(err, &gap) || !strings.Contains(gap.What, probe.reason) {
-				test.Fatalf("got %v, want a NotYet saying %q", err, probe.reason)
+			if !errors.As(lowerSourceError, &gap) || !strings.Contains(gap.What, probe.reason) {
+				test.Fatalf("got %v, want a NotYet saying %q", lowerSourceError, probe.reason)
 			}
 		})
 	}
@@ -406,10 +406,11 @@ func TestNullishIterableParameterStopsOnEveryOtherRoad(test *testing.T) {
 		} {
 			test.Run(probe.name+" in "+extension, func(test *testing.T) {
 				test.Parallel()
-				_, err := lowerSourceAs(test, probe.source, extension)
+				_, lowerSourceAsError := lowerSourceAs(test, probe.source, extension)
 				var refused *Refused
-				if !errors.As(err, &refused) || !strings.Contains(err.Error(), probe.reason) {
-					test.Fatalf("got %v, want a refusal saying %q", err, probe.reason)
+				if !errors.As(lowerSourceAsError, &refused) ||
+					!strings.Contains(lowerSourceAsError.Error(), probe.reason) {
+					test.Fatalf("got %v, want a refusal saying %q", lowerSourceAsError, probe.reason)
 				}
 			})
 		}
@@ -423,7 +424,7 @@ func TestNullishIterableParameterOptionalChainStops(test *testing.T) {
 	test.Parallel()
 	source := iterableCounted +
 		"function first(items: Iterable<number> | undefined): number { let found = -1; if (items?.[Symbol.iterator] !== undefined && items !== undefined) { for (const value of items) { found = value; break; } } return found; }\nconsole.log(String(first(counted(3))));"
-	if _, err := lowerSource(test, source); err == nil {
+	if _, lowerSourceError := lowerSource(test, source); lowerSourceError == nil {
 		test.Fatal("an optional chain on a nullable Iterable<T> parameter a generator feeds lowered, want it stopped")
 	}
 }
@@ -435,12 +436,12 @@ func TestNullishIterableParameterOptionalChainStops(test *testing.T) {
 // this goes red.
 func TestNullishViewHolderKeepsItsDefinedCheck(test *testing.T) {
 	test.Parallel()
-	program, err := lowerSource(
+	program, lowerSourceError := lowerSource(
 		test,
 		iterableCounted+iterableFirst+iterableShown+"console.log(shown(firstOrUndefinedIterator(counted(3))));",
 	)
-	if err != nil {
-		test.Fatal(err)
+	if lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
 	holders := 0
 	inspect := func(node any) bool {
@@ -483,9 +484,12 @@ func TestNullishViewHolderKeepsItsDefinedCheck(test *testing.T) {
 // argument. The mutants that take out an arm are in testdata/generators/mutants.md.
 func TestGeneratorViewDispatchesOnTheHeapKind(test *testing.T) {
 	test.Parallel()
-	program, err := lowerSource(test, iterableCounted+iterableTotal+"console.log(String(total(counted(3))));")
-	if err != nil {
-		test.Fatal(err)
+	program, lowerSourceError := lowerSource(
+		test,
+		iterableCounted+iterableTotal+"console.log(String(total(counted(3))));",
+	)
+	if lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
 	closes, kinds, collections, steps, nexts, iterables := 0, 0, 0, 0, 0, 0
 	inspect := func(node any) bool {
@@ -585,9 +589,9 @@ func TestLocalUseCountSeesEveryWrite(test *testing.T) {
 // no longer has fails too.
 func TestLocalFieldsClassifyEveryIntField(test *testing.T) {
 	test.Parallel()
-	paths, err := filepath.Glob("../ir/*.go")
-	if err != nil {
-		test.Fatal(err)
+	paths, globError := filepath.Glob("../ir/*.go")
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	files := token.NewFileSet()
 	structs := map[string]*goast.StructType{}
@@ -596,9 +600,9 @@ func TestLocalFieldsClassifyEveryIntField(test *testing.T) {
 		if strings.HasSuffix(path, "_test.go") {
 			continue
 		}
-		file, err := parser.ParseFile(files, path, nil, 0)
-		if err != nil {
-			test.Fatal(err)
+		file, parseFileError := parser.ParseFile(files, path, nil, 0)
+		if parseFileError != nil {
+			test.Fatal(parseFileError)
 		}
 		goast.Inspect(file, func(node goast.Node) bool {
 			switch node := node.(type) {
@@ -696,9 +700,9 @@ func TestGeneratorRoadsRefuseAGeneratorBoxedOrCastIntoAnObject(test *testing.T) 
 			Locals:    []ir.Local{{Name: "slot", Type: ir.Object, Function: -1}},
 			Main:      []ir.Statement{ir.Declare{Local: 0, Value: probe.value}},
 		}
-		err := checkGeneratorRoads(program)
-		if err == nil || !strings.Contains(err.Error(), "compiler bug") {
-			test.Errorf("%s: got %v, want checkGeneratorRoads' compiler bug", probe.name, err)
+		checkGeneratorRoadsError := checkGeneratorRoads(program)
+		if checkGeneratorRoadsError == nil || !strings.Contains(checkGeneratorRoadsError.Error(), "compiler bug") {
+			test.Errorf("%s: got %v, want checkGeneratorRoads' compiler bug", probe.name, checkGeneratorRoadsError)
 		}
 	}
 }
@@ -758,8 +762,11 @@ func TestGeneratorRoadsRefuseAnotherNextOfADispatchedLocal(test *testing.T) {
 			next,
 		}}},
 	}
-	err := checkGeneratorRoads(program)
-	if err == nil || !strings.Contains(err.Error(), "compiler bug") {
-		test.Fatalf("got %v, want checkGeneratorRoads' compiler bug for a second next of the view's local", err)
+	checkGeneratorRoadsError := checkGeneratorRoads(program)
+	if checkGeneratorRoadsError == nil || !strings.Contains(checkGeneratorRoadsError.Error(), "compiler bug") {
+		test.Fatalf(
+			"got %v, want checkGeneratorRoads' compiler bug for a second next of the view's local",
+			checkGeneratorRoadsError,
+		)
 	}
 }

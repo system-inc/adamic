@@ -52,7 +52,11 @@ func (l *lowering) censusRestDeclaration(function int) *ast.Node {
 
 // censusRestCall evaluates fixed arguments before rest items, and copies each spread
 // when encountered. The array is new even when the only item is a spread.
-func (l *lowering) censusRestCall(call *ast.CallExpression, function int, declaration *ast.Node) (ir.Expression, error) {
+func (l *lowering) censusRestCall(
+	call *ast.CallExpression,
+	function int,
+	declaration *ast.Node,
+) (ir.Expression, error) {
 	parameters := declaration.Parameters()
 	fixed := len(parameters) - 1
 	proven := l.checker.GetTypeAtLocation(parameters[fixed].Name())
@@ -68,9 +72,9 @@ func (l *lowering) censusRestCall(call *ast.CallExpression, function int, declar
 			}
 			valueNode = argument.AsSpreadElement().Expression
 		}
-		value, err := l.expression(valueNode)
-		if err != nil {
-			return nil, err
+		value, expressionError := l.expression(valueNode)
+		if expressionError != nil {
+			return nil, expressionError
 		}
 		if index < fixed {
 			arguments = append(arguments, value)
@@ -103,7 +107,10 @@ func (l *lowering) censusRestCall(call *ast.CallExpression, function int, declar
 		arguments = append(arguments, fit(ir.Undefined{}, of))
 	}
 	arguments = append(arguments, rest)
-	return l.censusOverloadResult(call, ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns})
+	return l.censusOverloadResult(
+		call,
+		ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns},
+	)
 }
 
 // Boolean fields have a tagged byte; other slotless representations remain refused.
@@ -148,8 +155,8 @@ func (l *lowering) censusOverloads(implementation *ast.Node) error {
 			continue
 		}
 		ordinal++
-		if err := l.censusOverload(implementation, overload, ordinal); err != nil {
-			return err
+		if censusOverloadError := l.censusOverload(implementation, overload, ordinal); censusOverloadError != nil {
+			return censusOverloadError
 		}
 	}
 	return nil
@@ -170,10 +177,18 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 			// alpha-renaming: implementations may insert a binder before an old one.
 			for index, parameter := range implementation.Parameters() {
 				if index < len(overload.Parameters()) {
-					l.inferTypes(l.checker.GetTypeAtLocation(parameter), l.checker.GetTypeAtLocation(overload.Parameters()[index]), inferred)
+					l.inferTypes(
+						l.checker.GetTypeAtLocation(parameter),
+						l.checker.GetTypeAtLocation(overload.Parameters()[index]),
+						inferred,
+					)
 				}
 			}
-			l.inferTypes(l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(implementation)), l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(overload)), inferred)
+			l.inferTypes(
+				l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(implementation)),
+				l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(overload)),
+				inferred,
+			)
 		}
 		for index, parameter := range servedTypes {
 			source := l.checker.GetTypeAtLocation(parameter.Name())
@@ -191,23 +206,29 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 		}
 		l.typeMapper = newTypeMapper(sources, targets)
 		for index, parameter := range servedTypes {
-			if constraint := l.checker.GetBaseConstraintOfType(sources[index]); constraint != nil && !l.censusRelated(targets[index], constraint) {
+			if constraint := l.checker.GetBaseConstraintOfType(
+				sources[index],
+			); constraint != nil && !l.censusRelated(targets[index], constraint) {
 				where, name := overload, "type "+l.checker.TypeToString(targets[index])
 				if len(servedTypes) <= len(declaredTypes) {
 					where, name = declaredTypes[index], "type parameter "+declaredTypes[index].Name().Text()
 				}
-				return &Refused{Where: l.program.Where(where), What: label + " " + name + " cannot satisfy implementation parameter " + parameter.Name().Text(), Fix: "make implementation constraints accept every type admitted by the overload"}
+				return &Refused{
+					Where: l.program.Where(where),
+					What:  label + " " + name + " cannot satisfy implementation parameter " + parameter.Name().Text(),
+					Fix:   "make implementation constraints accept every type admitted by the overload",
+				}
 			}
 		}
 	}
 	declared, served := overload.Parameters(), implementation.Parameters()
 	for index := 0; index <= max(len(declared), len(served)); index++ {
-		given, parameter, givenRest, err := l.censusOverloadParameter(declared, index)
-		if err != nil {
+		given, parameter, givenRest, censusOverloadParameterError := l.censusOverloadParameter(declared, index)
+		if censusOverloadParameterError != nil {
 			return l.notYet(overload, label+" with a non-array rest parameter")
 		}
-		takes, actual, takesRest, err := l.censusOverloadParameter(served, index)
-		if err != nil {
+		takes, actual, takesRest, censusOverloadParameterError := l.censusOverloadParameter(served, index)
+		if censusOverloadParameterError != nil {
 			return l.notYet(overload, label+" with a non-array implementation rest parameter")
 		}
 		if actual == nil {
@@ -230,14 +251,25 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 				}
 				return fmt.Sprintf("%d", index+1)
 			}
-			return &Refused{Where: l.program.Where(parameter), What: label + " parameter " + name(parameter) + " cannot be served by implementation parameter " + name(actual), Fix: "make the implementation accept every value admitted by this overload, without mutable widening or bivariance"}
+			return &Refused{
+				Where: l.program.Where(parameter),
+				What: label +
+					" parameter " +
+					name(parameter) +
+					" cannot be served by implementation parameter " +
+					name(actual),
+				Fix: "make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+			}
 		}
 	}
 	promised := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(overload))
 	produced := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(implementation))
 	if !l.censusRelated(produced, promised) {
 		from, to := l.concrete(produced), l.concrete(promised)
-		if (l.hasPhantom(from) || l.hasPhantom(to)) && l.phantomCast(from, to) && l.phantomAssignable(from, to) && l.phantomAssignable(to, from) {
+		if (l.hasPhantom(from) || l.hasPhantom(to)) &&
+			l.phantomCast(from, to) &&
+			l.phantomAssignable(from, to) &&
+			l.phantomAssignable(to, from) {
 			return nil
 		}
 		if l.censusNullableOverloadResult(produced, promised) {
@@ -250,11 +282,19 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 			// predicateArguments demands a named function or arrow whose body proves both branches.
 			return nil
 		}
-		what := label + " result " + l.checker.TypeToString(promised) + " cannot be served by implementation result " + l.checker.TypeToString(produced)
+		what := label +
+			" result " +
+			l.checker.TypeToString(promised) +
+			" cannot be served by implementation result " +
+			l.checker.TypeToString(produced)
 		if failed != nil {
 			what += " (return at " + l.program.Where(failed) + " isn't the value its predicate checked)"
 		}
-		return &Refused{Where: l.program.Where(overload), What: what, Fix: "make the implementation result covariant with every overload result"}
+		return &Refused{
+			Where: l.program.Where(overload),
+			What:  what,
+			Fix:   "make the implementation result covariant with every overload result",
+		}
 	}
 	return nil
 }
@@ -290,7 +330,9 @@ func (l *lowering) censusOverloadResult(call *ast.CallExpression, value ir.Expre
 	overloaded := false
 	if symbol != nil {
 		for _, declaration := range symbol.Declarations {
-			if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil && l.censusImplementation(declaration) != nil {
+			if declaration.Kind == ast.KindFunctionDeclaration &&
+				declaration.Body() == nil &&
+				l.censusImplementation(declaration) != nil {
 				overloaded = true
 				break
 			}
@@ -320,11 +362,16 @@ func (l *lowering) censusOverloadResult(call *ast.CallExpression, value ir.Expre
 				promised := l.checker.GetReturnTypeOfSignature(resolved)
 				produced := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(implementation))
 				if l.censusHasUndefined(produced) && !l.censusHasUndefined(promised) {
-					of, err := l.typeOf(call.AsNode())
-					if err != nil {
-						return nil, err
+					of, typeOfError := l.typeOf(call.AsNode())
+					if typeOfError != nil {
+						return nil, typeOfError
 					}
-					message := fmt.Sprintf("overload %d of %s result: expected %s, got undefined", ordinal, implementation.Name().Text(), l.checker.TypeToString(promised))
+					message := fmt.Sprintf(
+						"overload %d of %s result: expected %s, got undefined",
+						ordinal,
+						implementation.Name().Text(),
+						l.checker.TypeToString(promised),
+					)
 					return ir.Coalesce{Value: value, Of: of, Panic: ir.StringConstant{Index: l.constant(message)}}, nil
 				}
 			}
@@ -333,9 +380,9 @@ func (l *lowering) censusOverloadResult(call *ast.CallExpression, value ir.Expre
 	if value.Type() == 0 {
 		return value, nil
 	}
-	of, err := l.typeOf(call.AsNode())
-	if err != nil {
-		return nil, err
+	of, typeOfError := l.typeOf(call.AsNode())
+	if typeOfError != nil {
+		return nil, typeOfError
 	}
 	value = fit(value, of)
 	if value.Type() != of {
@@ -392,7 +439,11 @@ func censusBooleanCondition(value ir.Expression) ir.Expression {
 	return value
 }
 
-func (l *lowering) censusBooleanLogical(node *ast.Node, operator ast.Kind, left, right ir.Expression) (ir.Expression, bool) {
+func (l *lowering) censusBooleanLogical(
+	node *ast.Node,
+	operator ast.Kind,
+	left, right ir.Expression,
+) (ir.Expression, bool) {
 	if operator != ast.KindAmpersandAmpersandToken && operator != ast.KindBarBarToken {
 		return nil, false
 	}
@@ -400,8 +451,8 @@ func (l *lowering) censusBooleanLogical(node *ast.Node, operator ast.Kind, left,
 	if !boolean(left.Type()) || !boolean(right.Type()) {
 		return nil, false
 	}
-	of, err := l.typeOf(node)
-	if err != nil || !boolean(of) {
+	of, typeOfError := l.typeOf(node)
+	if typeOfError != nil || !boolean(of) {
 		// Two booleans give a boolean whatever the checker narrowed the whole to: a branch it
 		// knows is dead types the expression never, and that branch must still lower.
 		if left.Type() != ir.Boolean || right.Type() != ir.Boolean {

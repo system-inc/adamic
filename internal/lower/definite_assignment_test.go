@@ -28,9 +28,9 @@ func TestDefiniteAssignmentUsesReadiness(test *testing.T) {
 		if strings.Contains(probe.source, "= 2") {
 			lowersAndAgreesWithNode(test, probe.source)
 		}
-		program, err := lowerSource(test, probe.source)
-		if err != nil {
-			test.Fatal(err)
+		program, lowerSourceError := lowerSource(test, probe.source)
+		if lowerSourceError != nil {
+			test.Fatal(lowerSourceError)
 		}
 		checked := 0
 		visit := func(node any) bool {

@@ -53,20 +53,20 @@ func portabilityConstants() string {
 func portabilityHeaders(test *testing.T) string {
 	test.Helper()
 	directory := test.TempDir()
-	entries, err := runtime.ReadDir("runtime")
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := runtime.ReadDir("runtime")
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	for _, entry := range entries {
 		if !strings.HasSuffix(entry.Name(), ".h") {
 			continue
 		}
-		data, err := runtime.ReadFile("runtime/" + entry.Name())
-		if err != nil {
-			test.Fatal(err)
+		data, readFileError := runtime.ReadFile("runtime/" + entry.Name())
+		if readFileError != nil {
+			test.Fatal(readFileError)
 		}
-		if err := os.WriteFile(filepath.Join(directory, entry.Name()), data, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, entry.Name()), data, 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	return directory
@@ -76,16 +76,16 @@ func compilePortability(test *testing.T, compiler, source string, fatalWarnings 
 	test.Helper()
 	directory := portabilityHeaders(test)
 	file := filepath.Join(directory, "main.c")
-	if err := os.WriteFile(file, []byte(source), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(file, []byte(source), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	flags := []string{"-std=c11", "-Wpedantic", "-Wconversion", "-fsyntax-only", "-fsigned-char", "-I", directory, file}
 	if fatalWarnings {
 		flags = append(flags, "-Werror")
 	}
-	output, err := exec.Command(compiler, flags...).CombinedOutput()
-	if err != nil {
-		test.Fatalf("%s compile: %v\n%s", compiler, err, output)
+	output, combinedOutputError := exec.Command(compiler, flags...).CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("%s compile: %v\n%s", compiler, combinedOutputError, output)
 	}
 	return string(output)
 }

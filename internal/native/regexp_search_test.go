@@ -102,9 +102,9 @@ func runRegexNodeCases(test *testing.T, cases []regexCase) {
 
 func runRegexNodeCasesForTarget(test *testing.T, cases []regexCase, wasmOnly bool) {
 	test.Helper()
-	data, err := json.Marshal(cases)
-	if err != nil {
-		test.Fatal(err)
+	data, encodeError := json.Marshal(cases)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
@@ -115,12 +115,12 @@ func runRegexNodeCasesForTarget(test *testing.T, cases []regexCase, wasmOnly boo
 		`const cases=JSON.parse(require('fs').readFileSync(0,'utf8'));if(!process.version.startsWith('v24.'))throw Error('Node 24 required');for(const c of cases){const r=new RegExp(c.pattern,c.flags+'d');r.lastIndex=c.lastIndex;const m=r.exec(String.fromCharCode(...c.input));c.expected={captures:m?Array.from(m.indices,x=>x??null):null,lastIndex:r.lastIndex,groups:m?.indices.groups?Object.fromEntries(Object.entries(m.indices.groups).map(([k,v])=>[k,v??null])):null};}process.stdout.write(JSON.stringify(cases));`,
 	)
 	command.Stdin = bytes.NewReader(data)
-	output, err := command.CombinedOutput()
-	if err != nil {
-		test.Fatalf("Node: %v %s", err, output)
+	output, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("Node: %v %s", combinedOutputError, output)
 	}
-	if err = json.Unmarshal(output, &cases); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(output, &cases); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	runRegexCasesForTarget(test, cases, wasmOnly)
 }
@@ -128,16 +128,16 @@ func runRegexNodeCasesForTarget(test *testing.T, cases []regexCase, wasmOnly boo
 // Freeze every benchmark input as a per-case oracle, beyond timing checksums.
 func TestRegExpLintPatternsNode(test *testing.T) {
 	test.Parallel()
-	data, err := os.ReadFile("../../bench/regex/cases.json")
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile("../../bench/regex/cases.json")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var probes []struct {
 		Name, Pattern, Flags string
 		Inputs               []string
 	}
-	if err = json.Unmarshal(data, &probes); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &probes); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	var cases []regexCase
 	for _, p := range probes {

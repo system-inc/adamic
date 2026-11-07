@@ -13,8 +13,8 @@ func TestNodeFSDirectorySymlinkSignatures(test *testing.T) {
 		`import {symlinkSync} from 'node:fs'; symlinkSync('target','link','dir');`,
 		`import {symlinkSync} from 'node:fs'; function link():void {return symlinkSync('target','link',null);}`,
 	} {
-		if _, err := lowerSource(test, source); err != nil {
-			test.Fatal(err)
+		if _, lowerSourceError := lowerSource(test, source); lowerSourceError != nil {
+			test.Fatal(lowerSourceError)
 		}
 	}
 	for _, source := range []string{
@@ -22,10 +22,10 @@ func TestNodeFSDirectorySymlinkSignatures(test *testing.T) {
 		`import {symlinkSync} from 'node:fs'; import {Buffer} from 'node:buffer'; symlinkSync(Buffer.from('target'),'link');`,
 		`import {symlinkSync} from 'node:fs'; const value=symlinkSync('target','link');`,
 	} {
-		_, err := lowerSource(test, source)
+		_, lowerSourceError := lowerSource(test, source)
 		var notYet *NotYet
-		if !errors.As(err, &notYet) || !strings.Contains(notYet.What, "node:fs.symlinkSync") {
-			test.Fatalf("want named NotYet, got %v", err)
+		if !errors.As(lowerSourceError, &notYet) || !strings.Contains(notYet.What, "node:fs.symlinkSync") {
+			test.Fatalf("want named NotYet, got %v", lowerSourceError)
 		}
 	}
 }
@@ -36,8 +36,8 @@ func TestNodeFSDirectoryRealpathClosureBoundaries(test *testing.T) {
 		`import {realpathSync} from 'node:fs'; const resolve=realpathSync.native; console.log(resolve('.'));`,
 		`import {realpathSync} from 'node:fs'; const resolve=realpathSync.native; function invoke(){return resolve('.');} console.log(invoke());`,
 	} {
-		if _, err := lowerSource(test, source); err != nil {
-			test.Fatal(err)
+		if _, lowerSourceError := lowerSource(test, source); lowerSourceError != nil {
+			test.Fatal(lowerSourceError)
 		}
 	}
 	// Main's closed-use walk rejects aliases before inspecting their calls.
@@ -59,12 +59,12 @@ func TestNodeFSDirectoryRealpathClosureBoundaries(test *testing.T) {
 			"zero or multiple arguments",
 		},
 	} {
-		_, err := lowerSource(test, one.source)
+		_, lowerSourceError := lowerSource(test, one.source)
 		var missing *NotYet
-		if !errors.As(err, &missing) ||
+		if !errors.As(lowerSourceError, &missing) ||
 			!strings.Contains(missing.What, "node:fs.realpathSync.native as a value") ||
 			!strings.Contains(missing.What, one.reason) {
-			test.Fatalf("want named closed-use refusal %s, got %v", one.reason, err)
+			test.Fatalf("want named closed-use refusal %s, got %v", one.reason, lowerSourceError)
 		}
 	}
 }

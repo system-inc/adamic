@@ -25,9 +25,9 @@ func init() {
 }
 func parserStackPath(test *testing.T, name string) string {
 	test.Helper()
-	p, err := filepath.Abs(filepath.Join(repository, "stage3/parser-next/stack", name+".a"))
-	if err != nil {
-		test.Fatal(err)
+	p, absolutePathError := filepath.Abs(filepath.Join(repository, "stage3/parser-next/stack", name+".a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return p
 }
@@ -38,9 +38,9 @@ func TestParserStackLegal(test *testing.T) {
 	if truth.exitCode != 0 || string(truth.stdout) != "859|1719\n" || len(truth.stderr) != 0 {
 		test.Fatalf("Node %+v", truth)
 	}
-	program, err := loweredParser(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredParserError := loweredParser(test, path)
+	if loweredParserError != nil {
+		test.Fatal(loweredParserError)
 	}
 	actual, binary := nativelyUncached(test, program)
 	for backend, got := range map[string]run{"native": actual, "JavaScript": onSliceJavaScript(test, program)} {
@@ -60,9 +60,9 @@ func TestParserStackPathological(test *testing.T) {
 	if truth.exitCode != 70 || !strings.Contains(string(truth.stderr), "RangeError: Maximum call stack size exceeded") {
 		test.Fatalf("Node %+v", truth)
 	}
-	program, err := loweredParser(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredParserError := loweredParser(test, path)
+	if loweredParserError != nil {
+		test.Fatal(loweredParserError)
 	}
 	actual, _ := nativelyUncached(test, program)
 	want := "adamic: panic: RangeError: Maximum call stack size exceeded in parseNested\n"
@@ -85,14 +85,18 @@ func TestParserStackPathological(test *testing.T) {
 // Native-only: Node itself cannot start safely under these stack limits.
 func TestParserStackTinyLimit(test *testing.T) {
 	test.Parallel()
-	program, err := loweredParser(test, parserStackPath(test, "pathological"))
-	if err != nil {
-		test.Fatal(err)
+	program, loweredParserError := loweredParser(test, parserStackPath(test, "pathological"))
+	if loweredParserError != nil {
+		test.Fatal(loweredParserError)
 	}
 	for _, sanitized := range []bool{false, true} {
 		binary := filepath.Join(test.TempDir(), "native")
-		if err := native.Build(native.C(program), binary, native.Options{Sanitize: sanitized}); err != nil {
-			test.Fatal(err)
+		if buildError := native.Build(
+			native.C(program),
+			binary,
+			native.Options{Sanitize: sanitized},
+		); buildError != nil {
+			test.Fatal(buildError)
 		}
 		for _, limit := range []string{"64", "128"} {
 			got := executeWith(
@@ -123,17 +127,17 @@ func parserStackWithoutGuard(test *testing.T, source string) string {
 }
 func TestParserStackGuardMutant(test *testing.T) {
 	test.Parallel()
-	program, err := loweredParser(test, parserStackPath(test, "pathological"))
-	if err != nil {
-		test.Fatal(err)
+	program, loweredParserError := loweredParser(test, parserStackPath(test, "pathological"))
+	if loweredParserError != nil {
+		test.Fatal(loweredParserError)
 	}
 	binary := filepath.Join(test.TempDir(), "mutant")
-	if err := native.Build(
+	if buildError := native.Build(
 		parserStackWithoutGuard(test, native.C(program)),
 		binary,
 		native.Options{Sanitize: true},
-	); err != nil {
-		test.Fatal(err)
+	); buildError != nil {
+		test.Fatal(buildError)
 	}
 	actual := executeWith(
 		test,
@@ -167,13 +171,13 @@ func TestParserStackGuardCost(test *testing.T) {
 		"speculation/arrow-tryparse",
 		"speculation/truthiness-rewind",
 	} {
-		path, err := filepath.Abs(filepath.Join(repository, "stage3/parser-next", name+".a"))
-		if err != nil {
-			test.Fatal(err)
+		path, absolutePathError := filepath.Abs(filepath.Join(repository, "stage3/parser-next", name+".a"))
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
-		program, err := loweredParser(test, path)
-		if err != nil {
-			test.Fatal(err)
+		program, loweredParserError := loweredParser(test, path)
+		if loweredParserError != nil {
+			test.Fatal(loweredParserError)
 		}
 		truth := onSliceNode(test, path)
 		if truth.exitCode != 0 {
@@ -183,8 +187,8 @@ func TestParserStackGuardCost(test *testing.T) {
 		guarded := filepath.Join(test.TempDir(), "guarded")
 		unguarded := filepath.Join(test.TempDir(), "unguarded")
 		for binary, code := range map[string]string{guarded: source, unguarded: parserStackWithoutGuard(test, source)} {
-			if err := native.Build(code, binary, native.Options{}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(code, binary, native.Options{}); buildError != nil {
+				test.Fatal(buildError)
 			}
 		}
 		var samples [2][]time.Duration

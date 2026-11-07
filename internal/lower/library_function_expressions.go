@@ -37,7 +37,10 @@ func (l *lowering) closureExpression(node *ast.Node) (ir.Expression, error) {
 	}
 	for _, parameter := range node.Parameters() {
 		if ast.IsIdentifier(parameter.Name()) && parameter.Name().Text() == "this" {
-			return nil, l.notYet(parameter, "a function expression with a this parameter (dynamic receivers are not implemented)")
+			return nil, l.notYet(
+				parameter,
+				"a function expression with a this parameter (dynamic receivers are not implemented)",
+			)
 		}
 	}
 	var invalid error
@@ -51,7 +54,11 @@ func (l *lowering) closureExpression(node *ast.Node) (ir.Expression, error) {
 			return false
 		}
 		if inner.Kind == ast.KindThisKeyword && !ast.IsPartOfTypeNode(inner) {
-			invalid = &Refused{Where: l.program.Where(inner), What: "this in a function expression", Fix: "dynamic receivers are not implemented; capture a named object, or use an arrow in a method"}
+			invalid = &Refused{
+				Where: l.program.Where(inner),
+				What:  "this in a function expression",
+				Fix:   "dynamic receivers are not implemented; capture a named object, or use an arrow in a method",
+			}
 			return true
 		}
 		return inner.ForEachChild(visit)
@@ -77,18 +84,24 @@ func (l *lowering) closureExpression(node *ast.Node) (ir.Expression, error) {
 		function.Body = []ir.Statement{ir.Declare{Local: local, Value: ir.ClosureSelf{}}}
 	}
 	l.result.Functions = append(l.result.Functions, function)
-	l.closureRecords = append(l.closureRecords, closureRecord{proven: l.concrete(l.checker.GetTypeAtLocation(node)), function: index, node: node})
+	l.closureRecords = append(
+		l.closureRecords,
+		closureRecord{proven: l.concrete(l.checker.GetTypeAtLocation(node)), function: index, node: node},
+	)
 	if l.instance != nil {
-		l.instance.templates = append(l.instance.templates, template{closure: index, proven: l.checker.GetTypeAtLocation(node), isClosure: true})
+		l.instance.templates = append(
+			l.instance.templates,
+			template{closure: index, proven: l.checker.GetTypeAtLocation(node), isClosure: true},
+		)
 	}
 	l.closures = append(l.closures, index)
 	outerThis := l.this
 	l.this = -1
-	err := l.lowerFunction(index, node, -1)
+	lowerFunctionError := l.lowerFunction(index, node, -1)
 	l.this = outerThis
 	l.closures = l.closures[:len(l.closures)-1]
-	if err != nil {
-		return nil, err
+	if lowerFunctionError != nil {
+		return nil, lowerFunctionError
 	}
 	return ir.MakeClosure{Function: index}, nil
 }

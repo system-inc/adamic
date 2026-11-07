@@ -39,12 +39,12 @@ func graphCompilerModulesWitness(
 	test.Helper()
 	directory := test.TempDir()
 	path := filepath.Join(directory, "main.a")
-	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	for name, module := range modules {
-		if err := os.WriteFile(filepath.Join(directory, name), []byte(module), 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, name), []byte(module), 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	run := func(env []string, name string, args ...string) ([]byte, []byte, error) {
@@ -55,29 +55,35 @@ func graphCompilerModulesWitness(
 		var out, diagnostic bytes.Buffer
 		command.Stdout = &out
 		command.Stderr = &diagnostic
-		err := command.Run()
-		return out.Bytes(), diagnostic.Bytes(), err
+		runError := command.Run()
+		return out.Bytes(), diagnostic.Bytes(), runError
 	}
-	truth, diagnostic, err := run(nil, "node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", path)
-	if err != nil {
-		test.Fatalf("source Node: %v\n%s", err, diagnostic)
+	truth, diagnostic, runError := run(
+		nil,
+		"node",
+		"--disable-warning=ExperimentalWarning",
+		"../../oracle/node.mjs",
+		path,
+	)
+	if runError != nil {
+		test.Fatalf("source Node: %v\n%s", runError, diagnostic)
 	}
-	checked, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	checked, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	// This witness targets batch 8 ownership even when the process opts into Program mode.
-	program, err := lower.LowerWithOptions(context.Background(), checked, lower.Options{})
-	if err != nil {
-		test.Fatal(err)
+	program, lowerWithOptionsError := lower.LowerWithOptions(context.Background(), checked, lower.Options{})
+	if lowerWithOptionsError != nil {
+		test.Fatal(lowerWithOptionsError)
 	}
 	js := filepath.Join(directory, "main.mjs")
-	if err := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	got, diagnostic, err := run(nil, "node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", js)
-	if err != nil || !bytes.Equal(got, truth) {
-		test.Fatalf("JavaScript: %v\n%s\n%s, Node %s", err, diagnostic, got, truth)
+	got, diagnostic, runError := run(nil, "node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", js)
+	if runError != nil || !bytes.Equal(got, truth) {
+		test.Fatalf("JavaScript: %v\n%s\n%s, Node %s", runError, diagnostic, got, truth)
 	}
 	code := native.C(program)
 	if mutant != nil {
@@ -88,22 +94,22 @@ func graphCompilerModulesWitness(
 		code = changed
 	}
 	binary := filepath.Join(directory, "native")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(code, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
-	got, diagnostic, err = run([]string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
+	got, diagnostic, runError = run([]string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
 	if mutant != nil {
-		if err == nil && bytes.Equal(got, truth) {
+		if runError == nil && bytes.Equal(got, truth) {
 			if report := leakcheck.Report(test, code, binary); report == "" {
 				// A sanitizer may report leaks with exit status zero, or have leak
 				// detection disabled. Check ownership counts independently.
-				if err := native.Build(code, binary, native.Options{Count: true}); err != nil {
-					test.Fatal(err)
+				if buildError := native.Build(code, binary, native.Options{Count: true}); buildError != nil {
+					test.Fatal(buildError)
 				}
-				got, diagnostic, err = run(nil, binary)
+				got, diagnostic, runError = run(nil, binary)
 				counts := leakcheck.CountsLine.FindSubmatch(diagnostic)
-				if err != nil || !bytes.Equal(got, truth) || counts == nil {
-					test.Fatalf("counted mutant: %v\n%s\n%s, Node %s", err, diagnostic, got, truth)
+				if runError != nil || !bytes.Equal(got, truth) || counts == nil {
+					test.Fatalf("counted mutant: %v\n%s\n%s, Node %s", runError, diagnostic, got, truth)
 				}
 				// Counts are emitted as canonical decimal integers. Unlike the
 				// general leak check, this witness permits no surviving region.
@@ -114,28 +120,28 @@ func graphCompilerModulesWitness(
 			} else {
 				test.Logf("leak check caught mutant: %s", report)
 			}
-		} else if err != nil &&
+		} else if runError != nil &&
 			!strings.Contains(string(diagnostic), "AddressSanitizer") &&
 			!strings.Contains(string(diagnostic), "runtime error:") &&
 			!strings.Contains(string(diagnostic), "LeakSanitizer") &&
 			!strings.Contains(string(diagnostic), "compiler bug: graph edge crosses regions") &&
 			!strings.Contains(string(diagnostic), "compiler bug: graph adoption truncates object storage") {
-			test.Fatalf("mutant failed outside sanitizer: %v\n%s", err, diagnostic)
+			test.Fatalf("mutant failed outside sanitizer: %v\n%s", runError, diagnostic)
 		}
 		return program
 	}
-	if err != nil || !bytes.Equal(got, truth) {
-		test.Fatalf("native: %v\n%s\n%s, Node %s", err, diagnostic, got, truth)
+	if runError != nil || !bytes.Equal(got, truth) {
+		test.Fatalf("native: %v\n%s\n%s, Node %s", runError, diagnostic, got, truth)
 	}
 	if report := leakcheck.Report(test, code, binary); report != "" {
 		test.Fatal(report)
 	}
-	if err := native.Build(code, binary, native.Options{Count: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(code, binary, native.Options{Count: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
-	got, diagnostic, err = run(nil, binary)
-	if err != nil || !bytes.Equal(got, truth) {
-		test.Fatalf("counted: %v\n%s\n%s", err, got, diagnostic)
+	got, diagnostic, runError = run(nil, binary)
+	if runError != nil || !bytes.Equal(got, truth) {
+		test.Fatalf("counted: %v\n%s\n%s", runError, got, diagnostic)
 	}
 	if report := leakcheck.Unbalanced(leakcheck.Run{Stdout: got, Stderr: diagnostic}); report != "" {
 		test.Fatal(report)
@@ -235,14 +241,14 @@ func TestGraphCompilerLinkCountsDecrease(test *testing.T) {
 	), nil)
 	counts := func(code string) []string {
 		binary := filepath.Join(test.TempDir(), "counted")
-		if err := native.Build(code, binary, native.Options{Count: true}); err != nil {
-			test.Fatal(err)
+		if buildError := native.Build(code, binary, native.Options{Count: true}); buildError != nil {
+			test.Fatal(buildError)
 		}
 		ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 		defer cancel()
-		output, err := exec.CommandContext(ctx, binary).CombinedOutput()
-		if err != nil {
-			test.Fatalf("counted: %v\n%s", err, output)
+		output, combinedOutputError := exec.CommandContext(ctx, binary).CombinedOutput()
+		if combinedOutputError != nil {
+			test.Fatalf("counted: %v\n%s", combinedOutputError, output)
 		}
 		match := leakcheck.CountsLine.FindStringSubmatch(string(output))
 		if match == nil {
@@ -264,13 +270,13 @@ func TestGraphCompilerLinkCountsDecrease(test *testing.T) {
 	before := counts(native.C(program))
 	test.Logf("Link witness A/F/R/L/P/G: counted %s; graph %s", strings.Join(before, "/"), strings.Join(after, "/"))
 	for _, field := range []int{2, 3} {
-		old, err := strconv.Atoi(before[field])
-		if err != nil {
-			test.Fatal(err)
+		old, parseError := strconv.Atoi(before[field])
+		if parseError != nil {
+			test.Fatal(parseError)
 		}
-		now, err := strconv.Atoi(after[field])
-		if err != nil {
-			test.Fatal(err)
+		now, parseError := strconv.Atoi(after[field])
+		if parseError != nil {
+			test.Fatal(parseError)
 		}
 		if now >= old {
 			test.Fatalf("graph ownership did not reduce count %d: %d -> %d", field, old, now)

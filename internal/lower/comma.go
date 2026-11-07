@@ -7,13 +7,13 @@ import (
 
 func (l *lowering) comma(node *ast.Node) (ir.Expression, error) {
 	binary := node.AsBinaryExpression()
-	left, err := l.discardedValue(binary.Left)
-	if err != nil {
-		return nil, err
+	left, discardedValueError := l.discardedValue(binary.Left)
+	if discardedValueError != nil {
+		return nil, discardedValueError
 	}
-	right, err := l.expression(binary.Right)
-	if err != nil {
-		return nil, err
+	right, expressionError := l.expression(binary.Right)
+	if expressionError != nil {
+		return nil, expressionError
 	}
 	return ir.Comma{Left: left, Right: right}, nil
 }
@@ -21,13 +21,13 @@ func (l *lowering) comma(node *ast.Node) (ir.Expression, error) {
 // discardedValue accepts the effects already lowered as statements too: writes, increments,
 // console calls and void calls. The discarded value never needs storage.
 func (l *lowering) discardedValue(node *ast.Node) (ir.Expression, error) {
-	value, err := l.expression(node)
-	if err == nil {
+	value, expressionError := l.expression(node)
+	if expressionError == nil {
 		return value, nil
 	}
-	statements, statementErr := l.expressionStatement(node)
-	if statementErr != nil {
-		return nil, err
+	statements, statementError := l.expressionStatement(node)
+	if statementError != nil {
+		return nil, expressionError
 	}
 	walk(statements, func(node any) bool {
 		if assign, ok := node.(ir.Assign); ok {

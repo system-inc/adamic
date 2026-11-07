@@ -95,16 +95,16 @@ func producerSource(test *testing.T, name, path string) string {
 			text = "export function echo(value: {n:number,b:boolean,s:string}): {n:number,b:boolean,s:string} {return value;}"
 		}
 		path := filepath.Join(test.TempDir(), "shape.a")
-		if err := os.WriteFile(path, []byte(text), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(text), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
-		source, err := load.Load([]string{path})
-		if err != nil {
-			test.Fatal(err)
+		source, loadError := load.Load([]string{path})
+		if loadError != nil {
+			test.Fatal(loadError)
 		}
-		program, err := lower.LowerWithOptions(context.Background(), source, lower.Options{})
-		if err != nil {
-			test.Fatal(err)
+		program, lowerWithOptionsError := lower.LowerWithOptions(context.Background(), source, lower.Options{})
+		if lowerWithOptionsError != nil {
+			test.Fatal(lowerWithOptionsError)
 		}
 		if name == "AsyncFrameObjects" {
 			code := C(program)
@@ -126,22 +126,22 @@ func producerSource(test *testing.T, name, path string) string {
 				index = i
 			}
 		}
-		code, err := WASIExports(program, []ABIExport{
+		code, wasiExportsError := WASIExports(program, []ABIExport{
 			{Name: "echo", Function: index, Parameters: []ABIField{{Name: "value", Type: record}}, Returns: record},
 		})
-		if err != nil {
-			test.Fatal(err)
+		if wasiExportsError != nil {
+			test.Fatal(wasiExportsError)
 		}
 		return code
 	}
 	if name == "CaptureGroups" {
-		program, err := regex.Compile("(?<word>a)(?<tail>b)", "d")
-		if err != nil {
-			test.Fatal(err)
+		program, compileError := regex.Compile("(?<word>a)(?<tail>b)", "d")
+		if compileError != nil {
+			test.Fatal(compileError)
 		}
-		code, err := program.NativeDeclarations("capture")
-		if err != nil {
-			test.Fatal(err)
+		code, nativeDeclarationsError := program.NativeDeclarations("capture")
+		if nativeDeclarationsError != nil {
+			test.Fatal(nativeDeclarationsError)
 		}
 		return code
 	}
@@ -153,9 +153,9 @@ func producerSource(test *testing.T, name, path string) string {
 		e.shapeOf(nil, nil)
 		return strings.Join(e.declarations, "\n")
 	}
-	code, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	code, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return string(code)
 }
@@ -192,8 +192,8 @@ func producerDescriptors(test *testing.T, source string) []shapeDescriptor {
 		if len(fields) != 5 {
 			test.Fatalf("shape must have five fields: %s", input.fields)
 		}
-		count, err := strconv.Atoi(strings.TrimSpace(fields[0]))
-		if err != nil {
+		count, parseError := strconv.Atoi(strings.TrimSpace(fields[0]))
+		if parseError != nil {
 			test.Fatalf("unrecognized count: %s", input.fields)
 		}
 		var code strings.Builder
@@ -284,9 +284,9 @@ func shapeProbeProduct(test *testing.T) string {
 	}
 	code.WriteString("return 4;\n}\n")
 	source := code.String()
-	request, err := RuntimeRequestFor(Options{Count: true})
-	if err != nil {
-		test.Fatal(err)
+	request, runtimeRequestForError := RuntimeRequestFor(Options{Count: true})
+	if runtimeRequestForError != nil {
+		test.Fatal(runtimeRequestForError)
 	}
 	inputs.Flags = append([]string{source}, request.Portable...)
 	inputs.Files = append(inputs.Files, "internal/native/testdata/parallel/scaling.c")
@@ -301,35 +301,43 @@ func shapeProbeProduct(test *testing.T) string {
 		"internal/native/target.go",
 	)
 	return buildcache.Product(test, inputs, func(directory string) error {
-		if err := Build(source, filepath.Join(directory, "probe"), Options{Count: true}); err != nil {
-			return err
+		if buildError := Build(source, filepath.Join(directory, "probe"), Options{Count: true}); buildError != nil {
+			return buildError
 		}
-		scaling, err := os.ReadFile("testdata/parallel/scaling.c")
-		if err != nil {
-			return err
+		scaling, readError := os.ReadFile("testdata/parallel/scaling.c")
+		if readError != nil {
+			return readError
 		}
-		if err := Build(string(scaling), filepath.Join(directory, "scaling"), Options{Count: true}); err != nil {
-			return err
+		if buildError := Build(
+			string(scaling),
+			filepath.Join(directory, "scaling"),
+			Options{Count: true},
+		); buildError != nil {
+			return buildError
 		}
 		before := "adamic_object *object = adamic_object_new(&shape);"
 		if strings.Count(string(scaling), before) != 1 {
 			return fmt.Errorf("scaling mutation is stale")
 		}
 		changed := strings.Replace(string(scaling), before, "kinds[count-1]=adamic_field_reference;\n"+before, 1)
-		if err := Build(changed, filepath.Join(directory, "scaling-mutant"), Options{Count: true}); err != nil {
-			return err
+		if buildError := Build(
+			changed,
+			filepath.Join(directory, "scaling-mutant"),
+			Options{Count: true},
+		); buildError != nil {
+			return buildError
 		}
 		for _, sanitize := range []bool{false, true} {
 			name := "string"
 			if sanitize {
 				name += "-sanitized"
 			}
-			if err := Build(
+			if buildError := Build(
 				stringShapeWitness,
 				filepath.Join(directory, name),
 				Options{Count: true, Sanitize: sanitize},
-			); err != nil {
-				return err
+			); buildError != nil {
+				return buildError
 			}
 		}
 		return nil
@@ -535,15 +543,15 @@ func TestShapeProducerInventory(test *testing.T) {
 	for _, producer := range shapeProducers {
 		known[producer.path] = true
 	}
-	entries, err := runtime.ReadDir("runtime")
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := runtime.ReadDir("runtime")
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	for _, entry := range entries {
 		path := "runtime/" + entry.Name()
-		data, err := runtime.ReadFile(path)
-		if err != nil {
-			test.Fatal(err)
+		data, readFileError := runtime.ReadFile(path)
+		if readFileError != nil {
+			test.Fatal(readFileError)
 		}
 		hasShape := strings.Contains(string(data), "static const adamic_shape ") ||
 			strings.Contains(string(data), "(adamic_shape){")
@@ -634,8 +642,8 @@ int main(int argc,char **argv) {
  return 0;
 }`
 	binary := filepath.Join(test.TempDir(), "groups")
-	if err := Build(code+"\n", binary, Options{Count: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(code+"\n", binary, Options{Count: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	got := inlineArrayRun(test, binary)
 	if got.exit != 0 || len(got.stdout) != 0 || !strings.HasPrefix(string(got.stderr), "adamic: counts:") {

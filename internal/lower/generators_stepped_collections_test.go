@@ -36,8 +36,8 @@ func TestGeneratorVoidReturnIsNeverReadByNewMapOrNewSet(test *testing.T) {
 	for _, probe := range lowers {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			if _, err := lowerSource(test, probe.source); err != nil {
-				test.Fatalf("%v", err)
+			if _, lowerSourceError := lowerSource(test, probe.source); lowerSourceError != nil {
+				test.Fatalf("%v", lowerSourceError)
 			}
 		})
 	}
@@ -73,10 +73,10 @@ func TestGeneratorVoidReturnIsNeverReadByNewMapOrNewSet(test *testing.T) {
 	for _, probe := range refused {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var refusal *Refused
-			if !errors.As(err, &refusal) || !strings.Contains(refusal.Error(), "adamic/no-void") {
-				test.Fatalf("got %v, want a void rule's refusal", err)
+			if !errors.As(lowerSourceError, &refusal) || !strings.Contains(refusal.Error(), "adamic/no-void") {
+				test.Fatalf("got %v, want a void rule's refusal", lowerSourceError)
 			}
 		})
 	}
@@ -98,11 +98,11 @@ func TestGeneratorVoidReturnIsNeverReadByNewMapOrNewSet(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var refusal *Refused
 			var gap *NotYet
-			if !errors.As(err, &refusal) && !errors.As(err, &gap) {
-				test.Fatalf("got %v, want it refused or not yet, never lowered", err)
+			if !errors.As(lowerSourceError, &refusal) && !errors.As(lowerSourceError, &gap) {
+				test.Fatalf("got %v, want it refused or not yet, never lowered", lowerSourceError)
 			}
 		})
 	}
@@ -111,10 +111,10 @@ func TestGeneratorVoidReturnIsNeverReadByNewMapOrNewSet(test *testing.T) {
 	// rule, or the class itself), so that admitting it is a change someone makes on purpose.
 	test.Run("a subclass of the built-in Map", func(test *testing.T) {
 		test.Parallel()
-		if _, err := lowerSource(
+		if _, lowerSourceError := lowerSource(
 			test,
 			"class Tally extends Map<string, number> {}\n"+pairs+"console.log(String(new Tally(pairs(3)).size));",
-		); err == nil {
+		); lowerSourceError == nil {
 			test.Fatal("a subclass of Map consumed a plain function*'s call and lowered; want it judged, not exempt")
 		}
 	})

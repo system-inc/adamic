@@ -28,23 +28,23 @@ func checkMemoryExample(test *testing.T, name, output string) {
 	if !registered {
 		test.Fatalf("%s is not registered with the Node oracle", path)
 	}
-	absolute, err := filepath.Abs(filepath.Join(repository, path))
-	if err != nil {
-		test.Fatal(err)
+	absolute, absolutePathError := filepath.Abs(filepath.Join(repository, path))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	result := onNode(test, absolute)
 	if result.exitCode != 0 || string(result.stdout) != output || len(result.stderr) != 0 {
 		test.Fatalf("Node: exit %d stdout %q stderr %q", result.exitCode, result.stdout, result.stderr)
 	}
 	checkRuntimeWitness(test, "memory_examples/"+name+".a")
-	program, err := lowered(test, absolute)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, absolute)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	// Rebuild the documented counts even when ordinary oracle observations are cached.
 	binary := filepath.Join(test.TempDir(), "counted")
-	if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), binary, native.Options{Count: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	command, arguments := pinnedStack(binary)
 	counted := execute(test, command, arguments...)
@@ -62,9 +62,9 @@ func checkMemoryExample(test *testing.T, name, output string) {
 		match[5],
 		match[6],
 	)
-	document, err := os.ReadFile(filepath.Join(repository, "docs/memory.md"))
-	if err != nil {
-		test.Fatal(err)
+	document, readError := os.ReadFile(filepath.Join(repository, "docs/memory.md"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	section := strings.SplitN(string(document), "## Worked examples\n", 2)
 	if len(section) != 2 {
@@ -79,26 +79,26 @@ func checkMemoryExample(test *testing.T, name, output string) {
 
 func checkMemoryExampleRefusal(test *testing.T, name, output, reason string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, memoryExamples, "refused", name+".a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, memoryExamples, "refused", name+".a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	result := onNode(test, path)
 	if result.exitCode != 0 || string(result.stdout) != output || len(result.stderr) != 0 {
 		test.Fatalf("Node: exit %d stdout %q stderr %q", result.exitCode, result.stdout, result.stderr)
 	}
-	program, err := lowered(test, path)
-	if err == nil {
+	program, loweredError := lowered(test, path)
+	if loweredError == nil {
 		checkGraphAdmission(test, path, program)
 		return
 	}
 	var refused *lower.Refused
-	if !errors.As(err, &refused) ||
-		!strings.Contains(err.Error(), "adamic/cycle-capable") ||
-		!strings.Contains(err.Error(), reason) {
-		test.Fatalf("want cycle refusal naming %q, got %v", reason, err)
+	if !errors.As(loweredError, &refused) ||
+		!strings.Contains(loweredError.Error(), "adamic/cycle-capable") ||
+		!strings.Contains(loweredError.Error(), reason) {
+		test.Fatalf("want cycle refusal naming %q, got %v", reason, loweredError)
 	}
-	test.Logf("Node stdout %q; %v", result.stdout, err)
+	test.Logf("Node stdout %q; %v", result.stdout, loweredError)
 }
 
 func TestMemoryExampleList(test *testing.T) {

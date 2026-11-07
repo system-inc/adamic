@@ -22,7 +22,10 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 		receiver := callee.AsPropertyAccessExpression().Expression
 		if l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver)), "Date") {
 			if symbol.Name != "getTime" && symbol.Name != "valueOf" {
-				return nil, true, l.notYet(node, memberName+": "+"Date methods other than getTime/valueOf in the fs file host")
+				return nil, true, l.notYet(
+					node,
+					memberName+": "+"Date methods other than getTime/valueOf in the fs file host",
+				)
 			}
 			if len(call.Arguments.Nodes) != 0 {
 				return nil, true, l.notYet(node, memberName+": "+"Date getTime/valueOf with arguments")
@@ -46,7 +49,9 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 	of := ir.Number // Void calls are only admitted as discarded statements.
 	switch symbol.Name {
 	case "isFile", "isDirectory", "isSymbolicLink", "isBlockDevice", "isCharacterDevice", "isFIFO", "isSocket":
-		if declaration.Parent == nil || declaration.Parent.Name() == nil || declaration.Parent.Name().Text() != "StatsBase" {
+		if declaration.Parent == nil ||
+			declaration.Parent.Name() == nil ||
+			declaration.Parent.Name().Text() != "StatsBase" {
 			return nil, false, nil
 		}
 		if node.Flags&ast.NodeFlagsOptionalChain != 0 {
@@ -59,7 +64,12 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 		if err != nil {
 			return nil, true, err
 		}
-		return ir.NodeHostCall{Module: "node:fs", Member: symbol.Name, Arguments: []ir.Expression{receiver}, Returns: ir.Boolean}, true, nil
+		return ir.NodeHostCall{
+			Module:    "node:fs",
+			Member:    symbol.Name,
+			Arguments: []ir.Expression{receiver},
+			Returns:   ir.Boolean,
+		}, true, nil
 	case "readFileSync":
 		operation, of = "read_file", ir.String
 	case "mkdtempSync":
@@ -69,7 +79,8 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 	case "openSync":
 		operation = "open"
 	case "readSync":
-		if len(call.Arguments.Nodes) != 5 || !l.nodeBufferType(l.checker.GetTypeAtLocation(call.Arguments.Nodes[1]), "Buffer") {
+		if len(call.Arguments.Nodes) != 5 ||
+			!l.nodeBufferType(l.checker.GetTypeAtLocation(call.Arguments.Nodes[1]), "Buffer") {
 			return nil, true, l.notYet(node, "node:fs.readSync outside the five-argument Buffer overload")
 		}
 		operation = "read_sync"
@@ -99,14 +110,19 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 			outer = outer.Parent
 		}
 		discarded := outer.Parent != nil && outer.Parent.Kind == ast.KindExpressionStatement
-		returned := outer.Parent != nil && outer.Parent.Kind == ast.KindReturnStatement && l.function != nil && l.function.Returns == 0
+		returned := outer.Parent != nil &&
+			outer.Parent.Kind == ast.KindReturnStatement &&
+			l.function != nil &&
+			l.function.Returns == 0
 		if !discarded && !returned {
 			return nil, true, l.notYet(node, memberName+": "+"fs void calls used as values")
 		}
 	}
 	for index, argument := range call.Arguments.Nodes {
 		lowerArgument := l.expression
-		if operation == "write" && index == 2 && l.checker.GetTypeAtLocation(argument).Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
+		if operation == "write" &&
+			index == 2 &&
+			l.checker.GetTypeAtLocation(argument).Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
 			// This intrinsic consumes an exact empty position as its existing sentinel; it stores no nullable view.
 			lowerArgument = l.value
 		}
@@ -141,13 +157,23 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 						return fallback, nil
 					}
 					of, known := l.representation(l.checker.GetTypeOfSymbol(field))
-					if !known || of != fallback.Type() || field.Flags&ast.SymbolFlagsOptional != 0 || name == "bigint" || name == "encoding" {
-						return nil, l.notYet(node, memberName+": "+"fs options with optional fields, dynamic encoding or bigint")
+					if !known ||
+						of != fallback.Type() ||
+						field.Flags&ast.SymbolFlagsOptional != 0 ||
+						name == "bigint" ||
+						name == "encoding" {
+						return nil, l.notYet(
+							node,
+							memberName+": "+"fs options with optional fields, dynamic encoding or bigint",
+						)
 					}
 					return ir.Property{Object: value, Name: name, Of: of}, nil
 				}
 			}
-			return nil, l.notYet(node, memberName+": "+"fs options other than a fixed literal or its plain const binding")
+			return nil, l.notYet(
+				node,
+				memberName+": "+"fs options other than a fixed literal or its plain const binding",
+			)
 		}
 		if literal.Spread != nil {
 			return nil, l.notYet(node, memberName+": "+"fs options containing a spread")
@@ -175,7 +201,8 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 			switch literalValue(field.Value).(type) {
 			case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Undefined, ir.Null:
 			default:
-				return nil, l.notYet(node, memberName+": "+"fs option literals containing evaluated expressions; bind a plain options object first")
+				return nil, l.notYet(node, memberName+
+					": "+"fs option literals containing evaluated expressions; bind a plain options object first")
 			}
 		}
 		for _, field := range literal.Fields {
@@ -186,7 +213,9 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 					// them. A present undefined is an invalid value, not an absent key.
 					// The scalar fs host cannot carry this TypeError and its code.
 					if operation == "rm" {
-						return nil, l.notYet(node, "node:fs.rmSync options."+name+" present as undefined (Node throws TypeError ERR_INVALID_ARG_TYPE; option validation is not represented by the scalar fs host)")
+						return nil, l.notYet(node, "node:fs.rmSync options."+
+							name+
+							" present as undefined (Node throws TypeError ERR_INVALID_ARG_TYPE; option validation is not represented by the scalar fs host)")
 					}
 					return fallback, nil
 				}
@@ -202,7 +231,8 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 		if _, ok := value.(ir.Null); ok {
 			return nil
 		}
-		if text, ok := value.(ir.StringConstant); ok && (l.result.Strings[text.Index] == "utf8" || l.result.Strings[text.Index] == "utf-8") {
+		if text, ok := value.(ir.StringConstant); ok &&
+			(l.result.Strings[text.Index] == "utf8" || l.result.Strings[text.Index] == "utf-8") {
 			return nil
 		}
 		return l.notYet(node, memberName+": "+"fs encodings other than constant utf8/utf-8")
@@ -227,7 +257,9 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 		}
 		args = args[:1]
 	case "rm":
-		recursive, force := ir.Expression(ir.BooleanConstant{Value: false}), ir.Expression(ir.BooleanConstant{Value: false})
+		recursive, force := ir.Expression(
+			ir.BooleanConstant{Value: false},
+		), ir.Expression(ir.BooleanConstant{Value: false})
 		if len(args) > 1 {
 			recursive, err = option(args[1], "recursive", recursive)
 			if err != nil {
@@ -324,7 +356,8 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 		}
 		args = []ir.Expression{args[0], args[1], position}
 	case "write_file":
-		if args[1].Type() == ir.Array && l.nodeBufferType(l.checker.GetTypeAtLocation(call.Arguments.Nodes[1]), "Buffer") {
+		if args[1].Type() == ir.Array &&
+			l.nodeBufferType(l.checker.GetTypeAtLocation(call.Arguments.Nodes[1]), "Buffer") {
 			operation = "write_buffer"
 		}
 		flag, mode, flush := constant("w"), number(438), ir.Expression(ir.BooleanConstant{Value: false})
@@ -417,12 +450,28 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 		operation = "write_fd"
 	}
 	types := map[string][]ir.Type{
-		"write_buffer": {ir.String, ir.Array, ir.String, ir.Number, ir.Boolean}, "write_buffer_fd": {ir.Number, ir.Array, ir.String, ir.Number, ir.Boolean},
-		"read_sync": {ir.Number, ir.Array, ir.Number, ir.Number, ir.Number}, "read_buffer": {ir.String, ir.String}, "read_buffer_fd": {ir.Number, ir.String},
-		"read_file": {ir.String, ir.String}, "read_fd": {ir.Number, ir.String}, "open": {ir.String, ir.String, ir.Number},
-		"write": {ir.Number, ir.String, ir.Number}, "close": {ir.Number}, "write_file": {ir.String, ir.String, ir.String, ir.Number, ir.Boolean}, "write_fd": {ir.Number, ir.String, ir.String, ir.Number, ir.Boolean},
-		"utimes_dates": {ir.String, ir.Object, ir.Object}, "utimes_atime_date": {ir.String, ir.Object, ir.Number}, "utimes_mtime_date": {ir.String, ir.Number, ir.Object},
-		"mkdtemp": {ir.String}, "rm": {ir.String, ir.Boolean, ir.Boolean}, "exists": {ir.String}, "stat": {ir.String, ir.Boolean}, "mkdir": {ir.String, ir.Boolean, ir.Number}, "unlink": {ir.String}, "utimes": {ir.String, ir.Number, ir.Number},
+		"write_buffer":      {ir.String, ir.Array, ir.String, ir.Number, ir.Boolean},
+		"write_buffer_fd":   {ir.Number, ir.Array, ir.String, ir.Number, ir.Boolean},
+		"read_sync":         {ir.Number, ir.Array, ir.Number, ir.Number, ir.Number},
+		"read_buffer":       {ir.String, ir.String},
+		"read_buffer_fd":    {ir.Number, ir.String},
+		"read_file":         {ir.String, ir.String},
+		"read_fd":           {ir.Number, ir.String},
+		"open":              {ir.String, ir.String, ir.Number},
+		"write":             {ir.Number, ir.String, ir.Number},
+		"close":             {ir.Number},
+		"write_file":        {ir.String, ir.String, ir.String, ir.Number, ir.Boolean},
+		"write_fd":          {ir.Number, ir.String, ir.String, ir.Number, ir.Boolean},
+		"utimes_dates":      {ir.String, ir.Object, ir.Object},
+		"utimes_atime_date": {ir.String, ir.Object, ir.Number},
+		"utimes_mtime_date": {ir.String, ir.Number, ir.Object},
+		"mkdtemp":           {ir.String},
+		"rm":                {ir.String, ir.Boolean, ir.Boolean},
+		"exists":            {ir.String},
+		"stat":              {ir.String, ir.Boolean},
+		"mkdir":             {ir.String, ir.Boolean, ir.Number},
+		"unlink":            {ir.String},
+		"utimes":            {ir.String, ir.Number, ir.Number},
 	}
 	for i, t := range types[operation] {
 		if args[i].Type() != t {
@@ -435,7 +484,9 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 // dateNow lowers Date.now(), the current time in whole epoch milliseconds, read from the clock new Date()
 // reads.
 func (l *lowering) dateNow(node, callee *ast.Node) (ir.Expression, bool, error) {
-	if callee.Kind != ast.KindPropertyAccessExpression || callee.Name().Text() != "now" || !l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Date") {
+	if callee.Kind != ast.KindPropertyAccessExpression ||
+		callee.Name().Text() != "now" ||
+		!l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Date") {
 		return nil, false, nil
 	}
 	if arguments := node.AsCallExpression().Arguments; arguments != nil && len(arguments.Nodes) != 0 {
@@ -462,9 +513,9 @@ func (l *lowering) nodeFSFileDate(node *ast.Node) (ir.Expression, bool, error) {
 	if len(created.Arguments.Nodes) != 1 {
 		return nil, true, l.notYet(node, "Date construction other than a numeric timestamp in the fs file host")
 	}
-	value, err := l.expression(created.Arguments.Nodes[0])
-	if err != nil {
-		return nil, true, err
+	value, expressionError := l.expression(created.Arguments.Nodes[0])
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
 	if value.Type() != ir.Number {
 		return nil, true, l.notYet(node, "Date construction other than a numeric timestamp in the fs file host")
@@ -506,9 +557,33 @@ func (l *lowering) nodeFSFileReadOnlyArgument(node *ast.Node) bool {
 	default:
 		return false
 	}
-	return len(call.Arguments.Nodes) > index && call.Arguments.Nodes[index] == outer && l.nodeHostConsumesArgument(outer.Parent, index)
+	return len(call.Arguments.Nodes) > index &&
+		call.Arguments.Nodes[index] == outer &&
+		l.nodeHostConsumesArgument(outer.Parent, index)
 }
 
 func init() {
-	RegisterNodeLibraryMembers("node:fs.mkdtempSync", "node:fs.rmSync", "node:fs.readSync", "node:fs.readFileSync", "node:fs.openSync", "node:fs.writeSync", "node:fs.closeSync", "node:fs.writeFileSync", "node:fs.existsSync", "node:fs.statSync", "node:fs.mkdirSync", "node:fs.unlinkSync", "node:fs.utimesSync", "node:fs.StatsBase.isFile", "node:fs.StatsBase.isDirectory", "node:fs.StatsBase.isSymbolicLink", "node:fs.StatsBase.size", "node:fs.StatsBase.mtime", "node:fs.StatsBase.atime", "node:fs.StatsBase.mtimeMs", "node:globals.ErrnoException.code")
+	RegisterNodeLibraryMembers(
+		"node:fs.mkdtempSync",
+		"node:fs.rmSync",
+		"node:fs.readSync",
+		"node:fs.readFileSync",
+		"node:fs.openSync",
+		"node:fs.writeSync",
+		"node:fs.closeSync",
+		"node:fs.writeFileSync",
+		"node:fs.existsSync",
+		"node:fs.statSync",
+		"node:fs.mkdirSync",
+		"node:fs.unlinkSync",
+		"node:fs.utimesSync",
+		"node:fs.StatsBase.isFile",
+		"node:fs.StatsBase.isDirectory",
+		"node:fs.StatsBase.isSymbolicLink",
+		"node:fs.StatsBase.size",
+		"node:fs.StatsBase.mtime",
+		"node:fs.StatsBase.atime",
+		"node:fs.StatsBase.mtimeMs",
+		"node:globals.ErrnoException.code",
+	)
 }

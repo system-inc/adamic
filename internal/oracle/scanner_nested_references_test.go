@@ -33,13 +33,15 @@ func TestScannerNestedReferenceMutants(test *testing.T) {
 	for _, name := range scannerNestedReferenceProbes {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "stage3/drivers/scanner/probes", name+".a"))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "stage3/drivers/scanner/probes", name+".a"),
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			expected := onNode(test, path)
 			target := "worker"
@@ -91,13 +93,13 @@ func TestScannerNestedReferences(test *testing.T) {
 	for _, source := range paths {
 		test.Run(filepath.Base(source), func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, source))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(filepath.Join(repository, source))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			expected := onNode(test, path)
 			native, binary := nativelyUncached(test, program)
@@ -134,13 +136,15 @@ func TestScannerNestedReferences(test *testing.T) {
 
 func TestNestedReferenceIdentityMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/nested_reference_identity.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/nested_reference_identity.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	changed := 0
 	for index := range program.Functions {

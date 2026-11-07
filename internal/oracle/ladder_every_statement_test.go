@@ -49,9 +49,9 @@ func ladderEveryStatementFixtures(test *testing.T, group string) []string {
 			}
 		}
 	} else {
-		matches, err := filepath.Glob(filepath.Join(repository, "internal/oracle/testdata/environment_*.a"))
-		if err != nil {
-			test.Fatal(err)
+		matches, globError := filepath.Glob(filepath.Join(repository, "internal/oracle/testdata/environment_*.a"))
+		if globError != nil {
+			test.Fatal(globError)
 		}
 		for _, match := range matches {
 			coverage := strings.HasPrefix(filepath.Base(match), "environment_coverage_")
@@ -78,22 +78,22 @@ func laddersEverywhereAgree(test *testing.T, group string) {
 	for _, fixture := range ladderEveryStatementFixtures(test, group) {
 		test.Run(fixture, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, fixture))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(filepath.Join(repository, fixture))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			want := onNode(test, path)
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatalf("Lower: %v", err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatalf("Lower: %v", loweredError)
 			}
 			code := native.CWithOptions(program, native.Options{LadderEveryStatement: true})
 			if strings.Contains(code, "_done:;") {
 				laddered.Add(1)
 			}
 			binary := filepath.Join(test.TempDir(), "program")
-			if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(code, binary, native.Options{Sanitize: true}); buildError != nil {
+				test.Fatal(buildError)
 			}
 			var environment []string
 			if runtime.GOOS == "linux" {

@@ -103,13 +103,13 @@ func execute(test testing.TB, directory string, environment []string, name strin
 	command.Env = append(append(os.Environ(), toolchainSettings("PATH", "CC", "CXX")...), environment...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	var exited *exec.ExitError
 	if ctx.Err() != nil {
 		test.Fatalf("%s timed out: %v", name, ctx.Err())
 	}
-	if err != nil && !errors.As(err, &exited) {
-		test.Fatal(err)
+	if captureError != nil && !errors.As(captureError, &exited) {
+		test.Fatal(captureError)
 	}
 	return behavior{string(stdout), string(stderr), command.ProcessState.ExitCode()}
 }
@@ -134,23 +134,23 @@ func equal(test *testing.T, check string, got, want behavior) {
 // key order and whitespace outside stage0 remain byte-for-byte unchanged.
 func replaceStage0(raw json.RawMessage, value stage0) (json.RawMessage, error) {
 	decoder := json.NewDecoder(bytes.NewReader(raw))
-	token, err := decoder.Token()
-	if err != nil || token != json.Delim('{') {
-		return nil, fmt.Errorf("fixture must be an object: %v", err)
+	token, tokenError := decoder.Token()
+	if tokenError != nil || token != json.Delim('{') {
+		return nil, fmt.Errorf("fixture must be an object: %v", tokenError)
 	}
 	for decoder.More() {
-		key, err := decoder.Token()
-		if err != nil {
-			return nil, err
+		key, tokenError := decoder.Token()
+		if tokenError != nil {
+			return nil, tokenError
 		}
 		var field json.RawMessage
-		if err := decoder.Decode(&field); err != nil {
-			return nil, err
+		if decodeError := decoder.Decode(&field); decodeError != nil {
+			return nil, decodeError
 		}
 		if key == "stage0" {
-			encoded, err := json.Marshal(value)
-			if err != nil {
-				return nil, err
+			encoded, encodeError := json.Marshal(value)
+			if encodeError != nil {
+				return nil, encodeError
 			}
 			end := int(decoder.InputOffset())
 			start := end - len(field)
@@ -193,9 +193,9 @@ func nodeRunnerMode(test *testing.T, text string) int {
 func transformedNodeRunner(test *testing.T, repository string) string {
 	test.Helper()
 	path := filepath.Join(repository, "oracle/node.mjs")
-	source, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	text := string(source)
 	// Parameter properties may already require transform mode in the source oracle.
@@ -220,8 +220,8 @@ func transformedNodeRunner(test *testing.T, repository string) string {
 		1,
 	)
 	transformed := filepath.Join(test.TempDir(), "node-transform.mjs")
-	if err := os.WriteFile(transformed, []byte(text), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(transformed, []byte(text), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return transformed
 }
@@ -281,13 +281,13 @@ func TestFixturesTaste(test *testing.T) {
 
 func testFixtureDirectory(test *testing.T, directory string, selectedFiles ...string) {
 	test.Helper()
-	repository, err := filepath.Abs("../..")
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs("../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	root, err := filepath.Abs(*fixtureRoot)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(*fixtureRoot)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	statuses := []string{filepath.Join(root, directory, "status.json")}
 	hook := fixtureOracleHook(test, repository)
@@ -296,13 +296,13 @@ func testFixtureDirectory(test *testing.T, directory string, selectedFiles ...st
 	for _, status := range statuses {
 		test.Run(filepath.Base(filepath.Dir(status)), func(test *testing.T) {
 			test.Parallel()
-			data, err := os.ReadFile(status)
-			if err != nil {
-				test.Fatal(err)
+			data, readError := os.ReadFile(status)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			var entries []json.RawMessage
-			if err := json.Unmarshal(data, &entries); err != nil {
-				test.Fatal(err)
+			if decodeError := json.Unmarshal(data, &entries); decodeError != nil {
+				test.Fatal(decodeError)
 			}
 			if len(entries) == 0 {
 				test.Fatal("empty fixture status")
@@ -356,18 +356,18 @@ func testFixtureDirectory(test *testing.T, directory string, selectedFiles ...st
 				if closeError != nil {
 					test.Fatal(closeError)
 				}
-				if err := os.Rename(temporary.Name(), status); err != nil {
-					test.Fatal(err)
+				if renameError := os.Rename(temporary.Name(), status); renameError != nil {
+					test.Fatal(renameError)
 				}
 			})
 			seen := map[string]bool{}
 			for index, raw := range entries {
 				var entry fixture
 				decoder := json.NewDecoder(bytes.NewReader(raw))
-				if err := decoder.Decode(&entry); err != nil {
-					test.Fatal(err)
+				if decodeError := decoder.Decode(&entry); decodeError != nil {
+					test.Fatal(decodeError)
 				}
-				if err := decoder.Decode(new(any)); err != io.EOF {
+				if decodeError := decoder.Decode(new(any)); decodeError != io.EOF {
 					test.Fatal("unexpected trailing fixture JSON")
 				}
 				if !validFixturePath(entry.File) || seen[entry.File] {
@@ -481,13 +481,13 @@ func testFixtureDirectory(test *testing.T, directory string, selectedFiles ...st
 									result.Stderr,
 								)
 							}
-							data, err := os.ReadFile(resultPath)
-							if err != nil {
-								test.Fatal(err)
+							data, readError := os.ReadFile(resultPath)
+							if readError != nil {
+								test.Fatal(readError)
 							}
 							var fields []json.RawMessage
-							if err := json.Unmarshal(data, &fields); err != nil {
-								test.Fatal(err)
+							if decodeError := json.Unmarshal(data, &fields); decodeError != nil {
+								test.Fatal(decodeError)
 							}
 							if len(fields) != 3 {
 								test.Fatal("invalid oracle hook result")
@@ -495,8 +495,8 @@ func testFixtureDirectory(test *testing.T, directory string, selectedFiles ...st
 							var stdout, stderr []byte
 							var exit int
 							for index, target := range []any{&stdout, &stderr, &exit} {
-								if err := json.Unmarshal(fields[index], target); err != nil {
-									test.Fatal(err)
+								if decodeError := json.Unmarshal(fields[index], target); decodeError != nil {
+									test.Fatal(decodeError)
 								}
 							}
 							observed := behavior{string(stdout), string(stderr), exit}
@@ -504,8 +504,12 @@ func testFixtureDirectory(test *testing.T, directory string, selectedFiles ...st
 								// An inserted check may stop source that Node accepts. Pin the
 								// complete stop, including output before it, on both backends.
 								checkedPath := filepath.Join(test.TempDir(), "checked.mjs")
-								if err := os.WriteFile(checkedPath, []byte(checkedJavaScript), 0600); err != nil {
-									test.Fatal(err)
+								if writeError := os.WriteFile(
+									checkedPath,
+									[]byte(checkedJavaScript),
+									0600,
+								); writeError != nil {
+									test.Fatal(writeError)
 								}
 								want := behavior{Stdout: entry.Stage0.Stdout, Stderr: entry.Stage0.What, Exit: 70}
 								equal(test, "pinned native check", observed, want)
@@ -543,9 +547,9 @@ func testFixtureDirectory(test *testing.T, directory string, selectedFiles ...st
 					}
 					if *update && recordedNodeAgrees && nativeAgrees {
 						if actual != entry.Stage0 {
-							replacement, err := replaceStage0(raw, actual)
-							if err != nil {
-								test.Fatal(err)
+							replacement, replaceStage0Error := replaceStage0(raw, actual)
+							if replaceStage0Error != nil {
+								test.Fatal(replaceStage0Error)
 							}
 							mutex.Lock()
 							replacements[index] = replacement
@@ -620,9 +624,9 @@ func fixtureShard(test *testing.T) (int, int) {
 
 func TestFixtureShardManifest(test *testing.T) {
 	test.Parallel()
-	statuses, err := filepath.Glob(filepath.Join(*fixtureRoot, "*", "status.json"))
-	if err != nil {
-		test.Fatal(err)
+	statuses, globError := filepath.Glob(filepath.Join(*fixtureRoot, "*", "status.json"))
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	if len(statuses) == 0 {
 		test.Fatal("no fixture status.json files found")
@@ -630,18 +634,18 @@ func TestFixtureShardManifest(test *testing.T) {
 	_, count := fixtureShard(test)
 	seen := map[string]bool{}
 	for _, status := range statuses {
-		data, err := os.ReadFile(status)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(status)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		var entries []fixture
-		if err := json.Unmarshal(data, &entries); err != nil {
-			test.Fatal(err)
+		if decodeError := json.Unmarshal(data, &entries); decodeError != nil {
+			test.Fatal(decodeError)
 		}
 		for index, entry := range entries {
-			_, skip, err := hostconfiguration.Resolve(index+1, entry.Configuration, os.Getenv)
-			if err != nil {
-				test.Fatal(err)
+			_, skip, resolveError := hostconfiguration.Resolve(index+1, entry.Configuration, os.Getenv)
+			if resolveError != nil {
+				test.Fatal(resolveError)
 			}
 			if skip != "" {
 				// A manifest must keep every row: log the requirement; never Skip it.

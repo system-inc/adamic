@@ -12,7 +12,9 @@ const iteratorSlot = "__adamic_symbol_iterator"
 
 func (l *lowering) symbolIterator(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
-	return node.Kind == ast.KindPropertyAccessExpression && node.Name().Text() == "iterator" && l.isLibraryGlobal(node.AsPropertyAccessExpression().Expression, "Symbol")
+	return node.Kind == ast.KindPropertyAccessExpression &&
+		node.Name().Text() == "iterator" &&
+		l.isLibraryGlobal(node.AsPropertyAccessExpression().Expression, "Symbol")
 }
 
 func (l *lowering) methodName(node *ast.Node) (string, bool) {
@@ -38,7 +40,9 @@ func (l *lowering) iteratorMember(proven *checker.Type) *ast.Symbol {
 	for _, member := range l.checker.GetPropertiesOfType(l.concrete(proven)) {
 		for _, root := range l.checker.GetRootSymbols(member) {
 			for _, declaration := range root.Declarations {
-				if name, known := l.methodName(declaration); known && name == iteratorSlot && !load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+				if name, known := l.methodName(
+					declaration,
+				); known && name == iteratorSlot && !load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
 					return member
 				}
 			}
@@ -54,12 +58,15 @@ func (l *lowering) objectMethod(node *ast.Node) (ir.Expression, error) {
 	l.result.Functions = append(l.result.Functions, ir.Function{Name: "object_method", Closure: true, Receiver: true})
 	this := l.iterationLocal("this", ir.Object, index)
 	l.noteLocal(this, l.checker.GetTypeAtLocation(node.Parent), node)
-	l.closureRecords = append(l.closureRecords, closureRecord{proven: l.checker.GetTypeAtLocation(node), function: index, node: node})
+	l.closureRecords = append(
+		l.closureRecords,
+		closureRecord{proven: l.checker.GetTypeAtLocation(node), function: index, node: node},
+	)
 	l.closures = append(l.closures, index)
-	err := l.lowerFunction(index, node, this)
+	lowerFunctionError := l.lowerFunction(index, node, this)
 	l.closures = l.closures[:len(l.closures)-1]
-	if err != nil {
-		return nil, err
+	if lowerFunctionError != nil {
+		return nil, lowerFunctionError
 	}
 	return ir.MakeClosure{Function: index}, nil
 }
@@ -88,7 +95,10 @@ func (l *lowering) memberReceiver(where *ast.Node, member *ast.Symbol) (bool, er
 					return false, l.notYet(where, "a declared iterator method with no runtime field")
 				}
 			default:
-				return false, l.notYet(where, "an iterator method whose concrete origin is erased by a structural signature")
+				return false, l.notYet(
+					where,
+					"an iterator method whose concrete origin is erased by a structural signature",
+				)
 			}
 			if convention >= 0 && convention != current {
 				return false, l.notYet(where, "iterator methods with mixed receiver conventions")
@@ -102,10 +112,15 @@ func (l *lowering) memberReceiver(where *ast.Node, member *ast.Symbol) (bool, er
 	return convention == 1, nil
 }
 
-func (l *lowering) memberFunction(where *ast.Node, proven *checker.Type, value ir.Expression, member *ast.Symbol) (ir.Expression, bool, int, error) {
-	receiver, err := l.memberReceiver(where, member)
-	if err != nil {
-		return nil, false, -1, err
+func (l *lowering) memberFunction(
+	where *ast.Node,
+	proven *checker.Type,
+	value ir.Expression,
+	member *ast.Symbol,
+) (ir.Expression, bool, int, error) {
+	receiver, memberReceiverError := l.memberReceiver(where, member)
+	if memberReceiverError != nil {
+		return nil, false, -1, memberReceiverError
 	}
 	for _, root := range l.checker.GetRootSymbols(member) {
 		for _, declaration := range root.Declarations {
@@ -117,9 +132,9 @@ func (l *lowering) memberFunction(where *ast.Node, proven *checker.Type, value i
 				if class == nil {
 					return nil, false, -1, l.notYet(where, "an iterator class not declared in this program")
 				}
-				instance, err := l.instantiate(class, proven, where)
-				if err != nil {
-					return nil, false, -1, err
+				instance, instantiateError := l.instantiate(class, proven, where)
+				if instantiateError != nil {
+					return nil, false, -1, instantiateError
 				}
 				return nil, true, instance.methods[l.methodKey(declaration, instance.class)], nil
 			}
@@ -136,7 +151,14 @@ func (l *lowering) memberFunction(where *ast.Node, proven *checker.Type, value i
 	return ir.Property{Object: value, Name: name, Of: ir.Closure}, receiver, -1, nil
 }
 
-func invokeMember(function ir.Expression, receiver bool, direct int, value ir.Expression, arguments []ir.Expression, returns ir.Type) ir.Expression {
+func invokeMember(
+	function ir.Expression,
+	receiver bool,
+	direct int,
+	value ir.Expression,
+	arguments []ir.Expression,
+	returns ir.Type,
+) ir.Expression {
 	if receiver {
 		arguments = append([]ir.Expression{value}, arguments...)
 	}
@@ -165,8 +187,8 @@ type iterationPlan struct {
 }
 
 func (l *lowering) planIteration(where *ast.Node) (*iterationPlan, error) {
-	if _, isGenerator, err := l.generatorCallee(where); err != nil {
-		return nil, err
+	if _, isGenerator, generatorCalleeError := l.generatorCallee(where); generatorCalleeError != nil {
+		return nil, generatorCalleeError
 	} else if isGenerator {
 		// Destructuring a generator's call isn't built; a for-of, a spread and Array.from route one by
 		// origin before they plan (forOf, iterated, arrayFrom), so only destructuring reaches here.
@@ -180,20 +202,20 @@ func (l *lowering) planIteration(where *ast.Node) (*iterationPlan, error) {
 	if of, known := l.representation(source); !known || of != ir.Object || l.includesUndefined(source) {
 		return nil, l.notYet(where, "a custom iterable without a present object representation")
 	}
-	if _, err := l.memberReceiver(where, entry); err != nil {
-		return nil, err
+	if _, memberReceiverError := l.memberReceiver(where, entry); memberReceiverError != nil {
+		return nil, memberReceiverError
 	}
-	iterator, err := l.memberResult(where, entry)
-	if err != nil {
-		return nil, err
+	iterator, memberResultError := l.memberResult(where, entry)
+	if memberResultError != nil {
+		return nil, memberResultError
 	}
 	next := l.checker.GetPropertyOfType(iterator, "next")
-	if _, err := l.memberReceiver(where, next); err != nil {
-		return nil, err
+	if _, memberReceiverError := l.memberReceiver(where, next); memberReceiverError != nil {
+		return nil, memberReceiverError
 	}
-	step, err := l.memberResult(where, next)
-	if err != nil {
-		return nil, err
+	step, memberResultError := l.memberResult(where, next)
+	if memberResultError != nil {
+		return nil, memberResultError
 	}
 	done := l.checker.GetPropertyOfType(step, "done")
 	if done == nil || done.Flags&ast.SymbolFlagsOptional != 0 {
@@ -212,18 +234,18 @@ func (l *lowering) planIteration(where *ast.Node) (*iterationPlan, error) {
 	}
 	close := l.checker.GetPropertyOfType(iterator, "return")
 	if close != nil {
-		if _, err := l.memberReceiver(where, close); err != nil {
-			return nil, err
+		if _, memberReceiverError := l.memberReceiver(where, close); memberReceiverError != nil {
+			return nil, memberReceiverError
 		}
-		if _, err := l.memberResult(where, close); err != nil {
-			return nil, err
+		if _, memberResultError := l.memberResult(where, close); memberResultError != nil {
+			return nil, memberResultError
 		}
 	}
 	// A view which omits return must not hide a runtime close method. Method signatures themselves
 	// are refused above, but a concrete literal can also be viewed as another concrete literal type.
-	modules, err := l.moduleOrder(l.program.Files()[0])
-	if err != nil {
-		return nil, err
+	modules, moduleOrderError := l.moduleOrder(l.program.Files()[0])
+	if moduleOrderError != nil {
+		return nil, moduleOrderError
 	}
 	// Until protocol calls dispatch virtually, prove that a returned receiver cannot
 	// override next/return or introduce a close method hidden by the return annotation.
@@ -234,15 +256,23 @@ func (l *lowering) planIteration(where *ast.Node) (*iterationPlan, error) {
 		}
 		presence := close != nil
 		if !l.iterationOrigin(where, members, &presence, 0) {
-			return nil, &Refused{Where: l.program.Where(where), What: "an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin)", Fix: "return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type"}
+			return nil, &Refused{
+				Where: l.program.Where(where),
+				What:  "an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin)",
+				Fix:   "return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type",
+			}
 		}
 	}
 	sourceKnown := l.iterationOrigin(where, []*ast.Symbol{entry}, nil, 0)
 	iteratorKnown := sourceKnown && l.iterationFactoryKnown(entry, next, close)
-	if isClassInstance(source) && len(l.checker.GetTypeArguments(source)) > 0 && !l.knownIterationClass(where, source, 0) {
+	if isClassInstance(source) &&
+		len(l.checker.GetTypeArguments(source)) > 0 &&
+		!l.knownIterationClass(where, source, 0) {
 		return nil, l.notYet(where, "a generic iterable view without proven native type arguments")
 	}
-	if isClassInstance(iterator) && len(l.checker.GetTypeArguments(iterator)) > 0 && (!sourceKnown || !l.genericIteratorFactoryKnown(entry, source, iterator)) {
+	if isClassInstance(iterator) &&
+		len(l.checker.GetTypeArguments(iterator)) > 0 &&
+		(!sourceKnown || !l.genericIteratorFactoryKnown(entry, source, iterator)) {
 		return nil, l.notYet(where, "a generic iterator view without proven native type arguments")
 	}
 
@@ -287,24 +317,32 @@ func (l *lowering) planIteration(where *ast.Node) (*iterationPlan, error) {
 			}
 			if node.Kind == ast.KindObjectLiteralExpression {
 				for _, property := range node.AsObjectLiteralExpression().Properties.Nodes {
-					if property.Kind == ast.KindSpreadAssignment && (l.iterationShapeFits(shape, iterator) || l.iterationShapeFits(shape, source)) {
-						hazard = l.notYet(where, "an iterator built by object spread (own method presence is not proved)")
+					if property.Kind == ast.KindSpreadAssignment &&
+						(l.iterationShapeFits(shape, iterator) || l.iterationShapeFits(shape, source)) {
+						hazard = l.notYet(
+							where,
+							"an iterator built by object spread (own method presence is not proved)",
+						)
 						return true
 					}
 				}
 			}
-			if !iteratorKnown && l.iterationShapeFits(shape, iterator) && (l.checker.GetPropertyOfType(shape, "return") != nil) != (close != nil) {
+			if !iteratorKnown &&
+				l.iterationShapeFits(shape, iterator) &&
+				(l.checker.GetPropertyOfType(shape, "return") != nil) != (close != nil) {
 				hazard = l.notYet(where, "an iterator view that can hide a return method")
 				return true
 			}
 		}
-		if node.Kind == ast.KindBinaryExpression && node.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken {
+		if node.Kind == ast.KindBinaryExpression &&
+			node.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken {
 			target := ast.SkipParentheses(node.AsBinaryExpression().Left)
 			if target.Kind == ast.KindPropertyAccessExpression {
 				access := target.AsPropertyAccessExpression()
 				key := access.Name().Text()
 				targetType := l.checker.GetTypeAtLocation(access.Expression)
-				if (key == "next" || key == "return") && (l.checker.IsTypeAssignableTo(iterator, targetType) || l.checker.IsTypeAssignableTo(targetType, iterator)) {
+				if (key == "next" || key == "return") && (l.checker.IsTypeAssignableTo(iterator, targetType) ||
+					l.checker.IsTypeAssignableTo(targetType, iterator)) {
 					hazard = l.notYet(where, "replacing an iterator protocol method at runtime")
 					return true
 				}
@@ -318,7 +356,15 @@ func (l *lowering) planIteration(where *ast.Node) (*iterationPlan, error) {
 	if hazard != nil {
 		return nil, hazard
 	}
-	return &iterationPlan{source: source, iterator: iterator, step: step, entry: entry, next: next, close: close, element: element}, nil
+	return &iterationPlan{
+		source:   source,
+		iterator: iterator,
+		step:     step,
+		entry:    entry,
+		next:     next,
+		close:    close,
+		element:  element,
+	}, nil
 }
 
 type iterationState struct {
@@ -330,25 +376,39 @@ type iterationState struct {
 	active   int
 }
 
-func (l *lowering) startIteration(where *ast.Node, plan *iterationPlan, source ir.Expression) ([]ir.Statement, *iterationState, error) {
-	function, receiver, direct, err := l.memberFunction(where, plan.source, source, plan.entry)
-	if err != nil {
-		return nil, nil, err
+func (l *lowering) startIteration(
+	where *ast.Node,
+	plan *iterationPlan,
+	source ir.Expression,
+) ([]ir.Statement, *iterationState, error) {
+	function, receiver, direct, memberFunctionError := l.memberFunction(where, plan.source, source, plan.entry)
+	if memberFunctionError != nil {
+		return nil, nil, memberFunctionError
 	}
 	iterator := l.iterationLocal("iterator", ir.Object, l.functionIndex)
 	active := l.iterationLocal("iterator_close_needed", ir.Boolean, l.functionIndex)
 	read := ir.Read{Local: iterator, Of: ir.Object}
-	statements := []ir.Statement{ir.Declare{Local: iterator, Value: invokeMember(function, receiver, direct, source, nil, ir.Object)}, ir.Declare{Local: active, Value: ir.BooleanConstant{Value: false}}}
-	next, receiver, direct, err := l.memberFunction(where, plan.iterator, read, plan.next)
-	if err != nil {
-		return nil, nil, err
+	statements := []ir.Statement{
+		ir.Declare{Local: iterator, Value: invokeMember(function, receiver, direct, source, nil, ir.Object)},
+		ir.Declare{Local: active, Value: ir.BooleanConstant{Value: false}},
+	}
+	next, receiver, direct, memberFunctionError := l.memberFunction(where, plan.iterator, read, plan.next)
+	if memberFunctionError != nil {
+		return nil, nil, memberFunctionError
 	}
 	if direct < 0 {
 		cached := l.iterationLocal("iterator_next", ir.Closure, l.functionIndex)
 		statements = append(statements, ir.Declare{Local: cached, Value: next})
 		next = ir.Read{Local: cached, Of: ir.Closure}
 	}
-	return statements, &iterationState{plan: plan, iterator: read, next: next, receiver: receiver, direct: direct, active: active}, nil
+	return statements, &iterationState{
+		plan:     plan,
+		iterator: read,
+		next:     next,
+		receiver: receiver,
+		direct:   direct,
+		active:   active,
+	}, nil
 }
 
 func (l *lowering) iterationStep(state *iterationState) ([]ir.Statement, ir.Expression) {
@@ -356,7 +416,10 @@ func (l *lowering) iterationStep(state *iterationState) ([]ir.Statement, ir.Expr
 	read := ir.Read{Local: step, Of: ir.Object}
 	statements := []ir.Statement{
 		ir.Assign{Local: state.active, Value: ir.BooleanConstant{Value: false}},
-		ir.Declare{Local: step, Value: invokeMember(state.next, state.receiver, state.direct, state.iterator, nil, ir.Object)},
+		ir.Declare{
+			Local: step,
+			Value: invokeMember(state.next, state.receiver, state.direct, state.iterator, nil, ir.Object),
+		},
 		ir.If{Condition: ir.Property{Object: read, Name: "done", Of: ir.Boolean}, Then: []ir.Statement{ir.Break{}}},
 	}
 	value := ir.Property{Object: read, Name: "value", Of: state.plan.element}
@@ -369,18 +432,32 @@ func (l *lowering) closeIteration(where *ast.Node, state *iterationState, body [
 	if state.plan.close == nil {
 		return body, nil
 	}
-	function, receiver, direct, err := l.memberFunction(where, state.plan.iterator, state.iterator, state.plan.close)
-	if err != nil {
-		return nil, err
+	function, receiver, direct, memberFunctionError := l.memberFunction(
+		where,
+		state.plan.iterator,
+		state.iterator,
+		state.plan.close,
+	)
+	if memberFunctionError != nil {
+		return nil, memberFunctionError
 	}
-	close := []ir.Statement{ir.Evaluate{Value: invokeMember(function, receiver, direct, state.iterator, nil, ir.Object)}}
+	close := []ir.Statement{
+		ir.Evaluate{Value: invokeMember(function, receiver, direct, state.iterator, nil, ir.Object)},
+	}
 	thrown := l.iterationLocal("iterator_pending_throw", ir.Boolean, l.functionIndex)
 	caught := l.iterationLocal("iterator_error", ir.Object, l.functionIndex)
 	// Distinct branches need distinct statement identities for flow analysis and tracing.
 	cleanup := ir.If{Condition: ir.Read{Local: state.active, Of: ir.Boolean}, Then: []ir.Statement{
-		ir.If{Condition: ir.Read{Local: thrown, Of: ir.Boolean}, Then: []ir.Statement{ir.Try{Body: close, HasCatch: true, CatchLocal: -1}}, Else: append([]ir.Statement{}, close...)},
+		ir.If{
+			Condition: ir.Read{Local: thrown, Of: ir.Boolean},
+			Then:      []ir.Statement{ir.Try{Body: close, HasCatch: true, CatchLocal: -1}},
+			Else:      append([]ir.Statement{}, close...),
+		},
 	}}
-	guarded := ir.Try{Body: body, HasCatch: true, CatchLocal: caught, Catch: []ir.Statement{ir.Assign{Local: thrown, Value: ir.BooleanConstant{Value: true}}, ir.Throw{Value: ir.Read{Local: caught, Of: ir.Object}}}, HasFinally: true, Finally: []ir.Statement{cleanup}}
+	guarded := ir.Try{Body: body, HasCatch: true, CatchLocal: caught, Catch: []ir.Statement{
+		ir.Assign{Local: thrown, Value: ir.BooleanConstant{Value: true}},
+		ir.Throw{Value: ir.Read{Local: caught, Of: ir.Object}},
+	}, HasFinally: true, Finally: []ir.Statement{cleanup}}
 	l.tries = append(l.tries, tryRecord{node: where, body: body})
 	return []ir.Statement{ir.Declare{Local: thrown, Value: ir.BooleanConstant{Value: false}}, guarded}, nil
 }
@@ -396,21 +473,21 @@ func (l *lowering) forOfUser(node *ast.Node, plan *iterationPlan, name *ast.Node
 	if (l.function != nil && l.function.Suspends()) || suspends(node) {
 		return nil, l.notYet(node, "async for-of over a user iterator")
 	}
-	source, err := l.expression(node.AsForInOrOfStatement().Expression)
-	if err != nil {
-		return nil, err
+	source, expressionError := l.expression(node.AsForInOrOfStatement().Expression)
+	if expressionError != nil {
+		return nil, expressionError
 	}
 	held := l.iterationLocal("iterable", ir.Object, l.functionIndex)
 	read := ir.Read{Local: held, Of: ir.Object}
-	setup, state, err := l.startIteration(node, plan, read)
-	if err != nil {
-		return nil, err
+	setup, state, startIterationError := l.startIteration(node, plan, read)
+	if startIterationError != nil {
+		return nil, startIterationError
 	}
 	step, value := l.iterationStep(state)
 	if ast.IsIdentifier(name) {
-		local, err := l.declareLocal(name)
-		if err != nil {
-			return nil, err
+		local, declareLocalError := l.declareLocal(name)
+		if declareLocalError != nil {
+			return nil, declareLocalError
 		}
 		if l.result.Locals[local].Type != plan.element {
 			return nil, l.notYet(name, "an iteration variable with a different value representation")
@@ -419,23 +496,27 @@ func (l *lowering) forOfUser(node *ast.Node, plan *iterationPlan, name *ast.Node
 	} else {
 		valueType := l.checker.GetTypeOfSymbol(l.checker.GetPropertyOfType(plan.step, "value"))
 		heldValue := l.iterationLocal("iteration_value", plan.element, l.functionIndex)
-		bound, err := l.destructureFrom(name, valueType, plan.element, heldValue)
-		if err != nil {
-			return nil, err
+		bound, destructureFromError := l.destructureFrom(name, valueType, plan.element, heldValue)
+		if destructureFromError != nil {
+			return nil, destructureFromError
 		}
 		step = append(step, ir.Declare{Local: heldValue, Value: value})
 		step = append(step, bound...)
 	}
-	body, err := l.statement(node.AsForInOrOfStatement().Statement)
-	if err != nil {
-		return nil, err
+	body, statementError := l.statement(node.AsForInOrOfStatement().Statement)
+	if statementError != nil {
+		return nil, statementError
 	}
 	step = append(step, ir.Assign{Local: state.active, Value: ir.BooleanConstant{Value: true}})
 	step = append(step, body...)
-	loop := ir.Loop{Condition: ir.BooleanConstant{Value: true}, Body: step, Update: []ir.Statement{ir.Assign{Local: state.active, Value: ir.BooleanConstant{Value: false}}}}
-	guarded, err := l.closeIteration(node, state, []ir.Statement{loop})
-	if err != nil {
-		return nil, err
+	loop := ir.Loop{
+		Condition: ir.BooleanConstant{Value: true},
+		Body:      step,
+		Update:    []ir.Statement{ir.Assign{Local: state.active, Value: ir.BooleanConstant{Value: false}}},
+	}
+	guarded, closeIterationError := l.closeIteration(node, state, []ir.Statement{loop})
+	if closeIterationError != nil {
+		return nil, closeIterationError
 	}
 	statements := append([]ir.Statement{ir.Declare{Local: held, Value: source}}, setup...)
 	return []ir.Statement{ir.Block{Body: append(statements, guarded...)}}, nil
@@ -461,20 +542,20 @@ func (l *lowering) userMethodCall(node *ast.Node) (ir.Expression, bool, error) {
 		if member == nil || !literalMethod(member) {
 			return nil, false, nil
 		}
-		value, err := l.callClosure(node)
-		return value, true, err
+		value, callClosureError := l.callClosure(node)
+		return value, true, callClosureError
 	default:
 		return nil, false, nil
 	}
-	value, err := l.expression(receiverNode)
-	if err != nil {
-		return nil, true, err
+	value, expressionError := l.expression(receiverNode)
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
 	arguments := []ir.Expression{value}
 	for _, argument := range node.AsCallExpression().Arguments.Nodes {
-		lowered, err := l.expression(argument)
-		if err != nil {
-			return nil, true, err
+		lowered, expressionError := l.expression(argument)
+		if expressionError != nil {
+			return nil, true, expressionError
 		}
 		arguments = append(arguments, lowered)
 	}
@@ -494,9 +575,14 @@ func (l *lowering) userMethodCall(node *ast.Node) (ir.Expression, bool, error) {
 		parameters = append(parameters, l.iterationLocal("argument", argument.Type(), function))
 	}
 	object := ir.Read{Local: parameters[0], Of: ir.Object}
-	method, hasReceiver, direct, err := l.memberFunction(node, l.checker.GetTypeAtLocation(receiverNode), object, member)
-	if err != nil {
-		return nil, true, err
+	method, hasReceiver, direct, memberFunctionError := l.memberFunction(
+		node,
+		l.checker.GetTypeAtLocation(receiverNode),
+		object,
+		member,
+	)
+	if memberFunctionError != nil {
+		return nil, true, memberFunctionError
 	}
 	passed := []ir.Expression{}
 	for index, parameter := range parameters[1:] {
@@ -508,6 +594,11 @@ func (l *lowering) userMethodCall(node *ast.Node) (ir.Expression, bool, error) {
 		// A void method still runs with its receiver and arguments, but has no value to return.
 		body = []ir.Statement{ir.Evaluate{Value: call}}
 	}
-	l.result.Functions[function] = ir.Function{Name: "invoke_method", Returns: result, Parameters: parameters, Body: body}
+	l.result.Functions[function] = ir.Function{
+		Name:       "invoke_method",
+		Returns:    result,
+		Parameters: parameters,
+		Body:       body,
+	}
 	return ir.Call{Function: function, Arguments: arguments, Returns: result}, true, nil
 }

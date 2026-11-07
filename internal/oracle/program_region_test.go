@@ -17,21 +17,25 @@ import (
 
 func programRegionLowered(test *testing.T, path string, enabled bool) *ir.Program {
 	test.Helper()
-	source, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	source, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := lower.LowerWithOptions(context.Background(), source, lower.Options{ProgramRegion: enabled})
+	program, lowerWithOptionsError := lower.LowerWithOptions(
+		context.Background(),
+		source,
+		lower.Options{ProgramRegion: enabled},
+	)
 	var refused *lower.Refused
-	if errors.As(err, &refused) &&
+	if errors.As(lowerWithOptionsError, &refused) &&
 		filepath.Base(path) == "optional.a" &&
 		filepath.Base(filepath.Dir(path)) == "program_region" &&
 		refused.What == "delete" {
 		test.Skip("pending delete on optional fields: program_region/optional.a")
 	}
 
-	if err != nil {
-		test.Fatal(err)
+	if lowerWithOptionsError != nil {
+		test.Fatal(lowerWithOptionsError)
 	}
 	return program
 }
@@ -45,21 +49,26 @@ func checkProgramRegionMode(test *testing.T, program *ir.Program, path string, e
 	test.Helper()
 	code := native.C(program)
 	binary := filepath.Join(test.TempDir(), "program")
-	if err := programRegionBuild(
+	if programRegionBuildError := programRegionBuild(
 		test,
 		code,
 		binary,
 		native.Options{ProgramRegion: enabled, Sanitize: true},
-	); err != nil {
-		test.Fatal(err)
+	); programRegionBuildError != nil {
+		test.Fatal(programRegionBuildError)
 	}
 	oracle := onNode(test, path)
 	if diff := disagreement(oracle, onJavaScriptBackend(test, program)); diff != "" {
 		test.Fatalf("JavaScript backend: %s", diff)
 	}
 	plain := filepath.Join(test.TempDir(), "plain")
-	if err := programRegionBuild(test, code, plain, native.Options{ProgramRegion: enabled}); err != nil {
-		test.Fatal(err)
+	if programRegionBuildError := programRegionBuild(
+		test,
+		code,
+		plain,
+		native.Options{ProgramRegion: enabled},
+	); programRegionBuildError != nil {
+		test.Fatal(programRegionBuildError)
 	}
 	if diff := disagreement(oracle, execute(test, plain)); diff != "" {
 		test.Fatalf("native plain: %s", diff)
@@ -68,7 +77,7 @@ func checkProgramRegionMode(test *testing.T, program *ir.Program, path string, e
 	if difference := disagreement(oracle, result); difference != "" {
 		test.Fatalf("Program region: %s: %s", difference, result.stderr)
 	}
-	report, err := leakcheck.Check(leakcheck.Program{
+	report, checkError := leakcheck.Check(leakcheck.Program{
 		C: code, Sanitized: binary, Counted: filepath.Join(test.TempDir(), "counted"),
 		BuildCounted: func(code, output string) error {
 			return programRegionBuild(test, code, output, native.Options{ProgramRegion: enabled, Count: true})
@@ -77,20 +86,20 @@ func checkProgramRegionMode(test *testing.T, program *ir.Program, path string, e
 			return leakRun(executeWith(test, environment, name, args...))
 		},
 	})
-	if err != nil {
-		test.Fatal(err)
+	if checkError != nil {
+		test.Fatal(checkError)
 	}
 	if report != "" {
 		test.Fatal(report)
 	}
 	countedBinary := filepath.Join(test.TempDir(), "counts")
-	if err := programRegionBuild(
+	if programRegionBuildError := programRegionBuild(
 		test,
 		code,
 		countedBinary,
 		native.Options{ProgramRegion: enabled, Count: true},
-	); err != nil {
-		test.Fatal(err)
+	); programRegionBuildError != nil {
+		test.Fatal(programRegionBuildError)
 	}
 	name, args := pinnedStack(countedBinary)
 	counted := execute(test, name, args...)
@@ -112,9 +121,9 @@ func checkProgramRegionMode(test *testing.T, program *ir.Program, path string, e
 
 func programRegionFixture(test *testing.T, name string) []int {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/program_region", name))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/program_region", name))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return checkProgramRegion(test, programRegionLowered(test, path, true), path)
 }
@@ -165,8 +174,8 @@ func TestProgramRegionCapturedCell(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "capture.a")
 	source := `function make(): () => string {let current:(()=>string)|undefined=undefined;const result=()=>current===undefined?'empty':'set';current=result;return result;}console.log(make()());`
-	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	counts := checkProgramRegion(test, programRegionLowered(test, path, true), path)
 	if counts[5] < 2 {

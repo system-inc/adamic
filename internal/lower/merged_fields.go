@@ -46,13 +46,17 @@ func initializedClassMember(field *ast.Symbol) bool {
 		if parent.Kind != ast.KindClassDeclaration && parent.Kind != ast.KindClassExpression {
 			continue
 		}
-		if ast.HasSyntacticModifier(declaration, ast.ModifierFlagsAmbient|ast.ModifierFlagsAbstract|ast.ModifierFlagsStatic) {
+		if ast.HasSyntacticModifier(
+			declaration,
+			ast.ModifierFlagsAmbient|ast.ModifierFlagsAbstract|ast.ModifierFlagsStatic,
+		) {
 			continue
 		}
 		switch declaration.Kind {
 		case ast.KindPropertyDeclaration:
 			property := declaration.AsPropertyDeclaration()
-			if property.Initializer != nil || (declaration.PostfixToken() == nil || declaration.PostfixToken().Kind != ast.KindExclamationToken) {
+			if property.Initializer != nil ||
+				(declaration.PostfixToken() == nil || declaration.PostfixToken().Kind != ast.KindExclamationToken) {
 				return true
 			}
 		case ast.KindMethodDeclaration, ast.KindGetAccessor, ast.KindSetAccessor:
@@ -76,7 +80,19 @@ func (l *lowering) mergedDeclarationRefusal(node *ast.Node) error {
 		if field.Flags&ast.SymbolFlagsOptional != 0 || initializedClassMember(field) {
 			continue
 		}
-		return &Refused{Where: l.program.Where(node), What: "class " + class.Name().Text() + " merged with an interface promises field " + field.Name + " that the class does not initialize", Fix: "declare and initialize " + field.Name + " in class " + class.Name().Text() + ", or use a separate interface with a checked view"}
+		return &Refused{
+			Where: l.program.Where(node),
+			What: "class " +
+				class.Name().Text() +
+				" merged with an interface promises field " +
+				field.Name +
+				" that the class does not initialize",
+			Fix: "declare and initialize " +
+				field.Name +
+				" in class " +
+				class.Name().Text() +
+				", or use a separate interface with a checked view",
+		}
 	}
 	return nil
 }
@@ -113,7 +129,10 @@ func (l *lowering) mergedFieldRead(node *ast.Node) error {
 		access := node.AsElementAccessExpression()
 		key := ast.SkipParentheses(access.ArgumentExpression)
 		if key.Kind == ast.KindStringLiteral {
-			field = l.checker.GetPropertyOfType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression)), key.Text())
+			field = l.checker.GetPropertyOfType(
+				l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression)),
+				key.Text(),
+			)
 		}
 	}
 	if field == nil || field.Flags&ast.SymbolFlagsOptional != 0 || initializedClassMember(field) {
@@ -121,15 +140,20 @@ func (l *lowering) mergedFieldRead(node *ast.Node) error {
 	}
 	merged := false
 	for _, declaration := range field.Declarations {
-		if declaration.Parent != nil && declaration.Parent.Kind == ast.KindInterfaceDeclaration && l.mergedClass(declaration.Parent) != nil {
+		if declaration.Parent != nil &&
+			declaration.Parent.Kind == ast.KindInterfaceDeclaration &&
+			l.mergedClass(declaration.Parent) != nil {
 			merged = true
 		}
 	}
 	if !merged {
 		return nil
 	}
-	if _, err := l.strictViewContract(node, l.checker.GetTypeOfSymbol(field)); err != nil {
-		return err
+	if _, strictViewContractError := l.strictViewContract(
+		node,
+		l.checker.GetTypeOfSymbol(field),
+	); strictViewContractError != nil {
+		return strictViewContractError
 	}
 	if l.result.CheckedFields == nil {
 		l.result.CheckedFields = map[string]bool{}
@@ -149,22 +173,27 @@ func (l *lowering) mergedComputedRead(node *ast.Node) (ir.Expression, bool, erro
 	if key.Kind != ast.KindStringLiteral || !l.result.CheckedFields[key.Text()] {
 		return nil, false, nil
 	}
-	field := l.checker.GetPropertyOfType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression)), key.Text())
+	field := l.checker.GetPropertyOfType(
+		l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression)),
+		key.Text(),
+	)
 	if field == nil || initializedClassMember(field) {
 		return nil, false, nil
 	}
 	merged := false
 	for _, declaration := range field.Declarations {
-		if declaration.Parent != nil && declaration.Parent.Kind == ast.KindInterfaceDeclaration && l.mergedClass(declaration.Parent) != nil {
+		if declaration.Parent != nil &&
+			declaration.Parent.Kind == ast.KindInterfaceDeclaration &&
+			l.mergedClass(declaration.Parent) != nil {
 			merged = true
 		}
 	}
 	if !merged {
 		return nil, false, nil
 	}
-	object, err := l.expression(access.Expression)
-	if err != nil {
-		return nil, true, err
+	object, expressionError := l.expression(access.Expression)
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
 	declared := l.checker.GetTypeOfSymbol(field)
 	of, known := l.representation(declared)

@@ -21,9 +21,9 @@ import (
 // provider, independently of the Python generator's source-layout conversion.
 func runtimePropertyAliases(test *testing.T) []string {
 	test.Helper()
-	file, err := parser.ParseFile(token.NewFileSet(), "../unicodeproperties/tables.go", nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	file, parseFileError := parser.ParseFile(token.NewFileSet(), "../unicodeproperties/tables.go", nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	prefixes := map[string][]string{
 		"binaryNames":          {""},
@@ -50,9 +50,9 @@ func runtimePropertyAliases(test *testing.T) []string {
 			table := value.Values[0].(*ast.CompositeLit)
 			for _, element := range table.Elts {
 				literal := element.(*ast.KeyValueExpr).Key.(*ast.BasicLit)
-				name, err := strconv.Unquote(literal.Value)
-				if err != nil {
-					test.Fatal(err)
+				name, unquoteError := strconv.Unquote(literal.Value)
+				if unquoteError != nil {
+					test.Fatal(unquoteError)
 				}
 				for _, prefix := range selected {
 					aliases = append(aliases, prefix+name)
@@ -71,16 +71,16 @@ func TestRegExpRuntimePropertiesGenerated(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "tables.h")
 	command := exec.Command("python3", "../regexp/testdata/generate-runtime-properties.py", "--output", path)
-	if output, err := command.CombinedOutput(); err != nil {
-		test.Fatalf("generate: %v\n%s", err, output)
+	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("generate: %v\n%s", combinedOutputError, output)
 	}
-	actual, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	actual, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	committed, err := os.ReadFile("runtime/regexp_compile_tables.h")
-	if err != nil {
-		test.Fatal(err)
+	committed, readError := os.ReadFile("runtime/regexp_compile_tables.h")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if !bytes.Equal(actual, committed) {
 		test.Fatal("runtime property tables are stale; run generate-runtime-properties.py")
@@ -222,12 +222,12 @@ func TestRegExpRuntimePropertyIdentity(test *testing.T) {
 	source := runtimePropertyHarness(test)
 	directory := test.TempDir()
 	main := filepath.Join(directory, "main.c")
-	if err := os.WriteFile(main, []byte(source), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(main, []byte(source), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	runtimeDirectory, err := filepath.Abs("runtime")
-	if err != nil {
-		test.Fatal(err)
+	runtimeDirectory, absolutePathError := filepath.Abs("runtime")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	executable := filepath.Join(directory, "check")
 	arguments := append(
@@ -241,13 +241,13 @@ func TestRegExpRuntimePropertyIdentity(test *testing.T) {
 		executable,
 	)
 	command := exec.Command("clang", arguments...)
-	if output, err := command.CombinedOutput(); err != nil {
-		test.Fatalf("compile: %v\n%s", err, output)
+	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("compile: %v\n%s", combinedOutputError, output)
 	}
 	command = exec.Command(executable)
 	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1:halt_on_error=1", "UBSAN_OPTIONS=halt_on_error=1")
-	if output, err := command.CombinedOutput(); err != nil {
-		test.Fatalf("C versus Go property identity: %v\n%s", err, output)
+	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("C versus Go property identity: %v\n%s", combinedOutputError, output)
 	}
 }
 
@@ -259,12 +259,12 @@ func TestRegExpRuntimePropertiesWASI(test *testing.T) {
 	source := runtimePropertyHarness(test)
 	directory := test.TempDir()
 	main := filepath.Join(directory, "main.c")
-	if err := os.WriteFile(main, []byte(source), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(main, []byte(source), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	runtimeDirectory, err := filepath.Abs("runtime")
-	if err != nil {
-		test.Fatal(err)
+	runtimeDirectory, absolutePathError := filepath.Abs("runtime")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	wasm := filepath.Join(directory, "check.wasm")
 	arguments := []string{
@@ -290,8 +290,8 @@ func TestRegExpRuntimePropertiesWASI(test *testing.T) {
 		wasm,
 	}
 	command := exec.Command("clang", arguments...)
-	if output, err := command.CombinedOutput(); err != nil {
-		test.Fatalf("wasm32 compile: %v\n%s", err, output)
+	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("wasm32 compile: %v\n%s", combinedOutputError, output)
 	}
 	command = exec.Command(
 		"node",
@@ -300,27 +300,27 @@ func TestRegExpRuntimePropertiesWASI(test *testing.T) {
 		`const fs = require('fs'); const {WASI} = require('node:wasi'); const wasi = new WASI({version:'preview1', args:[], env:{}}); WebAssembly.instantiate(fs.readFileSync(process.argv[1]), {wasi_snapshot_preview1:wasi.wasiImport}).then(({instance}) => wasi.start(instance));`,
 		wasm,
 	)
-	if output, err := command.CombinedOutput(); err != nil {
-		test.Fatalf("WASI identity: %v\n%s", err, output)
+	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("WASI identity: %v\n%s", combinedOutputError, output)
 	}
 }
 
 func TestRegExpRuntimeCompilerNotLinked(test *testing.T) {
 	test.Parallel()
 	binary := filepath.Join(test.TempDir(), "empty")
-	if err := Build(
+	if buildError := Build(
 		"#include \"adamic.h\"\nint main(void) { return 0; }\n",
 		binary,
 		Options{Sanitize: true},
-	); err != nil {
-		test.Fatal(err)
+	); buildError != nil {
+		test.Fatal(buildError)
 	}
-	if output, err := exec.Command(binary).CombinedOutput(); err != nil {
-		test.Fatalf("sanitized empty program: %v\n%s", err, output)
+	if output, combinedOutputError := exec.Command(binary).CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("sanitized empty program: %v\n%s", combinedOutputError, output)
 	}
-	output, err := exec.Command("nm", "-a", binary).CombinedOutput()
-	if err != nil {
-		test.Fatalf("symbol list: %v\n%s", err, output)
+	output, combinedOutputError := exec.Command("nm", "-a", binary).CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("symbol list: %v\n%s", combinedOutputError, output)
 	}
 	if bytes.Contains(output, []byte("regex_compile_")) {
 		test.Fatal("a program without dynamic RegExp linked compiler symbols or tables")

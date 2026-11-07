@@ -16,28 +16,45 @@ import (
 // test, keep their own refusals. The angle-bracket form <Circle>shape is NotYet in stage 0 (conformance's
 // refusals/angle_bracket_downcast.a); whoever teaches stage 0 to lower it takes it in here too.
 func (l *lowering) keptCheckDowncastRefusal(node *ast.Node) error {
-	if node.Kind != ast.KindAsExpression || !strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".a") || l.processPath(node.AsAsExpression().Expression) != "" {
+	if node.Kind != ast.KindAsExpression ||
+		!strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".a") ||
+		l.processPath(node.AsAsExpression().Expression) != "" {
 		return nil
 	}
-	proof, err := l.castProof(node)
-	if err != nil {
-		return err
+	proof, castProofError := l.castProof(node)
+	if castProofError != nil {
+		return castProofError
 	}
 	if len(proof.classes) > 0 || !proof.interfaceView && !proof.structuralView && len(proof.allowed) == 0 {
 		return nil
 	}
 	source := l.checker.TypeToString(l.concrete(l.checker.GetTypeAtLocation(node.AsAsExpression().Expression)))
 	target := l.checker.TypeToString(l.concrete(l.checker.GetTypeAtLocation(node)))
-	refused := &Refused{Where: l.program.Where(node), What: "a downcast from " + source + " to " + target + " in .a whose checks no proof erases"}
+	refused := &Refused{
+		Where: l.program.Where(node),
+		What:  "a downcast from " + source + " to " + target + " in .a whose checks no proof erases",
+	}
 	const ts = "or move the file to .ts, where the cast stays a checked cast"
 	literal := l.fieldLiteral(l.concrete(l.checker.GetTypeAtLocation(node)), proof.field)
 	switch {
 	case len(proof.allowed) > 0:
 		refused.Fix = "narrow it, as .a writes !: " + l.tagNarrowing(node, proof.field, proof.allowed) + ", " + ts
 	case proof.interfaceView && literal != nil:
-		refused.Fix = "declare " + source + " as a union with " + target + " as a member and narrow it, as .a writes !: " + l.tagNarrowing(node, proof.field, []*checker.Type{literal}) + ", " + ts
+		refused.Fix = "declare " +
+			source +
+			" as a union with " +
+			target +
+			" as a member and narrow it, as .a writes !: " +
+			l.tagNarrowing(node, proof.field, []*checker.Type{literal}) +
+			", " +
+			ts
 	default:
-		refused.Fix = "give " + target + " a tag of its own in a discriminated union and narrow on it, as .a writes !, or build the value as a " + target + " so the compiler can prove it, " + ts
+		refused.Fix = "give " +
+			target +
+			" a tag of its own in a discriminated union and narrow on it, as .a writes !, or build the value as a " +
+			target +
+			" so the compiler can prove it, " +
+			ts
 	}
 	return refused
 }
@@ -50,7 +67,9 @@ func init() {
 // allowed, written with the operand's own name when it's a reference a narrowing can name.
 func (l *lowering) tagNarrowing(node *ast.Node, field string, allowed []*checker.Type) string {
 	operand := ast.SkipParentheses(node.AsAsExpression().Expression)
-	reference := ast.IsIdentifier(operand) || operand.Kind == ast.KindPropertyAccessExpression || operand.Kind == ast.KindThisKeyword
+	reference := ast.IsIdentifier(operand) ||
+		operand.Kind == ast.KindPropertyAccessExpression ||
+		operand.Kind == ast.KindThisKeyword
 	held := "value"
 	if reference {
 		held = sourceExpression(operand)

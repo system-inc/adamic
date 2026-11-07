@@ -15,14 +15,14 @@ func TestPrepareCPUWithChildGuard(test *testing.T) {
 	command := exec.CommandContext(test.Context(), "/bin/sh", "-c", "ulimit -t")
 	var output bytes.Buffer
 	command.Stdout = &output
-	if err := PrepareCPU(command, 7*time.Second); err != nil {
-		test.Fatal(err)
+	if prepareCpuError := PrepareCPU(command, 7*time.Second); prepareCpuError != nil {
+		test.Fatal(prepareCpuError)
 	}
-	if err := childguard.Run(
+	if runError := childguard.Run(
 		command,
 		childguard.Options{FirstOutput: Ceiling, Stall: Ceiling, Ceiling: Ceiling},
-	); err != nil {
-		test.Fatal(err)
+	); runError != nil {
+		test.Fatal(runError)
 	}
 	if got := strings.TrimSpace(output.String()); got != "7" {
 		test.Fatalf("CPU limit = %q, want 7 seconds", got)

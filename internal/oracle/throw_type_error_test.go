@@ -32,11 +32,11 @@ func TestThrownErrorClassesAgreeWithNode(test *testing.T) {
 	} {
 		test.Run(probe.file, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(
+			path, absolutePathError := filepath.Abs(
 				filepath.Join(repository, "internal/oracle/testdata/throw_type_error", probe.file),
 			)
-			if err != nil {
-				test.Fatal(err)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			want := run{stdout: []byte(probe.stdout), stderr: []byte(probe.stderr)}
 			if probe.stderr != "" {
@@ -46,9 +46,9 @@ func TestThrownErrorClassesAgreeWithNode(test *testing.T) {
 			if disagreement(want, truth) != "" {
 				test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatalf("a thrown built-in Error must lower: %v", err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatalf("a thrown built-in Error must lower: %v", loweredError)
 			}
 			native, _ := natively(test, program)
 			for name, got := range map[string]run{
@@ -75,19 +75,21 @@ func TestThrownErrorClassesAgreeWithNode(test *testing.T) {
 // isn't lowered, so a caught TypeError isn't read as one, and the test isn't lowered to true.
 func TestCaughtInstanceOfTypeErrorNotYet(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/throw_type_error/instanceof.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/throw_type_error/instanceof.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	if truth := onNode(test, path); disagreement(run{stdout: []byte("true\n")}, truth) != "" {
 		test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 	}
-	_, err = lowered(test, path)
+	_, loweredError := lowered(test, path)
 	var notYet *lower.NotYet
-	if !errors.As(err, &notYet) ||
-		!strings.Contains(err.Error(), "instanceof.a:6:17") ||
-		!strings.Contains(err.Error(), "instanceof against a value that isn't a declared class") {
-		test.Fatalf("want instanceof TypeError NotYet at the test, got %v", err)
+	if !errors.As(loweredError, &notYet) ||
+		!strings.Contains(loweredError.Error(), "instanceof.a:6:17") ||
+		!strings.Contains(loweredError.Error(), "instanceof against a value that isn't a declared class") {
+		test.Fatalf("want instanceof TypeError NotYet at the test, got %v", loweredError)
 	}
 }
 
@@ -106,21 +108,25 @@ func TestErrorKeysNotYet(test *testing.T) {
 	} {
 		test.Run(probe.file, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(
+			path, absolutePathError := filepath.Abs(
 				filepath.Join(repository, "internal/oracle/testdata/throw_type_error", probe.file),
 			)
-			if err != nil {
-				test.Fatal(err)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			if truth := onNode(test, path); disagreement(run{stdout: []byte("0\n")}, truth) != "" {
 				test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
-			_, err = lowered(test, path)
+			_, loweredError := lowered(test, path)
 			var notYet *lower.NotYet
-			if !errors.As(err, &notYet) ||
-				!strings.Contains(err.Error(), probe.at) ||
-				!strings.Contains(err.Error(), "Object.keys of a value that may hold an Error") {
-				test.Fatalf("want Object.keys of a value that may hold an Error NotYet at %s, got %v", probe.at, err)
+			if !errors.As(loweredError, &notYet) ||
+				!strings.Contains(loweredError.Error(), probe.at) ||
+				!strings.Contains(loweredError.Error(), "Object.keys of a value that may hold an Error") {
+				test.Fatalf(
+					"want Object.keys of a value that may hold an Error NotYet at %s, got %v",
+					probe.at,
+					loweredError,
+				)
 			}
 		})
 	}
@@ -132,16 +138,18 @@ func TestErrorKeysNotYet(test *testing.T) {
 // message, String(value) of a value that is null or undefined there, which isn't built yet.
 func TestPropertyOfLowersPastItsThrow(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/throw_type_error/hostErrors.ts"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/throw_type_error/hostErrors.ts"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	_, err = lowered(test, path)
+	_, loweredError := lowered(test, path)
 	var notYet *lower.NotYet
-	if !errors.As(err, &notYet) ||
-		!strings.Contains(err.Error(), "hostErrors.ts:14:65") ||
-		!strings.Contains(err.Error(), "String conversion of an object, array, map or function") {
-		test.Fatalf("want propertyOf NotYet at String(value) in its message, got %v", err)
+	if !errors.As(loweredError, &notYet) ||
+		!strings.Contains(loweredError.Error(), "hostErrors.ts:14:65") ||
+		!strings.Contains(loweredError.Error(), "String conversion of an object, array, map or function") {
+		test.Fatalf("want propertyOf NotYet at String(value) in its message, got %v", loweredError)
 	}
 }
 
@@ -156,23 +164,23 @@ const caughtTypeError = "TypeError\nbad 3\nTypeError: bad 3\nTypeError\ndirect 4
 // class extend Error goes red here, and must teach errorMayHide the base chain before it re-pins this.
 func TestErrorSubclassStaysNotYet(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(
+	path, absolutePathError := filepath.Abs(
 		filepath.Join(repository, "internal/oracle/testdata/throw_type_error/subclass_keys_view.a"),
 	)
-	if err != nil {
-		test.Fatal(err)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	if truth := onNode(test, path); disagreement(run{stdout: []byte("0\n")}, truth) != "" {
 		test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 	}
-	_, err = lowered(test, path)
+	_, loweredError := lowered(test, path)
 	var notYet *lower.NotYet
-	if !errors.As(err, &notYet) ||
-		!strings.Contains(err.Error(), "subclass_keys_view.a:3:11") ||
-		!strings.Contains(err.Error(), "a computed class base") {
+	if !errors.As(loweredError, &notYet) ||
+		!strings.Contains(loweredError.Error(), "subclass_keys_view.a:3:11") ||
+		!strings.Contains(loweredError.Error(), "a computed class base") {
 		test.Fatalf(
 			"an Error subclass no longer stops at its base (got %v): before re-pinning this, errorMayHide's made test (prototype.go) must walk the base chain, so an instance of a class extending any errorClasses member counts as an Error made in the source",
-			err,
+			loweredError,
 		)
 	}
 }

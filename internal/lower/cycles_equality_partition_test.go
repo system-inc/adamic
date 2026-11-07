@@ -15,13 +15,13 @@ import (
 // deleting a wrapper or changing the partition must not lose or repeat a path.
 func TestCycleFinderEqualityPartition(test *testing.T) {
 	test.Parallel()
-	file, err := parser.ParseFile(token.NewFileSet(), "cycles_equality_shards_test.go", nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	file, parseFileError := parser.ParseFile(token.NewFileSet(), "cycles_equality_shards_test.go", nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
-	paths, err := cycleComparisonInputs()
-	if err != nil {
-		test.Fatal(err)
+	paths, cycleComparisonInputsError := cycleComparisonInputs()
+	if cycleComparisonInputsError != nil {
+		test.Fatal(cycleComparisonInputsError)
 	}
 	if len(paths) < 3500 {
 		test.Fatalf("cycle comparison inventory shrank: %d", len(paths))
@@ -38,8 +38,8 @@ func TestCycleFinderEqualityPartition(test *testing.T) {
 		if !ok || literal.Kind != token.INT {
 			test.Fatalf("%s: shard must be an integer literal", function.Name.Name)
 		}
-		shard, err := strconv.ParseUint(literal.Value, 10, 64)
-		if err != nil ||
+		shard, parseError := strconv.ParseUint(literal.Value, 10, 64)
+		if parseError != nil ||
 			shard >= cycleEqualityShardCount ||
 			function.Name.Name != fmt.Sprintf("TestCycleFinderEquality_%03d", shard) {
 			test.Fatalf("%s: invalid shard %s", function.Name.Name, literal.Value)
@@ -84,13 +84,13 @@ func cycleEqualityWrapperArguments(test *testing.T, function *ast.FuncDecl, help
 
 func TestCycleEqualityProductsHaveBuilders(test *testing.T) {
 	test.Parallel()
-	file, err := parser.ParseFile(token.NewFileSet(), "cycles_equality_products_test.go", nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	file, parseFileError := parser.ParseFile(token.NewFileSet(), "cycles_equality_products_test.go", nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
-	paths, err := cycleComparisonInputs()
-	if err != nil {
-		test.Fatal(err)
+	paths, cycleComparisonInputsError := cycleComparisonInputs()
+	if cycleComparisonInputsError != nil {
+		test.Fatal(cycleComparisonInputsError)
 	}
 	inventory := make(map[string]bool)
 	for _, path := range paths {
@@ -107,8 +107,8 @@ func TestCycleEqualityProductsHaveBuilders(test *testing.T) {
 		if !ok || literal.Kind != token.STRING {
 			test.Fatalf("%s: path must be a string literal", function.Name.Name)
 		}
-		path, err := strconv.Unquote(literal.Value)
-		if err != nil ||
+		path, unquoteError := strconv.Unquote(literal.Value)
+		if unquoteError != nil ||
 			!inventory[path] ||
 			function.Name.Name != "TestProduct_CycleEquality"+cycleEqualityProducts[path] {
 			test.Fatalf("%s: invalid product path %s", function.Name.Name, literal.Value)

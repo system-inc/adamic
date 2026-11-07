@@ -24,9 +24,9 @@ func TestNodeRealpathNativeForms(test *testing.T) {
 	} {
 		test.Run(source, func(test *testing.T) {
 			test.Parallel()
-			program, err := lowerSource(test, source)
-			if err != nil {
-				test.Fatal(err)
+			program, lowerSourceError := lowerSource(test, source)
+			if lowerSourceError != nil {
+				test.Fatal(lowerSourceError)
 			}
 			count := 0
 			for _, f := range program.Functions {
@@ -70,10 +70,13 @@ func TestNodeRealpathNativeRefusals(test *testing.T) {
 	} {
 		test.Run(one.source, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, `import fs from 'node:fs'; import {Buffer} from 'node:buffer'; `+one.source)
+			_, lowerSourceError := lowerSource(
+				test,
+				`import fs from 'node:fs'; import {Buffer} from 'node:buffer'; `+one.source,
+			)
 			var gap *NotYet
-			if !errors.As(err, &gap) || !strings.Contains(gap.What, one.reason) {
-				test.Fatalf("want %s, got %v", one.reason, err)
+			if !errors.As(lowerSourceError, &gap) || !strings.Contains(gap.What, one.reason) {
+				test.Fatalf("want %s, got %v", one.reason, lowerSourceError)
 			}
 		})
 	}
@@ -152,16 +155,16 @@ func TestNodeRealpathNativeClosedUses(test *testing.T) {
 
 func TestNodeRealpathNativePlainArmIsAdmitted(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("testdata/realpath/refused/plain_arm.a")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("testdata/realpath/refused/plain_arm.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	if _, err = Lower(context.Background(), program); err != nil {
-		test.Fatal(err)
+	if _, lowerError := Lower(context.Background(), program); lowerError != nil {
+		test.Fatal(lowerError)
 	}
 }
 
@@ -201,8 +204,8 @@ func TestNodeRealpathPlainUsesAndOptions(test *testing.T) {
 	} {
 		test.Run(source, func(test *testing.T) {
 			test.Parallel()
-			if _, err := lowerSource(test, source); err != nil {
-				test.Fatal(err)
+			if _, lowerSourceError := lowerSource(test, source); lowerSourceError != nil {
+				test.Fatal(lowerSourceError)
 			}
 		})
 	}
@@ -212,10 +215,10 @@ func TestNodeRealpathPlainUsesAndOptions(test *testing.T) {
 	} {
 		test.Run(source, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, source)
+			_, lowerSourceError := lowerSource(test, source)
 			var gap *NotYet
-			if !errors.As(err, &gap) || !strings.Contains(gap.What, "options") {
-				test.Fatalf("want named options NotYet, got %v", err)
+			if !errors.As(lowerSourceError, &gap) || !strings.Contains(gap.What, "options") {
+				test.Fatalf("want named options NotYet, got %v", lowerSourceError)
 			}
 		})
 	}
@@ -232,16 +235,16 @@ func TestNodeRealpathPlainCallRefusals(test *testing.T) {
 	} {
 		test.Run(one.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(
+			_, lowerSourceError := lowerSource(
 				test,
 				`import fs from 'node:fs'; import {Buffer} from 'node:buffer'; import {URL} from 'node:url'; `+
 					one.source,
 			)
 			var gap *NotYet
-			if !errors.As(err, &gap) ||
+			if !errors.As(lowerSourceError, &gap) ||
 				!strings.Contains(gap.What, "node:fs.realpathSync") ||
 				!strings.Contains(gap.What, one.reason) {
-				test.Fatalf("want named plain realpath refusal %q, got %v", one.reason, err)
+				test.Fatalf("want named plain realpath refusal %q, got %v", one.reason, lowerSourceError)
 			}
 		})
 	}

@@ -65,7 +65,9 @@ func (l *lowering) recordReadDeclared(node *ast.Node, read ir.Expression, here *
 	}
 	b := l.libraryArrayBuilder([]ir.Expression{read})
 	value := b.read(b.parameters[0])
-	matches := ir.Expression(ir.Binary{Operator: ir.Equal, Left: ir.TypeOf{Value: value}, Right: ir.StringConstant{Index: l.constant(name)}})
+	matches := ir.Expression(
+		ir.Binary{Operator: ir.Equal, Left: ir.TypeOf{Value: value}, Right: ir.StringConstant{Index: l.constant(name)}},
+	)
 	if l.includesUndefined(here) {
 		matches = ir.Binary{Operator: ir.Or, Left: matches, Right: ir.IsUndefined{Value: value}}
 	}
@@ -73,20 +75,32 @@ func (l *lowering) recordReadDeclared(node *ast.Node, read ir.Expression, here *
 	// member of the slot's union under a declared key. The stop names the read and what it found.
 	expression := recordReadExpression(node)
 	declared := l.checker.TypeToString(l.checker.GetNonNullableType(here))
-	found := ir.Conditional{Condition: ir.IsNull{Value: value}, WhenTrue: ir.StringConstant{Index: l.constant("null")}, WhenNot: ir.TypeOf{Value: value}, Of: ir.String}
+	found := ir.Conditional{
+		Condition: ir.IsNull{Value: value},
+		WhenTrue:  ir.StringConstant{Index: l.constant("null")},
+		WhenNot:   ir.TypeOf{Value: value},
+		Of:        ir.String,
+	}
 	message := ir.Concat{Parts: []ir.Expression{
-		ir.StringConstant{Index: l.constant("field read failed: " + expression + " is not a " + declared + "; expected " + declared + ", found ")},
+		ir.StringConstant{Index: l.constant(
+			"field read failed: " + expression + " is not a " + declared + "; expected " + declared + ", found ",
+		)},
 		found,
 		ir.StringConstant{Index: l.constant(", which a computed-key or index-signature write may have stored")},
 	}}
-	b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: matches}, Then: []ir.Statement{ir.Panic{Message: message}}})
+	b.body = append(b.body, ir.If{
+		Condition: ir.Unary{Operator: ir.Not, Operand: matches},
+		Then:      []ir.Statement{ir.Panic{Message: message}},
+	})
 	// typeof alone lets a 3 under 1 | 2, or Kind.C under Kind.A | Kind.B. Where the declared type is
 	// its literals alone (viewLiterals, the list a checked view holds a field to), a present value must
 	// be one of them; beside a member of its own representation (1 | number) the typeof is enough, and
 	// viewLiterals gives none. Lower's ruling on #1w8gvx9. A whole numeric enum is no closed list:
 	// numeric enums are open (docs/rulings.md, resolved October 19), so any number is one of its values,
 	// and only a strict subset of its members (ModuleKind.ESNext | ModuleKind.CommonJS) is held.
-	if allowed := l.viewLiterals(l.checker.GetNonNullableType(here)); len(allowed) != 0 && !l.openNumericEnumType(here) {
+	if allowed := l.viewLiterals(
+		l.checker.GetNonNullableType(here),
+	); len(allowed) != 0 && !l.openNumericEnumType(here) {
 		present := b.local("present", to.Present())
 		var member ir.Expression
 		for _, literal := range allowed {
@@ -105,16 +119,29 @@ func (l *lowering) recordReadDeclared(node *ast.Node, read ir.Expression, here *
 			shown = ir.BooleanToString{Value: shown}
 		}
 		missed := ir.Concat{Parts: []ir.Expression{
-			ir.StringConstant{Index: l.constant("field read failed: " + expression + " is not a " + declared + "; expected " + declared + ", found " + name + " ")},
+			ir.StringConstant{Index: l.constant("field read failed: " +
+				expression +
+				" is not a " +
+				declared +
+				"; expected " +
+				declared +
+				", found " +
+				name +
+				" ")},
 			shown,
 			ir.StringConstant{Index: l.constant(", which a computed-key or index-signature write may have stored")},
 		}}
 		membership := []ir.Statement{
 			ir.Declare{Local: present, Value: ir.Narrow{Value: value, To: to.Present()}},
-			ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: member}, Then: []ir.Statement{ir.Panic{Message: missed}}},
+			ir.If{
+				Condition: ir.Unary{Operator: ir.Not, Operand: member},
+				Then:      []ir.Statement{ir.Panic{Message: missed}},
+			},
 		}
 		if l.includesUndefined(here) {
-			membership = []ir.Statement{ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: ir.IsUndefined{Value: value}}, Then: membership}}
+			membership = []ir.Statement{
+				ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: ir.IsUndefined{Value: value}}, Then: membership},
+			}
 		}
 		b.body = append(b.body, membership...)
 	}
@@ -136,7 +163,12 @@ func recordReadExpression(node *ast.Node) string {
 // CompilerOptions reads configFile?: TsConfigSourceFile and paths?: MapLike<string[]> this way, beside
 // arrays, scalars and null. Two members of one class, an array's four, a member whose runtime class
 // isn't known, or a declared type that admits null (which the checked arm stops on) keep the NotYet.
-func (l *lowering) recordReadHeapMember(node *ast.Node, read ir.Expression, here *checker.Type, to ir.Type) (ir.Expression, error) {
+func (l *lowering) recordReadHeapMember(
+	node *ast.Node,
+	read ir.Expression,
+	here *checker.Type,
+	to ir.Type,
+) (ir.Expression, error) {
 	declared := l.concrete(l.checker.GetNonNullableType(here))
 	if l.includesNull(here) || !l.recordSlotMemberUnique(recordReceiver(node), declared, to) {
 		return nil, l.notYet(node, "a dictionary member narrowed to an object kind without a checked runtime tag")
@@ -144,12 +176,21 @@ func (l *lowering) recordReadHeapMember(node *ast.Node, read ir.Expression, here
 	b := l.libraryArrayBuilder([]ir.Expression{read})
 	value := b.read(b.parameters[0])
 	if l.includesUndefined(here) {
-		b.body = append(b.body, ir.If{Condition: ir.IsUndefined{Value: value}, Then: []ir.Statement{ir.Return{Value: ir.Undefined{Of: to}}}})
+		b.body = append(b.body, ir.If{
+			Condition: ir.IsUndefined{Value: value},
+			Then:      []ir.Statement{ir.Return{Value: ir.Undefined{Of: to}}},
+		})
 	}
 	named := l.checker.TypeToString(declared)
 	// A write through the index signature, by a computed key or through a wider alias, can leave any
 	// member of the slot's union under a declared key. The stop names the read and what it found.
-	message := "field read failed: " + recordReadExpression(node) + " is not a " + named + "; expected " + named + ", found another member of the index signature's union, which a computed-key or index-signature write may have stored"
+	message := "field read failed: " +
+		recordReadExpression(node) +
+		" is not a " +
+		named +
+		"; expected " +
+		named +
+		", found another member of the index signature's union, which a computed-key or index-signature write may have stored"
 	return b.finish("record_declared_member", ir.Narrow{Value: value, To: to, Checked: true, Message: message}), nil
 }
 
@@ -175,7 +216,8 @@ func (l *lowering) recordSlotMemberUnique(receiver *ast.Node, declared *checker.
 		if !known || !recordSlotHeapClasses[of] {
 			return false
 		}
-		if of == ir.Object && len(l.checker.GetIndexInfosOfType(member)) != 0 || of == ir.Closure && len(l.checker.GetSignaturesOfType(member, checker.SignatureKindCall)) == 0 {
+		if of == ir.Object && len(l.checker.GetIndexInfosOfType(member)) != 0 ||
+			of == ir.Closure && len(l.checker.GetSignaturesOfType(member, checker.SignatureKindCall)) == 0 {
 			return false
 		}
 		if of != to {
@@ -186,13 +228,25 @@ func (l *lowering) recordSlotMemberUnique(receiver *ast.Node, declared *checker.
 		}
 		unique = member
 	}
-	return unique != nil && (unique == declared || l.checker.IsTypeAssignableTo(unique, declared) && l.checker.IsTypeAssignableTo(declared, unique) && l.sameRecordStorage(unique, declared, map[[2]*checker.Type]bool{}) && l.sameRecordStorage(declared, unique, map[[2]*checker.Type]bool{}))
+	return unique != nil && (unique == declared || l.checker.IsTypeAssignableTo(unique, declared) &&
+		l.checker.IsTypeAssignableTo(declared, unique) &&
+		l.sameRecordStorage(unique, declared, map[[2]*checker.Type]bool{}) &&
+		l.sameRecordStorage(declared, unique, map[[2]*checker.Type]bool{}))
 }
 
 // recordSlotHeapClasses is each representation recordSlotMemberUnique tells apart at runtime: a scalar by
 // its box, a string, an array, a Map and a closure by their heap kinds, and a fixed object from a
 // dictionary by its shape.
-var recordSlotHeapClasses = map[ir.Type]bool{ir.Number: true, ir.Boolean: true, ir.String: true, ir.Array: true, ir.Map: true, ir.Closure: true, ir.Object: true, ir.Record: true}
+var recordSlotHeapClasses = map[ir.Type]bool{
+	ir.Number:  true,
+	ir.Boolean: true,
+	ir.String:  true,
+	ir.Array:   true,
+	ir.Map:     true,
+	ir.Closure: true,
+	ir.Object:  true,
+	ir.Record:  true,
+}
 
 // An unrestricted key can hit a narrower named slot. Preserve that slot's
 // contract instead of trusting the checker's permissive index assignment.
@@ -203,7 +257,9 @@ func (l *lowering) recordNamedWrite(access, value *ast.Node) error {
 	}
 	a := access.AsElementAccessExpression()
 	key := ast.SkipParentheses(a.ArgumentExpression)
-	if key.Kind == ast.KindStringLiteral || key.Kind == ast.KindNoSubstitutionTemplateLiteral || key.Kind == ast.KindNumericLiteral {
+	if key.Kind == ast.KindStringLiteral ||
+		key.Kind == ast.KindNoSubstitutionTemplateLiteral ||
+		key.Kind == ast.KindNumericLiteral {
 		return nil // The checker already applies the named property's write type.
 	}
 	return l.namedWriteStop(access, l.checker.GetTypeAtLocation(a.Expression), value, nil)
@@ -224,7 +280,9 @@ func (l *lowering) recordNamedWrite(access, value *ast.Node) error {
 // read as unknown.
 func (l *lowering) recordComputedEntry(literal, entry *ast.Node, of ir.Type) error {
 	key := ast.SkipParentheses(entry.Name().AsComputedPropertyName().Expression)
-	if key.Kind == ast.KindStringLiteral || key.Kind == ast.KindNoSubstitutionTemplateLiteral || key.Kind == ast.KindNumericLiteral {
+	if key.Kind == ast.KindStringLiteral ||
+		key.Kind == ast.KindNoSubstitutionTemplateLiteral ||
+		key.Kind == ast.KindNumericLiteral {
 		return nil
 	}
 	var folded map[string]bool
@@ -242,7 +300,9 @@ func (l *lowering) recordComputedEntry(literal, entry *ast.Node, of ir.Type) err
 				continue
 			}
 			if of == ir.Union {
-				if stored, known := l.representation(l.checker.GetNonMissingTypeOfSymbol(property)); known && readGuardedInUnionSlot[stored.Present()] {
+				if stored, known := l.representation(
+					l.checker.GetNonMissingTypeOfSymbol(property),
+				); known && readGuardedInUnionSlot[stored.Present()] {
 					continue
 				}
 			}
@@ -252,10 +312,18 @@ func (l *lowering) recordComputedEntry(literal, entry *ast.Node, of ir.Type) err
 			continue
 		}
 		if entry.Kind != ast.KindPropertyAssignment {
-			return l.notYet(entry.Name(), "a computed method or accessor in a record literal whose name a named property may take")
+			return l.notYet(
+				entry.Name(),
+				"a computed method or accessor in a record literal whose name a named property may take",
+			)
 		}
-		if err := l.namedWriteStop(entry.Name(), receiver, entry.AsPropertyAssignment().Initializer, names); err != nil {
-			return err
+		if namedWriteStopError := l.namedWriteStop(
+			entry.Name(),
+			receiver,
+			entry.AsPropertyAssignment().Initializer,
+			names,
+		); namedWriteStopError != nil {
+			return namedWriteStopError
 		}
 	}
 	return nil
@@ -268,9 +336,17 @@ func (l *lowering) recordComputedEntry(literal, entry *ast.Node, of ir.Type) err
 // member of its heap class in the slot's union is read through a checked heap narrow
 // (recordReadHeapMember), which stops on the other class; beside another of its class it has no
 // checked tag, and neither has an array or a Map, so their read is not yet: Language's b8, a8 and p8,
-// and r8, the MapLike that records_union_options.ts, tsc's commandLineParser shape, declares. A function's tag says only
-// "function", so it's judged (b10), as is any representation not here.
-var readGuardedInUnionSlot = map[ir.Type]bool{ir.Number: true, ir.String: true, ir.Boolean: true, ir.Object: true, ir.Array: true, ir.Map: true, ir.Record: true}
+// and r8, the MapLike that records_union_options.ts, tsc's commandLineParser shape, declares. A function's tag says
+// only "function", so it's judged (b10), as is any representation not here.
+var readGuardedInUnionSlot = map[ir.Type]bool{
+	ir.Number:  true,
+	ir.String:  true,
+	ir.Boolean: true,
+	ir.Object:  true,
+	ir.Array:   true,
+	ir.Map:     true,
+	ir.Record:  true,
+}
 
 // namedWriteStop stops a value written under a name the key can't promise into receiver, through its
 // index signature, at the first named property of receiver (of those names holds, when it's given) it
@@ -284,18 +360,27 @@ var readGuardedInUnionSlot = map[ir.Type]bool{ir.Number: true, ir.String: true, 
 // judges, since a direct write can't do it:
 // a readonly property written through the index, a value tsc's own relation doesn't take (the registry
 // presumes the site passed it), and a value the record's one storage can't hold as that property does.
-func (l *lowering) namedWriteStop(where *ast.Node, receiver *checker.Type, value *ast.Node, names map[string]bool) error {
+func (l *lowering) namedWriteStop(
+	where *ast.Node,
+	receiver *checker.Type,
+	value *ast.Node,
+	names map[string]bool,
+) error {
 	from := l.checker.GetTypeAtLocation(value)
 	for _, property := range l.checker.GetPropertiesOfType(receiver) {
 		if names != nil && !names[property.Name] {
 			continue
 		}
 		to := l.checker.GetNonMissingTypeOfSymbol(property)
-		if l.checker.IsReadonlySymbol(property) || !l.checker.IsTypeAssignableTo(from, to) || !l.sameRecordStorage(from, to, map[[2]*checker.Type]bool{}) {
-			return l.notYet(where, "an unrestricted dictionary write that can violate named property "+property.Name+"; use a literal key or a value accepted by every named property")
+		if l.checker.IsReadonlySymbol(property) ||
+			!l.checker.IsTypeAssignableTo(from, to) ||
+			!l.sameRecordStorage(from, to, map[[2]*checker.Type]bool{}) {
+			return l.notYet(where, "an unrestricted dictionary write that can violate named property "+
+				property.Name+
+				"; use a literal key or a value accepted by every named property")
 		}
-		if err := l.refuseInSlot(value, to); err != nil {
-			return err
+		if refuseInSlotError := l.refuseInSlot(value, to); refuseInSlotError != nil {
+			return refuseInSlotError
 		}
 		// Lowering judges the value against the index type it's stored as, so its own slot checks (a
 		// host object's view, a weak or strong keep, a tuple seen as an array) are run here against the
@@ -303,8 +388,12 @@ func (l *lowering) namedWriteStop(where *ast.Node, receiver *checker.Type, value
 		// whose representation isn't known is judged as a reference, so this never leans on its own
 		// lowering stopping it later (Lower's should on fffa97b5).
 		held, known := l.representation(from)
-		if err := l.valueSlotStops(value, to, !known || held.IsReference()); err != nil {
-			return err
+		if valueSlotStopsError := l.valueSlotStops(
+			value,
+			to,
+			!known || held.IsReference(),
+		); valueSlotStopsError != nil {
+			return valueSlotStopsError
 		}
 	}
 	return nil
@@ -312,7 +401,10 @@ func (l *lowering) namedWriteStop(where *ast.Node, receiver *checker.Type, value
 
 // Erasing or widening a named contract would allow another alias to write through
 // the index signature. Storage identity alone is not a proof of that relation.
-func (l *lowering) sameRecordNamedContracts(from, to, inside, viewed *checker.Type, visited map[[2]*checker.Type]bool) bool {
+func (l *lowering) sameRecordNamedContracts(
+	from, to, inside, viewed *checker.Type,
+	visited map[[2]*checker.Type]bool,
+) bool {
 	for index, pair := range [][3]*checker.Type{{from, to, viewed}, {to, from, inside}} {
 		if len(l.checker.GetIndexInfosOfType(pair[0])) == 0 {
 			continue // Finite partial records retain their existing element invariance rule.
@@ -322,13 +414,19 @@ func (l *lowering) sameRecordNamedContracts(from, to, inside, viewed *checker.Ty
 			t := l.checker.GetNonMissingTypeOfSymbol(property)
 			if other == nil {
 				// A .ts view may drop the source's own contract (droppedContractRead), never add one.
-				if (l.checker.IsReadonlySymbol(property) || !l.checker.IsTypeAssignableTo(pair[2], t)) && !(index == 0 && l.droppedContractRead(t, inside, viewed)) {
+				if (l.checker.IsReadonlySymbol(property) || !l.checker.IsTypeAssignableTo(pair[2], t)) &&
+					!(index == 0 && l.droppedContractRead(t, inside, viewed)) {
 					return false
 				}
 				continue
 			}
 			u := l.checker.GetNonMissingTypeOfSymbol(other)
-			if l.checker.IsReadonlySymbol(property) != l.checker.IsReadonlySymbol(other) || !l.checker.IsTypeAssignableTo(t, u) || !l.checker.IsTypeAssignableTo(u, t) || !l.sameRecordStorage(t, u, visited) || l.widened(t, u, map[[2]*checker.Type]bool{}) != nil || l.widened(u, t, map[[2]*checker.Type]bool{}) != nil {
+			if l.checker.IsReadonlySymbol(property) != l.checker.IsReadonlySymbol(other) ||
+				!l.checker.IsTypeAssignableTo(t, u) ||
+				!l.checker.IsTypeAssignableTo(u, t) ||
+				!l.sameRecordStorage(t, u, visited) ||
+				l.widened(t, u, map[[2]*checker.Type]bool{}) != nil ||
+				l.widened(u, t, map[[2]*checker.Type]bool{}) != nil {
 				return false
 			}
 		}

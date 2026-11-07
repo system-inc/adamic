@@ -43,13 +43,13 @@ func TestLibraryMapSetMutants(test *testing.T) {
 			case "groupBy":
 				fixture = "library_map_set_group_by.a"
 			}
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			changed := false
 			for index := range program.Functions {
@@ -125,8 +125,8 @@ static bool library_mutant_next(adamic_map_iterator *iterator, adamic_value *key
 				test.Fatal("the mutant changed no code")
 			}
 			binary := filepath.Join(test.TempDir(), "mutant")
-			if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(code, binary, native.Options{Sanitize: true}); buildError != nil {
+				test.Fatal(buildError)
 			}
 			result := executeWith(
 				test,

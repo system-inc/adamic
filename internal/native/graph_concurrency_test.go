@@ -16,13 +16,17 @@ import (
 func graphRuntimeGuard(test *testing.T, source, file, old, changed, diagnostic string, modes ...bool) {
 	test.Helper()
 	options := Options{Sanitize: true, Count: true}
-	files, flags, compiler, version, err := runtimeInputs("", options, []string{"-DADAMIC_CANONICAL_CLOSURES=1"})
-	if err != nil {
-		test.Fatal(err)
+	files, flags, compiler, version, runtimeInputsError := runtimeInputs(
+		"",
+		options,
+		[]string{"-DADAMIC_CANONICAL_CLOSURES=1"},
+	)
+	if runtimeInputsError != nil {
+		test.Fatal(runtimeInputsError)
 	}
-	cache, err := cacheDirectory("graph-runtime")
-	if err != nil {
-		test.Fatal(err)
+	cache, cacheDirectoryError := cacheDirectory("graph-runtime")
+	if cacheDirectoryError != nil {
+		test.Fatal(cacheDirectoryError)
 	}
 	if len(modes) == 0 {
 		modes = []bool{false, true}
@@ -45,22 +49,22 @@ func graphRuntimeGuard(test *testing.T, source, file, old, changed, diagnostic s
 				test.Fatal("missing mutant file", file)
 			}
 		}
-		library, err := cachedRuntime(files, flags, compiler, version, cache)
-		if err != nil {
-			test.Fatal(err)
+		library, cachedRuntimeError := cachedRuntime(files, flags, compiler, version, cache)
+		if cachedRuntimeError != nil {
+			test.Fatal(cachedRuntimeError)
 		}
 		binary := buildHarnessWithLibrary(test, source, flags, compiler, library)
 		command, release := boundedrun.Command(5*time.Second, binary)
 		command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0:halt_on_error=1")
-		output, err := command.CombinedOutput()
+		output, combinedOutputError := command.CombinedOutput()
 		release()
 		if mutant {
-			if err == nil || !strings.Contains(string(output), diagnostic) {
-				test.Fatalf("mutant survived or failed differently: %v\n%s", err, output)
+			if combinedOutputError == nil || !strings.Contains(string(output), diagnostic) {
+				test.Fatalf("mutant survived or failed differently: %v\n%s", combinedOutputError, output)
 			}
 			test.Logf("caught %s mutant by %s", file, diagnostic)
-		} else if err != nil {
-			test.Fatalf("control: %v\n%s", err, output)
+		} else if combinedOutputError != nil {
+			test.Fatalf("control: %v\n%s", combinedOutputError, output)
 		}
 	}
 }
@@ -205,13 +209,13 @@ int main(void) {
 
 func graphRefusalGuard(test *testing.T, source string, mutant bool) {
 	test.Helper()
-	files, flags, compiler, version, err := runtimeInputs("", Options{Sanitize: true}, nil)
-	if err != nil {
-		test.Fatal(err)
+	files, flags, compiler, version, runtimeInputsError := runtimeInputs("", Options{Sanitize: true}, nil)
+	if runtimeInputsError != nil {
+		test.Fatal(runtimeInputsError)
 	}
-	cache, err := cacheDirectory("graph-refusal")
-	if err != nil {
-		test.Fatal(err)
+	cache, cacheDirectoryError := cacheDirectory("graph-refusal")
+	if cacheDirectoryError != nil {
+		test.Fatal(cacheDirectoryError)
 	}
 	if mutant {
 		for i := range files {
@@ -225,21 +229,21 @@ func graphRefusalGuard(test *testing.T, source string, mutant bool) {
 			}
 		}
 	}
-	library, err := cachedRuntime(files, flags, compiler, version, cache)
-	if err != nil {
-		test.Fatal(err)
+	library, cachedRuntimeError := cachedRuntime(files, flags, compiler, version, cache)
+	if cachedRuntimeError != nil {
+		test.Fatal(cachedRuntimeError)
 	}
 	binary := buildHarnessWithLibrary(test, source, flags, compiler, library)
 	command, release := boundedrun.Command(5*time.Second, binary)
 	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
-	output, err := command.CombinedOutput()
+	output, combinedOutputError := command.CombinedOutput()
 	release()
 	expected := "graph adoption needs a new allocation"
 	if mutant {
 		expected = "Assertion"
 	}
-	if err == nil || !strings.Contains(string(output), expected) {
-		test.Fatalf("mutant=%t: %v %s", mutant, err, output)
+	if combinedOutputError == nil || !strings.Contains(string(output), expected) {
+		test.Fatalf("mutant=%t: %v %s", mutant, combinedOutputError, output)
 	}
 }
 
@@ -280,13 +284,13 @@ int main(void) {
  return 0;
 }
 `
-	files, flags, compiler, version, err := runtimeInputs("", Options{ThreadSanitize: true}, nil)
-	if err != nil {
-		test.Fatal(err)
+	files, flags, compiler, version, runtimeInputsError := runtimeInputs("", Options{ThreadSanitize: true}, nil)
+	if runtimeInputsError != nil {
+		test.Fatal(runtimeInputsError)
 	}
-	cache, err := cacheDirectory("graph-task-refusal")
-	if err != nil {
-		test.Fatal(err)
+	cache, cacheDirectoryError := cacheDirectory("graph-task-refusal")
+	if cacheDirectoryError != nil {
+		test.Fatal(cacheDirectoryError)
 	}
 	for _, mutant := range []bool{false, true} {
 		if mutant {
@@ -301,21 +305,21 @@ int main(void) {
 				}
 			}
 		}
-		library, err := cachedRuntime(files, flags, compiler, version, cache)
-		if err != nil {
-			test.Fatal(err)
+		library, cachedRuntimeError := cachedRuntime(files, flags, compiler, version, cache)
+		if cachedRuntimeError != nil {
+			test.Fatal(cachedRuntimeError)
 		}
 		binary := buildHarnessWithLibrary(test, source, flags, compiler, library)
 		command, release := boundedrun.Command(10*time.Second, binary)
 		command.Env = append(os.Environ(), "ADAMIC_THREADS=2", "TSAN_OPTIONS=halt_on_error=1")
-		output, err := command.CombinedOutput()
+		output, combinedOutputError := command.CombinedOutput()
 		release()
 		expected := "a graph region can't cross into parallel work yet"
 		if mutant {
 			expected = "WARNING: ThreadSanitizer: data race"
 		}
-		if err == nil || !strings.Contains(string(output), expected) {
-			test.Fatalf("mutant=%t: %v\n%s", mutant, err, output)
+		if combinedOutputError == nil || !strings.Contains(string(output), expected) {
+			test.Fatalf("mutant=%t: %v\n%s", mutant, combinedOutputError, output)
 		}
 		if mutant && !strings.Contains(string(output), "graph_regions.c") {
 			test.Fatalf("race did not involve region counts: %s", output)
@@ -371,13 +375,13 @@ int main(void) {
  return 0;
 }
 `
-	files, flags, compiler, version, err := runtimeInputs("", Options{Sanitize: true}, nil)
-	if err != nil {
-		test.Fatal(err)
+	files, flags, compiler, version, runtimeInputsError := runtimeInputs("", Options{Sanitize: true}, nil)
+	if runtimeInputsError != nil {
+		test.Fatal(runtimeInputsError)
 	}
-	cache, err := cacheDirectory("graph-relocation")
-	if err != nil {
-		test.Fatal(err)
+	cache, cacheDirectoryError := cacheDirectory("graph-relocation")
+	if cacheDirectoryError != nil {
+		test.Fatal(cacheDirectoryError)
 	}
 	for i := range files {
 		if files[i].name == "map.c" {
@@ -401,20 +405,20 @@ int main(void) {
 				}
 			}
 		}
-		library, err := cachedRuntime(files, flags, compiler, version, cache)
-		if err != nil {
-			test.Fatal(err)
+		library, cachedRuntimeError := cachedRuntime(files, flags, compiler, version, cache)
+		if cachedRuntimeError != nil {
+			test.Fatal(cachedRuntimeError)
 		}
 		binary := buildHarnessWithLibrary(test, source, flags, compiler, library)
 		command, release := boundedrun.Command(5*time.Second, binary)
-		output, err := command.CombinedOutput()
+		output, combinedOutputError := command.CombinedOutput()
 		release()
 		if mutant {
-			if err == nil || !strings.Contains(string(output), "Assertion") {
-				test.Fatalf("relocation mutant: %v %s", err, output)
+			if combinedOutputError == nil || !strings.Contains(string(output), "Assertion") {
+				test.Fatalf("relocation mutant: %v %s", combinedOutputError, output)
 			}
-		} else if err != nil {
-			test.Fatalf("relocation control: %v %s", err, output)
+		} else if combinedOutputError != nil {
+			test.Fatalf("relocation control: %v %s", combinedOutputError, output)
 		}
 	}
 }
@@ -561,12 +565,12 @@ int main(void) {
 }
 `
 	binary := filepath.Join(test.TempDir(), "discards")
-	if err := Build(source, binary, Options{Sanitize: true, Count: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(source, binary, Options{Sanitize: true, Count: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	command, release := boundedrun.Command(5*time.Second, binary)
 	defer release()
-	if output, err := command.CombinedOutput(); err != nil {
-		test.Fatalf("canonical discard ownership: %v\n%s", err, output)
+	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("canonical discard ownership: %v\n%s", combinedOutputError, output)
 	}
 }

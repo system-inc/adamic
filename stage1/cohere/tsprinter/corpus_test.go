@@ -16,15 +16,15 @@ import (
 // served for this one. Keying builds nothing.
 func TestTSPrinterPinnedCorpusRekeysWithThePin(test *testing.T) {
 	test.Parallel()
-	root, err := filepath.Abs(oracles.Repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(oracles.Repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	keys := func(pin string) (string, string) {
 		inputs := oracles.TSPrinterPinnedCorpusInputs(pin)
-		declared, err := buildcache.Key(root, inputs)
-		if err != nil {
-			test.Fatal(err)
+		declared, keyError := buildcache.Key(root, inputs)
+		if keyError != nil {
+			test.Fatal(keyError)
 		}
 		return buildcache.NameKey(root, inputs), declared
 	}
@@ -46,12 +46,12 @@ func TestTrackedCorpusRoots(test *testing.T) {
 	if result := execute(test, nil, "git", "-C", directory, "init", "-q"); result.ExitCode != 0 {
 		test.Fatal(string(result.Stderr))
 	}
-	if err := os.Mkdir(filepath.Join(directory, "named"), 0755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.Mkdir(filepath.Join(directory, "named"), 0755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	for _, name := range []string{"named/tracked.ts", "named/untracked.ts", "outside.ts"} {
-		if err := os.WriteFile(filepath.Join(directory, name), []byte("x;\n"), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, name), []byte("x;\n"), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	if result := execute(
@@ -66,26 +66,26 @@ func TestTrackedCorpusRoots(test *testing.T) {
 	); result.ExitCode != 0 {
 		test.Fatal(string(result.Stderr))
 	}
-	files, err := oracles.TrackedRootFiles(test, directory, "named")
-	if err != nil || len(files) != 1 || files[0] != filepath.Join(directory, "named/tracked.ts") {
-		test.Fatalf("named tracked corpus: %v %v", files, err)
+	files, trackedRootFilesError := oracles.TrackedRootFiles(test, directory, "named")
+	if trackedRootFilesError != nil || len(files) != 1 || files[0] != filepath.Join(directory, "named/tracked.ts") {
+		test.Fatalf("named tracked corpus: %v %v", files, trackedRootFilesError)
 	}
-	if _, err := oracles.TrackedRootFiles(
+	if _, trackedRootFilesError := oracles.TrackedRootFiles(
 		test,
 		directory,
 		"missing",
-	); err == nil || !strings.Contains(err.Error(), "missing") {
-		test.Fatalf("missing root was not named: %v", err)
+	); trackedRootFilesError == nil || !strings.Contains(trackedRootFilesError.Error(), "missing") {
+		test.Fatalf("missing root was not named: %v", trackedRootFilesError)
 	}
-	if err := os.Mkdir(filepath.Join(directory, "empty"), 0755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.Mkdir(filepath.Join(directory, "empty"), 0755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	if _, err := oracles.TrackedRootFiles(
+	if _, trackedRootFilesError := oracles.TrackedRootFiles(
 		test,
 		directory,
 		"empty",
-	); err == nil || !strings.Contains(err.Error(), "empty") {
-		test.Fatalf("empty root was not named: %v", err)
+	); trackedRootFilesError == nil || !strings.Contains(trackedRootFilesError.Error(), "empty") {
+		test.Fatalf("empty root was not named: %v", trackedRootFilesError)
 	}
 	// The same checkout as a Loom runner unpacks it, every file but .git, answers from the tree's manifest alike.
 	if result := execute(
@@ -108,35 +108,38 @@ func TestTrackedCorpusRoots(test *testing.T) {
 	}
 	source := test.TempDir()
 	for _, name := range []string{"named/tracked.ts", "named/untracked.ts", "outside.ts"} {
-		if err := os.MkdirAll(filepath.Join(source, filepath.Dir(name)), 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(
+			filepath.Join(source, filepath.Dir(name)),
+			0755,
+		); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.WriteFile(filepath.Join(source, name), []byte("x;\n"), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(source, name), []byte("x;\n"), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
-	if _, err := oracles.TrackedRootFiles(
+	if _, trackedRootFilesError := oracles.TrackedRootFiles(
 		test,
 		source,
 		"named",
-	); err == nil || !strings.Contains(err.Error(), tracked.ManifestDirectory) {
-		test.Fatalf("a source with neither .git nor a manifest was listed: %v", err)
+	); trackedRootFilesError == nil || !strings.Contains(trackedRootFilesError.Error(), tracked.ManifestDirectory) {
+		test.Fatalf("a source with neither .git nor a manifest was listed: %v", trackedRootFilesError)
 	}
-	if err := tracked.Write(directory, source); err != nil {
-		test.Fatal(err)
+	if writeError := tracked.Write(directory, source); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if _, err := oracles.TrackedRootFiles(
+	if _, trackedRootFilesError := oracles.TrackedRootFiles(
 		test,
 		source,
 		"named",
-	); err == nil || !strings.Contains(err.Error(), "named/untracked.ts") {
-		test.Fatalf("a .ts file the manifest leaves out was dropped silently: %v", err)
+	); trackedRootFilesError == nil || !strings.Contains(trackedRootFilesError.Error(), "named/untracked.ts") {
+		test.Fatalf("a .ts file the manifest leaves out was dropped silently: %v", trackedRootFilesError)
 	}
-	if err := os.Remove(filepath.Join(source, "named/untracked.ts")); err != nil {
-		test.Fatal(err)
+	if removeError := os.Remove(filepath.Join(source, "named/untracked.ts")); removeError != nil {
+		test.Fatal(removeError)
 	}
-	files, err = oracles.TrackedRootFiles(test, source, "named")
-	if err != nil || len(files) != 1 || files[0] != filepath.Join(source, "named/tracked.ts") {
-		test.Fatalf("named tracked corpus without .git: %v %v", files, err)
+	files, trackedRootFilesError = oracles.TrackedRootFiles(test, source, "named")
+	if trackedRootFilesError != nil || len(files) != 1 || files[0] != filepath.Join(source, "named/tracked.ts") {
+		test.Fatalf("named tracked corpus without .git: %v %v", files, trackedRootFilesError)
 	}
 }

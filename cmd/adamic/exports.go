@@ -24,7 +24,10 @@ func crossingType(c *checker.Checker, t *checker.Type, path string, depth int) (
 		return native.ABIType{Kind: "string"}, nil
 	}
 	// boolean is represented by the checker as the union of true and false.
-	if t.Flags()&checker.TypeFlagsBoolean != 0 || (t.Flags()&checker.TypeFlagsUnion != 0 && len(t.Types()) == 2 && t.Types()[0].Flags()&checker.TypeFlagsBooleanLiteral != 0 && t.Types()[1].Flags()&checker.TypeFlagsBooleanLiteral != 0) {
+	if t.Flags()&checker.TypeFlagsBoolean != 0 || (t.Flags()&checker.TypeFlagsUnion != 0 &&
+		len(t.Types()) == 2 &&
+		t.Types()[0].Flags()&checker.TypeFlagsBooleanLiteral != 0 &&
+		t.Types()[1].Flags()&checker.TypeFlagsBooleanLiteral != 0) {
 		return native.ABIType{Kind: "boolean"}, nil
 	}
 	if c.IsArrayType(t) {
@@ -36,9 +39,9 @@ func crossingType(c *checker.Checker, t *checker.Type, path string, depth int) (
 		if len(args) != 1 {
 			return fail("ABI array must have one element type")
 		}
-		element, err := crossingType(c, args[0], path+"[]", depth)
-		if err != nil {
-			return native.ABIType{}, err
+		element, crossingTypeError := crossingType(c, args[0], path+"[]", depth)
+		if crossingTypeError != nil {
+			return native.ABIType{}, crossingTypeError
 		}
 		if element.Kind != "number" && element.Kind != "string" {
 			return fail("ABI arrays contain only number or string")
@@ -59,7 +62,8 @@ func crossingType(c *checker.Checker, t *checker.Type, path string, depth int) (
 			}
 		}
 	}
-	if len(c.GetSignaturesOfType(t, checker.SignatureKindCall)) != 0 || len(c.GetSignaturesOfType(t, checker.SignatureKindConstruct)) != 0 {
+	if len(c.GetSignaturesOfType(t, checker.SignatureKindCall)) != 0 ||
+		len(c.GetSignaturesOfType(t, checker.SignatureKindConstruct)) != 0 {
 		return fail("callable objects are outside ABI version 1")
 	}
 	if len(c.GetIndexInfosOfType(t)) != 0 {
@@ -79,9 +83,9 @@ func crossingType(c *checker.Checker, t *checker.Type, path string, depth int) (
 				return native.ABIType{}, fmt.Errorf("%s: ABI requires record data fields", fieldPath)
 			}
 		}
-		ft, err := crossingType(c, c.GetTypeOfSymbol(field), fieldPath, depth+1)
-		if err != nil {
-			return native.ABIType{}, err
+		ft, crossingTypeError := crossingType(c, c.GetTypeOfSymbol(field), fieldPath, depth+1)
+		if crossingTypeError != nil {
+			return native.ABIType{}, crossingTypeError
 		}
 		result.Fields = append(result.Fields, native.ABIField{Name: field.Name, Type: ft})
 	}
@@ -129,9 +133,14 @@ func exportSignaturesWith(program *load.Program, names []string, entryFunctions 
 		if named {
 			delete(wanted, symbol.Name)
 		}
-		if symbol.Flags&ast.SymbolFlagsAlias != 0 || len(symbol.Declarations) != 1 || symbol.Declarations[0].Kind != ast.KindFunctionDeclaration {
+		if symbol.Flags&ast.SymbolFlagsAlias != 0 ||
+			len(symbol.Declarations) != 1 ||
+			symbol.Declarations[0].Kind != ast.KindFunctionDeclaration {
 			if named {
-				return nil, fmt.Errorf("%s: ABI export must be an entry module export function declaration", symbol.Name)
+				return nil, fmt.Errorf(
+					"%s: ABI export must be an entry module export function declaration",
+					symbol.Name,
+				)
 			}
 			continue
 		}
@@ -149,13 +158,16 @@ func exportSignaturesWith(program *load.Program, names []string, entryFunctions 
 		}
 		for _, p := range d.Parameters() {
 			pd := p.AsParameterDeclaration()
-			if !ast.IsIdentifier(p.Name()) || pd.QuestionToken != nil || pd.Initializer != nil || pd.DotDotDotToken != nil {
+			if !ast.IsIdentifier(p.Name()) ||
+				pd.QuestionToken != nil ||
+				pd.Initializer != nil ||
+				pd.DotDotDotToken != nil {
 				invalid = fmt.Errorf("%s: ABI requires required named parameters", symbol.Name)
 				break
 			}
-			t, err := crossingType(c, c.GetTypeAtLocation(p), symbol.Name+"."+p.Name().Text(), 0)
-			if err != nil {
-				invalid = err
+			t, crossingTypeError := crossingType(c, c.GetTypeAtLocation(p), symbol.Name+"."+p.Name().Text(), 0)
+			if crossingTypeError != nil {
+				invalid = crossingTypeError
 				break
 			}
 			export.Parameters = append(export.Parameters, native.ABIField{Name: p.Name().Text(), Type: t})
@@ -164,10 +176,10 @@ func exportSignaturesWith(program *load.Program, names []string, entryFunctions 
 		if ret.Flags() == checker.TypeFlagsVoid {
 			export.Returns = native.ABIType{Kind: "void"}
 		} else {
-			var err error
-			export.Returns, err = crossingType(c, ret, symbol.Name+".return", 0)
-			if err != nil {
-				invalid = err
+			var crossingTypeError error
+			export.Returns, crossingTypeError = crossingType(c, ret, symbol.Name+".return", 0)
+			if crossingTypeError != nil {
+				invalid = crossingTypeError
 			}
 		}
 		if invalid != nil {
@@ -194,14 +206,14 @@ func compileExportsWith(path string, names []string, entryFunctions bool) (*ir.P
 	if checked == nil {
 		return nil, nil, code
 	}
-	exports, err := exportSignaturesWith(checked, names, entryFunctions)
-	if err != nil {
-		fmt.Fprintln(os.Stderr, "adamic: "+err.Error())
+	exports, exportSignaturesWithError := exportSignaturesWith(checked, names, entryFunctions)
+	if exportSignaturesWithError != nil {
+		fmt.Fprintln(os.Stderr, "adamic: "+exportSignaturesWithError.Error())
 		return nil, nil, 1
 	}
-	program, err := lower.Lower(context.Background(), checked)
-	if err != nil {
-		fmt.Fprintln(os.Stderr, relative("adamic: "+err.Error()))
+	program, lowerError := lower.Lower(context.Background(), checked)
+	if lowerError != nil {
+		fmt.Fprintln(os.Stderr, relative("adamic: "+lowerError.Error()))
 		return nil, nil, 1
 	}
 	for i := range exports {

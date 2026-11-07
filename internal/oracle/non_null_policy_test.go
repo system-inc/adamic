@@ -19,12 +19,12 @@ func refusedAdamicNonNullFixture(path string) bool {
 	return true
 }
 
-func assertAdamicNonNullRefusal(test *testing.T, err error) {
+func assertAdamicNonNullRefusal(test *testing.T, loweredError error) {
 	test.Helper()
 	var refused *lower.Refused
-	if !errors.As(err, &refused) ||
+	if !errors.As(loweredError, &refused) ||
 		refused.What != "the non-null assertion !" ||
 		refused.Fix != "write ?? panic('why it can't be missing'), or narrow and handle the missing case" {
-		test.Fatalf("want .a non-null refusal with its unchanged fix, got %v", err)
+		test.Fatalf("want .a non-null refusal with its unchanged fix, got %v", loweredError)
 	}
 }

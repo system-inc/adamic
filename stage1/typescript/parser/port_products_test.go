@@ -55,14 +55,14 @@ func jsxScannerMutant(test *testing.T, change jsxScannerChange) string {
 	test.Helper()
 	mutant := copyPort(test, "", "", "")
 	scannerDirectory := filepath.Join(mutant, "scanner")
-	if err := os.Mkdir(scannerDirectory, 0755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.Mkdir(scannerDirectory, 0755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	originalScanner, _ := filepath.Abs("../scanner/scanner.ts")
 	for _, file := range []string{"scanner.ts", "characters.ts", "tokens.ts"} {
-		data, err := os.ReadFile(filepath.Join("../scanner", file))
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(filepath.Join("../scanner", file))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		source := string(data)
 		if file == "scanner.ts" {
@@ -71,19 +71,19 @@ func jsxScannerMutant(test *testing.T, change jsxScannerChange) string {
 			}
 			source = strings.Replace(source, change.from, change.to, 1)
 		}
-		if err := os.WriteFile(filepath.Join(scannerDirectory, file), []byte(source), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(scannerDirectory, file), []byte(source), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	for _, file := range portFiles {
 		path := filepath.Join(mutant, file)
-		data, err := os.ReadFile(path)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(path)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		source := strings.ReplaceAll(string(data), originalScanner, filepath.Join(scannerDirectory, "scanner.ts"))
-		if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	return mutant

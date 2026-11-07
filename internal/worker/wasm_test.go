@@ -15,8 +15,10 @@ import (
 
 func requireWasm(test *testing.T) {
 	test.Helper()
-	if err := native.ValidateOptions(native.Options{Target: "wasm32-wasi"}); err != nil {
-		test.Fatalf("Workers require setup.sh --wasi-sdk: %v", err)
+	if validateOptionsError := native.ValidateOptions(
+		native.Options{Target: "wasm32-wasi"},
+	); validateOptionsError != nil {
+		test.Fatalf("Workers require setup.sh --wasi-sdk: %v", validateOptionsError)
 	}
 }
 
@@ -29,9 +31,9 @@ func wasmCompiler(test *testing.T) string {
 func wasmOracle(test *testing.T, directory, entry string) string {
 	test.Helper()
 	oracle := test.TempDir()
-	bridge, err := os.ReadFile(filepath.Join(directory, "worker.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	bridge, readError := os.ReadFile(filepath.Join(directory, "worker.mjs"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	entry, _ = filepath.Abs(entry)
 	runtime, _ := filepath.Abs("../../oracle/adamic.mjs")
@@ -48,9 +50,9 @@ func wasmOracle(test *testing.T, directory, entry string) string {
 
 func mustJSON(test *testing.T, value any) []byte {
 	test.Helper()
-	encoded, err := json.Marshal(value)
-	if err != nil {
-		test.Fatal(err)
+	encoded, encodeError := json.Marshal(value)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	return encoded
 }
@@ -77,13 +79,13 @@ func wasmObserve(
 	command := exec.Command("node", arguments...)
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
-	if err := command.Run(); err != nil {
-		test.Fatalf("Wasm witness: %v\nstderr: %s", err, &stderr)
+	if runError := command.Run(); runError != nil {
+		test.Fatalf("Wasm witness: %v\nstderr: %s", runError, &stderr)
 	}
 	var evidence wasmEvidence
-	contents, err := os.ReadFile(evidencePath)
-	if err != nil || json.Unmarshal(contents, &evidence) != nil {
-		test.Fatalf("evidence: %s %v", contents, err)
+	contents, readError := os.ReadFile(evidencePath)
+	if readError != nil || json.Unmarshal(contents, &evidence) != nil {
+		test.Fatalf("evidence: %s %v", contents, readError)
 	}
 	return stdout.String(), stderr.String(), evidence
 }
@@ -122,17 +124,17 @@ func runWasmWorkersShard(test *testing.T, shard int) {
 			} else if evidence.FinalMemory <= evidence.InitialMemory {
 				test.Fatalf("large corpus did not grow memory: %#v", evidence)
 			}
-			entries, err := os.ReadDir(directory)
-			if err != nil || len(entries) != 11 {
-				test.Fatalf("want eleven Wasm Worker files: %v %v", entries, err)
+			entries, readDirectoryError := os.ReadDir(directory)
+			if readDirectoryError != nil || len(entries) != 11 {
+				test.Fatalf("want eleven Wasm Worker files: %v %v", entries, readDirectoryError)
 			}
 			for _, file := range entries {
 				if filepath.Ext(file.Name()) != ".mjs" {
 					continue
 				}
-				contents, err := os.ReadFile(filepath.Join(directory, file.Name()))
-				if err != nil {
-					test.Fatal(err)
+				contents, readError := os.ReadFile(filepath.Join(directory, file.Name()))
+				if readError != nil {
+					test.Fatal(readError)
 				}
 				if forbidden := workersUnavailable(contents); forbidden != "" {
 					test.Fatalf("%s uses Workers-unavailable %s", file.Name(), forbidden)
@@ -236,7 +238,7 @@ func TestWasmPurity(test *testing.T) {
 				// compiling C. In particular the accept-console mutant must
 				// fail here without warming an unshipped runtime archive.
 				builds := 0
-				err := BuildWith(
+				buildWithError := BuildWith(
 					entry,
 					directory,
 					Options{Wasm: []string{fixture.selected}, BuildWasm: func(string, string, string, []string) error {
@@ -245,21 +247,21 @@ func TestWasmPurity(test *testing.T) {
 					}},
 				)
 				if builds != 0 ||
-					err == nil ||
-					!strings.Contains(err.Error(), fixture.witness) ||
-					!strings.Contains(err.Error(), "fix:") {
-					test.Fatalf("expected refusal before native build: builds=%d err=%v", builds, err)
+					buildWithError == nil ||
+					!strings.Contains(buildWithError.Error(), fixture.witness) ||
+					!strings.Contains(buildWithError.Error(), "fix:") {
+					test.Fatalf("expected refusal before native build: builds=%d err=%v", builds, buildWithError)
 				}
 			}
 			command := exec.Command(binary, "worker", entry, "--out", directory, "--wasm", fixture.selected)
-			output, err := command.CombinedOutput()
-			if err == nil ||
+			output, combinedOutputError := command.CombinedOutput()
+			if combinedOutputError == nil ||
 				!strings.Contains(string(output), fixture.witness) ||
 				!strings.Contains(string(output), "fix:") {
-				test.Fatalf("expected refusal %q with fix: err=%v\n%s", fixture.witness, err, output)
+				test.Fatalf("expected refusal %q with fix: err=%v\n%s", fixture.witness, combinedOutputError, output)
 			}
-			if _, err := os.Stat(directory); !os.IsNotExist(err) {
-				test.Fatalf("refusal wrote output: %v", err)
+			if _, statError := os.Stat(directory); !os.IsNotExist(statError) {
+				test.Fatalf("refusal wrote output: %v", statError)
 			}
 		})
 	}

@@ -32,21 +32,21 @@ func jsonEncoderMainFixture(test *testing.T, index, backend int) {
 	if name == "census_append_overload" {
 		fixture = "internal/oracle/testdata/" + name + ".a"
 	}
-	path, err := filepath.Abs(filepath.Join(repository, fixture))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, fixture))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	want := onNodeWith(test, inputRun{}, path)
 	code := native.C(program)
 	var actual run
 	if backend == 2 {
 		script := filepath.Join(test.TempDir(), "program.mjs")
-		if err := os.WriteFile(script, []byte(javascript.JavaScript(program)), 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(script, []byte(javascript.JavaScript(program)), 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 		actual = onNodeWith(test, inputRun{}, script)
 	} else {
@@ -58,8 +58,8 @@ func jsonEncoderMainFixture(test *testing.T, index, backend int) {
 			options.Target = "wasm32-wasi"
 		}
 		binary := filepath.Join(test.TempDir(), "program")
-		if err := native.Build(code, binary, options); err != nil {
-			test.Fatal(err)
+		if buildError := native.Build(code, binary, options); buildError != nil {
+			test.Fatal(buildError)
 		}
 		if backend == 3 {
 			actual = execute(
@@ -82,9 +82,9 @@ func jsonEncoderMainFixture(test *testing.T, index, backend int) {
 				numbers = append(numbers, string(value))
 			}
 			row := "| " + fixture + " | " + strings.Join(numbers, " | ") + " |"
-			recorded, err := recordedCounts()
-			if err != nil {
-				test.Fatal(err)
+			recorded, recordedCountsError := recordedCounts()
+			if recordedCountsError != nil {
+				test.Fatal(recordedCountsError)
 			}
 			if recorded[fixture] != row {
 				test.Fatalf("counts differ: got %s; recorded %s", row, recorded[fixture])
@@ -111,8 +111,8 @@ func jsonEncoderMissingProviders(test *testing.T, backend int) {
 				options.Target = target
 			}
 			binary := filepath.Join(test.TempDir(), "probe")
-			if err := native.Build(code, binary, options); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(code, binary, options); buildError != nil {
+				test.Fatal(buildError)
 			}
 			for _, probe := range []struct{ arg, reason string }{
 				{"empty_array", "JSON.stringify runtime array without complete element descriptors"},
@@ -152,15 +152,15 @@ func jsonEncoderMissingProviders(test *testing.T, backend int) {
 func jsonEncoderGapNUL(test *testing.T, backend int) {
 	// The review runner still marks this witness pending; exercise it directly
 	// against Node on each backend, including its length and escaped-result checks.
-	path, err := filepath.Abs(
+	path, absolutePathError := filepath.Abs(
 		filepath.Join(repository, "internal/oracle/testdata/review/agree/fxspptb_bdb950b_gap_nul.a"),
 	)
-	if err != nil {
-		test.Fatal(err)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	want := onNodeWith(test, inputRun{}, path)
 	options := native.Options{Sanitize: backend == 0}
@@ -171,8 +171,8 @@ func jsonEncoderGapNUL(test *testing.T, backend int) {
 		options.Target = "wasm32-wasi"
 	}
 	binary := filepath.Join(test.TempDir(), "program")
-	if err := native.Build(native.C(program), binary, options); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), binary, options); buildError != nil {
+		test.Fatal(buildError)
 	}
 	var actual run
 	if backend == 2 {

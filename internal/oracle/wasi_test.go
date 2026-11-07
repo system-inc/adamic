@@ -57,8 +57,10 @@ func runWASIFixtures(test *testing.T, rows []int, mutate func(string, *ir.Progra
 		test.Skip("set ADAMIC_ORACLE_WASI=1 to run the WASI oracle")
 	}
 	started := time.Now()
-	if err := native.ValidateOptions(native.Options{Target: "wasm32-wasi"}); err != nil {
-		test.Fatal(err)
+	if validateOptionsError := native.ValidateOptions(
+		native.Options{Target: "wasm32-wasi"},
+	); validateOptionsError != nil {
+		test.Fatal(validateOptionsError)
 	}
 	identity(test)
 	test.Logf("WASI shard setup (Node identity, three native runtime archives): %.3fs", time.Since(started).Seconds())
@@ -66,27 +68,27 @@ func runWASIFixtures(test *testing.T, rows []int, mutate func(string, *ir.Progra
 		fixture := fixtures[fixtureIndex]
 		test.Run(fixture.path, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, fixture.path))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(filepath.Join(repository, fixture.path))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			program, err := lowered(test, path)
+			program, loweredError := lowered(test, path)
 			if runtimeBoundaryViewFixture(fixture.path) {
-				assertRuntimeBoundaryViewRefusal(test, err)
+				assertRuntimeBoundaryViewRefusal(test, loweredError)
 				return
 			}
-			if assertAsyncWitnessRefusal(test, fixture.path, path, err) {
+			if assertAsyncWitnessRefusal(test, fixture.path, path, loweredError) {
 				return
 			}
 			if !fixture.lowers {
 				var notYet *lower.NotYet
-				if !errors.As(err, &notYet) {
-					test.Fatalf("want NotYet, got %v", err)
+				if !errors.As(loweredError, &notYet) {
+					test.Fatalf("want NotYet, got %v", loweredError)
 				}
 				return
 			}
-			if err != nil {
-				test.Fatal(err)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			platform, readsPlatform := wasiHostPlatform(test, fixture.path, program)
 			expected := onNode(test, path)
@@ -110,8 +112,12 @@ func runWASIFixtures(test *testing.T, rows []int, mutate func(string, *ir.Progra
 			if fixture.path == "internal/oracle/testdata/host_stdout/closed.a" {
 				stdoutWASIClosedPipe(test, native.C(program))
 			}
-			if err := wasiFixtureDifference(test.Name(), expected, actual); err != nil {
-				test.Error(err)
+			if wasiFixtureDifferenceError := wasiFixtureDifference(
+				test.Name(),
+				expected,
+				actual,
+			); wasiFixtureDifferenceError != nil {
+				test.Error(wasiFixtureDifferenceError)
 			}
 		})
 	}
@@ -148,13 +154,13 @@ func wasiOracleCatchesMutant(test *testing.T, exit bool) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
-	path, err := filepath.Abs(filepath.Join(repository, "dedication", "dedication.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "dedication", "dedication.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	// A WASI oracle mutant needs a fresh Node witness, not native runtime cache identity.
 	expected := onNodeWith(test, inputRun{}, path)
@@ -193,12 +199,12 @@ func TestWASIRunnerCatchesMutants(test *testing.T) {
 	probe := func(text string, exit int) run {
 		directory := test.TempDir()
 		source, binary := filepath.Join(directory, "probe.c"), filepath.Join(directory, "probe.wasm")
-		if err := os.WriteFile(
+		if writeError := os.WriteFile(
 			source,
 			[]byte(fmt.Sprintf("#include <stdio.h>\nint main(void) { fputs(%q, stdout); return %d; }\n", text, exit)),
 			0644,
-		); err != nil {
-			test.Fatal(err)
+		); writeError != nil {
+			test.Fatal(writeError)
 		}
 		ctx, command := bounded(
 			test,
@@ -211,8 +217,8 @@ func TestWASIRunnerCatchesMutants(test *testing.T) {
 			"-o",
 			binary,
 		)
-		if stdout, stderr, err := childguard.Capture(ctx, command); err != nil {
-			test.Fatalf("probe build: %v\n%s%s", err, stdout, stderr)
+		if stdout, stderr, captureError := childguard.Capture(ctx, command); captureError != nil {
+			test.Fatalf("probe build: %v\n%s%s", captureError, stdout, stderr)
 		}
 		return execute(
 			test,

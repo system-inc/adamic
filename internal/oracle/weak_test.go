@@ -43,13 +43,13 @@ func TestWeakReadsUndefinedOnceFreed(test *testing.T) {
 	} {
 		test.Run(probe.path, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, probe.path))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(filepath.Join(repository, probe.path))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatalf("Lower: %v", err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatalf("Lower: %v", loweredError)
 			}
 			native, sanitized := natively(test, program)
 			if difference := disagreement(probe.native, native); difference != "" {

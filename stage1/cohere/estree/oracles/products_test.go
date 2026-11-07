@@ -40,8 +40,8 @@ func TestProduct_scalar_edges_go_oracle(test *testing.T) {
 	binary := ScalarEdgesOracle(test)
 	// The product row proves the oracle exists and runs: it answers an empty manifest (#n1g5604).
 	manifest := filepath.Join(test.TempDir(), "empty-manifest")
-	if err := os.WriteFile(manifest, nil, 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(manifest, nil, 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	buildcache.RequireArtifacts(
 		test,

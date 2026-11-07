@@ -20,12 +20,12 @@ func TestPredicatePrefilterSkipsOnlyOtherNames(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "main.a")
 	source := "const value: string | number = 1; const other = { value: 2 }; function f(): void { console.log(`${value}${other.value}`); }\n"
-	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	var argument, declaration, sameName, otherName, propertyName *ast.Node
 	var visit ast.Visitor

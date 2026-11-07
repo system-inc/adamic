@@ -11,13 +11,13 @@ import (
 func main() {
 	root := flag.String("root", "stage1/cohere/lint", "lint source directory")
 	flag.Parse()
-	descriptors, err := registry.Generate(*root)
-	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
+	descriptors, generateError := registry.Generate(*root)
+	if generateError != nil {
+		fmt.Fprintln(os.Stderr, generateError)
 		os.Exit(1)
 	}
-	if err := registry.CheckWitnesses(*root, descriptors); err != nil {
-		fmt.Fprintln(os.Stderr, err)
+	if checkWitnessesError := registry.CheckWitnesses(*root, descriptors); checkWitnessesError != nil {
+		fmt.Fprintln(os.Stderr, checkWitnessesError)
 		os.Exit(1)
 	}
 	for _, d := range descriptors {

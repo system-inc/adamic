@@ -17,9 +17,9 @@ const straceTableSum = "b6f73c983f46fe06594d5aa9558bbd9311881df47cc4bfc22f35c83d
 // (#9tr6c6j). A name strace's x86_64 table doesn't hold (stat64, lstat64, fstatat64) no x86_64 trace holds either.
 func TestSettleParsesOnlyAskedCalls(test *testing.T) {
 	test.Parallel()
-	table, err := os.ReadFile("testdata/strace-6.8-x86_64.txt")
-	if err != nil {
-		test.Fatal(err)
+	table, readError := os.ReadFile("testdata/strace-6.8-x86_64.txt")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if sum := sha256.Sum256(table); hex.EncodeToString(sum[:]) != straceTableSum {
 		test.Fatalf(
@@ -58,9 +58,9 @@ func TestSettleParsesOnlyAskedCalls(test *testing.T) {
 	}
 	// Settle's pinned calls, which its own test holds its code to (internal/buildcache's
 	// TestSettleParsesExactlyThePinnedCalls).
-	pinned, err := os.ReadFile("../../testdata/settle-calls.txt")
-	if err != nil {
-		test.Fatal(err)
+	pinned, readError := os.ReadFile("../../testdata/settle-calls.txt")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	for _, line := range strings.Split(string(pinned), "\n") {
 		name := strings.TrimSpace(line)

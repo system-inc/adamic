@@ -33,15 +33,15 @@ func TestCSSPrinterByteSlicesMatchGo(test *testing.T) {
 				if a < b {
 					value = string([]rune(text[a:b]))
 				}
-				if err := encoder.Encode(value); err != nil {
-					test.Fatal(err)
+				if encodeError := encoder.Encode(value); encodeError != nil {
+					test.Fatal(encodeError)
 				}
 			}
 		}
 	}
-	path, err := filepath.Abs("testdata/byte_slices.ts")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("testdata/byte_slices.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	program := lowered(test, path)
 	binary := filepath.Join(programSanitized(test, "testdata/byte_slices.ts"), "port")

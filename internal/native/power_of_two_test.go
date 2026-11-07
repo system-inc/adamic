@@ -31,8 +31,8 @@ func TestPowersOfTwoFormatAsJavaScriptDoes(test *testing.T) {
 	}
 
 	binary := filepath.Join(test.TempDir(), "harness")
-	if err := Build(numberHarness, binary, Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(numberHarness, binary, Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	native := strings.Split(strings.TrimSuffix(runWithInput(test, input.String(), binary), "\n"), "\n")
 	oracle := strings.Split(

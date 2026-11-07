@@ -33,9 +33,9 @@ func programs(test *testing.T) []string {
 		"../oracle/testdata/modules/main.a",
 		"testdata/*.a",
 	} {
-		matches, err := filepath.Glob(pattern)
-		if err != nil {
-			test.Fatal(err)
+		matches, globError := filepath.Glob(pattern)
+		if globError != nil {
+			test.Fatal(globError)
 		}
 		paths = append(paths, matches...)
 	}
@@ -91,17 +91,17 @@ func refusedNonNullFixture(path string) bool {
 
 func lowered(test *testing.T, path string) *ir.Program {
 	test.Helper()
-	absolute, err := filepath.Abs(path)
-	if err != nil {
-		test.Fatal(err)
+	absolute, absolutePathError := filepath.Abs(path)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	value, _ := loweredPrograms.LoadOrStore(absolute, &loweredProgram{})
 	entry := value.(*loweredProgram)
 	entry.once.Do(func() {
 		entry.phase = "Load"
-		program, err := load.Load([]string{absolute})
-		entry.err = err
-		if err == nil {
+		program, loadError := load.Load([]string{absolute})
+		entry.err = loadError
+		if loadError == nil {
 			entry.phase = "Lower"
 			entry.program, entry.err = Lower(context.Background(), program)
 		}
@@ -166,9 +166,9 @@ func checkReads(test *testing.T, where string, program *ir.Program, function int
 	}
 	want := 0
 	for _, match := range readPrinted.FindAllStringSubmatch(fmt.Sprintf("%#v", statements), -1) {
-		local, err := strconv.Atoi(match[1])
-		if err != nil {
-			test.Fatal(err)
+		local, parseError := strconv.Atoi(match[1])
+		if parseError != nil {
+			test.Fatal(parseError)
 		}
 		if !program.Locals[local].Global &&
 			!program.Locals[local].Captured &&

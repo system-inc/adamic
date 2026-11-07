@@ -27,14 +27,19 @@ func main() {
 		if os.Getenv("LEDGER_STRICT") == "1" {
 			tree := os.Getenv("LEDGER_TREE")
 			configPath := filepath.Join(tree, "src/compiler/tsconfig.json")
-			data, readErr := os.ReadFile(configPath)
-			if readErr != nil {
-				panic(readErr)
+			data, readError := os.ReadFile(configPath)
+			if readError != nil {
+				panic(readError)
 			}
 			if strings.Count(string(data), `"types": ["node"]`) != 1 {
 				panic("unexpected compiler config shape")
 			}
-			config := strings.Replace(string(data), `"types": ["node"]`, `"types": ["node"], "noUncheckedIndexedAccess": true, "exactOptionalPropertyTypes": true, "useUnknownInCatchVariables": true, "strictBindCallApply": true`, 1)
+			config := strings.Replace(
+				string(data),
+				`"types": ["node"]`,
+				`"types": ["node"], "noUncheckedIndexedAccess": true, "exactOptionalPropertyTypes": true, "useUnknownInCatchVariables": true, "strictBindCallApply": true`,
+				1,
+			)
 			if os.Getenv("LEDGER_PROFILE") == "census" {
 				config = `{"compilerOptions":{"strict":true,"noUncheckedIndexedAccess":true,"exactOptionalPropertyTypes":true,"erasableSyntaxOnly":false,"verbatimModuleSyntax":true,"allowImportingTsExtensions":true,"noEmit":true,"module":"ESNext","moduleDetection":"force","moduleResolution":"Bundler","target":"ES2024","lib":["es2024"],"types":["node"]},"include":["**/*"]}`
 			}
@@ -54,9 +59,9 @@ func main() {
 				result.Error = err.Error()
 			}
 		}
-		data, err := json.Marshal(result)
-		if err != nil {
-			panic(err)
+		data, encodeError := json.Marshal(result)
+		if encodeError != nil {
+			panic(encodeError)
 		}
 		fmt.Println(string(data))
 		if whole {

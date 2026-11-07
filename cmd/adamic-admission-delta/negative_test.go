@@ -29,19 +29,19 @@ func negativeFixture(test *testing.T) ([]byte, negativeWitness, negativeWitnessL
 }
 func writeNegativeList(test *testing.T, path string, list negativeWitnessList) {
 	test.Helper()
-	data, err := json.Marshal(list)
-	if err != nil {
-		test.Fatal(err)
+	data, encodeError := json.Marshal(list)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
-	if err = os.WriteFile(path, data, 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, data, 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 }
 func TestNegativeContentHash(test *testing.T) {
 	test.Parallel()
 	source, witness, list := negativeFixture(test)
-	if err := validateWitnessSource(source, witness); err != nil {
-		test.Fatal(err)
+	if validateWitnessSourceError := validateWitnessSource(source, witness); validateWitnessSourceError != nil {
+		test.Fatal(validateWitnessSourceError)
 	}
 	// Names are documentary; a renamed byte-identical program retains the ruling.
 	if _, listed := list.Witnesses[contentHash(source)]; !listed {
@@ -110,7 +110,7 @@ func TestNegativeRulingMetadata(test *testing.T) {
 		}
 		changed.Witnesses[contentHash(source)] = bad
 		writeNegativeList(test, path, changed)
-		if _, err := readNegativeWitnesses(path); err == nil {
+		if _, readNegativeWitnessesError := readNegativeWitnesses(path); readNegativeWitnessesError == nil {
 			test.Fatal("bad metadata accepted", field)
 		}
 	}
@@ -131,26 +131,26 @@ func negativeCommand(test *testing.T, corrected, alreadyAccepted bool) (observat
 		"corpus/input.a":  string(source),
 		"oracle/node.mjs": "import {readFileSync} from 'node:fs';const s=readFileSync(process.argv[2],'utf8');console.log('42');if(s.includes('STOP')){console.error('adamic: panic: unset');process.exit(70);}\n",
 	} {
-		if err := os.WriteFile(filepath.Join(dir, path), []byte(data), 0755); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(dir, path), []byte(data), 0755); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	writeNegativeList(test, filepath.Join(dir, "cloud/admission-corpus/negative-witnesses.json"), list)
-	if _, err := git(
+	if _, gitError := git(
 		dir,
 		"add",
 		"corpus/input.a",
 		"oracle/node.mjs",
 		"cloud/admission-corpus/negative-witnesses.json",
-	); err != nil {
-		test.Fatal(err)
+	); gitError != nil {
+		test.Fatal(gitError)
 	}
-	if _, err := git(dir, "commit", "-qm", "negative witness input"); err != nil {
-		test.Fatal(err)
+	if _, gitError := git(dir, "commit", "-qm", "negative witness input"); gitError != nil {
+		test.Fatal(gitError)
 	}
-	sha, err := git(dir, "rev-parse", "HEAD")
-	if err != nil {
-		test.Fatal(err)
+	sha, gitError := git(dir, "rev-parse", "HEAD")
+	if gitError != nil {
+		test.Fatal(gitError)
 	}
 	if alreadyAccepted {
 		base = head
@@ -171,8 +171,8 @@ func negativeCommand(test *testing.T, corrected, alreadyAccepted bool) (observat
 		"--json",
 	)
 	var r report
-	if err := json.Unmarshal([]byte(o.Stdout), &r); err != nil {
-		test.Fatal(err, o.Stderr, o.Stdout)
+	if decodeError := json.Unmarshal([]byte(o.Stdout), &r); decodeError != nil {
+		test.Fatal(decodeError, o.Stderr, o.Stdout)
 	}
 	return o, r
 }
@@ -212,14 +212,14 @@ func TestNegativeValidProgramCannotBeListed(test *testing.T) {
 		[]byte("// let value: string = undefined!;\nconsole.log('42');\n"),
 		[]byte("let value: string = undefined!;\nimport './dependency.a';\n"),
 	} {
-		if err := validateWitnessSource(valid, witness); err == nil {
+		if validateWitnessSourceError := validateWitnessSource(valid, witness); validateWitnessSourceError == nil {
 			test.Fatal("valid source accepted as literal type lie")
 		}
 	}
 	list.Witnesses[witness.TypeCorrectSHA256] = witness
 	path := filepath.Join(test.TempDir(), "negatives.json")
 	writeNegativeList(test, path, list)
-	if _, err := readNegativeWitnesses(path); err == nil {
+	if _, readNegativeWitnessesError := readNegativeWitnesses(path); readNegativeWitnessesError == nil {
 		test.Fatal("type-correct hash listed")
 	}
 }
@@ -315,11 +315,11 @@ func TestNegativeCheckedBoundaryMetadata(test *testing.T) {
 	source, witness, list := checkedBoundaryFixture(test)
 	path := filepath.Join(test.TempDir(), "negatives.json")
 	writeNegativeList(test, path, list)
-	if _, err := readNegativeWitnesses(path); err != nil {
-		test.Fatal("ruled checked boundary rejected:", err)
+	if _, readNegativeWitnessesError := readNegativeWitnesses(path); readNegativeWitnessesError != nil {
+		test.Fatal("ruled checked boundary rejected:", readNegativeWitnessesError)
 	}
-	if err := validateWitnessSource(source, witness); err != nil {
-		test.Fatal("ruled checked boundary source rejected:", err)
+	if validateWitnessSourceError := validateWitnessSource(source, witness); validateWitnessSourceError != nil {
+		test.Fatal("ruled checked boundary source rejected:", validateWitnessSourceError)
 	}
 	for name, change := range map[string]func(*negativeWitness){
 		"compiler bug": func(w *negativeWitness) {
@@ -347,7 +347,7 @@ func TestNegativeCheckedBoundaryMetadata(test *testing.T) {
 			path,
 			negativeWitnessList{Comment: list.Comment, Witnesses: map[string]negativeWitness{contentHash(source): bad}},
 		)
-		if _, err := readNegativeWitnesses(path); err == nil {
+		if _, readNegativeWitnessesError := readNegativeWitnesses(path); readNegativeWitnessesError == nil {
 			test.Errorf("%s accepted", name)
 		}
 	}
@@ -365,7 +365,7 @@ func TestNegativeCheckedBoundarySource(test *testing.T) {
 	} {
 		bad := witness
 		change(&bad)
-		if err := validateWitnessSource(source, bad); err == nil {
+		if validateWitnessSourceError := validateWitnessSource(source, bad); validateWitnessSourceError == nil {
 			test.Errorf("%s accepted", name)
 		}
 	}
@@ -403,12 +403,13 @@ func TestNegativeCheckedBoundaryOptionalField(test *testing.T) {
 		witness.TypeCorrectSHA256 = contentHash(
 			[]byte(strings.ReplaceAll(string(source), witness.RepairFrom, witness.RepairTo)),
 		)
-		err := validateWitnessSource(source, witness)
-		if testCase.declares && err != nil {
-			test.Errorf("%s: refused: %v", testCase.name, err)
+		validateWitnessSourceError := validateWitnessSource(source, witness)
+		if testCase.declares && validateWitnessSourceError != nil {
+			test.Errorf("%s: refused: %v", testCase.name, validateWitnessSourceError)
 		}
-		if !testCase.declares && (err == nil || err.Error() != "violated declaration does not declare its ruled type") {
-			test.Errorf("%s: want the declaration refused, got %v", testCase.name, err)
+		if !testCase.declares && (validateWitnessSourceError == nil ||
+			validateWitnessSourceError.Error() != "violated declaration does not declare its ruled type") {
+			test.Errorf("%s: want the declaration refused, got %v", testCase.name, validateWitnessSourceError)
 		}
 	}
 }
@@ -457,31 +458,31 @@ func checkedBoundaryCommand(test *testing.T, repairAgrees bool, name string) (ob
 		"corpus/" + name:  string(source),
 		"oracle/node.mjs": "import {readFileSync} from 'node:fs';const s=readFileSync(process.argv[2],'utf8');console.log('42');if(s.includes('STOP')){console.error('adamic: panic: field read failed: viewed.count is not a number; expected number, found string');process.exit(70);}\n",
 	} {
-		if err := os.WriteFile(filepath.Join(dir, path), []byte(data), 0755); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(dir, path), []byte(data), 0755); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	if name != "input.a" {
-		if _, err := git(dir, "rm", "-q", "corpus/input.a"); err != nil {
-			test.Fatal(err)
+		if _, gitError := git(dir, "rm", "-q", "corpus/input.a"); gitError != nil {
+			test.Fatal(gitError)
 		}
 	}
 	writeNegativeList(test, filepath.Join(dir, "cloud/admission-corpus/negative-witnesses.json"), list)
-	if _, err := git(
+	if _, gitError := git(
 		dir,
 		"add",
 		"corpus/"+name,
 		"oracle/node.mjs",
 		"cloud/admission-corpus/negative-witnesses.json",
-	); err != nil {
-		test.Fatal(err)
+	); gitError != nil {
+		test.Fatal(gitError)
 	}
-	if _, err := git(dir, "commit", "-qm", "checked boundary witness"); err != nil {
-		test.Fatal(err)
+	if _, gitError := git(dir, "commit", "-qm", "checked boundary witness"); gitError != nil {
+		test.Fatal(gitError)
 	}
-	sha, err := git(dir, "rev-parse", "HEAD")
-	if err != nil {
-		test.Fatal(err)
+	sha, gitError := git(dir, "rev-parse", "HEAD")
+	if gitError != nil {
+		test.Fatal(gitError)
 	}
 	o := invokeCommand(
 		test,
@@ -499,8 +500,8 @@ func checkedBoundaryCommand(test *testing.T, repairAgrees bool, name string) (ob
 		"--json",
 	)
 	var r report
-	if err := json.Unmarshal([]byte(o.Stdout), &r); err != nil {
-		test.Fatal(err, o.Stderr, o.Stdout)
+	if decodeError := json.Unmarshal([]byte(o.Stdout), &r); decodeError != nil {
+		test.Fatal(decodeError, o.Stderr, o.Stdout)
 	}
 	return o, r
 }

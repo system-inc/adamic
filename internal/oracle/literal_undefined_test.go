@@ -28,13 +28,13 @@ func TestLiteralUndefinedOracleCatchesMutant(test *testing.T) {
 	for _, fixture := range []string{"e4eec87_u03_discriminated_undefined.a", "e4eec87_u01_undefined_field_widened.a"} {
 		test.Run(fixture, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			source := native.C(program)
 			read := regexp.MustCompile(`adamic_object_maybe_number\(([^,]+), ([^,]+), (&[^)]+)\)`)
@@ -47,8 +47,8 @@ func TestLiteralUndefinedOracleCatchesMutant(test *testing.T) {
 				test.Fatal("mutant target absent")
 			}
 			binary := filepath.Join(test.TempDir(), "mutant")
-			if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(mutant, binary, native.Options{Sanitize: true}); buildError != nil {
+				test.Fatal(buildError)
 			}
 			result := execute(test, binary)
 			if result.exitCode != 0 || len(result.stderr) != 0 {

@@ -15,24 +15,24 @@ import (
 // sanitized native output as the positive witness of that ruling.
 func TestTypeOnlyImportCycleCompiles(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("testdata/type_import_cycle/entry.a")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("testdata/type_import_cycle/entry.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	want := execute(test, "", "node", "--disable-warning=ExperimentalWarning", runner, path).output
 	if string(want) != "1\n" {
 		test.Fatalf("Node cycle result %q", want)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	if _, err := lower.Lower(context.Background(), program); err != nil {
-		test.Fatalf("type-only cycle must compile after 779ff9d: %v", err)
+	if _, lowerError := lower.Lower(context.Background(), program); lowerError != nil {
+		test.Fatalf("type-only cycle must compile after 779ff9d: %v", lowerError)
 	}
 	binary := gapNative(
 		test,

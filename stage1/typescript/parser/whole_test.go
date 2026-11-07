@@ -11,9 +11,9 @@ import (
 
 func wholeNode(test *testing.T, directory, manifest string, count bool) execution {
 	test.Helper()
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	args := []string{
 		"--disable-warning=ExperimentalWarning",
@@ -37,8 +37,8 @@ func wholeCompilerShard(test *testing.T, index int) {
 	shards, planted, _ := compilerExpressionsEnumeration(test)
 	paths := shards[index]
 	manifest := filepath.Join(test.TempDir(), "compiler.txt")
-	if err := os.WriteFile(manifest, []byte(strings.Join(paths, "\n")+"\n"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(manifest, []byte(strings.Join(paths, "\n")+"\n"), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	oracle := goOracle(test)
 	want := execute(test, "", oracle, "--manifest", manifest, "--whole")
@@ -58,9 +58,9 @@ func wholeCompilerShard(test *testing.T, index int) {
 		}
 		test.Logf("planted disagreement caught by shard-%03d for %s", index, filepath.Base(planted))
 	}
-	directory, err := filepath.Abs(".")
-	if err != nil {
-		test.Fatal(err)
+	directory, absolutePathError := filepath.Abs(".")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	got := wholeNode(test, directory, manifest, false)
 	if diff := difference(got.output, want.output); diff != "" {
@@ -159,14 +159,14 @@ func wholeManifest(test *testing.T, cases []string) string {
 	var manifest strings.Builder
 	for i, source := range cases {
 		path := filepath.Join(directory, fmt.Sprintf("whole-%d.ts", i))
-		if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		manifest.WriteString(path + "\n")
 	}
 	path := filepath.Join(directory, "manifest")
-	if err := os.WriteFile(path, []byte(manifest.String()), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(manifest.String()), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return path
 }

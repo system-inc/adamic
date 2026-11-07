@@ -13,9 +13,9 @@ import (
 func TestEditCacheSeparation(t *testing.T) {
 	t.Parallel()
 	// Reads: internal/lower/*.go
-	e, err := prepareMode("../..", "testdata/mini", t.TempDir(), nil, nil, true)
-	if err != nil {
-		t.Fatal(err)
+	e, prepareModeError := prepareMode("../..", "testdata/mini", t.TempDir(), nil, nil, true)
+	if prepareModeError != nil {
+		t.Fatal(prepareModeError)
 	}
 	e.cache = &resultCache{directory: t.TempDir()}
 	e.compiler = &compilerWorker{}
@@ -76,60 +76,63 @@ func TestNodeHarnessIdentity(test *testing.T) {
 func TestWorkerLazyFallback(test *testing.T) {
 	test.Parallel()
 	// Reads: internal/lower/*.go
-	e, err := prepareMode("../..", "testdata/mini", test.TempDir(), productAdamic(test), nil, true)
-	if err != nil {
-		test.Fatal(err)
+	e, prepareModeError := prepareMode("../..", "testdata/mini", test.TempDir(), productAdamic(test), nil, true)
+	if prepareModeError != nil {
+		test.Fatal(prepareModeError)
 	}
 	e.log = io.Discard
 	e.jobs = 2
 	e.cache = &resultCache{directory: test.TempDir()}
-	report, err := e.runFilter("pass", 0, false)
-	if err != nil || report.Pass != 1 {
-		test.Fatalf("worker report %+v: %v", report, err)
+	report, runFilterError := e.runFilter("pass", 0, false)
+	if runFilterError != nil || report.Pass != 1 {
+		test.Fatalf("worker report %+v: %v", report, runFilterError)
 	}
-	if _, err := os.Stat(e.adamic); !os.IsNotExist(err) {
+	if _, statError := os.Stat(e.adamic); !os.IsNotExist(statError) {
 		test.Fatal("unused backup compiler was built")
 	}
 	source := filepath.Join(e.work, "fallback.a")
-	if err := os.WriteFile(source, []byte(program("assertSameValue(1, 1);")), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(source, []byte(program("assertSameValue(1, 1);")), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	result := e.fallbackCompile(source)
 	if result.Exit != 0 || result.Stdout == "" {
 		test.Fatalf("lazy fallback lost compiler behavior: %+v", result)
 	}
-	if _, err := os.Stat(e.adamic); err != nil {
-		test.Fatal("fallback compiler missing", err)
+	if _, statError := os.Stat(e.adamic); statError != nil {
+		test.Fatal("fallback compiler missing", statError)
 	}
 }
 
 func TestLoweringSourceEdit(test *testing.T) {
 	test.Parallel()
 	root := test.TempDir()
-	runtime, err := filepath.Abs("../../internal/native/runtime")
-	if err != nil {
-		test.Fatal(err)
+	runtime, absolutePathError := filepath.Abs("../../internal/native/runtime")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	if err := os.MkdirAll(filepath.Join(root, "internal", "native"), 0700); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(
+		filepath.Join(root, "internal", "native"),
+		0700,
+	); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	if err := os.Symlink(runtime, filepath.Join(root, "internal", "native", "runtime")); err != nil {
-		test.Fatal(err)
+	if symlinkError := os.Symlink(runtime, filepath.Join(root, "internal", "native", "runtime")); symlinkError != nil {
+		test.Fatal(symlinkError)
 	}
 	lower := filepath.Join(root, "internal", "lower")
-	if err := os.MkdirAll(lower, 0700); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(lower, 0700); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	cache := &resultCache{directory: test.TempDir()}
 	var previousContext string
 	for _, text := range []string{"// A\n", "// B\n"} {
-		if err := os.WriteFile(filepath.Join(lower, "probe.go"), []byte(text), 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(lower, "probe.go"), []byte(text), 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 		profile := newRunProfile()
-		e, err := prepareMode(root, "testdata/mini", test.TempDir(), nil, profile, true)
-		if err != nil {
-			test.Fatal(err)
+		e, prepareModeError := prepareMode(root, "testdata/mini", test.TempDir(), nil, profile, true)
+		if prepareModeError != nil {
+			test.Fatal(prepareModeError)
 		}
 		e.cache = cache
 		e.compiler = &compilerWorker{}
@@ -175,38 +178,38 @@ func TestRunnerLocationHelper(test *testing.T) {
 	if root == "" {
 		root = "../.."
 	}
-	tools, err := resolveTools()
-	if err != nil {
-		test.Fatal(err)
+	tools, resolveToolsError := resolveTools()
+	if resolveToolsError != nil {
+		test.Fatal(resolveToolsError)
 	}
-	cache, _, context, err := prepareCache(root, tools)
-	if err != nil {
-		test.Fatal(err)
+	cache, _, context, prepareCacheError := prepareCache(root, tools)
+	if prepareCacheError != nil {
+		test.Fatal(prepareCacheError)
 	}
 	fmt.Printf("%s %s\n", context, cache.nodeContext)
 }
 
 func TestRunnerLocationIdentity(test *testing.T) {
 	test.Parallel()
-	executable, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	executable, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
-	contents, err := os.ReadFile(executable)
-	if err != nil {
-		test.Fatal(err)
+	contents, readError := os.ReadFile(executable)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	relocated := filepath.Join(test.TempDir(), "runner")
-	if err := os.WriteFile(relocated, contents, 0700); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(relocated, contents, 0700); writeError != nil {
+		test.Fatal(writeError)
 	}
 	var before []byte
 	for _, path := range []string{executable, relocated} {
 		command := exec.Command(path, "-test.run=^TestRunnerLocationHelper$")
 		command.Env = append(os.Environ(), "ADAMIC_TEST262_CONTEXT_HELPER=1")
-		output, err := command.CombinedOutput()
-		if err != nil {
-			test.Fatalf("helper: %v: %s", err, output)
+		output, combinedOutputError := command.CombinedOutput()
+		if combinedOutputError != nil {
+			test.Fatalf("helper: %v: %s", combinedOutputError, output)
 		}
 		if before != nil && string(before) != string(output) {
 			test.Fatalf("relocating identical runner bytes invalidates observations: %s vs %s", before, output)

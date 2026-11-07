@@ -41,10 +41,10 @@ func TestThisParameterIsNotYet(test *testing.T) {
 		for _, extension := range []string{".a", ".ts"} {
 			test.Run(probe.name+extension, func(test *testing.T) {
 				test.Parallel()
-				_, err := lowerSourceAs(test, probe.source, extension)
+				_, lowerSourceAsError := lowerSourceAs(test, probe.source, extension)
 				var notYet *NotYet
-				if !errors.As(err, &notYet) || !strings.Contains(err.Error(), reason) {
-					test.Fatalf("got %v, want NotYet %q", err, reason)
+				if !errors.As(lowerSourceAsError, &notYet) || !strings.Contains(lowerSourceAsError.Error(), reason) {
+					test.Fatalf("got %v, want NotYet %q", lowerSourceAsError, reason)
 				}
 			})
 		}
@@ -64,8 +64,8 @@ func TestThisParameterIsNotYet(test *testing.T) {
 		for _, extension := range []string{".a", ".ts"} {
 			test.Run(control.name+extension, func(test *testing.T) {
 				test.Parallel()
-				if _, err := lowerSourceAs(test, control.source, extension); err != nil {
-					test.Fatalf("got %v, want it to lower", err)
+				if _, lowerSourceAsError := lowerSourceAs(test, control.source, extension); lowerSourceAsError != nil {
+					test.Fatalf("got %v, want it to lower", lowerSourceAsError)
 				}
 			})
 		}

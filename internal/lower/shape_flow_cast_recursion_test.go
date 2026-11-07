@@ -67,8 +67,8 @@ console.log(String(narrowable(nonNull)));
 	defer projectionFramesOpened.Store(nil)
 	done := make(chan error, 1)
 	go func() {
-		_, err := lowerSourceAs(test, source, ".ts")
-		done <- err
+		_, lowerSourceAsError := lowerSourceAs(test, source, ".ts")
+		done <- lowerSourceAsError
 	}()
 	var budget <-chan time.Time
 	if os.Getenv("ADAMIC_UNIT_BUDGET") == "1" {

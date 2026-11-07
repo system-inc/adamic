@@ -36,27 +36,27 @@ func TestEveryDuplicatedProductDeclarationAgrees(test *testing.T) {
 	// Reads: *_test.go
 	root := parallelCheckRoot(test)
 	var declarations []productCensusDeclaration
-	var printErr error
-	err := parallelCheckEachTest(root, func(
+	var printError error
+	parallelCheckEachTestError := parallelCheckEachTest(root, func(
 		rel string,
 		fn *ast.FuncDecl,
 		param string,
 		positions *token.FileSet,
 		lines []string,
 	) {
-		declaration, ok, err := productCensusDeclare(rel, fn, param)
-		if err != nil && printErr == nil {
-			printErr = err
+		declaration, ok, productCensusDeclareError := productCensusDeclare(rel, fn, param)
+		if productCensusDeclareError != nil && printError == nil {
+			printError = productCensusDeclareError
 		}
 		if ok {
 			declarations = append(declarations, declaration)
 		}
 	})
-	if err != nil {
-		test.Fatal(err)
+	if parallelCheckEachTestError != nil {
+		test.Fatal(parallelCheckEachTestError)
 	}
-	if printErr != nil {
-		test.Fatal(printErr)
+	if printError != nil {
+		test.Fatal(printError)
 	}
 	counts := make(map[string]int)
 	for _, declaration := range declarations {
@@ -116,18 +116,18 @@ func TestProductDeclarationCensusRefusesWhatItShould(test *testing.T) {
 		var declarations []productCensusDeclaration
 		for file, body := range c.sources {
 			source := "package p\n\nimport \"testing\"\n\nfunc TestProduct_Adamic(t *testing.T) " + body + "\n"
-			parsed, err := parser.ParseFile(token.NewFileSet(), file, source, 0)
-			if err != nil {
-				test.Fatalf("%s: %v", c.name, err)
+			parsed, parseFileError := parser.ParseFile(token.NewFileSet(), file, source, 0)
+			if parseFileError != nil {
+				test.Fatalf("%s: %v", c.name, parseFileError)
 			}
 			fn := parsed.Decls[1].(*ast.FuncDecl)
 			param, ok := parallelCheckTestParameter(fn, map[string]bool{"testing": true})
 			if !ok {
 				test.Fatalf("%s: %s is not a test", c.name, file)
 			}
-			declaration, ok, err := productCensusDeclare(file, fn, param)
-			if err != nil || !ok {
-				test.Fatalf("%s: %s declares no product: %v", c.name, file, err)
+			declaration, ok, productCensusDeclareError := productCensusDeclare(file, fn, param)
+			if productCensusDeclareError != nil || !ok {
+				test.Fatalf("%s: %s declares no product: %v", c.name, file, productCensusDeclareError)
 			}
 			declarations = append(declarations, declaration)
 		}
@@ -161,8 +161,8 @@ func productCensusDeclare(rel string, fn *ast.FuncDecl, param string) (productCe
 		statements = statements[1:]
 	}
 	var body bytes.Buffer
-	if err := format.Node(&body, token.NewFileSet(), statements); err != nil {
-		return productCensusDeclaration{}, false, fmt.Errorf("%s: print %s: %w", rel, fn.Name.Name, err)
+	if nodeError := format.Node(&body, token.NewFileSet(), statements); nodeError != nil {
+		return productCensusDeclaration{}, false, fmt.Errorf("%s: print %s: %w", rel, fn.Name.Name, nodeError)
 	}
 	return productCensusDeclaration{File: rel, Name: fn.Name.Name, Body: body.String()}, true, nil
 }

@@ -56,7 +56,13 @@ func TSGoC(program *ir.Program) (string, error) {
 				}
 				arguments = append(arguments, emitter.localName(parameter))
 			}
-			runtimeName := map[string]string{"tsgoProgram": "program", "tsgoQuery": "query", "tsgoRelease": "release", "tsgoTypeParts": "type_parts", "tsgoInspect": "inspect"}[name]
+			runtimeName := map[string]string{
+				"tsgoProgram":   "program",
+				"tsgoQuery":     "query",
+				"tsgoRelease":   "release",
+				"tsgoTypeParts": "type_parts",
+				"tsgoInspect":   "inspect",
+			}[name]
 			if inRegion {
 				if name != "tsgoQuery" {
 					return "", fmt.Errorf("native: unexpected region version of %s", name)
@@ -81,58 +87,69 @@ func BuildTSGo(source, output, archive string, options Options) error {
 	return buildTSGo(source, output, archive, options, false)
 }
 
-// buildTSGo compiles main.c to main.o and then links it, as linkOne does. oneCall has a build off macOS compile and link
-// it in one clang call instead, as it did before the split (#2r9xhqs), only so
+// buildTSGo compiles main.c to main.o and then links it, as linkOne does. oneCall has a build off macOS compile and
+// link it in one clang call instead, as it did before the split (#2r9xhqs), only so
 // TestACompiledThenLinkedCheckerIsTheOneCallChecker can hold the split's binary to the one call's bytes.
 func buildTSGo(source, output, archive string, options Options, oneCall bool) error {
-	archive, err := checkerArchivePath(archive)
-	if err != nil {
-		return err
+	archive, checkerArchivePathError := checkerArchivePath(archive)
+	if checkerArchivePathError != nil {
+		return checkerArchivePathError
 	}
-	jobserver, err := defaultJobserver()
-	if err != nil {
-		return err
+	jobserver, defaultJobserverError := defaultJobserver()
+	if defaultJobserverError != nil {
+		return defaultJobserverError
 	}
-	directory, err := os.MkdirTemp("", "adamic-tsgo-")
-	if err != nil {
-		return err
+	directory, temporaryDirectoryError := os.MkdirTemp("", "adamic-tsgo-")
+	if temporaryDirectoryError != nil {
+		return temporaryDirectoryError
 	}
 	defer os.RemoveAll(directory)
-	if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0o644); err != nil {
-		return err
+	if writeError := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0o644); writeError != nil {
+		return writeError
 	}
-	library, err := tsgoRuntimeLibrary(source, options)
-	if err != nil {
-		return err
+	library, tsgoRuntimeLibraryError := tsgoRuntimeLibrary(source, options)
+	if tsgoRuntimeLibraryError != nil {
+		return tsgoRuntimeLibraryError
 	}
 	// Relative input names keep sanitizer metadata and linker debug maps placeless.
-	if err := os.Symlink(filepath.Dir(library), filepath.Join(directory, "runtime")); err != nil {
-		return err
+	if symlinkError := os.Symlink(filepath.Dir(library), filepath.Join(directory, "runtime")); symlinkError != nil {
+		return symlinkError
 	}
-	if err := os.Symlink(archive, filepath.Join(directory, checkerArchive)); err != nil {
-		return err
+	if symlinkError := os.Symlink(archive, filepath.Join(directory, checkerArchive)); symlinkError != nil {
+		return symlinkError
 	}
-	output, err = filepath.Abs(output)
-	if err != nil {
-		return err
+	output, absolutePathError := filepath.Abs(output)
+	if absolutePathError != nil {
+		return absolutePathError
 	}
-	flags := append(append(tsgoFlags(source, options), prefixMaps(directory, "/adamic-build")...), prefixMaps(filepath.Dir(library), "/adamic-runtime")...)
+	flags := append(
+		append(tsgoFlags(source, options), prefixMaps(directory, "/adamic-build")...),
+		prefixMaps(filepath.Dir(library), "/adamic-runtime")...,
+	)
 	flags = append(flags, "-I", "runtime")
 	// main.c is compiled first and linked as main.o, for linkOne's reasons: on macOS so the debug map names it main.o
 	// alone, and elsewhere so the compile is a step of its own, the binary the one call's bytes.
 	program := "main.c"
 	if goruntime.GOOS == "darwin" || !oneCall {
-		compile := clangIn(directory, compilerName(options), append(compileOnlyFlags(flags), "-c", program, "-o", "main.o")...)
+		compile := clangIn(
+			directory,
+			compilerName(options),
+			append(compileOnlyFlags(flags), "-c", program, "-o", "main.o")...,
+		)
 		var combined []byte
 		var compiling time.Duration
-		if err := jobserver.Hold(func() error {
+		if holdError := jobserver.Hold(func() error {
 			return timed(&compiling, func() (err error) { combined, err = compile.CombinedOutput(); return err })
-		}); err != nil {
-			return fmt.Errorf("native: clang with checker archive failed: %w\n%s", err, combined)
+		}); holdError != nil {
+			return fmt.Errorf("native: clang with checker archive failed: %w\n%s", holdError, combined)
 		}
 		buildLog("cCompile", "main.c", "", "off", compiling)
-		if err := os.Chtimes(filepath.Join(directory, "main.o"), time.Unix(0, 0), time.Unix(0, 0)); err != nil {
-			return err
+		if changeTimesError := os.Chtimes(
+			filepath.Join(directory, "main.o"),
+			time.Unix(0, 0),
+			time.Unix(0, 0),
+		); changeTimesError != nil {
+			return changeTimesError
 		}
 		program = "main.o"
 	}
@@ -142,10 +159,10 @@ func buildTSGo(source, output, archive string, options Options, oneCall bool) er
 	command := clangIn(directory, compilerName(options), arguments...)
 	var combined []byte
 	var building time.Duration
-	if err := jobserver.Hold(func() error {
+	if holdError := jobserver.Hold(func() error {
 		return timed(&building, func() (err error) { combined, err = command.CombinedOutput(); return err })
-	}); err != nil {
-		return fmt.Errorf("native: clang with checker archive failed: %w\n%s", err, combined)
+	}); holdError != nil {
+		return fmt.Errorf("native: clang with checker archive failed: %w\n%s", holdError, combined)
 	}
 	// As linkOne's: a link alone is a cLink, and one call that compiles and links is a cBuild.
 	kind := "cBuild"
@@ -164,12 +181,12 @@ const checkerArchive = "checker.a"
 // checkerArchivePath is archive, a path from the working directory, as the absolute path a link to it in a build
 // directory needs; only that link ever holds it.
 func checkerArchivePath(archive string) (string, error) {
-	archive, err := filepath.Abs(archive)
-	if err != nil {
-		return "", err
+	archive, absolutePathError := filepath.Abs(archive)
+	if absolutePathError != nil {
+		return "", absolutePathError
 	}
-	if _, err := os.Stat(archive); err != nil {
-		return "", fmt.Errorf("native: checker archive: %w", err)
+	if _, statError := os.Stat(archive); statError != nil {
+		return "", fmt.Errorf("native: checker archive: %w", statError)
 	}
 	return archive, nil
 }
@@ -184,8 +201,8 @@ func tsgoFlags(source string, options Options) []string {
 // The checker bridge has its own runtime key: its ABI header and ADAMIC_TSGO
 // change the objects, while the selected Go archive changes only the final link.
 func tsgoRuntimeLibrary(source string, options Options) (string, error) {
-	if err := ValidateOptions(options); err != nil {
-		return "", err
+	if validateOptionsError := ValidateOptions(options); validateOptionsError != nil {
+		return "", validateOptionsError
 	}
 	return splitTSGoRuntime(source, options)
 }

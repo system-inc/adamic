@@ -18,14 +18,17 @@ func TestProcessEnvironmentMutationsAreRefusedInParallelWork(test *testing.T) {
 	} {
 		test.Run(one.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, `import process from 'node:process'; import {parallelMap} from 'adamic';
+			_, lowerSourceError := lowerSource(
+				test,
+				`import process from 'node:process'; import {parallelMap} from 'adamic';
 const items: readonly string[] = ['ADAMIC_PARALLEL_ENV'];
-parallelMap(items, (key: string): string => {`+one.body+` return key;});`)
+parallelMap(items, (key: string): string => {`+one.body+` return key;});`,
+			)
 			var refused *Refused
-			if !errors.As(err, &refused) ||
+			if !errors.As(lowerSourceError, &refused) ||
 				!strings.Contains(refused.What, "parallelMap work writes state another task can reach") ||
 				!strings.Contains(refused.What, "process environment") {
-				test.Fatalf("want process environment effect refusal, got %v", err)
+				test.Fatalf("want process environment effect refusal, got %v", lowerSourceError)
 			}
 		})
 	}

@@ -9,21 +9,27 @@ import (
 
 // console lowers console.log and console.error with one string.
 func (l *lowering) console(call *ast.Node) (ir.Statement, error) {
-	stream, err := l.consoleStream(call.AsCallExpression().Expression)
-	if err != nil {
-		return nil, err
+	stream, consoleStreamError := l.consoleStream(call.AsCallExpression().Expression)
+	if consoleStreamError != nil {
+		return nil, consoleStreamError
 	}
 	arguments := call.AsCallExpression().Arguments.Nodes
 	if len(arguments) != 1 {
 		// The prelude declares one parameter, so the checker has already refused any other count.
-		return nil, l.notYet(call, "console."+call.AsCallExpression().Expression.Name().Text()+" with other than one string argument")
+		return nil, l.notYet(
+			call,
+			"console."+call.AsCallExpression().Expression.Name().Text()+" with other than one string argument",
+		)
 	}
-	value, err := l.expression(arguments[0])
-	if err != nil {
-		return nil, err
+	value, expressionError := l.expression(arguments[0])
+	if expressionError != nil {
+		return nil, expressionError
 	}
 	if value.Type() != ir.String {
-		return nil, l.notYet(call, "console."+call.AsCallExpression().Expression.Name().Text()+" with a non-string argument")
+		return nil, l.notYet(
+			call,
+			"console."+call.AsCallExpression().Expression.Name().Text()+" with a non-string argument",
+		)
 	}
 	return ir.WriteLine{Stream: stream, Value: l.spelled(arguments[0], value)}, nil
 }
@@ -31,7 +37,8 @@ func (l *lowering) console(call *ast.Node) (ir.Statement, error) {
 // isPanicCall reports whether an expression is a call to the prelude's panic, which never returns.
 func (l *lowering) isPanicCall(expression *ast.Node) bool {
 	expression = ast.SkipParentheses(expression)
-	return expression.Kind == ast.KindCallExpression && l.isPreludeFunction(expression.AsCallExpression().Expression, "panic")
+	return expression.Kind == ast.KindCallExpression &&
+		l.isPreludeFunction(expression.AsCallExpression().Expression, "panic")
 }
 
 // isPreludeFunction reports whether a callee is the prelude's function of that name, as imported
@@ -42,7 +49,10 @@ func (l *lowering) isPreludeFunction(callee *ast.Node, name string) bool {
 		return false
 	}
 	symbol := l.symbol(callee)
-	return symbol != nil && symbol.Name == name && len(symbol.Declarations) > 0 && load.IsPrelude(ast.GetSourceFileOfNode(symbol.Declarations[0]))
+	return symbol != nil &&
+		symbol.Name == name &&
+		len(symbol.Declarations) > 0 &&
+		load.IsPrelude(ast.GetSourceFileOfNode(symbol.Declarations[0]))
 }
 
 // isConsole reports whether a callee is a method of the prelude's console.

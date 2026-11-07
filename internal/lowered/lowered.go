@@ -96,9 +96,9 @@ func sourcesOf(test testing.TB, paths []string) sources {
 	}
 	absolute := make([]string, len(paths))
 	for index, path := range paths {
-		resolved, err := filepath.Abs(path)
-		if err != nil {
-			test.Fatal(err)
+		resolved, absolutePathError := filepath.Abs(path)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		absolute[index] = resolved
 	}
@@ -111,17 +111,17 @@ func sourcesOf(test testing.TB, paths []string) sources {
 	}
 	read := sources{files: map[string][]byte{}}
 	for index, path := range absolute {
-		relative, err := filepath.Rel(base, path)
-		if err != nil {
-			test.Fatal(err)
+		relative, relativePathError := filepath.Rel(base, path)
+		if relativePathError != nil {
+			test.Fatal(relativePathError)
 		}
 		relative = filepath.ToSlash(relative)
 		if index == 0 {
 			read.entry = relative
 		}
-		data, err := os.ReadFile(path)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(path)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		read.files[relative] = data
 	}
@@ -137,9 +137,9 @@ type environment struct {
 // processEnvironment is this process's.
 func processEnvironment(test testing.TB) environment {
 	test.Helper()
-	workingDirectory, err := os.Getwd()
-	if err != nil {
-		test.Fatal(err)
+	workingDirectory, workingDirectoryError := os.Getwd()
+	if workingDirectoryError != nil {
+		test.Fatal(workingDirectoryError)
 	}
 	return environment{getenv: os.Getenv, workingDirectory: workingDirectory}
 }
@@ -147,9 +147,9 @@ func processEnvironment(test testing.TB) environment {
 // inputsOf is stage 1's key for the program from sources with options, under environment.
 func inputsOf(test testing.TB, read sources, options Options, under environment) buildcache.Inputs {
 	test.Helper()
-	lowering, err := loweringClosure()
-	if err != nil {
-		test.Fatal(err)
+	lowering, loweringClosureError := loweringClosure()
+	if loweringClosureError != nil {
+		test.Fatal(loweringClosureError)
 	}
 	inputs := buildcache.Inputs{
 		Name:      productName,
@@ -193,11 +193,11 @@ func stored(
 		inputs,
 		func(directory string) error { return builder(directory, read, options) },
 	)
-	program, err := readStored(directory)
-	if err == nil {
+	program, readStoredError := readStored(directory)
+	if readStoredError == nil {
 		return program, inputs, directory
 	}
-	test.Logf("lowered: the IR stored in %s doesn't read back, a miss: %v", directory, err)
+	test.Logf("lowered: the IR stored in %s doesn't read back, a miss: %v", directory, readStoredError)
 	rebuilt := inputs
 	rebuilt.Flags = append(slices.Clone(inputs.Flags), "replaces="+storedDigest(directory))
 	directory = buildcache.Product(
@@ -205,9 +205,9 @@ func stored(
 		rebuilt,
 		func(directory string) error { return builder(directory, read, options) },
 	)
-	program, err = readStored(directory)
-	if err != nil {
-		test.Fatalf("lowered: the IR rebuilt in %s doesn't read back either: %v", directory, err)
+	program, readStoredError = readStored(directory)
+	if readStoredError != nil {
+		test.Fatalf("lowered: the IR rebuilt in %s doesn't read back either: %v", directory, readStoredError)
 	}
 	return program, inputs, directory
 }
@@ -225,21 +225,21 @@ func storedDigest(directory string) string {
 
 // readStored decodes the IR stored in directory, once its bytes are the ones its sum names.
 func readStored(directory string) (*ir.Program, error) {
-	data, err := os.ReadFile(filepath.Join(directory, gobFile))
-	if err != nil {
-		return nil, err
+	data, readError := os.ReadFile(filepath.Join(directory, gobFile))
+	if readError != nil {
+		return nil, readError
 	}
-	sum, err := os.ReadFile(filepath.Join(directory, sumFile))
-	if err != nil {
-		return nil, err
+	sum, readError := os.ReadFile(filepath.Join(directory, sumFile))
+	if readError != nil {
+		return nil, readError
 	}
 	if got, want := fmt.Sprintf("%x", sha256.Sum256(data)), strings.TrimSpace(string(sum)); got != want {
 		return nil, fmt.Errorf("%s's sha256 is %s, and its sum says %s", gobFile, got, want)
 	}
 	ir.RegisterGob()
 	var program ir.Program
-	if err := gob.NewDecoder(bytes.NewReader(data)).Decode(&program); err != nil {
-		return nil, fmt.Errorf("decode %s: %w", gobFile, err)
+	if decodeError := gob.NewDecoder(bytes.NewReader(data)).Decode(&program); decodeError != nil {
+		return nil, fmt.Errorf("decode %s: %w", gobFile, decodeError)
 	}
 	return &program, nil
 }
@@ -247,28 +247,28 @@ func readStored(directory string) (*ir.Program, error) {
 // build lowers the program from sources into directory: the sources laid out under source/ as they sat, loaded from
 // there, lowered with options, encoded once, and the encoding's sum written beside it.
 func build(directory string, read sources, options Options) error {
-	program, err := loaded(directory, read, options)
-	if err != nil {
-		return err
+	program, loadedError := loaded(directory, read, options)
+	if loadedError != nil {
+		return loadedError
 	}
-	lowering, err := lower.LowerWithOptions(context.Background(), program, options.Lower)
-	if err != nil {
-		return err
+	lowering, lowerWithOptionsError := lower.LowerWithOptions(context.Background(), program, options.Lower)
+	if lowerWithOptionsError != nil {
+		return lowerWithOptionsError
 	}
 	ir.RegisterGob()
 	var encoded bytes.Buffer
-	if err := gob.NewEncoder(&encoded).Encode(lowering); err != nil {
-		return fmt.Errorf("encode the IR: %w", err)
+	if encodeError := gob.NewEncoder(&encoded).Encode(lowering); encodeError != nil {
+		return fmt.Errorf("encode the IR: %w", encodeError)
 	}
-	if err := os.WriteFile(filepath.Join(directory, gobFile), encoded.Bytes(), 0o644); err != nil {
-		return err
+	if writeError := os.WriteFile(filepath.Join(directory, gobFile), encoded.Bytes(), 0o644); writeError != nil {
+		return writeError
 	}
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		filepath.Join(directory, sumFile),
 		fmt.Appendf(nil, "%x\n", sha256.Sum256(encoded.Bytes())),
 		0o644,
-	); err != nil {
-		return err
+	); writeError != nil {
+		return writeError
 	}
 	// The sources' imports may name this checkout; the product names it <repository> (#tqrqx60).
 	return buildcache.RelativeFiles(filepath.Join(directory, "source"))
@@ -282,24 +282,24 @@ func loaded(directory string, read sources, options Options) (*load.Program, err
 	source := filepath.Join(directory, "source")
 	for file, data := range read.files {
 		path := filepath.Join(source, filepath.FromSlash(file))
-		if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
-			return nil, err
+		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0o755); createDirectoryError != nil {
+			return nil, createDirectoryError
 		}
-		if err := os.WriteFile(path, data, 0o644); err != nil {
-			return nil, err
+		if writeError := os.WriteFile(path, data, 0o644); writeError != nil {
+			return nil, writeError
 		}
 	}
 	// Named placelessly: the IR's positions would otherwise carry this build directory, random per build (#tqrqx60).
-	program, err := load.LoadDisplayed(
+	program, loadDisplayedError := load.LoadDisplayed(
 		[]string{filepath.Join(source, filepath.FromSlash(read.entry))},
 		buildcache.Relative,
 	)
-	if err != nil {
-		return nil, err
+	if loadDisplayedError != nil {
+		return nil, loadDisplayedError
 	}
 	// The checker may name the directory as its links resolve (macOS's /var is /private/var).
 	places := []string{source + "/"}
-	if resolved, err := filepath.EvalSymlinks(source); err == nil {
+	if resolved, resolveSymlinksError := filepath.EvalSymlinks(source); resolveSymlinksError == nil {
 		places = append(places, resolved+"/")
 	}
 	for _, file := range program.CompilerProgram().GetSourceFiles() {

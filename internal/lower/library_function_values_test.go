@@ -28,8 +28,8 @@ func TestLibraryFunctionValuesLower(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			if _, err := lowerSource(test, probe.source); err != nil {
-				test.Fatalf("want it to lower, got %v", err)
+			if _, lowerSourceError := lowerSource(test, probe.source); lowerSourceError != nil {
+				test.Fatalf("want it to lower, got %v", lowerSourceError)
 			}
 		})
 	}
@@ -90,9 +90,9 @@ func TestLibraryFunctionValueReadsElsewhereKeepTheirStop(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
-			if err == nil || !strings.Contains(err.Error(), probe.want) {
-				test.Errorf("got %v, want a stop containing %q", err, probe.want)
+			_, lowerSourceError := lowerSource(test, probe.source)
+			if lowerSourceError == nil || !strings.Contains(lowerSourceError.Error(), probe.want) {
+				test.Errorf("got %v, want a stop containing %q", lowerSourceError, probe.want)
 			}
 		})
 	}

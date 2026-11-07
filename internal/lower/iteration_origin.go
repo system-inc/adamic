@@ -62,9 +62,9 @@ func (l *lowering) erasedLiteralMethod(node *ast.Node) error {
 }
 
 func (l *lowering) erasedMethodField(where *ast.Node, view *checker.Type, name string) error {
-	modules, err := l.moduleOrder(l.program.Files()[0])
-	if err != nil {
-		return err
+	modules, moduleOrderError := l.moduleOrder(l.program.Files()[0])
+	if moduleOrderError != nil {
+		return moduleOrderError
 	}
 	var found error
 	var visit ast.Visitor
@@ -85,11 +85,13 @@ func (l *lowering) erasedMethodField(where *ast.Node, view *checker.Type, name s
 				}
 				for _, root := range l.checker.GetRootSymbols(field) {
 					for _, declaration := range root.Declarations {
-						if declaration.Kind == ast.KindMethodDeclaration && declaration.Parent.Kind == ast.KindClassDeclaration {
+						if declaration.Kind == ast.KindMethodDeclaration &&
+							declaration.Parent.Kind == ast.KindClassDeclaration {
 							// Method calls preserve the existing class prototype dispatch. Arrow-field
 							// views and destructuring still erase the represented method origin.
 							member := l.checker.GetPropertyOfType(l.checker.GetNonNullableType(view), name)
-							if isCallee(where) && (isClassInstance(l.checker.GetNonNullableType(view)) || (member != nil && member.Flags&ast.SymbolFlagsMethod != 0)) {
+							if isCallee(where) && (isClassInstance(l.checker.GetNonNullableType(view)) ||
+								(member != nil && member.Flags&ast.SymbolFlagsMethod != 0)) {
 								continue
 							}
 							found = l.notYet(where, "a class method through a view that erases its prototype origin")
@@ -151,7 +153,9 @@ func (l *lowering) iterationOrigin(node *ast.Node, members []*ast.Symbol, closeP
 			return false
 		}
 		declaration := symbol.Declarations[0]
-		if declaration.Kind != ast.KindVariableDeclaration || declaration.Parent == nil || declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
+		if declaration.Kind != ast.KindVariableDeclaration ||
+			declaration.Parent == nil ||
+			declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
 			return false
 		}
 		return l.iterationOrigin(declaration.AsVariableDeclaration().Initializer, members, closePresence, depth+1)
@@ -168,7 +172,8 @@ func (l *lowering) iterationOrigin(node *ast.Node, members []*ast.Symbol, closeP
 		return l.iterationReturns(body, members, closePresence, depth+1)
 	case ast.KindConditionalExpression:
 		expression := node.AsConditionalExpression()
-		return l.iterationOrigin(expression.WhenTrue, members, closePresence, depth+1) && l.iterationOrigin(expression.WhenFalse, members, closePresence, depth+1)
+		return l.iterationOrigin(expression.WhenTrue, members, closePresence, depth+1) &&
+			l.iterationOrigin(expression.WhenFalse, members, closePresence, depth+1)
 	}
 	return false
 }
@@ -268,7 +273,9 @@ func (l *lowering) iterationCallableBody(symbol *ast.Symbol, depth int) *ast.Nod
 	if declaration.Kind == ast.KindFunctionDeclaration {
 		return declaration.Body()
 	}
-	if declaration.Kind != ast.KindVariableDeclaration || declaration.Parent == nil || declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
+	if declaration.Kind != ast.KindVariableDeclaration ||
+		declaration.Parent == nil ||
+		declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
 		return nil
 	}
 	initializer := declaration.AsVariableDeclaration().Initializer
@@ -322,7 +329,9 @@ func (l *lowering) knownIterationClass(node *ast.Node, expected *checker.Type, d
 			return false
 		}
 		declaration := symbol.Declarations[0]
-		if declaration.Kind != ast.KindVariableDeclaration || declaration.Parent == nil || declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
+		if declaration.Kind != ast.KindVariableDeclaration ||
+			declaration.Parent == nil ||
+			declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
 			return false
 		}
 		return l.knownIterationClass(declaration.AsVariableDeclaration().Initializer, expected, depth+1)
@@ -334,7 +343,8 @@ func (l *lowering) knownIterationClass(node *ast.Node, expected *checker.Type, d
 		return l.iterationReturnsClass(l.iterationCallableBody(l.symbol(callee), depth+1), expected, nil, depth+1)
 	case ast.KindConditionalExpression:
 		expression := node.AsConditionalExpression()
-		return l.knownIterationClass(expression.WhenTrue, expected, depth+1) && l.knownIterationClass(expression.WhenFalse, expected, depth+1)
+		return l.knownIterationClass(expression.WhenTrue, expected, depth+1) &&
+			l.knownIterationClass(expression.WhenFalse, expected, depth+1)
 	}
 	return false
 }
@@ -396,7 +406,9 @@ func (l *lowering) iterationFactoryReturnsThis(member *ast.Symbol) bool {
 		}
 		if ast.IsIdentifier(node) {
 			symbol := l.symbol(node)
-			if symbol != nil && len(symbol.Declarations) == 1 && symbol.Declarations[0].Kind == ast.KindVariableDeclaration {
+			if symbol != nil &&
+				len(symbol.Declarations) == 1 &&
+				symbol.Declarations[0].Kind == ast.KindVariableDeclaration {
 				return receiver(symbol.Declarations[0].AsVariableDeclaration().Initializer, depth+1)
 			}
 		}
@@ -430,7 +442,11 @@ func (l *lowering) iterationFactoryReturnsThis(member *ast.Symbol) bool {
 
 // Unknown receiver origins matter only when a declared descendant can change the
 // protocol. A factory returning a base receiver remains sound in a closed class tree.
-func (l *lowering) iteratorReceiverOverrides(modules []*ast.SourceFile, iterator *checker.Type, next, close *ast.Symbol) bool {
+func (l *lowering) iteratorReceiverOverrides(
+	modules []*ast.SourceFile,
+	iterator *checker.Type,
+	next, close *ast.Symbol,
+) bool {
 	class := l.classNodeFor(iterator)
 	if class == nil {
 		return false
@@ -443,7 +459,10 @@ func (l *lowering) iteratorReceiverOverrides(modules []*ast.SourceFile, iterator
 			if l.classView(shape, class) != nil {
 				actualNext := l.checker.GetPropertyOfType(shape, "next")
 				actualClose := l.checker.GetPropertyOfType(shape, "return")
-				if actualNext == nil || !l.sameMemberOrigin(actualNext, next) || (actualClose != nil) != (close != nil) || (close != nil && !l.sameMemberOrigin(actualClose, close)) {
+				if actualNext == nil ||
+					!l.sameMemberOrigin(actualNext, next) ||
+					(actualClose != nil) != (close != nil) ||
+					(close != nil && !l.sameMemberOrigin(actualClose, close)) {
 					changed = true
 					return true
 				}

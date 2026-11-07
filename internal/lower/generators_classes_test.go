@@ -22,13 +22,13 @@ func lowerModules(test *testing.T, modules map[string]string) (*ir.Program, erro
 	test.Helper()
 	directory := test.TempDir()
 	for name, source := range modules {
-		if err := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
-	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-	if err != nil {
-		test.Fatalf("Load: %v", err)
+	program, loadError := load.Load([]string{filepath.Join(directory, "main.ts")})
+	if loadError != nil {
+		test.Fatalf("Load: %v", loadError)
 	}
 	return Lower(context.Background(), program)
 }
@@ -38,13 +38,13 @@ func lowerModules(test *testing.T, modules map[string]string) (*ir.Program, erro
 // a module's class declarations; the program lowers, and this goes red.
 func TestUnusedClassGeneratorMethodIsStillWalked(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(
+	_, lowerSourceError := lowerSource(
 		test,
 		"class Box { *each(items: number[]): Generator<number, void, unknown> { for (const x of items) { yield (x as any); } } }\nconsole.log('control');\n",
 	)
 	var refused *Refused
-	if !errors.As(err, &refused) {
-		test.Fatalf("got %v, want the walk's refusal of the any cast", err)
+	if !errors.As(lowerSourceError, &refused) {
+		test.Fatalf("got %v, want the walk's refusal of the any cast", lowerSourceError)
 	}
 }
 
@@ -85,22 +85,26 @@ func TestGeneratorMethodUseIsDecidedAcrossModules(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerModules(test, map[string]string{"library.ts": probe.library, "main.ts": probe.main})
+			_, lowerModulesError := lowerModules(
+				test,
+				map[string]string{"library.ts": probe.library, "main.ts": probe.main},
+			)
 			var gap *NotYet
-			if !errors.As(err, &gap) || !strings.Contains(gap.What, "a generator function written as a method") {
-				test.Fatalf("got %v, want a NotYet saying it is written as a method", err)
+			if !errors.As(lowerModulesError, &gap) ||
+				!strings.Contains(gap.What, "a generator function written as a method") {
+				test.Fatalf("got %v, want a NotYet saying it is written as a method", lowerModulesError)
 			}
 		})
 	}
 	test.Run("exported and used nowhere", func(test *testing.T) {
 		test.Parallel()
-		if _, err := lowerModules(test, map[string]string{
+		if _, lowerModulesError := lowerModules(test, map[string]string{
 			"library.ts": "export class Box { *each(): " +
 				generator +
 				" { yield 1; } }\nexport function label(): string { return 'library'; }\n",
 			"main.ts": "import { label } from './library';\nconsole.log(label());\n",
-		}); err != nil {
-			test.Fatalf("an exported class nothing constructs: %v", err)
+		}); lowerModulesError != nil {
+			test.Fatalf("an exported class nothing constructs: %v", lowerModulesError)
 		}
 	})
 }
@@ -112,15 +116,15 @@ func TestGeneratorMethodUseIsDecidedAcrossModules(test *testing.T) {
 func TestGeneratorMethodBothWays(test *testing.T) {
 	test.Parallel()
 	const class = "class Box { *each(): Generator<number, void, unknown> { return; } }\n"
-	if _, err := lowerSource(test, class+"console.log('control');\n"); err != nil {
-		test.Errorf("an unused class with a generator method: %v", err)
+	if _, lowerSourceError := lowerSource(test, class+"console.log('control');\n"); lowerSourceError != nil {
+		test.Errorf("an unused class with a generator method: %v", lowerSourceError)
 	}
-	_, err := lowerSource(test, class+"new Box().each();\nconsole.log('control');\n")
+	_, lowerSourceError := lowerSource(test, class+"new Box().each();\nconsole.log('control');\n")
 	var gap *NotYet
-	if !errors.As(err, &gap) || !strings.Contains(gap.What, "a generator function written as a method") {
+	if !errors.As(lowerSourceError, &gap) || !strings.Contains(gap.What, "a generator function written as a method") {
 		test.Errorf(
 			"the class constructed and its generator method called: got %v, want a NotYet saying it is written as a method",
-			err,
+			lowerSourceError,
 		)
 	}
 }
@@ -144,10 +148,11 @@ func TestOverloadedGeneratorMethodStopsAtItsImplementation(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, strings.ReplaceAll(overloads, "BODY", probe.body)+probe.use)
+			_, lowerSourceError := lowerSource(test, strings.ReplaceAll(overloads, "BODY", probe.body)+probe.use)
 			var gap *NotYet
-			if !errors.As(err, &gap) || !strings.Contains(gap.What, "a generator function written as a method") {
-				test.Fatalf("got %v, want a NotYet saying it is written as a method", err)
+			if !errors.As(lowerSourceError, &gap) ||
+				!strings.Contains(gap.What, "a generator function written as a method") {
+				test.Fatalf("got %v, want a NotYet saying it is written as a method", lowerSourceError)
 			}
 		})
 	}

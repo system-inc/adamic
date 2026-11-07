@@ -73,22 +73,22 @@ const corpusListName = "corpus.list"
 // the working tree.
 func buildTSPrinterPinnedCorpus(inputs buildcache.Inputs, pin string) func(directory string) error {
 	return func(directory string) error {
-		root, err := filepath.Abs(Repository)
-		if err != nil {
-			return err
+		root, absolutePathError := filepath.Abs(Repository)
+		if absolutePathError != nil {
+			return absolutePathError
 		}
-		files, err := buildcache.PinnedFiles(root, inputs, pin, "TypeScript", inRepositoryCorpus)
-		if err != nil {
-			return err
+		files, pinnedFilesError := buildcache.PinnedFiles(root, inputs, pin, "TypeScript", inRepositoryCorpus)
+		if pinnedFilesError != nil {
+			return pinnedFilesError
 		}
 		var list strings.Builder
 		for _, file := range files {
 			path := filepath.Join(directory, filepath.FromSlash(file.Path))
-			if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
-				return err
+			if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0o755); createDirectoryError != nil {
+				return createDirectoryError
 			}
-			if err := os.WriteFile(path, file.Data, 0o644); err != nil {
-				return err
+			if writeError := os.WriteFile(path, file.Data, 0o644); writeError != nil {
+				return writeError
 			}
 			list.WriteString(file.Path + "\n")
 		}
@@ -110,17 +110,17 @@ func PinnedCorpusFiles(test *testing.T) []string {
 	test.Helper()
 	pinnedCorpus.once.Do(func() {
 		inputs := oracleInputs(TSPrinterPinnedCorpusInputs(RepositoryCorpusCommit))
-		directory, err := buildcache.Get(
+		directory, getError := buildcache.Get(
 			inputs,
 			oracleBuild(inputs.Name, buildTSPrinterPinnedCorpus(inputs, RepositoryCorpusCommit)),
 		)
-		if err != nil {
-			pinnedCorpus.err = fmt.Errorf("tsprinter pinned corpus: %w", err)
+		if getError != nil {
+			pinnedCorpus.err = fmt.Errorf("tsprinter pinned corpus: %w", getError)
 			return
 		}
-		list, err := os.ReadFile(filepath.Join(directory, corpusListName))
-		if err != nil {
-			pinnedCorpus.err = fmt.Errorf("tsprinter pinned corpus: %w", err)
+		list, readError := os.ReadFile(filepath.Join(directory, corpusListName))
+		if readError != nil {
+			pinnedCorpus.err = fmt.Errorf("tsprinter pinned corpus: %w", readError)
 			return
 		}
 		for _, name := range strings.Split(strings.TrimSuffix(string(list), "\n"), "\n") {
@@ -204,14 +204,14 @@ func printerCorpusFiles(test *testing.T) []string {
 	// The pin is a check, never an input: tracked.Head asks git as key-time work, with the home's configuration out of
 	// reach (home-6's dry run, Oct 11: this git read ~/.gitconfig inside the build, refusing it and the Go oracle
 	// beside it).
-	if head, err := tracked.Head(source); err != nil || head != "050880ce59e30b356b686bd3144efe24f875ebc8" {
-		test.Fatalf("TypeScript pin: %q %v", head, err)
+	if head, headError := tracked.Head(source); headError != nil || head != "050880ce59e30b356b686bd3144efe24f875ebc8" {
+		test.Fatalf("TypeScript pin: %q %v", head, headError)
 	}
 	// The repository's half is the pinned corpus product's files, never the working tree's (repositoryCorpusCommit).
 	files := PinnedCorpusFiles(test)
-	listed, err := TrackedRootFiles(test, source, "src/compiler")
-	if err != nil {
-		test.Fatal(err)
+	listed, trackedRootFilesError := TrackedRootFiles(test, source, "src/compiler")
+	if trackedRootFilesError != nil {
+		test.Fatal(trackedRootFilesError)
 	}
 	return append(files, listed...)
 }
@@ -232,8 +232,11 @@ func DocumentCorpus(test *testing.T) (string, string, string) {
 			command := toolchain.Command(oracle, "-test.run=^TestAdamicDocuments$")
 			command.Dir = cohere + "/internal/format/doc"
 			command.Env = append(os.Environ(), "ADAMIC_TS_DOC_OUTPUT="+dir)
-			if output, err := childguard.CombinedOutput(command, childguard.Options{}); err != nil {
-				return fmt.Errorf("Go doc corpus %v\n%s", err, output)
+			if output, combinedOutputError := childguard.CombinedOutput(
+				command,
+				childguard.Options{},
+			); combinedOutputError != nil {
+				return fmt.Errorf("Go doc corpus %v\n%s", combinedOutputError, output)
 			}
 			return nil
 		})
@@ -241,17 +244,17 @@ func DocumentCorpus(test *testing.T) (string, string, string) {
 	// A private copy per test: PlanCorpus keys its plan by path and forgets it when the test ends (#g7a9yd3).
 	directory := test.TempDir()
 	for _, name := range []string{"docs.txt", "answers.txt", "docs.json"} {
-		data, err := os.ReadFile(filepath.Join(product, name))
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(filepath.Join(product, name))
+		if readError != nil {
+			test.Fatal(readError)
 		}
-		if err := os.WriteFile(filepath.Join(directory, name), data, 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, name), data, 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
-	answers, err := os.ReadFile(directory + "/answers.txt")
-	if err != nil {
-		test.Fatal(err)
+	answers, readError := os.ReadFile(directory + "/answers.txt")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	PlanCorpus(test, directory+"/docs.txt")
 	return directory + "/docs.txt", string(answers), directory + "/docs.json"
@@ -273,15 +276,15 @@ func DocumentOracle(test *testing.T) string {
 // documentOracleInputs is DocumentOracle's key, computed without building it.
 func documentOracleInputs(test *testing.T) buildcache.Inputs {
 	test.Helper()
-	inputs, err := buildcache.GoTestInputs(
+	inputs, goTestInputsError := buildcache.GoTestInputs(
 		"cohere",
 		"doc.test",
 		"./internal/format/doc",
 		documentOracleArguments(test),
 		nil,
 	)
-	if err != nil {
-		test.Fatal(err)
+	if goTestInputsError != nil {
+		test.Fatal(goTestInputsError)
 	}
 	return inputs
 }
@@ -295,25 +298,25 @@ func documentOracleArguments(test *testing.T) []string {
 		map[string]any{"Replace": map[string]string{cohere + "/internal/format/doc/adamic_docs_test.go": side}},
 	)
 	path := test.TempDir() + "/overlay.json"
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, overlay, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return []string{"-overlay=" + path}
 }
 
 func ExpressionGateKeys(test *testing.T, cases []PrinterCase) []string {
 	test.Helper()
-	root, err := filepath.Abs(Repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(Repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	upstream, err := filepath.Abs(os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"))
-	if err != nil {
-		test.Fatal(err)
+	upstream, absolutePathError := filepath.Abs(os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	keys, err := StatementCaseKeys(cases, root, upstream)
-	if err != nil {
-		test.Fatal(err)
+	keys, statementCaseKeysError := StatementCaseKeys(cases, root, upstream)
+	if statementCaseKeysError != nil {
+		test.Fatal(statementCaseKeysError)
 	}
 	return expressionCaseKeys(keys)
 }
@@ -343,9 +346,9 @@ func ExpressionGateOwners(keys []string, count int) [][]int {
 
 func expressionGatePartition(test *testing.T, cases []PrinterCase, count int) [][]int {
 	test.Helper()
-	partition, err := expressionPartition(ExpressionGateKeys(test, cases), count)
-	if err != nil {
-		test.Fatal(err)
+	partition, expressionPartitionError := expressionPartition(ExpressionGateKeys(test, cases), count)
+	if expressionPartitionError != nil {
+		test.Fatal(expressionPartitionError)
 	}
 	return partition
 }
@@ -372,10 +375,10 @@ func tsPrinterOracleProduct(t *testing.T, root string, files []string, gaps, fam
 	}
 	external := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
 	if external != "" {
-		var err error
-		external, err = filepath.Abs(external)
-		if err != nil {
-			t.Fatal(err)
+		var absolutePathError error
+		external, absolutePathError = filepath.Abs(external)
+		if absolutePathError != nil {
+			t.Fatal(absolutePathError)
 		}
 	}
 	flags := []string{"test-run=" + test, "metadata=canonical-v1"}
@@ -389,21 +392,21 @@ func tsPrinterOracleProduct(t *testing.T, root string, files []string, gaps, fam
 		Flags:     flags,
 		Toolchain: runtime.Version(),
 	}, func(directory string) error {
-		request, err := json.Marshal(map[string]any{"Files": files, "Directory": directory, "Gaps": gaps})
-		if err != nil {
-			return err
+		request, encodeError := json.Marshal(map[string]any{"Files": files, "Directory": directory, "Gaps": gaps})
+		if encodeError != nil {
+			return encodeError
 		}
 		// Requests name this builder's paths and must never become shared outputs.
 		requestPath := filepath.Join(t.TempDir(), "request.json")
-		if err := os.WriteFile(requestPath, request, 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(requestPath, request, 0644); writeError != nil {
+			return writeError
 		}
 		command := toolchain.Command(oracle, "-test.v", "-test.count=1", "-test.run=^"+test+"$", "-test.timeout=0")
 		command.Dir = root + "/cohere"
 		command.Env = append(os.Environ(), variable+"="+requestPath)
-		output, err := childguard.CombinedOutput(command, childguard.Options{})
-		if err != nil {
-			return fmt.Errorf("Go %s corpus: %w\n%s", family, err, output)
+		output, combinedOutputError := childguard.CombinedOutput(command, childguard.Options{})
+		if combinedOutputError != nil {
+			return fmt.Errorf("Go %s corpus: %w\n%s", family, combinedOutputError, output)
 		}
 		t.Log(string(output))
 		return TSPrinterRewriteMetadata(directory, root, external, true)
@@ -415,10 +418,10 @@ func tsPrinterOracleOutputs(test *testing.T, root string, files []string, gaps, 
 	test.Helper()
 	external := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
 	if external != "" {
-		var err error
-		external, err = filepath.Abs(external)
-		if err != nil {
-			test.Fatal(err)
+		var absolutePathError error
+		external, absolutePathError = filepath.Abs(external)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 	}
 	product := tsPrinterOracleCorpus(test, root, files, gaps, family, oracle)
@@ -429,16 +432,21 @@ func tsPrinterOracleOutputs(test *testing.T, root string, files []string, gaps, 
 		names = append(names, "gaps.txt", "gap-answers.txt", "gaps.json")
 	}
 	for _, name := range names {
-		data, err := os.ReadFile(filepath.Join(product, name))
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(filepath.Join(product, name))
+		if readError != nil {
+			test.Fatal(readError)
 		}
-		if err := os.WriteFile(filepath.Join(directory, name), data, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, name), data, 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
-	if err := TSPrinterRewriteMetadata(directory, root, external, false); err != nil {
-		test.Fatal(err)
+	if tsPrinterRewriteMetadataError := TSPrinterRewriteMetadata(
+		directory,
+		root,
+		external,
+		false,
+	); tsPrinterRewriteMetadataError != nil {
+		test.Fatal(tsPrinterRewriteMetadataError)
 	}
 	return directory
 }
@@ -479,37 +487,37 @@ func outputLabel(label string, roots [][2]string, canonical bool) string {
 // and changing those would silently change the independent oracle's answers.
 func TSPrinterRewriteMetadata(directory, root, external string, canonical bool) error {
 	path := filepath.Join(directory, "cases.json")
-	data, err := os.ReadFile(path)
-	if err != nil {
-		return err
+	data, readError := os.ReadFile(path)
+	if readError != nil {
+		return readError
 	}
 	var cases []PrinterCase
-	if err := json.Unmarshal(data, &cases); err != nil {
-		return err
+	if decodeError := json.Unmarshal(data, &cases); decodeError != nil {
+		return decodeError
 	}
 	for i := range cases {
 		cases[i].Label = tsPrinterOutputLabel(cases[i].Label, root, external, canonical)
 	}
-	data, err = json.Marshal(cases)
-	if err != nil {
-		return err
+	data, encodeError := json.Marshal(cases)
+	if encodeError != nil {
+		return encodeError
 	}
-	if err := os.WriteFile(path, data, 0644); err != nil {
-		return err
+	if writeError := os.WriteFile(path, data, 0644); writeError != nil {
+		return writeError
 	}
 	path = filepath.Join(directory, "coverage.json")
-	data, err = os.ReadFile(path)
-	if err != nil {
-		return err
+	data, readError = os.ReadFile(path)
+	if readError != nil {
+		return readError
 	}
 	var report map[string]json.RawMessage
-	if err := json.Unmarshal(data, &report); err != nil {
-		return err
+	if decodeError := json.Unmarshal(data, &report); decodeError != nil {
+		return decodeError
 	}
 	if raw, exists := report["file_refusals"]; exists {
 		var refusals map[string]string
-		if err := json.Unmarshal(raw, &refusals); err != nil {
-			return err
+		if decodeError := json.Unmarshal(raw, &refusals); decodeError != nil {
+			return decodeError
 		}
 		rewritten := make(map[string]string, len(refusals))
 		var replacements []string
@@ -527,31 +535,31 @@ func TSPrinterRewriteMetadata(directory, root, external string, canonical bool) 
 		for label, diagnostic := range refusals {
 			rewritten[tsPrinterOutputLabel(label, root, external, canonical)] = replace.Replace(diagnostic)
 		}
-		report["file_refusals"], err = json.Marshal(rewritten)
-		if err != nil {
-			return err
+		report["file_refusals"], encodeError = json.Marshal(rewritten)
+		if encodeError != nil {
+			return encodeError
 		}
 	}
-	data, err = json.MarshalIndent(report, "", "  ")
-	if err != nil {
-		return err
+	data, encodeError = json.MarshalIndent(report, "", "  ")
+	if encodeError != nil {
+		return encodeError
 	}
 	return os.WriteFile(path, data, 0644)
 }
 
 func ExpressionUnits(test *testing.T, path, want string, count int) (*CorpusPlan, [][]byte) {
 	test.Helper()
-	text, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	text, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	data, err := os.ReadFile(strings.TrimSuffix(path, ".txt") + ".json")
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(strings.TrimSuffix(path, ".txt") + ".json")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var cases []PrinterCase
-	if err := json.Unmarshal(data, &cases); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &cases); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	rows := bytes.Split(bytes.TrimSuffix(text, []byte("\n")), []byte("\n"))
 	answers := bytes.Split(bytes.TrimSuffix([]byte(want), []byte("\n")), []byte("\n"))
@@ -597,33 +605,33 @@ func ExpressionUnits(test *testing.T, path, want string, count int) (*CorpusPlan
 			expected.WriteByte('\n')
 			subset = append(subset, cases[i])
 		}
-		encoded, err := json.Marshal(subset)
-		if err != nil {
-			test.Fatal(err)
+		encoded, encodeError := json.Marshal(subset)
+		if encodeError != nil {
+			test.Fatal(encodeError)
 		}
-		if err := os.WriteFile(shard.Text, protocol.Bytes(), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(shard.Text, protocol.Bytes(), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
-		if err := os.WriteFile(shard.Specs, encoded, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(shard.Specs, encoded, 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		plan.Shards = append(plan.Shards, shard)
 		outputs = append(outputs, expected.Bytes())
 	}
-	if err := ExpressionUnion(plan, outputs, []byte(want)); err != nil {
-		test.Fatal(err)
+	if expressionUnionError := ExpressionUnion(plan, outputs, []byte(want)); expressionUnionError != nil {
+		test.Fatal(expressionUnionError)
 	}
-	gapData, err := os.ReadFile(filepath.Dir(path) + "/gaps.json")
-	if err != nil {
-		test.Fatal(err)
+	gapData, readError := os.ReadFile(filepath.Dir(path) + "/gaps.json")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var gaps []PrinterCase
-	if err := json.Unmarshal(gapData, &gaps); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(gapData, &gaps); decodeError != nil {
+		test.Fatal(decodeError)
 	}
-	gapAnswers, err := os.ReadFile(filepath.Dir(path) + "/gap-answers.txt")
-	if err != nil {
-		test.Fatal(err)
+	gapAnswers, readError := os.ReadFile(filepath.Dir(path) + "/gap-answers.txt")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if len(gaps) != bytes.Count(gapAnswers, []byte("\n")) {
 		test.Fatal("gap enumeration/answer count differs")
@@ -639,8 +647,12 @@ func ExpressionUnits(test *testing.T, path, want string, count int) (*CorpusPlan
 	}
 	whole.Shards = append(whole.Shards, CorpusShard{Indices: gapIDs})
 	wholeOutputs := append(append([][]byte(nil), outputs...), gapAnswers)
-	if err := ExpressionUnion(whole, wholeOutputs, append([]byte(want), gapAnswers...)); err != nil {
-		test.Fatal(err)
+	if expressionUnionError := ExpressionUnion(
+		whole,
+		wholeOutputs,
+		append([]byte(want), gapAnswers...),
+	); expressionUnionError != nil {
+		test.Fatal(expressionUnionError)
 	}
 	test.Logf(
 		"union: %d unique expression case ids in %d units; %d gap ids in one unit; total %d",
@@ -693,13 +705,13 @@ func ExpressionGateUnitsOnce(test *testing.T) *expressionGateUnits {
 			corpus:  expressionCorpusProduct(test),
 		}
 		for _, shard := range plan.Shards {
-			text, err := os.ReadFile(shard.Text)
-			if err != nil {
-				test.Fatal(err)
+			text, readError := os.ReadFile(shard.Text)
+			if readError != nil {
+				test.Fatal(readError)
 			}
-			specs, err := os.ReadFile(shard.Specs)
-			if err != nil {
-				test.Fatal(err)
+			specs, readError := os.ReadFile(shard.Specs)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			units.Plan.Shards = append(units.Plan.Shards, CorpusShard{Indices: shard.Indices})
 			units.texts, units.specs = append(units.texts, text), append(units.specs, specs)
@@ -709,9 +721,9 @@ func ExpressionGateUnitsOnce(test *testing.T) *expressionGateUnits {
 			name string
 			data *[]byte
 		}{{"gaps.txt", &units.gapText}, {"gaps.json", &units.gapSpecs}, {"gap-answers.txt", &units.GapWant}} {
-			data, err := os.ReadFile(filepath.Join(directory, file.name))
-			if err != nil {
-				test.Fatal(err)
+			data, readError := os.ReadFile(filepath.Join(directory, file.name))
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			*file.data = data
 		}
@@ -735,11 +747,11 @@ func (units *expressionGateUnits) Unit(test *testing.T, number int) CorpusShard 
 		Text:    filepath.Join(directory, fmt.Sprintf("shard-%03d.txt", number)),
 		Specs:   filepath.Join(directory, fmt.Sprintf("shard-%03d.json", number)),
 	}
-	if err := os.WriteFile(shard.Text, units.texts[number], 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(shard.Text, units.texts[number], 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if err := os.WriteFile(shard.Specs, units.specs[number], 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(shard.Specs, units.specs[number], 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return shard
 }
@@ -749,8 +761,8 @@ func (units *expressionGateUnits) Gaps(test *testing.T) string {
 	test.Helper()
 	directory := test.TempDir()
 	for name, data := range map[string][]byte{"gaps.txt": units.gapText, "gaps.json": units.gapSpecs} {
-		if err := os.WriteFile(filepath.Join(directory, name), data, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, name), data, 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	return directory
@@ -777,9 +789,9 @@ func ExpressionUnion(plan *CorpusPlan, outputs [][]byte, want []byte) error {
 			return fmt.Errorf("union: missing case id %d", id)
 		}
 	}
-	merged, err := MergeCorpus(plan, outputs)
-	if err != nil {
-		return err
+	merged, mergeCorpusError := MergeCorpus(plan, outputs)
+	if mergeCorpusError != nil {
+		return mergeCorpusError
 	}
 	if !bytes.Equal(merged, want) {
 		return fmt.Errorf("union differs from unsplit answers")
@@ -793,13 +805,13 @@ func ExpressionCorpus(test *testing.T, processPlan ...bool) (string, string, str
 	files := printerCorpusFiles(test)
 	gaps, _ := filepath.Abs("testdata/notyet.json")
 	directory := tsPrinterOracleOutputs(test, root, files, gaps, "expressions", PrinterGateGoOracle(test)+"/oracle")
-	answers, err := os.ReadFile(directory + "/answers.txt")
-	if err != nil {
-		test.Fatal(err)
+	answers, readError := os.ReadFile(directory + "/answers.txt")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if keep := os.Getenv("ADAMIC_TS_PRINTER_KEEP"); keep != "" {
-		if err := os.MkdirAll(keep, 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(keep, 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 		for _, name := range []string{
 			"coverage.json",
@@ -810,12 +822,12 @@ func ExpressionCorpus(test *testing.T, processPlan ...bool) (string, string, str
 			"gap-answers.txt",
 			"gaps.json",
 		} {
-			data, err := os.ReadFile(directory + "/" + name)
-			if err != nil {
-				test.Fatal(err)
+			data, readError := os.ReadFile(directory + "/" + name)
+			if readError != nil {
+				test.Fatal(readError)
 			}
-			if err = os.WriteFile(keep+"/"+name, data, 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(keep+"/"+name, data, 0644); writeError != nil {
+				test.Fatal(writeError)
 			}
 		}
 	}
@@ -875,13 +887,13 @@ func oracleExpressionBuild(test *testing.T, inputs PrinterBuildInputs, build fun
 
 func expressionBuildKeyed(test *testing.T, key buildcache.Inputs, build func(dir string) error) string {
 	test.Helper()
-	root, err := filepath.Abs(Repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(Repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	digest, err := buildcache.Key(root, key)
-	if err != nil {
-		test.Fatal(err)
+	digest, keyError := buildcache.Key(root, key)
+	if keyError != nil {
+		test.Fatal(keyError)
 	}
 	return PrinterGateOnce(test, "expression-product-"+digest, func() string {
 		return buildcache.Product(test, key, build)
@@ -892,9 +904,9 @@ func expressionBuildKeyed(test *testing.T, key buildcache.Inputs, build func(dir
 // outside the repository by its bytes.
 func expressionKey(test *testing.T, inputs PrinterBuildInputs) buildcache.Inputs {
 	test.Helper()
-	root, err := filepath.Abs(Repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(Repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	key := buildcache.Inputs{
 		Name:      inputs.Name,
@@ -902,16 +914,16 @@ func expressionKey(test *testing.T, inputs PrinterBuildInputs) buildcache.Inputs
 		Toolchain: []string{inputs.Toolchain, runtime.Version(), runtime.GOOS, runtime.GOARCH},
 	}
 	for _, file := range inputs.Files {
-		relative, err := filepath.Rel(root, file)
-		if err != nil {
-			test.Fatal(err)
+		relative, relativePathError := filepath.Rel(root, file)
+		if relativePathError != nil {
+			test.Fatal(relativePathError)
 		}
 		if relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
 			// Generated inputs live in a read-only product outside the repository.
 			// Its bytes, rather than the machine-specific cache path, identify it.
-			data, err := os.ReadFile(file)
-			if err != nil {
-				test.Fatal(err)
+			data, readError := os.ReadFile(file)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			key.Flags = append(key.Flags, fmt.Sprintf("generated:%s:%x", filepath.Base(file), sha256.Sum256(data)))
 		} else {
@@ -938,20 +950,20 @@ type Run struct {
 func mutantOracle(test *testing.T, change Mutation, binary string) (string, string) {
 	test.Helper()
 	directory := test.TempDir()
-	root, err := filepath.Abs(Repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(Repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	gaps, err := filepath.Abs("testdata/notyet.json")
-	if err != nil {
-		test.Fatal(err)
+	gaps, absolutePathError := filepath.Abs("testdata/notyet.json")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	request, err := json.Marshal(map[string]any{"Files": []string{}, "Directory": directory, "Gaps": gaps})
-	if err != nil {
-		test.Fatal(err)
+	request, encodeError := json.Marshal(map[string]any{"Files": []string{}, "Directory": directory, "Gaps": gaps})
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
-	if err := os.WriteFile(directory+"/request.json", request, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(directory+"/request.json", request, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	kind := "Expression"
 	if change.Entry == "statementsMain.ts" {
@@ -965,12 +977,15 @@ func mutantOracle(test *testing.T, change Mutation, binary string) (string, stri
 		"ADAMIC_TS_EXPRESSION_REQUEST="+directory+"/request.json",
 		"ADAMIC_TS_STATEMENT_REQUEST="+directory+"/request.json",
 	)
-	if output, err := childguard.CombinedOutput(command, childguard.Options{}); err != nil {
-		test.Fatalf("Go mutation oracle: %v\n%s", err, output)
+	if output, combinedOutputError := childguard.CombinedOutput(
+		command,
+		childguard.Options{},
+	); combinedOutputError != nil {
+		test.Fatalf("Go mutation oracle: %v\n%s", combinedOutputError, output)
 	}
-	answers, err := os.ReadFile(directory + "/answers.txt")
-	if err != nil {
-		test.Fatal(err)
+	answers, readError := os.ReadFile(directory + "/answers.txt")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return directory + "/cases.txt", string(answers)
 }
@@ -1000,9 +1015,15 @@ func mutantOracleBinary(test *testing.T, change Mutation) string {
 func mutantOracleInputs(test *testing.T, change Mutation) buildcache.Inputs {
 	test.Helper()
 	arguments, filters := mutantOracleRequest(test, change)
-	inputs, err := buildcache.GoTestInputs("cohere", "oracle", "./internal/format/javascript", arguments, filters)
-	if err != nil {
-		test.Fatal(err)
+	inputs, goTestInputsError := buildcache.GoTestInputs(
+		"cohere",
+		"oracle",
+		"./internal/format/javascript",
+		arguments,
+		filters,
+	)
+	if goTestInputsError != nil {
+		test.Fatal(goTestInputsError)
 	}
 	return inputs
 }
@@ -1010,9 +1031,9 @@ func mutantOracleInputs(test *testing.T, change Mutation) buildcache.Inputs {
 // mutantOracleRequest is how mutantOracleBinary builds change's oracle: the overlay argument and each planted filter.
 func mutantOracleRequest(test *testing.T, change Mutation) ([]string, []buildcache.Mutation) {
 	test.Helper()
-	root, err := filepath.Abs(Repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(Repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	families, ok := MutantFamilies[change.Name]
 	if !ok && change.Name != "hashbang loses its refusal" {
@@ -1035,14 +1056,14 @@ func mutantOracleRequest(test *testing.T, change Mutation) ([]string, []buildcac
 			allowed +
 			"\nadd := func(label, source string) { if allowed[label] { cases = append(cases, portExpressionCase{Label: label, Source: source}) } }"})
 	}
-	overlay, err := json.Marshal(map[string]any{"Replace": replace})
-	if err != nil {
-		test.Fatal(err)
+	overlay, encodeError := json.Marshal(map[string]any{"Replace": replace})
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	// The overlay names this checkout's paths: GoTestMutated keys its map and the side files, never its own path.
 	path := filepath.Join(test.TempDir(), "overlay.json")
-	if err := os.WriteFile(path, overlay, 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, overlay, 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return []string{"-overlay=" + path}, filters
 }
@@ -1061,9 +1082,9 @@ func MutantOracleProduct(test *testing.T, index int) (string, string) {
 	test.Helper()
 	state := &mutantOracleProducts[index]
 	state.Once.Do(func() {
-		root, err := filepath.Abs(Repository)
-		if err != nil {
-			test.Fatal(err)
+		root, absolutePathError := filepath.Abs(Repository)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		// The corpus is the oracle's answers: the oracle is a product (mutantOracleBinary, or DocumentOracle for the
 		// doc mutation), a deterministic build of what go compiles, so it stands in this key by its own key
@@ -1091,12 +1112,12 @@ func MutantOracleProduct(test *testing.T, index int) (string, string) {
 				names = append(names, "gaps.txt", "gap-answers.txt")
 			}
 			for _, name := range names {
-				data, err := os.ReadFile(filepath.Join(filepath.Dir(cases), name))
-				if err != nil {
-					return err
+				data, readError := os.ReadFile(filepath.Join(filepath.Dir(cases), name))
+				if readError != nil {
+					return readError
 				}
-				if err := os.WriteFile(filepath.Join(directory, name), data, 0644); err != nil {
-					return err
+				if writeError := os.WriteFile(filepath.Join(directory, name), data, 0644); writeError != nil {
+					return writeError
 				}
 			}
 			return nil
@@ -1109,9 +1130,9 @@ func MutantOracleProduct(test *testing.T, index int) (string, string) {
 	if Mutations[index].Entry == "docMain.ts" {
 		name = "docs.txt"
 	}
-	answers, err := os.ReadFile(filepath.Join(state.Directory, "answers.txt"))
-	if err != nil {
-		test.Fatal(err)
+	answers, readError := os.ReadFile(filepath.Join(state.Directory, "answers.txt"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return filepath.Join(state.Directory, name), string(answers)
 }
@@ -1147,9 +1168,9 @@ func MutantOracleKey(test *testing.T, root string, index int) string {
 	} else {
 		inputs = mutantOracleInputs(test, Mutations[index])
 	}
-	key, err := buildcache.Key(root, inputs)
-	if err != nil {
-		test.Fatal(err)
+	key, keyError := buildcache.Key(root, inputs)
+	if keyError != nil {
+		test.Fatal(keyError)
 	}
 	return key
 }
@@ -1377,13 +1398,13 @@ const MutantsShards = 29
 
 func printerGateTSCCorpus(test *testing.T, family string) {
 	test.Helper()
-	root, err := filepath.Abs(Repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(Repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	files, err := TrackedRootFiles(test, root, "stage3/drivers/tsc/corpus")
-	if err != nil {
-		test.Fatal(err)
+	files, trackedRootFilesError := TrackedRootFiles(test, root, "stage3/drivers/tsc/corpus")
+	if trackedRootFilesError != nil {
+		test.Fatal(trackedRootFilesError)
 	}
 	gaps, _ := filepath.Abs("testdata/notyet.json")
 	tsPrinterOracleOutputs(test, root, files, gaps, family, PrinterGateGoOracle(test)+"/oracle")
@@ -1445,9 +1466,9 @@ func PrinterGateOnce(test *testing.T, name string, build func() string) string {
 func PrinterGateGoOracle(test *testing.T) string {
 	test.Helper()
 	return PrinterGateOnce(test, "go-oracle", func() string {
-		root, err := filepath.Abs(Repository)
-		if err != nil {
-			test.Fatal(err)
+		root, absolutePathError := filepath.Abs(Repository)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		replace := map[string]string{}
 		for _, family := range []string{"expressions", "statements"} {
@@ -1456,14 +1477,14 @@ func PrinterGateGoOracle(test *testing.T) string {
 				family+
 				"_test.go"] = root + "/stage1/cohere/tsprinter/testdata/" + family + "_side_test.go"
 		}
-		overlay, err := json.Marshal(map[string]any{"Replace": replace})
-		if err != nil {
-			test.Fatal(err)
+		overlay, encodeError := json.Marshal(map[string]any{"Replace": replace})
+		if encodeError != nil {
+			test.Fatal(encodeError)
 		}
 		// The overlay names this checkout's paths: GoTest keys its map and the side files' content, never its own path.
 		path := filepath.Join(test.TempDir(), "overlay.json")
-		if err := os.WriteFile(path, overlay, 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, overlay, 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		return filepath.Dir(goTestOracle(
 			test,
@@ -1526,17 +1547,17 @@ func PlanCorpus(test *testing.T, path string) *CorpusPlan {
 	}
 	base := strings.TrimSuffix(path, filepath.Ext(path))
 	textPath, specsPath := base+".txt", base+".json"
-	text, err := os.ReadFile(textPath)
-	if err != nil {
-		test.Fatal(err)
+	text, readError := os.ReadFile(textPath)
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	data, err := os.ReadFile(specsPath)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(specsPath)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var specs []json.RawMessage
-	if err := json.Unmarshal(data, &specs); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &specs); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	var rows []string
 	if filepath.Base(base) == "docs" {
@@ -1555,8 +1576,8 @@ func PlanCorpus(test *testing.T, path string) *CorpusPlan {
 	weights := make([]int, len(rows))
 	for i, raw := range specs {
 		var item PrinterCase
-		if err := json.Unmarshal(raw, &item); err != nil {
-			test.Fatal(err)
+		if decodeError := json.Unmarshal(raw, &item); decodeError != nil {
+			test.Fatal(decodeError)
 		}
 		plan.Labels[i] = item.Label
 		if item.Label == "" {
@@ -1578,15 +1599,15 @@ func PlanCorpus(test *testing.T, path string) *CorpusPlan {
 			Text:    filepath.Join(directory, fmt.Sprintf("shard-%d.txt", number)),
 			Specs:   filepath.Join(directory, fmt.Sprintf("shard-%d.json", number)),
 		}
-		if err := os.WriteFile(shard.Text, []byte(batch.String()), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(shard.Text, []byte(batch.String()), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
-		encoded, err := json.Marshal(subset)
-		if err != nil {
-			test.Fatal(err)
+		encoded, encodeError := json.Marshal(subset)
+		if encodeError != nil {
+			test.Fatal(encodeError)
 		}
-		if err := os.WriteFile(shard.Specs, encoded, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(shard.Specs, encoded, 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		plan.Shards = append(plan.Shards, shard)
 	}
@@ -1685,13 +1706,13 @@ func StatementGateShardsOnce(test *testing.T) *StatementGateShards {
 		cases, want, specs := StatementCorpus(test)
 		gate := &StatementGateShards{Cases: cases, Want: want, Specs: specs, builder: test.Name()}
 		for _, shard := range StatementShards(test, cases, want, specs) {
-			text, err := os.ReadFile(shard.Text)
-			if err != nil {
-				test.Fatal(err)
+			text, readError := os.ReadFile(shard.Text)
+			if readError != nil {
+				test.Fatal(readError)
 			}
-			specifications, err := os.ReadFile(shard.Specs)
-			if err != nil {
-				test.Fatal(err)
+			specifications, readError := os.ReadFile(shard.Specs)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			gate.Shards = append(
 				gate.Shards,
@@ -1717,11 +1738,11 @@ func (gate *StatementGateShards) Shard(test *testing.T, number int) statementSha
 	shard := gate.Shards[number]
 	shard.Text = filepath.Join(directory, fmt.Sprintf("statement-shard-%03d.txt", number))
 	shard.Specs = filepath.Join(directory, fmt.Sprintf("statement-shard-%03d.json", number))
-	if err := os.WriteFile(shard.Text, gate.texts[number], 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(shard.Text, gate.texts[number], 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if err := os.WriteFile(shard.Specs, gate.specifications[number], 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(shard.Specs, gate.specifications[number], 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return shard
 }
@@ -1747,8 +1768,8 @@ func statementProduct(test *testing.T, inputs buildcache.Inputs, build func(dir 
 	test.Helper()
 	return oracleProduct(test, inputs, func(dir string) error {
 		start, cpu := time.Now(), StatementCPU()
-		if err := build(dir); err != nil {
-			return err
+		if buildError := build(dir); buildError != nil {
+			return buildError
 		}
 		test.Logf("build %s: %.3fs, %.3f CPU s", inputs.Name, time.Since(start).Seconds(), StatementCPU()-cpu)
 		return nil
@@ -1759,9 +1780,9 @@ func StatementBytesHash(data []byte) string { return fmt.Sprintf("%x", sha256.Su
 
 func statementFileHash(test *testing.T, path string) string {
 	test.Helper()
-	data, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return StatementBytesHash(data)
 }
@@ -1771,9 +1792,9 @@ func statementFileHash(test *testing.T, path string) string {
 func StatementDirectoryHash(test *testing.T, directory string) string {
 	test.Helper()
 	hash := sha256.New()
-	err := filepath.WalkDir(directory, func(path string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
+	walkError := filepath.WalkDir(directory, func(path string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
 		if entry.Type()&os.ModeSymlink != 0 {
 			return fmt.Errorf("oracle input symlink: %s", path)
@@ -1781,20 +1802,20 @@ func StatementDirectoryHash(test *testing.T, directory string) string {
 		if entry.IsDir() {
 			return nil
 		}
-		name, err := filepath.Rel(directory, path)
-		if err != nil {
-			return err
+		name, relativePathError := filepath.Rel(directory, path)
+		if relativePathError != nil {
+			return relativePathError
 		}
-		data, err := os.ReadFile(path)
-		if err != nil {
-			return err
+		data, readError := os.ReadFile(path)
+		if readError != nil {
+			return readError
 		}
 		fmt.Fprintf(hash, "%d:%s:%d:", len(name), name, len(data))
 		hash.Write(data)
 		return nil
 	})
-	if err != nil {
-		test.Fatal(err)
+	if walkError != nil {
+		test.Fatal(walkError)
 	}
 	return fmt.Sprintf("%x", hash.Sum(nil))
 }
@@ -1802,11 +1823,11 @@ func StatementDirectoryHash(test *testing.T, directory string) string {
 // Linux accounting includes all reaped descendants (oracle, Node and clang).
 func StatementCPU() float64 {
 	var self, children syscall.Rusage
-	if err := syscall.Getrusage(syscall.RUSAGE_SELF, &self); err != nil {
-		panic(err)
+	if getrusageError := syscall.Getrusage(syscall.RUSAGE_SELF, &self); getrusageError != nil {
+		panic(getrusageError)
 	}
-	if err := syscall.Getrusage(syscall.RUSAGE_CHILDREN, &children); err != nil {
-		panic(err)
+	if getrusageError := syscall.Getrusage(syscall.RUSAGE_CHILDREN, &children); getrusageError != nil {
+		panic(getrusageError)
 	}
 	return float64(self.Utime.Sec+self.Stime.Sec+children.Utime.Sec+children.Stime.Sec) +
 		float64(self.Utime.Usec+self.Stime.Usec+children.Utime.Usec+children.Stime.Usec)/1e6
@@ -1835,18 +1856,20 @@ func StatementCaseKeys(items []PrinterCase, root, upstream string) ([]string, er
 			if start < 0 {
 				return nil, fmt.Errorf("invalid statement label %q", item.Label)
 			}
-			path, err := filepath.Abs(outputLabel(item.Label[:start], readingLabelRoots(root, upstream), false))
-			if err != nil {
-				return nil, err
+			path, absolutePathError := filepath.Abs(
+				outputLabel(item.Label[:start], readingLabelRoots(root, upstream), false),
+			)
+			if absolutePathError != nil {
+				return nil, absolutePathError
 			}
-			relative, err := filepath.Rel(root, path)
-			if err != nil {
-				return nil, err
+			relative, relativePathError := filepath.Rel(root, path)
+			if relativePathError != nil {
+				return nil, relativePathError
 			}
 			if relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
-				relative, err = filepath.Rel(upstream, path)
-				if err != nil {
-					return nil, err
+				relative, relativePathError = filepath.Rel(upstream, path)
+				if relativePathError != nil {
+					return nil, relativePathError
 				}
 				if relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
 					return nil, fmt.Errorf("statement outside corpus roots: %s", path)
@@ -1877,8 +1900,8 @@ func StatementPartition(keys []string) ([][]int, error) {
 		number := int(value % uint64(StatementsAgainstGoAndPrettierShards))
 		shards[number] = append(shards[number], id)
 	}
-	if err := StatementUnion(len(keys), shards); err != nil {
-		return nil, err
+	if statementUnionError := StatementUnion(len(keys), shards); statementUnionError != nil {
+		return nil, statementUnionError
 	}
 	return shards, nil
 }
@@ -1917,17 +1940,17 @@ func StatementUnion(count int, shards [][]int) error {
 
 func StatementShards(test *testing.T, cases, want, specs string) []statementShard {
 	test.Helper()
-	text, err := os.ReadFile(cases)
-	if err != nil {
-		test.Fatal(err)
+	text, readError := os.ReadFile(cases)
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	data, err := os.ReadFile(specs)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(specs)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var items []PrinterCase
-	if err := json.Unmarshal(data, &items); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &items); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	rows := strings.Split(strings.TrimSuffix(string(text), "\n"), "\n")
 	answers := strings.Split(strings.TrimSuffix(want, "\n"), "\n")
@@ -1954,21 +1977,21 @@ func StatementShards(test *testing.T, cases, want, specs string) []statementShar
 			test.Fatalf("recorded upstream case absent: %s", record.Label)
 		}
 	}
-	root, err := filepath.Abs(Repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(Repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	upstream, err := filepath.Abs(os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"))
-	if err != nil {
-		test.Fatal(err)
+	upstream, absolutePathError := filepath.Abs(os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	keys, err := StatementCaseKeys(items, root, upstream)
-	if err != nil {
-		test.Fatal(err)
+	keys, statementCaseKeysError := StatementCaseKeys(items, root, upstream)
+	if statementCaseKeysError != nil {
+		test.Fatal(statementCaseKeysError)
 	}
-	partition, err := StatementPartition(keys)
-	if err != nil {
-		test.Fatal(err)
+	partition, statementPartitionError := StatementPartition(keys)
+	if statementPartitionError != nil {
+		test.Fatal(statementPartitionError)
 	}
 	dir := test.TempDir()
 	result := make([]statementShard, len(partition))
@@ -1989,20 +2012,20 @@ func StatementShards(test *testing.T, cases, want, specs string) []statementShar
 			projected[number] = append(projected[number], id)
 		}
 		shard.Want = expected.String()
-		encoded, err := json.Marshal(subset)
-		if err != nil {
-			test.Fatal(err)
+		encoded, encodeError := json.Marshal(subset)
+		if encodeError != nil {
+			test.Fatal(encodeError)
 		}
-		if err := os.WriteFile(shard.Text, []byte(input.String()), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(shard.Text, []byte(input.String()), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
-		if err := os.WriteFile(shard.Specs, encoded, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(shard.Specs, encoded, 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		result[number] = shard
 	}
-	if err := StatementUnion(len(items), projected); err != nil {
-		test.Fatal(err)
+	if statementUnionError := StatementUnion(len(items), projected); statementUnionError != nil {
+		test.Fatal(statementUnionError)
 	}
 	return result
 }
@@ -2034,9 +2057,9 @@ func StatementExecute(test *testing.T, environment []string, name string, argume
 	ctx := statementContext(test)
 	command := toolchain.CommandContextIn(ctx, "", name, arguments...)
 	command.Env = append(os.Environ(), environment...)
-	stdout, stderr, err := childguard.Capture(ctx, command)
-	if err != nil && (command.ProcessState == nil || command.ProcessState.Success()) {
-		test.Fatalf("running %s: %v", name, err)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
+	if captureError != nil && (command.ProcessState == nil || command.ProcessState.Success()) {
+		test.Fatalf("running %s: %v", name, captureError)
 	}
 	return Run{Stdout: stdout, Stderr: stderr, ExitCode: command.ProcessState.ExitCode()}
 }
@@ -2047,19 +2070,19 @@ func statementCorpusBuild(test *testing.T) (string, string, string) {
 	root, _ := filepath.Abs(Repository)
 	files := printerCorpusFiles(test)
 	// This count is fixed by the upstream commit, never by the live case total.
-	upstream, err := filepath.Abs(os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"))
-	if err != nil {
-		test.Fatal(err)
+	upstream, absolutePathError := filepath.Abs(os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	upstreamFiles, repositoryFiles := 0, 0
 	for _, file := range files {
-		path, err := filepath.Abs(file)
-		if err != nil {
-			test.Fatal(err)
+		path, absolutePathError := filepath.Abs(file)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
-		relative, err := filepath.Rel(upstream, path)
-		if err != nil {
-			test.Fatal(err)
+		relative, relativePathError := filepath.Rel(upstream, path)
+		if relativePathError != nil {
+			test.Fatal(relativePathError)
 		}
 		if relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
 			upstreamFiles++
@@ -2078,9 +2101,9 @@ func statementCorpusBuild(test *testing.T) (string, string, string) {
 	// An input under ADAMIC_TYPESCRIPT_SOURCE is named by the tree it is in, not where this machine keeps it
 	// (#t37sw0f).
 	for _, file := range files {
-		path, err := filepath.Abs(file)
-		if err != nil {
-			test.Fatal(err)
+		path, absolutePathError := filepath.Abs(file)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		flags = append(
 			flags,
@@ -2093,12 +2116,12 @@ func statementCorpusBuild(test *testing.T) (string, string, string) {
 		Flags: flags, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
 	}, func(dir string) error {
 		// Requests are scratch inputs. Publish only the oracle's four output files.
-		request, err := json.Marshal(map[string]any{"Files": files, "Directory": dir})
-		if err != nil {
-			return err
+		request, encodeError := json.Marshal(map[string]any{"Files": files, "Directory": dir})
+		if encodeError != nil {
+			return encodeError
 		}
-		if err := os.WriteFile(directory+"/request.json", request, 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(directory+"/request.json", request, 0644); writeError != nil {
+			return writeError
 		}
 		ctx := statementContext(test)
 		command := toolchain.CommandContextIn(
@@ -2115,10 +2138,10 @@ func statementCorpusBuild(test *testing.T) (string, string, string) {
 		// Read through childguard.Capture for StatementExecute's reason, stdout then stderr: a five-second WaitDelay
 		// could fail a corpus run that had finished. The stall guard it loses watched a run that prints its one RUN
 		// line and then nothing until its summary, so it was never progress; the product unit's ceiling bounds it.
-		stdout, stderr, err := childguard.Capture(ctx, command)
+		stdout, stderr, captureError := childguard.Capture(ctx, command)
 		output := append(stdout, stderr...)
-		if err != nil {
-			return fmt.Errorf("Go statement corpus: %w\n%s", err, output)
+		if captureError != nil {
+			return fmt.Errorf("Go statement corpus: %w\n%s", captureError, output)
 		}
 		test.Log(string(output))
 		// The oracle labels each case by its file's path here; the product names it repo/ or typescript/ and the path
@@ -2127,22 +2150,22 @@ func statementCorpusBuild(test *testing.T) (string, string, string) {
 	})
 	directory = product
 	if keep := os.Getenv("ADAMIC_TS_STATEMENT_KEEP"); keep != "" {
-		if err := os.MkdirAll(keep, 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(keep, 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 		for _, name := range []string{"cases.txt", "answers.txt", "cases.json", "coverage.json"} {
-			data, err := os.ReadFile(directory + "/" + name)
-			if err != nil {
-				test.Fatal(err)
+			data, readError := os.ReadFile(directory + "/" + name)
+			if readError != nil {
+				test.Fatal(readError)
 			}
-			if err = os.WriteFile(keep+"/"+name, data, 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(keep+"/"+name, data, 0644); writeError != nil {
+				test.Fatal(writeError)
 			}
 		}
 	}
-	answers, err := os.ReadFile(directory + "/answers.txt")
-	if err != nil {
-		test.Fatal(err)
+	answers, readError := os.ReadFile(directory + "/answers.txt")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	PlanCorpus(test, directory+"/cases.txt")
 	return directory + "/cases.txt", string(answers), directory + "/cases.json"
@@ -2200,9 +2223,9 @@ func libraryOracle(
 	script, _ = filepath.Abs(script)
 	root, _ := filepath.Abs(Repository)
 	upstream, _ := filepath.Abs(os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"))
-	data, err := os.ReadFile(specs)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(specs)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	cases := StatementBytesHash(
 		[]byte(strings.ReplaceAll(strings.ReplaceAll(string(data), upstream+"/", "typescript/"), root+"/", "repo/")),
@@ -2220,17 +2243,21 @@ func libraryOracle(
 		),
 		Toolchain: []string{runtime.GOOS, runtime.GOARCH, buildcache.Tool("node", "--version")},
 	})
-	if directory, found, err := oracleFound(inputs, oracleProducer, buildcache.Tracing()); err != nil {
-		test.Fatal(err)
+	if directory, found, oracleFoundError := oracleFound(
+		inputs,
+		oracleProducer,
+		buildcache.Tracing(),
+	); oracleFoundError != nil {
+		test.Fatal(oracleFoundError)
 	} else if found {
 		return directory
 	}
 	// The shard's cases as the shards product holds them, the same bytes this process partitioned, or the key's cases
 	// sha256 would name cases the build never read.
 	held := filepath.Join(shards(test), fmt.Sprintf("shard-%03d.json", number))
-	data, err = os.ReadFile(held)
-	if err != nil {
-		test.Fatal(err)
+	data, readError = os.ReadFile(held)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if got := StatementBytesHash(data); got != cases {
 		test.Fatalf(
@@ -2262,9 +2289,9 @@ func libraryOracleBuild(handed buildcache.Handed, directory string) error {
 	command := toolchain.CommandContextIn(ctx, "", "node", handed.Paths...)
 	command.Env = os.Environ()
 	// As in StatementExecute, an error beside a clean exit is never node's answer.
-	stdout, stderr, err := childguard.Capture(ctx, command)
-	if err != nil && (command.ProcessState == nil || command.ProcessState.Success()) {
-		return fmt.Errorf("running node: %w", err)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
+	if captureError != nil && (command.ProcessState == nil || command.ProcessState.Success()) {
+		return fmt.Errorf("running node: %w", captureError)
 	}
 	if code := command.ProcessState.ExitCode(); code != 0 || len(stderr) != 0 {
 		return fmt.Errorf("%s exit %d: %s", handed.Inputs.Name, code, stderr)
@@ -2318,43 +2345,46 @@ func shardsInputs(family string, count int) buildcache.Inputs {
 // statementShardsBuild partitions the statement corpus product it's handed as StatementShards does, each shard's cases
 // as StatementShards writes them.
 func statementShardsBuild(handed buildcache.Handed, directory string) error {
-	cases, err := corpusCases(handed.Paths[0])
-	if err != nil {
-		return err
+	cases, corpusCasesError := corpusCases(handed.Paths[0])
+	if corpusCasesError != nil {
+		return corpusCasesError
 	}
-	keys, err := StatementCaseKeys(cases, canonicalRoot, canonicalSource)
-	if err != nil {
-		return err
+	keys, statementCaseKeysError := StatementCaseKeys(cases, canonicalRoot, canonicalSource)
+	if statementCaseKeysError != nil {
+		return statementCaseKeysError
 	}
-	partition, err := StatementPartition(keys)
-	if err != nil {
-		return err
+	partition, statementPartitionError := StatementPartition(keys)
+	if statementPartitionError != nil {
+		return statementPartitionError
 	}
 	return writeShards(directory, cases, partition)
 }
 
 // expressionShardsBuild partitions the expression corpus product it's handed as ExpressionUnits does.
 func expressionShardsBuild(handed buildcache.Handed, directory string) error {
-	cases, err := corpusCases(handed.Paths[0])
-	if err != nil {
-		return err
+	cases, corpusCasesError := corpusCases(handed.Paths[0])
+	if corpusCasesError != nil {
+		return corpusCasesError
 	}
-	keys, err := StatementCaseKeys(cases, canonicalRoot, canonicalSource)
-	if err != nil {
-		return err
+	keys, statementCaseKeysError := StatementCaseKeys(cases, canonicalRoot, canonicalSource)
+	if statementCaseKeysError != nil {
+		return statementCaseKeysError
 	}
-	partition, err := expressionPartition(expressionCaseKeys(keys), ExpressionsAgainstGoAndPrettierShards-1)
-	if err != nil {
-		return err
+	partition, expressionPartitionError := expressionPartition(
+		expressionCaseKeys(keys),
+		ExpressionsAgainstGoAndPrettierShards-1,
+	)
+	if expressionPartitionError != nil {
+		return expressionPartitionError
 	}
 	return writeShards(directory, cases, partition)
 }
 
 // corpusCases are a corpus product's cases.
 func corpusCases(corpus string) ([]PrinterCase, error) {
-	data, err := os.ReadFile(filepath.Join(corpus, "cases.json"))
-	if err != nil {
-		return nil, err
+	data, readError := os.ReadFile(filepath.Join(corpus, "cases.json"))
+	if readError != nil {
+		return nil, readError
 	}
 	var cases []PrinterCase
 	return cases, json.Unmarshal(data, &cases)
@@ -2367,16 +2397,16 @@ func writeShards(directory string, cases []PrinterCase, partition [][]int) error
 		for _, index := range indices {
 			subset = append(subset, cases[index])
 		}
-		encoded, err := json.Marshal(subset)
-		if err != nil {
-			return err
+		encoded, encodeError := json.Marshal(subset)
+		if encodeError != nil {
+			return encodeError
 		}
-		if err := os.WriteFile(
+		if writeError := os.WriteFile(
 			filepath.Join(directory, fmt.Sprintf("shard-%03d.json", number)),
 			encoded,
 			0o644,
-		); err != nil {
-			return err
+		); writeError != nil {
+			return writeError
 		}
 	}
 	return nil
@@ -2389,9 +2419,9 @@ func StatementCorpus(test *testing.T) (string, string, string) {
 		"statement-corpus",
 		func() string { cases, _, _ := statementCorpusBuild(test); return filepath.Dir(cases) },
 	)
-	answers, err := os.ReadFile(directory + "/answers.txt")
-	if err != nil {
-		test.Fatal(err)
+	answers, readError := os.ReadFile(directory + "/answers.txt")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return directory + "/cases.txt", string(answers), directory + "/cases.json"
 }
@@ -2417,13 +2447,13 @@ var TSCAgreementRecipe = []string{"stage1/cohere/tsprinter/oracles/oracles.go"}
 // of the repository cost the first shard of every process 19 s of walking (#4ycgm2n).
 func tscAgreementInputs(test *testing.T) buildcache.Inputs {
 	test.Helper()
-	root, err := filepath.Abs(Repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(Repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	oracle, err := os.ReadFile(tscOracle(test, root))
-	if err != nil {
-		test.Fatal(err)
+	oracle, readError := os.ReadFile(tscOracle(test, root))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return TSCAgreementKeyInputs(fmt.Sprintf("%x", sha256.Sum256(oracle)))
 }
@@ -2445,13 +2475,13 @@ func TSCAgreementKeyInputs(oracle string) buildcache.Inputs {
 func TSCAgreementPrepare(test *testing.T) string {
 	test.Helper()
 	return oracleProduct(test, tscAgreementInputs(test), func(directory string) error {
-		root, err := filepath.Abs(Repository)
-		if err != nil {
-			return err
+		root, absolutePathError := filepath.Abs(Repository)
+		if absolutePathError != nil {
+			return absolutePathError
 		}
-		files, err := TrackedRootFiles(test, root, "stage3/drivers/tsc/corpus")
-		if err != nil {
-			return err
+		files, trackedRootFilesError := TrackedRootFiles(test, root, "stage3/drivers/tsc/corpus")
+		if trackedRootFilesError != nil {
+			return trackedRootFilesError
 		}
 		oracle := tscOracle(test, root)
 		data := TSCAgreementData{}
@@ -2462,21 +2492,21 @@ func TSCAgreementPrepare(test *testing.T) string {
 			}
 			cases, original := tscCorpus(test, root, files, family, statements, oracle)
 			output := filepath.Join(directory, family)
-			if err := os.MkdirAll(output, 0755); err != nil {
-				return err
+			if createDirectoryError := os.MkdirAll(output, 0755); createDirectoryError != nil {
+				return createDirectoryError
 			}
 			for _, name := range []string{"coverage.json"} {
-				content, err := os.ReadFile(filepath.Join(original, name))
-				if err != nil {
-					return err
+				content, readError := os.ReadFile(filepath.Join(original, name))
+				if readError != nil {
+					return readError
 				}
 				// A refused file is named by the root the reader supplies (#tqrqx60).
-				if err := os.WriteFile(
+				if writeError := os.WriteFile(
 					filepath.Join(output, name),
 					[]byte(buildcache.Relative(string(content))),
 					0644,
-				); err != nil {
-					return err
+				); writeError != nil {
+					return writeError
 				}
 			}
 			// Each case's label names its corpus file by the root the reader supplies, never this checkout (#tqrqx60).
@@ -2488,9 +2518,9 @@ func TSCAgreementPrepare(test *testing.T) string {
 				tscAgreementFamily{Name: family, Directory: family, Cases: cases, Source: entry},
 			)
 		}
-		encoded, err := json.Marshal(data)
-		if err != nil {
-			return err
+		encoded, encodeError := json.Marshal(data)
+		if encodeError != nil {
+			return encodeError
 		}
 		return os.WriteFile(filepath.Join(directory, "manifest.json"), encoded, 0644)
 	})
@@ -2509,13 +2539,13 @@ func tscCorpus(
 	test.Helper()
 	gaps, _ := filepath.Abs("testdata/notyet.json")
 	directory := tsPrinterOracleOutputs(test, root, files, gaps, family, oracle)
-	data, err := os.ReadFile(filepath.Join(directory, "cases.json"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(directory, "cases.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var selected, cases []PrinterCase
-	if err := json.Unmarshal(data, &selected); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &selected); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	escape := strings.NewReplacer("\\", "\\\\", "\n", "\\n", "\r", "\\r", "\t", "\\t")
 	var batch strings.Builder
@@ -2527,15 +2557,15 @@ func tscCorpus(
 		}
 	}
 	path := filepath.Join(directory, "tsc-cases.txt")
-	if err := os.WriteFile(path, []byte(batch.String()), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(batch.String()), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	encoded, err := json.Marshal(cases)
-	if err != nil {
-		test.Fatal(err)
+	encoded, encodeError := json.Marshal(cases)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
-	if err := os.WriteFile(filepath.Join(directory, "tsc-cases.json"), encoded, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(directory, "tsc-cases.json"), encoded, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 
 	return cases, directory
@@ -2552,16 +2582,16 @@ type upstreamOutcome struct {
 
 func UpstreamOutcomes(test *testing.T) []upstreamOutcome {
 	test.Helper()
-	data, err := os.ReadFile("testdata/tsc-upstream-differences.json")
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile("testdata/tsc-upstream-differences.json")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var pinned struct {
 		Version string
 		Records []upstreamOutcome
 	}
-	if err := json.Unmarshal(data, &pinned); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &pinned); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if pinned.Version != "3.9.6" {
 		test.Fatalf("upstream outcome version: %s", pinned.Version)
@@ -2608,19 +2638,19 @@ func oracleFound(inputs buildcache.Inputs, producer, tracing bool) (string, bool
 	if producer || !tracing {
 		return "", false, nil
 	}
-	directory, err := buildcache.Get(inputs, func(string) error { return errOracleElsewhere })
-	if err != nil {
+	directory, getError := buildcache.Get(inputs, func(string) error { return errorOracleElsewhere })
+	if getError != nil {
 		return "", false, fmt.Errorf(
 			"oracle %s is stage1/cohere/tsprinter/oracles' to build, and it isn't here: its TestProduct_ units build it first. %w",
 			inputs.Name,
-			err,
+			getError,
 		)
 	}
 	return directory, true, nil
 }
 
-// errOracleElsewhere is the build a process that may not build an oracle product hands buildcache.Get.
-var errOracleElsewhere = errors.New("built by stage1/cohere/tsprinter/oracles")
+// errorOracleElsewhere is the build a process that may not build an oracle product hands buildcache.Get.
+var errorOracleElsewhere = errors.New("built by stage1/cohere/tsprinter/oracles")
 
 // oracleProduct is buildcache.Product for an oracle product, keyed and gated as oracleInputs and oracleBuild say.
 func oracleProduct(test *testing.T, inputs buildcache.Inputs, build func(directory string) error) string {
@@ -2640,9 +2670,9 @@ func goTestOracle(
 ) string {
 	test.Helper()
 	if buildcache.Tracing() && !oracleProducer {
-		inputs, err := buildcache.GoTestInputs("cohere", output, pkg, arguments, mutations)
-		if err != nil {
-			test.Fatal(err)
+		inputs, goTestInputsError := buildcache.GoTestInputs("cohere", output, pkg, arguments, mutations)
+		if goTestInputsError != nil {
+			test.Fatal(goTestInputsError)
 		}
 		return filepath.Join(buildcache.BuiltElsewhere(test, "the Go oracle "+
 			pkg, inputs, "stage1/cohere/tsprinter/oracles "+owner, func(string) error {

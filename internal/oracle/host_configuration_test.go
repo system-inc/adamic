@@ -20,13 +20,13 @@ func TestHostConfigurationOracleReaders(test *testing.T) {
 		}
 		return
 	}
-	binary, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	binary, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
-	node, err := exec.LookPath("node")
-	if err != nil {
-		test.Fatal(err)
+	node, lookPathError := exec.LookPath("node")
+	if lookPathError != nil {
+		test.Fatal(lookPathError)
 	}
 	stubDirectory := test.TempDir()
 	stub := filepath.Join(stubDirectory, "node-stub")
@@ -40,24 +40,24 @@ func TestHostConfigurationOracleReaders(test *testing.T) {
 			node+
 			"' \"$@\"\n",
 	)
-	original, err := os.ReadFile(filepath.Join(repository, "stage3/fixtures/host/status.json"))
-	if err != nil {
-		test.Fatal(err)
+	original, readError := os.ReadFile(filepath.Join(repository, "stage3/fixtures/host/status.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	template, err := os.ReadFile(filepath.Join(repository, "internal/hostconfiguration/testdata/status.json"))
-	if err != nil {
-		test.Fatal(err)
+	template, readError := os.ReadFile(filepath.Join(repository, "internal/hostconfiguration/testdata/status.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var model []map[string]json.RawMessage
-	if err := json.Unmarshal(template, &model); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(template, &model); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	for _, reader := range []string{"status", "newline"} {
 		for _, mode := range []string{"unset", "selected", "unknown", "wrong-recorded"} {
 			test.Run(reader+"/"+mode, func(test *testing.T) {
 				var rows []map[string]json.RawMessage
-				if err := json.Unmarshal(original, &rows); err != nil {
-					test.Fatal(err)
+				if decodeError := json.Unmarshal(original, &rows); decodeError != nil {
+					test.Fatal(decodeError)
 				}
 				index := 0
 				if reader == "status" {
@@ -72,19 +72,19 @@ func TestHostConfigurationOracleReaders(test *testing.T) {
 				}
 				if mode == "wrong-recorded" {
 					var expected map[string]any
-					if err := json.Unmarshal(rows[index]["node"], &expected); err != nil {
-						test.Fatal(err)
+					if decodeError := json.Unmarshal(rows[index]["node"], &expected); decodeError != nil {
+						test.Fatal(decodeError)
 					}
 					expected["stdout"] = "wrong recorded bytes\n"
 					rows[index]["node"], _ = json.Marshal(expected)
 				}
-				encoded, err := json.Marshal(rows)
-				if err != nil {
-					test.Fatal(err)
+				encoded, encodeError := json.Marshal(rows)
+				if encodeError != nil {
+					test.Fatal(encodeError)
 				}
 				input := filepath.Join(test.TempDir(), "status.json")
-				if err := os.WriteFile(input, encoded, 0600); err != nil {
-					test.Fatal(err)
+				if writeError := os.WriteFile(input, encoded, 0600); writeError != nil {
+					test.Fatal(writeError)
 				}
 				selected := ""
 				if mode == "selected" {
@@ -103,10 +103,10 @@ func TestHostConfigurationOracleReaders(test *testing.T) {
 					"ADAMIC_HOST_CONFIGURATION_ORACLE_READER="+reader,
 					"ADAMIC_HOST_NODE_WITHOUT_INSPECTOR="+selected,
 				)
-				if err := os.WriteFile(calls, nil, 0600); err != nil {
-					test.Fatal(err)
+				if writeError := os.WriteFile(calls, nil, 0600); writeError != nil {
+					test.Fatal(writeError)
 				}
-				out, err := cmd.CombinedOutput()
+				out, combinedOutputError := cmd.CombinedOutput()
 				test.Logf("%s", out)
 				if mode == "unset" || mode == "selected" {
 					for _, backend := range []string{"native"} {
@@ -124,35 +124,35 @@ func TestHostConfigurationOracleReaders(test *testing.T) {
 					test.Fatalf("configured JavaScript did not run: %s", out)
 				}
 				if mode == "selected" {
-					data, err := os.ReadFile(calls)
-					if err != nil || strings.Count(string(data), "oracle/node.mjs") < 2 {
+					data, readError := os.ReadFile(calls)
+					if readError != nil || strings.Count(string(data), "oracle/node.mjs") < 2 {
 						test.Fatalf(
 							"source and generated JavaScript must both use the configured binary: %v %s",
-							err,
+							readError,
 							data,
 						)
 					}
 				}
 				switch mode {
 				case "unset":
-					if err != nil || !strings.Contains(
+					if combinedOutputError != nil || !strings.Contains(
 						string(out),
 						"needs node-without-inspector; set ADAMIC_HOST_NODE_WITHOUT_INSPECTOR",
 					) || !strings.Contains(string(out), "--- SKIP:") {
-						test.Fatalf("want named skip: %v\n%s", err, out)
+						test.Fatalf("want named skip: %v\n%s", combinedOutputError, out)
 					}
 				case "selected":
-					if err != nil || strings.Contains(string(out), "--- SKIP:") {
-						test.Fatalf("want selected-Node pass: %v\n%s", err, out)
+					if combinedOutputError != nil || strings.Contains(string(out), "--- SKIP:") {
+						test.Fatalf("want selected-Node pass: %v\n%s", combinedOutputError, out)
 					}
 				case "wrong-recorded":
-					if err == nil ||
+					if combinedOutputError == nil ||
 						!strings.Contains(string(out), "--- FAIL: TestHostConfigurationOracleReaders/native") {
-						test.Fatalf("recorded bytes mismatch not caught natively: %v\n%s", err, out)
+						test.Fatalf("recorded bytes mismatch not caught natively: %v\n%s", combinedOutputError, out)
 					}
 				case "unknown":
-					if err == nil || !strings.Contains(string(out), "unknown host configuration") {
-						test.Fatalf("want unknown-name failure: %v\n%s", err, out)
+					if combinedOutputError == nil || !strings.Contains(string(out), "unknown host configuration") {
+						test.Fatalf("want unknown-name failure: %v\n%s", combinedOutputError, out)
 					}
 				}
 			})
@@ -175,25 +175,25 @@ func writeExecutable(test *testing.T, path, script string) {
 	func() {
 		syscall.ForkLock.Lock()
 		defer syscall.ForkLock.Unlock()
-		file, err := os.CreateTemp(filepath.Dir(path), ".executable-*")
-		if err != nil {
-			test.Fatal(err)
+		file, temporaryFileError := os.CreateTemp(filepath.Dir(path), ".executable-*")
+		if temporaryFileError != nil {
+			test.Fatal(temporaryFileError)
 		}
 		temporary = file.Name()
-		if _, err := file.WriteString(script); err != nil {
+		if _, writeStringError := file.WriteString(script); writeStringError != nil {
 			file.Close()
-			test.Fatal(err)
+			test.Fatal(writeStringError)
 		}
-		if err := file.Chmod(0700); err != nil {
+		if chmodError := file.Chmod(0700); chmodError != nil {
 			file.Close()
-			test.Fatal(err)
+			test.Fatal(chmodError)
 		}
-		if err := file.Close(); err != nil {
-			test.Fatal(err)
+		if closeError := file.Close(); closeError != nil {
+			test.Fatal(closeError)
 		}
 	}()
-	if err := os.Rename(temporary, path); err != nil {
-		test.Fatal(err)
+	if renameError := os.Rename(temporary, path); renameError != nil {
+		test.Fatal(renameError)
 	}
 	temporary = ""
 }

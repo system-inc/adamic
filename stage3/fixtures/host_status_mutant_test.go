@@ -13,24 +13,24 @@ import (
 // the real tsc source, recorded Node result, and compiler invocation.
 func TestHostStatusMutants(test *testing.T) {
 	test.Parallel()
-	data, err := os.ReadFile("host/status.json")
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile("host/status.json")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var rows []fixture
-	if err := json.Unmarshal(data, &rows); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &rows); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if len(rows) != 25 {
 		test.Fatalf("got %d host fixtures, want 25", len(rows))
 	}
-	executable, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	executable, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
-	repository, err := filepath.Abs("../..")
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs("../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	for _, index := range []int{0, 15, 17} {
 		for _, mutation := range []string{"real", "wrong stage", "missing fixture"} {
@@ -38,16 +38,16 @@ func TestHostStatusMutants(test *testing.T) {
 				test.Parallel()
 				root := test.TempDir()
 				directory := filepath.Join(root, "host")
-				if err := os.Mkdir(directory, 0700); err != nil {
-					test.Fatal(err)
+				if createDirectoryError := os.Mkdir(directory, 0700); createDirectoryError != nil {
+					test.Fatal(createDirectoryError)
 				}
 				row := rows[index]
-				source, err := os.ReadFile(filepath.Join("host", row.File))
-				if err != nil {
-					test.Fatal(err)
+				source, readError := os.ReadFile(filepath.Join("host", row.File))
+				if readError != nil {
+					test.Fatal(readError)
 				}
-				if err = os.WriteFile(filepath.Join(directory, row.File), source, 0600); err != nil {
-					test.Fatal(err)
+				if writeError := os.WriteFile(filepath.Join(directory, row.File), source, 0600); writeError != nil {
+					test.Fatal(writeError)
 				}
 				switch mutation {
 				case "wrong stage":
@@ -55,12 +55,16 @@ func TestHostStatusMutants(test *testing.T) {
 				case "missing fixture":
 					row.File = "missing-host-status-mutant.a"
 				}
-				encoded, err := json.Marshal([]fixture{row})
-				if err != nil {
-					test.Fatal(err)
+				encoded, encodeError := json.Marshal([]fixture{row})
+				if encodeError != nil {
+					test.Fatal(encodeError)
 				}
-				if err = os.WriteFile(filepath.Join(directory, "status.json"), encoded, 0600); err != nil {
-					test.Fatal(err)
+				if writeError := os.WriteFile(
+					filepath.Join(directory, "status.json"),
+					encoded,
+					0600,
+				); writeError != nil {
+					test.Fatal(writeError)
 				}
 				arguments := []string{"-test.run=^TestFixturesHost$", "-test.count=1", "-fixtures=" + root}
 				arguments = append(arguments, hostStatusMutantTimeout(test)...)

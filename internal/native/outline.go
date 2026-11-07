@@ -76,9 +76,9 @@ func (e *emitter) moduleMain() string {
 // tables are single array literals). Structured control flow stays with its source
 // statement so labels, handlers, and lexical lifetimes cannot cross helper frames.
 func initializerStatements(source string) []string {
-	tokens, err := cTokens(source)
-	if err != nil {
-		panic(err)
+	tokens, cTokensError := cTokens(source)
+	if cTokensError != nil {
+		panic(cTokensError)
 	}
 	if len(tokens) > 0 && tokens[0].text == "{" {
 		return []string{source}
@@ -121,9 +121,9 @@ func initializerStatements(source string) []string {
 // Root declarations are the only values that can outlive a generated chunk.
 // Nested declarations remain inside the structured statement that owns them.
 func initializerLocals(source string) []initializerLocal {
-	tokens, err := cTokens(source)
-	if err != nil {
-		panic(err)
+	tokens, cTokensError := cTokens(source)
+	if cTokensError != nil {
+		panic(cTokensError)
 	}
 	var locals []initializerLocal
 	depth, paren, begin := 0, 0, 0
@@ -133,8 +133,13 @@ func initializerLocals(source string) []initializerLocal {
 			for j < len(tokens) && (tokens[j].text == "*" || initializerType(tokens[j].text)) {
 				j++
 			}
-			if j > i && j < len(tokens) && (strings.HasPrefix(tokens[j].text, "adamic_temporary_") || strings.HasPrefix(tokens[j].text, "adamic_local_")) {
-				local := initializerLocal{name: tokens[j].text, of: strings.TrimSpace(source[token.start:tokens[j].start]), start: token.start}
+			if j > i && j < len(tokens) && (strings.HasPrefix(tokens[j].text, "adamic_temporary_") ||
+				strings.HasPrefix(tokens[j].text, "adamic_local_")) {
+				local := initializerLocal{
+					name:  tokens[j].text,
+					of:    strings.TrimSpace(source[token.start:tokens[j].start]),
+					start: token.start,
+				}
 				// Lifted initialization is an assignment into backing storage. Pointee
 				// qualifiers stay; a value itself needs writable initialization storage.
 				if !strings.Contains(local.of, "*") {
@@ -193,9 +198,9 @@ func initializerType(token string) bool {
 }
 
 func initializerTokens(source string) []cToken {
-	tokens, err := cTokens(source)
-	if err != nil {
-		panic(err)
+	tokens, cTokensError := cTokens(source)
+	if cTokensError != nil {
+		panic(cTokensError)
 	}
 	return tokens
 }
@@ -215,7 +220,11 @@ func (e *emitter) outlineInitializers(parts []initializerPart, cleanup string) s
 					continue
 				}
 				if len(indexes) == 0 || count >= initializerChunkStatements {
-					name := stableName("adamic_initialize", part.module, fmt.Sprintf("%q/chunk/%d", part.module, len(indexes)))
+					name := stableName(
+						"adamic_initialize",
+						part.module,
+						fmt.Sprintf("%q/chunk/%d", part.module, len(indexes)),
+					)
 					chunks = append(chunks, initializerChunk{module: part.module, name: name, part: partIndex})
 					indexes = append(indexes, len(chunks)-1)
 					count = 0
@@ -226,7 +235,11 @@ func (e *emitter) outlineInitializers(parts []initializerPart, cleanup string) s
 		}
 		if len(indexes) > 1 {
 			for chunkIndex, index := range indexes {
-				chunks[index].name = stableName("adamic_initialize_chunk", part.module, fmt.Sprintf("%q/chunk/%d", part.module, chunkIndex))
+				chunks[index].name = stableName(
+					"adamic_initialize_chunk",
+					part.module,
+					fmt.Sprintf("%q/chunk/%d", part.module, chunkIndex),
+				)
 			}
 		}
 		modules = append(modules, indexes)
@@ -317,7 +330,15 @@ func (e *emitter) outlineInitializers(parts []initializerPart, cleanup string) s
 		}
 		body.WriteString(chunk.body[position:])
 		signature := initializerSignature(chunk.name, chunk.parameters, types)
-		fmt.Fprintf(&definitions, "static %s%s;\n// adamic-module %q\nstatic %s {\n%s\n}\n\n", signature, initializerAttribute, chunk.module, signature, body.String())
+		fmt.Fprintf(
+			&definitions,
+			"static %s%s;\n// adamic-module %q\nstatic %s {\n%s\n}\n\n",
+			signature,
+			initializerAttribute,
+			chunk.module,
+			signature,
+			body.String(),
+		)
 	}
 	for partIndex, indexes := range modules {
 		if len(indexes) == 0 {
@@ -338,7 +359,14 @@ func (e *emitter) outlineInitializers(parts []initializerPart, cleanup string) s
 		}
 		name := stableName("adamic_initialize", module, fmt.Sprintf("%q/module", module))
 		signature := initializerSignature(name, parameters, types)
-		fmt.Fprintf(&definitions, "static %s%s;\n// adamic-module %q\nstatic %s {\n", signature, initializerAttribute, module, signature)
+		fmt.Fprintf(
+			&definitions,
+			"static %s%s;\n// adamic-module %q\nstatic %s {\n",
+			signature,
+			initializerAttribute,
+			module,
+			signature,
+		)
 		// Typed backing arrays avoid thousands of separately described stack
 		// variables in a table initializer's wrapper. Chunks still receive typed
 		// addresses; the slots have exactly the original storage and lifetime.

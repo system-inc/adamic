@@ -18,13 +18,13 @@ import (
 // insertion algorithm and the runtime's own growing table sizes, without exporting a test API.
 func mapHashProbe(test *testing.T, options Options, mutation func(string) string) (string, error) {
 	test.Helper()
-	files, err := readRuntime(runtime, "runtime")
-	if err != nil {
-		test.Fatal(err)
+	files, readRuntimeError := readRuntime(runtime, "runtime")
+	if readRuntimeError != nil {
+		test.Fatal(readRuntimeError)
 	}
-	harness, err := os.ReadFile("testdata/map_hash.c")
-	if err != nil {
-		test.Fatal(err)
+	harness, readError := os.ReadFile("testdata/map_hash.c")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	for index := range files {
 		if files[index].name == "map.c" {
@@ -61,28 +61,31 @@ func mapHashProbe(test *testing.T, options Options, mutation func(string) string
 			files[index].contents = []byte(source[:start] + changed + source[end:])
 		}
 	}
-	compiler, err := toolchain.Path("clang")
-	if err != nil {
-		test.Fatal(err)
+	compiler, pathError := toolchain.Path("clang")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
 	flags := Flags(options)
-	library, err := cachedRuntime(files, flags, compiler, "map hash probe", test.TempDir())
-	if err != nil {
-		test.Fatal(err)
+	library, cachedRuntimeError := cachedRuntime(files, flags, compiler, "map hash probe", test.TempDir())
+	if cachedRuntimeError != nil {
+		test.Fatal(cachedRuntimeError)
 	}
 	binary := filepath.Join(test.TempDir(), "probe")
 	arguments := append(append([]string{}, flags...), RuntimeLinkFlags(library)...)
 	arguments = append(arguments, "-lm", "-o", binary)
-	if output, err := toolchain.Command(compiler, arguments...).CombinedOutput(); err != nil {
-		test.Fatalf("link probe: %v\n%s", err, output)
+	if output, combinedOutputError := toolchain.Command(
+		compiler,
+		arguments...,
+	).CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("link probe: %v\n%s", combinedOutputError, output)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 	defer cancel()
 	command := exec.CommandContext(ctx, binary)
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
-	err = command.Run()
-	return stderr.String() + stdout.String(), err
+	runError := command.Run()
+	return stderr.String() + stdout.String(), runError
 }
 
 // The probe's two allocators, by name. Each probe builds and runs the runtime on its own, 10 s alone on one core, so
@@ -118,10 +121,10 @@ func runMapHashProbeBound(test *testing.T, name string) {
 	if !ok {
 		test.Fatalf("no map hash probe allocator %q", name)
 	}
-	output, err := mapHashProbe(test, Options{Sanitize: true, slabs: slabs}, nil)
+	output, mapHashProbeError := mapHashProbe(test, Options{Sanitize: true, slabs: slabs}, nil)
 	test.Log(output)
-	if err != nil {
-		test.Fatalf("runtime map hash: %v", err)
+	if mapHashProbeError != nil {
+		test.Fatalf("runtime map hash: %v", mapHashProbeError)
 	}
 }
 
@@ -178,7 +181,7 @@ func runMapHashMutant(test *testing.T, name string) {
 	if !ok {
 		test.Fatalf("no map hash mutant %q", name)
 	}
-	output, err := mapHashProbe(test, Options{Sanitize: true}, func(source string) string {
+	output, mapHashProbeError := mapHashProbe(test, Options{Sanitize: true}, func(source string) string {
 		if mutant.before == "" {
 			return mutant.after
 		}
@@ -188,12 +191,12 @@ func runMapHashMutant(test *testing.T, name string) {
 		return strings.Replace(source, mutant.before, mutant.after, 1)
 	})
 	var exit *exec.ExitError
-	if !errors.As(err, &exit) ||
+	if !errors.As(mapHashProbeError, &exit) ||
 		exit.ExitCode() != 1 ||
 		!strings.Contains(output, mutant.caught) ||
 		strings.Contains(output, "ERROR: AddressSanitizer") ||
 		strings.Contains(output, "runtime error:") {
-		test.Fatalf("mutant escaped or failed for another reason: %v\n%s", err, output)
+		test.Fatalf("mutant escaped or failed for another reason: %v\n%s", mapHashProbeError, output)
 	}
 	for _, line := range strings.Split(output, "\n") {
 		if name == "old hash" && strings.Contains(line, "entries=2048 buckets=") {

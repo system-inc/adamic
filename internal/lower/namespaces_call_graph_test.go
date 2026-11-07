@@ -16,12 +16,12 @@ import (
 func namespaceGraphForTest(test *testing.T, source string) (*namespaceCallGraph, []*ast.Node) {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "graph.a")
-	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	checker, release := program.Checker(context.Background(), program.Files()[0])
 	test.Cleanup(release)
@@ -86,9 +86,10 @@ func TestNamespaceEnumInitializationIndependentOfModuleAnalysis(test *testing.T)
 		test,
 		"namespace N {function read():number{return E.A;} const x=read(); enum E {A}}",
 	)
-	err := graph.lowering.namespaceInitialization(graph.lowering.program.Files())
+	namespaceInitializationError := graph.lowering.namespaceInitialization(graph.lowering.program.Files())
 	var notYet *NotYet
-	if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "enum before its runtime initialization") {
-		test.Fatalf("namespace enum lost its independent refusal: %v", err)
+	if !errors.As(namespaceInitializationError, &notYet) ||
+		!strings.Contains(namespaceInitializationError.Error(), "enum before its runtime initialization") {
+		test.Fatalf("namespace enum lost its independent refusal: %v", namespaceInitializationError)
 	}
 }

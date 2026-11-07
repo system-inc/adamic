@@ -36,21 +36,21 @@ func callerNodeTypes(path string) bool {
 
 func (s *nodeLibraryFS) FileExists(path tspath.RootedFilePath) bool {
 	if name, bundled := nodeBundleName(path.AsString()); bundled {
-		info, err := fs.Stat(embeddedNodeTypes, name)
-		return err == nil && !info.IsDir()
+		info, statError := fs.Stat(embeddedNodeTypes, name)
+		return statError == nil && !info.IsDir()
 	}
 	return !callerNodeTypes(path.AsString()) && s.FS.FileExists(path)
 }
 
 func (s *nodeLibraryFS) ReadFile(path tspath.RootedFilePath) (string, bool) {
 	if name, bundled := nodeBundleName(path.AsString()); bundled {
-		data, err := embeddedNodeTypes.ReadFile(name)
-		if err != nil {
+		data, readFileError := embeddedNodeTypes.ReadFile(name)
+		if readFileError != nil {
 			return "", false
 		}
 		file := strings.TrimPrefix(name, "node_types/node_modules/@types/node/")
-		text, err := CorrectNodeHostAxioms(file, string(data))
-		return text, err == nil
+		text, correctNodeHostAxiomsError := CorrectNodeHostAxioms(file, string(data))
+		return text, correctNodeHostAxiomsError == nil
 	}
 	if callerNodeTypes(path.AsString()) {
 		return "", false
@@ -60,8 +60,8 @@ func (s *nodeLibraryFS) ReadFile(path tspath.RootedFilePath) (string, bool) {
 
 func (s *nodeLibraryFS) DirectoryExists(path tspath.RootedDirectoryPath) bool {
 	if name, bundled := nodeBundleName(path.AsString()); bundled {
-		info, err := fs.Stat(embeddedNodeTypes, name)
-		return err == nil && info.IsDir()
+		info, statError := fs.Stat(embeddedNodeTypes, name)
+		return statError == nil && info.IsDir()
 	}
 	return !callerNodeTypes(path.AsString()) && s.FS.DirectoryExists(path)
 }
@@ -69,8 +69,8 @@ func (s *nodeLibraryFS) DirectoryExists(path tspath.RootedDirectoryPath) bool {
 func (s *nodeLibraryFS) GetAccessibleEntries(path tspath.RootedDirectoryPath) vfs.Entries {
 	if name, bundled := nodeBundleName(path.AsString()); bundled {
 		var result vfs.Entries
-		entries, err := embeddedNodeTypes.ReadDir(name)
-		if err != nil {
+		entries, readDirectoryError := embeddedNodeTypes.ReadDir(name)
+		if readDirectoryError != nil {
 			return result
 		}
 		for _, entry := range entries {

@@ -49,15 +49,15 @@ func TestCheckedViewV2ReadsAfterWrites(test *testing.T) {
 func TestCheckedViewV2ArrayArmBoundary(test *testing.T) {
 	test.Parallel()
 	path, _ := filepath.Abs("../../stage3/interface-downcasts/v2/array-arm.a")
-	_, err := lowered(test, path)
-	if refused, ok := err.(*lower.Refused); !ok ||
+	_, loweredError := lowered(test, path)
+	if refused, ok := loweredError.(*lower.Refused); !ok ||
 		!strings.Contains(refused.What, "a downcast to View whose tag test is vacuous") {
-		test.Fatalf("expected the vacuous downcast refusal, got %v", err)
+		test.Fatalf("expected the vacuous downcast refusal, got %v", loweredError)
 	}
-	_, err = lowered(test, typeScriptTwin(test, path))
-	if unsupported, ok := err.(*lower.NotYet); !ok ||
+	_, loweredError = lowered(test, typeScriptTwin(test, path))
+	if unsupported, ok := loweredError.(*lower.NotYet); !ok ||
 		!strings.Contains(unsupported.What, "views-v3: array element kind") {
-		test.Fatalf("twin: expected named V3 arm, got %v", err)
+		test.Fatalf("twin: expected named V3 arm, got %v", loweredError)
 	}
 	if got := onNode(test, path); got.exitCode != 0 {
 		test.Fatalf("Node: %#v", got)
@@ -124,20 +124,20 @@ func TestCheckedViewV2RepresentationMutants(test *testing.T) {
 			test.Parallel()
 			code := representationProbeC(sample.tag, sample.value, false)
 			binary := filepath.Join(test.TempDir(), "correct")
-			if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(code, binary, native.Options{Sanitize: true}); buildError != nil {
+				test.Fatal(buildError)
 			}
 			want := run{stdout: []byte(sample.kind + "\n")}
 			if difference := disagreement(want, execute(test, binary)); difference != "" {
 				test.Fatal(difference)
 			}
 			binary = filepath.Join(test.TempDir(), "old-layout")
-			if err := native.Build(
+			if buildError := native.Build(
 				representationProbeC(sample.tag, sample.value, true),
 				binary,
 				native.Options{Sanitize: true},
-			); err != nil {
-				test.Fatal(err)
+			); buildError != nil {
+				test.Fatal(buildError)
 			}
 			got := execute(test, binary)
 			if disagreement(want, got) == "" {
@@ -312,17 +312,17 @@ func TestCheckedViewV2MovedStage3Results(test *testing.T) {
 	} {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs("../../stage3/fixtures/" + name)
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs("../../stage3/fixtures/" + name)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			loaded, err := load.Load([]string{path})
-			if err != nil {
-				test.Fatal(err)
+			loaded, loadError := load.Load([]string{path})
+			if loadError != nil {
+				test.Fatal(loadError)
 			}
-			program, err := lower.Lower(context.Background(), loaded)
-			if err != nil {
-				test.Fatal(err)
+			program, lowerError := lower.Lower(context.Background(), loaded)
+			if lowerError != nil {
+				test.Fatal(lowerError)
 			}
 			node := onNode(test, path)
 			sanitized, binary := nativelyUncached(test, program)
@@ -347,23 +347,23 @@ func TestCheckedViewV2MovedStage3Results(test *testing.T) {
 // kind through Node. Node prints the result; stage 0 stops at the read until the per-read check wins it back.
 func TestCheckedViewV2MovedStage3NotYet(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("../../stage3/fixtures/predicates/03_void_zero.a")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("../../stage3/fixtures/predicates/03_void_zero.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	if difference := disagreement(run{stdout: []byte("true\nfalse\nfalse\n")}, onNode(test, path)); difference != "" {
 		test.Fatal("Node: " + difference)
 	}
-	loaded, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	loaded, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	_, err = lower.Lower(context.Background(), loaded)
+	_, lowerError := lower.Lower(context.Background(), loaded)
 	var notYet *lower.NotYet
-	if !errors.As(err, &notYet) || !strings.Contains(
-		err.Error(),
+	if !errors.As(lowerError, &notYet) || !strings.Contains(
+		lowerError.Error(),
 		"03_void_zero.a:23:12: stage 0 can't lower a read of field kind through type Node, which may hold a checked view's value",
 	) {
-		test.Fatalf("want the widened read NotYet at 23:12, got %v", err)
+		test.Fatalf("want the widened read NotYet at 23:12, got %v", lowerError)
 	}
 }

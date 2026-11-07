@@ -42,11 +42,11 @@ func main() {
 			result["what"] = err.Error()
 		}
 	}
-	data, err := json.MarshalIndent(result, "", "  ")
-	if err != nil {
-		panic(err)
+	data, encodeError := json.MarshalIndent(result, "", "  ")
+	if encodeError != nil {
+		panic(encodeError)
 	}
-	if err := os.WriteFile(os.Args[2], append(data, '\n'), 0644); err != nil {
-		panic(err)
+	if writeError := os.WriteFile(os.Args[2], append(data, '\n'), 0644); writeError != nil {
+		panic(writeError)
 	}
 }

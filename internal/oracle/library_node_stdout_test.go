@@ -32,13 +32,13 @@ func stdoutWriteAgreement(test *testing.T, name string) {
 	// Ordinary oracle execution captures a pipe, including the interleaved writes.
 	for _, i := range rows {
 		fixture := fixtures[i]
-		path, err := filepath.Abs(filepath.Join(repository, fixture.path))
-		if err != nil {
-			test.Fatal(err)
+		path, absolutePathError := filepath.Abs(filepath.Join(repository, fixture.path))
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
-		program, err := lowered(test, path)
-		if err != nil {
-			test.Fatal(err)
+		program, loweredError := lowered(test, path)
+		if loweredError != nil {
+			test.Fatal(loweredError)
 		}
 		truth := onNode(test, path)
 		js := onJavaScriptBackend(test, program)
@@ -91,21 +91,21 @@ func TestStdoutWriteClosedPipeMatchesNode(test *testing.T) {
 func stdoutClosedPipe(test *testing.T, name string, arguments ...string) {
 	test.Helper()
 
-	reader, writer, err := os.Pipe()
-	if err != nil {
-		test.Fatal(err)
+	reader, writer, pipeError := os.Pipe()
+	if pipeError != nil {
+		test.Fatal(pipeError)
 	}
 	reader.Close()
-	stderr, err := os.Create(filepath.Join(test.TempDir(), "stderr"))
-	if err != nil {
-		test.Fatal(err)
+	stderr, createError := os.Create(filepath.Join(test.TempDir(), "stderr"))
+	if createError != nil {
+		test.Fatal(createError)
 	}
 	code := withStreams(test, writer, stderr, name, arguments...)
 	writer.Close()
 	stderr.Close()
-	said, err := os.ReadFile(stderr.Name())
-	if err != nil {
-		test.Fatal(err)
+	said, readError := os.ReadFile(stderr.Name())
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if code != 70 || len(said) != 0 {
 		test.Fatalf("%s closed stdout: exit %d stderr %q", name, code, said)
@@ -116,8 +116,8 @@ func stdoutClosedPipe(test *testing.T, name string, arguments ...string) {
 func stdoutWASIClosedPipe(test *testing.T, source string) {
 	test.Helper()
 	wasm := filepath.Join(test.TempDir(), "closed.wasm")
-	if err := native.Build(source, wasm, native.Options{Target: "wasm32-wasi"}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(source, wasm, native.Options{Target: "wasm32-wasi"}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	stdoutClosedPipe(
 		test,
@@ -132,12 +132,12 @@ func TestStdoutWriteParenthesizedReceiverMatchesNode(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "main.a")
 	source := "import process from 'node:process';\n(process.stdout).write('x');\n"
-	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	truth := onNode(test, path)
 	if truth.exitCode != 0 || string(truth.stdout) != "x" || len(truth.stderr) != 0 {

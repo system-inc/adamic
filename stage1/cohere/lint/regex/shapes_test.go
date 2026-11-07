@@ -23,13 +23,13 @@ const shapeFixtureShards = 16
 
 func shapeFixtureRows(test *testing.T) []struct{ ID string } {
 	test.Helper()
-	data, err := os.ReadFile("table.json")
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile("table.json")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var rows []struct{ ID string }
-	if err := json.Unmarshal(data, &rows); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &rows); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	return rows
 }
@@ -37,26 +37,26 @@ func shapeFixtureRows(test *testing.T) []struct{ ID string } {
 // invokeShapesGate runs the gate binary from the repository, its output and error together.
 func invokeShapesGate(test *testing.T, binary string, arguments ...string) ([]byte, error) {
 	test.Helper()
-	repository, err := filepath.Abs("../../../..")
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs("../../../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	command := exec.Command(binary, arguments...)
 	command.Dir = repository
 	var output bytes.Buffer
 	command.Stdout = &output
 	command.Stderr = &output
-	err = command.Run()
-	return output.Bytes(), err
+	runError := command.Run()
+	return output.Bytes(), runError
 }
 
 // shapeFixtureOwned is the rows shard index owns, as the gate's dry run names them after their Go side passes.
 func shapeFixtureOwned(test *testing.T, binary string, rows, index int) []string {
 	test.Helper()
 	shard := fmt.Sprintf("%d/%d", index, shapeFixtureShards)
-	output, err := invokeShapesGate(test, binary, "-dry", "-shard", shard)
-	if err != nil {
-		test.Fatalf("shard %s dry run: %v\n%s", shard, err, output)
+	output, invokeShapesGateError := invokeShapesGate(test, binary, "-dry", "-shard", shard)
+	if invokeShapesGateError != nil {
+		test.Fatalf("shard %s dry run: %v\n%s", shard, invokeShapesGateError, output)
 	}
 	var owned []string
 	for _, line := range strings.Split(string(output), "\n") {
@@ -80,9 +80,9 @@ func shapeFixtureShard(test *testing.T, index int) {
 	if os.Getenv("ADAMIC_REGEX_TRANSLATION_MUTANT") == "1" {
 		arguments = append(arguments, "-mutant")
 	}
-	output, err := invokeShapesGate(test, binary, arguments...)
-	if err != nil {
-		test.Fatalf("per-shape fixture comparison failed: %v\n%s", err, output)
+	output, invokeShapesGateError := invokeShapesGate(test, binary, arguments...)
+	if invokeShapesGateError != nil {
+		test.Fatalf("per-shape fixture comparison failed: %v\n%s", invokeShapesGateError, output)
 	}
 	if !strings.Contains(
 		string(output),
@@ -97,9 +97,9 @@ func shapeFixtureShard(test *testing.T, index int) {
 // row is owned by exactly one shard, and a failure planted in one row is caught by its owner alone.
 func TestShapeFixturesUnion(test *testing.T) {
 	test.Parallel()
-	tree, err := parser.ParseFile(token.NewFileSet(), "shapes_test.go", nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	tree, parseFileError := parser.ParseFile(token.NewFileSet(), "shapes_test.go", nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	declared := 0
 	for _, declaration := range tree.Decls {
@@ -136,7 +136,7 @@ func TestShapeFixturesUnion(test *testing.T) {
 	planted := rows[len(rows)-1].ID
 	caught := 0
 	for index := 0; index < shapeFixtureShards; index++ {
-		output, err := invokeShapesGate(
+		output, invokeShapesGateError := invokeShapesGate(
 			test,
 			binary,
 			"-dry",
@@ -145,7 +145,7 @@ func TestShapeFixturesUnion(test *testing.T) {
 			"-shard",
 			fmt.Sprintf("%d/%d", index, shapeFixtureShards),
 		)
-		if err == nil {
+		if invokeShapesGateError == nil {
 			continue
 		}
 		if index != owners[planted][0] || !strings.Contains(string(output), planted+": Go oracle drift") {
@@ -153,7 +153,7 @@ func TestShapeFixturesUnion(test *testing.T) {
 				"planted failure in %s failed shard %d outside its comparison: %v\n%s",
 				planted,
 				index,
-				err,
+				invokeShapesGateError,
 				output,
 			)
 		}
@@ -182,32 +182,33 @@ func TestShapeFixtureControls(test *testing.T) {
 	}
 	shard := fmt.Sprintf("%d/%d", first, shapeFixtureShards)
 	test.Run("one-character-translation-mutant", func(test *testing.T) {
-		output, err := invokeShapesGate(test, binary, "-mutant", "-shard", shard)
-		if err == nil || !strings.Contains(string(output), rows[0].ID+": source Node fixture mismatch") {
-			test.Fatalf("mutant escaped or failed outside comparison: %v\n%s", err, output)
+		output, invokeShapesGateError := invokeShapesGate(test, binary, "-mutant", "-shard", shard)
+		if invokeShapesGateError == nil ||
+			!strings.Contains(string(output), rows[0].ID+": source Node fixture mismatch") {
+			test.Fatalf("mutant escaped or failed outside comparison: %v\n%s", invokeShapesGateError, output)
 		}
 		test.Logf("one-character mutant caught by fixture comparison: %s", rows[0].ID)
 	})
 	test.Run("forced-native-transition", func(test *testing.T) {
 		// Whether every row awaits the runtime compiler is a whole-table fact, so it is counted over the whole table.
-		census, err := invokeShapesGate(test, binary, "-pending")
-		if err != nil || !strings.Contains(
+		census, invokeShapesGateError := invokeShapesGate(test, binary, "-pending")
+		if invokeShapesGateError != nil || !strings.Contains(
 			string(census),
 			fmt.Sprintf("PENDING fixtures=%d shard=0/1 ran=%d ", len(rows), len(rows)),
 		) {
-			test.Fatalf("runtime lowering census failed: %v\n%s", err, census)
+			test.Fatalf("runtime lowering census failed: %v\n%s", invokeShapesGateError, census)
 		}
-		forced, err := invokeShapesGate(test, binary, "-force-native", "-shard", shard)
+		forced, invokeShapesGateError := invokeShapesGate(test, binary, "-force-native", "-shard", shard)
 		if strings.Contains(string(census), fmt.Sprintf("awaits codex/regex-runtime-compiler=%d\n", len(rows))) {
-			if err == nil || !strings.Contains(
+			if invokeShapesGateError == nil || !strings.Contains(
 				string(forced),
 				"awaits codex/regex-runtime-compiler: forced native requirement caught refusal",
 			) {
-				test.Fatalf("native refusal control failed: %v\n%s", err, forced)
+				test.Fatalf("native refusal control failed: %v\n%s", invokeShapesGateError, forced)
 			}
 			test.Log("awaits codex/regex-runtime-compiler: forced native requirement caught named refusal")
-		} else if err != nil {
-			test.Fatalf("native is now required: %v\n%s", err, forced)
+		} else if invokeShapesGateError != nil {
+			test.Fatalf("native is now required: %v\n%s", invokeShapesGateError, forced)
 		}
 	})
 }

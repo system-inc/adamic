@@ -26,21 +26,21 @@ func TestABuiltAheadLookupNeverAuditsAndABuildingOneStillDoes(test *testing.T) {
 	test.Setenv("ADAMIC_BUILD_TRACE", "")
 	forgetHeldForLife()
 	keys := filepath.Join(test.TempDir(), "keys")
-	if err := os.WriteFile(keys, []byte(build.NameKey+"\n"), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(keys, []byte(build.NameKey+"\n"), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	test.Setenv("ADAMIC_BUILD_AUDIT_KEYS", keys)
 	log := filepath.Join(test.TempDir(), "builds.log")
 	test.Setenv("ADAMIC_BUILD_LOG", log)
 	refusal := errors.New("port not built ahead")
-	if _, err := BuiltAhead(port, refusal); err != nil {
-		test.Fatalf("a BuiltAhead lookup of a listed product that's there: %v, want it found", err)
+	if _, builtAheadError := BuiltAhead(port, refusal); builtAheadError != nil {
+		test.Fatalf("a BuiltAhead lookup of a listed product that's there: %v, want it found", builtAheadError)
 	}
 	if lines, _ := os.ReadFile(log); strings.Contains(string(lines), "audit ") {
 		test.Errorf("a BuiltAhead lookup audited its product: census %q", lines)
 	}
-	if _, err := Get(port, building("built")); err != nil {
-		test.Fatal(err)
+	if _, getError := Get(port, building("built")); getError != nil {
+		test.Fatal(getError)
 	}
 	if lines, _ := os.ReadFile(
 		log,
@@ -59,9 +59,9 @@ func TestABuiltAheadFetchUnderATraceIsNeverAudited(test *testing.T) {
 	test.Setenv("ADAMIC_BUILD_AUDIT", "1")
 	test.Setenv("ADAMIC_BUILD_TRACE", test.TempDir())
 	store.put(test, recorded(test), map[string]string{"product": "built"})
-	directory, err := BuiltAhead(thisPackage, errors.New("this package's product not built ahead"))
-	if err != nil {
-		test.Fatalf("a BuiltAhead fetch of a product the store holds: %v, want it fetched", err)
+	directory, builtAheadError := BuiltAhead(thisPackage, errors.New("this package's product not built ahead"))
+	if builtAheadError != nil {
+		test.Fatalf("a BuiltAhead fetch of a product the store holds: %v, want it fetched", builtAheadError)
 	}
 	if content, _ := os.ReadFile(filepath.Join(directory, "product")); string(content) != "built" {
 		test.Errorf("fetched %q, want the stored product", content)

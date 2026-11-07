@@ -106,9 +106,9 @@ func TestUnistMutants(test *testing.T) {
 	test.Parallel()
 	cases, _, _ := composeCases(test)
 	expected := goUnist(test, cases)
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	for index, mutant := range unistMutants.mutations {
 		// Not parallel: one mutant at a time keeps this test to one child at a time, its share.

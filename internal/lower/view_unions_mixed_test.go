@@ -16,12 +16,12 @@ import (
 func mixedUnionLowering(test *testing.T, source string) (*lowering, *checker.Type, func()) {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "contract.a")
-	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	file := program.Files()[0]
 	checked, release := program.Checker(context.Background(), file)
@@ -51,14 +51,14 @@ func TestMixedUnionContractGraph(test *testing.T) {
 			l, target, release := mixedUnionLowering(test, source)
 			defer release()
 			node := l.program.Files()[0].Statements.Nodes[0]
-			id, err := internMixedUnionViewContract(
+			id, internMixedUnionViewContractError := internMixedUnionViewContract(
 				l,
 				node,
 				target,
 				func(member *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, member) },
 			)
-			if err != nil {
-				test.Fatal(err)
+			if internMixedUnionViewContractError != nil {
+				test.Fatal(internMixedUnionViewContractError)
 			}
 			contract := l.result.ViewContracts[int(id)-1]
 			if len(contract.Members) != len(target.Types()) {
@@ -94,21 +94,21 @@ func TestMixedUnionContractFailureDoesNotCertifyRetry(test *testing.T) {
 		}
 		return l.viewContract(node, member)
 	}
-	id, err := internMixedUnionViewContract(l, node, target, build)
-	if id != 0 || !errors.Is(err, sentinel) {
-		test.Fatalf("failure lost: id %d, %v", id, err)
+	id, internMixedUnionViewContractError := internMixedUnionViewContract(l, node, target, build)
+	if id != 0 || !errors.Is(internMixedUnionViewContractError, sentinel) {
+		test.Fatalf("failure lost: id %d, %v", id, internMixedUnionViewContractError)
 	}
 	if len(l.result.ViewContracts) != 0 || len(l.result.ViewContractTypes) != 0 {
 		test.Fatal("failed graph remains memoized as certified")
 	}
-	id, err = internMixedUnionViewContract(
+	id, internMixedUnionViewContractError = internMixedUnionViewContract(
 		l,
 		node,
 		target,
 		func(member *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, member) },
 	)
-	if err != nil || id == 0 || len(l.result.ViewContracts[int(id)-1].Members) != 2 {
-		test.Fatalf("retry used incomplete graph: id %d, %v", id, err)
+	if internMixedUnionViewContractError != nil || id == 0 || len(l.result.ViewContracts[int(id)-1].Members) != 2 {
+		test.Fatalf("retry used incomplete graph: id %d, %v", id, internMixedUnionViewContractError)
 	}
 }
 
@@ -118,14 +118,16 @@ func TestMixedUnionContractUnknownMemberFails(test *testing.T) {
 	defer release()
 	node := l.program.Files()[0].Statements.Nodes[0]
 	for _, kind := range []ir.ViewKind{ir.ViewUnknown, ir.ViewScalar} {
-		id, err := internMixedUnionViewContract(l, node, target, func(member *checker.Type) (ir.ViewContractID, error) {
+		id, internMixedUnionViewContractError := internMixedUnionViewContract(l, node, target, func(
+			member *checker.Type,
+		) (ir.ViewContractID, error) {
 			if kind == ir.ViewScalar {
 				return 0, nil
 			}
 			l.result.ViewContracts = append(l.result.ViewContracts, ir.ViewContract{Kind: kind})
 			return ir.ViewContractID(len(l.result.ViewContracts)), nil
 		})
-		if err == nil || id != 0 || len(l.result.ViewContracts) != 0 {
+		if internMixedUnionViewContractError == nil || id != 0 || len(l.result.ViewContracts) != 0 {
 			test.Fatal("unavailable member certified")
 		}
 	}
@@ -136,14 +138,14 @@ func TestMixedUnionContractRecursiveMember(test *testing.T) {
 	l, target, release := mixedUnionLowering(test, `interface Node {readonly next:Target} type Target=Node|number;`)
 	defer release()
 	node := l.program.Files()[0].Statements.Nodes[0]
-	id, err := internMixedUnionViewContract(
+	id, internMixedUnionViewContractError := internMixedUnionViewContract(
 		l,
 		node,
 		target,
 		func(member *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, member) },
 	)
-	if err != nil {
-		test.Fatal(err)
+	if internMixedUnionViewContractError != nil {
+		test.Fatal(internMixedUnionViewContractError)
 	}
 	found := false
 	for _, member := range l.result.ViewContracts[int(id)-1].Members {
@@ -168,14 +170,14 @@ func TestMixedUnionContractPhantomBrandUsesPrimitiveBase(test *testing.T) {
 	)
 	defer release()
 	node := l.program.Files()[0].Statements.Nodes[0]
-	id, err := internMixedUnionViewContract(
+	id, internMixedUnionViewContractError := internMixedUnionViewContract(
 		l,
 		node,
 		target,
 		func(member *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, member) },
 	)
-	if err != nil || id == 0 {
-		test.Fatalf("approved phantom base refused: %v", err)
+	if internMixedUnionViewContractError != nil || id == 0 {
+		test.Fatalf("approved phantom base refused: %v", internMixedUnionViewContractError)
 	}
 	found := false
 	for _, child := range l.result.ViewContracts[id-1].Members {
@@ -197,9 +199,9 @@ func TestMixedUnionContractPhantomVoidIsUndefined(test *testing.T) {
 	l, target, release := mixedUnionLowering(test, `type Target=void&{readonly marker:void};`)
 	defer release()
 	node := l.program.Files()[0].Statements.Nodes[0]
-	id, err := l.viewContract(node, target)
-	if err != nil || id == 0 {
-		test.Fatalf("phantom void refused: %v", err)
+	id, viewContractError := l.viewContract(node, target)
+	if viewContractError != nil || id == 0 {
+		test.Fatalf("phantom void refused: %v", viewContractError)
 	}
 	contract := l.result.ViewContracts[id-1]
 	if contract.Kind != ir.ViewUndefined ||

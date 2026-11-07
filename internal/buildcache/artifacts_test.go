@@ -16,25 +16,28 @@ func TestRequireArtifacts(test *testing.T) {
 			write(test, directory, name, "")
 		}
 		if name == "directory" {
-			if err := os.Mkdir(filepath.Join(directory, name), 0755); err != nil {
-				test.Fatal(err)
+			if createDirectoryError := os.Mkdir(filepath.Join(directory, name), 0755); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
 		}
-		if err := requireArtifact(directory, Artifact{Name: name}); err == nil {
+		if requireArtifactError := requireArtifact(directory, Artifact{Name: name}); requireArtifactError == nil {
 			test.Fatalf("accepted %s artifact", name)
 		}
 	}
 	write(test, directory, "data", "built")
 	RequireArtifacts(test, directory, Artifact{Name: "data"})
 	for _, name := range []string{"", "../data", "/data"} {
-		if err := requireArtifact(directory, Artifact{Name: name}); err == nil {
+		if requireArtifactError := requireArtifact(directory, Artifact{Name: name}); requireArtifactError == nil {
 			test.Fatalf("accepted name %q", name)
 		}
 	}
-	if err := requireArtifact("", Artifact{Name: "data"}); err == nil {
+	if requireArtifactError := requireArtifact("", Artifact{Name: "data"}); requireArtifactError == nil {
 		test.Fatal("accepted empty directory")
 	}
-	if err := requireArtifact(directory, Artifact{Name: "data", Executable: true}); err == nil {
+	if requireArtifactError := requireArtifact(
+		directory,
+		Artifact{Name: "data", Executable: true},
+	); requireArtifactError == nil {
 		test.Fatal("accepted unusable executable")
 	}
 	writeExecutable(
@@ -43,7 +46,10 @@ func TestRequireArtifacts(test *testing.T) {
 		"#!/bin/sh\nread value\n[ \"$value\" = built ] || exit 3\nexit 7\n",
 	)
 	RequireArtifacts(test, directory, Artifact{Name: "probe", Executable: true, Stdin: "built\n", ExitCode: 7})
-	if err := requireArtifact(directory, Artifact{Name: "probe", Executable: true, Stdin: "built\n"}); err == nil {
+	if requireArtifactError := requireArtifact(
+		directory,
+		Artifact{Name: "probe", Executable: true, Stdin: "built\n"},
+	); requireArtifactError == nil {
 		test.Fatal("accepted wrong exit")
 	}
 }
@@ -57,8 +63,11 @@ func TestAProbeWhoseChildHoldsItsOutputPasses(test *testing.T) {
 	directory := test.TempDir()
 	writeExecutable(test, filepath.Join(directory, "probe"), "#!/bin/sh\nsleep 30 &\necho ready\nexit 0\n")
 	started := time.Now()
-	if err := requireArtifact(directory, Artifact{Name: "probe", Executable: true}); err != nil {
-		test.Fatalf("a probe whose child holds its output: %v", err)
+	if requireArtifactError := requireArtifact(
+		directory,
+		Artifact{Name: "probe", Executable: true},
+	); requireArtifactError != nil {
+		test.Fatalf("a probe whose child holds its output: %v", requireArtifactError)
 	}
 	if elapsed := time.Since(started); elapsed > 20*time.Second {
 		test.Fatalf("the probe took %v, held by its child", elapsed)

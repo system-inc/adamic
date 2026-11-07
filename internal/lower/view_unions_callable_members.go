@@ -28,7 +28,8 @@ func (l *lowering) untaggedCallableShape(target *checker.Type) bool {
 				continue
 			}
 		}
-		if !known || !(of == ir.Number || of == ir.Boolean || of == ir.String || of == ir.MaybeNumber || of == ir.MaybeBoolean) {
+		if !known ||
+			!(of == ir.Number || of == ir.Boolean || of == ir.String || of == ir.MaybeNumber || of == ir.MaybeBoolean) {
 			return false
 		}
 	}
@@ -52,9 +53,9 @@ func (l *lowering) prepareUntaggedCallableMember(node *ast.Node, target *checker
 	signature := l.checker.GetSignaturesOfType(target, checker.SignatureKindCall)[0]
 	contract := ir.ViewContract{Kind: ir.ViewCallable, Of: ir.Closure, Name: l.checker.TypeToString(target)}
 	for _, parameter := range signature.Parameters() {
-		child, err := l.viewContract(node, l.checker.GetTypeOfSymbol(parameter))
-		if err != nil {
-			return 0, err
+		child, viewContractError := l.viewContract(node, l.checker.GetTypeOfSymbol(parameter))
+		if viewContractError != nil {
+			return 0, viewContractError
 		}
 		if members, ok := ir.PrimitiveViewMembers(l.result, child); ok {
 			for _, member := range members {
@@ -67,9 +68,9 @@ func (l *lowering) prepareUntaggedCallableMember(node *ast.Node, target *checker
 	if result.Flags()&checker.TypeFlagsVoid != 0 {
 		contract.DiscardResult = true
 	} else {
-		child, err := l.viewContract(node, result)
-		if err != nil {
-			return 0, err
+		child, viewContractError := l.viewContract(node, result)
+		if viewContractError != nil {
+			return 0, viewContractError
 		}
 		contract.Result = child
 	}

@@ -26,12 +26,12 @@ declare const stringSource: string;
 function inspect<Source extends CompilerType>(source: Source): void {}
 function lengthOnly<Length extends { readonly length: number }>(lengthSource: Length): void {}
 `
-	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	file := program.Files()[0]
 	checked, release := program.Checker(context.Background(), file)

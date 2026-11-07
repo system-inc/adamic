@@ -137,11 +137,17 @@ func TestEveryTestHasOneDescriptiveName(test *testing.T) {
 	// Reads: *_test.go
 	root := parallelCheckRoot(test)
 	var tests []nameCensusTest
-	err := parallelCheckEachTest(root, func(rel string, fn *ast.FuncDecl, _ string, _ *token.FileSet, _ []string) {
+	parallelCheckEachTestError := parallelCheckEachTest(root, func(
+		rel string,
+		fn *ast.FuncDecl,
+		_ string,
+		_ *token.FileSet,
+		_ []string,
+	) {
 		tests = append(tests, nameCensusTest{Package: path.Dir(rel), File: rel, Function: fn.Name.Name})
 	})
-	if err != nil {
-		test.Fatal(err)
+	if parallelCheckEachTestError != nil {
+		test.Fatal(parallelCheckEachTestError)
 	}
 	refusals := nameCensus(tests, nameCensusPinned)
 	test.Logf("census of %d top-level tests; %d pinned offenders", len(tests), len(nameCensusPinned))

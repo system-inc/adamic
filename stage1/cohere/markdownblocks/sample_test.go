@@ -20,9 +20,9 @@ func selectMarkdownFiles(test *testing.T, root string, inputs []auditInput, file
 	for i := range names {
 		names[i] = inputs[i].Name
 	}
-	selection, err := gatesample.Select(root, names, stride)
-	if err != nil {
-		test.Fatalf("%s: %v", test.Name(), err)
+	selection, selectError := gatesample.Select(root, names, stride)
+	if selectError != nil {
+		test.Fatalf("%s: %v", test.Name(), selectError)
 	}
 	var controls []int
 	for index, input := range inputs[files:] {

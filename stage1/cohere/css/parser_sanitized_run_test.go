@@ -32,9 +32,9 @@ func cssParserReleaseMutant(test *testing.T) string {
 		Flags:     append(native.Flags(options), "mutation=adamic_release dropped"),
 		Toolchain: buildcache.Tool("clang", "--version"),
 	}, func(dir string) error {
-		source, err := os.ReadFile(program.c)
-		if err != nil {
-			return err
+		source, readError := os.ReadFile(program.c)
+		if readError != nil {
+			return readError
 		}
 		code := strings.ReplaceAll(string(source), "adamic_release(", "(void)(")
 		if code == string(source) {

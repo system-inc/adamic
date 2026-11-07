@@ -16,17 +16,17 @@ func mutantCorpus(test *testing.T, change oracles.Mutation, path, want string) (
 	if !ok {
 		test.Fatalf("mutant %q has no proving corpus families", change.Name)
 	}
-	data, err := os.ReadFile(strings.TrimSuffix(path, ".txt") + ".json")
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(strings.TrimSuffix(path, ".txt") + ".json")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var specs []oracles.PrinterCase
-	if err := json.Unmarshal(data, &specs); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &specs); decodeError != nil {
+		test.Fatal(decodeError)
 	}
-	data, err = os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	data, readError = os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	rows := strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")
 	answers := strings.Split(strings.TrimSuffix(want, "\n"), "\n")
@@ -62,8 +62,8 @@ func mutantCorpus(test *testing.T, change oracles.Mutation, path, want string) (
 	}
 	// A distinct basename bypasses executeShards: these already are small units.
 	subset := filepath.Join(test.TempDir(), "witnesses.txt")
-	if err := os.WriteFile(subset, []byte(input.String()), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(subset, []byte(input.String()), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	test.Logf("%s: %d Go-oracle witnesses from %v", change.Name, len(selected), families)
 	return subset, expected.String()

@@ -50,9 +50,13 @@ func formatfilesSelectedShard(test *testing.T) int {
 	if len(fields) != 2 {
 		test.Fatalf("invalid ADAMIC_TEST_SHARD %q", value)
 	}
-	index, err := strconv.Atoi(fields[0])
-	count, countErr := strconv.Atoi(fields[1])
-	if err != nil || countErr != nil || count != testThePortParsesAsGoCohereDoesShards || index < 0 || index >= count {
+	index, parseError := strconv.Atoi(fields[0])
+	count, countError := strconv.Atoi(fields[1])
+	if parseError != nil ||
+		countError != nil ||
+		count != testThePortParsesAsGoCohereDoesShards ||
+		index < 0 ||
+		index >= count {
 		test.Fatalf("invalid ADAMIC_TEST_SHARD %q: want i/%d", value, testThePortParsesAsGoCohereDoesShards)
 	}
 	return index
@@ -75,9 +79,9 @@ func formatfilesBlocks(test *testing.T, text, marker string) []string {
 
 func formatfilesPartition(test *testing.T, path, answers string) []formatfilesPart {
 	test.Helper()
-	contents, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	contents, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	header, body, ok := strings.Cut(string(contents), "\n")
 	if !ok {
@@ -180,8 +184,8 @@ func formatfilesPartition(test *testing.T, path, answers string) []formatfilesPa
 func formatfilesCaseFile(test *testing.T, part formatfilesPart) string {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "cases.txt")
-	if err := os.WriteFile(path, []byte(part.cases), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(part.cases), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return path
 }
@@ -280,8 +284,8 @@ func TestFormatfilesShardPlantedDisagreement(test *testing.T) {
 		fmt.Fprintf(&cases, "tree\t%s\t/fixture\nhouse\t0\n", key)
 		fmt.Fprintf(&answers, "tree %s\nsame\n", key)
 	}
-	if err := os.WriteFile(path, []byte(cases.String()), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(cases.String()), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	parts := formatfilesPartition(test, path, answers.String())
 	planted := "generated 1"
@@ -439,14 +443,14 @@ func TestThePortParsesAsGoCohereDoesUnion(test *testing.T) {
 	}
 	// Check the written-out top-level table too: missing or repeated leaves are
 	// a failure even when their data partitions themselves are complete.
-	source, err := os.ReadFile("formatfiles_shards_test.go")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("formatfiles_shards_test.go")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 
-	table, err := parser.ParseFile(token.NewFileSet(), "formatfiles_shards_test.go", source, 0)
-	if err != nil {
-		test.Fatal(err)
+	table, parseFileError := parser.ParseFile(token.NewFileSet(), "formatfiles_shards_test.go", source, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	names := make(map[int]bool)
 	for _, declaration := range table.Decls {
@@ -461,8 +465,8 @@ func TestThePortParsesAsGoCohereDoesUnion(test *testing.T) {
 		if !ok {
 			continue
 		}
-		index, err := strconv.Atoi(suffix)
-		if err != nil || index < 0 || index >= len(parts) || names[index] {
+		index, parseError := strconv.Atoi(suffix)
+		if parseError != nil || index < 0 || index >= len(parts) || names[index] {
 			test.Fatalf("invalid leaf declaration %q", fn.Name.Name)
 		}
 		if len(fn.Body.List) != 2 {
@@ -495,16 +499,16 @@ func TestThePortParsesAsGoCohereDoesUnion(test *testing.T) {
 func formatfilesAskedCases(test *testing.T) (string, string) {
 	test.Helper()
 	seed := int64(generatedSeed)
-	var err error
+	var parseError error
 	if value := os.Getenv("COHERE_FORMATFILES_SEED"); value != "" {
-		if seed, err = strconv.ParseInt(value, 10, 64); err != nil {
-			test.Fatal(err)
+		if seed, parseError = strconv.ParseInt(value, 10, 64); parseError != nil {
+			test.Fatal(parseError)
 		}
 	}
 	generated := 400
 	if value := os.Getenv("COHERE_FORMATFILES_GENERATED"); value != "" {
-		if generated, err = strconv.Atoi(value); err != nil {
-			test.Fatal(err)
+		if generated, parseError = strconv.Atoi(value); parseError != nil {
+			test.Fatal(parseError)
 		}
 	}
 	directory := formatfilesSetupDirectory(test)
@@ -513,8 +517,8 @@ func formatfilesAskedCases(test *testing.T) (string, string) {
 	// The trees live here, where the port walks them after cohere's side has laid them out; the
 	// directory is the test's own, so it outlives cohere's side and goes when the test ends.
 	scratch := filepath.Join(directory, "trees")
-	if err := os.Mkdir(scratch, 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.Mkdir(scratch, 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	formatfilesCohereSide(test, map[string]any{
 		"scratch":   scratch,
@@ -523,17 +527,17 @@ func formatfilesAskedCases(test *testing.T) (string, string) {
 		"cases":     casesPath,
 		"answers":   answersPath,
 	})
-	answers, err := os.ReadFile(answersPath)
-	if err != nil {
-		test.Fatal(err)
+	answers, readError := os.ReadFile(answersPath)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if keep := os.Getenv("ADAMIC_FORMATFILES_KEEP"); keep != "" {
-		cases, err := os.ReadFile(casesPath)
-		if err != nil {
-			test.Fatal(err)
+		cases, readError := os.ReadFile(casesPath)
+		if readError != nil {
+			test.Fatal(readError)
 		}
-		if err := os.WriteFile(keep, cases, 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(keep, cases, 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	test.Logf("seed %d, %d generated trees", seed, generated)
@@ -545,12 +549,12 @@ func formatfilesCohereSide(test *testing.T, request map[string]any) {
 	product, packageDirectory := formatfilesOracle(test)
 	directory := test.TempDir()
 	requestPath := filepath.Join(directory, "request.json")
-	encoded, err := json.Marshal(request)
-	if err != nil {
-		test.Fatal(err)
+	encoded, encodeError := json.Marshal(request)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
-	if err := os.WriteFile(requestPath, encoded, 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(requestPath, encoded, 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	command := formatfilesCommand(test, product, "-test.run=^TestAdamicPortCases$", "-test.timeout=0")
 	command.Dir = packageDirectory
@@ -559,8 +563,8 @@ func formatfilesCohereSide(test *testing.T, request map[string]any) {
 	// Capture has no stall guard, and this run loses nothing by it: without -test.v cohere's side prints nothing
 	// until it ends, so only childguard's 30-minute first-output window could have fired, and the unit's own ceiling
 	// (Loom kills a test unit at 90 s and a product unit at 600 s) ends a hung run sooner.
-	if stdout, stderr, err := childguard.Capture(test.Context(), command); err != nil {
-		test.Fatalf("cohere's side: %v\n%s%s", err, stdout, stderr)
+	if stdout, stderr, captureError := childguard.Capture(test.Context(), command); captureError != nil {
+		test.Fatalf("cohere's side: %v\n%s%s", captureError, stdout, stderr)
 	}
 }
 

@@ -14,7 +14,22 @@ import (
 // tree are modules a program imports. Language's rule on #sa5ptyj, so the tool
 // keeps no globs of its own. The rest are returned as unmatched, never guessed.
 func changedPrograms(root, base, head string, programs map[string]bool) ([]program, []string, error) {
-	listing := execute(root, time.Minute, "git", "diff", "--name-only", "--diff-filter=AM", "--no-renames", "-z", base, head, "--", "*.a", "*.ts", ":(exclude)*.d.ts")
+	listing := execute(
+		root,
+		time.Minute,
+		"git",
+		"diff",
+		"--name-only",
+		"--diff-filter=AM",
+		"--no-renames",
+		"-z",
+		base,
+		head,
+		"--",
+		"*.a",
+		"*.ts",
+		":(exclude)*.d.ts",
+	)
 	if listing.Exit != 0 || listing.Error != "" {
 		return nil, nil, fmt.Errorf("diff corpus: %s %s", listing.Error, listing.Stderr)
 	}
@@ -28,9 +43,9 @@ func changedPrograms(root, base, head string, programs map[string]bool) ([]progr
 			unmatched = append(unmatched, path)
 			continue
 		}
-		blob, err := git(root, "rev-parse", head+":"+path)
-		if err != nil {
-			return nil, nil, err
+		blob, gitError := git(root, "rev-parse", head+":"+path)
+		if gitError != nil {
+			return nil, nil, gitError
 		}
 		changed = append(changed, program{Path: path, Blob: blob})
 	}

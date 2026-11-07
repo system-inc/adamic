@@ -15,13 +15,13 @@ func runtimeUnfusedProduct(test *testing.T, profile string) string {
 	test.Helper()
 	options := Options{Release: profile == "release", Sanitize: profile == "sanitized", Count: profile == "counted"}
 	options.ProgramRegion = true
-	files, flags, compiler, _, err := gccAuditRuntimeInputs(options)
-	if err != nil {
-		test.Fatal(err)
+	files, flags, compiler, _, gccAuditRuntimeInputsError := gccAuditRuntimeInputs(options)
+	if gccAuditRuntimeInputsError != nil {
+		test.Fatal(gccAuditRuntimeInputsError)
 	}
-	headers, err := headersRead(files, flags, compiler)
-	if err != nil {
-		test.Fatal(err)
+	headers, headersReadError := headersRead(files, flags, compiler)
+	if headersReadError != nil {
+		test.Fatal(headersReadError)
 	}
 	inputs := buildcache.Inputs{
 		Name: "runtime-unfused-" + profile,
@@ -47,14 +47,14 @@ func runtimeUnfusedProduct(test *testing.T, profile string) string {
 			quote(scratch),
 			quote(compiler),
 		)
-		if err := os.WriteFile(wrapper, []byte(script), 0700); err != nil {
-			return err
+		if writeError := os.WriteFile(wrapper, []byte(script), 0700); writeError != nil {
+			return writeError
 		}
-		jobserver, err := defaultJobserver()
-		if err != nil {
-			return err
+		jobserver, defaultJobserverError := defaultJobserver()
+		if defaultJobserverError != nil {
+			return defaultJobserverError
 		}
-		if err := compileRuntime(
+		if compileRuntimeError := compileRuntime(
 			files,
 			flags,
 			wrapper,
@@ -62,17 +62,17 @@ func runtimeUnfusedProduct(test *testing.T, profile string) string {
 			4,
 			jobserver,
 			"runtime-unfused-"+profile,
-		); err != nil {
-			return err
+		); compileRuntimeError != nil {
+			return compileRuntimeError
 		}
 		var audit strings.Builder
 		for _, file := range files {
 			if !strings.HasSuffix(file.name, ".c") {
 				continue
 			}
-			args, err := os.ReadFile(filepath.Join(scratch, file.name))
-			if err != nil {
-				return err
+			args, readError := os.ReadFile(filepath.Join(scratch, file.name))
+			if readError != nil {
+				return readError
 			}
 			// The last contraction option wins. Record the effective option, not
 			// just the presence of an earlier flag overridden by a later one.
@@ -84,8 +84,12 @@ func runtimeUnfusedProduct(test *testing.T, profile string) string {
 			}
 			fmt.Fprintf(&audit, "%s\t%s\n", file.name, contraction)
 		}
-		if err := os.WriteFile(filepath.Join(directory, "audit"), []byte(audit.String()), 0600); err != nil {
-			return err
+		if writeError := os.WriteFile(
+			filepath.Join(directory, "audit"),
+			[]byte(audit.String()),
+			0600,
+		); writeError != nil {
+			return writeError
 		}
 		if profile == "release" {
 			// Compile one real unit without the flag. Reuse every other object;
@@ -104,9 +108,9 @@ func runtimeUnfusedProduct(test *testing.T, profile string) string {
 				"-o",
 				object,
 			)...)
-			actual, err := os.ReadFile(filepath.Join(scratch, "dtoa.c"))
-			if err != nil {
-				return err
+			actual, readError := os.ReadFile(filepath.Join(scratch, "dtoa.c"))
+			if readError != nil {
+				return readError
 			}
 			contraction := "missing"
 			for _, arg := range strings.Split(string(actual), "\n") {
@@ -115,8 +119,12 @@ func runtimeUnfusedProduct(test *testing.T, profile string) string {
 				}
 			}
 			omitted := strings.Replace(audit.String(), "dtoa.c\t-ffp-contract=off\n", "dtoa.c\t"+contraction+"\n", 1)
-			if err := os.WriteFile(filepath.Join(directory, "omission-audit"), []byte(omitted), 0600); err != nil {
-				return err
+			if writeError := os.WriteFile(
+				filepath.Join(directory, "omission-audit"),
+				[]byte(omitted),
+				0600,
+			); writeError != nil {
+				return writeError
 			}
 
 		}
@@ -145,12 +153,12 @@ func checkRuntimeUnfusedAudit(data string) error {
 }
 func checkRuntimeUnfused(test *testing.T, profile string) {
 	test.Helper()
-	data, err := os.ReadFile(filepath.Join(runtimeUnfusedProduct(test, profile), "audit"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(runtimeUnfusedProduct(test, profile), "audit"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	if err := checkRuntimeUnfusedAudit(string(data)); err != nil {
-		test.Fatal(err)
+	if checkRuntimeUnfusedAuditError := checkRuntimeUnfusedAudit(string(data)); checkRuntimeUnfusedAuditError != nil {
+		test.Fatal(checkRuntimeUnfusedAuditError)
 	}
 	test.Logf("all %d runtime translation units: -ffp-contract=off (%s)", len(gccRuntimeUnits), profile)
 }
@@ -181,13 +189,16 @@ func TestRuntimeCompilesEveryUnitUnfusedCounted(test *testing.T) {
 
 func TestRuntimeUnfusedOmissionMutant(test *testing.T) {
 	test.Parallel()
-	data, err := os.ReadFile(filepath.Join(runtimeUnfusedProduct(test, "release"), "omission-audit"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(runtimeUnfusedProduct(test, "release"), "omission-audit"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	err = checkRuntimeUnfusedAudit(string(data))
-	if err == nil || !strings.Contains(err.Error(), "dtoa.c") {
-		test.Fatalf("actual dtoa.c compile omitted contraction flag but audit accepted it: %v", err)
+	checkRuntimeUnfusedAuditError := checkRuntimeUnfusedAudit(string(data))
+	if checkRuntimeUnfusedAuditError == nil || !strings.Contains(checkRuntimeUnfusedAuditError.Error(), "dtoa.c") {
+		test.Fatalf(
+			"actual dtoa.c compile omitted contraction flag but audit accepted it: %v",
+			checkRuntimeUnfusedAuditError,
+		)
 	}
-	test.Log(err)
+	test.Log(checkRuntimeUnfusedAuditError)
 }

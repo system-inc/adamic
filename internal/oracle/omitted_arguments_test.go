@@ -35,13 +35,13 @@ func init() {
 // mutant. Sanitizers and the leak check must stay green.
 func TestOmittedArgumentZeroMutantIsCaught(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/omitted_scanner.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/omitted_scanner.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	changed := 0
 	for index, statement := range program.Main {
@@ -83,17 +83,19 @@ func TestOmittedArgumentZeroMutantIsCaught(test *testing.T) {
 // unwrap (a .a refuses it). The omitted branch never evaluates that assertion, as Node also proves.
 func TestOmittedOriginalProbePolicy(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/refusals/omitted_scanner_original.ts"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/refusals/omitted_scanner_original.ts"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	observed := onNode(test, path)
 	if observed.exitCode != 0 || string(observed.stdout) != "11\n" || len(observed.stderr) != 0 {
 		test.Fatalf("want Node 11, got %+v", observed)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	native, sanitized := natively(test, program)
 	backend := onJavaScriptBackend(test, program)
@@ -110,13 +112,13 @@ func TestOmittedOriginalProbePolicy(test *testing.T) {
 
 func TestOmittedReaderZeroMutantIsCaught(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/omitted_reader.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/omitted_reader.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	changed := 0
 	for index, statement := range program.Main {

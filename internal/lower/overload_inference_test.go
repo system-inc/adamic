@@ -11,13 +11,13 @@ import (
 
 func TestOverloadInferenceWitnesses(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("../oracle/testdata/overload_inference_contracts.a")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("../oracle/testdata/overload_inference_contracts.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	file := program.Files()[0]
 	checked, release := program.Checker(context.Background(), file)

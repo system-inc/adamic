@@ -18,7 +18,8 @@ func realpathTruthiness(node *ast.Node) bool {
 	if parent == nil {
 		return false
 	}
-	if parent.Kind == ast.KindPrefixUnaryExpression && parent.AsPrefixUnaryExpression().Operator == ast.KindExclamationToken {
+	if parent.Kind == ast.KindPrefixUnaryExpression &&
+		parent.AsPrefixUnaryExpression().Operator == ast.KindExclamationToken {
 		return true
 	}
 	switch parent.Kind {
@@ -34,7 +35,8 @@ func realpathTruthiness(node *ast.Node) bool {
 		return parent.AsConditionalExpression().Condition == node
 	case ast.KindBinaryExpression:
 		operator := parent.AsBinaryExpression().OperatorToken.Kind
-		return (operator == ast.KindAmpersandAmpersandToken || operator == ast.KindBarBarToken) && realpathTruthiness(parent)
+		return (operator == ast.KindAmpersandAmpersandToken || operator == ast.KindBarBarToken) &&
+			realpathTruthiness(parent)
 	}
 	return false
 }
@@ -57,7 +59,8 @@ func (l *lowering) realpathIdentity(node *ast.Node) bool {
 		return false
 	}
 	binary := node.Parent.AsBinaryExpression()
-	if binary.OperatorToken.Kind != ast.KindEqualsEqualsEqualsToken && binary.OperatorToken.Kind != ast.KindExclamationEqualsEqualsToken {
+	if binary.OperatorToken.Kind != ast.KindEqualsEqualsEqualsToken &&
+		binary.OperatorToken.Kind != ast.KindExclamationEqualsEqualsToken {
 		return false
 	}
 	other := binary.Left
@@ -76,11 +79,19 @@ func (l *lowering) realpathIdentity(node *ast.Node) bool {
 		return false
 	}
 	declaration := symbol.Declarations[0]
-	return declaration.Kind == ast.KindVariableDeclaration && declaration.Parent.Flags&ast.NodeFlagsConst != 0 && declaration.AsVariableDeclaration().Initializer != nil && l.realpathInitializer(declaration.AsVariableDeclaration().Initializer)
+	return declaration.Kind == ast.KindVariableDeclaration &&
+		declaration.Parent.Flags&ast.NodeFlagsConst != 0 &&
+		declaration.AsVariableDeclaration().Initializer != nil &&
+		l.realpathInitializer(declaration.AsVariableDeclaration().Initializer)
 }
 
 func (l *lowering) realpathUseError(node *ast.Node, use string) error {
-	return l.notYet(node, "node:fs.realpathSync.native as a value is admitted only as a const called with one path; this use "+use+" could pass it extra arguments Node reads as options")
+	return l.notYet(
+		node,
+		"node:fs.realpathSync.native as a value is admitted only as a const called with one path; this use "+
+			use+
+			" could pass it extra arguments Node reads as options",
+	)
 }
 
 func realpathUseName(node *ast.Node) string {
@@ -115,7 +126,9 @@ func realpathUseName(node *ast.Node) string {
 // lowering state or whole-program pass is needed.
 func (l *lowering) nodeRealpathReferenceRefusal(node *ast.Node) error {
 	use := realpathParent(node)
-	if parent := use.Parent; parent != nil && parent.Kind == ast.KindCallExpression && parent.AsCallExpression().Expression == use {
+	if parent := use.Parent; parent != nil &&
+		parent.Kind == ast.KindCallExpression &&
+		parent.AsCallExpression().Expression == use {
 		return nil
 	}
 	if realpathTruthiness(use) || l.realpathIdentity(use) {
@@ -129,7 +142,9 @@ func (l *lowering) nodeRealpathReferenceRefusal(node *ast.Node) error {
 		use = realpathParent(use.Parent)
 	}
 	declaration := use.Parent
-	if declaration == nil || declaration.Kind != ast.KindVariableDeclaration || declaration.AsVariableDeclaration().Initializer != use {
+	if declaration == nil ||
+		declaration.Kind != ast.KindVariableDeclaration ||
+		declaration.AsVariableDeclaration().Initializer != use {
 		return l.realpathUseError(node, realpathUseName(use))
 	}
 	binding := declaration.AsVariableDeclaration()
@@ -166,8 +181,8 @@ func (l *lowering) nodeRealpathReferenceRefusal(node *ast.Node) error {
 				target = l.checker.GetShorthandAssignmentValueSymbol(reference.Parent)
 			}
 			if target == symbol {
-				if err := l.realpathConstUse(reference); err != nil {
-					found = err
+				if realpathConstUseError := l.realpathConstUse(reference); realpathConstUseError != nil {
+					found = realpathConstUseError
 					return true
 				}
 			}

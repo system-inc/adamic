@@ -25,7 +25,7 @@ export function mutate(value: number): number {`+one.source+` return value;}
 export function handle(request: HttpRequest): HttpResponse {return {status:200,headers:[],body:'ok'};}`,
 			)
 			builds := 0
-			err := BuildWith(
+			buildWithError := BuildWith(
 				entry,
 				filepath.Join(test.TempDir(), "worker"),
 				Options{Wasm: []string{"mutate"}, BuildWasm: func(
@@ -38,8 +38,10 @@ export function handle(request: HttpRequest): HttpResponse {return {status:200,h
 					return fmt.Errorf("unexpected Wasm build")
 				}},
 			)
-			if err == nil || !strings.Contains(err.Error(), "impure: host operation "+one.operation) || builds != 0 {
-				test.Fatalf("want environment refusal before Wasm build, builds=%d: %v", builds, err)
+			if buildWithError == nil ||
+				!strings.Contains(buildWithError.Error(), "impure: host operation "+one.operation) ||
+				builds != 0 {
+				test.Fatalf("want environment refusal before Wasm build, builds=%d: %v", builds, buildWithError)
 			}
 		})
 	}
@@ -62,8 +64,11 @@ func TestCheckPureRefusesEnvironmentHostIR(test *testing.T) {
 			program := &ir.Program{
 				Functions: []ir.Function{{Name: "mutate", Body: []ir.Statement{ir.Evaluate{Value: one.value}}}},
 			}
-			if err := CheckPure(program, 0); err == nil || !strings.Contains(err.Error(), "impure: host operation") {
-				test.Fatalf("want host effect refusal, got %v", err)
+			if checkPureError := CheckPure(
+				program,
+				0,
+			); checkPureError == nil || !strings.Contains(checkPureError.Error(), "impure: host operation") {
+				test.Fatalf("want host effect refusal, got %v", checkPureError)
 			}
 		})
 	}

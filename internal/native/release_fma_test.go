@@ -19,51 +19,51 @@ func TestReleaseFixtureKeepsArithmeticUnfused(test *testing.T) {
 	if !ok {
 		test.Skip(why)
 	}
-	path, err := filepath.Abs("../oracle/testdata/release_fma.a")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("../oracle/testdata/release_fma.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	node := exec.Command("node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", path)
-	want, err := node.CombinedOutput()
-	if err != nil {
-		test.Fatalf("Node: %v\n%s", err, want)
+	want, combinedOutputError := node.CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("Node: %v\n%s", combinedOutputError, want)
 	}
 	if string(want) != "0\n0\n0\n" {
 		test.Fatalf("fixture's Node rounding boundaries are wrong: %q", want)
 	}
-	checked, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	checked, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := lower.Lower(context.Background(), checked)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerError := lower.Lower(context.Background(), checked)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	generated := C(program)
 	directory := test.TempDir()
 	source := filepath.Join(directory, "main.c")
-	if err := os.WriteFile(source, []byte(generated), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(source, []byte(generated), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	options := Options{Release: true, cpu: cpu}
 	binary := filepath.Join(directory, "good")
-	if err := Build(generated, binary, options); err != nil {
-		test.Fatal(err)
+	if buildError := Build(generated, binary, options); buildError != nil {
+		test.Fatal(buildError)
 	}
 	if got := runWithInput(test, "", binary); got != string(want) {
 		test.Fatalf("ThinLTO fixture differs from Node: %q vs %q", got, want)
 	}
-	library, err := RuntimeLibrary("", options)
-	if err != nil {
-		test.Fatal(err)
+	library, runtimeLibraryError := RuntimeLibrary("", options)
+	if runtimeLibraryError != nil {
+		test.Fatal(runtimeLibraryError)
 	}
 	mutant := filepath.Join(directory, "mutant")
 	flags := slices.DeleteFunc(LinkFlags(options), func(s string) bool { return s == "-ffp-contract=off" })
 	flags = append(flags, "-I", filepath.Dir(library), "-o", mutant, source)
 	flags = append(flags, RuntimeLinkFlags(library)...)
 	flags = append(flags, "-lm")
-	if output, err := exec.Command("clang", flags...).CombinedOutput(); err != nil {
-		test.Fatalf("mutant compile: %v\n%s", err, output)
+	if output, combinedOutputError := exec.Command("clang", flags...).CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("mutant compile: %v\n%s", combinedOutputError, output)
 	}
 	got := runWithInput(test, "", mutant)
 	if got == string(want) {
@@ -74,21 +74,21 @@ func TestReleaseFixtureKeepsArithmeticUnfused(test *testing.T) {
 
 func TestReleaseSplitFixtureAgreesWithNode(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("../oracle/testdata/release_fma.a")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("../oracle/testdata/release_fma.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	checked, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	checked, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := lower.Lower(context.Background(), checked)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerError := lower.Lower(context.Background(), checked)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	binary := filepath.Join(test.TempDir(), "split")
-	if err := Build(C(program), binary, Options{Release: true, Split: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(C(program), binary, Options{Release: true, Split: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	if got := runWithInput(test, "", binary); got != "0\n0\n0\n" {
 		test.Fatalf("split release rounding: %q", got)

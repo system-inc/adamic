@@ -23,20 +23,20 @@ import (
 // show the miscompile (testdata/narrowed-union-object-kinds-mutant.json).
 func TestNarrowedUnionTypedArrayTag(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(
+	path, absolutePathError := filepath.Abs(
 		filepath.Join(repository, "internal/oracle/testdata/reland_refused/narrowed_union_typed_array_tag.ts"),
 	)
-	if err != nil {
-		test.Fatal(err)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := onNode(test, path)
 	if disagreement(run{stdout: []byte("undefined\n")}, truth) != "" {
 		test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 	}
-	program, err := lowered(test, path)
+	program, loweredError := lowered(test, path)
 	if os.Getenv("ADAMIC_NARROWED_OBJECT_KINDS_MUTANT") == "1" {
-		if err != nil {
-			test.Fatalf("the mutant must admit the program: %v", err)
+		if loweredError != nil {
+			test.Fatalf("the mutant must admit the program: %v", loweredError)
 		}
 		native, _ := nativelyUncached(test, program)
 		for name, got := range map[string]run{"native": native, "release": releasedUncached(test, program)} {
@@ -54,7 +54,7 @@ func TestNarrowedUnionTypedArrayTag(test *testing.T) {
 		}
 		return
 	}
-	refusedAtNarrowing(test, err, "narrowed_union_typed_array_tag.ts:4:5")
+	refusedAtNarrowing(test, loweredError, "narrowed_union_typed_array_tag.ts:4:5")
 }
 
 // A promise and another class are each typeof object too, so each stops at the narrowing. On main, release native
@@ -67,15 +67,17 @@ func TestNarrowedUnionObjectKindTags(test *testing.T) {
 	} {
 		test.Run(probe.file, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/reland_refused", probe.file))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/reland_refused", probe.file),
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			if truth := onNode(test, path); disagreement(run{stdout: []byte("undefined\n")}, truth) != "" {
 				test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
-			_, err = lowered(test, path)
-			refusedAtNarrowing(test, err, probe.file+":"+probe.at)
+			_, loweredError := lowered(test, path)
+			refusedAtNarrowing(test, loweredError, probe.file+":"+probe.at)
 		})
 	}
 }
@@ -107,15 +109,15 @@ func TestNarrowedNullableObjectRead(test *testing.T) {
 			source := "class Box { v = 1; }\nlet x: " +
 				probe.union +
 				" = new Box();\nfunction clear(): void { x = null; }\nif (x instanceof Box) {\n    clear();\n    console.log(String(x.v));\n}\n"
-			if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
+				test.Fatal(writeError)
 			}
 			if truth := onNode(test, path); disagreement(typeError, truth) != "" {
 				test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			native, _ := nativelyUncached(test, program)
 			for name, got := range map[string]run{
@@ -138,13 +140,13 @@ func TestNarrowedNullableObjectRead(test *testing.T) {
 	}
 }
 
-func refusedAtNarrowing(test *testing.T, err error, where string) {
+func refusedAtNarrowing(test *testing.T, loweredError error, where string) {
 	test.Helper()
 	var notYet *lower.NotYet
-	if !errors.As(err, &notYet) || !strings.Contains(err.Error(), where) || !strings.Contains(
-		err.Error(),
+	if !errors.As(loweredError, &notYet) || !strings.Contains(loweredError.Error(), where) || !strings.Contains(
+		loweredError.Error(),
 		"stage 0 can't lower a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables yet",
 	) {
-		test.Fatalf("want the object-tag NotYet at the narrowing, got %v", err)
+		test.Fatalf("want the object-tag NotYet at the narrowing, got %v", loweredError)
 	}
 }

@@ -20,13 +20,13 @@ func init() {
 func TestRepresentationClockSourceMutant(test *testing.T) {
 	test.Parallel()
 	test.Run("clock-source-ignore-payload", func(test *testing.T) {
-		path, err := filepath.Abs(filepath.Join(repository, representationClockSourceFixture))
-		if err != nil {
-			test.Fatal(err)
+		path, absolutePathError := filepath.Abs(filepath.Join(repository, representationClockSourceFixture))
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
-		program, err := lowered(test, path)
-		if err != nil {
-			test.Fatal(err)
+		program, loweredError := lowered(test, path)
+		if loweredError != nil {
+			test.Fatal(loweredError)
 		}
 		constant := len(program.Strings)
 		program.Strings = append(program.Strings, "7:mutant")

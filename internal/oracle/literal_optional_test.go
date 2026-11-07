@@ -23,13 +23,15 @@ func init() {
 // The old required-field lookup still compiles, but panics instead of returning typed undefined.
 func TestLiteralOptionalOracleCatchesMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/e4eec87_u02_optional_absent.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/e4eec87_u02_optional_absent.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	source := native.C(program)
 	mutant := strings.ReplaceAll(source, "adamic_object_optional_field(", "adamic_object_field(")
@@ -37,8 +39,8 @@ func TestLiteralOptionalOracleCatchesMutant(test *testing.T) {
 		test.Fatal("mutant target absent")
 	}
 	binary := filepath.Join(test.TempDir(), "mutant")
-	if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(mutant, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	result := execute(test, binary)
 	if result.exitCode != 70 ||

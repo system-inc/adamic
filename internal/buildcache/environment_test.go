@@ -17,12 +17,12 @@ func hostileHome(test *testing.T) (home, marker string) {
 	home = test.TempDir()
 	marker = filepath.Join(home, "git-ran-the-homes-program")
 	program := filepath.Join(home, "program.sh")
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		program,
 		[]byte("#!/bin/sh\ntouch "+marker+"\nprintf 'token\\0'\ncat\n"),
 		0o755,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
 	configuration := "[core]\n\tautocrlf = true\n\tfsmonitor = " + program + "\n" +
 		"[filter \"hostile\"]\n\tclean = " + program + "\n\tsmudge = " + program + "\n" +
@@ -64,7 +64,7 @@ func TestAHomesGitConfigurationReachesNeitherTrackedNorAKey(test *testing.T) {
 	test.Setenv("XDG_CONFIG_HOME", filepath.Join(home, ".config"))
 	gotKey, gotTracked := answers()
 	test.Cleanup(forgetTracked)
-	if _, err := os.Stat(marker); err == nil {
+	if _, statError := os.Stat(marker); statError == nil {
 		test.Error("git ran a program the home's configuration names")
 	}
 	if gotKey != wantKey {
@@ -91,8 +91,8 @@ func TestAToolIsTheProgramToolchainResolves(test *testing.T) {
 			filepath.Dir(bin) +
 			"/lib\"\n"
 		write(test, bin, "adamic-fake-tool", script)
-		if err := os.Chmod(filepath.Join(bin, "adamic-fake-tool"), 0o755); err != nil {
-			test.Fatal(err)
+		if changeModeError := os.Chmod(filepath.Join(bin, "adamic-fake-tool"), 0o755); changeModeError != nil {
+			test.Fatal(changeModeError)
 		}
 	}
 	fake(filepath.Join(directory, "bin"), "1.0")
@@ -135,9 +135,9 @@ func TestAToolIsTheProgramToolchainResolves(test *testing.T) {
 // moves).
 // Not parallel: test.Setenv, cached.
 func TestAGoProductIsTheSameWhateverElseTheEnvironmentHolds(test *testing.T) {
-	root, err := repositoryRoot()
-	if err != nil {
-		test.Fatal(err)
+	root, repositoryRootError := repositoryRoot()
+	if repositoryRootError != nil {
+		test.Fatal(repositoryRootError)
 	}
 	// No GOFLAGS of the caller's, so the configuration file's would be go's, and go list would stamp a build through
 	// git.
@@ -146,18 +146,18 @@ func TestAGoProductIsTheSameWhateverElseTheEnvironmentHolds(test *testing.T) {
 		test.Helper()
 		cached(test)
 		forgetInputs()
-		inputs, err := goRequest{
+		inputs, inputsError := goRequest{
 			verb:      "build",
 			output:    "hello",
 			pkg:       "./internal/buildcache/testdata/hello",
 			arguments: reproducible(nil),
 		}.inputs()
-		if err != nil {
-			test.Fatal(err)
+		if inputsError != nil {
+			test.Fatal(inputsError)
 		}
-		content, err := os.ReadFile(GoBuild(test, "hello", "./internal/buildcache/testdata/hello", nil))
-		if err != nil {
-			test.Fatal(err)
+		content, readError := os.ReadFile(GoBuild(test, "hello", "./internal/buildcache/testdata/hello", nil))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		return key(test, root, inputs), content
 	}
@@ -188,38 +188,41 @@ func TestASandboxDeclaresWhereToolsAndProductsLive(test *testing.T) {
 	test.Setenv("ADAMIC_TOOLS", "")
 	test.Setenv("ADAMIC_BUILD_CACHE_DIR", "")
 	test.Setenv("ADAMIC_SANDBOX", "")
-	user, err := os.UserCacheDir()
-	if err != nil {
-		test.Fatal(err)
+	user, userCacheDirectoryError := os.UserCacheDir()
+	if userCacheDirectoryError != nil {
+		test.Fatal(userCacheDirectoryError)
 	}
-	if tools, err := toolsRoot(); err != nil || tools != filepath.Join(home, "adamic-tools") {
-		test.Errorf("outside a sandbox, toolsRoot = %q, %v", tools, err)
+	if tools, toolsRootError := toolsRoot(); toolsRootError != nil || tools != filepath.Join(home, "adamic-tools") {
+		test.Errorf("outside a sandbox, toolsRoot = %q, %v", tools, toolsRootError)
 	}
-	if cache, err := cacheLocation(); err != nil || cache != filepath.Join(user, "adamic-build") {
-		test.Errorf("outside a sandbox, cacheLocation = %q, %v", cache, err)
+	if cache, cacheLocationError := cacheLocation(); cacheLocationError != nil ||
+		cache != filepath.Join(user, "adamic-build") {
+		test.Errorf("outside a sandbox, cacheLocation = %q, %v", cache, cacheLocationError)
 	}
 	test.Setenv("ADAMIC_SANDBOX", "1")
-	if tools, err := toolsRoot(); err == nil || !strings.Contains(err.Error(), "ADAMIC_TOOLS is unset") {
-		test.Errorf("in a sandbox with no ADAMIC_TOOLS, toolsRoot = %q, %v", tools, err)
+	if tools, toolsRootError := toolsRoot(); toolsRootError == nil ||
+		!strings.Contains(toolsRootError.Error(), "ADAMIC_TOOLS is unset") {
+		test.Errorf("in a sandbox with no ADAMIC_TOOLS, toolsRoot = %q, %v", tools, toolsRootError)
 	}
-	if value, err := treeEntryValue(
+	if value, treeEntryValueError := treeEntryValue(
 		test.TempDir(),
 		test.TempDir(),
 		readEntry{Kind: "tool", Path: "bin/adamic-fake-tool"},
-	); err == nil {
+	); treeEntryValueError == nil {
 		test.Errorf("in a sandbox with no ADAMIC_TOOLS, a tool entry valued %q", value)
 	}
-	if cache, err := cacheLocation(); err == nil || !strings.Contains(err.Error(), "ADAMIC_BUILD_CACHE_DIR is unset") {
-		test.Errorf("in a sandbox with no ADAMIC_BUILD_CACHE_DIR, cacheLocation = %q, %v", cache, err)
+	if cache, cacheLocationError := cacheLocation(); cacheLocationError == nil ||
+		!strings.Contains(cacheLocationError.Error(), "ADAMIC_BUILD_CACHE_DIR is unset") {
+		test.Errorf("in a sandbox with no ADAMIC_BUILD_CACHE_DIR, cacheLocation = %q, %v", cache, cacheLocationError)
 	}
 	tools, cache := test.TempDir(), test.TempDir()
 	test.Setenv("ADAMIC_TOOLS", tools)
 	test.Setenv("ADAMIC_BUILD_CACHE_DIR", cache)
-	if got, err := toolsRoot(); err != nil || got != tools {
-		test.Errorf("in a sandbox, toolsRoot = %q, %v; want %q", got, err, tools)
+	if got, toolsRootError := toolsRoot(); toolsRootError != nil || got != tools {
+		test.Errorf("in a sandbox, toolsRoot = %q, %v; want %q", got, toolsRootError, tools)
 	}
-	if got, err := cacheLocation(); err != nil || got != cache {
-		test.Errorf("in a sandbox, cacheLocation = %q, %v; want %q", got, err, cache)
+	if got, cacheLocationError := cacheLocation(); cacheLocationError != nil || got != cache {
+		test.Errorf("in a sandbox, cacheLocation = %q, %v; want %q", got, cacheLocationError, cache)
 	}
 }
 
@@ -236,8 +239,8 @@ func TestAToolReportsUnderTheEnvironmentItsBuildRunsIn(test *testing.T) {
 		"adamic-fake-tool",
 		"#!/bin/sh\necho \"adamic-fake-tool, setting ${ADAMIC_FAKE_SETTING:-unset}\"\n",
 	)
-	if err := os.Chmod(filepath.Join(bin, "adamic-fake-tool"), 0o755); err != nil {
-		test.Fatal(err)
+	if changeModeError := os.Chmod(filepath.Join(bin, "adamic-fake-tool"), 0o755); changeModeError != nil {
+		test.Fatal(changeModeError)
 	}
 	test.Setenv("ADAMIC_TOOLS", filepath.Dir(bin))
 	test.Setenv("ADAMIC_SANDBOX", "")

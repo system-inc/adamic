@@ -107,21 +107,22 @@ func TestEnumSlotViews(test *testing.T) {
 				lowersAndAgreesWithNode(test, probe.source+observations[probe.name])
 				return
 			}
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var refused *Refused
-			if !errors.As(err, &refused) {
-				test.Fatalf("got %v, want Refused", err)
+			if !errors.As(lowerSourceError, &refused) {
+				test.Fatalf("got %v, want Refused", lowerSourceError)
 			}
-			if probe.name == "generic class invariant" && !strings.Contains(err.Error(), "adamic/nominal-class") {
-				test.Fatalf("want nominal generic argument refusal, got %v", err)
+			if probe.name == "generic class invariant" &&
+				!strings.Contains(lowerSourceError.Error(), "adamic/nominal-class") {
+				test.Fatalf("want nominal generic argument refusal, got %v", lowerSourceError)
 			}
-			if !strings.Contains(err.Error(), "enum") &&
-				!strings.Contains(err.Error(), "readonly") &&
-				!strings.Contains(err.Error(), "invariant-mutable") &&
-				!strings.Contains(err.Error(), "override") &&
-				!strings.Contains(err.Error(), "Object.assign") &&
-				!strings.Contains(err.Error(), "nominal-class") {
-				test.Fatalf("missing reason: %v", err)
+			if !strings.Contains(lowerSourceError.Error(), "enum") &&
+				!strings.Contains(lowerSourceError.Error(), "readonly") &&
+				!strings.Contains(lowerSourceError.Error(), "invariant-mutable") &&
+				!strings.Contains(lowerSourceError.Error(), "override") &&
+				!strings.Contains(lowerSourceError.Error(), "Object.assign") &&
+				!strings.Contains(lowerSourceError.Error(), "nominal-class") {
+				test.Fatalf("missing reason: %v", lowerSourceError)
 			}
 		})
 	}
@@ -132,10 +133,11 @@ func TestEnumSwitchExhaustiveness(test *testing.T) {
 	for _, source := range []string{
 		"enum E { A = 'a', B = 'b' } function show(e: E): void { switch (e) { case E.A: break; } }",
 	} {
-		_, err := lowerSource(test, source)
+		_, lowerSourceError := lowerSource(test, source)
 		var refused *Refused
-		if !errors.As(err, &refused) || !strings.Contains(err.Error(), "non-exhaustive enum switch") {
-			test.Fatalf("got %v", err)
+		if !errors.As(lowerSourceError, &refused) ||
+			!strings.Contains(lowerSourceError.Error(), "non-exhaustive enum switch") {
+			test.Fatalf("got %v", lowerSourceError)
 		}
 	}
 	for _, source := range []string{
@@ -162,10 +164,10 @@ func TestEnumLimitsStayLoud(test *testing.T) {
 		"function read(e: E = E.A): void {} read(); enum E { A }",
 		"function read(): number { return E.A; } class C { static readonly value = read(); } enum E { A }",
 	} {
-		_, err := lowerSource(test, source)
+		_, lowerSourceError := lowerSource(test, source)
 		var notYet *NotYet
-		if !errors.As(err, &notYet) {
-			test.Fatalf("got %v, want NotYet", err)
+		if !errors.As(lowerSourceError, &notYet) {
+			test.Fatalf("got %v, want NotYet", lowerSourceError)
 		}
 	}
 	for _, source := range []string{
@@ -175,10 +177,10 @@ func TestEnumLimitsStayLoud(test *testing.T) {
 		"enum E { NaN = 0 }",
 		"enum E { Infinity = 0 }",
 	} {
-		_, err := lowerSource(test, source)
+		_, lowerSourceError := lowerSource(test, source)
 		var refused *Refused
-		if !errors.As(err, &refused) {
-			test.Fatalf("got %v, want Refused", err)
+		if !errors.As(lowerSourceError, &refused) {
+			test.Fatalf("got %v, want Refused", lowerSourceError)
 		}
 	}
 }
@@ -211,17 +213,17 @@ func TestEnumIdentityAcrossModules(test *testing.T) {
 		main:  "import { E as Other } from './other.a'; enum E { A = 'a', B = 'b' } const value: E = Other.A;",
 		other: "export enum E { A = 'a', B = 'b' }",
 	} {
-		if err := os.WriteFile(name, []byte(source), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(name, []byte(source), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
-	program, err := load.Load([]string{main})
-	if err != nil {
-		test.Fatalf("the checker must admit the probe: %v", err)
+	program, loadError := load.Load([]string{main})
+	if loadError != nil {
+		test.Fatalf("the checker must admit the probe: %v", loadError)
 	}
-	_, err = Lower(context.Background(), program)
+	_, lowerError := Lower(context.Background(), program)
 	var refused *Refused
-	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "enum-members") {
-		test.Fatalf("got %v, want closed enum identity refusal", err)
+	if !errors.As(lowerError, &refused) || !strings.Contains(lowerError.Error(), "enum-members") {
+		test.Fatalf("got %v, want closed enum identity refusal", lowerError)
 	}
 }

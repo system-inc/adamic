@@ -17,8 +17,8 @@ const literalStorageLets = "let first: number | string = 1;\nlet second: number 
 func literalStorageProgram(test *testing.T, name, source string) string {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), name+".a")
-	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return path
 }
@@ -74,9 +74,9 @@ func TestDestructureLiteralStorageAgrees(test *testing.T) {
 			if want.exitCode != 0 {
 				test.Fatalf("Node: %#v", want)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			sanitized, _ := nativelyUncached(test, program)
 			for backend, got := range map[string]run{
@@ -142,14 +142,14 @@ func TestDestructureLiteralStorageStops(test *testing.T) {
 			if node := onNode(test, path); node.exitCode != 0 {
 				test.Fatalf("Node: %#v", node)
 			}
-			_, err := lowered(test, path)
+			_, loweredError := lowered(test, path)
 			var pending *lower.NotYet
 			var refused *lower.Refused
 			switch {
-			case errors.As(err, &pending) && pending.What == probe.what:
-			case errors.As(err, &refused) && strings.HasPrefix(refused.What, probe.what):
+			case errors.As(loweredError, &pending) && pending.What == probe.what:
+			case errors.As(loweredError, &refused) && strings.HasPrefix(refused.What, probe.what):
 			default:
-				test.Fatalf("want a stop %q, got %v", probe.what, err)
+				test.Fatalf("want a stop %q, got %v", probe.what, loweredError)
 			}
 		})
 	}

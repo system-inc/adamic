@@ -56,9 +56,9 @@ func Product(test testing.TB, source string, archive string, split string) strin
 			"ADAMIC_NATIVE_SPLIT=1: an agreement native is built lean, in one translation unit (native.BuildLean)",
 		)
 	}
-	compiler, err := toolchain.Path("clang")
-	if err != nil {
-		test.Fatal(err)
+	compiler, pathError := toolchain.Path("clang")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
 	// A C its test wrote, outside every product, is a read under the temporary directory, which a traced window can
 	// only refuse as temp not made by this run (#egjbcre): refused here first, on every machine, naming where it came
@@ -69,13 +69,13 @@ func Product(test testing.TB, source string, archive string, split string) strin
 			source,
 		)
 	}
-	code, err := os.ReadFile(source)
-	if err != nil {
-		test.Fatal(err)
+	code, readError := os.ReadFile(source)
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	digest, err := archiveDigest(archive)
-	if err != nil {
-		test.Fatal(err)
+	digest, archiveDigestError := archiveDigest(archive)
+	if archiveDigestError != nil {
+		test.Fatal(archiveDigestError)
 	}
 	inputs := buildcache.Inputs{
 		// v3: a lean build of what it's handed, keyed by its own window (#egjbcre).
@@ -105,9 +105,9 @@ func BuildAgreementNative(handed buildcache.Handed, directory string) error {
 	if len(handed.Paths) != 3 {
 		return fmt.Errorf("agreementproducts: handed %q, want the C, the archive's directory and clang", handed.Paths)
 	}
-	jobserver, err := ccjobserver.Process()
-	if err != nil {
-		return err
+	jobserver, processError := ccjobserver.Process()
+	if processError != nil {
+		return processError
 	}
 	return native.BuildLean(
 		handed.Paths[2],
@@ -127,18 +127,18 @@ func options() native.Options {
 // archiveDigest is the sha256 of every file the archive's directory holds, each by its name and the sha256 of what it
 // holds: so a build outside a trace, keyed by Inputs alone, keys apart on another runtime.
 func archiveDigest(directory string) (string, error) {
-	entries, err := os.ReadDir(directory)
-	if err != nil {
-		return "", err
+	entries, readDirectoryError := os.ReadDir(directory)
+	if readDirectoryError != nil {
+		return "", readDirectoryError
 	}
 	hash := sha256.New()
 	for _, entry := range entries {
 		if !entry.Type().IsRegular() {
 			continue
 		}
-		content, err := os.ReadFile(filepath.Join(directory, entry.Name()))
-		if err != nil {
-			return "", err
+		content, readError := os.ReadFile(filepath.Join(directory, entry.Name()))
+		if readError != nil {
+			return "", readError
 		}
 		fmt.Fprintf(hash, "%s %x\n", entry.Name(), sha256.Sum256(content))
 	}

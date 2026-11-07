@@ -50,8 +50,8 @@ func intentionalExit(run Run) bool {
 	if match == nil {
 		return false
 	}
-	status, err := strconv.Atoi(string(match[1]))
-	if err != nil || status != run.ExitCode {
+	status, parseError := strconv.Atoi(string(match[1]))
+	if parseError != nil || status != run.ExitCode {
 		return false
 	}
 	// Only a terminal marker, optionally followed by the runtime's complete counts, is accepted.
@@ -113,8 +113,8 @@ func Check(program Program) (string, error) {
 		if build == nil {
 			build = func(code, output string) error { return native.Build(code, output, native.Options{Count: true}) }
 		}
-		if err := build(program.C, program.Counted); err != nil {
-			return "", err
+		if buildError := build(program.C, program.Counted); buildError != nil {
+			return "", buildError
 		}
 		counted := program.Execute(nil, program.Counted, arguments()...)
 		if report := Unbalanced(counted); report != "" {
@@ -163,9 +163,9 @@ func Unbalanced(counted Run) string {
 	// count past int64 fails to parse, and that is reported as what it is.
 	var counts [3]int64
 	for index, group := range []int{1, 2, 6} {
-		count, err := strconv.ParseInt(string(match[group]), 10, 64)
-		if err != nil {
-			return fmt.Sprintf("unreadable counts: %v", err)
+		count, parseError := strconv.ParseInt(string(match[group]), 10, 64)
+		if parseError != nil {
+			return fmt.Sprintf("unreadable counts: %v", parseError)
 		}
 		counts[index] = count
 	}
@@ -188,7 +188,7 @@ func Unbalanced(counted Run) string {
 // test.
 func Report(test testing.TB, code string, sanitized string, arguments ...string) string {
 	test.Helper()
-	report, err := Check(Program{
+	report, checkError := Check(Program{
 		C:         code,
 		Sanitized: sanitized,
 		Counted:   filepath.Join(test.TempDir(), "counted"),
@@ -197,8 +197,8 @@ func Report(test testing.TB, code string, sanitized string, arguments ...string)
 			return bounded(test, environment, name, arguments...)
 		},
 	})
-	if err != nil {
-		test.Fatal(err)
+	if checkError != nil {
+		test.Fatal(checkError)
 	}
 	return report
 }
@@ -216,10 +216,10 @@ func bounded(test testing.TB, environment []string, name string, arguments ...st
 		command.Env = append(os.Environ(), environment...)
 	}
 	var stdout, stderr bytes.Buffer
-	err := childguard.CaptureTo(ctx, command, &stdout, &stderr)
+	captureToError := childguard.CaptureTo(ctx, command, &stdout, &stderr)
 	var exitError *exec.ExitError
-	if err != nil && !errors.As(err, &exitError) {
-		test.Fatalf("running %s: %v", name, err)
+	if captureToError != nil && !errors.As(captureToError, &exitError) {
+		test.Fatalf("running %s: %v", name, captureToError)
 	}
 	return Run{Stdout: stdout.Bytes(), Stderr: stderr.Bytes(), ExitCode: command.ProcessState.ExitCode()}
 }

@@ -13,25 +13,25 @@ import (
 
 func TestOptionalWideningRefused(test *testing.T) {
 	test.Parallel()
-	paths, err := filepath.Glob("testdata/optional_widening/*.a")
-	if err != nil || len(paths) == 0 {
-		test.Fatalf("fixtures: %v", err)
+	paths, globError := filepath.Glob("testdata/optional_widening/*.a")
+	if globError != nil || len(paths) == 0 {
+		test.Fatalf("fixtures: %v", globError)
 	}
 	for _, path := range paths {
 		test.Run(strings.TrimSuffix(filepath.Base(path), ".a"), func(test *testing.T) {
 			test.Parallel()
-			program, err := load.Load([]string{path})
+			program, loadError := load.Load([]string{path})
 			if filepath.Base(path) == "incompatible.a" {
 				var checked *load.CheckError
-				if !errors.As(err, &checked) || !strings.Contains(err.Error(), "not assignable") {
-					test.Fatalf("want checker rejection, got %v", err)
+				if !errors.As(loadError, &checked) || !strings.Contains(loadError.Error(), "not assignable") {
+					test.Fatalf("want checker rejection, got %v", loadError)
 				}
 				return
 			}
-			if err != nil {
-				test.Fatal(err)
+			if loadError != nil {
+				test.Fatal(loadError)
 			}
-			_, err = Lower(context.Background(), program)
+			_, lowerError := Lower(context.Background(), program)
 			var refused *Refused
 			property := "y"
 			if filepath.Base(path) == "field_access_paths.a" {
@@ -41,21 +41,21 @@ func TestOptionalWideningRefused(test *testing.T) {
 				property = "z"
 			}
 			cast := filepath.Base(path) == "cast.a"
-			if !errors.As(err, &refused) ||
+			if !errors.As(lowerError, &refused) ||
 				!strings.Contains(refused.Fix, "adamic/no-optional-widening") ||
 				(!cast && !strings.Contains(refused.What, "optional property "+property)) ||
 				(cast && !strings.Contains(refused.What, "an unproven relation")) {
-				test.Fatalf("want optional-property refusal, got %v", err)
+				test.Fatalf("want optional-property refusal, got %v", lowerError)
 			}
 			// Casts reach main's proven-relation refusal first. Other positions must retain
 			// the optional-widening diagnostic. Pin every complete message independently.
-			want, readErr := os.ReadFile(strings.TrimSuffix(path, ".a") + ".refused")
-			if readErr != nil {
-				test.Fatal(readErr)
+			want, readError := os.ReadFile(strings.TrimSuffix(path, ".a") + ".refused")
+			if readError != nil {
+				test.Fatal(readError)
 			}
-			absolute, err := filepath.Abs(path)
-			if err != nil {
-				test.Fatal(err)
+			absolute, absolutePathError := filepath.Abs(path)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			got := strings.ReplaceAll(refused.Error(), absolute, path)
 			if got != strings.TrimSpace(string(want)) {
@@ -77,18 +77,18 @@ func TestOptionalWideningSpreadOverwrite(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "main.a")
 	source := "const original = { x: 1, y: 'wrong', z: 'wrong' }; const view: { x: number } = original; const wider: { x: number; y?: number } = { ...view, y: 3 };"
-	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	file := program.Files()[0]
 	checker, release := program.Checker(context.Background(), file)
 	defer release()
 	l := &lowering{checker: checker, program: program}
-	if err := l.refuse(file); err != nil {
-		test.Fatal(err)
+	if refuseError := l.refuse(file); refuseError != nil {
+		test.Fatal(refuseError)
 	}
 }

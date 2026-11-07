@@ -16,9 +16,9 @@ func programParseOracle(test *testing.T, enabled bool) {
 		test.Skip("Linux instrumented parse witness")
 	}
 	args := programParseArguments(test)
-	absolute, err := filepath.Abs("testdata/program_region/parse.a")
-	if err != nil {
-		test.Fatal(err)
+	absolute, absolutePathError := filepath.Abs("testdata/program_region/parse.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := execute(
 		test,
@@ -68,13 +68,13 @@ func TestProgramRegionParseWASIImports(test *testing.T) {
 	if !shimFileFixtures[path] {
 		test.Fatal("file-reading parser must be excluded from the file-free shim")
 	}
-	code, err := os.ReadFile(filepath.Join(programParseLower(test, false), "code.c"))
-	if err != nil {
-		test.Fatal(err)
+	code, readError := os.ReadFile(filepath.Join(programParseLower(test, false), "code.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	binary := filepath.Join(test.TempDir(), "parse.wasm")
-	if err := native.Build(string(code), binary, native.Options{Target: "wasm32-wasi"}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(string(code), binary, native.Options{Target: "wasm32-wasi"}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	inventory := execute(
 		test,
@@ -87,8 +87,8 @@ func TestProgramRegionParseWASIImports(test *testing.T) {
 	if inventory.exitCode != 0 {
 		test.Fatalf("imports: %s", inventory.stderr)
 	}
-	if err := json.Unmarshal(inventory.stdout, &imports); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(inventory.stdout, &imports); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if actual := strings.Join(imports, ", "); actual != want {
 		test.Fatalf("parser imports %s, want %s", actual, want)

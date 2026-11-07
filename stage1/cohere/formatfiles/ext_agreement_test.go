@@ -39,9 +39,9 @@ func TestExtAgreesWithGo(test *testing.T) {
 	var expected bytes.Buffer
 	for _, each := range cases {
 		names = append(names, each.path)
-		encoded, err := json.Marshal(filepath.Ext(each.path))
-		if err != nil {
-			test.Fatal(err)
+		encoded, encodeError := json.Marshal(filepath.Ext(each.path))
+		if encodeError != nil {
+			test.Fatal(encodeError)
 		}
 		expected.Write(encoded)
 		expected.WriteByte('\n')
@@ -53,8 +53,8 @@ func TestExtAgreesWithGo(test *testing.T) {
 		path := filepath.Join(port, "ext_driver.ts")
 		source := "import { ext } from './golang.ts';\n" +
 			"for (const name of process.argv.slice(2)) { console.log(JSON.stringify(ext(name))); }\n"
-		if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		result := formatfilesNode(test, ctx, path, inputs...)
 		if result.exitCode != 0 || len(result.stderr) != 0 {

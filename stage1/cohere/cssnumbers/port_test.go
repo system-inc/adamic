@@ -50,10 +50,10 @@ func execute(test *testing.T, environment []string, name string, arguments ...st
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
-	err := childguard.Run(command, childguard.Options{})
+	runError := childguard.Run(command, childguard.Options{})
 	var exitError *exec.ExitError
-	if err != nil && !errors.As(err, &exitError) {
-		test.Fatalf("running %s: %v", name, err)
+	if runError != nil && !errors.As(runError, &exitError) {
+		test.Fatalf("running %s: %v", name, runError)
 	}
 	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
 }
@@ -61,9 +61,9 @@ func execute(test *testing.T, environment []string, name string, arguments ...st
 // onNode runs a program's source on Node, through the oracle's runner, with its arguments.
 func onNode(test *testing.T, path string, arguments ...string) run {
 	test.Helper()
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return execute(
 		test,
@@ -109,9 +109,9 @@ func prepareCSSNumbersSetup(test *testing.T) {
 		write(test, cases, numbersInput(corpus.texts))
 		if keep := os.Getenv("ADAMIC_CSSNUMBERS_KEEP"); keep != "" {
 			write(test, keep, numbersInput(corpus.texts))
-			manifest, err := json.MarshalIndent(corpus.paths, "", "  ")
-			if err != nil {
-				test.Fatal(err)
+			manifest, encodeError := json.MarshalIndent(corpus.paths, "", "  ")
+			if encodeError != nil {
+				test.Fatal(encodeError)
 			}
 			write(test, keep+".files.json", manifest)
 		}
@@ -302,8 +302,8 @@ func runCSSNumbersShard(test *testing.T, ordinal int) {
 
 func write(test *testing.T, path string, b []byte) {
 	test.Helper()
-	if err := os.WriteFile(path, b, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, b, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 }
 func clean(test *testing.T, name string, r run) {

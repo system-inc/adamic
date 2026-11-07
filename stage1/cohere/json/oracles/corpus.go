@@ -142,22 +142,22 @@ func CorpusPinError(want, got CorpusPin) error {
 
 func verifyCorpusPin(test *testing.T, cases []ComparisonCase) {
 	test.Helper()
-	encoded, err := os.ReadFile("testdata/corpus.pin")
-	if err != nil {
-		test.Fatalf("%s corpus pin: %v", test.Name(), err)
+	encoded, readError := os.ReadFile("testdata/corpus.pin")
+	if readError != nil {
+		test.Fatalf("%s corpus pin: %v", test.Name(), readError)
 	}
 	var expected CorpusPin
-	if err := json.Unmarshal(encoded, &expected); err != nil {
-		test.Fatalf("%s corpus pin: %v", test.Name(), err)
+	if decodeError := json.Unmarshal(encoded, &expected); decodeError != nil {
+		test.Fatalf("%s corpus pin: %v", test.Name(), decodeError)
 	}
-	actual, count, err := ValidatePinnedCorpus(test, cases, expected)
+	actual, count, validatePinnedCorpusError := ValidatePinnedCorpus(test, cases, expected)
 	test.Logf(
 		"corpus repository: %d tracked JSON files; read from the corpus product at Git pin %s",
 		count,
 		RepositoryCorpusCommit,
 	)
-	if err != nil {
-		test.Fatalf("%s: %v", test.Name(), err)
+	if validatePinnedCorpusError != nil {
+		test.Fatalf("%s: %v", test.Name(), validatePinnedCorpusError)
 	}
 	for _, group := range []string{"provisioned", "TypeScript", "cohere", "generated"} {
 		test.Logf("corpus pin group %s: %d, SHA256 %s", group, actual.Groups[group].Count, actual.Groups[group].SHA256)
@@ -172,14 +172,14 @@ func PinnedCorpusInputs() (buildcache.Inputs, error) {
 // PinnedCorpusInputsAt is shared with the parent json tests.
 func PinnedCorpusInputsAt(pin string) (buildcache.Inputs, error) {
 	jsonTrackedSources.once.Do(func() {
-		root, err := filepath.Abs(repository)
-		if err != nil {
-			jsonTrackedSources.err = err
+		root, absolutePathError := filepath.Abs(repository)
+		if absolutePathError != nil {
+			jsonTrackedSources.err = absolutePathError
 			return
 		}
-		entries, err := tracked.Files(root)
-		if err != nil {
-			jsonTrackedSources.err = err
+		entries, filesError := tracked.Files(root)
+		if filesError != nil {
+			jsonTrackedSources.err = filesError
 			return
 		}
 		for _, entry := range entries {
@@ -209,20 +209,23 @@ func PinnedCorpusInputsAt(pin string) (buildcache.Inputs, error) {
 // BuildPinnedCorpus is shared with the parent json tests.
 func BuildPinnedCorpus(inputs buildcache.Inputs) func(directory string) error {
 	return func(directory string) error {
-		root, err := filepath.Abs(repository)
-		if err != nil {
-			return err
+		root, absolutePathError := filepath.Abs(repository)
+		if absolutePathError != nil {
+			return absolutePathError
 		}
-		tracked, err := RepositoryCasesAtPin(root, inputs, RepositoryCorpusCommit)
-		if err != nil {
-			return err
+		tracked, repositoryCasesAtPinError := RepositoryCasesAtPin(root, inputs, RepositoryCorpusCommit)
+		if repositoryCasesAtPinError != nil {
+			return repositoryCasesAtPinError
 		}
-		provisioned, err := provisionedCorpusFiles(root)
-		if err != nil {
-			return err
+		provisioned, provisionedCorpusFilesError := provisionedCorpusFiles(root)
+		if provisionedCorpusFilesError != nil {
+			return provisionedCorpusFilesError
 		}
-		if err := WriteCorpusRecords(filepath.Join(directory, "repository"), tracked); err != nil {
-			return err
+		if writeCorpusRecordsError := WriteCorpusRecords(
+			filepath.Join(directory, "repository"),
+			tracked,
+		); writeCorpusRecordsError != nil {
+			return writeCorpusRecordsError
 		}
 		return WriteCorpusRecords(filepath.Join(directory, "provisioned"), provisioned)
 	}
@@ -276,16 +279,22 @@ func WriteCorpusRecords(path string, cases []ComparisonCase) error {
 
 // ReadCorpusRecords is shared with the parent json tests.
 func ReadCorpusRecords(path string) ([]ComparisonCase, error) {
-	data, err := os.ReadFile(path)
-	if err != nil {
-		return nil, err
+	data, readError := os.ReadFile(path)
+	if readError != nil {
+		return nil, readError
 	}
 	var cases []ComparisonCase
 	for len(data) > 0 {
 		header, rest, terminated := bytes.Cut(data, []byte("\n"))
 		sizeText, name, named := strings.Cut(string(header), " ")
-		size, err := strconv.Atoi(sizeText)
-		if !terminated || !named || name == "" || err != nil || size < 0 || len(rest) <= size || rest[size] != '\n' {
+		size, parseError := strconv.Atoi(sizeText)
+		if !terminated ||
+			!named ||
+			name == "" ||
+			parseError != nil ||
+			size < 0 ||
+			len(rest) <= size ||
+			rest[size] != '\n' {
 			if len(header) > 120 {
 				header = header[:120]
 			}
@@ -299,9 +308,9 @@ func ReadCorpusRecords(path string) ([]ComparisonCase, error) {
 
 func corpusPinManifest(root string) (CorpusPin, error) {
 	var manifest CorpusPin
-	encoded, err := os.ReadFile(filepath.Join(root, "stage1/cohere/json/testdata/corpus.pin"))
-	if err != nil {
-		return manifest, err
+	encoded, readError := os.ReadFile(filepath.Join(root, "stage1/cohere/json/testdata/corpus.pin"))
+	if readError != nil {
+		return manifest, readError
 	}
 	return manifest, json.Unmarshal(encoded, &manifest)
 }
@@ -343,15 +352,15 @@ func provisionedCorpusFiles(root string) ([]ComparisonCase, error) {
 
 // RepositoryCasesAtPin is shared with the parent json tests.
 func RepositoryCasesAtPin(root string, inputs buildcache.Inputs, pin string) ([]ComparisonCase, error) {
-	files, err := buildcache.PinnedFiles(
+	files, pinnedFilesError := buildcache.PinnedFiles(
 		root,
 		inputs,
 		pin,
 		"JSON",
 		func(name string) bool { return strings.HasSuffix(name, ".json") },
 	)
-	if err != nil {
-		return nil, err
+	if pinnedFilesError != nil {
+		return nil, pinnedFilesError
 	}
 	cases := make([]ComparisonCase, 0, len(files))
 	for _, file := range files {
@@ -366,9 +375,9 @@ func RepositoryCasesAtPin(root string, inputs buildcache.Inputs, pin string) ([]
 func pinnedCorpusFiles(test testing.TB, root string) ([]ComparisonCase, error) {
 	tracked, provisioned := PinnedCorpusProduct(test)
 	cases := append(tracked, provisioned...)
-	manifest, err := corpusPinManifest(root)
-	if err != nil {
-		return nil, err
+	manifest, corpusPinManifestError := corpusPinManifest(root)
+	if corpusPinManifestError != nil {
+		return nil, corpusPinManifestError
 	}
 	// Only pinned submodule paths are read from disk. Arbitrary repository JSON,
 	// additions, deletions and dirty index entries cannot enter.
@@ -379,9 +388,9 @@ func pinnedCorpusFiles(test testing.TB, root string) ([]ComparisonCase, error) {
 		if !strings.HasPrefix(item.Path, "cohere/") {
 			return nil, fmt.Errorf("unexpected disk input in corpus pin: %s", item.Path)
 		}
-		data, err := os.ReadFile(filepath.Join(root, filepath.FromSlash(item.Path)))
-		if err != nil {
-			return nil, fmt.Errorf("pinned corpus input %s: %w", item.Path, err)
+		data, readError := os.ReadFile(filepath.Join(root, filepath.FromSlash(item.Path)))
+		if readError != nil {
+			return nil, fmt.Errorf("pinned corpus input %s: %w", item.Path, readError)
 		}
 		if !utf8.Valid(data) {
 			return nil, fmt.Errorf("non-UTF-8 pinned corpus file %s", item.Path)
@@ -499,13 +508,13 @@ func ValidateCorpusState(
 // CorpusCases is shared with the parent json tests.
 func CorpusCases(test *testing.T) []ComparisonCase {
 	test.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	cases, err := pinnedCorpusFiles(test, root)
-	if err != nil {
-		test.Fatal(err)
+	cases, pinnedCorpusFilesError := pinnedCorpusFiles(test, root)
+	if pinnedCorpusFilesError != nil {
+		test.Fatal(pinnedCorpusFilesError)
 	}
 	// Generated boundary cases exercise both filename-selected printers, including the extension's
 	// JavaScript literal forms that a JSON.parse/JSON.stringify substitute would lose.

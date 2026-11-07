@@ -21,9 +21,9 @@ func TestNestedEmptyArrayElementKinds(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			program, err := lowerSource(test, probe.source)
-			if err != nil {
-				test.Fatal(err)
+			program, lowerSourceError := lowerSource(test, probe.source)
+			if lowerSourceError != nil {
+				test.Fatal(lowerSourceError)
 			}
 			outer := program.Main[0].(ir.Declare).Value.(ir.ArrayLiteral)
 			found := false
@@ -45,11 +45,11 @@ func TestNestedEmptyArrayElementKinds(test *testing.T) {
 
 func TestEmptyLiteralGenericReturnUsesSamePath(test *testing.T) {
 	test.Parallel()
-	program, err := lowerSource(test, `function empty<T>(): T[] { return [] as T[]; }
+	program, lowerSourceError := lowerSource(test, `function empty<T>(): T[] { return [] as T[]; }
 interface Item { readonly text: string; }
 empty<number>(); empty<Item>();`)
-	if err != nil {
-		test.Fatal(err)
+	if lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
 	kinds := map[ir.Type]int{}
 	for _, function := range program.Functions {

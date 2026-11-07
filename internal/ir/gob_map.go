@@ -29,8 +29,8 @@ func (entries SortedMap[K, V]) GobEncode() ([]byte, error) {
 	sorted := make([]ordered, 0, len(entries))
 	for key, value := range entries {
 		var order bytes.Buffer
-		if err := gob.NewEncoder(&order).Encode(key); err != nil {
-			return nil, err
+		if encodeError := gob.NewEncoder(&order).Encode(key); encodeError != nil {
+			return nil, encodeError
 		}
 		sorted = append(sorted, ordered{order.Bytes(), mapEntry[K, V]{key, value}})
 	}
@@ -40,15 +40,15 @@ func (entries SortedMap[K, V]) GobEncode() ([]byte, error) {
 		list[index] = each.entry
 	}
 	var encoded bytes.Buffer
-	err := gob.NewEncoder(&encoded).Encode(list)
-	return encoded.Bytes(), err
+	encodeError := gob.NewEncoder(&encoded).Encode(list)
+	return encoded.Bytes(), encodeError
 }
 
 // GobDecode reads what GobEncode wrote.
 func (entries *SortedMap[K, V]) GobDecode(data []byte) error {
 	var list []mapEntry[K, V]
-	if err := gob.NewDecoder(bytes.NewReader(data)).Decode(&list); err != nil {
-		return err
+	if decodeError := gob.NewDecoder(bytes.NewReader(data)).Decode(&list); decodeError != nil {
+		return decodeError
 	}
 	*entries = make(SortedMap[K, V], len(list))
 	for _, each := range list {

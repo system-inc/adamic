@@ -28,10 +28,10 @@ func TestArrayPredicateDoesNotMisclassifyNativeTuples(test *testing.T) {
 		`const tuple: [number, string] = [1, 'x']; console.log(String(Array.isArray(tuple)));`,
 		`function test(value: {}): boolean { return Array.isArray(value); }`,
 	} {
-		_, err := lowerSource(test, source)
+		_, lowerSourceError := lowerSource(test, source)
 		var notYet *NotYet
-		if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "tuple or an erased") {
-			test.Fatalf("%s: want an explicit representation refusal, got %v", source, err)
+		if !errors.As(lowerSourceError, &notYet) || !strings.Contains(lowerSourceError.Error(), "tuple or an erased") {
+			test.Fatalf("%s: want an explicit representation refusal, got %v", source, lowerSourceError)
 		}
 	}
 }
@@ -54,9 +54,9 @@ func TestArrayPredicateIgnoresAProgramsOwnMerge(test *testing.T) {
 		},
 	} {
 		path := writeAgreementSource(test, "main.a", probe.source)
-		program, err := load.Load([]string{path})
-		if err != nil {
-			test.Fatal(err)
+		program, loadError := load.Load([]string{path})
+		if loadError != nil {
+			test.Fatal(loadError)
 		}
 		file := program.Files()[0]
 		checked, release := program.Checker(context.Background(), file)
@@ -66,11 +66,12 @@ func TestArrayPredicateIgnoresAProgramsOwnMerge(test *testing.T) {
 		if builtin != probe.builtin {
 			test.Errorf("%q: builtin %v, want %v", probe.source, builtin, probe.builtin)
 		}
-		_, err = Lower(context.Background(), program)
+		_, lowerError := Lower(context.Background(), program)
 		var refused *Refused
-		if probe.builtin && err != nil || !probe.builtin && (!errors.As(err, &refused) || refused.Error() != path+
-			":3:1: Adamic 0.1 refuses a global augmentation; define the values in a module and import them; use Adamic-generated platform bindings for host values") {
-			test.Errorf("%q: Lower: %v", probe.source, err)
+		if probe.builtin && lowerError != nil ||
+			!probe.builtin && (!errors.As(lowerError, &refused) || refused.Error() != path+
+				":3:1: Adamic 0.1 refuses a global augmentation; define the values in a module and import them; use Adamic-generated platform bindings for host values") {
+			test.Errorf("%q: Lower: %v", probe.source, lowerError)
 		}
 	}
 }
@@ -81,10 +82,10 @@ func TestUnknownArrayPredicateRefusesUnrepresentedObservations(test *testing.T) 
 		`function test(value: unknown): unknown { if (Array.isArray(value)) return value[0]; return undefined; }`,
 		`function test(value: unknown): boolean { return Array.isArray(value); } const pair: [number, string] = [1, 'x']; console.log(String(test(pair)));`,
 	} {
-		_, err := lowerSource(test, source)
+		_, lowerSourceError := lowerSource(test, source)
 		var notYet *NotYet
-		if !errors.As(err, &notYet) {
-			test.Fatalf("%s: want named representation refusal, got %v", source, err)
+		if !errors.As(lowerSourceError, &notYet) {
+			test.Fatalf("%s: want named representation refusal, got %v", source, lowerSourceError)
 		}
 	}
 }

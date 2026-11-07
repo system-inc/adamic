@@ -27,12 +27,12 @@ func TestQualifiedPredicateCallsLower(test *testing.T) {
 		for _, suffix := range []string{"_truth", "_lie"} {
 			test.Run(shape+suffix, func(test *testing.T) {
 				path := filepath.Join("..", "oracle", "testdata", "predicate_qualified", shape+suffix, "main.ts")
-				program, err := load.Load([]string{path})
-				if err != nil {
-					test.Fatal(err)
+				program, loadError := load.Load([]string{path})
+				if loadError != nil {
+					test.Fatal(loadError)
 				}
-				if _, err = Lower(context.Background(), program); err != nil {
-					test.Fatal(err)
+				if _, lowerError := Lower(context.Background(), program); lowerError != nil {
+					test.Fatal(lowerError)
 				}
 			})
 		}
@@ -68,12 +68,15 @@ func TestQualifiedPredicateValueAndWriteRefusals(test *testing.T) {
 func TestQualifiedPredicateFalseSideReadLowers(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join("..", "oracle", "testdata", "predicate_qualified", "false_read_truth", "main.ts")
-	source, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	if _, err = lowerTypeScriptAssertionSource(test, string(source)); err != nil {
-		test.Fatal(err)
+	if _, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(
+		test,
+		string(source),
+	); lowerTypeScriptAssertionSourceError != nil {
+		test.Fatal(lowerTypeScriptAssertionSourceError)
 	}
 }
 
@@ -83,12 +86,12 @@ func TestQualifiedPredicateCallsAreNotValueEscapes(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "main.ts")
 	source := `namespace ts { export function isNumber(v: number | string): v is number { return true; } } function use(v: number | string): void { if (ts.isNumber(v)) console.log("yes"); } use(7);`
-	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	checker, release := program.Checker(context.Background(), program.Files()[0])
 	defer release()

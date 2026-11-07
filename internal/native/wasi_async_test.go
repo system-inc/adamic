@@ -44,12 +44,12 @@ int main(int argc, char **argv) {
 `
 	directory := test.TempDir()
 	module := filepath.Join(directory, "host.wasm")
-	if err := Build(code, module, Options{Target: "wasm32-wasi", Count: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(code, module, Options{Target: "wasm32-wasi", Count: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
-	repository, err := filepath.Abs("../..")
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs("../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	runner := filepath.Join(repository, "oracle/wasi.mjs")
 	control := observeWASI(test, repository, "node", "--disable-warning=ExperimentalWarning", runner, module, "hooks")
@@ -66,12 +66,12 @@ int main(int argc, char **argv) {
 	// Leave the owned promise behind: successful output still matches, while
 	// the independent counted build must expose its retained result graph.
 	mutant := filepath.Join(directory, "leak.wasm")
-	if err := Build(
+	if buildError := Build(
 		strings.Replace(code, "adamic_release(promise);", "/* missing release */", 1),
 		mutant,
 		Options{Target: "wasm32-wasi", Count: true},
-	); err != nil {
-		test.Fatal(err)
+	); buildError != nil {
+		test.Fatal(buildError)
 	}
 	leaked := observeWASI(test, repository, "node", "--disable-warning=ExperimentalWarning", runner, mutant, "hooks")
 	leakCounts := regexp.MustCompile(`allocations ([0-9]+) frees ([0-9]+)`).FindSubmatch(leaked.stderr)

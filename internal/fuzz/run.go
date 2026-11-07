@@ -39,14 +39,14 @@ type Checkout struct {
 // Prepare builds a checkout's adamic command into directory and prepares it for per-program runtime builds.
 // The cache is shared with native.Build, while another checkout keeps its own runtime bytes.
 func Prepare(root string, directory string) (*Checkout, error) {
-	if err := os.MkdirAll(directory, 0o755); err != nil {
-		return nil, err
+	if createDirectoryError := os.MkdirAll(directory, 0o755); createDirectoryError != nil {
+		return nil, createDirectoryError
 	}
 	adamic := filepath.Join(directory, "adamic")
 	// CommandIn sets PWD with Dir: go builds root's spelling from PWD into the binary (no -trimpath here).
 	build := toolchain.CommandIn(root, "go", "build", "-o", adamic, "./cmd/adamic")
-	if output, err := build.CombinedOutput(); err != nil {
-		return nil, fmt.Errorf("fuzz: building adamic in %s: %w\n%s", root, err, output)
+	if output, combinedOutputError := build.CombinedOutput(); combinedOutputError != nil {
+		return nil, fmt.Errorf("fuzz: building adamic in %s: %w\n%s", root, combinedOutputError, output)
 	}
 	return PrepareBuilt(root, adamic, directory)
 }
@@ -55,18 +55,21 @@ func Prepare(root string, directory string) (*Checkout, error) {
 // drives this tree through the shared compiler product (buildcache.Adamic) rather than a go build of
 // its own.
 func PrepareBuilt(root string, adamic string, directory string) (*Checkout, error) {
-	root, err := filepath.Abs(root)
-	if err != nil {
-		return nil, err
+	root, absolutePathError := filepath.Abs(root)
+	if absolutePathError != nil {
+		return nil, absolutePathError
 	}
-	if err := os.MkdirAll(directory, 0o755); err != nil {
-		return nil, err
+	if createDirectoryError := os.MkdirAll(directory, 0o755); createDirectoryError != nil {
+		return nil, createDirectoryError
 	}
 	checkout := &Checkout{Root: root, directory: directory, adamic: adamic}
 	// TSan is a separate build. A machine without it still runs; the report says so.
-	tsanRuntime, tsanErr := native.RuntimeLibrary(filepath.Join(root, "internal", "native", "runtime"), native.Options{ThreadSanitize: true})
-	if tsanErr != nil {
-		checkout.TSan = tsanErr.Error()
+	tsanRuntime, tsanError := native.RuntimeLibrary(
+		filepath.Join(root, "internal", "native", "runtime"),
+		native.Options{ThreadSanitize: true},
+	)
+	if tsanError != nil {
+		checkout.TSan = tsanError.Error()
 	} else {
 		checkout.tsanRuntime = tsanRuntime
 		checkout.TSan = "ready"
@@ -150,12 +153,12 @@ func runnerDied(run Run) bool { return run.ExitCode < 0 || run.TimedOut }
 
 // Try runs a program's source three ways in a directory of its own, the way the oracle does.
 func (c *Checkout) Try(source string, directory string) Outcome {
-	if err := os.MkdirAll(directory, 0o755); err != nil {
-		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()}
+	if createDirectoryError := os.MkdirAll(directory, 0o755); createDirectoryError != nil {
+		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: createDirectoryError.Error()}
 	}
 	path := filepath.Join(directory, "program.a")
-	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()}
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
+		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: writeError.Error()}
 	}
 	return c.TryFile(path, directory)
 }
@@ -167,16 +170,18 @@ func (c *Checkout) TryFile(path string, directory string) Outcome {
 
 func (c *Checkout) tryFile(path string, directory string) Outcome {
 	// The refusal a program expects, and whether it reaches a task boundary, are in its comments.
-	contents, err := os.ReadFile(path)
-	if err != nil {
-		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()}
+	contents, readError := os.ReadFile(path)
+	if readError != nil {
+		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: readError.Error()}
 	}
 	source := string(contents)
 	// The C first: the checker's and stage 0's refusals come from here.
 	lowered := execute(directory, nil, 30*time.Second, c.adamic, "c", path)
 	expected := parallelRefusal(source)
 	moveWhat, moveFix := moveRefusal(source)
-	if (moveWhat == "") != (moveFix == "") || (moveWhat != "" && moveFix != "return it through the results" && moveFix != "don't use it after the parallelMap") {
+	if (moveWhat == "") != (moveFix == "") || (moveWhat != "" &&
+		moveFix != "return it through the results" &&
+		moveFix != "don't use it after the parallelMap") {
 		return Outcome{Verdict: Finding, Key: "invalid move expectation"}
 	}
 	if lowered.ExitCode != 0 || lowered.TimedOut {
@@ -196,44 +201,75 @@ func (c *Checkout) tryFile(path string, directory string) Outcome {
 		if moveWhat != "" {
 			expected = moveWhat + "; " + moveFix
 		}
-		return Outcome{Verdict: Finding, Key: "compiler accepted a program it must refuse", Detail: "expected a refusal containing " + expected}
+		return Outcome{
+			Verdict: Finding,
+			Key:     "compiler accepted a program it must refuse",
+			Detail:  "expected a refusal containing " + expected,
+		}
 	}
-	if err := os.WriteFile(filepath.Join(directory, "main.c"), lowered.Stdout, 0o644); err != nil {
-		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()}
+	if writeError := os.WriteFile(filepath.Join(directory, "main.c"), lowered.Stdout, 0o644); writeError != nil {
+		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: writeError.Error()}
 	}
 	javascript := execute(directory, nil, 30*time.Second, c.adamic, "js", path)
 	if javascript.ExitCode != 0 || javascript.TimedOut {
-		return Outcome{Verdict: Finding, Key: "javascript backend failed", Detail: string(javascript.Stderr), retry: true}
+		return Outcome{
+			Verdict: Finding,
+			Key:     "javascript backend failed",
+			Detail:  string(javascript.Stderr),
+			retry:   true,
+		}
 	}
-	if err := os.WriteFile(filepath.Join(directory, "program.mjs"), javascript.Stdout, 0o644); err != nil {
-		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()}
+	if writeError := os.WriteFile(
+		filepath.Join(directory, "program.mjs"),
+		javascript.Stdout,
+		0o644,
+	); writeError != nil {
+		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: writeError.Error()}
 	}
 	binary := filepath.Join(directory, "program")
 	options := native.Options{Sanitize: true}
-	library, err := c.runtimeFor(directory, options, c.runtime)
-	if err != nil {
-		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()}
+	library, runtimeForError := c.runtimeFor(directory, options, c.runtime)
+	if runtimeForError != nil {
+		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: runtimeForError.Error()}
 	}
-	arguments := append(native.SourceFlags(string(lowered.Stdout), options), "-I", filepath.Dir(library), "-o", binary, filepath.Join(directory, "main.c"))
+	arguments := append(
+		native.SourceFlags(string(lowered.Stdout), options),
+		"-I",
+		filepath.Dir(library),
+		"-o",
+		binary,
+		filepath.Join(directory, "main.c"),
+	)
 	arguments = append(arguments, native.RuntimeLinkFlags(library)...)
 	arguments = append(arguments, "-lm")
-	if output, err := toolchain.Command("clang", arguments...).CombinedOutput(); err != nil {
+	if output, combinedOutputError := toolchain.Command(
+		"clang",
+		arguments...,
+	).CombinedOutput(); combinedOutputError != nil {
 		key := "clang refused the C"
 		if warning := clangWarning.FindSubmatch(output); warning != nil {
 			key += ": " + string(warning[1])
 		}
 		detail := strings.TrimSpace(string(output))
 		if detail == "" {
-			detail = err.Error()
+			detail = combinedOutputError.Error()
 		}
 		return Outcome{Verdict: Finding, Key: key, Detail: detail, retry: true}
 	}
 
 	oracle := filepath.Join(c.Root, "oracle", "node.mjs")
 	outcome := Outcome{
-		Node:    execute(directory, nil, 20*time.Second, "node", "--disable-warning=ExperimentalWarning", oracle, path),
-		Native:  executeIsolated(directory, nativeEnvironment(""), 20*time.Second, binary),
-		Backend: execute(directory, nil, 20*time.Second, "node", "--disable-warning=ExperimentalWarning", oracle, filepath.Join(directory, "program.mjs")),
+		Node:   execute(directory, nil, 20*time.Second, "node", "--disable-warning=ExperimentalWarning", oracle, path),
+		Native: executeIsolated(directory, nativeEnvironment(""), 20*time.Second, binary),
+		Backend: execute(
+			directory,
+			nil,
+			20*time.Second,
+			"node",
+			"--disable-warning=ExperimentalWarning",
+			oracle,
+			filepath.Join(directory, "program.mjs"),
+		),
 	}
 	judged := c.judge(outcome, binary, directory)
 	if judged.Verdict != Agreed && judged.Verdict != Checked {
@@ -247,7 +283,9 @@ func (c *Checkout) tryFile(path string, directory string) Outcome {
 
 // sanitizerReport finds the kind of report a sanitizer wrote, if any: ASan's error name, or UBSan's
 // "runtime error" with its words, numbers taken out so the same bug at another address is the same.
-var sanitizerReport = regexp.MustCompile(`ERROR: AddressSanitizer: ([a-z-]+)|runtime error: ([^\n]*)|WARNING: ThreadSanitizer: ([^\n]+)|ERROR: ThreadSanitizer: ([^\n]+)|ERROR: LeakSanitizer`)
+var sanitizerReport = regexp.MustCompile(
+	`ERROR: AddressSanitizer: ([a-z-]+)|runtime error: ([^\n]*)|WARNING: ThreadSanitizer: ([^\n]+)|ERROR: ThreadSanitizer: ([^\n]+)|ERROR: LeakSanitizer`,
+)
 
 // clangWarning is the warning -Werror made an error, by its flag, so two kinds of bad C stay apart.
 var clangWarning = regexp.MustCompile(`\[-Werror,(-W[a-z-]+)\]`)
@@ -259,13 +297,17 @@ var clangWarning = regexp.MustCompile(`\[-Werror,(-W[a-z-]+)\]`)
 // A check whose words are JavaScript's own (TypeError: Cannot read properties of undefined, and the
 // rest) is where Node throws too, so Node's run stops there and the two agree; a shared stop on one
 // of those, or on anything else, while Node runs on, is a finding.
-var insertedCheck = regexp.MustCompile(`^adamic: panic: (?:(?:undefined|null) where the checker narrowed it away: a call since the narrowing put it back|map: the array shrank while it was being mapped|[A-Za-z]+: the array shrank while it was being searched|(?:find|findIndex|findLast|findLastIndex): index [0-9]+ is undefined; element type [^\n]+ does not admit undefined|index [^ ]+ is outside an array of length [0-9]+|cast failed: this .+ is not a .+)\n$`)
+var insertedCheck = regexp.MustCompile(
+	`^adamic: panic: (?:(?:undefined|null) where the checker narrowed it away: a call since the narrowing put it back|map: the array shrank while it was being mapped|[A-Za-z]+: the array shrank while it was being searched|(?:find|findIndex|findLast|findLastIndex): index [0-9]+ is undefined; element type [^\n]+ does not admit undefined|index [^ ]+ is outside an array of length [0-9]+|cast failed: this .+ is not a .+)\n$`,
+)
 
 var digits = regexp.MustCompile(`[0-9]+|0x[0-9a-f]+`)
 
 // javascriptError is how oracle/adamic.mjs reports an exception the program didn't mean: a panic
 // carries the program's own words, and anything else is a JavaScript error with its class's name.
-var javascriptError = regexp.MustCompile(`^adamic: panic: (RangeError|TypeError|ReferenceError|SyntaxError|Error|InternalError)\b`)
+var javascriptError = regexp.MustCompile(
+	`^adamic: panic: (RangeError|TypeError|ReferenceError|SyntaxError|Error|InternalError)\b`,
+)
 
 func (c *Checkout) judge(outcome Outcome, binary string, directory string) Outcome {
 	outcome.retry = runnerDied(outcome.Node) || runnerDied(outcome.Native) || runnerDied(outcome.Backend)
@@ -284,7 +326,8 @@ func (c *Checkout) judge(outcome Outcome, binary string, directory string) Outco
 		if kind == "" && match[2] != nil {
 			kind = "undefined behavior: " + digits.ReplaceAllString(string(match[2]), "N")
 		}
-		outcome.Verdict, outcome.Key, outcome.Detail = Finding, "sanitizer: "+kind, firstLines(string(outcome.Native.Stderr), 20)
+		outcome.Verdict, outcome.Key, outcome.Detail = Finding, "sanitizer: "+
+			kind, firstLines(string(outcome.Native.Stderr), 20)
 		return outcome
 	}
 	var differences []string
@@ -297,12 +340,18 @@ func (c *Checkout) judge(outcome Outcome, binary string, directory string) Outco
 		nativeDifference = differenceBesidesStderr(outcome.Node, outcome.Native)
 		backendDifference = differenceBesidesStderr(outcome.Node, outcome.Backend)
 	}
-	if nativeDifference != "" && backendDifference != "" && difference(outcome.Backend, outcome.Native) == "" && outcome.Native.ExitCode == 70 {
+	if nativeDifference != "" &&
+		backendDifference != "" &&
+		difference(outcome.Backend, outcome.Native) == "" &&
+		outcome.Native.ExitCode == 70 {
 		// Both of Adamic's backends stopped at the same place, where Node didn't stop: an inserted
 		// check, as long as the panic says it is one and what was printed before it is what Node
 		// printed.
 		if insertedCheck.Match(outcome.Native.Stderr) && bytes.HasPrefix(outcome.Node.Stdout, outcome.Native.Stdout) {
-			outcome.Verdict, outcome.Key, outcome.Detail = Checked, "inserted check", firstLines(string(outcome.Native.Stderr), 1)
+			outcome.Verdict, outcome.Key, outcome.Detail = Checked, "inserted check", firstLines(
+				string(outcome.Native.Stderr),
+				1,
+			)
 			return outcome
 		}
 	}
@@ -315,19 +364,27 @@ func (c *Checkout) judge(outcome Outcome, binary string, directory string) Outco
 	if len(differences) > 0 {
 		sort.Strings(differences)
 		outcome.Verdict, outcome.Key = Finding, strings.Join(differences, ", ")
-		outcome.Detail = fmt.Sprintf("node:    exit %d, stdout %q, stderr %q\nnative:  exit %d, stdout %q, stderr %q\nbackend: exit %d, stdout %q, stderr %q",
-			outcome.Node.ExitCode, tail(outcome.Node.Stdout), outcome.Node.Stderr,
-			outcome.Native.ExitCode, tail(outcome.Native.Stdout), outcome.Native.Stderr,
-			outcome.Backend.ExitCode, tail(outcome.Backend.Stdout), outcome.Backend.Stderr)
+		outcome.Detail = fmt.Sprintf(
+			"node:    exit %d, stdout %q, stderr %q\nnative:  exit %d, stdout %q, stderr %q\nbackend: exit %d, stdout %q, stderr %q",
+			outcome.Node.ExitCode,
+			tail(outcome.Node.Stdout),
+			outcome.Node.Stderr,
+			outcome.Native.ExitCode,
+			tail(outcome.Native.Stdout),
+			outcome.Native.Stderr,
+			outcome.Backend.ExitCode,
+			tail(outcome.Backend.Stdout),
+			outcome.Backend.Stderr,
+		)
 		return outcome
 	}
 	// Every finished program runs the shared platform leak check.
 	if outcome.Node.ExitCode == 0 {
-		code, err := os.ReadFile(filepath.Join(directory, "main.c"))
-		if err != nil {
-			return Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()}
+		code, readError := os.ReadFile(filepath.Join(directory, "main.c"))
+		if readError != nil {
+			return Outcome{Verdict: Finding, Key: "fuzzer", Detail: readError.Error()}
 		}
-		report, err := leakcheck.Check(leakcheck.Program{
+		report, checkError := leakcheck.Check(leakcheck.Program{
 			C: string(code), Sanitized: binary, Counted: filepath.Join(directory, "program-counted"),
 			Execute: func(environment []string, name string, arguments ...string) leakcheck.Run {
 				result := execute(directory, environment, 20*time.Second, name, arguments...)
@@ -335,8 +392,8 @@ func (c *Checkout) judge(outcome Outcome, binary string, directory string) Outco
 				return leakcheck.Run{Stdout: result.Stdout, Stderr: result.Stderr, ExitCode: result.ExitCode}
 			},
 		})
-		if err != nil {
-			report, outcome.retry = err.Error(), true
+		if checkError != nil {
+			report, outcome.retry = checkError.Error(), true
 		}
 		if report != "" {
 			outcome.Verdict, outcome.Key, outcome.Detail = Finding, "leak", firstLines(report, 20)
@@ -391,7 +448,11 @@ func judgeParallelRefusal(expected string, refusal Outcome, lowered Run) Outcome
 	if strings.Contains(stderr, expected) {
 		return Outcome{Verdict: Refused, Key: expected, Detail: firstLines(stderr, 4)}
 	}
-	return Outcome{Verdict: Finding, Key: "refusal did not name the path", Detail: "expected " + expected + "\n" + firstLines(stderr, 8)}
+	return Outcome{
+		Verdict: Finding,
+		Key:     "refusal did not name the path",
+		Detail:  "expected " + expected + "\n" + firstLines(stderr, 8),
+	}
 }
 
 // parallelRuns holds an accepted parallel program to one thread, the default pool, and ThreadSanitizer
@@ -412,9 +473,9 @@ func (c *Checkout) parallelRuns(outcome Outcome, binary string, directory string
 		return threadFinding("threads differ: "+diff, outcome.Native, one)
 	}
 	if outcome.Verdict == Agreed && outcome.Node.ExitCode == 0 {
-		report, err := c.leaks(binary, directory, "1")
-		if err != nil {
-			report = err.Error()
+		report, leaksError := c.leaks(binary, directory, "1")
+		if leaksError != nil {
+			report = leaksError.Error()
 		}
 		if report != "" {
 			return Outcome{Verdict: Finding, Key: "leak at ADAMIC_THREADS=1", Detail: firstLines(report, 20)}
@@ -425,12 +486,12 @@ func (c *Checkout) parallelRuns(outcome Outcome, binary string, directory string
 		return outcome
 	}
 	tsanBinary := filepath.Join(directory, "program-tsan")
-	tsanRuntime, err := c.runtimeFor(directory, native.Options{ThreadSanitize: true}, c.tsanRuntime)
-	if err != nil {
-		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()}
+	tsanRuntime, runtimeForError := c.runtimeFor(directory, native.Options{ThreadSanitize: true}, c.tsanRuntime)
+	if runtimeForError != nil {
+		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: runtimeForError.Error()}
 	}
-	if err := c.link(tsanBinary, directory, native.Options{ThreadSanitize: true}, tsanRuntime); err != nil {
-		return Outcome{Verdict: Finding, Key: "clang refused the TSan build", Detail: err.Error()}
+	if linkError := c.link(tsanBinary, directory, native.Options{ThreadSanitize: true}, tsanRuntime); linkError != nil {
+		return Outcome{Verdict: Finding, Key: "clang refused the TSan build", Detail: linkError.Error()}
 	}
 	for _, threads := range []string{"", "1"} {
 		label := "default"
@@ -439,7 +500,11 @@ func (c *Checkout) parallelRuns(outcome Outcome, binary string, directory string
 		}
 		observed := executeIsolated(directory, tsanEnvironment(threads), 45*time.Second, tsanBinary)
 		if kind := sanitizerKind(observed.Stderr); kind != "" {
-			return Outcome{Verdict: Finding, Key: "sanitizer: " + kind + " (" + label + ")", Detail: firstLines(string(observed.Stderr), 20)}
+			return Outcome{
+				Verdict: Finding,
+				Key:     "sanitizer: " + kind + " (" + label + ")",
+				Detail:  firstLines(string(observed.Stderr), 20),
+			}
 		}
 		if observed.TimedOut {
 			return Outcome{Verdict: Finding, Key: "thread sanitizer never finished (" + label + ")"}
@@ -458,20 +523,24 @@ func (c *Checkout) parallelRuns(outcome Outcome, binary string, directory string
 // defines (closure convention, canonical closures and the rest change struct layouts the runtime
 // allocates), or prebuilt when the program defines none.
 func (c *Checkout) runtimeFor(directory string, options native.Options, prebuilt string) (string, error) {
-	source, err := os.ReadFile(filepath.Join(directory, "main.c"))
-	if err != nil {
-		return "", err
+	source, readError := os.ReadFile(filepath.Join(directory, "main.c"))
+	if readError != nil {
+		return "", readError
 	}
 	if prebuilt != "" && len(native.Features(string(source))) == 0 {
 		return prebuilt, nil
 	}
-	return native.RuntimeLibraryForSource(filepath.Join(c.Root, "internal", "native", "runtime"), string(source), options)
+	return native.RuntimeLibraryForSource(
+		filepath.Join(c.Root, "internal", "native", "runtime"),
+		string(source),
+		options,
+	)
 }
 
 func (c *Checkout) link(binary string, directory string, options native.Options, runtime string) error {
-	source, err := os.ReadFile(filepath.Join(directory, "main.c"))
-	if err != nil {
-		return err
+	source, readError := os.ReadFile(filepath.Join(directory, "main.c"))
+	if readError != nil {
+		return readError
 	}
 	return native.BuildWithRuntime(string(source), binary, options, runtime)
 }
@@ -519,19 +588,19 @@ func nativeEnvironment(threads string) []string {
 
 // Preserve the fuzzer's isolated environment, deadline and one-worker witness in every leak run.
 func (c *Checkout) leaks(binary, directory, threads string) (string, error) {
-	report, _, err := c.leaksRun(binary, directory, threads)
-	return report, err
+	report, _, leaksRunError := c.leaksRun(binary, directory, threads)
+	return report, leaksRunError
 }
 
 // leaksRun is leaks that also says whether a run of the check was killed by a signal, so a
 // leak runner that died under load is tried again alone rather than reported as a leak.
 func (c *Checkout) leaksRun(binary, directory, threads string) (string, bool, error) {
-	code, err := os.ReadFile(filepath.Join(directory, "main.c"))
-	if err != nil {
-		return "", false, err
+	code, readError := os.ReadFile(filepath.Join(directory, "main.c"))
+	if readError != nil {
+		return "", false, readError
 	}
 	timedOut, died := false, false
-	report, err := leakcheck.Check(leakcheck.Program{
+	report, checkError := leakcheck.Check(leakcheck.Program{
 		C: string(code), Sanitized: binary, Counted: filepath.Join(directory, "program-counted"),
 		Execute: func(environment []string, name string, arguments ...string) leakcheck.Run {
 			extra := append([]string{}, environment...)
@@ -547,7 +616,7 @@ func (c *Checkout) leaksRun(binary, directory, threads string) (string, bool, er
 	if timedOut {
 		return "", true, fmt.Errorf("leak check never finished")
 	}
-	return report, died, err
+	return report, died, checkError
 }
 
 func tsanEnvironment(threads string) []string {
@@ -563,7 +632,9 @@ func tsanEnvironment(threads string) []string {
 func isolatedEnvironment(extra []string) []string {
 	var environment []string
 	for _, entry := range os.Environ() {
-		if strings.HasPrefix(entry, "ADAMIC_THREADS=") || strings.HasPrefix(entry, "ASAN_OPTIONS=") || strings.HasPrefix(entry, "TSAN_OPTIONS=") {
+		if strings.HasPrefix(entry, "ADAMIC_THREADS=") ||
+			strings.HasPrefix(entry, "ASAN_OPTIONS=") ||
+			strings.HasPrefix(entry, "TSAN_OPTIONS=") {
 			continue
 		}
 		environment = append(environment, entry)
@@ -600,14 +671,20 @@ func execute(directory string, environment []string, limit time.Duration, name s
 	return executeIsolated(directory, toolchain.Env(environment...), limit, name, arguments...)
 }
 
-func executeIsolated(directory string, environment []string, limit time.Duration, name string, arguments ...string) Run {
-	path, err := toolchain.Path(name)
-	if err != nil {
-		return Run{ExitCode: -1, Stderr: []byte(err.Error())}
+func executeIsolated(
+	directory string,
+	environment []string,
+	limit time.Duration,
+	name string,
+	arguments ...string,
+) Run {
+	path, pathError := toolchain.Path(name)
+	if pathError != nil {
+		return Run{ExitCode: -1, Stderr: []byte(pathError.Error())}
 	}
-	working, err := filepath.Abs(directory)
-	if err != nil {
-		return Run{ExitCode: -1, Stderr: []byte(err.Error())}
+	working, absolutePathError := filepath.Abs(directory)
+	if absolutePathError != nil {
+		return Run{ExitCode: -1, Stderr: []byte(absolutePathError.Error())}
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 	defer cancel()
@@ -633,21 +710,22 @@ func executeIsolated(directory string, environment []string, limit time.Duration
 	}
 	// With Env set, exec no longer sets PWD from Dir: the child sees its directory spelled as given, as before.
 	command.Env = append(environment, "PWD="+working)
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	run := Run{Stdout: stdout, Stderr: stderr, TimedOut: ctx.Err() != nil}
 	var exitError *exec.ExitError
 	switch {
-	case err == nil || errors.As(err, &exitError):
+	case captureError == nil || errors.As(captureError, &exitError):
 		run.ExitCode = command.ProcessState.ExitCode()
 		if status, ok := command.ProcessState.Sys().(syscall.WaitStatus); ok && status.Signaled() {
 			cpu := command.ProcessState.UserTime() + command.ProcessState.SystemTime()
-			if status.Signal() == syscall.SIGXCPU || (status.Signal() == syscall.SIGKILL && cpu >= seconds*time.Second) {
+			if status.Signal() == syscall.SIGXCPU ||
+				(status.Signal() == syscall.SIGKILL && cpu >= seconds*time.Second) {
 				run.TimedOut = true
 			}
 		}
 	default:
 		run.ExitCode = -1
-		run.Stderr = append(run.Stderr, []byte(err.Error())...)
+		run.Stderr = append(run.Stderr, []byte(captureError.Error())...)
 	}
 	return run
 }

@@ -27,23 +27,23 @@ func EnableProduction() { oracleProducer = true }
 func Parser(test testing.TB) (string, string) {
 	test.Helper()
 	directory := test.TempDir()
-	cohere, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		test.Fatal(err)
+	cohere, absolutePathError := filepath.Abs(filepath.Join(repository, "cohere"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	side, err := filepath.Abs(filepath.Join("testdata", "cohere_side_test.go"))
-	if err != nil {
-		test.Fatal(err)
+	side, absolutePathError := filepath.Abs(filepath.Join("testdata", "cohere_side_test.go"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	packageDirectory := filepath.Join(cohere, "internal", "format", "css", "selector")
 	replace := map[string]string{filepath.Join(packageDirectory, "adamic_port_side_test.go"): side}
-	overlay, err := json.Marshal(map[string]any{"Replace": replace})
-	if err != nil {
-		test.Fatal(err)
+	overlay, encodeError := json.Marshal(map[string]any{"Replace": replace})
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	overlayPath := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(overlayPath, overlay, 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(overlayPath, overlay, 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	const output = "selector.test-oracle-owner-v1"
 	arguments := []string{"-overlay=" + overlayPath}
@@ -51,9 +51,15 @@ func Parser(test testing.TB) (string, string) {
 	if oracleProducer {
 		binary = buildcache.GoTest(test, "cohere", output, "./internal/format/css/selector", arguments)
 	} else {
-		inputs, err := buildcache.GoTestInputs("cohere", output, "./internal/format/css/selector", arguments, nil)
-		if err != nil {
-			test.Fatal(err)
+		inputs, goTestInputsError := buildcache.GoTestInputs(
+			"cohere",
+			output,
+			"./internal/format/css/selector",
+			arguments,
+			nil,
+		)
+		if goTestInputsError != nil {
+			test.Fatal(goTestInputsError)
 		}
 		product := buildcache.BuiltElsewhere(
 			test,
@@ -73,21 +79,21 @@ const DefaultSeed = 20261005
 func Cases(test *testing.T) (string, string) {
 	test.Helper()
 	seed := int64(DefaultSeed)
-	var err error
+	var parseError error
 	if value := os.Getenv("COHERE_SELECTOR_SEED"); value != "" {
-		if seed, err = strconv.ParseInt(value, 10, 64); err != nil {
-			test.Fatal(err)
+		if seed, parseError = strconv.ParseInt(value, 10, 64); parseError != nil {
+			test.Fatal(parseError)
 		}
 	}
 	generated := 4000
 	if value := os.Getenv("COHERE_SELECTOR_GENERATED"); value != "" {
-		if generated, err = strconv.Atoi(value); err != nil {
-			test.Fatal(err)
+		if generated, parseError = strconv.Atoi(value); parseError != nil {
+			test.Fatal(parseError)
 		}
 	}
-	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(filepath.Join(repository, "cohere"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	// The root also contains the Go test constants the generator extracts.
 	// Validate it before running that generator, even without the npm oracle.
@@ -95,17 +101,17 @@ func Cases(test *testing.T) (string, string) {
 		[]string{"internal/format/css", "internal/lint/rules/tailwind"}, []string{"*.css"})
 	directory := selectorAnswers(test, seed, generated, root, files, os.Getenv("ADAMIC_SELECTOR_LIBRARY"))
 	casesPath := filepath.Join(directory, "cases.txt")
-	answers, err := os.ReadFile(filepath.Join(directory, "answers.txt"))
-	if err != nil {
-		test.Fatal(err)
+	answers, readError := os.ReadFile(filepath.Join(directory, "answers.txt"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if keep := os.Getenv("ADAMIC_SELECTOR_KEEP"); keep != "" {
-		cases, err := os.ReadFile(casesPath)
-		if err != nil {
-			test.Fatal(err)
+		cases, readError := os.ReadFile(casesPath)
+		if readError != nil {
+			test.Fatal(readError)
 		}
-		if err := os.WriteFile(keep, cases, 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(keep, cases, 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	test.Logf("seed %d, %d generated selectors", seed, generated)
@@ -159,25 +165,25 @@ func selectorAnswers(test *testing.T, seed int64, generated int, root string, fi
 		}
 		cohereSide(test, request)
 		if library != "" {
-			script, err := filepath.Abs(filepath.Join("testdata", "library.mjs"))
-			if err != nil {
-				return err
+			script, absolutePathError := filepath.Abs(filepath.Join("testdata", "library.mjs"))
+			if absolutePathError != nil {
+				return absolutePathError
 			}
 			fileList := filepath.Join(directory, "css-files.json")
-			encoded, err := json.Marshal(files)
-			if err != nil {
-				return err
+			encoded, encodeError := json.Marshal(files)
+			if encodeError != nil {
+				return encodeError
 			}
-			if err := os.WriteFile(fileList, encoded, 0644); err != nil {
-				return err
+			if writeError := os.WriteFile(fileList, encoded, 0644); writeError != nil {
+				return writeError
 			}
 			command := toolchain.CommandIn("", "node", script, library, "corpus", root, corpus, testTexts, fileList)
 			command.Env = nil
 			var stdout, stderr bytes.Buffer
 			command.Stdout = &stdout
 			command.Stderr = &stderr
-			if err := childguard.Run(command, childguard.Options{}); err != nil {
-				return fmt.Errorf("corpus: %v: %s", err, stderr.Bytes())
+			if runError := childguard.Run(command, childguard.Options{}); runError != nil {
+				return fmt.Errorf("corpus: %v: %s", runError, stderr.Bytes())
 			}
 			test.Logf("%s", stdout.Bytes())
 			cohereSide(test, request)
@@ -201,23 +207,23 @@ func selectorAnswers(test *testing.T, seed int64, generated int, root string, fi
 func contentDigest(test *testing.T, path string) string {
 	test.Helper()
 	hash := sha256.New()
-	err := filepath.WalkDir(path, func(name string, entry os.DirEntry, err error) error {
-		if err != nil || entry.IsDir() {
-			return err
+	walkError := filepath.WalkDir(path, func(name string, entry os.DirEntry, pathError error) error {
+		if pathError != nil || entry.IsDir() {
+			return pathError
 		}
-		content, err := os.ReadFile(name)
-		if err != nil {
-			return err
+		content, readError := os.ReadFile(name)
+		if readError != nil {
+			return readError
 		}
-		relative, err := filepath.Rel(path, name)
-		if err != nil {
-			return err
+		relative, relativePathError := filepath.Rel(path, name)
+		if relativePathError != nil {
+			return relativePathError
 		}
 		fmt.Fprintf(hash, "%s\x00%x\n", filepath.ToSlash(relative), sha256.Sum256(content))
 		return nil
 	})
-	if err != nil {
-		test.Fatal(err)
+	if walkError != nil {
+		test.Fatal(walkError)
 	}
 	return fmt.Sprintf("%x", hash.Sum(nil))
 }
@@ -226,12 +232,12 @@ func cohereSide(test *testing.T, request map[string]any) {
 	test.Helper()
 	directory := test.TempDir()
 	requestPath := filepath.Join(directory, "request.json")
-	encoded, err := json.Marshal(request)
-	if err != nil {
-		test.Fatal(err)
+	encoded, encodeError := json.Marshal(request)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
-	if err := os.WriteFile(requestPath, encoded, 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(requestPath, encoded, 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	// The package's test binary with the harness laid over it is a product built ahead (cohereSideOracle), run here in
 	// the package's directory, where go test would run it; the child guard owns hang detection.
@@ -239,9 +245,9 @@ func cohereSide(test *testing.T, request map[string]any) {
 	command := toolchain.CommandIn("", binary, "-test.timeout=0", "-test.v", "-test.run=^TestAdamicPortCases$")
 	command.Dir = packageDirectory
 	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
-	output, err := childguard.CombinedOutput(command, childguard.Options{})
-	if err != nil {
-		test.Fatalf("cohere's side: %v\n%s", err, output)
+	output, combinedOutputError := childguard.CombinedOutput(command, childguard.Options{})
+	if combinedOutputError != nil {
+		test.Fatalf("cohere's side: %v\n%s", combinedOutputError, output)
 	}
 	test.Logf("Go oracle: %s", output)
 }

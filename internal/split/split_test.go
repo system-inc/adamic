@@ -20,33 +20,33 @@ import (
 
 func lowered(test *testing.T, path string) *ir.Program {
 	test.Helper()
-	source, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	source, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := lower.Lower(context.Background(), source)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerError := lower.Lower(context.Background(), source)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	return program
 }
 
 func TestFixtures(test *testing.T) {
 	test.Parallel()
-	paths, err := filepath.Glob("testdata/*.a")
-	if err != nil {
-		test.Fatal(err)
+	paths, globError := filepath.Glob("testdata/*.a")
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	for _, path := range paths {
 		test.Run(filepath.Base(path), func(test *testing.T) {
 			program := lowered(test, path)
 			var output bytes.Buffer
-			if err := split.Print(&output, split.Analyze(program)); err != nil {
-				test.Fatal(err)
+			if printError := split.Print(&output, split.Analyze(program)); printError != nil {
+				test.Fatal(printError)
 			}
-			expected, err := os.ReadFile(path[:len(path)-2] + ".txt")
-			if err != nil {
-				test.Fatal(err)
+			expected, readError := os.ReadFile(path[:len(path)-2] + ".txt")
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			if output.String() != string(expected) {
 				test.Fatalf("decision table:\n%s\nwant:\n%s", output.String(), expected)
@@ -57,35 +57,35 @@ func TestFixtures(test *testing.T) {
 }
 func ordinaryOracle(test *testing.T, path string, program *ir.Program) {
 	test.Helper()
-	absolute, err := filepath.Abs(path)
-	if err != nil {
-		test.Fatal(err)
+	absolute, absolutePathError := filepath.Abs(path)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	runner, err := filepath.Abs("../../oracle/node.mjs")
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs("../../oracle/node.mjs")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truthCommand := exec.Command("node", "--disable-warning=ExperimentalWarning", runner, absolute)
 	truthCommand.Env = append(os.Environ(), jsonTypesEnvironment(test, absolute)...)
-	truth, err := truthCommand.CombinedOutput()
-	if err != nil {
-		test.Fatalf("source Node: %v: %s", err, truth)
+	truth, combinedOutputError := truthCommand.CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("source Node: %v: %s", combinedOutputError, truth)
 	}
 	directory := test.TempDir()
 	module, binary := filepath.Join(directory, "program.mjs"), filepath.Join(directory, "program")
-	if err := os.WriteFile(module, []byte(javascript.JavaScript(program)), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(module, []byte(javascript.JavaScript(program)), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	for _, command := range []*exec.Cmd{
 		exec.Command("node", "--disable-warning=ExperimentalWarning", runner, module),
 		exec.Command(binary),
 	} {
-		observed, err := command.CombinedOutput()
-		if err != nil || !bytes.Equal(observed, truth) {
-			test.Fatalf("%v: %v: observed %q, source Node %q", command.Args, err, observed, truth)
+		observed, combinedOutputError := command.CombinedOutput()
+		if combinedOutputError != nil || !bytes.Equal(observed, truth) {
+			test.Fatalf("%v: %v: observed %q, source Node %q", command.Args, combinedOutputError, observed, truth)
 		}
 	}
 	test.Logf("Node, JavaScript and sanitized native agree: %q", truth)

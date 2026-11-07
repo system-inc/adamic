@@ -18,12 +18,14 @@ func TestMain(m *testing.M) { testtools.ConfigureWASI(); os.Exit(m.Run()) }
 
 func wasiClang(test *testing.T) string {
 	test.Helper()
-	if err := native.ValidateOptions(native.Options{Target: "wasm32-wasi"}); err != nil {
-		test.Fatal(err)
+	if validateOptionsError := native.ValidateOptions(
+		native.Options{Target: "wasm32-wasi"},
+	); validateOptionsError != nil {
+		test.Fatal(validateOptionsError)
 	}
-	compiler, err := native.WASIClang()
-	if err != nil {
-		test.Fatal(err)
+	compiler, wasiClangError := native.WASIClang()
+	if wasiClangError != nil {
+		test.Fatal(wasiClangError)
 	}
 	return compiler
 }
@@ -32,9 +34,9 @@ func wasiClang(test *testing.T) string {
 // built ahead. The harness and each planted mutant still run in every test.
 func integrationInputs(test *testing.T, name string) buildcache.Inputs {
 	test.Helper()
-	inputs, err := buildcache.GoBuildInInputs("", "adamic", "./cmd/adamic", nil, nil)
-	if err != nil {
-		test.Fatal(err)
+	inputs, goBuildInInputsError := buildcache.GoBuildInInputs("", "adamic", "./cmd/adamic", nil, nil)
+	if goBuildInInputsError != nil {
+		test.Fatal(goBuildInInputsError)
 	}
 	inputs.Name = name
 	inputs.Files = append(
@@ -43,9 +45,9 @@ func integrationInputs(test *testing.T, name string) buildcache.Inputs {
 		"cmd/adamic/testdata/wasi",
 		"internal/native/wasm",
 	)
-	request, err := native.RuntimeRequestFor(native.Options{Target: "wasm32-wasi", Count: true})
-	if err != nil {
-		test.Fatal(err)
+	request, runtimeRequestForError := native.RuntimeRequestFor(native.Options{Target: "wasm32-wasi", Count: true})
+	if runtimeRequestForError != nil {
+		test.Fatal(runtimeRequestForError)
 	}
 	inputs.Flags = append(append([]string{}, inputs.Flags...), request.Portable...)
 	inputs.Toolchain = append(
@@ -65,9 +67,9 @@ func commandRunner(test *testing.T, root string) func(string, ...string) []byte 
 		defer cancel()
 		cmd := exec.CommandContext(ctx, name, args...)
 		cmd.Dir = root
-		output, err := cmd.CombinedOutput()
-		if err != nil {
-			test.Fatalf("%s %v: %v\n%s", name, args, err, output)
+		output, combinedOutputError := cmd.CombinedOutput()
+		if combinedOutputError != nil {
+			test.Fatalf("%s %v: %v\n%s", name, args, combinedOutputError, output)
 		}
 		return output
 	}

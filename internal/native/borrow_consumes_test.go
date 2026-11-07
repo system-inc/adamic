@@ -88,9 +88,9 @@ func TestPassThroughsAreNotConsumers(test *testing.T) {
 // pureKinds is every type named in pureKind's switch, read from borrow.go.
 func pureKinds(test *testing.T) []string {
 	test.Helper()
-	file, err := parser.ParseFile(token.NewFileSet(), "borrow.go", nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	file, parseFileError := parser.ParseFile(token.NewFileSet(), "borrow.go", nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	var names []string
 	ast.Inspect(file, func(node ast.Node) bool {

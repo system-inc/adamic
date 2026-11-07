@@ -108,18 +108,18 @@ func debugFamilyWrappers() ([]byte, error) {
 
 // Not parallel: the update flag writes generated source.
 func TestDebugFamilyWrappersAreCurrent(test *testing.T) {
-	want, err := debugFamilyWrappers()
-	if err != nil {
-		test.Fatal(err)
+	want, debugFamilyWrappersError := debugFamilyWrappers()
+	if debugFamilyWrappersError != nil {
+		test.Fatal(debugFamilyWrappersError)
 	}
 	if *updateDebugFamilies {
-		if err := os.WriteFile("source_lines_families_generated_test.go", want, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile("source_lines_families_generated_test.go", want, 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		return
 	}
-	got, err := os.ReadFile("source_lines_families_generated_test.go")
-	if err != nil || !bytes.Equal(got, want) {
-		test.Fatal("debug family wrappers stale; run with -update-debug-families", err)
+	got, readError := os.ReadFile("source_lines_families_generated_test.go")
+	if readError != nil || !bytes.Equal(got, want) {
+		test.Fatal("debug family wrappers stale; run with -update-debug-families", readError)
 	}
 }

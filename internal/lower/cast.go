@@ -14,9 +14,9 @@ import (
 // (adamic/no-unchecked-cast).
 func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 	as := node.AsAsExpression()
-	proof, err := l.castProof(node)
-	if err != nil {
-		return nil, err
+	proof, castProofError := l.castProof(node)
+	if castProofError != nil {
+		return nil, castProofError
 	}
 	if proof.speculation {
 		return l.checkedSpeculativeResult(node)
@@ -36,7 +36,10 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 		operand := ast.SkipParentheses(as.Expression).AsAsExpression().Expression
 		from, target := l.concrete(l.checker.GetTypeAtLocation(operand)), l.concrete(l.checker.GetTypeAtLocation(node))
 		if !l.sameKeeping(from, target, map[[2]*checker.Type]bool{}) {
-			return nil, l.notYet(node, "a proven default cast that changes the runtime representation of "+l.checker.TypeToString(from))
+			return nil, l.notYet(
+				node,
+				"a proven default cast that changes the runtime representation of "+l.checker.TypeToString(from),
+			)
 		}
 		// x goes where the pair goes, never into the hop's unknown, which would read it as a value viewed
 		// as unknown (valueSlotTags).
@@ -48,26 +51,34 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 	if !l.sameKeeping(source, target, map[[2]*checker.Type]bool{}) {
 		return nil, l.notYet(node, "a cast that changes the runtime representation or ownership of a reference")
 	}
-	value, err := l.expression(as.Expression)
-	if err != nil {
-		return nil, err
+	value, expressionError := l.expression(as.Expression)
+	if expressionError != nil {
+		return nil, expressionError
 	}
 	if proof.structuralView {
 		return l.structuralViewCast(node, value, source, target)
 	}
 	if proof.interfaceView {
-		checked, err := l.interfaceCast(node, value, source, target)
+		checked, interfaceCastError := l.interfaceCast(node, value, source, target)
 		// castProof found the tag on an object placeholder. A value held otherwise, an array cast to a
 		// tuple whose length is the tag (never[] as []), gets no checked cast back, and nil is no value.
-		if err == nil && checked == nil {
-			return nil, l.notYet(node, "a checked cast from "+l.checker.TypeToString(source)+" to "+l.checker.TypeToString(target)+" whose value isn't a plain object")
+		if interfaceCastError == nil && checked == nil {
+			return nil, l.notYet(node, "a checked cast from "+
+				l.checker.TypeToString(source)+
+				" to "+
+				l.checker.TypeToString(target)+
+				" whose value isn't a plain object")
 		}
-		return checked, err
+		return checked, interfaceCastError
 	}
 	if len(proof.allowed) == 0 && len(proof.classes) == 0 {
 		return value, nil
 	}
-	refused := &Refused{Where: l.program.Where(node), What: "a cast without an object tag representation", Fix: l.castRepair(node)}
+	refused := &Refused{
+		Where: l.program.Where(node),
+		What:  "a cast without an object tag representation",
+		Fix:   l.castRepair(node),
+	}
 	if value.Type() != ir.Object {
 		return nil, refused
 	}
@@ -84,8 +95,8 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 		cast.Allowed = append(cast.Allowed, allowed)
 		cast.FieldType = fieldType
 	}
-	if _, err := l.view(node, value, source, target); err != nil {
-		return nil, err
+	if _, viewError := l.view(node, value, source, target); viewError != nil {
+		return nil, viewError
 	}
 	l.viewSources[len(l.viewSources)-1].cast = true
 	cast.CheckedFields = true

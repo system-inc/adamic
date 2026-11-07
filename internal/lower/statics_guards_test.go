@@ -55,13 +55,13 @@ func TestNamespaceFactoryBindingsAgreeWithNode(test *testing.T) {
 // reads undefined here; run the generated program on Node to check its message.
 func TestReadinessErrorIncludesReceiverExpression(test *testing.T) {
 	test.Parallel()
-	program, err := lowerSource(test, "class Box { n!: number; } console.log(`${new Box().n + 1}`);")
-	if err != nil {
-		test.Fatal(err)
+	program, lowerSourceError := lowerSource(test, "class Box { n!: number; } console.log(`${new Box().n + 1}`);")
+	if lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
 	path := filepath.Join(test.TempDir(), "generated.mjs")
-	if err := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	result := runAgreementNode(test, path)
 	const want = "adamic: panic: read before assignment: field 'n' in new Box().n\n"

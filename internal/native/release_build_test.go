@@ -83,8 +83,8 @@ func TestReleaseArithmeticIsNeverFused(test *testing.T) {
 		test.Skip(why)
 	}
 	binary := filepath.Join(test.TempDir(), "release")
-	if err := Build(fusedHarness, binary, Options{Release: true, cpu: cpu}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(fusedHarness, binary, Options{Release: true, cpu: cpu}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	if got := runWithInput(test, "", binary); got != "0 0 0\n" {
 		test.Fatalf("shipped arithmetic differs: %q", got)
@@ -92,12 +92,12 @@ func TestReleaseArithmeticIsNeverFused(test *testing.T) {
 	// This changes only the actual program compilation/link command, not the runtime.
 	// With the semantic option omitted, clang's default contraction must be observable.
 	source := filepath.Join(test.TempDir(), "fused.c")
-	if err := os.WriteFile(source, []byte(fusedHarness), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(source, []byte(fusedHarness), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	library, err := RuntimeLibrary("", Options{Release: true, cpu: cpu})
-	if err != nil {
-		test.Fatal(err)
+	library, runtimeLibraryError := RuntimeLibrary("", Options{Release: true, cpu: cpu})
+	if runtimeLibraryError != nil {
+		test.Fatal(runtimeLibraryError)
 	}
 	flags := slices.DeleteFunc(
 		LinkFlags(Options{Release: true, cpu: cpu}),
@@ -106,8 +106,8 @@ func TestReleaseArithmeticIsNeverFused(test *testing.T) {
 	flags = append(flags, "-o", binary, source)
 	flags = append(flags, RuntimeLinkFlags(library)...)
 	flags = append(flags, "-lm")
-	if output, err := exec.Command("clang", flags...).CombinedOutput(); err != nil {
-		test.Fatalf("mutant compile: %v\n%s", err, output)
+	if output, combinedOutputError := exec.Command("clang", flags...).CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("mutant compile: %v\n%s", combinedOutputError, output)
 	}
 	if got := runWithInput(test, "", binary); got == "0 0 0\n" {
 		test.Fatal("link contraction-option mutant survived")

@@ -57,11 +57,11 @@ func TestRecoveryMutantsTopSurvivor(test *testing.T) {
 		)
 		command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 		command.Cancel = func() error {
-			err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-			if err == syscall.ESRCH {
+			killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+			if killError == syscall.ESRCH {
 				return os.ErrProcessDone
 			}
-			return err
+			return killError
 		}
 		for _, entry := range os.Environ() {
 			if !strings.HasPrefix(entry, "ADAMIC_TEST_SHARD=") &&
@@ -73,10 +73,10 @@ func TestRecoveryMutantsTopSurvivor(test *testing.T) {
 		// Read through childguard.Capture, to its end with no timer deciding when: exec's copying under a one-second
 		// WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF a second after the shard exited,
 		// which counted as a failing shard here and cut the output the verdict reads (#n3gk22h's shape).
-		stdout, stderr, childErr := childguard.Capture(ctx, command)
+		stdout, stderr, childError := childguard.Capture(ctx, command)
 		output = append(append(output, stdout...), stderr...)
-		if childErr != nil {
-			err = childErr
+		if childError != nil {
+			err = childError
 		}
 		if ctx.Err() != nil {
 			test.Fatalf("planted survivor subprocess cooked: %v", ctx.Err())

@@ -24,16 +24,18 @@ func (l *lowering) setElement(node *ast.Node) (ir.Type, error) {
 	}
 	element, isKnown := l.representation(arguments[0])
 	if !isKnown || !keyable(element) {
-		return 0, l.notYet(node, "a Set of "+l.checker.TypeToString(arguments[0])+" (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)")
+		return 0, l.notYet(node, "a Set of "+
+			l.checker.TypeToString(arguments[0])+
+			" (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)")
 	}
 	return element, nil
 }
 
 // newSet lowers new Set() and new Set(array).
 func (l *lowering) newSet(node *ast.Node) (ir.Expression, error) {
-	element, err := l.setElement(node)
-	if err != nil {
-		return nil, err
+	element, setElementError := l.setElement(node)
+	if setElementError != nil {
+		return nil, setElementError
 	}
 	lowered := ir.SetNew{Element: element}
 	arguments := node.AsNewExpression().Arguments
@@ -44,9 +46,9 @@ func (l *lowering) newSet(node *ast.Node) (ir.Expression, error) {
 		return nil, l.notYet(node, "new Set with more than one argument")
 	}
 	if ast.SkipParentheses(arguments.Nodes[0]).Kind == ast.KindArrayLiteralExpression {
-		if values, known, err := l.librarySetLiteral(arguments.Nodes[0], element); known {
+		if values, known, librarySetLiteralError := l.librarySetLiteral(arguments.Nodes[0], element); known {
 			lowered.Values = values
-			return lowered, err
+			return lowered, librarySetLiteralError
 		}
 	}
 	if l.libraryEmptyCollectionArgument(arguments.Nodes[0]) {
@@ -54,9 +56,9 @@ func (l *lowering) newSet(node *ast.Node) (ir.Expression, error) {
 	}
 	// From anything iterable: an array, a string's code points, a Set, a Map's entries, what keys()
 	// and values() give, or a call to a program's generator, collected by its origin (collections.go).
-	values, from, err := l.iterated(arguments.Nodes[0])
-	if err != nil {
-		return nil, err
+	values, from, iteratedError := l.iterated(arguments.Nodes[0])
+	if iteratedError != nil {
+		return nil, iteratedError
 	}
 	if from == ir.Number && element == ir.MaybeNumber {
 		values = l.libraryOptionalNumbers(arguments.Nodes[0], values)
@@ -72,8 +74,8 @@ func (l *lowering) newSet(node *ast.Node) (ir.Expression, error) {
 // setMethod lowers set.add, set.has and set.delete. isBuiltin is false for any other method, which
 // is left to be refused as a call stage 0 doesn't know.
 func (l *lowering) setMethod(node *ast.Node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
-	if lowered, known, err := l.librarySetMethod(node, receiver, name); known {
-		return lowered, true, err
+	if lowered, known, librarySetMethodError := l.librarySetMethod(node, receiver, name); known {
+		return lowered, true, librarySetMethodError
 	}
 	if name == "clear" || name == "forEach" {
 		return l.clearOrVisit(node, receiver, name, true)
@@ -81,21 +83,21 @@ func (l *lowering) setMethod(node *ast.Node, receiver *ast.Node, name string) (i
 	if name != "add" && name != "has" && name != "delete" {
 		return nil, false, nil
 	}
-	element, err := l.setElement(receiver)
-	if err != nil {
-		return nil, true, err
+	element, setElementError := l.setElement(receiver)
+	if setElementError != nil {
+		return nil, true, setElementError
 	}
-	set, err := l.expression(receiver)
-	if err != nil {
-		return nil, true, err
+	set, expressionError := l.expression(receiver)
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
 	arguments := node.AsCallExpression().Arguments.Nodes
 	if len(arguments) != 1 {
 		return nil, true, l.notYet(node, "set."+name+" with other than one value")
 	}
-	value, err := l.expression(arguments[0])
-	if err != nil {
-		return nil, true, err
+	value, expressionError := l.expression(arguments[0])
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
 	// set.has(undefined), written out, which the checker allows only where the elements may be
 	// undefined: a reference's undefined is its null one, which the set holds as any element.
@@ -116,10 +118,16 @@ func (l *lowering) setMethod(node *ast.Node, receiver *ast.Node, name string) (i
 
 // forOfSet lowers for (const element of set), and of set.keys() and set.values(), which give the
 // same elements. Its steps are a Map's keys.
-func (l *lowering) forOfSet(node *ast.Node, iterable ir.Expression, iterated *ast.Node, part string, name *ast.Node) ([]ir.Statement, error) {
-	element, err := l.setElement(iterated)
-	if err != nil {
-		return nil, err
+func (l *lowering) forOfSet(
+	node *ast.Node,
+	iterable ir.Expression,
+	iterated *ast.Node,
+	part string,
+	name *ast.Node,
+) ([]ir.Statement, error) {
+	element, setElementError := l.setElement(iterated)
+	if setElementError != nil {
+		return nil, setElementError
 	}
 	lowered := ir.ForOf{Iterable: iterable, MapPart: "keys", Key: element, Value: ir.Number}
 	// Each entry is [element, element]: the first name bound takes the element, and any other is
@@ -141,9 +149,9 @@ func (l *lowering) forOfSet(node *ast.Node, iterable ir.Expression, iterated *as
 			if !ast.IsIdentifier(binding.Name()) || declared.Initializer != nil || declared.DotDotDotToken != nil {
 				return nil, l.notYet(binding, "a destructured name that isn't plain")
 			}
-			local, err := l.declareLocal(binding.Name())
-			if err != nil {
-				return nil, err
+			local, declareLocalError := l.declareLocal(binding.Name())
+			if declareLocalError != nil {
+				return nil, declareLocalError
 			}
 			if !bound {
 				lowered.Local, bound = local, true
@@ -155,15 +163,16 @@ func (l *lowering) forOfSet(node *ast.Node, iterable ir.Expression, iterated *as
 			return nil, l.notYet(name, "a Set entry destructured into no names")
 		}
 	case part != "entries" && ast.IsIdentifier(name):
-		if lowered.Local, err = l.declareLocal(name); err != nil {
-			return nil, err
+		var declareLocalError error
+		if lowered.Local, declareLocalError = l.declareLocal(name); declareLocalError != nil {
+			return nil, declareLocalError
 		}
 	default:
 		return nil, l.notYet(name, "for...of over a Set's "+part+" into this name")
 	}
-	body, err := l.statement(node.AsForInOrOfStatement().Statement)
-	if err != nil {
-		return nil, err
+	body, statementError := l.statement(node.AsForInOrOfStatement().Statement)
+	if statementError != nil {
+		return nil, statementError
 	}
 	lowered.Body = append(others, body...)
 	return []ir.Statement{lowered}, nil

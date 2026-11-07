@@ -72,12 +72,12 @@ func rulesAgreeSourceInputsAt(test *testing.T, root string) []string {
 	test.Helper()
 	files := []string{"go.mod", "go.work"}
 	for _, directory := range []string{"internal", "bridge", "stage1/typescript", "stage1/cohere/lint", "cohere"} {
-		err := filepath.WalkDir(filepath.Join(
+		walkError := filepath.WalkDir(filepath.Join(
 			root,
 			directory,
-		), func(path string, entry os.DirEntry, walkErr error) error {
-			if walkErr != nil {
-				return walkErr
+		), func(path string, entry os.DirEntry, pathError error) error {
+			if pathError != nil {
+				return pathError
 			}
 			name := entry.Name()
 			if entry.IsDir() {
@@ -95,16 +95,16 @@ func rulesAgreeSourceInputsAt(test *testing.T, root string) []string {
 			}
 			switch filepath.Ext(name) {
 			case ".go", ".a", ".ts", ".json", ".c", ".h", ".inc", ".mod", ".sum":
-				relative, err := filepath.Rel(root, path)
-				if err != nil {
-					return err
+				relative, relativePathError := filepath.Rel(root, path)
+				if relativePathError != nil {
+					return relativePathError
 				}
 				files = append(files, filepath.ToSlash(relative))
 			}
 			return nil
 		})
-		if err != nil {
-			test.Fatal(err)
+		if walkError != nil {
+			test.Fatal(walkError)
 		}
 	}
 	sort.Strings(files)
@@ -117,8 +117,8 @@ func TestRulesAgreeLoweringCacheKey(test *testing.T) {
 	test.Parallel()
 	root := test.TempDir()
 	for _, directory := range []string{"internal", "bridge", "stage1/typescript", "stage1/cohere/lint", "cohere"} {
-		if err := os.MkdirAll(filepath.Join(root, directory), 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(filepath.Join(root, directory), 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 	}
 	sources := []string{
@@ -135,25 +135,25 @@ func TestRulesAgreeLoweringCacheKey(test *testing.T) {
 	}
 	write := func(name, content string) {
 		path := filepath.Join(root, name)
-		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.WriteFile(path, []byte(content), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(content), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	for _, name := range sources {
 		write(name, "original")
 	}
 	key := func() string {
-		result, err := buildcache.Key(root, buildcache.Inputs{
+		result, keyError := buildcache.Key(root, buildcache.Inputs{
 			Name:      "lowering-cache-proof",
 			Files:     rulesAgreeSourceInputsAt(test, root),
 			Flags:     []string{"default lowering"},
 			Toolchain: []string{runtime.Version()},
 		})
-		if err != nil {
-			test.Fatal(err)
+		if keyError != nil {
+			test.Fatal(keyError)
 		}
 		return result
 	}
@@ -202,20 +202,24 @@ func rulesAgreeLowered(test *testing.T) string {
 		rulesAgreeBuildInputs = inputs
 		rulesAgreeLoweredDirectory = buildcache.Product(test, inputs, func(output string) error {
 			phase := time.Now()
-			program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-			if err != nil {
-				return err
+			program, loadError := load.Load([]string{filepath.Join(directory, "main.ts")})
+			if loadError != nil {
+				return loadError
 			}
 			test.Logf("rules load: %.3fs", time.Since(phase).Seconds())
 			phase = time.Now()
-			result, err := lower.Lower(context.Background(), program)
-			if err != nil {
-				return err
+			result, lowerError := lower.Lower(context.Background(), program)
+			if lowerError != nil {
+				return lowerError
 			}
 			test.Logf("rules lower: %.3fs", time.Since(phase).Seconds())
 			phase = time.Now()
-			if err := os.WriteFile(filepath.Join(output, "lint.c"), []byte(native.C(result)), 0644); err != nil {
-				return err
+			if writeError := os.WriteFile(
+				filepath.Join(output, "lint.c"),
+				[]byte(native.C(result)),
+				0644,
+			); writeError != nil {
+				return writeError
 			}
 			test.Logf("rules native emit: %.3fs", time.Since(phase).Seconds())
 			phase = time.Now()
@@ -241,9 +245,9 @@ func rulesAgreeNative(test *testing.T) string {
 			"ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 		inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
 		rulesAgreeBinaryDirectory = buildcache.Product(test, inputs, func(output string) error {
-			source, err := os.ReadFile(filepath.Join(lowered, "lint.c"))
-			if err != nil {
-				return err
+			source, readError := os.ReadFile(filepath.Join(lowered, "lint.c"))
+			if readError != nil {
+				return readError
 			}
 			started := time.Now()
 			defer func() { test.Logf("rules clang: %.3fs", time.Since(started).Seconds()) }()
@@ -268,23 +272,23 @@ func rulesAgreeCorpus(test *testing.T) *rulesAgreeProducts {
 	rulesAgreeOnce.Do(func() {
 		directory := packageDirectory
 		oracle := lintGoOracleProduct(test)
-		corpus, err := os.MkdirTemp(sharedDirectory, "rules-agree-")
-		if err != nil {
-			test.Fatal(err)
+		corpus, temporaryDirectoryError := os.MkdirTemp(sharedDirectory, "rules-agree-")
+		if temporaryDirectoryError != nil {
+			test.Fatal(temporaryDirectoryError)
 		}
 		var rows []string
 		for index, row := range generated(test) {
 			fields := strings.SplitN(row, "\t", 2)
-			source, err := os.ReadFile(fields[0])
-			if err != nil {
-				test.Fatal(err)
+			source, readError := os.ReadFile(fields[0])
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			path := filepath.Join(corpus, fmt.Sprintf("generated-%03d", index), filepath.Base(fields[0]))
-			if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
-				test.Fatal(err)
+			if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0755); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
-			if err := os.WriteFile(path, source, 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, source, 0644); writeError != nil {
+				test.Fatal(writeError)
 			}
 			if len(fields) == 2 {
 				path += "\t" + fields[1]
@@ -292,13 +296,13 @@ func rulesAgreeCorpus(test *testing.T) *rulesAgreeProducts {
 			rows = append(rows, path)
 		}
 		captureDirectory := rulesAgreeCapture(test)
-		data, err := os.ReadFile(filepath.Join(captureDirectory, "rows.json"))
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(filepath.Join(captureDirectory, "rows.json"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		var captured []string
-		if err := json.Unmarshal(data, &captured); err != nil {
-			test.Fatal(err)
+		if decodeError := json.Unmarshal(data, &captured); decodeError != nil {
+			test.Fatal(decodeError)
 		}
 		for _, row := range captured {
 			fields := strings.SplitN(row, "\t", 2)
@@ -364,9 +368,9 @@ func rulesAgreeAssignments(test *testing.T, rows []string) [][]int {
 	assignments := make([][]int, testRulesAgreeShards)
 	for index, row := range rows {
 		fields := strings.SplitN(row, "\t", 2)
-		source, err := os.ReadFile(fields[0])
-		if err != nil {
-			test.Fatal(err)
+		source, readError := os.ReadFile(fields[0])
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		hash := fnv.New64a()
 		fmt.Fprintf(hash, "%q\n%q\n", filepath.Base(fields[0]), source)
@@ -475,13 +479,13 @@ type rulesAgreeProbe struct {
 
 func rulesAgreeProbeProducts(test *testing.T, path string) *rulesAgreeProducts {
 	test.Helper()
-	data, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var probe rulesAgreeProbe
-	if err := json.Unmarshal(data, &probe); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &probe); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	return &rulesAgreeProducts{
 		directory:   probe.Directory,
@@ -508,28 +512,28 @@ func TestRulesAgreePlantedFailure(test *testing.T) {
 	if planted < 0 {
 		test.Fatal("no supported case to plant")
 	}
-	data, err := os.ReadFile(products.module)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(products.module)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	module := filepath.Join(test.TempDir(), "planted.mjs")
 	marker := "planted RulesAgree disagreement"
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		module,
 		append(data, []byte(fmt.Sprintf("\nconsole.log(%q);\n", marker))...),
 		0644,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
-	data, err = json.Marshal(
+	data, encodeError := json.Marshal(
 		rulesAgreeProbe{products.directory, products.oracle, products.binary, module, []string{products.rows[planted]}},
 	)
-	if err != nil {
-		test.Fatal(err)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	path := filepath.Join(test.TempDir(), "products.json")
-	if err := os.WriteFile(path, data, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, data, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	caught, owner := 0, -1
 	for shard := 0; shard < testRulesAgreeShards; shard++ {
@@ -538,18 +542,18 @@ func TestRulesAgreePlantedFailure(test *testing.T) {
 		command := dotARenameChild(ctx, "-test.run=^"+name+"$", "-test.v", "-test.timeout=10s")
 		command.Env = append(os.Environ(), "ADAMIC_RULES_AGREE_PROBE="+path)
 		// Read through childguard.Capture for dotARenameChild's reason, stdout then stderr.
-		stdout, stderr, err := childguard.Capture(ctx, command)
+		stdout, stderr, captureError := childguard.Capture(ctx, command)
 		output := append(stdout, stderr...)
 		expired := ctx.Err()
 		cancel()
 		if expired != nil {
 			test.Fatalf("%s probe timed out: %v\n%s", name, expired, output)
 		}
-		if err != nil {
+		if captureError != nil {
 			if bytes.Count(output, []byte("--- FAIL: "+name)) != 1 ||
 				!bytes.Contains(output, []byte("emitted JavaScript:")) ||
 				!bytes.Contains(output, []byte(marker)) {
-				test.Fatalf("wrong planted failure in %s: %v\n%s", name, err, output)
+				test.Fatalf("wrong planted failure in %s: %v\n%s", name, captureError, output)
 			}
 			caught++
 			owner = shard

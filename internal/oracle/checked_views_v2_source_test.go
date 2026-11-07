@@ -15,22 +15,22 @@ import (
 func TestCheckedViewUntaggedSourceDispatch(test *testing.T) {
 	test.Parallel()
 	path, _ := filepath.Abs("../../stage3/interface-downcasts/untagged/fixtures/binding-name-source-good.ts")
-	loaded, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	loaded, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	_, err = lower.Lower(context.Background(), loaded)
-	if err != nil {
-		test.Fatal(err)
+	_, lowerError := lower.Lower(context.Background(), loaded)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 
-	data, err := os.ReadFile("../../stage3/interface-downcasts/untagged/source-refusals.json")
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile("../../stage3/interface-downcasts/untagged/source-refusals.json")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	pins := map[string]string{}
-	if err = json.Unmarshal(data, &pins); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &pins); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	for _, family := range []string{"binding-name", "option-element", "structural"} {
 		for _, variant := range []string{"good", "wrong", "nested", "absent"} {
@@ -40,13 +40,13 @@ func TestCheckedViewUntaggedSourceDispatch(test *testing.T) {
 					path, _ := filepath.Abs(
 						"../../stage3/interface-downcasts/untagged/fixtures/" + family + "-source-" + variant + ".a",
 					)
-					loaded, err := load.Load([]string{path})
-					if err != nil {
-						test.Fatal(err)
+					loaded, loadError := load.Load([]string{path})
+					if loadError != nil {
+						test.Fatal(loadError)
 					}
-					_, err = lower.Lower(context.Background(), loaded)
-					if err == nil || !strings.Contains(err.Error(), "optional field value") {
-						test.Fatalf("base optional widening boundary changed: %v", err)
+					_, lowerError := lower.Lower(context.Background(), loaded)
+					if lowerError == nil || !strings.Contains(lowerError.Error(), "optional field value") {
+						test.Fatalf("base optional widening boundary changed: %v", lowerError)
 					}
 					if got := onNode(test, path); got.exitCode != 0 {
 						test.Fatalf("Node control: %#v", got)
@@ -122,27 +122,31 @@ func TestCheckedViewUntaggedCallableUnionMisfitRefuses(test *testing.T) {
 	} {
 		test.Run(variant, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(
+			path, absolutePathError := filepath.Abs(
 				filepath.Join(repository, interfaceFixturePath("untagged/fixtures/callable-union-"+variant)),
 			)
-			if err != nil {
-				test.Fatal(err)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			if difference := disagreement(run{stdout: []byte("true\n")}, onNode(test, path)); difference != "" {
 				test.Fatal(difference)
 			}
-			_, err = lowered(test, path)
+			_, loweredError := lowered(test, path)
 			var refused *lower.Refused
-			if !errors.As(err, &refused) ||
-				!strings.Contains(err.Error(), "callable-union-"+variant+".a"+at.cast) ||
+			if !errors.As(loweredError, &refused) ||
+				!strings.Contains(loweredError.Error(), "callable-union-"+variant+".a"+at.cast) ||
 				!strings.Contains(refused.What, "a downcast to Receiver whose tag test is vacuous") {
-				test.Fatalf("want the located vacuous downcast refusal at %s, got %v", at.cast, err)
+				test.Fatalf("want the located vacuous downcast refusal at %s, got %v", at.cast, loweredError)
 			}
-			_, err = lowered(test, typeScriptTwin(test, path))
-			if !errors.As(err, &refused) ||
-				!strings.Contains(err.Error(), "callable-union-"+variant+".ts"+at.read) ||
+			_, loweredError = lowered(test, typeScriptTwin(test, path))
+			if !errors.As(loweredError, &refused) ||
+				!strings.Contains(loweredError.Error(), "callable-union-"+variant+".ts"+at.read) ||
 				refused.What != "checked view read of field value with unsupported representation conversion contract" {
-				test.Fatalf("twin: want the located representation conversion refusal at %s, got %v", at.read, err)
+				test.Fatalf(
+					"twin: want the located representation conversion refusal at %s, got %v",
+					at.read,
+					loweredError,
+				)
 			}
 		})
 	}
@@ -267,17 +271,17 @@ func TestCheckedViewUntaggedArrayPending(test *testing.T) {
 		test.Run(variant, func(test *testing.T) {
 			test.Parallel()
 			path, _ := filepath.Abs("../../stage3/interface-downcasts/untagged/fixtures/array-union-" + variant + ".a")
-			_, err := lowered(test, path)
-			if refused, ok := err.(*lower.Refused); !ok ||
+			_, loweredError := lowered(test, path)
+			if refused, ok := loweredError.(*lower.Refused); !ok ||
 				!strings.Contains(refused.What, "a downcast to Receiver whose tag test is vacuous") {
-				test.Fatalf("want the vacuous downcast refusal, got %v", err)
+				test.Fatalf("want the vacuous downcast refusal, got %v", loweredError)
 			}
-			_, err = lowered(test, typeScriptTwin(test, path))
-			if unsupported, ok := err.(*lower.NotYet); !ok || !(strings.Contains(
+			_, loweredError = lowered(test, typeScriptTwin(test, path))
+			if unsupported, ok := loweredError.(*lower.NotYet); !ok || !(strings.Contains(
 				unsupported.What,
 				"views-v3: array element kind",
 			) || variant == "empty" && unsupported.What == "an array of never") {
-				test.Fatalf("twin: array admission must stay NotYet: %v", err)
+				test.Fatalf("twin: array admission must stay NotYet: %v", loweredError)
 			}
 			// Array membership needs V3 element-kind metadata and hole-aware reads.
 			test.Skip("awaits compiler/views-v3: array element kind and holes (b065fa576)")

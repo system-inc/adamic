@@ -17,15 +17,15 @@ func TestCheckerAnswerMatchesLiveOracle(test *testing.T) {
 	}
 	corpusfiles.Upstream(test, source, compilerCommit, []string{"src/compiler"}, []string{"*.ts", "*.a"})
 	path := filepath.Join(source, "src/compiler/checker.ts")
-	live, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	live, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	fixture, err := os.ReadFile(
+	fixture, readError := os.ReadFile(
 		filepath.Join(repository, "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts"),
 	)
-	if err != nil {
-		test.Fatal(err)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if !bytes.Equal(live, fixture) {
 		test.Fatal("checker oracle fixture differs from the pinned agreement source")

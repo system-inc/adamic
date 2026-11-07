@@ -16,9 +16,9 @@ import (
 // test says so and skips. Mutant: toolMaps returning nothing, red.
 func TestAnObjectNamesNotWhereTheCompilerIsInstalled(test *testing.T) {
 	test.Parallel()
-	compiler, err := toolchain.Path("clang")
-	if err != nil {
-		test.Fatal(err)
+	compiler, pathError := toolchain.Path("clang")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
 	installation := compilerInstallation(compiler)
 	if installation == "" {
@@ -27,8 +27,8 @@ func TestAnObjectNamesNotWhereTheCompilerIsInstalled(test *testing.T) {
 	directory := test.TempDir()
 	// stddef.h is one of clang's own headers, from its resource directory under the installation.
 	source := "#include <stddef.h>\nsize_t adamic_probe(size_t value) { return value + sizeof(ptrdiff_t); }\n"
-	if err := os.WriteFile(filepath.Join(directory, "probe.c"), []byte(source), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(directory, "probe.c"), []byte(source), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	arguments := append(Flags(Options{Sanitize: true}), prefixMaps(directory, "/adamic-probe")...)
 	compile := func(object string, mapped bool) []byte {
@@ -38,12 +38,12 @@ func TestAnObjectNamesNotWhereTheCompilerIsInstalled(test *testing.T) {
 		if mapped {
 			command = clangIn(directory, compiler, all...)
 		}
-		if output, err := command.CombinedOutput(); err != nil {
-			test.Fatalf("clang: %v\n%s", err, output)
+		if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+			test.Fatalf("clang: %v\n%s", combinedOutputError, output)
 		}
-		contents, err := os.ReadFile(filepath.Join(directory, object))
-		if err != nil {
-			test.Fatal(err)
+		contents, readError := os.ReadFile(filepath.Join(directory, object))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		return contents
 	}
@@ -84,18 +84,18 @@ func TestToolMapsTakeTheSysrootOut(test *testing.T) {
 // an inline function UBSan checks. Mutant: -fsanitize-undefined-strip-path-components dropped from Flags, red.
 func TestASanitizedObjectNamesNoHeadersDirectory(test *testing.T) {
 	test.Parallel()
-	compiler, err := toolchain.Path("clang")
-	if err != nil {
-		test.Fatal(err)
+	compiler, pathError := toolchain.Path("clang")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
 	directory, headers := test.TempDir(), test.TempDir()
 	header := "static inline int adamic_probe_add(int left, int right) { return left + right; }\n"
-	if err := os.WriteFile(filepath.Join(headers, "probe_header.h"), []byte(header), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(headers, "probe_header.h"), []byte(header), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	source := "#include <probe_header.h>\nint adamic_probe(int value) { return adamic_probe_add(value, 1); }\n"
-	if err := os.WriteFile(filepath.Join(directory, "probe.c"), []byte(source), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(directory, "probe.c"), []byte(source), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	// The headers' directory is mapped as the compiler's installation is, so its debug info names it no more: only
 	// UBSan's strings, which no map reaches, could still carry it.
@@ -103,12 +103,16 @@ func TestASanitizedObjectNamesNoHeadersDirectory(test *testing.T) {
 		append(Flags(Options{Sanitize: true}), prefixMaps(directory, "/adamic-probe")...),
 		prefixMaps(headers, "/adamic-headers")...,
 	), "-I", headers, "-c", "probe.c", "-o", "probe.o")
-	if output, err := clangIn(directory, compiler, arguments...).CombinedOutput(); err != nil {
-		test.Fatalf("clang: %v\n%s", err, output)
+	if output, combinedOutputError := clangIn(
+		directory,
+		compiler,
+		arguments...,
+	).CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("clang: %v\n%s", combinedOutputError, output)
 	}
-	object, err := os.ReadFile(filepath.Join(directory, "probe.o"))
-	if err != nil {
-		test.Fatal(err)
+	object, readError := os.ReadFile(filepath.Join(directory, "probe.o"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if !bytes.Contains(object, []byte("probe_header.h")) {
 		test.Fatal("the object names no probe_header.h at all, so UBSan checked nothing in it and this test can't fail")

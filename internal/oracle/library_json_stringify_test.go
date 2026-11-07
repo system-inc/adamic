@@ -36,24 +36,24 @@ func TestJSONStringifyRefusals(test *testing.T) {
 	for _, testCase := range cases {
 		test.Run(testCase.name, func(test *testing.T) {
 			path := filepath.Join(test.TempDir(), "probe.ts")
-			if err := os.WriteFile(path, []byte(testCase.source), 0600); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, []byte(testCase.source), 0600); writeError != nil {
+				test.Fatal(writeError)
 			}
-			program, err := load.Load([]string{path})
-			if err != nil {
+			program, loadError := load.Load([]string{path})
+			if loadError != nil {
 				// The checker itself refuses duplicate keys before lowering.
-				if testCase.name == "duplicate" && strings.Contains(err.Error(), "TS1117") {
+				if testCase.name == "duplicate" && strings.Contains(loadError.Error(), "TS1117") {
 					return
 				}
-				test.Fatal(err)
+				test.Fatal(loadError)
 			}
-			_, err = lower.Lower(context.Background(), program)
-			if err == nil || !strings.Contains(err.Error(), testCase.reason) {
-				test.Fatalf("want refusal containing %q, got %v", testCase.reason, err)
+			_, lowerError := lower.Lower(context.Background(), program)
+			if lowerError == nil || !strings.Contains(lowerError.Error(), testCase.reason) {
+				test.Fatalf("want refusal containing %q, got %v", testCase.reason, lowerError)
 			}
 			if testCase.name == "parse" &&
-				!strings.Contains(err.Error(), "checked parse against a declared type is a later design") {
-				test.Fatalf("parse refusal omitted its later design: %v", err)
+				!strings.Contains(lowerError.Error(), "checked parse against a declared type is a later design") {
+				test.Fatalf("parse refusal omitted its later design: %v", lowerError)
 			}
 		})
 	}
@@ -63,16 +63,16 @@ func TestJSONStringifyResultMayBeUndefined(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "probe.ts")
 	// Even a serializable argument is not used as a license to lie in the public declaration.
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		path,
 		[]byte(`const result: string = JSON.stringify(undefined); console.log(result);`),
 		0600,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
-	_, err := load.Load([]string{path})
-	if err == nil || !strings.Contains(err.Error(), "undefined") {
-		test.Fatalf("want the checker to require handling stringify's undefined result, got %v", err)
+	_, loadError := load.Load([]string{path})
+	if loadError == nil || !strings.Contains(loadError.Error(), "undefined") {
+		test.Fatalf("want the checker to require handling stringify's undefined result, got %v", loadError)
 	}
 }
 
@@ -82,12 +82,12 @@ func TestJSONStringifyOracleCatchesKeyOrder(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "mutant.ts")
 	source := `console.log(JSON.stringify({ '2': 2, '1': 1, z: 'built'.repeat(2), a: 3 }) ?? 'missing');`
-	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	call := program.Main[0].(ir.WriteLine).Value.(ir.Coalesce).Value.(ir.JSONStringify)
 	call.Schema.Fields[0], call.Schema.Fields[1] = call.Schema.Fields[1], call.Schema.Fields[0]

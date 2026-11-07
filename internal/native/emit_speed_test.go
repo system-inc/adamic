@@ -43,17 +43,17 @@ func initializerWitness(test *testing.T, split bool, exceptions bool) {
 			"values.a",
 		): `export const values=[` + strings.Join(elements, ",") + `];console.log('values first');`,
 	} {
-		if err := os.WriteFile(path, []byte(text), 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(text), 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
-	checked, err := load.Load([]string{entry})
-	if err != nil {
-		test.Fatal(err)
+	checked, loadError := load.Load([]string{entry})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := lower.Lower(context.Background(), checked)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerError := lower.Lower(context.Background(), checked)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	initializerCompiledWitness(test, entry, program, split)
 }
@@ -69,16 +69,16 @@ func initializerCompiledWitness(test *testing.T, entry string, program *ir.Progr
 		test.Fatal("initializer helpers are missing")
 	}
 	binary := filepath.Join(directory, "native")
-	if err := native.Build(
+	if buildError := native.Build(
 		code,
 		binary,
 		native.Options{Split: split, Sanitize: true, Count: true, Jobs: 1},
-	); err != nil {
-		test.Fatal(err)
+	); buildError != nil {
+		test.Fatal(buildError)
 	}
 	js := filepath.Join(directory, "program.mjs")
-	if err := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	run := func(command string, args ...string) []byte {
 		test.Helper()
@@ -86,9 +86,9 @@ func initializerCompiledWitness(test *testing.T, entry string, program *ir.Progr
 		defer cancel()
 		cmd := exec.CommandContext(ctx, command, args...)
 		cmd.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1")
-		out, err := cmd.Output()
-		if err != nil {
-			test.Fatalf("%s: %v", command, err)
+		out, outputError := cmd.Output()
+		if outputError != nil {
+			test.Fatalf("%s: %v", command, outputError)
 		}
 		return out
 	}
@@ -133,17 +133,17 @@ func TestInitializerTypedArrayViewChunks(test *testing.T) {
 
 func initializerFixtureWitness(test *testing.T, name string) {
 	test.Helper()
-	entry, err := filepath.Abs("../oracle/testdata/" + name + ".a")
-	if err != nil {
-		test.Fatal(err)
+	entry, absolutePathError := filepath.Abs("../oracle/testdata/" + name + ".a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	checked, err := load.Load([]string{entry})
-	if err != nil {
-		test.Fatal(err)
+	checked, loadError := load.Load([]string{entry})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := lower.Lower(context.Background(), checked)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerError := lower.Lower(context.Background(), checked)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	initializerCompiledWitness(test, entry, program, true)
 }

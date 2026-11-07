@@ -9,8 +9,8 @@ import (
 
 // TestMain is shared with the parent json tests.
 func TestMain(m *testing.M) {
-	if err := os.Chdir(".."); err != nil {
-		panic(err)
+	if chdirError := os.Chdir(".."); chdirError != nil {
+		panic(chdirError)
 	}
 	EnableProductProduction()
 	os.Exit(m.Run())

@@ -35,13 +35,13 @@ func TestClosedComparatorGaps(test *testing.T) {
 	for _, probe := range closedComparatorGaps {
 		test.Run(probe.file, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join("gaps", probe.file))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(filepath.Join("gaps", probe.file))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-			if err != nil {
-				test.Fatal(err)
+			runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			if answer := execute(
 				test,
@@ -53,17 +53,17 @@ func TestClosedComparatorGaps(test *testing.T) {
 			); string(answer.output) != probe.answer {
 				test.Fatalf("Node prints %q, want %q", answer.output, probe.answer)
 			}
-			lowered, err := closedComparatorGapLowered(probe.file)
-			if err != nil {
-				test.Fatalf("closed gap stopped lowering: %v", err)
+			lowered, closedComparatorGapLoweredError := closedComparatorGapLowered(probe.file)
+			if closedComparatorGapLoweredError != nil {
+				test.Fatalf("closed gap stopped lowering: %v", closedComparatorGapLoweredError)
 			}
 			binary := filepath.Join(closedComparatorGapNative(test, probe.file), "gap")
 			if got := execute(test, "", binary); string(got.output) != probe.answer {
 				test.Fatalf("native prints %q, Node %q", got.output, probe.answer)
 			}
 			emitted := filepath.Join(test.TempDir(), "gap.mjs")
-			if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0o644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0o644); writeError != nil {
+				test.Fatal(writeError)
 			}
 			if got := execute(
 				test,
@@ -129,9 +129,9 @@ func closedComparatorGapNative(test *testing.T, file string) string {
 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version")},
 	}
 	return buildcache.Product(test, inputs, func(directory string) error {
-		lowered, err := closedComparatorGapLowered(file)
-		if err != nil {
-			return err
+		lowered, closedComparatorGapLoweredError := closedComparatorGapLowered(file)
+		if closedComparatorGapLoweredError != nil {
+			return closedComparatorGapLoweredError
 		}
 		return native.Build(native.C(lowered), filepath.Join(directory, "gap"), options)
 	})
@@ -139,13 +139,13 @@ func closedComparatorGapNative(test *testing.T, file string) string {
 
 // closedComparatorGapLowered loads and lowers one gap file.
 func closedComparatorGapLowered(file string) (*ir.Program, error) {
-	path, err := filepath.Abs(filepath.Join("gaps", file))
-	if err != nil {
-		return nil, err
+	path, absolutePathError := filepath.Abs(filepath.Join("gaps", file))
+	if absolutePathError != nil {
+		return nil, absolutePathError
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		return nil, err
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		return nil, loadError
 	}
 	return lower.Lower(context.Background(), program)
 }

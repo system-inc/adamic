@@ -42,9 +42,14 @@ var splitTSGoOptions = Options{Sanitize: true, Jobs: 5}
 // finding.ts and its suggestions.a) and this recipe; under the tree builder's trace its key is what it read.
 func splitTSGoSource(test *testing.T) string {
 	test.Helper()
-	compiler, err := buildcache.GoInputs("main.c", "./internal/load ./internal/lower ./internal/native", nil, nil)
-	if err != nil {
-		test.Fatal(err)
+	compiler, goInputsError := buildcache.GoInputs(
+		"main.c",
+		"./internal/load ./internal/lower ./internal/native",
+		nil,
+		nil,
+	)
+	if goInputsError != nil {
+		test.Fatal(goInputsError)
 	}
 	directory := buildcache.Product(test, buildcache.Inputs{
 		Name: "split-tsgo-source",
@@ -56,24 +61,24 @@ func splitTSGoSource(test *testing.T) string {
 		Flags:     compiler.Flags,
 		Toolchain: compiler.Toolchain,
 	}, func(directory string) error {
-		program, err := load.Load([]string{"../../stage1/cohere/typeaware/main.ts"})
-		if err != nil {
-			return err
+		program, loadError := load.Load([]string{"../../stage1/cohere/typeaware/main.ts"})
+		if loadError != nil {
+			return loadError
 		}
 		program.EnableTSGo()
-		lowered, err := lower.Lower(context.Background(), program)
-		if err != nil {
-			return err
+		lowered, lowerError := lower.Lower(context.Background(), program)
+		if lowerError != nil {
+			return lowerError
 		}
-		source, err := TSGoC(lowered)
-		if err != nil {
-			return err
+		source, tsGoCError := TSGoC(lowered)
+		if tsGoCError != nil {
+			return tsGoCError
 		}
 		return os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0o644)
 	})
-	source, err := os.ReadFile(filepath.Join(directory, "main.c"))
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(filepath.Join(directory, "main.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return string(source)
 }
@@ -83,13 +88,13 @@ func splitTSGoSource(test *testing.T) string {
 // are products, so they key it by their bytes: the same bytes wherever they were fetched.
 func splitTSGoBaseline(test *testing.T, source, archive string) string {
 	test.Helper()
-	archiveBytes, err := os.ReadFile(archive)
-	if err != nil {
-		test.Fatal(err)
+	archiveBytes, readError := os.ReadFile(archive)
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	optionBytes, err := json.Marshal(splitTSGoOptions)
-	if err != nil {
-		test.Fatal(err)
+	optionBytes, encodeError := json.Marshal(splitTSGoOptions)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	directory := buildcache.Product(test, buildcache.Inputs{
 		Name:  "split-tsgo-baseline",
@@ -131,13 +136,13 @@ func TestProduct_SplitTSGoBaseline(test *testing.T) {
 func splitTSGoSplit(test *testing.T, source, archive string) string {
 	test.Helper()
 	test.Setenv("ADAMIC_GATE_UNCACHED", "1")
-	archiveBytes, err := os.ReadFile(archive)
-	if err != nil {
-		test.Fatal(err)
+	archiveBytes, readError := os.ReadFile(archive)
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	optionBytes, err := json.Marshal(splitTSGoOptions)
-	if err != nil {
-		test.Fatal(err)
+	optionBytes, encodeError := json.Marshal(splitTSGoOptions)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	directory := buildcache.Product(test, buildcache.Inputs{
 		Name:  "split-tsgo-split",
@@ -183,17 +188,17 @@ func TestSplitTSGoAgrees(test *testing.T) {
 		config:   `{"compilerOptions":{"strict":true,"target":"esnext"},"files":["sample.a"]}`,
 		manifest: input + "\n",
 	} {
-		if err := os.WriteFile(name, []byte(contents), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(name, []byte(contents), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
-	want, err := exec.Command(whole, config, manifest).CombinedOutput()
-	if err != nil {
-		test.Fatalf("whole checker: %v\n%s", err, want)
+	want, combinedOutputError := exec.Command(whole, config, manifest).CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("whole checker: %v\n%s", combinedOutputError, want)
 	}
-	got, err := exec.Command(split, config, manifest).CombinedOutput()
-	if err != nil || !bytes.Equal(got, want) {
-		test.Fatalf("split checker: %v\nwhole=%s\nsplit=%s", err, want, got)
+	got, combinedOutputError := exec.Command(split, config, manifest).CombinedOutput()
+	if combinedOutputError != nil || !bytes.Equal(got, want) {
+		test.Fatalf("split checker: %v\nwhole=%s\nsplit=%s", combinedOutputError, want, got)
 	}
 	test.Logf("split checker: %d identical bytes: %s", len(got), got)
 }

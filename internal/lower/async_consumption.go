@@ -96,7 +96,9 @@ func (l *lowering) checkPromiseConsumption() error {
 				expression = value.Value
 			case ir.Return:
 				read, ok := value.Value.(ir.Read)
-				return ok && read.Of == ir.Promise && origin(read.Local, map[int]bool{}) == origin(local, map[int]bool{})
+				return ok &&
+					read.Of == ir.Promise &&
+					origin(read.Local, map[int]bool{}) == origin(local, map[int]bool{})
 			case ir.Block:
 				if consumedAfter(value.Body, local) {
 					return true
@@ -111,7 +113,8 @@ func (l *lowering) checkPromiseConsumption() error {
 				}
 			}
 			if awaited, ok := expression.(ir.Await); ok {
-				if read, ok := awaited.Value.(ir.Read); ok && origin(read.Local, map[int]bool{}) == origin(local, map[int]bool{}) {
+				if read, ok := awaited.Value.(ir.Read); ok &&
+					origin(read.Local, map[int]bool{}) == origin(local, map[int]bool{}) {
 					return true
 				}
 			}
@@ -136,12 +139,16 @@ func (l *lowering) checkPromiseConsumption() error {
 	var checkScope func([]ir.Statement, *ast.Node) error
 	checkScope = func(statements []ir.Statement, where *ast.Node) error {
 		for index, statement := range statements {
-			if declared, ok := statement.(ir.Declare); ok && declared.Value != nil && declared.Value.Type() == ir.Promise {
+			if declared, ok := statement.(ir.Declare); ok &&
+				declared.Value != nil &&
+				declared.Value.Type() == ir.Promise {
 				node := where
 				if original := l.localNodes[declared.Local]; original != nil {
 					node = original
 				}
-				if !fulfilled(declared.Value, map[int]bool{}) && (mutable[declared.Local] || l.result.Locals[declared.Local].Captured || !consumedAfter(statements[index+1:], declared.Local)) {
+				if !fulfilled(declared.Value, map[int]bool{}) && (mutable[declared.Local] ||
+					l.result.Locals[declared.Local].Captured ||
+					!consumedAfter(statements[index+1:], declared.Local)) {
 					return l.notYet(node, "a promise not awaited in the same function before an escaping completion")
 				}
 			}
@@ -159,7 +166,10 @@ func (l *lowering) checkPromiseConsumption() error {
 					if expression, ok := value.Interface().(ir.Expression); ok {
 						if expression.Type() == ir.Promise && !consumed && !fulfilled(expression, map[int]bool{}) {
 							if _, read := expression.(ir.Read); !read {
-								failure = l.notYet(where, "a promise not awaited in the same function before an escaping completion")
+								failure = l.notYet(
+									where,
+									"a promise not awaited in the same function before an escaping completion",
+								)
 								return
 							}
 						}
@@ -199,16 +209,16 @@ func (l *lowering) checkPromiseConsumption() error {
 		}
 		return nil
 	}
-	if err := checkScope(l.result.Main, l.entry.AsNode()); err != nil {
-		return err
+	if checkScopeError := checkScope(l.result.Main, l.entry.AsNode()); checkScopeError != nil {
+		return checkScopeError
 	}
 	for _, function := range l.result.Functions {
 		where := l.entry.AsNode()
 		if function.AsyncSite > 0 {
 			where = l.asyncSites[function.AsyncSite-1]
 		}
-		if err := checkScope(function.Body, where); err != nil {
-			return err
+		if checkScopeError := checkScope(function.Body, where); checkScopeError != nil {
+			return checkScopeError
 		}
 	}
 	return nil

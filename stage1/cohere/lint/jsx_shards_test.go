@@ -46,9 +46,9 @@ func jsxInputFiles(test *testing.T, roots ...string) []string {
 	test.Helper()
 	files := map[string]bool{}
 	for _, root := range roots {
-		err := filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
-			if err != nil {
-				return err
+		walkError := filepath.WalkDir(root, func(path string, entry fs.DirEntry, pathError error) error {
+			if pathError != nil {
+				return pathError
 			}
 			if entry.IsDir() {
 				if entry.Name() == ".git" || entry.Name() == "node_modules" || lintRuleSubdirectory(path) {
@@ -61,16 +61,16 @@ func jsxInputFiles(test *testing.T, roots ...string) []string {
 				if strings.HasSuffix(path, "_test.go") {
 					return nil
 				}
-				absolute, err := filepath.Abs(path)
-				if err != nil {
-					return err
+				absolute, absolutePathError := filepath.Abs(path)
+				if absolutePathError != nil {
+					return absolutePathError
 				}
 				files[absolute] = true
 			}
 			return nil
 		})
-		if err != nil {
-			test.Fatal(err)
+		if walkError != nil {
+			test.Fatal(walkError)
 		}
 	}
 	result := make([]string, 0, len(files))
@@ -112,14 +112,14 @@ func jsxStableCaseKeys(test *testing.T, paths []string) map[string]string {
 			declarations := map[string]string{}
 			relative := filepath.Join("cohere/internal/lint/rules", d.UpstreamPackage)
 			// Reads: cohere
-			files, err := filepath.Glob(filepath.Join(repository, relative, "*_test.go"))
-			if err != nil {
-				test.Fatal(err)
+			files, globError := filepath.Glob(filepath.Join(repository, relative, "*_test.go"))
+			if globError != nil {
+				test.Fatal(globError)
 			}
 			for _, file := range files {
-				parsed, err := goparser.ParseFile(token.NewFileSet(), file, nil, 0)
-				if err != nil {
-					test.Fatal(err)
+				parsed, parseFileError := goparser.ParseFile(token.NewFileSet(), file, nil, 0)
+				if parseFileError != nil {
+					test.Fatal(parseFileError)
 				}
 				for _, declaration := range parsed.Decls {
 					fn, ok := declaration.(*ast.FuncDecl)
@@ -167,15 +167,15 @@ func jsxStableCaseKeys(test *testing.T, paths []string) map[string]string {
 		if !selected[path] {
 			continue
 		}
-		source, err := os.ReadFile(path)
-		if err != nil {
-			test.Fatal(err)
+		source, readError := os.ReadFile(path)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		components := strings.Split(filepath.ToSlash(path), "/")
 		fixture := ""
 		for i, component := range components {
 			if strings.HasPrefix(component, "case-") {
-				if _, err := strconv.Atoi(strings.TrimPrefix(component, "case-")); err == nil {
+				if _, parseError := strconv.Atoi(strings.TrimPrefix(component, "case-")); parseError == nil {
 					fixture = strings.Join(components[i+1:], "/")
 					break
 				}
@@ -185,9 +185,9 @@ func jsxStableCaseKeys(test *testing.T, paths []string) map[string]string {
 			test.Fatalf("capture path has no fixture name: %s", path)
 		}
 		mode := append(append([]string(nil), fields[1:]...), "whole", "jsx-recovery")
-		identity, err := json.Marshal([]any{origins[fields[1]], fixture, string(source), mode})
-		if err != nil {
-			test.Fatal(err)
+		identity, encodeError := json.Marshal([]any{origins[fields[1]], fixture, string(source), mode})
+		if encodeError != nil {
+			test.Fatal(encodeError)
 		}
 		sum := sha256.Sum256(identity)
 		keys[path] = origins[fields[1]] + "\x00" + fixture + "\x00" + fmt.Sprintf("%x", sum)
@@ -221,8 +221,8 @@ func jsxTreeShards(paths []string, identities ...map[string]string) ([][]string,
 		shard := jsxCaseShard(key)
 		shards[shard] = append(shards[shard], path)
 	}
-	if err := jsxValidateUnion(paths, shards); err != nil {
-		return nil, err
+	if jsxValidateUnionError := jsxValidateUnion(paths, shards); jsxValidateUnionError != nil {
+		return nil, jsxValidateUnionError
 	}
 	return shards, nil
 }
@@ -306,9 +306,9 @@ func TestJsxLintTreesShardCoverage(test *testing.T) {
 	for i := range paths {
 		paths[i] = fmt.Sprintf("case-%03d.tsx", i)
 	}
-	shards, err := jsxTreeShards(paths)
-	if err != nil {
-		test.Fatal(err)
+	shards, jsxTreeShardsError := jsxTreeShards(paths)
+	if jsxTreeShardsError != nil {
+		test.Fatal(jsxTreeShardsError)
 	}
 	owners := func(groups [][]string) map[string]int {
 		result := map[string]int{}
@@ -320,26 +320,26 @@ func TestJsxLintTreesShardCoverage(test *testing.T) {
 		return result
 	}
 	original := owners(shards)
-	expanded, err := jsxTreeShards(append([]string{"000-new-case.tsx"}, paths...))
-	if err != nil {
-		test.Fatal(err)
+	expanded, jsxTreeShardsError := jsxTreeShards(append([]string{"000-new-case.tsx"}, paths...))
+	if jsxTreeShardsError != nil {
+		test.Fatal(jsxTreeShardsError)
 	}
 	for path, shard := range original {
 		if owners(expanded)[path] != shard {
 			test.Fatalf("adding a case moved %s", path)
 		}
 	}
-	relocated, err := jsxTreeShards(
+	relocated, jsxTreeShardsError := jsxTreeShards(
 		[]string{"/new-temp/case-999/fixture.tsx"},
 		map[string]string{"/new-temp/case-999/fixture.tsx": paths[0]},
 	)
-	if err != nil {
-		test.Fatal(err)
+	if jsxTreeShardsError != nil {
+		test.Fatal(jsxTreeShardsError)
 	}
 	if owners(relocated)["/new-temp/case-999/fixture.tsx"] != original[paths[0]] {
 		test.Fatal("capture renumbering moved a stable identity")
 	}
-	if _, err := jsxTreeShards(nil); err == nil {
+	if _, jsxTreeShardsError := jsxTreeShards(nil); jsxTreeShardsError == nil {
 		test.Fatal("empty corpus accepted")
 	}
 
@@ -359,7 +359,7 @@ func TestJsxLintTreesShardCoverage(test *testing.T) {
 			case "shard count":
 				broken = broken[:len(broken)-1]
 			}
-			if err := jsxValidateUnion(paths, broken); err == nil {
+			if jsxValidateUnionError := jsxValidateUnion(paths, broken); jsxValidateUnionError == nil {
 				test.Fatalf("%s union fault survived", fault)
 			}
 		})
@@ -367,9 +367,9 @@ func TestJsxLintTreesShardCoverage(test *testing.T) {
 	for n := 1; n <= testJsxLintTreesShards; n++ {
 		counts := make([]int, len(shards))
 		for i := 0; i < n; i++ {
-			selectShard, err := jsxShardSelection(fmt.Sprintf("%d/%d", i, n))
-			if err != nil {
-				test.Fatal(err)
+			selectShard, jsxShardSelectionError := jsxShardSelection(fmt.Sprintf("%d/%d", i, n))
+			if jsxShardSelectionError != nil {
+				test.Fatal(jsxShardSelectionError)
 			}
 			for shard := range shards {
 				if selectShard(shard) {
@@ -384,7 +384,7 @@ func TestJsxLintTreesShardCoverage(test *testing.T) {
 		}
 	}
 	for _, invalid := range []string{"1", "-1/16", "16/16", "0/0", "0/17", "x/16", "0/16/1"} {
-		if _, err := jsxShardSelection(invalid); err == nil {
+		if _, jsxShardSelectionError := jsxShardSelection(invalid); jsxShardSelectionError == nil {
 			test.Fatalf("invalid selection %q accepted", invalid)
 		}
 	}
@@ -394,18 +394,19 @@ func TestJsxLintTreesShardCoverage(test *testing.T) {
 func jsxProduct(test *testing.T, inputs jsxProductInputs, build func(string) error) string {
 	test.Helper()
 	files := make([]string, len(inputs.Files))
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	for i, file := range inputs.Files {
-		absolute, pathErr := filepath.Abs(file)
-		if pathErr != nil {
-			test.Fatal(pathErr)
+		absolute, pathError := filepath.Abs(file)
+		if pathError != nil {
+			test.Fatal(pathError)
 		}
-		files[i], err = filepath.Rel(root, absolute)
-		if err != nil {
-			test.Fatal(err)
+		var relativePathError error
+		files[i], relativePathError = filepath.Rel(root, absolute)
+		if relativePathError != nil {
+			test.Fatal(relativePathError)
 		}
 	}
 	return buildcache.Product(
@@ -433,13 +434,13 @@ func jsxTreeInputs(test *testing.T, entry string) jsxProductInputs {
 func jsxTreeLowered(test *testing.T, entry string) string {
 	test.Helper()
 	return jsxProduct(test, jsxTreeInputs(test, entry), func(dir string) error {
-		program, err := load.Load([]string{entry})
-		if err != nil {
-			return err
+		program, loadError := load.Load([]string{entry})
+		if loadError != nil {
+			return loadError
 		}
-		lowered, err := lower.Lower(context.Background(), program)
-		if err != nil {
-			return err
+		lowered, lowerError := lower.Lower(context.Background(), program)
+		if lowerError != nil {
+			return lowerError
 		}
 		return os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(lowered)), 0644)
 	})
@@ -458,9 +459,9 @@ func jsxTreeNative(test *testing.T, entry string, sanitize bool) string {
 	)
 	inputs.Toolchain = []string{buildcache.Tool("clang", "--version")}
 	built := jsxProduct(test, inputs, func(dir string) error {
-		data, err := os.ReadFile(source)
-		if err != nil {
-			return err
+		data, readError := os.ReadFile(source)
+		if readError != nil {
+			return readError
 		}
 		return native.Build(string(data), filepath.Join(dir, "native"), native.Options{Sanitize: sanitize})
 	})
@@ -469,9 +470,9 @@ func jsxTreeNative(test *testing.T, entry string, sanitize bool) string {
 
 func jsxParserEntry(test *testing.T) string {
 	test.Helper()
-	entry, err := filepath.Abs(filepath.Join(repository, "stage1/typescript/parser/main.ts"))
-	if err != nil {
-		test.Fatal(err)
+	entry, absolutePathError := filepath.Abs(filepath.Join(repository, "stage1/typescript/parser/main.ts"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return entry
 }
@@ -556,10 +557,10 @@ func TestJsxSetupKeyNamesTheBuildsCompiler(test *testing.T) {
 			"-test.timeout=120s",
 		)
 		command.Env = environment
-		stdout, stderr, err := childguard.Capture(ctx, command)
+		stdout, stderr, captureError := childguard.Capture(ctx, command)
 		output := append(stdout, stderr...)
-		if err != nil {
-			test.Fatalf("CC=%s: %v\n%s", compiler, err, output)
+		if captureError != nil {
+			test.Fatalf("CC=%s: %v\n%s", compiler, captureError, output)
 		}
 		for _, line := range strings.Split(string(output), "\n") {
 			if value, found := strings.CutPrefix(line, "jsx-setup-key\t"); found {
@@ -588,9 +589,9 @@ func jsxPrepareTrees(test *testing.T) string {
 	jsxPrepareOnce.Do(func() {
 		jsxReadyDirectory = buildcache.Product(test, jsxSetupInputs(), func(directory string) error {
 			paths := jsxTreeSources(test)
-			shards, err := jsxTreeShards(paths, jsxStableCaseKeys(test, paths))
-			if err != nil {
-				return err
+			shards, jsxTreeShardsError := jsxTreeShards(paths, jsxStableCaseKeys(test, paths))
+			if jsxTreeShardsError != nil {
+				return jsxTreeShardsError
 			}
 			oracle := jsxParserOracle(test)
 			binary := jsxTreeNative(test, jsxParserEntry(test), true)
@@ -608,15 +609,15 @@ func jsxPrepareTrees(test *testing.T) string {
 					return fmt.Errorf("case has no capture directory: %s", path)
 				}
 				target := filepath.Join(directory, relative)
-				if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {
-					return err
+				if createDirectoryError := os.MkdirAll(filepath.Dir(target), 0755); createDirectoryError != nil {
+					return createDirectoryError
 				}
-				data, err := os.ReadFile(path)
-				if err != nil {
-					return err
+				data, readError := os.ReadFile(path)
+				if readError != nil {
+					return readError
 				}
-				if err := os.WriteFile(target, data, 0444); err != nil {
-					return err
+				if writeError := os.WriteFile(target, data, 0444); writeError != nil {
+					return writeError
 				}
 				copied[path] = relative
 			}
@@ -630,17 +631,17 @@ func jsxPrepareTrees(test *testing.T) string {
 				}
 			}
 			for name, source := range map[string]string{"parser-oracle": oracle, "native": binary} {
-				data, err := os.ReadFile(source)
-				if err != nil {
-					return err
+				data, readError := os.ReadFile(source)
+				if readError != nil {
+					return readError
 				}
-				if err := os.WriteFile(filepath.Join(directory, name), data, 0555); err != nil {
-					return err
+				if writeError := os.WriteFile(filepath.Join(directory, name), data, 0555); writeError != nil {
+					return writeError
 				}
 			}
-			data, err := json.Marshal(bundle)
-			if err != nil {
-				return err
+			data, encodeError := json.Marshal(bundle)
+			if encodeError != nil {
+				return encodeError
 			}
 			return os.WriteFile(filepath.Join(directory, "bundle.json"), data, 0444)
 		})
@@ -656,16 +657,16 @@ func jsxPrepareTrees(test *testing.T) string {
 func jsxFetchTrees(test *testing.T) (jsxTreeBundle, string) {
 	test.Helper()
 	directory := jsxPrepareTrees(test)
-	data, err := os.ReadFile(filepath.Join(directory, "bundle.json"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(directory, "bundle.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var bundle jsxTreeBundle
-	if err := json.Unmarshal(data, &bundle); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &bundle); decodeError != nil {
+		test.Fatal(decodeError)
 	}
-	if err := jsxValidateUnion(bundle.Paths, bundle.Shards); err != nil {
-		test.Fatal(err)
+	if jsxValidateUnionError := jsxValidateUnion(bundle.Paths, bundle.Shards); jsxValidateUnionError != nil {
+		test.Fatal(jsxValidateUnionError)
 	}
 	for i, path := range bundle.Paths {
 		bundle.Paths[i] = filepath.Join(directory, path)
@@ -717,9 +718,9 @@ func jsxTreeSources(test *testing.T) []string {
 func TestJsxLintTreesUnion(test *testing.T) {
 	test.Parallel()
 	// The planner sees declarations, so missing or extra entry points must fail.
-	declarations, err := goparser.ParseFile(token.NewFileSet(), "jsx_integration_test.go", nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	declarations, parseFileError := goparser.ParseFile(token.NewFileSet(), "jsx_integration_test.go", nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	entries := map[string]bool{}
 	for _, declaration := range declarations.Decls {
@@ -743,8 +744,8 @@ func TestJsxLintTreesUnion(test *testing.T) {
 	for _, cases := range shards {
 		paths = append(paths, cases...)
 	}
-	if err := jsxValidateUnion(bundle.Paths, shards); err != nil {
-		test.Fatal(err)
+	if jsxValidateUnionError := jsxValidateUnion(bundle.Paths, shards); jsxValidateUnionError != nil {
+		test.Fatal(jsxValidateUnionError)
 	}
 	test.Logf("live union: %d cases", len(paths))
 }
@@ -756,9 +757,9 @@ func jsxRunTreeShard(test *testing.T, i int) {
 		for j := range paths {
 			paths[j] = fmt.Sprintf("case-%03d.tsx", j)
 		}
-		shards, err := jsxTreeShards(paths)
-		if err != nil {
-			test.Fatal(err)
+		shards, jsxTreeShardsError := jsxTreeShards(paths)
+		if jsxTreeShardsError != nil {
+			test.Fatal(jsxTreeShardsError)
 		}
 		for _, path := range shards[i] {
 			want := []byte("case 0\nJsxElement " + path + "\n")
@@ -770,9 +771,9 @@ func jsxRunTreeShard(test *testing.T, i int) {
 		}
 		return
 	}
-	selected, err := jsxShardSelection(os.Getenv("ADAMIC_TEST_SHARD"))
-	if err != nil {
-		test.Fatal(err)
+	selected, jsxShardSelectionError := jsxShardSelection(os.Getenv("ADAMIC_TEST_SHARD"))
+	if jsxShardSelectionError != nil {
+		test.Fatal(jsxShardSelectionError)
 	}
 	if !selected(i) {
 		return
@@ -821,9 +822,9 @@ func jsxRunTreeShard(test *testing.T, i int) {
 
 func TestJsxLintTreesShardDisagreement(test *testing.T) {
 	test.Parallel()
-	executable, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	executable, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
 	command, ctx := lintBuildPhaseChild(
 		test,
@@ -833,9 +834,9 @@ func TestJsxLintTreesShardDisagreement(test *testing.T) {
 		"-test.timeout=600s",
 	)
 	command.Env = append(os.Environ(), "ADAMIC_JSX_SHARD_CHILD=1")
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	output := append(stdout, stderr...)
-	if err == nil {
+	if captureError == nil {
 		test.Fatalf("planted disagreement survived:\n%s", output)
 	}
 	var failed []string
@@ -864,25 +865,25 @@ func jsxContextCommand(test *testing.T, parent context.Context, directory, name 
 func jsxCaseExecute(test *testing.T, ctx context.Context, directory, name string, args ...string) execution {
 	test.Helper()
 	command := jsxContextCommand(test, ctx, directory, name, args...)
-	output, err := os.CreateTemp(test.TempDir(), "stdout-")
-	if err != nil {
-		test.Fatal(err)
+	output, temporaryFileError := os.CreateTemp(test.TempDir(), "stdout-")
+	if temporaryFileError != nil {
+		test.Fatal(temporaryFileError)
 	}
 	defer output.Close()
 	command.Stdout = output
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
 	started := time.Now()
-	err = command.Run()
+	runError := command.Run()
 	if ctx.Err() != nil {
 		test.Fatalf("cooked: case deadline exceeded: %s %v", name, args)
 	}
-	if err != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
-		test.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
+	if runError != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
+		test.Fatalf("%s %v: %v\n%s", name, args, runError, &stderr)
 	}
-	data, err := os.ReadFile(output.Name())
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(output.Name())
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return execution{data, time.Since(started)}
 }
@@ -890,9 +891,9 @@ func jsxCaseExecute(test *testing.T, ctx context.Context, directory, name string
 func jsxUpstream(test *testing.T) []string {
 	test.Helper()
 	value := shared("jsx-setup-upstream", func(value *sharedValue) {
-		directory, err := os.MkdirTemp(sharedDirectory, "jsx-upstream-")
-		if err != nil {
-			value.err = err
+		directory, temporaryDirectoryError := os.MkdirTemp(sharedDirectory, "jsx-upstream-")
+		if temporaryDirectoryError != nil {
+			value.err = temporaryDirectoryError
 			return
 		}
 		value.rows, value.err = jsxCaptureUpstream(".", directory)
@@ -905,9 +906,9 @@ func jsxUpstream(test *testing.T) []string {
 
 func jsxCaptureRun(directory string, environment []string, name string, args ...string) ([]byte, error) {
 	// toolchain's program for name, under its environment plus the capture's own settings, as the setup key reads it.
-	path, err := toolchain.Path(name)
-	if err != nil {
-		return nil, err
+	path, pathError := toolchain.Path(name)
+	if pathError != nil {
+		return nil, pathError
 	}
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -919,26 +920,26 @@ func jsxCaptureRun(directory string, environment []string, name string, args ...
 	}
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if err == syscall.ESRCH {
+		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if killError == syscall.ESRCH {
 			return os.ErrProcessDone
 		}
-		return err
+		return killError
 	}
 	// No WaitDelay, for lintCommand's reason: stdout is a file, and exec reads stderr to its end. go test waits for
 	// the compilers and test binaries it starts before it exits, so nothing holds the pipe after it, and the unit's
 	// ceiling ends a wait on one that did.
-	output, err := os.CreateTemp(sharedDirectory, "jsx-capture-stdout-")
-	if err != nil {
-		return nil, err
+	output, temporaryFileError := os.CreateTemp(sharedDirectory, "jsx-capture-stdout-")
+	if temporaryFileError != nil {
+		return nil, temporaryFileError
 	}
 	defer os.Remove(output.Name())
 	defer output.Close()
 	command.Stdout = output
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
-	if err := command.Run(); err != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
-		return nil, fmt.Errorf("%s %v: %v\n%s", name, args, err, &stderr)
+	if runError := command.Run(); runError != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
+		return nil, fmt.Errorf("%s %v: %v\n%s", name, args, runError, &stderr)
 	}
 	return os.ReadFile(output.Name())
 }
@@ -946,14 +947,14 @@ func jsxCaptureRun(directory string, environment []string, name string, args ...
 // Capture uses the package's complete upstream protocol, with an owned runner
 // so all spawned Go compilers inherit the setup context and group cancellation.
 func jsxCaptureUpstream(sourceRoot, directory string) ([]string, error) {
-	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		return nil, err
+	root, absolutePathError := filepath.Abs(filepath.Join(repository, "cohere"))
+	if absolutePathError != nil {
+		return nil, absolutePathError
 	}
 	harness := filepath.Join(root, "internal/lint/testing/rule_testing.go")
-	data, err := os.ReadFile(harness)
-	if err != nil {
-		return nil, err
+	data, readError := os.ReadFile(harness)
+	if readError != nil {
+		return nil, readError
 	}
 	original := "return Result{Diagnostics: diagnostics, SourceFile: sourceFile, capture: captured}"
 	replacement := "result := Result{Diagnostics: diagnostics, SourceFile: sourceFile, capture: captured}\n RecordAssertedCase(t, result)\n return result"
@@ -961,19 +962,23 @@ func jsxCaptureUpstream(sourceRoot, directory string) ([]string, error) {
 		return nil, fmt.Errorf("capture overlay anchor changed")
 	}
 	side := filepath.Join(directory, "rule_testing.go")
-	if err := os.WriteFile(side, []byte(strings.Replace(string(data), original, replacement, 1)), 0644); err != nil {
-		return nil, err
+	if writeError := os.WriteFile(
+		side,
+		[]byte(strings.Replace(string(data), original, replacement, 1)),
+		0644,
+	); writeError != nil {
+		return nil, writeError
 	}
 	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{harness: side}})
 	overlayPath := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-		return nil, err
+	if writeError := os.WriteFile(overlayPath, overlay, 0644); writeError != nil {
+		return nil, writeError
 	}
 	capture := filepath.Join(directory, "capture")
 	environment := []string{"COHERE_DOCS_CAPTURE=" + capture}
-	descriptors, err := registry.Generate(sourceRoot)
-	if err != nil {
-		return nil, err
+	descriptors, generateError := registry.Generate(sourceRoot)
+	if generateError != nil {
+		return nil, generateError
 	}
 	discovered := map[string]bool{}
 	packages := map[string][]string{}
@@ -987,7 +992,7 @@ func jsxCaptureUpstream(sourceRoot, directory string) ([]string, error) {
 	}
 	sort.Strings(names)
 	for _, name := range names {
-		if _, err := jsxCaptureRun(
+		if _, jsxCaptureRunError := jsxCaptureRun(
 			root,
 			environment,
 			"go",
@@ -998,13 +1003,13 @@ func jsxCaptureUpstream(sourceRoot, directory string) ([]string, error) {
 			"^("+strings.Join(packages[name], "|")+")",
 			"-count=1",
 			"-timeout=90s",
-		); err != nil {
-			return nil, err
+		); jsxCaptureRunError != nil {
+			return nil, jsxCaptureRunError
 		}
 	}
-	files, err := filepath.Glob(filepath.Join(capture, "*.jsonl"))
-	if err != nil {
-		return nil, err
+	files, globError := filepath.Glob(filepath.Join(capture, "*.jsonl"))
+	if globError != nil {
+		return nil, globError
 	}
 	type record struct {
 		Rule, File, Source, Outcome, FixedSource string
@@ -1016,17 +1021,17 @@ func jsxCaptureUpstream(sourceRoot, directory string) ([]string, error) {
 	// tree, Oct 11: lint-rules-agree-capture held capture-<pid>.jsonl). The rows and cases made from it are sorted.
 	defer os.RemoveAll(capture)
 	for _, path := range files {
-		data, err := os.ReadFile(path)
-		if err != nil {
-			return nil, err
+		data, readError := os.ReadFile(path)
+		if readError != nil {
+			return nil, readError
 		}
 		for _, line := range bytes.Split(data, []byte("\n")) {
 			if len(line) == 0 {
 				continue
 			}
 			var row record
-			if err := json.Unmarshal(line, &row); err != nil {
-				return nil, err
+			if decodeError := json.Unmarshal(line, &row); decodeError != nil {
+				return nil, decodeError
 			}
 			if !discovered[row.Rule] {
 				continue
@@ -1054,19 +1059,19 @@ func jsxCaptureUpstream(sourceRoot, directory string) ([]string, error) {
 		}
 		caseDirectory := filepath.Join(directory, fmt.Sprintf("case-%03d", i))
 		path := filepath.Join(caseDirectory, name)
-		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
-			return nil, err
+		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0755); createDirectoryError != nil {
+			return nil, createDirectoryError
 		}
-		if err := os.WriteFile(path, []byte(row.Source), 0644); err != nil {
-			return nil, err
+		if writeError := os.WriteFile(path, []byte(row.Source), 0644); writeError != nil {
+			return nil, writeError
 		}
 		var legacy struct {
 			Mode, Null      string
 			AllowEmptyCatch bool
 		}
 		if len(row.Options) > 0 && row.Options[0] == '{' {
-			if err := json.Unmarshal(row.Options, &legacy); err != nil {
-				return nil, err
+			if decodeError := json.Unmarshal(row.Options, &legacy); decodeError != nil {
+				return nil, decodeError
 			}
 		}
 		mode := ""

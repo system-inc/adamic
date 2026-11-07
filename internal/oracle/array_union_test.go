@@ -14,13 +14,13 @@ import (
 
 func TestArrayUnionRead(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/array_union.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/array_union.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatalf("Lower: %v", err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatalf("Lower: %v", loweredError)
 	}
 	want := []string{
 		"em-is-array:true",
@@ -104,18 +104,18 @@ func TestArrayUnionWriteRefused(test *testing.T) {
 		},
 	} {
 		test.Run(row.name, func(test *testing.T) {
-			path, err := filepath.Abs(
+			path, absolutePathError := filepath.Abs(
 				filepath.Join(repository, "internal/oracle/testdata/array_union_refused", row.name+".a"),
 			)
-			if err != nil {
-				test.Fatal(err)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			_, err = load.Load([]string{path})
+			_, loadError := load.Load([]string{path})
 			var refused *load.CheckError
-			if !errors.As(err, &refused) || err.Error() != path+row.diagnostic {
-				test.Fatalf("want checker refusal %q, got %v", row.diagnostic, err)
+			if !errors.As(loadError, &refused) || loadError.Error() != path+row.diagnostic {
+				test.Fatalf("want checker refusal %q, got %v", row.diagnostic, loadError)
 			}
-			test.Log(err)
+			test.Log(loadError)
 		})
 	}
 }
@@ -133,18 +133,18 @@ func TestArrayUnionLayoutRefused(test *testing.T) {
 		},
 	} {
 		test.Run(row.name, func(test *testing.T) {
-			path, err := filepath.Abs(
+			path, absolutePathError := filepath.Abs(
 				filepath.Join(repository, "internal/oracle/testdata/array_union_refused", row.name+".a"),
 			)
-			if err != nil {
-				test.Fatal(err)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			_, err = lowered(test, path)
+			_, loweredError := lowered(test, path)
 			var refused *lower.NotYet
-			if !errors.As(err, &refused) || refused.What != row.reason {
-				test.Fatalf("want lowering refusal %q, got %v", row.reason, err)
+			if !errors.As(loweredError, &refused) || refused.What != row.reason {
+				test.Fatalf("want lowering refusal %q, got %v", row.reason, loweredError)
 			}
-			test.Log(err)
+			test.Log(loweredError)
 		})
 	}
 }
@@ -153,23 +153,23 @@ func TestArrayUnionLayoutRefused(test *testing.T) {
 // contract stops before reading it as the class (TestNarrowedUnionMemberCheck).
 func TestArrayUnionClassNarrowingInvalidated(test *testing.T) {
 	test.Parallel()
-	source, err := os.ReadFile(filepath.Join(repository, "internal/oracle/testdata/array_union.a"))
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(filepath.Join(repository, "internal/oracle/testdata/array_union.a"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	path := filepath.Join(test.TempDir(), "array_union.a")
 	source = append(source, []byte("\narrayUnionClassNarrowing();\n")...)
-	if err := os.WriteFile(path, source, 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, source, 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	const observation = "er-class-read-is-array:true\n"
 	node := onNode(test, path)
 	if node.exitCode != 0 || len(node.stderr) != 0 || !strings.HasSuffix(string(node.stdout), observation) {
 		test.Fatalf("source Node: exit %d stdout %q stderr %q", node.exitCode, node.stdout, node.stderr)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	want := run{stdout: []byte(strings.TrimSuffix(string(node.stdout), observation)), exitCode: 70,
 		stderr: []byte(
@@ -197,22 +197,22 @@ func TestArrayUnionNarrowingRefused(test *testing.T) {
 	test.Parallel()
 	for _, name := range []string{"tuple_member", "object_member"} {
 		test.Run(name, func(test *testing.T) {
-			path, err := filepath.Abs(
+			path, absolutePathError := filepath.Abs(
 				filepath.Join(repository, "internal/oracle/testdata/array_union_refused", name+".a"),
 			)
-			if err != nil {
-				test.Fatal(err)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			if node := onNode(test, path); disagreement(run{stdout: []byte("true\n")}, node) != "" {
 				test.Fatalf("source Node: exit %d stdout %q stderr %q", node.exitCode, node.stdout, node.stderr)
 			}
-			_, err = lowered(test, path)
+			_, loweredError := lowered(test, path)
 			var refused *lower.NotYet
 			const reason = "a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables"
-			if !errors.As(err, &refused) || refused.What != reason || refused.Where != path+":5:19" {
-				test.Fatalf("want narrowing refusal %q, got %v", reason, err)
+			if !errors.As(loweredError, &refused) || refused.What != reason || refused.Where != path+":5:19" {
+				test.Fatalf("want narrowing refusal %q, got %v", reason, loweredError)
 			}
-			test.Log(err)
+			test.Log(loweredError)
 		})
 	}
 }

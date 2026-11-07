@@ -24,9 +24,9 @@ import (
 // descriptor, so each finishing mode's whole stdout is written here.
 func sourceHarness(test *testing.T) string {
 	test.Helper()
-	source, err := os.ReadFile("testdata/sources/harness.c")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("testdata/sources/harness.c")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return string(source)
 }
@@ -115,15 +115,15 @@ func TestReadinessSourceModesFinish(test *testing.T) {
 			if failure := sourceFinishes(released, mode); failure != "" {
 				test.Fatalf("release: %s", failure)
 			}
-			report, err := leakcheck.Check(
+			report, checkError := leakcheck.Check(
 				leakcheck.Program{C: code, Sanitized: binary, Counted: filepath.Join(test.TempDir(), "counted"),
 					Arguments: func() []string { return []string{mode} }, Execute: timerRun,
 					BuildCounted: func(_ string, output string) error {
 						return copyTimerProduct(sourceProduct(test, "counted", native.Options{Count: true}), output)
 					}},
 			)
-			if err != nil || report != "" {
-				test.Fatalf("leakcheck: %v %s", err, report)
+			if checkError != nil || report != "" {
+				test.Fatalf("leakcheck: %v %s", checkError, report)
 			}
 		})
 	}
@@ -261,15 +261,15 @@ func sourceProduct(test *testing.T, variant string, options native.Options) stri
 // reds this test.
 func TestSourceProductOrderIsCurrent(test *testing.T) {
 	test.Parallel()
-	script, err := filepath.Abs("../../cloud/fast-gate/sources-product-order.py")
-	if err != nil {
-		test.Fatal(err)
+	script, absolutePathError := filepath.Abs("../../cloud/fast-gate/sources-product-order.py")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	output, err := exec.CommandContext(ctx, "python3", script, "--check").CombinedOutput()
-	if err != nil {
-		test.Fatalf("readiness-source product generator: %v\n%s", err, output)
+	output, combinedOutputError := exec.CommandContext(ctx, "python3", script, "--check").CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("readiness-source product generator: %v\n%s", combinedOutputError, output)
 	}
 }
 func TestProduct_SourcesSanitized(test *testing.T) {

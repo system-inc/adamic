@@ -41,24 +41,24 @@ func TestInitializerUnitOwnership(test *testing.T) {
 	for i := 0; i < 400; i++ {
 		values = append(values, fmt.Sprintf("{value:next(%d)}", i))
 	}
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		filepath.Join(directory, "table.a"),
 		[]byte("function next(n: number): number { return n; } export const table = ["+strings.Join(values, ",")+"];"),
 		0644,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		entry,
 		[]byte("import { table } from './table.a'; console.log(table.length.toString());"),
 		0644,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
 	program := namedProgram(test, entry, nil)
-	_, units, err := splitC(C(program))
-	if err != nil {
-		test.Fatal(err)
+	_, units, splitCError := splitC(C(program))
+	if splitCError != nil {
+		test.Fatal(splitCError)
 	}
 	chunks := 0
 	for _, unit := range units {
@@ -115,8 +115,12 @@ func TestInitializerCrossModuleRoot(test *testing.T) {
 		e.out.String() +
 		"return 0;\n}\n"
 	binary := filepath.Join(test.TempDir(), "root")
-	if err := Build(source, binary, Options{Split: true, Sanitize: true, Count: true, Jobs: 1}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(
+		source,
+		binary,
+		Options{Split: true, Sanitize: true, Count: true, Jobs: 1},
+	); buildError != nil {
+		test.Fatal(buildError)
 	}
 	truth := runWithInput(test, "", "node", "-e", "const root=[];root.push(7);console.log(root.length)")
 	if got := runWithInput(test, "", binary); got != truth {
@@ -202,8 +206,8 @@ func TestInitializerChunkOrder(test *testing.T) {
 		e.out.String() +
 		"return 0;\n}\n"
 	binary := filepath.Join(test.TempDir(), "order")
-	if err := Build(source, binary, Options{Split: true, Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(source, binary, Options{Split: true, Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	truth := runWithInput(test, "", "node", "-e", "for(let i=0;i<300;i++)console.log(i)")
 	if got := runWithInput(test, "", binary); got != truth {
@@ -247,8 +251,8 @@ func TestInitializerBraceLiteralsCrossChunks(test *testing.T) {
 				e.out.String() +
 				"return 0;\n}\n"
 			binary := filepath.Join(test.TempDir(), "brace")
-			if err := Build(source, binary, Options{Split: true, Sanitize: true}); err != nil {
-				test.Fatal(err)
+			if buildError := Build(source, binary, Options{Split: true, Sanitize: true}); buildError != nil {
+				test.Fatal(buildError)
 			}
 			want := "1\n"
 			if shape.of == "adamic_value" {

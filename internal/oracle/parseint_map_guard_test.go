@@ -9,16 +9,16 @@ import (
 func TestParseIntMapIndexRadixAgreesWithNode(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "parseint_map.a")
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		path,
 		[]byte("console.log(['10','10','10'].map(Number.parseInt).join(','));"),
 		0600,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	oracle := onNode(test, path)
 	if oracle.exitCode != 0 || string(oracle.stdout) != "10,NaN,2\n" || len(oracle.stderr) != 0 {

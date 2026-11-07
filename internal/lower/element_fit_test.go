@@ -17,9 +17,9 @@ import (
 // judgment drifts from the first.
 func TestElementsHeldOtherwiseIsJudgedOnce(test *testing.T) {
 	test.Parallel()
-	files, err := filepath.Glob("*.go")
-	if err != nil {
-		test.Fatal(err)
+	files, globError := filepath.Glob("*.go")
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	callers := map[string]bool{}
 	walkCallers := map[string]bool{}
@@ -27,9 +27,9 @@ func TestElementsHeldOtherwiseIsJudgedOnce(test *testing.T) {
 		if strings.HasSuffix(path, "_test.go") {
 			continue
 		}
-		file, err := parser.ParseFile(token.NewFileSet(), path, nil, 0)
-		if err != nil {
-			test.Fatal(err)
+		file, parseFileError := parser.ParseFile(token.NewFileSet(), path, nil, 0)
+		if parseFileError != nil {
+			test.Fatal(parseFileError)
 		}
 		for _, declaration := range file.Decls {
 			function, isFunction := declaration.(*ast.FuncDecl)

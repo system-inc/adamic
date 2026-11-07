@@ -86,26 +86,26 @@ func TestPhantomRefusals(test *testing.T) {
 	} {
 		test.Run(testCase.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, testCase.source)
+			_, lowerSourceError := lowerSource(test, testCase.source)
 			var refused *Refused
-			if !errors.As(err, &refused) {
-				test.Fatalf("got %v, want Refused", err)
+			if !errors.As(lowerSourceError, &refused) {
+				test.Fatalf("got %v, want Refused", lowerSourceError)
 			}
 			if refused.What != testCase.what || refused.Fix != testCase.fix {
-				test.Fatalf("got %v; want %s; %s", err, testCase.what, testCase.fix)
+				test.Fatalf("got %v; want %s; %s", lowerSourceError, testCase.what, testCase.fix)
 			}
 		})
 	}
 	test.Run("fixture exact message", func(test *testing.T) {
 		test.Parallel()
-		source, err := os.ReadFile(filepath.Join("testdata", "phantom_brands", "prototype-read.a"))
-		if err != nil {
-			test.Fatal(err)
+		source, readError := os.ReadFile(filepath.Join("testdata", "phantom_brands", "prototype-read.a"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
-		_, err = lowerSource(test, string(source))
+		_, lowerSourceError := lowerSource(test, string(source))
 		want := "main.a:2:14: Adamic 0.1 refuses a primitive brand member __proto__ that exists on the primitive; use a member name the primitive does not have on its own properties or prototype chain"
-		if err == nil || !strings.HasSuffix(err.Error(), want) {
-			test.Fatalf("got %v, want %s", err, want)
+		if lowerSourceError == nil || !strings.HasSuffix(lowerSourceError.Error(), want) {
+			test.Fatalf("got %v, want %s", lowerSourceError, want)
 		}
 	})
 }
@@ -124,13 +124,13 @@ console.log(out(into('made' + 'now')));`
 function into(value: string): Escaped { return value as Escaped; }
 function out(value: Escaped): string { return value as string; }
 console.log(out(into('made' + 'now')));`
-			got, err := lowerSource(test, branded)
-			if err != nil {
-				test.Fatal(err)
+			got, lowerSourceError := lowerSource(test, branded)
+			if lowerSourceError != nil {
+				test.Fatal(lowerSourceError)
 			}
-			want, err := lowerSource(test, plain)
-			if err != nil {
-				test.Fatal(err)
+			want, lowerSourceError := lowerSource(test, plain)
+			if lowerSourceError != nil {
+				test.Fatal(lowerSourceError)
 			}
 			// Checker function IDs are local to each load, and this fixture has no indirect calls.
 			got.FunctionTypeTargets, want.FunctionTypeTargets = nil, nil
@@ -162,13 +162,13 @@ func TestPhantomPrimitiveNames(test *testing.T) {
 	test.Parallel()
 	// Node owns the inventory. Test every observed name, including ones absent from Adamic's lib.
 	script := `const results = []; for (const value of ['', 0, false]) { let at = Object(value), names = new Set(); while (at !== null) { for (const name of Object.getOwnPropertyNames(at)) names.add(name); at = Object.getPrototypeOf(at); } results.push([...names].sort()); } console.log(JSON.stringify(results));`
-	output, err := exec.Command("node", "-e", script).CombinedOutput()
-	if err != nil {
-		test.Fatalf("Node: %v: %s", err, output)
+	output, combinedOutputError := exec.Command("node", "-e", script).CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("Node: %v: %s", combinedOutputError, output)
 	}
 	var inventory [][]string
-	if err := json.Unmarshal(output, &inventory); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(output, &inventory); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	flags := []checker.TypeFlags{checker.TypeFlagsString, checker.TypeFlagsNumber, checker.TypeFlagsBoolean}
 	for index, names := range inventory {
@@ -200,39 +200,39 @@ func TestPhantomLiteralCastsStayRefused(test *testing.T) {
 		`type Numeric = number & { brand: void }; function into(value: string | number): Numeric { return value as Numeric; }`,
 	} {
 		// Stock tsc permits the first assertion but the phantom rule must retain the literal proof.
-		_, err := lowerSource(test, source)
+		_, lowerSourceError := lowerSource(test, source)
 		var refused *Refused
-		if !errors.As(err, &refused) {
-			test.Fatalf("got %v, want a refused cast", err)
+		if !errors.As(lowerSourceError, &refused) {
+			test.Fatalf("got %v, want a refused cast", lowerSourceError)
 		}
 	}
 }
 
 func TestPhantomRealPathRefusal(test *testing.T) {
 	test.Parallel()
-	source, err := os.ReadFile(filepath.Join("testdata", "phantom_brands", "nonvoid-path.a"))
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(filepath.Join("testdata", "phantom_brands", "nonvoid-path.a"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	_, err = lowerSource(test, string(source))
+	_, lowerSourceError := lowerSource(test, string(source))
 	want := "main.a:3:20: Adamic 0.1 refuses a primitive brand member __pathBrand whose type is not void; make __pathBrand undefined (or void) so the brand is phantom"
-	if err == nil || !strings.HasSuffix(err.Error(), want) {
-		test.Fatalf("got %v, want %s", err, want)
+	if lowerSourceError == nil || !strings.HasSuffix(lowerSourceError.Error(), want) {
+		test.Fatalf("got %v, want %s", lowerSourceError, want)
 	}
 }
 
 func TestPhantomOverloadOnlyBrandsKeepMainProof(test *testing.T) {
 	test.Parallel()
-	source, err := os.ReadFile("../oracle/testdata/overload_ancestor_directory.a")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("../oracle/testdata/overload_ancestor_directory.a")
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	if _, err := lowerSource(test, string(source)); err != nil {
-		test.Fatal(err)
+	if _, lowerSourceError := lowerSource(test, string(source)); lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
-	_, err = lowerSource(test, `type Path = string & { readonly pathBrand: true };
+	_, lowerSourceError := lowerSource(test, `type Path = string & { readonly pathBrand: true };
  function read(path: Path): string { return path; }`)
-	if err == nil || !strings.Contains(err.Error(), "whose type is not void") {
-		test.Fatalf("want non-phantom runtime brand refusal, got %v", err)
+	if lowerSourceError == nil || !strings.Contains(lowerSourceError.Error(), "whose type is not void") {
+		test.Fatalf("want non-phantom runtime brand refusal, got %v", lowerSourceError)
 	}
 }

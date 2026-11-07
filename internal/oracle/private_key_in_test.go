@@ -15,17 +15,19 @@ func TestPrivateKeyInClassAgrees(test *testing.T) {
 	for _, file := range []string{"private_hash.a", "private_hash.ts"} {
 		test.Run(file, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/private_key_in", file))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/private_key_in", file),
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			truth := onNode(test, path)
 			if disagreement(run{stdout: []byte("1 false\n")}, truth) != "" {
 				test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatalf("Lower: %v", err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatalf("Lower: %v", loweredError)
 			}
 			native, _ := natively(test, program)
 			for name, got := range map[string]run{

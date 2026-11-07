@@ -29,9 +29,9 @@ var compiler = []string{"./internal/load", "./internal/lower", "./internal/nativ
 // cohere/TypeScript/tsc whole added (it holds the baselines).
 func TestLoweringIsWhatTheCompilerLinks(test *testing.T) {
 	test.Parallel()
-	root, err := filepath.Abs(filepath.Join("..", ".."))
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(filepath.Join("..", ".."))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	// toolchain's go, under its environment, in the repository root with PWD set to it, so go.work resolves there. Once
 	// for each system the gate builds on, cgo on as a native build has it, and the union taken: a package only one of
@@ -46,17 +46,17 @@ func TestLoweringIsWhatTheCompilerLinks(test *testing.T) {
 		command.Env = append(command.Env, "GOOS="+system, "CGO_ENABLED=1")
 		var stderr bytes.Buffer
 		command.Stderr = &stderr
-		output, err := command.Output()
-		if err != nil {
-			test.Fatalf("go list for %s: %v\n%s", system, err, stderr.Bytes())
+		output, outputError := command.Output()
+		if outputError != nil {
+			test.Fatalf("go list for %s: %v\n%s", system, outputError, stderr.Bytes())
 		}
 		listing = append(listing, output...)
 	}
 	inside := func(path string) (string, bool) {
-		relative, err := filepath.Rel(root, path)
+		relative, relativePathError := filepath.Rel(root, path)
 		return filepath.ToSlash(
 			relative,
-		), err == nil && relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator))
+		), relativePathError == nil && relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator))
 	}
 	needed := map[string]bool{"go.work": true}
 	for _, line := range strings.Split(strings.TrimSpace(string(listing)), "\n") {
@@ -66,7 +66,7 @@ func TestLoweringIsWhatTheCompilerLinks(test *testing.T) {
 		}
 		if relative, ok := inside(goMod); ok && goMod != "" {
 			needed[relative] = true
-			if _, err := os.Stat(filepath.Join(filepath.Dir(goMod), "go.sum")); err == nil {
+			if _, statError := os.Stat(filepath.Join(filepath.Dir(goMod), "go.sum")); statError == nil {
 				needed[filepath.ToSlash(filepath.Join(filepath.Dir(relative), "go.sum"))] = true
 			}
 		}

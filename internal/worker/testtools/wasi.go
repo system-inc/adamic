@@ -19,14 +19,18 @@ func ConfigureWASI() {
 		roots = append(roots, filepath.Join(tools, "wasi-sdk/share/wasi-sysroot"))
 	} else {
 		for _, directory := range filepath.SplitList(os.Getenv("PATH")) {
-			roots = append(roots, filepath.Join(directory, "../wasi-sdk/share/wasi-sysroot"), filepath.Join(directory, "../share/wasi-sysroot"))
+			roots = append(
+				roots,
+				filepath.Join(directory, "../wasi-sdk/share/wasi-sysroot"),
+				filepath.Join(directory, "../share/wasi-sysroot"),
+			)
 		}
 	}
 	for _, root := range roots {
 		root = filepath.Clean(root)
-		if info, err := os.Stat(root); err == nil && info.IsDir() {
-			if err := os.Setenv("WASI_SYSROOT", root); err != nil {
-				panic(err)
+		if info, statError := os.Stat(root); statError == nil && info.IsDir() {
+			if setenvError := os.Setenv("WASI_SYSROOT", root); setenvError != nil {
+				panic(setenvError)
 			}
 			return
 		}

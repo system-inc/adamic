@@ -155,7 +155,10 @@ func (t *sourceTree) parse() *parsedSource {
 	if t.parsed != nil {
 		return t.parsed
 	}
-	file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: tspath.RootedFilePathFromAbsolute(parseName(t.path)), PathKey: tspath.CaseSensitive.PathKey(tspath.RootedPathFromAbsolute(parseName(t.path)))}, t.text, core.ScriptKindTS)
+	file := parser.ParseSourceFile(ast.SourceFileParseOptions{
+		FileName: tspath.RootedFilePathFromAbsolute(parseName(t.path)),
+		PathKey:  tspath.CaseSensitive.PathKey(tspath.RootedPathFromAbsolute(parseName(t.path))),
+	}, t.text, core.ScriptKindTS)
 	parsed := &parsedSource{clean: len(file.Diagnostics()) == 0}
 	comments := itemList{apart: true, trailingComma: -1}
 	commented := map[int]bool{}
@@ -392,12 +395,12 @@ func (t *sourceTree) typedSites() []site {
 }
 
 func (t *sourceTree) findSites() []site {
-	path, err := filepath.Abs(t.path)
-	if err != nil {
+	path, absolutePathError := filepath.Abs(t.path)
+	if absolutePathError != nil {
 		return nil
 	}
-	program, err := load.LoadOverlay([]string{path}, map[string]string{path: t.text})
-	if err != nil || len(program.Files()) == 0 {
+	program, loadOverlayError := load.LoadOverlay([]string{path}, map[string]string{path: t.text})
+	if loadOverlayError != nil || len(program.Files()) == 0 {
 		// A program this checker refuses has no types to go by; the lists and compounds still shrink it.
 		return nil
 	}
@@ -422,7 +425,8 @@ func (t *sourceTree) findSites() []site {
 				entry.literals = []string{"true", "false"}
 			}
 			node.ForEachChild(func(child *ast.Node) bool {
-				if ast.IsExpressionNode(child) && typeChecker.TypeToString(typeChecker.GetTypeAtLocation(child)) == typeOf {
+				if ast.IsExpressionNode(child) &&
+					typeChecker.TypeToString(typeChecker.GetTypeAtLocation(child)) == typeOf {
 					entry.children = append(entry.children, span{scanner.SkipTrivia(t.text, child.Pos()), child.End()})
 				}
 				return false
@@ -443,7 +447,10 @@ func (t *sourceTree) findSites() []site {
 // replaceable is an expression a value can stand in for: not a literal already, not a name being
 // declared or a property's name, not a place written to, and not part of a type.
 func replaceable(node *ast.Node) bool {
-	if !ast.IsExpressionNode(node) || ast.IsPartOfTypeNode(node) || ast.IsAssignmentTarget(node) || ast.IsDeclarationName(node) {
+	if !ast.IsExpressionNode(node) ||
+		ast.IsPartOfTypeNode(node) ||
+		ast.IsAssignmentTarget(node) ||
+		ast.IsDeclarationName(node) {
 		return false
 	}
 	switch node.Kind {

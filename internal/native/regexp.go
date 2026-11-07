@@ -28,7 +28,17 @@ func (e *emitter) regexCall(call ir.RegExpCall) string {
 	for _, argument := range call.Arguments {
 		arguments = append(arguments, e.value(argument))
 	}
-	method := map[string]string{"test": "test", "exec": "exec", "match": "match", "matchAll": "match_all", "next": "next", "replace": "replace", "replaceAll": "replace", "split": "split", "search": "search"}[call.Method]
+	method := map[string]string{
+		"test":       "test",
+		"exec":       "exec",
+		"match":      "match",
+		"matchAll":   "match_all",
+		"next":       "next",
+		"replace":    "replace",
+		"replaceAll": "replace",
+		"split":      "split",
+		"search":     "search",
+	}[call.Method]
 	if method == "replace" {
 		arguments = append(arguments, fmt.Sprint(call.Method == "replaceAll"))
 	}
@@ -53,7 +63,10 @@ func (e *emitter) regexProperty(property ir.RegExpProperty) string {
 			missing = array + " == NULL || " + missing
 		}
 		value := fmt.Sprintf("adamic_regex_property(%s, %s).number", array, cString(property.Name))
-		return e.snapshot(ir.MaybeNumber, fmt.Sprintf("(%s ? %s : %s)", missing, zero(ir.MaybeNumber), maybe(ir.MaybeNumber, value)))
+		return e.snapshot(
+			ir.MaybeNumber,
+			fmt.Sprintf("(%s ? %s : %s)", missing, zero(ir.MaybeNumber), maybe(ir.MaybeNumber, value)),
+		)
 	}
 	value := fmt.Sprintf("adamic_regex_property(%s, %s).%s", array, cString(property.Name), member(property.Of))
 	if property.Of.IsReference() {
@@ -80,12 +93,15 @@ func (e *emitter) regexpShapeNames() []string {
 		return names
 	}
 	for index := range e.program.Regexps {
-		tokens, err := cTokens(e.regexDeclarations(index))
-		if err != nil {
-			panic("native: malformed generated regexp declarations: " + err.Error())
+		tokens, cTokensError := cTokens(e.regexDeclarations(index))
+		if cTokensError != nil {
+			panic("native: malformed generated regexp declarations: " + cTokensError.Error())
 		}
 		for index := 0; index+4 < len(tokens); index++ {
-			if tokens[index].text == "static" && tokens[index+1].text == "const" && tokens[index+2].text == "adamic_shape" && tokens[index+4].text == "=" {
+			if tokens[index].text == "static" &&
+				tokens[index+1].text == "const" &&
+				tokens[index+2].text == "adamic_shape" &&
+				tokens[index+4].text == "=" {
 				names = append(names, tokens[index+3].text)
 			}
 		}

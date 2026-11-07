@@ -31,8 +31,8 @@ func newTypeAwarePlan(test *testing.T, h *harness, expected []string, shards []s
 	if len(shards) != required {
 		test.Fatalf("enumerated shard count %d differs from declared %d", len(shards), required)
 	}
-	if err := sixUnion(expected, shards); err != nil {
-		test.Fatal(err)
+	if sixUnionError := sixUnion(expected, shards); sixUnionError != nil {
+		test.Fatal(sixUnionError)
 	}
 	test.Logf("six-union count=%d unique=%d shards=%d", len(expected), len(expected), len(shards))
 	test.Logf("split-setup elapsed_s=%.6f builds=shared-once", time.Since(h.setupStarted).Seconds())
@@ -64,8 +64,8 @@ func typeAwareTopShard(test *testing.T, key string, index int) {
 	defer typeAwareDeadline(test, test.Name())()
 	shard := plan.shards[index]
 	directory := filepath.Join(productDirectory, "top-shards", test.Name())
-	if err := os.MkdirAll(directory, 0755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	h := &harness{t: test, repository: plan.h.repository, directory: directory, parallel: true}
 	started := time.Now()
@@ -87,8 +87,8 @@ func typeAwareTopUnion(test *testing.T, key string) {
 	if len(plan.expected) == 0 {
 		test.Fatal("empty shard corpus")
 	}
-	if err := sixUnion(plan.expected, plan.shards); err != nil {
-		test.Fatal(err)
+	if sixUnionError := sixUnion(plan.expected, plan.shards); sixUnionError != nil {
+		test.Fatal(sixUnionError)
 	}
 	test.Logf("six-union count=%d unique=%d shards=%d", len(plan.expected), len(plan.expected), len(plan.shards))
 }
@@ -129,14 +129,14 @@ func TestTypeAwareTopShardPlantedFailure(test *testing.T) {
 		command.Env = append(os.Environ(), "ADAMIC_TYPEAWARE_TOP_PLANTED=1")
 		// Read through childguard.Capture, to its end with no WaitDelay deciding when, so a nonholding leaf that passed
 		// but was slow to drain under load never reads as failed, and the holding leaf's message is never cut short.
-		stdout, stderr, err := childguard.Capture(ctx, command)
+		stdout, stderr, captureError := childguard.Capture(ctx, command)
 		output := append(stdout, stderr...)
 		cancel()
-		if i == 0 && err != nil {
-			test.Fatalf("nonholding leaf failed: %v %s", err, output)
+		if i == 0 && captureError != nil {
+			test.Fatalf("nonholding leaf failed: %v %s", captureError, output)
 		}
-		if i == 1 && (err == nil || !bytes.Contains(output, []byte("shard "+name+" mismatch"))) {
-			test.Fatalf("holding leaf did not catch planted failure: %v %s", err, output)
+		if i == 1 && (captureError == nil || !bytes.Contains(output, []byte("shard "+name+" mismatch"))) {
+			test.Fatalf("holding leaf did not catch planted failure: %v %s", captureError, output)
 		}
 	}
 }

@@ -15,9 +15,9 @@ import (
 // Each subprocess owns its stdout/stderr; other driver tests capture those globals.
 func TestExplainChecksOutput(test *testing.T) {
 	test.Parallel()
-	repository, err := filepath.Abs("../..")
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs("../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	for _, fixture := range []string{
 		"overload_some_empty",
@@ -28,18 +28,18 @@ func TestExplainChecksOutput(test *testing.T) {
 	} {
 		test.Run(fixture, func(test *testing.T) {
 			test.Parallel()
-			want, err := os.ReadFile("testdata/checks/" + fixture + ".txt")
-			if err != nil {
-				test.Fatal(err)
+			want, readError := os.ReadFile("testdata/checks/" + fixture + ".txt")
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			witness := "internal/lower/testdata/predicates/" + fixture + ".a"
-			source, err := os.ReadFile(filepath.Join(repository, witness))
-			if err != nil {
-				test.Fatal(err)
+			source, readError := os.ReadFile(filepath.Join(repository, witness))
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			path := filepath.Join(test.TempDir(), "main.ts")
-			if err = os.WriteFile(path, source, 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, source, 0644); writeError != nil {
+				test.Fatal(writeError)
 			}
 			for _, backend := range []string{"c", "js", "build"} {
 				test.Run(backend, func(test *testing.T) {
@@ -56,8 +56,8 @@ func TestExplainChecksOutput(test *testing.T) {
 					command.Env = explainDriverEnvironment(test, os.Environ())
 					var output, diagnostic bytes.Buffer
 					command.Stdout, command.Stderr = &output, &diagnostic
-					if err := command.Run(); err != nil {
-						test.Fatalf("%s: %v, %s", backend, err, diagnostic.Bytes())
+					if runError := command.Run(); runError != nil {
+						test.Fatalf("%s: %v, %s", backend, runError, diagnostic.Bytes())
 					}
 					if diagnosticString := strings.ReplaceAll(
 						diagnostic.String(),
@@ -85,9 +85,9 @@ func TestExplainChecksOutput(test *testing.T) {
 // (commandRuntime never builds), so the drivers can share them.
 func explainDriverEnvironment(test *testing.T, environment []string) []string {
 	test.Helper()
-	cache, err := location.BuildCache()
-	if err != nil {
-		test.Fatal(err)
+	cache, buildCacheError := location.BuildCache()
+	if buildCacheError != nil {
+		test.Fatal(buildCacheError)
 	}
 	return append(slices.Clone(environment), "ADAMIC_EXPLAIN_TEST_DRIVER=1", "ADAMIC_BUILD_CACHE_DIR="+cache)
 }
@@ -96,9 +96,9 @@ func explainDriverEnvironment(test *testing.T, environment []string) []string {
 // place of the pin, and a box without ADAMIC_BUILD_CACHE_DIR has the driver look in an empty cache.
 func TestExplainDriversReadTheTestsBuildCache(test *testing.T) {
 	test.Parallel()
-	cache, err := location.BuildCache()
-	if err != nil {
-		test.Fatal(err)
+	cache, buildCacheError := location.BuildCache()
+	if buildCacheError != nil {
+		test.Fatal(buildCacheError)
 	}
 	environment := explainDriverEnvironment(
 		test,
@@ -152,9 +152,9 @@ func TestPlaceholderExplainChecksOutputBuild(test *testing.T) {
 
 func assertPlaceholderExplainChecksOutput(test *testing.T, backend string) {
 	test.Helper()
-	repository, err := filepath.Abs("../..")
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs("../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 
 	arguments := []string{backend, "internal/oracle/testdata/placeholder_nonnull_saved_leak.a", "--explain-checks"}
@@ -166,8 +166,8 @@ func assertPlaceholderExplainChecksOutput(test *testing.T, backend string) {
 	command.Env = append(os.Environ(), "ADAMIC_EXPLAIN_TEST_DRIVER=1")
 	var output, diagnostic bytes.Buffer
 	command.Stdout, command.Stderr = &output, &diagnostic
-	if err := command.Run(); err != nil {
-		test.Fatalf("%v: %s", err, diagnostic.Bytes())
+	if runError := command.Run(); runError != nil {
+		test.Fatalf("%v: %s", runError, diagnostic.Bytes())
 	}
 	for _, want := range []string{
 		"placeholder value: checked at argument via saved",

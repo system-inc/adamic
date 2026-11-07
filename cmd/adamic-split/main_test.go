@@ -13,9 +13,9 @@ func TestCommandPrintsFixture(test *testing.T) {
 	if code := run([]string{path}, &output, &errors); code != 0 {
 		test.Fatalf("exit %d: %s", code, errors.String())
 	}
-	expected, err := os.ReadFile("../../internal/split/testdata/decisions.txt")
-	if err != nil {
-		test.Fatal(err)
+	expected, readError := os.ReadFile("../../internal/split/testdata/decisions.txt")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if !bytes.Equal(output.Bytes(), expected) {
 		test.Fatalf("output:\n%s", output.String())

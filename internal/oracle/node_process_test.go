@@ -51,8 +51,8 @@ func nodeProcessTerminal(test *testing.T, destination string, command ...string)
 		Stdout, Stderr []byte
 		ExitCode       int
 	}
-	if err := json.Unmarshal(result.stdout, &observed); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(result.stdout, &observed); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	return run{stdout: observed.Stdout, stderr: observed.Stderr, exitCode: observed.ExitCode}
 }
@@ -101,13 +101,13 @@ func nodeProcessMutantNames(source, prefix string) string {
 func nodeProcessMutant(test *testing.T, fixture, before, after string) (string, string) {
 	test.Helper()
 	path := filepath.Join(repository, "internal/oracle/testdata", fixture)
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
-	data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/node_process.c"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(repository, "internal/native/runtime/node_process.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	source := string(data)
 	if strings.Count(source, before) != 1 {
@@ -127,8 +127,8 @@ func nodeProcessMutant(test *testing.T, fixture, before, after string) (string, 
 		1,
 	)
 	binary := filepath.Join(test.TempDir(), "mutant")
-	if err := native.Build(source+"\n"+code, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(source+"\n"+code, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	return path, binary
 }
@@ -248,9 +248,9 @@ func TestNodeProcessMutants(test *testing.T) {
 					test.Fatalf("mutant not caught only by stdout: %d %q %q", bad.exitCode, bad.stdout, bad.stderr)
 				}
 			} else {
-				absolute, err := filepath.Abs(path)
-				if err != nil {
-					test.Fatal(err)
+				absolute, absolutePathError := filepath.Abs(path)
+				if absolutePathError != nil {
+					test.Fatal(absolutePathError)
 				}
 				how := inputRun{
 					directory: filepath.Dir(absolute),
@@ -286,18 +286,18 @@ func TestNodeProcessMutants(test *testing.T) {
 
 func TestNodeProcessUnicodeDirectory(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_process_host.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_process_host.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	shared := sharedDirectory(test)
 	directory := filepath.Join(shared, "héllo 🌍")
-	if err := os.Mkdir(directory, 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.Mkdir(directory, 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	how := inputRun{directory: directory, arguments: []string{"real directory", "bad\xff"}}
 	truth := onNodeWith(test, how, path)
@@ -364,9 +364,9 @@ int main(void) {
 	for _, mutant := range []bool{false, true} {
 		implementation := code + "\n"
 		if mutant {
-			data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/node_process.c"))
-			if err != nil {
-				test.Fatal(err)
+			data, readError := os.ReadFile(filepath.Join(repository, "internal/native/runtime/node_process.c"))
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			anchor := "(void)fcntl(STDOUT_FILENO, F_SETFL, flags);"
 			if strings.Count(string(data), anchor) != 1 {
@@ -376,8 +376,8 @@ int main(void) {
 			implementation = nodeProcessMutantNames(changed+"\n"+code+"\n", "blocking_probe_node_")
 		}
 		probe := filepath.Join(test.TempDir(), "flags")
-		if err := native.Build(implementation, probe, native.Options{Sanitize: true}); err != nil {
-			test.Fatal(err)
+		if buildError := native.Build(implementation, probe, native.Options{Sanitize: true}); buildError != nil {
+			test.Fatal(buildError)
 		}
 		got := nodeProcessTerminal(test, "backpressure", probe)
 		if got.exitCode != 0 || len(got.stderr) != 0 {
@@ -406,13 +406,15 @@ func TestNodeProcessCachedDirectory(test *testing.T) {
 		"if (current_directory != NULL) { return adamic_retain(current_directory); }",
 		"if (false) { return adamic_retain(current_directory); }",
 	)
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	driver, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_process_cached_cwd.py"))
-	if err != nil {
-		test.Fatal(err)
+	driver, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/node_process_cached_cwd.py"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	observe := func(command ...string) run {
 		result := execute(test, "python3", append([]string{driver}, command...)...)
@@ -423,8 +425,8 @@ func TestNodeProcessCachedDirectory(test *testing.T) {
 			Stdout, Stderr []byte
 			ExitCode       int
 		}
-		if err := json.Unmarshal(result.stdout, &observed); err != nil {
-			test.Fatal(err)
+		if decodeError := json.Unmarshal(result.stdout, &observed); decodeError != nil {
+			test.Fatal(decodeError)
 		}
 		return run{stdout: observed.Stdout, stderr: observed.Stderr, exitCode: observed.ExitCode}
 	}
@@ -459,13 +461,13 @@ func TestNodeProcessUnsupportedOperationsStayLoud(test *testing.T) {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
 			path := filepath.Join(test.TempDir(), "node_process_unsupported.a")
-			if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
+				test.Fatal(writeError)
 			}
-			_, err := lowered(test, path)
+			_, loweredError := lowered(test, path)
 			var missing *lower.NotYet
-			if !errors.As(err, &missing) {
-				test.Fatalf("must fail before C generation with NotYet, got %v", err)
+			if !errors.As(loweredError, &missing) {
+				test.Fatalf("must fail before C generation with NotYet, got %v", loweredError)
 			}
 			test.Log(missing)
 		})
@@ -478,13 +480,13 @@ func TestNodeProcessRawWriteFileModeMutant(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "main.a")
 	source := `import fs from 'node:fs'; process.stdout.write('raw|'); console.log('line'); console.log(String(fs.fstatSync(1).size));`
-	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	observe := func(name string, arguments ...string) run {
-		file, err := os.Create(filepath.Join(test.TempDir(), "stdout"))
-		if err != nil {
-			test.Fatal(err)
+		file, createError := os.Create(filepath.Join(test.TempDir(), "stdout"))
+		if createError != nil {
+			test.Fatal(createError)
 		}
 		defer file.Close()
 		// CaptureTo drains pipes; redirect inside the child so descriptor 1 is a real file.
@@ -498,15 +500,15 @@ func TestNodeProcessRawWriteFileModeMutant(test *testing.T) {
 		ctx, command := bounded(test, "/bin/sh", append(redirect, arguments...)...)
 		var stderr bytes.Buffer
 		command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1")
-		if err := childguard.CaptureTo(ctx, command, file, &stderr); err != nil {
-			test.Fatalf("file observation must finish cleanly: %v\n%s", err, stderr.Bytes())
+		if captureToError := childguard.CaptureTo(ctx, command, file, &stderr); captureToError != nil {
+			test.Fatalf("file observation must finish cleanly: %v\n%s", captureToError, stderr.Bytes())
 		}
 		if stderr.Len() != 0 {
 			test.Fatalf("file observation must have clean stderr: %s", stderr.Bytes())
 		}
-		data, err := os.ReadFile(file.Name())
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(file.Name())
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		return run{stdout: data, stderr: stderr.Bytes()}
 	}
@@ -519,9 +521,9 @@ func TestNodeProcessRawWriteFileModeMutant(test *testing.T) {
 	if string(truth.stdout) != "raw|line\n9\n" || len(truth.stderr) != 0 {
 		test.Fatalf("unexpected Node file observation: %+v", truth)
 	}
-	data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/adamic.c"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(repository, "internal/native/runtime/adamic.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	runtimeSource := string(data)
 	prefix := ""
@@ -577,8 +579,12 @@ int main(void) {
 			)
 		}
 		binary := filepath.Join(test.TempDir(), "probe")
-		if err := native.Build(prefix+implementation+harness, binary, native.Options{Sanitize: true}); err != nil {
-			test.Fatal(err)
+		if buildError := native.Build(
+			prefix+implementation+harness,
+			binary,
+			native.Options{Sanitize: true},
+		); buildError != nil {
+			test.Fatal(buildError)
 		}
 		got := observe(binary)
 		difference := disagreement(truth, got)

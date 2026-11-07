@@ -24,32 +24,35 @@ func TestNodeFSFileOptionsBorrow(test *testing.T) {
 
 func TestNodeFSFileDoesNotAuthorizeMutableWidening(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(
+	_, lowerSourceError := lowerSource(
 		test,
 		`import {statSync} from 'node:fs'; const options={throwIfNoEntry:false}; const wider:{throwIfNoEntry?:boolean | undefined}=options; wider.throwIfNoEntry=undefined; statSync('missing',options);`,
 	)
-	if err == nil || !strings.Contains(err.Error(), "invariant-mutable") {
-		test.Fatalf("want mutable widening refusal, got %v", err)
+	if lowerSourceError == nil || !strings.Contains(lowerSourceError.Error(), "invariant-mutable") {
+		test.Fatalf("want mutable widening refusal, got %v", lowerSourceError)
 	}
 }
 
 func TestNodeFSFileRefusesOptionEffects(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(
+	_, lowerSourceError := lowerSource(
 		test,
 		`import {statSync} from 'node:fs'; function option():boolean {console.log('effect');return false;} const result=statSync('missing',{throwIfNoEntry:option()});`,
 	)
-	if err == nil || !strings.Contains(err.Error(), "evaluated expressions") {
-		test.Fatalf("want effects refusal, got %v", err)
+	if lowerSourceError == nil || !strings.Contains(lowerSourceError.Error(), "evaluated expressions") {
+		test.Fatalf("want effects refusal, got %v", lowerSourceError)
 	}
 }
 
 func TestNodeFSFileRefusesVoidValues(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(test, `import {closeSync} from 'node:fs'; const result=closeSync(0)===undefined;`)
+	_, lowerSourceError := lowerSource(
+		test,
+		`import {closeSync} from 'node:fs'; const result=closeSync(0)===undefined;`,
+	)
 	// H2's refusal of a void read (#x2gt39p) meets it first, before the fs-specific one.
-	if err == nil || !strings.Contains(err.Error(), "a read of a void value") {
-		test.Fatalf("want void value refusal, got %v", err)
+	if lowerSourceError == nil || !strings.Contains(lowerSourceError.Error(), "a read of a void value") {
+		test.Fatalf("want void value refusal, got %v", lowerSourceError)
 	}
 }
 
@@ -64,10 +67,10 @@ func TestNodeFSFileRefusesPinnedUnsupportedOverloads(test *testing.T) {
 	} {
 		test.Run(one.member, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, one.source)
+			_, lowerSourceError := lowerSource(test, one.source)
 			var missing *NotYet
-			if !errors.As(err, &missing) || !strings.Contains(missing.What, one.member) {
-				test.Fatalf("want named NotYet %s, got %v", one.member, err)
+			if !errors.As(lowerSourceError, &missing) || !strings.Contains(missing.What, one.member) {
+				test.Fatalf("want named NotYet %s, got %v", one.member, lowerSourceError)
 			}
 		})
 	}
@@ -83,25 +86,26 @@ func TestNodeFSFileNamespaceImport(test *testing.T) {
 
 func TestNodeFSFileQualifiedErrorType(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(
+	_, lowerSourceError := lowerSource(
 		test,
 		`import type {Stats} from 'node:fs'; const error=new Error('plain'); const code=(error as NodeJS.ErrnoException).code; console.log(code??'missing');`,
 	)
 	var refused *Refused
-	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/no-optional-widening") {
-		test.Fatalf("want optional host fields proven before the qualified cast, got %v", err)
+	if !errors.As(lowerSourceError, &refused) ||
+		!strings.Contains(lowerSourceError.Error(), "adamic/no-optional-widening") {
+		test.Fatalf("want optional host fields proven before the qualified cast, got %v", lowerSourceError)
 	}
 }
 
 func TestNodeFSFileKeepsDetachedMethodRefusal(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(
+	_, lowerSourceError := lowerSource(
 		test,
 		`import {statSync} from 'node:fs'; const stat=statSync('x'); const method=stat.isFile; console.log(method()?'file':'other');`,
 	)
 	var refused *Refused
-	if !errors.As(err, &refused) || !strings.Contains(refused.What, "isFile") {
-		test.Fatalf("want existing unbound-method refusal naming isFile, got %v", err)
+	if !errors.As(lowerSourceError, &refused) || !strings.Contains(refused.What, "isFile") {
+		test.Fatalf("want existing unbound-method refusal naming isFile, got %v", lowerSourceError)
 	}
 }
 
@@ -134,10 +138,10 @@ func TestNodeFSFileScratchOverloadsAreNamed(test *testing.T) {
 			"rmSync",
 		},
 	} {
-		_, err := lowerSource(test, one.source)
+		_, lowerSourceError := lowerSource(test, one.source)
 		var missing *NotYet
-		if !errors.As(err, &missing) || !strings.Contains(err.Error(), one.member) {
-			test.Fatalf("%s: want named NotYet, got %v", one.member, err)
+		if !errors.As(lowerSourceError, &missing) || !strings.Contains(lowerSourceError.Error(), one.member) {
+			test.Fatalf("%s: want named NotYet, got %v", one.member, lowerSourceError)
 		}
 	}
 }

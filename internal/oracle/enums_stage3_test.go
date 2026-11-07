@@ -61,8 +61,8 @@ func TestStage3EnumBoundaries(test *testing.T) {
 			if err != nil {
 				test.Fatal(err)
 			}
-			program, loadErr := load.Load([]string{path})
-			err = loadErr
+			program, loadError := load.Load([]string{path})
+			err = loadError
 			if err == nil {
 				_, err = lower.Lower(context.Background(), program)
 			}
@@ -80,13 +80,13 @@ func TestStage3EnumBoundaries(test *testing.T) {
 
 func TestStage3EnumSparseArrayBoundary(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "stage3/fixtures/enums/07_regex_array_map.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "stage3/fixtures/enums/07_regex_array_map.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	want := run{stderr: []byte("adamic: panic: index 1 is outside an array of length 0\n"), exitCode: 70}
 	native, _ := natively(test, program)
@@ -104,13 +104,13 @@ func TestStage3EnumSparseArrayBoundary(test *testing.T) {
 // This mutant finishes normally; only the independent source observation catches its ordering.
 func TestEnumNameEnumerationMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/enums_names.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/enums_names.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	changed := false
 	for _, statement := range program.Main {

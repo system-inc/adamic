@@ -48,11 +48,11 @@ func inlineCommandContext(ctx context.Context, name string, arguments ...string)
 		if command.Process == nil {
 			return os.ErrProcessDone
 		}
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
+		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if errors.Is(killError, syscall.ESRCH) {
 			return os.ErrProcessDone
 		}
-		return err
+		return killError
 	}
 	return command
 }
@@ -90,23 +90,23 @@ func inlineWrite(dir, name string, data []byte) error {
 	return os.WriteFile(filepath.Join(dir, name), data, 0644)
 }
 func buildInlineProgram(main, dir string) error {
-	p, err := load.Load([]string{main})
-	if err != nil {
-		return err
+	p, loadError := load.Load([]string{main})
+	if loadError != nil {
+		return loadError
 	}
-	program, err := lower.Lower(context.Background(), p)
-	if err != nil {
-		return err
+	program, lowerError := lower.Lower(context.Background(), p)
+	if lowerError != nil {
+		return lowerError
 	}
-	if err = inlineWrite(dir, "program.c", []byte(native.C(program))); err != nil {
-		return err
+	if inlineWriteError := inlineWrite(dir, "program.c", []byte(native.C(program))); inlineWriteError != nil {
+		return inlineWriteError
 	}
 	return inlineWrite(dir, "program.mjs", []byte(javascript.JavaScript(program)))
 }
 func buildInlineLowered(dir string) error {
-	main, err := filepath.Abs("main.ts")
-	if err != nil {
-		return err
+	main, absolutePathError := filepath.Abs("main.ts")
+	if absolutePathError != nil {
+		return absolutePathError
 	}
 	return buildInlineProgram(main, dir)
 }
@@ -116,25 +116,25 @@ type inlineSource string
 func (source inlineSource) buildNative(dir string) error    { return source.buildBinary(dir, false) }
 func (source inlineSource) buildSanitized(dir string) error { return source.buildBinary(dir, true) }
 func (source inlineSource) buildBinary(dir string, sanitize bool) error {
-	data, err := os.ReadFile(filepath.Join(string(source), "program.c"))
-	if err != nil {
-		return err
+	data, readError := os.ReadFile(filepath.Join(string(source), "program.c"))
+	if readError != nil {
+		return readError
 	}
 	return native.Build(string(data), filepath.Join(dir, "port"), native.Options{Sanitize: sanitize})
 }
 func (source inlineSource) buildNode(dir string) error {
-	script, err := filepath.Abs("testdata/build_node.mjs")
-	if err != nil {
-		return err
+	script, absolutePathError := filepath.Abs("testdata/build_node.mjs")
+	if absolutePathError != nil {
+		return absolutePathError
 	}
 	cmd, ctx, cancel := inlineCommand("node", "--disable-warning=ExperimentalWarning", script, string(source), dir)
 	defer cancel()
 	// Read through childguard.Capture for execute's reason: a WaitDelay could fail a build that had finished. The
 	// build script prints nothing unless it fails, so only childguard's 30-minute first-output window could have
 	// fired, and the 600 s Loom gives a product unit ends a hung build sooner.
-	stdout, stderr, err := childguard.Capture(ctx, cmd)
-	if err != nil {
-		return fmt.Errorf("%w: %s%s", err, stdout, stderr)
+	stdout, stderr, captureError := childguard.Capture(ctx, cmd)
+	if captureError != nil {
+		return fmt.Errorf("%w: %s%s", captureError, stdout, stderr)
 	}
 	return nil
 }
@@ -143,9 +143,9 @@ type inlineMutation struct{ name, file, from, to string }
 
 func (m inlineMutation) buildLowered(dir string) error {
 	for _, name := range []string{"main.ts", "inline.ts", "classes.ts"} {
-		data, err := os.ReadFile(name)
-		if err != nil {
-			return err
+		data, readError := os.ReadFile(name)
+		if readError != nil {
+			return readError
 		}
 		if name == m.file {
 			if strings.Count(string(data), m.from) != 1 {
@@ -153,8 +153,8 @@ func (m inlineMutation) buildLowered(dir string) error {
 			}
 			data = []byte(strings.Replace(string(data), m.from, m.to, 1))
 		}
-		if err = inlineWrite(dir, name, data); err != nil {
-			return err
+		if inlineWriteError := inlineWrite(dir, name, data); inlineWriteError != nil {
+			return inlineWriteError
 		}
 	}
 	return buildInlineProgram(filepath.Join(dir, "main.ts"), dir)
@@ -205,9 +205,9 @@ func inlineLoweredInputs(index int) buildcache.Inputs {
 func inlineProductSources(test *testing.T, in buildcache.Inputs, source string, names ...string) buildcache.Inputs {
 	test.Helper()
 	for _, name := range names {
-		data, err := os.ReadFile(filepath.Join(source, name))
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(filepath.Join(source, name))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		in.Flags = append(in.Flags, fmt.Sprintf("source %s sha256 %x", name, sha256.Sum256(data)))
 	}
@@ -312,9 +312,9 @@ func inlineBox() (int, int, error) {
 	if len(parts) != 2 {
 		return 0, 0, fmt.Errorf("ADAMIC_TEST_SHARD must be zero-based i/n")
 	}
-	i, e := strconv.Atoi(parts[0])
+	i, parseError := strconv.Atoi(parts[0])
 	n, f := strconv.Atoi(parts[1])
-	if e != nil || f != nil || n < 1 || i < 0 || i >= n {
+	if parseError != nil || f != nil || n < 1 || i < 0 || i >= n {
 		return 0, 0, fmt.Errorf("invalid ADAMIC_TEST_SHARD=%q", value)
 	}
 	return i, n, nil
@@ -377,15 +377,15 @@ func prepareInlineShards(
 	files, generatedEnd int,
 	selected map[string]bool,
 ) func(*testing.T, int) {
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	names := make([]string, files)
 	for i, path := range paths {
-		name, err := filepath.Rel(root, path)
-		if err != nil {
-			test.Fatal(err)
+		name, relativePathError := filepath.Rel(root, path)
+		if relativePathError != nil {
+			test.Fatal(relativePathError)
 		}
 		names[i] = filepath.ToSlash(name)
 	}
@@ -394,8 +394,8 @@ func prepareInlineShards(
 	for id := range len(texts) * len(inlineModes) {
 		full[id] = true
 	}
-	if err := inlineUnion(shards, full); err != nil {
-		test.Fatal(err)
+	if inlineUnionError := inlineUnion(shards, full); inlineUnionError != nil {
+		test.Fatal(inlineUnionError)
 	}
 	test.Logf("full counted union: %d cases, each id exactly once", len(full))
 	if len(shards) != testMarkdownInlineShards {
@@ -418,13 +418,13 @@ func prepareInlineShards(
 		}
 		shards[i].ids = ids
 	}
-	if err := inlineUnion(shards, expected); err != nil {
-		test.Fatal(err)
+	if inlineUnionError := inlineUnion(shards, expected); inlineUnionError != nil {
+		test.Fatal(inlineUnionError)
 	}
 	test.Logf("counted union: %d cases, each id exactly once; %d shards", len(expected), len(shards))
-	box, boxes, err := inlineBox()
-	if err != nil {
-		test.Fatal(err)
+	box, boxes, inlineBoxError := inlineBox()
+	if inlineBoxError != nil {
+		test.Fatal(inlineBoxError)
 	}
 	goBinary := inlineOverlayBuild(test)
 	nodeDir := inlineNodeProduct(test)
@@ -507,8 +507,13 @@ func prepareInlineShards(
 		clean(test, "Go", want)
 		compare := func(side string, r run) {
 			clean(test, side, r)
-			if err := inlineDifference(test.Name()+" "+side, shard.ids, r.stdout, want.stdout); err != nil {
-				test.Fatal(err)
+			if inlineDifferenceError := inlineDifference(
+				test.Name()+" "+side,
+				shard.ids,
+				r.stdout,
+				want.stdout,
+			); inlineDifferenceError != nil {
+				test.Fatal(inlineDifferenceError)
 			}
 		}
 		compare(
@@ -536,8 +541,8 @@ func prepareInlineShards(
 		if owns {
 			r := inlineNativeRun(test, filepath.Join(mutantNativeDir, "port"), mutantFast, "--batch", cases)
 			clean(test, "planted mutant", r)
-			err := inlineDifference(test.Name(), shard.ids, r.stdout, want.stdout)
-			if err == nil {
+			inlineDifferenceError := inlineDifference(test.Name(), shard.ids, r.stdout, want.stdout)
+			if inlineDifferenceError == nil {
 				test.Fatal("planted mutant survived")
 			}
 			a, b := bytes.Split(r.stdout, []byte("\n")), bytes.Split(want.stdout, []byte("\n"))
@@ -556,7 +561,7 @@ func prepareInlineShards(
 			if differences != 1 {
 				test.Fatalf("planted mutant changed %d cases", differences)
 			}
-			test.Logf("planted mutant caught exactly once: %v", err)
+			test.Logf("planted mutant caught exactly once: %v", inlineDifferenceError)
 		}
 		for _, id := range shard.ids {
 			if id%len(inlineModes) != 0 || id/len(inlineModes) >= files {
@@ -613,10 +618,15 @@ func prepareInlineShards(
 					onNode(test, m.node, "--batch", probe),
 				} {
 					clean(test, m.name, r)
-					if err := inlineDifference(test.Name()+" "+m.name, ids, r.stdout, answer.stdout); err == nil {
+					if inlineDifferenceError := inlineDifference(
+						test.Name()+" "+m.name,
+						ids,
+						r.stdout,
+						answer.stdout,
+					); inlineDifferenceError == nil {
 						test.Fatalf("%s survived", m.name)
 					} else {
-						test.Log(err)
+						test.Log(inlineDifferenceError)
 					}
 				}
 			}
@@ -627,8 +637,11 @@ func prepareInlineShards(
 func TestMarkdownInlineShardUnion(test *testing.T) {
 	test.Parallel()
 	expected := map[int]bool{0: true, 1: true, 2: true}
-	if err := inlineUnion([]inlineShard{{ids: []int{0, 1}}, {ids: []int{2}}}, expected); err != nil {
-		test.Fatal(err)
+	if inlineUnionError := inlineUnion(
+		[]inlineShard{{ids: []int{0, 1}}, {ids: []int{2}}},
+		expected,
+	); inlineUnionError != nil {
+		test.Fatal(inlineUnionError)
 	}
 	for _, shards := range [][]inlineShard{{{ids: []int{0, 1}}}, {{ids: []int{0, 1, 2, 2}}}, {{ids: []int{0, 1, 3}}}} {
 		if inlineUnion(shards, expected) == nil {
@@ -641,13 +654,13 @@ func TestMarkdownInlineShardUnion(test *testing.T) {
 func TestMarkdownInlineShardSelector(test *testing.T) {
 	for _, value := range []string{"", "0/1", "2/3"} {
 		test.Setenv("ADAMIC_TEST_SHARD", value)
-		if _, _, err := inlineBox(); err != nil {
-			test.Fatal(err)
+		if _, _, inlineBoxError := inlineBox(); inlineBoxError != nil {
+			test.Fatal(inlineBoxError)
 		}
 	}
 	for _, value := range []string{"1", "0/0", "-1/3", "3/3", "x/2"} {
 		test.Setenv("ADAMIC_TEST_SHARD", value)
-		if _, _, err := inlineBox(); err == nil {
+		if _, _, inlineBoxError := inlineBox(); inlineBoxError == nil {
 			test.Fatalf("accepted %q", value)
 		}
 	}
@@ -655,18 +668,18 @@ func TestMarkdownInlineShardSelector(test *testing.T) {
 
 func TestMarkdownInlineProductSourceInputs(test *testing.T) {
 	test.Parallel()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	first, second := test.TempDir(), test.TempDir()
 	write(test, filepath.Join(first, "program.c"), []byte("original"))
 	write(test, filepath.Join(second, "program.c"), []byte("original"))
 	key := func(dir string) string {
 		in := inlineProductSources(test, buildcache.Inputs{Name: "markdowninline prerequisite"}, dir, "program.c")
-		value, err := buildcache.Key(root, in)
-		if err != nil {
-			test.Fatal(err)
+		value, keyError := buildcache.Key(root, in)
+		if keyError != nil {
+			test.Fatal(keyError)
 		}
 		return value
 	}
@@ -749,15 +762,15 @@ func TestMarkdownInlineShardAssignmentStable(test *testing.T) {
 func TestMarkdownInlineUnion(test *testing.T) {
 	test.Parallel()
 	data := collectInlineCorpus(test)
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	names := make([]string, data.files)
 	for i, path := range data.paths {
-		name, err := filepath.Rel(root, path)
-		if err != nil {
-			test.Fatal(err)
+		name, relativePathError := filepath.Rel(root, path)
+		if relativePathError != nil {
+			test.Fatal(relativePathError)
 		}
 		names[i] = filepath.ToSlash(name)
 	}
@@ -769,8 +782,8 @@ func TestMarkdownInlineUnion(test *testing.T) {
 	for id := range len(data.texts) * len(inlineModes) {
 		expected[id] = true
 	}
-	if err := inlineUnion(shards, expected); err != nil {
-		test.Fatal(err)
+	if inlineUnionError := inlineUnion(shards, expected); inlineUnionError != nil {
+		test.Fatal(inlineUnionError)
 	}
 	test.Logf("live union: %d cases, each id exactly once; %d shards", len(expected), len(shards))
 }

@@ -47,8 +47,8 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 		declaration = implementation
 	}
 	if _, isSigned := l.signed[index]; !isSigned {
-		if err := l.signature(index, declaration, this); err != nil {
-			return err
+		if signatureError := l.signature(index, declaration, this); signatureError != nil {
+			return signatureError
 		}
 	}
 	pending := l.signed[index]
@@ -62,8 +62,8 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 	if implementation := l.censusImplementation(declaration); implementation != nil {
 		declaration = implementation
 	}
-	if err := l.censusOverloads(declaration); err != nil {
-		return err
+	if censusOverloadsError := l.censusOverloads(declaration); censusOverloadsError != nil {
+		return censusOverloadsError
 	}
 	function := l.result.Functions[index]
 	function.SourceLength = sourceFunctionLength(declaration)
@@ -93,8 +93,8 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		if !loweredGenerator(declaration) {
 			return l.generatorNotYet(declaration, generatorForm(declaration))
 		}
-		if err := l.generatorSignature(&function, declaration); err != nil {
-			return err
+		if generatorSignatureError := l.generatorSignature(&function, declaration); generatorSignatureError != nil {
+			return generatorSignatureError
 		}
 	} else if declaration.Kind != ast.KindConstructor {
 		signature := l.checker.GetSignatureFromDeclaration(declaration)
@@ -103,7 +103,11 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		// A function that never returns (it panics on every path, as (why) => panic(why) does) has no
 		// result to hold, as one returning void hasn't. An arrow whose expression is never for another
 		// reason, a variable the checker narrowed to nothing, isn't one.
-		neverArrow := returns.Flags()&checker.TypeFlagsNever != 0 && declaration.Body() != nil && declaration.Body().Kind != ast.KindBlock && declaration.Body().Kind != ast.KindCallExpression && !l.isPanicCall(declaration.Body())
+		neverArrow := returns.Flags()&checker.TypeFlagsNever != 0 &&
+			declaration.Body() != nil &&
+			declaration.Body().Kind != ast.KindBlock &&
+			declaration.Body().Kind != ast.KindCallExpression &&
+			!l.isPanicCall(declaration.Body())
 		if returns.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 || neverArrow {
 			valueType, isKnown := l.representation(returns)
 			if returns.Flags()&checker.TypeFlagsUndefined != 0 {
@@ -162,8 +166,15 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 	patterns := []patterned{}
 	for position, parameter := range declaration.Parameters() {
 		declared := parameter.AsParameterDeclaration()
-		function.Boundary.Parameters = append(function.Boundary.Parameters, ir.BoundaryParameter{Schema: l.boundarySchema(parameter, l.checker.GetTypeAtLocation(parameter))})
-		if name := parameter.Name(); (name.Kind == ast.KindArrayBindingPattern || name.Kind == ast.KindObjectBindingPattern) && declared.DotDotDotToken == nil && declared.Initializer == nil && declared.QuestionToken == nil {
+		function.Boundary.Parameters = append(
+			function.Boundary.Parameters,
+			ir.BoundaryParameter{Schema: l.boundarySchema(parameter, l.checker.GetTypeAtLocation(parameter))},
+		)
+		if name := parameter.Name(); (name.Kind == ast.KindArrayBindingPattern ||
+			name.Kind == ast.KindObjectBindingPattern) &&
+			declared.DotDotDotToken == nil &&
+			declared.Initializer == nil &&
+			declared.QuestionToken == nil {
 			incoming := len(l.result.Locals)
 			heldAs := ir.Object
 			if represented, _ := l.representation(l.checker.GetTypeAtLocation(parameter)); represented == ir.String {
@@ -187,11 +198,14 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		// (namespace_method_receiver.a). A function expression, a nested declaration, a namespace
 		// function and a function used as a value stop sooner, in their own words.
 		if parameter.Name().Text() == "this" && position < len(declaration.Parameters())-1 {
-			return l.notYet(parameter, "a function or method with a this parameter followed by another parameter (dynamic receivers are not implemented)")
+			return l.notYet(
+				parameter,
+				"a function or method with a this parameter followed by another parameter (dynamic receivers are not implemented)",
+			)
 		}
-		local, err := l.declareLocal(parameter.Name())
-		if err != nil {
-			return err
+		local, declareLocalError := l.declareLocal(parameter.Name())
+		if declareLocalError != nil {
+			return declareLocalError
 		}
 		if parameterProperty(parameter) {
 			// The binder gives a parameter property both a field symbol and a lexical parameter
@@ -217,9 +231,14 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 			}
 			function.RestElement = element
 		}
-		if function.Closure && censusCallableSlotless(l.result.Locals[local].Type) && !(l.result.Locals[local].Type == ir.Union && l.regexReplacementArgument(declaration)) {
+		if function.Closure &&
+			censusCallableSlotless(l.result.Locals[local].Type) &&
+			!(l.result.Locals[local].Type == ir.Union && l.regexReplacementArgument(declaration)) {
 			// Its arguments are each one adamic_value.
-			return l.notYet(parameter, "a function value taking "+l.checker.TypeToString(l.checker.GetTypeAtLocation(parameter.Name())))
+			return l.notYet(
+				parameter,
+				"a function value taking "+l.checker.TypeToString(l.checker.GetTypeAtLocation(parameter.Name())),
+			)
 		}
 		if declared.Initializer == nil {
 			function.Parameters = append(function.Parameters, local)
@@ -230,11 +249,16 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 			return l.notYet(parameter, "a default for a "+typeName(missing)+" parameter")
 		}
 		incoming := len(l.result.Locals)
-		l.result.Locals = append(l.result.Locals, ir.Local{Name: parameter.Name().Text(), Type: missing, Function: index})
+		l.result.Locals = append(
+			l.result.Locals,
+			ir.Local{Name: parameter.Name().Text(), Type: missing, Function: index},
+		)
 		function.Parameters = append(function.Parameters, incoming)
 		defaults = append(defaults, defaulted{local: local, incoming: incoming, initializer: declared.Initializer})
 	}
-	if function.Closure && censusCallableSlotless(function.Returns) && !(function.Returns == ir.Union && l.regexReplacementArgument(declaration)) {
+	if function.Closure &&
+		censusCallableSlotless(function.Returns) &&
+		!(function.Returns == ir.Union && l.regexReplacementArgument(declaration)) {
 		// A function value's arguments and result must each fit one adamic_value.
 		return l.notYet(declaration, "a function value returning "+typeName(function.Returns))
 	}
@@ -257,7 +281,11 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 	}
 	l.result.Functions[index] = function
 	if !function.Closure && declaration.Kind != ast.KindConstructor && declaration.Name() != nil {
-		l.closureRecords = append(l.closureRecords, closureRecord{proven: l.concrete(l.checker.GetTypeAtLocation(declaration.Name())), function: index, node: declaration})
+		l.closureRecords = append(l.closureRecords, closureRecord{
+			proven:   l.concrete(l.checker.GetTypeAtLocation(declaration.Name())),
+			function: index,
+			node:     declaration,
+		})
 	}
 	// A declared constructor also supplies the public allocator's signature.
 	// The initializer's receiver is internal and the class result is not data.
@@ -274,7 +302,13 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 }
 
 // lowerBody lowers the body of the function at index, whose signature is written.
-func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, defaults []defaulted, patterns []patterned) error {
+func (l *lowering) lowerBody(
+	index int,
+	declaration *ast.Node,
+	this int,
+	defaults []defaulted,
+	patterns []patterned,
+) error {
 	if declaration.Body() == nil {
 		return l.notYet(declaration, "a function without a body")
 	}
@@ -283,8 +317,8 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 	}
 	l.functionNodes[index] = declaration
 	// Every call in a body is judged when the body is lowered, under its own mapper (predicates_branded.go).
-	if err := l.judgeBrandedCalls(declaration); err != nil {
-		return err
+	if judgeBrandedCallsError := l.judgeBrandedCalls(declaration); judgeBrandedCallsError != nil {
+		return judgeBrandedCallsError
 	}
 	function := l.result.Functions[index]
 	if !function.Closure {
@@ -312,7 +346,8 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 		if err != nil {
 			break
 		}
-		if patternIndex < len(patterns) && (defaultIndex == len(defaults) || patterns[patternIndex].incoming < defaults[defaultIndex].incoming) {
+		if patternIndex < len(patterns) &&
+			(defaultIndex == len(defaults) || patterns[patternIndex].incoming < defaults[defaultIndex].incoming) {
 			parameter := patterns[patternIndex]
 			patternIndex++
 			patternType := l.checker.GetTypeAtLocation(parameter.parameter)
@@ -332,7 +367,16 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 		if l.uninitializedInitializer(parameter.initializer) {
 			l.result.Locals[parameter.local].Uninitialized = true
 			incoming := ir.Read{Local: parameter.incoming, Of: l.result.Locals[parameter.incoming].Type}
-			prologue = append(prologue, ir.Declare{Local: parameter.local, Value: l.placeholderInitialValue(parameter.initializer, l.result.Locals[parameter.local].Type), Uninitialized: true}, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: ir.IsUndefined{Value: incoming}}, Then: []ir.Statement{ir.Assign{Local: parameter.local, Value: fit(incoming, l.result.Locals[parameter.local].Type)}}})
+			prologue = append(prologue, ir.Declare{
+				Local:         parameter.local,
+				Value:         l.placeholderInitialValue(parameter.initializer, l.result.Locals[parameter.local].Type),
+				Uninitialized: true,
+			}, ir.If{
+				Condition: ir.Unary{Operator: ir.Not, Operand: ir.IsUndefined{Value: incoming}},
+				Then: []ir.Statement{
+					ir.Assign{Local: parameter.local, Value: fit(incoming, l.result.Locals[parameter.local].Type)},
+				},
+			})
 			continue
 		}
 
@@ -346,17 +390,20 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 			break
 		}
 		incoming := ir.Read{Local: parameter.incoming, Of: l.result.Locals[parameter.incoming].Type}
-		prologue = append(prologue, ir.Declare{Local: parameter.local, Value: ir.Coalesce{Value: incoming, Fallback: fallback, Of: of}})
+		prologue = append(
+			prologue,
+			ir.Declare{Local: parameter.local, Value: ir.Coalesce{Value: incoming, Fallback: fallback, Of: of}},
+		)
 	}
 	if err != nil {
 		l.function, l.this, l.functionIndex = outer, outerThis, outerIndex
 		return err
 	}
 	if declaration.Kind == ast.KindConstructor && l.instance.base == nil {
-		assigned, assignErr := l.parameterPropertyStores(declaration.Parent, this)
-		if assignErr != nil {
+		assigned, assignError := l.parameterPropertyStores(declaration.Parent, this)
+		if assignError != nil {
 			l.function, l.this, l.functionIndex = outer, outerThis, outerIndex
-			return assignErr
+			return assignError
 		}
 		prologue = append(prologue, assigned...)
 	}
@@ -379,7 +426,10 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 	if err != nil {
 		return err
 	}
-	if body.Kind == ast.KindBlock && declaration.Kind != ast.KindConstructor && declaration.Flags&ast.NodeFlagsHasImplicitReturn != 0 && l.permitsImplicitReturn(declaration) {
+	if body.Kind == ast.KindBlock &&
+		declaration.Kind != ast.KindConstructor &&
+		declaration.Flags&ast.NodeFlagsHasImplicitReturn != 0 &&
+		l.permitsImplicitReturn(declaration) {
 		// The checker permits an end that is reachable only when the result can be undefined
 		// (or void). Put that exit in the IR so every backend and ownership pass sees it.
 		returned := ir.Return{}
@@ -403,8 +453,13 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 // Descriptor construction must not intern boundary-only literals into codegen's
 // string table. The same builder runs against a private table and reports no errors.
 func (l *lowering) boundarySchema(node *ast.Node, proven *checker.Type) *ir.JSONDecodeSchema {
-	schema, err := l.jsonDecodeSchema(node, proven, jsonSchemaBoundary, l.result.BoundaryStrings.Intern)
-	if err != nil {
+	schema, jsonDecodeSchemaError := l.jsonDecodeSchema(
+		node,
+		proven,
+		jsonSchemaBoundary,
+		l.result.BoundaryStrings.Intern,
+	)
+	if jsonDecodeSchemaError != nil {
 		return nil
 	}
 	return &schema

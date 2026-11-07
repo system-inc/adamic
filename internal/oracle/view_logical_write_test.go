@@ -31,9 +31,9 @@ func init() {
 func TestViewLogicalWritesAgreeWithNode(test *testing.T) {
 	test.Parallel()
 	directory := "internal/oracle/testdata/view_logical_write"
-	entries, err := os.ReadDir(filepath.Join(repository, directory))
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(filepath.Join(repository, directory))
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -72,13 +72,13 @@ func TestViewLogicalWritesStopAsTheirPlainTwinsDo(test *testing.T) {
 	} {
 		test.Run(pair.logical, func(test *testing.T) {
 			test.Parallel()
-			logical, err := lowered(test, filepath.Join(repository, directory+pair.logical))
-			if err != nil {
-				test.Fatal(err)
+			logical, loweredError := lowered(test, filepath.Join(repository, directory+pair.logical))
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
-			plain, err := lowered(test, filepath.Join(repository, directory+pair.plain))
-			if err != nil {
-				test.Fatal(err)
+			plain, loweredError := lowered(test, filepath.Join(repository, directory+pair.plain))
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			logicalSanitized, _ := nativelyUncached(test, logical)
 			plainSanitized, _ := nativelyUncached(test, plain)
@@ -133,9 +133,9 @@ func TestViewLogicalWriteWitnessRepairsAgreeWithNode(test *testing.T) {
 func TestViewLogicalWritesAreRefused(test *testing.T) {
 	test.Parallel()
 	directory := "internal/oracle/testdata/view_logical_write_refused"
-	entries, err := os.ReadDir(filepath.Join(repository, directory))
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(filepath.Join(repository, directory))
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -147,25 +147,25 @@ func TestViewLogicalWritesAreRefused(test *testing.T) {
 		path := directory + "/" + name
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			absolute, err := filepath.Abs(filepath.Join(repository, path))
-			if err != nil {
-				test.Fatal(err)
+			absolute, absolutePathError := filepath.Abs(filepath.Join(repository, path))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			_, err = lowered(test, absolute)
+			_, loweredError := lowered(test, absolute)
 			var refused *lower.Refused
-			if !errors.As(err, &refused) {
-				test.Fatalf("want a refusal, got %v", err)
+			if !errors.As(loweredError, &refused) {
+				test.Fatalf("want a refusal, got %v", loweredError)
 			}
-			source, err := os.ReadFile(absolute)
-			if err != nil {
-				test.Fatal(err)
+			source, readError := os.ReadFile(absolute)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			if header := "// a-check: refused " + refused.What + "\n"; !strings.HasPrefix(string(source), header) {
 				test.Fatalf("first line: want %q", header)
 			}
-			expected, err := os.ReadFile(strings.TrimSuffix(absolute, ".a") + ".refused")
-			if err != nil {
-				test.Fatal(err)
+			expected, readError := os.ReadFile(strings.TrimSuffix(absolute, ".a") + ".refused")
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			got := strings.ReplaceAll(refused.Error(), strings.TrimSuffix(absolute, path), "")
 			if got != strings.TrimSpace(string(expected)) {
@@ -191,10 +191,10 @@ func TestViewLogicalWriteTwinIsRefused(test *testing.T) {
 		test,
 		filepath.Join(repository, "internal/oracle/testdata/view_logical_write_refused/computed.a"),
 	)
-	_, err := lowered(test, twin)
+	_, loweredError := lowered(test, twin)
 	var refused *lower.Refused
-	if !errors.As(err, &refused) {
-		test.Fatalf("want a refusal, got %v", err)
+	if !errors.As(loweredError, &refused) {
+		test.Fatalf("want a refusal, got %v", loweredError)
 	}
 	want := "computed.ts:10:1: Adamic 0.1 refuses a logical assignment through a checked view; write the field through the object's own type, or read it, decide, then assign with ="
 	if got := strings.ReplaceAll(refused.Error(), filepath.Dir(twin)+string(filepath.Separator), ""); got != want {
@@ -208,18 +208,20 @@ func TestViewLogicalWriteTwinIsRefused(test *testing.T) {
 // node array guard in lower's logicalAssignment, which lowers it.
 func TestNodeArrayLogicalWritesAreNotYet(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/logical_write_notyet/node_array.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/logical_write_notyet/node_array.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := onNode(test, path)
 	if truth.exitCode != 0 || len(truth.stderr) != 0 || string(truth.stdout) != "-1|9|true|1|1|1\n" {
 		test.Fatalf("Node: %+v", truth)
 	}
-	_, err = lowered(test, path)
+	_, loweredError := lowered(test, path)
 	var notYet *lower.NotYet
 	want := path + ":18:1: stage 0 can't lower a logical assignment to a node array's field yet"
-	if !errors.As(err, &notYet) || err.Error() != want {
-		test.Fatalf("got %v; want %s", err, want)
+	if !errors.As(loweredError, &notYet) || loweredError.Error() != want {
+		test.Fatalf("got %v; want %s", loweredError, want)
 	}
 }

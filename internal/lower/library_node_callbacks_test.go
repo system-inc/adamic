@@ -69,16 +69,19 @@ func TestNodeHostCallbackParameterViews(test *testing.T) {
 		{"any", "any", "any"},
 	} {
 		test.Run(probe.name, func(test *testing.T) {
-			_, err := lowerSource(test, prefix+`function listener(curr: `+probe.parameter+`):void{} hand(listener);`)
+			_, lowerSourceError := lowerSource(
+				test,
+				prefix+`function listener(curr: `+probe.parameter+`):void{} hand(listener);`,
+			)
 			if probe.want == "" {
-				if err != nil {
-					test.Fatal(err)
+				if lowerSourceError != nil {
+					test.Fatal(lowerSourceError)
 				}
 				return
 			}
 			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.want) {
-				test.Fatalf("want NotYet %q, got %v", probe.want, err)
+			if !errors.As(lowerSourceError, &notYet) || !strings.Contains(lowerSourceError.Error(), probe.want) {
+				test.Fatalf("want NotYet %q, got %v", probe.want, lowerSourceError)
 			}
 		})
 	}
@@ -126,9 +129,9 @@ func TestNodeHostCallbackDirectionAndSignaturePositions(test *testing.T) {
 				`; declare const view: ` +
 				probe.view +
 				`;`
-			program, err := load.Load([]string{writeAgreementSource(test, "main.ts", source)})
-			if err != nil {
-				test.Fatal(err)
+			program, loadError := load.Load([]string{writeAgreementSource(test, "main.ts", source)})
+			if loadError != nil {
+				test.Fatal(loadError)
 			}
 			checked, release := program.Checker(context.Background(), program.Files()[0])
 			defer release()
@@ -198,9 +201,9 @@ func nodeRegisteredDeclarations(test *testing.T, registered map[string]bool) (*l
 		`declare const nodeCallbackOpaque: (...args: unknown[]) => void;`,
 		`console.log(cwd() + join(tmpdir(), "a") + String(performance.now() >= 0) + String(Buffer.from("a").length) + createHash("sha256").update("a").digest("hex") + String(readFileSync === undefined) + String(Writable === undefined) + String(Socket === undefined));`,
 	}, "\n")
-	program, err := load.Load([]string{writeAgreementSource(test, "main.ts", source)})
-	if err != nil {
-		test.Fatalf("Load: %v", err)
+	program, loadError := load.Load([]string{writeAgreementSource(test, "main.ts", source)})
+	if loadError != nil {
+		test.Fatalf("Load: %v", loadError)
 	}
 	checked, release := program.Checker(context.Background(), program.Files()[0])
 	test.Cleanup(release)

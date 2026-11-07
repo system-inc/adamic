@@ -17,12 +17,12 @@ import (
 func cycleIndexTypes(test *testing.T, source string) (*cycleFinder, map[string]*checker.Type) {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "main.a")
-	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	entry := program.Files()[0]
 	checked, release := program.Checker(context.Background(), entry)

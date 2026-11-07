@@ -160,8 +160,11 @@ func compilerAgreementCutCheckerGroups(descriptors []registry.Descriptor) ([]com
 			return nil, fmt.Errorf("checker group %d costs %d ms", part, g.millis)
 		}
 	}
-	if err := compilerAgreementCheckerGroupUnion(groups, descriptors); err != nil {
-		return nil, err
+	if compilerAgreementCheckerGroupUnionError := compilerAgreementCheckerGroupUnion(
+		groups,
+		descriptors,
+	); compilerAgreementCheckerGroupUnionError != nil {
+		return nil, compilerAgreementCheckerGroupUnionError
 	}
 	return groups, nil
 }
@@ -203,9 +206,9 @@ func compilerAgreementCheckerGroupUnion(
 
 func compilerAgreementCombinedGroups(test *testing.T) []compilerAgreementCheckerGroup {
 	test.Helper()
-	groups, err := compilerAgreementCutCheckerGroups(prepareRegistry(test, "."))
-	if err != nil {
-		test.Fatal(err)
+	groups, compilerAgreementCutCheckerGroupsError := compilerAgreementCutCheckerGroups(prepareRegistry(test, "."))
+	if compilerAgreementCutCheckerGroupsError != nil {
+		test.Fatal(compilerAgreementCutCheckerGroupsError)
 	}
 	if len(groups) != compilerAgreementCheckerGroupCount {
 		test.Fatalf(
@@ -235,8 +238,11 @@ func compilerAgreementCheckerSideGroups(test *testing.T, side int) []compilerAgr
 			parts[part].millis += g.millis
 		}
 	}
-	if err := compilerAgreementCheckerGroupUnion(parts, prepareRegistry(test, ".")); err != nil {
-		test.Fatalf("checker/all side %d: %v", side, err)
+	if compilerAgreementCheckerGroupUnionError := compilerAgreementCheckerGroupUnion(
+		parts,
+		prepareRegistry(test, "."),
+	); compilerAgreementCheckerGroupUnionError != nil {
+		test.Fatalf("checker/all side %d: %v", side, compilerAgreementCheckerGroupUnionError)
 	}
 	return parts
 }
@@ -314,9 +320,9 @@ func compilerAgreementCombinedOutputNative(test *testing.T) string {
 		"stage1/cohere/lint/lint_test.go",
 	)
 	product := compilerAgreementProduct(test, inputs, func(directory string) error {
-		source, err := os.MkdirTemp("", "compiler-agreement-output-mutant-")
-		if err != nil {
-			return err
+		source, temporaryDirectoryError := os.MkdirTemp("", "compiler-agreement-output-mutant-")
+		if temporaryDirectoryError != nil {
+			return temporaryDirectoryError
 		}
 		defer os.RemoveAll(source)
 		copyPort(
@@ -327,17 +333,17 @@ func compilerAgreementCombinedOutputNative(test *testing.T) string {
 			compilerAgreementCombinedOutputFile,
 		)
 		prepareRegistry(test, source)
-		program, err := load.Load([]string{filepath.Join(source, "main.ts")})
-		if err != nil {
-			return err
+		program, loadError := load.Load([]string{filepath.Join(source, "main.ts")})
+		if loadError != nil {
+			return loadError
 		}
-		lowered, err := lower.Lower(context.Background(), program)
-		if err != nil {
-			return err
+		lowered, lowerError := lower.Lower(context.Background(), program)
+		if lowerError != nil {
+			return lowerError
 		}
 		c := native.C(lowered)
-		if err := os.WriteFile(filepath.Join(directory, "lint.c"), []byte(c), 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(filepath.Join(directory, "lint.c"), []byte(c), 0644); writeError != nil {
+			return writeError
 		}
 		return native.Build(c, filepath.Join(directory, "lint"), options)
 	})
@@ -388,8 +394,11 @@ func TestCompilerAndStage1AgreeCombinedGroupsUnion(test *testing.T) {
 	test.Parallel()
 	descriptors := prepareRegistry(test, ".")
 	groups := compilerAgreementCombinedGroups(test)
-	if err := compilerAgreementCheckerGroupUnion(groups, descriptors); err != nil {
-		test.Fatal(err)
+	if compilerAgreementCheckerGroupUnionError := compilerAgreementCheckerGroupUnion(
+		groups,
+		descriptors,
+	); compilerAgreementCheckerGroupUnionError != nil {
+		test.Fatal(compilerAgreementCheckerGroupUnionError)
 	}
 	// Exercise the same validator on actual dropped and duplicated memberships.
 	for _, mutant := range []string{"dropped", "duplicated", "empty"} {
@@ -403,13 +412,16 @@ func TestCompilerAndStage1AgreeCombinedGroupsUnion(test *testing.T) {
 		case "empty":
 			broken[0].rules = nil
 		}
-		if err := compilerAgreementCheckerGroupUnion(broken, descriptors); err == nil {
+		if compilerAgreementCheckerGroupUnionError := compilerAgreementCheckerGroupUnion(
+			broken,
+			descriptors,
+		); compilerAgreementCheckerGroupUnionError == nil {
 			test.Fatalf("%s membership survived checker group union", mutant)
 		}
 	}
-	source, err := os.ReadFile("compiler_stage1_combined_sanitized_test.go")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("compiler_stage1_combined_sanitized_test.go")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	wrappers := compilerAgreementCombinedWitnessWrapper.FindAllSubmatch(source, -1)
 	if len(wrappers) != len(groups) ||

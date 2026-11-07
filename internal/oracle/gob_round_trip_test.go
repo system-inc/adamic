@@ -123,11 +123,11 @@ func gobRoundTripShard(test *testing.T, name string, shard int) {
 			test.Parallel()
 			program := gobRoundTripLowered(test, path)
 			var first, second bytes.Buffer
-			if err := gob.NewEncoder(&first).Encode(program); err != nil {
-				test.Fatal(err)
+			if encodeError := gob.NewEncoder(&first).Encode(program); encodeError != nil {
+				test.Fatal(encodeError)
 			}
-			if err := gob.NewEncoder(&second).Encode(program); err != nil {
-				test.Fatal(err)
+			if encodeError := gob.NewEncoder(&second).Encode(program); encodeError != nil {
+				test.Fatal(encodeError)
 			}
 			if !bytes.Equal(first.Bytes(), second.Bytes()) {
 				test.Fatalf("one program, two gob encodings (%d and %d bytes)", first.Len(), second.Len())
@@ -135,8 +135,8 @@ func gobRoundTripShard(test *testing.T, name string, shard int) {
 			zeros := negativeZeros(reflect.ValueOf(program))
 			want := native.CWithOptions(program, options)
 			var decoded ir.Program
-			if err := gob.NewDecoder(&first).Decode(&decoded); err != nil {
-				test.Fatal(err)
+			if decodeError := gob.NewDecoder(&first).Decode(&decoded); decodeError != nil {
+				test.Fatal(decodeError)
 			}
 			if probing && path == planted {
 				clearNegativeZeros(reflect.ValueOf(&decoded))
@@ -159,13 +159,13 @@ func gobRoundTripShard(test *testing.T, name string, shard int) {
 // gobRoundTripLowered is a fixture's lowered program, from the repository root.
 func gobRoundTripLowered(test *testing.T, path string) *ir.Program {
 	test.Helper()
-	source, err := load.Load([]string{filepath.Join(repository, path)})
-	if err != nil {
-		test.Fatal(err)
+	source, loadError := load.Load([]string{filepath.Join(repository, path)})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := lower.Lower(context.Background(), source)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerError := lower.Lower(context.Background(), source)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	return program
 }

@@ -16,24 +16,28 @@ func goProps(test *testing.T, cases string) []byte {
 	if artifacts := os.Getenv("ADAMIC_YAML_ARTIFACTS"); artifacts != "" {
 		yamlArtifacts.Lock()
 		defer yamlArtifacts.Unlock()
-		if err := os.MkdirAll(artifacts, 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(artifacts, 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		executable, err := os.ReadFile(binary)
-		if err != nil {
-			test.Fatal(err)
+		executable, readError := os.ReadFile(binary)
+		if readError != nil {
+			test.Fatal(readError)
 		}
-		inputs, err := os.ReadFile(cases)
-		if err != nil {
-			test.Fatal(err)
+		inputs, readError := os.ReadFile(cases)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		for _, file := range []struct {
 			name string
 			data []byte
 			mode os.FileMode
 		}{{"go-props", executable, 0755}, {"props-cases.txt", inputs, 0644}, {"props-expected.txt", expected, 0644}} {
-			if err := os.WriteFile(filepath.Join(artifacts, file.name), file.data, file.mode); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(
+				filepath.Join(artifacts, file.name),
+				file.data,
+				file.mode,
+			); writeError != nil {
+				test.Fatal(writeError)
 			}
 		}
 	}
@@ -57,13 +61,13 @@ func TestPropsMatchGo(test *testing.T) {
 	emitted := yamlPropsBuild.emitted(test, "props_main.ts")
 	cases, files, count := lexCases(test)
 	expected := goProps(test, cases)
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	entry, err := filepath.Abs("props_main.ts")
-	if err != nil {
-		test.Fatal(err)
+	entry, absolutePathError := filepath.Abs("props_main.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	actual := run(test, "", []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, cases)
 	runner := filepath.Join(root, "oracle/node.mjs")
@@ -118,9 +122,9 @@ func TestPropsMutants(test *testing.T) {
 	test.Parallel()
 	cases, _, _ := lexCases(test)
 	expected := goProps(test, cases)
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	for index, mutant := range propsMutants.mutations {
 		// Not parallel: one mutant at a time keeps this test to one child at a time, its share.

@@ -14,11 +14,15 @@ func TestMemoryLimitReadsTheUnitsOwnCgroup(test *testing.T) {
 	write := func(group, contents string) {
 		test.Helper()
 		directory := filepath.Join(root, group)
-		if err := os.MkdirAll(directory, 0o755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(directory, 0o755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.WriteFile(filepath.Join(directory, "memory.max"), []byte(contents), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(
+			filepath.Join(directory, "memory.max"),
+			[]byte(contents),
+			0o644,
+		); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	write("system.slice/loom-serve.service", "max\n")

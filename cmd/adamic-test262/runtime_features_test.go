@@ -10,21 +10,21 @@ import (
 func TestRuntimeFeaturesMatchNode(test *testing.T) {
 	test.Parallel()
 	// Reads: internal/lower/*.go
-	e, err := prepareMode("../..", "testdata/mini", test.TempDir(), nil, nil, true)
-	if err != nil {
-		test.Fatal(err)
+	e, prepareModeError := prepareMode("../..", "testdata/mini", test.TempDir(), nil, nil, true)
+	if prepareModeError != nil {
+		test.Fatal(prepareModeError)
 	}
 	e.cache = nil
 	e.compiler = &compilerWorker{}
 	defer e.compiler.close()
-	source, err := os.ReadFile("../../internal/oracle/testdata/arguments_length_value_count.a")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("../../internal/oracle/testdata/arguments_length_value_count.a")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	got := e.attempt(classified{Path: "arguments_length_value_count.a", Program: string(source)})
-	emitted, err := os.ReadFile(filepath.Join(e.work, "program.c"))
-	if err != nil {
-		test.Fatal(err)
+	emitted, readError := os.ReadFile(filepath.Join(e.work, "program.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if !strings.Contains(string(emitted), "#define ADAMIC_CLOSURE_CONVENTION 1\n") {
 		test.Fatal("fixture does not enable closure convention")

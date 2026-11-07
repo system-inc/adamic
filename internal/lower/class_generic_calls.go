@@ -49,8 +49,13 @@ func (l *lowering) classGenericCall(node *ast.Node) (ir.Expression, bool, error)
 		key += "," + strconv.Itoa(int(target.Id()))
 	}
 	mapper := newTypeMapper(sources, targets)
-	if err := l.nominalTypeArguments(declaration, targets, mapper, node); err != nil {
-		return nil, true, err
+	if nominalTypeArgumentsError := l.nominalTypeArguments(
+		declaration,
+		targets,
+		mapper,
+		node,
+	); nominalTypeArgumentsError != nil {
+		return nil, true, nominalTypeArgumentsError
 	}
 	if !needsTypes {
 		return nil, false, nil
@@ -66,8 +71,8 @@ func (l *lowering) classGenericCall(node *ast.Node) (ir.Expression, bool, error)
 	outerMapper, outerInstances := l.typeMapper, l.genericInstances
 	l.typeMapper, l.genericInstances = mapper, bucket
 	defer func() { l.typeMapper, l.genericInstances = outerMapper, outerInstances }()
-	value, err := l.call(node)
-	return value, true, err
+	value, callError := l.call(node)
+	return value, true, callError
 }
 
 func (l *lowering) genericUsesClasses(declaration *ast.Node, seen map[*ast.Node]bool) bool {
@@ -86,7 +91,11 @@ func (l *lowering) genericUsesClasses(declaration *ast.Node, seen map[*ast.Node]
 					needed = true
 					return true
 				}
-				if node.Parent != nil && node.Parent.Kind == ast.KindCallExpression && target.Kind == ast.KindFunctionDeclaration && len(target.TypeParameters()) > 0 && l.genericUsesClasses(target, seen) {
+				if node.Parent != nil &&
+					node.Parent.Kind == ast.KindCallExpression &&
+					target.Kind == ast.KindFunctionDeclaration &&
+					len(target.TypeParameters()) > 0 &&
+					l.genericUsesClasses(target, seen) {
 					needed = true
 					return true
 				}
@@ -100,7 +109,12 @@ func (l *lowering) genericUsesClasses(declaration *ast.Node, seen map[*ast.Node]
 
 // A structural fake cannot satisfy a nominal bound, including a dependent bound
 // such as U extends Box<T>. The concrete mapper preserves both parameters' meanings.
-func (l *lowering) nominalTypeArguments(declaration *ast.Node, arguments []*checker.Type, mapper *typeMapper, where *ast.Node) error {
+func (l *lowering) nominalTypeArguments(
+	declaration *ast.Node,
+	arguments []*checker.Type,
+	mapper *typeMapper,
+	where *ast.Node,
+) error {
 	for index, parameter := range declaration.TypeParameters() {
 		node := parameter.AsTypeParameterDeclaration().Constraint
 		if node == nil {
@@ -111,7 +125,11 @@ func (l *lowering) nominalTypeArguments(declaration *ast.Node, arguments []*chec
 			constraint = instantiateType(l.checker, constraint, mapper)
 		}
 		if mismatch := l.nominalMismatch(arguments[index], constraint, map[[2]*checker.Type]bool{}); mismatch != nil {
-			return &Refused{Where: l.program.Where(where), What: "a generic argument without nominal ancestry seen as " + l.checker.TypeToString(mismatch), Fix: "use that class or a subclass as the argument; use an interface for structural constraints (adamic/nominal-class)"}
+			return &Refused{
+				Where: l.program.Where(where),
+				What:  "a generic argument without nominal ancestry seen as " + l.checker.TypeToString(mismatch),
+				Fix:   "use that class or a subclass as the argument; use an interface for structural constraints (adamic/nominal-class)",
+			}
 		}
 	}
 	return nil

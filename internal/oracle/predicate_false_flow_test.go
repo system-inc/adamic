@@ -53,9 +53,9 @@ func init() {
 func TestPredicateFalseDirectionReadsAreNotYet(test *testing.T) {
 	test.Parallel()
 	directory := "internal/oracle/testdata/predicate_false_flow_stopped"
-	entries, err := os.ReadDir(filepath.Join(repository, directory))
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(filepath.Join(repository, directory))
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -67,9 +67,9 @@ func TestPredicateFalseDirectionReadsAreNotYet(test *testing.T) {
 		path := directory + "/" + name
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			absolute, err := filepath.Abs(filepath.Join(repository, path))
-			if err != nil {
-				test.Fatal(err)
+			absolute, absolutePathError := filepath.Abs(filepath.Join(repository, path))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			truth := onNode(test, absolute)
 			if truth.exitCode != 0 || len(truth.stderr) != 0 || len(truth.stdout) == 0 {
@@ -81,9 +81,9 @@ func TestPredicateFalseDirectionReadsAreNotYet(test *testing.T) {
 			if !errors.As(stopped, &notYet) && !errors.As(stopped, &refused) {
 				test.Fatalf("want a NotYet or a refusal, got %v", stopped)
 			}
-			expected, err := os.ReadFile(strings.TrimSuffix(absolute, ".ts") + ".stopped")
-			if err != nil {
-				test.Fatal(err)
+			expected, readError := os.ReadFile(strings.TrimSuffix(absolute, ".ts") + ".stopped")
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			got := strings.ReplaceAll(stopped.Error(), strings.TrimSuffix(absolute, path), "")
 			if got != strings.TrimSpace(string(expected)) {
@@ -126,19 +126,19 @@ func TestPredicateFalseDirectionLeavesDirectCalls(test *testing.T) {
 	} {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(
+			path, absolutePathError := filepath.Abs(
 				filepath.Join(repository, "internal/oracle/testdata/predicate_false_flow/direct", name+".ts"),
 			)
-			if err != nil {
-				test.Fatal(err)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			truth := onNode(test, path)
 			if difference := disagreement(run{stdout: []byte("function undefined\n")}, truth); difference != "" {
 				test.Fatal("source Node: " + difference)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			if len(program.PredicateChecks.Sites) != 1 {
 				test.Fatalf("predicate check sites %+v", program.PredicateChecks.Sites)

@@ -18,13 +18,15 @@ func init() {
 
 func TestCounterSquareJumpDoubleProductMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/counters_square_jump.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/counters_square_jump.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	counter := -1
 	for id, local := range program.Locals {
@@ -59,8 +61,8 @@ func TestCounterSquareJumpDoubleProductMutant(test *testing.T) {
 	}
 	code = strings.Replace(code, product, local+" * "+local, 1)
 	binary := filepath.Join(test.TempDir(), "integer-square-mutant")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(code, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	result := execute(test, binary)
 	diagnostic := string(result.stderr)

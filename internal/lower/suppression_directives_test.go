@@ -27,10 +27,10 @@ func TestSuppressionDirectivesAreRefused(test *testing.T) {
 			} {
 				test.Run(directive+"/"+probe.name+"/"+comment, func(test *testing.T) {
 					test.Parallel()
-					_, err := lowerSource(test, probe.prefix+comment+probe.body)
+					_, lowerSourceError := lowerSource(test, probe.prefix+comment+probe.body)
 					var refused *Refused
-					if !errors.As(err, &refused) {
-						test.Fatalf("got %v, want directive refusal", err)
+					if !errors.As(lowerSourceError, &refused) {
+						test.Fatalf("got %v, want directive refusal", lowerSourceError)
 					}
 					location := probe.location
 					if strings.Contains(comment, "prose") {
@@ -42,7 +42,7 @@ func TestSuppressionDirectivesAreRefused(test *testing.T) {
 					}
 					for _, text := range []string{location, directive, "remove it and fix the type error"} {
 						if !strings.Contains(refused.Error(), text) {
-							test.Errorf("got %v, want %q", err, text)
+							test.Errorf("got %v, want %q", lowerSourceError, text)
 						}
 					}
 				})
@@ -61,9 +61,9 @@ func TestSuppressionDirectiveSoundNeighbors(test *testing.T) {
 		"class Box { n: number = 2; }\nconsole.log(`${new Box().n + 1}`);\n",
 		"let n: number;\nn = 2;\nconsole.log(`${n + 1}`);\n",
 	} {
-		_, err := lowerSource(test, source)
-		if err != nil {
-			test.Errorf("sound neighbor: %v", err)
+		_, lowerSourceError := lowerSource(test, source)
+		if lowerSourceError != nil {
+			test.Errorf("sound neighbor: %v", lowerSourceError)
 		}
 	}
 }

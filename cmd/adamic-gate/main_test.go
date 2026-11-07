@@ -27,9 +27,9 @@ func TestAnchoredSelectors(test *testing.T) {
 	var all []result
 	for index, pattern := range patterns(asked) {
 		log := filepath.Join(directory, "run-"+string(rune('a'+index))+".jsonl")
-		f, err := os.Create(log)
-		if err != nil {
-			test.Fatal(err)
+		f, createError := os.Create(log)
+		if createError != nil {
+			test.Fatal(createError)
 		}
 		cmd := exec.Command(
 			test2json,
@@ -45,14 +45,14 @@ func TestAnchoredSelectors(test *testing.T) {
 		cmd.Dir = filepath.Dir(probe)
 		cmd.Stdout = f
 		cmd.Stderr = f
-		err = cmd.Run()
+		runError := cmd.Run()
 		f.Close()
-		if err != nil {
-			test.Fatal(err)
+		if runError != nil {
+			test.Fatal(runError)
 		}
-		events, _, _, err := readLog(log)
-		if err != nil {
-			test.Fatal(err)
+		events, _, _, readLogError := readLog(log)
+		if readLogError != nil {
+			test.Fatal(readLogError)
 		}
 		all = append(all, events...)
 	}
@@ -146,12 +146,12 @@ func TestRawEvidenceKeepsSkipReasonsAndFailures(test *testing.T) {
 {"Action":"fail","Package":"p","Test":"TestFail","Elapsed":0.2}
 {"Action":"output","Package":"p","Output":"gate cache: native hits=1 misses=0\n"}
 `
-	if err := os.WriteFile(path, []byte(log), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(log), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	results, cache, count, err := readLog(path)
-	if err != nil {
-		test.Fatal(err)
+	results, cache, count, readLogError := readLog(path)
+	if readLogError != nil {
+		test.Fatal(readLogError)
 	}
 	if count != 2 ||
 		len(results) != 2 ||
@@ -162,10 +162,10 @@ func TestRawEvidenceKeepsSkipReasonsAndFailures(test *testing.T) {
 	if len(cache) != 1 || cacheHits.FindStringSubmatch(cache[0])[2] != "1" {
 		test.Fatal("lost hit evidence")
 	}
-	if err := os.WriteFile(path, []byte("truncated JSON"), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte("truncated JSON"), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if _, _, _, err := readLog(path); err == nil {
+	if _, _, _, readLogError := readLog(path); readLogError == nil {
 		test.Fatal("corrupt log accepted")
 	}
 }

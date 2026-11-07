@@ -13,10 +13,10 @@ func TestNullableObjectSharedStorageStaysNotYet(test *testing.T) {
 		`interface Item {readonly name:string} const old:{readonly value:Item|null}={value:null}; const view:{readonly value:Item|null|undefined}=old;`,
 		`interface Item {readonly name:string} function old():Item|null{return null} const view:()=>Item|null|undefined=old;`,
 	} {
-		_, err := lowerSource(test, source)
-		if err == nil || !(strings.Contains(err.Error(), "sharing nullable object storage") ||
-			strings.Contains(err.Error(), "spreading an array of other elements")) {
-			test.Fatalf("want explicit storage-view stop, got %v", err)
+		_, lowerSourceError := lowerSource(test, source)
+		if lowerSourceError == nil || !(strings.Contains(lowerSourceError.Error(), "sharing nullable object storage") ||
+			strings.Contains(lowerSourceError.Error(), "spreading an array of other elements")) {
+			test.Fatalf("want explicit storage-view stop, got %v", lowerSourceError)
 		}
 	}
 }
@@ -25,12 +25,12 @@ func TestNullableObjectUnionUsesGraphOwnership(test *testing.T) {
 	test.Parallel()
 	const source = `interface Link {next:Link|null|undefined} const link:Link={next:null}; link.next=link;`
 	test.Run("untagged lookup stays NotYet", func(test *testing.T) {
-		_, err := lowerSource(test, source+
+		_, lowerSourceError := lowerSource(test, source+
 			`interface Item {readonly name:string} const old:readonly (Item|null)[]=[null]; console.log(String(old[0]===null));`)
 		var pending *NotYet
-		if !errors.As(err, &pending) ||
+		if !errors.As(lowerSourceError, &pending) ||
 			pending.What != "a nullable object lookup without separate null/undefined tags" {
-			test.Fatalf("want main's nullable lookup tag refusal, got %v", err)
+			test.Fatalf("want main's nullable lookup tag refusal, got %v", lowerSourceError)
 		}
 		test.Logf("tag hazard remains refused: %s", pending.What)
 	})
@@ -43,14 +43,14 @@ func TestNullableObjectUnionUsesGraphOwnership(test *testing.T) {
 
 func TestNullableObjectSpreadKeepsNarrowerLiteralRefused(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(
+	_, lowerSourceError := lowerSource(
 		test,
 		`interface Item {readonly name:string} const old:readonly (Item|null)[]=[null]; const copy:readonly (Item|null|undefined)[]=[...old];`,
 	)
 	var refusal *Refused
-	if !errors.As(err, &refusal) ||
+	if !errors.As(lowerSourceError, &refusal) ||
 		refusal.What != "union-typed array built from a narrower literal" ||
 		refusal.Fix != "declare the literal's element type explicitly, or build the array with a mixed literal" {
-		test.Fatalf("want the newer narrow-literal layout refusal with its fix, got %v", err)
+		test.Fatalf("want the newer narrow-literal layout refusal with its fix, got %v", lowerSourceError)
 	}
 }

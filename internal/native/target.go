@@ -11,7 +11,8 @@ import (
 
 // ValidateOptions refuses unsupported combinations before invoking clang.
 func ValidateOptions(options Options) error {
-	if (options.ProgramRegion || os.Getenv("ADAMIC_PROGRAM_REGION") == "1") && (options.Request || options.Target != "") {
+	if (options.ProgramRegion || os.Getenv("ADAMIC_PROGRAM_REGION") == "1") &&
+		(options.Request || options.Target != "") {
 		return fmt.Errorf("native: Program regions require a one-shot native CLI")
 	}
 	if options.Request && options.Target != "wasm32-wasi" {
@@ -38,11 +39,11 @@ func ValidateOptions(options Options) error {
 	if sysroot == "" {
 		return fmt.Errorf("native: wasm32-wasi requires WASI_SYSROOT")
 	}
-	if info, err := os.Stat(sysroot); err != nil || !info.IsDir() {
+	if info, statError := os.Stat(sysroot); statError != nil || !info.IsDir() {
 		return fmt.Errorf("native: WASI_SYSROOT is not a directory: %s", sysroot)
 	}
-	_, err := WASIClang()
-	return err
+	_, wasiClangError := WASIClang()
+	return wasiClangError
 }
 
 // WASISDKVersion is the one wasi-sdk release every wasm32 build and test uses (bash cloud/setup.sh
@@ -64,24 +65,40 @@ func WASIClang() (string, error) {
 	if checked, ok := wasiClangChecks.Load(candidate); ok {
 		return candidate, checked.(wasiClangCheck).err
 	}
-	err := checkWASIClang(candidate)
-	wasiClangChecks.Store(candidate, wasiClangCheck{err})
-	return candidate, err
+	checkWasiClangError := checkWASIClang(candidate)
+	wasiClangChecks.Store(candidate, wasiClangCheck{checkWasiClangError})
+	return candidate, checkWasiClangError
 }
 
 func checkWASIClang(path string) error {
-	info, err := os.Stat(path)
-	if err != nil || !info.Mode().IsRegular() || info.Mode().Perm()&0111 == 0 {
-		return fmt.Errorf("native: wasm32-wasi is pinned to wasi-sdk %s, whose clang belongs at %s beside WASI_SYSROOT, and none is there; run bash cloud/setup.sh --wasi-sdk", WASISDKVersion, path)
+	info, statError := os.Stat(path)
+	if statError != nil || !info.Mode().IsRegular() || info.Mode().Perm()&0111 == 0 {
+		return fmt.Errorf(
+			"native: wasm32-wasi is pinned to wasi-sdk %s, whose clang belongs at %s beside WASI_SYSROOT, and none is there; run bash cloud/setup.sh --wasi-sdk",
+			WASISDKVersion,
+			path,
+		)
 	}
-	output, err := exec.Command(path, "--version").Output()
+	output, outputError := exec.Command(path, "--version").Output()
 	// A clang that couldn't be run says why, rather than reading as one that printed nothing (#b548dw1).
-	if err != nil {
-		return fmt.Errorf("native: wasm32-wasi is pinned to wasi-sdk %s (%s); %s --version failed: %w", WASISDKVersion, wasiClangVersion, path, err)
+	if outputError != nil {
+		return fmt.Errorf(
+			"native: wasm32-wasi is pinned to wasi-sdk %s (%s); %s --version failed: %w",
+			WASISDKVersion,
+			wasiClangVersion,
+			path,
+			outputError,
+		)
 	}
 	first, _, _ := strings.Cut(string(output), "\n")
 	if !strings.HasPrefix(first, wasiClangVersion) {
-		return fmt.Errorf("native: wasm32-wasi is pinned to wasi-sdk %s (%s); %s is %q", WASISDKVersion, wasiClangVersion, path, strings.TrimSpace(first))
+		return fmt.Errorf(
+			"native: wasm32-wasi is pinned to wasi-sdk %s (%s); %s is %q",
+			WASISDKVersion,
+			wasiClangVersion,
+			path,
+			strings.TrimSpace(first),
+		)
 	}
 	return nil
 }
@@ -97,7 +114,9 @@ func compilerName(options Options) string {
 
 func archiverName(compiler string) string {
 	candidate := filepath.Join(filepath.Dir(compiler), "llvm-ar")
-	if info, err := os.Stat(candidate); err == nil && info.Mode().IsRegular() && info.Mode().Perm()&0111 != 0 {
+	if info, statError := os.Stat(
+		candidate,
+	); statError == nil && info.Mode().IsRegular() && info.Mode().Perm()&0111 != 0 {
 		return candidate
 	}
 	return "ar"
@@ -110,7 +129,14 @@ func WASILinkFlags(options Options) []string {
 		return append(flags, "-mexec-model=command")
 	}
 	flags = append(flags, "-mexec-model=reactor", "-Wl,--export-memory")
-	for _, name := range []string{"adamic_request", "adamic_response_bytes", "adamic_response_length", "malloc", "free", "adamic_release"} {
+	for _, name := range []string{
+		"adamic_request",
+		"adamic_response_bytes",
+		"adamic_response_length",
+		"malloc",
+		"free",
+		"adamic_release",
+	} {
 		flags = append(flags, "-Wl,--export-if-defined="+name)
 	}
 	if options.Count {

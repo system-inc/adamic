@@ -41,16 +41,16 @@ func TestThrowLadderLetsGoOfWhatEachCheckOwns(test *testing.T) {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
 			path := filepath.Join(test.TempDir(), probe.name+".a")
-			if err := os.WriteFile(path, []byte(probe.source), 0o644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, []byte(probe.source), 0o644); writeError != nil {
+				test.Fatal(writeError)
 			}
 			want := onNode(test, path)
 			if want.exitCode != 0 || len(want.stderr) != 0 || string(want.stdout) != probe.stdout {
 				test.Fatalf("Node: exit %d, stdout %q, stderr %q", want.exitCode, want.stdout, want.stderr)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			if !strings.Contains(native.C(program), "_rung_") {
 				test.Fatal("no statement of the probe's uses a ladder")

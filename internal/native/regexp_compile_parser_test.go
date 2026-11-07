@@ -37,13 +37,13 @@ func runtimeParserAcceptance(test *testing.T, wasi bool, mutateMessage ...bool) 
 		`const c=JSON.parse(require('fs').readFileSync(0,'utf8'));process.stdout.write(JSON.stringify(c.map(x=>{try{new RegExp(x[0],x[1]);return ''}catch(e){if(!(e instanceof SyntaxError))throw e;return e.message}})));`,
 	)
 	node.Stdin = bytes.NewReader(input)
-	output, err := node.CombinedOutput()
-	if err != nil {
-		test.Fatalf("Node: %v %s", err, output)
+	output, combinedOutputError := node.CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("Node: %v %s", combinedOutputError, output)
 	}
 	var messages []string
-	if err := json.Unmarshal(output, &messages); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(output, &messages); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	var source strings.Builder
 	source.WriteString(
@@ -60,13 +60,13 @@ func runtimeParserAcceptance(test *testing.T, wasi bool, mutateMessage ...bool) 
 	}
 	disagreements := 0
 	for i, c := range cases {
-		_, err := reference.Parse(c[0], c[1])
-		valid := err == nil
+		_, parseError := reference.Parse(c[0], c[1])
+		valid := parseError == nil
 		var divergence *reference.V8DivergenceError
-		refused := errors.As(err, &divergence)
+		refused := errors.As(parseError, &divergence)
 		if !refused && valid != (messages[i] == "") {
 			disagreements++
-			test.Logf("reference versus Node %q %q: %v / %s", c[0], c[1], err, messages[i])
+			test.Logf("reference versus Node %q %q: %v / %s", c[0], c[1], parseError, messages[i])
 		}
 		expected := 1
 		if valid {
@@ -75,7 +75,7 @@ func runtimeParserAcceptance(test *testing.T, wasi bool, mutateMessage ...bool) 
 		reason := messages[i]
 		if refused {
 			expected = 3
-			reason = err.Error()
+			reason = parseError.Error()
 		}
 
 		fmt.Fprintf(
@@ -95,8 +95,8 @@ func runtimeParserAcceptance(test *testing.T, wasi bool, mutateMessage ...bool) 
 	)
 	directory := test.TempDir()
 	main := filepath.Join(directory, "main.c")
-	if err := os.WriteFile(main, []byte(source.String()), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(main, []byte(source.String()), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	runtimeDirectory, _ := filepath.Abs("runtime")
 	binary := filepath.Join(directory, "check")
@@ -150,9 +150,9 @@ func runtimeParserAcceptance(test *testing.T, wasi bool, mutateMessage ...bool) 
 	}
 	if len(mutateMessage) > 0 && mutateMessage[0] {
 		parser := filepath.Join(runtimeDirectory, "regexp_compile_parser.c")
-		data, err := os.ReadFile(parser)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(parser)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		old := "result->message = message; result->message_length = position;"
 		if bytes.Count(data, []byte(old)) != 1 {
@@ -165,8 +165,8 @@ func runtimeParserAcceptance(test *testing.T, wasi bool, mutateMessage ...bool) 
 			1,
 		)
 		replacement := filepath.Join(directory, "parser-mutant.c")
-		if err := os.WriteFile(replacement, data, 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(replacement, data, 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 		for i, arg := range args {
 			if arg == parser {
@@ -175,8 +175,8 @@ func runtimeParserAcceptance(test *testing.T, wasi bool, mutateMessage ...bool) 
 		}
 	}
 	command := exec.Command(compiler, args...)
-	if output, err := command.CombinedOutput(); err != nil {
-		test.Fatalf("compile: %v\n%s", err, output)
+	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("compile: %v\n%s", combinedOutputError, output)
 	}
 	command = exec.Command(binary)
 	if wasi {
@@ -189,18 +189,18 @@ func runtimeParserAcceptance(test *testing.T, wasi bool, mutateMessage ...bool) 
 		)
 	}
 	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1:halt_on_error=1", "UBSAN_OPTIONS=halt_on_error=1")
-	output, err = command.CombinedOutput()
+	output, combinedOutputError = command.CombinedOutput()
 	if len(mutateMessage) > 0 && mutateMessage[0] {
-		if err == nil ||
+		if combinedOutputError == nil ||
 			!bytes.Contains(output, []byte("case ")) ||
 			bytes.Contains(output, []byte("ERROR: AddressSanitizer")) {
-			test.Fatalf("counted message mutant did not reach comparison: %v %s", err, output)
+			test.Fatalf("counted message mutant did not reach comparison: %v %s", combinedOutputError, output)
 		}
 		test.Log("caught error-message corruption after embedded NUL at counted-byte comparison")
 		return
 	}
-	if err != nil {
-		test.Fatalf("C versus Go: %v\n%s", err, output)
+	if combinedOutputError != nil {
+		test.Fatalf("C versus Go: %v\n%s", combinedOutputError, output)
 	}
 	if disagreements != 0 {
 		test.Fatalf("%d reference versus Node disagreements", disagreements)
@@ -215,22 +215,22 @@ func runtimeParserAcceptance(test *testing.T, wasi bool, mutateMessage ...bool) 
 
 func runtimeRegexCompilerCases(test *testing.T) ([][]string, int) {
 	test.Helper()
-	data, err := os.ReadFile("../regexp/testdata/test262.json")
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile("../regexp/testdata/test262.json")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var cases [][]string
-	if err := json.Unmarshal(data, &cases); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &cases); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	corpus := len(cases)
-	cohereData, err := os.ReadFile("../regexp/testdata/runtime-cohere.json")
-	if err != nil {
-		test.Fatal(err)
+	cohereData, readError := os.ReadFile("../regexp/testdata/runtime-cohere.json")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var cohere [][]string
-	if err := json.Unmarshal(cohereData, &cohere); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(cohereData, &cohere); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if len(cohere) != 875 {
 		test.Fatalf("cohere count %d", len(cohere))

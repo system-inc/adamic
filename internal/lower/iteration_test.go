@@ -24,10 +24,10 @@ func TestIteratorGapsAreExplicit(test *testing.T) {
 	} {
 		test.Run(source, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, source)
+			_, lowerSourceError := lowerSource(test, source)
 			var gap *NotYet
-			if !errors.As(err, &gap) {
-				test.Fatalf("got %v, want an explicit iterator NotYet", err)
+			if !errors.As(lowerSourceError, &gap) {
+				test.Fatalf("got %v, want an explicit iterator NotYet", lowerSourceError)
 			}
 		})
 	}
@@ -39,10 +39,10 @@ func TestIteratorViewsCannotHideReturn(test *testing.T) {
  function closing(){return{[Symbol.iterator](){return{next(){return{value:1,done:false};},return(){return{value:0,done:true};}}}};}
  function consume(value:ReturnType<typeof plain>):void{for(const item of value){break;}}
  consume(closing());`
-	_, err := lowerSource(test, source)
+	_, lowerSourceError := lowerSource(test, source)
 	var gap *NotYet
-	if !errors.As(err, &gap) || !strings.Contains(gap.What, "hide a return") {
-		test.Fatalf("got %v, want a hidden-return refusal", err)
+	if !errors.As(lowerSourceError, &gap) || !strings.Contains(gap.What, "hide a return") {
+		test.Fatalf("got %v, want a hidden-return refusal", lowerSourceError)
 	}
 }
 
@@ -51,22 +51,22 @@ func TestIteratorViewsCannotEraseReceivers(test *testing.T) {
 	source := `const source={[Symbol.iterator](){return{next(){return{value:1,done:false};}}}};
  class Other{[Symbol.iterator](){return{next(){return{value:1,done:false};}}}}
  function consume(value:typeof source):void{for(const item of value){break;}}const other=new Other();consume(other);`
-	_, err := lowerSource(test, source)
+	_, lowerSourceError := lowerSource(test, source)
 	var gap *NotYet
-	if !errors.As(err, &gap) || !strings.Contains(gap.What, "receiver convention") {
-		test.Fatalf("got %v, want an erased-receiver refusal", err)
+	if !errors.As(lowerSourceError, &gap) || !strings.Contains(gap.What, "receiver convention") {
+		test.Fatalf("got %v, want an erased-receiver refusal", lowerSourceError)
 	}
 }
 
 func TestIteratorDestructuringDoesNotLieAboutExhaustion(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(
+	_, lowerSourceError := lowerSource(
 		test,
 		"const source={[Symbol.iterator](){return{next(){return{value:1,done:true};}}}};const [value]=source;console.log(`${value}`);",
 	)
 	var refused *Refused
-	if !errors.As(err, &refused) || !strings.Contains(refused.Fix, "default") {
-		test.Fatalf("got %v, want a default or undefined fix", err)
+	if !errors.As(lowerSourceError, &refused) || !strings.Contains(refused.Fix, "default") {
+		test.Fatalf("got %v, want a default or undefined fix", lowerSourceError)
 	}
 }
 
@@ -84,10 +84,10 @@ func TestGeneratorsAreNotYetEvenWithoutYield(test *testing.T) {
 		"async function outer(){function* numbers(){yield 1;} for (const value of numbers()) console.log(String(value));} await outer();",
 		"class Numbers{*each(){yield 1;}} for (const value of new Numbers().each()) console.log(String(value));",
 	} {
-		_, err := lowerSource(test, source)
+		_, lowerSourceError := lowerSource(test, source)
 		var gap *NotYet
-		if !errors.As(err, &gap) || !strings.Contains(gap.What, "a generator function") {
-			test.Errorf("%s: got %v, want the generator NotYet", source, err)
+		if !errors.As(lowerSourceError, &gap) || !strings.Contains(gap.What, "a generator function") {
+			test.Errorf("%s: got %v, want the generator NotYet", source, lowerSourceError)
 		}
 	}
 }
@@ -156,10 +156,10 @@ func TestIteratorDescriptorReasons(test *testing.T) {
 	for _, probe := range probes {
 		test.Run(probe.reason, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var gap *NotYet
-			if !errors.As(err, &gap) || !strings.Contains(gap.What, probe.reason) {
-				test.Fatalf("got %v, want iterator reason %s", err, probe.reason)
+			if !errors.As(lowerSourceError, &gap) || !strings.Contains(gap.What, probe.reason) {
+				test.Fatalf("got %v, want iterator reason %s", lowerSourceError, probe.reason)
 			}
 		})
 	}
@@ -169,32 +169,32 @@ func TestRepresentedMethodReplacementIsNotYet(test *testing.T) {
 	test.Parallel()
 	// Exercise the lowering safeguard directly; the up-front unbound-method pass also refuses this write.
 	path := filepath.Join(test.TempDir(), "write.a")
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		path,
 		[]byte("class Box{next():number{return 1;}}const value=new Box();value.next=():number=>2;"),
 		0644,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	entry := program.Files()[0]
 	checker, release := program.Checker(context.Background(), entry)
 	defer release()
 	lowering := &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1}
-	if err := lowering.declareModule(entry.Statements.Nodes); err != nil {
-		test.Fatal(err)
+	if declareModuleError := lowering.declareModule(entry.Statements.Nodes); declareModuleError != nil {
+		test.Fatal(declareModuleError)
 	}
-	if _, err := lowering.statements(entry.Statements.Nodes[:2]); err != nil {
-		test.Fatal(err)
+	if _, statementsError := lowering.statements(entry.Statements.Nodes[:2]); statementsError != nil {
+		test.Fatal(statementsError)
 	}
 	assignment := entry.Statements.Nodes[2].AsExpressionStatement().Expression.AsBinaryExpression()
-	_, err = lowering.setProperty(assignment.Left, assignment.Right)
+	_, setPropertyError := lowering.setProperty(assignment.Left, assignment.Right)
 	var gap *NotYet
-	if !errors.As(err, &gap) || !strings.Contains(gap.What, "replacing a represented method") {
-		test.Fatalf("got %v, want a method-replacement refusal", err)
+	if !errors.As(setPropertyError, &gap) || !strings.Contains(gap.What, "replacing a represented method") {
+		test.Fatalf("got %v, want a method-replacement refusal", setPropertyError)
 	}
 }
 
@@ -207,11 +207,11 @@ func TestDestructuredMethodsCannotLoadOwnSlots(test *testing.T) {
 		"const own={next():number{return 1;}};const view:{next:()=>number}=own;const {next}=view;console.log(`${next()}`);",
 		"const own={};const {constructor}=own;",
 	} {
-		_, err := lowerSource(test, source)
+		_, lowerSourceError := lowerSource(test, source)
 		var refused *Refused
 		var gap *NotYet
-		if !errors.As(err, &refused) && !errors.As(err, &gap) {
-			test.Fatalf("got %v, want a refusal before a method becomes an own-slot load", err)
+		if !errors.As(lowerSourceError, &refused) && !errors.As(lowerSourceError, &gap) {
+			test.Fatalf("got %v, want a refusal before a method becomes an own-slot load", lowerSourceError)
 		}
 	}
 }
@@ -220,31 +220,31 @@ func TestGenericIteratorViewsPreserveNativeArguments(test *testing.T) {
 	test.Parallel()
 	source := `class Sequence<T>{readonly data:readonly T[];constructor(data:readonly T[]){this.data=data;}[Symbol.iterator]():Sequence<T>{return this;}next():{value:number;done:boolean}{const ignored=this.data[0];return{value:1,done:false};}}
  const source:Sequence<number|undefined>=new Sequence([1]);for(const value of source){break;}`
-	_, err := lowerSource(test, source)
+	_, lowerSourceError := lowerSource(test, source)
 	var refused *Refused
-	if !errors.As(err, &refused) || !strings.Contains(refused.What, "nominal ancestry") {
-		test.Fatalf("got %v, want the earlier nominal generic-view refusal", err)
+	if !errors.As(lowerSourceError, &refused) || !strings.Contains(refused.What, "nominal ancestry") {
+		test.Fatalf("got %v, want the earlier nominal generic-view refusal", lowerSourceError)
 	}
 }
 
 func TestIteratorMapperIndexHasNumberRepresentation(test *testing.T) {
 	test.Parallel()
 	source := `class Sequence{[Symbol.iterator]():Sequence{return this;}next():{value:number;done:boolean}{return{value:1,done:true};}}const source=new Sequence();const values=Array.from(source,(value:number,index:number|undefined):number=>value);`
-	_, err := lowerSource(test, source)
+	_, lowerSourceError := lowerSource(test, source)
 	var gap *NotYet
-	if !errors.As(err, &gap) || !strings.Contains(gap.What, "index representation") {
-		test.Fatalf("got %v, want a mapper index representation refusal", err)
+	if !errors.As(lowerSourceError, &gap) || !strings.Contains(gap.What, "index representation") {
+		test.Fatalf("got %v, want a mapper index representation refusal", lowerSourceError)
 	}
 }
 
 func TestIteratorSymbolKeysAreNotStringKeys(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(
+	_, lowerSourceError := lowerSource(
 		test,
 		`const source={value:1,[Symbol.iterator](){return{next(){return{value:1,done:true};}}}};console.log(Object.keys(source).join(','));`,
 	)
 	var gap *NotYet
-	if !errors.As(err, &gap) || !strings.Contains(gap.What, "symbol-key storage") {
-		test.Fatalf("got %v, want explicit symbol-key storage refusal", err)
+	if !errors.As(lowerSourceError, &gap) || !strings.Contains(gap.What, "symbol-key storage") {
+		test.Fatalf("got %v, want explicit symbol-key storage refusal", lowerSourceError)
 	}
 }

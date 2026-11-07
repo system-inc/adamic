@@ -68,12 +68,12 @@ func TestPredicateValuesCheckTheirClaim(test *testing.T) {
 				test.Fatal("source Node: " + difference)
 			}
 			var refused *lower.Refused
-			if _, err := lowered(test, witness); !errors.As(err, &refused) {
-				test.Fatalf(".a witness: want a refusal of the unproven predicate, got %v", err)
+			if _, loweredError := lowered(test, witness); !errors.As(loweredError, &refused) {
+				test.Fatalf(".a witness: want a refusal of the unproven predicate, got %v", loweredError)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			message := fmt.Sprintf(
 				"adamic: panic: predicate %s used as a value, declared at %s:12:1, %s branch: source %s, target Statement\n",
@@ -130,9 +130,9 @@ func TestPredicateValueThroughAssertNotNode(test *testing.T) {
 	if difference := disagreement(run{stdout: []byte("undefined\n")}, node); difference != "" {
 		test.Fatal("source Node: " + difference)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	var site *ir.PredicateCallCheck
 	for i := range program.PredicateChecks.Sites {
@@ -209,9 +209,9 @@ func TestPredicateValuesOverAnOpenTag(test *testing.T) {
 			if difference := disagreement(run{stdout: []byte(probe.nodeOut)}, node); difference != "" {
 				test.Fatal("source Node: " + difference)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			want := node
 			if probe.stderr != "" {

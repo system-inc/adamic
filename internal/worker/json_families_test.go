@@ -21,9 +21,9 @@ import (
 // FNV assigns these case names, fixture names and mutant names.
 func workerJSONBehaviorKeys(mode string) []string {
 	// Reads: internal/oracle/testdata/json_*.a
-	paths, err := filepath.Glob("../oracle/testdata/json_" + mode + "_*.a")
-	if err != nil {
-		panic(err)
+	paths, globError := filepath.Glob("../oracle/testdata/json_" + mode + "_*.a")
+	if globError != nil {
+		panic(globError)
 	}
 	keys := []string{}
 	for _, path := range paths {
@@ -81,8 +81,8 @@ func workerJSONCorpusProduct(test *testing.T, mode string, build bool) string {
 	}
 	return buildcache.Product(test, inputs, func(directory string) error {
 		command := exec.CommandContext(test.Context(), "node", "json_corpus_product.mjs", mode, directory)
-		if output, err := command.CombinedOutput(); err != nil {
-			return fmt.Errorf("corpus inputs: %w\n%s", err, output)
+		if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+			return fmt.Errorf("corpus inputs: %w\n%s", combinedOutputError, output)
 		}
 		return nil
 	})
@@ -101,9 +101,9 @@ func TestProduct_WorkerEncodeJSONCorpus(test *testing.T) {
 func catchWorkerJSONPlantedCase(test *testing.T, family string) {
 	test.Helper()
 	key := "corpus/00000"
-	executable, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	executable, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
 	command := exec.CommandContext(
 		test.Context(),
@@ -114,10 +114,10 @@ func catchWorkerJSONPlantedCase(test *testing.T, family string) {
 		"-test.timeout=60s",
 	)
 	command.Env = append(os.Environ(), workerJSONProbeVariable+"="+family+"="+key)
-	output, err := command.CombinedOutput()
+	output, combinedOutputError := command.CombinedOutput()
 	owner := familyCaseName(family, key)
 	failed := regexp.MustCompile(`(?m)^--- FAIL: (`+family+`_[0-9]+) `).FindAllSubmatch(output, -1)
-	if err == nil ||
+	if combinedOutputError == nil ||
 		len(failed) != 1 ||
 		string(failed[0][1]) != owner ||
 		!bytes.Contains(output, []byte("--- FAIL: "+owner+"/"+key+" ")) ||
@@ -126,7 +126,7 @@ func catchWorkerJSONPlantedCase(test *testing.T, family string) {
 			"planted wrong case must fail exactly %s/%s with native disagreement: %v\n%s",
 			owner,
 			key,
-			err,
+			combinedOutputError,
 			output,
 		)
 	}
@@ -146,13 +146,13 @@ func TestWorkerJSONFamiliesCoverEveryText(test *testing.T) {
 	for _, mode := range []string{"decode", "encode"} {
 		directory := workerJSONCorpusProduct(test, mode, false)
 		read := func(name string) []string {
-			contents, err := os.ReadFile(filepath.Join(directory, name))
-			if err != nil {
-				test.Fatal(err)
+			contents, readError := os.ReadFile(filepath.Join(directory, name))
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			var texts []string
-			if err := json.Unmarshal(contents, &texts); err != nil {
-				test.Fatal(err)
+			if decodeError := json.Unmarshal(contents, &texts); decodeError != nil {
+				test.Fatal(decodeError)
 			}
 			return texts
 		}

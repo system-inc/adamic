@@ -142,9 +142,9 @@ func TestFlowCorpusBoundaryDeclarations(test *testing.T) {
 		"../oracle/testdata/json_decode_coverage_empty.a",
 		"../oracle/testdata/json_decode_empty_object.a",
 	} {
-		paths, err := filepath.Glob(pattern)
-		if err != nil {
-			test.Fatal(err)
+		paths, globError := filepath.Glob(pattern)
+		if globError != nil {
+			test.Fatal(globError)
 		}
 		for _, path := range paths {
 			reason := runtimeBoundaryLoweringReason(path)
@@ -154,17 +154,17 @@ func TestFlowCorpusBoundaryDeclarations(test *testing.T) {
 			if runnable[filepath.ToSlash(path)] {
 				test.Fatalf("refused fixture entered flow corpus: %s", path)
 			}
-			absolute, err := filepath.Abs(path)
-			if err != nil {
-				test.Fatal(err)
+			absolute, absolutePathError := filepath.Abs(path)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			program, err := load.Load([]string{absolute})
-			if err != nil {
-				test.Fatal(err)
+			program, loadError := load.Load([]string{absolute})
+			if loadError != nil {
+				test.Fatal(loadError)
 			}
-			_, err = Lower(context.Background(), program)
-			if err == nil || !strings.Contains(err.Error(), reason) {
-				test.Fatalf("%s: declared lowering refusal %q, got %v", path, reason, err)
+			_, lowerError := Lower(context.Background(), program)
+			if lowerError == nil || !strings.Contains(lowerError.Error(), reason) {
+				test.Fatalf("%s: declared lowering refusal %q, got %v", path, reason, lowerError)
 			}
 			count++
 		}

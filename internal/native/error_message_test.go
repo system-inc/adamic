@@ -44,8 +44,8 @@ int main(void) {
 		test.Fatalf("Node changed: %q", want)
 	}
 	binary := filepath.Join(test.TempDir(), "error-message")
-	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(source, binary, Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	if got := runWithInput(test, "", binary); got != want {
 		test.Fatalf("native %q; Node %q", got, want)

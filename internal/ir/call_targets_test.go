@@ -13,13 +13,13 @@ import (
 
 func TestCallTargetsIncludeEveryDescendant(test *testing.T) {
 	test.Parallel()
-	source, err := load.Load([]string{"testdata/call_targets.a"})
-	if err != nil {
-		test.Fatal(err)
+	source, loadError := load.Load([]string{"testdata/call_targets.a"})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := lower.Lower(context.Background(), source)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerError := lower.Lower(context.Background(), source)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	var base ir.Class
 	for _, class := range program.Classes {

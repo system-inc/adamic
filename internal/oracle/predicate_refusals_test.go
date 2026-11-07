@@ -67,36 +67,36 @@ func TestPredicateMiscompileRefusals(test *testing.T) {
 	for _, probe := range predicateMiscompileCases {
 		test.Run(probe.name, func(test *testing.T) {
 			relative := "internal/oracle/testdata/predicate_refusals/oct8_predicates_" + probe.name + ".a"
-			path, err := filepath.Abs(filepath.Join(repository, relative))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(filepath.Join(repository, relative))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			node := onNode(test, path)
 			if node.exitCode != 0 || string(node.stdout) != probe.output || len(node.stderr) != 0 {
 				test.Fatalf("Node: exit=%d stdout=%q stderr=%q", node.exitCode, node.stdout, node.stderr)
 			}
 			test.Logf("Node: exit=%d stdout=%q", node.exitCode, node.stdout)
-			program, err := lowered(test, path)
+			program, loweredError := lowered(test, path)
 			if baseline {
-				test.Logf("lower: %v", err)
+				test.Logf("lower: %v", loweredError)
 			} else if probe.diagnostic != "" {
 				var refused *lower.Refused
 				var pending *lower.NotYet
-				if (probe.pending && !errors.As(err, &pending)) ||
-					(!probe.pending && !errors.As(err, &refused)) ||
-					err == nil ||
-					!strings.Contains(err.Error(), probe.diagnostic) ||
-					!strings.Contains(err.Error(), filepath.Base(path)+":"+probe.position) {
-					test.Fatalf("want path-bearing %q refusal/pending, got %v", probe.diagnostic, err)
+				if (probe.pending && !errors.As(loweredError, &pending)) ||
+					(!probe.pending && !errors.As(loweredError, &refused)) ||
+					loweredError == nil ||
+					!strings.Contains(loweredError.Error(), probe.diagnostic) ||
+					!strings.Contains(loweredError.Error(), filepath.Base(path)+":"+probe.position) {
+					test.Fatalf("want path-bearing %q refusal/pending, got %v", probe.diagnostic, loweredError)
 				}
-				test.Log(err)
+				test.Log(loweredError)
 				return
 			}
-			if err != nil {
+			if loweredError != nil {
 				if baseline {
 					return
 				}
-				test.Fatal(err)
+				test.Fatal(loweredError)
 			}
 			js := onJavaScriptBackend(test, program)
 			test.Logf("javascript: exit=%d stdout=%q stderr=%q", js.exitCode, js.stdout, js.stderr)

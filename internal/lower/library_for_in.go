@@ -14,7 +14,10 @@ func (l *lowering) forIn(node *ast.Node) ([]ir.Statement, error) {
 	statement := node.AsForInOrOfStatement()
 	proven := l.checker.GetTypeAtLocation(statement.Expression)
 	if l.isArrayType(proven) || checker.IsTupleType(proven) {
-		return nil, l.notYet(statement.Expression, "for...in over an array (holes and own enumerable properties are not represented; use for...of for elements)")
+		return nil, l.notYet(
+			statement.Expression,
+			"for...in over an array (holes and own enumerable properties are not represented; use for...of for elements)",
+		)
 	}
 	// Structural types can hide an array, and synthetic undefined spread fields are not real keys.
 	// Require a plain literal origin, including aliases. This deliberately refuses parameters and
@@ -26,7 +29,10 @@ func (l *lowering) forIn(node *ast.Node) ([]ir.Statement, error) {
 	// No prototype carries an enumerable name in a closed program, and an array is never held as one.
 	view := l.readonlyObjectView(proven)
 	if !isRecord && !construction && !view && !l.plainEnumerableObject(statement.Expression, map[*ast.Symbol]bool{}) {
-		return nil, l.notYet(statement.Expression, "for...in without a proven fixed plain-object origin (arrays, prototypes and absent synthetic fields cannot be enumerated soundly)")
+		return nil, l.notYet(
+			statement.Expression,
+			"for...in without a proven fixed plain-object origin (arrays, prototypes and absent synthetic fields cannot be enumerated soundly)",
+		)
 	}
 	object, err := l.expression(statement.Expression)
 	if err != nil {
@@ -40,7 +46,11 @@ func (l *lowering) forIn(node *ast.Node) ([]ir.Statement, error) {
 	if isRecord {
 		recordLocal = len(l.result.Locals)
 		l.result.Locals = append(l.result.Locals, ir.Local{Name: "record", Type: ir.Record, Function: l.functionIndex})
-		loop.Iterable = ir.RecordCall{Method: "keys", Arguments: []ir.Expression{ir.Read{Local: recordLocal, Of: ir.Record}}, Returns: ir.Array}
+		loop.Iterable = ir.RecordCall{
+			Method:    "keys",
+			Arguments: []ir.Expression{ir.Read{Local: recordLocal, Of: ir.Record}},
+			Returns:   ir.Array,
+		}
 	}
 	initializer := statement.Initializer
 	var assignment ir.Statement
@@ -61,21 +71,28 @@ func (l *lowering) forIn(node *ast.Node) ([]ir.Statement, error) {
 		}
 		loop.Local = len(l.result.Locals)
 		l.result.Locals = append(l.result.Locals, ir.Local{Name: "key", Type: ir.String, Function: l.functionIndex})
-		assignment = ir.Assign{Local: local, Value: ir.Read{Local: loop.Local, Of: ir.String}, Checked: l.checked(local)}
+		assignment = ir.Assign{
+			Local:   local,
+			Value:   ir.Read{Local: loop.Local, Of: ir.String},
+			Checked: l.checked(local),
+		}
 	}
 	if err != nil {
 		return nil, err
 	}
-	body, err := l.statement(statement.Statement)
-	if err != nil {
-		return nil, err
+	body, statementError := l.statement(statement.Statement)
+	if statementError != nil {
+		return nil, statementError
 	}
 	if assignment != nil {
 		loop.Body = append(loop.Body, assignment)
 	}
 	loop.Body = append(loop.Body, body...)
 	if isRecord {
-		loop.Body = []ir.Statement{ir.If{Condition: ir.RecordCall{Method: "hasOwn", Arguments: []ir.Expression{ir.Read{Local: recordLocal, Of: ir.Record}, ir.Read{Local: loop.Local, Of: ir.String}}, Returns: ir.Boolean}, Then: loop.Body}}
+		loop.Body = []ir.Statement{ir.If{Condition: ir.RecordCall{Method: "hasOwn", Arguments: []ir.Expression{
+			ir.Read{Local: recordLocal, Of: ir.Record},
+			ir.Read{Local: loop.Local, Of: ir.String},
+		}, Returns: ir.Boolean}, Then: loop.Body}}
 		return []ir.Statement{ir.Declare{Local: recordLocal, Value: object}, loop}, nil
 	}
 	return []ir.Statement{loop}, nil
@@ -109,7 +126,9 @@ func (l *lowering) plainEnumerableObject(node *ast.Node, visiting map[*ast.Symbo
 				}
 			case ast.KindPropertyAssignment, ast.KindShorthandPropertyAssignment:
 				name := property.Name()
-				if name == nil || strings.ContainsRune(name.Text(), 0) || (property.Kind == ast.KindPropertyAssignment && name.Text() == "__proto__") {
+				if name == nil ||
+					strings.ContainsRune(name.Text(), 0) ||
+					(property.Kind == ast.KindPropertyAssignment && name.Text() == "__proto__") {
 					return false
 				}
 			default:
@@ -150,7 +169,9 @@ func (l *lowering) plainEnumerableObject(node *ast.Node, visiting map[*ast.Symbo
 		}
 		if inner.Kind == ast.KindBinaryExpression {
 			binary := inner.AsBinaryExpression()
-			if ast.IsIdentifier(ast.SkipParentheses(binary.Left)) && l.symbol(ast.SkipParentheses(binary.Left)) == symbol && binary.OperatorToken.Kind == ast.KindEqualsToken {
+			if ast.IsIdentifier(ast.SkipParentheses(binary.Left)) &&
+				l.symbol(ast.SkipParentheses(binary.Left)) == symbol &&
+				binary.OperatorToken.Kind == ast.KindEqualsToken {
 				safe = l.plainEnumerableObject(binary.Right, visiting)
 			}
 			if binary.OperatorToken.Kind == ast.KindEqualsToken && !ast.IsIdentifier(ast.SkipParentheses(binary.Left)) {
@@ -161,7 +182,8 @@ func (l *lowering) plainEnumerableObject(node *ast.Node, visiting map[*ast.Symbo
 					}
 					return part.ForEachChild(target)
 				}
-				if binary.Left.Kind == ast.KindArrayLiteralExpression || binary.Left.Kind == ast.KindObjectLiteralExpression {
+				if binary.Left.Kind == ast.KindArrayLiteralExpression ||
+					binary.Left.Kind == ast.KindObjectLiteralExpression {
 					binary.Left.ForEachChild(target)
 				}
 			}

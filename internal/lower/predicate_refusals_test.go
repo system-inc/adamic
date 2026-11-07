@@ -18,13 +18,15 @@ func TestPredicateSummaryParameterIndex(test *testing.T) {
 		"p13_filter_wrong_parameter_helper",
 	} {
 		test.Run(name, func(test *testing.T) {
-			path, err := filepath.Abs("../oracle/testdata/predicate_refusals/oct8_predicates_" + name + ".a")
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				"../oracle/testdata/predicate_refusals/oct8_predicates_" + name + ".a",
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			program, err := load.Load([]string{path})
-			if err != nil {
-				test.Fatal(err)
+			program, loadError := load.Load([]string{path})
+			if loadError != nil {
+				test.Fatal(loadError)
 			}
 			file := program.Files()[0]
 			checked, release := program.Checker(context.Background(), file)
@@ -43,12 +45,18 @@ func TestPredicateSummaryParameterIndex(test *testing.T) {
 			if predicate == nil {
 				test.Fatal("missing g predicate")
 			}
-			_, err = proof.provePredicate(predicate)
-			if err == nil ||
-				!strings.Contains(err.Error(), "helper argument 0 does not occupy its predicate parameter") ||
-				!strings.Contains(err.Error(), "pass the tested value at the helper's predicate parameter index") ||
-				!strings.Contains(err.Error(), filepath.Base(path)+":5:10:") {
-				test.Fatalf("want helper call path and parameter-index fix, got %v", err)
+			_, provePredicateError := proof.provePredicate(predicate)
+			if provePredicateError == nil ||
+				!strings.Contains(
+					provePredicateError.Error(),
+					"helper argument 0 does not occupy its predicate parameter",
+				) ||
+				!strings.Contains(
+					provePredicateError.Error(),
+					"pass the tested value at the helper's predicate parameter index",
+				) ||
+				!strings.Contains(provePredicateError.Error(), filepath.Base(path)+":5:10:") {
+				test.Fatalf("want helper call path and parameter-index fix, got %v", provePredicateError)
 			}
 		})
 	}

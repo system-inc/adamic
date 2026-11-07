@@ -35,13 +35,13 @@ func TestWASIExportSelection(test *testing.T) {
 		if code != 0 {
 			test.Fatalf("source check: %d", code)
 		}
-		_, err := exportSignatures(program, []string{"bad"})
-		if err == nil || !strings.Contains(err.Error(), testCase.path) {
-			test.Fatalf("named unsupported signature: %v, want path %s", err, testCase.path)
+		_, exportSignaturesError := exportSignatures(program, []string{"bad"})
+		if exportSignaturesError == nil || !strings.Contains(exportSignaturesError.Error(), testCase.path) {
+			test.Fatalf("named unsupported signature: %v, want path %s", exportSignaturesError, testCase.path)
 		}
-		selected, err := exportSignatures(program, nil)
-		if err != nil || len(selected) != 0 {
-			test.Fatalf("automatic selection: %v %v", selected, err)
+		selected, exportSignaturesError := exportSignatures(program, nil)
+		if exportSignaturesError != nil || len(selected) != 0 {
+			test.Fatalf("automatic selection: %v %v", selected, exportSignaturesError)
 		}
 	}
 }
@@ -54,25 +54,25 @@ func TestWASIExports(test *testing.T) {
 	directory := test.TempDir()
 	binary := filepath.Join(directory, "exports.wasm")
 	table := filepath.Join(directory, "exports.json")
-	source, err := filepath.Abs("../../internal/native/wasm/exports/types.a")
-	if err != nil {
-		test.Fatal(err)
+	source, absolutePathError := filepath.Abs("../../internal/native/wasm/exports/types.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	if code := run(
 		[]string{"build", "--target", "wasm32-wasi", "--reactor", source, "-o", binary, "--count", "--abi-json", table},
 	); code != 0 {
 		test.Fatalf("build: %d", code)
 	}
-	bytes, err := os.ReadFile(table)
-	if err != nil {
-		test.Fatal(err)
+	bytes, readError := os.ReadFile(table)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var signatures struct {
 		Version int
 		Exports []struct{ Name string }
 	}
-	if err = json.Unmarshal(bytes, &signatures); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(bytes, &signatures); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if signatures.Version != 1 || len(signatures.Exports) != 14 {
 		test.Fatalf("table: %s", bytes)
@@ -93,9 +93,9 @@ func TestWASIExports(test *testing.T) {
 		source,
 		table,
 	)
-	result, err := command.CombinedOutput()
-	if err != nil {
-		test.Fatalf("oracle: %v\n%s", err, result)
+	result, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("oracle: %v\n%s", combinedOutputError, result)
 	}
 	test.Log(string(result))
 	if code := run([]string{
@@ -126,12 +126,12 @@ func TestWASIExports(test *testing.T) {
 	}); code != 0 {
 		test.Fatalf("narrowed build: %d", code)
 	}
-	bytes, err = os.ReadFile(table)
-	if err != nil {
-		test.Fatal(err)
+	bytes, readError = os.ReadFile(table)
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	if err = json.Unmarshal(bytes, &signatures); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(bytes, &signatures); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if len(signatures.Exports) != 1 || signatures.Exports[0].Name != "numberValue" {
 		test.Fatalf("narrowed table: %s", bytes)

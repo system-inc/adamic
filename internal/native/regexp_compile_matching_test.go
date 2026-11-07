@@ -36,9 +36,9 @@ func runtimeCompilerMatching(test *testing.T, wasm bool) {
 	for i, p := range probes {
 		cases[i] = regexCase{Pattern: p.pattern, Flags: p.flags, Input: utf16.Encode([]rune(p.input))}
 	}
-	wire, err := json.Marshal(cases)
-	if err != nil {
-		test.Fatal(err)
+	wire, encodeError := json.Marshal(cases)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
@@ -49,12 +49,12 @@ func runtimeCompilerMatching(test *testing.T, wasm bool) {
 		`const c=JSON.parse(require('fs').readFileSync(0,'utf8'));for(const x of c){const r=new RegExp(x.pattern,x.flags+'d');r.lastIndex=x.lastIndex;const m=r.exec(String.fromCharCode(...x.input));x.expected={captures:m?Array.from(m.indices,p=>p??null):null,lastIndex:r.lastIndex};}process.stdout.write(JSON.stringify(c));`,
 	)
 	command.Stdin = bytes.NewReader(wire)
-	output, err := command.CombinedOutput()
-	if err != nil {
-		test.Fatalf("Node: %v %s", err, output)
+	output, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("Node: %v %s", combinedOutputError, output)
 	}
-	if err = json.Unmarshal(output, &cases); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(output, &cases); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	var source strings.Builder
 	source.WriteString(
@@ -127,16 +127,16 @@ func runtimeCompilerMatching(test *testing.T, wasm bool) {
 	if path := os.Getenv("ADAMIC_REGEX_COMPILER_TEST_RUNTIME"); path != "" {
 		runtimeDirectory = path
 	}
-	compilerHeaders, err := filepath.Abs(runtimeDirectory)
-	if err != nil {
-		test.Fatal(err)
+	compilerHeaders, absolutePathError := filepath.Abs(runtimeDirectory)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	flags := append(Flags(options), "-DADAMIC_REGEXP_RUNTIME_COMPILER=1", "-I", compilerHeaders)
 	if os.Getenv("ADAMIC_REGEX_COMPILER_TEST_RUNTIME") != "" {
 		for _, name := range []string{"parser", "properties", "sets", "bytecode", "v8"} {
-			path, err := filepath.Abs(filepath.Join(runtimeDirectory, "regexp_compile_"+name+".c"))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(filepath.Join(runtimeDirectory, "regexp_compile_"+name+".c"))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			flags = append(flags, path)
 		}
@@ -148,8 +148,8 @@ func runtimeCompilerMatching(test *testing.T, wasm bool) {
 		source.WriteString("#define ADAMIC_REGEXP_RUNTIME_COMPILER 1\n" + sourceText)
 	}
 	binary := filepath.Join(test.TempDir(), "compiler-matches")
-	if err := BuildFlags(source.String(), binary, options, flags); err != nil {
-		test.Fatal(err)
+	if buildFlagsError := BuildFlags(source.String(), binary, options, flags); buildFlagsError != nil {
+		test.Fatal(buildFlagsError)
 	}
 	ctxRun, cancelRun := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancelRun()
@@ -164,8 +164,8 @@ func runtimeCompilerMatching(test *testing.T, wasm bool) {
 		)
 	}
 	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1:halt_on_error=1", "UBSAN_OPTIONS=halt_on_error=1")
-	if output, err = command.CombinedOutput(); err != nil {
-		test.Fatalf("runtime compiler versus Node: %v %s", err, output)
+	if output, combinedOutputError = command.CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("runtime compiler versus Node: %v %s", combinedOutputError, output)
 	}
 	test.Logf(
 		"%d runtime-compiled matches agree with live Node (wasm=%v), plus one classified V8 refusal",

@@ -75,8 +75,8 @@ func TestKindPredicateCallIsItsComparison(test *testing.T) {
 			test.Parallel()
 			source := kindPredicateTypes + probe.source
 			for _, extension := range []string{".ts", ".a"} {
-				if _, err := lowerSourceAs(test, source, extension); err != nil {
-					test.Fatalf("%s: want it lowered, got %v", extension, err)
+				if _, lowerSourceAsError := lowerSourceAs(test, source, extension); lowerSourceAsError != nil {
+					test.Fatalf("%s: want it lowered, got %v", extension, lowerSourceAsError)
 				}
 			}
 			program := lowersAndAgreesWithNodeAs(test, source, ".ts")
@@ -148,12 +148,12 @@ type N = A | B;
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
 			if probe.refusal != "" {
-				if _, err := lowerSourceAs(
+				if _, lowerSourceAsError := lowerSourceAs(
 					test,
 					probe.source,
 					".ts",
-				); err == nil || !strings.Contains(err.Error(), probe.refusal) {
-					test.Fatalf("want %q, got %v", probe.refusal, err)
+				); lowerSourceAsError == nil || !strings.Contains(lowerSourceAsError.Error(), probe.refusal) {
+					test.Fatalf("want %q, got %v", probe.refusal, lowerSourceAsError)
 				}
 				return
 			}
@@ -304,15 +304,15 @@ func TestKindPredicateWalkRefusals(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSourceAs(test, probe.types+probe.source, ".ts")
+			_, lowerSourceAsError := lowerSourceAs(test, probe.types+probe.source, ".ts")
 			if probe.refusal == "" {
-				if err != nil {
-					test.Fatalf("want it lowered, got %v", err)
+				if lowerSourceAsError != nil {
+					test.Fatalf("want it lowered, got %v", lowerSourceAsError)
 				}
 				return
 			}
-			if err == nil || !strings.Contains(err.Error(), probe.refusal) {
-				test.Fatalf("want %q, got %v", probe.refusal, err)
+			if lowerSourceAsError == nil || !strings.Contains(lowerSourceAsError.Error(), probe.refusal) {
+				test.Fatalf("want %q, got %v", probe.refusal, lowerSourceAsError)
 			}
 		})
 	}
@@ -349,23 +349,27 @@ func TestKindPredicateThroughModules(test *testing.T) {
 				"relay.ts":   "export { isA as isBeta, K, F } from './library';\nexport type { N } from './library';\n",
 				"main.ts":    probe.main,
 			} {
-				if err := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); err != nil {
-					test.Fatal(err)
+				if writeError := os.WriteFile(
+					filepath.Join(directory, name),
+					[]byte(source),
+					0o644,
+				); writeError != nil {
+					test.Fatal(writeError)
 				}
 			}
-			program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-			if err != nil {
-				test.Fatalf("Load: %v", err)
+			program, loadError := load.Load([]string{filepath.Join(directory, "main.ts")})
+			if loadError != nil {
+				test.Fatalf("Load: %v", loadError)
 			}
-			_, err = Lower(context.Background(), program)
+			_, lowerError := Lower(context.Background(), program)
 			if probe.refusal == "" {
-				if err != nil {
-					test.Fatalf("want it lowered, got %v", err)
+				if lowerError != nil {
+					test.Fatalf("want it lowered, got %v", lowerError)
 				}
 				return
 			}
-			if err == nil || !strings.Contains(err.Error(), probe.refusal) {
-				test.Fatalf("want %q, got %v", probe.refusal, err)
+			if lowerError == nil || !strings.Contains(lowerError.Error(), probe.refusal) {
+				test.Fatalf("want %q, got %v", probe.refusal, lowerError)
 			}
 		})
 	}

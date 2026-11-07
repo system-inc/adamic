@@ -13,8 +13,8 @@ import (
 // Not parallel: establishes the tests' stage3/lane-relative working directory, where Product's paths resolve as lane's
 // tests resolve them.
 func TestMain(m *testing.M) {
-	if err := os.Chdir(".."); err != nil {
-		panic(err)
+	if chdirError := os.Chdir(".."); chdirError != nil {
+		panic(chdirError)
 	}
 	os.Exit(m.Run())
 }
@@ -28,51 +28,51 @@ func TestProduct_Stage3AdaptedTree(test *testing.T) {
 	test.Parallel()
 	product := Product(test)
 	tree := filepath.Join(product, "tree")
-	err := filepath.WalkDir(product, func(path string, entry os.DirEntry, err error) error {
-		if err != nil || !entry.IsDir() {
-			return err
+	walkError := filepath.WalkDir(product, func(path string, entry os.DirEntry, pathError error) error {
+		if pathError != nil || !entry.IsDir() {
+			return pathError
 		}
-		entries, err := os.ReadDir(path)
-		if err == nil && len(entries) == 0 {
+		entries, readDirectoryError := os.ReadDir(path)
+		if readDirectoryError == nil && len(entries) == 0 {
 			return fmt.Errorf("the product holds the empty directory %s, which a lay would drop", path)
 		}
-		return err
+		return readDirectoryError
 	})
-	if err != nil {
-		test.Fatal(err)
+	if walkError != nil {
+		test.Fatal(walkError)
 	}
-	if refs, err := toolchain.GitCommandIn(
+	if refs, outputError := toolchain.GitCommandIn(
 		tree,
 		"for-each-ref",
 		"refs/heads",
 		"refs/tags",
-	).Output(); err != nil || len(bytes.TrimSpace(refs)) > 0 {
+	).Output(); outputError != nil || len(bytes.TrimSpace(refs)) > 0 {
 		test.Fatalf(
 			"the adapted tree's branches and tags read %q (%v), want none: the pin is checked out detached",
 			refs,
-			err,
+			outputError,
 		)
 	}
-	if refs, err := toolchain.GitCommandIn(
+	if refs, outputError := toolchain.GitCommandIn(
 		tree,
 		"for-each-ref",
 		"--format=%(refname)",
-	).Output(); err != nil || bytes.Contains(refs, []byte(".keep")) {
-		test.Fatalf("the adapted tree's refs read %q (%v), want none naming a .keep", refs, err)
+	).Output(); outputError != nil || bytes.Contains(refs, []byte(".keep")) {
+		test.Fatalf("the adapted tree's refs read %q (%v), want none naming a .keep", refs, outputError)
 	}
-	head, err := toolchain.GitCommandIn(tree, "rev-parse", "HEAD").Output()
-	if err != nil {
-		test.Fatal(err)
+	head, outputError := toolchain.GitCommandIn(tree, "rev-parse", "HEAD").Output()
+	if outputError != nil {
+		test.Fatal(outputError)
 	}
-	repository, err := filepath.Abs(repositoryFromLane)
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs(repositoryFromLane)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	if pin := typescriptPin(test, repository); string(bytes.TrimSpace(head)) != pin {
 		test.Fatalf("the adapted tree is at %s, not the pinned %s", head, pin)
 	}
 	// built/local/run.js is the harness hereby tests makes, the last thing the build writes.
-	if _, err := os.Stat(filepath.Join(tree, "built/local/run.js")); err != nil {
-		test.Fatalf("the adapted tree isn't built: %v", err)
+	if _, statError := os.Stat(filepath.Join(tree, "built/local/run.js")); statError != nil {
+		test.Fatalf("the adapted tree isn't built: %v", statError)
 	}
 }

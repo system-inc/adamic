@@ -35,11 +35,16 @@ func (l *lowering) parameterPropertyStores(declaration *ast.Node, this int) ([]i
 		if !found {
 			return nil, l.notYet(parameter, "a parameter property without a bound parameter")
 		}
-		of, err := l.typeOf(parameter.Name())
-		if err != nil {
-			return nil, err
+		of, typeOfError := l.typeOf(parameter.Name())
+		if typeOfError != nil {
+			return nil, typeOfError
 		}
-		statements = append(statements, ir.SetProperty{Object: ir.Read{Local: this, Of: ir.Object}, Name: parameter.Name().Text(), Value: fit(ir.Read{Local: local, Of: l.result.Locals[local].Type}, of), Site: l.writeSite(declaration.Name())})
+		statements = append(statements, ir.SetProperty{
+			Object: ir.Read{Local: this, Of: ir.Object},
+			Name:   parameter.Name().Text(),
+			Value:  fit(ir.Read{Local: local, Of: l.result.Locals[local].Type}, of),
+			Site:   l.writeSite(declaration.Name()),
+		})
 	}
 	return statements, nil
 }
@@ -52,7 +57,9 @@ func (l *lowering) parameterPropertyDefault(declaration, initializer *ast.Node) 
 	available := map[string]bool{}
 	for _, member := range classMembersWithParameters(declaration.Parent) {
 		hasProperties = hasProperties || parameterProperty(member)
-		if member.Kind == ast.KindPropertyDeclaration && member.AsPropertyDeclaration().Initializer != nil && !ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
+		if member.Kind == ast.KindPropertyDeclaration &&
+			member.AsPropertyDeclaration().Initializer != nil &&
+			!ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 			available[l.fieldName(member.Name())] = true
 		}
 	}
@@ -64,7 +71,11 @@ func (l *lowering) parameterPropertyDefault(declaration, initializer *ast.Node) 
 
 // A derived parameter-property declaration defines its own slot after super, resetting any
 // inherited property of the same name before the written field initializers run.
-func (l *lowering) parameterPropertyResets(declaration *ast.Node, this int, available map[string]bool) ([]ir.Statement, error) {
+func (l *lowering) parameterPropertyResets(
+	declaration *ast.Node,
+	this int,
+	available map[string]bool,
+) ([]ir.Statement, error) {
 	if l.instance.base == nil {
 		return nil, nil
 	}
@@ -74,15 +85,20 @@ func (l *lowering) parameterPropertyResets(declaration *ast.Node, this int, avai
 			continue
 		}
 		delete(available, parameter.Name().Text())
-		of, err := l.typeOf(parameter.Name())
-		if err != nil {
-			return nil, err
+		of, typeOfError := l.typeOf(parameter.Name())
+		if typeOfError != nil {
+			return nil, typeOfError
 		}
 		value := zeroValue(of)
 		if of.IsReference() {
 			value = ir.Undefined{Of: of}
 		}
-		statements = append(statements, ir.SetProperty{Object: ir.Read{Local: this, Of: ir.Object}, Name: parameter.Name().Text(), Value: value, Site: l.writeSite(declaration.Name())})
+		statements = append(statements, ir.SetProperty{
+			Object: ir.Read{Local: this, Of: ir.Object},
+			Name:   parameter.Name().Text(),
+			Value:  value,
+			Site:   l.writeSite(declaration.Name()),
+		})
 	}
 	return statements, nil
 }

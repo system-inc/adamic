@@ -43,19 +43,19 @@ func TestSplitFamilyWrappersAreCurrent(test *testing.T) {
 			)
 		}
 	}
-	source, err := format.Source(text.Bytes())
-	if err != nil {
-		test.Fatal(err)
+	source, formatError := format.Source(text.Bytes())
+	if formatError != nil {
+		test.Fatal(formatError)
 	}
 	const path = "families_generated_test.go"
 	if *updateSplitFamilies {
-		if err := os.WriteFile(path, source, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, source, 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
-	actual, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	actual, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if !bytes.Equal(actual, source) {
 		test.Fatal(

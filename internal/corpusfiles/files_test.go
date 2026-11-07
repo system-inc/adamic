@@ -27,35 +27,35 @@ func fixture(test *testing.T, root, extension string) (string, string, string) {
 
 func runGit(test *testing.T, directory string, args ...string) string {
 	test.Helper()
-	data, err := git(directory, args...)
-	if err != nil {
-		test.Fatal(err)
+	data, gitError := git(directory, args...)
+	if gitError != nil {
+		test.Fatal(gitError)
 	}
 	return string(data)
 }
 
 func writeFile(test *testing.T, name, text string) {
 	test.Helper()
-	if err := os.MkdirAll(filepath.Dir(name), 0755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(filepath.Dir(name), 0755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	if err := os.WriteFile(name, []byte(text), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(name, []byte(text), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 }
 
 func requireFailure(test *testing.T, directory, pin, root, pattern string, fragments ...string) {
 	test.Helper()
-	_, _, _, err := selectFiles(directory, pin, []string{root}, []string{pattern}, nil)
-	if err == nil {
+	_, _, _, selectFilesError := selectFiles(directory, pin, []string{root}, []string{pattern}, nil)
+	if selectFilesError == nil {
 		test.Fatal("planted corpus fault survived")
 	}
 	for _, fragment := range fragments {
-		if !strings.Contains(err.Error(), fragment) {
-			test.Fatalf("failure %q does not name %q", err, fragment)
+		if !strings.Contains(selectFilesError.Error(), fragment) {
+			test.Fatalf("failure %q does not name %q", selectFilesError, fragment)
 		}
 	}
-	test.Logf("caught: %v", err)
+	test.Logf("caught: %v", selectFilesError)
 }
 
 // convertedPackages are the converted packages' named roots and the extension each selects.
@@ -96,8 +96,8 @@ func TestConvertedPackageContracts(test *testing.T) {
 				test.Fatal("untracked file changed count")
 			}
 			requireFailure(test, directory, pin, testCase.root, pattern, "untracked", filepath.ToSlash(stray))
-			if err := os.Remove(filepath.Join(directory, stray)); err != nil {
-				test.Fatal(err)
+			if removeError := os.Remove(filepath.Join(directory, stray)); removeError != nil {
+				test.Fatal(removeError)
 			}
 			writeFile(test, filepath.Join(directory, tracked), "dirty\n")
 			requireFailure(test, directory, "", testCase.root, pattern, "worktree", filepath.ToSlash(tracked))
@@ -138,12 +138,15 @@ func TestSparseCheckoutCannotShrinkCorpus(test *testing.T) {
 	// A skipped index entry is deliberately absent. Git status considers this
 	// clean, and ls-files still returns it, as in the sparse Prettier checkout.
 	runGit(test, directory, "update-index", "--skip-worktree", "--", tracked)
-	if err := os.Remove(filepath.Join(directory, tracked)); err != nil {
-		test.Fatal(err)
+	if removeError := os.Remove(filepath.Join(directory, tracked)); removeError != nil {
+		test.Fatal(removeError)
 	}
 	// Keep its named directory present, so the per-file check is what catches it.
-	if err := os.MkdirAll(filepath.Join(directory, "tests/format/css"), 0755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(
+		filepath.Join(directory, "tests/format/css"),
+		0755,
+	); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	if status := runGit(test, directory, "status", "--porcelain", "--ignored"); status != "" {
 		test.Fatalf("sparse control not clean: %s", status)
@@ -191,22 +194,22 @@ func unpacked(test *testing.T, directory string, manifest bool) string {
 	test.Helper()
 	source := test.TempDir()
 	for _, name := range names([]byte(runGit(test, directory, "ls-files", "-z"))) {
-		info, err := os.Lstat(filepath.Join(directory, name))
-		if err != nil {
-			test.Fatal(err)
+		info, statError := os.Lstat(filepath.Join(directory, name))
+		if statError != nil {
+			test.Fatal(statError)
 		}
-		data, err := os.ReadFile(filepath.Join(directory, name))
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(filepath.Join(directory, name))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		writeFile(test, filepath.Join(source, name), string(data))
-		if err := os.Chmod(filepath.Join(source, name), info.Mode().Perm()); err != nil {
-			test.Fatal(err)
+		if changeModeError := os.Chmod(filepath.Join(source, name), info.Mode().Perm()); changeModeError != nil {
+			test.Fatal(changeModeError)
 		}
 	}
 	if manifest {
-		if err := tracked.Write(directory, source); err != nil {
-			test.Fatal(err)
+		if writeError := tracked.Write(directory, source); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	return source
@@ -236,19 +239,19 @@ func TestManifestPackageContracts(test *testing.T) {
 			writeFile(test, filepath.Join(directory, stray), "stray\n")
 			requireFailure(test, directory, "", testCase.root, pattern, "doesn't record", filepath.ToSlash(stray))
 			requireFailure(test, directory, pin, testCase.root, pattern, "untracked", filepath.ToSlash(stray))
-			if err := os.Remove(filepath.Join(directory, stray)); err != nil {
-				test.Fatal(err)
+			if removeError := os.Remove(filepath.Join(directory, stray)); removeError != nil {
+				test.Fatal(removeError)
 			}
 			writeFile(test, filepath.Join(directory, tracked), "dirty\n")
 			requireFailure(test, directory, "", testCase.root, pattern, "worktree", filepath.ToSlash(tracked))
 			requireFailure(test, directory, pin, testCase.root, pattern, "dirty", filepath.ToSlash(tracked))
 			writeFile(test, filepath.Join(directory, tracked), "original\n")
-			if err := os.Chmod(filepath.Join(directory, tracked), 0755); err != nil {
-				test.Fatal(err)
+			if changeModeError := os.Chmod(filepath.Join(directory, tracked), 0755); changeModeError != nil {
+				test.Fatal(changeModeError)
 			}
 			requireFailure(test, directory, "", testCase.root, pattern, "worktree", filepath.ToSlash(tracked))
-			if err := os.Chmod(filepath.Join(directory, tracked), 0644); err != nil {
-				test.Fatal(err)
+			if changeModeError := os.Chmod(filepath.Join(directory, tracked), 0644); changeModeError != nil {
+				test.Fatal(changeModeError)
 			}
 			requireFailure(test, directory, strings.Repeat("0", 40), testCase.root, pattern, "HEAD", "pin")
 			ignored := filepath.Join(testCase.root, "ignored-stray"+testCase.extension)
@@ -257,11 +260,11 @@ func TestManifestPackageContracts(test *testing.T) {
 				test.Fatal("an ignored file changed the selection")
 			}
 			requireFailure(test, directory, pin, testCase.root, pattern, "ignored", filepath.ToSlash(ignored))
-			if err := os.Remove(filepath.Join(directory, ignored)); err != nil {
-				test.Fatal(err)
+			if removeError := os.Remove(filepath.Join(directory, ignored)); removeError != nil {
+				test.Fatal(removeError)
 			}
-			if err := os.Remove(filepath.Join(directory, tracked)); err != nil {
-				test.Fatal(err)
+			if removeError := os.Remove(filepath.Join(directory, tracked)); removeError != nil {
+				test.Fatal(removeError)
 			}
 			requireFailure(
 				test,
@@ -298,8 +301,8 @@ func TestManifestUpstreamCoversEveryFileUnderARoot(test *testing.T) {
 	Upstream(test, directory, pin, []string{"inputs"}, []string{"*.ts"})
 	writeFile(test, filepath.Join(directory, "inputs", "notes.txt"), "edited\n")
 	requireFailure(test, directory, pin, "inputs", "*.ts", "dirty", "inputs/notes.txt")
-	if err := os.Remove(filepath.Join(directory, "inputs", "notes.txt")); err != nil {
-		test.Fatal(err)
+	if removeError := os.Remove(filepath.Join(directory, "inputs", "notes.txt")); removeError != nil {
+		test.Fatal(removeError)
 	}
 	requireFailure(test, directory, pin, "inputs", "*.ts", "dirty", "inputs/notes.txt")
 	if files := Repository(test, directory, []string{"inputs"}, []string{"*.ts"}); len(files) != 1 {

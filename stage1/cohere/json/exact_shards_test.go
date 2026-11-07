@@ -9,8 +9,13 @@ func TestPortMatchesGoCohereUnion(test *testing.T) {
 	if len(shards) != testPortMatchesGoCohereShards {
 		test.Fatal("static port count differs from enumeration")
 	}
-	if e := jsonPortDedicatedUnion(allCases, cases, shards, dedicated); e != nil {
-		test.Fatal(e)
+	if jsonPortDedicatedUnionError := jsonPortDedicatedUnion(
+		allCases,
+		cases,
+		shards,
+		dedicated,
+	); jsonPortDedicatedUnionError != nil {
+		test.Fatal(jsonPortDedicatedUnionError)
 	}
 	// A dedicated file that leaves the pinned corpus would leave its owners with nothing to check.
 	if len(dedicated) != len(jsonPortDedicatedKeys) {

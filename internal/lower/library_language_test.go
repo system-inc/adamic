@@ -50,9 +50,9 @@ func TestLibraryLanguageBoundaries(test *testing.T) {
 	} {
 		test.Run(testCase.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, testCase.source)
-			if err == nil || !strings.Contains(err.Error(), testCase.reason) {
-				test.Fatalf("want %q refusal, got %v", testCase.reason, err)
+			_, lowerSourceError := lowerSource(test, testCase.source)
+			if lowerSourceError == nil || !strings.Contains(lowerSourceError.Error(), testCase.reason) {
+				test.Fatalf("want %q refusal, got %v", testCase.reason, lowerSourceError)
 			}
 		})
 	}

@@ -297,9 +297,9 @@ func compilerAgreementCheckUnits(test *testing.T, cases []compilerAgreementCase)
 	test.Helper()
 	var source []byte
 	for _, path := range []string{"compiler_stage1_split_test.go", "compiler_stage1_sanitized_groups_test.go"} {
-		data, err := os.ReadFile(path)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(path)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		source = append(append(source, '\n'), data...)
 	}
@@ -317,8 +317,8 @@ func compilerAgreementCheckUnits(test *testing.T, cases []compilerAgreementCase)
 		test.Fatalf("enumerated %d original shards, want %d", len(old), want)
 	}
 	for _, m := range old {
-		index, err := strconv.Atoi(string(m[1]))
-		if err != nil ||
+		index, parseError := strconv.Atoi(string(m[1]))
+		if parseError != nil ||
 			index < 0 ||
 			index >= testCompilerAndStage1AgreeShards ||
 			units[index] ||
@@ -336,9 +336,9 @@ func compilerAgreementCheckUnits(test *testing.T, cases []compilerAgreementCase)
 			)
 		}
 	}
-	subUnits, err := compilerAgreementSubShardUnits(source)
-	if err != nil {
-		test.Fatal(err)
+	subUnits, compilerAgreementSubShardUnitsError := compilerAgreementSubShardUnits(source)
+	if compilerAgreementSubShardUnitsError != nil {
+		test.Fatal(compilerAgreementSubShardUnitsError)
 	}
 	for unit := range subUnits {
 		units[unit] = true
@@ -365,14 +365,16 @@ func compilerAgreementCheckUnits(test *testing.T, cases []compilerAgreementCase)
 			subWrapper(string(firstSub[1]), "9", string(firstSub[1]), "9")...,
 		),
 	} {
-		if _, err := compilerAgreementSubShardUnits(broken); err == nil {
+		if _, compilerAgreementSubShardUnitsError := compilerAgreementSubShardUnits(
+			broken,
+		); compilerAgreementSubShardUnitsError == nil {
 			test.Fatalf("a %s sub-shard wrapper survived the union check", planted)
 		}
 	}
 	descriptors := prepareRegistry(test, ".")
-	owners, err := compilerAgreementCheckerSanitizedOwners(source, descriptors)
-	if err != nil {
-		test.Fatal(err)
+	owners, compilerAgreementCheckerSanitizedOwnersError := compilerAgreementCheckerSanitizedOwners(source, descriptors)
+	if compilerAgreementCheckerSanitizedOwnersError != nil {
+		test.Fatal(compilerAgreementCheckerSanitizedOwnersError)
 	}
 	// The per-rule check must refuse a missing wrapper, one that runs another rule, and one naming no registered rule.
 	first := compilerAgreementCheckerSanitizedWrapper.FindSubmatch(source)
@@ -392,7 +394,10 @@ func compilerAgreementCheckUnits(test *testing.T, cases []compilerAgreementCase)
 		),
 		"unregistered": append(append([]byte(nil), source...), wrapper("planted_rule", "planted-rule")...),
 	} {
-		if _, err := compilerAgreementCheckerSanitizedOwners(broken, descriptors); err == nil {
+		if _, compilerAgreementCheckerSanitizedOwnersError := compilerAgreementCheckerSanitizedOwners(
+			broken,
+			descriptors,
+		); compilerAgreementCheckerSanitizedOwnersError == nil {
 			test.Fatalf("a %s sanitized checker wrapper survived the union check", planted)
 		}
 	}
@@ -477,14 +482,14 @@ func compilerAgreementCheckUnits(test *testing.T, cases []compilerAgreementCase)
 func TestCompilerAndStage1AgreeSanitizedPlantedDisagreement(test *testing.T) {
 	test.Parallel()
 	_ = compilerAgreementCases(test)
-	source, err := os.ReadFile("compiler_stage1_sanitized_groups_test.go")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("compiler_stage1_sanitized_groups_test.go")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	descriptors := prepareRegistry(test, ".")
-	owners, err := compilerAgreementCheckerSanitizedOwners(source, descriptors)
-	if err != nil {
-		test.Fatal(err)
+	owners, compilerAgreementCheckerSanitizedOwnersError := compilerAgreementCheckerSanitizedOwners(source, descriptors)
+	if compilerAgreementCheckerSanitizedOwnersError != nil {
+		test.Fatal(compilerAgreementCheckerSanitizedOwnersError)
 	}
 	owner := owners[compilerAgreementSanitizedPlantedRule]
 	command, ctx, cancel := compilerAgreementCommand(
@@ -495,13 +500,18 @@ func TestCompilerAndStage1AgreeSanitizedPlantedDisagreement(test *testing.T) {
 		"-test.v",
 	)
 	command.Env = append(os.Environ(), "ADAMIC_COMPILER_AGREEMENT_PROBE=1")
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	output := append(stdout, stderr...)
 	cancel()
-	if err == nil ||
+	if captureError == nil ||
 		bytes.Count(output, []byte("--- FAIL:")) != 1 ||
 		!bytes.Contains(output, []byte("--- FAIL: "+owner+" ")) {
-		test.Fatalf("planted sanitized disagreement not caught exactly once, by %s: %v\n%s", owner, err, output)
+		test.Fatalf(
+			"planted sanitized disagreement not caught exactly once, by %s: %v\n%s",
+			owner,
+			captureError,
+			output,
+		)
 	}
 	if passed := bytes.Count(
 		output,
@@ -918,14 +928,14 @@ func TestCompilerAndStage1AgreeSubShardPlantedDisagreement(test *testing.T) {
 		"-test.v",
 	)
 	command.Env = append(os.Environ(), "ADAMIC_COMPILER_AGREEMENT_PROBE=1")
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	output := append(stdout, stderr...)
 	cancel()
-	if err == nil || bytes.Count(output, []byte("--- FAIL:")) != len(owners) {
+	if captureError == nil || bytes.Count(output, []byte("--- FAIL:")) != len(owners) {
 		test.Fatalf(
 			"planted sub-shard disagreements not caught once for each of %d owner sides: %v\n%s",
 			len(owners),
-			err,
+			captureError,
 			output,
 		)
 	}

@@ -24,9 +24,9 @@ func open(path string) (*native.Jobserver, error) {
 	if path == "" {
 		return nil, nil
 	}
-	jobserver, err := native.OpenJobserver(path)
-	if err != nil {
-		return nil, fmt.Errorf("%s=%s: %w", Variable, path, err)
+	jobserver, openJobserverError := native.OpenJobserver(path)
+	if openJobserverError != nil {
+		return nil, fmt.Errorf("%s=%s: %w", Variable, path, openJobserverError)
 	}
 	return jobserver, nil
 }
@@ -37,8 +37,8 @@ func init() {
 	if process == nil && failed == nil {
 		return
 	}
-	if err := native.UseJobserver(process, failed); err != nil {
-		panic(err)
+	if useJobserverError := native.UseJobserver(process, failed); useJobserverError != nil {
+		panic(useJobserverError)
 	}
 }
 

@@ -24,7 +24,7 @@ func TestCommandHelper(test *testing.T) {
 		return
 	}
 	var args []string
-	if err := json.Unmarshal([]byte(os.Getenv("ADMISSION_COMMAND_ARGS")), &args); err != nil {
+	if decodeError := json.Unmarshal([]byte(os.Getenv("ADMISSION_COMMAND_ARGS")), &args); decodeError != nil {
 		os.Exit(2)
 	}
 	os.Exit(exitCode(run(args)))
@@ -42,25 +42,25 @@ func writeExecutable(test *testing.T, path, script string) {
 	func() {
 		syscall.ForkLock.Lock()
 		defer syscall.ForkLock.Unlock()
-		file, err := os.CreateTemp(filepath.Dir(path), ".executable-*")
-		if err != nil {
-			test.Fatal(err)
+		file, temporaryFileError := os.CreateTemp(filepath.Dir(path), ".executable-*")
+		if temporaryFileError != nil {
+			test.Fatal(temporaryFileError)
 		}
 		temporary = file.Name()
-		if _, err := file.WriteString(script); err != nil {
+		if _, writeStringError := file.WriteString(script); writeStringError != nil {
 			file.Close()
-			test.Fatal(err)
+			test.Fatal(writeStringError)
 		}
-		if err := file.Chmod(0700); err != nil {
+		if chmodError := file.Chmod(0700); chmodError != nil {
 			file.Close()
-			test.Fatal(err)
+			test.Fatal(chmodError)
 		}
-		if err := file.Close(); err != nil {
-			test.Fatal(err)
+		if closeError := file.Close(); closeError != nil {
+			test.Fatal(closeError)
 		}
 	}()
-	if err := os.Rename(temporary, path); err != nil {
-		test.Fatal(err)
+	if renameError := os.Rename(temporary, path); renameError != nil {
+		test.Fatal(renameError)
 	}
 }
 
@@ -69,11 +69,14 @@ func commandFixture(test *testing.T) (string, string, string, string) {
 	dir := test.TempDir()
 	write := func(path, text string) {
 		test.Helper()
-		if err := os.MkdirAll(filepath.Dir(filepath.Join(dir, path)), 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(
+			filepath.Dir(filepath.Join(dir, path)),
+			0755,
+		); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.WriteFile(filepath.Join(dir, path), []byte(text), 0755); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(dir, path), []byte(text), 0755); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	write(
@@ -97,25 +100,25 @@ func commandFixture(test *testing.T) (string, string, string, string) {
 		{"add", "."},
 		{"commit", "-qm", "fixture"},
 	} {
-		if _, err := git(dir, args...); err != nil {
-			test.Fatal(err)
+		if _, gitError := git(dir, args...); gitError != nil {
+			test.Fatal(gitError)
 		}
 	}
-	sha, err := git(dir, "rev-parse", "HEAD")
-	if err != nil {
-		test.Fatal(err)
+	sha, gitError := git(dir, "rev-parse", "HEAD")
+	if gitError != nil {
+		test.Fatal(gitError)
 	}
-	blob, err := git(dir, "rev-parse", "HEAD:corpus/input.a")
-	if err != nil {
-		test.Fatal(err)
+	blob, gitError := git(dir, "rev-parse", "HEAD:corpus/input.a")
+	if gitError != nil {
+		test.Fatal(gitError)
 	}
 	m := manifest{SHA: sha, Generator: "generator.py", Corpora: []corpus{
 		{Name: "witnesses", Programs: []program{{Path: "corpus/input.a", Blob: blob}}},
 		{Name: "fuzz", Programs: []program{}},
 	}}
-	data, err := json.Marshal(m)
-	if err != nil {
-		test.Fatal(err)
+	data, encodeError := json.Marshal(m)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	write("manifest.json", string(data))
 	writeExecutable(
@@ -138,9 +141,9 @@ func invokeCommand(test *testing.T, dir string, args ...string) observation {
 // invokeCommandWith runs the command with environment appended to the test's, returning its own exit code.
 func invokeCommandWith(test *testing.T, dir string, environment []string, args ...string) observation {
 	test.Helper()
-	exe, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	exe, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
 	// Fake compilers implement the lowering adapter contract explicitly.
 	for i := 0; i+1 < len(args); i++ {
@@ -151,9 +154,9 @@ func invokeCommandWith(test *testing.T, dir string, environment []string, args .
 			args = append(args, "--head-lower-binary", args[i+1])
 		}
 	}
-	data, err := json.Marshal(args)
-	if err != nil {
-		test.Fatal(err)
+	data, encodeError := json.Marshal(args)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
@@ -166,12 +169,12 @@ func invokeCommandWith(test *testing.T, dir string, environment []string, args .
 	var out, errors bytes.Buffer
 	command.Stdout = &out
 	command.Stderr = &errors
-	err = command.Run()
+	runError := command.Run()
 	code := 0
-	if exit, ok := err.(*exec.ExitError); ok {
+	if exit, ok := runError.(*exec.ExitError); ok {
 		code = exit.ExitCode()
-	} else if err != nil {
-		test.Fatal(err)
+	} else if runError != nil {
+		test.Fatal(runError)
 	}
 	return observation{Exit: code, Stdout: out.String(), Stderr: errors.String()}
 }
@@ -198,8 +201,8 @@ func TestNewAdmissionMismatch(test *testing.T) {
 		"1",
 	)
 	var r report
-	if err := json.Unmarshal([]byte(o.Stdout), &r); err != nil {
-		test.Fatalf("%v: %s %s", err, o.Stdout, o.Stderr)
+	if decodeError := json.Unmarshal([]byte(o.Stdout), &r); decodeError != nil {
+		test.Fatalf("%v: %s %s", decodeError, o.Stdout, o.Stderr)
 	}
 	if o.Exit != 1 || r.Verdict != "fail" || r.Void || r.Admitted != 1 || r.SamplingSize != 1 || r.Omitted != 0 {
 		test.Fatalf("missed mismatch, or charged it as other than a red: exit %d %+v %s", o.Exit, r, o.Stderr)
@@ -219,8 +222,8 @@ func TestNewAdmissionMismatch(test *testing.T) {
 func TestHeadInputIsolation(test *testing.T) {
 	test.Parallel()
 	dir, sha, base, head := commandFixture(test)
-	if err := os.WriteFile(filepath.Join(dir, "corpus/input.a"), []byte("changed"), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(dir, "corpus/input.a"), []byte("changed"), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	o := invokeCommand(
 		test,
@@ -238,8 +241,8 @@ func TestHeadInputIsolation(test *testing.T) {
 		"--json",
 	)
 	var r report
-	if err := json.Unmarshal([]byte(o.Stdout), &r); err != nil {
-		test.Fatal(err, o.Stderr)
+	if decodeError := json.Unmarshal([]byte(o.Stdout), &r); decodeError != nil {
+		test.Fatal(decodeError, o.Stderr)
 	}
 	if r.CompileTimeoutSeconds != 45 || r.RuntimeTimeoutSeconds != 10 || r.Programs[0].Head.WallSeconds <= 0 {
 		test.Fatal("missing timeout limits or measured command time", r)
@@ -292,8 +295,8 @@ esac
 		filepath.Join(dir, "manifest.json"),
 		"--json",
 	)
-	if err := json.Unmarshal([]byte(o.Stdout), &r); err != nil {
-		test.Fatal(err, o.Stderr)
+	if decodeError := json.Unmarshal([]byte(o.Stdout), &r); decodeError != nil {
+		test.Fatal(decodeError, o.Stderr)
 	}
 	if o.Exit != 0 ||
 		r.Verdict != "pass" ||
@@ -318,21 +321,21 @@ esac
 func TestManifestMismatch(test *testing.T) {
 	test.Parallel()
 	dir, sha, base, head := commandFixture(test)
-	data, err := os.ReadFile(filepath.Join(dir, "manifest.json"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(dir, "manifest.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var m manifest
-	if err = json.Unmarshal(data, &m); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &m); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	m.Corpora[0].Programs[0].Blob = "bad"
-	data, err = json.Marshal(m)
-	if err != nil {
-		test.Fatal(err)
+	data, encodeError := json.Marshal(m)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
-	if err = os.WriteFile(filepath.Join(dir, "manifest.json"), data, 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(dir, "manifest.json"), data, 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	o := invokeCommand(
 		test,
@@ -373,8 +376,8 @@ func TestNewlyRefusedIsInformational(test *testing.T) {
 		"--json",
 	)
 	var r report
-	if err := json.Unmarshal([]byte(o.Stdout), &r); err != nil {
-		test.Fatal(err, o.Stderr)
+	if decodeError := json.Unmarshal([]byte(o.Stdout), &r); decodeError != nil {
+		test.Fatal(decodeError, o.Stderr)
 	}
 	if o.Exit != 0 || r.Admitted != 0 || r.Verdict != "pass" || r.Programs[0].Class != "newly-refused" {
 		test.Fatalf("new refusal failed gate: %+v %s", r, o.Stderr)
@@ -384,12 +387,12 @@ func TestEmptyCorpus(test *testing.T) {
 	test.Parallel()
 	dir, sha, base, head := commandFixture(test)
 	m := manifest{SHA: sha, Generator: "generator.py", Corpora: []corpus{{Name: "fuzz", Programs: []program{}}}}
-	data, err := json.Marshal(m)
-	if err != nil {
-		test.Fatal(err)
+	data, encodeError := json.Marshal(m)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
-	if err = os.WriteFile(filepath.Join(dir, "manifest.json"), data, 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(dir, "manifest.json"), data, 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	o := invokeCommand(
 		test,
@@ -407,8 +410,8 @@ func TestEmptyCorpus(test *testing.T) {
 		"--json",
 	)
 	var r report
-	if err = json.Unmarshal([]byte(o.Stdout), &r); err != nil {
-		test.Fatal(err, o.Stderr)
+	if decodeError := json.Unmarshal([]byte(o.Stdout), &r); decodeError != nil {
+		test.Fatal(decodeError, o.Stderr)
 	}
 	if o.Exit != 0 || r.Admitted != 0 || r.Verdict != "pass" || len(r.Corpora) != 2 || len(r.Programs) != 0 {
 		test.Fatalf("empty corpus failed: %+v %s", r, o.Stderr)
@@ -425,24 +428,24 @@ func TestCompilerTimeoutIsError(test *testing.T) {
 func compilerFixture(test *testing.T) (string, string) {
 	test.Helper()
 	dir, _, _, _ := commandFixture(test)
-	if err := os.MkdirAll(filepath.Join(dir, "cmd/adamic"), 0755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(filepath.Join(dir, "cmd/adamic"), 0755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	for path, text := range map[string]string{
 		"go.mod":             "module github.com/system-inc/adamic\n\ngo 1.27\n",
 		"cmd/adamic/main.go": "package main\nimport \"fmt\"\nfunc main(){fmt.Println(\"C\")}\nfunc compile(string)(*int,int){n:=0;return &n,0}\n",
 	} {
-		if err := os.WriteFile(filepath.Join(dir, path), []byte(text), 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(dir, path), []byte(text), 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
-	if _, err := git(dir, "add", "go.mod", "cmd/adamic/main.go"); err != nil {
-		test.Fatal(err)
+	if _, gitError := git(dir, "add", "go.mod", "cmd/adamic/main.go"); gitError != nil {
+		test.Fatal(gitError)
 	}
 	// A root commit with pinned metadata gives Workshop and every runner the same revision.
-	tree, err := git(dir, "write-tree")
-	if err != nil {
-		test.Fatal(err)
+	tree, gitError := git(dir, "write-tree")
+	if gitError != nil {
+		test.Fatal(gitError)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
@@ -466,13 +469,13 @@ func compilerFixture(test *testing.T) (string, string) {
 		"GIT_AUTHOR_DATE=2000-01-01T00:00:00Z",
 		"GIT_COMMITTER_DATE=2000-01-01T00:00:00Z",
 	)
-	out, err := command.Output()
-	if err != nil {
-		test.Fatal(err)
+	out, outputError := command.Output()
+	if outputError != nil {
+		test.Fatal(outputError)
 	}
 	sha := strings.TrimSpace(string(out))
-	if _, err := git(dir, "update-ref", "HEAD", sha); err != nil {
-		test.Fatal(err)
+	if _, gitError := git(dir, "update-ref", "HEAD", sha); gitError != nil {
+		test.Fatal(gitError)
 	}
 	return dir, sha
 }
@@ -529,8 +532,8 @@ func TestBuildRevisions(test *testing.T) {
 		"--json",
 	)
 	var r report
-	if err := json.Unmarshal([]byte(o.Stdout), &r); err != nil {
-		test.Fatal(err, o.Stderr)
+	if decodeError := json.Unmarshal([]byte(o.Stdout), &r); decodeError != nil {
+		test.Fatal(decodeError, o.Stderr)
 	}
 	if o.Exit != 0 || r.Admitted != 0 || r.Verdict != "pass" || r.Programs[0].Class != "accepted-by-both" {
 		test.Fatalf("revision build failed: %+v %s", r, o.Stderr)

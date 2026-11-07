@@ -39,13 +39,15 @@ func TestEnumInitializationNode(test *testing.T) {
 	} {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "stage3/fixtures/enum-init-reach", name+".a"))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "stage3/fixtures/enum-init-reach", name+".a"),
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			truth := onNode(test, path)
 			if truth.exitCode != 0 {
@@ -71,20 +73,22 @@ func TestEnumInitializationNode(test *testing.T) {
 	} {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "stage3/fixtures/enum-init-reach", name+".a"))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "stage3/fixtures/enum-init-reach", name+".a"),
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			truth := onNode(test, path)
 			if truth.exitCode == 0 || !strings.Contains(string(truth.stderr), "TypeError") {
 				test.Fatalf("Node must fail at pending enum: %+v", truth)
 			}
-			_, err = lowered(test, path)
+			_, loweredError := lowered(test, path)
 			var gap *lower.NotYet
-			if !errors.As(err, &gap) ||
+			if !errors.As(loweredError, &gap) ||
 				gap.What != "reading an enum before its runtime initialization; move the call after the enum declaration" ||
 				!strings.Contains(gap.Where, ":2:") {
-				test.Fatalf("lost reaching-call refusal: %v", err)
+				test.Fatalf("lost reaching-call refusal: %v", loweredError)
 			}
 		})
 	}
@@ -95,9 +99,11 @@ func TestEnumInitializationUnknownPinned(test *testing.T) {
 	for _, name := range []string{"unknown-before", "unknown-callback", "unknown-property"} {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "stage3/fixtures/enum-init-reach", name+".a"))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "stage3/fixtures/enum-init-reach", name+".a"),
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			truth := onNode(test, path)
 			if truth.exitCode == 0 ||
@@ -105,9 +111,9 @@ func TestEnumInitializationUnknownPinned(test *testing.T) {
 				!strings.Contains(string(truth.stderr), "TypeError") {
 				test.Fatalf("source Node: %+v", truth)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			want := run{
 				stdout:   []byte("before\n"),

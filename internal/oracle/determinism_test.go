@@ -68,10 +68,10 @@ func emit(test *testing.T, binary, path string) emitted {
 	test.Helper()
 	ctx, command := bounded(test, binary, "c", path)
 	command.Dir = repository
-	output, _, err := childguard.Capture(ctx, command)
+	output, _, captureError := childguard.Capture(ctx, command)
 	var exit *exec.ExitError
-	if err != nil && !errors.As(err, &exit) {
-		test.Fatalf("running %s c %s: %v", binary, path, err)
+	if captureError != nil && !errors.As(captureError, &exit) {
+		test.Fatalf("running %s c %s: %v", binary, path, captureError)
 	}
 	return emitted{code: command.ProcessState.ExitCode(), output: output}
 }

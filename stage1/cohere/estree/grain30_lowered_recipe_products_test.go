@@ -30,13 +30,13 @@ func TestRecoveryLoweredRecipe(test *testing.T) {
 	)
 	runRecoveryShards(test, shards, func(test *testing.T, _ int, _ []recoveryCase) {
 		for _, name := range []string{"port.c", "port.mjs"} {
-			a, err := os.ReadFile(filepath.Join(products[0], name))
-			if err != nil {
-				test.Fatal(err)
+			a, readError := os.ReadFile(filepath.Join(products[0], name))
+			if readError != nil {
+				test.Fatal(readError)
 			}
-			b, err := os.ReadFile(filepath.Join(products[1], name))
-			if err != nil {
-				test.Fatal(err)
+			b, readError := os.ReadFile(filepath.Join(products[1], name))
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			if !bytes.Equal(a, b) {
 				test.Fatalf("%s differs across source paths", name)
@@ -58,16 +58,16 @@ func estreeLoweredRecipeProduct(test *testing.T, i int) string {
 	inputs.Name = []string{"estree-lowering-proof-a", "estree-lowering-proof-b"}[i]
 	inputs.Files = append(inputs.Files, "stage1/cohere/estree/grain30_lowered_recipe_products_test.go")
 	return recoveryProduct(test, setup, inputs, func(dir string) error {
-		program, err := load.Load([]string{path})
-		if err != nil {
-			return err
+		program, loadError := load.Load([]string{path})
+		if loadError != nil {
+			return loadError
 		}
-		ir, err := lower.Lower(context.Background(), program)
-		if err != nil {
-			return err
+		ir, lowerError := lower.Lower(context.Background(), program)
+		if lowerError != nil {
+			return lowerError
 		}
-		if err := os.WriteFile(filepath.Join(dir, "port.c"), []byte(native.C(ir)), 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(filepath.Join(dir, "port.c"), []byte(native.C(ir)), 0644); writeError != nil {
+			return writeError
 		}
 		return os.WriteFile(filepath.Join(dir, "port.mjs"), []byte(javascript.JavaScript(ir)), 0644)
 	})

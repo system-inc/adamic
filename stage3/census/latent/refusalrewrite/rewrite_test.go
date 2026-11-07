@@ -17,21 +17,21 @@ import (
 
 func TestCompiler41231d51Shape(test *testing.T) {
 	test.Parallel()
-	source, err := os.ReadFile("testdata/refusals-41231d51.go.txt")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("testdata/refusals-41231d51.go.txt")
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	output, err := Rewrite(source)
-	if err != nil {
-		test.Fatal(err)
+	output, rewriteError := Rewrite(source)
+	if rewriteError != nil {
+		test.Fatal(rewriteError)
 	}
-	before, err := parser.ParseFile(token.NewFileSet(), "before.go", source, 0)
-	if err != nil {
-		test.Fatal(err)
+	before, parseFileError := parser.ParseFile(token.NewFileSet(), "before.go", source, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
-	after, err := parser.ParseFile(token.NewFileSet(), "after.go", output, 0)
-	if err != nil {
-		test.Fatal(err)
+	after, parseFileError := parser.ParseFile(token.NewFileSet(), "after.go", output, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	find := func(file *ast.File, name string) *ast.FuncDecl {
 		for _, d := range file.Decls {
@@ -63,14 +63,15 @@ func TestCompiler41231d51Shape(test *testing.T) {
 
 func TestMissingFunctionMutantFailsLoudly(test *testing.T) {
 	test.Parallel()
-	source, err := os.ReadFile("testdata/refusals-41231d51.go.txt")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("testdata/refusals-41231d51.go.txt")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	mutant := strings.Replace(string(source), "func (l *lowering) refuse(", "func (l *lowering) missingRefuse(", 1)
-	output, err := Rewrite([]byte(mutant))
-	if err == nil || !strings.Contains(err.Error(), "lowering.refuse: expected exactly one function, found 0") {
-		test.Fatalf("missing-function mutant not caught: output=%d error=%v", len(output), err)
+	output, rewriteError := Rewrite([]byte(mutant))
+	if rewriteError == nil ||
+		!strings.Contains(rewriteError.Error(), "lowering.refuse: expected exactly one function, found 0") {
+		test.Fatalf("missing-function mutant not caught: output=%d error=%v", len(output), rewriteError)
 	}
 	if output != nil {
 		test.Fatal("failed rewrite returned partial source")
@@ -79,33 +80,34 @@ func TestMissingFunctionMutantFailsLoudly(test *testing.T) {
 
 func TestChangedVisitorMutantFailsLoudly(test *testing.T) {
 	test.Parallel()
-	source, err := os.ReadFile("testdata/refusals-41231d51.go.txt")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("testdata/refusals-41231d51.go.txt")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	mutant := strings.Replace(string(source), "node.ForEachChild(visit)", "node.ForEachChild(other)", 1)
-	_, err = Rewrite([]byte(mutant))
-	if err == nil || !strings.Contains(err.Error(), "lowering.refuse: visit expected one child walk, found 0") {
-		test.Fatalf("changed visitor mutant not caught: %v", err)
+	_, rewriteError := Rewrite([]byte(mutant))
+	if rewriteError == nil ||
+		!strings.Contains(rewriteError.Error(), "lowering.refuse: visit expected one child walk, found 0") {
+		test.Fatalf("changed visitor mutant not caught: %v", rewriteError)
 	}
 }
 
 func TestVisitorsCollectContinueAndSkipDiagnosedBodies(test *testing.T) {
 	test.Parallel()
 	probe := behaviorProbe(test)
-	log, err := os.Create(filepath.Join(test.TempDir(), "test.log"))
-	if err != nil {
-		test.Fatal(err)
+	log, createError := os.Create(filepath.Join(test.TempDir(), "test.log"))
+	if createError != nil {
+		test.Fatal(createError)
 	}
 	cmd := exec.Command(probe, "-test.count=1")
 	cmd.Dir = filepath.Dir(probe)
 	cmd.Stdout = log
 	cmd.Stderr = log
-	err = cmd.Run()
+	runError := cmd.Run()
 	_ = log.Close()
-	if err != nil {
+	if runError != nil {
 		contents, _ := os.ReadFile(log.Name())
-		test.Fatalf("compiled behavior probe: %v\n%s", err, contents)
+		test.Fatalf("compiled behavior probe: %v\n%s", runError, contents)
 	}
 }
 
@@ -206,9 +208,9 @@ func probeToolchain(test *testing.T) []string {
 	} {
 		command := toolchain.CommandIn("../../../..", "go", arguments...)
 		command.Env = append(command.Env, "GOWORK=off")
-		output, err := command.Output()
-		if err != nil {
-			test.Fatalf("go %s: %v", strings.Join(arguments, " "), err)
+		output, outputError := command.Output()
+		if outputError != nil {
+			test.Fatalf("go %s: %v", strings.Join(arguments, " "), outputError)
 		}
 		reports = append(reports, strings.TrimSpace(string(output)))
 	}
@@ -231,15 +233,15 @@ func behaviorProbe(test *testing.T) string {
 		Toolchain: probeToolchain(test),
 	}
 	directory := buildcache.Product(test, inputs, func(directory string) error {
-		output, err := Rewrite([]byte(behaviorSource))
-		if err != nil {
-			return err
+		output, rewriteError := Rewrite([]byte(behaviorSource))
+		if rewriteError != nil {
+			return rewriteError
 		}
 		// The probe declares the repository's go version, so GOTOOLCHAIN selects for its build the release the key's
 		// go version, asked at the repository, names.
-		repository, err := os.ReadFile("../../../../go.mod")
-		if err != nil {
-			return err
+		repository, readError := os.ReadFile("../../../../go.mod")
+		if readError != nil {
+			return readError
 		}
 		directives := ""
 		for _, line := range strings.Split(string(repository), "\n") {
@@ -258,11 +260,11 @@ func behaviorProbe(test *testing.T) string {
 			"behavior_test.go": behaviorTest,
 		} {
 			path := filepath.Join(module, name)
-			if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
-				return err
+			if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0o755); createDirectoryError != nil {
+				return createDirectoryError
 			}
-			if err := os.WriteFile(path, []byte(text), 0o644); err != nil {
-				return err
+			if writeError := os.WriteFile(path, []byte(text), 0o644); writeError != nil {
+				return writeError
 			}
 		}
 		command := toolchain.CommandIn(
@@ -278,8 +280,8 @@ func behaviorProbe(test *testing.T) string {
 			".",
 		)
 		command.Env = append(command.Env, "GOWORK=off")
-		if combined, err := command.CombinedOutput(); err != nil {
-			return fmt.Errorf("go test -c of the behavior probe: %v\n%s", err, combined)
+		if combined, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+			return fmt.Errorf("go test -c of the behavior probe: %v\n%s", combinedOutputError, combined)
 		}
 		return nil
 	})
@@ -300,9 +302,9 @@ func TestModulePreflightShapes(test *testing.T) {
 			"if err := l."+preflight+"(module); err != nil { return err }; if len(module.CommentDirectives)",
 			1,
 		)
-		output, err := Rewrite([]byte(input))
-		if err != nil {
-			test.Fatal(err)
+		output, rewriteError := Rewrite([]byte(input))
+		if rewriteError != nil {
+			test.Fatal(rewriteError)
 		}
 		clone := string(output)[strings.Index(string(output), "func (l *lowering) latentRefuse"):]
 		if !strings.Contains(clone, "latentRecord(err)") {
@@ -325,8 +327,8 @@ func TestUnsupportedPreflightReturns(test *testing.T) {
 			statement+"; if len(module.CommentDirectives)",
 			1,
 		)
-		output, err := Rewrite([]byte(input))
-		if err == nil || output != nil {
+		output, rewriteError := Rewrite([]byte(input))
+		if rewriteError == nil || output != nil {
 			test.Fatalf("unsupported return published: %s", statement)
 		}
 	}
@@ -334,12 +336,12 @@ func TestUnsupportedPreflightReturns(test *testing.T) {
 
 func TestCompilerSlice3Shape(test *testing.T) {
 	test.Parallel()
-	source, err := os.ReadFile("testdata/refusals-slice3.go.txt")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("testdata/refusals-slice3.go.txt")
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	if _, err := Rewrite(source); err != nil {
-		test.Fatal(err)
+	if _, rewriteError := Rewrite(source); rewriteError != nil {
+		test.Fatal(rewriteError)
 	}
 }
 
@@ -348,13 +350,13 @@ func TestCompilerSlice3Shape(test *testing.T) {
 func TestRefusalRewriteReadsMainRefusals(test *testing.T) {
 	test.Parallel()
 	// Reads: internal/lower/refusals.go
-	source, err := os.ReadFile("../../../../internal/lower/refusals.go")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("../../../../internal/lower/refusals.go")
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	output, err := Rewrite(source)
-	if err != nil {
-		test.Fatalf("main's lowering.refuse doesn't rewrite: %v", err)
+	output, rewriteError := Rewrite(source)
+	if rewriteError != nil {
+		test.Fatalf("main's lowering.refuse doesn't rewrite: %v", rewriteError)
 	}
 	for _, binding := range []string{"found", "contractError"} {
 		if count := strings.Count(string(output), "\t\t\tlatentRecord("+binding+")\n"); count != 1 {

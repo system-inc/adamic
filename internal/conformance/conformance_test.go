@@ -60,9 +60,9 @@ type expectation struct {
 
 // readExpectation reads a case's header: the comment lines it opens with, up to the first line that isn't one.
 func readExpectation(path string) (expectation, error) {
-	file, err := os.Open(path)
-	if err != nil {
-		return expectation{}, err
+	file, openError := os.Open(path)
+	if openError != nil {
+		return expectation{}, openError
 	}
 	defer file.Close()
 	var found expectation
@@ -87,8 +87,8 @@ func readExpectation(path string) (expectation, error) {
 			found.outcome, found.says, expected = panics, strings.TrimPrefix(comment, "Expect: panics "), true
 		}
 	}
-	if err := scanner.Err(); err != nil {
-		return expectation{}, err
+	if scanError := scanner.Err(); scanError != nil {
+		return expectation{}, scanError
 	}
 	if found.spec == "" || !expected {
 		return expectation{}, fmt.Errorf("%s opens with no // Spec: and // Expect: lines", path)
@@ -166,13 +166,13 @@ func judgeRun(promise expectation, backend, source run) string {
 // runOnNode runs path through oracle/node.mjs, as the oracle runs a source or a JavaScript backend's output.
 func runOnNode(test *testing.T, path string) run {
 	test.Helper()
-	runner, err := filepath.Abs(filepath.Join("..", "..", "oracle", "node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join("..", "..", "oracle", "node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	node, err := toolchain.Path("node")
-	if err != nil {
-		test.Fatal(err)
+	node, pathError := toolchain.Path("node")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
@@ -180,15 +180,15 @@ func runOnNode(test *testing.T, path string) run {
 	command.Env = toolchain.Env()
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
-	err = command.Run()
+	runError := command.Run()
 	if ctx.Err() != nil {
 		test.Fatalf("Node %s: %v", path, ctx.Err())
 	}
 	exit := 0
-	if err != nil {
+	if runError != nil {
 		var failure *exec.ExitError
-		if !errors.As(err, &failure) {
-			test.Fatalf("Node %s: %v", path, err)
+		if !errors.As(runError, &failure) {
+			test.Fatalf("Node %s: %v", path, runError)
 		}
 		exit = failure.ExitCode()
 	}
@@ -197,15 +197,15 @@ func runOnNode(test *testing.T, path string) run {
 
 func TestEveryCaseKeepsTheSpecsPromise(test *testing.T) {
 	test.Parallel()
-	spec, err := os.ReadFile(filepath.Join("..", "..", "docs", "0.1.md"))
-	if err != nil {
-		test.Fatal(err)
+	spec, readError := os.ReadFile(filepath.Join("..", "..", "docs", "0.1.md"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var paths []string
 	for _, pattern := range []string{"*.a", "*.ts"} {
-		matches, err := filepath.Glob(filepath.Join("testdata", "*", pattern))
-		if err != nil {
-			test.Fatal(err)
+		matches, globError := filepath.Glob(filepath.Join("testdata", "*", pattern))
+		if globError != nil {
+			test.Fatal(globError)
 		}
 		paths = append(paths, matches...)
 	}
@@ -228,25 +228,25 @@ func TestEveryCaseKeepsTheSpecsPromise(test *testing.T) {
 // case, run and judged again.
 func keeps(test *testing.T, path, spec string) string {
 	test.Helper()
-	promise, err := readExpectation(path)
-	if err != nil {
-		test.Fatal(err)
+	promise, readExpectationError := readExpectation(path)
+	if readExpectationError != nil {
+		test.Fatal(readExpectationError)
 	}
-	absolute, err := filepath.Abs(path)
-	if err != nil {
-		test.Fatal(err)
+	absolute, absolutePathError := filepath.Abs(path)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := load.Load([]string{absolute})
-	if err != nil {
-		test.Fatalf("Load: %v (a case must be TypeScript tsc accepts; refusing it is Adamic's job)", err)
+	program, loadError := load.Load([]string{absolute})
+	if loadError != nil {
+		test.Fatalf("Load: %v (a case must be TypeScript tsc accepts; refusing it is Adamic's job)", loadError)
 	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if broken := judge(promise, spec, err); broken != "" || promise.outcome != panics {
+	lowered, lowerError := lower.Lower(context.Background(), program)
+	if broken := judge(promise, spec, lowerError); broken != "" || promise.outcome != panics {
 		return broken
 	}
 	generated := filepath.Join(test.TempDir(), "generated.mjs")
-	if err := os.WriteFile(generated, []byte(javascript.JavaScript(lowered)), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(generated, []byte(javascript.JavaScript(lowered)), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return judgeRun(promise, runOnNode(test, generated), runOnNode(test, absolute))
 }
@@ -257,8 +257,8 @@ func TestAPanicsCaseThatRunsCleanIsBroken(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "clean.a")
 	source := "// Spec: Array writes\n// Expect: panics index\nconst values: number[] = [1, 2, 3];\nvalues[1] = 9;\nconsole.log(values.join(','));\n"
-	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	if broken := keeps(test, path, "Array writes"); broken == "" {
 		test.Error("a panics case that runs clean was judged kept")
@@ -405,10 +405,10 @@ func TestAHeaderWithoutAPromiseIsAnError(test *testing.T) {
 		"late.a":      "console.log('a');\n// Spec: Decorators\n// Expect: lowers\n",
 	} {
 		path := filepath.Join(directory, name)
-		if err := os.WriteFile(path, []byte(content), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(content), 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
-		if _, err := readExpectation(path); err == nil {
+		if _, readExpectationError := readExpectation(path); readExpectationError == nil {
 			test.Errorf("%s: want an error for a header with no promise", name)
 		}
 	}

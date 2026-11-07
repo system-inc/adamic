@@ -10,9 +10,9 @@ import (
 
 func typedArraySortInputs(test *testing.T, kind string) (string, []byte) {
 	test.Helper()
-	source, err := os.ReadFile("testdata/typed-arrays/sort.c")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("testdata/typed-arrays/sort.c")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	expected := inlineArrayRun(test, "node", "testdata/typed-arrays/sort-node.a", kind)
 	if expected.exit != 0 || len(expected.stderr) != 0 {
@@ -24,8 +24,8 @@ func typedArraySortInputs(test *testing.T, kind string) (string, []byte) {
 func typedArraySortRun(test *testing.T, source, kind string, options Options) inlineArrayResult {
 	test.Helper()
 	binary := filepath.Join(test.TempDir(), "sort")
-	if err := Build(source, binary, options); err != nil {
-		test.Fatal("sort must compile:", err)
+	if buildError := Build(source, binary, options); buildError != nil {
+		test.Fatal("sort must compile:", buildError)
 	}
 	return inlineArrayRun(test, binary, kind)
 }
@@ -58,9 +58,9 @@ func typedArraySortMutation(test *testing.T, kind, before, after string) {
 	if control.exit != 0 || !bytes.Equal(control.stdout, expected) {
 		test.Fatalf("control differs from Node: %+v", control)
 	}
-	implementation, err := runtime.ReadFile("runtime/typed_array_sort.c")
-	if err != nil {
-		test.Fatal(err)
+	implementation, readFileError := runtime.ReadFile("runtime/typed_array_sort.c")
+	if readFileError != nil {
+		test.Fatal(readFileError)
 	}
 	code := string(implementation)
 	if strings.Count(code, before) != 1 {

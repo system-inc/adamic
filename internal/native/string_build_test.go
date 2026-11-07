@@ -14,9 +14,9 @@ func TestStringBuildingMatchesNode(test *testing.T) {
 	test.Parallel()
 	operations := 2000
 	if value := os.Getenv("ADAMIC_STRING_OPERATIONS"); value != "" {
-		var err error
-		operations, err = strconv.Atoi(value)
-		if err != nil || operations < 1 {
+		var parseError error
+		operations, parseError = strconv.Atoi(value)
+		if parseError != nil || operations < 1 {
 			test.Fatal("ADAMIC_STRING_OPERATIONS must be a positive integer")
 		}
 	}
@@ -103,8 +103,8 @@ process.stdout.write(lines.join('\n') + '\n');
 		return strings.ReplaceAll(source, "@OPERATIONS@", strconv.Itoa(operations))
 	}
 	binary := filepath.Join(test.TempDir(), "string-build")
-	if err := Build(replace(harness), binary, Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(replace(harness), binary, Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	want := strings.Split(runWithInput(test, "", "node", "--eval", replace(oracle)), "\n")
 	got := strings.Split(runWithInput(test, "", binary), "\n")

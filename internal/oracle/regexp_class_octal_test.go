@@ -18,26 +18,30 @@ func runRegExpFixtureNodeUnit(test *testing.T, fixture string, target string) {
 	if target == "wasm32-wasi" && os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
-	path, err := filepath.Abs(filepath.Join("testdata", fixture+".a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join("testdata", fixture+".a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	source, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	want := execute(test, "node", "-e", string(source))
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	var got run
 	if target == "wasm32-wasi" {
 		got = onWASI(test, native.C(program))
 	} else {
 		binary := filepath.Join(test.TempDir(), "program")
-		if err := native.Build(native.C(program), binary, native.Options{Sanitize: target == "sanitized"}); err != nil {
-			test.Fatal(err)
+		if buildError := native.Build(
+			native.C(program),
+			binary,
+			native.Options{Sanitize: target == "sanitized"},
+		); buildError != nil {
+			test.Fatal(buildError)
 		}
 		got = execute(test, binary)
 	}

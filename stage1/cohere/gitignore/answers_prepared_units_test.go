@@ -217,9 +217,9 @@ func portBuildProduct(test *testing.T, applied *mutant) string {
 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version")},
 	}, func(dir string) error {
 		for _, f := range portFiles {
-			data, err := os.ReadFile(f)
-			if err != nil {
-				return err
+			data, readError := os.ReadFile(f)
+			if readError != nil {
+				return readError
 			}
 			source := string(data)
 			if applied != nil && applied.file == f {
@@ -228,21 +228,25 @@ func portBuildProduct(test *testing.T, applied *mutant) string {
 				}
 				source = strings.Replace(source, applied.from, applied.to, 1)
 			}
-			if err := os.WriteFile(filepath.Join(dir, f), []byte(source), 0644); err != nil {
-				return err
+			if writeError := os.WriteFile(filepath.Join(dir, f), []byte(source), 0644); writeError != nil {
+				return writeError
 			}
 		}
 		program := lowered(test, filepath.Join(dir, "main.ts"))
-		if err := os.WriteFile(
+		if writeError := os.WriteFile(
 			filepath.Join(dir, "program.mjs"),
 			[]byte(javascript.JavaScript(program)),
 			0644,
-		); err != nil {
-			return err
+		); writeError != nil {
+			return writeError
 		}
 		source := native.C(program)
-		if err := native.Build(source, filepath.Join(dir, "port"), native.Options{Sanitize: true}); err != nil {
-			return err
+		if buildError := native.Build(
+			source,
+			filepath.Join(dir, "port"),
+			native.Options{Sanitize: true},
+		); buildError != nil {
+			return buildError
 		}
 		if runtime.GOOS == "darwin" {
 			return native.Build(source, filepath.Join(dir, "port-leaks"), native.Options{})
@@ -259,13 +263,13 @@ func portBuildOracleProduct(test *testing.T) string { return oracles.Binary(test
 
 func portOracle(test *testing.T, binary string, request map[string]any) {
 	test.Helper()
-	data, err := json.Marshal(request)
-	if err != nil {
-		test.Fatal(err)
+	data, encodeError := json.Marshal(request)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	path := filepath.Join(test.TempDir(), "request.json")
-	if err = os.WriteFile(path, data, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, data, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	result := portExecute(
 		test,
@@ -281,32 +285,34 @@ func portOracle(test *testing.T, binary string, request map[string]any) {
 
 func portAsked(test *testing.T, binary, scratch string) cases {
 	test.Helper()
-	scratch, err := filepath.EvalSymlinks(scratch)
-	if err != nil {
-		test.Fatal(err)
+	scratch, resolveSymlinksError := filepath.EvalSymlinks(scratch)
+	if resolveSymlinksError != nil {
+		test.Fatal(resolveSymlinksError)
 	}
 	seed := int64(generatedSeed)
 	if v := os.Getenv("COHERE_GITIGNORE_SEED"); v != "" {
-		seed, err = strconv.ParseInt(v, 10, 64)
-		if err != nil {
-			test.Fatal(err)
+		var parseError error
+		seed, parseError = strconv.ParseInt(v, 10, 64)
+		if parseError != nil {
+			test.Fatal(parseError)
 		}
 	}
 	generated := 40
 	if v := os.Getenv("COHERE_GITIGNORE_GENERATED"); v != "" {
-		generated, err = strconv.Atoi(v)
-		if err != nil {
-			test.Fatal(err)
+		var parseError error
+		generated, parseError = strconv.Atoi(v)
+		if parseError != nil {
+			test.Fatal(parseError)
 		}
 	}
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	// The oracle makes its trees repositories with the git internal/toolchain resolves, under GitEnv, never its PATH's.
-	git, err := toolchain.Path("git")
-	if err != nil {
-		test.Fatal(err)
+	git, pathError := toolchain.Path("git")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
 	output := filepath.Join(scratch, "cases.json")
 	portOracle(test, binary, map[string]any{
@@ -321,13 +327,13 @@ func portAsked(test *testing.T, binary, scratch string) cases {
 		"git":            git,
 		"gitEnvironment": toolchain.GitEnv(),
 	})
-	data, err := os.ReadFile(output)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(output)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var asked cases
-	if err = json.Unmarshal(data, &asked); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &asked); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	return asked
 }
@@ -335,19 +341,19 @@ func portAsked(test *testing.T, binary, scratch string) cases {
 func portGoAnswers(test *testing.T, binary string, asked cases) string {
 	test.Helper()
 	dir := test.TempDir()
-	data, err := json.Marshal(asked)
-	if err != nil {
-		test.Fatal(err)
+	data, encodeError := json.Marshal(asked)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	path := filepath.Join(dir, "cases.json")
-	if err = os.WriteFile(path, data, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, data, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	output := filepath.Join(dir, "answers.txt")
 	portOracle(test, binary, map[string]any{"mode": "answer", "cases": path, "output": output})
-	data, err = os.ReadFile(output)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(output)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return string(data)
 }
@@ -497,9 +503,9 @@ func preparePortAnswerInputs(test *testing.T) {
 	portShared.once.Do(func() {
 		start := time.Now()
 		oracle := portOracleProduct(test)
-		scratch, err := os.MkdirTemp("", "gitignore-shards-")
-		if err != nil {
-			test.Fatal(err)
+		scratch, temporaryDirectoryError := os.MkdirTemp("", "gitignore-shards-")
+		if temporaryDirectoryError != nil {
+			test.Fatal(temporaryDirectoryError)
 		}
 		portShared.scratch = scratch
 		asked := portAsked(test, oracle, scratch)
@@ -544,9 +550,9 @@ func preparePortPartAnswers(test *testing.T, needsLargest bool) *portPart {
 	}
 	part.once.Do(func() {
 		start := time.Now()
-		directory, err := os.MkdirTemp(portShared.scratch, "mutant-part-")
-		if err != nil {
-			test.Fatal(err)
+		directory, temporaryDirectoryError := os.MkdirTemp(portShared.scratch, "mutant-part-")
+		if temporaryDirectoryError != nil {
+			test.Fatal(temporaryDirectoryError)
 		}
 		part.asked = portMutantCases(portShared.asked, needsLargest)
 		part.path = casesFile(test, directory, part.asked)
@@ -919,19 +925,19 @@ func portCommand(test *testing.T, name string, args ...string) *exec.Cmd {
 		// PATH's, as toolchain.Command runs one under a context it has no form for. A program a test built (the Go
 		// oracle, the port) runs as named, with this process's environment. Path's error fails the command as it
 		// starts.
-		if path, err := toolchain.Path(name); err != nil {
-			command.Err = err
+		if path, pathError := toolchain.Path(name); pathError != nil {
+			command.Err = pathError
 		} else {
 			command = exec.CommandContext(test.Context(), path, args...)
 			command.Env = toolchain.Env()
 		}
 	}
 	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
+		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if errors.Is(killError, syscall.ESRCH) {
 			return os.ErrProcessDone
 		}
-		return err
+		return killError
 	}
 	return command
 }
@@ -949,19 +955,19 @@ func portExecute(test *testing.T, environment []string, name string, args ...str
 		// On top of the environment the command already runs with: a tool's is toolchain's, not this process's.
 		command.Env = append(command.Environ(), environment...)
 	}
-	stdout, stderr, err := childguard.Capture(test.Context(), command)
+	stdout, stderr, captureError := childguard.Capture(test.Context(), command)
 	var exitError *exec.ExitError
-	if err != nil && !errors.As(err, &exitError) {
-		test.Fatalf("running %s: %v", name, err)
+	if captureError != nil && !errors.As(captureError, &exitError) {
+		test.Fatalf("running %s: %v", name, captureError)
 	}
 	return run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}
 }
 
 func portNode(test *testing.T, path string, args ...string) run {
 	test.Helper()
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return portExecute(
 		test,
@@ -975,8 +981,8 @@ func portGitCheckIgnore(test *testing.T, tree tree) []string {
 	test.Helper()
 	scratch := test.TempDir()
 	emptyExclude := filepath.Join(scratch, "empty-excludes")
-	if err := os.WriteFile(emptyExclude, nil, 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(emptyExclude, nil, 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	var input bytes.Buffer
 	for _, query := range tree.Queries {
@@ -993,11 +999,11 @@ func portGitCheckIgnore(test *testing.T, tree tree) []string {
 		repository := filepath.Join(scratch, "repository")
 		initialize := toolchain.GitCommand("init", "-q", "--bare", repository)
 		initialize.Env = append(initialize.Env, environment...)
-		if output, err := initialize.CombinedOutput(); err != nil {
-			test.Fatalf("git init for %s: %v\n%s", tree.Disk, err, output)
+		if output, combinedOutputError := initialize.CombinedOutput(); combinedOutputError != nil {
+			test.Fatalf("git init for %s: %v\n%s", tree.Disk, combinedOutputError, output)
 		}
-		if err := os.WriteFile(filepath.Join(repository, "info", "exclude"), nil, 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(repository, "info", "exclude"), nil, 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		arguments = append(
 			[]string{"--git-dir=" + repository, "--work-tree=" + tree.Disk, "-c", "core.bare=false"},
@@ -1011,11 +1017,11 @@ func portGitCheckIgnore(test *testing.T, tree tree) []string {
 	command.Env = append(command.Env, environment...)
 	command.Stdin = &input
 	// Read through childguard.Capture for portExecute's reason: a WaitDelay could cut git's answers short under load.
-	output, standardError, err := childguard.Capture(test.Context(), command)
+	output, standardError, captureError := childguard.Capture(test.Context(), command)
 	// check-ignore exits 1 when nothing is ignored, which is an answer, not a failure.
 	var exitError *exec.ExitError
-	if err != nil && !(errors.As(err, &exitError) && exitError.ExitCode() == 1) {
-		test.Fatalf("git check-ignore in %s: %v\n%s", tree.Disk, err, standardError)
+	if captureError != nil && !(errors.As(captureError, &exitError) && exitError.ExitCode() == 1) {
+		test.Fatalf("git check-ignore in %s: %v\n%s", tree.Disk, captureError, standardError)
 	}
 	fields := bytes.Split(bytes.TrimSuffix(output, []byte{0}), []byte{0})
 	if len(output) > 0 && len(fields)%4 != 0 {

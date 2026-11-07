@@ -17,51 +17,54 @@ func (l *lowering) arrayFrom(node *ast.Node) (ir.Expression, bool, error) {
 	// A call to a program's generator is collected by its origin, before the declared-iterator
 	// paths below can read its type (#qk8rztp, Compiler's risk 2).
 	if len(arguments) > 0 {
-		if function, isGenerator, err := l.generatorCallee(arguments[0]); err != nil {
-			return nil, true, err
+		if function, isGenerator, generatorCalleeError := l.generatorCallee(arguments[0]); generatorCalleeError != nil {
+			return nil, true, generatorCalleeError
 		} else if isGenerator {
 			if len(arguments) > 1 {
 				return nil, true, l.generatorNotYet(node, "consumed by Array.from with a mapper")
 			}
-			element, err := l.elementType(node)
-			if err != nil {
-				return nil, true, err
+			element, elementTypeError := l.elementType(node)
+			if elementTypeError != nil {
+				return nil, true, elementTypeError
 			}
-			value, yields, err := l.collectGenerator(arguments[0], function)
-			if err == nil && yields != element {
-				return nil, true, l.generatorNotYet(node, "consumed by Array.from into an array held differently from what it yields")
+			value, yields, collectGeneratorError := l.collectGenerator(arguments[0], function)
+			if collectGeneratorError == nil && yields != element {
+				return nil, true, l.generatorNotYet(
+					node,
+					"consumed by Array.from into an array held differently from what it yields",
+				)
 			}
-			return value, true, err
+			return value, true, collectGeneratorError
 		}
 	}
 	// Collection iterators already yield fitted slots. Preserve those references
 	// when copying, including boxed union values.
 	if len(arguments) == 1 {
 		if element, iterator := l.libraryIteratorElement(arguments[0]); iterator {
-			value, err := l.expression(arguments[0])
-			if err != nil {
-				return nil, true, err
+			value, expressionError := l.expression(arguments[0])
+			if expressionError != nil {
+				return nil, true, expressionError
 			}
 			return l.libraryIteratorArray(node, value, element), true, nil
 		}
 	}
 	if len(arguments) > 0 {
-		if plan, err := l.planIteration(arguments[0]); err != nil {
-			return nil, true, err
+		if plan, planIterationError := l.planIteration(arguments[0]); planIterationError != nil {
+			return nil, true, planIterationError
 		} else if plan != nil {
 			if len(arguments) > 2 {
 				return nil, true, l.notYet(node, "Array.from with thisArg")
 			}
-			element, err := l.elementType(node)
-			if err != nil {
-				return nil, true, err
+			element, elementTypeError := l.elementType(node)
+			if elementTypeError != nil {
+				return nil, true, elementTypeError
 			}
 			var callback *ast.Node
 			if len(arguments) == 2 {
 				callback = arguments[1]
 			}
-			value, err := l.collectIteration(node, arguments[0], callback, plan, element)
-			return value, true, err
+			value, collectIterationError := l.collectIteration(node, arguments[0], callback, plan, element)
+			return value, true, collectIterationError
 		}
 	}
 	if len(arguments) != 2 {
@@ -72,7 +75,9 @@ func (l *lowering) arrayFrom(node *ast.Node) (ir.Expression, bool, error) {
 		return nil, true, l.notYet(arguments[0], "Array.from of anything but { length }")
 	}
 	property := source.AsObjectLiteralExpression().Properties.Nodes[0]
-	if (property.Kind != ast.KindPropertyAssignment && property.Kind != ast.KindShorthandPropertyAssignment) || !ast.IsIdentifier(property.Name()) || property.Name().Text() != "length" {
+	if (property.Kind != ast.KindPropertyAssignment && property.Kind != ast.KindShorthandPropertyAssignment) ||
+		!ast.IsIdentifier(property.Name()) ||
+		property.Name().Text() != "length" {
 		return nil, true, l.notYet(arguments[0], "Array.from of anything but { length }")
 	}
 	element, err := l.elementType(node)
@@ -95,7 +100,10 @@ func (l *lowering) arrayFrom(node *ast.Node) (ir.Expression, bool, error) {
 	if callback.Kind != ast.KindArrowFunction && callback.Kind != ast.KindFunctionExpression {
 		// A function value from elsewhere would be typed (value: unknown, index: number), and an
 		// unknown parameter isn't something stage 0 holds.
-		return nil, true, l.notYet(arguments[1], "Array.from with a callback that isn't an arrow function written in place")
+		return nil, true, l.notYet(
+			arguments[1],
+			"Array.from with a callback that isn't an arrow function written in place",
+		)
 	}
 	if parameters := callback.Parameters(); len(parameters) > 0 && ast.IsIdentifier(parameters[0].Name()) {
 		received := l.checker.GetTypeAtLocation(parameters[0].Name())
@@ -110,7 +118,13 @@ func (l *lowering) arrayFrom(node *ast.Node) (ir.Expression, bool, error) {
 		case !l.includesUndefined(received):
 			// The checker reads { length } as an array-like of whatever the parameter says, but
 			// it has no elements: the parameter is undefined every time, whatever its type claims.
-			return nil, true, &Refused{Where: l.program.Where(parameters[0]), What: "a first Array.from parameter typed " + l.checker.TypeToString(received) + ", which is undefined every time", Fix: "name it _ and leave it untyped, (_, index) => ..., or type it undefined (the type would be a lie the checker can't see)"}
+			return nil, true, &Refused{
+				Where: l.program.Where(parameters[0]),
+				What: "a first Array.from parameter typed " +
+					l.checker.TypeToString(received) +
+					", which is undefined every time",
+				Fix: "name it _ and leave it untyped, (_, index) => ..., or type it undefined (the type would be a lie the checker can't see)",
+			}
 		}
 	}
 	mapped, err := l.expression(callback)
@@ -125,5 +139,11 @@ func (l *lowering) arrayFrom(node *ast.Node) (ir.Expression, bool, error) {
 			first = l.result.Locals[parameters[0]].Type
 		}
 	}
-	return ir.ArrayFrom{Length: length, Callback: mapped, Element: element, First: first, CallbackType: int(l.concrete(l.checker.GetTypeAtLocation(callback)).Id())}, true, nil
+	return ir.ArrayFrom{
+		Length:       length,
+		Callback:     mapped,
+		Element:      element,
+		First:        first,
+		CallbackType: int(l.concrete(l.checker.GetTypeAtLocation(callback)).Id()),
+	}, true, nil
 }

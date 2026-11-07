@@ -12,7 +12,12 @@ func (l *lowering) shareable(proven *checker.Type, path string, where *ast.Node)
 	return l.shareableWith(proven, path, where, map[*ast.Node]bool{})
 }
 
-func (l *lowering) shareableWith(proven *checker.Type, path string, where *ast.Node, functions map[*ast.Node]bool) string {
+func (l *lowering) shareableWith(
+	proven *checker.Type,
+	path string,
+	where *ast.Node,
+	functions map[*ast.Node]bool,
+) string {
 	finder := &cycleFinder{l: l, where: map[*checker.Type]*ast.Node{}}
 	finder.use(proven, where)
 	shapes := l.parallelShapes()
@@ -51,7 +56,8 @@ func (l *lowering) shareableWith(proven *checker.Type, path string, where *ast.N
 			}
 			return name + " is a mutable " + kind
 		case l.isArrayType(current) || checker.IsTupleType(current):
-			if !l.isLibraryType(current, "ReadonlyArray") && !(checker.IsTupleType(current) && current.TargetTupleType().IsReadonly()) {
+			if !l.isLibraryType(current, "ReadonlyArray") &&
+				!(checker.IsTupleType(current) && current.TargetTupleType().IsReadonly()) {
 				return name + " is a mutable " + l.checker.TypeToString(current)
 			}
 			for _, element := range l.checker.GetTypeArguments(current) {
@@ -75,7 +81,9 @@ func (l *lowering) shareableWith(proven *checker.Type, path string, where *ast.N
 			for _, property := range l.checker.GetPropertiesOfType(current) {
 				for _, declaration := range property.Declarations {
 					parent := declaration.Parent
-					if parent == nil || parent.Kind != ast.KindInterfaceDeclaration || !ast.GetSourceFileOfNode(parent).IsDeclarationFile {
+					if parent == nil ||
+						parent.Kind != ast.KindInterfaceDeclaration ||
+						!ast.GetSourceFileOfNode(parent).IsDeclarationFile {
 						continue
 					}
 					if parent.Name().Text() == "Map" || parent.Name().Text() == "Set" {
@@ -88,7 +96,8 @@ func (l *lowering) shareableWith(proven *checker.Type, path string, where *ast.N
 			}
 			if symbol := current.Symbol(); symbol != nil {
 				for _, declaration := range symbol.Declarations {
-					if ast.GetSourceFileOfNode(declaration).IsDeclarationFile && current.ObjectFlags()&checker.ObjectFlagsMapped == 0 {
+					if ast.GetSourceFileOfNode(declaration).IsDeclarationFile &&
+						current.ObjectFlags()&checker.ObjectFlagsMapped == 0 {
 						return name + " has a type the compiler cannot see the whole of"
 					}
 				}
@@ -136,9 +145,14 @@ func (l *lowering) shareableWith(proven *checker.Type, path string, where *ast.N
 // Use the existing module order, and judge every source body assignable to this
 // function type. A type with no visible producer cannot prove its captures.
 // The shared visited set makes mutually recursive closure/type graphs finite.
-func (l *lowering) shareableFunctionType(proven *checker.Type, path string, where *ast.Node, functions map[*ast.Node]bool) string {
-	modules, err := l.moduleOrder(l.program.Files()[0])
-	if err != nil {
+func (l *lowering) shareableFunctionType(
+	proven *checker.Type,
+	path string,
+	where *ast.Node,
+	functions map[*ast.Node]bool,
+) string {
+	modules, moduleOrderError := l.moduleOrder(l.program.Files()[0])
+	if moduleOrderError != nil {
 		return path + " is a function whose captures are not known"
 	}
 	proof := &parallelProof{l: l, active: functions, checked: map[*ast.Node]bool{}, shareableFunctions: functions}
@@ -149,10 +163,12 @@ func (l *lowering) shareableFunctionType(proven *checker.Type, path string, wher
 		if ast.IsPartOfTypeNode(node) || why != "" {
 			return false
 		}
-		if ast.IsFunctionLike(node) && node.Body() != nil && l.checker.IsTypeAssignableTo(l.checker.GetTypeAtLocation(node), proven) {
+		if ast.IsFunctionLike(node) &&
+			node.Body() != nil &&
+			l.checker.IsTypeAssignableTo(l.checker.GetTypeAtLocation(node), proven) {
 			found = true
-			if err := proof.function(node, nil); err != nil {
-				if refused, ok := err.(*Refused); ok {
+			if functionError := proof.function(node, nil); functionError != nil {
+				if refused, ok := functionError.(*Refused); ok {
 					why = path + " has unproven captures or effects: " + refused.What
 				} else {
 					why = path + " has captures or effects the compiler cannot prove"
@@ -179,8 +195,8 @@ func (l *lowering) shareableFunctionType(proven *checker.Type, path string, wher
 // extra slots and complete class layouts must also be immutable.
 func (l *lowering) parallelShapes() []*checker.Type {
 	finder := &cycleFinder{l: l, where: map[*checker.Type]*ast.Node{}}
-	modules, err := l.moduleOrder(l.program.Files()[0])
-	if err != nil {
+	modules, moduleOrderError := l.moduleOrder(l.program.Files()[0])
+	if moduleOrderError != nil {
 		return nil
 	}
 	var visit ast.Visitor

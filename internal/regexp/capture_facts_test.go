@@ -35,9 +35,9 @@ type captureObservation struct {
 
 func captureNode(test *testing.T, cases []captureCase) []captureObservation {
 	test.Helper()
-	data, err := json.Marshal(cases)
-	if err != nil {
-		test.Fatal(err)
+	data, encodeError := json.Marshal(cases)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	cmd := exec.Command(
 		"node",
@@ -45,13 +45,13 @@ func captureNode(test *testing.T, cases []captureCase) []captureObservation {
 		`if(process.version !== 'v24.19.0') throw Error('requires Node 24.19.0'); const cs=JSON.parse(require('fs').readFileSync(0,'utf8')); console.log(JSON.stringify(cs.map(c=>{const r=new RegExp(c.Pattern,c.Flags);r.lastIndex=c.LastIndex;const input=c.InputUnits===null?c.Input:String.fromCharCode(...c.InputUnits);const m=r.exec(input);return m?{Match:true,Indices:Array.from(m,x=>x!==undefined),Names:Object.fromEntries(Object.entries(m.groups||{}).map(([k,v])=>[k,v!==undefined]))}:{Match:false};})));`,
 	)
 	cmd.Stdin = bytes.NewReader(data)
-	out, err := cmd.CombinedOutput()
-	if err != nil {
-		test.Fatalf("Node: %v %s", err, out)
+	out, combinedOutputError := cmd.CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("Node: %v %s", combinedOutputError, out)
 	}
 	var observations []captureObservation
-	if err = json.Unmarshal(out, &observations); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(out, &observations); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if len(observations) != len(cases) {
 		test.Fatal("incomplete Node response")
@@ -64,9 +64,9 @@ func assertCaptureFacts(test *testing.T, cases []captureCase) []captureObservati
 	observed := captureNode(test, cases)
 	matches := 0
 	for i, c := range cases {
-		facts, err := CaptureFacts(c.Pattern, c.Flags)
-		if err != nil {
-			test.Fatalf("%s /%s/%s: %v", c.Source, c.Pattern, c.Flags, err)
+		facts, captureFactsError := CaptureFacts(c.Pattern, c.Flags)
+		if captureFactsError != nil {
+			test.Fatalf("%s /%s/%s: %v", c.Source, c.Pattern, c.Flags, captureFactsError)
 		}
 		m := observed[i]
 		if !m.Match {
@@ -138,14 +138,14 @@ func TestCaptureFactsNodeBranches(test *testing.T) {
 
 func TestCaptureFactsTest262Node(test *testing.T) {
 	test.Parallel()
-	f, err := os.Open("testdata/matches.json.gz")
-	if err != nil {
-		test.Fatal(err)
+	f, openError := os.Open("testdata/matches.json.gz")
+	if openError != nil {
+		test.Fatal(openError)
 	}
 	defer f.Close()
-	zip, err := gzip.NewReader(f)
-	if err != nil {
-		test.Fatal(err)
+	zip, gzipError := gzip.NewReader(f)
+	if gzipError != nil {
+		test.Fatal(gzipError)
 	}
 	defer zip.Close()
 	var rows []struct {
@@ -153,8 +153,8 @@ func TestCaptureFactsTest262Node(test *testing.T) {
 		Input                  []uint16
 		LastIndex              int
 	}
-	if err = json.NewDecoder(zip).Decode(&rows); err != nil {
-		test.Fatal(err)
+	if decodeError := json.NewDecoder(zip).Decode(&rows); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	var cases []captureCase
 	patterns := map[string]bool{}
@@ -227,13 +227,13 @@ func TestCaptureFactsTSCCallbacksNode(test *testing.T) {
 			}
 		}
 	}
-	data, err := os.ReadFile("testdata/capture-tsc.json")
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile("testdata/capture-tsc.json")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var table []captureLiteral
-	if err = json.Unmarshal(data, &table); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &table); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	for _, p := range patterns {
 		if !matched[p.pattern] {
@@ -283,9 +283,9 @@ func TestCaptureFactsOptionalMutant(test *testing.T) {
 		"-test.count=1",
 		"-test.v",
 	)
-	output, err := command.CombinedOutput()
-	if err == nil || !bytes.Contains(output, []byte("Node undefined:")) {
-		test.Fatalf("mutant did not fail Node comparison: %v %s", err, output)
+	output, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError == nil || !bytes.Contains(output, []byte("Node undefined:")) {
+		test.Fatalf("mutant did not fail Node comparison: %v %s", combinedOutputError, output)
 	}
 	test.Logf("optional-as-always mutant caught by Node: %s", output)
 }
@@ -294,13 +294,13 @@ func TestCaptureFactsOptionalMutant(test *testing.T) {
 // return a parser error instead of a fabricated participation table.
 func TestCaptureFactsTest262Patterns(test *testing.T) {
 	test.Parallel()
-	data, err := os.ReadFile("testdata/test262.json")
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile("testdata/test262.json")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var all [][3]string
-	if err = json.Unmarshal(data, &all); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &all); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	var selected [][3]string
 	for _, row := range all {
@@ -311,9 +311,9 @@ func TestCaptureFactsTest262Patterns(test *testing.T) {
 	if len(selected) != 264 {
 		test.Fatalf("pattern inventory changed: %d", len(selected))
 	}
-	input, err := json.Marshal(selected)
-	if err != nil {
-		test.Fatal(err)
+	input, encodeError := json.Marshal(selected)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	command := exec.Command(
 		"node",
@@ -321,24 +321,31 @@ func TestCaptureFactsTest262Patterns(test *testing.T) {
 		`if(process.version !== 'v24.19.0')throw Error('requires Node 24.19.0');console.log(JSON.stringify(JSON.parse(require('fs').readFileSync(0,'utf8')).map(([p,f])=>{try{new RegExp(p,f);return true}catch(e){if(!(e instanceof SyntaxError))throw e;return false}})));`,
 	)
 	command.Stdin = bytes.NewReader(input)
-	output, err := command.CombinedOutput()
-	if err != nil {
-		test.Fatalf("Node: %v %s", err, output)
+	output, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("Node: %v %s", combinedOutputError, output)
 	}
 	var valid []bool
-	if err = json.Unmarshal(output, &valid); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(output, &valid); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if len(valid) != len(selected) {
 		test.Fatal("incomplete Node response")
 	}
 	accepted, refused := 0, 0
 	for i, row := range selected {
-		_, err := CaptureFacts(row[0], row[1])
-		if (err == nil) != valid[i] {
-			test.Errorf("%s /%s/%s: Node validity=%v facts error=%v", row[2], row[0], row[1], valid[i], err)
+		_, captureFactsError := CaptureFacts(row[0], row[1])
+		if (captureFactsError == nil) != valid[i] {
+			test.Errorf(
+				"%s /%s/%s: Node validity=%v facts error=%v",
+				row[2],
+				row[0],
+				row[1],
+				valid[i],
+				captureFactsError,
+			)
 		}
-		if err == nil {
+		if captureFactsError == nil {
 			accepted++
 		} else {
 			refused++
@@ -362,18 +369,18 @@ func TestCaptureFactsPrecision(test *testing.T) {
 		{`((a)|(b))+`, []bool{true, true, false, false}, map[string]bool{}},
 		{`(?<x>a)?\k<x>`, []bool{true, false}, map[string]bool{"x": false}},
 	} {
-		facts, err := CaptureFacts(c.pattern, "")
-		if err != nil {
-			test.Fatal(err)
+		facts, captureFactsError := CaptureFacts(c.pattern, "")
+		if captureFactsError != nil {
+			test.Fatal(captureFactsError)
 		}
 		if !reflect.DeepEqual(facts.Indices, c.indices) || !reflect.DeepEqual(facts.Names, c.names) {
 			test.Errorf("/%s/: %+v", c.pattern, facts)
 		}
 	}
-	if _, err := CaptureFacts("(", ""); err == nil {
+	if _, captureFactsError := CaptureFacts("(", ""); captureFactsError == nil {
 		test.Fatal("invalid pattern accepted")
 	}
-	if _, err := CaptureFacts("a", "gg"); err == nil {
+	if _, captureFactsError := CaptureFacts("a", "gg"); captureFactsError == nil {
 		test.Fatal("invalid flags accepted")
 	}
 }
@@ -382,9 +389,9 @@ func TestCaptureFactsPrecision(test *testing.T) {
 // inventory uses TypeScript's parser and is unrelated to these Node comparisons.
 func regexpMutantSources(test testing.TB, witnesses ...string) string {
 	test.Helper()
-	files, err := filepath.Glob("*.go")
-	if err != nil {
-		test.Fatal(err)
+	files, globError := filepath.Glob("*.go")
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	var sources []string
 	for _, file := range files {

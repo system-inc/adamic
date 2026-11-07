@@ -17,15 +17,15 @@ func TestLibraryNumberThrowsCaught(test *testing.T) {
 	for _, name := range []string{"caught", "propagated", "async", "constant"} {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(
+			path, absolutePathError := filepath.Abs(
 				filepath.Join(repository, "internal/oracle/testdata/library_number_throws/"+name+".a"),
 			)
-			if err != nil {
-				test.Fatal(err)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatalf("a try around a number format must lower: %v", err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatalf("a try around a number format must lower: %v", loweredError)
 			}
 			node := onNode(test, path)
 			if node.exitCode != 0 {
@@ -67,13 +67,15 @@ func TestLibraryNumberThrowsCaught(test *testing.T) {
 // is marked as one that can, and the C tests the pending word nowhere.
 func TestLibraryNumberConstantsDoNotCheck(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/library_number_throws/constant.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/library_number_throws/constant.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	for _, function := range program.Functions {
 		if function.MayThrow {

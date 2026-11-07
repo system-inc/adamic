@@ -20,25 +20,25 @@ import (
 
 // Not parallel: ASAN_OPTIONS and UBSAN_OPTIONS process environment via test.Setenv.
 func TestClosedStrongAstParentGap(test *testing.T) {
-	path, err := filepath.Abs("gaps/1_strong_ast_parent.ts")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("gaps/1_strong_ast_parent.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	expected := execute(test, "", "node", "--disable-warning=ExperimentalWarning", runner, path).output
 	if string(expected) != "root\n" {
 		test.Fatalf("Node gap result %q", expected)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		test.Fatal(err)
+	lowered, lowerError := lower.Lower(context.Background(), program)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	if len(lowered.GraphTypes) == 0 {
 		test.Fatal("strong parent/child cycle accepted without graph ownership")
@@ -49,8 +49,8 @@ func TestClosedStrongAstParentGap(test *testing.T) {
 	test.Setenv("UBSAN_OPTIONS", "halt_on_error=1")
 	actual := execute(test, "", binary).output
 	emitted := filepath.Join(test.TempDir(), "strong-parent.mjs")
-	if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	backend := execute(test, "", "node", "--disable-warning=ExperimentalWarning", runner, emitted).output
 	for _, side := range []struct {
@@ -67,9 +67,9 @@ func TestClosedStrongAstParentGap(test *testing.T) {
 	counted := gapNative(test, "gaps/1_strong_ast_parent.ts", "", native.Options{Count: true})
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
-	stdout, stderr, err := childguard.Capture(ctx, exec.Command(counted))
-	if err != nil || !bytes.Equal(stdout, expected) {
-		test.Fatalf("counted native: %v, stdout %q, stderr %q; Node %q", err, stdout, stderr, expected)
+	stdout, stderr, captureError := childguard.Capture(ctx, exec.Command(counted))
+	if captureError != nil || !bytes.Equal(stdout, expected) {
+		test.Fatalf("counted native: %v, stdout %q, stderr %q; Node %q", captureError, stdout, stderr, expected)
 	}
 	if report := leakcheck.Unbalanced(leakcheck.Run{Stdout: stdout, Stderr: stderr}); report != "" {
 		test.Fatal(report)
@@ -79,32 +79,32 @@ func TestClosedStrongAstParentGap(test *testing.T) {
 
 // Not parallel: ASAN_OPTIONS process environment via test.Setenv.
 func TestPushSpreadGap(test *testing.T) {
-	path, err := filepath.Abs("gaps/2_push_spread.ts")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("gaps/2_push_spread.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	expected := execute(test, "", "node", "--disable-warning=ExperimentalWarning", runner, path).output
 	if string(expected) != "1,2,3\n" {
 		test.Fatalf("Node gap result %q", expected)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		test.Fatal(err)
+	lowered, lowerError := lower.Lower(context.Background(), program)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	binary := gapNative(test, "gaps/2_push_spread.ts", "", native.Options{Sanitize: true})
 	test.Setenv("ASAN_OPTIONS", "detect_leaks=1")
 	actual := execute(test, "", binary).output
 	emitted := filepath.Join(test.TempDir(), "spread.mjs")
-	if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	backend := execute(test, "", "node", "--disable-warning=ExperimentalWarning", runner, emitted).output
 	for _, side := range []struct {
@@ -119,58 +119,59 @@ func TestPushSpreadGap(test *testing.T) {
 
 func TestClassMethodInterfaceGap(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("gaps/4_class_interface_method.ts")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("gaps/4_class_interface_method.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	result := execute(test, "", "node", "--disable-warning=ExperimentalWarning", runner, path)
 	if string(result.output) != "1\n" {
 		test.Fatalf("Node gap result %q", result.output)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	_, err = lower.Lower(context.Background(), program)
+	_, lowerError := lower.Lower(context.Background(), program)
 	var notYet *lower.NotYet
-	if !errors.As(err, &notYet) || notYet.What != "a class method through a view that erases its prototype origin" {
-		test.Fatalf("GAPS.md records an erased class-method origin NotYet, got %v", err)
+	if !errors.As(lowerError, &notYet) ||
+		notYet.What != "a class method through a view that erases its prototype origin" {
+		test.Fatalf("GAPS.md records an erased class-method origin NotYet, got %v", lowerError)
 	}
 	test.Logf("Node prints 1; Adamic reports: %v", notYet)
 }
 
 // Not parallel: ASAN_OPTIONS process environment via test.Setenv.
 func TestClosedOptionalFunctionValueGap(test *testing.T) {
-	path, err := filepath.Abs("gaps/5_optional_function_value.ts")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("gaps/5_optional_function_value.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	expected := execute(test, "", "node", "--disable-warning=ExperimentalWarning", runner, path).output
 	if string(expected) != "1\n" {
 		test.Fatalf("Node optional function result %q", expected)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		test.Fatal(err)
+	lowered, lowerError := lower.Lower(context.Background(), program)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	binary := gapNative(test, "gaps/5_optional_function_value.ts", "", native.Options{Sanitize: true})
 	test.Setenv("ASAN_OPTIONS", "detect_leaks=1")
 	actual := execute(test, "", binary).output
 	emitted := filepath.Join(test.TempDir(), "optional.mjs")
-	if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	backend := execute(test, "", "node", "--disable-warning=ExperimentalWarning", runner, emitted).output
 	for _, side := range []struct {
@@ -188,32 +189,32 @@ func TestClosedOptionalFunctionValueGap(test *testing.T) {
 // JavaScript backend. The driver's number[] annotation still stands.
 // Not parallel: ASAN_OPTIONS process environment via test.Setenv.
 func TestClosedConditionalEmptyArrayGap(test *testing.T) {
-	path, err := filepath.Abs("gaps/6_conditional_empty_array.ts")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("gaps/6_conditional_empty_array.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	expected := execute(test, "", "node", "--disable-warning=ExperimentalWarning", runner, path).output
 	if string(expected) != "1\n" {
 		test.Fatalf("Node gap result %q", expected)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		test.Fatal(err)
+	lowered, lowerError := lower.Lower(context.Background(), program)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	binary := gapNative(test, "gaps/6_conditional_empty_array.ts", "", native.Options{Sanitize: true})
 	test.Setenv("ASAN_OPTIONS", "detect_leaks=1")
 	actual := execute(test, "", binary).output
 	emitted := filepath.Join(test.TempDir(), "conditional.mjs")
-	if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	backend := execute(test, "", "node", "--disable-warning=ExperimentalWarning", runner, emitted).output
 	for _, side := range []struct {

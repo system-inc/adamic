@@ -39,11 +39,22 @@ func (e *emitter) viewUntaggedObjectUnion(property ir.Property, value string) st
 		property.ViewType = e.program.ViewContracts[property.ViewContract-1].Name
 	}
 
-	encoded, err := json.Marshal(e.program.ViewContracts)
-	if err != nil {
-		panic(err)
+	encoded, encodeError := json.Marshal(e.program.ViewContracts)
+	if encodeError != nil {
+		panic(encodeError)
 	}
-	return fmt.Sprintf("((adamicUntaggedValue) => { %s; adamicUntaggedPlainSelect(adamicUntaggedValue, %s, %d, %s, %s); return adamicUntaggedValue; })(%s)", unionCallableShapeRuntime+viewUntaggedPlainRuntime+"; const adamicUntaggedCallableRecorded=(value)=>"+e.unionCallableRecorded("value"), string(encoded), property.ViewContract, quote(property.View), quote(property.ViewType), value)
+	return fmt.Sprintf(
+		"((adamicUntaggedValue) => { %s; adamicUntaggedPlainSelect(adamicUntaggedValue, %s, %d, %s, %s); return adamicUntaggedValue; })(%s)",
+		unionCallableShapeRuntime+
+			viewUntaggedPlainRuntime+
+			"; const adamicUntaggedCallableRecorded=(value)=>"+
+			e.unionCallableRecorded("value"),
+		string(encoded),
+		property.ViewContract,
+		quote(property.View),
+		quote(property.ViewType),
+		value,
+	)
 }
 
 const viewUntaggedPlainRuntime = `
@@ -141,7 +152,11 @@ func (e *emitter) untaggedCallableUnionExpected(property ir.Property, recorded, 
 		}
 		choices = append(choices, unionCallableSignature(parameters, result, root.Name, masks))
 	}
-	return "((recorded)=>{const choices=[" + strings.Join(choices, ",") + "];return choices.find(expected=>adamicViewCallableSignaturesMatch(recorded,expected)) || choices[0];})(" + recorded + ")"
+	return "((recorded)=>{const choices=[" +
+		strings.Join(choices, ",") +
+		"];return choices.find(expected=>adamicViewCallableSignaturesMatch(recorded,expected)) || choices[0];})(" +
+		recorded +
+		")"
 }
 
 func (e *emitter) untaggedCallableRecorded(property ir.Property, recorded, expected string) string {
@@ -164,5 +179,11 @@ func (e *emitter) untaggedCallableRecorded(property ir.Property, recorded, expec
 		return recorded
 	}
 	encoded, _ := json.Marshal(functions)
-	return "((recorded)=>!adamicViewCallableSignaturesMatch(recorded," + expected + ") || " + string(encoded) + ".includes(recorded?.function) ? recorded : undefined)(" + recorded + ")"
+	return "((recorded)=>!adamicViewCallableSignaturesMatch(recorded," +
+		expected +
+		") || " +
+		string(encoded) +
+		".includes(recorded?.function) ? recorded : undefined)(" +
+		recorded +
+		")"
 }

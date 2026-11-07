@@ -41,19 +41,21 @@ func TestImpossibleNonNullFixturesAreRefused(test *testing.T) {
 	for _, name := range paths {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", func() string {
-				if filepath.Ext(name) == ".a" {
-					return "non_null_refused/" + name
-				}
-				return name
-			}()))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata", func() string {
+					if filepath.Ext(name) == ".a" {
+						return "non_null_refused/" + name
+					}
+					return name
+				}()),
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			program, err := lowered(test, path)
+			program, loweredError := lowered(test, path)
 			if filepath.Ext(path) == ".ts" {
-				if err != nil {
-					test.Fatal(err)
+				if loweredError != nil {
+					test.Fatal(loweredError)
 				}
 				if program.NonNullChecks.Proven != 0 || program.NonNullChecks.Checked != 1 {
 					test.Fatalf("want proven 0 checked 1, got %#v", program.NonNullChecks)
@@ -82,19 +84,19 @@ func TestImpossibleNonNullFixturesAreRefused(test *testing.T) {
 				return
 			}
 			var refused *lower.Refused
-			if !errors.As(err, &refused) {
-				test.Fatalf("want impossible assertion Refused, got %v", err)
+			if !errors.As(loweredError, &refused) {
+				test.Fatalf("want impossible assertion Refused, got %v", loweredError)
 			}
 			if refused.What != "the non-null assertion !" {
-				test.Fatalf("wrong refusal: %v", err)
+				test.Fatalf("wrong refusal: %v", loweredError)
 			}
 			if refused.Fix != "write ?? panic('why it can't be missing'), or narrow and handle the missing case" {
-				test.Fatalf("wrong fix: %v", err)
+				test.Fatalf("wrong fix: %v", loweredError)
 			}
 			if !strings.HasSuffix(refused.Error(), ": Adamic 0.1 refuses "+
 				refused.What+
 				"; write ?? panic('why it can't be missing'), or narrow and handle the missing case") {
-				test.Fatalf("wrong diagnostic: %v", err)
+				test.Fatalf("wrong diagnostic: %v", loweredError)
 			}
 		})
 	}
@@ -104,18 +106,18 @@ func TestPossibleNonNullAdamicAssertionsAreRefused(test *testing.T) {
 	test.Parallel()
 	for _, name := range []string{"read", "typeerror"} {
 		test.Run(name, func(test *testing.T) {
-			path, err := filepath.Abs(
+			path, absolutePathError := filepath.Abs(
 				filepath.Join(repository, "internal/oracle/testdata/non_null_refused/non_null_possible_"+name+".a"),
 			)
-			if err != nil {
-				test.Fatal(err)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			_, err = lowered(test, path)
+			_, loweredError := lowered(test, path)
 			var refused *lower.Refused
-			if !errors.As(err, &refused) ||
+			if !errors.As(loweredError, &refused) ||
 				refused.What != "the non-null assertion !" ||
 				refused.Fix != "write ?? panic('why it can't be missing'), or narrow and handle the missing case" {
-				test.Fatalf("wrong .a refusal: %v", err)
+				test.Fatalf("wrong .a refusal: %v", loweredError)
 			}
 		})
 	}
@@ -124,13 +126,15 @@ func TestPossibleNonNullAdamicAssertionsAreRefused(test *testing.T) {
 // An unused literal default is a slot initializer, not an assertion expression.
 func TestLiteralDefaultPlaceholderAgreesWithNode(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_refuse_default.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/non_null_refuse_default.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	source := onSliceNode(test, path)
 	native, binary := nativelyUncached(test, program)

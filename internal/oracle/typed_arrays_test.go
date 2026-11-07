@@ -49,13 +49,15 @@ func TestTypedArrayWriteStopIsPinned(test *testing.T) {
 	test.Parallel()
 	for _, kind := range []string{"stop", "uint16_stop"} {
 		test.Run(kind, func(test *testing.T) {
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/typed_arrays_"+kind+".a"))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/typed_arrays_"+kind+".a"),
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			p, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			p, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			stopped := run{
 				stdout:   []byte("before 2 7 undefined\n"),
@@ -91,23 +93,25 @@ func TestTypedArrayWriteStopIsPinned(test *testing.T) {
 // This pins the port's arithmetic, not just native agreement with its own source.
 func TestTypedArrayWorkersStatsMatchesPlatforms(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/typed_arrays_workers_stats.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/typed_arrays_workers_stats.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	reference, err := filepath.Abs(
+	reference, absolutePathError := filepath.Abs(
 		filepath.Join(repository, "internal/oracle/testdata/typed_arrays_workers_stats_reference.mjs"),
 	)
-	if err != nil {
-		test.Fatal(err)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	expected := onNode(test, reference)
 	if expected.exitCode != 0 {
 		test.Fatalf("platforms Node reference: %#v", expected)
 	}
-	p, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	p, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	native, _ := natively(test, p)
 	for name, observed := range map[string]run{
@@ -133,22 +137,24 @@ func TestTypedArrayWorkersStatsMatchesPlatforms(test *testing.T) {
 // its actual bounds check without changing the embedded runtime or other tests.
 func TestTypedArrayIntegerBoundsMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/typed_arrays_integer.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/typed_arrays_integer.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	control := native.C(program)
 	if strings.Count(control, "adamic_typed_array_get_integer(") != 13 ||
 		strings.Count(control, "adamic_typed_array_set_integer(") != 4 {
 		test.Fatal("all four kinds must use integer reads and writes")
 	}
-	header, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/adamic.h"))
-	if err != nil {
-		test.Fatal(err)
+	header, readError := os.ReadFile(filepath.Join(repository, "internal/native/runtime/adamic.h"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	start := strings.Index(string(header), "static inline adamic_maybe_number adamic_typed_array_get_integer(")
 	if start < 0 {
@@ -169,8 +175,8 @@ func TestTypedArrayIntegerBoundsMutant(test *testing.T) {
 	code := strings.ReplaceAll(control, "adamic_typed_array_get_integer(", "mutant_get_integer(")
 	code = strings.Replace(code, "#include \"adamic.h\"", "#include \"adamic.h\"\n"+body, 1)
 	binary := filepath.Join(test.TempDir(), "mutant")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(code, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	result := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=1:halt_on_error=1"}, binary)
 	if result.exitCode == 0 || !strings.Contains(string(result.stderr), "heap-buffer-overflow") {
@@ -181,13 +187,15 @@ func TestTypedArrayIntegerBoundsMutant(test *testing.T) {
 
 func TestTypedArrayIntegerWriteStopIsPinned(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/typed_arrays_integer_stop.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/typed_arrays_integer_stop.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	if !strings.Contains(native.C(program), "adamic_typed_array_set_integer(") {
 		test.Fatal("bound write must use integer helper")
@@ -215,13 +223,15 @@ func TestTypedArrayIntegerWriteStopIsPinned(test *testing.T) {
 // source binding. Node keeps that original array through its built-in iterator.
 func TestTypedArrayIterationOwnerMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/typed_arrays_integer.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/typed_arrays_integer.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	control := native.C(program)
 	if strings.Contains(control, "adamic_typed_array_iterate(") {
@@ -235,8 +245,8 @@ func TestTypedArrayIterationOwnerMutant(test *testing.T) {
 	}
 	mutant := holder.ReplaceAllString(control, "$1\tadamic_release($2);\n$3")
 	binary := filepath.Join(test.TempDir(), "unowned-iteration")
-	if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal("ownership mutant must compile:", err)
+	if buildError := native.Build(mutant, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal("ownership mutant must compile:", buildError)
 	}
 	observed := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=0:halt_on_error=1"}, binary)
 	if observed.exitCode == 0 || !strings.Contains(string(observed.stderr), "heap-use-after-free") {

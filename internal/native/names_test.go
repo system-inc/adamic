@@ -19,13 +19,13 @@ import (
 
 func namedProgram(test *testing.T, entry string, overlay map[string]string) *ir.Program {
 	test.Helper()
-	loaded, err := load.LoadOverlay([]string{entry}, overlay)
-	if err != nil {
-		test.Fatal(err)
+	loaded, loadOverlayError := load.LoadOverlay([]string{entry}, overlay)
+	if loadOverlayError != nil {
+		test.Fatal(loadOverlayError)
 	}
-	program, err := lower.Lower(context.Background(), loaded)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerError := lower.Lower(context.Background(), loaded)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	return program
 }
@@ -58,8 +58,8 @@ func TestSourceNamesDoNotMove(test *testing.T) {
 		): `export const marker = [14].length; export const container = { get value(): number { return 14; } }; export function same(value: number): number { const callback = () => value + 14; return callback(); }`,
 	}
 	for path, source := range sources {
-		if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	before := namedProgram(test, entry, nil)
@@ -97,9 +97,9 @@ func TestSourceNamesDoNotMove(test *testing.T) {
 		changed := namedProgram(test, entry, map[string]string{module: edit})
 		code := C(changed)
 		moduleBody := func(code, module string) string {
-			declarations, err := splitDeclarations(code)
-			if err != nil {
-				test.Fatal(err)
+			declarations, splitDeclarationsError := splitDeclarations(code)
+			if splitDeclarationsError != nil {
+				test.Fatal(splitDeclarationsError)
 			}
 			var body strings.Builder
 			previous := 0
@@ -107,14 +107,14 @@ func TestSourceNamesDoNotMove(test *testing.T) {
 				begin := declaration.tokens[0].start
 				marker := "// adamic-module "
 				owner, marked := "", false
-				var err error
+				var unquoteError error
 				if at := strings.LastIndex(code[previous:begin], marker); at >= 0 {
 					text := strings.TrimSpace(code[previous:begin][at+len(marker):])
-					owner, err = strconv.Unquote(text)
+					owner, unquoteError = strconv.Unquote(text)
 					marked = true
 				}
-				if err != nil {
-					test.Fatal(err)
+				if unquoteError != nil {
+					test.Fatal(unquoteError)
 				}
 				end := declaration.tokens[len(declaration.tokens)-1].end
 				if declaration.function &&
@@ -158,8 +158,8 @@ func TestSourceNamesDoNotMove(test *testing.T) {
 	}
 	for _, sanitize := range []bool{false, true} {
 		binary := filepath.Join(directory, "names")
-		if err := Build(original, binary, Options{Sanitize: sanitize}); err != nil {
-			test.Fatal(err)
+		if buildError := Build(original, binary, Options{Sanitize: sanitize}); buildError != nil {
+			test.Fatal(buildError)
 		}
 		if got := runWithInput(test, "", binary); got != runWithInput(
 			test,
@@ -248,8 +248,8 @@ func TestImportedSpecializationsHaveSourceIdentity(test *testing.T) {
 		): `export class Box { readonly value: number; constructor(value: number) { this.value = value; } read(): number { return this.value + 1; } }`,
 	}
 	for path, source := range sources {
-		if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	program := namedProgram(test, entry, nil)
@@ -277,16 +277,20 @@ func TestImportedSpecializationsHaveSourceIdentity(test *testing.T) {
 	code := C(program)
 	relocated := test.TempDir()
 	for path, source := range sources {
-		if err := os.WriteFile(filepath.Join(relocated, filepath.Base(path)), []byte(source), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(
+			filepath.Join(relocated, filepath.Base(path)),
+			[]byte(source),
+			0644,
+		); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	if other := C(namedProgram(test, filepath.Join(relocated, "main.a"), nil)); other != code {
 		test.Fatal("program root relocation changed emitted text")
 	}
 	binary := filepath.Join(directory, "imported")
-	if err := Build(code, binary, Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(code, binary, Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	if got := runWithInput(
 		test,
@@ -322,8 +326,8 @@ func TestGeneratedRolesDoNotCollide(test *testing.T) {
 	test.Parallel()
 	entry := filepath.Join(test.TempDir(), "roles.a")
 	source := `class Box { readonly value: number; constructor(value: number) { this.value = value; } allocate(value: number): Box { return new Box(value); } initialize(): number { return this.value + 1; } } function outer(): number { return 17; } const fn = outer; console.log((new Box(1).allocate(2).initialize() + fn()).toString());`
-	if err := os.WriteFile(entry, []byte(source), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(entry, []byte(source), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	program := namedProgram(test, entry, nil)
 	e := &emitter{program: program}
@@ -336,8 +340,8 @@ func TestGeneratedRolesDoNotCollide(test *testing.T) {
 		seen[name] = true
 	}
 	binary := filepath.Join(filepath.Dir(entry), "roles")
-	if err := Build(C(program), binary, Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(C(program), binary, Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	if got := runWithInput(
 		test,
@@ -352,8 +356,8 @@ func TestGenericSpecializationsHaveSourceIdentity(test *testing.T) {
 	test.Parallel()
 	entry := filepath.Join(test.TempDir(), "generic.a")
 	source := `function identity<T>(value:T):T {return value;} console.log(identity<number>(7).toString()); console.log(identity<string>('seven'));`
-	if err := os.WriteFile(entry, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(entry, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	program := namedProgram(test, entry, nil)
 	e := &emitter{program: program}
@@ -373,8 +377,8 @@ func TestGenericSpecializationsHaveSourceIdentity(test *testing.T) {
 		test.Fatalf("got %d concrete specializations", count)
 	}
 	binary := filepath.Join(test.TempDir(), "generic")
-	if err := Build(C(program), binary, Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(C(program), binary, Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	if got, want := runWithInput(test, "", binary), runWithInput(
 		test,
@@ -451,21 +455,21 @@ func TestStableCacheOwnersAndCounters(test *testing.T) {
 
 func TestStableEmissionIsDeterministic(test *testing.T) {
 	test.Parallel()
-	entry, err := filepath.Abs("../oracle/testdata/async_methods.a")
-	if err != nil {
-		test.Fatal(err)
+	entry, absolutePathError := filepath.Abs("../oracle/testdata/async_methods.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	first, second := namedProgram(test, entry, nil), namedProgram(test, entry, nil)
 	want := C(first)
 	if C(first) != want || C(second) != want {
 		test.Fatal("same source changed emitted C")
 	}
-	h, a, err := splitC(want)
-	if err != nil {
-		test.Fatal(err)
+	h, a, splitCError := splitC(want)
+	if splitCError != nil {
+		test.Fatal(splitCError)
 	}
-	h2, b, err := splitC(C(second))
-	if err != nil || h != h2 || len(a) != len(b) {
+	h2, b, splitCError := splitC(C(second))
+	if splitCError != nil || h != h2 || len(a) != len(b) {
 		test.Fatal("same source changed split output")
 	}
 	for i := range a {
@@ -505,9 +509,9 @@ func TestStableSchemaIdentity(test *testing.T) {
 
 func TestStableRequestHandlerIdentity(test *testing.T) {
 	test.Parallel()
-	entry, err := filepath.Abs("wasm/request.a")
-	if err != nil {
-		test.Fatal(err)
+	entry, absolutePathError := filepath.Abs("wasm/request.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	program := namedProgram(test, entry, nil)
 	match := wasiRequestHandler(C(program))
@@ -563,9 +567,9 @@ func TestStableDeclarationAncestry(test *testing.T) {
 // test name so the named identity mutants continue to exercise this control.
 func stableDefinitions(test *testing.T, code string) map[string]string {
 	test.Helper()
-	declarations, err := splitDeclarations(code)
-	if err != nil {
-		test.Fatal(err)
+	declarations, splitDeclarationsError := splitDeclarations(code)
+	if splitDeclarationsError != nil {
+		test.Fatal(splitDeclarationsError)
 	}
 	definitions := map[string]string{}
 	for _, declaration := range declarations {
@@ -597,9 +601,9 @@ func stableDefinitionsSurvive(test *testing.T, before, after string, minimum int
 
 func stableProgramMatchesNode(test *testing.T, entry, code string) {
 	test.Helper()
-	loader, err := filepath.Abs("../../oracle/node.mjs")
-	if err != nil {
-		test.Fatal(err)
+	loader, absolutePathError := filepath.Abs("../../oracle/node.mjs")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	run := func(name string, arguments ...string) []byte {
 		test.Helper()
@@ -608,15 +612,15 @@ func stableProgramMatchesNode(test *testing.T, entry, code string) {
 		command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1")
 		var stdout, stderr bytes.Buffer
 		command.Stdout, command.Stderr = &stdout, &stderr
-		if err := command.Run(); err != nil || stderr.Len() != 0 {
-			test.Fatalf("%s: %v; stderr %s", name, err, &stderr)
+		if runError := command.Run(); runError != nil || stderr.Len() != 0 {
+			test.Fatalf("%s: %v; stderr %s", name, runError, &stderr)
 		}
 		return stdout.Bytes()
 	}
 	want := run("node", "--disable-warning=ExperimentalWarning", loader, entry)
 	binary := filepath.Join(test.TempDir(), "program")
-	if err := Build(code, binary, Options{Split: true, Sanitize: true, Jobs: 2}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(code, binary, Options{Split: true, Sanitize: true, Jobs: 2}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	if got := run(binary); !bytes.Equal(got, want) {
 		test.Fatalf("native %q differs from Node %q", got, want)
@@ -630,8 +634,8 @@ func TestStableUnitsSurviveMiddleDeclaration(test *testing.T) {
 async function middle(n: number): Promise<number> { return await Promise.resolve(n + 2); }
 function last(n: number): number { return first(n) + 3; }
 console.log(last(4).toString()); console.log((await middle(5)).toString());`
-	if err := os.WriteFile(entry, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(entry, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	before := namedProgram(test, entry, nil)
 	changed := strings.Replace(
@@ -644,8 +648,8 @@ console.log(last(4).toString()); console.log((await middle(5)).toString());`
 	original, next := C(before), C(after)
 	stableDefinitionsSurvive(test, original, next, len(before.Functions))
 	stableProgramMatchesNode(test, entry, original)
-	if err := os.WriteFile(entry, []byte(changed), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(entry, []byte(changed), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	stableProgramMatchesNode(test, entry, next)
 }
@@ -682,9 +686,9 @@ func TestStableDecoderAndCallableDescriptors(test *testing.T) {
 
 func TestStablePredicateHelperUnits(test *testing.T) {
 	test.Parallel()
-	source, err := os.ReadFile("../lower/testdata/predicates/overload_checked.a")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("../lower/testdata/predicates/overload_checked.a")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	// The original fixture deliberately lies for a string, which a checked native
 	// predicate rejects. Use its number arm so both programs can agree with Node.
@@ -694,8 +698,8 @@ func TestStablePredicateHelperUnits(test *testing.T) {
 	safe := strings.Replace(string(source), `use("text");`, "use(7);", 1)
 	entry := filepath.Join(test.TempDir(), "main.ts")
 	safe = "\n" + safe // Reserve a line so insertion leaves checked diagnostics unchanged.
-	if err := os.WriteFile(entry, []byte(safe), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(entry, []byte(safe), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	before := namedProgram(test, entry, nil)
 	wrappers := 0
@@ -715,8 +719,8 @@ func TestStablePredicateHelperUnits(test *testing.T) {
 	original, next := C(before), C(after)
 	stableDefinitionsSurvive(test, original, next, len(before.Functions))
 	stableProgramMatchesNode(test, entry, original)
-	if err := os.WriteFile(entry, []byte(changed), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(entry, []byte(changed), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	stableProgramMatchesNode(test, entry, next)
 	test.Logf("%d checked predicate helpers retain declaration/content identity after middle insertion", wrappers)
@@ -728,12 +732,12 @@ func TestStableSameNamedCheckedPredicates(test *testing.T) {
 	test.Parallel()
 	directory := test.TempDir()
 	for _, name := range []string{"main.ts", "number.ts", "string.ts"} {
-		source, err := os.ReadFile(filepath.Join("testdata/stable_checked_predicates", name))
-		if err != nil {
-			test.Fatal(err)
+		source, readError := os.ReadFile(filepath.Join("testdata/stable_checked_predicates", name))
+		if readError != nil {
+			test.Fatal(readError)
 		}
-		if err := os.WriteFile(filepath.Join(directory, name), source, 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, name), source, 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	entry := filepath.Join(directory, "main.ts")
@@ -753,9 +757,9 @@ func TestStableSameNamedCheckedPredicates(test *testing.T) {
 			before.PredicateChecks,
 		)
 	}
-	source, err := os.ReadFile(entry)
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(entry)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	// The first line is reserved; leave every checked call's diagnostic location fixed.
 	changed := "function unrelated(): number { return 42; }" + string(source)
@@ -763,8 +767,8 @@ func TestStableSameNamedCheckedPredicates(test *testing.T) {
 	next := C(after)
 	stableDefinitionsSurvive(test, original, next, len(before.Functions))
 	stableProgramMatchesNode(test, entry, original)
-	if err := os.WriteFile(entry, []byte(changed), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(entry, []byte(changed), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	stableProgramMatchesNode(test, entry, next)
 	test.Log(
@@ -774,9 +778,9 @@ func TestStableSameNamedCheckedPredicates(test *testing.T) {
 
 func TestStableGenericArrowObjectShapes(test *testing.T) {
 	test.Parallel()
-	entry, err := filepath.Abs("../oracle/testdata/generic_arrow_object_shapes.a")
-	if err != nil {
-		test.Fatal(err)
+	entry, absolutePathError := filepath.Abs("../oracle/testdata/generic_arrow_object_shapes.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	program := namedProgram(test, entry, nil)
 	_ = C(program)
@@ -786,9 +790,9 @@ func TestStableGenericArrowObjectShapes(test *testing.T) {
 // its entry. Imports outside the copied directory keep referring to the checkout.
 // Not parallel: it changes the process working directory
 func TestStableCFromDifferentCheckoutsAndWorkingDirectories(test *testing.T) {
-	fixture, err := filepath.Abs("testdata/stable_checkout")
-	if err != nil {
-		test.Fatal(err)
+	fixture, absolutePathError := filepath.Abs("testdata/stable_checkout")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	root := test.TempDir()
 	checkouts := []string{filepath.Join(root, "checkout-one"), filepath.Join(root, "deeper", "checkout-two")}
@@ -796,20 +800,20 @@ func TestStableCFromDifferentCheckoutsAndWorkingDirectories(test *testing.T) {
 	entries := []string{}
 	for _, checkout := range checkouts {
 		for _, name := range []string{"src", "shared/left", "shared/right", "private/tree", "private/entry"} {
-			if err := os.MkdirAll(filepath.Join(checkout, name), 0700); err != nil {
-				test.Fatal(err)
+			if createDirectoryError := os.MkdirAll(filepath.Join(checkout, name), 0700); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
 		}
-		main, err := os.ReadFile(filepath.Join(fixture, "main.a"))
-		if err != nil {
-			test.Fatal(err)
+		main, readError := os.ReadFile(filepath.Join(fixture, "main.a"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		// Two different definitions have the same basename and declaration name.
 		source := string(main) +
 			"\nimport { value as left } from '../shared/left/library.a';\nimport { value as right } from '../shared/right/library.a';\nconsole.log((left() + right()).toString());\n"
-		library, err := os.ReadFile(filepath.Join(fixture, "library.a"))
-		if err != nil {
-			test.Fatal(err)
+		library, readError := os.ReadFile(filepath.Join(fixture, "library.a"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		files := map[string]string{
 			"src/main.a":             source,
@@ -818,8 +822,8 @@ func TestStableCFromDifferentCheckoutsAndWorkingDirectories(test *testing.T) {
 			"shared/right/library.a": "export function value(): number { return 22; }\n",
 		}
 		for name, text := range files {
-			if err := os.WriteFile(filepath.Join(checkout, name), []byte(text), 0600); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(filepath.Join(checkout, name), []byte(text), 0600); writeError != nil {
+				test.Fatal(writeError)
 			}
 		}
 		entries = append(entries, filepath.Join(checkout, "src/main.a"))
@@ -832,23 +836,35 @@ func TestStableCFromDifferentCheckoutsAndWorkingDirectories(test *testing.T) {
 				filepath.ToSlash(filepath.Join(checkout, "shared", name, "library.a")),
 			)
 		}
-		if err := os.WriteFile(filepath.Join(checkout, "private/tree/main.a"), []byte(copied), 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(
+			filepath.Join(checkout, "private/tree/main.a"),
+			[]byte(copied),
+			0600,
+		); writeError != nil {
+			test.Fatal(writeError)
 		}
-		if err := os.WriteFile(filepath.Join(checkout, "private/tree/library.a"), library, 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(
+			filepath.Join(checkout, "private/tree/library.a"),
+			library,
+			0600,
+		); writeError != nil {
+			test.Fatal(writeError)
 		}
 		entries = append(entries, filepath.Join(checkout, "private/tree/main.a"))
 		// Also move only the entry: a formerly adjacent import now stays outside it.
 		copied = strings.ReplaceAll(copied, "./library.a", filepath.ToSlash(filepath.Join(checkout, "src/library.a")))
-		if err := os.WriteFile(filepath.Join(checkout, "private/entry/main.a"), []byte(copied), 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(
+			filepath.Join(checkout, "private/entry/main.a"),
+			[]byte(copied),
+			0600,
+		); writeError != nil {
+			test.Fatal(writeError)
 		}
 		entries = append(entries, filepath.Join(checkout, "private/entry/main.a"))
 	}
 	for _, cwd := range working {
-		if err := os.MkdirAll(cwd, 0700); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(cwd, 0700); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 	}
 	var wantC, wantJS string
@@ -858,20 +874,20 @@ func TestStableCFromDifferentCheckoutsAndWorkingDirectories(test *testing.T) {
 				"/"+
 				filepath.Base(cwd), func(test *testing.T) {
 				test.Chdir(cwd)
-				entry, err := filepath.Rel(cwd, absolute)
-				if err != nil {
-					test.Fatal(err)
+				entry, relativePathError := filepath.Rel(cwd, absolute)
+				if relativePathError != nil {
+					test.Fatal(relativePathError)
 				}
-				loaded, err := load.Load([]string{entry})
-				if err != nil {
-					test.Fatal(err)
+				loaded, loadError := load.Load([]string{entry})
+				if loadError != nil {
+					test.Fatal(loadError)
 				}
 				if len(loaded.Files()) != 1 || loaded.FileName(loaded.Files()[0]) != absolute {
 					test.Fatal("Files did not retain the explicit entry")
 				}
-				lowered, err := lower.Lower(context.Background(), loaded)
-				if err != nil {
-					test.Fatal(err)
+				lowered, lowerError := lower.Lower(context.Background(), loaded)
+				if lowerError != nil {
+					test.Fatal(lowerError)
 				}
 				gotC, gotJS := C(lowered), javascript.JavaScript(lowered)
 				if strings.Contains(gotC, root) || strings.Contains(gotJS, root) {
@@ -908,8 +924,8 @@ class Box<T> {
 function run<T>(value: T): T[] { return new Box<T>(value).run(); }
 console.log((collect(11)[0] ?? 0).toString());
 console.log((run(22)[0] ?? 0).toString());`
-	if err := os.WriteFile(entry, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(entry, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	program := namedProgram(test, entry, nil)
 	code := C(program)
@@ -937,8 +953,8 @@ console.log((run(22)[0] ?? 0).toString());`
 	}
 	for _, sanitize := range []bool{false, true} {
 		binary := filepath.Join(filepath.Dir(entry), "calling-class")
-		if err := Build(code, binary, Options{Sanitize: sanitize}); err != nil {
-			test.Fatal(err)
+		if buildError := Build(code, binary, Options{Sanitize: sanitize}); buildError != nil {
+			test.Fatal(buildError)
 		}
 		if got := runWithInput(test, "", binary); got != truth {
 			test.Fatalf("native sanitize=%t: %q, Node: %q", sanitize, got, truth)

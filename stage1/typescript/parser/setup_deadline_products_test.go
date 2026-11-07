@@ -7,9 +7,9 @@ import (
 
 func compilerExpressionsProductDirectory(test *testing.T) string {
 	test.Helper()
-	directory, err := filepath.Abs(".")
-	if err != nil {
-		test.Fatal(err)
+	directory, absolutePathError := filepath.Abs(".")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return directory
 }

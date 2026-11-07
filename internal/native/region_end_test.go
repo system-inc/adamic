@@ -64,16 +64,16 @@ int main(void) {
 }
 `
 	binary := filepath.Join(test.TempDir(), "weak-region")
-	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(source, binary, Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
 	command := exec.CommandContext(ctx, binary)
 	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1:malloc_fill_byte=239")
-	output, err := command.CombinedOutput()
-	if err != nil || len(output) != 0 {
-		test.Fatalf("regional Weak targets: %v\n%s", err, output)
+	output, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError != nil || len(output) != 0 {
+		test.Fatalf("regional Weak targets: %v\n%s", combinedOutputError, output)
 	}
 }
 
@@ -82,53 +82,53 @@ int main(void) {
 // mask the ASan invalid read that would occur if allocation moved ahead of a throwing field.
 func TestRegionEndThrowInitialization(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("../oracle/testdata/region_end.a")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("../oracle/testdata/region_end.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	checked, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	checked, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	// This witness targets batch 8 ownership even when the process opts into Program mode.
-	program, err := lower.LowerWithOptions(context.Background(), checked, lower.Options{})
-	if err != nil {
-		test.Fatal(err)
+	program, lowerWithOptionsError := lower.LowerWithOptions(context.Background(), checked, lower.Options{})
+	if lowerWithOptionsError != nil {
+		test.Fatal(lowerWithOptionsError)
 	}
 	binary := filepath.Join(test.TempDir(), "throw-initialization")
-	if err := Build(C(program), binary, Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(C(program), binary, Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
-	truth, err := exec.Command(
+	truth, combinedOutputError := exec.Command(
 		"node",
 		"--disable-warning=ExperimentalWarning",
 		"../../oracle/node.mjs",
 		path,
 	).CombinedOutput()
-	if err != nil {
-		test.Fatalf("Node: %v\n%s", err, truth)
+	if combinedOutputError != nil {
+		test.Fatalf("Node: %v\n%s", combinedOutputError, truth)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
 	command := exec.CommandContext(ctx, binary)
 	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1:malloc_fill_byte=240")
-	output, err := command.CombinedOutput()
-	if err != nil || string(output) != string(truth) {
-		test.Fatalf("throw initialization: %v\n%s\nNode: %s", err, output, truth)
+	output, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError != nil || string(output) != string(truth) {
+		test.Fatalf("throw initialization: %v\n%s\nNode: %s", combinedOutputError, output, truth)
 	}
 }
 
 // Emission controls distinguish filled literals, outside children, and transitive writes.
 func TestRegionEndEmission(test *testing.T) {
 	test.Parallel()
-	checked, err := load.Load([]string{"../oracle/testdata/region_end.a"})
-	if err != nil {
-		test.Fatal(err)
+	checked, loadError := load.Load([]string{"../oracle/testdata/region_end.a"})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	// Inspect the statement-region plan independently of the process opt-in.
-	program, err := lower.LowerWithOptions(context.Background(), checked, lower.Options{})
-	if err != nil {
-		test.Fatal(err)
+	program, lowerWithOptionsError := lower.LowerWithOptions(context.Background(), checked, lower.Options{})
+	if lowerWithOptionsError != nil {
+		test.Fatal(lowerWithOptionsError)
 	}
 	plan := planRegions(program)
 	seen := 0
@@ -204,15 +204,15 @@ int main(void) {
 }
 `
 	binary := filepath.Join(test.TempDir(), "region-weak-tsan")
-	if err := Build(source, binary, Options{ThreadSanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(source, binary, Options{ThreadSanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
 	command := exec.CommandContext(ctx, binary)
 	command.Env = append(os.Environ(), "TSAN_OPTIONS=halt_on_error=1")
-	output, err := command.CombinedOutput()
-	if err != nil || len(output) != 0 {
-		test.Fatalf("concurrent region Weak: %v\n%s", err, output)
+	output, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError != nil || len(output) != 0 {
+		test.Fatalf("concurrent region Weak: %v\n%s", combinedOutputError, output)
 	}
 }

@@ -42,9 +42,9 @@ static int adamic_next_%[1]s(void) { return ++adamic_state_%[1]s; }
 static int adamic_twice_%[1]s(void) { return adamic_next_%[1]s() + adamic_next_%[1]s(); }
 int main(void) { printf("%%d\n", adamic_twice_%[1]s()); return 0; }
 `, nonce)
-	_, units, err := splitC(source)
-	if err != nil {
-		test.Fatal(err)
+	_, units, splitCError := splitC(source)
+	if splitCError != nil {
+		test.Fatal(splitCError)
 	}
 	directory := test.TempDir()
 	build := func(name, uncached string, logged bool) ([]byte, []string) {
@@ -57,25 +57,25 @@ int main(void) { printf("%%d\n", adamic_twice_%[1]s()); return 0; }
 		}
 		test.Setenv("ADAMIC_GATE_UNCACHED", uncached)
 		binary := filepath.Join(directory, name, "program")
-		if err := os.MkdirAll(filepath.Dir(binary), 0o755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(filepath.Dir(binary), 0o755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := Build(source, binary, Options{Split: true, Jobs: 2}); err != nil {
-			test.Fatal(err)
+		if buildError := Build(source, binary, Options{Split: true, Jobs: 2}); buildError != nil {
+			test.Fatal(buildError)
 		}
-		contents, err := os.ReadFile(binary)
-		if err != nil {
-			test.Fatal(err)
+		contents, readError := os.ReadFile(binary)
+		if readError != nil {
+			test.Fatal(readError)
 		}
-		written, err := os.ReadFile(log)
+		written, readError := os.ReadFile(log)
 		if !logged {
-			if !os.IsNotExist(err) {
-				test.Fatalf("%s: a build without ADAMIC_BUILD_LOG wrote %s: %v", name, log, err)
+			if !os.IsNotExist(readError) {
+				test.Fatalf("%s: a build without ADAMIC_BUILD_LOG wrote %s: %v", name, log, readError)
 			}
 			return contents, nil
 		}
-		if err != nil {
-			test.Fatalf("%s: no build log: %v", name, err)
+		if readError != nil {
+			test.Fatalf("%s: no build log: %v", name, readError)
 		}
 		return contents, strings.Split(strings.TrimSuffix(string(written), "\n"), "\n")
 	}
@@ -90,9 +90,9 @@ int main(void) { printf("%%d\n", adamic_twice_%[1]s()); return 0; }
 			if match == nil {
 				test.Fatalf("%s: %q isn't a build log line", name, line)
 			}
-			seconds, err := strconv.ParseFloat(match[5], 64)
-			if err != nil {
-				test.Fatal(err)
+			seconds, parseError := strconv.ParseFloat(match[5], 64)
+			if parseError != nil {
+				test.Fatal(parseError)
 			}
 			// The runtime's archive, looked up or compiled for the build, is its own test's
 			// (TestRuntimeArchiveLogsItsCompilesAndItsHit).
@@ -166,9 +166,9 @@ func TestBuildLogKeepsANameOnOneLine(test *testing.T) {
 	log := filepath.Join(test.TempDir(), "build.log")
 	test.Setenv("ADAMIC_BUILD_LOG", log)
 	buildLog("cLink", "a b\tc\ncCompile forged 0123456789ab hit 9.000", "", "off", time.Second)
-	written, err := os.ReadFile(log)
-	if err != nil {
-		test.Fatal(err)
+	written, readError := os.ReadFile(log)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if want := "cLink a_b_c_cCompile_forged_0123456789ab_hit_9.000 - off 1.000\n"; string(written) != want {
 		test.Fatalf("wrote %q, want %q", written, want)
@@ -193,25 +193,36 @@ func TestARepassAfterAMismatchSaysRepass(test *testing.T) {
 	root := test.TempDir()
 	cache := filepath.Join(root, "cache")
 	directory := filepath.Join(root, "units")
-	if err := os.MkdirAll(directory, 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(directory, 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	never := testUnitKeying(test, unitFirst, common, unitKeyFlags, compiler, environment)
 	never.check = func(compilationUnit) bool { return false }
-	cached, err := compileUnits(units, common, unitKeyFlags, compiler, never, cache, directory, 2, nil, false)
-	if err != nil {
-		test.Fatal(err)
+	cached, compileUnitsError := compileUnits(
+		units,
+		common,
+		unitKeyFlags,
+		compiler,
+		never,
+		cache,
+		directory,
+		2,
+		nil,
+		false,
+	)
+	if compileUnitsError != nil {
+		test.Fatal(compileUnitsError)
 	}
 	for _, object := range cached {
-		if err := os.WriteFile(object, []byte("planted\n"), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(object, []byte("planted\n"), 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	log := filepath.Join(root, "build.log")
 	test.Setenv("ADAMIC_BUILD_LOG", log)
 	keying := testUnitKeying(test, unitFirst, common, unitKeyFlags, compiler, environment)
 	keying.check = func(unit compilationUnit) bool { return unit.name == "beta.c" }
-	if _, err := compileUnits(
+	if _, compileUnitsError := compileUnits(
 		units,
 		common,
 		unitKeyFlags,
@@ -222,12 +233,12 @@ func TestARepassAfterAMismatchSaysRepass(test *testing.T) {
 		2,
 		nil,
 		false,
-	); err != nil {
-		test.Fatalf("a mismatched build failed: %v", err)
+	); compileUnitsError != nil {
+		test.Fatalf("a mismatched build failed: %v", compileUnitsError)
 	}
-	written, err := os.ReadFile(log)
-	if err != nil {
-		test.Fatal(err)
+	written, readError := os.ReadFile(log)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	outcomes, noted := map[string][]string{}, 0
 	for line := range strings.SplitSeq(strings.TrimSuffix(string(written), "\n"), "\n") {
@@ -268,8 +279,8 @@ func TestEachPhaseLogsOnceAProgram(test *testing.T) {
 	directory := test.TempDir()
 	entry := filepath.Join(directory, "main.ts")
 	source := "function twice(value: number): number {\n\treturn value * 2;\n}\nfunction greet(name: string): string {\n\treturn `hello ${name}`;\n}\nconsole.log(`${twice(21)} ${greet('phase')}`);\n"
-	if err := os.WriteFile(entry, []byte(source), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(entry, []byte(source), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	test.Setenv("ADAMIC_GATE_UNCACHED", "1")
 	// phases loads, lowers and emits the program, with the log set when logged, and builds the C in units when split.
@@ -282,34 +293,35 @@ func TestEachPhaseLogsOnceAProgram(test *testing.T) {
 		} else {
 			test.Setenv("ADAMIC_BUILD_LOG", "")
 		}
-		loaded, err := load.Load([]string{entry})
-		if err != nil {
-			test.Fatal(err)
+		loaded, loadError := load.Load([]string{entry})
+		if loadError != nil {
+			test.Fatal(loadError)
 		}
-		program, err := lower.Lower(context.Background(), loaded)
-		if err != nil {
-			test.Fatal(err)
+		program, lowerError := lower.Lower(context.Background(), loaded)
+		if lowerError != nil {
+			test.Fatal(lowerError)
 		}
 		code := C(program)
 		var binary []byte
 		if split {
 			output := filepath.Join(directory, name, "program")
-			if err := os.MkdirAll(filepath.Dir(output), 0o755); err != nil {
-				test.Fatal(err)
+			if createDirectoryError := os.MkdirAll(filepath.Dir(output), 0o755); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
-			if err := Build(code, output, Options{Split: true, Jobs: 2}); err != nil {
-				test.Fatal(err)
+			if buildError := Build(code, output, Options{Split: true, Jobs: 2}); buildError != nil {
+				test.Fatal(buildError)
 			}
-			if binary, err = os.ReadFile(output); err != nil {
-				test.Fatal(err)
+			var readError error
+			if binary, readError = os.ReadFile(output); readError != nil {
+				test.Fatal(readError)
 			}
 		}
 		if !logged {
 			return code, binary, nil
 		}
-		written, err := os.ReadFile(log)
-		if err != nil {
-			test.Fatalf("%s: no build log: %v", name, err)
+		written, readError := os.ReadFile(log)
+		if readError != nil {
+			test.Fatalf("%s: no build log: %v", name, readError)
 		}
 		var named []string
 		for line := range strings.SplitSeq(strings.TrimSuffix(string(written), "\n"), "\n") {
@@ -333,9 +345,9 @@ func TestEachPhaseLogsOnceAProgram(test *testing.T) {
 	if logged != quiet {
 		test.Fatal("the C emitted with ADAMIC_BUILD_LOG set differs from the C emitted without it")
 	}
-	_, units, err := splitC(logged)
-	if err != nil {
-		test.Fatal(err)
+	_, units, splitCError := splitC(logged)
+	if splitCError != nil {
+		test.Fatal(splitCError)
 	}
 	if len(units) < 2 {
 		test.Fatalf("the program splits into %d units, want more than one for a split to divide", len(units))

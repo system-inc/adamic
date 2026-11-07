@@ -44,9 +44,9 @@ func cssPrinterWitnessKey(test *testing.T, variant int, port, corpus, oracle str
 	test.Helper()
 	flags := []string{"variant=" + strconv.Itoa(variant), "modes=" + strings.Join(cssPrinterModes, ",")}
 	for _, input := range []struct{ name, path string }{{"port", port}, {"corpus", corpus}, {"oracle", oracle}} {
-		content, err := os.ReadFile(input.path)
-		if err != nil {
-			test.Fatal(err)
+		content, readError := os.ReadFile(input.path)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		flags = append(flags, fmt.Sprintf("%s-sha256=%x", input.name, sha256.Sum256(content)))
 	}
@@ -65,36 +65,36 @@ func cssPrinterWitnesses(test *testing.T, variant int) [][]int {
 		corpus, _ := oracles.CachedParserOutputs(test)
 		port := cssPrinterProduct(test, variant).source
 		directory := buildcache.Product(test, cssPrinterWitnessInputs(test, variant), func(dir string) error {
-			witnesses, err := cssPrinterDeriveWitnesses(test, port, corpus)
-			if err != nil {
-				return err
+			witnesses, cssPrinterDeriveWitnessesError := cssPrinterDeriveWitnesses(test, port, corpus)
+			if cssPrinterDeriveWitnessesError != nil {
+				return cssPrinterDeriveWitnessesError
 			}
 			for mode, ids := range witnesses {
 				var b strings.Builder
 				for _, id := range ids {
 					fmt.Fprintf(&b, "%d\n", id)
 				}
-				if err := os.WriteFile(
+				if writeError := os.WriteFile(
 					filepath.Join(dir, cssPrinterModes[mode]+".txt"),
 					[]byte(b.String()),
 					0644,
-				); err != nil {
-					return err
+				); writeError != nil {
+					return writeError
 				}
 			}
 			return nil
 		})
 		var sets [][]int
 		for _, mode := range cssPrinterModes {
-			data, err := os.ReadFile(filepath.Join(directory, mode+".txt"))
-			if err != nil {
-				test.Fatal(err)
+			data, readError := os.ReadFile(filepath.Join(directory, mode+".txt"))
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			ids := []int{}
 			for _, field := range strings.Fields(string(data)) {
-				id, err := strconv.Atoi(field)
-				if err != nil {
-					test.Fatal(err)
+				id, parseError := strconv.Atoi(field)
+				if parseError != nil {
+					test.Fatal(parseError)
 				}
 				ids = append(ids, id)
 			}
@@ -128,9 +128,9 @@ func cssPrinterDeriveWitnesses(test *testing.T, port, corpus string) ([][]int, e
 				got.stderr,
 			)
 		}
-		ids, err := cssPrinterDifferingCases(string(got.stdout), want)
-		if err != nil {
-			return nil, fmt.Errorf("%s: %w", mode, err)
+		ids, cssPrinterDifferingCasesError := cssPrinterDifferingCases(string(got.stdout), want)
+		if cssPrinterDifferingCasesError != nil {
+			return nil, fmt.Errorf("%s: %w", mode, cssPrinterDifferingCasesError)
 		}
 		witnesses = append(witnesses, ids)
 	}
@@ -186,9 +186,9 @@ func TestProduct_CSSPrinterWidthMutantWitnesses(test *testing.T) {
 // The witnesses' key moves with each input they're derived from: the mutant's port, the corpus and the Go printer.
 func TestCSSPrinterMutantWitnessesRekey(test *testing.T) {
 	test.Parallel()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	corpus, _ := oracles.CachedParserOutputs(test)
 	inputs := map[string]string{
@@ -204,13 +204,13 @@ func TestCSSPrinterMutantWitnessesRekey(test *testing.T) {
 		test.Fatal("another mutant kept the witnesses' key")
 	}
 	for _, name := range []string{"port", "corpus", "oracle"} {
-		content, err := os.ReadFile(inputs[name])
-		if err != nil {
-			test.Fatal(err)
+		content, readError := os.ReadFile(inputs[name])
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		edited := filepath.Join(test.TempDir(), name)
-		if err := os.WriteFile(edited, append(content, 'x'), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(edited, append(content, 'x'), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		moved := map[string]string{"port": inputs["port"], "corpus": inputs["corpus"], "oracle": inputs["oracle"]}
 		moved[name] = edited
@@ -230,9 +230,13 @@ func TestCSSPrinterMutantWitnessesRekey(test *testing.T) {
 func TestCSSPrinterMutantThatDiffersNowhereFails(test *testing.T) {
 	test.Parallel()
 	corpus, _ := oracles.CachedParserOutputs(test)
-	witnesses, err := cssPrinterDeriveWitnesses(test, cssPrinterProduct(test, -1).source, corpus)
-	if err != nil {
-		test.Fatal(err)
+	witnesses, cssPrinterDeriveWitnessesError := cssPrinterDeriveWitnesses(
+		test,
+		cssPrinterProduct(test, -1).source,
+		corpus,
+	)
+	if cssPrinterDeriveWitnessesError != nil {
+		test.Fatal(cssPrinterDeriveWitnessesError)
 	}
 	for mode, ids := range witnesses {
 		if err := cssPrinterWitnessError("that differs nowhere", cssPrinterModes[mode], ids); err == nil {
@@ -245,11 +249,17 @@ func TestCSSPrinterMutantThatDiffersNowhereFails(test *testing.T) {
 			test.Logf("refused: %v", err)
 		}
 	}
-	ids, err := cssPrinterDifferingCases("case 0\n\"a\"\ncase 1\n\"c\"\n", "case 0\n\"a\"\ncase 1\n\"b\"\n")
-	if err != nil || len(ids) != 1 || ids[0] != 1 {
-		test.Fatalf("one changed answer read as %v, %v", ids, err)
+	ids, cssPrinterDifferingCasesError := cssPrinterDifferingCases(
+		"case 0\n\"a\"\ncase 1\n\"c\"\n",
+		"case 0\n\"a\"\ncase 1\n\"b\"\n",
+	)
+	if cssPrinterDifferingCasesError != nil || len(ids) != 1 || ids[0] != 1 {
+		test.Fatalf("one changed answer read as %v, %v", ids, cssPrinterDifferingCasesError)
 	}
-	if _, err := cssPrinterDifferingCases("case 0\n\"a\"\n", "case 0\n\"a\"\ncase 1\n\"b\"\n"); err == nil {
+	if _, cssPrinterDifferingCasesError := cssPrinterDifferingCases(
+		"case 0\n\"a\"\n",
+		"case 0\n\"a\"\ncase 1\n\"b\"\n",
+	); cssPrinterDifferingCasesError == nil {
 		test.Fatal("a missing case read as no difference")
 	}
 }

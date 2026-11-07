@@ -24,8 +24,8 @@ int main(int count, char **arguments) {
 }
 `
 	binary := filepath.Join(test.TempDir(), "harness")
-	if err := Build(harness, binary, Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(harness, binary, Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	for _, check := range []struct {
 		units  string
@@ -37,12 +37,12 @@ int main(int count, char **arguments) {
 		{"536870889", "adamic: panic: RangeError: Invalid string length\n", 70},
 		{"inf", "adamic: panic: RangeError: Invalid string length\n", 70},
 	} {
-		output, err := exec.Command(binary, check.units).CombinedOutput()
+		output, combinedOutputError := exec.Command(binary, check.units).CombinedOutput()
 		exit := 0
-		if exitError, isExit := err.(*exec.ExitError); isExit {
+		if exitError, isExit := combinedOutputError.(*exec.ExitError); isExit {
 			exit = exitError.ExitCode()
-		} else if err != nil {
-			test.Fatal(err)
+		} else if combinedOutputError != nil {
+			test.Fatal(combinedOutputError)
 		}
 		if exit != check.exit || !strings.Contains(string(output), check.output) {
 			test.Errorf("%s units: exit %d, %q; want exit %d, %q", check.units, exit, output, check.exit, check.output)

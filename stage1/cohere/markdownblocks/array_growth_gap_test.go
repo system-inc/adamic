@@ -9,9 +9,9 @@ import (
 // Not parallel: shared markdownMemory configuration; existing helper controls parallel execution.
 func TestArrayGrowthWitness(test *testing.T) {
 	parallelMarkdownMemory(test, 1)
-	path, e := filepath.Abs("gaps/13_array_growth.ts")
-	if e != nil {
-		test.Fatal(e)
+	path, absolutePathError := filepath.Abs("gaps/13_array_growth.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	source := onNode(test, path)
 	clean(test, "Node truth", source)

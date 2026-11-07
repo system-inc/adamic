@@ -8,13 +8,13 @@ import (
 // BuildSplitTSGo is an explicit prototype entrypoint for TSGoC output. BuildTSGo is unchanged;
 // its owner can decide whether to dispatch here when Options.Split is requested.
 func BuildSplitTSGo(source, output, archive string, options Options) error {
-	archive, err := checkerArchivePath(archive)
-	if err != nil {
-		return err
+	archive, checkerArchivePathError := checkerArchivePath(archive)
+	if checkerArchivePathError != nil {
+		return checkerArchivePathError
 	}
-	library, err := splitTSGoRuntime(source, options)
-	if err != nil {
-		return err
+	library, splitTsGoRuntimeError := splitTSGoRuntime(source, options)
+	if splitTsGoRuntimeError != nil {
+		return splitTsGoRuntimeError
 	}
 	return buildUnitsWithLibrary(source, output, options, library, archive)
 }
@@ -23,22 +23,22 @@ func BuildSplitTSGo(source, output, archive string, options Options) error {
 // plus the program's features in its flags. The ordinary runtime's empty tsgo.c object cannot
 // satisfy these calls, and a runtime built without the features has other layouts than the units.
 func splitTSGoRuntime(source string, options Options) (string, error) {
-	files, err := readRuntime(runtime, "runtime")
-	if err != nil {
-		return "", err
+	files, readRuntimeError := readRuntime(runtime, "runtime")
+	if readRuntimeError != nil {
+		return "", readRuntimeError
 	}
 	files = append(files, runtimeFile{"tsgo.h", bridge.Header})
-	compiler, err := toolchain.Path("clang")
-	if err != nil {
-		return "", err
+	compiler, pathError := toolchain.Path("clang")
+	if pathError != nil {
+		return "", pathError
 	}
-	version, err := toolchain.Command(compiler, "--version").CombinedOutput()
-	if err != nil {
-		return "", err
+	version, combinedOutputError := toolchain.Command(compiler, "--version").CombinedOutput()
+	if combinedOutputError != nil {
+		return "", combinedOutputError
 	}
-	cache, err := cacheDirectory("native-runtime")
-	if err != nil {
-		return "", err
+	cache, cacheDirectoryError := cacheDirectory("native-runtime")
+	if cacheDirectoryError != nil {
+		return "", cacheDirectoryError
 	}
 	flags := append(sourceFlags(source, options), "-DADAMIC_TSGO")
 	return cachedRuntime(files, flags, compiler, string(version), cache)

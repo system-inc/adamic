@@ -103,8 +103,8 @@ func helperEnv(dir, url, trust, token string) []string {
 func tokenFile(test *testing.T) string {
 	test.Helper()
 	p := filepath.Join(test.TempDir(), "token")
-	if err := os.WriteFile(p, []byte("test-token\n"), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(p, []byte("test-token\n"), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return p
 }
@@ -125,22 +125,22 @@ func transact(test *testing.T, dir, url, trust, token string, req request, body 
 	cmd.Stdin = &input
 	cmd.Stdout = &stdout
 	cmd.Stderr = &stderr
-	if err := cmd.Run(); err != nil {
-		test.Fatalf("helper: %v: %s", err, stderr.String())
+	if runError := cmd.Run(); runError != nil {
+		test.Fatalf("helper: %v: %s", runError, stderr.String())
 	}
 	dec := json.NewDecoder(&stdout)
 	var hello, out, close response
-	if err := dec.Decode(&hello); err != nil {
-		test.Fatal(err)
+	if decodeError := dec.Decode(&hello); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if hello.ID != 0 || len(hello.KnownCommands) != 3 {
 		test.Fatalf("capabilities: %+v", hello)
 	}
-	if err := dec.Decode(&out); err != nil {
-		test.Fatal(err)
+	if decodeError := dec.Decode(&out); decodeError != nil {
+		test.Fatal(decodeError)
 	}
-	if err := dec.Decode(&close); err != nil {
-		test.Fatal(err)
+	if decodeError := dec.Decode(&close); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if out.ID != req.ID || close.ID != 99 || out.Err != "" {
 		test.Fatalf("responses: %+v %+v", out, close)
@@ -169,9 +169,9 @@ func TestSharedCache(test *testing.T) {
 	if out.Miss || out.Size != int64(len(body)) {
 		test.Fatalf("get: %+v", out)
 	}
-	got, err := os.ReadFile(out.DiskPath)
-	if err != nil || !bytes.Equal(got, body) {
-		test.Fatalf("body: %q, %v", got, err)
+	got, readError := os.ReadFile(out.DiskPath)
+	if readError != nil || !bytes.Equal(got, body) {
+		test.Fatalf("body: %q, %v", got, readError)
 	}
 }
 
@@ -277,9 +277,9 @@ func runGo(test *testing.T, dir, url, token string, args ...string) (string, tim
 	defer cancel()
 	// runtime.GOROOT is empty in a test binary built with -trimpath, so the go command is toolchain's, and it runs with
 	// toolchain's environment, the helper's settings over it: go hands them to the helper it starts as GOCACHEPROG.
-	goCommand, err := toolchain.Path("go")
-	if err != nil {
-		test.Skipf("no go command: %v", err)
+	goCommand, pathError := toolchain.Path("go")
+	if pathError != nil {
+		test.Skipf("no go command: %v", pathError)
 	}
 	cmd := exec.CommandContext(ctx, goCommand, args...)
 	cmd.Dir = dir
@@ -294,10 +294,10 @@ func runGo(test *testing.T, dir, url, token string, args ...string) (string, tim
 		"GOMAXPROCS=4",
 	)...)
 	start := time.Now()
-	b, err := cmd.CombinedOutput()
+	b, combinedOutputError := cmd.CombinedOutput()
 	elapsed := time.Since(start)
-	if err != nil {
-		test.Fatalf("go %v: %v\n%s", args, err, b)
+	if combinedOutputError != nil {
+		test.Fatalf("go %v: %v\n%s", args, combinedOutputError, b)
 	}
 	return string(b), elapsed
 }
@@ -307,15 +307,19 @@ func TestGoBuildEndToEnd(test *testing.T) {
 	_, srv := fakeStore(test)
 	dir := test.TempDir()
 	token := tokenFile(test)
-	if err := os.WriteFile(filepath.Join(dir, "go.mod"), []byte("module cachetest\n\ngo 1.24\n"), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(
+		filepath.Join(dir, "go.mod"),
+		[]byte("module cachetest\n\ngo 1.24\n"),
+		0600,
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		filepath.Join(dir, "tiny.go"),
 		[]byte("package cachetest\nfunc Add(a,b int) int { return a+b }\n"),
 		0600,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
 	cold, _ := runGo(test, dir, srv.URL, token, "build", "-x", ".")
 	warm, _ := runGo(test, dir, srv.URL, "", "build", "-x", ".")
@@ -362,8 +366,8 @@ func TestLocalPoisoning(test *testing.T) {
 	body := []byte("compiled output")
 	dir := test.TempDir()
 	out, _ := transact(test, dir, "off", "main", "", putRequest(body), body)
-	if err := os.WriteFile(out.DiskPath, []byte("tampered"), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(out.DiskPath, []byte("tampered"), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	out, log := transact(test, dir, "off", "main", "", getRequest(), nil)
 	if !out.Miss || !strings.Contains(log, "cache poisoning") {
@@ -462,7 +466,7 @@ func writeLikeGo(b *bytes.Buffer, req request, body []byte) {
 func serveStream(test *testing.T, c *cache, input []byte) (map[int64]response, error) {
 	test.Helper()
 	var output bytes.Buffer
-	err := serve(c, bytes.NewReader(input), &output)
+	serveError := serve(c, bytes.NewReader(input), &output)
 	responses := map[int64]response{}
 	dec := json.NewDecoder(&output)
 	for {
@@ -475,7 +479,7 @@ func serveStream(test *testing.T, c *cache, input []byte) (map[int64]response, e
 		}
 		responses[r.ID] = r
 	}
-	return responses, err
+	return responses, serveError
 }
 
 func localCache(test *testing.T) (*cache, *bytes.Buffer) {
@@ -502,9 +506,9 @@ func TestAbandonedPutResyncs(test *testing.T) {
 	get.ID = 4
 	writeLikeGo(&input, get, nil)
 	writeLikeGo(&input, request{ID: 5, Command: "close"}, nil)
-	responses, err := serveStream(test, c, input.Bytes())
-	if err != nil {
-		test.Fatalf("serve: %v", err)
+	responses, serveStreamError := serveStream(test, c, input.Bytes())
+	if serveStreamError != nil {
+		test.Fatalf("serve: %v", serveStreamError)
 	}
 	if r, ok := responses[2]; ok {
 		test.Fatalf("answered the abandoned put: %+v", r)
@@ -531,10 +535,10 @@ func TestAbandonedPutResyncs(test *testing.T) {
 	input.Reset()
 	writeLikeGo(&input, getRequest(), nil)
 	writeLikeGo(&input, request{ID: 3, Command: "close"}, nil)
-	responses, err = serveStream(test, c, input.Bytes())
+	responses, serveStreamError = serveStream(test, c, input.Bytes())
 	got, _ := os.ReadFile(responses[2].DiskPath)
-	if err != nil || responses[2].Miss || !bytes.Equal(got, body) {
-		test.Fatalf("valid put not served: %+v %q %v", responses[2], got, err)
+	if serveStreamError != nil || responses[2].Miss || !bytes.Equal(got, body) {
+		test.Fatalf("valid put not served: %+v %q %v", responses[2], got, serveStreamError)
 	}
 }
 
@@ -544,9 +548,9 @@ func TestAbandonedPutAtEOF(test *testing.T) {
 		test.Run(fmt.Sprintf("%q", tail), func(test *testing.T) {
 			c, log := localCache(test)
 			j, _ := json.Marshal(putRequest([]byte("never arrives")))
-			responses, err := serveStream(test, c, append(j, "\n\n"+tail...))
-			if err != nil {
-				test.Fatalf("serve: %v", err)
+			responses, serveStreamError := serveStream(test, c, append(j, "\n\n"+tail...))
+			if serveStreamError != nil {
+				test.Fatalf("serve: %v", serveStreamError)
 			}
 			if _, ok := responses[1]; ok || len(responses) != 1 {
 				test.Fatalf("responses: %+v", responses)

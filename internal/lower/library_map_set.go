@@ -20,24 +20,24 @@ func (l *lowering) librarySetMethod(node, receiver *ast.Node, name string) (ir.E
 	if len(arguments) != 1 || !l.isSet(arguments[0]) {
 		return nil, true, l.notYet(node, name+" with anything but a concrete library Set")
 	}
-	element, err := l.setElement(receiver)
-	if err != nil {
-		return nil, true, err
+	element, setElementError := l.setElement(receiver)
+	if setElementError != nil {
+		return nil, true, setElementError
 	}
-	otherElement, err := l.setElement(arguments[0])
-	if err != nil {
-		return nil, true, err
+	otherElement, setElementError := l.setElement(arguments[0])
+	if setElementError != nil {
+		return nil, true, setElementError
 	}
 	if element != otherElement {
 		return nil, true, l.notYet(node, name+" between Sets whose elements have different representations")
 	}
-	left, err := l.expression(receiver)
-	if err != nil {
-		return nil, true, err
+	left, expressionError := l.expression(receiver)
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
-	right, err := l.expression(arguments[0])
-	if err != nil {
-		return nil, true, err
+	right, expressionError := l.expression(arguments[0])
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
 	index := len(l.result.Functions)
 	function := ir.Function{Name: "set_" + name, Returns: ir.Map}
@@ -69,15 +69,25 @@ func (l *lowering) librarySetMethod(node, receiver *ast.Node, name string) (ir.E
 		if name == "isSubsetOf" {
 			function.Body = []ir.Statement{ir.If{Condition: not(smaller), Then: []ir.Statement{no}}, check(a, b, false)}
 		} else if name == "isSupersetOf" {
-			function.Body = []ir.Statement{ir.If{Condition: ir.Binary{Operator: ir.Less, Left: ir.MapSize{Map: a}, Right: ir.MapSize{Map: b}}, Then: []ir.Statement{no}}, check(b, a, false)}
+			function.Body = []ir.Statement{ir.If{
+				Condition: ir.Binary{Operator: ir.Less, Left: ir.MapSize{Map: a}, Right: ir.MapSize{Map: b}},
+				Then:      []ir.Statement{no},
+			}, check(b, a, false)}
 		} else {
-			function.Body = []ir.Statement{ir.If{Condition: smaller, Then: []ir.Statement{check(a, b, true)}, Else: []ir.Statement{check(b, a, true)}}}
+			function.Body = []ir.Statement{ir.If{
+				Condition: smaller,
+				Then:      []ir.Statement{check(a, b, true)},
+				Else:      []ir.Statement{check(b, a, true)},
+			}}
 		}
 		function.Body = append(function.Body, ir.Return{Value: ir.BooleanConstant{Value: true}})
 	default:
 		result := local("result", ir.Map)
 		// The result is a fresh Set of the call's result type. Record its writes for the cycle proof.
-		l.writeSites = append(l.writeSites, writeSite{holder: l.concrete(l.checker.GetTypeAtLocation(node)), node: node})
+		l.writeSites = append(
+			l.writeSites,
+			writeSite{holder: l.concrete(l.checker.GetTypeAtLocation(node)), node: node},
+		)
 		site := len(l.writeSites)
 		add := ir.Evaluate{Value: ir.SetAdd{Set: result, Value: item, Element: element, Site: site}}
 		copy := func(source ir.Expression) ir.Statement { return walk(source, add) }
@@ -94,7 +104,11 @@ func (l *lowering) librarySetMethod(node, receiver *ast.Node, name string) (ir.E
 			function.Body = append(function.Body, copy(a), copy(b))
 		case "intersection":
 			// The smaller Set supplies the order; ties visit the receiver (ECMA-262).
-			function.Body = append(function.Body, ir.If{Condition: smaller, Then: []ir.Statement{selected(a, b, true)}, Else: []ir.Statement{selected(b, a, true)}})
+			function.Body = append(function.Body, ir.If{
+				Condition: smaller,
+				Then:      []ir.Statement{selected(a, b, true)},
+				Else:      []ir.Statement{selected(b, a, true)},
+			})
 		case "difference":
 			function.Body = append(function.Body, selected(a, b, false))
 		case "symmetricDifference":
@@ -122,9 +136,9 @@ func (l *lowering) libraryCollectionIterator(node, receiver *ast.Node, part stri
 	if err != nil {
 		return nil, true, err
 	}
-	collection, err := l.expression(receiver)
-	if err != nil {
-		return nil, true, err
+	collection, expressionError := l.expression(receiver)
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
 	return ir.CollectionIterator{Collection: collection, Part: part, Key: key, Value: value, Set: set}, true, nil
 }
@@ -135,9 +149,9 @@ func (l *lowering) librarySetLiteral(node *ast.Node, element ir.Type) (ir.Expres
 		if item.Kind == ast.KindSpreadElement || item.Kind == ast.KindOmittedExpression {
 			return nil, false, nil
 		}
-		value, err := l.expression(item)
-		if err != nil {
-			return nil, true, err
+		value, expressionError := l.expression(item)
+		if expressionError != nil {
+			return nil, true, expressionError
 		}
 		value = fit(value, element)
 		if value.Type() != element {
@@ -175,17 +189,17 @@ func (l *lowering) libraryForEachThisArg(node, receiver *ast.Node, set bool) (ir
 	if err != nil {
 		return nil, true, err
 	}
-	collection, err := l.expression(receiver)
-	if err != nil {
-		return nil, true, err
+	collection, expressionError := l.expression(receiver)
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
-	callback, err := l.expression(arguments[0])
-	if err != nil {
-		return nil, true, err
+	callback, expressionError := l.expression(arguments[0])
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
-	context, err := l.expression(arguments[1])
-	if err != nil {
-		return nil, true, err
+	context, expressionError := l.expression(arguments[1])
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
 	// Pass the context to an unused parameter, preserving evaluation order, side effects,
 	// exceptions and its lifetime across the visit.
@@ -205,7 +219,15 @@ func (l *lowering) libraryForEachThisArg(node, receiver *ast.Node, set bool) (ir
 	if slotless(returns) {
 		return nil, true, l.notYet(node, "forEach with a callback result held in more than one word")
 	}
-	function.Body = []ir.Statement{ir.Evaluate{Value: ir.MapForEach{Map: ir.Read{Local: function.Parameters[0], Of: ir.Map}, Callback: ir.Read{Local: function.Parameters[1], Of: ir.Closure}, Key: key, Value: value, Set: set, Returns: returns, CallbackType: int(l.concrete(l.checker.GetTypeAtLocation(arguments[0])).Id())}}}
+	function.Body = []ir.Statement{ir.Evaluate{Value: ir.MapForEach{
+		Map:          ir.Read{Local: function.Parameters[0], Of: ir.Map},
+		Callback:     ir.Read{Local: function.Parameters[1], Of: ir.Closure},
+		Key:          key,
+		Value:        value,
+		Set:          set,
+		Returns:      returns,
+		CallbackType: int(l.concrete(l.checker.GetTypeAtLocation(arguments[0])).Id()),
+	}}}
 	l.result.Functions = append(l.result.Functions, function)
 	return ir.Call{Function: index, Arguments: values}, true, nil
 }
@@ -231,13 +253,21 @@ func (l *lowering) libraryIteratorElement(node *ast.Node) (ir.Type, bool) {
 	return element, known && boxedSlot(element)
 }
 
-func (l *lowering) libraryIteratorLoop(function int, iterator ir.Expression, item ir.Read, body []ir.Statement) []ir.Statement {
+func (l *lowering) libraryIteratorLoop(
+	function int,
+	iterator ir.Expression,
+	item ir.Read,
+	body []ir.Statement,
+) []ir.Statement {
 	held := l.libraryLocal(function, "iterator", ir.Object)
 	step := l.libraryLocal(function, "step", ir.Object)
 	loop, value := libraryIteratorStep(held, step, item.Of)
 	loop = append(loop, ir.Declare{Local: item.Local, Value: value})
 	loop = append(loop, body...)
-	return []ir.Statement{ir.Declare{Local: held.Local, Value: iterator}, ir.Loop{Condition: ir.BooleanConstant{Value: true}, Body: loop}}
+	return []ir.Statement{
+		ir.Declare{Local: held.Local, Value: iterator},
+		ir.Loop{Condition: ir.BooleanConstant{Value: true}, Body: loop},
+	}
 }
 
 // libraryIteratorStep is one step of a library iterator held in held: its next called into step, a
@@ -246,7 +276,10 @@ func (l *lowering) libraryIteratorLoop(function int, iterator ir.Expression, ite
 // (Lower's condition 4 on #qk8rztp).
 func libraryIteratorStep(held, step ir.Read, of ir.Type) ([]ir.Statement, ir.Expression) {
 	return []ir.Statement{
-		ir.Declare{Local: step.Local, Value: ir.CallClosure{Closure: ir.Property{Object: held, Name: "next", Of: ir.Closure}, Returns: ir.Object}},
+		ir.Declare{
+			Local: step.Local,
+			Value: ir.CallClosure{Closure: ir.Property{Object: held, Name: "next", Of: ir.Closure}, Returns: ir.Object},
+		},
 		ir.If{Condition: ir.Property{Object: step, Name: "done", Of: ir.Boolean}, Then: []ir.Statement{ir.Break{}}},
 	}, ir.Property{Object: step, Name: "value", Of: of}
 }
@@ -261,19 +294,29 @@ func (l *lowering) libraryIteratorArray(node *ast.Node, iterator ir.Expression, 
 	function.Body = []ir.Statement{ir.Declare{Local: array.Local, Value: ir.ArrayLiteral{Element: element}}}
 	l.writeSites = append(l.writeSites, writeSite{node: node})
 	site := len(l.writeSites)
-	function.Body = append(function.Body, l.libraryIteratorLoop(index, parameter, item, []ir.Statement{ir.Evaluate{Value: ir.ArrayPush{Array: array, Value: item, Element: element, Site: site}}})...)
+	function.Body = append(function.Body, l.libraryIteratorLoop(
+		index,
+		parameter,
+		item,
+		[]ir.Statement{ir.Evaluate{Value: ir.ArrayPush{Array: array, Value: item, Element: element, Site: site}}},
+	)...)
 	function.Body = append(function.Body, ir.Return{Value: array})
 	l.result.Functions = append(l.result.Functions, function)
 	return ir.Call{Function: index, Arguments: []ir.Expression{iterator}, Returns: ir.Array}
 }
 
-func (l *lowering) libraryForOfIterator(node *ast.Node, iterator ir.Expression, element ir.Type, name *ast.Node) ([]ir.Statement, error) {
+func (l *lowering) libraryForOfIterator(
+	node *ast.Node,
+	iterator ir.Expression,
+	element ir.Type,
+	name *ast.Node,
+) ([]ir.Statement, error) {
 	item := l.libraryLocal(l.functionIndex, "element", element)
 	var bindings []ir.Statement
 	if ast.IsIdentifier(name) {
-		local, err := l.declareLocal(name)
-		if err != nil {
-			return nil, err
+		local, declareLocalError := l.declareLocal(name)
+		if declareLocalError != nil {
+			return nil, declareLocalError
 		}
 		bindings = append(bindings, ir.Declare{Local: local, Value: item})
 	} else {
@@ -288,22 +331,27 @@ func (l *lowering) libraryForOfIterator(node *ast.Node, iterator ir.Expression, 
 			if !ast.IsIdentifier(binding.Name()) || declared.Initializer != nil || declared.DotDotDotToken != nil {
 				return nil, l.notYet(binding, "an iterator binding that isn't plain")
 			}
-			local, err := l.declareLocal(binding.Name())
-			if err != nil {
-				return nil, err
+			local, declareLocalError := l.declareLocal(binding.Name())
+			if declareLocalError != nil {
+				return nil, declareLocalError
 			}
 			of := l.result.Locals[local].Type
 			if !boxedSlot(of) {
 				return nil, l.notYet(binding, "an iterator binding held in more than one word")
 			}
-			bindings = append(bindings, ir.Declare{Local: local, Value: ir.Property{Object: item, Name: strconv.Itoa(index), Of: of}})
+			bindings = append(
+				bindings,
+				ir.Declare{Local: local, Value: ir.Property{Object: item, Name: strconv.Itoa(index), Of: of}},
+			)
 		}
 	}
-	body, err := l.statement(node.AsForInOrOfStatement().Statement)
-	if err != nil {
-		return nil, err
+	body, statementError := l.statement(node.AsForInOrOfStatement().Statement)
+	if statementError != nil {
+		return nil, statementError
 	}
-	return []ir.Statement{ir.Block{Body: l.libraryIteratorLoop(l.functionIndex, iterator, item, append(bindings, body...))}}, nil
+	return []ir.Statement{
+		ir.Block{Body: l.libraryIteratorLoop(l.functionIndex, iterator, item, append(bindings, body...))},
+	}, nil
 }
 
 // groupBy copies elements into fresh bucket arrays while walking the original input live. Callback
@@ -385,7 +433,9 @@ func (l *lowering) libraryMapGroupBy(node *ast.Node) (ir.Expression, bool, error
 		}
 		components := l.typeArguments(groupedElement)
 		original := l.typeArguments(proven)
-		if len(components) != 2 || l.checker.TypeToString(components[0]) != l.checker.TypeToString(original[0]) || l.checker.TypeToString(components[1]) != l.checker.TypeToString(original[1]) {
+		if len(components) != 2 ||
+			l.checker.TypeToString(components[0]) != l.checker.TypeToString(original[0]) ||
+			l.checker.TypeToString(components[1]) != l.checker.TypeToString(original[1]) {
 			return nil, true, l.notYet(node, "Map.groupBy widening its Map entry components")
 		}
 	}
@@ -428,17 +478,40 @@ func (l *lowering) libraryMapGroupBy(node *ast.Node) (ir.Expression, bool, error
 	l.writeSites = append(l.writeSites, writeSite{holder: grouped[1], node: node})
 	arraySite := len(l.writeSites)
 	body := []ir.Statement{
-		ir.Declare{Local: groupKey.Local, Value: ir.CallClosure{Closure: fn, Arguments: []ir.Expression{item, position}, Returns: key}},
-		ir.Assign{Local: position.Local, Value: ir.Binary{Operator: ir.Add, Left: position, Right: ir.NumberConstant{Value: 1}}},
-		ir.Declare{Local: bucket.Local, Value: ir.Coalesce{Value: ir.MapGet{Map: result, Key: groupKey, KeyType: key, ValueType: ir.Array}, Fallback: ir.ArrayLiteral{Element: element}, Of: ir.Array}},
+		ir.Declare{
+			Local: groupKey.Local,
+			Value: ir.CallClosure{Closure: fn, Arguments: []ir.Expression{item, position}, Returns: key},
+		},
+		ir.Assign{
+			Local: position.Local,
+			Value: ir.Binary{Operator: ir.Add, Left: position, Right: ir.NumberConstant{Value: 1}},
+		},
+		ir.Declare{Local: bucket.Local, Value: ir.Coalesce{
+			Value:    ir.MapGet{Map: result, Key: groupKey, KeyType: key, ValueType: ir.Array},
+			Fallback: ir.ArrayLiteral{Element: element},
+			Of:       ir.Array,
+		}},
 		ir.Evaluate{Value: ir.ArrayPush{Array: bucket, Value: item, Element: element, Site: arraySite}},
-		ir.Evaluate{Value: ir.MapSet{Map: result, Key: groupKey, Value: bucket, KeyType: key, ValueType: ir.Array, Site: mapSite}},
+		ir.Evaluate{Value: ir.MapSet{
+			Map:       result,
+			Key:       groupKey,
+			Value:     bucket,
+			KeyType:   key,
+			ValueType: ir.Array,
+			Site:      mapSite,
+		}},
 	}
-	function.Body = []ir.Statement{ir.Declare{Local: result.Local, Value: ir.MapNew{Key: key, Value: ir.Array}}, ir.Declare{Local: position.Local, Value: ir.NumberConstant{}}}
+	function.Body = []ir.Statement{
+		ir.Declare{Local: result.Local, Value: ir.MapNew{Key: key, Value: ir.Array}},
+		ir.Declare{Local: position.Local, Value: ir.NumberConstant{}},
+	}
 	if iterator {
 		function.Body = append(function.Body, l.libraryIteratorLoop(index, input, item, body)...)
 	} else {
-		function.Body = append(function.Body, ir.ForOf{Iterable: input, Element: element, Local: item.Local, Body: body})
+		function.Body = append(
+			function.Body,
+			ir.ForOf{Iterable: input, Element: element, Local: item.Local, Body: body},
+		)
 	}
 	function.Body = append(function.Body, ir.Return{Value: result})
 	l.result.Functions = append(l.result.Functions, function)
@@ -458,7 +531,9 @@ func (l *lowering) libraryOptionalNumbers(node *ast.Node, source ir.Expression) 
 	site := len(l.writeSites)
 	function.Body = []ir.Statement{
 		ir.Declare{Local: array.Local, Value: ir.ArrayLiteral{Element: ir.MaybeNumber}},
-		ir.ForOf{Iterable: input, Element: ir.Number, Local: item.Local, Body: []ir.Statement{ir.Evaluate{Value: ir.ArrayPush{Array: array, Value: fit(item, ir.MaybeNumber), Element: ir.MaybeNumber, Site: site}}}},
+		ir.ForOf{Iterable: input, Element: ir.Number, Local: item.Local, Body: []ir.Statement{ir.Evaluate{
+			Value: ir.ArrayPush{Array: array, Value: fit(item, ir.MaybeNumber), Element: ir.MaybeNumber, Site: site},
+		}}},
 		ir.Return{Value: array},
 	}
 	l.result.Functions = append(l.result.Functions, function)
@@ -507,20 +582,28 @@ func (l *lowering) libraryIteratorUnsupportedUse(node *ast.Node) error {
 	if node.Kind == ast.KindObjectLiteralExpression {
 		for _, property := range node.AsObjectLiteralExpression().Properties.Nodes {
 			if property.Kind == ast.KindSpreadAssignment && isIterator(property.AsSpreadAssignment().Expression) {
-				return l.notYet(property, "spreading a Map or Set iterator: next is inherited, not an own enumerable field; use the original iterator or collect its elements into an array")
+				return l.notYet(
+					property,
+					"spreading a Map or Set iterator: next is inherited, not an own enumerable field; use the original iterator or collect its elements into an array",
+				)
 			}
 		}
 	}
 	if node.Kind == ast.KindCallExpression {
 		call := node.AsCallExpression()
 		callee := ast.SkipParentheses(call.Expression)
-		if callee.Kind == ast.KindPropertyAccessExpression && callee.Name().Text() == "assign" && l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Object") {
+		if callee.Kind == ast.KindPropertyAccessExpression &&
+			callee.Name().Text() == "assign" &&
+			l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Object") {
 			for index, source := range call.Arguments.Nodes {
 				if index == 0 {
 					continue
 				}
 				if isIterator(source) {
-					return l.notYet(source, "Object.assign copying a Map or Set iterator: next is inherited, not an own enumerable field; use the original iterator")
+					return l.notYet(
+						source,
+						"Object.assign copying a Map or Set iterator: next is inherited, not an own enumerable field; use the original iterator",
+					)
 				}
 			}
 		}

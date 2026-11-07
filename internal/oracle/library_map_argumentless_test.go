@@ -15,13 +15,15 @@ import (
 // Map<any, any> and stops the program at "a Map whose keys aren't strings".
 func TestArgumentlessMapTakesItsSlotsArguments(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/library_map_argumentless/admitted.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/library_map_argumentless/admitted.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatalf("an argumentless new Map() in a typed slot must lower: %v", err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatalf("an argumentless new Map() in a typed slot must lower: %v", loweredError)
 	}
 	node := onNode(test, path)
 	if node.exitCode != 0 {
@@ -38,16 +40,16 @@ func TestArgumentlessMapTakesItsSlotsArguments(test *testing.T) {
 // With no slot to fill, new Map() is Map<unknown, unknown>, whose keys lowering can't hold yet.
 func TestArgumentlessMapWithoutContextStops(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(
+	path, absolutePathError := filepath.Abs(
 		filepath.Join(repository, "internal/oracle/testdata/library_map_argumentless/uncontextual.a"),
 	)
-	if err != nil {
-		test.Fatal(err)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	_, err = lowered(test, path)
+	_, loweredError := lowered(test, path)
 	var notYet *lower.NotYet
 	const what = "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
-	if !errors.As(err, &notYet) || notYet.What != what || notYet.Where != path+":1:15" {
-		test.Fatalf("want NotYet %q at :1:15, got %v", what, err)
+	if !errors.As(loweredError, &notYet) || notYet.What != what || notYet.Where != path+":1:15" {
+		test.Fatalf("want NotYet %q at :1:15, got %v", what, loweredError)
 	}
 }

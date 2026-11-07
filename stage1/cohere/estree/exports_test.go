@@ -18,9 +18,9 @@ func TestDecoratedExports(test *testing.T) {
 	cases := decoratedExports()
 	ids := miscIDs("stage1/cohere/estree/exports_test.go:export", cases)
 	oracle := miscOracle(test)
-	main, err := filepath.Abs("main.ts")
-	if err != nil {
-		test.Fatal(err)
+	main, absolutePathError := filepath.Abs("main.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	binary, script := miscBuild(test, main)
 	answers := miscTextAnswers(test, oracle, cases, ".ts")
@@ -33,8 +33,8 @@ func TestDecoratedExports(test *testing.T) {
 			"native":  execute(test, "", binary, "--manifest", list),
 			"emitted": onNode(test, script, "--manifest", list),
 		} {
-			if err := miscCompare(want, got, false); err != nil {
-				test.Fatalf("%s %s: %v", ids[i], name, err)
+			if miscCompareError := miscCompare(want, got, false); miscCompareError != nil {
+				test.Fatalf("%s %s: %v", ids[i], name, miscCompareError)
 			}
 		}
 	})
@@ -78,8 +78,8 @@ func TestDecoratedExportMutant(test *testing.T) {
 			"Node":   onNode(test, path, "--manifest", list),
 			"native": execute(test, "", binary, "--manifest", list),
 		} {
-			if err := miscCompare(want, got, mustDisagree); err != nil {
-				test.Fatalf("%s %s: %v", ids[i], name, err)
+			if miscCompareError := miscCompare(want, got, mustDisagree); miscCompareError != nil {
+				test.Fatalf("%s %s: %v", ids[i], name, miscCompareError)
 			}
 		}
 	})

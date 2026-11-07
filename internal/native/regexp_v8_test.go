@@ -111,9 +111,9 @@ func runRegExpBytecodeV8NodeUnit(test *testing.T, shard int, wasmOnly bool) {
 		}
 	}
 	cases = selected
-	data, err := json.Marshal(cases)
-	if err != nil {
-		test.Fatal(err)
+	data, encodeError := json.Marshal(cases)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
@@ -124,12 +124,12 @@ func runRegExpBytecodeV8NodeUnit(test *testing.T, shard int, wasmOnly bool) {
 		`if(!process.version.startsWith('v24.'))throw Error('Node 24 required');const cases=JSON.parse(require('fs').readFileSync(0,'utf8'));for(const c of cases){const r=new RegExp(c.pattern,c.flags+'d');r.lastIndex=c.lastIndex;const m=r.exec(String.fromCharCode(...c.input));c.expected={captures:m?Array.from(m.indices,x=>x??null):null,lastIndex:r.lastIndex,groups:m?.indices.groups??null};}process.stdout.write(JSON.stringify(cases));`,
 	)
 	command.Stdin = bytes.NewReader(data)
-	output, err := command.CombinedOutput()
-	if err != nil {
-		test.Fatalf("Node: %v\n%s", err, output)
+	output, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("Node: %v\n%s", combinedOutputError, output)
 	}
-	if err := json.Unmarshal(output, &cases); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(output, &cases); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	runRegexCasesForTarget(test, cases, wasmOnly)
 }

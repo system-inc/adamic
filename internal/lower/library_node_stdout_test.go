@@ -13,8 +13,8 @@ func TestNodeStdoutWriteAdmission(test *testing.T) {
 		`import process from 'node:process'; ((process.stdout.write('é\ud800')));`,
 		`import host from 'node:process'; host.stdout.write('clear\x1b[2J');`,
 	} {
-		if _, err := lowerSource(test, source); err != nil {
-			test.Fatal(err)
+		if _, lowerSourceError := lowerSource(test, source); lowerSourceError != nil {
+			test.Fatal(lowerSourceError)
 		}
 	}
 }
@@ -34,10 +34,10 @@ func TestNodeStdoutWriteRefusals(test *testing.T) {
 		{`process.stdout?.write('x');`, "optional chain"},
 	} {
 		test.Run(one.reason+one.source, func(test *testing.T) {
-			_, err := lowerSource(test, "import process from 'node:process';"+one.source)
+			_, lowerSourceError := lowerSource(test, "import process from 'node:process';"+one.source)
 			var ny *NotYet
-			if !errors.As(err, &ny) || !strings.Contains(ny.What, one.reason) {
-				test.Fatalf("want %s, got %v", one.reason, err)
+			if !errors.As(lowerSourceError, &ny) || !strings.Contains(ny.What, one.reason) {
+				test.Fatalf("want %s, got %v", one.reason, lowerSourceError)
 			}
 		})
 	}
@@ -56,16 +56,20 @@ func TestNodeStdoutWriteExpressionForms(test *testing.T) {
 	} {
 		for _, extension := range []string{".a", ".ts"} {
 			test.Run(one.name+extension, func(test *testing.T) {
-				_, err := lowerSourceAs(test, "import process from 'node:process';\n"+one.source, extension)
+				_, lowerSourceAsError := lowerSourceAs(
+					test,
+					"import process from 'node:process';\n"+one.source,
+					extension,
+				)
 				if one.reason == "" {
-					if err != nil {
-						test.Fatalf("want admitted parenthesized receiver, got %v", err)
+					if lowerSourceAsError != nil {
+						test.Fatalf("want admitted parenthesized receiver, got %v", lowerSourceAsError)
 					}
 					return
 				}
 				var notYet *NotYet
-				if !errors.As(err, &notYet) || notYet.What != one.reason {
-					test.Fatalf("want exact NotYet %q, got %v", one.reason, err)
+				if !errors.As(lowerSourceAsError, &notYet) || notYet.What != one.reason {
+					test.Fatalf("want exact NotYet %q, got %v", one.reason, lowerSourceAsError)
 				}
 			})
 		}

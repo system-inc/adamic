@@ -21,32 +21,32 @@ import (
 // reads it (#mr87ptk); in .a it's refused, naming the field.
 func TestTagPredicateOptionalFieldNamesItsReason(test *testing.T) {
 	test.Parallel()
-	plain, err := os.ReadFile("testdata/predicates_tag_optional/plain.ts")
-	if err != nil {
-		test.Fatal(err)
+	plain, readError := os.ReadFile("testdata/predicates_tag_optional/plain.ts")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	lowersAndAgreesWithNodeAs(test, string(plain), ".ts")
-	optional, err := os.ReadFile("testdata/predicates_tag_optional/optional.ts")
-	if err != nil {
-		test.Fatal(err)
+	optional, readError := os.ReadFile("testdata/predicates_tag_optional/optional.ts")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	lowersAndAgreesWithNodeAs(test, string(optional), ".ts")
 	// In .a it needs proof, so it's refused, naming the field.
-	_, err = lowerSource(test, string(optional))
+	_, lowerSourceError := lowerSource(test, string(optional))
 	var refused *Refused
-	if !errors.As(err, &refused) ||
+	if !errors.As(lowerSourceError, &refused) ||
 		refused.What != "a tag-proven predicate whose target has an optional field (jsDoc on Identifier) that the view can't check" {
-		test.Fatalf("want the optional field refused in .a, got %v", err)
+		test.Fatalf("want the optional field refused in .a, got %v", lowerSourceError)
 	}
 	// An asserts claim proven by its tag takes the same branch, in .a too: this row pinned the flow
 	// prover's "normal return" until the reason was named (predicates_test.go's "assertion wider shape").
-	_, err = lowerSource(
+	_, lowerSourceError = lowerSource(
 		test,
 		`type A = { readonly kind: 'a' }; type B = { readonly kind: 'b' }; type Claimed = { readonly kind: 'a'; readonly extra?: number }; function assertA(x: A | B): asserts x is Claimed { if (x.kind !== 'a') { throw new Error('bad'); } }`,
 	)
-	if !errors.As(err, &refused) ||
+	if !errors.As(lowerSourceError, &refused) ||
 		refused.What != "a tag-proven predicate whose target has an optional field (extra on Claimed) that the view can't check" {
-		test.Fatalf("want the asserts claim's optional field named, got %v", err)
+		test.Fatalf("want the asserts claim's optional field named, got %v", lowerSourceError)
 	}
 }
 
@@ -105,9 +105,12 @@ func TestTagPredicateOptionalFieldIsCheckedAtTheRead(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			program, err := lowerTypeScriptAssertionSource(test, tagOptionalPrelude+probe.source)
-			if err != nil {
-				test.Fatal(err)
+			program, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(
+				test,
+				tagOptionalPrelude+probe.source,
+			)
+			if lowerTypeScriptAssertionSourceError != nil {
+				test.Fatal(lowerTypeScriptAssertionSourceError)
 			}
 			// Every read of jsDoc is the checked view read (an ir.Property naming its view and its
 			// contract, on a field the view checks), the node Emit's TestViewOptionalReadsStopAtTheRead
@@ -134,16 +137,20 @@ func TestTagPredicateOptionalFieldIsCheckedAtTheRead(test *testing.T) {
 			}
 			directory := test.TempDir()
 			binary := filepath.Join(directory, "native")
-			if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(
+				native.C(program),
+				binary,
+				native.Options{Sanitize: true},
+			); buildError != nil {
+				test.Fatal(buildError)
 			}
-			runner, err := filepath.Abs("../../oracle/node.mjs")
-			if err != nil {
-				test.Fatal(err)
+			runner, absolutePathError := filepath.Abs("../../oracle/node.mjs")
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			generated := filepath.Join(directory, "generated.mjs")
-			if err := os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0o644); writeError != nil {
+				test.Fatal(writeError)
 			}
 			want := "adamic: panic: field read failed: " +
 				probe.read +
@@ -156,10 +163,10 @@ func TestTagPredicateOptionalFieldIsCheckedAtTheRead(test *testing.T) {
 				var out, errs bytes.Buffer
 				command.Stdout, command.Stderr = &out, &errs
 				code := 0
-				if err := command.Run(); err != nil {
+				if runError := command.Run(); runError != nil {
 					var exit *exec.ExitError
-					if !errors.As(err, &exit) {
-						test.Fatal(err)
+					if !errors.As(runError, &exit) {
+						test.Fatal(runError)
 					}
 					code = exit.ExitCode()
 				}
@@ -176,10 +183,13 @@ func TestTagPredicateOptionalFieldIsCheckedAtTheRead(test *testing.T) {
 			}
 		})
 	}
-	_, err := lowerTypeScriptAssertionSource(test, tagOptionalPrelude+
+	_, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(test, tagOptionalPrelude+
 		"function show(node: Node): void { if (isIdentifier(node)) { node.jsDoc = { kind: 320, text: 'set' }; } }\nshow({ kind: 80, escapedText: 'x' } as Node);")
 	var pending *NotYet
-	if !errors.As(err, &pending) {
-		test.Fatalf("want a write through the view NotYet, never an unchecked store, got %v", err)
+	if !errors.As(lowerTypeScriptAssertionSourceError, &pending) {
+		test.Fatalf(
+			"want a write through the view NotYet, never an unchecked store, got %v",
+			lowerTypeScriptAssertionSourceError,
+		)
 	}
 }

@@ -34,8 +34,8 @@ func processExitOutput(test *testing.T, destination string, shared, backpressure
 		Stdout, Stderr         []byte
 		ExitCode, PipeCapacity int
 	}
-	if err := json.Unmarshal(result.stdout, &observed); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(result.stdout, &observed); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	test.Logf(
 		"%s shared=%t backpressure=%t: stdout=%d stderr=%d exit=%d pipe capacity=%d",
@@ -55,14 +55,14 @@ func processExitOutput(test *testing.T, destination string, shared, backpressure
 // use ordinary asynchronous Node pipes while retaining the real generated exit helper.
 func processAsyncScript(test *testing.T, script string) string {
 	test.Helper()
-	data, err := os.ReadFile(script)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(script)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	path := filepath.Join(test.TempDir(), "async.mjs")
 	prefix := "for (const stream of [process.stdout, process.stderr]) stream._handle?.setBlocking(false);\n"
-	if err := os.WriteFile(path, append([]byte(prefix), data...), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, append([]byte(prefix), data...), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return path
 }
@@ -79,16 +79,16 @@ func processOutputSources(test *testing.T, source string) (*ir.Program, string, 
 	test.Helper()
 	directory := test.TempDir()
 	path := filepath.Join(directory, "main.a")
-	if err := os.WriteFile(path, []byte("import 'node:process';\n"+source), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte("import 'node:process';\n"+source), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	script := filepath.Join(directory, "program.mjs")
-	if err := os.WriteFile(script, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(script, []byte(javascript.JavaScript(program)), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return program, path, script
 }
@@ -102,9 +102,9 @@ func processOutputProgramWith(
 	program, path, script := processOutputSources(test, source)
 	code := native.C(program)
 	if mutation != "" {
-		data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/adamic.c"))
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(filepath.Join(repository, "internal/native/runtime/adamic.c"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		runtimeSource := string(data)
 		before := "_Noreturn void adamic_process_exit_now(int code) {\n\tadamic_output_flush();"
@@ -149,8 +149,8 @@ func processOutputProgramWith(
 			code
 	}
 	binary := filepath.Join(filepath.Dir(path), "program")
-	if err := native.Build(code, binary, options); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(code, binary, options); buildError != nil {
+		test.Fatal(buildError)
 	}
 	return path, binary, script
 }
@@ -385,32 +385,32 @@ func processLargePipeExit(test *testing.T, shard int) {
 					len(expected),
 					bytes.Equal(truth.stdout, expected),
 				)
-				data, err := os.ReadFile(script)
-				if err != nil {
-					test.Fatal(err)
+				data, readError := os.ReadFile(script)
+				if readError != nil {
+					test.Fatal(readError)
 				}
 				if strings.Count(string(data), "adamicProcessExit(") != 1 {
 					test.Fatal("JS exit mutant anchor changed")
 				}
 				mutant := filepath.Join(test.TempDir(), "mutant.mjs")
-				if err := os.WriteFile(
+				if writeError := os.WriteFile(
 					mutant,
 					[]byte(strings.Replace(string(data), "adamicProcessExit(", "process.exit(", 1)),
 					0o644,
-				); err != nil {
-					test.Fatal(err)
+				); writeError != nil {
+					test.Fatal(writeError)
 				}
 				control := filepath.Join(test.TempDir(), "control.mjs")
-				original, err := os.ReadFile(path)
-				if err != nil {
-					test.Fatal(err)
+				original, readError := os.ReadFile(path)
+				if readError != nil {
+					test.Fatal(readError)
 				}
-				if err := os.WriteFile(
+				if writeError := os.WriteFile(
 					control,
 					[]byte(strings.Replace(string(original), ending, "process.exitCode = 37;", 1)),
 					0600,
-				); err != nil {
-					test.Fatal(err)
+				); writeError != nil {
+					test.Fatal(writeError)
 				}
 				drained := processExitOutput(
 					test,
@@ -546,21 +546,21 @@ func processExitDoesNotUnwind(test *testing.T, wasm bool) {
 			test.Fatal(difference)
 		}
 	}
-	data, err := os.ReadFile(script)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(script)
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	instrumented := javascript.JavaScriptWith(program, javascript.Options{
 		Enter: func(int) string { return "undefined" },
 		Leave: func(int) string { return "console.log('must not leave')" },
 	})
 	observed := filepath.Join(test.TempDir(), "instrumented.mjs")
-	if err := os.WriteFile(observed, []byte(instrumented), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(observed, []byte(instrumented), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	if difference := disagreement(truth, processExitOutput(
 		test,
@@ -589,12 +589,12 @@ func processExitDoesNotUnwind(test *testing.T, wasm bool) {
 				test.Fatal("exit control-flow mutant anchor changed")
 			}
 			mutant := filepath.Join(test.TempDir(), "mutant.mjs")
-			if err := os.WriteFile(
+			if writeError := os.WriteFile(
 				mutant,
 				[]byte(strings.Replace(change.source, change.before, change.after, 1)),
 				0o644,
-			); err != nil {
-				test.Fatal(err)
+			); writeError != nil {
+				test.Fatal(writeError)
 			}
 			bad := processExitOutput(
 				test,
@@ -647,16 +647,16 @@ func processExitArgument(test *testing.T, shard int) {
 		test.Run("argument="+argument, func(test *testing.T) {
 			test.Parallel()
 			path := filepath.Join(test.TempDir(), "main.a")
-			if err := os.WriteFile(path, []byte(
+			if writeError := os.WriteFile(path, []byte(
 				"import 'node:process'; process.exitCode = 7; console.log('exit argument'); process.exit("+
 					argument+
 					");",
-			), 0o644); err != nil {
-				test.Fatal(err)
+			), 0o644); writeError != nil {
+				test.Fatal(writeError)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			truth := onNodeWith(test, inputRun{}, path)
 			var got run
@@ -684,18 +684,18 @@ func TestProcessObjectsDoNotEscape(test *testing.T) {
 		test.Run(expression, func(test *testing.T) {
 			test.Parallel()
 			path := filepath.Join(test.TempDir(), "main.a")
-			if err := os.WriteFile(
+			if writeError := os.WriteFile(
 				path,
 				[]byte("import 'node:process'; const held = "+expression+";"),
 				0o644,
-			); err != nil {
-				test.Fatal(err)
+			); writeError != nil {
+				test.Fatal(writeError)
 			}
-			_, err := lowered(test, path)
+			_, loweredError := lowered(test, path)
 			var notYet *lower.NotYet
 			var refused *lower.Refused
-			if !errors.As(err, &notYet) && !errors.As(err, &refused) {
-				test.Fatalf("want explicit NotYet rather than an uninitialized object, got %v", err)
+			if !errors.As(loweredError, &notYet) && !errors.As(loweredError, &refused) {
+				test.Fatalf("want explicit NotYet rather than an uninitialized object, got %v", loweredError)
 			}
 		})
 	}
@@ -738,13 +738,13 @@ func processStatusMutant(test *testing.T, shard int) {
 		}
 		test.Run(one.name, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", one.fixture))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", one.fixture))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			original := native.C(program)
 			mutant := strings.ReplaceAll(original, one.before, one.after)
@@ -755,8 +755,8 @@ func processStatusMutant(test *testing.T, shard int) {
 				mutant = "#include \"adamic.h\"\n" + one.helper + "\n" + mutant
 			}
 			binary := filepath.Join(test.TempDir(), "mutant")
-			if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(mutant, binary, native.Options{Sanitize: true}); buildError != nil {
+				test.Fatal(buildError)
 			}
 			// LeakSanitizer is Linux's: macOS's AddressSanitizer aborts when asked for it.
 			var environment []string
@@ -814,12 +814,12 @@ func TestProcessExitAssignmentResult_002(test *testing.T) {
 func processExitAssignmentResult(test *testing.T, shard int) {
 	path := filepath.Join(test.TempDir(), "main.a")
 	source := "import 'node:process'; const assigned=(process.exitCode=4294967297); console.log(String(assigned)); console.log(String(process.exitCode)); const cleared=(process.exitCode=undefined); console.log(String(cleared===undefined)); console.log(String(process.exitCode));"
-	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	nodeProcessRuntimeAgreement(test, program, onNodeWith(test, inputRun{}, path), shard)
 }
@@ -836,13 +836,13 @@ func TestProcessExitNonnumericABI(test *testing.T) {
 		test.Run(source, func(test *testing.T) {
 			test.Parallel()
 			path := filepath.Join(test.TempDir(), "main.a")
-			if err := os.WriteFile(path, []byte("import 'node:process'; "+source), 0600); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, []byte("import 'node:process'; "+source), 0600); writeError != nil {
+				test.Fatal(writeError)
 			}
-			_, err := lowered(test, path)
+			_, loweredError := lowered(test, path)
 			var notYet *lower.NotYet
-			if !errors.As(err, &notYet) {
-				test.Fatalf("want explicit numeric exit ABI refusal, got %v", err)
+			if !errors.As(loweredError, &notYet) {
+				test.Fatalf("want explicit numeric exit ABI refusal, got %v", loweredError)
 			}
 		})
 	}
@@ -870,17 +870,17 @@ func processExitWASIDrain(test *testing.T, method, destination string) {
 		method +
 		"(line);} process.exit(37);"
 	path, binary, _ := processOutputProgramWith(test, source, "", native.Options{Target: "wasm32-wasi"})
-	original, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	original, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	control := filepath.Join(test.TempDir(), "control.mjs")
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		control,
 		[]byte(strings.Replace(string(original), "process.exit(37);", "process.exitCode=37;", 1)),
 		0600,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
 	truth := processExitOutput(
 		test,
@@ -909,17 +909,17 @@ func processExitWASIDrain(test *testing.T, method, destination string) {
 
 func TestProcessExitNormalizationMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/process_exit_code.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/process_exit_code.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
-	data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/process.c"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(repository, "internal/native/runtime/process.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	anchor := "adamic_bitwise_or(code.number, 0)"
 	if strings.Count(string(data), anchor) != 1 {
@@ -939,8 +939,8 @@ func TestProcessExitNormalizationMutant(test *testing.T) {
 		code = strings.ReplaceAll(code, name+"(", "mutant_"+name+"(")
 	}
 	binary := filepath.Join(test.TempDir(), "mutant")
-	if err := native.Build(runtimeSource+"\n"+code, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(runtimeSource+"\n"+code, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	truth := onNodeWith(test, inputRun{}, path)
 	bad := execute(test, binary)
@@ -972,8 +972,8 @@ func TestProcessExitValidationCode_003(test *testing.T) {
 func processExitValidationCode(test *testing.T, shard int) {
 	path := filepath.Join(test.TempDir(), "main.a")
 	source := "try {process.exitCode=NaN;} catch(error) {console.log((error as {code:string}).code);}"
-	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	truth := onNodeWith(test, inputRun{}, path)
 	if truth.exitCode != 0 || len(truth.stderr) != 0 || string(truth.stdout) != "ERR_OUT_OF_RANGE\n" {
@@ -997,9 +997,9 @@ func processExitValidationCode(test *testing.T, shard int) {
 		nodeProcessRuntimeAgreement(test, program, truth, shard)
 		return
 	}
-	data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/process.c"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(repository, "internal/native/runtime/process.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	anchor := "ADAMIC_STRING(\"ERR_OUT_OF_RANGE\")"
 	if strings.Count(string(data), anchor) != 1 {
@@ -1019,8 +1019,8 @@ func processExitValidationCode(test *testing.T, shard int) {
 		code = strings.ReplaceAll(code, name+"(", "mutant_"+name+"(")
 	}
 	binary := filepath.Join(test.TempDir(), "mutant")
-	if err := native.Build(runtimeSource+"\n"+code, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(runtimeSource+"\n"+code, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	bad := execute(test, binary)
 	if bad.exitCode != 0 || len(bad.stderr) != 0 || disagreement(truth, bad) != "stdout differs" {
@@ -1075,21 +1075,21 @@ func processExitClosedStdout(test *testing.T, shard int) {
 	}
 	ended := func(command ...string) run {
 		test.Helper()
-		reader, writer, err := os.Pipe()
-		if err != nil {
-			test.Fatal(err)
+		reader, writer, pipeError := os.Pipe()
+		if pipeError != nil {
+			test.Fatal(pipeError)
 		}
 		reader.Close()
 		defer writer.Close()
-		stderr, err := os.Create(filepath.Join(test.TempDir(), "stderr"))
-		if err != nil {
-			test.Fatal(err)
+		stderr, createError := os.Create(filepath.Join(test.TempDir(), "stderr"))
+		if createError != nil {
+			test.Fatal(createError)
 		}
 		defer stderr.Close()
 		status := withStreams(test, writer, stderr, command[0], command[1:]...)
-		said, err := os.ReadFile(stderr.Name())
-		if err != nil {
-			test.Fatal(err)
+		said, readError := os.ReadFile(stderr.Name())
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		return run{exitCode: status, stderr: said}
 	}
@@ -1124,45 +1124,49 @@ func processExitClosedStdout(test *testing.T, shard int) {
 		test.Fatalf("closed stdout: %s; Node %+v got %+v", difference, truth, got)
 	}
 	if immediate && shard%3 == 1 {
-		data, err := os.ReadFile(filepath.Join(repository, "oracle/adamic.mjs"))
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(filepath.Join(repository, "oracle/adamic.mjs"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		anchor := "stream.on('error', () => {\n        if(!exiting) process.exit(70);\n    });"
 		if strings.Count(string(data), anchor) != 1 {
 			test.Fatal("closed-stream mutant anchor changed")
 		}
 		runtimePath := filepath.Join(test.TempDir(), "runtime.mjs")
-		if err := os.WriteFile(
+		if writeError := os.WriteFile(
 			runtimePath,
 			[]byte(strings.Replace(string(data), anchor, "stream.on('error', () => process.exit(70));", 1)),
 			0600,
-		); err != nil {
-			test.Fatal(err)
+		); writeError != nil {
+			test.Fatal(writeError)
 		}
 		// Main's runtime re-exports JSON modules; keep the mutant's bundle complete
 		// and bind their panic helper to this same runtime instance.
 		for _, name := range []string{"json_encode.mjs", "json_decode.mjs"} {
-			data, err := os.ReadFile(filepath.Join(repository, "oracle", name))
-			if err != nil {
-				test.Fatal(err)
+			data, readError := os.ReadFile(filepath.Join(repository, "oracle", name))
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			data = []byte(strings.ReplaceAll(string(data), "'./adamic.mjs'", "'./runtime.mjs'"))
-			if err := os.WriteFile(filepath.Join(filepath.Dir(runtimePath), name), data, 0600); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(
+				filepath.Join(filepath.Dir(runtimePath), name),
+				data,
+				0600,
+			); writeError != nil {
+				test.Fatal(writeError)
 			}
 		}
-		code, err := os.ReadFile(script)
-		if err != nil {
-			test.Fatal(err)
+		code, readError := os.ReadFile(script)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		mutant := filepath.Join(test.TempDir(), "mutant.mjs")
-		if err := os.WriteFile(
+		if writeError := os.WriteFile(
 			mutant,
 			[]byte(strings.ReplaceAll(string(code), "'adamic'", fmt.Sprintf("%q", runtimePath))),
 			0600,
-		); err != nil {
-			test.Fatal(err)
+		); writeError != nil {
+			test.Fatal(writeError)
 		}
 		bad := ended("node", "--disable-warning=ExperimentalWarning", mutant)
 		if len(bad.stderr) != 0 || disagreement(truth, bad) != "exit codes differ" {

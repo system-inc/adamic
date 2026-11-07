@@ -94,13 +94,15 @@ func TestPlaceholderUseCheckAliasReset(test *testing.T) {
 
 func assertPlaceholderUseCheck(test *testing.T, name, message string, nodeExit int) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/placeholder_nonnull_"+name+".a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/placeholder_nonnull_"+name+".a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	source := onSliceNode(test, path)
 	if source.exitCode != nodeExit {
@@ -128,19 +130,19 @@ func assertPlaceholderUseCheck(test *testing.T, name, message string, nodeExit i
 func TestPlaceholderNonliteralAssertionStillChecks(test *testing.T) {
 	test.Parallel()
 	sourcePath := filepath.Join(repository, "internal/lower/testdata/placeholders/nonliteral.a")
-	source, err := os.ReadFile(sourcePath)
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(sourcePath)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	// The extension chooses the existing checked .ts policy. The committed witness
 	// remains .a; no compiler adaptation changes its non-literal assertion.
 	path := filepath.Join(test.TempDir(), "checked-input.ts")
-	if err := os.WriteFile(path, source, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, source, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	node := onSliceNode(test, path)
 	if node.exitCode != 0 || string(node.stdout) != "after assertion\n" {
@@ -197,13 +199,15 @@ func TestPlaceholderFlowMutantAliasReset(test *testing.T) {
 
 func assertPlaceholderFlowMutant(test *testing.T, name string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/placeholder_nonnull_"+name+".a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/placeholder_nonnull_"+name+".a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	baseline, _ := nativelyUncached(test, program)
 	if baseline.exitCode != 70 {
@@ -250,13 +254,15 @@ func assertPlaceholderFlowMutant(test *testing.T, name string) {
 // Collapsing null into undefined must change ordinary presence observations.
 func TestPlaceholderNullTagMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/placeholder_nonnull_null_equality.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/placeholder_nonnull_null_equality.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	source := onSliceNode(test, path)
 	baseline, _ := nativelyUncached(test, program)
@@ -293,13 +299,15 @@ func TestPlaceholderNullTagMutant(test *testing.T) {
 // A copy observes the nullish payload; readiness is checked at its later typed use.
 func TestPlaceholderSpreadReadinessMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/placeholder_nonnull_null_copy.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/placeholder_nonnull_null_copy.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	source := onSliceNode(test, path)
 	baseline, _ := nativelyUncached(test, program)
@@ -385,9 +393,9 @@ func TestSlice5WitnessSpeculation(test *testing.T) {
 // A witness is exact source bytes and an exact stop; its type-correct repair must agree with Node.
 func assertSlice5Witness(test *testing.T, fixture string) {
 	test.Helper()
-	data, err := os.ReadFile(filepath.Join(repository, "cloud/admission-corpus/negative-witnesses.json"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(repository, "cloud/admission-corpus/negative-witnesses.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var ledger struct {
 		Witnesses map[string]struct {
@@ -399,29 +407,29 @@ func assertSlice5Witness(test *testing.T, fixture string) {
 			Stderr       string `json:"stderr"`
 		} `json:"witnesses"`
 	}
-	if err := json.Unmarshal(data, &ledger); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &ledger); decodeError != nil {
+		test.Fatal(decodeError)
 	}
-	path, err := filepath.Abs(filepath.Join(repository, fixture))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, fixture))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	source, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	hash := fmt.Sprintf("%x", sha256.Sum256(source))
 	entry, ok := ledger.Witnesses[hash]
 	if !ok || !strings.HasPrefix(entry.Declaration, fixture+":") || entry.Exit != 70 {
 		test.Fatalf("unlisted or mismatched witness %s", hash)
 	}
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	originalNode := onSliceNode(test, path)
 	if originalNode.exitCode != 0 {
@@ -446,12 +454,12 @@ func assertSlice5Witness(test *testing.T, fixture string) {
 		test.Fatal("type-correct repair is listed as a negative witness")
 	}
 	repairPath := filepath.Join(test.TempDir(), filepath.Base(path))
-	if err := os.WriteFile(repairPath, []byte(repaired), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(repairPath, []byte(repaired), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	repairProgram, err := lowered(test, repairPath)
-	if err != nil {
-		test.Fatal(err)
+	repairProgram, loweredError := lowered(test, repairPath)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	truth := onSliceNode(test, repairPath)
 	if truth.exitCode != 0 {

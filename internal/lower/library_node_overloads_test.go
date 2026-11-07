@@ -73,9 +73,9 @@ func TestNodeRegisteredOverloadsFindASplit(test *testing.T) {
 		`declare function apart(key: number): number;`,
 		`console.log(String(performance.now() >= 0) + typeof split + typeof widen + typeof arity + typeof overlap + typeof apart);`,
 	}, "\n")
-	program, err := load.Load([]string{writeAgreementSource(test, "main.ts", source)})
-	if err != nil {
-		test.Fatalf("Load: %v", err)
+	program, loadError := load.Load([]string{writeAgreementSource(test, "main.ts", source)})
+	if loadError != nil {
+		test.Fatalf("Load: %v", loadError)
 	}
 	checked, release := program.Checker(context.Background(), program.Files()[0])
 	test.Cleanup(release)

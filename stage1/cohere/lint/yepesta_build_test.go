@@ -39,12 +39,12 @@ func jsxTextnodesLoweredRecipe(test *testing.T) (buildcache.Inputs, func(out str
 	test.Helper()
 	d := jsxTextnodesDescriptor(test)
 	var change struct{ Name, File, From, To string }
-	data, err := os.ReadFile(filepath.Join("rules", d.Slug, "mutant.json"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join("rules", d.Slug, "mutant.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	if err := json.Unmarshal(data, &change); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &change); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if change.File == "" {
 		change.File = d.Module
@@ -69,39 +69,43 @@ func jsxTextnodesLoweredRecipe(test *testing.T) (buildcache.Inputs, func(out str
 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
 	}
 	return inputs, func(out string) error {
-		port, err := portTree(
+		port, portTreeError := portTree(
 			test,
 			filepath.Join(out, "tree"),
 			change.From,
 			change.To,
 			filepath.Join("rules", d.Slug, change.File),
 		)
-		if err != nil {
-			return err
+		if portTreeError != nil {
+			return portTreeError
 		}
 		prepareRegistry(test, port)
 		started := time.Now()
-		program, err := load.Load([]string{filepath.Join(port, "main.ts")})
-		if err != nil {
-			return err
+		program, loadError := load.Load([]string{filepath.Join(port, "main.ts")})
+		if loadError != nil {
+			return loadError
 		}
 		test.Logf("load: %.3fs", time.Since(started).Seconds())
 		started = time.Now()
-		lowered, err := lower.Lower(context.Background(), program)
-		if err != nil {
-			return err
+		lowered, lowerError := lower.Lower(context.Background(), program)
+		if lowerError != nil {
+			return lowerError
 		}
 		test.Logf("lower: %.3fs", time.Since(started).Seconds())
 		started = time.Now()
-		if err := os.WriteFile(filepath.Join(out, "main.c"), []byte(native.C(lowered)), 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(
+			filepath.Join(out, "main.c"),
+			[]byte(native.C(lowered)),
+			0644,
+		); writeError != nil {
+			return writeError
 		}
 		test.Logf("emit C: %.3fs", time.Since(started).Seconds())
 		started = time.Now()
-		err = os.WriteFile(filepath.Join(out, "lint.mjs"), []byte(javascript.JavaScript(lowered)), 0644)
+		writeError := os.WriteFile(filepath.Join(out, "lint.mjs"), []byte(javascript.JavaScript(lowered)), 0644)
 		test.Logf("emit JS: %.3fs", time.Since(started).Seconds())
-		if err != nil {
-			return err
+		if writeError != nil {
+			return writeError
 		}
 		// The port's imports name this checkout for the build's own lowering; the product names it <repository>
 		// (#tqrqx60).
@@ -130,9 +134,9 @@ func portTree(test *testing.T, tree, from, to string, targets ...string) (string
 		to,
 		targets...,
 	)
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		return "", err
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		return "", absolutePathError
 	}
 	var queue []string
 	reach := func(file, source string) error {
@@ -154,12 +158,15 @@ func portTree(test *testing.T, tree, from, to string, targets ...string) (string
 		if !strings.HasSuffix(file, ".ts") && !strings.HasSuffix(file, ".a") {
 			continue
 		}
-		data, err := os.ReadFile(filepath.Join(port, file))
-		if err != nil {
-			return "", err
+		data, readError := os.ReadFile(filepath.Join(port, file))
+		if readError != nil {
+			return "", readError
 		}
-		if err := reach(path.Join(jsxTextnodesPackage, filepath.ToSlash(file)), string(data)); err != nil {
-			return "", err
+		if reachError := reach(
+			path.Join(jsxTextnodesPackage, filepath.ToSlash(file)),
+			string(data),
+		); reachError != nil {
+			return "", reachError
 		}
 	}
 	copied := map[string]bool{}
@@ -170,19 +177,19 @@ func portTree(test *testing.T, tree, from, to string, targets ...string) (string
 			continue
 		}
 		copied[file] = true
-		data, err := os.ReadFile(filepath.Join(root, filepath.FromSlash(file)))
-		if err != nil {
-			return "", err
+		data, readError := os.ReadFile(filepath.Join(root, filepath.FromSlash(file)))
+		if readError != nil {
+			return "", readError
 		}
 		destination := filepath.Join(tree, filepath.FromSlash(file))
-		if err := os.MkdirAll(filepath.Dir(destination), 0755); err != nil {
-			return "", err
+		if createDirectoryError := os.MkdirAll(filepath.Dir(destination), 0755); createDirectoryError != nil {
+			return "", createDirectoryError
 		}
-		if err := os.WriteFile(destination, data, 0644); err != nil {
-			return "", err
+		if writeError := os.WriteFile(destination, data, 0644); writeError != nil {
+			return "", writeError
 		}
-		if err := reach(file, string(data)); err != nil {
-			return "", err
+		if reachError := reach(file, string(data)); reachError != nil {
+			return "", reachError
 		}
 	}
 	return port, nil
@@ -215,9 +222,9 @@ func jsxTextnodesNativeInputs(inputs buildcache.Inputs) buildcache.Inputs {
 
 // jsxTextnodesNativeBuild builds the sanitized native, the executable scanner, into out from the lowered mutant's C.
 func jsxTextnodesNativeBuild(lowered, out string) error {
-	source, err := os.ReadFile(filepath.Join(lowered, "main.c"))
-	if err != nil {
-		return err
+	source, readError := os.ReadFile(filepath.Join(lowered, "main.c"))
+	if readError != nil {
+		return readError
 	}
 	return native.Build(
 		string(source),

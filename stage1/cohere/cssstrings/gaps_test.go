@@ -13,24 +13,24 @@ import (
 
 func TestMultiPushGap(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("gaps/1_multi_push.ts")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("gaps/1_multi_push.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	answer := onNode(test, path)
 	clean(test, "Node gap", answer)
 	equal(test, "Node gap", answer.stdout, []byte("ab\n"))
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		test.Fatal(err)
+	lowered, lowerError := lower.Lower(context.Background(), program)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	binary := filepath.Join(test.TempDir(), "gap")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	actual := stringsExecute(test, []string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
 	clean(test, "native ASan/UBSan/LSan", actual)

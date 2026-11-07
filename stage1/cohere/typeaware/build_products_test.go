@@ -32,16 +32,16 @@ func typeAwareOverlayOracle(
 ) string {
 	h.t.Helper()
 	virtual := filepath.Join(h.repository, "cohere", virtualName)
-	data, err := json.Marshal(map[string]any{
+	data, encodeError := json.Marshal(map[string]any{
 		"Replace": map[string]string{virtual: filepath.Join(h.repository, "stage1/cohere/typeaware/testdata", source)},
 	})
-	if err != nil {
-		h.t.Fatal(err)
+	if encodeError != nil {
+		h.t.Fatal(encodeError)
 	}
 	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 	overlay := filepath.Join(h.t.TempDir(), "overlay.json")
-	if err := os.WriteFile(overlay, data, 0644); err != nil {
-		h.t.Fatal(err)
+	if writeError := os.WriteFile(overlay, data, 0644); writeError != nil {
+		h.t.Fatal(writeError)
 	}
 	return buildcache.GoBuildInMutated(h.t, "cohere", binaryName, virtual, []string{"-overlay=" + overlay}, mutations)
 }

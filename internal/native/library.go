@@ -46,8 +46,8 @@ func RuntimeLibraryForSource(directory string, source string, options Options) (
 // it. Parts are everything its key reads, as runtimeKey hashes them (runtimeKeyParts), spelled as this machine reaches
 // them. Portable are the same parts as every machine spells them, for a key that travels: Compiler and Archiver are
 // left for the caller to key by what they report, and every path inside the compiler's installation is named from
-// it, so a runner reaching clang through $ADAMIC_TOOLS/bin keys as Workshop does through ~/.adamic-tools/bin (#94aa17s's
-// class: typeaware's native keyed apart on the two). Features and Options are what asked for it.
+// it, so a runner reaching clang through $ADAMIC_TOOLS/bin keys as Workshop does through ~/.adamic-tools/bin
+// (#94aa17s's class: typeaware's native keyed apart on the two). Features and Options are what asked for it.
 type RuntimeRequest struct {
 	Parts    []string
 	Portable []string
@@ -66,7 +66,15 @@ type RuntimeRequest struct {
 // bytes from outside its own initializers, and its key, which the jobserver never enters, is all its bytes depend on.
 // The one outside value it reads is $ADAMIC_BUILD_LOG, which only names where its timing lines go (buildLog).
 func (request RuntimeRequest) Build(directory string, workers int, jobserver *Jobserver) error {
-	return compileRuntime(request.files, request.flags, request.Compiler, directory, workers, jobserver, partsKey(request.Parts))
+	return compileRuntime(
+		request.files,
+		request.flags,
+		request.Compiler,
+		directory,
+		workers,
+		jobserver,
+		partsKey(request.Parts),
+	)
 }
 
 // runtimeSupplier, when set, supplies every archive of the embedded runtime this process links, in place of the
@@ -102,16 +110,23 @@ func RuntimeRequestFor(options Options, features ...string) (RuntimeRequest, err
 		}
 		fmt.Fprintf(&source, "#define %s 1\n", feature)
 	}
-	files, flags, compiler, version, err := runtimeInputs("", options, featureFlags(source.String()))
-	if err != nil {
-		return RuntimeRequest{}, err
+	files, flags, compiler, version, runtimeInputsError := runtimeInputs("", options, featureFlags(source.String()))
+	if runtimeInputsError != nil {
+		return RuntimeRequest{}, runtimeInputsError
 	}
 	return runtimeRequest(files, flags, compiler, version, options)
 }
 
 // runtimeFeatures are the runtime's features a program's C turns on with a leading #define (cProgram), in the order
 // their -D flags are given.
-var runtimeFeatures = []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST", "ADAMIC_CLOSURE_DISCARDS"}
+var runtimeFeatures = []string{
+	"ADAMIC_CLOSURE_CONVENTION",
+	"ADAMIC_CANONICAL_CLOSURES",
+	"ADAMIC_CLOSURE_RECEIVERS",
+	"ADAMIC_REGEXP_REPLACE_CALLBACK",
+	"ADAMIC_NODE_HOST",
+	"ADAMIC_CLOSURE_DISCARDS",
+}
 
 // Features are the runtime features a program's C turns on, in runtimeFeatures' order.
 func Features(source string) []string {
@@ -148,18 +163,25 @@ func featureFlags(source string) []string {
 }
 
 func runtimeLibrary(directory string, options Options, extraFlags []string) (string, error) {
-	files, flags, compiler, version, err := runtimeInputs(directory, options, extraFlags)
-	if err != nil {
-		return "", err
+	files, flags, compiler, version, runtimeInputsError := runtimeInputs(directory, options, extraFlags)
+	if runtimeInputsError != nil {
+		return "", runtimeInputsError
 	}
 	return runtimeLibraryFromInputs(files, flags, compiler, version, options, directory == "", "native-runtime")
 }
 
-func runtimeLibraryFromInputs(files []runtimeFile, flags []string, compiler, version string, options Options, supplied bool, namespace string) (string, error) {
+func runtimeLibraryFromInputs(
+	files []runtimeFile,
+	flags []string,
+	compiler, version string,
+	options Options,
+	supplied bool,
+	namespace string,
+) (string, error) {
 	if supplier := runtimeSupplier.Load(); supplier != nil && supplied {
-		request, err := runtimeRequest(files, flags, compiler, version, options)
-		if err != nil {
-			return "", err
+		request, runtimeRequestError := runtimeRequest(files, flags, compiler, version, options)
+		if runtimeRequestError != nil {
+			return "", runtimeRequestError
 		}
 		value, _ := suppliedRuntimes.LoadOrStore(partsKey(request.Parts), &suppliedRuntime{})
 		supplied := value.(*suppliedRuntime)
@@ -170,15 +192,15 @@ func runtimeLibraryFromInputs(files []runtimeFile, flags []string, compiler, ver
 				return
 			}
 			supplied.library = filepath.Join(held, "runtime.a")
-			if info, err := os.Stat(supplied.library); err != nil || !info.Mode().IsRegular() {
+			if info, statError := os.Stat(supplied.library); statError != nil || !info.Mode().IsRegular() {
 				supplied.err = fmt.Errorf("native: the supplied runtime %s holds no runtime.a", held)
 			}
 		})
 		return supplied.library, supplied.err
 	}
-	cache, err := cacheDirectory(namespace)
-	if err != nil {
-		return "", err
+	cache, cacheDirectoryError := cacheDirectory(namespace)
+	if cacheDirectoryError != nil {
+		return "", cacheDirectoryError
 	}
 	return cachedRuntime(files, flags, compiler, version, cache)
 }
@@ -186,18 +208,22 @@ func runtimeLibraryFromInputs(files []runtimeFile, flags []string, compiler, ver
 // runtimeInputs are what a runtime archive is compiled from: the runtime's files (directory's, or the embedded
 // runtime's when it is empty, without the units of features the flags leave off), the flags, and the compiler with its
 // version.
-func runtimeInputs(directory string, options Options, extraFlags []string) ([]runtimeFile, []string, string, string, error) {
-	if err := ValidateOptions(options); err != nil {
-		return nil, nil, "", "", err
+func runtimeInputs(
+	directory string,
+	options Options,
+	extraFlags []string,
+) ([]runtimeFile, []string, string, string, error) {
+	if validateOptionsError := ValidateOptions(options); validateOptionsError != nil {
+		return nil, nil, "", "", validateOptionsError
 	}
 	var sources fs.FS = runtime
 	root := "runtime"
 	if directory != "" {
 		sources, root = os.DirFS(directory), "."
 	}
-	files, err := readRuntime(sources, root)
-	if err != nil {
-		return nil, nil, "", "", fmt.Errorf("native: runtime: %w", err)
+	files, readRuntimeError := readRuntime(sources, root)
+	if readRuntimeError != nil {
+		return nil, nil, "", "", fmt.Errorf("native: runtime: %w", readRuntimeError)
 	}
 	if !slicesContain(extraFlags, "-DADAMIC_REGEXP_REPLACE_CALLBACK=1") {
 		kept := files[:0]
@@ -229,13 +255,13 @@ func runtimeInputs(directory string, options Options, extraFlags []string) ([]ru
 		files = kept
 	}
 	// The program toolchain resolves is the one the key names and every step of the build runs.
-	compiler, err := toolchain.Path(compilerName(options))
-	if err != nil {
-		return nil, nil, "", "", fmt.Errorf("native: %w", err)
+	compiler, pathError := toolchain.Path(compilerName(options))
+	if pathError != nil {
+		return nil, nil, "", "", fmt.Errorf("native: %w", pathError)
 	}
-	version, err := toolchain.Command(compiler, "--version").CombinedOutput()
-	if err != nil {
-		return nil, nil, "", "", fmt.Errorf("native: clang --version: %w\n%s", err, version)
+	version, combinedOutputError := toolchain.Command(compiler, "--version").CombinedOutput()
+	if combinedOutputError != nil {
+		return nil, nil, "", "", fmt.Errorf("native: clang --version: %w\n%s", combinedOutputError, version)
 	}
 	return files, append(Flags(options), extraFlags...), compiler, string(version), nil
 }
@@ -245,9 +271,9 @@ func runtimeInputs(directory string, options Options, extraFlags []string) ([]ru
 // sandboxed build that names its cache writes nothing under HOME. An entry is looked for there first, then at the same
 // place under the build cache (location.ReadPlaces).
 func cacheDirectory(name string) (string, error) {
-	cache, err := location.Output()
-	if err != nil {
-		return "", fmt.Errorf("native: cache directory: %w", err)
+	cache, outputError := location.Output()
+	if outputError != nil {
+		return "", fmt.Errorf("native: cache directory: %w", outputError)
 	}
 	return filepath.Join(cache, name), nil
 }
@@ -256,7 +282,7 @@ func cacheDirectory(name string) (string, error) {
 // there, then at the same place under the build cache (location.ReadPlaces).
 func cachedFile(file string) (string, bool) {
 	for _, place := range location.ReadPlaces(file) {
-		if info, err := os.Stat(place); err == nil && info.Mode().IsRegular() {
+		if info, statError := os.Stat(place); statError == nil && info.Mode().IsRegular() {
 			return place, true
 		}
 	}
@@ -264,18 +290,18 @@ func cachedFile(file string) (string, bool) {
 }
 
 func readRuntime(sources fs.FS, root string) ([]runtimeFile, error) {
-	entries, err := fs.ReadDir(sources, root)
-	if err != nil {
-		return nil, err
+	entries, readDirectoryError := fs.ReadDir(sources, root)
+	if readDirectoryError != nil {
+		return nil, readDirectoryError
 	}
 	var files []runtimeFile
 	for _, entry := range entries {
 		if entry.IsDir() || (!strings.HasSuffix(entry.Name(), ".c") && !strings.HasSuffix(entry.Name(), ".h")) {
 			continue
 		}
-		contents, err := fs.ReadFile(sources, path.Join(root, entry.Name()))
-		if err != nil {
-			return nil, err
+		contents, readFileError := fs.ReadFile(sources, path.Join(root, entry.Name()))
+		if readFileError != nil {
+			return nil, readFileError
 		}
 		files = append(files, runtimeFile{entry.Name(), contents})
 	}
@@ -283,12 +309,12 @@ func readRuntime(sources fs.FS, root string) ([]runtimeFile, error) {
 }
 
 // RuntimeSourceDigest is the sha256 of every file of the embedded runtime, named and by what it holds, every feature's
-// units included: the runtime as its sources say it, with nothing of the machine or the compiler that builds it, so it is
-// the same on every machine. internal/oracle's counts table keys each row by it (countDigest).
+// units included: the runtime as its sources say it, with nothing of the machine or the compiler that builds it, so it
+// is the same on every machine. internal/oracle's counts table keys each row by it (countDigest).
 func RuntimeSourceDigest() (string, error) {
-	files, err := readRuntime(runtime, "runtime")
-	if err != nil {
-		return "", fmt.Errorf("native: runtime: %w", err)
+	files, readRuntimeError := readRuntime(runtime, "runtime")
+	if readRuntimeError != nil {
+		return "", fmt.Errorf("native: runtime: %w", readRuntimeError)
 	}
 	parts := []string{"adamic-runtime-sources-v1"}
 	for _, file := range files {
@@ -308,21 +334,31 @@ func runtimeKey(files []runtimeFile, flags []string, compiler string, version st
 // runtime's files by what they hold. A supplied runtime's product is keyed by the same parts as every machine spells
 // them (portableKeyParts), so the two keys can't move apart.
 func runtimeKeyParts(files []runtimeFile, flags []string, compiler string, version string, headers string) []string {
-	parts := append(runtimePlatformParts(), "compiler "+compiler, "version "+version, "archiver "+archiverName(compiler))
+	parts := append(
+		runtimePlatformParts(),
+		"compiler "+compiler,
+		"version "+version,
+		"archiver "+archiverName(compiler),
+	)
 	return append(parts, runtimeSourceParts(files, flags, headers)...)
 }
 
 // runtimePlatformParts open every runtime key: its version and the platform it is compiled for.
 func runtimePlatformParts() []string {
-	// v2: objects no longer carry the build directory (-ffile-prefix-map), so a v1 archive built without it is never reused.
-	// v3: the map covers the directory's resolved spelling too, so a v2 archive a Mac built under /private/var isn't reused.
-	// v4: the archive's members carry no time (ZERO_AR_DATE), so a v3 archive Apple's ar stamped isn't reused.
-	// v5: clang and ar run under toolchain.Env, not the caller's environment, so a v4 archive built under whatever the
-	// caller had set (CPATH, SDKROOT, CCC_OVERRIDE_OPTIONS) isn't reused.
-	// v6: the key is a list of named parts, each file by the sha256 of what it holds, so a product can be keyed by them.
-	// v7: objects no longer carry where the compiler is installed or the sysroot sits (clangIn), so a v6 archive whose
-	// debug info named either is never reused (#8wgk65j).
-	return []string{"adamic-runtime-v7", "ir-tags " + ir.TypeTagFingerprint(), "os " + goruntime.GOOS, "arch " + goruntime.GOARCH}
+	// v2: objects no longer carry the build directory (-ffile-prefix-map), so a v1 archive built without it is never
+	// reused. v3: the map covers the directory's resolved spelling too, so a v2 archive a Mac built under /private/var
+	// isn't reused. v4: the archive's members carry no time (ZERO_AR_DATE), so a v3 archive Apple's ar stamped isn't
+	// reused. v5: clang and ar run under toolchain.Env, not the caller's environment, so a v4 archive built under
+	// whatever the caller had set (CPATH, SDKROOT, CCC_OVERRIDE_OPTIONS) isn't reused.
+	// v6: the key is a list of named parts, each file by the sha256 of what it holds, so a product can be keyed by
+	// them. v7: objects no longer carry where the compiler is installed or the sysroot sits (clangIn), so a v6 archive
+	// whose debug info named either is never reused (#8wgk65j).
+	return []string{
+		"adamic-runtime-v7",
+		"ir-tags " + ir.TypeTagFingerprint(),
+		"os " + goruntime.GOOS,
+		"arch " + goruntime.GOARCH,
+	}
 }
 
 // runtimeSourceParts are what a runtime key reads of what is compiled: the system headers the compile reads, every
@@ -350,10 +386,16 @@ func partsKey(parts []string) string {
 }
 
 // runtimeRequest is the request for the archive these inputs compile, its parts read as the cache's key reads them.
-func runtimeRequest(files []runtimeFile, flags []string, compiler string, version string, options Options) (RuntimeRequest, error) {
-	headers, err := headersRead(files, flags, compiler)
-	if err != nil {
-		return RuntimeRequest{}, err
+func runtimeRequest(
+	files []runtimeFile,
+	flags []string,
+	compiler string,
+	version string,
+	options Options,
+) (RuntimeRequest, error) {
+	headers, headersReadError := headersRead(files, flags, compiler)
+	if headersReadError != nil {
+		return RuntimeRequest{}, headersReadError
 	}
 	var features []string
 	for _, feature := range runtimeFeatures {
@@ -361,8 +403,16 @@ func runtimeRequest(files []runtimeFile, flags []string, compiler string, versio
 			features = append(features, feature)
 		}
 	}
-	return RuntimeRequest{Parts: runtimeKeyParts(files, flags, compiler, version, headers), Portable: portableKeyParts(files, flags, compiler, headers),
-		Compiler: compiler, Archiver: archiverName(compiler), Features: features, Options: options, files: files, flags: flags}, nil
+	return RuntimeRequest{
+		Parts:    runtimeKeyParts(files, flags, compiler, version, headers),
+		Portable: portableKeyParts(files, flags, compiler, headers),
+		Compiler: compiler,
+		Archiver: archiverName(compiler),
+		Features: features,
+		Options:  options,
+		files:    files,
+		flags:    flags,
+	}, nil
 }
 
 // portableKeyParts are runtimeKeyParts as every machine spells them: without the compiler, its version and the
@@ -372,11 +422,14 @@ func runtimeRequest(files []runtimeFile, flags []string, compiler string, versio
 func portableKeyParts(files []runtimeFile, flags []string, compiler string, headers string) []string {
 	installation := compilerInstallation(compiler)
 	relocate := func(path string) string {
-		if real, err := filepath.EvalSymlinks(path); err == nil {
+		if real, resolveSymlinksError := filepath.EvalSymlinks(path); resolveSymlinksError == nil {
 			path = real
 		}
 		if installation != "" {
-			if relative, err := filepath.Rel(installation, path); err == nil && relative != ".." && !strings.HasPrefix(relative, "../") {
+			if relative, relativePathError := filepath.Rel(
+				installation,
+				path,
+			); relativePathError == nil && relative != ".." && !strings.HasPrefix(relative, "../") {
 				return "<compiler>/" + filepath.ToSlash(relative)
 			}
 		}
@@ -404,8 +457,8 @@ func portableKeyParts(files []runtimeFile, flags []string, compiler string, head
 // bin directory its program sits in (<ADAMIC_TOOLS>/llvm for <ADAMIC_TOOLS>/bin/clang, a link to llvm/bin/clang-20).
 // "" when it can't be told, or is the root itself, which would name every path.
 func compilerInstallation(compiler string) string {
-	real, err := filepath.EvalSymlinks(compiler)
-	if err != nil {
+	real, resolveSymlinksError := filepath.EvalSymlinks(compiler)
+	if resolveSymlinksError != nil {
 		return ""
 	}
 	installation := filepath.Dir(filepath.Dir(real))
@@ -416,9 +469,9 @@ func compilerInstallation(compiler string) string {
 }
 
 func cachedRuntime(files []runtimeFile, flags []string, compiler string, version string, cache string) (string, error) {
-	headers, err := headersRead(files, flags, compiler)
-	if err != nil {
-		return "", err
+	headers, headersReadError := headersRead(files, flags, compiler)
+	if headersReadError != nil {
+		return "", headersReadError
 	}
 	directory := filepath.Join(cache, runtimeKey(files, flags, compiler, version, headers))
 	library := filepath.Join(directory, "runtime.a")
@@ -430,8 +483,8 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 		buildLog("cArchive", "runtime.a", filepath.Base(directory), "hit", 0)
 		return found, nil
 	}
-	if err := os.MkdirAll(cache, 0o755); err != nil {
-		return "", fmt.Errorf("native: runtime cache: %w", err)
+	if createDirectoryError := os.MkdirAll(cache, 0o755); createDirectoryError != nil {
+		return "", fmt.Errorf("native: runtime cache: %w", createDirectoryError)
 	}
 	// Another process may be building this key: wait for it and look again, so a key every process misses together is
 	// compiled once. A hit before the lock takes none, so finding an archive writes nothing.
@@ -441,27 +494,35 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 		buildLog("cArchive", "runtime.a", filepath.Base(directory), "hit", 0)
 		return found, nil
 	}
-	temporary, err := os.MkdirTemp(cache, ".build-")
-	if err != nil {
-		return "", fmt.Errorf("native: %w", err)
+	temporary, temporaryDirectoryError := os.MkdirTemp(cache, ".build-")
+	if temporaryDirectoryError != nil {
+		return "", fmt.Errorf("native: %w", temporaryDirectoryError)
 	}
 	defer os.RemoveAll(temporary)
-	if err := os.Chmod(temporary, 0o755); err != nil {
-		return "", err
+	if changeModeError := os.Chmod(temporary, 0o755); changeModeError != nil {
+		return "", changeModeError
 	}
-	jobserver, err := defaultJobserver()
-	if err != nil {
-		return "", err
+	jobserver, defaultJobserverError := defaultJobserver()
+	if defaultJobserverError != nil {
+		return "", defaultJobserverError
 	}
-	if err := compileRuntime(files, flags, compiler, temporary, 1, jobserver, filepath.Base(directory)); err != nil {
-		return "", err
+	if compileRuntimeError := compileRuntime(
+		files,
+		flags,
+		compiler,
+		temporary,
+		1,
+		jobserver,
+		filepath.Base(directory),
+	); compileRuntimeError != nil {
+		return "", compileRuntimeError
 	}
 	// Publish everything together. A process that built without the lock may already have published this key; its
 	// identical complete entry wins, while this process removes only its own temporary directory.
-	if err := os.Rename(temporary, directory); err != nil {
+	if renameError := os.Rename(temporary, directory); renameError != nil {
 		found, ok := cachedFile(library)
 		if !ok {
-			return "", fmt.Errorf("native: publishing runtime: %w", err)
+			return "", fmt.Errorf("native: publishing runtime: %w", renameError)
 		}
 		return found, nil
 	}
@@ -472,7 +533,15 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 // holding a token of jobserver (nil bounds none, and is never the process's), and archives them as runtime.a there, in
 // the files' order whatever order they finished in. key is the archive's, which names each of its compiles and its
 // archiving in the build log (buildLog).
-func compileRuntime(files []runtimeFile, flags []string, compiler string, directory string, workers int, jobserver *Jobserver, key string) error {
+func compileRuntime(
+	files []runtimeFile,
+	flags []string,
+	compiler string,
+	directory string,
+	workers int,
+	jobserver *Jobserver,
+	key string,
+) error {
 	for _, feature := range runtimeFeatures {
 		if slicesContain(flags, "-D"+feature+"=1") {
 			files = append([]runtimeFile(nil), files...)
@@ -487,8 +556,8 @@ func compileRuntime(files []runtimeFile, flags []string, compiler string, direct
 	// Headers live beside the archive, from the same snapshot that produced its objects.
 	var sources []string
 	for _, file := range files {
-		if err := os.WriteFile(filepath.Join(directory, file.name), file.contents, 0o644); err != nil {
-			return err
+		if writeError := os.WriteFile(filepath.Join(directory, file.name), file.contents, 0o644); writeError != nil {
+			return writeError
 		}
 		if strings.HasSuffix(file.name, ".c") {
 			sources = append(sources, file.name)
@@ -507,16 +576,23 @@ func compileRuntime(files []runtimeFile, flags []string, compiler string, direct
 			defer func() { <-slots }()
 			objects[index] = filepath.Join(directory, strings.TrimSuffix(source, ".c")+".o")
 			// The build directory is random and the cache sits where each machine keeps it, so neither may reach an
-			// object: mapped, and compiled from inside it, the archive's bytes are a function of its key (Oct 9: a native
-			// product carried ~/.cache/adamic/runtime/.build-<random> in its debug info and never matched a rebuild).
-			arguments := append(append(append([]string{}, flags...), prefixMaps(directory, "/adamic-runtime")...), "-c", source, "-o", objects[index])
+			// object: mapped, and compiled from inside it, the archive's bytes are a function of its key (Oct 9: a
+			// native product carried ~/.cache/adamic/runtime/.build-<random> in its debug info and never matched a
+			// rebuild).
+			arguments := append(
+				append(append([]string{}, flags...), prefixMaps(directory, "/adamic-runtime")...),
+				"-c",
+				source,
+				"-o",
+				objects[index],
+			)
 			command := clangIn(directory, compiler, arguments...)
 			var output []byte
 			var clang time.Duration
-			if err := jobserver.Hold(func() error {
+			if holdError := jobserver.Hold(func() error {
 				return timed(&clang, func() (err error) { output, err = command.CombinedOutput(); return err })
-			}); err != nil {
-				failures[index] = fmt.Errorf("native: compiling runtime %s: %w\n%s", source, err, output)
+			}); holdError != nil {
+				failures[index] = fmt.Errorf("native: compiling runtime %s: %w\n%s", source, holdError, output)
 				return
 			}
 			buildLog("cCompile", "runtime/"+source, key, "miss", clang)
@@ -526,16 +602,20 @@ func compileRuntime(files []runtimeFile, flags []string, compiler string, direct
 	if err := errors.Join(failures...); err != nil {
 		return err
 	}
-	// Each member carries no time: Apple's ar stamps the time it ran into a member's header, which ld's debug map copies
-	// beside the member's name, so two builds of one program linked against runtimes archived a second apart differed
-	// (TestBuildIsTheSameFromAnyDirectory on a Mac, Oct 12). ZERO_AR_DATE has it write zero; llvm-ar writes zero anyway.
+	// Each member carries no time: Apple's ar stamps the time it ran into a member's header, which ld's debug map
+	// copies beside the member's name, so two builds of one program linked against runtimes archived a second apart
+	// differed (TestBuildIsTheSameFromAnyDirectory on a Mac, Oct 12). ZERO_AR_DATE has it write zero; llvm-ar writes
+	// zero anyway.
 	arguments := append([]string{"rcs", filepath.Join(directory, "runtime.a")}, objects...)
 	archive := toolchain.Command(archiverName(compiler), arguments...)
 	archive.Env = append(archive.Env, "ZERO_AR_DATE=1")
 	var archiving time.Duration
 	var output []byte
-	if err := timed(&archiving, func() (err error) { output, err = archive.CombinedOutput(); return err }); err != nil {
-		return fmt.Errorf("native: archiving runtime: %w\n%s", err, output)
+	if timedError := timed(
+		&archiving,
+		func() (err error) { output, err = archive.CombinedOutput(); return err },
+	); timedError != nil {
+		return fmt.Errorf("native: archiving runtime: %w\n%s", timedError, output)
 	}
 	buildLog("cArchive", "runtime.a", key, "miss", archiving)
 	return nil
@@ -546,29 +626,35 @@ func compileRuntime(files []runtimeFile, flags []string, compiler string, direct
 // directories sit under /var, a link to /private/var, and a build there kept its directory, landable-12 on a Mac).
 func prefixMaps(directory, name string) []string {
 	maps := []string{"-ffile-prefix-map=" + directory + "=" + name}
-	if real, err := filepath.EvalSymlinks(directory); err == nil && real != directory {
+	if real, resolveSymlinksError := filepath.EvalSymlinks(
+		directory,
+	); resolveSymlinksError == nil && real != directory {
 		maps = append(maps, "-ffile-prefix-map="+real+"="+name)
 	}
 	return maps
 }
 
 // clangIn is every clang adamic runs to compile or link (compiler, a path or a name toolchain resolves), in directory:
-// arguments, and after them the maps that take the compiler's installation and any sysroot out of everything the compile
-// records of a path (toolMaps). The prefix maps beside a call take its own directories out; these take the tools out, in
-// one place, so no compile can forget them.
+// arguments, and after them the maps that take the compiler's installation and any sysroot out of everything the
+// compile records of a path (toolMaps). The prefix maps beside a call take its own directories out; these take the
+// tools out, in one place, so no compile can forget them.
 func clangIn(directory string, compiler string, arguments ...string) *exec.Cmd {
-	return toolchain.CommandIn(directory, compiler, append(append([]string{}, arguments...), toolMaps(compiler, arguments)...)...)
+	return toolchain.CommandIn(
+		directory,
+		compiler,
+		append(append([]string{}, arguments...), toolMaps(compiler, arguments)...)...,
+	)
 }
 
 // toolMaps map where the compiler is installed to /adamic-compiler, and any --sysroot in arguments to /adamic-sysroot,
 // in everything a compile records of a path. clang records the include directories it searches in debug info
-// (.debug_line_str), and its own headers sit under its installation: built with the tools at two places, one key built two
-// sets of bytes that differed by exactly those paths (Hot x86, #8wgk65j). A key names the compiler by what it reports and
-// its headers from <compiler> (portableKeyParts), never where it sits, so neither may reach the bytes. The installation is
-// read from the compiler's own path, never the environment.
+// (.debug_line_str), and its own headers sit under its installation: built with the tools at two places, one key built
+// two sets of bytes that differed by exactly those paths (Hot x86, #8wgk65j). A key names the compiler by what it
+// reports and its headers from <compiler> (portableKeyParts), never where it sits, so neither may reach the bytes. The
+// installation is read from the compiler's own path, never the environment.
 func toolMaps(compiler string, arguments []string) []string {
 	if !filepath.IsAbs(compiler) {
-		if path, err := toolchain.Path(compiler); err == nil {
+		if path, pathError := toolchain.Path(compiler); pathError == nil {
 			compiler = path
 		}
 	}
@@ -600,9 +686,9 @@ type headerScan struct {
 // headersRead is every header outside the runtime's own sources that compiling them reads, as the compiler lists its
 // dependencies (-M): the C library's headers and the compiler's own, each by its path and the sha256 of what it holds.
 // A traced build reads the runtime cache as no entry, as it reads Go's build cache (#vt46geg), and only an address of
-// everything the compile read makes that safe: these headers are the one part the sources, flags and compiler don't name.
-// A scan the memo holds is the answer only while every header it lists still holds what it hashed; a failed scan is the
-// answer as it was, since nothing it listed can be checked.
+// everything the compile read makes that safe: these headers are the one part the sources, flags and compiler don't
+// name. A scan the memo holds is the answer only while every header it lists still holds what it hashed; a failed scan
+// is the answer as it was, since nothing it listed can be checked.
 func headersRead(files []runtimeFile, flags []string, compiler string) (string, error) {
 	value, _ := headerScans.LoadOrStore(runtimeKey(files, flags, compiler, "", ""), &headerScan{})
 	scan := value.(*headerScan)
@@ -627,8 +713,8 @@ func headersHold(headers string) bool {
 		if separator < 0 {
 			return false
 		}
-		contents, err := os.ReadFile(line[:separator])
-		if err != nil || fmt.Sprintf("%x", sha256.Sum256(contents)) != line[separator+1:] {
+		contents, readError := os.ReadFile(line[:separator])
+		if readError != nil || fmt.Sprintf("%x", sha256.Sum256(contents)) != line[separator+1:] {
 			return false
 		}
 	}
@@ -636,15 +722,15 @@ func headersHold(headers string) bool {
 }
 
 func scanHeaders(files []runtimeFile, flags []string, compiler string) (string, error) {
-	directory, err := os.MkdirTemp("", "adamic-runtime-headers-")
-	if err != nil {
-		return "", fmt.Errorf("native: runtime headers: %w", err)
+	directory, temporaryDirectoryError := os.MkdirTemp("", "adamic-runtime-headers-")
+	if temporaryDirectoryError != nil {
+		return "", fmt.Errorf("native: runtime headers: %w", temporaryDirectoryError)
 	}
 	defer os.RemoveAll(directory)
 	var sources []string
 	for _, file := range files {
-		if err := os.WriteFile(filepath.Join(directory, file.name), file.contents, 0o644); err != nil {
-			return "", fmt.Errorf("native: runtime headers: %w", err)
+		if writeError := os.WriteFile(filepath.Join(directory, file.name), file.contents, 0o644); writeError != nil {
+			return "", fmt.Errorf("native: runtime headers: %w", writeError)
 		}
 		if strings.HasSuffix(file.name, ".c") {
 			sources = append(sources, file.name)
@@ -653,19 +739,19 @@ func scanHeaders(files []runtimeFile, flags []string, compiler string) (string, 
 	if len(sources) == 0 {
 		return "", nil
 	}
-	jobserver, err := defaultJobserver()
-	if err != nil {
-		return "", err
+	jobserver, defaultJobserverError := defaultJobserver()
+	if defaultJobserverError != nil {
+		return "", defaultJobserverError
 	}
 	command := clangIn(directory, compiler, append(append(append([]string{}, flags...), "-M"), sources...)...)
 	var rules []byte
-	err = jobserver.Hold(func() (err error) { rules, err = command.Output(); return err })
-	if err != nil {
+	holdError := jobserver.Hold(func() (err error) { rules, err = command.Output(); return err })
+	if holdError != nil {
 		var exit *exec.ExitError
-		if errors.As(err, &exit) {
-			return "", fmt.Errorf("native: listing the runtime's headers: %w\n%s", err, exit.Stderr)
+		if errors.As(holdError, &exit) {
+			return "", fmt.Errorf("native: listing the runtime's headers: %w\n%s", holdError, exit.Stderr)
 		}
-		return "", fmt.Errorf("native: listing the runtime's headers: %w", err)
+		return "", fmt.Errorf("native: listing the runtime's headers: %w", holdError)
 	}
 	seen := map[string]bool{}
 	var headers []string
@@ -678,9 +764,9 @@ func scanHeaders(files []runtimeFile, flags []string, compiler string) (string, 
 			continue
 		}
 		seen[name] = true
-		contents, err := os.ReadFile(name)
-		if err != nil {
-			return "", fmt.Errorf("native: runtime header %s: %w", name, err)
+		contents, readError := os.ReadFile(name)
+		if readError != nil {
+			return "", fmt.Errorf("native: runtime header %s: %w", name, readError)
 		}
 		headers = append(headers, fmt.Sprintf("%s %x", name, sha256.Sum256(contents)))
 	}
@@ -741,8 +827,8 @@ func slicesContain(values []string, wanted string) bool {
 // (internal/buildcache's record): '<kind> <name> <key12> hit|miss|off <seconds>'. kind is cCompile for a translation
 // unit, cArchive for the runtime's archive, cLink for a link, and cBuild for one clang call that compiles a program's
 // one unit and links it (a WASI module's build, or a lean build's off macOS), so neither half is taken for the other.
-// Where main.c's compile is keyed (objectTrustVariable), cPreprocess is the preprocessing its key reads, and cRecheck the
-// preprocessing again after a miss's compile with the look again at every file the first read.
+// Where main.c's compile is keyed (objectTrustVariable), cPreprocess is the preprocessing its key reads, and cRecheck
+// the preprocessing again after a miss's compile with the look again at every file the first read.
 // name is the unit, archive or output it made; key12 is the first 12 of the cache key the step was looked up by, or -
 // when nothing keys it. hit is an object or archive the cache held, miss one made into the cache, off a step that read
 // no cache. seconds is how long the tool ran for it, a wait for a compile token left out: a split unit's hit is its
@@ -765,8 +851,15 @@ func buildLog(kind, name, key, outcome string, seconds time.Duration) {
 	}
 	// Every whitespace character in name becomes _, so an output path holding a tab or a newline can neither split the
 	// line nor write a second one.
-	line := fmt.Sprintf("%s %s %s %s %.3f\n", kind, strings.Join(strings.Fields(name), "_"), key[:min(12, len(key))], outcome, seconds.Seconds())
-	if file, err := os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o644); err == nil {
+	line := fmt.Sprintf(
+		"%s %s %s %s %.3f\n",
+		kind,
+		strings.Join(strings.Fields(name), "_"),
+		key[:min(12, len(key))],
+		outcome,
+		seconds.Seconds(),
+	)
+	if file, openError := os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o644); openError == nil {
 		file.WriteString(line)
 		file.Close()
 	}
@@ -775,7 +868,7 @@ func buildLog(kind, name, key, outcome string, seconds time.Duration) {
 // timed runs step and adds how long it took to total.
 func timed(total *time.Duration, step func() error) error {
 	started := time.Now()
-	err := step()
+	stepError := step()
 	*total += time.Since(started)
-	return err
+	return stepError
 }

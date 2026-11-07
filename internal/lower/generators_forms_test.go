@@ -124,10 +124,11 @@ func TestGeneratorFormsStopAtLowering(test *testing.T) {
 						strings.ReplaceAll(form.declared, "BODY", use[0]),
 						strings.ReplaceAll(use[1], "BODY", use[0]),
 					)
-					_, err := lowerSource(test, source)
+					_, lowerSourceError := lowerSource(test, source)
 					var gap *NotYet
-					if !errors.As(err, &gap) || !strings.Contains(gap.What, "a generator function "+form.words) {
-						test.Fatalf("got %v, want a NotYet saying %q", err, form.words)
+					if !errors.As(lowerSourceError, &gap) ||
+						!strings.Contains(gap.What, "a generator function "+form.words) {
+						test.Fatalf("got %v, want a NotYet saying %q", lowerSourceError, form.words)
 					}
 				})
 			}
@@ -152,10 +153,10 @@ func TestGeneratorFormsStopAtLowering(test *testing.T) {
 			"declared without a name",
 		},
 	} {
-		_, err := lowerSource(test, probe.source)
+		_, lowerSourceError := lowerSource(test, probe.source)
 		var gap *NotYet
-		if !errors.As(err, &gap) || !strings.Contains(gap.What, "a generator function "+probe.words) {
-			test.Errorf("%s: got %v, want a NotYet saying %q", probe.name, err, probe.words)
+		if !errors.As(lowerSourceError, &gap) || !strings.Contains(gap.What, "a generator function "+probe.words) {
+			test.Errorf("%s: got %v, want a NotYet saying %q", probe.name, lowerSourceError, probe.words)
 		}
 	}
 }
@@ -169,13 +170,16 @@ func TestGeneratorFormsStopAtLowering(test *testing.T) {
 // Refused control lowers, and the test goes red.
 func TestUninstantiatedGenericGeneratorsAreWalkedButNotLowered(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(
+	_, lowerSourceError := lowerSource(
 		test,
 		"function* each<T>(items: readonly T[]): Generator<T, void, unknown> { for (const item of items) { yield (item as any); } }\nconsole.log('control');\n",
 	)
 	var refused *Refused
-	if !errors.As(err, &refused) {
-		test.Errorf("an uninstantiated generic generator yielding an any cast: got %v, want the walk's refusal", err)
+	if !errors.As(lowerSourceError, &refused) {
+		test.Errorf(
+			"an uninstantiated generic generator yielding an any cast: got %v, want the walk's refusal",
+			lowerSourceError,
+		)
 	}
 	for name, source := range map[string]string{
 		"flatMapIterator's shape": `function* flatMapIterator<T, U>(iter: Iterable<T>, mapfn: (x: T) => readonly U[] | Iterable<U> | undefined): Generator<U, void, unknown> {
@@ -202,8 +206,8 @@ console.log('control');
 console.log('control');
 `,
 	} {
-		if _, err := lowerSource(test, source); err != nil {
-			test.Errorf("%s, uninstantiated: %v", name, err)
+		if _, lowerSourceError := lowerSource(test, source); lowerSourceError != nil {
+			test.Errorf("%s, uninstantiated: %v", name, lowerSourceError)
 		}
 	}
 }

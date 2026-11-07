@@ -32,9 +32,9 @@ func TestBuildDebugFlag(test *testing.T) {
 			}
 			wantDirectory := ""
 			if debug {
-				entry, err := filepath.Abs(path)
-				if err != nil {
-					test.Fatal(err)
+				entry, absolutePathError := filepath.Abs(path)
+				if absolutePathError != nil {
+					test.Fatal(absolutePathError)
 				}
 				wantDirectory = filepath.Dir(entry)
 			}
@@ -57,13 +57,13 @@ func debugDriverEnvironment(test *testing.T) []string {
 	if os.Getenv("ADAMIC_BUILD_CACHE_DIR") == "" {
 		test.Fatal("debug command tests require the unit's ADAMIC_BUILD_CACHE_DIR; refusing the home cache (#phzhe68)")
 	}
-	cache, err := location.BuildCache()
-	if err != nil {
-		test.Fatal(err)
+	cache, buildCacheError := location.BuildCache()
+	if buildCacheError != nil {
+		test.Fatal(buildCacheError)
 	}
-	output, err := location.Output()
-	if err != nil {
-		test.Fatal(err)
+	output, outputError := location.Output()
+	if outputError != nil {
+		test.Fatal(outputError)
 	}
 	return append(
 		os.Environ(),
@@ -93,27 +93,27 @@ func TestBuildDebugBinary(test *testing.T) {
 		"--debug",
 	)
 	command.Env = debugDriverEnvironment(test)
-	if output, err := command.CombinedOutput(); err != nil {
-		test.Fatalf("build --debug: %v: %s", err, output)
+	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("build --debug: %v: %s", combinedOutputError, output)
 	}
-	if object, err := elf.Open(binary); err == nil {
+	if object, openError := elf.Open(binary); openError == nil {
 		defer object.Close()
-		if _, err := object.DWARF(); err != nil {
-			test.Fatal(err)
+		if _, dwarfError := object.DWARF(); dwarfError != nil {
+			test.Fatal(dwarfError)
 		}
 	} else {
-		object, err := macho.Open(binary)
-		if err != nil {
-			test.Fatal(err)
+		object, openError := macho.Open(binary)
+		if openError != nil {
+			test.Fatal(openError)
 		}
 		defer object.Close()
-		if _, err := object.DWARF(); err != nil {
-			test.Fatal(err)
+		if _, dwarfError := object.DWARF(); dwarfError != nil {
+			test.Fatal(dwarfError)
 		}
 	}
-	output, err := exec.CommandContext(ctx, binary).CombinedOutput()
-	if err != nil || string(output) != "4\n" {
-		test.Fatalf("run: %v: %q", err, output)
+	output, combinedOutputError := exec.CommandContext(ctx, binary).CombinedOutput()
+	if combinedOutputError != nil || string(output) != "4\n" {
+		test.Fatalf("run: %v: %q", combinedOutputError, output)
 	}
 }
 
@@ -136,15 +136,15 @@ func TestBuildDebugDriver(test *testing.T) {
 func TestBuildDebugDirectoryFailure(test *testing.T) {
 	test.Parallel()
 	if os.Getenv("ADAMIC_TEST_DEBUG_DIRECTORY_FAILURE") == "1" {
-		directory, err := os.MkdirTemp("", "adamic-debug-cwd-")
-		if err != nil {
-			test.Fatal(err)
+		directory, temporaryDirectoryError := os.MkdirTemp("", "adamic-debug-cwd-")
+		if temporaryDirectoryError != nil {
+			test.Fatal(temporaryDirectoryError)
 		}
-		if err := os.Chdir(directory); err != nil {
-			test.Fatal(err)
+		if chdirError := os.Chdir(directory); chdirError != nil {
+			test.Fatal(chdirError)
 		}
-		if err := os.Remove(directory); err != nil {
-			test.Fatal(err)
+		if removeError := os.Remove(directory); removeError != nil {
+			test.Fatal(removeError)
 		}
 		os.Exit(buildWithNative(
 			"fixture.a",
@@ -157,11 +157,11 @@ func TestBuildDebugDirectoryFailure(test *testing.T) {
 	defer cancel()
 	command := exec.CommandContext(ctx, os.Args[0], "-test.run=^TestBuildDebugDirectoryFailure$")
 	command.Env = append(command.Environ(), "ADAMIC_TEST_DEBUG_DIRECTORY_FAILURE=1")
-	output, err := command.CombinedOutput()
+	output, combinedOutputError := command.CombinedOutput()
 	if command.ProcessState == nil ||
 		command.ProcessState.ExitCode() != 3 ||
 		!strings.Contains(string(output), "getwd") {
-		test.Fatalf("unreadable cwd: error=%v output=%s, want exit 3 and getwd error", err, output)
+		test.Fatalf("unreadable cwd: error=%v output=%s, want exit 3 and getwd error", combinedOutputError, output)
 	}
 	test.Log("unreadable cwd reports getwd failure and exits 3")
 }

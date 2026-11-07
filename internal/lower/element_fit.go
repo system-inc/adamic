@@ -63,11 +63,15 @@ func (l *lowering) elementsHeldOtherwise(node *ast.Node, slot *checker.Type) str
 		// A literal's elements are stored as elementType builds them: the slot's, where that's an array
 		// whose elements are boxed, or the literal's own. Each element is a value at its own slot, so
 		// only the literal's own elements are judged here.
-		element, err := l.elementType(node)
-		if err != nil {
+		element, elementTypeError := l.elementType(node)
+		if elementTypeError != nil {
 			// The literal lowered (expression judges a value only once it has), so elementType can't
 			// restate how its elements were stored, and nothing shows they're read as they're held.
-			return "a " + l.checker.TypeToString(l.checker.GetTypeAtLocation(node)) + " where " + l.checker.TypeToString(slot) + " goes, its elements stored in a way Adamic can't name here"
+			return "a " +
+				l.checker.TypeToString(l.checker.GetTypeAtLocation(node)) +
+				" where " +
+				l.checker.TypeToString(slot) +
+				" goes, its elements stored in a way Adamic can't name here"
 		}
 		built = element
 	case node.Kind == ast.KindObjectLiteralExpression:
@@ -95,9 +99,25 @@ func (l *lowering) elementsHeldOtherwise(node *ast.Node, slot *checker.Type) str
 	case found.stored == nil:
 		return where + ", its containers nested deeper than their elements are judged"
 	case found.unnamed != "":
-		return where + ", with no representation Adamic can name for the " + found.unnamed + " elements (" + l.checker.TypeToString(found.stored) + " stored, read as " + l.checker.TypeToString(found.read) + ")"
+		return where +
+			", with no representation Adamic can name for the " +
+			found.unnamed +
+			" elements (" +
+			l.checker.TypeToString(found.stored) +
+			" stored, read as " +
+			l.checker.TypeToString(found.read) +
+			")"
 	}
-	return where + ": its " + l.checker.TypeToString(found.stored) + " elements are stored as " + heldName(found.held) + " and read there as " + l.checker.TypeToString(found.read) + ", held as " + heldName(found.as) + " (build it as the slot's type where it's made, or copy its elements into one)"
+	return where +
+		": its " +
+		l.checker.TypeToString(found.stored) +
+		" elements are stored as " +
+		heldName(found.held) +
+		" and read there as " +
+		l.checker.TypeToString(found.read) +
+		", held as " +
+		heldName(found.as) +
+		" (build it as the slot's type where it's made, or copy its elements into one)"
 }
 
 // patternInitializer is whether node is what a destructuring pattern takes apart, through parentheses
@@ -116,17 +136,23 @@ func patternInitializer(node *ast.Node) bool {
 			node = parent
 			continue
 		case ast.KindAsExpression:
-			if as := parent.AsAsExpression(); as.Type.Kind == ast.KindTypeReference && ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
+			if as := parent.AsAsExpression(); as.Type.Kind == ast.KindTypeReference &&
+				ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) &&
+				as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
 				node = parent
 				continue
 			}
 		case ast.KindVariableDeclaration:
 			declaration := parent.AsVariableDeclaration()
-			return declaration.Initializer == node && declaration.Type == nil && ast.IsBindingPattern(declaration.Name())
+			return declaration.Initializer == node &&
+				declaration.Type == nil &&
+				ast.IsBindingPattern(declaration.Name())
 		case ast.KindBinaryExpression:
 			binary := parent.AsBinaryExpression()
 			target := ast.SkipParentheses(binary.Left)
-			return binary.OperatorToken.Kind == ast.KindEqualsToken && binary.Right == node && (target.Kind == ast.KindArrayLiteralExpression || target.Kind == ast.KindObjectLiteralExpression)
+			return binary.OperatorToken.Kind == ast.KindEqualsToken &&
+				binary.Right == node &&
+				(target.Kind == ast.KindArrayLiteralExpression || target.Kind == ast.KindObjectLiteralExpression)
 		}
 		return false
 	}
@@ -138,7 +164,14 @@ func patternInitializer(node *ast.Node) bool {
 // takes it reads them: at the top, or inside an element, a field or a dictionary's value, all the way
 // down. built, when it's set, is how the top array stores its elements, and shallow leaves what's inside
 // them to their own sites.
-func (l *lowering) elementsSeenAs(stored *checker.Type, viewed *checker.Type, built ir.Type, shallow bool, depth int, visited map[[2]*checker.Type]bool) *elementMismatch {
+func (l *lowering) elementsSeenAs(
+	stored *checker.Type,
+	viewed *checker.Type,
+	built ir.Type,
+	shallow bool,
+	depth int,
+	visited map[[2]*checker.Type]bool,
+) *elementMismatch {
 	if stored == nil || viewed == nil || stored == viewed && built == 0 || visited[[2]*checker.Type{stored, viewed}] {
 		return nil
 	}
@@ -163,7 +196,8 @@ func (l *lowering) elementsSeenAs(stored *checker.Type, viewed *checker.Type, bu
 			}
 			for _, container := range inside {
 				for _, slot := range seen {
-					if !l.sameContainer(container, slot) || checker.IsTupleType(container) != checker.IsTupleType(slot) {
+					if !l.sameContainer(container, slot) ||
+						checker.IsTupleType(container) != checker.IsTupleType(slot) {
 						// A tuple seen as an array has its own stop (tupleSeenAsArray).
 						continue
 					}
@@ -174,7 +208,8 @@ func (l *lowering) elementsSeenAs(stored *checker.Type, viewed *checker.Type, bu
 							// One type is held one way, whatever it is.
 							continue
 						}
-						if !literal && storedArguments[index].Flags()&(checker.TypeFlagsNever|checker.TypeFlagsAny) != 0 {
+						if !literal &&
+							storedArguments[index].Flags()&(checker.TypeFlagsNever|checker.TypeFlagsAny) != 0 {
 							// A container of never holds no element to read otherwise (tsc's emptyArray, a
 							// never[] seen as readonly (readonly number[])[]), and an any element is judged
 							// where any meets a typed slot (any_relations.go), not here.
@@ -185,7 +220,12 @@ func (l *lowering) elementsSeenAs(stored *checker.Type, viewed *checker.Type, bu
 							held, heldKnown = built, true
 						}
 						as, asKnown := l.kept(viewedArguments[index])
-						mismatch := &elementMismatch{stored: storedArguments[index], read: viewedArguments[index], held: held, as: as}
+						mismatch := &elementMismatch{
+							stored: storedArguments[index],
+							read:   viewedArguments[index],
+							held:   held,
+							as:     as,
+						}
 						switch {
 						case !heldKnown:
 							// Fails closed: a representation that can't be named can't be shown to match.
@@ -200,7 +240,14 @@ func (l *lowering) elementsSeenAs(stored *checker.Type, viewed *checker.Type, bu
 						if shallow {
 							continue
 						}
-						if found := l.elementsSeenAs(storedArguments[index], viewedArguments[index], 0, false, depth+1, visited); found != nil {
+						if found := l.elementsSeenAs(
+							storedArguments[index],
+							viewedArguments[index],
+							0,
+							false,
+							depth+1,
+							visited,
+						); found != nil {
 							return found
 						}
 					}
@@ -214,8 +261,15 @@ func (l *lowering) elementsSeenAs(stored *checker.Type, viewed *checker.Type, bu
 // fieldsSeenAs is elementsSeenAs through an object's fields and a dictionary's values, where a container
 // held in one is read through the other's. A library type holds only what its type arguments say, and a
 // function's slots are sameKeeping's to judge.
-func (l *lowering) fieldsSeenAs(stored *checker.Type, viewed *checker.Type, depth int, visited map[[2]*checker.Type]bool) *elementMismatch {
-	if !l.structured(stored) || !l.structured(viewed) || len(l.checker.GetSignaturesOfType(viewed, checker.SignatureKindCall)) > 0 {
+func (l *lowering) fieldsSeenAs(
+	stored *checker.Type,
+	viewed *checker.Type,
+	depth int,
+	visited map[[2]*checker.Type]bool,
+) *elementMismatch {
+	if !l.structured(stored) ||
+		!l.structured(viewed) ||
+		len(l.checker.GetSignaturesOfType(viewed, checker.SignatureKindCall)) > 0 {
 		return nil
 	}
 	if l.librarySymbol(viewed.Symbol()) && viewed.ObjectFlags()&checker.ObjectFlagsAnonymous == 0 {
@@ -226,7 +280,14 @@ func (l *lowering) fieldsSeenAs(stored *checker.Type, viewed *checker.Type, dept
 			continue
 		}
 		if inside := l.checker.GetPropertyOfType(stored, field.Name); inside != nil {
-			if found := l.elementsSeenAs(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(field), 0, false, depth+1, visited); found != nil {
+			if found := l.elementsSeenAs(
+				l.checker.GetTypeOfSymbol(inside),
+				l.checker.GetTypeOfSymbol(field),
+				0,
+				false,
+				depth+1,
+				visited,
+			); found != nil {
 				return found
 			}
 		}
@@ -234,7 +295,14 @@ func (l *lowering) fieldsSeenAs(stored *checker.Type, viewed *checker.Type, dept
 	for _, info := range l.checker.GetIndexInfosOfType(viewed) {
 		for _, own := range l.checker.GetIndexInfosOfType(stored) {
 			if own.KeyType() == info.KeyType() {
-				if found := l.elementsSeenAs(own.ValueType(), info.ValueType(), 0, false, depth+1, visited); found != nil {
+				if found := l.elementsSeenAs(
+					own.ValueType(),
+					info.ValueType(),
+					0,
+					false,
+					depth+1,
+					visited,
+				); found != nil {
 					return found
 				}
 			}
@@ -262,7 +330,9 @@ func (l *lowering) heldMembers(proven *checker.Type) []*checker.Type {
 // reserved NaN and every other number as itself, or a reference read as a union, whose box is the
 // reference itself. A number or a boolean read as a union needs a box of its own, and a Weak is a handle.
 func elementReadAs(held ir.Type, as ir.Type) bool {
-	return held == as || held == ir.Number && as == ir.MaybeNumber || as == ir.Union && held.IsReference() && held != ir.Weak
+	return held == as ||
+		held == ir.Number && as == ir.MaybeNumber ||
+		as == ir.Union && held.IsReference() && held != ir.Weak
 }
 
 // heldName names how an element is held, for a stop: a scalar by its type, a union as its box.

@@ -13,22 +13,22 @@ import (
 
 func compilingOracleFixtures(test *testing.T) []string {
 	test.Helper()
-	inputs, err := buildcache.GoTestInputs("", "oracle.test", "./internal/oracle", nil, nil)
-	if err != nil {
-		test.Fatal(err)
+	inputs, goTestInputsError := buildcache.GoTestInputs("", "oracle.test", "./internal/oracle", nil, nil)
+	if goTestInputsError != nil {
+		test.Fatal(goTestInputsError)
 	}
 	inputs.Name = "oracle compiling fixtures"
 	directory := buildcache.BuiltElsewhere(test, "oracle's compiling fixture registry", inputs,
 		"internal/oracle TestProduct_OracleCompilingFixtures", func(string) error {
 			return fmt.Errorf("run internal/oracle TestProduct_OracleCompilingFixtures ahead")
 		})
-	data, err := os.ReadFile(filepath.Join(directory, "fixtures.json"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(directory, "fixtures.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var paths []string
-	if err := json.Unmarshal(data, &paths); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &paths); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	var selected []string
 	for _, path := range paths {

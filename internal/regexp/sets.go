@@ -166,9 +166,9 @@ func compileCharacter(c *Character, f Flags, p PropertyProvider) (characterSet, 
 	switch c.Kind {
 	case PropertyEscape:
 		property := c.Raw[3 : len(c.Raw)-1]
-		data, err := p.Lookup(property)
-		if err != nil {
-			return set, err
+		data, lookupError := p.Lookup(property)
+		if lookupError != nil {
+			return set, lookupError
 		}
 		set = characterSet{ranges: normalizeRanges(slices.Clone(data.Ranges)), strings: slices.Clone(data.Strings)}
 		for index, text := range set.strings {
@@ -189,7 +189,18 @@ func compileCharacter(c *Character, f Flags, p PropertyProvider) (characterSet, 
 		case "w":
 			set.ranges = []RuneRange{{'0', '9'}, {'A', 'Z'}, {'_', '_'}, {'a', 'z'}}
 		case "s":
-			set.ranges = []RuneRange{{9, 13}, {32, 32}, {0xa0, 0xa0}, {0x1680, 0x1680}, {0x2000, 0x200a}, {0x2028, 0x2029}, {0x202f, 0x202f}, {0x205f, 0x205f}, {0x3000, 0x3000}, {0xfeff, 0xfeff}}
+			set.ranges = []RuneRange{
+				{9, 13},
+				{32, 32},
+				{0xa0, 0xa0},
+				{0x1680, 0x1680},
+				{0x2000, 0x200a},
+				{0x2028, 0x2029},
+				{0x202f, 0x202f},
+				{0x205f, 0x205f},
+				{0x3000, 0x3000},
+				{0xfeff, 0xfeff},
+			}
 		}
 		set = foldSet(set, f)
 		if c.Raw[1] >= 'A' && c.Raw[1] <= 'Z' { // Complements are of the canonical character domain in both modes.
@@ -215,8 +226,8 @@ func compileClass(e ClassExpression, f Flags, p PropertyProvider) (characterSet,
 	case *ClassRange:
 		return foldSet(characterSet{ranges: []RuneRange{{characterValue(e.From), characterValue(e.To)}}}, f), nil
 	case *ClassNegation:
-		s, err := compileClass(e.Operand, f, p)
-		return negateSet(s, f), err
+		s, compileClassError := compileClass(e.Operand, f, p)
+		return negateSet(s, f), compileClassError
 	case *ClassString:
 		set := characterSet{}
 		for _, s := range e.Alternatives {
@@ -235,9 +246,9 @@ func compileClass(e ClassExpression, f Flags, p PropertyProvider) (characterSet,
 	case *ClassUnion:
 		result := characterSet{}
 		for _, e := range e.Operands {
-			s, err := compileClass(e, f, p)
-			if err != nil {
-				return result, err
+			s, compileClassError := compileClass(e, f, p)
+			if compileClassError != nil {
+				return result, compileClassError
 			}
 			result.ranges = append(result.ranges, s.ranges...)
 			result.strings = append(result.strings, s.strings...)
@@ -245,23 +256,23 @@ func compileClass(e ClassExpression, f Flags, p PropertyProvider) (characterSet,
 		result.ranges = normalizeRanges(result.ranges)
 		return result, nil
 	case *ClassIntersection:
-		a, err := compileClass(e.Left, f, p)
-		if err != nil {
-			return a, err
+		a, compileClassError := compileClass(e.Left, f, p)
+		if compileClassError != nil {
+			return a, compileClassError
 		}
-		b, err := compileClass(e.Right, f, p)
-		if err != nil {
-			return b, err
+		b, compileClassError := compileClass(e.Right, f, p)
+		if compileClassError != nil {
+			return b, compileClassError
 		}
 		return combineSets(a, b, true), nil
 	case *ClassSubtraction:
-		a, err := compileClass(e.Left, f, p)
-		if err != nil {
-			return a, err
+		a, compileClassError := compileClass(e.Left, f, p)
+		if compileClassError != nil {
+			return a, compileClassError
 		}
-		b, err := compileClass(e.Right, f, p)
-		if err != nil {
-			return b, err
+		b, compileClassError := compileClass(e.Right, f, p)
+		if compileClassError != nil {
+			return b, compileClassError
 		}
 		return combineSets(a, b, false), nil
 	}

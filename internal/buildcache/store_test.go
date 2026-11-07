@@ -69,9 +69,9 @@ func (s *fakeStore) put(test *testing.T, key string, files map[string]string) ma
 
 func (s *fakeStore) ref(test *testing.T, key string, product manifest) {
 	test.Helper()
-	encoded, err := json.Marshal(product)
-	if err != nil {
-		test.Fatal(err)
+	encoded, encodeError := json.Marshal(product)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	s.objects["/refs/build/"+key] = []byte(s.blob(encoded) + "\n")
 }
@@ -92,19 +92,19 @@ func shared(test *testing.T) (*fakeStore, string) {
 func recorded(test *testing.T) string {
 	test.Helper()
 	root := repositoryRootForTest(test)
-	cache, err := cacheDirectory()
-	if err != nil {
-		test.Fatal(err)
+	cache, cacheDirectoryError := cacheDirectory()
+	if cacheDirectoryError != nil {
+		test.Fatal(cacheDirectoryError)
 	}
 	nameKey := NameKey(root, thisPackage)
 	set := readSet{Entries: []readEntry{{Kind: "content", Path: "internal/buildcache/buildcache.go"}}}
-	evaluated, err := evaluate(root, cache, nameKey, set, 0, nil)
-	if err != nil {
-		test.Fatal(err)
+	evaluated, evaluateError := evaluate(root, cache, nameKey, set, 0, nil)
+	if evaluateError != nil {
+		test.Fatal(evaluateError)
 	}
 	set.Key = evaluated.key
-	if err = recordReads(cache, nameKey, thisPackage.Name, set); err != nil {
-		test.Fatal(err)
+	if recordReadsError := recordReads(cache, nameKey, thisPackage.Name, set); recordReadsError != nil {
+		test.Fatal(recordReadsError)
 	}
 	return evaluated.key
 }
@@ -119,8 +119,10 @@ func TestAStoredProductIsFetchedNotBuilt(test *testing.T) {
 		func(string) error { test.Fatal("built a product the store holds"); return nil },
 	)
 	for name, want := range map[string]string{"bin/checker": "the checker", "lib/a.o": "object"} {
-		if content, err := os.ReadFile(filepath.Join(directory, name)); err != nil || string(content) != want {
-			test.Fatalf("%s reads %q, %v", name, content, err)
+		if content, readError := os.ReadFile(
+			filepath.Join(directory, name),
+		); readError != nil || string(content) != want {
+			test.Fatalf("%s reads %q, %v", name, content, readError)
 		}
 	}
 	if lines, _ := os.ReadFile(log); !strings.Contains(string(lines), " fetched ") {
@@ -170,12 +172,12 @@ func TestAStoredProductThatDoesntCheckIsPoisoning(test *testing.T) {
 			store, _ := shared(test)
 			key := recorded(test)
 			plant(test, store, key)
-			_, err := Get(thisPackage, func(string) error { test.Fatal("built instead of failing"); return nil })
+			_, getError := Get(thisPackage, func(string) error { test.Fatal("built instead of failing"); return nil })
 			var wrong poisonedError
-			if !errors.As(err, &wrong) {
-				test.Fatalf("got %v, want cache poisoning", err)
+			if !errors.As(getError, &wrong) {
+				test.Fatalf("got %v, want cache poisoning", getError)
 			}
-			if _, err := os.Stat(filepath.Join(os.Getenv("ADAMIC_BUILD_CACHE_DIR"), key)); err == nil {
+			if _, statError := os.Stat(filepath.Join(os.Getenv("ADAMIC_BUILD_CACHE_DIR"), key)); statError == nil {
 				test.Fatal("a poisoned product reached the local cache")
 			}
 		})
@@ -241,22 +243,22 @@ func TestTheTreeBuilderWritesNothingAndARunnerFetchesByTheShippedReadSets(test *
 	store.put(test, key, map[string]string{"product": "stored"})
 	// Another machine: an empty cache holding only the shipped read sets, untraced, reading the store.
 	elsewhere := test.TempDir()
-	shipped, err := os.ReadFile(readsPath(r.cache, build.NameKey))
-	if err != nil {
-		test.Fatal(err)
+	shipped, readError := os.ReadFile(readsPath(r.cache, build.NameKey))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	if err = os.WriteFile(readsPath(elsewhere, build.NameKey), shipped, 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(readsPath(elsewhere, build.NameKey), shipped, 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	test.Setenv("ADAMIC_BUILD_STORE", strings.TrimPrefix(os.Getenv("ADAMIC_BUILD_STORE"), "traced="))
 	test.Setenv("ADAMIC_BUILD_CACHE_DIR", elsewhere)
 	test.Setenv("ADAMIC_BUILD_TRACE", "")
 	forgetHeldForLife()
 	directory := Product(test, port, func(string) error { test.Fatal("rebuilt what the store holds"); return nil })
-	if content, err := os.ReadFile(
+	if content, readError := os.ReadFile(
 		filepath.Join(directory, "product"),
-	); err != nil || string(content) != "stored" || directory != filepath.Join(elsewhere, key) {
-		test.Fatalf("the fetched product at %s reads %q, %v", directory, content, err)
+	); readError != nil || string(content) != "stored" || directory != filepath.Join(elsewhere, key) {
+		test.Fatalf("the fetched product at %s reads %q, %v", directory, content, readError)
 	}
 	if len(store.writes) != 0 {
 		test.Fatalf("a fetch wrote to the store: %q", store.writes)
@@ -271,9 +273,9 @@ func TestTheTreeBuilderWritesNothingAndARunnerFetchesByTheShippedReadSets(test *
 func TestALookupTheCachesReadSetsMissAsksTheStoreNothing(test *testing.T) {
 	store, _ := shared(test)
 	nameKey := NameKey(repositoryRootForTest(test), thisPackage)
-	findings, err := Find([]string{nameKey})
-	if err != nil || len(findings) != 1 || findings[0].Outcome != FindingMissing {
-		test.Fatalf("a name key the cache doesn't know: %+v, %v", findings, err)
+	findings, findError := Find([]string{nameKey})
+	if findError != nil || len(findings) != 1 || findings[0].Outcome != FindingMissing {
+		test.Fatalf("a name key the cache doesn't know: %+v, %v", findings, findError)
 	}
 	if len(store.reads)+len(store.writes) != 0 {
 		test.Fatalf("Find asked the store for what the cache missed: read %q, wrote %q", store.reads, store.writes)
@@ -308,10 +310,10 @@ func TestAnAuditedFetchThatDiffersFromARebuildIsPoisoning(test *testing.T) {
 	}
 	test.Setenv("ADAMIC_BUILD_CACHE_DIR", test.TempDir())
 	store.put(test, recorded(test), map[string]string{"product": "a wrong product"})
-	_, err := Get(thisPackage, build)
+	_, getError := Get(thisPackage, build)
 	var wrong poisonedError
-	if !errors.As(err, &wrong) || !strings.Contains(err.Error(), "differs from a rebuild") {
-		test.Fatalf("got %v, want poisoning", err)
+	if !errors.As(getError, &wrong) || !strings.Contains(getError.Error(), "differs from a rebuild") {
+		test.Fatalf("got %v, want poisoning", getError)
 	}
 }
 
@@ -374,18 +376,18 @@ func TestTheSharedTierIsOffUnlessTurnedOn(test *testing.T) {
 func staleFinder(test *testing.T) (string, string, string) {
 	test.Helper()
 	root := repositoryRootForTest(test)
-	cache, err := cacheDirectory()
-	if err != nil {
-		test.Fatal(err)
+	cache, cacheDirectoryError := cacheDirectory()
+	if cacheDirectoryError != nil {
+		test.Fatal(cacheDirectoryError)
 	}
 	nameKey := NameKey(root, thisPackage)
 	finder := readSet{
 		Key:     strings.Repeat("0", 64),
 		Entries: []readEntry{{Kind: "content", Path: "internal/buildcache/buildcache.go"}},
 	}
-	evaluated, err := evaluate(root, cache, nameKey, finder, 0, nil)
-	if err != nil {
-		test.Fatal(err)
+	evaluated, evaluateError := evaluate(root, cache, nameKey, finder, 0, nil)
+	if evaluateError != nil {
+		test.Fatal(evaluateError)
 	}
 	for _, set := range []readSet{
 		finder,
@@ -393,8 +395,8 @@ func staleFinder(test *testing.T) (string, string, string) {
 		readOnly(test, root, cache, nameKey, "internal/buildcache/find.go"),
 		readOnly(test, root, cache, nameKey, "internal/buildcache/reads.go"),
 	} {
-		if err := recordReads(cache, nameKey, thisPackage.Name, set); err != nil {
-			test.Fatal(err)
+		if recordReadsError := recordReads(cache, nameKey, thisPackage.Name, set); recordReadsError != nil {
+			test.Fatal(recordReadsError)
 		}
 	}
 	return cache, nameKey, evaluated.key
@@ -404,9 +406,9 @@ func staleFinder(test *testing.T) (string, string, string) {
 func readOnly(test *testing.T, root, cache, nameKey, path string) readSet {
 	test.Helper()
 	set := readSet{Entries: []readEntry{{Kind: "content", Path: path}}}
-	evaluated, err := evaluate(root, cache, nameKey, set, 0, nil)
-	if err != nil {
-		test.Fatal(err)
+	evaluated, evaluateError := evaluate(root, cache, nameKey, set, 0, nil)
+	if evaluateError != nil {
+		test.Fatal(evaluateError)
 	}
 	set.Key = evaluated.key
 	return set
@@ -415,13 +417,13 @@ func readOnly(test *testing.T, root, cache, nameKey, path string) readSet {
 // pushOut records one set newer than every set in nameKey's file, as a later settlement of the product would.
 func pushOut(test *testing.T, cache, nameKey string) {
 	test.Helper()
-	if err := recordReads(
+	if recordReadsError := recordReads(
 		cache,
 		nameKey,
 		thisPackage.Name,
 		readOnly(test, repositoryRootForTest(test), cache, nameKey, "internal/buildcache/settle.go"),
-	); err != nil {
-		test.Fatal(err)
+	); recordReadsError != nil {
+		test.Fatal(recordReadsError)
 	}
 }
 
@@ -442,29 +444,29 @@ func TestTheSetThatFoundAProductUnderAnotherKeyIsRecordedAgainFirst(test *testin
 				store.put(test, key, map[string]string{"product": "stored"})
 				Product(test, thisPackage, func(string) error { test.Fatal("built what the store holds"); return nil })
 			case "found in the cache":
-				if err := os.MkdirAll(filepath.Join(cache, key), 0o755); err != nil {
-					test.Fatal(err)
+				if createDirectoryError := os.MkdirAll(filepath.Join(cache, key), 0o755); createDirectoryError != nil {
+					test.Fatal(createDirectoryError)
 				}
 				os.WriteFile(filepath.Join(cache, key, "product"), []byte("cached"), 0o644)
 				Product(test, thisPackage, func(string) error { test.Fatal("built what the cache holds"); return nil })
 			case "found by Find":
 				os.MkdirAll(filepath.Join(cache, key), 0o755)
 				os.WriteFile(filepath.Join(cache, key, "product"), []byte("cached"), 0o644)
-				if findings, err := Find(
+				if findings, findError := Find(
 					[]string{nameKey},
-				); err != nil || findings[0].Outcome != FindingFound || findings[0].Key != key {
-					test.Fatalf("Find: %+v, %v", findings, err)
+				); findError != nil || findings[0].Outcome != FindingFound || findings[0].Key != key {
+					test.Fatalf("Find: %+v, %v", findings, findError)
 				}
 			}
-			file, err := loadReads(cache, nameKey)
-			if err != nil ||
+			file, loadReadsError := loadReads(cache, nameKey)
+			if loadReadsError != nil ||
 				len(file.Sets) != keptSets ||
 				file.Sets[0].Key != key ||
 				file.Sets[0].Entries[0].Path != "internal/buildcache/buildcache.go" {
 				test.Fatalf(
 					"the file's sets after the lookup: %+v, %v; want the finding set first under %s",
 					file.Sets,
-					err,
+					loadReadsError,
 					key[:12],
 				)
 			}

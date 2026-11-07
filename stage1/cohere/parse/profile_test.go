@@ -24,9 +24,9 @@ import (
 // bytes. Driver and parser inputs belong to the separate lowering product.
 func driverInputs(test *testing.T, name string) buildcache.Inputs {
 	test.Helper()
-	inputs, err := buildcache.GoInputs("adamic", "./cmd/adamic", nil, nil)
-	if err != nil {
-		test.Fatal(err)
+	inputs, goInputsError := buildcache.GoInputs("adamic", "./cmd/adamic", nil, nil)
+	if goInputsError != nil {
+		test.Fatal(goInputsError)
 	}
 	inputs.Name = "stage1-parse-" + name
 	inputs.Files = append(inputs.Files, "stage1/cohere/parse", "stage1/typescript/parser", "stage1/typescript/scanner")
@@ -38,21 +38,21 @@ func driverSource(test *testing.T, root string) string {
 	inputs := driverInputs(test, root+"-lower")
 	inputs.Flags = append(inputs.Flags, root)
 	directory := buildcache.Product(test, inputs, func(directory string) error {
-		program, err := load.Load([]string{root + ".a"})
-		if err != nil {
-			return err
+		program, loadError := load.Load([]string{root + ".a"})
+		if loadError != nil {
+			return loadError
 		}
 		ctx, cancel := context.WithTimeout(context.Background(), 50*time.Second)
 		defer cancel()
-		ir, err := lower.Lower(ctx, program)
-		if err != nil {
-			return err
+		ir, lowerError := lower.Lower(ctx, program)
+		if lowerError != nil {
+			return lowerError
 		}
 		return os.WriteFile(filepath.Join(directory, "main.c"), []byte(native.C(ir)), 0644)
 	})
-	data, err := os.ReadFile(filepath.Join(directory, "main.c"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(directory, "main.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return string(data)
 }
@@ -71,19 +71,19 @@ func driverBinary(test *testing.T, root string) string {
 
 func parseOracle(test *testing.T) string {
 	test.Helper()
-	root, err := filepath.Abs("../../..")
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs("../../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	virtual := filepath.Join(root, "cohere/TypeScript/tsc/adamic_stage1_parse_oracle.go")
 	replacement := filepath.Join(root, "stage1/cohere/parse/testdata/go_parse.go.txt")
-	data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: replacement}})
-	if err != nil {
-		test.Fatal(err)
+	data, encodeError := json.Marshal(map[string]any{"Replace": map[string]string{virtual: replacement}})
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	overlay := filepath.Join(test.TempDir(), "overlay.json")
-	if err := os.WriteFile(overlay, data, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(overlay, data, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return buildcache.GoBuildIn(
 		test,
@@ -101,9 +101,9 @@ func execute(test *testing.T, name string, args ...string) []byte {
 	command := toolchain.CommandContextIn(ctx, "", name, args...)
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
-	output, err := command.Output()
-	if err != nil || stderr.Len() != 0 {
-		test.Fatalf("%s: %v\n%s", name, err, &stderr)
+	output, outputError := command.Output()
+	if outputError != nil || stderr.Len() != 0 {
+		test.Fatalf("%s: %v\n%s", name, outputError, &stderr)
 	}
 	return output
 }
@@ -117,12 +117,12 @@ func TestProduct_ParseGoOracle(test *testing.T)     { test.Parallel(); parseOrac
 func checkAST(test *testing.T, source string) {
 	test.Helper()
 	fixture := filepath.Join(test.TempDir(), "fixture.a")
-	if err := os.WriteFile(fixture, []byte(source), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(fixture, []byte(source), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	manifest := filepath.Join(test.TempDir(), "manifest.txt")
-	if err := os.WriteFile(manifest, []byte(fixture+"\n"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(manifest, []byte(fixture+"\n"), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	want := execute(test, parseOracle(test), "--manifest", manifest, "--ast")
 	got := execute(test, driverBinary(test, "parse"), "--manifest", manifest, "--ast")
@@ -159,12 +159,12 @@ func TestParseDriverUnicodeAST(test *testing.T) {
 func TestParseDriverDoesNotLint(test *testing.T) {
 	test.Parallel()
 	fixture := filepath.Join(test.TempDir(), "fixture.a")
-	if err := os.WriteFile(fixture, []byte("ReactDOM.findDOMNode(element);\n"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(fixture, []byte("ReactDOM.findDOMNode(element);\n"), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	manifest := filepath.Join(test.TempDir(), "manifest.txt")
-	if err := os.WriteFile(manifest, []byte(fixture+"\n"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(manifest, []byte(fixture+"\n"), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	got := execute(test, driverBinary(test, "parse"), "--manifest", manifest, "--count")
 	if string(got) != "0\n" {
@@ -180,8 +180,8 @@ func TestParseDriverNodeControls(test *testing.T) {
 	test.Parallel()
 	for _, root := range []string{"main", "parse"} {
 		fixture := filepath.Join(test.TempDir(), "fixture.a")
-		if err := os.WriteFile(fixture, []byte("ReactDOM.findDOMNode(element);\n"), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(fixture, []byte("ReactDOM.findDOMNode(element);\n"), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		got := execute(test, driverBinary(test, root), fixture)
 		want := execute(
@@ -206,9 +206,9 @@ func TestParseDriverNodeControls(test *testing.T) {
 func checkCompilerAST(test *testing.T, name, digest string) {
 	test.Helper()
 	root := compilerCorpus(test)
-	data, err := os.ReadFile(filepath.Join(root, "src/compiler", name))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(root, "src/compiler", name))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if fmt.Sprintf("%x", sha256.Sum256(data)) != digest {
 		test.Fatal("compiler corpus content pin differs", name)
@@ -624,15 +624,15 @@ func TestParseDriverCompiler076(test *testing.T) {
 // the caller's checkout only supplies objects, never working-tree contents.
 func compilerCorpus(test *testing.T) string {
 	test.Helper()
-	pinBytes, err := os.ReadFile("../../../stage3/source.json")
-	if err != nil {
-		test.Fatal(err)
+	pinBytes, readError := os.ReadFile("../../../stage3/source.json")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var source struct {
 		Commit string `json:"commit"`
 	}
-	if err := json.Unmarshal(pinBytes, &source); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(pinBytes, &source); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	inputs := buildcache.Inputs{
 		Name:  "stage1-parse-compiler-corpus",
@@ -646,19 +646,21 @@ func compilerCorpus(test *testing.T) string {
 				"environment: ADAMIC_TYPESCRIPT_SOURCE must supply stage3/source.json's TypeScript commit; the corpus never fetches",
 			)
 		}
-		files, err := buildcache.PinnedFiles(root, inputs, source.Commit, "parse compiler", func(name string) bool {
+		files, pinnedFilesError := buildcache.PinnedFiles(root, inputs, source.Commit, "parse compiler", func(
+			name string,
+		) bool {
 			return strings.HasPrefix(name, "src/compiler/") && strings.HasSuffix(name, ".ts")
 		})
-		if err != nil {
-			return err
+		if pinnedFilesError != nil {
+			return pinnedFilesError
 		}
 		for _, file := range files {
 			path := filepath.Join(directory, filepath.FromSlash(file.Path))
-			if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
-				return err
+			if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0755); createDirectoryError != nil {
+				return createDirectoryError
 			}
-			if err := os.WriteFile(path, file.Data, 0644); err != nil {
-				return err
+			if writeError := os.WriteFile(path, file.Data, 0644); writeError != nil {
+				return writeError
 			}
 		}
 		return nil

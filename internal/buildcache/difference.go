@@ -18,13 +18,13 @@ import (
 // the whole file is often the header's, which says nothing). In any other file it is the first differing byte's offset.
 // Two copies alike read as "", so a caller only asks after their digests differed. It reads; it changes nothing.
 func firstDifference(stored, rebuilt string) (string, error) {
-	storedFiles, err := differenceEntries(stored)
-	if err != nil {
-		return "", err
+	storedFiles, differenceEntriesError := differenceEntries(stored)
+	if differenceEntriesError != nil {
+		return "", differenceEntriesError
 	}
-	rebuiltFiles, err := differenceEntries(rebuilt)
-	if err != nil {
-		return "", err
+	rebuiltFiles, differenceEntriesError := differenceEntries(rebuilt)
+	if differenceEntriesError != nil {
+		return "", differenceEntriesError
 	}
 	var paths []string
 	for path := range storedFiles {
@@ -53,13 +53,13 @@ func firstDifference(stored, rebuilt string) (string, error) {
 		case was.executable != now.executable:
 			return path + " (its executable bit)", nil
 		}
-		storedContent, err := os.ReadFile(was.file)
-		if err != nil {
-			return "", err
+		storedContent, readError := os.ReadFile(was.file)
+		if readError != nil {
+			return "", readError
 		}
-		rebuiltContent, err := os.ReadFile(now.file)
-		if err != nil {
-			return "", err
+		rebuiltContent, readError := os.ReadFile(now.file)
+		if readError != nil {
+			return "", readError
 		}
 		if !bytes.Equal(storedContent, rebuiltContent) {
 			return path + " " + differenceWithin(storedContent, rebuiltContent), nil
@@ -76,22 +76,22 @@ type differenceEntry struct {
 
 // differenceEntries is every path under a product's root, by its slash-separated path relative to the root.
 func differenceEntries(directory string) (map[string]differenceEntry, error) {
-	root, err := ProductRoot(directory)
-	if err != nil {
-		return nil, err
+	root, productRootError := ProductRoot(directory)
+	if productRootError != nil {
+		return nil, productRootError
 	}
 	entries := map[string]differenceEntry{}
-	err = filepath.WalkDir(root, func(file string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
+	walkError := filepath.WalkDir(root, func(file string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
-		relative, err := filepath.Rel(root, file)
-		if err != nil || relative == "." {
-			return err
+		relative, relativePathError := filepath.Rel(root, file)
+		if relativePathError != nil || relative == "." {
+			return relativePathError
 		}
-		info, err := entry.Info()
-		if err != nil {
-			return err
+		info, infoError := entry.Info()
+		if infoError != nil {
+			return infoError
 		}
 		found := differenceEntry{kind: "other", file: file}
 		switch {
@@ -99,8 +99,9 @@ func differenceEntries(directory string) (map[string]differenceEntry, error) {
 			found.kind = "directory"
 		case info.Mode()&fs.ModeSymlink != 0:
 			found.kind = "link"
-			if found.target, err = os.Readlink(file); err != nil {
-				return err
+			var readLinkError error
+			if found.target, readLinkError = os.Readlink(file); readLinkError != nil {
+				return readLinkError
 			}
 		case info.Mode().IsRegular():
 			found.kind = "file"
@@ -109,7 +110,7 @@ func differenceEntries(directory string) (map[string]differenceEntry, error) {
 		entries[filepath.ToSlash(relative)] = found
 		return nil
 	})
-	return entries, err
+	return entries, walkError
 }
 
 // differenceWithin says where two different contents of one file differ: in an object file both copies parse as, the
@@ -163,25 +164,25 @@ func objectSectionDifference(stored, rebuilt []byte) string {
 
 // objectSections parses content as ELF or Mach-O and lists its sections that hold bytes in the file, in its order.
 func objectSections(content []byte) (string, []objectSection) {
-	if file, err := elf.NewFile(bytes.NewReader(content)); err == nil {
+	if file, newFileError := elf.NewFile(bytes.NewReader(content)); newFileError == nil {
 		var sections []objectSection
 		for _, section := range file.Sections {
 			if section.Type == elf.SHT_NOBITS || section.Type == elf.SHT_NULL {
 				continue
 			}
-			data, err := section.Data()
-			if err != nil {
+			data, dataError := section.Data()
+			if dataError != nil {
 				return "", nil
 			}
 			sections = append(sections, objectSection{name: section.Name, data: data})
 		}
 		return "ELF", sections
 	}
-	if file, err := macho.NewFile(bytes.NewReader(content)); err == nil {
+	if file, newFileError := macho.NewFile(bytes.NewReader(content)); newFileError == nil {
 		var sections []objectSection
 		for _, section := range file.Sections {
-			data, err := section.Data()
-			if err != nil {
+			data, dataError := section.Data()
+			if dataError != nil {
 				continue
 			}
 			sections = append(sections, objectSection{name: section.Seg + "," + section.Name, data: data})

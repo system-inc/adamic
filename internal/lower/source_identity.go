@@ -16,14 +16,17 @@ import (
 // changing the statements or their execution order.
 func (l *lowering) moduleStatements(module *ast.SourceFile) ([]ir.Statement, error) {
 	// A module's own calls are judged as a body's are (predicates_branded.go).
-	if err := l.judgeBrandedCalls(module.AsNode()); err != nil {
-		return nil, err
+	if judgeBrandedCallsError := l.judgeBrandedCalls(module.AsNode()); judgeBrandedCallsError != nil {
+		return nil, judgeBrandedCallsError
 	}
-	body, err := l.statements(module.Statements.Nodes)
-	if err == nil {
-		l.result.MainModules = append(l.result.MainModules, ir.MainModule{Module: l.modulePath(module), Statements: len(body)})
+	body, statementsError := l.statements(module.Statements.Nodes)
+	if statementsError == nil {
+		l.result.MainModules = append(
+			l.result.MainModules,
+			ir.MainModule{Module: l.modulePath(module), Statements: len(body)},
+		)
 	}
-	return body, err
+	return body, statementsError
 }
 
 func (l *lowering) modulePath(module *ast.SourceFile) string {
@@ -74,7 +77,11 @@ func (l *lowering) indexSourceModules() {
 				specifier = node.ModuleSpecifier()
 				label = "import"
 				if clause := node.AsImportDeclaration().ImportClause; clause != nil {
-					label += fmt.Sprintf(":%t:%s", clause.IsTypeOnly(), strings.TrimSpace(current.module.Text()[clause.Pos():clause.End()]))
+					label += fmt.Sprintf(
+						":%t:%s",
+						clause.IsTypeOnly(),
+						strings.TrimSpace(current.module.Text()[clause.Pos():clause.End()]),
+					)
 				}
 			case ast.KindImportEqualsDeclaration:
 				imported := node.AsImportEqualsDeclaration()
@@ -101,7 +108,8 @@ func (l *lowering) indexSourceModules() {
 				// declaration owns an anonymous sequence, like sourceIdentity.
 				parents := []string{}
 				for parent := node.Parent; parent != nil && parent.Kind != ast.KindSourceFile; parent = parent.Parent {
-					if name := parent.Name(); name != nil && (ast.IsIdentifier(name) || name.Kind == ast.KindStringLiteral) {
+					if name := parent.Name(); name != nil &&
+						(ast.IsIdentifier(name) || name.Kind == ast.KindStringLiteral) {
 						parents = append(parents, fmt.Sprintf("%d:%s", parent.Kind, name.Text()))
 					}
 				}
@@ -114,7 +122,9 @@ func (l *lowering) indexSourceModules() {
 							continue
 						}
 						target := declaration.AsSourceFile()
-						if load.IsPrelude(target) || load.IsLibrary(target) || strings.HasPrefix(l.program.FileName(target), "bundled://") {
+						if load.IsPrelude(target) ||
+							load.IsLibrary(target) ||
+							strings.HasPrefix(l.program.FileName(target), "bundled://") {
 							break
 						}
 						// Only indistinguishable anonymous declarations (side
@@ -136,7 +146,11 @@ func (l *lowering) indexSourceModules() {
 				continue
 			}
 			route := append(append([]string{}, current.route...), imported.label)
-			l.sourceModules[imported.module] = fmt.Sprintf("imported:///%q/%s", route, filepath.Base(l.program.FileName(imported.module)))
+			l.sourceModules[imported.module] = fmt.Sprintf(
+				"imported:///%q/%s",
+				route,
+				filepath.Base(l.program.FileName(imported.module)),
+			)
 			queue = append(queue, pending{module: imported.module, route: route})
 		}
 	}
@@ -156,14 +170,23 @@ func (l *lowering) sourceIdentity(node *ast.Node) ir.SourceIdentity {
 	var walk func(*ast.Node, []string, *int)
 	walk = func(node *ast.Node, parents []string, anonymous *int) {
 		path := parents
-		own := (ast.IsFunctionLike(node) && (node.Body() != nil || node.Kind == ast.KindMethodDeclaration)) || node.Kind == ast.KindClassDeclaration || node.Kind == ast.KindInterfaceDeclaration || node.Kind == ast.KindTypeAliasDeclaration || node.Kind == ast.KindVariableDeclaration || node.Kind == ast.KindPropertyDeclaration || node.Kind == ast.KindPropertyAssignment
+		own := (ast.IsFunctionLike(node) && (node.Body() != nil || node.Kind == ast.KindMethodDeclaration)) ||
+			node.Kind == ast.KindClassDeclaration ||
+			node.Kind == ast.KindInterfaceDeclaration ||
+			node.Kind == ast.KindTypeAliasDeclaration ||
+			node.Kind == ast.KindVariableDeclaration ||
+			node.Kind == ast.KindPropertyDeclaration ||
+			node.Kind == ast.KindPropertyAssignment
 		if own {
 			name := ""
 			if node.Kind == ast.KindConstructor {
 				name = "constructor"
 			} else if node.Name() != nil {
 				named := node.Name()
-				if named.Kind == ast.KindIdentifier || named.Kind == ast.KindPrivateIdentifier || named.Kind == ast.KindStringLiteral || named.Kind == ast.KindNumericLiteral {
+				if named.Kind == ast.KindIdentifier ||
+					named.Kind == ast.KindPrivateIdentifier ||
+					named.Kind == ast.KindStringLiteral ||
+					named.Kind == ast.KindNumericLiteral {
 					name = named.Text()
 				} else {
 					name = strings.TrimSpace(module.Text()[named.Pos():named.End()])

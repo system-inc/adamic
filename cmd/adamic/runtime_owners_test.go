@@ -30,17 +30,17 @@ import (
 // already-owned sanitized key a second time.
 func TestCommandRuntimeArchivesHaveOneBuilder(test *testing.T) {
 	test.Parallel()
-	root, err := filepath.Abs("../..")
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs("../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	for _, product := range commandRuntimes {
 		if product.options.Target != "" && os.Getenv("WASI_SYSROOT") == "" {
 			continue
 		}
-		request, err := native.RuntimeRequestFor(product.options, product.features...)
-		if err != nil {
-			test.Fatal(err)
+		request, runtimeRequestForError := native.RuntimeRequestFor(product.options, product.features...)
+		if runtimeRequestForError != nil {
+			test.Fatal(runtimeRequestForError)
 		}
 		key := buildcache.NameKey(root, commandRuntimeInputs(request))
 		var builders []string
@@ -83,9 +83,9 @@ func productsBuildKey(test *testing.T, root, key string, features []string) bool
 		if variant.Options.Target != "" && os.Getenv("WASI_SYSROOT") == "" {
 			continue
 		}
-		request, err := native.RuntimeRequestFor(variant.Options, features...)
-		if err != nil {
-			test.Fatal(err)
+		request, runtimeRequestForError := native.RuntimeRequestFor(variant.Options, features...)
+		if runtimeRequestForError != nil {
+			test.Fatal(runtimeRequestForError)
 		}
 		if buildcache.NameKey(root, runtimeproducts.Inputs(request)) == key {
 			return true
@@ -99,20 +99,20 @@ func productsBuildKey(test *testing.T, root, key string, features []string) bool
 // under the real tracer, with an empty cache, in the unit's review evidence.
 func TestCommandRuntimeProductsWaitForOwners(t *testing.T) {
 	t.Parallel()
-	contents, err := os.ReadFile("../../cloud/fast-gate/product-order.json")
-	if err != nil {
-		t.Fatal(err)
+	contents, readError := os.ReadFile("../../cloud/fast-gate/product-order.json")
+	if readError != nil {
+		t.Fatal(readError)
 	}
 	var order struct {
 		Waits map[string][]string `json:"waits"`
 	}
-	if err := json.Unmarshal(contents, &order); err != nil {
-		t.Fatal(err)
+	if decodeError := json.Unmarshal(contents, &order); decodeError != nil {
+		t.Fatal(decodeError)
 	}
 	tests := map[string]string{}
-	file, err := parser.ParseFile(token.NewFileSet(), "runtimes_test.go", nil, 0)
-	if err != nil {
-		t.Fatal(err)
+	file, parseFileError := parser.ParseFile(token.NewFileSet(), "runtimes_test.go", nil, 0)
+	if parseFileError != nil {
+		t.Fatal(parseFileError)
 	}
 	for _, declaration := range file.Decls {
 		function, ok := declaration.(*ast.FuncDecl)
@@ -132,9 +132,9 @@ func TestCommandRuntimeProductsWaitForOwners(t *testing.T) {
 			if !ok {
 				t.Fatal("runtime product name must be a literal")
 			}
-			product, err := strconv.Unquote(argument.Value)
-			if err != nil {
-				t.Fatal(err)
+			product, unquoteError := strconv.Unquote(argument.Value)
+			if unquoteError != nil {
+				t.Fatal(unquoteError)
 			}
 			tests[product] = "cmd/adamic " + function.Name.Name
 			return true
@@ -173,10 +173,14 @@ func TestSharedCommandRuntimeCannotBuildItsOwnersArchive(test *testing.T) {
 		"ADAMIC_BUILD_CACHE=",
 		"ADAMIC_BUILD_STORE=off",
 	)
-	output, err := command.CombinedOutput()
-	if err == nil ||
+	output, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError == nil ||
 		!strings.Contains(string(output), "internal/oracle TestProduct_NativeRuntimesSanitized0's to build") ||
 		!strings.Contains(string(output), "is this test in the tree's product order after it?") {
-		test.Fatalf("a shared runtime product must fail for its missing owner, never build: %v\n%s", err, output)
+		test.Fatalf(
+			"a shared runtime product must fail for its missing owner, never build: %v\n%s",
+			combinedOutputError,
+			output,
+		)
 	}
 }

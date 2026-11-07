@@ -19,10 +19,16 @@ func adaptRegExpSyntaxAssertions(source string) adapted {
 		return adapted{Source: source, Counts: counts}
 	}
 	for i, token := range t {
-		if token.text == "assertRegExpSyntaxError" || token.text == "globalThis" || token.text == "Object" || token.text == "Reflect" || token.text == "eval" || token.text == "Function" {
+		if token.text == "assertRegExpSyntaxError" ||
+			token.text == "globalThis" ||
+			token.text == "Object" ||
+			token.text == "Reflect" ||
+			token.text == "eval" ||
+			token.text == "Function" {
 			return adapted{Source: source, Counts: counts}
 		}
-		if token.text == "SyntaxError" && (i < 4 || t[i-1].text != "(" || t[i-2].text != "throws" || t[i-3].text != "." || t[i-4].text != "assert") {
+		if token.text == "SyntaxError" &&
+			(i < 4 || t[i-1].text != "(" || t[i-2].text != "throws" || t[i-3].text != "." || t[i-4].text != "assert") {
 			return adapted{Source: source, Counts: counts}
 		}
 		if token.text == "RegExp" && (i+1 >= len(t) || t[i+1].text != "(") {
@@ -42,7 +48,12 @@ func adaptRegExpSyntaxAssertions(source string) adapted {
 			continue
 		}
 		a, b := args[1][0], args[1][1]
-		if b-a >= 5 && t[a].text == "function" && t[a+1].text == "(" && t[a+2].text == ")" && t[a+3].text == "{" && t[b-1].text == "}" {
+		if b-a >= 5 &&
+			t[a].text == "function" &&
+			t[a+1].text == "(" &&
+			t[a+2].text == ")" &&
+			t[a+3].text == "{" &&
+			t[b-1].text == "}" {
 			a += 4
 			b--
 		} else if b-a >= 4 && t[a].text == "(" && t[a+1].text == ")" && t[a+2].text == "=>" {
@@ -58,7 +69,10 @@ func adaptRegExpSyntaxAssertions(source string) adapted {
 			b--
 		}
 		// A sole local declaration cannot be observed when construction throws.
-		if b-a >= 3 && (t[a].text == "let" || t[a].text == "const" || t[a].text == "var") && t[a+1].kind == "ident" && t[a+2].text == "=" {
+		if b-a >= 3 &&
+			(t[a].text == "let" || t[a].text == "const" || t[a].text == "var") &&
+			t[a+1].kind == "ident" &&
+			t[a+2].text == "=" {
 			a += 3
 		}
 		if a < b && t[a].text == "return" {
@@ -97,9 +111,9 @@ func adaptRegExpSyntaxAssertions(source string) adapted {
 				continue
 			}
 		}
-		_, err := regex.Compile(pattern, flags)
+		_, compileError := regex.Compile(pattern, flags)
 		var syntax *regex.SyntaxError
-		if !errors.As(err, &syntax) {
+		if !errors.As(compileError, &syntax) {
 			continue
 		}
 		replacement := "assertRegExpSyntaxError(" + t[values[0][0]].text + ", "

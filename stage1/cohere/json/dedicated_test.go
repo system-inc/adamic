@@ -222,16 +222,21 @@ func jsonPortDedicatedAgree(test *testing.T, key string, part jsonPortPart) {
 	portMatchesPrepare(test)
 	all, _ := jsonTopCorpus(test)
 	ordinary, shards, dedicated := jsonPortDedicatedPartition(all)
-	if err := jsonPortDedicatedUnion(all, ordinary, shards, dedicated); err != nil {
-		test.Fatal(err)
+	if jsonPortDedicatedUnionError := jsonPortDedicatedUnion(
+		all,
+		ordinary,
+		shards,
+		dedicated,
+	); jsonPortDedicatedUnionError != nil {
+		test.Fatal(jsonPortDedicatedUnionError)
 	}
 	items := jsonPortDedicatedCase(dedicated, key)
 	if len(items) != 1 {
 		test.Fatalf("%s is in the corpus %d times, want 1", key, len(items))
 	}
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	test.Logf(
 		"shared setup: %.3fs; exact union: %d ordinary + %d dedicated",
@@ -294,8 +299,8 @@ func TestJSONPortPartsAreTheWhole(test *testing.T) {
 	if !slices.Equal(jsonPortPartSides[jsonPortWhole], []int{0, 1, 2, 3, 4}) {
 		test.Fatalf("the whole runs sides %v, want all five", jsonPortPartSides[jsonPortWhole])
 	}
-	if err := jsonPortPartsUnion(jsonPortPartSides); err != nil {
-		test.Fatal(err)
+	if jsonPortPartsUnionError := jsonPortPartsUnion(jsonPortPartSides); jsonPortPartsUnionError != nil {
+		test.Fatal(jsonPortPartsUnionError)
 	}
 	for _, mutant := range []struct {
 		name  string

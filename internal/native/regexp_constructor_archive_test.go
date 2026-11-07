@@ -144,21 +144,25 @@ static adamic_object *make(void) {
 	c.WriteString("return 0;}\n")
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
-	want, err := exec.CommandContext(ctx, "node", "-e", js.String()).CombinedOutput()
-	if err != nil {
-		test.Fatalf("Node: %v %s", err, want)
+	want, combinedOutputError := exec.CommandContext(ctx, "node", "-e", js.String()).CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("Node: %v %s", combinedOutputError, want)
 	}
 	if directory := os.Getenv("ADAMIC_REGEX_CONSTRUCTOR_ARTIFACTS"); directory != "" {
-		if err := os.WriteFile(filepath.Join(directory, family+".c"), []byte(c.String()), 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(
+			filepath.Join(directory, family+".c"),
+			[]byte(c.String()),
+			0600,
+		); writeError != nil {
+			test.Fatal(writeError)
 		}
-		if err := os.WriteFile(filepath.Join(directory, family+".node"), want, 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, family+".node"), want, 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	binary := filepath.Join(test.TempDir(), "constructor")
-	if err := Build(c.String(), binary, options); err != nil {
-		test.Fatal(err)
+	if buildError := Build(c.String(), binary, options); buildError != nil {
+		test.Fatal(buildError)
 	}
 	runContext, runCancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer runCancel()
@@ -173,9 +177,9 @@ static adamic_object *make(void) {
 		)
 	}
 	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1:halt_on_error=1", "UBSAN_OPTIONS=halt_on_error=1")
-	got, err := command.CombinedOutput()
-	if err != nil {
-		test.Fatalf("constructor: %v %s", err, got)
+	got, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("constructor: %v %s", combinedOutputError, got)
 	}
 	if !bytes.Equal(want, got) {
 		test.Fatalf("Node disagreement (%s):\nNode: %s\nnative: %s", family, want, got)
@@ -234,21 +238,21 @@ func TestRegExpConstructorFlagsArchive(test *testing.T) {
 func compilerArchiveCache(test *testing.T, options Options) {
 	test.Helper()
 	source := "#define ADAMIC_REGEXP_RUNTIME_COMPILER 1\n"
-	library, err := regexpCompilerLibrary(source, options)
-	if err != nil {
-		test.Fatal(err)
+	library, regexpCompilerLibraryError := regexpCompilerLibrary(source, options)
+	if regexpCompilerLibraryError != nil {
+		test.Fatal(regexpCompilerLibraryError)
 	}
-	reused, err := regexpCompilerLibrary(source, options)
-	if err != nil || reused != library {
-		test.Fatalf("archive reuse: %s %s %v", library, reused, err)
+	reused, regexpCompilerLibraryError := regexpCompilerLibrary(source, options)
+	if regexpCompilerLibraryError != nil || reused != library {
+		test.Fatalf("archive reuse: %s %s %v", library, reused, regexpCompilerLibraryError)
 	}
-	compiler, err := toolchain.Path(compilerName(options))
-	if err != nil {
-		test.Fatal(err)
+	compiler, pathError := toolchain.Path(compilerName(options))
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
-	output, err := toolchain.Command(archiverName(compiler), "t", library).CombinedOutput()
-	if err != nil {
-		test.Fatalf("archive members: %v %s", err, output)
+	output, combinedOutputError := toolchain.Command(archiverName(compiler), "t", library).CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("archive members: %v %s", combinedOutputError, output)
 	}
 	members := strings.Fields(string(output))
 	if len(members) != 7 {
@@ -265,13 +269,13 @@ func compilerArchiveCache(test *testing.T, options Options) {
 func TestRegExpConstructorUsesOrdinaryRuntime(test *testing.T) {
 	test.Parallel()
 	source := "#define ADAMIC_REGEXP_RUNTIME_COMPILER 1\n"
-	ordinary, err := RuntimeLibraryForSource("", source, Options{Sanitize: true})
-	if err != nil {
-		test.Fatal(err)
+	ordinary, runtimeLibraryForSourceError := RuntimeLibraryForSource("", source, Options{Sanitize: true})
+	if runtimeLibraryForSourceError != nil {
+		test.Fatal(runtimeLibraryForSourceError)
 	}
-	plain, err := RuntimeLibrary("", Options{Sanitize: true})
-	if err != nil || ordinary != plain {
-		test.Fatalf("construction needs a second ordinary runtime: %s %s %v", ordinary, plain, err)
+	plain, runtimeLibraryError := RuntimeLibrary("", Options{Sanitize: true})
+	if runtimeLibraryError != nil || ordinary != plain {
+		test.Fatalf("construction needs a second ordinary runtime: %s %s %v", ordinary, plain, runtimeLibraryError)
 	}
 	test.Log("construction shares the ordinary runtime")
 }

@@ -21,12 +21,12 @@ func loggedSteps(test *testing.T, step func()) [][]string {
 	test.Setenv("ADAMIC_BUILD_LOG", log)
 	step()
 	test.Setenv("ADAMIC_BUILD_LOG", "")
-	written, err := os.ReadFile(log)
-	if os.IsNotExist(err) {
+	written, readError := os.ReadFile(log)
+	if os.IsNotExist(readError) {
 		return nil
 	}
-	if err != nil {
-		test.Fatal(err)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var lines [][]string
 	for _, line := range strings.Split(strings.TrimSuffix(string(written), "\n"), "\n") {
@@ -42,9 +42,9 @@ func loggedSteps(test *testing.T, step func()) [][]string {
 // loggedSeconds reads a matched line's seconds.
 func loggedSeconds(test *testing.T, match []string) float64 {
 	test.Helper()
-	seconds, err := strconv.ParseFloat(match[5], 64)
-	if err != nil {
-		test.Fatal(err)
+	seconds, parseError := strconv.ParseFloat(match[5], 64)
+	if parseError != nil {
+		test.Fatal(parseError)
 	}
 	return seconds
 }
@@ -68,13 +68,29 @@ func TestRuntimeArchiveLogsItsCompilesAndItsHit(test *testing.T) {
 		test.Fatal(err)
 	}
 	quiet := test.TempDir()
-	if err := compileRuntime(files, Flags(Options{}), compiler, quiet, 2, nil, "0123456789abcdef"); err != nil {
-		test.Fatal(err)
+	if compileRuntimeError := compileRuntime(
+		files,
+		Flags(Options{}),
+		compiler,
+		quiet,
+		2,
+		nil,
+		"0123456789abcdef",
+	); compileRuntimeError != nil {
+		test.Fatal(compileRuntimeError)
 	}
 	logged := test.TempDir()
 	lines := loggedSteps(test, func() {
-		if err := compileRuntime(files, Flags(Options{}), compiler, logged, 2, nil, "0123456789abcdef"); err != nil {
-			test.Fatal(err)
+		if compileRuntimeError := compileRuntime(
+			files,
+			Flags(Options{}),
+			compiler,
+			logged,
+			2,
+			nil,
+			"0123456789abcdef",
+		); compileRuntimeError != nil {
+			test.Fatal(compileRuntimeError)
 		}
 	})
 	quietArchive, err := os.ReadFile(filepath.Join(quiet, "runtime.a"))
@@ -156,25 +172,25 @@ func TestOneUnitBuildLogsItsClang(test *testing.T) {
 	quiet := filepath.Join(directory, "quiet", "program")
 	logged := filepath.Join(directory, "logged", "program")
 	for _, binary := range []string{quiet, logged} {
-		if err := os.MkdirAll(filepath.Dir(binary), 0o755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(filepath.Dir(binary), 0o755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 	}
-	if err := Build(source, quiet, Options{}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(source, quiet, Options{}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	lines := loggedSteps(test, func() {
-		if err := Build(source, logged, Options{}); err != nil {
-			test.Fatal(err)
+		if buildError := Build(source, logged, Options{}); buildError != nil {
+			test.Fatal(buildError)
 		}
 	})
-	quietBinary, err := os.ReadFile(quiet)
-	if err != nil {
-		test.Fatal(err)
+	quietBinary, readError := os.ReadFile(quiet)
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	loggedBinary, err := os.ReadFile(logged)
-	if err != nil {
-		test.Fatal(err)
+	loggedBinary, readError := os.ReadFile(logged)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if !bytes.Equal(quietBinary, loggedBinary) {
 		test.Fatal("the program built with ADAMIC_BUILD_LOG set differs from the one built without it")

@@ -74,9 +74,9 @@ func TestReadinessElisionRequiresDominatingAssignment(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			program, err := lowerTypeScriptAssertionSource(test, probe.source)
-			if err != nil {
-				test.Fatal(err)
+			program, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(test, probe.source)
+			if lowerTypeScriptAssertionSourceError != nil {
+				test.Fatal(lowerTypeScriptAssertionSourceError)
 			}
 			checked := 0
 			count := func(node any) bool {

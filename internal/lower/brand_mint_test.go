@@ -30,8 +30,12 @@ func TestBrandMintsOfTscsSortedArraysAreAdmitted(test *testing.T) {
 		brandMintPrelude +
 			"function toSorted<T>(array: readonly T[], compare: (a: T, b: T) => number): SortedReadonlyArray<T> { return array.slice().sort(compare) as unknown as SortedReadonlyArray<T>; }\nconsole.log(String(toSorted([3, 1], (a, b) => a - b).length));\n",
 	} {
-		if _, err := lowerSourceAs(test, source, ".ts"); err != nil {
-			test.Errorf("%s: got %v, want the cast admitted and the branded value held as its base", source, err)
+		if _, lowerSourceAsError := lowerSourceAs(test, source, ".ts"); lowerSourceAsError != nil {
+			test.Errorf(
+				"%s: got %v, want the cast admitted and the branded value held as its base",
+				source,
+				lowerSourceAsError,
+			)
 		}
 	}
 }
@@ -156,10 +160,10 @@ func TestBrandMintRecognitionIsExact(test *testing.T) {
 			"a brand mint in .a",
 		},
 	} {
-		_, err := lowerSourceAs(test, row.source, row.extension)
+		_, lowerSourceAsError := lowerSourceAs(test, row.source, row.extension)
 		var refused *Refused
-		if !errors.As(err, &refused) || !strings.Contains(refused.Error(), row.want) {
-			test.Errorf("%s: got %v, want a refusal containing %q", row.name, err, row.want)
+		if !errors.As(lowerSourceAsError, &refused) || !strings.Contains(refused.Error(), row.want) {
+			test.Errorf("%s: got %v, want a refusal containing %q", row.name, lowerSourceAsError, row.want)
 		}
 	}
 }
@@ -173,12 +177,12 @@ func TestBrandMintRecognitionIsExact(test *testing.T) {
 func TestBrandMintOfALiteralIsExact(test *testing.T) {
 	test.Parallel()
 	object := "interface Shape { a: number; b?: string; }\ninterface ObjBrand extends Shape { \" __brand\": undefined; }\nconst minted = { a: 1 } as unknown as ObjBrand;\nconsole.log(String(minted.a) + ' ' + typeof minted.b);\n"
-	if _, err := lowerSourceAs(test, object, ".ts"); err != nil {
-		test.Errorf("an object literal: %v", err)
+	if _, lowerSourceAsError := lowerSourceAs(test, object, ".ts"); lowerSourceAsError != nil {
+		test.Errorf("an object literal: %v", lowerSourceAsError)
 	}
 	array := brandMintPrelude +
 		"const minted = [{ a: 1 }] as unknown as SortedArray<{ a: number; b?: string }>;\nconsole.log(String(minted.length));\n"
-	if _, err := lowerSourceAs(test, array, ".ts"); err != nil {
-		test.Errorf("an array literal of objects: %v", err)
+	if _, lowerSourceAsError := lowerSourceAs(test, array, ".ts"); lowerSourceAsError != nil {
+		test.Errorf("an array literal of objects: %v", lowerSourceAsError)
 	}
 }

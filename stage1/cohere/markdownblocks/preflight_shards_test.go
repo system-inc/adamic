@@ -44,19 +44,19 @@ func prepareWholeDocumentPreflight(test *testing.T, root string, budget *preflig
 		"plugins/graphql.js",
 		"plugins/yaml.js",
 	} {
-		original, err := os.ReadFile(filepath.Join(cohere, "internal/format/prettier/bundles", name))
-		if err != nil {
-			test.Fatal(err)
+		original, readError := os.ReadFile(filepath.Join(cohere, "internal/format/prettier/bundles", name))
+		if readError != nil {
+			test.Fatal(readError)
 		}
-		installed, err := os.ReadFile(filepath.Join(fork, name))
-		if err != nil {
-			test.Fatal(err)
+		installed, readError := os.ReadFile(filepath.Join(fork, name))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		equal(test, "pinned fork bundle "+name, installed, original)
 	}
-	script, err := filepath.Abs("testdata/library.mjs")
-	if err != nil {
-		test.Fatal(err)
+	script, absolutePathError := filepath.Abs("testdata/library.mjs")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return &preflightProducts{binary: binary, mutants: mutants, fork: fork, script: script}
 }
@@ -73,8 +73,8 @@ func runWholeDocumentPreflightShard(
 	var batch bytes.Buffer
 	encoder := json.NewEncoder(&batch)
 	for _, input := range inputs {
-		if err := encoder.Encode(input); err != nil {
-			test.Fatal(err)
+		if encodeError := encoder.Encode(input); encodeError != nil {
+			test.Fatal(encodeError)
 		}
 	}
 	cases := filepath.Join(dir, "cases.jsonl")
@@ -97,9 +97,9 @@ func runWholeDocumentPreflightShard(
 			expectedWitnesses++
 		}
 	}
-	witnessFile, err := os.ReadFile("GAPS.md")
-	if err != nil {
-		test.Fatal(err)
+	witnessFile, readError := os.ReadFile("GAPS.md")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var witnessStrings []string
 	for _, line := range strings.Split(string(witnessFile), "\n") {
@@ -107,8 +107,8 @@ func runWholeDocumentPreflightShard(
 			continue
 		}
 		var value string
-		if err := json.Unmarshal([]byte(line), &value); err != nil {
-			test.Fatalf("witness JSON: %v", err)
+		if decodeError := json.Unmarshal([]byte(line), &value); decodeError != nil {
+			test.Fatalf("witness JSON: %v", decodeError)
 		}
 		witnessStrings = append(witnessStrings, value)
 	}
@@ -118,8 +118,8 @@ func runWholeDocumentPreflightShard(
 		if actual.Name != inputs[index].Name || expected.Name != actual.Name {
 			test.Fatal("oracle reordered documents")
 		}
-		if err := preflightOffComparison(actual, expected); err != nil {
-			test.Fatal(err)
+		if preflightOffComparisonError := preflightOffComparison(actual, expected); preflightOffComparisonError != nil {
+			test.Fatal(preflightOffComparisonError)
 		}
 		if actual.Name == products.planted {
 			planted := expected
@@ -170,8 +170,8 @@ func runWholeDocumentPreflightShard(
 		}
 	}
 	if keep := os.Getenv("ADAMIC_MARKDOWNBLOCKS_KEEP"); keep != "" {
-		if err := os.MkdirAll(keep, 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(keep, 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 		write(test, filepath.Join(keep, fmt.Sprintf("shard-%03d-cases.jsonl", shard)), batch.Bytes())
 		write(test, filepath.Join(keep, fmt.Sprintf("shard-%03d-go.jsonl", shard)), goRun.stdout)
@@ -279,9 +279,9 @@ func wholeDocumentPreflight(test *testing.T) *wholeDocumentPreflightFixture {
 		started := time.Now()
 		budget := newPreflightBudget(test, "TestWholeDocumentOraclePreflight_Setup")
 		defer budget.close()
-		root, err := filepath.Abs(repository)
-		if err != nil {
-			test.Fatal(err)
+		root, absolutePathError := filepath.Abs(repository)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		inputs, files := auditCorpus(test, root)
 		selection := selectMarkdownFiles(test, root, inputs, files, 1)
@@ -409,8 +409,8 @@ func TestWholeDocumentOraclePreflightMutants(test *testing.T) {
 	products, inputs := fixture.products, fixture.inputs
 	var batch bytes.Buffer
 	for _, input := range inputs {
-		if err := json.NewEncoder(&batch).Encode(input); err != nil {
-			test.Fatal(err)
+		if encodeError := json.NewEncoder(&batch).Encode(input); encodeError != nil {
+			test.Fatal(encodeError)
 		}
 	}
 	cases := filepath.Join(test.TempDir(), "cases.jsonl")
@@ -493,11 +493,11 @@ func preflightCommand(test *testing.T, budget *preflightBudget, name string, arg
 	command := exec.CommandContext(budget.ctx, name, arguments...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
+		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if errors.Is(killError, syscall.ESRCH) {
 			return os.ErrProcessDone
 		}
-		return err
+		return killError
 	}
 	// No WaitDelay: exec reads both streams to their end, where one closed them a second after the child exited and
 	// failed a run that had finished but was slow to drain under load (#n3gk22h's shape). Not childguard.Capture, which
@@ -514,8 +514,8 @@ func preflightRun(budget *preflightBudget, command *exec.Cmd) error {
 			budget.cooked()
 		}
 	}()
-	if err := command.Start(); err != nil {
-		return err
+	if startError := command.Start(); startError != nil {
+		return startError
 	}
 	budget.groups.Store(command.Process.Pid, true)
 	defer budget.groups.Delete(command.Process.Pid)
@@ -535,10 +535,10 @@ func preflightExecute(
 	}
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
-	err := preflightRun(budget, command)
+	preflightRunError := preflightRun(budget, command)
 	var exitError *exec.ExitError
-	if err != nil && !errors.As(err, &exitError) {
-		test.Fatalf("running %s: %v", name, err)
+	if preflightRunError != nil && !errors.As(preflightRunError, &exitError) {
+		test.Fatalf("running %s: %v", name, preflightRunError)
 	}
 	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
 }

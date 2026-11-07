@@ -17,9 +17,9 @@ import (
 
 func parallelHarness(test *testing.T, file string, options Options) string {
 	test.Helper()
-	source, err := os.ReadFile(filepath.Join("testdata", "parallel", file))
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(filepath.Join("testdata", "parallel", file))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	source = []byte(parallelSource(string(source)))
 	if goruntime.GOOS == "darwin" && !options.Sanitize && !options.ThreadSanitize && !options.Count {
@@ -30,8 +30,8 @@ func parallelHarness(test *testing.T, file string, options Options) string {
 		name += "-tsan"
 	}
 	binary := filepath.Join(test.TempDir(), name)
-	if err := Build(string(source), binary, options); err != nil {
-		test.Fatal(err)
+	if buildError := Build(string(source), binary, options); buildError != nil {
+		test.Fatal(buildError)
 	}
 	return binary
 }
@@ -42,7 +42,7 @@ func parallelRun(test *testing.T, binary string, threads string, arguments ...st
 	if strings.HasSuffix(binary, "-tsan") {
 		runs = 3
 	}
-	var firstOut, firstErr string
+	var firstOut, firstError string
 	started := time.Now()
 	for attempt := 0; attempt < runs; attempt++ {
 		ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
@@ -50,10 +50,17 @@ func parallelRun(test *testing.T, binary string, threads string, arguments ...st
 		command.Env = parallelEnvironment(threads, true)
 		var stdout, stderr bytes.Buffer
 		command.Stdout, command.Stderr = &stdout, &stderr
-		err := command.Run()
+		runError := command.Run()
 		cancel()
-		if err != nil {
-			test.Fatalf("threads=%s attempt=%d: %v\n%s\n%s", threads, attempt+1, err, stdout.String(), stderr.String())
+		if runError != nil {
+			test.Fatalf(
+				"threads=%s attempt=%d: %v\n%s\n%s",
+				threads,
+				attempt+1,
+				runError,
+				stdout.String(),
+				stderr.String(),
+			)
 		}
 		if strings.Contains(stderr.String(), "WARNING: ThreadSanitizer") ||
 			strings.Contains(stderr.String(), "ERROR:") {
@@ -64,7 +71,7 @@ func parallelRun(test *testing.T, binary string, threads string, arguments ...st
 				continue
 			}
 			var allocations, frees, retains, releases, peak, regions uint64
-			parsed, err := fmt.Sscanf(
+			parsed, scanError := fmt.Sscanf(
 				line,
 				"adamic: counts: allocations %d frees %d retains %d releases %d peak %d regions %d",
 				&allocations,
@@ -74,18 +81,18 @@ func parallelRun(test *testing.T, binary string, threads string, arguments ...st
 				&peak,
 				&regions,
 			)
-			if err != nil || parsed != 6 || allocations != frees+regions {
+			if scanError != nil || parsed != 6 || allocations != frees+regions {
 				test.Fatalf("unbalanced counted parallel harness: %s", line)
 			}
 		}
 		if attempt == 0 {
-			firstOut, firstErr = stdout.String(), stderr.String()
-		} else if firstOut != stdout.String() || firstErr != stderr.String() {
+			firstOut, firstError = stdout.String(), stderr.String()
+		} else if firstOut != stdout.String() || firstError != stderr.String() {
 			test.Fatal("repeated race fixture changed its output")
 		}
 	}
 	test.Logf("harness threads=%s arguments=%v runs=%d elapsed=%s", threads, arguments, runs, time.Since(started))
-	return firstOut, firstErr
+	return firstOut, firstError
 }
 
 func parallelBuilds(test *testing.T) []struct {
@@ -146,14 +153,14 @@ func TestParallelWorkerPanic(test *testing.T) {
 			defer cancel()
 			command := exec.CommandContext(ctx, binary, "panic")
 			command.Env = parallelEnvironment("4", false)
-			output, err := command.CombinedOutput()
-			failure, ok := err.(*exec.ExitError)
+			output, combinedOutputError := command.CombinedOutput()
+			failure, ok := combinedOutputError.(*exec.ExitError)
 			if !ok ||
 				failure.ExitCode() != 70 ||
 				strings.Count(string(output), "adamic: panic: worker panic\n") != 1 ||
 				strings.Contains(string(output), "Sanitizer") ||
 				!strings.HasPrefix(string(output), "before worker panic\n") {
-				test.Fatalf("got %v\n%s", err, output)
+				test.Fatalf("got %v\n%s", combinedOutputError, output)
 			}
 		})
 	}
@@ -347,14 +354,14 @@ func parallelCheckMutant(test *testing.T, name string) {
 				test.Skip("TSan is unavailable on this platform; see capability probe")
 			}
 			directory := test.TempDir()
-			files, err := fs.ReadDir(runtime, "runtime")
-			if err != nil {
-				test.Fatal(err)
+			files, readDirectoryError := fs.ReadDir(runtime, "runtime")
+			if readDirectoryError != nil {
+				test.Fatal(readDirectoryError)
 			}
 			for _, file := range files {
-				contents, err := fs.ReadFile(runtime, "runtime/"+file.Name())
-				if err != nil {
-					test.Fatal(err)
+				contents, readFileError := fs.ReadFile(runtime, "runtime/"+file.Name())
+				if readFileError != nil {
+					test.Fatal(readFileError)
 				}
 				if mutant.harness == "cache_race.c" && file.Name() == "string_index.c" {
 					contents = []byte(cacheBuilderGate(string(contents)))
@@ -365,33 +372,40 @@ func parallelCheckMutant(test *testing.T, name string) {
 					}
 					contents = []byte(strings.Replace(string(contents), mutant.old, mutant.changed, 1))
 				}
-				if err := os.WriteFile(filepath.Join(directory, file.Name()), contents, 0600); err != nil {
-					test.Fatal(err)
+				if writeError := os.WriteFile(
+					filepath.Join(directory, file.Name()),
+					contents,
+					0600,
+				); writeError != nil {
+					test.Fatal(writeError)
 				}
 			}
-			source, err := os.ReadFile(filepath.Join("testdata", "parallel", mutant.harness))
-			if err != nil {
-				test.Fatal(err)
+			source, readError := os.ReadFile(filepath.Join("testdata", "parallel", mutant.harness))
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			source = []byte(parallelSource(string(source)))
 			if mutant.file == "" {
 				source = []byte(strings.Replace(string(source), mutant.old, mutant.changed, 1))
 			}
 			options := Options{ThreadSanitize: mutant.race}
-			library, err := RuntimeLibrary(directory, options)
-			if err != nil {
-				test.Fatal(err)
+			library, runtimeLibraryError := RuntimeLibrary(directory, options)
+			if runtimeLibraryError != nil {
+				test.Fatal(runtimeLibraryError)
 			}
 			path := filepath.Join(directory, "main.c")
-			if err := os.WriteFile(path, source, 0600); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, source, 0600); writeError != nil {
+				test.Fatal(writeError)
 			}
 			binary := filepath.Join(directory, "mutant")
 			arguments := append(Flags(options), "-I", filepath.Dir(library), path, "-o", binary)
 			arguments = append(arguments, RuntimeLinkFlags(library)...)
 			arguments = append(arguments, "-lm")
-			if output, err := exec.Command("clang", arguments...).CombinedOutput(); err != nil {
-				test.Fatalf("mutant must compile: %v\n%s", err, output)
+			if output, combinedOutputError := exec.Command(
+				"clang",
+				arguments...,
+			).CombinedOutput(); combinedOutputError != nil {
+				test.Fatalf("mutant must compile: %v\n%s", combinedOutputError, output)
 			}
 			attempts := 1
 			if mutant.race {
@@ -407,17 +421,17 @@ func parallelCheckMutant(test *testing.T, name string) {
 				command := exec.CommandContext(ctx, binary, args...)
 				command.Env = parallelEnvironment(mutant.threads, false)
 				started := time.Now()
-				output, err := command.CombinedOutput()
+				output, combinedOutputError := command.CombinedOutput()
 				timedOut := ctx.Err() != nil
 				cancel()
 				test.Logf("mutant attempt=%d elapsed=%s", attempt+1, time.Since(started))
-				if err == nil || timedOut || !strings.Contains(string(output), mutant.want) {
-					test.Fatalf("mutant not caught by %q: %v\n%s", mutant.want, err, output)
+				if combinedOutputError == nil || timedOut || !strings.Contains(string(output), mutant.want) {
+					test.Fatalf("mutant not caught by %q: %v\n%s", mutant.want, combinedOutputError, output)
 				}
 				if mutant.name == "one_worker" {
-					failure, ok := err.(*exec.ExitError)
+					failure, ok := combinedOutputError.(*exec.ExitError)
 					if !ok || failure.ExitCode() != -1 {
-						test.Fatalf("want harness abort, got %v\n%s", err, output)
+						test.Fatalf("want harness abort, got %v\n%s", combinedOutputError, output)
 					}
 				}
 				report := "harness failure"
@@ -430,7 +444,7 @@ func parallelCheckMutant(test *testing.T, name string) {
 						}
 					}
 				}
-				test.Log(fmt.Sprintf("%s caught: %s (%v)", mutant.name, report, err))
+				test.Log(fmt.Sprintf("%s caught: %s (%v)", mutant.name, report, combinedOutputError))
 			}
 		})
 	}
@@ -490,8 +504,8 @@ func parallelLeaks(test *testing.T, binary string, options Options, threads stri
 	args := append([]string{"--atExit", "--", binary}, arguments...)
 	command := exec.CommandContext(ctx, "leaks", args...)
 	command.Env = parallelEnvironment(threads, false)
-	if output, err := command.CombinedOutput(); err != nil {
-		test.Fatalf("Darwin leaks, threads=%s: %v\n%s", threads, err, output)
+	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("Darwin leaks, threads=%s: %v\n%s", threads, combinedOutputError, output)
 	}
 }
 
@@ -510,33 +524,36 @@ func parallelTSan(test *testing.T) bool {
 		return false
 	}
 	parallelTSanProbe.Do(func() {
-		directory, err := os.MkdirTemp("", "adamic-tsan-probe-")
-		if err != nil {
-			parallelTSanProbe.reason = err.Error()
+		directory, temporaryDirectoryError := os.MkdirTemp("", "adamic-tsan-probe-")
+		if temporaryDirectoryError != nil {
+			parallelTSanProbe.reason = temporaryDirectoryError.Error()
 			return
 		}
 		defer os.RemoveAll(directory)
 		source := filepath.Join(directory, "probe.c")
 		binary := filepath.Join(directory, "probe")
-		if err := os.WriteFile(source, []byte("int main(void) { return 0; }\n"), 0600); err != nil {
-			parallelTSanProbe.reason = err.Error()
+		if writeError := os.WriteFile(source, []byte("int main(void) { return 0; }\n"), 0600); writeError != nil {
+			parallelTSanProbe.reason = writeError.Error()
 			return
 		}
 		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 		defer cancel()
-		if output, err := exec.CommandContext(
+		if output, combinedOutputError := exec.CommandContext(
 			ctx,
 			"clang",
 			"-fsanitize=thread",
 			source,
 			"-o",
 			binary,
-		).CombinedOutput(); err != nil {
-			parallelTSanProbe.reason = fmt.Sprintf("clang -fsanitize=thread: %v: %s", err, output)
+		).CombinedOutput(); combinedOutputError != nil {
+			parallelTSanProbe.reason = fmt.Sprintf("clang -fsanitize=thread: %v: %s", combinedOutputError, output)
 			return
 		}
-		if output, err := exec.CommandContext(ctx, binary).CombinedOutput(); err != nil {
-			parallelTSanProbe.reason = fmt.Sprintf("TSan probe runtime: %v: %s", err, output)
+		if output, combinedOutputError := exec.CommandContext(
+			ctx,
+			binary,
+		).CombinedOutput(); combinedOutputError != nil {
+			parallelTSanProbe.reason = fmt.Sprintf("TSan probe runtime: %v: %s", combinedOutputError, output)
 			return
 		}
 		parallelTSanProbe.available = true

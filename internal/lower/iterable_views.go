@@ -69,9 +69,13 @@ type iterableOrigin struct {
 // viewLoop notes, once forOf has lowered a view's loop, the function it is in and the local that
 // holds its iterator, which the loop's block declares first (libraryForOfIterator), so that
 // checkIterableViews can rewrite a loop a generator feeds into its dispatch.
-func (l *lowering) viewLoop(view int, statements []ir.Statement, err error) ([]ir.Statement, error) {
-	if err != nil {
-		return nil, err
+func (l *lowering) viewLoop(
+	view int,
+	statements []ir.Statement,
+	libraryForOfIteratorError error,
+) ([]ir.Statement, error) {
+	if libraryForOfIteratorError != nil {
+		return nil, libraryForOfIteratorError
 	}
 	l.iterableViews[view].function = l.functionIndex
 	l.iterableViews[view].holder = -1
@@ -90,8 +94,8 @@ func (l *lowering) viewLoop(view int, statements []ir.Statement, err error) ([]i
 // library's Iterable<T> or IterableIterator<T> (or either `| undefined`, narrowed), held as an object,
 // that names a parameter (Adamic's (a) on #qk8rztp S2c-2). A detached next (`const n = x.next`,
 // `x.next.call`, a passed `x.next`) is no call of it, so the library-member guard still refuses it;
-// a call with an argument is one, which callClosure stops not yet; and that the parameter is the function's own and its every origin a
-// collection's iterator is proven after lowering (handNextView, checkIterableViews).
+// a call with an argument is one, which callClosure stops not yet; and that the parameter is the function's own and its
+// every origin a collection's iterator is proven after lowering (handNextView, checkIterableViews).
 func (l *lowering) handDrivenNext(node *ast.Node) bool {
 	call := node.AsCallExpression()
 	if call.QuestionDotToken != nil || call.Expression.Kind != ast.KindPropertyAccessExpression {
@@ -99,7 +103,10 @@ func (l *lowering) handDrivenNext(node *ast.Node) bool {
 	}
 	callee := call.Expression
 	access := callee.AsPropertyAccessExpression()
-	if access.QuestionDotToken != nil || callee.Flags&ast.NodeFlagsOptionalChain != 0 || callee.Name().Text() != "next" || !ast.IsIdentifier(access.Expression) {
+	if access.QuestionDotToken != nil ||
+		callee.Flags&ast.NodeFlagsOptionalChain != 0 ||
+		callee.Name().Text() != "next" ||
+		!ast.IsIdentifier(access.Expression) {
 		return false
 	}
 	if !l.inheritedLibraryMember(callee) {
@@ -138,7 +145,14 @@ func (l *lowering) handNextView(node *ast.Node, closure ir.Expression) error {
 		return l.prototypeRead(callee, "next")
 	}
 	held, _ := l.iterableViewElement(callee.AsPropertyAccessExpression().Expression)
-	l.iterableViews = append(l.iterableViews, iterableView{where: node, iterated: property.Object, held: held, function: l.functionIndex, holder: -1, hand: true})
+	l.iterableViews = append(l.iterableViews, iterableView{
+		where:    node,
+		iterated: property.Object,
+		held:     held,
+		function: l.functionIndex,
+		holder:   -1,
+		hand:     true,
+	})
 	return nil
 }
 
@@ -169,7 +183,11 @@ func (l *lowering) generatorOrigin(of ir.IterableOf) iterableOrigin {
 	if argument.pair {
 		held.pair, held.key, held.value = true, argument.key, argument.value
 	}
-	return iterableOrigin{name: "a generator from " + l.result.Functions[generator].Name + "()", generator: generator + 1, held: held}
+	return iterableOrigin{
+		name:      "a generator from " + l.result.Functions[generator].Name + "()",
+		generator: generator + 1,
+		held:      held,
+	}
 }
 
 // iterableViewElement says whether a for-of's iterated value is typed the library's Iterable<T> or
@@ -248,11 +266,14 @@ func (l *lowering) checkIterableViews() error {
 	}
 	for _, view := range l.iterableViews {
 		if read, isRead := iterableViewRead(view.iterated); isRead && !view.hand && hands[read.Local] {
-			return l.notYet(view.where, "a for-of beside a hand-driven next() over the same parameter (#qk8rztp S2c-2a)")
+			return l.notYet(
+				view.where,
+				"a for-of beside a hand-driven next() over the same parameter (#qk8rztp S2c-2a)",
+			)
 		}
 	}
-	if err := l.checkGeneratorArguments(); err != nil {
-		return err
+	if checkGeneratorArgumentsError := l.checkGeneratorArguments(); checkGeneratorArgumentsError != nil {
+		return checkGeneratorArgumentsError
 	}
 	var origins []iterableOrigin
 	numbered := map[iterableOrigin]int{}
@@ -316,15 +337,19 @@ func (l *lowering) checkIterableViews() error {
 			return l.notYet(view.where, "a view over an iterable of unproven origin ("+strings.Join(unproven, "; ")+")")
 		}
 		if len(differently) != 0 {
-			return l.notYet(view.where, "a view over an iterable whose origins yield values held differently ("+strings.Join(differently, "; ")+", read as "+iterableHeldName(view.held)+")")
+			return l.notYet(view.where, "a view over an iterable whose origins yield values held differently ("+
+				strings.Join(differently, "; ")+
+				", read as "+
+				iterableHeldName(view.held)+
+				")")
 		}
 		if view.hand && len(generators) != 0 {
 			// A generator's step returns its value, not a result object (#qk8rztp S2c-2b).
 			return l.notYet(view.where, "a hand-driven next() through a view a generator feeds (#qk8rztp S2c-2b)")
 		}
 		if len(generators) != 0 {
-			if err := l.generatorView(index, generators); err != nil {
-				return err
+			if generatorViewError := l.generatorView(index, generators); generatorViewError != nil {
+				return generatorViewError
 			}
 		}
 	}
@@ -407,7 +432,10 @@ func (l *lowering) generatorParameter(call ir.Call, position int, of ir.Iterable
 	name := l.result.Locals[parameter].Name
 	for _, view := range l.iterableViews {
 		if read, isRead := iterableViewRead(view.iterated); view.hand && isRead && read.Local == parameter {
-			return l.generatorNotYet(where, "passed into the parameter "+name+", which a hand-driven next() reads (#qk8rztp S2c-2b)")
+			return l.generatorNotYet(
+				where,
+				"passed into the parameter "+name+", which a hand-driven next() reads (#qk8rztp S2c-2b)",
+			)
 		}
 	}
 	if index, isView := views[parameter]; !isView || l.iterableViews[index].function != target {
@@ -421,7 +449,10 @@ func (l *lowering) generatorParameter(call ir.Call, position int, of ir.Iterable
 	case l.result.Locals[parameter].Captured:
 		return l.generatorNotYet(where, "passed into the parameter "+name+", which a closure captures")
 	case l.generatorArguments[of.Site-1].nullable && l.result.Locals[parameter].Type != ir.Object:
-		return l.generatorNotYet(where, "passed into the parameter "+name+", which may be undefined and is held as a union")
+		return l.generatorNotYet(
+			where,
+			"passed into the parameter "+name+", which may be undefined and is held as a union",
+		)
 	}
 	// Every field that names a local counts, not only Read and Assign: a for-of head, a pattern's
 	// binding and a catch write one too (Lower's must), and anything else that names it is a use. An
@@ -440,13 +471,22 @@ func (l *lowering) generatorParameter(call ir.Call, position int, of ir.Iterable
 		walk(function.Body, count)
 	}
 	if uses.writes != 0 {
-		return l.generatorNotYet(where, "passed into the parameter "+name+", which the function writes (an assignment, a for-of head, a pattern or a catch)")
+		return l.generatorNotYet(where, "passed into the parameter "+
+			name+
+			", which the function writes (an assignment, a for-of head, a pattern or a catch)")
 	}
 	if uses.named != 0 {
-		return l.generatorNotYet(where, "passed into the parameter "+name+", which the lowered function names other than by a read")
+		return l.generatorNotYet(
+			where,
+			"passed into the parameter "+name+", which the lowered function names other than by a read",
+		)
 	}
 	if uses.reads != 1 {
-		return l.generatorNotYet(where, fmt.Sprintf("passed into the parameter %s, read %d times where one for-of over it is its only use", name, uses.reads))
+		return l.generatorNotYet(where, fmt.Sprintf(
+			"passed into the parameter %s, read %d times where one for-of over it is its only use",
+			name,
+			uses.reads,
+		))
 	}
 	return nil
 }
@@ -462,11 +502,17 @@ func (l *lowering) generatorView(index int, generators []iterableOrigin) error {
 	view := l.iterableViews[index]
 	switch {
 	case view.holder < 0 || view.function < 0:
-		return fmt.Errorf("lower: compiler bug: the iterable view at %s has no loop to dispatch", l.program.Where(view.where))
+		return fmt.Errorf(
+			"lower: compiler bug: the iterable view at %s has no loop to dispatch",
+			l.program.Where(view.where),
+		)
 	}
 	for _, other := range generators[1:] {
 		if other.generator != generators[0].generator {
-			return l.notYet(view.where, "a view that generators of more than one function feed (a step names the one function whose throws it may leave) (#qk8rztp S2c-1)")
+			return l.notYet(
+				view.where,
+				"a view that generators of more than one function feed (a step names the one function whose throws it may leave) (#qk8rztp S2c-1)",
+			)
 		}
 	}
 	return l.dispatchView(view, generators[0].generator-1)
@@ -493,7 +539,9 @@ func (l *lowering) dispatchView(view iterableView, function int) error {
 	yields := l.result.Functions[function].Yields
 	held := ir.Read{Local: view.holder, Of: ir.Object}
 	step := l.libraryLocal(view.function, "generator_step", yields)
-	message := "compiler bug: the iterable view at " + l.program.Where(view.where) + " holds a value no arm of its dispatch steps"
+	message := "compiler bug: the iterable view at " +
+		l.program.Where(view.where) +
+		" holds a value no arm of its dispatch steps"
 	rewritten := false
 	rewrite := func(node any) any {
 		block, isBlock := node.(ir.Block)
@@ -510,7 +558,11 @@ func (l *lowering) dispatchView(view iterableView, function int) error {
 		if !isStep || !isItem {
 			return node
 		}
-		collectionArm, value := libraryIteratorStep(held, ir.Read{Local: libraryStep.Local, Of: ir.Object}, l.result.Locals[item.Local].Type)
+		collectionArm, value := libraryIteratorStep(
+			held,
+			ir.Read{Local: libraryStep.Local, Of: ir.Object},
+			l.result.Locals[item.Local].Type,
+		)
 		collectionArm = append(collectionArm, ir.Assign{Local: item.Local, Value: value})
 		generatorArm := []ir.Statement{
 			// The step is tested for a throw before done is read, as forOfGenerator's is.
@@ -541,7 +593,10 @@ func (l *lowering) dispatchView(view iterableView, function int) error {
 	}
 	l.result.Functions[view.function].Body = rewriteShapeStatements(l.result.Functions[view.function].Body, rewrite)
 	if !rewritten {
-		return fmt.Errorf("lower: compiler bug: the iterable view at %s has no loop to dispatch", l.program.Where(view.where))
+		return fmt.Errorf(
+			"lower: compiler bug: the iterable view at %s has no loop to dispatch",
+			l.program.Where(view.where),
+		)
 	}
 	return nil
 }

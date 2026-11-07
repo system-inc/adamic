@@ -72,17 +72,17 @@ func TestWidthsMatchGo(test *testing.T) {
 		}
 	}
 	cases := filepath.Join(test.TempDir(), "width-cases.txt")
-	if err := os.WriteFile(cases, []byte(input.String()), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(cases, []byte(input.String()), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	expected := goWidth(test, cases)
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	entry, err := filepath.Abs("width_main.ts")
-	if err != nil {
-		test.Fatal(err)
+	entry, absolutePathError := filepath.Abs("width_main.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	runner := filepath.Join(root, "oracle/node.mjs")
 	for _, side := range []struct {

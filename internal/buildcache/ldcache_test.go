@@ -116,9 +116,9 @@ func TestTheLoadersCacheIsWhatOnlyItFinds(test *testing.T) {
 	if _, known := loaderFlags[runtime.GOARCH]; !known {
 		return
 	}
-	if content, err := os.ReadFile(
+	if content, readError := os.ReadFile(
 		"/etc/ld.so.cache",
-	); err == nil && strings.HasPrefix(string(content), "glibc-ld.so.cache1.1") {
+	); readError == nil && strings.HasPrefix(string(content), "glibc-ld.so.cache1.1") {
 		if _, ok := ldCacheValue(content); !ok {
 			test.Fatal("this machine's own loader cache didn't read")
 		}
@@ -184,8 +184,8 @@ func TestALoaderCacheThatDoesntReadIsUnreadable(test *testing.T) {
 	valueOf := func(name string, content []byte) string {
 		test.Helper()
 		ldCache = filepath.Join(directory, name)
-		if err := os.WriteFile(ldCache, content, 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(ldCache, content, 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		return systemValue(ldCache)
 	}

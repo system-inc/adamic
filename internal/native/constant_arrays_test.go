@@ -64,8 +64,8 @@ func TestConstantArraysAgreeWithNode(test *testing.T) {
 	path := filepath.Join(directory, "tables.ts")
 	script := filepath.Join(directory, "tables.mjs")
 	for _, file := range []string{path, script} {
-		if err := os.WriteFile(file, []byte(source), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(file, []byte(source), 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	want := runWithInput(test, "", "node", script)
@@ -112,16 +112,16 @@ func TestConstantArraysAgreeWithNode(test *testing.T) {
 func runConstantArrays(test *testing.T, code string) (string, string) {
 	test.Helper()
 	binary := filepath.Join(test.TempDir(), "tables")
-	if err := Build(code, binary, Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(code, binary, Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
 	command := programCommand(ctx, "", binary)
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
-	if err := command.Run(); err != nil || stderr.Len() > 0 {
-		return stdout.String(), fmt.Sprintf("%v: %s", err, stderr.String())
+	if runError := command.Run(); runError != nil || stderr.Len() > 0 {
+		return stdout.String(), fmt.Sprintf("%v: %s", runError, stderr.String())
 	}
 	return stdout.String(), ""
 }

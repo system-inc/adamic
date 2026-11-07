@@ -30,9 +30,9 @@ func primitiveRun(binary string, index int, environment ...string) primitiveExec
 	command.Env = append(os.Environ(), environment...)
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
-	err := command.Run()
+	runError := command.Run()
 	code := 0
-	if err != nil {
+	if runError != nil {
 		code = -1
 		if command.ProcessState != nil {
 			code = command.ProcessState.ExitCode()
@@ -43,9 +43,9 @@ func primitiveRun(binary string, index int, environment ...string) primitiveExec
 
 func primitiveOracle(test *testing.T, index int) []byte {
 	test.Helper()
-	got, err := exec.Command("node", "testdata/to-primitive/node.a", fmt.Sprint(index)).CombinedOutput()
-	if err != nil {
-		test.Fatalf("Node: %v %s", err, got)
+	got, combinedOutputError := exec.Command("node", "testdata/to-primitive/node.a", fmt.Sprint(index)).CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("Node: %v %s", combinedOutputError, got)
 	}
 	if index == 5 || index == 7 || index == 17 {
 		if !bytes.HasPrefix(got, []byte("TypeError: Cannot convert object to primitive value\n")) {
@@ -57,15 +57,15 @@ func primitiveOracle(test *testing.T, index int) []byte {
 
 func TestOrdinaryToPrimitive(test *testing.T) {
 	test.Parallel()
-	source, err := os.ReadFile("testdata/to-primitive/runtime.c")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("testdata/to-primitive/runtime.c")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	for _, slabs := range []bool{false, true} {
 		options := Options{Sanitize: true, slabs: slabs, Count: true}
 		binary := filepath.Join(test.TempDir(), "primitive")
-		if err := Build(string(source), binary, options); err != nil {
-			test.Fatal(err)
+		if buildError := Build(string(source), binary, options); buildError != nil {
+			test.Fatal(buildError)
 		}
 		test.Logf("clang flags: %s", strings.Join(Flags(options), " "))
 		for index, name := range primitiveCases {
@@ -158,14 +158,14 @@ func primitiveMutants(test *testing.T) string {
 			sha256.Sum256([]byte(mutation.after)),
 		))
 	}
-	harness, err := os.ReadFile("testdata/to-primitive/runtime.c")
-	if err != nil {
-		test.Fatal(err)
+	harness, readError := os.ReadFile("testdata/to-primitive/runtime.c")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return buildcache.Product(test, inputs, func(directory string) error {
-		files, err := readRuntime(runtime, "runtime")
-		if err != nil {
-			return err
+		files, readRuntimeError := readRuntime(runtime, "runtime")
+		if readRuntimeError != nil {
+			return readRuntimeError
 		}
 		var sources []string
 		for _, file := range files {
@@ -173,9 +173,9 @@ func primitiveMutants(test *testing.T) string {
 				sources = append(sources, file.name)
 			}
 		}
-		scratch, err := os.MkdirTemp("", "adamic-primitive-mutants-")
-		if err != nil {
-			return err
+		scratch, temporaryDirectoryError := os.MkdirTemp("", "adamic-primitive-mutants-")
+		if temporaryDirectoryError != nil {
+			return temporaryDirectoryError
 		}
 		defer os.RemoveAll(scratch)
 		// compile builds a directory's translation unit from inside it, mapped, so no object names the scratch
@@ -189,34 +189,38 @@ func primitiveMutants(test *testing.T) string {
 				strings.TrimSuffix(source, ".c")+".o",
 			)
 			command := runtimeMutantClang(within, arguments...)
-			if output, err := command.CombinedOutput(); err != nil {
-				return fmt.Errorf("compiling runtime %s: %w\n%s", source, err, output)
+			if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+				return fmt.Errorf("compiling runtime %s: %w\n%s", source, combinedOutputError, output)
 			}
 			return nil
 		}
 		write := func(within string, files []runtimeFile) error {
-			if err := os.MkdirAll(within, 0o755); err != nil {
-				return err
+			if createDirectoryError := os.MkdirAll(within, 0o755); createDirectoryError != nil {
+				return createDirectoryError
 			}
 			for _, file := range files {
-				if err := os.WriteFile(filepath.Join(within, file.name), file.contents, 0o644); err != nil {
-					return err
+				if writeError := os.WriteFile(
+					filepath.Join(within, file.name),
+					file.contents,
+					0o644,
+				); writeError != nil {
+					return writeError
 				}
 			}
 			return nil
 		}
 		unchanged := filepath.Join(scratch, "runtime")
-		if err := write(unchanged, files); err != nil {
-			return err
+		if writeError := write(unchanged, files); writeError != nil {
+			return writeError
 		}
-		if err := eachInParallel(
+		if eachInParallelError := eachInParallel(
 			len(sources),
 			func(index int) error { return compile(unchanged, sources[index]) },
-		); err != nil {
-			return err
+		); eachInParallelError != nil {
+			return eachInParallelError
 		}
-		if err := os.WriteFile(filepath.Join(scratch, "main.c"), harness, 0o644); err != nil {
-			return err
+		if writeError := os.WriteFile(filepath.Join(scratch, "main.c"), harness, 0o644); writeError != nil {
+			return writeError
 		}
 		return eachInParallel(len(primitiveMutations), func(index int) error {
 			mutation := primitiveMutations[index]
@@ -243,11 +247,11 @@ func primitiveMutants(test *testing.T) string {
 				return fmt.Errorf("mutant %s: the runtime has no exceptions.c", mutation.name)
 			}
 			within := filepath.Join(scratch, "mutant-"+strconv.Itoa(index))
-			if err := write(within, changed); err != nil {
-				return err
+			if writeError := write(within, changed); writeError != nil {
+				return writeError
 			}
-			if err := compile(within, "exceptions.c"); err != nil {
-				return fmt.Errorf("mutant %s: %w", mutation.name, err)
+			if compileError := compile(within, "exceptions.c"); compileError != nil {
+				return fmt.Errorf("mutant %s: %w", mutation.name, compileError)
 			}
 			// Linked from the scratch directory by relative names, mapped, so the binary names neither it nor the
 			// product.
@@ -269,8 +273,8 @@ func primitiveMutants(test *testing.T) string {
 			}
 			arguments = append(arguments, "-lm")
 			command := runtimeMutantClang(scratch, arguments...)
-			if output, err := command.CombinedOutput(); err != nil {
-				return fmt.Errorf("mutant %s must compile: %w\n%s", mutation.name, err, output)
+			if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+				return fmt.Errorf("mutant %s must compile: %w\n%s", mutation.name, combinedOutputError, output)
 			}
 			return nil
 		})
@@ -326,13 +330,13 @@ func TestOrdinaryToPrimitiveMutants(test *testing.T) {
 // These two runtime ABI guards have no source-level conversion counterpart.
 func TestOrdinaryToPrimitiveProtocolGuards(test *testing.T) {
 	test.Parallel()
-	source, err := os.ReadFile("testdata/to-primitive/runtime.c")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("testdata/to-primitive/runtime.c")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	binary := filepath.Join(test.TempDir(), "primitive")
-	if err := Build(string(source), binary, Options{Sanitize: true, Count: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(string(source), binary, Options{Sanitize: true, Count: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	test.Run("terminal-invalid-hint", func(test *testing.T) {
 		got := primitiveRun(binary, 20)
@@ -395,9 +399,9 @@ func primitiveLeaks(test *testing.T, binary string, arguments ...string) string 
 		return ""
 	} // Linux runs LSan in primitiveRun.
 	command := exec.Command("leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
-	output, err := command.CombinedOutput()
-	if err != nil {
-		return fmt.Sprintf("leaks: %v %s", err, output)
+	output, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError != nil {
+		return fmt.Sprintf("leaks: %v %s", combinedOutputError, output)
 	}
 	return ""
 }

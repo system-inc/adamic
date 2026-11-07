@@ -73,12 +73,12 @@ func (l *lowering) graphAllocation(value ir.Expression, node *ast.Node) ir.Expre
 }
 
 // graphSeed accepts only the slot-cycle proof; unrelated errors keep their identity.
-func graphSeed(err error) (bool, error) {
+func graphSeed(sourceError error) (bool, error) {
 	var refused *Refused
-	if errors.As(err, &refused) && refused != nil && refused.cycle {
+	if errors.As(sourceError, &refused) && refused != nil && refused.cycle {
 		return true, nil
 	}
-	return false, err
+	return false, sourceError
 }
 
 // The old refusal sites still determine the seeds. The ownership SCC includes
@@ -87,16 +87,16 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 	// Graph regions don't follow record values, so a cycle through a record stays refused rather than seeded.
 	for _, proven := range f.seen {
 		if f.l.recordElement(proven) != nil {
-			if err := f.slotsOf(proven); err != nil {
-				return err
+			if slotsOfError := f.slotsOf(proven); slotsOfError != nil {
+				return slotsOfError
 			}
 		}
 	}
 	seeds := map[cycleNode]bool{}
 	for _, proven := range f.seen {
-		seed, err := graphSeed(f.slotsOf(proven))
-		if err != nil {
-			return err
+		seed, graphSeedError := graphSeed(f.slotsOf(proven))
+		if graphSeedError != nil {
+			return graphSeedError
 		}
 		if seed {
 			seeds[cycleNode{proven: proven}] = true
@@ -106,14 +106,21 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 		proven := f.l.localTypes[local]
 		// A closed frame input (closed_frame_inputs.go) is proven not to close a cycle, so its cell
 		// stays counted rather than seeding a graph region.
-		if declared.Captured && !declared.Global && proven != nil && !f.weak(proven) && f.reaches(proven, cycleNode{cell: local + 1}) && !f.l.closedFrameInput(local) {
+		if declared.Captured &&
+			!declared.Global &&
+			proven != nil &&
+			!f.weak(proven) &&
+			f.reaches(proven, cycleNode{cell: local + 1}) &&
+			!f.l.closedFrameInput(local) {
 			// An async frame owns its captured cells and is never a graph member, so a cycle through
 			// one stays refused, as it was before graph regions.
 			if declared.Function >= 0 && f.l.result.Functions[declared.Function].Suspends() {
 				return &Refused{
 					Where: f.l.program.Where(f.l.localNodes[local]),
-					What:  "async frame capture cycle: '" + declared.Name + "', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free",
-					Fix:   "remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)",
+					What: "async frame capture cycle: '" +
+						declared.Name +
+						"', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free",
+					Fix: "remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)",
 				}
 			}
 			seeds[cycleNode{cell: local + 1}] = true
@@ -166,9 +173,17 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 		links := f.graphLinks(node)
 		// The finder's related relation treats compatible structural views as the
 		// same possible allocation. Weak views never become strong edges.
-		if node.proven != nil && node.proven.Flags()&checker.TypeFlagsObject != 0 && !f.weak(node.proven) && !f.template(node.proven) && !f.isFunction(node.proven) {
+		if node.proven != nil &&
+			node.proven.Flags()&checker.TypeFlagsObject != 0 &&
+			!f.weak(node.proven) &&
+			!f.template(node.proven) &&
+			!f.isFunction(node.proven) {
 			for _, view := range candidates {
-				if view.proven != nil && view.proven.Flags()&checker.TypeFlagsObject != 0 && !f.weak(view.proven) && !f.template(view.proven) && f.related(node.proven, view.proven) {
+				if view.proven != nil &&
+					view.proven.Flags()&checker.TypeFlagsObject != 0 &&
+					!f.weak(view.proven) &&
+					!f.template(view.proven) &&
+					f.related(node.proven, view.proven) {
 					links = append(links, view)
 				}
 			}
@@ -256,7 +271,9 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 				continue
 			}
 			proven := node.proven
-			if f.l.isArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
+			if f.l.isArrayType(proven) ||
+				checker.IsTupleType(proven) ||
+				f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
 				for _, argument := range f.graphArguments(proven) {
 					if graph[cycleNode{proven: argument}] {
 						graph[node] = true
@@ -413,7 +430,9 @@ func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {
 				}
 			}
 		}
-	case f.l.isArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
+	case f.l.isArrayType(proven) ||
+		checker.IsTupleType(proven) ||
+		f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
 		for _, argument := range f.graphArguments(proven) {
 			links = append(links, cycleNode{proven: argument})
 		}
@@ -445,7 +464,9 @@ func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {
 // graphArguments only queries the checker on reference objects. A contextual
 // union may describe an array initializer without itself being a TypeReference.
 func (f *cycleFinder) graphArguments(proven *checker.Type) []*checker.Type {
-	if proven == nil || proven.Flags()&checker.TypeFlagsObject == 0 || proven.ObjectFlags()&checker.ObjectFlagsReference == 0 {
+	if proven == nil ||
+		proven.Flags()&checker.TypeFlagsObject == 0 ||
+		proven.ObjectFlags()&checker.ObjectFlagsReference == 0 {
 		return nil
 	}
 	return f.l.checker.GetTypeArguments(proven)
@@ -485,7 +506,11 @@ func (f *cycleFinder) graphAdoptionBoundary() error {
 		walk(function.Body, inspect)
 	}
 	if reason != "" {
-		return &Refused{Where: f.l.program.Where(site), What: reason, Fix: "keep checked views and dynamic shapes outside graph adoption (adamic/cycle-capable)"}
+		return &Refused{
+			Where: f.l.program.Where(site),
+			What:  reason,
+			Fix:   "keep checked views and dynamic shapes outside graph adoption (adamic/cycle-capable)",
+		}
 	}
 	return nil
 }

@@ -65,31 +65,31 @@ int main(void) {
 		command := exec.Command(binary)
 		var stdout, stderr bytes.Buffer
 		command.Stdout, command.Stderr = &stdout, &stderr
-		err := command.Run()
+		runError := command.Run()
 		test.Logf("%s process: %s", build.name, time.Since(started))
 		report := firstSanitizerLine(stderr.String())
 		if build.name == "without quarantine" {
-			if err != nil || stdout.String() != "slot reused\nstale length 40\n" || report != "" {
+			if runError != nil || stdout.String() != "slot reused\nstale length 40\n" || report != "" {
 				test.Fatalf(
 					"%s: want the slot reused and the stale read unreported, got %v\nstdout %q\nstderr %.600s",
 					build.name,
-					err,
+					runError,
 					stdout.String(),
 					stderr.String(),
 				)
 			}
-		} else if err == nil ||
+		} else if runError == nil ||
 			stdout.String() != "slot quarantined\n" ||
 			!strings.Contains(report, "ERROR: AddressSanitizer: use-after-poison") {
 			test.Fatalf(
 				"%s: want another slot and the stale read reported as a use after poison, got %v\nstdout %q\nstderr %.600s",
 				build.name,
-				err,
+				runError,
 				stdout.String(),
 				stderr.String(),
 			)
 		}
-		test.Logf("%s: exit %v, stdout %q, first sanitizer line %q", build.name, err, stdout.String(), report)
+		test.Logf("%s: exit %v, stdout %q, first sanitizer line %q", build.name, runError, stdout.String(), report)
 	}
 }
 
@@ -103,25 +103,31 @@ func buildWithFlags(test *testing.T, source string, flags []string) string {
 
 func runtimeWithFlags(test *testing.T, flags []string) (string, string) {
 	test.Helper()
-	files, err := readRuntime(runtime, "runtime")
-	if err != nil {
-		test.Fatal(err)
+	files, readRuntimeError := readRuntime(runtime, "runtime")
+	if readRuntimeError != nil {
+		test.Fatal(readRuntimeError)
 	}
-	compiler, err := exec.LookPath(compilerName(Options{}))
-	if err != nil {
-		test.Fatal(err)
+	compiler, lookPathError := exec.LookPath(compilerName(Options{}))
+	if lookPathError != nil {
+		test.Fatal(lookPathError)
 	}
-	version, err := exec.Command(compiler, "--version").CombinedOutput()
-	if err != nil {
-		test.Fatalf("clang --version: %v\n%s", err, version)
+	version, combinedOutputError := exec.Command(compiler, "--version").CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("clang --version: %v\n%s", combinedOutputError, version)
 	}
-	cache, err := os.UserCacheDir()
-	if err != nil {
-		test.Fatal(err)
+	cache, userCacheDirectoryError := os.UserCacheDir()
+	if userCacheDirectoryError != nil {
+		test.Fatal(userCacheDirectoryError)
 	}
-	library, err := cachedRuntime(files, flags, compiler, string(version), filepath.Join(cache, "adamic", "runtime"))
-	if err != nil {
-		test.Fatal(err)
+	library, cachedRuntimeError := cachedRuntime(
+		files,
+		flags,
+		compiler,
+		string(version),
+		filepath.Join(cache, "adamic", "runtime"),
+	)
+	if cachedRuntimeError != nil {
+		test.Fatal(cachedRuntimeError)
 	}
 	return compiler, library
 }
@@ -130,9 +136,9 @@ func runtimeWithFlags(test *testing.T, flags []string) (string, string) {
 // other object from the exact same sanitized slab archive, including its headers.
 func slabQuarantineOffLibrary(test *testing.T, compiler, original string, flags []string) string {
 	test.Helper()
-	files, err := readRuntime(runtime, "runtime")
-	if err != nil {
-		test.Fatal(err)
+	files, readRuntimeError := readRuntime(runtime, "runtime")
+	if readRuntimeError != nil {
+		test.Fatal(readRuntimeError)
 	}
 	root := filepath.Dir(original)
 	directory := test.TempDir()
@@ -153,23 +159,23 @@ func slabQuarantineOffLibrary(test *testing.T, compiler, original string, flags 
 				"-o",
 				object,
 			)
-			if output, err := productCompilerCommand(
+			if output, combinedOutputError := productCompilerCommand(
 				test,
 				context.Background(),
 				compiler,
 				arguments...,
-			).CombinedOutput(); err != nil {
-				test.Fatalf("quarantine mutant must compile: %v\n%s", err, output)
+			).CombinedOutput(); combinedOutputError != nil {
+				test.Fatalf("quarantine mutant must compile: %v\n%s", combinedOutputError, output)
 			}
 		}
 		objects = append(objects, object)
 	}
 	library := filepath.Join(directory, "runtime.a")
-	if output, err := exec.Command(
+	if output, combinedOutputError := exec.Command(
 		archiverName(compiler),
 		append([]string{"rcs", library}, objects...)...,
-	).CombinedOutput(); err != nil {
-		test.Fatalf("quarantine mutant archive: %v\n%s", err, output)
+	).CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("quarantine mutant archive: %v\n%s", combinedOutputError, output)
 	}
 	return library
 }
@@ -178,18 +184,18 @@ func buildHarnessWithLibrary(test *testing.T, source string, flags []string, com
 	test.Helper()
 	directory := test.TempDir()
 	main, binary := filepath.Join(directory, "main.c"), filepath.Join(directory, "harness")
-	if err := os.WriteFile(main, []byte(source), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(main, []byte(source), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	arguments := append(append([]string{}, flags...), "-I", filepath.Dir(library), "-o", binary, main)
 	arguments = append(append(arguments, RuntimeLinkFlags(library)...), "-lm")
-	if output, err := productCompilerCommand(
+	if output, combinedOutputError := productCompilerCommand(
 		test,
 		context.Background(),
 		compiler,
 		arguments...,
-	).CombinedOutput(); err != nil {
-		test.Fatalf("clang: %v\n%s", err, output)
+	).CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("clang: %v\n%s", combinedOutputError, output)
 	}
 	return binary
 }
@@ -233,14 +239,14 @@ func TestQuarantineIsPerThreadUnderTSan(test *testing.T) {
 	test.Run("shared_ring_mutant", func(test *testing.T) {
 		test.Parallel()
 		directory := test.TempDir()
-		files, err := fs.ReadDir(runtime, "runtime")
-		if err != nil {
-			test.Fatal(err)
+		files, readDirectoryError := fs.ReadDir(runtime, "runtime")
+		if readDirectoryError != nil {
+			test.Fatal(readDirectoryError)
 		}
 		for _, file := range files {
-			contents, err := fs.ReadFile(runtime, "runtime/"+file.Name())
-			if err != nil {
-				test.Fatal(err)
+			contents, readFileError := fs.ReadFile(runtime, "runtime/"+file.Name())
+			if readFileError != nil {
+				test.Fatal(readFileError)
 			}
 			if file.Name() == "slab_quarantine.c" {
 				shared := strings.ReplaceAll(string(contents), "static _Thread_local", "static")
@@ -250,37 +256,45 @@ func TestQuarantineIsPerThreadUnderTSan(test *testing.T) {
 				}
 				contents = []byte(shared)
 			}
-			if err := os.WriteFile(filepath.Join(directory, file.Name()), contents, 0o600); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(filepath.Join(directory, file.Name()), contents, 0o600); writeError != nil {
+				test.Fatal(writeError)
 			}
 		}
-		library, err := RuntimeLibrary(directory, options)
-		if err != nil {
-			test.Fatal(err)
+		library, runtimeLibraryError := RuntimeLibrary(directory, options)
+		if runtimeLibraryError != nil {
+			test.Fatal(runtimeLibraryError)
 		}
-		source, err := os.ReadFile(filepath.Join("testdata", "parallel", "memory.c"))
-		if err != nil {
-			test.Fatal(err)
+		source, readError := os.ReadFile(filepath.Join("testdata", "parallel", "memory.c"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		main, binary := filepath.Join(directory, "main.c"), filepath.Join(directory, "mutant")
-		if err := os.WriteFile(main, []byte(parallelSource(string(source))), 0o600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(main, []byte(parallelSource(string(source))), 0o600); writeError != nil {
+			test.Fatal(writeError)
 		}
 		arguments := append(Flags(options), "-I", filepath.Dir(library), main, "-o", binary)
 		arguments = append(append(arguments, RuntimeLinkFlags(library)...), "-lm")
-		if output, err := exec.Command("clang", arguments...).CombinedOutput(); err != nil {
-			test.Fatalf("mutant must compile: %v\n%s", err, output)
+		if output, combinedOutputError := exec.Command(
+			"clang",
+			arguments...,
+		).CombinedOutput(); combinedOutputError != nil {
+			test.Fatalf("mutant must compile: %v\n%s", combinedOutputError, output)
 		}
 		for attempt := 1; attempt <= 3; attempt++ {
 			ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 			command := exec.CommandContext(ctx, binary)
 			command.Env = parallelEnvironment("4", false)
-			output, err := command.CombinedOutput()
+			output, combinedOutputError := command.CombinedOutput()
 			cancel()
-			if err == nil ||
+			if combinedOutputError == nil ||
 				!strings.Contains(string(output), "WARNING: ThreadSanitizer: data race") ||
 				!strings.Contains(string(output), "adamic_slab_quarantine") {
-				test.Fatalf("attempt %d: the shared ring escaped TSan: %v\n%.2000s", attempt, err, output)
+				test.Fatalf(
+					"attempt %d: the shared ring escaped TSan: %v\n%.2000s",
+					attempt,
+					combinedOutputError,
+					output,
+				)
 			}
 			summary := "data race"
 			for _, line := range strings.Split(string(output), "\n") {

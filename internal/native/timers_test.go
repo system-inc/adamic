@@ -20,9 +20,9 @@ import (
 
 func timerHarness(test *testing.T) string {
 	test.Helper()
-	source, err := os.ReadFile("testdata/timers/harness.c")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("testdata/timers/harness.c")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return string(source)
 }
@@ -37,9 +37,9 @@ func timerRunWithin(limit time.Duration, environment []string, name string, args
 	command.Env = append(os.Environ(), environment...)
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
-	err := command.Run()
+	runError := command.Run()
 	exit := 0
-	if err != nil {
+	if runError != nil {
 		exit = -1
 		if command.ProcessState != nil {
 			exit = command.ProcessState.ExitCode()
@@ -67,9 +67,9 @@ func timerNodeRun(test *testing.T, mode string, formatted bool) leakcheck.Run {
 	if formatted {
 		// The unchanged house oracle reports uncaught errors exactly as
 		// adamic_uncaught: one panic line and exit 70 (raw Node exits 1).
-		runtime, err := filepath.Abs("../../oracle/adamic.mjs")
-		if err != nil {
-			test.Fatal(err)
+		runtime, absolutePathError := filepath.Abs("../../oracle/adamic.mjs")
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		args = append(args, "--import", runtime)
 	}
@@ -188,15 +188,15 @@ func TestTimersAgainstNode(test *testing.T) {
 			if !bytes.Equal(run.Stdout, timerNode(test, mode)) {
 				test.Fatalf("Node mismatch: native %q Node %q", run.Stdout, timerNode(test, mode))
 			}
-			report, err := leakcheck.Check(
+			report, checkError := leakcheck.Check(
 				leakcheck.Program{C: code, Sanitized: binary, Counted: filepath.Join(test.TempDir(), "counted"),
 					Arguments: func() []string { return []string{mode} }, Execute: timerRun,
 					BuildCounted: func(_ string, output string) error {
 						return copyTimerProduct(timerProduct(test, "counted", native.Options{Count: true}), output)
 					}},
 			)
-			if err != nil || report != "" {
-				test.Fatalf("leakcheck: %v %s", err, report)
+			if checkError != nil || report != "" {
+				test.Fatalf("leakcheck: %v %s", checkError, report)
 			}
 			test.Log(strings.TrimSpace(string(run.Stderr)))
 		})
@@ -211,12 +211,12 @@ type timerRuntime struct{ directory string }
 // on one box (Loom's Builder, #landing90, Nov 2). TestTimerMutantProductIsReproducible pins it, and
 // TestTimerMutantProductPinCatchesBareClang shows the pin goes red with the old bare clang.
 func (runtime timerRuntime) build(code, output string, options native.Options) error {
-	library, err := native.RuntimeLibrary(runtime.directory, options)
-	if err != nil {
-		return err
+	library, runtimeLibraryError := native.RuntimeLibrary(runtime.directory, options)
+	if runtimeLibraryError != nil {
+		return runtimeLibraryError
 	}
-	if err := native.BuildWithRuntime(code, output, options, library); err != nil {
-		return fmt.Errorf("mutant must compile: %w", err)
+	if buildWithRuntimeError := native.BuildWithRuntime(code, output, options, library); buildWithRuntimeError != nil {
+		return fmt.Errorf("mutant must compile: %w", buildWithRuntimeError)
 	}
 	return nil
 }
@@ -225,15 +225,15 @@ func (runtime timerRuntime) build(code, output string, options native.Options) e
 // by a bare clang. It stays only as the pin's mutant.
 func timerBuildBare(code, output string, options native.Options, library string) error {
 	source := output + ".c"
-	if err := os.WriteFile(source, []byte(code), 0600); err != nil {
-		return err
+	if writeError := os.WriteFile(source, []byte(code), 0600); writeError != nil {
+		return writeError
 	}
 	args := append(native.LinkFlags(options), "-I", filepath.Dir(library), "-o", output, source)
 	args = append(args, native.RuntimeLinkFlags(library)...)
 	args = append(args, "-lm")
-	result, err := exec.Command("clang", args...).CombinedOutput()
-	if err != nil {
-		return fmt.Errorf("mutant must compile: %w\n%s", err, result)
+	result, combinedOutputError := exec.Command("clang", args...).CombinedOutput()
+	if combinedOutputError != nil {
+		return fmt.Errorf("mutant must compile: %w\n%s", combinedOutputError, result)
 	}
 	return nil
 }
@@ -248,9 +248,9 @@ func timerMutantTwice(test *testing.T, bare bool) ([]byte, []byte) {
 	}
 	options := native.Options{Sanitize: true, Count: true}
 	runtime := timerMutant(test, mutation.file, mutation.before, mutation.after)
-	library, err := native.RuntimeLibrary(runtime.directory, options)
-	if err != nil {
-		test.Fatal(err)
+	library, runtimeLibraryError := native.RuntimeLibrary(runtime.directory, options)
+	if runtimeLibraryError != nil {
+		test.Fatal(runtimeLibraryError)
 	}
 	build := native.BuildWithRuntime
 	if bare {
@@ -260,12 +260,12 @@ func timerMutantTwice(test *testing.T, bare bool) ([]byte, []byte) {
 	var built [2][]byte
 	for index := range built {
 		output := filepath.Join(test.TempDir(), "probe")
-		if err := build(code, output, options, library); err != nil {
-			test.Fatal(err)
+		if buildError := build(code, output, options, library); buildError != nil {
+			test.Fatal(buildError)
 		}
-		data, err := os.ReadFile(output)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(output)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		built[index] = data
 	}
@@ -295,18 +295,18 @@ func TestTimerMutantProductPinCatchesBareClang(test *testing.T) {
 func timerMutant(test *testing.T, file, before, after string) timerRuntime {
 	test.Helper()
 	runtime := timerRuntime{test.TempDir()}
-	entries, err := os.ReadDir("runtime")
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir("runtime")
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	found := false
 	for _, entry := range entries {
 		if entry.IsDir() || (filepath.Ext(entry.Name()) != ".h" && filepath.Ext(entry.Name()) != ".c") {
 			continue
 		}
-		data, err := os.ReadFile(filepath.Join("runtime", entry.Name()))
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(filepath.Join("runtime", entry.Name()))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		if entry.Name() == file {
 			if strings.Count(string(data), before) != 1 {
@@ -315,8 +315,8 @@ func timerMutant(test *testing.T, file, before, after string) timerRuntime {
 			data = []byte(strings.Replace(string(data), before, after, 1))
 			found = true
 		}
-		if err := os.WriteFile(filepath.Join(runtime.directory, entry.Name()), data, 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(runtime.directory, entry.Name()), data, 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	if !found {
@@ -438,7 +438,7 @@ func TestTimerMutants(test *testing.T) {
 			}
 			code := timerHarness(test)
 			if mutant.caught == "leak" {
-				report, err := leakcheck.Check(
+				report, checkError := leakcheck.Check(
 					leakcheck.Program{C: code, Sanitized: binary, Counted: filepath.Join(test.TempDir(), "counted"),
 						BuildCounted: func(code, output string) error {
 							return copyTimerProduct(
@@ -448,9 +448,9 @@ func TestTimerMutants(test *testing.T) {
 						},
 						Arguments: func() []string { return []string{mutant.mode} }, Execute: timerRun},
 				)
-				if err != nil || (!strings.Contains(report, "LeakSanitizer: detected memory leaks") &&
+				if checkError != nil || (!strings.Contains(report, "LeakSanitizer: detected memory leaks") &&
 					!strings.Contains(report, "heap values leaked:")) {
-					test.Fatalf("leak mutant must fail specifically the leak check: %v %q", err, report)
+					test.Fatalf("leak mutant must fail specifically the leak check: %v %q", checkError, report)
 				}
 				test.Log("caught by shared leakcheck")
 				return
@@ -524,9 +524,9 @@ func timerProduct(test *testing.T, variant string, options native.Options) strin
 	return filepath.Join(directory, "probe")
 }
 func copyTimerProduct(source, destination string) error {
-	data, err := os.ReadFile(source)
-	if err != nil {
-		return err
+	data, readError := os.ReadFile(source)
+	if readError != nil {
+		return readError
 	}
 	return os.WriteFile(destination, data, 0700)
 }

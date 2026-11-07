@@ -124,21 +124,21 @@ func asyncCountProgramProduct(test *testing.T, name string, original bool) strin
 	if original {
 		key = "internal/oracle/testdata/" + name + ".a"
 	}
-	path, err := filepath.Abs(filepath.Join(repository, key))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, key))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	p, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	p, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	code := native.C(p)
-	request, err := native.RuntimeRequestFor(
+	request, runtimeRequestForError := native.RuntimeRequestFor(
 		native.Options{Sanitize: !original, Count: original},
 		native.Features(code)...,
 	)
-	if err != nil {
-		test.Fatal(err)
+	if runtimeRequestForError != nil {
+		test.Fatal(runtimeRequestForError)
 	}
 	inputs := buildcache.Inputs{
 		Name:  fmt.Sprintf("async-count-%t-%s", original, name),
@@ -154,11 +154,19 @@ func asyncCountProgramProduct(test *testing.T, name string, original bool) strin
 		if original {
 			return native.Build(code, filepath.Join(directory, "counted"), native.Options{Count: true})
 		}
-		if err := native.Build(code, filepath.Join(directory, "control"), native.Options{Sanitize: true}); err != nil {
-			return err
+		if buildError := native.Build(
+			code,
+			filepath.Join(directory, "control"),
+			native.Options{Sanitize: true},
+		); buildError != nil {
+			return buildError
 		}
-		if err := native.Build(code, filepath.Join(directory, "counted"), native.Options{Count: true}); err != nil {
-			return err
+		if buildError := native.Build(
+			code,
+			filepath.Join(directory, "counted"),
+			native.Options{Count: true},
+		); buildError != nil {
+			return buildError
 		}
 		return native.Build(
 			asyncCountMutant(test, name, code, p),
@@ -173,9 +181,9 @@ func checkAsyncCountRow(test *testing.T, key string, got run, budget int) int {
 	if len(matches) != 7 {
 		test.Fatalf("missing counts: %s", got.stderr)
 	}
-	retains, err := strconv.Atoi(string(matches[3]))
-	if err != nil {
-		test.Fatal(err)
+	retains, parseError := strconv.Atoi(string(matches[3]))
+	if parseError != nil {
+		test.Fatal(parseError)
 	}
 	if budget > 0 && retains > budget {
 		test.Fatalf("unit 1 retain budget %d exceeded: %d", budget, retains)
@@ -185,9 +193,9 @@ func checkAsyncCountRow(test *testing.T, key string, got run, budget int) int {
 		row += " | " + string(match)
 	}
 	row += " |"
-	recorded, err := recordedCounts()
-	if err != nil {
-		test.Fatal(err)
+	recorded, recordedCountsError := recordedCounts()
+	if recordedCountsError != nil {
+		test.Fatal(recordedCountsError)
 	}
 	if recorded[key] != row {
 		test.Fatalf("counts changed: got %s; recorded %s", row, recorded[key])
@@ -220,9 +228,9 @@ func checkAsyncCountWitness(test *testing.T, name string, mutant bool) {
 		test.Log("necessary owner dropped: ASan heap-use-after-free")
 		return
 	}
-	path, err := filepath.Abs(filepath.Join(repository, asyncCountPath(name)))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, asyncCountPath(name)))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := onNode(test, path)
 	got := executeWith(
@@ -233,9 +241,9 @@ func checkAsyncCountWitness(test *testing.T, name string, mutant bool) {
 	if difference := disagreement(truth, got); difference != "" {
 		test.Fatalf("ASan %s: %+v", difference, got)
 	}
-	p, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	p, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	if difference := disagreement(truth, onJavaScriptBackend(test, p)); difference != "" {
 		test.Fatal("JavaScript: " + difference)

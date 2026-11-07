@@ -10,9 +10,9 @@ import (
 // Not parallel: fixed gaps/identifier_case_{go,fork}.txt witness files and shared markdownMemory budget; existing helper controls parallel execution.
 func TestMdastIdentifierWitnesses(test *testing.T) {
 	parallelMarkdownMemory(test, 1)
-	root, e := filepath.Abs(repository)
-	if e != nil {
-		test.Fatal(e)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	dir := test.TempDir()
 	cohere := filepath.Join(root, "cohere")
@@ -27,13 +27,13 @@ func TestMdastIdentifierWitnesses(test *testing.T) {
 	if fork == "" {
 		fork = filepath.Join(cohere, "internal/format/prettier/bundles")
 	}
-	installed, e := os.ReadFile(filepath.Join(fork, "plugins/markdown.js"))
-	if e != nil {
-		test.Fatal(e)
+	installed, readError := os.ReadFile(filepath.Join(fork, "plugins/markdown.js"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	pinned, e := os.ReadFile(filepath.Join(cohere, "internal/format/prettier/bundles/plugins/markdown.js"))
-	if e != nil {
-		test.Fatal(e)
+	pinned, readError := os.ReadFile(filepath.Join(cohere, "internal/format/prettier/bundles/plugins/markdown.js"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	equal(test, "pinned gap fork", installed, pinned)
 	original := execute(test, nil, "node", "testdata/mdast_library.mjs", fork, "gaps/identifier_case.jsonl")
@@ -49,15 +49,15 @@ func TestMdastIdentifierWitnesses(test *testing.T) {
 		name, path string
 		result     run
 	}{{"Go", "gaps/identifier_case_go.txt", goResult}, {"fork", "gaps/identifier_case_fork.txt", original}} {
-		golden, e := os.ReadFile(side.path)
-		if e != nil {
-			test.Fatal(e)
+		golden, readError := os.ReadFile(side.path)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		equal(test, side.name+" witness", side.result.stdout, golden)
 	}
-	main, e := filepath.Abs("testdata/mdast_probe.ts")
-	if e != nil {
-		test.Fatal(e)
+	main, absolutePathError := filepath.Abs("testdata/mdast_probe.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	program := lowered(test, main)
 	// The mdast grain's sanitized port is this program too, so the witness reads that product.

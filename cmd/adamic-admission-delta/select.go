@@ -17,13 +17,13 @@ func selectCorpora(corpora []corpus, filter, shard string) ([]corpus, bool, erro
 		if len(parts) != 2 {
 			return nil, false, fmt.Errorf("shard must be i/N, with 1 <= i <= N")
 		}
-		var err error
-		index, err = strconv.Atoi(parts[0])
-		if err != nil {
+		var parseError error
+		index, parseError = strconv.Atoi(parts[0])
+		if parseError != nil {
 			return nil, false, fmt.Errorf("invalid shard %q", shard)
 		}
-		count, err = strconv.Atoi(parts[1])
-		if err != nil || count < 1 || index < 1 || index > count {
+		count, parseError = strconv.Atoi(parts[1])
+		if parseError != nil || count < 1 || index < 1 || index > count {
 			return nil, false, fmt.Errorf("invalid shard %q", shard)
 		}
 	}

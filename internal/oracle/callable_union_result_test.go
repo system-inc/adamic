@@ -18,17 +18,19 @@ func init() {
 
 func checkCallableUnionResult(test *testing.T, name, output string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/callable_union_result_"+name+".a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/callable_union_result_"+name+".a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	want := onNode(test, path)
 	if string(want.stdout) != output || want.exitCode != 0 {
 		test.Fatalf("source Node: %#v", want)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	actual, _ := nativelyUncached(test, program)
 	for _, got := range []run{actual, releasedUncached(test, program), onJavaScriptBackend(test, program)} {

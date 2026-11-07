@@ -27,13 +27,13 @@ func TestLibraryTypeErrorThrowsCaught(test *testing.T) {
 	} {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/"+name+".a"))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/"+name+".a"))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatalf("a try around a frozen write, matchAll or replaceAll must lower: %v", err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatalf("a try around a frozen write, matchAll or replaceAll must lower: %v", loweredError)
 			}
 			node := onNode(test, path)
 			if node.exitCode != 0 {
@@ -76,13 +76,15 @@ func TestLibraryTypeErrorThrowsCaught(test *testing.T) {
 // tests the pending word nowhere.
 func TestLibraryTypeErrorConstantsDoNotCheck(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/library_regexp_throws/constant.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/library_regexp_throws/constant.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	for _, function := range program.Functions {
 		if function.MayThrow {

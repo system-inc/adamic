@@ -18,7 +18,11 @@ func (l *lowering) functionAnnotations(module *ast.SourceFile) error {
 			return true
 		}
 		if node.Kind == ast.KindTypeReference && l.isLibraryType(l.checker.GetTypeAtLocation(node), "Function") {
-			found = &Refused{Where: l.program.Where(node), What: "the Function annotation in .a", Fix: "write a call signature with its parameters and result, like (value: number) => number"}
+			found = &Refused{
+				Where: l.program.Where(node),
+				What:  "the Function annotation in .a",
+				Fix:   "write a call signature with its parameters and result, like (value: number) => number",
+			}
 			return true
 		}
 		return node.ForEachChild(visit)
@@ -41,17 +45,27 @@ func (l *lowering) functionCallRefusal(node *ast.Node) error {
 	opaque := l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(callee)), "Function")
 	if callee.Kind == ast.KindPropertyAccessExpression {
 		access := callee.AsPropertyAccessExpression()
-		opaque = opaque || l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression)), "Function") && (access.Name().Text() == "call" || access.Name().Text() == "apply" || access.Name().Text() == "bind")
+		opaque = opaque || l.isLibraryType(
+			l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression)),
+			"Function",
+		) && (access.Name().Text() == "call" || access.Name().Text() == "apply" || access.Name().Text() == "bind")
 	}
 	if callee.Kind == ast.KindElementAccessExpression {
 		access := callee.AsElementAccessExpression()
 		key := ast.SkipParentheses(access.ArgumentExpression)
 		if key.Kind == ast.KindStringLiteral {
-			opaque = opaque || l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression)), "Function") && (key.Text() == "call" || key.Text() == "apply" || key.Text() == "bind")
+			opaque = opaque || l.isLibraryType(
+				l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression)),
+				"Function",
+			) && (key.Text() == "call" || key.Text() == "apply" || key.Text() == "bind")
 		}
 	}
 	if opaque {
-		return &Refused{Where: l.program.Where(node), What: "calling through the unchecked Function type", Fix: "write a call signature with the actual parameters and result before calling"}
+		return &Refused{
+			Where: l.program.Where(node),
+			What:  "calling through the unchecked Function type",
+			Fix:   "write a call signature with the actual parameters and result before calling",
+		}
 	}
 	return nil
 }
@@ -101,9 +115,9 @@ func (l *lowering) functionObservation(node *ast.Node) (ir.Expression, bool, err
 	if name != "length" {
 		return nil, true, l.notYet(node, "observing Function."+name+"; use a call signature and explicit metadata")
 	}
-	value, err := l.expression(receiver)
-	if err != nil {
-		return nil, true, err
+	value, expressionError := l.expression(receiver)
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
 	return ir.Narrow{Value: ir.DynamicProperty{Object: fit(value, ir.Union), Name: name}, To: ir.Number}, true, nil
 }

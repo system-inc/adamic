@@ -107,17 +107,17 @@ func predicateCheckedInput(test *testing.T, name string) (string, string) {
 // predicateInputFrom is a stored .a witness in directory and its .ts copy, which checked mode reads.
 func predicateInputFrom(test *testing.T, directory, name string) (string, string) {
 	test.Helper()
-	witness, err := filepath.Abs(filepath.Join(repository, directory, name+".a"))
-	if err != nil {
-		test.Fatal(err)
+	witness, absolutePathError := filepath.Abs(filepath.Join(repository, directory, name+".a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	source, err := os.ReadFile(witness)
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(witness)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	checked := filepath.Join(test.TempDir(), name+".ts")
-	if err = os.WriteFile(checked, source, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(checked, source, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return witness, checked
 }
@@ -134,13 +134,13 @@ func TestCheckedPredicateOracle(test *testing.T) {
 			}
 			if strings.HasPrefix(probe.name, "condition_") {
 				var refused *lower.Refused
-				if _, err := lowered(test, witness); !errors.As(err, &refused) {
-					test.Fatalf(".a condition assertion: want refusal, got %v", err)
+				if _, loweredError := lowered(test, witness); !errors.As(loweredError, &refused) {
+					test.Fatalf(".a condition assertion: want refusal, got %v", loweredError)
 				}
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			counts := program.PredicateChecks
 			if counts.Checked != probe.checked ||
@@ -183,8 +183,12 @@ func TestCheckedPredicateOracle(test *testing.T) {
 					test.Fatal(report)
 				}
 				countedBinary := filepath.Join(test.TempDir(), "counted")
-				if err = native.Build(native.C(program), countedBinary, native.Options{Count: true}); err != nil {
-					test.Fatal(err)
+				if buildError := native.Build(
+					native.C(program),
+					countedBinary,
+					native.Options{Count: true},
+				); buildError != nil {
+					test.Fatal(buildError)
 				}
 				if report := leakcheck.Unbalanced(leakRun(execute(test, countedBinary))); report != "" {
 					test.Fatal(report)
@@ -279,9 +283,9 @@ func TestCheckedPredicateOpenTagViews(test *testing.T) {
 			if difference := disagreement(run{stdout: []byte(probe.nodeOut)}, node); difference != "" {
 				test.Fatal("source Node: " + difference)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			want := node
 			if probe.stderr != "" {
@@ -337,18 +341,18 @@ func checkedPredicateCounted(test *testing.T, key, name string) (string, func() 
 	test.Helper()
 	_, typed := predicateCheckedInput(test, name)
 	logical := "<repository>/internal/lower/testdata/predicates_checked/" + name + ".ts"
-	checked, err := load.LoadDisplayed([]string{typed}, func(path string) string {
+	checked, loadDisplayedError := load.LoadDisplayed([]string{typed}, func(path string) string {
 		if path == typed {
 			return logical
 		}
 		return path
 	})
-	if err != nil {
-		test.Fatal(err)
+	if loadDisplayedError != nil {
+		test.Fatal(loadDisplayedError)
 	}
-	program, err := lower.Lower(context.Background(), checked)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerError := lower.Lower(context.Background(), checked)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	source := native.C(program)
 	return countPortable(test, source, ""), func() string {
@@ -367,9 +371,9 @@ func TestCheckedPredicateCountsAreRecorded(test *testing.T) {
 	for _, probe := range checkedPredicateFixtures {
 		key := checkedPredicateCountKey(probe.name)
 		_, measure := checkedPredicateCounted(test, key, probe.name)
-		want, err := readCountRow(countsDirectory, "runtime", key)
-		if err != nil {
-			test.Fatal(err)
+		want, readCountRowError := readCountRow(countsDirectory, "runtime", key)
+		if readCountRowError != nil {
+			test.Fatal(readCountRowError)
 		}
 		if got := measure(); got != want {
 			test.Errorf(
@@ -398,12 +402,12 @@ func TestCheckedPredicateConditionForwarderOracle(test *testing.T) {
 				test.Fatal("source Node: " + difference)
 			}
 			var refused *lower.Refused
-			if _, err := lowered(test, witness); !errors.As(err, &refused) {
-				test.Fatalf(".a condition assertion: want refusal, got %v", err)
+			if _, loweredError := lowered(test, witness); !errors.As(loweredError, &refused) {
+				test.Fatalf(".a condition assertion: want refusal, got %v", loweredError)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			if len(program.PredicateChecks.Sites) != 0 {
 				test.Fatalf("forwarder counted as direct call: %+v", program.PredicateChecks)

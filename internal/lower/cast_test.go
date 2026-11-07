@@ -81,13 +81,17 @@ func TestUncheckableCastsStayRefused(test *testing.T) {
 				".a":  "narrow a discriminated union by its tag",
 				".ts": "enum tags",
 			} {
-				_, err := lowerSourceAs(test, probe.source, extension)
+				_, lowerSourceAsError := lowerSourceAs(test, probe.source, extension)
 				var refused *Refused
-				if !errors.As(err, &refused) ||
-					!strings.Contains(err.Error(), "adamic/no-unchecked-cast") ||
-					!strings.Contains(err.Error(), accepted) ||
-					!strings.Contains(err.Error(), "nominal class ancestry") {
-					test.Fatalf("%s: want unchecked-cast refusal and accepted forms, got %v", extension, err)
+				if !errors.As(lowerSourceAsError, &refused) ||
+					!strings.Contains(lowerSourceAsError.Error(), "adamic/no-unchecked-cast") ||
+					!strings.Contains(lowerSourceAsError.Error(), accepted) ||
+					!strings.Contains(lowerSourceAsError.Error(), "nominal class ancestry") {
+					test.Fatalf(
+						"%s: want unchecked-cast refusal and accepted forms, got %v",
+						extension,
+						lowerSourceAsError,
+					)
 				}
 			}
 		})
@@ -146,9 +150,9 @@ func TestCheckedCastProofAndElision(test *testing.T) {
 			case "enum member", "invariant mutable payload", "sub-union":
 				extension = ".ts"
 			}
-			program, err := lowerSourceAs(test, probe.source, extension)
-			if err != nil {
-				test.Fatal(err)
+			program, lowerSourceAsError := lowerSourceAs(test, probe.source, extension)
+			if lowerSourceAsError != nil {
+				test.Fatal(lowerSourceAsError)
 			}
 			checks := 0
 			for _, function := range program.Functions {

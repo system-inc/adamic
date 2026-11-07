@@ -24,9 +24,9 @@ func stringsPreparedProgram(test *testing.T, mutation int) stringsProgram {
 	test.Helper()
 	state := &stringsPreparedPrograms[mutation+1]
 	state.once.Do(func() {
-		main, err := filepath.Abs("main.ts")
-		if err != nil {
-			test.Fatal(err)
+		main, absolutePathError := filepath.Abs("main.ts")
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		name := "port"
 		if mutation >= 0 {
@@ -130,8 +130,13 @@ func stringsAnswerDirectory(
 				go func() {
 					defer workers.Done()
 					for each := range pending {
-						if err := stringsAnswerRun(test, dir, each, command); err != nil {
-							failures <- err
+						if stringsAnswerRunError := stringsAnswerRun(
+							test,
+							dir,
+							each,
+							command,
+						); stringsAnswerRunError != nil {
+							failures <- stringsAnswerRunError
 						}
 					}
 				}()
@@ -164,14 +169,14 @@ func stringsAnswerRun(
 	oracleCommand func(test *testing.T, input string) (*exec.Cmd, context.Context),
 ) error {
 	input := filepath.Join(dir, each.file+".input")
-	if err := os.WriteFile(input, each.input, 0644); err != nil {
-		return err
+	if writeError := os.WriteFile(input, each.input, 0644); writeError != nil {
+		return writeError
 	}
 	defer os.Remove(input)
 	command, ctx := oracleCommand(test, input)
-	stdout, stderr, err := childguard.Capture(ctx, command)
-	if err != nil || len(stderr) != 0 {
-		return fmt.Errorf("oracle on %s: %v; %s", each.file, err, stderr)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
+	if captureError != nil || len(stderr) != 0 {
+		return fmt.Errorf("oracle on %s: %v; %s", each.file, captureError, stderr)
 	}
 	return os.WriteFile(filepath.Join(dir, each.file), stdout, 0644)
 }
@@ -191,9 +196,9 @@ func stringsPrettierBatchAnswersDirectory(
 	corpus stringsCorpus,
 ) string {
 	test.Helper()
-	script, err := filepath.Abs("testdata/library.mjs")
-	if err != nil {
-		test.Fatal(err)
+	script, absolutePathError := filepath.Abs("testdata/library.mjs")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return stringsAnswerDirectory(test, &stringsPrettierBatchAnswers, func() (stringsInputs, []stringsAnswerCase) {
 		cases := stringsBatchCases(corpus)
@@ -220,9 +225,9 @@ func stringsGoRawAnswersDirectory(test *testing.T, oracle, oracleIdentity string
 
 func stringsAnswer(test *testing.T, directory, file string) run {
 	test.Helper()
-	answer, err := os.ReadFile(filepath.Join(directory, file))
-	if err != nil {
-		test.Fatal(err)
+	answer, readError := os.ReadFile(filepath.Join(directory, file))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return run{stdout: answer}
 }
@@ -308,9 +313,9 @@ func prepareStringsAnswerInputs(test *testing.T) {
 // changed Go oracle or Prettier library never serves stale answers.
 func TestCSSStringsAnswerProductsRekey(test *testing.T) {
 	test.Parallel()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	corpus := enumerateStrings(test)
 	edited := stringsCorpus{texts: append([]string{}, corpus.texts...), raw: append([]string{}, corpus.raw...)}
@@ -330,9 +335,9 @@ func TestCSSStringsAnswerProductsRekey(test *testing.T) {
 				test,
 				stringsAnswerProductInputs(product.name, identity, "toolchain", product.files, product.cases(corpus)),
 			)
-			declared, err := buildcache.Key(root, inputs)
-			if err != nil {
-				test.Fatal(err)
+			declared, keyError := buildcache.Key(root, inputs)
+			if keyError != nil {
+				test.Fatal(keyError)
 			}
 			return buildcache.NameKey(root, inputs), declared
 		}

@@ -8,13 +8,13 @@ import (
 
 func TestProgramRegionScoutParseSelectionEmpty(test *testing.T) {
 	test.Parallel()
-	source, err := load.Load([]string{"../oracle/testdata/program_region/parse.a"})
-	if err != nil {
-		test.Fatal(err)
+	source, loadError := load.Load([]string{"../oracle/testdata/program_region/parse.a"})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := LowerWithOptions(context.Background(), source, Options{ProgramRegion: true})
-	if err != nil {
-		test.Fatal(err)
+	program, lowerWithOptionsError := LowerWithOptions(context.Background(), source, Options{ProgramRegion: true})
+	if lowerWithOptionsError != nil {
+		test.Fatal(lowerWithOptionsError)
 	}
 	if len(program.ProgramTypes) != 0 {
 		test.Fatalf("acyclic parse.a selected %d identities", len(program.ProgramTypes))

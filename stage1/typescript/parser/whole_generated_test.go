@@ -57,9 +57,9 @@ func TestWholeGeneratedAgrees(test *testing.T) {
 	manifest := wholeManifest(test, cases)
 	oracle := goOracle(test)
 	want := execute(test, "", oracle, "--manifest", manifest, "--whole")
-	directory, err := filepath.Abs(".")
-	if err != nil {
-		test.Fatal(err)
+	directory, absolutePathError := filepath.Abs(".")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	got := wholeNode(test, directory, manifest, false)
 	if diff := difference(got.output, want.output); diff != "" {
@@ -79,9 +79,9 @@ func TestObsoleteImportAttributesAgrees(test *testing.T) {
 	})
 	oracle := goOracle(test)
 	want := execute(test, "", oracle, "--manifest", manifest, "--whole", "--allow-obsolete-assert")
-	directory, err := filepath.Abs(".")
-	if err != nil {
-		test.Fatal(err)
+	directory, absolutePathError := filepath.Abs(".")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	for _, side := range []struct {
 		name string

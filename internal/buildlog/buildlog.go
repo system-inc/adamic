@@ -27,7 +27,7 @@ func Phase(name string, started time.Time) {
 		return
 	}
 	line := fmt.Sprintf("phase %s - off %.3f\n", name, time.Since(started).Seconds())
-	if file, err := os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o644); err == nil {
+	if file, openError := os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o644); openError == nil {
 		file.WriteString(line)
 		file.Close()
 	}

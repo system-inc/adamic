@@ -21,8 +21,8 @@ func TestLatentUnitTimerWritesSeparateSequentialRecords(test *testing.T) {
 	decoder := json.NewDecoder(&output)
 	for index, name := range []string{"first.ts", "second.ts"} {
 		var record map[string]any
-		if err := decoder.Decode(&record); err != nil {
-			test.Fatal(err)
+		if decodeError := decoder.Decode(&record); decodeError != nil {
+			test.Fatal(decodeError)
 		}
 		wall, wallOK := record["wall_seconds"].(float64)
 		cpu, cpuOK := record["cpu_seconds"].(float64)
@@ -38,8 +38,8 @@ func TestLatentUnitTimerWritesSeparateSequentialRecords(test *testing.T) {
 		}
 	}
 	var extra UnitTime
-	if err := decoder.Decode(&extra); !errors.Is(err, io.EOF) {
-		test.Fatalf("extra record: %v", err)
+	if decodeError := decoder.Decode(&extra); !errors.Is(decodeError, io.EOF) {
+		test.Fatalf("extra record: %v", decodeError)
 	}
 	var disabled *UnitTimer
 	disabled.Start("untimed.ts", "untimed.ts:1:1")()

@@ -62,17 +62,17 @@ func composedMemoryProduct(test *testing.T, index int) composedMemoryNatives {
 			Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version"), runtime.GOOS, runtime.GOARCH},
 		}
 		directory := buildcache.Product(test, inputs, func(dir string) error {
-			main, err := filepath.Abs("print_main.ts")
-			if err != nil {
-				return err
+			main, absolutePathError := filepath.Abs("print_main.ts")
+			if absolutePathError != nil {
+				return absolutePathError
 			}
-			checked, err := load.Load([]string{main})
-			if err != nil {
-				return err
+			checked, loadError := load.Load([]string{main})
+			if loadError != nil {
+				return loadError
 			}
-			program, err := lower.Lower(test.Context(), checked)
-			if err != nil {
-				return err
+			program, lowerError := lower.Lower(test.Context(), checked)
+			if lowerError != nil {
+				return lowerError
 			}
 			source := native.C(program)
 			code := source
@@ -90,8 +90,8 @@ func composedMemoryProduct(test *testing.T, index int) composedMemoryNatives {
 					mutation.body +
 					strings.Replace(code, anchor, anchor+"\tcss_memory_probe(argc);\n", 1)
 			}
-			if err := native.Build(code, filepath.Join(dir, "ordinary"), native.Options{}); err != nil {
-				return err
+			if buildError := native.Build(code, filepath.Join(dir, "ordinary"), native.Options{}); buildError != nil {
+				return buildError
 			}
 			return native.Build(code, filepath.Join(dir, "sanitized"), native.Options{Sanitize: true})
 		})
@@ -119,12 +119,12 @@ func composedMemoryCheck(test *testing.T, index int) {
 	mutation := composedMemoryMutations[index]
 	natives := composedMemoryProduct(test, index)
 	cases := filepath.Join(test.TempDir(), "cases.txt")
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		cases,
 		[]byte(">Ca{color:red;margin:0.50px}\n>Sa{--x:{b:c};color:rgb(1,2,3)}\n"),
 		0644,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
 	expected := printerAnswers(test, cases, "default")
 	ordinary := execute(test, nil, natives.ordinary, cases)

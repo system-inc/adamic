@@ -29,23 +29,23 @@ func TestTSGoCacheSanitized(test *testing.T) {
 // Stub symbols permit a real checker link while keeping each test's setup bounded.
 func tsgoCacheWitness(test *testing.T, options Options) {
 	test.Helper()
-	fixture, err := filepath.Abs("../oracle/testdata/arguments_length_extended.a")
-	if err != nil {
-		test.Fatal(err)
+	fixture, absolutePathError := filepath.Abs("../oracle/testdata/arguments_length_extended.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	loaded, err := load.Load([]string{fixture})
-	if err != nil {
-		test.Fatal(err)
+	loaded, loadError := load.Load([]string{fixture})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := lower.Lower(context.Background(), loaded)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerError := lower.Lower(context.Background(), loaded)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	source := "#include \"tsgo_runtime.h\"\n" + C(program)
 	node := toolchain.Command("node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", fixture)
-	expected, err := node.CombinedOutput()
-	if err != nil {
-		test.Fatalf("source Node: %v\n%s", err, expected)
+	expected, combinedOutputError := node.CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("source Node: %v\n%s", combinedOutputError, expected)
 	}
 	directory := test.TempDir()
 	var stubs strings.Builder
@@ -59,47 +59,56 @@ func tsgoCacheWitness(test *testing.T, options Options) {
 	if len(seen) == 0 {
 		test.Fatal("checker ABI declares no symbols")
 	}
-	if err := os.WriteFile(filepath.Join(directory, "stubs.c"), []byte(stubs.String()), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(
+		filepath.Join(directory, "stubs.c"),
+		[]byte(stubs.String()),
+		0644,
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
-	compiler, err := toolchain.Path("clang")
-	if err != nil {
-		test.Fatal(err)
+	compiler, pathError := toolchain.Path("clang")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
 	compile := toolchain.CommandIn(directory, compiler, "-c", "stubs.c", "-o", "stubs.o")
-	if output, err := compile.CombinedOutput(); err != nil {
-		test.Fatalf("stubs: %v\n%s", err, output)
+	if output, combinedOutputError := compile.CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("stubs: %v\n%s", combinedOutputError, output)
 	}
 	archive := toolchain.CommandIn(directory, archiverName(compiler), "rcs", "checker.a", "stubs.o")
-	if output, err := archive.CombinedOutput(); err != nil {
-		test.Fatalf("archive: %v\n%s", err, output)
+	if output, combinedOutputError := archive.CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("archive: %v\n%s", combinedOutputError, output)
 	}
-	library, err := tsgoRuntimeLibrary(source, options)
-	if err != nil {
-		test.Fatal(err)
+	library, tsgoRuntimeLibraryError := tsgoRuntimeLibrary(source, options)
+	if tsgoRuntimeLibraryError != nil {
+		test.Fatal(tsgoRuntimeLibraryError)
 	}
-	info, err := os.Stat(library)
-	if err != nil {
-		test.Fatal(err)
+	info, statError := os.Stat(library)
+	if statError != nil {
+		test.Fatal(statError)
 	}
 	var first []byte
 	for _, round := range []string{"first", "warm"} {
 		binary := filepath.Join(directory, round, "program")
-		if err := os.Mkdir(filepath.Dir(binary), 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.Mkdir(filepath.Dir(binary), 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := BuildTSGo(source, binary, filepath.Join(directory, "checker.a"), options); err != nil {
-			test.Fatal(err)
+		if buildTsGoError := BuildTSGo(
+			source,
+			binary,
+			filepath.Join(directory, "checker.a"),
+			options,
+		); buildTsGoError != nil {
+			test.Fatal(buildTsGoError)
 		}
 		run := toolchain.Command(binary)
 		run.Env = append(run.Env, "ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1")
-		output, err := run.CombinedOutput()
-		if err != nil || !bytes.Equal(output, expected) {
-			test.Fatalf("%s: %v output %q, Node %q", round, err, output, expected)
+		output, combinedOutputError := run.CombinedOutput()
+		if combinedOutputError != nil || !bytes.Equal(output, expected) {
+			test.Fatalf("%s: %v output %q, Node %q", round, combinedOutputError, output, expected)
 		}
-		content, err := os.ReadFile(binary)
-		if err != nil {
-			test.Fatal(err)
+		content, readError := os.ReadFile(binary)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		for _, place := range []string{directory, filepath.Dir(library), "adamic-tsgo-", ".build-"} {
 			if bytes.Contains(content, []byte(place)) {
@@ -112,13 +121,13 @@ func tsgoCacheWitness(test *testing.T, options Options) {
 			test.Error("cold and warm binaries differ")
 		}
 	}
-	warm, err := tsgoRuntimeLibrary(source, options)
-	if err != nil {
-		test.Fatal(err)
+	warm, tsgoRuntimeLibraryError := tsgoRuntimeLibrary(source, options)
+	if tsgoRuntimeLibraryError != nil {
+		test.Fatal(tsgoRuntimeLibraryError)
 	}
-	after, err := os.Stat(warm)
-	if err != nil {
-		test.Fatal(err)
+	after, statError := os.Stat(warm)
+	if statError != nil {
+		test.Fatal(statError)
 	}
 	if library != warm || !os.SameFile(info, after) || !info.ModTime().Equal(after.ModTime()) {
 		test.Error("warm build replaced the cached runtime")

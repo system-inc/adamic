@@ -18,8 +18,8 @@
 // passed that the key doesn't read must provably not change a product's bytes. Nothing else of the caller's
 // environment reaches a tool: not GIT_DIR, GIT_INDEX_FILE or GIT_WORK_TREE from a hook that runs the tests, not
 // GOROOT, GODEBUG, GOFIPS140, GO111MODULE, GOARM, GO386 or the other per-architecture variables the key doesn't ask go
-// about, not SDKROOT, LD_LIBRARY_PATH, DYLD_*, PKG_CONFIG, AR or CGO_FFLAGS, and none of adamic's own ADAMIC_* variables
-// but the shared cache's.
+// about, not SDKROOT, LD_LIBRARY_PATH, DYLD_*, PKG_CONFIG, AR or CGO_FFLAGS, and none of adamic's own ADAMIC_*
+// variables but the shared cache's.
 //
 // Env, for go (and any other tool a build runs), passes these from the caller when they are set:
 //
@@ -108,18 +108,69 @@ import (
 
 // GoSettings are the go env variables a product's key reads (buildcache's goSettings, each as goSetting keys it), and
 // Env passes each from the caller: the key asks go, under Env, what each one resolves to.
-var GoSettings = []string{"GOOS", "GOARCH", "GOAMD64", "GOARM64", "GOEXPERIMENT", "GOFLAGS", "GOWORK", "CGO_ENABLED", "CC", "CXX",
-	"CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "GOTOOLCHAIN"}
+var GoSettings = []string{
+	"GOOS",
+	"GOARCH",
+	"GOAMD64",
+	"GOARM64",
+	"GOEXPERIMENT",
+	"GOFLAGS",
+	"GOWORK",
+	"CGO_ENABLED",
+	"CC",
+	"CXX",
+	"CGO_CFLAGS",
+	"CGO_CPPFLAGS",
+	"CGO_CXXFLAGS",
+	"CGO_LDFLAGS",
+	"GOTOOLCHAIN",
+}
 
 // goLocations are where go keeps and fetches things: passed, never keyed (the package doc says why).
-var goLocations = []string{"GOCACHE", "GOMODCACHE", "GOPATH", "GOTMPDIR", "GOCACHEPROG", "GOPROXY", "GOSUMDB", "GONOSUMDB",
-	"GONOSUMCHECK", "GONOPROXY", "GOPRIVATE", "GOINSECURE", "GOVCS", "GOAUTH"}
+var goLocations = []string{
+	"GOCACHE",
+	"GOMODCACHE",
+	"GOPATH",
+	"GOTMPDIR",
+	"GOCACHEPROG",
+	"GOPROXY",
+	"GOSUMDB",
+	"GONOSUMDB",
+	"GONOSUMCHECK",
+	"GONOPROXY",
+	"GOPRIVATE",
+	"GOINSECURE",
+	"GOVCS",
+	"GOAUTH",
+}
 
 // carried are the rest of what Env passes from the caller (the package doc says why for each). PATH is Env's own.
-var carried = []string{"HOME", "XDG_CACHE_HOME", "XDG_CONFIG_HOME", "TMPDIR", "GOCOVERDIR", "PWD", "TZ", "DEVELOPER_DIR", "GOMAXPROCS", "GOGC", "GOMEMLIMIT",
-	"HTTP_PROXY", "HTTPS_PROXY", "NO_PROXY", "ALL_PROXY", "http_proxy", "https_proxy", "no_proxy", "all_proxy", "SSL_CERT_FILE", "SSL_CERT_DIR"}
+var carried = []string{
+	"HOME",
+	"XDG_CACHE_HOME",
+	"XDG_CONFIG_HOME",
+	"TMPDIR",
+	"GOCOVERDIR",
+	"PWD",
+	"TZ",
+	"DEVELOPER_DIR",
+	"GOMAXPROCS",
+	"GOGC",
+	"GOMEMLIMIT",
+	"HTTP_PROXY",
+	"HTTPS_PROXY",
+	"NO_PROXY",
+	"ALL_PROXY",
+	"http_proxy",
+	"https_proxy",
+	"no_proxy",
+	"all_proxy",
+	"SSL_CERT_FILE",
+	"SSL_CERT_DIR",
+}
 
-// gocacheSettings is the prefix of the shared Go cache's own settings (cmd/adamic-gocacheprog), passed with GOCACHEPROG.
+// gocacheSettings is the prefix of the shared Go cache's own settings (cmd/adamic-gocacheprog), passed with
+// GOCACHEPROG.
 const gocacheSettings = "ADAMIC_GOCACHE_"
 
 // fixed are the settings Env gives every tool, whatever the caller had.
@@ -147,7 +198,7 @@ func directories() []string {
 	}
 	var found []string
 	for _, directory := range []string{filepath.Join(tools, "bin"), filepath.Join(tools, "go", "bin")} {
-		if info, err := os.Stat(directory); err == nil && info.IsDir() {
+		if info, statError := os.Stat(directory); statError == nil && info.IsDir() {
 			found = append(found, directory)
 		}
 	}
@@ -162,17 +213,24 @@ func Path(name string) (string, error) {
 		return name, nil
 	}
 	for _, directory := range directories() {
-		if path, err := exec.LookPath(filepath.Join(directory, name)); err == nil {
+		if path, lookPathError := exec.LookPath(filepath.Join(directory, name)); lookPathError == nil {
 			return path, nil
 		}
 	}
 	if Sandboxed() {
 		tools := os.Getenv("ADAMIC_TOOLS")
 		if tools == "" {
-			return "", fmt.Errorf("%s: ADAMIC_SANDBOX=1 runs only tools under ADAMIC_TOOLS, and ADAMIC_TOOLS is unset", name)
+			return "", fmt.Errorf(
+				"%s: ADAMIC_SANDBOX=1 runs only tools under ADAMIC_TOOLS, and ADAMIC_TOOLS is unset",
+				name,
+			)
 		}
-		return "", fmt.Errorf("%s: ADAMIC_SANDBOX=1 runs only tools under ADAMIC_TOOLS, and neither %s nor %s holds it", name,
-			filepath.Join(tools, "bin"), filepath.Join(tools, "go", "bin"))
+		return "", fmt.Errorf(
+			"%s: ADAMIC_SANDBOX=1 runs only tools under ADAMIC_TOOLS, and neither %s nor %s holds it",
+			name,
+			filepath.Join(tools, "bin"),
+			filepath.Join(tools, "go", "bin"),
+		)
 	}
 	return exec.LookPath(name)
 }
@@ -180,10 +238,10 @@ func Path(name string) (string, error) {
 // Command is exec.Command for the program Path resolves name to, with Env. A name Path can't resolve runs as itself,
 // so the command fails as it starts, with Path's error.
 func Command(name string, arguments ...string) *exec.Cmd {
-	path, err := Path(name)
-	if err != nil {
+	path, pathError := Path(name)
+	if pathError != nil {
 		command := exec.Command(name, arguments...)
-		command.Err = err
+		command.Err = pathError
 		return command
 	}
 	command := exec.Command(path, arguments...)
@@ -194,12 +252,12 @@ func Command(name string, arguments ...string) *exec.Cmd {
 // CommandContextIn is CommandIn with cancellation controlled by ctx. An empty
 // directory keeps the caller's directory. Use childguard to cancel the child group.
 func CommandContextIn(ctx context.Context, directory, name string, arguments ...string) *exec.Cmd {
-	path, err := Path(name)
-	if err != nil {
+	path, pathError := Path(name)
+	if pathError != nil {
 		path = name
 	}
 	command := exec.CommandContext(ctx, path, arguments...)
-	command.Err = err
+	command.Err = pathError
 	command.Env = Env()
 	if directory != "" {
 		return in(directory, command)
@@ -233,9 +291,9 @@ func in(directory string, command *exec.Cmd) *exec.Cmd {
 	if command.Err != nil {
 		return command
 	}
-	absolute, err := filepath.Abs(directory)
-	if err != nil {
-		command.Err = err
+	absolute, absolutePathError := filepath.Abs(directory)
+	if absolutePathError != nil {
+		command.Err = absolutePathError
 		return command
 	}
 	command.Env = append(command.Env, "PWD="+absolute)
@@ -247,7 +305,10 @@ func Env(extra ...string) []string {
 	environment := []string{"PATH=" + searchPath()}
 	for _, setting := range os.Environ() {
 		name, _, _ := strings.Cut(setting, "=")
-		if slices.Contains(GoSettings, name) || slices.Contains(goLocations, name) || slices.Contains(carried, name) || strings.HasPrefix(name, gocacheSettings) {
+		if slices.Contains(GoSettings, name) ||
+			slices.Contains(goLocations, name) ||
+			slices.Contains(carried, name) ||
+			strings.HasPrefix(name, gocacheSettings) {
 			environment = append(environment, setting)
 		}
 	}

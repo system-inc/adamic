@@ -18,9 +18,9 @@ func init() {
 func TestInspectorProfileDataAgreesWithNode(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(repository, "internal/oracle/testdata/node_inspector_profile_data.a")
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	truth := onSliceNode(test, path)
 	want := run{stdout: []byte("file:///project/a.ts\nfile:///elsewhere/b.ts\na.ts\nexternal.js\n")}

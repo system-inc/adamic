@@ -83,15 +83,18 @@ func mutantPortProduct(test *testing.T, mutation printerMutation, options native
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
 	return buildcache.Product(test, inputs, func(directory string) error {
 		source := filepath.Join(directory, "source")
-		if err := os.Mkdir(source, 0755); err != nil {
-			return err
+		if createDirectoryError := os.Mkdir(source, 0755); createDirectoryError != nil {
+			return createDirectoryError
 		}
-		if err := buildJSONLoweredPortMutation(source, &mutation); err != nil {
-			return err
+		if buildJsonLoweredPortMutationError := buildJSONLoweredPortMutation(
+			source,
+			&mutation,
+		); buildJsonLoweredPortMutationError != nil {
+			return buildJsonLoweredPortMutationError
 		}
-		c, err := os.ReadFile(filepath.Join(source, "main.c"))
-		if err != nil {
-			return err
+		c, readError := os.ReadFile(filepath.Join(source, "main.c"))
+		if readError != nil {
+			return readError
 		}
 		return native.Build(string(c), filepath.Join(directory, "port"), options)
 	})
@@ -112,17 +115,17 @@ func gapPortProduct(test *testing.T, file string, options native.Options) string
 		Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")},
 	}
 	return buildcache.Product(test, inputs, func(directory string) error {
-		path, err := filepath.Abs(filepath.Join("gaps", file))
-		if err != nil {
-			return err
+		path, absolutePathError := filepath.Abs(filepath.Join("gaps", file))
+		if absolutePathError != nil {
+			return absolutePathError
 		}
-		program, err := load.Load([]string{path})
-		if err != nil {
-			return fmt.Errorf("Load: %w", err)
+		program, loadError := load.Load([]string{path})
+		if loadError != nil {
+			return fmt.Errorf("Load: %w", loadError)
 		}
-		lowered, err := lower.Lower(context.Background(), program)
-		if err != nil {
-			return fmt.Errorf("Lower: %w", err)
+		lowered, lowerError := lower.Lower(context.Background(), program)
+		if lowerError != nil {
+			return fmt.Errorf("Lower: %w", lowerError)
 		}
 		return native.Build(native.C(lowered), filepath.Join(directory, "port"), options)
 	})

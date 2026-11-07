@@ -298,9 +298,9 @@ func TestProduct_RecoveryMutantsNative2(test *testing.T) {
 func recoveryMutantExecute(test *testing.T, ctx context.Context, name string, args ...string) []byte {
 	test.Helper()
 	// Read through childguard.Capture for estreeScopedCommand's reason; the caller's 90 s deadline ends a hung run.
-	output, stderr, err := childguard.Capture(ctx, estreeScopedCommand(ctx, name, args...))
-	if err != nil || len(stderr) != 0 {
-		test.Fatalf("%s %v: %v (deadline: %v)\n%s", name, args, err, ctx.Err(), stderr)
+	output, stderr, captureError := childguard.Capture(ctx, estreeScopedCommand(ctx, name, args...))
+	if captureError != nil || len(stderr) != 0 {
+		test.Fatalf("%s %v: %v (deadline: %v)\n%s", name, args, captureError, ctx.Err(), stderr)
 	}
 	return output
 }

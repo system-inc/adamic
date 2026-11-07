@@ -63,12 +63,12 @@ const base: Root = raw;
 const viewed = base as View;
 console.log(typeof viewed.value);
 `
-	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	code := native.C(program)
 	// Behavior alone cannot prove this refusal travels through the snapshot reader.
@@ -113,8 +113,8 @@ int main(void){
 }
 `
 	binary := filepath.Join(test.TempDir(), "snapshot-reference")
-	if err := native.Build(probe, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(probe, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	if difference := disagreement(
 		run{stdout: []byte("references preserved\n")},

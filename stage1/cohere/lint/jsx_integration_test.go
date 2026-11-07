@@ -26,8 +26,8 @@ func jsxSpansOracle(test *testing.T) string {
 	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{virtual: side}})
 	directory := test.TempDir()
 	path := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, overlay, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	binary := filepath.Join(directory, "jsx-spans")
 	execute(test, root, "go", "build", "-overlay="+path, "-o", binary, virtual)
@@ -65,17 +65,17 @@ func jsxSources(test *testing.T) []string {
 
 func buildNative(test *testing.T, entry string, sanitize bool) string {
 	test.Helper()
-	program, err := load.Load([]string{entry})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{entry})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		test.Fatal(err)
+	lowered, lowerError := lower.Lower(context.Background(), program)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	binary := filepath.Join(test.TempDir(), "native")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: sanitize}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(lowered), binary, native.Options{Sanitize: sanitize}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	return binary
 }
@@ -85,9 +85,9 @@ func TestJsxLintReleaseAndThroughput(test *testing.T) {
 	if os.Getenv("ADAMIC_LINT_BENCH") != "1" {
 		test.Skip("set ADAMIC_LINT_BENCH=1 for JSX throughput")
 	}
-	directory, err := filepath.Abs(".")
-	if err != nil {
-		test.Fatal(err)
+	directory, absolutePathError := filepath.Abs(".")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	var rows []string
 	for _, path := range jsxSources(test) {
@@ -127,8 +127,8 @@ func TestJsxLintReleaseAndThroughput(test *testing.T) {
 		}
 	}
 	var count int
-	if _, err := fmt.Sscan(string(answer), &count); err != nil || count == 0 {
-		test.Fatalf("positive count missing: %s %v", answer, err)
+	if _, scanError := fmt.Sscan(string(answer), &count); scanError != nil || count == 0 {
+		test.Fatalf("positive count missing: %s %v", answer, scanError)
 	}
 	for _, name := range names {
 		test.Logf(

@@ -160,9 +160,13 @@ func TestVersionMatchesNode(test *testing.T) {
 
 func nodeVersion(test *testing.T) (string, string) {
 	test.Helper()
-	output, err := toolchain.Command("node", "--print", "process.version + \" \" + process.versions.unicode").Output()
-	if err != nil {
-		test.Fatal(err)
+	output, outputError := toolchain.Command(
+		"node",
+		"--print",
+		"process.version + \" \" + process.versions.unicode",
+	).Output()
+	if outputError != nil {
+		test.Fatal(outputError)
 	}
 	fields := strings.Fields(string(output))
 	if len(fields) != 2 {
@@ -224,10 +228,10 @@ func TestNodeAgrees(test *testing.T) {
 		go func() {
 			defer workers.Done()
 			for batch := range jobs {
-				got, err := runScanner(batch)
+				got, runScannerError := runScanner(batch)
 				mu.Lock()
-				if err != nil {
-					problems = append(problems, disagreement{detail: err.Error()})
+				if runScannerError != nil {
+					problems = append(problems, disagreement{detail: runScannerError.Error()})
 					mu.Unlock()
 					continue
 				}
@@ -331,8 +335,8 @@ func runScanner(expressions []string) (map[string][]Range, error) {
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
-	if err := command.Run(); err != nil {
-		return nil, fmt.Errorf("node scanner: %v\n%s", err, stderr.String())
+	if runError := command.Run(); runError != nil {
+		return nil, fmt.Errorf("node scanner: %v\n%s", runError, stderr.String())
 	}
 	return parseRanges(stdout.String())
 }
@@ -341,10 +345,10 @@ func runScanner(expressions []string) (map[string][]Range, error) {
 // toolchain.Command has no form for. A node toolchain.Path can't resolve fails as the command starts, with Path's
 // error.
 func nodeEval(ctx context.Context, script string) *exec.Cmd {
-	path, err := toolchain.Path("node")
-	if err != nil {
+	path, pathError := toolchain.Path("node")
+	if pathError != nil {
 		command := exec.CommandContext(ctx, "node", "--eval", script)
-		command.Err = err
+		command.Err = pathError
 		return command
 	}
 	command := exec.CommandContext(ctx, path, "--eval", script)
@@ -382,19 +386,19 @@ func parseRanges(output string) (map[string][]Range, error) {
 			if len(fields) != 2 {
 				return nil, fmt.Errorf("range line %q", line)
 			}
-			start, err := strconv.ParseUint(fields[0], 16, 32)
-			if err != nil {
-				return nil, err
+			start, parseError := strconv.ParseUint(fields[0], 16, 32)
+			if parseError != nil {
+				return nil, parseError
 			}
-			end, err := strconv.ParseUint(fields[1], 16, 32)
-			if err != nil {
-				return nil, err
+			end, parseError := strconv.ParseUint(fields[1], 16, 32)
+			if parseError != nil {
+				return nil, parseError
 			}
 			ranges = append(ranges, Range{Start: uint32(start), End: uint32(end)})
 		}
 	}
-	if err := scanner.Err(); err != nil {
-		return nil, err
+	if scanError := scanner.Err(); scanError != nil {
+		return nil, scanError
 	}
 	if open {
 		return nil, fmt.Errorf("expression %s was not closed", expression)
@@ -440,8 +444,8 @@ func TestNodeStringProperties(test *testing.T) {
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
-	if err := command.Run(); err != nil {
-		test.Fatalf("node strings: %v\n%s", err, stderr.String())
+	if runError := command.Run(); runError != nil {
+		test.Fatalf("node strings: %v\n%s", runError, stderr.String())
 	}
 	answers := strings.Fields(stdout.String())
 	fmt.Printf("node string-property check: %d sequences, disagreements %d\n", total, countNot(answers, "1"))

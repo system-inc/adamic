@@ -23,15 +23,15 @@ func TestNamedRecordTypeGuardMutant(test *testing.T) {
 	if !recordRefusalMutant(test, "named_invalidated") {
 		return
 	}
-	path, err := filepath.Abs(
+	path, absolutePathError := filepath.Abs(
 		filepath.Join(repository, "internal/oracle/testdata/records_refused/records_named_invalidated.a"),
 	)
-	if err != nil {
-		test.Fatal(err)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	p, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	p, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	want := onJavaScriptBackend(test, p)
 	if want.exitCode != 70 {
@@ -66,13 +66,15 @@ func TestNamedRecordTypeGuardMutant(test *testing.T) {
 
 func TestNamedRecordAliasReadinessMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_named_alias_unready.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/records_named_alias_unready.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	p, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	p, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	changed := false
 	for i, f := range p.Functions {
@@ -111,13 +113,15 @@ func TestNamedRecordJavaScriptAgreesWithNode(test *testing.T) {
 	test.Parallel()
 	for _, name := range []string{"options", "operations", "union", "intrinsics", "alias_unready"} {
 		test.Run(name, func(test *testing.T) {
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_named_"+name+".a"))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/records_named_"+name+".a"),
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			p, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			p, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			want, got := onNode(test, path), onJavaScriptBackend(test, p)
 			if diff := disagreement(want, got); diff != "" {
@@ -129,13 +133,13 @@ func TestNamedRecordJavaScriptAgreesWithNode(test *testing.T) {
 
 func TestNamedRecordAbsentEntryMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_named_union.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_named_union.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	p, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	p, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	changed := false
 	for i, statement := range p.Main {

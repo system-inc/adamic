@@ -310,14 +310,14 @@ func TestAsyncLiveForOfStringAdmission(test *testing.T) {
 // only the source oracle may reject this change in live iteration order.
 func asyncLiveWrongEntry(test *testing.T, name string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/"+name+".a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/"+name+".a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := onNode(test, path)
-	p, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	p, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	changed := false
 	var rewrite func(reflect.Value) reflect.Value
@@ -367,8 +367,8 @@ func asyncLiveWrongEntry(test *testing.T, name string) {
 	}
 	code := native.C(p)
 	binary := filepath.Join(test.TempDir(), "wrong-entry")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(code, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	if report := leakcheck.Report(test, code, binary); report != "" {
 		test.Fatal(report)
@@ -563,13 +563,13 @@ func TestAsyncLiveSourceForOfCollectionsMutation(test *testing.T) {
 // The source oracle agrees; the counted and sanitizer cleanup checks must fail.
 func asyncLiveReleaseMutant(test *testing.T, name string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/"+name+".a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/"+name+".a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	p, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	p, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	function, local := -1, -1
 	var find func(reflect.Value)
@@ -653,16 +653,16 @@ func asyncLiveReleaseMutant(test *testing.T, name string) {
 	}
 	code = code[:begin] + strings.Replace(part, cleanup, "(void)0;", 1) + code[end:]
 	binary := filepath.Join(test.TempDir(), "leaked-iterator")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(code, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	report := leakcheck.Report(test, code, binary)
 	if !strings.Contains(report, "detected memory leaks") && !strings.Contains(report, "heap values leaked:") {
 		test.Fatalf("iterator cleanup mutant survived: %s", report)
 	}
 	counted := filepath.Join(test.TempDir(), "counted-iterator")
-	if err := native.Build(code, counted, native.Options{Count: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(code, counted, native.Options{Count: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	if report := leakcheck.Unbalanced(
 		leakRun(execute(test, counted)),

@@ -138,17 +138,17 @@ func (s *sourceFS) Realpath(path tspath.RootedPath) tspath.RootedPath {
 // accident through a file system that exists to read.
 
 func (s *sourceFS) WriteFile(path tspath.RootedFilePath, data string) error {
-	return errReadOnly
+	return errorReadOnly
 }
 
 func (s *sourceFS) AppendFile(path tspath.RootedFilePath, data string) error {
-	return errReadOnly
+	return errorReadOnly
 }
 
 func (s *sourceFS) Remove(path tspath.RootedPath) error {
-	return errReadOnly
+	return errorReadOnly
 }
 
 func (s *sourceFS) Chtimes(path tspath.RootedPath, aTime time.Time, mTime time.Time) error {
-	return errReadOnly
+	return errorReadOnly
 }

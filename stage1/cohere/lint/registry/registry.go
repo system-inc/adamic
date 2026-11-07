@@ -48,13 +48,13 @@ var slugPattern = regexp.MustCompile(`^[a-z0-9]+(?:-[a-z0-9]+)*$`)
 func RuleModule(directory string) (string, error) {
 	var module string
 	for _, name := range []string{"rule.ts", "rule.a"} {
-		if _, err := os.Stat(filepath.Join(directory, name)); err == nil {
+		if _, statError := os.Stat(filepath.Join(directory, name)); statError == nil {
 			if module != "" {
 				return "", fmt.Errorf("%s: ambiguous rule.ts and rule.a", directory)
 			}
 			module = name
-		} else if !os.IsNotExist(err) {
-			return "", err
+		} else if !os.IsNotExist(statError) {
+			return "", statError
 		}
 	}
 	if module == "" {
@@ -69,12 +69,12 @@ func RuleModule(directory string) (string, error) {
 func Witnesses(directory string) ([]string, error) {
 	var paths []string
 	root := filepath.Join(directory, "testdata")
-	err := filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {
-		if err != nil {
-			if os.IsNotExist(err) && path == root {
+	walkError := filepath.WalkDir(root, func(path string, entry os.DirEntry, pathError error) error {
+		if pathError != nil {
+			if os.IsNotExist(pathError) && path == root {
 				return filepath.SkipDir
 			}
-			return err
+			return pathError
 		}
 		if entry.IsDir() {
 			return nil
@@ -86,8 +86,8 @@ func Witnesses(directory string) ([]string, error) {
 		}
 		return nil
 	})
-	if err != nil {
-		return nil, err
+	if walkError != nil {
+		return nil, walkError
 	}
 	sort.Strings(paths)
 	return paths, nil
@@ -100,8 +100,8 @@ func Witnesses(directory string) ([]string, error) {
 func CheckWitnesses(root string, descriptors []Descriptor) error {
 	for _, d := range descriptors {
 		directory := filepath.Join(root, "rules", d.Slug)
-		witnesses, err := Witnesses(directory)
-		if err != nil || len(witnesses) == 0 {
+		witnesses, witnessesError := Witnesses(directory)
+		if witnessesError != nil || len(witnesses) == 0 {
 			return fmt.Errorf("%s: missing witness", filepath.Join(directory, "rule.json"))
 		}
 	}
@@ -111,39 +111,39 @@ func CheckWitnesses(root string, descriptors []Descriptor) error {
 // Discover reads each rule's descriptor and the files it names, all directly in the rule's directory, and nothing
 // below it: a rule's evidence/ and testdata/ are never its descriptor's inputs.
 func Discover(root string) ([]Descriptor, error) {
-	paths, err := filepath.Glob(filepath.Join(root, "rules", "*", "rule.json"))
-	if err != nil {
-		return nil, err
+	paths, globError := filepath.Glob(filepath.Join(root, "rules", "*", "rule.json"))
+	if globError != nil {
+		return nil, globError
 	}
 	if len(paths) == 0 {
 		return nil, fmt.Errorf("no rule descriptors in %s", root)
 	}
 	names := map[string]bool{}
 	adapters := map[string]bool{}
-	entries, err := os.ReadDir(filepath.Join(root, "rules"))
-	if err != nil {
-		return nil, err
+	entries, readDirectoryError := os.ReadDir(filepath.Join(root, "rules"))
+	if readDirectoryError != nil {
+		return nil, readDirectoryError
 	}
 	for _, entry := range entries {
 		if entry.IsDir() {
-			if _, err := os.Stat(filepath.Join(root, "rules", entry.Name(), "rule.json")); err != nil {
+			if _, statError := os.Stat(filepath.Join(root, "rules", entry.Name(), "rule.json")); statError != nil {
 				return nil, fmt.Errorf("%s: missing rule descriptor", entry.Name())
 			}
 		}
 	}
 	var result []Descriptor
 	for _, path := range paths {
-		data, err := os.ReadFile(path)
-		if err != nil {
-			return nil, err
+		data, readError := os.ReadFile(path)
+		if readError != nil {
+			return nil, readError
 		}
 		var d Descriptor
 		decoder := json.NewDecoder(bytes.NewReader(data))
 		decoder.DisallowUnknownFields()
-		if err := decoder.Decode(&d); err != nil {
-			return nil, fmt.Errorf("%s: %w", path, err)
+		if decodeError := decoder.Decode(&d); decodeError != nil {
+			return nil, fmt.Errorf("%s: %w", path, decodeError)
 		}
-		if err := decoder.Decode(new(any)); err != io.EOF {
+		if decodeError := decoder.Decode(new(any)); decodeError != io.EOF {
 			return nil, fmt.Errorf("%s: trailing JSON", path)
 		}
 		d.Slug = filepath.Base(filepath.Dir(path))
@@ -155,7 +155,10 @@ func Discover(root string) ([]Descriptor, error) {
 			return nil, fmt.Errorf("%s: duplicate oracle adapter %q", path, d.Oracle)
 		}
 		adapters[d.Oracle] = true
-		if d.Order < 0 || !identifier.MatchString(d.Oracle) || d.UpstreamPackage == "" || !identifier.MatchString(d.UpstreamTest) {
+		if d.Order < 0 ||
+			!identifier.MatchString(d.Oracle) ||
+			d.UpstreamPackage == "" ||
+			!identifier.MatchString(d.UpstreamTest) {
 			return nil, fmt.Errorf("%s: invalid oracle or provenance", path)
 		}
 		for _, part := range strings.Split(d.UpstreamPackage, "/") {
@@ -163,22 +166,27 @@ func Discover(root string) ([]Descriptor, error) {
 				return nil, fmt.Errorf("%s: invalid upstream package", path)
 			}
 		}
-		d.Module, err = RuleModule(filepath.Dir(path))
-		if err != nil {
-			return nil, err
+		var ruleModuleError error
+		d.Module, ruleModuleError = RuleModule(filepath.Dir(path))
+		if ruleModuleError != nil {
+			return nil, ruleModuleError
 		}
-		module, err := os.ReadFile(filepath.Join(filepath.Dir(path), d.Module))
-		if err != nil {
-			return nil, err
+		module, readError := os.ReadFile(filepath.Join(filepath.Dir(path), d.Module))
+		if readError != nil {
+			return nil, readError
 		}
-		if !identifier.MatchString(d.Factory) || !identifier.MatchString(d.Class) || !strings.Contains(string(module), "export function "+d.Factory+"(") || !strings.Contains(string(module), "export class "+d.Class+" {") {
+		if !identifier.MatchString(d.Factory) ||
+			!identifier.MatchString(d.Class) ||
+			!strings.Contains(string(module), "export function "+d.Factory+"(") ||
+			!strings.Contains(string(module), "export class "+d.Class+" {") {
 			return nil, fmt.Errorf("%s: missing named factory or class", path)
 		}
 		for _, hook := range []string{d.Visit, d.Prepare, d.Finish} {
 			if hook == "" {
 				continue
 			}
-			if !identifier.MatchString(hook) || !regexp.MustCompile(`(?m)^\s+`+regexp.QuoteMeta(hook)+`\(`).Match(module) {
+			if !identifier.MatchString(hook) ||
+				!regexp.MustCompile(`(?m)^\s+`+regexp.QuoteMeta(hook)+`\(`).Match(module) {
 				return nil, fmt.Errorf("%s: missing named hook %q", path, hook)
 			}
 		}
@@ -197,9 +205,14 @@ func Discover(root string) ([]Descriptor, error) {
 			}
 			seen[kind] = true
 		}
-		adapter, err := parser.ParseFile(token.NewFileSet(), filepath.Join(filepath.Dir(path), "oracle.go"), nil, 0)
-		if err != nil {
-			return nil, err
+		adapter, parseFileError := parser.ParseFile(
+			token.NewFileSet(),
+			filepath.Join(filepath.Dir(path), "oracle.go"),
+			nil,
+			0,
+		)
+		if parseFileError != nil {
+			return nil, parseFileError
 		}
 		functions := map[string]bool{}
 		for _, decl := range adapter.Decls {
@@ -211,23 +224,26 @@ func Discover(root string) ([]Descriptor, error) {
 			return nil, fmt.Errorf("%s: missing oracle adapter exports", path)
 		}
 		var mutant struct{ Name, File, From, To string }
-		mutation, err := os.ReadFile(filepath.Join(filepath.Dir(path), "mutant.json"))
-		if err != nil {
-			return nil, err
+		mutation, readError := os.ReadFile(filepath.Join(filepath.Dir(path), "mutant.json"))
+		if readError != nil {
+			return nil, readError
 		}
 		mutationDecoder := json.NewDecoder(bytes.NewReader(mutation))
 		mutationDecoder.DisallowUnknownFields()
-		if err := mutationDecoder.Decode(&mutant); err != nil {
-			return nil, err
+		if decodeError := mutationDecoder.Decode(&mutant); decodeError != nil {
+			return nil, decodeError
 		}
 		if mutant.File == "" {
 			mutant.File = d.Module
 		}
-		if filepath.IsAbs(mutant.File) || filepath.Clean(mutant.File) == ".." || strings.HasPrefix(filepath.Clean(mutant.File), ".."+string(filepath.Separator)) || !(strings.HasSuffix(mutant.File, ".ts") || strings.HasSuffix(mutant.File, ".a")) {
+		if filepath.IsAbs(mutant.File) ||
+			filepath.Clean(mutant.File) == ".." ||
+			strings.HasPrefix(filepath.Clean(mutant.File), ".."+string(filepath.Separator)) ||
+			!(strings.HasSuffix(mutant.File, ".ts") || strings.HasSuffix(mutant.File, ".a")) {
 			return nil, fmt.Errorf("%s: mutant file must be an owned .ts or .a module", path)
 		}
-		if _, err := os.Stat(filepath.Join(filepath.Dir(path), mutant.File)); err != nil {
-			return nil, err
+		if _, statError := os.Stat(filepath.Join(filepath.Dir(path), mutant.File)); statError != nil {
+			return nil, statError
 		}
 		if mutant.Name == "" || mutant.From == "" || mutant.To == mutant.From {
 			return nil, fmt.Errorf("%s: invalid owned mutant", path)
@@ -252,13 +268,26 @@ func Discover(root string) ([]Descriptor, error) {
 
 func Render(descriptors []Descriptor) (typescript, golang []byte) {
 	var ts, goSource strings.Builder
-	ts.WriteString("// Generated by go run ./cmd/lint-registry. Do not edit: regenerate, and commit the result.\nimport type { RuleContext } from '../context.ts';\n")
-	goSource.WriteString("// Generated by go run ./cmd/lint-registry. Do not edit: regenerate, and commit the result.\npackage main\nimport \"github.com/system-inc/cohere/internal/lint/rule\"\ntype registeredRule struct { subject rule.Rule; options func([]string) any }\nfunc registeredRules() []registeredRule { return []registeredRule{\n")
+	ts.WriteString(
+		"// Generated by go run ./cmd/lint-registry. Do not edit: regenerate, and commit the result.\nimport type { RuleContext } from '../context.ts';\n",
+	)
+	goSource.WriteString(
+		"// Generated by go run ./cmd/lint-registry. Do not edit: regenerate, and commit the result.\npackage main\nimport \"github.com/system-inc/cohere/internal/lint/rule\"\ntype registeredRule struct { subject rule.Rule; options func([]string) any }\nfunc registeredRules() []registeredRule { return []registeredRule{\n",
+	)
 	for i, d := range descriptors {
 		if d.Module == "" {
 			d.Module = "rule.ts"
 		}
-		fmt.Fprintf(&ts, "import { %s as create%d, type %s as Rule%d } from '../rules/%s/%s';\n", d.Factory, i, d.Class, i, d.Slug, d.Module)
+		fmt.Fprintf(
+			&ts,
+			"import { %s as create%d, type %s as Rule%d } from '../rules/%s/%s';\n",
+			d.Factory,
+			i,
+			d.Class,
+			i,
+			d.Slug,
+			d.Module,
+		)
 		fmt.Fprintf(&goSource, "{%s(), %sOptions},\n", d.Oracle, d.Oracle)
 	}
 	// The generated driver is a port of cohere's fused walk (internal/types/program/walk.go): one walk per
@@ -299,7 +328,9 @@ func Render(descriptors []Descriptor) (typescript, golang []byte) {
 		}
 		ts.WriteString("}\n")
 	}
-	ts.WriteString("    visit(index: number, parent: number): void {\n        const node = this.context.node(index);\n        switch(node.kind) {\n")
+	ts.WriteString(
+		"    visit(index: number, parent: number): void {\n        const node = this.context.node(index);\n        switch(node.kind) {\n",
+	)
 	buckets := map[string][]int{}
 	for i, d := range descriptors {
 		for _, kind := range d.Kinds {
@@ -336,9 +367,9 @@ func Render(descriptors []Descriptor) (typescript, golang []byte) {
 		fmt.Fprintf(&ts, ", rule%d", i)
 	}
 	ts.WriteString(");\n}\n")
-	formatted, err := format.Source([]byte(goSource.String()))
-	if err != nil {
-		panic(fmt.Sprintf("registry generator produced invalid Go: %v", err))
+	formatted, formatError := format.Source([]byte(goSource.String()))
+	if formatError != nil {
+		panic(fmt.Sprintf("registry generator produced invalid Go: %v", formatError))
 	}
 	return []byte(ts.String()), formatted
 }
@@ -347,9 +378,9 @@ func Render(descriptors []Descriptor) (typescript, golang []byte) {
 // reads the tree and never changes it (#k01pgng: a Loom runner's source is read-only, and a product that compiled an
 // untracked registry keyed apart from Workshop's). A stale or missing file is named, with the command that fixes it.
 func Stale(root string) ([]Descriptor, error) {
-	descriptors, err := Discover(root)
-	if err != nil {
-		return nil, err
+	descriptors, discoverError := Discover(root)
+	if discoverError != nil {
+		return nil, discoverError
 	}
 	ts, goSource := Render(descriptors)
 	var stale []string
@@ -357,12 +388,17 @@ func Stale(root string) ([]Descriptor, error) {
 		name string
 		data []byte
 	}{{"registry.ts", ts}, {"registry.go", goSource}} {
-		if existing, err := os.ReadFile(filepath.Join(root, ".generated", file.name)); err != nil || !bytes.Equal(existing, file.data) {
+		if existing, readError := os.ReadFile(
+			filepath.Join(root, ".generated", file.name),
+		); readError != nil || !bytes.Equal(existing, file.data) {
 			stale = append(stale, filepath.Join(root, ".generated", file.name))
 		}
 	}
 	if len(stale) != 0 {
-		return nil, fmt.Errorf("the lint registry is stale (%s): run go run ./cmd/lint-registry and commit .generated", strings.Join(stale, ", "))
+		return nil, fmt.Errorf(
+			"the lint registry is stale (%s): run go run ./cmd/lint-registry and commit .generated",
+			strings.Join(stale, ", "),
+		)
 	}
 	return descriptors, nil
 }
@@ -370,37 +406,37 @@ func Stale(root string) ([]Descriptor, error) {
 // Generate validates the entire registry even when a test selects only one rule.
 // Atomic replacement and unchanged-byte checks make concurrent test generation safe.
 func Generate(root string) ([]Descriptor, error) {
-	descriptors, err := Discover(root)
-	if err != nil {
-		return nil, err
+	descriptors, discoverError := Discover(root)
+	if discoverError != nil {
+		return nil, discoverError
 	}
 	ts, goSource := Render(descriptors)
 	directory := filepath.Join(root, ".generated")
-	if err := os.MkdirAll(directory, 0755); err != nil {
-		return nil, err
+	if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+		return nil, createDirectoryError
 	}
 	for _, file := range []struct {
 		name string
 		data []byte
 	}{{"registry.ts", ts}, {"registry.go", goSource}} {
 		path := filepath.Join(directory, file.name)
-		if existing, err := os.ReadFile(path); err == nil && bytes.Equal(existing, file.data) {
+		if existing, readError := os.ReadFile(path); readError == nil && bytes.Equal(existing, file.data) {
 			continue
 		}
-		temporary, err := os.CreateTemp(directory, "registry-")
-		if err != nil {
-			return nil, err
+		temporary, temporaryFileError := os.CreateTemp(directory, "registry-")
+		if temporaryFileError != nil {
+			return nil, temporaryFileError
 		}
-		if _, err = temporary.Write(file.data); err != nil {
+		if _, writeError := temporary.Write(file.data); writeError != nil {
 			temporary.Close()
 			os.Remove(temporary.Name())
-			return nil, err
+			return nil, writeError
 		}
-		if err = temporary.Close(); err != nil {
-			return nil, err
+		if closeError := temporary.Close(); closeError != nil {
+			return nil, closeError
 		}
-		if err = os.Rename(temporary.Name(), path); err != nil {
-			return nil, err
+		if renameError := os.Rename(temporary.Name(), path); renameError != nil {
+			return nil, renameError
 		}
 	}
 	return descriptors, nil

@@ -23,15 +23,15 @@ const nodeTypesRoot = "bundled:///node/node_modules/@types"
 // The exact published package travels with the compiler, independent of its
 // working directory. Build-time integrity tests hold every embedded byte.
 func nodeTypesIndex() (tspath.RootedFilePath, error) {
-	if err := validateNodeHostAxioms(embeddedNodeTypes); err != nil {
-		return "", err
+	if validateNodeHostAxiomsError := validateNodeHostAxioms(embeddedNodeTypes); validateNodeHostAxiomsError != nil {
+		return "", validateNodeHostAxiomsError
 	}
 	return nodeTypesIndexFromFS(embeddedNodeTypes)
 }
 
 func nodeTypesIndexFromFS(files fs.FS) (tspath.RootedFilePath, error) {
-	data, err := fs.ReadFile(files, "node_types/node_modules/@types/node/package.json")
-	if err != nil {
+	data, readFileError := fs.ReadFile(files, "node_types/node_modules/@types/node/package.json")
+	if readFileError != nil {
 		return "", fmt.Errorf("load: this compiler is missing its bundled Node declarations; reinstall Adamic")
 	}
 	var pin struct {
@@ -39,10 +39,15 @@ func nodeTypesIndexFromFS(files fs.FS) (tspath.RootedFilePath, error) {
 		Version string `json:"version"`
 	}
 	if json.Unmarshal(data, &pin) != nil || pin.Name != "@types/node" || pin.Version != NodeTypesVersion {
-		return "", fmt.Errorf("load: this compiler's bundled Node declarations are not @types/node %s; reinstall Adamic", NodeTypesVersion)
+		return "", fmt.Errorf(
+			"load: this compiler's bundled Node declarations are not @types/node %s; reinstall Adamic",
+			NodeTypesVersion,
+		)
 	}
-	if _, err := fs.ReadFile(files, "node_types/node_modules/@types/node/index.d.ts"); err != nil {
-		return "", fmt.Errorf("load: this compiler's bundled Node declarations are incomplete (missing index.d.ts); reinstall Adamic")
+	if _, readFileError := fs.ReadFile(files, "node_types/node_modules/@types/node/index.d.ts"); readFileError != nil {
+		return "", fmt.Errorf(
+			"load: this compiler's bundled Node declarations are incomplete (missing index.d.ts); reinstall Adamic",
+		)
 	}
 	return tspath.RootedDirectoryPathFromNormalized(nodeTypesDirectory).ResolveFile("index.d.ts"), nil
 }
@@ -65,7 +70,10 @@ func usesNodeModules(program *compiler.Program) bool {
 			}
 		case ast.KindCallExpression:
 			call := node.AsCallExpression()
-			if ast.IsIdentifier(call.Expression) && call.Expression.Text() == "require" && call.Arguments != nil && len(call.Arguments.Nodes) == 1 {
+			if ast.IsIdentifier(call.Expression) &&
+				call.Expression.Text() == "require" &&
+				call.Arguments != nil &&
+				len(call.Arguments.Nodes) == 1 {
 				argument := call.Arguments.Nodes[0]
 				if argument.Kind == ast.KindStringLiteral && nodeBuiltinModules()[argument.Text()] {
 					return true
@@ -95,37 +103,46 @@ func usesNodeModules(program *compiler.Program) bool {
 var nodeBuiltinModules = sync.OnceValue(func() map[string]bool {
 	modules := map[string]bool{}
 	declaration := regexp.MustCompile(`(?m)^declare module "([^"]+)"`)
-	err := fs.WalkDir(embeddedNodeTypes, "node_types/node_modules/@types/node", func(name string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
+	walkDirectoryError := fs.WalkDir(embeddedNodeTypes, "node_types/node_modules/@types/node", func(
+		name string,
+		entry fs.DirEntry,
+		pathError error,
+	) error {
+		if pathError != nil {
+			return pathError
 		}
 		if entry.IsDir() || !strings.HasSuffix(name, ".d.ts") {
 			return nil
 		}
-		data, err := embeddedNodeTypes.ReadFile(name)
-		if err != nil {
-			return err
+		data, readFileError := embeddedNodeTypes.ReadFile(name)
+		if readFileError != nil {
+			return readFileError
 		}
 		for _, match := range declaration.FindAllSubmatch(data, -1) {
 			modules[string(match[1])] = true
 		}
 		return nil
 	})
-	if err != nil {
-		panic(err) // The embedded filesystem is fixed at build time.
+	if walkDirectoryError != nil {
+		panic(walkDirectoryError) // The embedded filesystem is fixed at build time.
 	}
 	return modules
 })
 
 // Unit lowerers use declaration identity, not the spelling of an imported name.
 func IsNodeLibrary(file *ast.SourceFile) bool {
-	return file != nil && strings.HasPrefix(file.FileName().AsString(), nodeTypesDirectory+"/") && strings.HasSuffix(file.FileName().AsString(), ".d.ts")
+	return file != nil &&
+		strings.HasPrefix(file.FileName().AsString(), nodeTypesDirectory+"/") &&
+		strings.HasSuffix(file.FileName().AsString(), ".d.ts")
 }
 
 // Match top-level declarations, not console method signatures. The standalone
 // prelude has only console; the project overlay adds Console and process together.
 func nodePrelude(source string, requiredOverlay ...string) (string, error) {
-	file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: tspath.RootedFilePathFromAbsolute(preludePath), PathKey: tspath.CaseSensitive.PathKey(tspath.RootedPathFromAbsolute(preludePath))}, source, core.ScriptKindTS)
+	file := parser.ParseSourceFile(ast.SourceFileParseOptions{
+		FileName: tspath.RootedFilePathFromAbsolute(preludePath),
+		PathKey:  tspath.CaseSensitive.PathKey(tspath.RootedPathFromAbsolute(preludePath)),
+	}, source, core.ScriptKindTS)
 	if len(file.Diagnostics()) != 0 {
 		return "", fmt.Errorf("load: cannot adapt malformed Node prelude")
 	}
@@ -165,7 +182,11 @@ func nodePrelude(source string, requiredOverlay ...string) (string, error) {
 			return "", fmt.Errorf("load: Node prelude is missing the %s declaration", name)
 		}
 	}
-	replacements := map[string]string{"console": "declare var console: Console;", "Console": "", "process": "declare var process: NodeJS.Process;"}
+	replacements := map[string]string{
+		"console": "declare var console: Console;",
+		"Console": "",
+		"process": "declare var process: NodeJS.Process;",
+	}
 	// Work backwards so the original parser spans remain valid. Keep leading
 	// comments and whitespace: Pos includes trivia before the declaration.
 	for index := len(file.Statements.Nodes) - 1; index >= 0; index-- {

@@ -22,23 +22,23 @@ func runGit(test *testing.T, directory string, arguments ...string) string {
 			arguments...,
 		)...,
 	)
-	output, err := command.CombinedOutput()
-	if err != nil {
-		test.Fatalf("git %v in %s: %v\n%s", arguments, directory, err, output)
+	output, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("git %v in %s: %v\n%s", arguments, directory, combinedOutputError, output)
 	}
 	return string(output)
 }
 
 func write(test *testing.T, name, text string, mode os.FileMode) {
 	test.Helper()
-	if err := os.MkdirAll(filepath.Dir(name), 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(filepath.Dir(name), 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
-	if err := os.WriteFile(name, []byte(text), mode); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(name, []byte(text), mode); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if err := os.Chmod(name, mode); err != nil {
-		test.Fatal(err)
+	if changeModeError := os.Chmod(name, mode); changeModeError != nil {
+		test.Fatal(changeModeError)
 	}
 }
 
@@ -75,8 +75,8 @@ func checkout(test *testing.T) string {
 		"a.b.md":           "beside a/\n",
 		"tool.sh":          "#!/bin/sh\n",
 	})
-	if err := os.Symlink("a/b.md", filepath.Join(top, "link.md")); err != nil {
-		test.Fatal(err)
+	if symlinkError := os.Symlink("a/b.md", filepath.Join(top, "link.md")); symlinkError != nil {
+		test.Fatal(symlinkError)
 	}
 	runGit(test, top, "add", "link.md")
 	runGit(test, top, "submodule", "add", "-q", middle, "cohere")
@@ -98,32 +98,32 @@ func unpack(test *testing.T, checkout string, manifest bool) string {
 			checkout,
 			filepath.FromSlash(name),
 		), filepath.Join(directory, filepath.FromSlash(name))
-		info, err := os.Lstat(source)
-		if err != nil {
-			test.Fatal(err)
+		info, statError := os.Lstat(source)
+		if statError != nil {
+			test.Fatal(statError)
 		}
-		if err := os.MkdirAll(filepath.Dir(destination), 0o755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(filepath.Dir(destination), 0o755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 		if info.Mode()&os.ModeSymlink != 0 {
-			target, err := os.Readlink(source)
-			if err != nil {
-				test.Fatal(err)
+			target, readLinkError := os.Readlink(source)
+			if readLinkError != nil {
+				test.Fatal(readLinkError)
 			}
-			if err := os.Symlink(target, destination); err != nil {
-				test.Fatal(err)
+			if symlinkError := os.Symlink(target, destination); symlinkError != nil {
+				test.Fatal(symlinkError)
 			}
 			continue
 		}
-		data, err := os.ReadFile(source)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(source)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		write(test, destination, string(data), info.Mode().Perm())
 	}
 	if manifest {
-		if err := Write(checkout, directory); err != nil {
-			test.Fatal(err)
+		if writeError := Write(checkout, directory); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	return directory
@@ -139,40 +139,40 @@ func TestManifestAnswersWhatGitAnswers(test *testing.T) {
 		if Git(filepath.Join(source, repository)) || !Git(filepath.Join(checkout, repository)) {
 			test.Fatalf("%s: the checkout must have .git and the source none", repository)
 		}
-		gitHead, err := Head(filepath.Join(checkout, repository))
-		if err != nil {
-			test.Fatal(err)
+		gitHead, headError := Head(filepath.Join(checkout, repository))
+		if headError != nil {
+			test.Fatal(headError)
 		}
-		head, err := Head(filepath.Join(source, repository))
-		if err != nil || head != gitHead {
-			test.Fatalf("%s: HEAD %s (%v), git says %s", repository, head, err, gitHead)
+		head, headError := Head(filepath.Join(source, repository))
+		if headError != nil || head != gitHead {
+			test.Fatalf("%s: HEAD %s (%v), git says %s", repository, head, headError, gitHead)
 		}
-		gitFiles, err := Files(filepath.Join(checkout, repository))
-		if err != nil {
-			test.Fatal(err)
+		gitFiles, filesError := Files(filepath.Join(checkout, repository))
+		if filesError != nil {
+			test.Fatal(filesError)
 		}
-		files, err := Files(filepath.Join(source, repository))
-		if err != nil || !reflect.DeepEqual(files, gitFiles) {
-			test.Fatalf("%s: files %v (%v), git says %v", repository, files, err, gitFiles)
+		files, filesError := Files(filepath.Join(source, repository))
+		if filesError != nil || !reflect.DeepEqual(files, gitFiles) {
+			test.Fatalf("%s: files %v (%v), git says %v", repository, files, filesError, gitFiles)
 		}
-		missing, changed, err := Changed(filepath.Join(source, repository), files)
-		if err != nil || len(missing)+len(changed) != 0 {
+		missing, changed, changedError := Changed(filepath.Join(source, repository), files)
+		if changedError != nil || len(missing)+len(changed) != 0 {
 			test.Fatalf(
 				"%s: an unpacked source reads as missing %q, changed %q (%v)",
 				repository,
 				missing,
 				changed,
-				err,
+				changedError,
 			)
 		}
 	}
-	gitRecursive, err := Recursive(checkout)
-	if err != nil {
-		test.Fatal(err)
+	gitRecursive, recursiveError := Recursive(checkout)
+	if recursiveError != nil {
+		test.Fatal(recursiveError)
 	}
-	recursive, err := Recursive(source)
-	if err != nil || !reflect.DeepEqual(recursive, gitRecursive) {
-		test.Fatalf("recursive listing %q (%v), git says %q", recursive, err, gitRecursive)
+	recursive, recursiveError := Recursive(source)
+	if recursiveError != nil || !reflect.DeepEqual(recursive, gitRecursive) {
+		test.Fatalf("recursive listing %q (%v), git says %q", recursive, recursiveError, gitRecursive)
 	}
 	if sort.StringsAreSorted(recursive) || len(recursive) != 12 {
 		test.Fatalf("the fixture no longer tells git's order from a sorted one: %q", recursive)
@@ -185,24 +185,24 @@ func TestManifestAnswersWhatGitAnswers(test *testing.T) {
 func TestChangedNamesEveryDifference(test *testing.T) {
 	test.Parallel()
 	source := unpack(test, checkout(test), true)
-	files, err := Files(source)
-	if err != nil {
-		test.Fatal(err)
+	files, filesError := Files(source)
+	if filesError != nil {
+		test.Fatal(filesError)
 	}
 	write(test, filepath.Join(source, "a/b.md"), "c\n", 0o644)
-	if err := os.Chmod(filepath.Join(source, "tool.sh"), 0o644); err != nil {
-		test.Fatal(err)
+	if changeModeError := os.Chmod(filepath.Join(source, "tool.sh"), 0o644); changeModeError != nil {
+		test.Fatal(changeModeError)
 	}
-	if err := os.Remove(filepath.Join(source, "link.md")); err != nil {
-		test.Fatal(err)
+	if removeError := os.Remove(filepath.Join(source, "link.md")); removeError != nil {
+		test.Fatal(removeError)
 	}
 	write(test, filepath.Join(source, "link.md"), "a/b.md", 0o644)
-	if err := os.Remove(filepath.Join(source, "cohere.json")); err != nil {
-		test.Fatal(err)
+	if removeError := os.Remove(filepath.Join(source, "cohere.json")); removeError != nil {
+		test.Fatal(removeError)
 	}
-	missing, changed, err := Changed(source, files)
-	if err != nil {
-		test.Fatal(err)
+	missing, changed, changedError := Changed(source, files)
+	if changedError != nil {
+		test.Fatal(changedError)
 	}
 	if !reflect.DeepEqual(missing, []string{"cohere.json"}) ||
 		!reflect.DeepEqual(changed, []string{"a/b.md", "link.md", "tool.sh"}) {
@@ -215,29 +215,35 @@ func TestNoGitAndNoManifestFailsByName(test *testing.T) {
 	test.Parallel()
 	checkout := checkout(test)
 	source := unpack(test, checkout, false)
-	if _, err := Head(
+	if _, headError := Head(
 		filepath.Join(source, "cohere"),
-	); err == nil || !strings.Contains(err.Error(), ManifestDirectory) || !strings.Contains(err.Error(), "commit") {
-		test.Fatalf("no manifest: %v", err)
+	); headError == nil ||
+		!strings.Contains(headError.Error(), ManifestDirectory) ||
+		!strings.Contains(headError.Error(), "commit") {
+		test.Fatalf("no manifest: %v", headError)
 	}
-	if _, err := Files(source); err == nil || !strings.Contains(err.Error(), "tracked files") {
-		test.Fatalf("no manifest: %v", err)
+	if _, filesError := Files(source); filesError == nil || !strings.Contains(filesError.Error(), "tracked files") {
+		test.Fatalf("no manifest: %v", filesError)
 	}
-	if _, err := Recursive(source); err == nil || !strings.Contains(err.Error(), "no .git") {
-		test.Fatalf("no manifest: %v", err)
+	if _, recursiveError := Recursive(
+		source,
+	); recursiveError == nil || !strings.Contains(recursiveError.Error(), "no .git") {
+		test.Fatalf("no manifest: %v", recursiveError)
 	}
 
 	lost := unpack(test, checkout, true)
-	if err := os.Remove(filepath.Join(lost, ManifestDirectory, "cohere", "files")); err != nil {
-		test.Fatal(err)
+	if removeError := os.Remove(filepath.Join(lost, ManifestDirectory, "cohere", "files")); removeError != nil {
+		test.Fatal(removeError)
 	}
-	if _, err := Files(
+	if _, filesError := Files(
 		filepath.Join(lost, "cohere"),
-	); err == nil || !strings.Contains(err.Error(), "no tracked files for it") {
-		test.Fatalf("a repository's files lost from the manifest: %v", err)
+	); filesError == nil || !strings.Contains(filesError.Error(), "no tracked files for it") {
+		test.Fatalf("a repository's files lost from the manifest: %v", filesError)
 	}
-	if _, err := Recursive(lost); err == nil || !strings.Contains(err.Error(), "no tracked files for it") {
-		test.Fatalf("a submodule's files lost from the manifest: %v", err)
+	if _, recursiveError := Recursive(
+		lost,
+	); recursiveError == nil || !strings.Contains(recursiveError.Error(), "no tracked files for it") {
+		test.Fatalf("a submodule's files lost from the manifest: %v", recursiveError)
 	}
 }
 
@@ -245,13 +251,13 @@ func TestNoGitAndNoManifestFailsByName(test *testing.T) {
 func record(test *testing.T, directory, source, repository string) {
 	test.Helper()
 	scratch := test.TempDir()
-	if err := Write(directory, scratch); err != nil {
-		test.Fatal(err)
+	if writeError := Write(directory, scratch); writeError != nil {
+		test.Fatal(writeError)
 	}
 	for _, name := range []string{headFile, commitFile, filesFile} {
-		data, err := os.ReadFile(filepath.Join(scratch, ManifestDirectory, name))
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(filepath.Join(scratch, ManifestDirectory, name))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		write(test, filepath.Join(source, ManifestDirectory, filepath.FromSlash(repository), name), string(data), 0o644)
 	}
@@ -267,13 +273,13 @@ func TestManifestCommitMustMatchTheParentGitlink(test *testing.T) {
 	write(test, filepath.Join(leaf, "README.md"), "# moved on\n", 0o644)
 	runGit(test, leaf, "commit", "-qam", "unpinned")
 	record(test, leaf, source, "cohere/TypeScript")
-	if _, err := Head(
+	if _, headError := Head(
 		filepath.Join(source, "cohere", "TypeScript"),
-	); err == nil || !strings.Contains(err.Error(), "gitlink") {
-		test.Fatalf("a commit its parent doesn't pin: %v", err)
+	); headError == nil || !strings.Contains(headError.Error(), "gitlink") {
+		test.Fatalf("a commit its parent doesn't pin: %v", headError)
 	}
-	if _, err := Head(filepath.Join(source, "cohere")); err != nil {
-		test.Fatalf("the parent's own record still answers: %v", err)
+	if _, headError := Head(filepath.Join(source, "cohere")); headError != nil {
+		test.Fatalf("the parent's own record still answers: %v", headError)
 	}
 }
 
@@ -284,11 +290,11 @@ func TestGitAnswersOverAManifest(test *testing.T) {
 	want := strings.TrimSpace(runGit(test, checkout, "rev-parse", "HEAD"))
 	write(test, filepath.Join(checkout, ManifestDirectory, "HEAD"), strings.Repeat("2", 40)+"\n", 0o644)
 	write(test, filepath.Join(checkout, ManifestDirectory, "files"), "", 0o644)
-	if head, err := Head(checkout); err != nil || head != want {
-		test.Fatalf("HEAD %s (%v), git says %s", head, err, want)
+	if head, headError := Head(checkout); headError != nil || head != want {
+		test.Fatalf("HEAD %s (%v), git says %s", head, headError, want)
 	}
-	if files, err := Files(checkout); err != nil || len(files) != 8 {
-		test.Fatalf("files %v (%v)", files, err)
+	if files, filesError := Files(checkout); filesError != nil || len(files) != 8 {
+		test.Fatalf("files %v (%v)", files, filesError)
 	}
 }
 
@@ -299,8 +305,8 @@ func TestManifestFilesAreBoundToItsCommit(test *testing.T) {
 	checkout := checkout(test)
 	leaf := filepath.Join(checkout, "cohere", "TypeScript")
 	older := test.TempDir()
-	if err := Write(leaf, older); err != nil {
-		test.Fatal(err)
+	if writeError := Write(leaf, older); writeError != nil {
+		test.Fatal(writeError)
 	}
 	// The tree and cohere as checked out, TypeScript as Write recorded it before any later commit: bound.
 	prepare := func() string {
@@ -308,9 +314,9 @@ func TestManifestFilesAreBoundToItsCommit(test *testing.T) {
 		record(test, checkout, source, "")
 		record(test, filepath.Join(checkout, "cohere"), source, "cohere")
 		for _, file := range []string{headFile, commitFile, filesFile} {
-			data, err := os.ReadFile(filepath.Join(older, ManifestDirectory, file))
-			if err != nil {
-				test.Fatal(err)
+			data, readError := os.ReadFile(filepath.Join(older, ManifestDirectory, file))
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			write(test, filepath.Join(source, ManifestDirectory, "cohere", "TypeScript", file), string(data), 0o644)
 		}
@@ -322,12 +328,12 @@ func TestManifestFilesAreBoundToItsCommit(test *testing.T) {
 			runGit(test, leaf, "add", ".")
 			runGit(test, leaf, "commit", "-qm", "later")
 			later := test.TempDir()
-			if err := Write(leaf, later); err != nil {
-				test.Fatal(err)
+			if writeError := Write(leaf, later); writeError != nil {
+				test.Fatal(writeError)
 			}
-			data, err := os.ReadFile(filepath.Join(later, ManifestDirectory, filesFile))
-			if err != nil {
-				test.Fatal(err)
+			data, readError := os.ReadFile(filepath.Join(later, ManifestDirectory, filesFile))
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			write(
 				test,
@@ -338,36 +344,36 @@ func TestManifestFilesAreBoundToItsCommit(test *testing.T) {
 		},
 		"commit object edited": func(source string) {
 			name := filepath.Join(source, ManifestDirectory, "cohere", "TypeScript", commitFile)
-			data, err := os.ReadFile(name)
-			if err != nil {
-				test.Fatal(err)
+			data, readError := os.ReadFile(name)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			write(test, name, strings.Replace(string(data), "fixture", "fixturf", 1), 0o644)
 		},
 		"commit object missing": func(source string) {
-			if err := os.Remove(
+			if removeError := os.Remove(
 				filepath.Join(source, ManifestDirectory, "cohere", "TypeScript", commitFile),
-			); err != nil {
-				test.Fatal(err)
+			); removeError != nil {
+				test.Fatal(removeError)
 			}
 		},
 	} {
 		source := prepare()
-		if _, err := Files(filepath.Join(source, "cohere", "TypeScript")); err != nil {
-			test.Fatalf("%s: the record before the fault: %v", name, err)
+		if _, filesError := Files(filepath.Join(source, "cohere", "TypeScript")); filesError != nil {
+			test.Fatalf("%s: the record before the fault: %v", name, filesError)
 		}
 		source = prepare()
 		plant(source)
-		_, err := Files(filepath.Join(source, "cohere", "TypeScript"))
+		_, filesError := Files(filepath.Join(source, "cohere", "TypeScript"))
 		want := map[string]string{
 			"files from another commit": "aren't that commit's",
 			"commit object edited":      "hashes to",
 			"commit object missing":     "no commit object",
 		}[name]
-		if err == nil || !strings.Contains(err.Error(), want) {
-			test.Fatalf("%s: %v", name, err)
+		if filesError == nil || !strings.Contains(filesError.Error(), want) {
+			test.Fatalf("%s: %v", name, filesError)
 		}
-		test.Logf("%s: %v", name, err)
+		test.Logf("%s: %v", name, filesError)
 	}
 }
 
@@ -376,19 +382,19 @@ func TestManifestFilesAreBoundToItsCommit(test *testing.T) {
 func TestExecutableBitIsTheOwners(test *testing.T) {
 	test.Parallel()
 	source := unpack(test, checkout(test), true)
-	files, err := Files(source)
-	if err != nil {
-		test.Fatal(err)
+	files, filesError := Files(source)
+	if filesError != nil {
+		test.Fatal(filesError)
 	}
-	if err := os.Chmod(filepath.Join(source, "a/b.md"), 0o654); err != nil {
-		test.Fatal(err)
+	if changeModeError := os.Chmod(filepath.Join(source, "a/b.md"), 0o654); changeModeError != nil {
+		test.Fatal(changeModeError)
 	}
-	if err := os.Chmod(filepath.Join(source, "tool.sh"), 0o645); err != nil {
-		test.Fatal(err)
+	if changeModeError := os.Chmod(filepath.Join(source, "tool.sh"), 0o645); changeModeError != nil {
+		test.Fatal(changeModeError)
 	}
-	missing, changed, err := Changed(source, files)
-	if err != nil || len(missing) != 0 || !reflect.DeepEqual(changed, []string{"tool.sh"}) {
-		test.Fatalf("missing %q, changed %q (%v)", missing, changed, err)
+	missing, changed, changedError := Changed(source, files)
+	if changedError != nil || len(missing) != 0 || !reflect.DeepEqual(changed, []string{"tool.sh"}) {
+		test.Fatalf("missing %q, changed %q (%v)", missing, changed, changedError)
 	}
 }
 
@@ -404,35 +410,42 @@ func TestUnrecordedFilesAreNamed(test *testing.T) {
 	source := unpack(test, checkout, true)
 	write(test, filepath.Join(source, "a", "node_modules", "pkg", "README.md"), "provisioned\n", 0o644)
 	write(test, filepath.Join(source, "run.log"), "log\n", 0o644)
-	if extra, err := Unrecorded(source, "."); err != nil || len(extra) != 0 {
-		test.Fatalf("ignored leftovers named: %q (%v)", extra, err)
+	if extra, unrecordedError := Unrecorded(source, "."); unrecordedError != nil || len(extra) != 0 {
+		test.Fatalf("ignored leftovers named: %q (%v)", extra, unrecordedError)
 	}
-	if _, err := Recursive(source); err != nil {
-		test.Fatalf("ignored leftovers refused: %v", err)
+	if _, recursiveError := Recursive(source); recursiveError != nil {
+		test.Fatalf("ignored leftovers refused: %v", recursiveError)
 	}
 	write(test, filepath.Join(source, "a", "new", "c.md"), "added since\n", 0o644)
 	write(test, filepath.Join(source, "cohere", "internal", "y.go"), "package x\n", 0o644)
-	if extra, err := Unrecorded(source, "a"); err != nil || !reflect.DeepEqual(extra, []string{"a/new/c.md"}) {
-		test.Fatalf("unrecorded under a: %q (%v)", extra, err)
+	if extra, unrecordedError := Unrecorded(
+		source,
+		"a",
+	); unrecordedError != nil || !reflect.DeepEqual(extra, []string{"a/new/c.md"}) {
+		test.Fatalf("unrecorded under a: %q (%v)", extra, unrecordedError)
 	}
-	if extra, err := Unrecorded(
+	if extra, unrecordedError := Unrecorded(
 		filepath.Join(source, "cohere"),
 		".",
-	); err != nil || !reflect.DeepEqual(extra, []string{"internal/y.go"}) {
-		test.Fatalf("unrecorded in cohere: %q (%v)", extra, err)
+	); unrecordedError != nil || !reflect.DeepEqual(extra, []string{"internal/y.go"}) {
+		test.Fatalf("unrecorded in cohere: %q (%v)", extra, unrecordedError)
 	}
-	if _, err := Recursive(source); err == nil || !strings.Contains(err.Error(), "internal/y.go") {
-		test.Fatalf("a stale submodule record listed: %v", err)
+	if _, recursiveError := Recursive(
+		source,
+	); recursiveError == nil || !strings.Contains(recursiveError.Error(), "internal/y.go") {
+		test.Fatalf("a stale submodule record listed: %v", recursiveError)
 	}
-	if err := os.Remove(filepath.Join(source, "cohere", "internal", "y.go")); err != nil {
-		test.Fatal(err)
+	if removeError := os.Remove(filepath.Join(source, "cohere", "internal", "y.go")); removeError != nil {
+		test.Fatal(removeError)
 	}
-	if _, err := Recursive(source); err == nil || !strings.Contains(err.Error(), "a/new/c.md") {
-		test.Fatalf("a stale record listed: %v", err)
+	if _, recursiveError := Recursive(
+		source,
+	); recursiveError == nil || !strings.Contains(recursiveError.Error(), "a/new/c.md") {
+		test.Fatalf("a stale record listed: %v", recursiveError)
 	}
 	write(test, filepath.Join(checkout, "a", "new", "c.md"), "untracked in a checkout\n", 0o644)
-	if extra, err := Unrecorded(checkout, "."); err != nil || extra != nil {
-		test.Fatalf("git's own checkout: %q (%v)", extra, err)
+	if extra, unrecordedError := Unrecorded(checkout, "."); unrecordedError != nil || extra != nil {
+		test.Fatalf("git's own checkout: %q (%v)", extra, unrecordedError)
 	}
 }
 
@@ -449,9 +462,9 @@ func TestUnrecordedNamesArePathsNotPathspecs(test *testing.T) {
 	for _, name := range []string{":(glob)x.md", ":!y.md", ":(top)z.log"} {
 		write(test, filepath.Join(source, name), "magic\n", 0o644)
 	}
-	extra, err := Unrecorded(source, ".")
-	if err != nil || !reflect.DeepEqual(extra, []string{":!y.md", ":(glob)x.md"}) {
-		test.Fatalf("names that look like pathspecs: %q (%v)", extra, err)
+	extra, unrecordedError := Unrecorded(source, ".")
+	if unrecordedError != nil || !reflect.DeepEqual(extra, []string{":!y.md", ":(glob)x.md"}) {
+		test.Fatalf("names that look like pathspecs: %q (%v)", extra, unrecordedError)
 	}
 }
 
@@ -463,17 +476,17 @@ func TestACallersGitVariablesNeverRedirectAnAnswer(test *testing.T) {
 	top := checkout(test)
 	answers := func() (string, []Entry, []string) {
 		test.Helper()
-		head, err := Head(top)
-		if err != nil {
-			test.Fatal(err)
+		head, headError := Head(top)
+		if headError != nil {
+			test.Fatal(headError)
 		}
-		files, err := Files(top)
-		if err != nil {
-			test.Fatal(err)
+		files, filesError := Files(top)
+		if filesError != nil {
+			test.Fatal(filesError)
 		}
-		recursive, err := Recursive(top)
-		if err != nil {
-			test.Fatal(err)
+		recursive, recursiveError := Recursive(top)
+		if recursiveError != nil {
+			test.Fatal(recursiveError)
 		}
 		return head, files, recursive
 	}
@@ -509,28 +522,28 @@ func TestPathsUnderLeavesSkippedDirectoriesUnentered(test *testing.T) {
 		"other/evidence/kept.ts": "outside root;\n",
 	})
 	want := []string{"stage1/a.ts", "stage1/evidence-based/b.ts", "stage1/evidence.ts", "stage1/rules/x/rule.ts"}
-	listed, err := PathsUnder(directory, "stage1", "evidence", "testdata")
-	if err != nil {
-		test.Fatal(err)
+	listed, pathsUnderError := PathsUnder(directory, "stage1", "evidence", "testdata")
+	if pathsUnderError != nil {
+		test.Fatal(pathsUnderError)
 	}
 	if !reflect.DeepEqual(listed, want) {
 		test.Fatalf("git's answer: %q, want %q", listed, want)
 	}
 	test.Setenv("ADAMIC_BUILD_TRACE", test.TempDir())
-	walked, err := PathsUnder(directory, "stage1", "evidence", "testdata")
-	if err != nil {
-		test.Fatal(err)
+	walked, pathsUnderError := PathsUnder(directory, "stage1", "evidence", "testdata")
+	if pathsUnderError != nil {
+		test.Fatal(pathsUnderError)
 	}
 	if !reflect.DeepEqual(walked, want) {
 		test.Fatalf("the traced walk: %q, want %q", walked, want)
 	}
 	// A root that is itself a skipped name is still listed: skip applies below root.
-	if rooted, err := PathsUnder(
+	if rooted, pathsUnderError := PathsUnder(
 		directory,
 		"stage1/rules/x/evidence",
 		"evidence",
-	); err != nil || !reflect.DeepEqual(rooted, []string{"stage1/rules/x/evidence/log.txt"}) {
-		test.Fatalf("a skipped name as root: %q %v", rooted, err)
+	); pathsUnderError != nil || !reflect.DeepEqual(rooted, []string{"stage1/rules/x/evidence/log.txt"}) {
+		test.Fatalf("a skipped name as root: %q %v", rooted, pathsUnderError)
 	}
 }
 
@@ -543,31 +556,31 @@ func TestManifestIsReadAsKeying(test *testing.T) {
 	checkout := checkout(test)
 	source := unpack(test, checkout, true)
 	away := filepath.Join(test.TempDir(), "away")
-	if err := os.Rename(filepath.Join(source, ManifestDirectory), away); err != nil {
-		test.Fatal(err)
+	if renameError := os.Rename(filepath.Join(source, ManifestDirectory), away); renameError != nil {
+		test.Fatal(renameError)
 	}
 	calls := 0
 	saved := asKeying
 	asKeying = func(compute func()) {
 		calls++
-		if err := os.Rename(away, filepath.Join(source, ManifestDirectory)); err != nil {
-			test.Fatal(err)
+		if renameError := os.Rename(away, filepath.Join(source, ManifestDirectory)); renameError != nil {
+			test.Fatal(renameError)
 		}
 		defer func() {
-			if err := os.Rename(filepath.Join(source, ManifestDirectory), away); err != nil {
-				test.Fatal(err)
+			if renameError := os.Rename(filepath.Join(source, ManifestDirectory), away); renameError != nil {
+				test.Fatal(renameError)
 			}
 		}()
 		saved(compute)
 	}
 	test.Cleanup(func() { asKeying = saved })
 	for _, repository := range []string{"cohere/TypeScript", "cohere", "."} {
-		gitHead, err := Head(filepath.Join(checkout, repository))
-		if err != nil {
-			test.Fatal(err)
+		gitHead, headError := Head(filepath.Join(checkout, repository))
+		if headError != nil {
+			test.Fatal(headError)
 		}
-		if head, err := Head(filepath.Join(source, repository)); err != nil || head != gitHead {
-			test.Fatalf("%s: HEAD %s (%v), git says %s", repository, head, err, gitHead)
+		if head, headError := Head(filepath.Join(source, repository)); headError != nil || head != gitHead {
+			test.Fatalf("%s: HEAD %s (%v), git says %s", repository, head, headError, gitHead)
 		}
 	}
 	// TypeScript's record and the look for cohere's HEAD, cohere's and the look for the root's HEAD, the root's.

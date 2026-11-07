@@ -10,13 +10,13 @@ func TestSharedSliceAppendMatchesNode(test *testing.T) {
 	test.Parallel()
 	binary := yamlSharedSliceBuild.binary(test, "gaps/sharedSliceAppend.ts")
 	sanitized := yamlSharedSliceSanitizedBuild.binary(test, "gaps/sharedSliceAppend.ts")
-	entry, err := filepath.Abs("gaps/sharedSliceAppend.ts")
-	if err != nil {
-		test.Fatal(err)
+	entry, absolutePathError := filepath.Abs("gaps/sharedSliceAppend.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	expected := run(test, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, entry, "0")
 	if string(expected) != "a\nx\n" {

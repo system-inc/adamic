@@ -50,9 +50,9 @@ func TestProduct_Adamic(test *testing.T) {
 func TestEveryProgramOutsideAPackageKeepsItsPromise(test *testing.T) {
 	test.Parallel()
 	adamic := buildcache.Adamic(test)
-	programs, err := programsOutsidePackages(repository)
-	if err != nil {
-		test.Fatal(err)
+	programs, programsOutsidePackagesError := programsOutsidePackages(repository)
+	if programsOutsidePackagesError != nil {
+		test.Fatal(programsOutsidePackagesError)
 	}
 	programs = slices.DeleteFunc(programs, evidence)
 	if len(programs) == 0 {
@@ -60,9 +60,9 @@ func TestEveryProgramOutsideAPackageKeepsItsPromise(test *testing.T) {
 	}
 	broken := map[string]string{}
 	var mutex sync.Mutex
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	work := make(chan string)
 	var workers sync.WaitGroup
@@ -84,9 +84,9 @@ func TestEveryProgramOutsideAPackageKeepsItsPromise(test *testing.T) {
 	}
 	close(work)
 	workers.Wait()
-	known, err := readKnown(knownFile)
-	if err != nil {
-		test.Fatal(err)
+	known, readKnownError := readKnown(knownFile)
+	if readKnownError != nil {
+		test.Fatal(readKnownError)
 	}
 	for _, problem := range compare(programs, broken, known) {
 		test.Error(problem)
@@ -138,11 +138,11 @@ func TestTheCheckFindsAndJudgesAsTheGateDid(test *testing.T) {
 	root := test.TempDir()
 	plant := func(path, content string) {
 		full := filepath.Join(root, path)
-		if err := os.MkdirAll(filepath.Dir(full), 0o755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(filepath.Dir(full), 0o755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.WriteFile(full, []byte(content), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(full, []byte(content), 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	plant("go.mod", "module example.com/a\n")
@@ -158,9 +158,9 @@ func TestTheCheckFindsAndJudgesAsTheGateDid(test *testing.T) {
 	plant("stage3/node_modules/y.a", "an install's\n")
 	plant("notes/testdata/fixture.go", "package fixture\n")
 	plant("notes/testdata/c.a", "no package holds it\n")
-	programs, err := programsOutsidePackages(root)
-	if err != nil {
-		test.Fatal(err)
+	programs, programsOutsidePackagesError := programsOutsidePackages(root)
+	if programsOutsidePackagesError != nil {
+		test.Fatal(programsOutsidePackagesError)
 	}
 	if want := []string{"notes/deep/b.a", "notes/testdata/c.a", "stage3/drivers/a.a"}; !slices.Equal(programs, want) {
 		test.Fatalf("found %q, want %q", programs, want)
@@ -221,20 +221,20 @@ func TestTheCheckFindsAndJudgesAsTheGateDid(test *testing.T) {
 // submodule (a directory holding its own .git) or node_modules, which aren't the module's.
 func programsOutsidePackages(root string) ([]string, error) {
 	packages, programs := map[string]bool{}, []string{}
-	err := filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
+	walkError := filepath.WalkDir(root, func(path string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
-		relative, err := filepath.Rel(root, path)
-		if err != nil {
-			return err
+		relative, relativePathError := filepath.Rel(root, path)
+		if relativePathError != nil {
+			return relativePathError
 		}
 		if entry.IsDir() {
 			switch {
 			case entry.Name() == ".git" || entry.Name() == "node_modules":
 				return filepath.SkipDir
 			case relative != ".":
-				if _, err := os.Lstat(filepath.Join(path, ".git")); err == nil {
+				if _, statError := os.Lstat(filepath.Join(path, ".git")); statError == nil {
 					return filepath.SkipDir
 				}
 			}
@@ -250,8 +250,8 @@ func programsOutsidePackages(root string) ([]string, error) {
 		}
 		return nil
 	})
-	if err != nil {
-		return nil, err
+	if walkError != nil {
+		return nil, walkError
 	}
 	outside := []string{}
 	for _, program := range programs {
@@ -279,9 +279,9 @@ func programsOutsidePackages(root string) ([]string, error) {
 // line's promise, "" when it kept it.
 func checked(test *testing.T, adamic, program string) string {
 	test.Helper()
-	content, err := os.ReadFile(filepath.Join(repository, program))
-	if err != nil {
-		return err.Error()
+	content, readError := os.ReadFile(filepath.Join(repository, program))
+	if readError != nil {
+		return readError.Error()
 	}
 	header, _, _ := strings.Cut(string(content), "\n")
 	expect := ""
@@ -293,10 +293,10 @@ func checked(test *testing.T, adamic, program string) string {
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
 	code := 0
-	if err := command.Run(); err != nil {
+	if runError := command.Run(); runError != nil {
 		var exit *exec.ExitError
-		if !errors.As(err, &exit) {
-			return "running adamic c: " + err.Error()
+		if !errors.As(runError, &exit) {
+			return "running adamic c: " + runError.Error()
 		}
 		code = exit.ExitCode()
 	}
@@ -351,7 +351,7 @@ func stable(why, root string) string {
 
 // resolved is a path with every link on it followed, or the path itself when it can't be.
 func resolved(path string) string {
-	if real, err := filepath.EvalSymlinks(path); err == nil {
+	if real, resolveSymlinksError := filepath.EvalSymlinks(path); resolveSymlinksError == nil {
 		return real
 	}
 	return path
@@ -359,9 +359,9 @@ func resolved(path string) string {
 
 // readKnown reads known.txt, "<path>: <how it broke>" a line; blank lines and # comments are skipped.
 func readKnown(path string) (map[string]string, error) {
-	file, err := os.Open(path)
-	if err != nil {
-		return nil, err
+	file, openError := os.Open(path)
+	if openError != nil {
+		return nil, openError
 	}
 	defer file.Close()
 	known := map[string]string{}

@@ -58,8 +58,8 @@ int main(int argc, char **argv) {
 `
 	for _, sanitized := range []bool{false, true} {
 		binary := filepath.Join(test.TempDir(), "view-runtime")
-		if err := Build(source, binary, Options{Sanitize: sanitized}); err != nil {
-			test.Fatal(err)
+		if buildError := Build(source, binary, Options{Sanitize: sanitized}); buildError != nil {
+			test.Fatal(buildError)
 		}
 		for _, mode := range []string{"cycle", "guard", "deep"} {
 			guard := mode == "guard"
@@ -75,17 +75,17 @@ int main(int argc, char **argv) {
 			var out, errout bytes.Buffer
 			command.Stdout = &out
 			command.Stderr = &errout
-			err := command.Run()
+			runError := command.Run()
 			cancel()
 			if guard {
-				failure, ok := err.(*exec.ExitError)
+				failure, ok := runError.(*exec.ExitError)
 				if !ok ||
 					failure.ExitCode() != 70 ||
 					errout.String() != "adamic: panic: RangeError: Maximum call stack size exceeded\n" {
-					test.Fatalf("guard: %v %q", err, errout.String())
+					test.Fatalf("guard: %v %q", runError, errout.String())
 				}
-			} else if err != nil || errout.Len() != 0 {
-				test.Fatalf("%s: %v %q", mode, err, errout.String())
+			} else if runError != nil || errout.Len() != 0 {
+				test.Fatalf("%s: %v %q", mode, runError, errout.String())
 			}
 		}
 	}
@@ -118,11 +118,11 @@ int main(void) {
 }
 `
 	binary := filepath.Join(test.TempDir(), "tuple-selection")
-	if err := Build(source, binary, Options{Sanitize: sanitized}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(source, binary, Options{Sanitize: sanitized}); buildError != nil {
+		test.Fatal(buildError)
 	}
-	output, err := exec.Command(binary).CombinedOutput()
-	if err != nil || len(output) != 0 {
-		test.Fatalf("sanitized=%v: %v %s", sanitized, err, output)
+	output, combinedOutputError := exec.Command(binary).CombinedOutput()
+	if combinedOutputError != nil || len(output) != 0 {
+		test.Fatalf("sanitized=%v: %v %s", sanitized, combinedOutputError, output)
 	}
 }

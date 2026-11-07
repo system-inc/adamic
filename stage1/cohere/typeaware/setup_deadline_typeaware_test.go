@@ -26,8 +26,8 @@ func TestTypeAwareUnitDeadline(test *testing.T) {
 	marker := os.Getenv("ADAMIC_TYPEAWARE_DEADLINE_MARKER")
 	if mode == "marker" {
 		time.Sleep(time.Second)
-		if err := os.WriteFile(marker, []byte("survived"), 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(marker, []byte("survived"), 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 		return
 	}
@@ -38,8 +38,8 @@ func TestTypeAwareUnitDeadline(test *testing.T) {
 		}
 		command := exec.Command(os.Args[0], "-test.run=^TestTypeAwareUnitDeadline$")
 		command.Env = append(os.Environ(), "ADAMIC_TYPEAWARE_DEADLINE_CHILD=marker")
-		if err := typeAwareRunCommand(command); err != nil {
-			test.Fatal(err)
+		if typeAwareRunCommandError := typeAwareRunCommand(command); typeAwareRunCommandError != nil {
+			test.Fatal(typeAwareRunCommandError)
 		}
 		return
 	}
@@ -56,23 +56,23 @@ func TestTypeAwareUnitDeadline(test *testing.T) {
 			)
 			// Read through childguard.Capture, to its end with no WaitDelay deciding when. Its group kill can't reach
 			// the marker child, which typeAwareRunCommand starts in a group of its own, so only cooked's kill stops it.
-			stdout, stderr, err := childguard.Capture(ctx, command)
+			stdout, stderr, captureError := childguard.Capture(ctx, command)
 			output := append(stdout, stderr...)
 			if mode == "quick" {
-				if err != nil || !bytes.Contains(output, []byte("cooked=false")) {
-					test.Fatalf("quick unit: %v %s", err, output)
+				if captureError != nil || !bytes.Contains(output, []byte("cooked=false")) {
+					test.Fatalf("quick unit: %v %s", captureError, output)
 				}
 				return
 			}
-			exit, ok := err.(*exec.ExitError)
+			exit, ok := captureError.(*exec.ExitError)
 			if !ok ||
 				exit.ExitCode() != 1 ||
 				!bytes.Contains(output, []byte("unit deadline exceeded name=watchdog-probe")) {
-				test.Fatalf("slow unit was not cooked: %v %s", err, output)
+				test.Fatalf("slow unit was not cooked: %v %s", captureError, output)
 			}
 			time.Sleep(time.Second)
-			if _, err := os.Stat(marker); !os.IsNotExist(err) {
-				test.Fatalf("cooked unit left its subprocess alive: %v", err)
+			if _, statError := os.Stat(marker); !os.IsNotExist(statError) {
+				test.Fatalf("cooked unit left its subprocess alive: %v", statError)
 			}
 		})
 	}

@@ -25,7 +25,11 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 	return l.instantiateFunctionSignature(call, declaration, l.checker.GetResolvedSignature(call))
 }
 
-func (l *lowering) instantiateFunctionSignature(call *ast.Node, declaration *ast.Node, resolved *checker.Signature) (int, error) {
+func (l *lowering) instantiateFunctionSignature(
+	call *ast.Node,
+	declaration *ast.Node,
+	resolved *checker.Signature,
+) (int, error) {
 	target := l.checker.GetSignatureFromDeclaration(declaration)
 	if resolved == nil || target == nil {
 		return 0, l.notYet(call, "a call to a generic function whose signature the checker didn't resolve")
@@ -46,28 +50,58 @@ func (l *lowering) instantiateFunctionSignature(call *ast.Node, declaration *ast
 	declared, given := target.Parameters(), resolved.Parameters()
 	for index := range declared {
 		if index < len(given) {
-			l.inferTypes(l.checker.GetTypeOfSymbol(declared[index]), l.checker.GetTypeOfSymbol(given[index]), concreteTypes)
+			l.inferTypes(
+				l.checker.GetTypeOfSymbol(declared[index]),
+				l.checker.GetTypeOfSymbol(given[index]),
+				concreteTypes,
+			)
 		}
 	}
-	l.inferTypes(l.checker.GetReturnTypeOfSignature(target), l.checker.GetReturnTypeOfSignature(resolved), concreteTypes)
+	l.inferTypes(
+		l.checker.GetReturnTypeOfSignature(target),
+		l.checker.GetReturnTypeOfSignature(resolved),
+		concreteTypes,
+	)
 
 	// An explicit type argument can make tsc view a mutable argument through a wider type without
 	// giving the argument that contextual type. Judge the instantiated parameter directly: the
 	// ordinary refusal walk cannot see this view at the argument node.
-	if call.Kind == ast.KindCallExpression && call.AsCallExpression().TypeArguments != nil && len(call.AsCallExpression().TypeArguments.Nodes) > 0 {
+	if call.Kind == ast.KindCallExpression &&
+		call.AsCallExpression().TypeArguments != nil &&
+		len(call.AsCallExpression().TypeArguments.Nodes) > 0 {
 		for index, argument := range call.AsCallExpression().Arguments.Nodes {
-			if index >= len(given) || argument.Kind == ast.KindObjectLiteralExpression || argument.Kind == ast.KindArrayLiteralExpression {
+			if index >= len(given) ||
+				argument.Kind == ast.KindObjectLiteralExpression ||
+				argument.Kind == ast.KindArrayLiteralExpression {
 				continue
 			}
 			from, to := l.checker.GetTypeAtLocation(argument), l.checker.GetTypeOfSymbol(given[index])
 			if found := l.widened(from, to, map[[2]*checker.Type]bool{}); found != nil {
-				return 0, &Refused{Where: l.program.Where(argument), What: "a type argument makes a value of type " + l.checker.TypeToString(from) + " seen as " + l.checker.TypeToString(to) + ", which can write " + l.checker.TypeToString(found.target) + " where " + l.checker.TypeToString(found.source) + " is read", Fix: "use the value's invariant type argument, or make the parameter readonly (adamic/invariant-mutable)"}
+				return 0, &Refused{
+					Where: l.program.Where(argument),
+					What: "a type argument makes a value of type " +
+						l.checker.TypeToString(from) +
+						" seen as " +
+						l.checker.TypeToString(to) +
+						", which can write " +
+						l.checker.TypeToString(found.target) +
+						" where " +
+						l.checker.TypeToString(found.source) +
+						" is read",
+					Fix: "use the value's invariant type argument, or make the parameter readonly (adamic/invariant-mutable)",
+				}
 			}
 		}
 	}
 
-	if err := l.refuseGenericVoidReads(call, declaration, concreteTypes, target, resolved); err != nil {
-		return 0, err
+	if refuseGenericVoidReadsError := l.refuseGenericVoidReads(
+		call,
+		declaration,
+		concreteTypes,
+		target,
+		resolved,
+	); refuseGenericVoidReadsError != nil {
+		return 0, refuseGenericVoidReadsError
 	}
 
 	substitution := map[*checker.Type]ir.Type{}
@@ -102,14 +136,22 @@ func (l *lowering) instantiateFunctionSignature(call *ast.Node, declaration *ast
 	}
 	// Every request is judged, hit or miss, before the table is read: a body shared by requests that
 	// differ, an unread parameter's, is judged with that parameter unmapped (predicates_branded.go).
-	if err := l.brandedRequest(key, declaration, l.instanceMapper(declaration, concreteTypes)); err != nil {
-		return 0, err
+	if brandedRequestError := l.brandedRequest(
+		key,
+		declaration,
+		l.instanceMapper(declaration, concreteTypes),
+	); brandedRequestError != nil {
+		return 0, brandedRequestError
 	}
 	if existing, isLowered := l.genericInstances[key]; isLowered {
 		return existing, nil
 	}
 	if l.genericDepth >= maximumGenericDepth {
-		return 0, &Refused{Where: l.program.Where(call), What: "a generic function instantiated without end (polymorphic recursion)", Fix: "call it with the same type arguments it was called with, or write a function per type"}
+		return 0, &Refused{
+			Where: l.program.Where(call),
+			What:  "a generic function instantiated without end (polymorphic recursion)",
+			Fix:   "call it with the same type arguments it was called with, or write a function per type",
+		}
 	}
 
 	source := l.sourceIdentity(declaration)
@@ -123,7 +165,10 @@ func (l *lowering) instantiateFunctionSignature(call *ast.Node, declaration *ast
 	}
 	index := len(l.result.Functions)
 	name += "_" + strconv.Itoa(index)
-	l.result.Functions = append(l.result.Functions, ir.Function{Name: name, Source: source, Closure: owner >= 0, NestedParent: owner + 1})
+	l.result.Functions = append(
+		l.result.Functions,
+		ir.Function{Name: name, Source: source, Closure: owner >= 0, NestedParent: owner + 1},
+	)
 	if l.genericInstances == nil {
 		l.genericInstances = map[string]int{}
 	}
@@ -146,8 +191,10 @@ func (l *lowering) instantiateFunctionSignature(call *ast.Node, declaration *ast
 		l.closures = append(append([]int{}, outerClosures...), index)
 	}
 	l.typeMapper = l.instanceMapper(declaration, concreteTypes)
-	if err := l.refuseInstantiatedMutation(declaration); err != nil {
-		return 0, err
+	if refuseInstantiatedMutationError := l.refuseInstantiatedMutation(
+		declaration,
+	); refuseInstantiatedMutationError != nil {
+		return 0, refuseInstantiatedMutationError
 	}
 	l.locals = map[*ast.Symbol]int{}
 	for symbol, local := range outerLocals {
@@ -160,10 +207,14 @@ func (l *lowering) instantiateFunctionSignature(call *ast.Node, declaration *ast
 		l.genericDepth--
 	}()
 	if owner >= 0 {
-		l.closureRecords = append(l.closureRecords, closureRecord{proven: l.concrete(l.checker.GetTypeAtLocation(declaration.Name())), function: index, node: declaration})
+		l.closureRecords = append(l.closureRecords, closureRecord{
+			proven:   l.concrete(l.checker.GetTypeAtLocation(declaration.Name())),
+			function: index,
+			node:     declaration,
+		})
 	}
-	if err := l.lowerFunction(index, declaration, -1); err != nil {
-		return 0, err
+	if lowerFunctionError := l.lowerFunction(index, declaration, -1); lowerFunctionError != nil {
+		return 0, lowerFunctionError
 	}
 	return index, nil
 }
@@ -219,10 +270,14 @@ func (l *lowering) refuseInstantiatedMutation(declaration *ast.Node) error {
 		if node.Kind == ast.KindCallExpression {
 			call := node.AsCallExpression()
 			callee := ast.SkipParentheses(call.Expression)
-			if callee.Kind == ast.KindPropertyAccessExpression && callee.Name().Text() == "stringify" && l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "JSON") {
+			if callee.Kind == ast.KindPropertyAccessExpression &&
+				callee.Name().Text() == "stringify" &&
+				l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "JSON") {
 				for _, argument := range call.Arguments.Nodes {
-					if err := l.checkInstantiatedJSONInput(argument); err != nil {
-						refused = err
+					if checkInstantiatedJsonInputError := l.checkInstantiatedJSONInput(
+						argument,
+					); checkInstantiatedJsonInputError != nil {
+						refused = checkInstantiatedJsonInputError
 						return true
 					}
 				}
@@ -237,7 +292,9 @@ func (l *lowering) refuseInstantiatedMutation(declaration *ast.Node) error {
 					argumentIndex, typeIndex = 1, 1
 				}
 				concrete := l.concrete(l.checker.GetTypeAtLocation(receiver))
-				if argumentIndex < 0 || concrete.Flags()&checker.TypeFlagsObject == 0 || concrete.ObjectFlags()&checker.ObjectFlagsReference == 0 {
+				if argumentIndex < 0 ||
+					concrete.Flags()&checker.TypeFlagsObject == 0 ||
+					concrete.ObjectFlags()&checker.ObjectFlagsReference == 0 {
 					return node.ForEachChild(visit)
 				}
 				arguments := l.checker.GetTypeArguments(concrete)
@@ -245,7 +302,15 @@ func (l *lowering) refuseInstantiatedMutation(declaration *ast.Node) error {
 					argument := call.Arguments.Nodes[argumentIndex]
 					from, to := l.concrete(l.checker.GetTypeAtLocation(argument)), arguments[typeIndex]
 					if !l.checker.IsTypeAssignableTo(from, to) {
-						refused = &Refused{Where: l.program.Where(argument), What: "instantiating a generic function makes a value of type " + l.checker.TypeToString(from) + " written where " + l.checker.TypeToString(to) + " is read", Fix: "make the collection readonly, or use a type parameter for the value being written (adamic/invariant-mutable)"}
+						refused = &Refused{
+							Where: l.program.Where(argument),
+							What: "instantiating a generic function makes a value of type " +
+								l.checker.TypeToString(from) +
+								" written where " +
+								l.checker.TypeToString(to) +
+								" is read",
+							Fix: "make the collection readonly, or use a type parameter for the value being written (adamic/invariant-mutable)",
+						}
 						return true
 					}
 				}
@@ -261,7 +326,11 @@ func (l *lowering) refuseInstantiatedMutation(declaration *ast.Node) error {
 // instantiated: the type itself, a referenced type's arguments, or a function's parameters and
 // result. The caller's type mapper makes an outer function's parameter concrete before it is saved,
 // so a generic function calling another with its own type parameter passes the concrete type on.
-func (l *lowering) inferTypes(declared *checker.Type, instantiated *checker.Type, into map[*checker.Type]*checker.Type) {
+func (l *lowering) inferTypes(
+	declared *checker.Type,
+	instantiated *checker.Type,
+	into map[*checker.Type]*checker.Type,
+) {
 	if declared == nil || instantiated == nil {
 		return
 	}
@@ -322,23 +391,37 @@ func (l *lowering) inferTypes(declared *checker.Type, instantiated *checker.Type
 		return
 	}
 	if declared.Flags()&checker.TypeFlagsObject != 0 && instantiated.Flags()&checker.TypeFlagsObject != 0 {
-		if declared.ObjectFlags()&checker.ObjectFlagsReference != 0 && instantiated.ObjectFlags()&checker.ObjectFlagsReference != 0 {
-			declaredArguments, instantiatedArguments := l.checker.GetTypeArguments(declared), l.checker.GetTypeArguments(instantiated)
+		if declared.ObjectFlags()&checker.ObjectFlagsReference != 0 &&
+			instantiated.ObjectFlags()&checker.ObjectFlagsReference != 0 {
+			declaredArguments, instantiatedArguments := l.checker.GetTypeArguments(
+				declared,
+			), l.checker.GetTypeArguments(instantiated)
 			for index := range declaredArguments {
 				if index < len(instantiatedArguments) {
 					l.inferTypes(declaredArguments[index], instantiatedArguments[index], into)
 				}
 			}
 		}
-		declaredSignatures, instantiatedSignatures := l.checker.GetSignaturesOfType(declared, checker.SignatureKindCall), l.checker.GetSignaturesOfType(instantiated, checker.SignatureKindCall)
+		declaredSignatures, instantiatedSignatures := l.checker.GetSignaturesOfType(
+			declared,
+			checker.SignatureKindCall,
+		), l.checker.GetSignaturesOfType(instantiated, checker.SignatureKindCall)
 		if len(declaredSignatures) > 0 && len(instantiatedSignatures) > 0 {
 			declaredParameters, instantiatedParameters := declaredSignatures[0].Parameters(), instantiatedSignatures[0].Parameters()
 			for index := range declaredParameters {
 				if index < len(instantiatedParameters) {
-					l.inferTypes(l.checker.GetTypeOfSymbol(declaredParameters[index]), l.checker.GetTypeOfSymbol(instantiatedParameters[index]), into)
+					l.inferTypes(
+						l.checker.GetTypeOfSymbol(declaredParameters[index]),
+						l.checker.GetTypeOfSymbol(instantiatedParameters[index]),
+						into,
+					)
 				}
 			}
-			l.inferTypes(l.checker.GetReturnTypeOfSignature(declaredSignatures[0]), l.checker.GetReturnTypeOfSignature(instantiatedSignatures[0]), into)
+			l.inferTypes(
+				l.checker.GetReturnTypeOfSignature(declaredSignatures[0]),
+				l.checker.GetReturnTypeOfSignature(instantiatedSignatures[0]),
+				into,
+			)
 		}
 	}
 }
@@ -355,8 +438,10 @@ func (l *lowering) checkInstantiatedJSONInput(node *ast.Node) error {
 			if element.Kind == ast.KindSpreadElement || element.Kind == ast.KindOmittedExpression {
 				continue
 			}
-			if err := l.checkInstantiatedJSONInput(element); err != nil {
-				return err
+			if checkInstantiatedJsonInputError := l.checkInstantiatedJSONInput(
+				element,
+			); checkInstantiatedJsonInputError != nil {
+				return checkInstantiatedJsonInputError
 			}
 		}
 		return nil
@@ -364,8 +449,10 @@ func (l *lowering) checkInstantiatedJSONInput(node *ast.Node) error {
 	if node.Kind == ast.KindObjectLiteralExpression {
 		for _, field := range node.AsObjectLiteralExpression().Properties.Nodes {
 			if field.Kind == ast.KindPropertyAssignment {
-				if err := l.checkInstantiatedJSONInput(field.AsPropertyAssignment().Initializer); err != nil {
-					return err
+				if checkInstantiatedJsonInputError := l.checkInstantiatedJSONInput(
+					field.AsPropertyAssignment().Initializer,
+				); checkInstantiatedJsonInputError != nil {
+					return checkInstantiatedJsonInputError
 				}
 			}
 		}
@@ -382,6 +469,6 @@ func (l *lowering) checkInstantiatedJSONInput(node *ast.Node) error {
 			}
 		}
 	}
-	_, err := l.jsonType(node, concrete, 0)
-	return err
+	_, jsonTypeError := l.jsonType(node, concrete, 0)
+	return jsonTypeError
 }

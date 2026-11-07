@@ -27,9 +27,9 @@ var updateGobTypes = flag.Bool("update-gob-types", false, "regenerate gob_types_
 func gobSourceTypes(test *testing.T) []string {
 	test.Helper()
 	// Reads: internal/ir/*.go
-	paths, err := filepath.Glob("*.go")
-	if err != nil {
-		test.Fatal(err)
+	paths, globError := filepath.Glob("*.go")
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	files := token.NewFileSet()
 	names := map[string]bool{}
@@ -38,9 +38,9 @@ func gobSourceTypes(test *testing.T) []string {
 		if strings.HasSuffix(path, "_test.go") {
 			continue
 		}
-		file, err := parser.ParseFile(files, path, nil, 0)
-		if err != nil {
-			test.Fatal(err)
+		file, parseFileError := parser.ParseFile(files, path, nil, 0)
+		if parseFileError != nil {
+			test.Fatal(parseFileError)
 		}
 		ast.Inspect(file, func(node ast.Node) bool {
 			switch node := node.(type) {
@@ -117,9 +117,9 @@ func gobTypesSource(test *testing.T) []byte {
 		fmt.Fprintf(&text, "%s{},\n", name)
 	}
 	fmt.Fprint(&text, "}\n")
-	source, err := format.Source(text.Bytes())
-	if err != nil {
-		test.Fatal(err)
+	source, formatError := format.Source(text.Bytes())
+	if formatError != nil {
+		test.Fatal(formatError)
 	}
 	return source
 }
@@ -132,14 +132,14 @@ func gobTypesSource(test *testing.T) []byte {
 func TestGobRegistersEveryInterfaceType(test *testing.T) {
 	want := gobTypesSource(test)
 	if *updateGobTypes {
-		if err := os.WriteFile("gob_types_generated.go", want, 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile("gob_types_generated.go", want, 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		return
 	}
-	got, err := os.ReadFile("gob_types_generated.go")
-	if err != nil || !bytes.Equal(got, want) {
-		test.Fatal("gob_types_generated.go is stale; run with -update-gob-types", err)
+	got, readError := os.ReadFile("gob_types_generated.go")
+	if readError != nil || !bytes.Equal(got, want) {
+		test.Fatal("gob_types_generated.go is stale; run with -update-gob-types", readError)
 	}
 	expression, statement := reflect.TypeFor[Expression](), reflect.TypeFor[Statement]()
 	for _, value := range gobTypes {
@@ -294,14 +294,14 @@ func TestEveryFloatAProgramHoldsReadsBackByItsBits(test *testing.T) {
 				value := reflect.New(kind).Elem()
 				value.Field(index).SetFloat(probe)
 				var encoded bytes.Buffer
-				if err := gob.NewEncoder(&encoded).EncodeValue(
+				if encodeValueError := gob.NewEncoder(&encoded).EncodeValue(
 					reflect.Append(reflect.MakeSlice(reflect.SliceOf(kind), 0, 1), value),
-				); err != nil {
-					test.Fatalf("%s: %v", at, err)
+				); encodeValueError != nil {
+					test.Fatalf("%s: %v", at, encodeValueError)
 				}
 				read := reflect.New(reflect.SliceOf(kind))
-				if err := gob.NewDecoder(&encoded).DecodeValue(read); err != nil {
-					test.Fatalf("%s: %v", at, err)
+				if decodeValueError := gob.NewDecoder(&encoded).DecodeValue(read); decodeValueError != nil {
+					test.Fatalf("%s: %v", at, decodeValueError)
 				}
 				if got := read.Elem().Index(0).Field(index).Float(); math.Float64bits(got) != math.Float64bits(probe) {
 					test.Errorf(
@@ -336,12 +336,12 @@ func TestANegativeZeroReadsBackFromGob(test *testing.T) {
 		Locals: []Local{{CounterGuard: &CounterGuard{MaxStep: negative}}, {CounterGuard: &CounterGuard{}}},
 	}
 	var encoded bytes.Buffer
-	if err := gob.NewEncoder(&encoded).Encode(program); err != nil {
-		test.Fatal(err)
+	if encodeError := gob.NewEncoder(&encoded).Encode(program); encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	var read Program
-	if err := gob.NewDecoder(&encoded).Decode(&read); err != nil {
-		test.Fatal(err)
+	if decodeError := gob.NewDecoder(&encoded).Decode(&read); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	for position, statement := range read.Functions[0].Body {
 		var value Expression
@@ -369,12 +369,12 @@ func TestAGeneratedTypeReadsBackWithItsIdentity(test *testing.T) {
 	test.Parallel()
 	program := Program{Generated: append(AsyncGeneratedTypes(), &GeneratedType{Name: "plain"})}
 	var encoded bytes.Buffer
-	if err := gob.NewEncoder(&encoded).Encode(program); err != nil {
-		test.Fatal(err)
+	if encodeError := gob.NewEncoder(&encoded).Encode(program); encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	var read Program
-	if err := gob.NewDecoder(&encoded).Decode(&read); err != nil {
-		test.Fatal(err)
+	if decodeError := gob.NewDecoder(&encoded).Decode(&read); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if len(read.Generated) != len(program.Generated) {
 		test.Fatalf("%d generated types read back as %d", len(program.Generated), len(read.Generated))
@@ -399,12 +399,12 @@ func TestABoundaryTableGobReadInternsWhatItHolds(test *testing.T) {
 	table.Intern("first")
 	table.Intern("second")
 	var encoded bytes.Buffer
-	if err := gob.NewEncoder(&encoded).Encode(table); err != nil {
-		test.Fatal(err)
+	if encodeError := gob.NewEncoder(&encoded).Encode(table); encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	var read BoundaryStringTable
-	if err := gob.NewDecoder(&encoded).Decode(&read); err != nil {
-		test.Fatal(err)
+	if decodeError := gob.NewDecoder(&encoded).Decode(&read); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if read.Intern("second") != 1 || read.Intern("third") != 2 || len(read.Values) != 3 {
 		test.Fatalf("the table read back interns as %v", read.Values)

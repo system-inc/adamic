@@ -49,8 +49,8 @@ int main(int count, char **arguments) {
 func TestObjectPrototypeClosuresStopWhenCalled(test *testing.T) {
 	test.Parallel()
 	binary := filepath.Join(test.TempDir(), "object-prototype")
-	if err := native.Build(objectPrototypeHarness, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(objectPrototypeHarness, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	for _, probe := range []struct{ key, object, message string }{
 		{"toString", "program", "Object.prototype.toString isn't called yet"},
@@ -64,8 +64,8 @@ func TestObjectPrototypeClosuresStopWhenCalled(test *testing.T) {
 			command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
 			var stdout, stderr bytes.Buffer
 			command.Stdout, command.Stderr = &stdout, &stderr
-			err := command.Run()
-			exit, ok := err.(*exec.ExitError)
+			runError := command.Run()
+			exit, ok := runError.(*exec.ExitError)
 			if !ok ||
 				exit.ExitCode() != 70 ||
 				stdout.Len() != 0 ||
@@ -73,7 +73,7 @@ func TestObjectPrototypeClosuresStopWhenCalled(test *testing.T) {
 				strings.Contains(stderr.String(), "Sanitizer") {
 				test.Fatalf(
 					"want the loud stop and exit 70: %v\nstdout %q\nstderr %q",
-					err,
+					runError,
 					stdout.String(),
 					stderr.String(),
 				)

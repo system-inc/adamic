@@ -22,18 +22,20 @@ func init() {
 // leaks the Box Maker.run returns.
 func TestVoidDiscardMethodsThatDisagreeAreNotYet(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/void_discards_refused/methods.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/void_discards_refused/methods.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := onNode(test, path)
 	if truth.exitCode != 0 || string(truth.stdout) != "ran 2\n" || len(truth.stderr) != 0 {
 		test.Fatalf("source Node: exit %d stdout %q stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 	}
-	_, err = lowered(test, path)
+	_, loweredError := lowered(test, path)
 	var notYet *lower.NotYet
-	if !errors.As(err, &notYet) {
-		test.Fatalf("want not yet, got %v", err)
+	if !errors.As(loweredError, &notYet) {
+		test.Fatalf("want not yet, got %v", loweredError)
 	}
 	want := "methods.a: stage 0 can't lower a void call through an interface at the module's top level where the class methods of its name disagree on whether their result is a reference to release; give the methods one result type, or call through a field yet"
 	if notYet.Error() != want {

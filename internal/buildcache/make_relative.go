@@ -80,15 +80,16 @@ func relativePlaces() []place {
 			add(directory.(string), "<build cache>/"+key.(string))
 			return true
 		})
-		cache, cacheErr := cacheLocation()
-		if cacheErr == nil {
+		cache, cacheError := cacheLocation()
+		if cacheError == nil {
 			add(cache, "<build cache>")
 		}
 		// Loom copies what this process writes into the build cache, so the output directory reads as the cache does.
-		if output, err := outputLocation(); err == nil && (cacheErr != nil || output != cache) {
+		if output, outputLocationError := outputLocation(); outputLocationError == nil &&
+			(cacheError != nil || output != cache) {
 			add(output, "<build cache>")
 		}
-		if root, err := repositoryRoot(); err == nil {
+		if root, repositoryRootError := repositoryRoot(); repositoryRootError == nil {
 			add(root, "<repository>")
 		}
 		for name, directory := range locations() {
@@ -110,14 +111,14 @@ func Absolute(value string) string {
 	value = productName.ReplaceAllStringFunc(value, func(name string) string {
 		return productDirectoryOf(strings.TrimPrefix(name, "<build cache>/"))
 	})
-	if roots, err := location.Roots(); err == nil && len(roots) > 1 {
+	if roots, rootsError := location.Roots(); rootsError == nil && len(roots) > 1 {
 		value = cachePath.ReplaceAllStringFunc(value, func(name string) string {
 			return cachedPath(roots, cache, strings.TrimPrefix(name, "<build cache>"))
 		})
 	} else {
 		value = strings.ReplaceAll(value, "<build cache>", cache)
 	}
-	if root, err := repositoryRoot(); err == nil {
+	if root, repositoryRootError := repositoryRoot(); repositoryRootError == nil {
 		value = strings.ReplaceAll(value, "<repository>", root)
 	}
 	here := locations()
@@ -136,8 +137,8 @@ var locationName = regexp.MustCompile(`<ADAMIC_[A-Z0-9_]+>`)
 var cachePath = regexp.MustCompile(`<build cache>((?:/[A-Za-z0-9._+@~-]+)*)`)
 
 // cachedPath is rest, a path under <build cache> ("" for the cache itself), under the first of roots that holds it, the
-// output directory before the build cache, so a reader finds what this process wrote and what Loom copied into the cache
-// alike. A path neither holds, and the cache itself, are the build cache's, as they are with one root. Looking is
+// output directory before the build cache, so a reader finds what this process wrote and what Loom copied into the
+// cache alike. A path neither holds, and the cache itself, are the build cache's, as they are with one root. Looking is
 // keying: where this machine keeps things is never what a product read.
 func cachedPath(roots []string, cache, rest string) string {
 	if rest == "" {
@@ -146,7 +147,7 @@ func cachedPath(roots []string, cache, rest string) string {
 	found := cache + rest
 	asKeying(func() {
 		for _, root := range roots {
-			if _, err := os.Stat(root + rest); err == nil {
+			if _, statError := os.Stat(root + rest); statError == nil {
 				found = root + rest
 				return
 			}
@@ -169,11 +170,14 @@ func locations() map[string]string {
 	asKeying(func() {
 		for _, variable := range environment {
 			name, value, _ := strings.Cut(variable, "=")
-			if !strings.HasPrefix(name, "ADAMIC_") || name == "ADAMIC_BUILD_CACHE_DIR" || name == location.OutputDirectoryVariable || value == "" {
+			if !strings.HasPrefix(name, "ADAMIC_") ||
+				name == "ADAMIC_BUILD_CACHE_DIR" ||
+				name == location.OutputDirectoryVariable ||
+				value == "" {
 				continue
 			}
-			if info, err := statLocation(value); err == nil && info.IsDir() {
-				if absolute, err := filepath.Abs(value); err == nil {
+			if info, statLocationError := statLocation(value); statLocationError == nil && info.IsDir() {
+				if absolute, absolutePathError := filepath.Abs(value); absolutePathError == nil {
 					found[name] = absolute
 				}
 			}
@@ -244,15 +248,15 @@ var dataFormats = []string{".gob"}
 // readFiles is textFiles, and with data, every file in one of dataFormats too. A directory reached through a link is
 // read where it points (ProductRoot), and each file is named under directory as given.
 func readFiles(directory string, data bool, each func(file string, content []byte, mode fs.FileMode) error) error {
-	root, err := ProductRoot(directory)
-	if err != nil {
-		return err
+	root, productRootError := ProductRoot(directory)
+	if productRootError != nil {
+		return productRootError
 	}
-	return filepath.WalkDir(root, func(file string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
+	return filepath.WalkDir(root, func(file string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
-		if relative, err := filepath.Rel(root, file); err == nil {
+		if relative, relativePathError := filepath.Rel(root, file); relativePathError == nil {
 			file = filepath.Join(directory, relative)
 		}
 		if entry.IsDir() {
@@ -264,16 +268,17 @@ func readFiles(directory string, data bool, each func(file string, content []byt
 		if !entry.Type().IsRegular() {
 			return nil
 		}
-		content, err := os.ReadFile(file)
-		if err != nil {
-			return err
+		content, readError := os.ReadFile(file)
+		if readError != nil {
+			return readError
 		}
-		if bytes.IndexByte(content[:min(len(content), 8000)], 0) >= 0 && !(data && slices.Contains(dataFormats, filepath.Ext(file))) {
+		if bytes.IndexByte(content[:min(len(content), 8000)], 0) >= 0 &&
+			!(data && slices.Contains(dataFormats, filepath.Ext(file))) {
 			return nil
 		}
-		info, err := entry.Info()
-		if err != nil {
-			return err
+		info, infoError := entry.Info()
+		if infoError != nil {
+			return infoError
 		}
 		return each(file, content, info.Mode())
 	})
@@ -311,15 +316,15 @@ func Resolved(directory string) (string, error) {
 		return directory, nil
 	}
 	named := false
-	err := textFiles(directory, func(_ string, content []byte, _ fs.FileMode) error {
+	textFilesError := textFiles(directory, func(_ string, content []byte, _ fs.FileMode) error {
 		named = named || Absolute(string(content)) != string(content)
 		return nil
 	})
-	if err != nil || !named {
-		if err == nil {
+	if textFilesError != nil || !named {
+		if textFilesError == nil {
 			resolvedDirectories.Store(directory, directory)
 		}
-		return directory, err
+		return directory, textFilesError
 	}
 	// The copy depends on where this machine keeps what Absolute reads names against, so two checkouts sharing one
 	// cache each get their own, and so does a process writing to an output directory of its own, whose copy reads a
@@ -328,39 +333,44 @@ func Resolved(directory string) (string, error) {
 	for name, where := range locations() {
 		roots = append(roots, name+"="+where)
 	}
-	if output, err := outputLocation(); err == nil && output != Absolute("<build cache>") {
+	if output, outputLocationError := outputLocation(); outputLocationError == nil &&
+		output != Absolute("<build cache>") {
 		roots = append(roots, location.OutputDirectoryVariable+"="+output)
 	}
 	sort.Strings(roots)
 	sum := sha256.Sum256([]byte(strings.Join(roots, "\n")))
 	// Beside the product, at its place under the output directory when it sits in a build cache this process only reads
 	// (location.WritePlace), and found next time at either.
-	beside := filepath.Join(filepath.Dir(directory), "."+filepath.Base(directory)+".resolved-"+hex.EncodeToString(sum[:6]))
+	beside := filepath.Join(
+		filepath.Dir(directory),
+		"."+filepath.Base(directory)+".resolved-"+hex.EncodeToString(sum[:6]),
+	)
 	place, found := existingPlace(beside)
 	if !found {
 		place = location.WritePlace(beside)
 		if place != beside {
-			if err := os.MkdirAll(filepath.Dir(place), 0o755); err != nil {
-				return "", err
+			if createDirectoryError := os.MkdirAll(filepath.Dir(place), 0o755); createDirectoryError != nil {
+				return "", createDirectoryError
 			}
 		}
-		lock, err := os.OpenFile(place+".lock", os.O_CREATE|os.O_RDWR, 0o644)
-		if err != nil {
-			return "", err
+		lock, openError := os.OpenFile(place+".lock", os.O_CREATE|os.O_RDWR, 0o644)
+		if openError != nil {
+			return "", openError
 		}
 		defer lock.Close()
-		if err = syscall.Flock(int(lock.Fd()), syscall.LOCK_EX); err != nil {
-			return "", err
+		if flockError := syscall.Flock(int(lock.Fd()), syscall.LOCK_EX); flockError != nil {
+			return "", flockError
 		}
 		defer syscall.Flock(int(lock.Fd()), syscall.LOCK_UN)
 		if existing, found := existingPlace(beside); found {
 			place = existing
-		} else if err = resolve(directory, place); err != nil {
-			return "", err
+		} else if resolveError := resolve(directory, place); resolveError != nil {
+			return "", resolveError
 		}
 	}
-	// Under a trace, reading the copy is reading the product (trace.go's found entries). A key names the copy as it names
-	// the product, <build cache>/<name key> (places); a directory this process doesn't hold is named by its own base.
+	// Under a trace, reading the copy is reading the product (trace.go's found entries). A key names the copy as it
+	// names the product, <build cache>/<name key> (places); a directory this process doesn't hold is named by its own
+	// base.
 	nameKey := filepath.Base(directory)
 	if held, ok := productDirectories.Load(directory); ok {
 		nameKey = held.(string)
@@ -382,13 +392,13 @@ func resolve(directory, place string) error {
 	if err != nil {
 		return err
 	}
-	err = filepath.WalkDir(root, func(file string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
+	err = filepath.WalkDir(root, func(file string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
-		relative, err := filepath.Rel(root, file)
-		if err != nil {
-			return err
+		relative, relativePathError := filepath.Rel(root, file)
+		if relativePathError != nil {
+			return relativePathError
 		}
 		target := filepath.Join(scratch, relative)
 		if entry.IsDir() {
@@ -397,15 +407,16 @@ func resolve(directory, place string) error {
 		if !entry.Type().IsRegular() {
 			return fmt.Errorf("%s is not a regular file", file)
 		}
-		info, err := entry.Info()
-		if err != nil {
-			return err
+		info, infoError := entry.Info()
+		if infoError != nil {
+			return infoError
 		}
-		content, err := os.ReadFile(file)
-		if err != nil {
-			return err
+		content, readError := os.ReadFile(file)
+		if readError != nil {
+			return readError
 		}
-		if bytes.IndexByte(content[:min(len(content), 8000)], 0) < 0 && !strings.Contains(relative, ".dSYM"+string(filepath.Separator)) {
+		if bytes.IndexByte(content[:min(len(content), 8000)], 0) < 0 &&
+			!strings.Contains(relative, ".dSYM"+string(filepath.Separator)) {
 			content = []byte(Absolute(string(content)))
 		}
 		return os.WriteFile(target, content, info.Mode().Perm())
@@ -423,7 +434,7 @@ type place struct{ path, name string }
 
 func resolved(path string) string {
 	resolutions.Add(1)
-	if value, err := filepath.EvalSymlinks(path); err == nil {
+	if value, resolveSymlinksError := filepath.EvalSymlinks(path); resolveSymlinksError == nil {
 		return value
 	}
 	return ""
@@ -475,7 +486,7 @@ func outputLocation() (string, error) {
 // output directory's first.
 func existingPlace(path string) (string, bool) {
 	for _, place := range location.ReadPlaces(path) {
-		if _, err := os.Stat(place); err == nil {
+		if _, statError := os.Stat(place); statError == nil {
 			return place, true
 		}
 	}
@@ -491,14 +502,14 @@ var root struct {
 // repositoryRoot is the nearest directory above the working directory holding this module's go.mod.
 func repositoryRoot() (string, error) {
 	root.once.Do(func() {
-		directory, err := os.Getwd()
-		if err != nil {
-			root.err = err
+		directory, workingDirectoryError := os.Getwd()
+		if workingDirectoryError != nil {
+			root.err = workingDirectoryError
 			return
 		}
 		for {
-			content, err := os.ReadFile(filepath.Join(directory, "go.mod"))
-			if err == nil && strings.HasPrefix(string(content), "module github.com/system-inc/adamic\n") {
+			content, readError := os.ReadFile(filepath.Join(directory, "go.mod"))
+			if readError == nil && strings.HasPrefix(string(content), "module github.com/system-inc/adamic\n") {
 				root.directory = directory
 				return
 			}
@@ -514,13 +525,14 @@ func repositoryRoot() (string, error) {
 }
 
 // ProductRoot is where a walk over a product directory starts: what directory resolves to when it is a link, and every
-// walk rooted at a product goes through it, a test's included (graphql/printer's printerWalk, mega's run 2). Loom's runner
-// links each product a unit fetched into the unit's cache from the box's shared products, and filepath.WalkDir visits a
-// link at its root as one entry, never what it points to. Mega's run 1 (Oct 12): every product read through another
-// was valued as one link line naming that box's path, and missed on every runner; run 2: Resolved found no text file
-// in estree's mutant port, so node read its <repository> imports raw. Links inside a product are its own, and stay.
+// walk rooted at a product goes through it, a test's included (graphql/printer's printerWalk, mega's run 2). Loom's
+// runner links each product a unit fetched into the unit's cache from the box's shared products, and filepath.WalkDir
+// visits a link at its root as one entry, never what it points to. Mega's run 1 (Oct 12): every product read through
+// another was valued as one link line naming that box's path, and missed on every runner; run 2: Resolved found no text
+// file in estree's mutant port, so node read its <repository> imports raw. Links inside a product are its own, and
+// stay.
 func ProductRoot(directory string) (string, error) {
-	if info, err := os.Lstat(directory); err != nil || info.Mode()&fs.ModeSymlink == 0 {
+	if info, statError := os.Lstat(directory); statError != nil || info.Mode()&fs.ModeSymlink == 0 {
 		return directory, nil
 	}
 	return filepath.EvalSymlinks(directory)

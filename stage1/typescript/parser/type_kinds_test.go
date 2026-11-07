@@ -14,13 +14,13 @@ func TestEveryTypeNodeKindAgrees(test *testing.T) {
 	trees := execute(test, "", oracle, "--manifest", manifest, "--whole").output
 	docs := wholeManifest(test, []string{`/** @type {...T} */ let x;`, `/** @type {T=} */ let x;`})
 	want := execute(test, "", oracle, "--manifest", docs, "--doc-types")
-	directory, err := filepath.Abs(".")
-	if err != nil {
-		test.Fatal(err)
+	directory, absolutePathError := filepath.Abs(".")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	got := execute(
 		test,

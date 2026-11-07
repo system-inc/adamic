@@ -23,14 +23,14 @@ import (
 // testdata/host_bindings/mutants.md: process folded Absent goes red here.
 func TestHostBindingsHeldToNode(test *testing.T) {
 	test.Parallel()
-	rows, err := load.HostBindings()
-	if err != nil {
-		test.Fatal(err)
+	rows, hostBindingsError := load.HostBindings()
+	if hostBindingsError != nil {
+		test.Fatal(hostBindingsError)
 	}
 	directory := "internal/oracle/testdata/host_bindings/typeof"
-	entries, err := os.ReadDir(filepath.Join(repository, directory))
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(filepath.Join(repository, directory))
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	var programs []string
 	for _, entry := range entries {
@@ -49,9 +49,9 @@ func TestHostBindingsHeldToNode(test *testing.T) {
 		test.Run(row.Name, func(test *testing.T) {
 			test.Parallel()
 			relative := directory + "/" + row.Name + "/" + row.Declaration.File
-			path, err := filepath.Abs(filepath.Join(repository, relative))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(filepath.Join(repository, relative))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			node := onNode(test, path)
 			if node.exitCode != 0 || string(node.stdout) != row.Node.TypeOf+"\n" {
@@ -83,17 +83,17 @@ func TestHostBindingsHeldToNode(test *testing.T) {
 					test.Errorf("the %s column says Provided where Node's typeof is \"undefined\"", target.Target)
 				}
 			}
-			_, err = lowered(test, path)
+			_, loweredError := lowered(test, path)
 			if !absent {
 				var notYet *lower.NotYet
-				if !errors.As(err, &notYet) ||
-					!strings.Contains(err.Error(), "stage 0 can't lower the host binding "+row.Name+", ") {
-					test.Errorf("got %v, want a not-yet naming the host binding %s", err, row.Name)
+				if !errors.As(loweredError, &notYet) ||
+					!strings.Contains(loweredError.Error(), "stage 0 can't lower the host binding "+row.Name+", ") {
+					test.Errorf("got %v, want a not-yet naming the host binding %s", loweredError, row.Name)
 				}
 				return
 			}
-			if err != nil {
-				test.Fatalf("a row Absent on every target stops: %v", err)
+			if loweredError != nil {
+				test.Fatalf("a row Absent on every target stops: %v", loweredError)
 			}
 			generatorAgrees(test, relative)
 		})
@@ -116,9 +116,9 @@ func TestHostBindingsAgreeWithNode(test *testing.T) {
 			generatorAgrees(test, directory+"/"+name+"/main.ts")
 		})
 	}
-	entries, err := os.ReadDir(filepath.Join(repository, directory))
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(filepath.Join(repository, directory))
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	directories := 0
 	for _, entry := range entries {
@@ -144,9 +144,9 @@ func TestHostBindingsAgreeWithNode(test *testing.T) {
 func TestHostBindingGlobalObjectRoadIsNotYet(test *testing.T) {
 	test.Parallel()
 	relative := "internal/oracle/testdata/host_bindings/global_object/reflect_set/main.ts"
-	path, err := filepath.Abs(filepath.Join(repository, relative))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, relative))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	if node := onNode(test, path); node.exitCode != 0 || string(node.stdout) != "set mark\n" {
 		test.Fatalf(
@@ -156,12 +156,12 @@ func TestHostBindingGlobalObjectRoadIsNotYet(test *testing.T) {
 			node.stderr,
 		)
 	}
-	_, err = lowered(test, path)
+	_, loweredError := lowered(test, path)
 	var notYet *lower.NotYet
-	if !errors.As(err, &notYet) || !strings.HasSuffix(
-		err.Error(),
+	if !errors.As(loweredError, &notYet) || !strings.HasSuffix(
+		loweredError.Error(),
 		"main.ts:6:13: stage 0 can't lower the global object as a value (only a property read's or member call's receiver is admitted) yet",
 	) {
-		test.Errorf("got %v, want the global object as a value to stop at main.ts:6:13", err)
+		test.Errorf("got %v, want the global object as a value to stop at main.ts:6:13", loweredError)
 	}
 }

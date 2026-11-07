@@ -30,8 +30,8 @@ func TestOnlyAFailedListenLetsTheCommandsStatusStand(test *testing.T) {
 	} {
 		complaints := &straceComplaints{}
 		for _, write := range each.writes {
-			if _, err := complaints.Write([]byte(write)); err != nil {
-				test.Fatal(err)
+			if _, writeError := complaints.Write([]byte(write)); writeError != nil {
+				test.Fatal(writeError)
 			}
 		}
 		if got := complaints.onlyListen(); got != each.only {
@@ -52,11 +52,11 @@ func TestARunStartsFromTheWavesTreeState(test *testing.T) {
 	}
 	directory := test.TempDir()
 	wave, empty := filepath.Join(directory, "wave"), filepath.Join(directory, "empty")
-	if err := os.WriteFile(wave, []byte("HEAD abc\nrepository /cohere\n"), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(wave, []byte("HEAD abc\nrepository /cohere\n"), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if err := os.WriteFile(empty, nil, 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(empty, nil, 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	for _, each := range []struct {
 		name, path, state string
@@ -70,9 +70,9 @@ func TestARunStartsFromTheWavesTreeState(test *testing.T) {
 	} {
 		taken = 0
 		test.Setenv("ADAMIC_TRACE_TREE_STATE", each.path)
-		state, err := treeStateBefore(take)
-		if (err != nil) != each.fails || state != each.state || taken != each.taken {
-			test.Errorf("%s: state %q, err %v, taken %d times", each.name, state, err, taken)
+		state, treeStateBeforeError := treeStateBefore(take)
+		if (treeStateBeforeError != nil) != each.fails || state != each.state || taken != each.taken {
+			test.Errorf("%s: state %q, err %v, taken %d times", each.name, state, treeStateBeforeError, taken)
 		}
 		if _, set := os.LookupEnv("ADAMIC_TRACE_TREE_STATE"); set {
 			test.Errorf("%s: ADAMIC_TRACE_TREE_STATE is still set for the command", each.name)
@@ -112,8 +112,8 @@ func TestMachineryPrintsOnlyTheMachinerysPaths(test *testing.T) {
 	test.Parallel()
 	var out strings.Builder
 	paths := "go.mod\ninternal/buildcache/settle.go\ninternal/buildcache/make_go.go\ninternal/buildcache/cmd/traced/main.go\nstage1/x.go\n"
-	if err := printMachinery(strings.NewReader(paths), &out); err != nil {
-		test.Fatal(err)
+	if printMachineryError := printMachinery(strings.NewReader(paths), &out); printMachineryError != nil {
+		test.Fatal(printMachineryError)
 	}
 	if want := "internal/buildcache/settle.go\ninternal/buildcache/cmd/traced/main.go\n"; out.String() != want {
 		test.Fatalf("printed %q, want %q", out.String(), want)

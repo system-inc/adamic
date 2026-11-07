@@ -16,12 +16,12 @@ import (
 func TestDebugAsyncTerminals(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "fixture.a")
-	if err := os.WriteFile(path, []byte(debugLineFixture), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(debugLineFixture), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := debugProgram(test, path, true)
-	if err != nil {
-		test.Fatal(err)
+	program, debugProgramError := debugProgram(test, path, true)
+	if debugProgramError != nil {
+		test.Fatal(debugProgramError)
 	}
 	index := -1
 	for i, function := range program.Functions {
@@ -96,9 +96,9 @@ func TestDebugAsyncTerminals(test *testing.T) {
 		"oracle/node.mjs",
 		path,
 	)
-	output, err := command.CombinedOutput()
-	if err != nil {
-		test.Fatalf("source Node: %v: %s", err, output)
+	output, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("source Node: %v: %s", combinedOutputError, output)
 	}
 	expected := mainPartsRun{Stdout: "3\n2\n1\n0\n6\n5\ncaught\n9\n", Exit: 0}
 	if release != expected || debug != expected || string(output) != expected.Stdout {

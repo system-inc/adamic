@@ -35,11 +35,11 @@ func asyncCountProtocolRun(test *testing.T, command string, arguments ...string)
 	)
 	var stdout, stderr bytes.Buffer
 	process.Stdout, process.Stderr = &stdout, &stderr
-	err := process.Run()
+	runError := process.Run()
 	exit := 0
-	if err != nil {
+	if runError != nil {
 		if process.ProcessState == nil {
-			test.Fatal(err)
+			test.Fatal(runError)
 		}
 		exit = process.ProcessState.ExitCode()
 	}
@@ -75,13 +75,13 @@ int main(int argc,char **argv){
 func asyncCountProtocolProduct(test *testing.T) string {
 	test.Helper()
 	options := Options{Sanitize: true}
-	files, flags, compiler, version, err := runtimeInputs("", options, nil)
-	if err != nil {
-		test.Fatal(err)
+	files, flags, compiler, version, runtimeInputsError := runtimeInputs("", options, nil)
+	if runtimeInputsError != nil {
+		test.Fatal(runtimeInputsError)
 	}
-	headers, err := headersRead(files, flags, compiler)
-	if err != nil {
-		test.Fatal(err)
+	headers, headersReadError := headersRead(files, flags, compiler)
+	if headersReadError != nil {
+		test.Fatal(headersReadError)
 	}
 	inputs := buildcache.Inputs{
 		Name: "async-count-protocol",
@@ -100,25 +100,25 @@ func asyncCountProtocolProduct(test *testing.T) string {
 		},
 	}
 	return buildcache.Product(test, inputs, func(directory string) error {
-		cache, err := cacheDirectory("async-count-protocol")
-		if err != nil {
-			return err
+		cache, cacheDirectoryError := cacheDirectory("async-count-protocol")
+		if cacheDirectoryError != nil {
+			return cacheDirectoryError
 		}
-		baseline, err := cachedRuntime(files, flags, compiler, version, cache)
-		if err != nil {
-			return err
+		baseline, cachedRuntimeError := cachedRuntime(files, flags, compiler, version, cache)
+		if cachedRuntimeError != nil {
+			return cachedRuntimeError
 		}
-		if err := BuildWithRuntime(
+		if buildWithRuntimeError := BuildWithRuntime(
 			asyncCountProtocol,
 			filepath.Join(directory, "control"),
 			options,
 			baseline,
-		); err != nil {
-			return err
+		); buildWithRuntimeError != nil {
+			return buildWithRuntimeError
 		}
-		source, err := runtime.ReadFile("runtime/async.c")
-		if err != nil {
-			return err
+		source, readFileError := runtime.ReadFile("runtime/async.c")
+		if readFileError != nil {
+			return readFileError
 		}
 		for _, mutant := range []struct{ name, before, after string }{
 			{"promise", "reaction->promise = adamic_retain(promise);", "reaction->promise = promise;"},
@@ -133,17 +133,21 @@ func asyncCountProtocolProduct(test *testing.T) string {
 			scratch := test.TempDir()
 			for _, file := range files {
 				if strings.HasSuffix(file.name, ".h") {
-					if err := os.WriteFile(filepath.Join(scratch, file.name), file.contents, 0600); err != nil {
-						return err
+					if writeError := os.WriteFile(
+						filepath.Join(scratch, file.name),
+						file.contents,
+						0600,
+					); writeError != nil {
+						return writeError
 					}
 				}
 			}
-			if err := os.WriteFile(
+			if writeError := os.WriteFile(
 				filepath.Join(scratch, "async.c"),
 				[]byte(strings.ReplaceAll(text, mutant.before, mutant.after)),
 				0600,
-			); err != nil {
-				return err
+			); writeError != nil {
+				return writeError
 			}
 			object := filepath.Join(scratch, "async.o")
 			arguments := append(
@@ -157,27 +161,27 @@ func asyncCountProtocolProduct(test *testing.T) string {
 			)
 			command, release := boundedrun.Command(45*time.Second, compiler, arguments...)
 			command.Dir = scratch
-			output, compileErr := command.CombinedOutput()
+			output, compileError := command.CombinedOutput()
 			release()
-			if compileErr != nil {
-				return fmt.Errorf("mutant must compile: %w\n%s", compileErr, output)
+			if compileError != nil {
+				return fmt.Errorf("mutant must compile: %w\n%s", compileError, output)
 			}
-			archive, err := os.ReadFile(baseline)
-			if err != nil {
-				return err
+			archive, readError := os.ReadFile(baseline)
+			if readError != nil {
+				return readError
 			}
 			library := filepath.Join(scratch, "runtime.a")
-			if err := os.WriteFile(library, archive, 0600); err != nil {
-				return err
+			if writeError := os.WriteFile(library, archive, 0600); writeError != nil {
+				return writeError
 			}
 			staticsCompile(test, archiverName(compiler), "r", library, object)
-			if err := BuildWithRuntime(
+			if buildWithRuntimeError := BuildWithRuntime(
 				asyncCountProtocol,
 				filepath.Join(directory, mutant.name),
 				options,
 				library,
-			); err != nil {
-				return err
+			); buildWithRuntimeError != nil {
+				return buildWithRuntimeError
 			}
 		}
 		return nil

@@ -15,43 +15,43 @@ import (
 
 func TestPostfixValueGap(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("gaps/postfixValue.ts")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("gaps/postfixValue.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	got := onNode(test, path)
 	if string(got) != "7\n1\n" {
 		test.Fatalf("Node %q", got)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	_, err = lower.Lower(context.Background(), program)
-	if err == nil || !strings.Contains(err.Error(), "a PostfixUnaryExpression") {
-		test.Fatalf("postfix value gap changed: %v", err)
+	_, lowerError := lower.Lower(context.Background(), program)
+	if lowerError == nil || !strings.Contains(lowerError.Error(), "a PostfixUnaryExpression") {
+		test.Fatalf("postfix value gap changed: %v", lowerError)
 	}
-	test.Logf("Node 7, 1; lowering: %v", err)
+	test.Logf("Node 7, 1; lowering: %v", lowerError)
 }
 
 func TestMethodReplacementGap(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("gaps/methodReplacement.ts")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("gaps/methodReplacement.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	if got := string(onNode(test, path)); got != "replacement\noriginal\n" {
 		test.Fatal(got)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	_, err = lower.Lower(context.Background(), program)
-	if err == nil || !strings.Contains(err.Error(), "unbound-method") {
-		test.Fatalf("method replacement gap changed: %v", err)
+	_, lowerError := lower.Lower(context.Background(), program)
+	if lowerError == nil || !strings.Contains(lowerError.Error(), "unbound-method") {
+		test.Fatalf("method replacement gap changed: %v", lowerError)
 	}
-	test.Logf("Node replacement/original; Adamic: %v", err)
+	test.Logf("Node replacement/original; Adamic: %v", lowerError)
 }
 
 // Not parallel: miscBuild writes the shared adamic-build and adamic/runtime cache directories
@@ -64,8 +64,8 @@ func TestRawInputGap(test *testing.T) {
 	a = append(a, []byte("\nx;")...)
 	b = append(b, []byte("\nx;")...)
 	for path, data := range map[string][]byte{first: a, second: b} {
-		if err := os.WriteFile(path, data, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, data, 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	oracle := goOracle(test)
@@ -73,9 +73,9 @@ func TestRawInputGap(test *testing.T) {
 	if bytes.Equal(left, right) {
 		test.Fatal("Go must distinguish these equal-size inputs")
 	}
-	path, err := filepath.Abs("gaps/rawInput.ts")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("gaps/rawInput.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	binary, script := build(test, path, true)
 	want := onNode(test, path, first)
@@ -99,9 +99,9 @@ func TestRawInputGap(test *testing.T) {
 
 // Not parallel: miscBuild writes the shared adamic-build and adamic/runtime cache directories
 func TestParserRecoveryGap(test *testing.T) {
-	path, err := filepath.Abs("gaps/parserRecovery.ts")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("gaps/parserRecovery.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	binary, _ := build(test, path, true)
 	for _, argv := range [][]string{
@@ -110,17 +110,17 @@ func TestParserRecoveryGap(test *testing.T) {
 	} {
 		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 		command := exec.CommandContext(ctx, argv[0], argv[1:]...)
-		output, err := os.CreateTemp(test.TempDir(), "recovery-log")
-		if err != nil {
-			test.Fatal(err)
+		output, temporaryFileError := os.CreateTemp(test.TempDir(), "recovery-log")
+		if temporaryFileError != nil {
+			test.Fatal(temporaryFileError)
 		}
 		command.Stdout, command.Stderr = output, output
-		err = command.Run()
+		runError := command.Run()
 		output.Close()
 		timedOut := ctx.Err() == context.DeadlineExceeded
 		cancel()
 		if !timedOut {
-			test.Fatalf("expected bounded external timeout; got %v", err)
+			test.Fatalf("expected bounded external timeout; got %v", runError)
 		}
 		test.Logf("%s: unported parser recovery does not terminate within 1s", argv[0])
 	}

@@ -51,13 +51,13 @@ func gccInvariantProduct(test *testing.T, kind string) string {
 		test.Fatal(kind)
 	}
 	options := Options{Sanitize: true}
-	files, flags, compiler, version, err := runtimeInputs("", options, nil)
-	if err != nil {
-		test.Fatal(err)
+	files, flags, compiler, version, runtimeInputsError := runtimeInputs("", options, nil)
+	if runtimeInputsError != nil {
+		test.Fatal(runtimeInputsError)
 	}
-	headers, err := headersRead(files, flags, compiler)
-	if err != nil {
-		test.Fatal(err)
+	headers, headersReadError := headersRead(files, flags, compiler)
+	if headersReadError != nil {
+		test.Fatal(headersReadError)
 	}
 	inputs := buildcache.Inputs{
 		Name: "gcc-invariant-" + kind,
@@ -78,17 +78,17 @@ func gccInvariantProduct(test *testing.T, kind string) string {
 		},
 	}
 	return buildcache.Product(test, inputs, func(directory string) error {
-		cache, err := cacheDirectory("gcc-invariant")
-		if err != nil {
-			return err
+		cache, cacheDirectoryError := cacheDirectory("gcc-invariant")
+		if cacheDirectoryError != nil {
+			return cacheDirectoryError
 		}
-		library, err := cachedRuntime(files, flags, compiler, version, cache)
-		if err != nil {
-			return err
+		library, cachedRuntimeError := cachedRuntime(files, flags, compiler, version, cache)
+		if cachedRuntimeError != nil {
+			return cachedRuntimeError
 		}
-		data, err := runtime.ReadFile("runtime/" + spec.file)
-		if err != nil {
-			return err
+		data, readFileError := runtime.ReadFile("runtime/" + spec.file)
+		if readFileError != nil {
+			return readFileError
 		}
 		text := string(data)
 		if strings.Count(text, spec.guard) != 1 {
@@ -115,8 +115,13 @@ func gccInvariantProduct(test *testing.T, kind string) string {
 				fmt.Fprintf(&renames, "#define %s probe_%s\n", match[1], match[1])
 			}
 			source = "#include <stdio.h>\n" + renames.String() + source + spec.main
-			if err := BuildWithRuntime(source, filepath.Join(directory, variant), options, library); err != nil {
-				return err
+			if buildWithRuntimeError := BuildWithRuntime(
+				source,
+				filepath.Join(directory, variant),
+				options,
+				library,
+			); buildWithRuntimeError != nil {
+				return buildWithRuntimeError
 			}
 		}
 		return nil

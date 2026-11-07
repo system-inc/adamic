@@ -49,19 +49,19 @@ func TestAsyncGapsNameTheMissingPiece(test *testing.T) {
 		{"async function f(): Promise<void> { await Promise.resolve(); }\nvoid f();", "void operator"},
 		{"async function f(): Promise<void> { console.log(`${1 == 1}`); }\nawait f();", "refuses =="},
 	} {
-		_, err := lowerSource(test, probe.source)
-		if err == nil || !strings.Contains(err.Error(), probe.want) {
-			test.Errorf("%s: got %v, want %s", probe.source, err, probe.want)
+		_, lowerSourceError := lowerSource(test, probe.source)
+		if lowerSourceError == nil || !strings.Contains(lowerSourceError.Error(), probe.want) {
+			test.Errorf("%s: got %v, want %s", probe.source, lowerSourceError, probe.want)
 		}
 		if strings.Contains(probe.want, "task") || probe.want == "void operator" || probe.want == "refuses ==" {
 			var refused *Refused
-			if !errors.As(err, &refused) {
-				test.Errorf("permanent refusal became NotYet: %v", err)
+			if !errors.As(lowerSourceError, &refused) {
+				test.Errorf("permanent refusal became NotYet: %v", lowerSourceError)
 			}
 		} else {
 			var notYet *NotYet
-			if !errors.As(err, &notYet) {
-				test.Errorf("gap became refusal: %v", err)
+			if !errors.As(lowerSourceError, &notYet) {
+				test.Errorf("gap became refusal: %v", lowerSourceError)
 			}
 		}
 	}
@@ -71,11 +71,11 @@ func TestAsyncGapsNameTheMissingPiece(test *testing.T) {
 func TestAsyncTypeOfCompoundFunctionValuesLower(test *testing.T) {
 	test.Parallel()
 	for _, expression := range []string{"typeof (true ? f : f)", "typeof (f === f)"} {
-		if _, err := lowerSource(
+		if _, lowerSourceError := lowerSource(
 			test,
 			"async function f(): Promise<void> {}\nconsole.log("+expression+");\n",
-		); err != nil {
-			test.Fatal(err)
+		); lowerSourceError != nil {
+			test.Fatal(lowerSourceError)
 		}
 	}
 }
@@ -91,10 +91,12 @@ func TestAsyncGeneratorsRemainRefused(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var refused *Refused
-			if !errors.As(err, &refused) || refused.What != "an async generator function" || refused.Where == "" {
-				test.Fatalf("want located async-generator refusal, got %v", err)
+			if !errors.As(lowerSourceError, &refused) ||
+				refused.What != "an async generator function" ||
+				refused.Where == "" {
+				test.Fatalf("want located async-generator refusal, got %v", lowerSourceError)
 			}
 		})
 	}
@@ -102,13 +104,13 @@ func TestAsyncGeneratorsRemainRefused(test *testing.T) {
 
 func TestPromisePayloadCannotHideUserCycles(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(
+	_, lowerSourceError := lowerSource(
 		test,
 		"interface Box { promise: Promise<Box> | undefined; }\nfunction stash(box: Box, promise: Promise<Box>): void { box.promise = promise; }\nconst box: Box = {promise: undefined};\nconst promise = Promise.resolve(box);\nstash(box,promise);",
 	)
 	var refused *Refused
-	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/cycle-capable") {
-		test.Fatalf("Promise payload hid the user back-reference: %v", err)
+	if !errors.As(lowerSourceError, &refused) || !strings.Contains(lowerSourceError.Error(), "adamic/cycle-capable") {
+		test.Fatalf("Promise payload hid the user back-reference: %v", lowerSourceError)
 	}
 }
 
@@ -137,18 +139,18 @@ func TestAsyncReaderRefusals(test *testing.T) {
 			false,
 		},
 	} {
-		_, err := lowerSource(test, probe.source)
-		if err == nil || !strings.Contains(err.Error(), probe.want) {
-			test.Fatalf("reader probe must be refused by name %q: %v", probe.want, err)
+		_, lowerSourceError := lowerSource(test, probe.source)
+		if lowerSourceError == nil || !strings.Contains(lowerSourceError.Error(), probe.want) {
+			test.Fatalf("reader probe must be refused by name %q: %v", probe.want, lowerSourceError)
 		}
 		var refused *Refused
 		var notYet *NotYet
 		if probe.cycle {
-			if !errors.As(err, &refused) {
-				test.Fatalf("cycle must be Refused: %v", err)
+			if !errors.As(lowerSourceError, &refused) {
+				test.Fatalf("cycle must be Refused: %v", lowerSourceError)
 			}
-		} else if !errors.As(err, &notYet) {
-			test.Fatalf("unproved semantics must be NotYet: %v", err)
+		} else if !errors.As(lowerSourceError, &notYet) {
+			test.Fatalf("unproved semantics must be NotYet: %v", lowerSourceError)
 		}
 	}
 }
@@ -167,9 +169,9 @@ func TestAsyncRepeatedBindingsLower(test *testing.T) {
 			source := "async function run(): Promise<void> { const readers: (() => string)[] = []; let i = 0; " +
 				strings.ReplaceAll(loop, "BODY", body) +
 				" } await run();"
-			_, err := lowerSource(test, source)
-			if err != nil {
-				test.Fatalf("repeated binding must lower: %s: %v", source, err)
+			_, lowerSourceError := lowerSource(test, source)
+			if lowerSourceError != nil {
+				test.Fatalf("repeated binding must lower: %s: %v", source, lowerSourceError)
 			}
 		}
 	}
@@ -186,10 +188,10 @@ return flag ? 4 : { then(resolve: (value: number) => void): void { resolve(7); }
 }
 const result = await f(false);`,
 	} {
-		_, err := lowerSource(test, source)
+		_, lowerSourceError := lowerSource(test, source)
 		var notYet *NotYet
-		if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "return of thenables") {
-			test.Fatalf("class or union thenable must be refused by name: %v", err)
+		if !errors.As(lowerSourceError, &notYet) || !strings.Contains(lowerSourceError.Error(), "return of thenables") {
+			test.Fatalf("class or union thenable must be refused by name: %v", lowerSourceError)
 		}
 	}
 }
@@ -198,19 +200,19 @@ const result = await f(false);`,
 // formerly refused unused binding and the observable registered fixture covered.
 func TestAsyncVoidAwaitValuesLower(test *testing.T) {
 	test.Parallel()
-	if _, err := lowerSource(
+	if _, lowerSourceError := lowerSource(
 		test,
 		"async function f(): Promise<void> { const value = await Promise.resolve(); }\nawait f();",
-	); err != nil {
-		test.Fatal(err)
+	); lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
 	// Reading the void binding is H2's refusal (#x2gt39p): a Promise<void> can resolve to anything a
 	// value-returning function hands it.
-	_, err := lowerSource(
+	_, lowerSourceError := lowerSource(
 		test,
 		"async function f(): Promise<void> { const value = await Promise.resolve(); console.log(typeof value); } await f();",
 	)
-	if err == nil || !strings.Contains(err.Error(), "a read of a void value") {
-		test.Fatalf("want the observed void binding refused, got %v", err)
+	if lowerSourceError == nil || !strings.Contains(lowerSourceError.Error(), "a read of a void value") {
+		test.Fatalf("want the observed void binding refused, got %v", lowerSourceError)
 	}
 }

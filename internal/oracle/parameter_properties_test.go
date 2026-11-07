@@ -36,13 +36,15 @@ func TestParameterPropertyMutants(test *testing.T) {
 	for _, family := range []string{"missing store", "late store"} {
 		test.Run(family, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/parameter_properties.a"))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/parameter_properties.a"),
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			changed := false
 			for index := range program.Functions {
@@ -68,8 +70,12 @@ func TestParameterPropertyMutants(test *testing.T) {
 				test.Fatal("mutant changed no parameter-property store")
 			}
 			binary := filepath.Join(test.TempDir(), "mutant")
-			if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(
+				native.C(program),
+				binary,
+				native.Options{Sanitize: true},
+			); buildError != nil {
+				test.Fatal(buildError)
 			}
 			result := executeWith(
 				test,
@@ -89,13 +95,15 @@ func TestParameterPropertyMutants(test *testing.T) {
 
 func TestParameterPropertyOwnershipMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/parameter_properties_ownership.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/parameter_properties_ownership.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	code := native.C(program)
 	retain := ""
@@ -109,8 +117,8 @@ func TestParameterPropertyOwnershipMutant(test *testing.T) {
 	}
 	code = strings.ReplaceAll(code, retain, strings.TrimSuffix(strings.TrimPrefix(retain, "adamic_retain("), ")"))
 	binary := filepath.Join(test.TempDir(), "mutant")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(code, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	result := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
 	if !strings.Contains(string(result.stderr), "AddressSanitizer: heap-use-after-free") {

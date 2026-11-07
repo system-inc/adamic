@@ -21,10 +21,13 @@ func NewUnitTimer(output io.Writer) *UnitTimer { return &UnitTimer{json.NewEncod
 
 func processCPUSeconds() float64 {
 	var usage syscall.Rusage
-	if err := syscall.Getrusage(syscall.RUSAGE_SELF, &usage); err != nil {
-		panic(err)
+	if getrusageError := syscall.Getrusage(syscall.RUSAGE_SELF, &usage); getrusageError != nil {
+		panic(getrusageError)
 	}
-	return float64(usage.Utime.Sec) + float64(usage.Utime.Usec)/1e6 + float64(usage.Stime.Sec) + float64(usage.Stime.Usec)/1e6
+	return float64(usage.Utime.Sec) +
+		float64(usage.Utime.Usec)/1e6 +
+		float64(usage.Stime.Sec) +
+		float64(usage.Stime.Usec)/1e6
 }
 
 // Start includes registration, lowering and panic recovery, but excludes writing
@@ -36,8 +39,8 @@ func (timer *UnitTimer) Start(file, where string) func() {
 	wall, cpu := time.Now(), processCPUSeconds()
 	return func() {
 		record := UnitTime{file, where, time.Since(wall).Seconds(), processCPUSeconds() - cpu}
-		if err := timer.encoder.Encode(record); err != nil {
-			panic(err)
+		if encodeError := timer.encoder.Encode(record); encodeError != nil {
+			panic(encodeError)
 		}
 	}
 }

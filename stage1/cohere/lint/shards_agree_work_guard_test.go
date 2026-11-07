@@ -24,9 +24,9 @@ func testShardsAgreeChild(test *testing.T, name string, markers ...string) {
 	command.Env = append(os.Environ(), markers...)
 	var output bytes.Buffer
 	command.Stdout, command.Stderr = &output, &output
-	err := testguard.Run(command, testguard.Budget, testguard.Ceiling)
+	runError := testguard.Run(command, testguard.Budget, testguard.Ceiling)
 	test.Logf("%s", &output)
-	if err != nil {
-		test.Fatalf("%s: %v", name, err)
+	if runError != nil {
+		test.Fatalf("%s: %v", name, runError)
 	}
 }

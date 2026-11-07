@@ -23,13 +23,15 @@ func TestNodePathRelativeRuntime(test *testing.T) {
 			program.Main = append(program.Main, ir.WriteLine{Stream: ir.Stdout, Value: call})
 		}
 	}
-	fixture, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_path_relative.a"))
-	if err != nil {
-		test.Fatal(err)
+	fixture, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/node_path_relative.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	how := inputRun{directory: root}
 	truth := onNodeWith(test, how, fixture)
@@ -51,8 +53,8 @@ func TestNodePathRelativeRuntime(test *testing.T) {
 	helper := `static adamic_string *mutant_relative(const adamic_string *from, const adamic_string *to) { return adamic_node_path_join(2, (adamic_string *const[]){(adamic_string *)from, (adamic_string *)to}); }`
 	source = strings.Replace(source, `#include "adamic.h"`, `#include "adamic.h"`+"\n"+helper, 1)
 	mutant := filepath.Join(shared, "mutant")
-	if err := native.Build(source, mutant, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(source, mutant, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	// LeakSanitizer is Linux's: macOS's AddressSanitizer aborts when asked for it.
 	var environment []string

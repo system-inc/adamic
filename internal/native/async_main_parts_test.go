@@ -42,9 +42,9 @@ func TestAsyncMainPastPartLimitStaysWhole(test *testing.T) {
 	defer cancel()
 	node := exec.CommandContext(ctx, "node", "--input-type=module")
 	node.Stdin = strings.NewReader("Promise.resolve();\n" + strings.Repeat("console.log('line');\n", statements))
-	want, err := node.CombinedOutput()
-	if err != nil || string(want) != strings.Repeat("line\n", statements) {
-		test.Fatalf("Node: %v %s", err, want)
+	want, combinedOutputError := node.CombinedOutput()
+	if combinedOutputError != nil || string(want) != strings.Repeat("line\n", statements) {
+		test.Fatalf("Node: %v %s", combinedOutputError, want)
 	}
 	got := runMainParts(test, code)
 	if got.Exit != 0 || got.Stderr != "" || got.Stdout != string(want) {

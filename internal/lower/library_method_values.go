@@ -28,7 +28,9 @@ func (l *lowering) libraryMethod(node *ast.Node, seen map[*ast.Symbol]bool) (lib
 		}
 		seen[symbol] = true
 		declaration := symbol.Declarations[0]
-		if declaration.Kind != ast.KindVariableDeclaration || declaration.Parent == nil || declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
+		if declaration.Kind != ast.KindVariableDeclaration ||
+			declaration.Parent == nil ||
+			declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
 			return libraryMethod{}, false
 		}
 		initializer := declaration.AsVariableDeclaration().Initializer
@@ -37,7 +39,9 @@ func (l *lowering) libraryMethod(node *ast.Node, seen map[*ast.Symbol]bool) (lib
 		}
 		return l.libraryMethod(initializer, seen)
 	}
-	if node.Kind != ast.KindPropertyAccessExpression || !l.libraryMember(node) || len(l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node), checker.SignatureKindCall)) == 0 {
+	if node.Kind != ast.KindPropertyAccessExpression ||
+		!l.libraryMember(node) ||
+		len(l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node), checker.SignatureKindCall)) == 0 {
 		return libraryMethod{}, false
 	}
 	access := node.AsPropertyAccessExpression()
@@ -52,7 +56,9 @@ func (l *lowering) libraryMethod(node *ast.Node, seen map[*ast.Symbol]bool) (lib
 		if l.isLibraryGlobal(receiver, family) {
 			return libraryMethod{family, node.Name().Text(), node}, true
 		}
-		if receiver.Kind == ast.KindPropertyAccessExpression && receiver.Name().Text() == "prototype" && l.isLibraryGlobal(receiver.AsPropertyAccessExpression().Expression, family) {
+		if receiver.Kind == ast.KindPropertyAccessExpression &&
+			receiver.Name().Text() == "prototype" &&
+			l.isLibraryGlobal(receiver.AsPropertyAccessExpression().Expression, family) {
 			return libraryMethod{family + ".prototype", node.Name().Text(), node}, true
 		}
 	}
@@ -65,7 +71,11 @@ func constMethodInitializer(node *ast.Node) bool {
 		outer = outer.Parent
 	}
 	parent := outer.Parent
-	return parent != nil && parent.Kind == ast.KindVariableDeclaration && parent.AsVariableDeclaration().Initializer == outer && parent.Parent != nil && parent.Parent.Flags&ast.NodeFlagsConst != 0
+	return parent != nil &&
+		parent.Kind == ast.KindVariableDeclaration &&
+		parent.AsVariableDeclaration().Initializer == outer &&
+		parent.Parent != nil &&
+		parent.Parent.Flags&ast.NodeFlagsConst != 0
 }
 
 func (l *lowering) libraryMethodReadAllowed(node *ast.Node) bool {
@@ -84,7 +94,10 @@ func (l *lowering) libraryMethodReadAllowed(node *ast.Node) bool {
 		outer = outer.Parent
 	}
 	parent := outer.Parent
-	if parent != nil && parent.Kind == ast.KindPropertyAccessExpression && (parent.Name().Text() == "call" || parent.Name().Text() == "apply" || parent.Name().Text() == "bind") && called(parent) {
+	if parent != nil &&
+		parent.Kind == ast.KindPropertyAccessExpression &&
+		(parent.Name().Text() == "call" || parent.Name().Text() == "apply" || parent.Name().Text() == "bind") &&
+		called(parent) {
 		return true
 	}
 	return l.libraryMapArgument(node)
@@ -108,8 +121,8 @@ func (l *lowering) libraryMapArgument(node *ast.Node) bool {
 }
 
 func (l *lowering) libraryMethodValue(node *ast.Node) (ir.Expression, bool, error) {
-	if value, handled, err := l.libraryFunctionValueOf(node); handled {
-		return value, true, err
+	if value, handled, libraryFunctionValueOfError := l.libraryFunctionValueOf(node); handled {
+		return value, true, libraryFunctionValueOfError
 	}
 	_, known := l.libraryMethod(node, map[*ast.Symbol]bool{})
 	if !known {
@@ -132,13 +145,25 @@ func (l *lowering) libraryMethodValue(node *ast.Node) (ir.Expression, bool, erro
 		return nil, false, nil
 	}
 	if !constMethodInitializer(node) {
-		return nil, true, l.notYet(node, "a library method value outside a const alias, typed call/apply, or supported map callback (its receiver and callable ABI are not proven); wrap the call in an arrow")
+		return nil, true, l.notYet(
+			node,
+			"a library method value outside a const alias, typed call/apply, or supported map callback (its receiver and callable ABI are not proven); wrap the call in an arrow",
+		)
 	}
-	if ast.IsIdentifier(node) && !l.isLibraryGlobal(node, "String") && !l.isLibraryGlobal(node, "Number") && !l.isLibraryGlobal(node, "parseInt") && !l.isLibraryGlobal(node, "parseFloat") {
+	if ast.IsIdentifier(node) &&
+		!l.isLibraryGlobal(node, "String") &&
+		!l.isLibraryGlobal(node, "Number") &&
+		!l.isLibraryGlobal(node, "parseInt") &&
+		!l.isLibraryGlobal(node, "parseFloat") {
 		return nil, false, nil
 	}
 	index := len(l.result.Functions)
-	l.result.Functions = append(l.result.Functions, ir.Function{Name: "library_method_token", Closure: true, Returns: ir.Number, Body: []ir.Statement{ir.Return{Value: ir.NumberConstant{}}}})
+	l.result.Functions = append(l.result.Functions, ir.Function{
+		Name:    "library_method_token",
+		Closure: true,
+		Returns: ir.Number,
+		Body:    []ir.Statement{ir.Return{Value: ir.NumberConstant{}}},
+	})
 	return ir.MakeClosure{Function: index}, true, nil
 }
 
@@ -151,7 +176,9 @@ func (l *lowering) methodSequence(values []ir.Expression) ir.Expression {
 		l.result.Locals = append(l.result.Locals, ir.Local{Name: "argument", Type: value.Type(), Function: index})
 		function.Parameters = append(function.Parameters, local)
 	}
-	function.Body = []ir.Statement{ir.Return{Value: ir.Read{Local: function.Parameters[len(function.Parameters)-1], Of: function.Returns}}}
+	function.Body = []ir.Statement{
+		ir.Return{Value: ir.Read{Local: function.Parameters[len(function.Parameters)-1], Of: function.Returns}},
+	}
 	l.result.Functions = append(l.result.Functions, function)
 	return ir.Call{Function: index, Arguments: values, Returns: function.Returns}
 }
@@ -171,7 +198,8 @@ func (l *lowering) libraryMethodCall(node *ast.Node) (ir.Expression, bool, error
 	callee := ast.SkipParentheses(call.Expression)
 	target := callee
 	mode := "direct"
-	if callee.Kind == ast.KindPropertyAccessExpression && (callee.Name().Text() == "call" || callee.Name().Text() == "apply" || callee.Name().Text() == "bind") {
+	if callee.Kind == ast.KindPropertyAccessExpression &&
+		(callee.Name().Text() == "call" || callee.Name().Text() == "apply" || callee.Name().Text() == "bind") {
 		mode = callee.Name().Text()
 		target = callee.AsPropertyAccessExpression().Expression
 	}
@@ -180,7 +208,9 @@ func (l *lowering) libraryMethodCall(node *ast.Node) (ir.Expression, bool, error
 		return nil, false, nil
 	}
 	// Leave existing immediate primitive prototype calls on their established paths.
-	if mode == "call" && method.source == ast.SkipParentheses(target) && (method.family == "String.prototype" || method.family == "Number.prototype") {
+	if mode == "call" &&
+		method.source == ast.SkipParentheses(target) &&
+		(method.family == "String.prototype" || method.family == "Number.prototype") {
 		return nil, false, nil
 	}
 	// Leave the intrinsic's ordinary direct call on the established path.
@@ -191,8 +221,8 @@ func (l *lowering) libraryMethodCall(node *ast.Node) (ir.Expression, bool, error
 		return nil, false, nil
 	}
 	if mode == "bind" {
-		value, err := l.libraryMethodBind(node, target, method)
-		return value, true, err
+		value, libraryMethodBindError := l.libraryMethodBind(node, target, method)
+		return value, true, libraryMethodBindError
 	}
 	if hasSpread(node) {
 		return nil, true, l.notYet(node, "spread into a delayed library call (argument arity is not proven)")
@@ -207,7 +237,10 @@ func (l *lowering) libraryMethodCall(node *ast.Node) (ir.Expression, bool, error
 	}
 	if mode == "apply" {
 		if len(written) != 1 || ast.SkipParentheses(written[0]).Kind != ast.KindArrayLiteralExpression {
-			return nil, true, l.notYet(node, "apply without a dense argument literal (length, presence and argument representations must be proven)")
+			return nil, true, l.notYet(
+				node,
+				"apply without a dense argument literal (length, presence and argument representations must be proven)",
+			)
 		}
 		written = ast.SkipParentheses(written[0]).AsArrayLiteralExpression().Elements.Nodes
 		for _, argument := range written {
@@ -217,16 +250,20 @@ func (l *lowering) libraryMethodCall(node *ast.Node) (ir.Expression, bool, error
 		}
 	}
 	prefix := []ir.Expression{}
-	if alias, err := l.methodAliasRead(target); err != nil {
-		return nil, true, err
+	if alias, methodAliasReadError := l.methodAliasRead(target); methodAliasReadError != nil {
+		return nil, true, methodAliasReadError
 	} else if alias != nil {
 		prefix = append(prefix, alias)
 	}
-	if method.family == "global" || method.family == "Number" || method.family == "Math" || method.family == "Object" || method.family == "String" {
+	if method.family == "global" ||
+		method.family == "Number" ||
+		method.family == "Math" ||
+		method.family == "Object" ||
+		method.family == "String" {
 		if receiver != nil {
-			value, err := l.expression(receiver)
-			if err != nil {
-				return nil, true, err
+			value, expressionError := l.expression(receiver)
+			if expressionError != nil {
+				return nil, true, expressionError
 			}
 			if value.Type() == 0 {
 				value = fit(value, ir.Object)
@@ -243,35 +280,60 @@ func (l *lowering) libraryMethodCall(node *ast.Node) (ir.Expression, bool, error
 	switch method.family {
 	case "Array.prototype":
 		if receiver == nil {
-			return nil, true, l.notYet(node, "an unbound Array method call (this is undefined); supply an array to call/apply")
+			return nil, true, l.notYet(
+				node,
+				"an unbound Array method call (this is undefined); supply an array to call/apply",
+			)
 		}
 		if l.mayBeUndefined(receiver) {
 			return nil, true, l.notYet(receiver, "an Array method receiver that may be undefined")
 		}
 		if of, _ := l.representation(l.checker.GetTypeAtLocation(receiver)); of != ir.Array {
-			return nil, true, l.notYet(receiver, "an Array method receiver whose dense array representation is not proven")
+			return nil, true, l.notYet(
+				receiver,
+				"an Array method receiver whose dense array representation is not proven",
+			)
 		}
 		switch method.name {
 		case "indexOf", "includes", "lastIndexOf":
-			if err := l.delayedArrayWritesFit(node, receiver, method.name, written); err != nil {
-				return nil, true, err
+			if delayedArrayWritesFitError := l.delayedArrayWritesFit(
+				node,
+				receiver,
+				method.name,
+				written,
+			); delayedArrayWritesFitError != nil {
+				return nil, true, delayedArrayWritesFitError
 			}
 			value, handled, err = l.libraryArrayMethodArguments(node, receiver, method.name, written)
 		case "slice", "join", "at", "push", "reverse", "concat", "fill", "splice":
 			if ast.SkipParentheses(receiver).Kind == ast.KindNewExpression && method.name == "fill" {
-				return nil, true, l.notYet(node, "delayed fill of an array with holes; write the direct filled construction")
+				return nil, true, l.notYet(
+					node,
+					"delayed fill of an array with holes; write the direct filled construction",
+				)
 			}
-			if err := l.delayedArrayWritesFit(node, receiver, method.name, written); err != nil {
-				return nil, true, err
+			if delayedArrayWritesFitError := l.delayedArrayWritesFit(
+				node,
+				receiver,
+				method.name,
+				written,
+			); delayedArrayWritesFitError != nil {
+				return nil, true, delayedArrayWritesFitError
 			}
 			value, handled, err = l.arrayMethodArguments(node, receiver, method.name, written)
 		}
 	case "String.prototype":
 		if receiver == nil || l.mayBeUndefined(receiver) {
-			return nil, true, l.notYet(node, "an unbound method read as a value without a proven present string receiver")
+			return nil, true, l.notYet(
+				node,
+				"an unbound method read as a value without a proven present string receiver",
+			)
 		}
 		if of, _ := l.representation(l.checker.GetTypeAtLocation(receiver)); of != ir.String {
-			return nil, true, l.notYet(receiver, "a String method receiver whose primitive string representation is not proven")
+			return nil, true, l.notYet(
+				receiver,
+				"a String method receiver whose primitive string representation is not proven",
+			)
 		}
 		var text ir.Expression
 		text, err = l.expression(receiver)
@@ -309,7 +371,9 @@ func (l *lowering) libraryMethodCall(node *ast.Node) (ir.Expression, bool, error
 		if method.name == "toString" {
 			value, err = l.objectTagCall(node, receiver, written)
 			handled = true
-		} else if method.name == "hasOwnProperty" || method.name == "propertyIsEnumerable" || method.name == "isPrototypeOf" {
+		} else if method.name == "hasOwnProperty" ||
+			method.name == "propertyIsEnumerable" ||
+			method.name == "isPrototypeOf" {
 			value, handled, err = l.objectPrototypeCallArguments(node, receiver, method.name, written)
 		}
 	case "Number":
@@ -340,21 +404,33 @@ func (l *lowering) libraryMethodCall(node *ast.Node) (ir.Expression, bool, error
 		}
 	}
 	if !handled {
-		return nil, true, l.notYet(node, "delayed "+method.family+"."+method.name+" (no adapter proves this receiver and argument ABI); use an arrow")
+		return nil, true, l.notYet(node, "delayed "+
+			method.family+
+			"."+
+			method.name+
+			" (no adapter proves this receiver and argument ABI); use an arrow")
 	}
 	if err != nil {
 		return nil, true, err
 	}
 	if contextual := l.slotType(node); contextual != nil {
 		expected, proven := l.representation(contextual)
-		if !proven || expected != value.Type() && expected != ir.Maybe(value.Type()) && !(expected == ir.Union && l.writable(contextual) && (value.Type() == ir.String || value.Type() == ir.Number || value.Type() == ir.Boolean || value.Type() == ir.MaybeNumber)) {
+		if !proven || expected != value.Type() && expected != ir.Maybe(value.Type()) && !(expected == ir.Union &&
+			l.writable(contextual) &&
+			(value.Type() == ir.String ||
+				value.Type() == ir.Number ||
+				value.Type() == ir.Boolean ||
+				value.Type() == ir.MaybeNumber)) {
 			return nil, true, l.notYet(node, "a delayed library result whose contextual representation is not proven")
 		}
 		if value.Type() == ir.Array && method.family == "Array.prototype" {
 			from := l.elementTypeOfArray(l.checker.GetTypeAtLocation(receiver))
 			to := l.elementTypeOfArray(contextual)
 			if from == nil || to == nil || from != to || !l.sameKeeping(from, to, map[[2]*checker.Type]bool{}) {
-				return nil, true, l.notYet(node, "a delayed Array result with an erased or different element type; preserve the receiver's exact element type")
+				return nil, true, l.notYet(
+					node,
+					"a delayed Array result with an erased or different element type; preserve the receiver's exact element type",
+				)
 			}
 		}
 	}
@@ -372,7 +448,15 @@ func (l *lowering) libraryMethodCall(node *ast.Node) (ir.Expression, bool, error
 // name in neither, so an adapter added later is checked or NotYet, never unchecked by default (Compiler's
 // change on c8f64485).
 var delayedArrayWriters = map[string]bool{"push": true, "fill": true, "splice": true, "concat": true}
-var delayedArrayReaders = map[string]bool{"slice": true, "join": true, "at": true, "reverse": true, "indexOf": true, "includes": true, "lastIndexOf": true}
+var delayedArrayReaders = map[string]bool{
+	"slice":       true,
+	"join":        true,
+	"at":          true,
+	"reverse":     true,
+	"indexOf":     true,
+	"includes":    true,
+	"lastIndexOf": true,
+}
 
 // delayedArrayWritesFit is the check a delayed Array method's writes need. lib types Array.prototype as
 // any[], so a method value taken from it has any parameters, and the checker never checks what call or
@@ -408,8 +492,11 @@ func (l *lowering) delayedArrayWritesFit(node, receiver *ast.Node, name string, 
 			if element == nil || inside == nil || !l.checker.IsTypeAssignableTo(inside, element) {
 				return l.notYet(other, "a delayed concat of an array whose elements aren't the receiver's element type")
 			}
-			if err := l.refuseInSlot(other, l.checker.GetTypeAtLocation(receiver)); err != nil {
-				return err
+			if refuseInSlotError := l.refuseInSlot(
+				other,
+				l.checker.GetTypeAtLocation(receiver),
+			); refuseInSlotError != nil {
+				return refuseInSlotError
 			}
 			l.keepSlot(other, l.checker.GetTypeAtLocation(receiver))
 		}
@@ -423,8 +510,8 @@ func (l *lowering) delayedArrayWritesFit(node, receiver *ast.Node, name string, 
 		// invariance, optional fields, nominal classes, void widening, record storage (Language's h7, a
 		// crash in map.c natively when a second list beside the registry forgot it) and whatever is
 		// registered after them.
-		if err := l.refuseInSlot(value, element); err != nil {
-			return err
+		if refuseInSlotError := l.refuseInSlot(value, element); refuseInSlotError != nil {
+			return refuseInSlotError
 		}
 		// Lowering's own checks at the value (a weak or strong keep, a host object's view, a tuple
 		// where an array goes) read the slot too, so it stays set while the value is lowered.
@@ -437,9 +524,9 @@ func (l *lowering) objectTagCall(node, receiver *ast.Node, written []*ast.Node) 
 	if len(written) != 0 || l.mayBeUndefined(receiver) {
 		return nil, l.notYet(node, "Object.prototype.toString with arguments or a possibly undefined receiver")
 	}
-	value, err := l.expression(receiver)
-	if err != nil {
-		return nil, err
+	value, expressionError := l.expression(receiver)
+	if expressionError != nil {
+		return nil, expressionError
 	}
 	tag := ""
 	if _, null := value.(ir.Null); null {
@@ -491,7 +578,11 @@ func (l *lowering) libraryMapCallback(node, receiver *ast.Node, element ir.Type)
 	// absent result slot, so normalize presence before passing it to the intrinsic adapter.
 	sourceElement := l.elementTypeOfArray(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver)))
 	if element == ir.String && sourceElement != nil && l.includesUndefined(sourceElement) {
-		reads[0] = ir.Coalesce{Value: reads[0], Fallback: ir.StringConstant{Index: l.constant("undefined")}, Of: ir.String}
+		reads[0] = ir.Coalesce{
+			Value:    reads[0],
+			Fallback: ir.StringConstant{Index: l.constant("undefined")},
+			Of:       ir.String,
+		}
 	}
 	var result ir.Expression
 	if method.family == "global" && method.name == "String" {
@@ -505,7 +596,9 @@ func (l *lowering) libraryMapCallback(node, receiver *ast.Node, element ir.Type)
 		case ir.MaybeNumber:
 			result = ir.MaybeToString{Value: reads[0]}
 		}
-	} else if (method.family == "Number" || method.family == "global") && (method.name == "parseInt" || method.name == "parseFloat") && element == ir.String {
+	} else if (method.family == "Number" || method.family == "global") &&
+		(method.name == "parseInt" || method.name == "parseFloat") &&
+		element == ir.String {
 		arguments := []ir.Expression{reads[0]}
 		if method.name == "parseInt" {
 			arguments = append(arguments, reads[1])
@@ -513,14 +606,17 @@ func (l *lowering) libraryMapCallback(node, receiver *ast.Node, element ir.Type)
 		result = ir.NumberCall{Function: method.name, Arguments: arguments}
 	}
 	if result == nil {
-		return nil, true, l.notYet(node, "a library map callback without a proven primitive adapter (map supplies value, index and array); use an arrow")
+		return nil, true, l.notYet(
+			node,
+			"a library map callback without a proven primitive adapter (map supplies value, index and array); use an arrow",
+		)
 	}
 	function.Returns = result.Type()
 	function.Body = []ir.Statement{ir.Return{Value: result}}
 	l.result.Functions = append(l.result.Functions, function)
 	value := ir.Expression(ir.MakeClosure{Function: index})
-	if alias, err := l.methodAliasRead(node); err != nil {
-		return nil, true, err
+	if alias, methodAliasReadError := l.methodAliasRead(node); methodAliasReadError != nil {
+		return nil, true, methodAliasReadError
 	} else if alias != nil {
 		value = l.methodSequence([]ir.Expression{alias, value})
 	}
@@ -532,16 +628,22 @@ func (l *lowering) libraryMapCallback(node, receiver *ast.Node, element ir.Type)
 func (l *lowering) libraryMethodBind(node, target *ast.Node, method libraryMethod) (ir.Expression, error) {
 	written := node.AsCallExpression().Arguments.Nodes
 	if method.family != "String.prototype" || len(written) != 1 || hasSpread(node) {
-		return nil, l.notYet(node, "bind without a supported captured receiver and fixed argument ABI (only zero-argument String methods are lowered); use an arrow")
+		return nil, l.notYet(
+			node,
+			"bind without a supported captured receiver and fixed argument ABI (only zero-argument String methods are lowered); use an arrow",
+		)
 	}
 	switch method.name {
 	case "trim", "trimStart", "trimEnd", "toUpperCase", "toLowerCase", "toString", "valueOf":
 	default:
-		return nil, l.notYet(node, "bind of a method with optional, required or partial arguments (its argument adapter is not lowered); use an arrow")
+		return nil, l.notYet(
+			node,
+			"bind of a method with optional, required or partial arguments (its argument adapter is not lowered); use an arrow",
+		)
 	}
-	receiver, err := l.expression(written[0])
-	if err != nil {
-		return nil, err
+	receiver, expressionError := l.expression(written[0])
+	if expressionError != nil {
+		return nil, expressionError
 	}
 	if receiver.Type() != ir.String || l.mayBeUndefined(written[0]) {
 		return nil, l.notYet(node, "bind without a proven present primitive string receiver")
@@ -549,7 +651,10 @@ func (l *lowering) libraryMethodBind(node, target *ast.Node, method libraryMetho
 	maker := len(l.result.Functions)
 	l.result.Functions = append(l.result.Functions, ir.Function{Name: "library_bind_factory", Returns: ir.Closure})
 	captured := len(l.result.Locals)
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: "bound_receiver", Type: ir.String, Function: maker, Captured: true})
+	l.result.Locals = append(
+		l.result.Locals,
+		ir.Local{Name: "bound_receiver", Type: ir.String, Function: maker, Captured: true},
+	)
 	closure := len(l.result.Functions)
 	read := ir.Expression(ir.Read{Local: captured, Of: ir.String})
 	result := read
@@ -560,26 +665,39 @@ func (l *lowering) libraryMethodBind(node, target *ast.Node, method libraryMetho
 	default:
 		result = ir.StringCall{Method: method.name, Value: read}
 	}
-	l.result.Functions = append(l.result.Functions, ir.Function{Name: "library_bound_" + method.name, Closure: true, Environment: []int{captured}, Returns: ir.String, Body: []ir.Statement{ir.Return{Value: result}}})
-	l.closureRecords = append(l.closureRecords, closureRecord{proven: l.concrete(l.checker.GetTypeAtLocation(node)), function: closure, node: node})
+	l.result.Functions = append(l.result.Functions, ir.Function{
+		Name:        "library_bound_" + method.name,
+		Closure:     true,
+		Environment: []int{captured},
+		Returns:     ir.String,
+		Body:        []ir.Statement{ir.Return{Value: result}},
+	})
+	l.closureRecords = append(
+		l.closureRecords,
+		closureRecord{proven: l.concrete(l.checker.GetTypeAtLocation(node)), function: closure, node: node},
+	)
 	l.result.Functions[maker].Parameters = []int{captured}
 	l.result.Functions[maker].Body = []ir.Statement{ir.Return{Value: ir.MakeClosure{Function: closure}}}
 	value := ir.Expression(ir.Call{Function: maker, Arguments: []ir.Expression{receiver}, Returns: ir.Closure})
-	if alias, err := l.methodAliasRead(target); err != nil {
-		return nil, err
+	if alias, methodAliasReadError := l.methodAliasRead(target); methodAliasReadError != nil {
+		return nil, methodAliasReadError
 	} else if alias != nil {
 		value = l.methodSequence([]ir.Expression{alias, value})
 	}
 	return value, nil
 }
 
-func (l *lowering) delayedNumberMethod(node, receiver *ast.Node, name string, written []*ast.Node) (ir.Expression, error) {
+func (l *lowering) delayedNumberMethod(
+	node, receiver *ast.Node,
+	name string,
+	written []*ast.Node,
+) (ir.Expression, error) {
 	if receiver == nil {
 		return nil, l.notYet(node, "an unbound Number method without a numeric receiver")
 	}
-	value, err := l.expression(receiver)
-	if err != nil {
-		return nil, err
+	value, expressionError := l.expression(receiver)
+	if expressionError != nil {
+		return nil, expressionError
 	}
 	if value.Type() != ir.Number {
 		return nil, l.notYet(receiver, "a Number method receiver without a proven number internal slot")
@@ -595,9 +713,9 @@ func (l *lowering) delayedNumberMethod(node, receiver *ast.Node, name string, wr
 	}
 	var argument ir.Expression
 	if len(written) == 1 {
-		argument, err = l.expression(written[0])
-		if err != nil {
-			return nil, err
+		argument, expressionError = l.expression(written[0])
+		if expressionError != nil {
+			return nil, expressionError
 		}
 		if _, missing := argument.(ir.Undefined); missing {
 			argument = nil
@@ -619,7 +737,10 @@ func (l *lowering) delayedNumberMethod(node, receiver *ast.Node, name string, wr
 func (l *lowering) libraryEmptyMap(node *ast.Node) (ir.Expression, bool, error) {
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
-	if callee.Kind != ast.KindPropertyAccessExpression || callee.Name().Text() != "map" || !l.libraryMember(callee) || len(call.Arguments.Nodes) != 1 {
+	if callee.Kind != ast.KindPropertyAccessExpression ||
+		callee.Name().Text() != "map" ||
+		!l.libraryMember(callee) ||
+		len(call.Arguments.Nodes) != 1 {
 		return nil, false, nil
 	}
 	receiver := ast.SkipParentheses(callee.AsPropertyAccessExpression().Expression)
@@ -634,15 +755,16 @@ func (l *lowering) libraryEmptyMap(node *ast.Node) (ir.Expression, bool, error) 
 	if method.family == "global" && method.name == "String" {
 		element = ir.String
 	}
-	if (method.family == "Number" || method.family == "global") && (method.name == "parseInt" || method.name == "parseFloat") {
+	if (method.family == "Number" || method.family == "global") &&
+		(method.name == "parseInt" || method.name == "parseFloat") {
 		element = ir.Number
 	}
 	if element == 0 {
 		return nil, true, l.notYet(node, "an empty map with an unsupported library callback value")
 	}
 	value := ir.Expression(ir.ArrayLiteral{Element: element})
-	if alias, err := l.methodAliasRead(call.Arguments.Nodes[0]); err != nil {
-		return nil, true, err
+	if alias, methodAliasReadError := l.methodAliasRead(call.Arguments.Nodes[0]); methodAliasReadError != nil {
+		return nil, true, methodAliasReadError
 	} else if alias != nil {
 		value = l.methodSequence([]ir.Expression{alias, value})
 	}

@@ -14,9 +14,9 @@ func environmentRecordedCount(test *testing.T, name string) {
 		if *updateCounts {
 			measuredCounts.Store(key, actual)
 		} else {
-			recorded, err := recordedCounts()
-			if err != nil {
-				test.Fatal(err)
+			recorded, recordedCountsError := recordedCounts()
+			if recordedCountsError != nil {
+				test.Fatal(recordedCountsError)
 			}
 			if recorded[key] != actual {
 				test.Fatalf("count row changed: %s; recorded %s", actual, recorded[key])

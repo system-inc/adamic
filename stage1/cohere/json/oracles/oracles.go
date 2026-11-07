@@ -138,23 +138,23 @@ var upstreamParityOracleBuild struct {
 func AuditOracle(test *testing.T) string {
 	test.Helper()
 	upstreamParityOracleBuild.once.Do(func() {
-		root, err := filepath.Abs(repository)
-		if err != nil {
-			test.Fatal(err)
+		root, absolutePathError := filepath.Abs(repository)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
-		side, err := filepath.Abs("testdata/cohere_side_test.go")
-		if err != nil {
-			test.Fatal(err)
+		side, absolutePathError := filepath.Abs("testdata/cohere_side_test.go")
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
-		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{
+		overlay, encodeError := json.Marshal(map[string]any{"Replace": map[string]string{
 			filepath.Join(root, "cohere/internal/format/javascript/adamic_json_audit_test.go"): side,
 		}})
-		if err != nil {
-			test.Fatal(err)
+		if encodeError != nil {
+			test.Fatal(encodeError)
 		}
 		path := filepath.Join(test.TempDir(), "overlay.json")
-		if err := os.WriteFile(path, overlay, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, overlay, 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		upstreamParityOracleBuild.path = stockOracle(
 			test,
@@ -178,23 +178,23 @@ func FormatterOracle(test *testing.T) string {
 	// cohere's command/formatter_comparison with testdata/cohere_driver.go laid over its main, keyed by what go
 	// says the build compiles (GoBuildIn). The overlay names this checkout's paths, so it sits in a temporary
 	// directory: it builds the product and is never part of it (#tqrqx60).
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	source, err := filepath.Abs("testdata/cohere_driver.go")
-	if err != nil {
-		test.Fatal(err)
+	source, absolutePathError := filepath.Abs("testdata/cohere_driver.go")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	overlay, err := json.Marshal(map[string]any{
+	overlay, encodeError := json.Marshal(map[string]any{
 		"Replace": map[string]string{filepath.Join(root, "cohere/command/formatter_comparison/main.go"): source},
 	})
-	if err != nil {
-		test.Fatal(err)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	path := filepath.Join(test.TempDir(), "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, overlay, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return stockOracle(
 		test,
@@ -230,13 +230,13 @@ func PrinterMutations() []PrinterMutation { return append([]PrinterMutation(nil)
 // PrinterMutant is shared with the parent json tests.
 func PrinterMutant(test *testing.T, planted []buildcache.Mutation) string {
 	test.Helper()
-	cohere, err := filepath.Abs("../../../cohere")
-	if err != nil {
-		test.Fatal(err)
+	cohere, absolutePathError := filepath.Abs("../../../cohere")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	side, err := filepath.Abs("testdata/cohere_side_test.go")
-	if err != nil {
-		test.Fatal(err)
+	side, absolutePathError := filepath.Abs("testdata/cohere_side_test.go")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	overlayPath := filepath.Join(test.TempDir(), "overlay.json")
 	writeJSON(test, overlayPath, map[string]any{"Replace": map[string]string{
@@ -254,12 +254,12 @@ func PrinterMutant(test *testing.T, planted []buildcache.Mutation) string {
 
 func writeJSON(test *testing.T, path string, value any) {
 	test.Helper()
-	encoded, err := json.Marshal(value)
-	if err != nil {
-		test.Fatal(err)
+	encoded, encodeError := json.Marshal(value)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
-	if err := os.WriteFile(path, encoded, 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, encoded, 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 }
 
@@ -280,18 +280,18 @@ func buildJSONClassOrderAnswer(oracle string, item ComparisonCase) func(string) 
 	return func(directory string) error {
 		input, _ := Protocol([]ComparisonCase{item}, make([]ComparisonAnswer, 1))
 		cases := filepath.Join(directory, "cases.txt")
-		if err := os.WriteFile(cases, []byte(input), 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(cases, []byte(input), 0644); writeError != nil {
+			return writeError
 		}
-		reference, err := executeResult(nil, oracle, "--cases", cases)
-		if err != nil {
-			return err
+		reference, executeResultError := executeResult(nil, oracle, "--cases", cases)
+		if executeResultError != nil {
+			return executeResultError
 		}
 		if reference.exitCode != 0 || len(reference.stderr) != 0 {
 			return fmt.Errorf("Go oracle: exit %d stderr %s", reference.exitCode, reference.stderr)
 		}
-		if _, err := ParseAnswers(string(reference.stdout), 1); err != nil {
-			return err
+		if _, parseAnswersError := ParseAnswers(string(reference.stdout), 1); parseAnswersError != nil {
+			return parseAnswersError
 		}
 		return os.WriteFile(filepath.Join(directory, "answer.txt"), reference.stdout, 0644)
 	}
@@ -307,9 +307,9 @@ func ClassOrderAnswer(test *testing.T) string {
 	test.Helper()
 	jsonClassOrderAnswer.once.Do(func() {
 		oracle := FormatterOracle(test)
-		binary, err := os.ReadFile(oracle)
-		if err != nil {
-			test.Fatal(err)
+		binary, readError := os.ReadFile(oracle)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		all := CorpusCases(test)
 		var items []ComparisonCase
@@ -326,9 +326,9 @@ func ClassOrderAnswer(test *testing.T) string {
 			ClassOrderAnswerInputs(binary, items[0]),
 			buildJSONClassOrderAnswer(oracle, items[0]),
 		)
-		stored, err := os.ReadFile(filepath.Join(directory, "answer.txt"))
-		if err != nil {
-			test.Fatal(err)
+		stored, readError := os.ReadFile(filepath.Join(directory, "answer.txt"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		jsonClassOrderAnswer.answer = string(stored)
 	})
@@ -350,10 +350,10 @@ func executeResult(_ []string, binary string, args ...string) (execution, error)
 	command.Env = nil
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
-	err := childguard.Run(command, jsonGuard)
+	runError := childguard.Run(command, jsonGuard)
 	var exitError interface{ ExitCode() int }
-	if err != nil && !errors.As(err, &exitError) {
-		return execution{}, err
+	if runError != nil && !errors.As(runError, &exitError) {
+		return execution{}, runError
 	}
 	return execution{stdout.Bytes(), stderr.Bytes(), command.ProcessState.ExitCode()}, nil
 }

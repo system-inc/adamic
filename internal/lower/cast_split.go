@@ -25,16 +25,24 @@ import (
 // call is a fresh RegExp, so no write to an instance reaches it.
 func (l *lowering) captureFreeSplit(expression *ast.Node, target *checker.Type) bool {
 	call := ast.SkipParentheses(expression)
-	if call.Kind != ast.KindCallExpression || !l.isArrayType(target) || l.elementTypeOfArray(target) != l.checker.GetStringType() {
+	if call.Kind != ast.KindCallExpression ||
+		!l.isArrayType(target) ||
+		l.elementTypeOfArray(target) != l.checker.GetStringType() {
 		return false
 	}
 	callee := ast.SkipParentheses(call.AsCallExpression().Expression)
 	arguments := call.AsCallExpression().Arguments.Nodes
-	if callee.Kind != ast.KindPropertyAccessExpression || callee.AsPropertyAccessExpression().QuestionDotToken != nil || callee.Name().Text() != "split" || len(arguments) == 0 || len(arguments) > 2 {
+	if callee.Kind != ast.KindPropertyAccessExpression ||
+		callee.AsPropertyAccessExpression().QuestionDotToken != nil ||
+		callee.Name().Text() != "split" ||
+		len(arguments) == 0 ||
+		len(arguments) > 2 {
 		return false
 	}
 	// The receiver test regexBuiltin dispatches a string's RegExp methods on.
-	if of, _ := l.representation(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))); of != ir.String {
+	if of, _ := l.representation(
+		l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression)),
+	); of != ir.String {
 		return false
 	}
 	separator := ast.SkipParentheses(arguments[0])
@@ -45,6 +53,6 @@ func (l *lowering) captureFreeSplit(expression *ast.Node, target *checker.Type) 
 	if !written {
 		return false
 	}
-	facts, err := regex.CaptureFacts(pattern, flags)
-	return err == nil && len(facts.Indices) == 1
+	facts, captureFactsError := regex.CaptureFacts(pattern, flags)
+	return captureFactsError == nil && len(facts.Indices) == 1
 }

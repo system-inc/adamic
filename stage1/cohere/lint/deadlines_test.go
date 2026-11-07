@@ -15,9 +15,9 @@ import (
 
 func guardExecutable(test *testing.T) string {
 	test.Helper()
-	path, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	path, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
 	return path
 }
@@ -42,8 +42,8 @@ func TestCompilerGuardBackend(test *testing.T) {
 	os.Unsetenv("ADAMIC_LINT_GUARD_BACKEND")
 	command := exec.Command(os.Args[index], os.Args[index+1:]...)
 	command.Stdout, command.Stderr = os.Stdout, os.Stderr
-	if err := testguard.Run(command, testguard.Budget, testguard.Ceiling); err != nil {
-		fmt.Fprintln(os.Stderr, err)
+	if runError := testguard.Run(command, testguard.Budget, testguard.Ceiling); runError != nil {
+		fmt.Fprintln(os.Stderr, runError)
 		os.Exit(1)
 	}
 	os.Exit(0)
@@ -52,29 +52,29 @@ func TestCompilerGuardBackend(test *testing.T) {
 func TestChildCPUHangGuard(test *testing.T) {
 	test.Parallel()
 	loop := filepath.Join(test.TempDir(), "planted-endless-loop.js")
-	if err := os.WriteFile(loop, []byte("for (;;) {}"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(loop, []byte("for (;;) {}"), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	command := toolchain.Command("node", loop)
 	started := time.Now()
-	err := testguard.Run(command, time.Second, testguard.Ceiling)
-	if err == nil ||
-		!strings.Contains(err.Error(), "child CPU hang guard exceeded") ||
-		!strings.Contains(err.Error(), "planted-endless-loop.js") {
-		test.Fatalf("loop guard: %v", err)
+	runError := testguard.Run(command, time.Second, testguard.Ceiling)
+	if runError == nil ||
+		!strings.Contains(runError.Error(), "child CPU hang guard exceeded") ||
+		!strings.Contains(runError.Error(), "planted-endless-loop.js") {
+		test.Fatalf("loop guard: %v", runError)
 	}
-	test.Logf("planted endless loop killed and named in %s: %v", time.Since(started), err)
+	test.Logf("planted endless loop killed and named in %s: %v", time.Since(started), runError)
 }
 
 func TestChildWallBackstop(test *testing.T) {
 	test.Parallel()
 	command := toolchain.Command("node", "-e", "setTimeout(()=>{},100000)")
 	started := time.Now()
-	err := testguard.Run(command, time.Minute, 200*time.Millisecond)
-	if err == nil || !strings.Contains(err.Error(), "wall backstop exceeded") {
-		test.Fatalf("backstop: %v", err)
+	runError := testguard.Run(command, time.Minute, 200*time.Millisecond)
+	if runError == nil || !strings.Contains(runError.Error(), "wall backstop exceeded") {
+		test.Fatalf("backstop: %v", runError)
 	}
-	test.Logf("separate backstop in %s: %v", time.Since(started), err)
+	test.Logf("separate backstop in %s: %v", time.Since(started), runError)
 }
 
 // A silent child may wait longer than its entire CPU budget and still finish.
@@ -87,8 +87,8 @@ func TestChildCPUWaitGuard(test *testing.T) {
 		`const start=process.cpuUsage(); while(Object.values(process.cpuUsage(start)).reduce((a,b)=>a+b,0) < 200000) {} setTimeout(()=>{const again=process.cpuUsage(); while(Object.values(process.cpuUsage(again)).reduce((a,b)=>a+b,0) < 200000) {}},1200);`,
 	)
 	started := time.Now()
-	if err := testguard.Run(command, time.Second, testguard.Ceiling); err != nil {
-		test.Fatal(err)
+	if runError := testguard.Run(command, time.Second, testguard.Ceiling); runError != nil {
+		test.Fatal(runError)
 	}
 	wall := time.Since(started)
 	cpu := command.ProcessState.UserTime() + command.ProcessState.SystemTime()

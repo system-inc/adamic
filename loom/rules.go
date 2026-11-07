@@ -35,27 +35,27 @@ type Rules struct {
 
 // WitnessRule is the witness of main: a witness of main's tip every Every landings, or Hours after the last one while a
 // landing a narrow key decided waits for one, on the first of Machines with none running. Every is from 1 to
-// MaximumWitnessEvery, Hours from 1 to MaximumWitnessHours, and Machines 1 to MaximumWitnessMachines box names, each once,
-// all three required. The lander's WitnessRule.
+// MaximumWitnessEvery, Hours from 1 to MaximumWitnessHours, and Machines 1 to MaximumWitnessMachines box names, each
+// once, all three required. The lander's WitnessRule.
 type WitnessRule struct {
 	Every    int      `json:"every"`
 	Hours    int      `json:"hours"`
 	Machines []string `json:"machines"`
 }
 
-// MaximumWitnessEvery, MaximumWitnessHours and MaximumWitnessMachines are the queue's: a thousand landings, a week, and as
-// many boxes as it leases blocks to (Loom's lander/rules.go).
+// MaximumWitnessEvery, MaximumWitnessHours and MaximumWitnessMachines are the queue's: a thousand landings, a week, and
+// as many boxes as it leases blocks to (Loom's lander/rules.go).
 const (
 	MaximumWitnessEvery    = 1000
 	MaximumWitnessHours    = 168
 	MaximumWitnessMachines = 8
 )
 
-// DoorRule is the door's bounds, each a whole number from 1 to MaximumDoorBound while present: pacedAfter (an owner whose
-// changes go red waits), waiting (the most an owner has on its way), files and lines (the largest diff), and heavy (the
-// most units a block prefix's plan moves before its change rides apart from light ones; a declared rekey is heavy at
-// any count, #mdect20), and censusWithin (the census door, #1kz9c3d: a checked change joins no block until the planner
-// has censused its own diff, and this many minutes on the queue's clock with no census let it in). The lander's
+// DoorRule is the door's bounds, each a whole number from 1 to MaximumDoorBound while present: pacedAfter (an owner
+// whose changes go red waits), waiting (the most an owner has on its way), files and lines (the largest diff), and
+// heavy (the most units a block prefix's plan moves before its change rides apart from light ones; a declared rekey is
+// heavy at any count, #mdect20), and censusWithin (the census door, #1kz9c3d: a checked change joins no block until the
+// planner has censused its own diff, and this many minutes on the queue's clock with no census let it in). The lander's
 // DoorRule.
 type DoorRule struct {
 	PacedAfter   *int64 `json:"pacedAfter"`
@@ -97,8 +97,8 @@ const (
 	MaximumBlocksBuilders = 8
 )
 
-// SizingRule is a block-size policy: the largest block whose chance of coming back all green, at the red rate of the last
-// Window decided branches, is at least Target, clamped to Minimum and Maximum.
+// SizingRule is a block-size policy: the largest block whose chance of coming back all green, at the red rate of the
+// last Window decided branches, is at least Target, clamped to Minimum and Maximum.
 type SizingRule struct {
 	Minimum *int     `json:"minimum"`
 	Maximum *int     `json:"maximum"`
@@ -119,47 +119,69 @@ func ReadRules() (Rules, error) {
 }
 
 // ParseRules reads a rules file strictly: a rule the queue doesn't know, a field a rule doesn't take, a missing field,
-// a budget that isn't a whole number of 1 or more, a sizing, a depth, builders, a tipFirst, a stacked, a door or a witness
-// the lander would refuse, or anything after the object is refused, so a typo can't land as a rule nobody meant.
+// a budget that isn't a whole number of 1 or more, a sizing, a depth, builders, a tipFirst, a stacked, a door or a
+// witness the lander would refuse, or anything after the object is refused, so a typo can't land as a rule nobody
+// meant.
 func ParseRules(data []byte) (Rules, error) {
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
 	var rules Rules
-	if err := decoder.Decode(&rules); err != nil {
-		return Rules{}, fmt.Errorf("rules.json: %w", err)
+	if decodeError := decoder.Decode(&rules); decodeError != nil {
+		return Rules{}, fmt.Errorf("rules.json: %w", decodeError)
 	}
-	if err := decoder.Decode(&struct{}{}); !errors.Is(err, io.EOF) {
+	if decodeError := decoder.Decode(&struct{}{}); !errors.Is(decodeError, io.EOF) {
 		return Rules{}, errors.New("rules.json: something after the rules object")
 	}
 	if rules.Blocks == nil || rules.Blocks.On == nil || rules.Blocks.Budget == nil {
 		return Rules{}, errors.New("rules.json: blocks needs on and budget")
 	}
 	if *rules.Blocks.Budget < 1 {
-		return Rules{}, fmt.Errorf("rules.json: blocks' budget is %d, and a block holds at least one change", *rules.Blocks.Budget)
+		return Rules{}, fmt.Errorf(
+			"rules.json: blocks' budget is %d, and a block holds at least one change",
+			*rules.Blocks.Budget,
+		)
 	}
 	if sizing := rules.Blocks.Sizing; sizing != nil {
 		if sizing.Minimum == nil || sizing.Maximum == nil || sizing.Target == nil || sizing.Window == nil {
 			return Rules{}, errors.New("rules.json: blocks' sizing needs minimum, maximum, target and window")
 		}
-		if *sizing.Minimum < 1 || *sizing.Maximum < *sizing.Minimum || !(*sizing.Target > 0 && *sizing.Target < 1) || *sizing.Window < 1 || *sizing.Window > MaximumSizingWindow {
-			return Rules{}, fmt.Errorf("rules.json: blocks' sizing needs 1 <= minimum <= maximum, target above 0 and below 1, and window from 1 to %d", MaximumSizingWindow)
+		if *sizing.Minimum < 1 ||
+			*sizing.Maximum < *sizing.Minimum ||
+			!(*sizing.Target > 0 && *sizing.Target < 1) ||
+			*sizing.Window < 1 ||
+			*sizing.Window > MaximumSizingWindow {
+			return Rules{}, fmt.Errorf(
+				"rules.json: blocks' sizing needs 1 <= minimum <= maximum, target above 0 and below 1, and window from 1 to %d",
+				MaximumSizingWindow,
+			)
 		}
 	}
-	// Present or absent, never null, as the lander reads it: a null decodes as absent, so it's read from the raw object.
+	// Present or absent, never null, as the lander reads it: a null decodes as absent, so it's read from the raw
+	// object.
 	var raw struct {
 		Blocks  map[string]json.RawMessage `json:"blocks"`
 		Door    json.RawMessage            `json:"door"`
 		Witness json.RawMessage            `json:"witness"`
 	}
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return Rules{}, fmt.Errorf("rules.json: %w", err)
+	if decodeError := json.Unmarshal(data, &raw); decodeError != nil {
+		return Rules{}, fmt.Errorf("rules.json: %w", decodeError)
 	}
 	if depth, present := raw.Blocks["depth"]; present {
 		if bytes.Equal(bytes.TrimSpace(depth), []byte("null")) || rules.Blocks.Depth == nil {
-			return Rules{}, fmt.Errorf("rules.json: blocks' depth is %s, and it's a whole number from %d to %d", depth, DefaultBlocksDepth, MaximumBlocksDepth)
+			return Rules{}, fmt.Errorf(
+				"rules.json: blocks' depth is %s, and it's a whole number from %d to %d",
+				depth,
+				DefaultBlocksDepth,
+				MaximumBlocksDepth,
+			)
 		}
 		if *rules.Blocks.Depth < DefaultBlocksDepth || *rules.Blocks.Depth > MaximumBlocksDepth {
-			return Rules{}, fmt.Errorf("rules.json: blocks' depth is %d, and it's from %d to %d", *rules.Blocks.Depth, DefaultBlocksDepth, MaximumBlocksDepth)
+			return Rules{}, fmt.Errorf(
+				"rules.json: blocks' depth is %d, and it's from %d to %d",
+				*rules.Blocks.Depth,
+				DefaultBlocksDepth,
+				MaximumBlocksDepth,
+			)
 		}
 	}
 	if builders, present := raw.Blocks["builders"]; present {
@@ -167,7 +189,11 @@ func ParseRules(data []byte) (Rules, error) {
 			return Rules{}, errors.New("rules.json: blocks' builders is null, and it's a list of host names")
 		}
 		if len(rules.Blocks.Builders) > MaximumBlocksBuilders {
-			return Rules{}, fmt.Errorf("rules.json: blocks' builders names %d boxes, and it names at most %d", len(rules.Blocks.Builders), MaximumBlocksBuilders)
+			return Rules{}, fmt.Errorf(
+				"rules.json: blocks' builders names %d boxes, and it names at most %d",
+				len(rules.Blocks.Builders),
+				MaximumBlocksBuilders,
+			)
 		}
 		seen := map[string]bool{}
 		for _, box := range rules.Blocks.Builders {
@@ -177,10 +203,12 @@ func ParseRules(data []byte) (Rules, error) {
 			seen[box] = true
 		}
 	}
-	if tipFirst, present := raw.Blocks["tipFirst"]; present && (bytes.Equal(bytes.TrimSpace(tipFirst), []byte("null")) || rules.Blocks.TipFirst == nil) {
+	if tipFirst, present := raw.Blocks["tipFirst"]; present &&
+		(bytes.Equal(bytes.TrimSpace(tipFirst), []byte("null")) || rules.Blocks.TipFirst == nil) {
 		return Rules{}, fmt.Errorf("rules.json: blocks' tipFirst is %s, and it's true or false", tipFirst)
 	}
-	if stacked, present := raw.Blocks["stacked"]; present && (bytes.Equal(bytes.TrimSpace(stacked), []byte("null")) || rules.Blocks.Stacked == nil) {
+	if stacked, present := raw.Blocks["stacked"]; present &&
+		(bytes.Equal(bytes.TrimSpace(stacked), []byte("null")) || rules.Blocks.Stacked == nil) {
 		return Rules{}, fmt.Errorf("rules.json: blocks' stacked is %s, and it's true or false", stacked)
 	}
 	if raw.Door != nil {
@@ -188,15 +216,27 @@ func ParseRules(data []byte) (Rules, error) {
 		if bytes.Equal(bytes.TrimSpace(raw.Door), []byte("null")) || json.Unmarshal(raw.Door, &bounds) != nil {
 			return Rules{}, fmt.Errorf("rules.json: door is %s, and it's an object of bounds", raw.Door)
 		}
-		for name, bound := range map[string]*int64{"pacedAfter": rules.Door.PacedAfter, "waiting": rules.Door.Waiting, "files": rules.Door.Files, "lines": rules.Door.Lines, "heavy": rules.Door.Heavy, "censusWithin": rules.Door.CensusWithin} {
+		for name, bound := range map[string]*int64{
+			"pacedAfter":   rules.Door.PacedAfter,
+			"waiting":      rules.Door.Waiting,
+			"files":        rules.Door.Files,
+			"lines":        rules.Door.Lines,
+			"heavy":        rules.Door.Heavy,
+			"censusWithin": rules.Door.CensusWithin,
+		} {
 			if _, present := bounds[name]; present && (bound == nil || *bound < 1 || *bound > MaximumDoorBound) {
-				return Rules{}, fmt.Errorf("rules.json: door's %s is %s, and it's a whole number from 1 to %d", name, bounds[name], int64(MaximumDoorBound))
+				return Rules{}, fmt.Errorf(
+					"rules.json: door's %s is %s, and it's a whole number from 1 to %d",
+					name,
+					bounds[name],
+					int64(MaximumDoorBound),
+				)
 			}
 		}
 	}
 	if raw.Witness != nil {
-		if err := checkWitness(raw.Witness); err != nil {
-			return Rules{}, err
+		if checkWitnessError := checkWitness(raw.Witness); checkWitnessError != nil {
+			return Rules{}, checkWitnessError
 		}
 	}
 	if rules.Restack == nil || rules.Restack.On == nil {
@@ -205,15 +245,18 @@ func ParseRules(data []byte) (Rules, error) {
 	seen := map[string]bool{}
 	for _, change := range rules.First {
 		if !changeIDPattern.MatchString(change) || seen[change] {
-			return Rules{}, fmt.Errorf("rules.json: first names change ids (chg_ and 26 base32 characters), each once, not %q", change)
+			return Rules{}, fmt.Errorf(
+				"rules.json: first names change ids (chg_ and 26 base32 characters), each once, not %q",
+				change,
+			)
 		}
 		seen[change] = true
 	}
 	return rules, nil
 }
 
-// checkWitness reads the witness as strictly as the lander's parseWitness: an object of exactly every, hours and machines,
-// never null, each present and in its range, and the machines box names, each once.
+// checkWitness reads the witness as strictly as the lander's parseWitness: an object of exactly every, hours and
+// machines, never null, each present and in its range, and the machines box names, each once.
 func checkWitness(raw json.RawMessage) error {
 	var named map[string]json.RawMessage
 	if bytes.Equal(bytes.TrimSpace(raw), []byte("null")) || json.Unmarshal(raw, &named) != nil {
@@ -222,14 +265,26 @@ func checkWitness(raw json.RawMessage) error {
 	for name, most := range map[string]int{"every": MaximumWitnessEvery, "hours": MaximumWitnessHours} {
 		value, present := named[name]
 		var number int
-		if !present || bytes.Equal(bytes.TrimSpace(value), []byte("null")) || json.Unmarshal(value, &number) != nil || number < 1 || number > most {
+		if !present ||
+			bytes.Equal(bytes.TrimSpace(value), []byte("null")) ||
+			json.Unmarshal(value, &number) != nil ||
+			number < 1 ||
+			number > most {
 			return fmt.Errorf("rules.json: witness's %s is %s, and it's a whole number from 1 to %d", name, value, most)
 		}
 	}
 	listed, present := named["machines"]
 	var machines []string
-	if !present || bytes.Equal(bytes.TrimSpace(listed), []byte("null")) || json.Unmarshal(listed, &machines) != nil || len(machines) == 0 || len(machines) > MaximumWitnessMachines {
-		return fmt.Errorf("rules.json: witness's machines is %s, and it's a list of 1 to %d box names", listed, MaximumWitnessMachines)
+	if !present ||
+		bytes.Equal(bytes.TrimSpace(listed), []byte("null")) ||
+		json.Unmarshal(listed, &machines) != nil ||
+		len(machines) == 0 ||
+		len(machines) > MaximumWitnessMachines {
+		return fmt.Errorf(
+			"rules.json: witness's machines is %s, and it's a list of 1 to %d box names",
+			listed,
+			MaximumWitnessMachines,
+		)
 	}
 	seen := map[string]bool{}
 	for _, box := range machines {

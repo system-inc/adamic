@@ -20,9 +20,9 @@ import (
 
 func jsxMutantsRows(test *testing.T, manifest string, count int) []string {
 	test.Helper()
-	data, err := os.ReadFile(manifest)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(manifest)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	rows := strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")
 	if len(rows) != count {
@@ -72,9 +72,9 @@ func jsxMutantsSelection(test *testing.T) int {
 	if len(fields) != 2 {
 		test.Fatalf("ADAMIC_TEST_SHARD must be i/%d", testJsxMutantsShards)
 	}
-	i, err := strconv.Atoi(fields[0])
+	i, parseError := strconv.Atoi(fields[0])
 	n, nerr := strconv.Atoi(fields[1])
-	if err != nil || nerr != nil || n != testJsxMutantsShards || i < 0 || i >= n {
+	if parseError != nil || nerr != nil || n != testJsxMutantsShards || i < 0 || i >= n {
 		test.Fatalf("invalid ADAMIC_TEST_SHARD %q; want i/%d", value, testJsxMutantsShards)
 	}
 	return i
@@ -135,13 +135,13 @@ type jsxMutantsPrepared struct{ Oracle, Control, Binary, Mutant string }
 func jsxMutantsPrepare(test *testing.T, shard int) jsxMutantsPrepared {
 	test.Helper()
 	if descriptor := os.Getenv(jsxMutantsPreparedEnv); descriptor != "" {
-		data, err := os.ReadFile(descriptor)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(descriptor)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		var prepared jsxMutantsPrepared
-		if err := json.Unmarshal(data, &prepared); err != nil {
-			test.Fatal(err)
+		if decodeError := json.Unmarshal(data, &prepared); decodeError != nil {
+			test.Fatal(decodeError)
 		}
 		return prepared
 	}
@@ -190,17 +190,17 @@ func TestJsxMutantsUnion(test *testing.T) {
 // Prove each ownership leaf independently; exactly shard 004 must fail.
 func jsxMutantsPlantedProof(test *testing.T, shard int, prepared jsxMutantsPrepared) {
 	test.Helper()
-	executable, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	executable, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
-	encoded, err := json.Marshal(prepared)
-	if err != nil {
-		test.Fatal(err)
+	encoded, encodeError := json.Marshal(prepared)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	descriptor := filepath.Join(test.TempDir(), "prepared.json")
-	if err := os.WriteFile(descriptor, encoded, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(descriptor, encoded, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
@@ -221,19 +221,19 @@ func jsxMutantsPlantedProof(test *testing.T, shard int, prepared jsxMutantsPrepa
 		jsxMutantsPreparedEnv+"="+descriptor,
 	)
 	// Read through childguard.Capture for jsxMutantsCommand's reason, stdout then stderr.
-	stdout, stderr, err := childguard.Capture(ctx, cmd)
+	stdout, stderr, captureError := childguard.Capture(ctx, cmd)
 	out := append(stdout, stderr...)
 	if ctx.Err() != nil {
 		test.Fatal("planted proof exceeded 60 seconds")
 	}
 	if shard == 4 {
-		if _, ok := err.(*exec.ExitError); !ok ||
+		if _, ok := captureError.(*exec.ExitError); !ok ||
 			!strings.Contains(string(out), "Node mutant survived: type argument comma") ||
 			!strings.Contains(string(out), "--- FAIL: "+name) {
-			test.Fatalf("owner failed to catch planted survivor: %v\n%s", err, out)
+			test.Fatalf("owner failed to catch planted survivor: %v\n%s", captureError, out)
 		}
-	} else if err != nil {
-		test.Fatalf("nonowner caught planted survivor: %v\n%s", err, out)
+	} else if captureError != nil {
+		test.Fatalf("nonowner caught planted survivor: %v\n%s", captureError, out)
 	}
 	test.Logf("planted survivor ownership proved for %s", name)
 }
@@ -250,11 +250,11 @@ func jsxMutantsCommand(ctx context.Context, name string, args ...string) *exec.C
 	cmd := exec.CommandContext(ctx, name, args...)
 	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	cmd.Cancel = func() error {
-		err := syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
+		killError := syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
+		if errors.Is(killError, syscall.ESRCH) {
 			return os.ErrProcessDone
 		}
-		return err
+		return killError
 	}
 	return cmd
 }

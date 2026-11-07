@@ -26,27 +26,45 @@ import (
 // A split unit's object is keyed by everything its compile reads, found before clang compiles it (#m62spx0): the unit
 // by its name and bytes, every file of the directory it compiles in, the resolution of every header name the headers it
 // reaches spell, clang's build as its driver decides a compile, the flags, the target, and the environment clang reads.
-// A compiler change that leaves a unit's C alone then compiles nothing there. Complete before minimal: a part that could
-// be narrower is kept whole, and anything the key can't account for compiles uncached, saying why (errUncachedUnit).
+// A compiler change that leaves a unit's C alone then compiles nothing there. Complete before minimal: a part that
+// could be narrower is kept whole, and anything the key can't account for compiles uncached, saying why
+// (errUncachedUnit).
 
-// errUncachedUnit is a reason a build's units compile uncached: the key can't account for something they read.
-var errUncachedUnit = errors.New("native: units compile uncached")
+// errorUncachedUnit is a reason a build's units compile uncached: the key can't account for something they read.
+var errorUncachedUnit = errors.New("native: units compile uncached")
 
-// unitEnvironmentKeyed are the variables clang's driver or cc1 reads that can change an object's bytes, each keyed by its
-// value when the compile's environment sets it: macOS's developer directory, SDK and deployment targets, the time
+// unitEnvironmentKeyed are the variables clang's driver or cc1 reads that can change an object's bytes, each keyed by
+// its value when the compile's environment sets it: macOS's developer directory, SDK and deployment targets, the time
 // `__DATE__` and `__TIME__` would read (none reaches a unit, which refuses them, but a header's could), and Apple's
 // debug options, which write the command line or a prefix map into debug info.
-var unitEnvironmentKeyed = []string{"DEVELOPER_DIR", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET", "IPHONEOS_DEPLOYMENT_TARGET",
-	"TVOS_DEPLOYMENT_TARGET", "WATCHOS_DEPLOYMENT_TARGET", "XROS_DEPLOYMENT_TARGET", "SOURCE_DATE_EPOCH", "TZ",
-	"RC_DEBUG_OPTIONS", "RC_DEBUG_PREFIX_MAP", "COMPILER_PATH"}
+var unitEnvironmentKeyed = []string{
+	"DEVELOPER_DIR",
+	"SDKROOT",
+	"MACOSX_DEPLOYMENT_TARGET",
+	"IPHONEOS_DEPLOYMENT_TARGET",
+	"TVOS_DEPLOYMENT_TARGET",
+	"WATCHOS_DEPLOYMENT_TARGET",
+	"XROS_DEPLOYMENT_TARGET",
+	"SOURCE_DATE_EPOCH",
+	"TZ",
+	"RC_DEBUG_OPTIONS",
+	"RC_DEBUG_PREFIX_MAP",
+	"COMPILER_PATH",
+}
 
 // unitEnvironmentRefused are the variables under which the units compile uncached when the compile's environment sets
 // them: the include-path family adds search directories the resolution table doesn't walk, and CCC_OVERRIDE_OPTIONS (as
 // every CCC_ setting) rewrites clang's arguments.
-var unitEnvironmentRefused = []string{"CPATH", "C_INCLUDE_PATH", "CPLUS_INCLUDE_PATH", "OBJC_INCLUDE_PATH", "OBJCPLUS_INCLUDE_PATH"}
+var unitEnvironmentRefused = []string{
+	"CPATH",
+	"C_INCLUDE_PATH",
+	"CPLUS_INCLUDE_PATH",
+	"OBJC_INCLUDE_PATH",
+	"OBJCPLUS_INCLUDE_PATH",
+}
 
-// unitEnvironmentParts are environment's settings clang reads, as key parts, or errUncachedUnit naming one the key can't
-// take. environment is exactly what the compile runs under.
+// unitEnvironmentParts are environment's settings clang reads, as key parts, or errUncachedUnit naming one the key
+// can't take. environment is exactly what the compile runs under.
 func unitEnvironmentParts(environment []string) ([]string, error) {
 	values := map[string]string{}
 	for _, setting := range environment {
@@ -56,7 +74,7 @@ func unitEnvironmentParts(environment []string) ([]string, error) {
 	var parts []string
 	for name := range values {
 		if slices.Contains(unitEnvironmentRefused, name) || strings.HasPrefix(name, "CCC_") {
-			return nil, fmt.Errorf("%w: the compile's environment sets %s", errUncachedUnit, name)
+			return nil, fmt.Errorf("%w: the compile's environment sets %s", errorUncachedUnit, name)
 		}
 	}
 	for _, name := range unitEnvironmentKeyed {
@@ -84,7 +102,7 @@ var unitClangs sync.Map
 // under a long-lived process isn't keyed by the facts of the one before it.
 func unitClang(compiler string, flags []string, environment []string) (*unitClangFacts, error) {
 	identity := []string{compiler}
-	if program, err := filepath.EvalSymlinks(compiler); err == nil {
+	if program, resolveSymlinksError := filepath.EvalSymlinks(compiler); resolveSymlinksError == nil {
 		configs, _ := filepath.Glob(filepath.Join(filepath.Dir(program), "*.cfg"))
 		spelled, _ := filepath.Glob(filepath.Join(filepath.Dir(compiler), "*.cfg"))
 		for _, path := range append(append([]string{program}, configs...), spelled...) {
@@ -102,64 +120,79 @@ func unitClang(compiler string, flags []string, environment []string) (*unitClan
 // command its driver hands cc1 for a probe compile under flags (the target, its CPU and features, and every default the
 // driver adds), and its search path.
 func readUnitClang(compiler string, flags []string, environment []string) ([]string, []searchDirectory, error) {
-	program, err := filepath.EvalSymlinks(compiler)
-	if err != nil {
-		return nil, nil, fmt.Errorf("%w: resolving clang: %v", errUncachedUnit, err)
+	program, resolveSymlinksError := filepath.EvalSymlinks(compiler)
+	if resolveSymlinksError != nil {
+		return nil, nil, fmt.Errorf("%w: resolving clang: %v", errorUncachedUnit, resolveSymlinksError)
 	}
-	digest, err := fileDigest(program)
-	if err != nil {
-		return nil, nil, fmt.Errorf("%w: reading clang: %v", errUncachedUnit, err)
+	digest, fileDigestError := fileDigest(program)
+	if fileDigestError != nil {
+		return nil, nil, fmt.Errorf("%w: reading clang: %v", errorUncachedUnit, fileDigestError)
 	}
 	parts := []string{"clang " + digest}
-	libraries, err := programLibraries(program)
-	if err != nil {
-		return nil, nil, fmt.Errorf("%w: reading clang's shared libraries: %v", errUncachedUnit, err)
+	libraries, programLibrariesError := programLibraries(program)
+	if programLibrariesError != nil {
+		return nil, nil, fmt.Errorf(
+			"%w: reading clang's shared libraries: %v",
+			errorUncachedUnit,
+			programLibrariesError,
+		)
 	}
 	for _, library := range libraries {
-		// An LLVM or clang library holds code generation the program's own digest doesn't: the house's clang links none.
+		// An LLVM or clang library holds code generation the program's own digest doesn't: the house's clang links
+		// none.
 		if lower := strings.ToLower(library); strings.Contains(lower, "llvm") || strings.Contains(lower, "clang") {
-			return nil, nil, fmt.Errorf("%w: clang links %s, whose code the key doesn't read", errUncachedUnit, library)
+			return nil, nil, fmt.Errorf(
+				"%w: clang links %s, whose code the key doesn't read",
+				errorUncachedUnit,
+				library,
+			)
 		}
 		parts = append(parts, "library "+library)
 	}
 	// clang reads <name>.cfg and <triple>-<name>.cfg beside its program, and each can add flags.
-	configs, err := filepath.Glob(filepath.Join(filepath.Dir(program), "*.cfg"))
-	if err != nil {
-		return nil, nil, err
+	configs, globError := filepath.Glob(filepath.Join(filepath.Dir(program), "*.cfg"))
+	if globError != nil {
+		return nil, nil, globError
 	}
 	if spelled := filepath.Dir(compiler); spelled != filepath.Dir(program) {
-		more, err := filepath.Glob(filepath.Join(spelled, "*.cfg"))
-		if err != nil {
-			return nil, nil, err
+		more, globError := filepath.Glob(filepath.Join(spelled, "*.cfg"))
+		if globError != nil {
+			return nil, nil, globError
 		}
 		configs = append(configs, more...)
 	}
 	for _, config := range configs {
-		digest, err := fileDigest(config)
-		if err != nil {
-			return nil, nil, fmt.Errorf("%w: reading clang's config %s: %v", errUncachedUnit, config, err)
+		digest, fileDigestError := fileDigest(config)
+		if fileDigestError != nil {
+			return nil, nil, fmt.Errorf("%w: reading clang's config %s: %v", errorUncachedUnit, config, fileDigestError)
 		}
 		parts = append(parts, "config "+config+" "+digest)
 	}
 	// Every run is from inside the probe's directory, so the compilation directory the driver hands cc1 is the probe's,
 	// written <probe> below, and not wherever this process runs.
-	probe, err := os.MkdirTemp("", "adamic-units-clang-")
-	if err != nil {
-		return nil, nil, err
+	probe, temporaryDirectoryError := os.MkdirTemp("", "adamic-units-clang-")
+	if temporaryDirectoryError != nil {
+		return nil, nil, temporaryDirectoryError
 	}
 	defer os.RemoveAll(probe)
 	run := func(arguments ...string) ([]byte, error) {
 		command := exec.Command(compiler, arguments...)
 		command.Dir, command.Env = probe, environment
-		output, err := command.CombinedOutput()
-		if err != nil {
-			return nil, fmt.Errorf("%w: clang %s: %v\n%s", errUncachedUnit, strings.Join(arguments, " "), err, output)
+		output, combinedOutputError := command.CombinedOutput()
+		if combinedOutputError != nil {
+			return nil, fmt.Errorf(
+				"%w: clang %s: %v\n%s",
+				errorUncachedUnit,
+				strings.Join(arguments, " "),
+				combinedOutputError,
+				output,
+			)
 		}
 		return output, nil
 	}
-	version, err := run("--version")
-	if err != nil {
-		return nil, nil, err
+	version, runError := run("--version")
+	if runError != nil {
+		return nil, nil, runError
 	}
 	var versionLines []string
 	for _, line := range strings.Split(string(version), "\n") {
@@ -168,28 +201,33 @@ func readUnitClang(compiler string, flags []string, environment []string) ([]str
 		}
 	}
 	parts = append(parts, "version "+strings.Join(versionLines, "\n"))
-	resource, err := run("-print-resource-dir")
-	if err != nil {
-		return nil, nil, err
+	resource, runError := run("-print-resource-dir")
+	if runError != nil {
+		return nil, nil, runError
 	}
 	resourceDirectory := strings.TrimSpace(string(resource))
-	// The resource directory's include tree holds clang's own headers, and its share tree the sanitizers' ignore lists a
-	// sanitized compile reads; its lib tree is only linked.
+	// The resource directory's include tree holds clang's own headers, and its share tree the sanitizers' ignore lists
+	// a sanitized compile reads; its lib tree is only linked.
 	for _, tree := range []string{"include", "share"} {
-		lines, err := treeDigests(filepath.Join(resourceDirectory, tree))
-		if err != nil {
-			return nil, nil, fmt.Errorf("%w: reading clang's resource %s: %v", errUncachedUnit, tree, err)
+		lines, treeDigestsError := treeDigests(filepath.Join(resourceDirectory, tree))
+		if treeDigestsError != nil {
+			return nil, nil, fmt.Errorf(
+				"%w: reading clang's resource %s: %v",
+				errorUncachedUnit,
+				tree,
+				treeDigestsError,
+			)
 		}
 		for _, line := range lines {
 			parts = append(parts, "resource "+tree+"/"+line)
 		}
 	}
-	if err := os.WriteFile(filepath.Join(probe, "probe.c"), nil, 0o644); err != nil {
-		return nil, nil, err
+	if writeError := os.WriteFile(filepath.Join(probe, "probe.c"), nil, 0o644); writeError != nil {
+		return nil, nil, writeError
 	}
-	driver, err := run(append(slices.Clone(flags), "-###", "-c", "probe.c", "-o", "probe.o")...)
-	if err != nil {
-		return nil, nil, err
+	driver, runError := run(append(slices.Clone(flags), "-###", "-c", "probe.c", "-o", "probe.o")...)
+	if runError != nil {
+		return nil, nil, runError
 	}
 	for _, line := range strings.Split(string(driver), "\n") {
 		// The cc1 line and the others are quoted arguments; the version and thread lines are the --version part's.
@@ -197,18 +235,18 @@ func readUnitClang(compiler string, flags []string, environment []string) ([]str
 			continue
 		}
 		line = strings.ReplaceAll(line, probe, "<probe>")
-		if real, err := filepath.EvalSymlinks(probe); err == nil {
+		if real, resolveSymlinksError := filepath.EvalSymlinks(probe); resolveSymlinksError == nil {
 			line = strings.ReplaceAll(line, real, "<probe>")
 		}
 		parts = append(parts, "driver"+line)
 	}
-	verbose, err := run(slices.Concat(flags, unitSearchProbe(probe))...)
-	if err != nil {
-		return nil, nil, err
+	verbose, runError := run(slices.Concat(flags, unitSearchProbe(probe))...)
+	if runError != nil {
+		return nil, nil, runError
 	}
-	search, err := searchPath(verbose)
-	if err != nil {
-		return nil, nil, err
+	search, searchPathError := searchPath(verbose)
+	if searchPathError != nil {
+		return nil, nil, searchPathError
 	}
 	for _, directory := range search {
 		parts = append(parts, fmt.Sprintf("search %s framework=%t", directory.path, directory.framework))
@@ -242,7 +280,10 @@ func (directory searchDirectory) candidates(name string) []string {
 	if !nested {
 		return nil
 	}
-	return []string{filepath.Join(directory.path, framework+".framework", "Headers", rest), filepath.Join(directory.path, framework+".framework", "PrivateHeaders", rest)}
+	return []string{
+		filepath.Join(directory.path, framework+".framework", "Headers", rest),
+		filepath.Join(directory.path, framework+".framework", "PrivateHeaders", rest),
+	}
 }
 
 // searchPath is the `<name>` search path `clang -E -v` lists, in order, framework directories included. A quote search
@@ -261,22 +302,31 @@ func searchPath(verbose []byte) ([]searchDirectory, error) {
 		case line == "End of search list.":
 			state = "done"
 		case strings.HasPrefix(line, " ") && state == "quote":
-			return nil, fmt.Errorf("%w: clang searches %s for quoted includes", errUncachedUnit, strings.TrimSpace(line))
+			return nil, fmt.Errorf(
+				"%w: clang searches %s for quoted includes",
+				errorUncachedUnit,
+				strings.TrimSpace(line),
+			)
 		case strings.HasPrefix(line, " ") && state == "angle":
 			directory, mark, _ := strings.Cut(strings.TrimSpace(line), " (")
-			search = append(search, searchDirectory{path: filepath.Clean(directory), framework: mark == "framework directory)"})
+			search = append(
+				search,
+				searchDirectory{path: filepath.Clean(directory), framework: mark == "framework directory)"},
+			)
 		}
 	}
 	if state != "done" || len(search) == 0 {
-		return nil, fmt.Errorf("%w: clang -E -v listed no search path", errUncachedUnit)
+		return nil, fmt.Errorf("%w: clang -E -v listed no search path", errorUncachedUnit)
 	}
 	return search, nil
 }
 
 // unitIncludes finds every header name a header asks for: an #include, #include_next or #import directive at a line's
-// start, or a __has_include or __has_include_next anywhere, each by a quoted or bracketed name. A form with anything else
-// there, a macro, refuses. One in a comment is read too, which only adds candidates.
-var unitIncludes = regexp.MustCompile(`(?m)^[ \t]*#[ \t]*(include|include_next|import)\b[ \t]*(.?)|__has_include(_next)?\s*\(\s*(.?)`)
+// start, or a __has_include or __has_include_next anywhere, each by a quoted or bracketed name. A form with anything
+// else there, a macro, refuses. One in a comment is read too, which only adds candidates.
+var unitIncludes = regexp.MustCompile(
+	`(?m)^[ \t]*#[ \t]*(include|include_next|import)\b[ \t]*(.?)|__has_include(_next)?\s*\(\s*(.?)`,
+)
 
 // unitDefinesName is the start of a line that defines or undefines the macro named next.
 var unitDefinesName = regexp.MustCompile(`^[ \t]*#[ \t]*(define|undef)[ \t]+$`)
@@ -291,40 +341,53 @@ var unitEmbeds = regexp.MustCompile(`(?m)^[ \t]*#[ \t]*embed\b|__has_embed\s*\(`
 var unitTime = regexp.MustCompile(`__(DATE|TIME|TIMESTAMP)__`)
 
 // unitHeaderParts are the resolution table of a build's units (#m62spx0): every file clang opens for a probe holding
-// only first, the line every unit begins with (`#include "units.h"`), compiled under flags in a directory holding common (units.h and the
-// runtime's headers) and nothing else; and for every header name any header in that closure spells, by an #include, an
+// only first, the line every unit begins with (`#include "units.h"`), compiled under flags in a directory holding
+// common (units.h and the runtime's headers) and nothing else; and for every header name any header in that closure
+// spells, by an #include, an
 // #include_next, a __has_include or a __has_include_next, that name's candidate in the including header's own
 // directory, when it spells it quoted, and in every search directory, each absent or by the sha256 of what it holds. A
 // header planted, removed or changed under any name a header asks for, in any place clang would look, moves the key,
 // whether clang found it, found it missing, or took the next. The probe is the build's one clang run before its units
 // compile, and common's own files are keyed by what they hold elsewhere (unitKeyParts).
-func unitHeaderParts(first string, common []runtimeFile, flags []string, compiler string, environment []string, search []searchDirectory) ([]string, error) {
-	probe, err := os.MkdirTemp("", "adamic-units-headers-")
-	if err != nil {
-		return nil, err
+func unitHeaderParts(
+	first string,
+	common []runtimeFile,
+	flags []string,
+	compiler string,
+	environment []string,
+	search []searchDirectory,
+) ([]string, error) {
+	probe, temporaryDirectoryError := os.MkdirTemp("", "adamic-units-headers-")
+	if temporaryDirectoryError != nil {
+		return nil, temporaryDirectoryError
 	}
 	defer os.RemoveAll(probe)
 	for _, file := range common {
-		if err := os.WriteFile(filepath.Join(probe, file.name), file.contents, 0o644); err != nil {
-			return nil, err
+		if writeError := os.WriteFile(filepath.Join(probe, file.name), file.contents, 0o644); writeError != nil {
+			return nil, writeError
 		}
 	}
-	if err := os.WriteFile(filepath.Join(probe, "probe.c"), []byte(first), 0o644); err != nil {
-		return nil, err
+	if writeError := os.WriteFile(filepath.Join(probe, "probe.c"), []byte(first), 0o644); writeError != nil {
+		return nil, writeError
 	}
 	command := exec.Command(compiler, append(slices.Clone(flags), "-M", "probe.c")...)
 	command.Dir, command.Env = probe, environment
-	rules, err := command.Output()
-	if err != nil {
+	rules, outputError := command.Output()
+	if outputError != nil {
 		var exit *exec.ExitError
-		if errors.As(err, &exit) {
-			return nil, fmt.Errorf("%w: listing the units' headers: %v\n%s", errUncachedUnit, err, exit.Stderr)
+		if errors.As(outputError, &exit) {
+			return nil, fmt.Errorf(
+				"%w: listing the units' headers: %v\n%s",
+				errorUncachedUnit,
+				outputError,
+				exit.Stderr,
+			)
 		}
-		return nil, fmt.Errorf("%w: listing the units' headers: %v", errUncachedUnit, err)
+		return nil, fmt.Errorf("%w: listing the units' headers: %v", errorUncachedUnit, outputError)
 	}
-	resolvedProbe, err := filepath.EvalSymlinks(probe)
-	if err != nil {
-		return nil, err
+	resolvedProbe, resolveSymlinksError := filepath.EvalSymlinks(probe)
+	if resolveSymlinksError != nil {
+		return nil, resolveSymlinksError
 	}
 	place := func(name string) string {
 		if !filepath.IsAbs(name) {
@@ -334,7 +397,10 @@ func unitHeaderParts(first string, common []runtimeFile, flags []string, compile
 	}
 	ownName := func(name string) (string, bool) {
 		for _, directory := range []string{probe, resolvedProbe} {
-			if relative, err := filepath.Rel(directory, name); err == nil && !strings.HasPrefix(relative, "..") {
+			if relative, relativePathError := filepath.Rel(
+				directory,
+				name,
+			); relativePathError == nil && !strings.HasPrefix(relative, "..") {
 				return relative, true
 			}
 		}
@@ -351,15 +417,19 @@ func unitHeaderParts(first string, common []runtimeFile, flags []string, compile
 		if own && relative == "probe.c" {
 			continue
 		}
-		contents, err := os.ReadFile(header)
-		if err != nil {
-			return nil, fmt.Errorf("%w: reading header %s: %v", errUncachedUnit, header, err)
+		contents, readError := os.ReadFile(header)
+		if readError != nil {
+			return nil, fmt.Errorf("%w: reading header %s: %v", errorUncachedUnit, header, readError)
 		}
 		if unitTime.Match(contents) {
-			return nil, fmt.Errorf("%w: %s reads the time of the compile", errUncachedUnit, header)
+			return nil, fmt.Errorf("%w: %s reads the time of the compile", errorUncachedUnit, header)
 		}
 		if unitEmbeds.Match(contents) {
-			return nil, fmt.Errorf("%w: %s reads a file by a form the key can't follow (#embed or __has_embed)", errUncachedUnit, header)
+			return nil, fmt.Errorf(
+				"%w: %s reads a file by a form the key can't follow (#embed or __has_embed)",
+				errorUncachedUnit,
+				header,
+			)
 		}
 		if !own {
 			parts = append(parts, fmt.Sprintf("system %s %x", header, sha256.Sum256(contents)))
@@ -369,15 +439,19 @@ func unitHeaderParts(first string, common []runtimeFile, flags []string, compile
 			operand := match[4]
 			if match[2] < 0 {
 				operand = match[8]
-				// A header that defines or undefines the name itself, as macOS's sys/cdefs.h does for a compiler without
-				// it (`#define __has_include(x) 0`), asks after no header there.
+				// A header that defines or undefines the name itself, as macOS's sys/cdefs.h does for a compiler
+				// without it (`#define __has_include(x) 0`), asks after no header there.
 				if unitDefinesName.Match(contents[bytes.LastIndexByte(contents[:match[0]], '\n')+1 : match[0]]) {
 					continue
 				}
 			}
 			name := unitNameOperand.FindSubmatch(contents[operand:])
 			if name == nil {
-				return nil, fmt.Errorf("%w: %s spells an include clang resolves by a macro, which the key can't follow", errUncachedUnit, header)
+				return nil, fmt.Errorf(
+					"%w: %s spells an include clang resolves by a macro, which the key can't follow",
+					errorUncachedUnit,
+					header,
+				)
 			}
 			if quoted := string(name[1]); quoted != "" {
 				candidates[filepath.Join(filepath.Dir(header), quoted)] = true
@@ -401,18 +475,18 @@ func unitHeaderParts(first string, common []runtimeFile, flags []string, compile
 			parts = append(parts, "own "+relative+" "+ownDigest(common, relative))
 			continue
 		}
-		info, err := os.Stat(candidate)
+		info, statError := os.Stat(candidate)
 		switch {
-		case errors.Is(err, fs.ErrNotExist):
+		case errors.Is(statError, fs.ErrNotExist):
 			parts = append(parts, "candidate "+candidate+" absent")
-		case err != nil:
-			return nil, fmt.Errorf("%w: looking for %s: %v", errUncachedUnit, candidate, err)
+		case statError != nil:
+			return nil, fmt.Errorf("%w: looking for %s: %v", errorUncachedUnit, candidate, statError)
 		case info.IsDir():
 			parts = append(parts, "candidate "+candidate+" directory")
 		default:
-			digest, err := fileDigest(candidate)
-			if err != nil {
-				return nil, fmt.Errorf("%w: reading %s: %v", errUncachedUnit, candidate, err)
+			digest, fileDigestError := fileDigest(candidate)
+			if fileDigestError != nil {
+				return nil, fmt.Errorf("%w: reading %s: %v", errorUncachedUnit, candidate, fileDigestError)
 			}
 			parts = append(parts, "candidate "+candidate+" "+digest)
 		}
@@ -438,15 +512,17 @@ func unitSourceRefusal(unit compilationUnit, first string) string {
 	if !begins {
 		return fmt.Sprintf("%s doesn't begin with the line its build's headers were probed by", unit.name)
 	}
-	tokens, err := cTokens(body)
-	if err != nil {
-		return err.Error()
+	tokens, cTokensError := cTokens(body)
+	if cTokensError != nil {
+		return cTokensError.Error()
 	}
 	for _, token := range tokens {
 		if strings.HasPrefix(token.text, "#") {
 			return fmt.Sprintf("%s holds a directive past its first line", unit.name)
 		}
-		if unitTime.MatchString(token.text) || strings.HasPrefix(token.text, "__has_include") || strings.HasPrefix(token.text, "__has_embed") {
+		if unitTime.MatchString(token.text) ||
+			strings.HasPrefix(token.text, "__has_include") ||
+			strings.HasPrefix(token.text, "__has_embed") {
 			return fmt.Sprintf("%s reads %s", unit.name, token.text)
 		}
 	}
@@ -481,28 +557,35 @@ func unitFlagsRefusal(flags []string) error {
 	for _, flag := range flags {
 		// Clang modules read module maps and a module cache the resolution table doesn't walk.
 		if strings.HasPrefix(flag, "-fmodule") || strings.HasPrefix(flag, "-fimplicit-module") {
-			return fmt.Errorf("%w: the flags use clang modules (%s)", errUncachedUnit, flag)
+			return fmt.Errorf("%w: the flags use clang modules (%s)", errorUncachedUnit, flag)
 		}
 	}
 	return nil
 }
 
 // newUnitKeying reads a build's unitKeying, or errUncachedUnit naming what the key can't account for.
-func newUnitKeying(first string, common []runtimeFile, flags []string, compiler string, environment []string, sanitized bool) (*unitKeying, error) {
-	if err := unitFlagsRefusal(flags); err != nil {
-		return nil, err
+func newUnitKeying(
+	first string,
+	common []runtimeFile,
+	flags []string,
+	compiler string,
+	environment []string,
+	sanitized bool,
+) (*unitKeying, error) {
+	if unitFlagsRefusalError := unitFlagsRefusal(flags); unitFlagsRefusalError != nil {
+		return nil, unitFlagsRefusalError
 	}
-	environmentParts, err := unitEnvironmentParts(environment)
-	if err != nil {
-		return nil, err
+	environmentParts, unitEnvironmentPartsError := unitEnvironmentParts(environment)
+	if unitEnvironmentPartsError != nil {
+		return nil, unitEnvironmentPartsError
 	}
-	clang, err := unitClang(compiler, flags, environment)
-	if err != nil {
-		return nil, err
+	clang, unitClangError := unitClang(compiler, flags, environment)
+	if unitClangError != nil {
+		return nil, unitClangError
 	}
-	headers, err := unitHeaderParts(first, common, flags, compiler, environment, clang.search)
-	if err != nil {
-		return nil, err
+	headers, unitHeaderPartsError := unitHeaderParts(first, common, flags, compiler, environment, clang.search)
+	if unitHeaderPartsError != nil {
+		return nil, unitHeaderPartsError
 	}
 	// v4: keyed before clang runs, by the unit's bytes and its headers' resolution, never by its preprocessed bytes.
 	// v5: objects no longer carry where the compiler is installed or the sysroot sits (clangIn, #8wgk65j).
@@ -524,7 +607,9 @@ func newUnitKeying(first string, common []runtimeFile, flags []string, compiler 
 
 // key is unit's key under keying: its parts and the unit by name and contents.
 func (keying *unitKeying) key(unit compilationUnit) string {
-	return partsKey(append(slices.Clone(keying.parts), fmt.Sprintf("unit %s %x", unit.name, sha256.Sum256([]byte(unit.source)))))
+	return partsKey(
+		append(slices.Clone(keying.parts), fmt.Sprintf("unit %s %x", unit.name, sha256.Sum256([]byte(unit.source)))),
+	)
 }
 
 // unitCompileArguments are what follow a unit's flags when it compiles: the directory it compiles in mapped to one name
@@ -546,9 +631,9 @@ func unitCompileArguments(name string, directory string, flags []string, sanitiz
 
 // fileDigest is the sha256 of what path holds, in hex.
 func fileDigest(path string) (string, error) {
-	contents, err := os.ReadFile(path)
-	if err != nil {
-		return "", err
+	contents, readError := os.ReadFile(path)
+	if readError != nil {
+		return "", readError
 	}
 	return fmt.Sprintf("%x", sha256.Sum256(contents)), nil
 }
@@ -557,50 +642,52 @@ func fileDigest(path string) (string, error) {
 // is followed, and a tree that isn't there is none.
 func treeDigests(root string) ([]string, error) {
 	var lines []string
-	err := filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
-		if errors.Is(err, fs.ErrNotExist) && path == root {
+	walkError := filepath.WalkDir(root, func(path string, entry fs.DirEntry, pathError error) error {
+		if errors.Is(pathError, fs.ErrNotExist) && path == root {
 			return filepath.SkipDir
 		}
-		if err != nil || entry.IsDir() {
-			return err
+		if pathError != nil || entry.IsDir() {
+			return pathError
 		}
-		digest, err := fileDigest(path)
-		if err != nil {
-			return err
+		digest, fileDigestError := fileDigest(path)
+		if fileDigestError != nil {
+			return fileDigestError
 		}
-		relative, err := filepath.Rel(root, path)
-		if err != nil {
-			return err
+		relative, relativePathError := filepath.Rel(root, path)
+		if relativePathError != nil {
+			return relativePathError
 		}
 		lines = append(lines, filepath.ToSlash(relative)+" "+digest)
 		return nil
 	})
 	sort.Strings(lines)
-	return lines, err
+	return lines, walkError
 }
 
 // programLibraries are the shared libraries program names for the dynamic loader, as its ELF or Mach-O header lists
 // them, sorted; none for a static program, and an error for one it can't read as either.
 func programLibraries(program string) ([]string, error) {
 	var libraries []string
-	if file, err := elf.Open(program); err == nil {
+	if file, openError := elf.Open(program); openError == nil {
 		defer file.Close()
-		libraries, err = file.ImportedLibraries()
-		if err != nil {
-			return nil, err
+		var importedLibrariesError error
+		libraries, importedLibrariesError = file.ImportedLibraries()
+		if importedLibrariesError != nil {
+			return nil, importedLibrariesError
 		}
-	} else if file, err := macho.Open(program); err == nil {
+	} else if file, openError := macho.Open(program); openError == nil {
 		defer file.Close()
-		libraries, err = file.ImportedLibraries()
-		if err != nil {
-			return nil, err
+		var importedLibrariesError error
+		libraries, importedLibrariesError = file.ImportedLibraries()
+		if importedLibrariesError != nil {
+			return nil, importedLibrariesError
 		}
-	} else if fat, err := macho.OpenFat(program); err == nil {
+	} else if fat, openFatError := macho.OpenFat(program); openFatError == nil {
 		defer fat.Close()
 		for _, architecture := range fat.Arches {
-			more, err := architecture.ImportedLibraries()
-			if err != nil {
-				return nil, err
+			more, importedLibrariesError := architecture.ImportedLibraries()
+			if importedLibrariesError != nil {
+				return nil, importedLibrariesError
 			}
 			libraries = append(libraries, more...)
 		}
@@ -614,9 +701,9 @@ func programLibraries(program string) ([]string, error) {
 // fileIdentity names the file at path as the system holds it, its place, size, modification time, device and inode, so
 // one rewritten or replaced there names another; a file that can't be read is named so.
 func fileIdentity(path string) string {
-	info, err := os.Stat(path)
-	if err != nil {
-		return path + " " + err.Error()
+	info, statError := os.Stat(path)
+	if statError != nil {
+		return path + " " + statError.Error()
 	}
 	identity := fmt.Sprintf("%s %d %d", path, info.Size(), info.ModTime().UnixNano())
 	if system, ok := info.Sys().(*syscall.Stat_t); ok {

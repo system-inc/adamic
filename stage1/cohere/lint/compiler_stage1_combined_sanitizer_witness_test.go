@@ -76,9 +76,9 @@ func compilerAgreementHeapWitnessNative(test *testing.T) string {
 		"stage1/cohere/lint/compiler_stage1_combined_sanitizer_witness_test.go",
 	)
 	product := compilerAgreementProduct(test, inputs, func(directory string) error {
-		source, err := os.ReadFile(filepath.Join(compilerAgreementLowered(test), "lint.c"))
-		if err != nil {
-			return err
+		source, readError := os.ReadFile(filepath.Join(compilerAgreementLowered(test), "lint.c"))
+		if readError != nil {
+			return readError
 		}
 		if found := len(compilerAgreementHeapWitnessDefinition.FindAllIndex(source, -1)); found != 1 {
 			return fmt.Errorf(
@@ -90,8 +90,8 @@ func compilerAgreementHeapWitnessNative(test *testing.T) string {
 			source,
 			[]byte("${1}"+compilerAgreementHeapWitnessPlant),
 		)
-		if err := os.WriteFile(filepath.Join(directory, "lint.c"), planted, 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(filepath.Join(directory, "lint.c"), planted, 0644); writeError != nil {
+			return writeError
 		}
 		return native.Build(string(planted), filepath.Join(directory, "lint"), options)
 	})
@@ -137,13 +137,13 @@ func TestCompilerAndStage1AgreeCombinedSanitizerWitness(test *testing.T) {
 	command := exec.Command(binary, "--manifest", path)
 	var stderr bytes.Buffer
 	command.Stdout, command.Stderr = &bytes.Buffer{}, &stderr
-	err := testguard.Run(command, testguard.Budget, testguard.Ceiling)
+	runError := testguard.Run(command, testguard.Budget, testguard.Ceiling)
 	var exit *exec.ExitError
-	if !errors.As(err, &exit) {
+	if !errors.As(runError, &exit) {
 		test.Fatalf(
 			"group %d against the heap witness: want the sanitizer to end the run, got %v\n%.2000s",
 			part,
-			err,
+			runError,
 			&stderr,
 		)
 	}

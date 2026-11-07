@@ -15,9 +15,9 @@ fs.unwatchFile('x');`
 
 func TestNodeWatchFilePollingForms(test *testing.T) {
 	test.Parallel()
-	program, err := lowerSource(test, watchSource)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerSourceError := lowerSource(test, watchSource)
+	if lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
 	if !program.HasPromises() {
 		test.Fatal("watchFile must run the loop without an explicit Promise")
@@ -48,34 +48,34 @@ func TestNodeWatchFileOtherFormsRefused(test *testing.T) {
 	}
 	prefix := `import * as fs from 'node:fs'; function observe(_c:fs.Stats,_p:fs.Stats):void{}`
 	for _, c := range cases {
-		_, err := lowerSource(test, prefix+c.code)
-		if err == nil || !strings.Contains(err.Error(), c.want) {
-			test.Errorf("%s: want %q, got %v", c.code, c.want, err)
+		_, lowerSourceError := lowerSource(test, prefix+c.code)
+		if lowerSourceError == nil || !strings.Contains(lowerSourceError.Error(), c.want) {
+			test.Errorf("%s: want %q, got %v", c.code, c.want, lowerSourceError)
 		}
 	}
 }
 
 func TestNodeWatchFileTscCloseShape(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(test, `import * as fs from 'node:fs';
+	_, lowerSourceError := lowerSource(test, `import * as fs from 'node:fs';
  function start(path:string): {close:()=>void} {
  fs.watchFile(path,{persistent:true,interval:250}, changed);
  return {close:()=>fs.unwatchFile(path,changed)};
  function changed(curr:fs.Stats,prev:fs.Stats):void {console.log(path+String(curr.size-prev.size));}
  }
  start('x').close();`)
-	if err != nil {
-		test.Fatal(err)
+	if lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
 }
 func TestNodeWatchFileVoidViewCannotHideOwnedResult(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(test, `import * as fs from 'node:fs';
+	_, lowerSourceError := lowerSource(test, `import * as fs from 'node:fs';
  function stringResult(_curr:fs.Stats,_prev:fs.Stats):string {return 'owned';}
  const listener:(curr:fs.Stats,prev:fs.Stats)=>void=stringResult;
  fs.watchFile('x',{persistent:true,interval:250},listener);`)
-	if err == nil || !strings.Contains(err.Error(), "listener outside") {
-		test.Fatal(err)
+	if lowerSourceError == nil || !strings.Contains(lowerSourceError.Error(), "listener outside") {
+		test.Fatal(lowerSourceError)
 	}
 }
 
@@ -87,8 +87,8 @@ func TestNodeWatchFileUsesLibrarySymbols(test *testing.T) {
  poll('x',{persistent:true,interval:250},changed);stop('x',changed);`,
 		`function watchFile(text:string):string{return text;}console.log(watchFile('own'));`,
 	} {
-		if _, err := lowerSource(test, source); err != nil {
-			test.Fatal(err)
+		if _, lowerSourceError := lowerSource(test, source); lowerSourceError != nil {
+			test.Fatal(lowerSourceError)
 		}
 	}
 }
@@ -101,26 +101,26 @@ func TestNodeWatchFileCallbackViews(test *testing.T) {
 		{"unknown", "unknown", "hides a host object"},
 	} {
 		test.Run(parameter.name, func(test *testing.T) {
-			_, err := lowerSource(test, `import * as fs from 'node:fs';
+			_, lowerSourceError := lowerSource(test, `import * as fs from 'node:fs';
 function changed(curr:`+parameter.of+`,prev:fs.Stats):void{}
 fs.watchFile('x',{persistent:true,interval:10},changed);`)
 			var notYet *NotYet
-			if !errors.As(err, &notYet) ||
+			if !errors.As(lowerSourceError, &notYet) ||
 				!strings.Contains(notYet.What, parameter.want) ||
 				!strings.Contains(notYet.Where, "main.a:3:") {
-				test.Fatalf("want argument-located NotYet %q, got %v", parameter.want, err)
+				test.Fatalf("want argument-located NotYet %q, got %v", parameter.want, lowerSourceError)
 			}
 		})
 	}
 }
 func TestNodeWatchFileMtimeUnaryPlus(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(test, `import * as fs from 'node:fs';
+	_, lowerSourceError := lowerSource(test, `import * as fs from 'node:fs';
  function changed(curr:fs.Stats,prev:fs.Stats):void { console.log(String(+curr.mtime === 0) + " " + String(+prev.mtime === 0) + " " + String(+curr.mtime === +prev.mtime)); }
  fs.watchFile('x',{persistent:true,interval:10},changed);
  fs.unwatchFile('x',changed);`)
-	if err != nil {
-		test.Fatal(err)
+	if lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
 }
 
@@ -140,10 +140,10 @@ func TestNodeWatchFileOptionTypeRefusals(test *testing.T) {
 		},
 	} {
 		test.Run(probe.name, func(test *testing.T) {
-			_, err := lowerSource(test, prefix+probe.code)
+			_, lowerSourceError := lowerSource(test, prefix+probe.code)
 			var notYet *NotYet
-			if !errors.As(err, &notYet) || notYet.What != probe.want {
-				test.Fatalf("want exact NotYet %q, got %v", probe.want, err)
+			if !errors.As(lowerSourceError, &notYet) || notYet.What != probe.want {
+				test.Fatalf("want exact NotYet %q, got %v", probe.want, lowerSourceError)
 			}
 		})
 	}

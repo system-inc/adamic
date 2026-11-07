@@ -801,9 +801,9 @@ func familyWrappers(test *testing.T) []byte {
 			family.name,
 		)
 	}
-	formatted, err := format.Source(text.Bytes())
-	if err != nil {
-		test.Fatal(err)
+	formatted, formatError := format.Source(text.Bytes())
+	if formatError != nil {
+		test.Fatal(formatError)
 	}
 	return formatted
 }
@@ -812,17 +812,17 @@ func TestFamilyWrappersAreCurrent(test *testing.T) {
 	test.Parallel()
 	want := familyWrappers(test)
 	if *updateFamilyWrappers {
-		if err := os.WriteFile(familyWrappersPath, want, 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(familyWrappersPath, want, 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		return
 	}
-	got, err := os.ReadFile(familyWrappersPath)
-	if err != nil || !bytes.Equal(got, want) {
+	got, readError := os.ReadFile(familyWrappersPath)
+	if readError != nil || !bytes.Equal(got, want) {
 		test.Fatalf(
 			"%s doesn't match the families table (%v): go test ./internal/oracle -run '^TestFamilyWrappersAreCurrent$' -args -update-family-wrappers",
 			familyWrappersPath,
-			err,
+			readError,
 		)
 	}
 }
@@ -1022,9 +1022,9 @@ func catchPlantedCase(test *testing.T, name string) {
 	if family.requires != "" && os.Getenv(family.requires) != "1" {
 		test.Skipf("set %s=1 to run %s", family.requires, family.name)
 	}
-	executable, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	executable, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
 	owner := familyTestName(family, family.planted)
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
@@ -1038,13 +1038,18 @@ func catchPlantedCase(test *testing.T, name string) {
 		"-test.timeout=90s",
 	)
 	command.Env = append(os.Environ(), familyProbeVariable+"="+family.name+"="+family.planted)
-	output, err := command.CombinedOutput()
+	output, combinedOutputError := command.CombinedOutput()
 	if ctx.Err() != nil {
 		test.Fatalf("the probe of %s was killed at 90 s:\n%s", family.name, output)
 	}
 	var exit *exec.ExitError
-	if !errors.As(err, &exit) {
-		test.Fatalf("the probe of %s passed, want its planted case caught: %v\n%s", family.name, err, output)
+	if !errors.As(combinedOutputError, &exit) {
+		test.Fatalf(
+			"the probe of %s passed, want its planted case caught: %v\n%s",
+			family.name,
+			combinedOutputError,
+			output,
+		)
 	}
 	failed := regexp.MustCompile(`(?m)^--- FAIL: (`+regexp.QuoteMeta(family.name)+`_\w+) `).FindAllSubmatch(output, -1)
 	caseFailed := family.oneProgram || strings.Contains(string(output), "--- FAIL: "+owner+"/"+family.planted+" ")

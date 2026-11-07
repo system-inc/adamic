@@ -24,9 +24,9 @@ const compilerCommit = "050880ce59e30b356b686bd3144efe24f875ebc8"
 
 func prepareRegistry(test *testing.T, directory string) []registry.Descriptor {
 	test.Helper()
-	descriptors, err := registry.Generate(directory)
-	if err != nil {
-		test.Fatal(err)
+	descriptors, generateError := registry.Generate(directory)
+	if generateError != nil {
+		test.Fatal(generateError)
 	}
 	return descriptors
 }
@@ -38,9 +38,9 @@ func prepareRegistry(test *testing.T, directory string) []registry.Descriptor {
 func portFiles(test *testing.T) []string {
 	test.Helper()
 	var files []string
-	err := filepath.WalkDir(".", func(path string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
+	walkError := filepath.WalkDir(".", func(path string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
 		if entry.IsDir() && (path == "gaps" || strings.HasSuffix(path, "testdata") || lintRuleSubdirectory(path)) {
 			return filepath.SkipDir
@@ -54,8 +54,8 @@ func portFiles(test *testing.T) []string {
 		}
 		return nil
 	})
-	if err != nil {
-		test.Fatal(err)
+	if walkError != nil {
+		test.Fatal(walkError)
 	}
 	return files
 }
@@ -106,23 +106,23 @@ func execute(test *testing.T, directory, name string, args ...string) execution 
 			command = toolchain.CommandIn(directory, name, args...)
 		}
 	}
-	output, err := os.CreateTemp(test.TempDir(), "stdout-")
-	if err != nil {
-		test.Fatal(err)
+	output, temporaryFileError := os.CreateTemp(test.TempDir(), "stdout-")
+	if temporaryFileError != nil {
+		test.Fatal(temporaryFileError)
 	}
 	defer output.Close()
 	command.Stdout = output
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
 	started := time.Now()
-	err = testguard.Run(command, testguard.Budget, testguard.Ceiling)
+	runError := testguard.Run(command, testguard.Budget, testguard.Ceiling)
 	duration := time.Since(started)
-	if err != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
-		test.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
+	if runError != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
+		test.Fatalf("%s %v: %v\n%s", name, args, runError, &stderr)
 	}
-	data, err := os.ReadFile(output.Name())
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(output.Name())
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return execution{data, duration}
 }
@@ -142,8 +142,8 @@ func buildPort(test *testing.T, directory string, sanitize bool) string {
 		return value.path
 	}
 	binary := filepath.Join(test.TempDir(), "scanner")
-	if err := buildPortTo(directory, sanitize, binary); err != nil {
-		test.Fatal(err)
+	if buildPortToError := buildPortTo(directory, sanitize, binary); buildPortToError != nil {
+		test.Fatal(buildPortToError)
 	}
 	return binary
 }
@@ -151,9 +151,9 @@ func buildPort(test *testing.T, directory string, sanitize bool) string {
 func node(test *testing.T, directory, manifest string, count bool) execution {
 	test.Helper()
 	prepareRegistry(test, directory)
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	args := []string{
 		"--disable-warning=ExperimentalWarning",
@@ -213,8 +213,8 @@ func difference(got, want []byte) string {
 func manifest(test *testing.T, rows []string) string {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "manifest.txt")
-	if err := os.WriteFile(path, []byte(strings.Join(rows, "\n")+"\n"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(strings.Join(rows, "\n")+"\n"), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return path
 }
@@ -270,8 +270,8 @@ func generated(test *testing.T) []string {
 	var rows []string
 	for i, source := range sources {
 		path := filepath.Join(test.TempDir(), fmt.Sprintf("generated-%d.ts", i))
-		if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		for _, options := range []string{
 			"all\tAlways\tAlways\tfalse",
@@ -291,10 +291,10 @@ func generated(test *testing.T) []string {
 	// One source exercising the ten rules that came from the frequency-ranked slice (VOLUME.md), by default
 	// and under the options each takes.
 	path := filepath.Join(test.TempDir(), "options.ts")
-	if err := os.WriteFile(path, []byte(
+	if writeError := os.WriteFile(path, []byte(
 		"interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\n",
-	), 0644); err != nil {
-		test.Fatal(err)
+	), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return append(rows, path,
 		path+"\tno-plusplus\t\t\t\t{\"AllowForLoopAfterthoughts\":true}",
@@ -312,9 +312,9 @@ func upstreamFrom(test *testing.T, sourceRoot string) []string {
 	test.Helper()
 	if isPackage(sourceRoot) {
 		value := shared("upstream", func(value *sharedValue) {
-			directory, err := os.MkdirTemp(sharedDirectory, "upstream-")
-			if err != nil {
-				value.err = err
+			directory, temporaryDirectoryError := os.MkdirTemp(sharedDirectory, "upstream-")
+			if temporaryDirectoryError != nil {
+				value.err = temporaryDirectoryError
 				return
 			}
 			value.rows, value.err = captureUpstream(sourceRoot, directory)
@@ -325,9 +325,9 @@ func upstreamFrom(test *testing.T, sourceRoot string) []string {
 		test.Logf("cohere cases: %d unique source/rule/options combinations", len(value.rows))
 		return append([]string(nil), value.rows...)
 	}
-	rows, err := captureUpstream(sourceRoot, test.TempDir())
-	if err != nil {
-		test.Fatal(err)
+	rows, captureUpstreamError := captureUpstream(sourceRoot, test.TempDir())
+	if captureUpstreamError != nil {
+		test.Fatal(captureUpstreamError)
 	}
 	test.Logf("cohere cases: %d unique source/rule/options combinations", len(rows))
 	return rows
@@ -364,9 +364,9 @@ func checkRecoveryRefusal(test *testing.T, oracle, binary, directory, row string
 	answer := execute(test, "", oracle, "--manifest", recovered)
 	test.Logf("Go recovered output: %s", answer.output)
 	path := manifest(test, []string{row})
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	for _, side := range []struct {
 		name string
@@ -386,20 +386,26 @@ func checkRecoveryRefusal(test *testing.T, oracle, binary, directory, row string
 			// Node is a tool, the one internal/toolchain resolves, as execute runs it.
 			command = toolchain.Command(side.name, side.args...)
 		}
-		output, err := os.CreateTemp(test.TempDir(), "recovery-refusal-")
-		if err != nil {
-			test.Fatal(err)
+		output, temporaryFileError := os.CreateTemp(test.TempDir(), "recovery-refusal-")
+		if temporaryFileError != nil {
+			test.Fatal(temporaryFileError)
 		}
 		command.Stdout = output
 		var stderr bytes.Buffer
 		command.Stderr = &stderr
-		err = testguard.Run(command, 2*time.Second, testguard.Ceiling)
-		cpuGuard := strings.Contains(fmt.Sprint(err), "child CPU hang guard exceeded")
+		runError := testguard.Run(command, 2*time.Second, testguard.Ceiling)
+		cpuGuard := strings.Contains(fmt.Sprint(runError), "child CPU hang guard exceeded")
 		output.Close()
-		if err == nil || (!cpuGuard && !strings.Contains(stderr.String(), "adamic: panic:")) {
-			test.Fatalf("expected parser refusal from %s, got %v: %s", side.name, err, stderr.String())
+		if runError == nil || (!cpuGuard && !strings.Contains(stderr.String(), "adamic: panic:")) {
+			test.Fatalf("expected parser refusal from %s, got %v: %s", side.name, runError, stderr.String())
 		}
-		test.Logf("explicit unsupported recovery: %s: CPU-guard=%t: %v: %s", side.name, cpuGuard, err, stderr.String())
+		test.Logf(
+			"explicit unsupported recovery: %s: CPU-guard=%t: %v: %s",
+			side.name,
+			cpuGuard,
+			runError,
+			stderr.String(),
+		)
 	}
 }
 
@@ -411,9 +417,9 @@ func compilerShardAssignments(test *testing.T, rows []string, count int) [][]int
 	sizes := make([]int64, len(rows))
 	order := make([]int, len(rows))
 	for index, row := range rows {
-		info, err := os.Stat(row)
-		if err != nil {
-			test.Fatal(err)
+		info, statError := os.Stat(row)
+		if statError != nil {
+			test.Fatal(statError)
 		}
 		sizes[index], order[index] = info.Size(), index
 	}
@@ -443,7 +449,7 @@ func compilerShardAssignments(test *testing.T, rows []string, count int) [][]int
 // Both comparison failures and Merge's missing/extra-case failures retain the input path.
 func compilerCasePath(rows []string, message string) string {
 	var index int
-	if _, err := fmt.Sscanf(message, "case %d", &index); err == nil && index >= 0 && index < len(rows) {
+	if _, scanError := fmt.Sscanf(message, "case %d", &index); scanError == nil && index >= 0 && index < len(rows) {
 		return rows[index] + ": " + strings.TrimPrefix(message, fmt.Sprintf("case %d ", index))
 	}
 	return message
@@ -461,27 +467,27 @@ func compilerShardLauncher(
 ) (string, string) {
 	test.Helper()
 	directory := test.TempDir()
-	configuration, err := json.Marshal(struct {
+	configuration, encodeError := json.Marshal(struct {
 		Command     string
 		Arguments   []string
 		Directory   string
 		Executable  string
 		Assignments [][]int
 	}{command, arguments, directory, guardExecutable(test), assignments})
-	if err != nil {
-		test.Fatal(err)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	for shard, indices := range assignments {
 		local := make([]string, len(indices))
 		for index, original := range indices {
 			local[index] = rows[original]
 		}
-		if err := os.WriteFile(
+		if writeError := os.WriteFile(
 			filepath.Join(directory, fmt.Sprintf("%d.manifest", shard)),
 			[]byte(strings.Join(local, "\n")+"\n"),
 			0644,
-		); err != nil {
-			test.Fatal(err)
+		); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	launcher := filepath.Join(directory, "shard.cjs")
@@ -524,8 +530,8 @@ if (result.error || result.status !== 0 || stderr.length !== 0) {
   process.stdout.write(Buffer.from(merged, 'latin1'));
 }
 `
-	if err := executable.Write(launcher, []byte(source)); err != nil {
-		test.Fatal(err)
+	if writeError := executable.Write(launcher, []byte(source)); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return launcher, directory
 }
@@ -552,9 +558,9 @@ func copyPortImporting(
 	changed := 0
 	prepareRegistry(test, ".")
 	for _, file := range portFiles(test) {
-		data, err := os.ReadFile(file)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(file)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		source := string(data)
 		selected := len(targets) == 0 || filepath.Clean(file) == filepath.Clean(targets[0])
@@ -569,30 +575,30 @@ func copyPortImporting(
 			source = imports(test, file, source)
 		}
 		destination := filepath.Join(directory, file)
-		if err := os.MkdirAll(filepath.Dir(destination), 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(filepath.Dir(destination), 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.WriteFile(destination, []byte(source), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(destination, []byte(source), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	// Validation requires each rule's owned witnesses too.
 	for _, d := range prepareRegistry(test, ".") {
-		paths, err := registry.Witnesses(filepath.Join("rules", d.Slug))
-		if err != nil {
-			test.Fatal(err)
+		paths, witnessesError := registry.Witnesses(filepath.Join("rules", d.Slug))
+		if witnessesError != nil {
+			test.Fatal(witnessesError)
 		}
 		for _, path := range paths {
-			data, err := os.ReadFile(path)
-			if err != nil {
-				test.Fatal(err)
+			data, readError := os.ReadFile(path)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			target := filepath.Join(directory, path)
-			if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {
-				test.Fatal(err)
+			if createDirectoryError := os.MkdirAll(filepath.Dir(target), 0755); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
-			if err := os.WriteFile(target, data, 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(target, data, 0644); writeError != nil {
+				test.Fatal(writeError)
 			}
 		}
 	}
@@ -631,8 +637,8 @@ func TestLegacyMutants(test *testing.T) {
 func TestCountGuardMutant(test *testing.T) {
 	test.Parallel()
 	source := filepath.Join(test.TempDir(), "count.ts")
-	if err := os.WriteFile(source, []byte("var a; debugger;"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(source, []byte("var a; debugger;"), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	path := manifest(test, []string{source})
 	oracle := lintGoOracleProduct(test)
@@ -676,32 +682,32 @@ func TestThroughput(test *testing.T) {
 		test.Fatal("missing pinned compiler checkout")
 	}
 	var rows []string
-	err := filepath.WalkDir(filepath.Join(
+	walkError := filepath.WalkDir(filepath.Join(
 		source,
 		"src/compiler",
-	), func(path string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
+	), func(path string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
 		if !entry.IsDir() && (strings.HasSuffix(path, ".ts") || strings.HasSuffix(path, ".a")) {
 			rows = append(rows, path)
 		}
 		return nil
 	})
-	if err != nil {
-		test.Fatal(err)
+	if walkError != nil {
+		test.Fatal(walkError)
 	}
 	path := manifest(test, rows)
-	directory, err := filepath.Abs(".")
-	if err != nil {
-		test.Fatal(err)
+	directory, absolutePathError := filepath.Abs(".")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	oracle := lintGoOracleProduct(test)
 	binary := buildPort(test, directory, false)
 	machine := execute(test, "", "uname", "-a")
-	cpu, err := os.ReadFile("/proc/cpuinfo")
-	if err != nil {
-		test.Fatal(err)
+	cpu, readError := os.ReadFile("/proc/cpuinfo")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	model := ""
 	for _, line := range strings.Split(string(cpu), "\n") {
@@ -749,8 +755,8 @@ func TestThroughput(test *testing.T) {
 		}
 	}
 	var count int
-	if _, err := fmt.Sscan(string(want), &count); err != nil {
-		test.Fatal(err)
+	if _, scanError := fmt.Sscan(string(want), &count); scanError != nil {
+		test.Fatal(scanError)
 	}
 	for _, name := range []string{"Go", "native", "Node"} {
 		test.Logf(
@@ -777,9 +783,9 @@ var portImport = regexp.MustCompile(`(?m)(^import\s+[^;]*?\s+from\s+)(['"])([^'"
 // original module directory. Rules may be arbitrarily deeper than context.ts.
 func rewritePortImports(test *testing.T, file, source string) string {
 	test.Helper()
-	root, err := filepath.Abs(".")
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(".")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return portImport.ReplaceAllStringFunc(source, func(declaration string) string {
 		parts := portImport.FindStringSubmatch(declaration)
@@ -787,9 +793,9 @@ func rewritePortImports(test *testing.T, file, source string) string {
 			return declaration
 		}
 		absolute := filepath.Clean(filepath.Join(root, filepath.Dir(file), parts[3]))
-		relative, err := filepath.Rel(root, absolute)
-		if err != nil {
-			test.Fatal(err)
+		relative, relativePathError := filepath.Rel(root, absolute)
+		if relativePathError != nil {
+			test.Fatal(relativePathError)
 		}
 		if relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
 			return declaration
@@ -813,8 +819,8 @@ func emittedJavaScript(test *testing.T, directory string) string {
 		return value.path
 	}
 	path := filepath.Join(test.TempDir(), "lint.mjs")
-	if err := emitJavaScriptTo(directory, path); err != nil {
-		test.Fatal(err)
+	if emitJavaScriptToError := emitJavaScriptTo(directory, path); emitJavaScriptToError != nil {
+		test.Fatal(emitJavaScriptToError)
 	}
 	return path
 }
@@ -824,9 +830,9 @@ func emittedNode(test *testing.T, directory, manifest string, count bool) execut
 }
 func runJavaScript(test *testing.T, module, manifest string, count bool) execution {
 	test.Helper()
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	args := []string{"--disable-warning=ExperimentalWarning", runner, module, "--manifest", manifest}
 	if count {

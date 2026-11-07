@@ -19,52 +19,52 @@ func programNodeAPI(test *testing.T) string {
 		Files:     []string{"stage3/api/package-lock.json", "internal/oracle/program_region_node_records_test.go"},
 		Toolchain: []string{buildcache.Tool("tsc", "--version"), buildcache.Tool("node", "--version")},
 	}, func(directory string) error {
-		data, err := os.ReadFile("../../stage3/api/package-lock.json")
-		if err != nil {
-			return err
+		data, readError := os.ReadFile("../../stage3/api/package-lock.json")
+		if readError != nil {
+			return readError
 		}
 		var lock struct {
 			Packages map[string]struct{ Version, Resolved, Integrity string }
 		}
-		if err := json.Unmarshal(data, &lock); err != nil {
-			return err
+		if decodeError := json.Unmarshal(data, &lock); decodeError != nil {
+			return decodeError
 		}
 		api := lock.Packages["node_modules/typescript"]
 		if api.Version != "6.0.3" {
 			return fmt.Errorf("Node witness requires TypeScript 6.0.3, got %s", api.Version)
 		}
-		tsc, err := exec.LookPath("tsc")
-		if err != nil {
-			return err
+		tsc, lookPathError := exec.LookPath("tsc")
+		if lookPathError != nil {
+			return lookPathError
 		}
-		tsc, err = filepath.EvalSymlinks(tsc)
-		if err != nil {
-			return err
+		tsc, resolveSymlinksError := filepath.EvalSymlinks(tsc)
+		if resolveSymlinksError != nil {
+			return resolveSymlinksError
 		}
 		library := filepath.Join(filepath.Dir(tsc), "../lib/typescript.js")
-		version, err := exec.Command(
+		version, outputError := exec.Command(
 			"node",
 			"-e",
 			"process.stdout.write(require(process.argv[1]).version)",
 			library,
 		).Output()
-		if err != nil {
-			return fmt.Errorf("gate TypeScript API version: %w", err)
+		if outputError != nil {
+			return fmt.Errorf("gate TypeScript API version: %w", outputError)
 		}
 		if string(version) != api.Version {
 			return fmt.Errorf("gate TypeScript API version %q, lock requires %s", version, api.Version)
 		}
 		// npm's integrity hashes the compressed package archive, not typescript.js. The
 		// traced product records the installed file's bytes instead, after checking its version.
-		data, err = os.ReadFile(library)
-		if err != nil {
-			return err
+		data, readError = os.ReadFile(library)
+		if readError != nil {
+			return readError
 		}
-		if err := os.MkdirAll(filepath.Join(directory, "lib"), 0755); err != nil {
-			return err
+		if createDirectoryError := os.MkdirAll(filepath.Join(directory, "lib"), 0755); createDirectoryError != nil {
+			return createDirectoryError
 		}
-		if err := os.WriteFile(filepath.Join(directory, "lib/typescript.js"), data, 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(filepath.Join(directory, "lib/typescript.js"), data, 0644); writeError != nil {
+			return writeError
 		}
 		return nil
 	})

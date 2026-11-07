@@ -51,9 +51,9 @@ const watchFileDeadline = 5 * time.Second
 // ordinary native, JS, gob and counted families. WASI refuses their host entry.
 func watchFileRun(test *testing.T, name string, args ...string) (run, bool) {
 	test.Helper()
-	path, err := toolchain.Path(name)
-	if err != nil {
-		test.Fatal(err)
+	path, pathError := toolchain.Path(name)
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), watchFileDeadline)
 	defer cancel()
@@ -66,11 +66,11 @@ func watchFileRun(test *testing.T, name string, args ...string) (run, bool) {
 	}
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	expired := ctx.Err() == context.DeadlineExceeded
 	var exited *exec.ExitError
-	if err != nil && !expired && !errors.As(err, &exited) {
-		test.Fatal(err)
+	if captureError != nil && !expired && !errors.As(captureError, &exited) {
+		test.Fatal(captureError)
 	}
 	if command.ProcessState == nil {
 		test.Fatal("watch fixture did not start")
@@ -79,17 +79,17 @@ func watchFileRun(test *testing.T, name string, args ...string) (run, bool) {
 }
 func watchFilePath(test *testing.T, name string) string {
 	test.Helper()
-	path, err := filepath.Abs("testdata/host_watch_file/" + name + ".a")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("testdata/host_watch_file/" + name + ".a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return path
 }
 func watchFileNode(test *testing.T, path string) run {
 	test.Helper()
-	loader, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	loader, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	result, expired := watchFileRun(test, "node", "--disable-warning=ExperimentalWarning", loader, path)
 	if expired {
@@ -179,17 +179,17 @@ func watchFileProduct(test *testing.T, fixture, variant string) string {
 			buildcache.Tool("ar", "--version"),
 		}}
 	return buildcache.Product(test, inputs, func(directory string) error {
-		program, err := lowered(test, watchFilePath(test, fixture))
-		if err != nil {
-			return err
+		program, loweredError := lowered(test, watchFilePath(test, fixture))
+		if loweredError != nil {
+			return loweredError
 		}
 		source := native.C(program)
-		if err := os.WriteFile(
+		if writeError := os.WriteFile(
 			filepath.Join(directory, "program.mjs"),
 			[]byte(javascript.JavaScript(program)),
 			0600,
-		); err != nil {
-			return err
+		); writeError != nil {
+			return writeError
 		}
 		options := native.Options{Sanitize: true}
 		if variant == "control" {
@@ -205,21 +205,21 @@ func watchFileProduct(test *testing.T, fixture, variant string) string {
 			return fmt.Errorf("unknown watchFile variant %s", variant)
 		}
 		runtimeDirectory := filepath.Join(directory, "runtime-mutant")
-		if err := os.Mkdir(runtimeDirectory, 0700); err != nil {
-			return err
+		if createDirectoryError := os.Mkdir(runtimeDirectory, 0700); createDirectoryError != nil {
+			return createDirectoryError
 		}
-		entries, err := os.ReadDir("../native/runtime")
-		if err != nil {
-			return err
+		entries, readDirectoryError := os.ReadDir("../native/runtime")
+		if readDirectoryError != nil {
+			return readDirectoryError
 		}
 		matched := false
 		for _, entry := range entries {
 			if entry.IsDir() {
 				continue
 			}
-			data, err := os.ReadFile(filepath.Join("../native/runtime", entry.Name()))
-			if err != nil {
-				return err
+			data, readError := os.ReadFile(filepath.Join("../native/runtime", entry.Name()))
+			if readError != nil {
+				return readError
 			}
 			if entry.Name() == mutation.file {
 				if strings.Count(string(data), mutation.before) != 1 {
@@ -228,16 +228,20 @@ func watchFileProduct(test *testing.T, fixture, variant string) string {
 				data = []byte(strings.Replace(string(data), mutation.before, mutation.after, 1))
 				matched = true
 			}
-			if err := os.WriteFile(filepath.Join(runtimeDirectory, entry.Name()), data, 0600); err != nil {
-				return err
+			if writeError := os.WriteFile(
+				filepath.Join(runtimeDirectory, entry.Name()),
+				data,
+				0600,
+			); writeError != nil {
+				return writeError
 			}
 		}
 		if !matched {
 			return fmt.Errorf("mutant file not found")
 		}
-		library, err := native.RuntimeLibraryForSource(runtimeDirectory, source, options)
-		if err != nil {
-			return err
+		library, runtimeLibraryForSourceError := native.RuntimeLibraryForSource(runtimeDirectory, source, options)
+		if runtimeLibraryForSourceError != nil {
+			return runtimeLibraryForSourceError
 		}
 		return native.BuildWithRuntime(source, filepath.Join(directory, "native"), options, library)
 	})
@@ -436,14 +440,14 @@ func TestProduct_WatchFileTscCloseShape(test *testing.T) {
 
 func TestWatchFileProductOrderIsCurrent(test *testing.T) {
 	test.Parallel()
-	script, err := filepath.Abs(filepath.Join(repository, "cloud/fast-gate/watchfile-product-order.py"))
-	if err != nil {
-		test.Fatal(err)
+	script, absolutePathError := filepath.Abs(filepath.Join(repository, "cloud/fast-gate/watchfile-product-order.py"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	output, err := exec.CommandContext(ctx, "python3", script, "--check").CombinedOutput()
-	if err != nil {
-		test.Fatalf("watchFile product generator: %v\n%s", err, output)
+	output, combinedOutputError := exec.CommandContext(ctx, "python3", script, "--check").CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("watchFile product generator: %v\n%s", combinedOutputError, output)
 	}
 }

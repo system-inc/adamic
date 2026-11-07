@@ -10,8 +10,8 @@ import (
 // Receiver-optional, zero-argument library methods need one saved receiver and
 // a missing result. An optional function call has a different guard and ABI.
 func (l *lowering) optionalIntrinsic(node *ast.Node) (ir.Expression, bool, error) {
-	if value, handled, err := l.optionalMapGet(node); handled {
-		return value, true, err
+	if value, handled, optionalMapGetError := l.optionalMapGet(node); handled {
+		return value, true, optionalMapGetError
 	}
 	call := node.AsCallExpression()
 	if call.QuestionDotToken != nil || len(call.Arguments.Nodes) != 0 {
@@ -25,20 +25,20 @@ func (l *lowering) optionalIntrinsic(node *ast.Node) (ir.Expression, bool, error
 	if access.QuestionDotToken == nil {
 		return nil, false, nil
 	}
-	value, known, err := l.builtin(node)
-	if !known || err != nil {
-		return nil, known, err
+	value, known, builtinError := l.builtin(node)
+	if !known || builtinError != nil {
+		return nil, known, builtinError
 	}
-	receiver, err := l.expression(access.Expression)
-	if err != nil {
-		return nil, true, err
+	receiver, expressionError := l.expression(access.Expression)
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
 	if !receiver.Type().IsReference() || value.Type() == 0 {
 		return nil, true, l.notYet(node, "an optional intrinsic without a reference receiver and a value result")
 	}
-	of, err := l.typeOf(node)
-	if err != nil {
-		return nil, true, err
+	of, typeOfError := l.typeOf(node)
+	if typeOfError != nil {
+		return nil, true, typeOfError
 	}
 	occurrences := 0
 	walk(value, func(node any) bool {
@@ -104,7 +104,12 @@ func (l *lowering) optionalIntrinsic(node *ast.Node) (ir.Expression, bool, error
 	if !replaced {
 		return nil, true, l.notYet(node, "an optional intrinsic whose receiver is not an explicit operand")
 	}
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: "optional_intrinsic_receiver", Type: receiver.Type(), Function: function, ExpressionAssigned: true})
+	l.result.Locals = append(l.result.Locals, ir.Local{
+		Name:               "optional_intrinsic_receiver",
+		Type:               receiver.Type(),
+		Function:           function,
+		ExpressionAssigned: true,
+	})
 	return ir.Effects{Body: []ir.Statement{ir.Declare{Local: local, Value: receiver}}, Result: ir.Conditional{
 		Condition: ir.Unary{Operator: ir.Not, Operand: ir.IsUndefined{Value: read}},
 		WhenTrue:  fit(lowered, of), WhenNot: fit(ir.Undefined{}, of), Of: of,

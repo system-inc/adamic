@@ -18,24 +18,24 @@ import (
 // Not parallel: TestMain owns the shared temporary directory and registry initialization.
 func TestMain(m *testing.M) {
 	// The committed registry is checked, never rewritten: the tests don't write the tree (#k01pgng).
-	if _, err := registry.Stale("."); err != nil {
-		fmt.Fprintln(os.Stderr, err)
+	if _, staleError := registry.Stale("."); staleError != nil {
+		fmt.Fprintln(os.Stderr, staleError)
 		os.Exit(1)
 	}
-	directory, err := os.MkdirTemp("", "lint-shared-")
-	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
+	directory, temporaryDirectoryError := os.MkdirTemp("", "lint-shared-")
+	if temporaryDirectoryError != nil {
+		fmt.Fprintln(os.Stderr, temporaryDirectoryError)
 		os.Exit(1)
 	}
 	sharedDirectory = directory
-	if err := decodedOptionsBeforeTests(); err != nil {
-		fmt.Fprintln(os.Stderr, err)
+	if decodedOptionsBeforeTestsError := decodedOptionsBeforeTests(); decodedOptionsBeforeTestsError != nil {
+		fmt.Fprintln(os.Stderr, decodedOptionsBeforeTestsError)
 		os.RemoveAll(directory)
 		os.Exit(1)
 	}
 	code := m.Run()
-	if err := os.RemoveAll(directory); err != nil {
-		fmt.Fprintln(os.Stderr, err)
+	if removeError := os.RemoveAll(directory); removeError != nil {
+		fmt.Fprintln(os.Stderr, removeError)
 	}
 	os.Exit(code)
 }
@@ -69,33 +69,33 @@ func TestFactoryHooks_Setup(test *testing.T) {
 // Raw corpus text stays outside the project's TypeScript module graph.
 func ownedWitnesses(test *testing.T, directory, slug string) []string {
 	test.Helper()
-	paths, err := registry.Witnesses(filepath.Join(directory, "rules", slug))
-	if err != nil {
-		test.Fatal(err)
+	paths, witnessesError := registry.Witnesses(filepath.Join(directory, "rules", slug))
+	if witnessesError != nil {
+		test.Fatal(witnessesError)
 	}
 	var sources []string
 	for index, path := range paths {
-		data, err := os.ReadFile(path)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(path)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		target := filepath.Join(
 			test.TempDir(),
 			fmt.Sprintf("%s-%d%s", slug, index, filepath.Ext(strings.TrimSuffix(path, ".txt"))),
 		)
 		// A witness in a directory under testdata is linted at that relative path, for a rule that judges it.
-		relative, err := filepath.Rel(filepath.Join(directory, "rules", slug, "testdata"), path)
-		if err != nil {
-			test.Fatal(err)
+		relative, relativePathError := filepath.Rel(filepath.Join(directory, "rules", slug, "testdata"), path)
+		if relativePathError != nil {
+			test.Fatal(relativePathError)
 		}
 		if filepath.Dir(relative) != "." {
 			target = filepath.Join(test.TempDir(), strings.TrimSuffix(relative, ".txt"))
-			if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {
-				test.Fatal(err)
+			if createDirectoryError := os.MkdirAll(filepath.Dir(target), 0755); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
 		}
-		if err := os.WriteFile(target, data, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(target, data, 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		sources = append(sources, target)
 	}
@@ -113,9 +113,9 @@ func ownedWitnesses(test *testing.T, directory, slug string) []string {
 // the options would be every rule's.
 func ownedWitnessRows(test *testing.T, directory string, d registry.Descriptor) []string {
 	test.Helper()
-	paths, err := registry.Witnesses(filepath.Join(directory, "rules", d.Slug))
-	if err != nil {
-		test.Fatal(err)
+	paths, witnessesError := registry.Witnesses(filepath.Join(directory, "rules", d.Slug))
+	if witnessesError != nil {
+		test.Fatal(witnessesError)
 	}
 	sources := ownedWitnesses(test, directory, d.Slug)
 	var rows []string
@@ -126,19 +126,19 @@ func ownedWitnessRows(test *testing.T, directory string, d registry.Descriptor) 
 			filepath.Ext(strings.TrimSuffix(path, ".txt")),
 		) +
 			".options.json"
-		data, err := os.ReadFile(sidecar)
-		if err == nil {
+		data, readError := os.ReadFile(sidecar)
+		if readError == nil {
 			var options any
-			if err := json.Unmarshal(data, &options); err != nil {
-				test.Fatalf("%s: %v", sidecar, err)
+			if decodeError := json.Unmarshal(data, &options); decodeError != nil {
+				test.Fatalf("%s: %v", sidecar, decodeError)
 			}
-			compact, err := json.Marshal(options)
-			if err != nil {
-				test.Fatal(err)
+			compact, encodeError := json.Marshal(options)
+			if encodeError != nil {
+				test.Fatal(encodeError)
 			}
 			row += "\t\t\tfalse\t" + string(compact)
-		} else if !os.IsNotExist(err) {
-			test.Fatal(err)
+		} else if !os.IsNotExist(readError) {
+			test.Fatal(readError)
 		}
 		rows = append(rows, row)
 	}
@@ -152,8 +152,8 @@ func TestNestedOutsideModuleCopy(test *testing.T) {
 console.log(written('copied'));
 `
 	source := rewritePortImports(test, "rules/probe/rule.ts", original)
-	if err := os.WriteFile(filepath.Join(directory, "main.ts"), []byte(source), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(directory, "main.ts"), []byte(source), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	path := manifest(test, nil)
 	for _, side := range []struct {
@@ -168,38 +168,38 @@ console.log(written('copied'));
 		}
 	}
 	// Put the old root-only rewrite back: a nested rule keeps two unwanted parents.
-	parserDirectory, err := filepath.Abs("../../typescript")
-	if err != nil {
-		test.Fatal(err)
+	parserDirectory, absolutePathError := filepath.Abs("../../typescript")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	bad := strings.ReplaceAll(original, "../../typescript", parserDirectory)
 	main := filepath.Join(directory, "main.ts")
-	if err := os.WriteFile(main, []byte(bad), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(main, []byte(bad), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	output, err := os.CreateTemp(test.TempDir(), "bad-copy-")
-	if err != nil {
-		test.Fatal(err)
+	output, temporaryFileError := os.CreateTemp(test.TempDir(), "bad-copy-")
+	if temporaryFileError != nil {
+		test.Fatal(temporaryFileError)
 	}
 	command := toolchain.Command("node", "--disable-warning=ExperimentalWarning", runner, main)
 	command.Stdout = output
 	command.Stderr = output
 	runError := command.Run()
-	if err := output.Close(); err != nil {
-		test.Fatal(err)
+	if closeError := output.Close(); closeError != nil {
+		test.Fatal(closeError)
 	}
-	data, err := os.ReadFile(output.Name())
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(output.Name())
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if runError == nil || !bytes.Contains(data, []byte("ERR_MODULE_NOT_FOUND")) {
 		test.Fatalf("root-only import mutant survived on Node: %v %s", runError, data)
 	}
-	if _, err := load.Load([]string{main}); err == nil {
+	if _, loadError := load.Load([]string{main}); loadError == nil {
 		test.Fatal("root-only import mutant survived native module loading")
 	}
 	test.Log("root-only import rewrite mutant caught by Node and native module loading")

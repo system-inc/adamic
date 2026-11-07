@@ -25,9 +25,9 @@ const recordFixtures = "testdata/records"
 
 func recordHarness(test *testing.T) string {
 	test.Helper()
-	source, err := os.ReadFile(filepath.Join(recordFixtures, "harness.c"))
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(filepath.Join(recordFixtures, "harness.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return string(source)
 }
@@ -51,16 +51,16 @@ func recordNodeRun(arguments ...string) (string, string, error) {
 func recordOutput(command *exec.Cmd) (string, string, error) {
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
-	err := command.Run()
-	return stdout.String(), stderr.String(), err
+	runError := command.Run()
+	return stdout.String(), stderr.String(), runError
 }
 
 func recordNode(test *testing.T, arguments ...string) string {
 	test.Helper()
 	arguments = append([]string{filepath.Join(recordFixtures, "oracle.js")}, arguments...)
-	stdout, stderr, err := recordNodeRun(arguments...)
-	if err != nil || stderr != "" {
-		test.Fatalf("Node: %v\n%s", err, stderr)
+	stdout, stderr, recordNodeRunError := recordNodeRun(arguments...)
+	if recordNodeRunError != nil || stderr != "" {
+		test.Fatalf("Node: %v\n%s", recordNodeRunError, stderr)
 	}
 	return stdout
 }
@@ -106,9 +106,9 @@ func recordCheckPin(test *testing.T, name, stderr string) {
 	}
 	measured := make([]uint64, 6)
 	for index := range measured {
-		value, err := strconv.ParseUint(counts[index+1], 10, 64)
-		if err != nil {
-			test.Fatalf("count %d: %v", index, err)
+		value, parseError := strconv.ParseUint(counts[index+1], 10, 64)
+		if parseError != nil {
+			test.Fatalf("count %d: %v", index, parseError)
 		}
 		measured[index] = value
 	}
@@ -140,13 +140,13 @@ func recordCheckPin(test *testing.T, name, stderr string) {
 // recordHarnessBinary is the counted, sanitized harness every record comparison runs, built once for
 // all of them in this process, in a directory of its own, since a test's own would go when that test ends.
 var recordHarnessBinary = sync.OnceValues(func() (string, error) {
-	source, err := os.ReadFile(filepath.Join(recordFixtures, "harness.c"))
-	if err != nil {
-		return "", err
+	source, readError := os.ReadFile(filepath.Join(recordFixtures, "harness.c"))
+	if readError != nil {
+		return "", readError
 	}
-	directory, err := os.MkdirTemp("", "adamic-records-")
-	if err != nil {
-		return "", err
+	directory, temporaryDirectoryError := os.MkdirTemp("", "adamic-records-")
+	if temporaryDirectoryError != nil {
+		return "", temporaryDirectoryError
 	}
 	binary := filepath.Join(directory, "records")
 	return binary, Build(string(source), binary, Options{Sanitize: true, Count: true})
@@ -154,9 +154,9 @@ var recordHarnessBinary = sync.OnceValues(func() (string, error) {
 
 func recordBinary(test *testing.T) string {
 	test.Helper()
-	binary, err := recordHarnessBinary()
-	if err != nil {
-		test.Fatal(err)
+	binary, recordHarnessBinaryError := recordHarnessBinary()
+	if recordHarnessBinaryError != nil {
+		test.Fatal(recordHarnessBinaryError)
 	}
 	return binary
 }
@@ -179,9 +179,9 @@ func recordAgainstNode(test *testing.T, arguments ...string) {
 	}()
 	// A native failure still waits for Node, so no oracle outlives its test.
 	defer func() { <-oracleDone }()
-	stdout, stderr, err := recordRun(binary, arguments...)
-	if err != nil {
-		test.Fatalf("native: %v\n%s", err, stderr)
+	stdout, stderr, recordRunError := recordRun(binary, arguments...)
+	if recordRunError != nil {
+		test.Fatalf("native: %v\n%s", recordRunError, stderr)
 	}
 	recordCheckCounts(test, stderr)
 	recordCheckPin(test, strings.Join(arguments, "-"), stderr)
@@ -241,13 +241,13 @@ func TestRecordMissingMembersStop(test *testing.T) {
 	for _, name := range recordPrototypeNames(test) {
 		for _, operation := range []string{"missing-get", "missing-has"} {
 			test.Run(operation+"/"+name, func(test *testing.T) {
-				stdout, stderr, err := recordRun(binary, operation, name)
-				if !recordMemberStop(stdout, stderr, err, name) {
+				stdout, stderr, recordRunError := recordRun(binary, operation, name)
+				if !recordMemberStop(stdout, stderr, recordRunError, name) {
 					test.Fatalf(
 						"want exact own-only stop for %s %q: %v\nstdout %q\nstderr %s",
 						operation,
 						name,
-						err,
+						recordRunError,
 						stdout,
 						stderr,
 					)
@@ -261,13 +261,13 @@ func TestRecordMissingMembersStop(test *testing.T) {
 // exit does not apply. Check its exact message and exit, and reject sanitizer diagnostics.
 func TestRecordProtoAssignmentStops(test *testing.T) {
 	test.Parallel()
-	stdout, stderr, err := recordRun(recordBinary(test), "proto-assignment")
-	exit, ok := err.(*exec.ExitError)
+	stdout, stderr, recordRunError := recordRun(recordBinary(test), "proto-assignment")
+	exit, ok := recordRunError.(*exec.ExitError)
 	if !ok || exit.ExitCode() != 70 || stdout != "" || !strings.HasPrefix(
 		stderr,
 		"adamic: panic: NotYet: record assignment to __proto__ requires the Object.prototype setter; use an own data property\n",
 	) || strings.Contains(stderr, "Sanitizer") {
-		test.Fatalf("want explicit NotYet and exit 70: %v\n%s\n%s", err, stdout, stderr)
+		test.Fatalf("want explicit NotYet and exit 70: %v\n%s\n%s", recordRunError, stdout, stderr)
 	}
 }
 
@@ -277,9 +277,9 @@ func TestRecordProtoAssignmentStops(test *testing.T) {
 // goes red (Runtime's should on #zhgxzjg).
 func TestRecordShapesKeepTheirValueKinds(test *testing.T) {
 	test.Parallel()
-	stdout, stderr, err := recordRun(recordBinary(test), "value-kinds")
-	if err != nil || stdout != "number boolean reference\n" {
-		test.Fatalf("want each record shape's own kind: %v\nstdout %q\nstderr %s", err, stdout, stderr)
+	stdout, stderr, recordRunError := recordRun(recordBinary(test), "value-kinds")
+	if recordRunError != nil || stdout != "number boolean reference\n" {
+		test.Fatalf("want each record shape's own kind: %v\nstdout %q\nstderr %s", recordRunError, stdout, stderr)
 	}
 }
 
@@ -295,13 +295,13 @@ func TestRecordFixedReadsStop(test *testing.T) {
 		{"uniform-read", "total"},
 	} {
 		test.Run(mode.name, func(test *testing.T) {
-			stdout, stderr, err := recordRun(binary, mode.name)
-			exit, ok := err.(*exec.ExitError)
+			stdout, stderr, recordRunError := recordRun(binary, mode.name)
+			exit, ok := recordRunError.(*exec.ExitError)
 			if !ok || exit.ExitCode() != 70 || stdout != "" || !strings.HasPrefix(
 				stderr,
 				"adamic: panic: compiler bug: a record reached a fixed-object read of "+mode.field+"\n",
 			) || strings.Contains(stderr, "Sanitizer") {
-				test.Fatalf("want a loud stop and exit 70: %v\nstdout %q\nstderr %s", err, stdout, stderr)
+				test.Fatalf("want a loud stop and exit 70: %v\nstdout %q\nstderr %s", recordRunError, stdout, stderr)
 			}
 		})
 	}
@@ -309,22 +309,22 @@ func TestRecordFixedReadsStop(test *testing.T) {
 
 func recordPrototypeNames(test *testing.T) []string {
 	test.Helper()
-	stdout, stderr, err := recordNodeRun(
+	stdout, stderr, recordNodeRunError := recordNodeRun(
 		"-e",
 		`console.log(JSON.stringify({version:process.version,members:Object.getOwnPropertyNames(Object.prototype)}))`,
 	)
-	if err != nil || stderr != "" {
-		test.Fatalf("Node prototype names: %v\n%s", err, stderr)
+	if recordNodeRunError != nil || stderr != "" {
+		test.Fatalf("Node prototype names: %v\n%s", recordNodeRunError, stderr)
 	}
 	var observation struct {
 		Version string
 		Members []string
 	}
-	if err := json.Unmarshal(
+	if decodeError := json.Unmarshal(
 		[]byte(stdout),
 		&observation,
-	); err != nil || observation.Version == "" || len(observation.Members) == 0 {
-		test.Fatalf("Node prototype observation: %v, %q", err, stdout)
+	); decodeError != nil || observation.Version == "" || len(observation.Members) == 0 {
+		test.Fatalf("Node prototype observation: %v, %q", decodeError, stdout)
 	}
 	test.Logf(
 		"Object.getOwnPropertyNames(Object.prototype) on Node %s: %s",
@@ -340,8 +340,8 @@ func recordMemberMessage(name string) string {
 
 // Intentional stops do not reach normal-exit leak checking. Require the complete diagnostic
 // followed only by the counted report, so a sanitizer failure cannot masquerade as this stop.
-func recordMemberStop(stdout, stderr string, err error, name string) bool {
-	exit, ok := err.(*exec.ExitError)
+func recordMemberStop(stdout, stderr string, recordRunError error, name string) bool {
+	exit, ok := recordRunError.(*exec.ExitError)
 	message := recordMemberMessage(name)
 	return ok && exit.ExitCode() == 70 && stdout == "" && strings.HasPrefix(stderr, message) &&
 		recordCounts.MatchString(strings.TrimPrefix(stderr, message))
@@ -427,9 +427,9 @@ func recordMutants(test *testing.T) string {
 	}
 	harness := recordHarness(test)
 	return buildcache.Product(test, inputs, func(directory string) error {
-		files, err := readRuntime(runtime, "runtime")
-		if err != nil {
-			return err
+		files, readRuntimeError := readRuntime(runtime, "runtime")
+		if readRuntimeError != nil {
+			return readRuntimeError
 		}
 		var sources []string
 		for _, file := range files {
@@ -437,9 +437,9 @@ func recordMutants(test *testing.T) string {
 				sources = append(sources, file.name)
 			}
 		}
-		scratch, err := os.MkdirTemp("", "adamic-record-mutants-")
-		if err != nil {
-			return err
+		scratch, temporaryDirectoryError := os.MkdirTemp("", "adamic-record-mutants-")
+		if temporaryDirectoryError != nil {
+			return temporaryDirectoryError
 		}
 		defer os.RemoveAll(scratch)
 		// compile builds a directory's translation unit from inside it, mapped, so no object names the
@@ -453,34 +453,38 @@ func recordMutants(test *testing.T) string {
 				strings.TrimSuffix(source, ".c")+".o",
 			)
 			command := runtimeMutantClang(within, arguments...)
-			if output, err := command.CombinedOutput(); err != nil {
-				return fmt.Errorf("compiling runtime %s: %w\n%s", source, err, output)
+			if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+				return fmt.Errorf("compiling runtime %s: %w\n%s", source, combinedOutputError, output)
 			}
 			return nil
 		}
 		write := func(within string, files []runtimeFile) error {
-			if err := os.MkdirAll(within, 0o755); err != nil {
-				return err
+			if createDirectoryError := os.MkdirAll(within, 0o755); createDirectoryError != nil {
+				return createDirectoryError
 			}
 			for _, file := range files {
-				if err := os.WriteFile(filepath.Join(within, file.name), file.contents, 0o644); err != nil {
-					return err
+				if writeError := os.WriteFile(
+					filepath.Join(within, file.name),
+					file.contents,
+					0o644,
+				); writeError != nil {
+					return writeError
 				}
 			}
 			return nil
 		}
 		unchanged := filepath.Join(scratch, "runtime")
-		if err := write(unchanged, files); err != nil {
-			return err
+		if writeError := write(unchanged, files); writeError != nil {
+			return writeError
 		}
-		if err := eachInParallel(
+		if eachInParallelError := eachInParallel(
 			len(sources),
 			func(index int) error { return compile(unchanged, sources[index]) },
-		); err != nil {
-			return err
+		); eachInParallelError != nil {
+			return eachInParallelError
 		}
-		if err := os.WriteFile(filepath.Join(scratch, "main.c"), []byte(harness), 0o644); err != nil {
-			return err
+		if writeError := os.WriteFile(filepath.Join(scratch, "main.c"), []byte(harness), 0o644); writeError != nil {
+			return writeError
 		}
 		return eachInParallel(len(mutations), func(index int) error {
 			mutation := mutations[index]
@@ -507,11 +511,11 @@ func recordMutants(test *testing.T) string {
 				return fmt.Errorf("mutant %s: runtime file missing: %s", mutation.name, mutation.file)
 			}
 			within := filepath.Join(scratch, "mutant-"+strconv.Itoa(index))
-			if err := write(within, changed); err != nil {
-				return err
+			if writeError := write(within, changed); writeError != nil {
+				return writeError
 			}
-			if err := compile(within, mutation.file); err != nil {
-				return fmt.Errorf("mutant %s: %w", mutation.name, err)
+			if compileError := compile(within, mutation.file); compileError != nil {
+				return fmt.Errorf("mutant %s: %w", mutation.name, compileError)
 			}
 			// Linked from the scratch directory by relative names, mapped, so the binary names neither it
 			// nor the product.
@@ -533,8 +537,8 @@ func recordMutants(test *testing.T) string {
 			}
 			arguments = append(arguments, "-lm")
 			command := runtimeMutantClang(scratch, arguments...)
-			if output, err := command.CombinedOutput(); err != nil {
-				return fmt.Errorf("mutant %s must compile: %w\n%s", mutation.name, err, output)
+			if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+				return fmt.Errorf("mutant %s must compile: %w\n%s", mutation.name, combinedOutputError, output)
 			}
 			return nil
 		})
@@ -613,17 +617,17 @@ func runRecordMutantUnit(test *testing.T, unit int) {
 		}
 		test.Run(mutant.name, func(test *testing.T) {
 			binary := recordMutant(test, mutant.name)
-			stdout, stderr, err := recordRun(binary, mutant.mode)
+			stdout, stderr, recordRunError := recordRun(binary, mutant.mode)
 			if mutant.caught == "Node" {
-				if err != nil {
-					test.Fatalf("order mutant must finish without sanitizer failure: %v\n%s", err, stderr)
+				if recordRunError != nil {
+					test.Fatalf("order mutant must finish without sanitizer failure: %v\n%s", recordRunError, stderr)
 				}
 				recordCheckCounts(test, stderr)
 				if want := recordNode(test, mutant.mode); stdout == want {
 					test.Fatal("Node comparison did not catch mutant")
 				}
-			} else if err == nil || !strings.Contains(stderr, mutant.caught) {
-				test.Fatalf("want %s to catch mutant: %v\n%s", mutant.caught, err, stderr)
+			} else if recordRunError == nil || !strings.Contains(stderr, mutant.caught) {
+				test.Fatalf("want %s to catch mutant: %v\n%s", mutant.caught, recordRunError, stderr)
 			}
 			test.Logf("caught by %s", mutant.caught)
 		})
@@ -657,23 +661,28 @@ func runRecordReadMutant(test *testing.T, unit int) {
 		test.Run(mutant.name, func(test *testing.T) {
 			binary := recordMutant(test, mutant.name)
 			if mutant.operation == "reads" {
-				stdout, stderr, err := recordRun(binary, "reads")
-				exit, ok := err.(*exec.ExitError)
+				stdout, stderr, recordRunError := recordRun(binary, "reads")
+				exit, ok := recordRunError.(*exec.ExitError)
 				if !ok ||
 					exit.ExitCode() != 70 ||
 					!strings.HasPrefix(stderr, recordMemberMessage("toString")) ||
 					stdout == recordNode(test, "reads") {
-					test.Fatalf("want own prototype-name hit wrongly stopped: %v\n%s\n%s", err, stdout, stderr)
+					test.Fatalf(
+						"want own prototype-name hit wrongly stopped: %v\n%s\n%s",
+						recordRunError,
+						stdout,
+						stderr,
+					)
 				}
 				test.Log("caught by the own-hit fixture")
 				return
 			}
-			stdout, stderr, err := recordRun(binary, mutant.operation, "toString")
-			if err != nil {
-				test.Fatalf("fallback mutant must finish without sanitizer failures: %v\n%s", err, stderr)
+			stdout, stderr, recordRunError := recordRun(binary, mutant.operation, "toString")
+			if recordRunError != nil {
+				test.Fatalf("fallback mutant must finish without sanitizer failures: %v\n%s", recordRunError, stderr)
 			}
 			recordCheckCounts(test, stderr)
-			if recordMemberStop(stdout, stderr, err, "toString") {
+			if recordMemberStop(stdout, stderr, recordRunError, "toString") {
 				test.Fatal("exact stop contract did not catch mutant")
 			}
 			want := "0\n"
@@ -692,8 +701,8 @@ func runRecordReadMutant(test *testing.T, unit int) {
 // at or below the last printed digit, 1 ns, measured nothing (Perry's report gave 0.0 ms in every
 // cell), so it's refused rather than kept as the best of five.
 func recordDuration(field string) (float64, error) {
-	duration, err := strconv.ParseFloat(field, 64)
-	if err != nil {
+	duration, parseError := strconv.ParseFloat(field, 64)
+	if parseError != nil {
 		return 0, fmt.Errorf("invalid duration %q", field)
 	}
 	if !(duration > 1e-9) {
@@ -705,15 +714,19 @@ func recordDuration(field string) (float64, error) {
 // A timing kept as the best of five is one the clock could see, and a non-number is refused.
 func TestRecordDurationRefusesWhatMeasuredNothing(test *testing.T) {
 	test.Parallel()
-	if duration, err := recordDuration("0.000154732"); err != nil || duration != 0.000154732 {
-		test.Fatalf("a real timing: %v %v", duration, err)
+	if duration, recordDurationError := recordDuration(
+		"0.000154732",
+	); recordDurationError != nil || duration != 0.000154732 {
+		test.Fatalf("a real timing: %v %v", duration, recordDurationError)
 	}
 	for _, field := range []string{"0.000000000", "0.000000001", "-0.000000500", "NaN"} {
-		if _, err := recordDuration(field); err == nil || !strings.HasPrefix(err.Error(), "measured nothing: ") {
-			test.Fatalf("%q was kept: %v", field, err)
+		if _, recordDurationError := recordDuration(
+			field,
+		); recordDurationError == nil || !strings.HasPrefix(recordDurationError.Error(), "measured nothing: ") {
+			test.Fatalf("%q was kept: %v", field, recordDurationError)
 		}
 	}
-	if _, err := recordDuration("fast"); err == nil {
+	if _, recordDurationError := recordDuration("fast"); recordDurationError == nil {
 		test.Fatal("a non-number was kept")
 	}
 }
@@ -726,8 +739,8 @@ func TestRecordBenchmark(test *testing.T) {
 		test.Skip("set ADAMIC_RECORD_BENCH=1 for five-round Node comparisons")
 	}
 	binary := filepath.Join(test.TempDir(), "records")
-	if err := Build(recordHarness(test), binary, Options{}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(recordHarness(test), binary, Options{}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	for _, size := range []int{1000, 10000, 100000, 1000000} {
 		var best [2][5]float64
@@ -763,9 +776,9 @@ func TestRecordBenchmark(test *testing.T) {
 					test.Fatal("missing benchmark timings")
 				}
 				for operation, field := range fields {
-					duration, err := recordDuration(field)
-					if err != nil {
-						test.Fatalf("side %d operation %d: %v", side, operation, err)
+					duration, recordDurationError := recordDuration(field)
+					if recordDurationError != nil {
+						test.Fatalf("side %d operation %d: %v", side, operation, recordDurationError)
 					}
 					best[side][operation] = math.Min(best[side][operation], duration)
 				}

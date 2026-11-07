@@ -35,12 +35,12 @@ let member: Kind.B = Kind.B;
 console.log(String(pure) + String(partial) + wider + widerPartial + String(single) + String(mixed) + String(member));
 `
 	path := filepath.Join(test.TempDir(), "main.ts")
-	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	file := program.Files()[0]
 	typeChecker, release := program.Checker(context.Background(), file)

@@ -28,13 +28,15 @@ func TestNodeProcessWASIAgreement(test *testing.T) {
 	} {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_process_"+name+".a"))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/node_process_"+name+".a"),
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			got, reason := observeWASI(test, native.C(program))
 			// The handle fixtures have their own exact, asserted runtime refusal; it
@@ -62,29 +64,33 @@ func TestNodeProcessCachedDirectoryWASI(test *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_process_cached_cwd.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/node_process_cached_cwd.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	binary := filepath.Join(test.TempDir(), "program.wasm")
-	if err := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); buildError != nil {
+		test.Fatal(buildError)
 	}
-	driver, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_process_cached_cwd.py"))
-	if err != nil {
-		test.Fatal(err)
+	driver, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/node_process_cached_cwd.py"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/wasi.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/wasi.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	sourceRunner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	sourceRunner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := execute(test, "python3", driver, "node", "--disable-warning=ExperimentalWarning", sourceRunner, path)
 	got := execute(test, "python3", driver, "node", "--disable-warning=ExperimentalWarning", runner, binary)
@@ -98,32 +104,32 @@ func TestNodeProcessFreshRemovedCwdWASIRefusal(test *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
-	source, err := os.ReadFile(filepath.Join(repository, "internal/oracle/testdata/node_process_cached_cwd.a"))
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(filepath.Join(repository, "internal/oracle/testdata/node_process_cached_cwd.a"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	text := strings.Replace(string(source), "const first = process.cwd();", "process.chdir('.');", 1)
 	text = strings.Replace(text, "process.cwd() === first", "process.cwd().length > 0", 1)
 	path := filepath.Join(test.TempDir(), "main.a")
-	if err := os.WriteFile(path, []byte(text), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(text), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	binary := filepath.Join(test.TempDir(), "program")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	wasm := filepath.Join(test.TempDir(), "program.wasm")
-	if err := native.Build(native.C(program), wasm, native.Options{Target: "wasm32-wasi"}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), wasm, native.Options{Target: "wasm32-wasi"}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	absolute := func(relative string) string {
-		path, err := filepath.Abs(filepath.Join(repository, relative))
-		if err != nil {
-			test.Fatal(err)
+		path, absolutePathError := filepath.Abs(filepath.Join(repository, relative))
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		return path
 	}
@@ -137,8 +143,8 @@ func TestNodeProcessFreshRemovedCwdWASIRefusal(test *testing.T) {
 			Stdout, Stderr []byte
 			ExitCode       int
 		}
-		if err := json.Unmarshal(result.stdout, &output); err != nil {
-			test.Fatal(err)
+		if decodeError := json.Unmarshal(result.stdout, &output); decodeError != nil {
+			test.Fatal(decodeError)
 		}
 		return run{stdout: output.Stdout, stderr: output.Stderr, exitCode: output.ExitCode}
 	}

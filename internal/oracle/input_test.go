@@ -75,9 +75,9 @@ type inputRun struct {
 func executeInput(test *testing.T, how inputRun, environment []string, name string, arguments ...string) run {
 	test.Helper()
 	// Set the child's umask explicitly so 0644 and 0666 create modes differ.
-	path, err := toolchain.Path(name)
-	if err != nil {
-		test.Fatal(err)
+	path, pathError := toolchain.Path(name)
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
 	ctx, command := bounded(test, "/bin/sh", append([]string{"-c", `umask 0; exec "$0" "$@"`, path}, arguments...)...)
 	command.Dir = how.directory
@@ -85,10 +85,10 @@ func executeInput(test *testing.T, how inputRun, environment []string, name stri
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	var exitError *exec.ExitError
-	if err != nil && !errors.As(err, &exitError) {
-		test.Fatalf("running %s: %v", name, err)
+	if captureError != nil && !errors.As(captureError, &exitError) {
+		test.Fatalf("running %s: %v", name, captureError)
 	}
 	result := run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}
 	rememberRun(test, result)
@@ -98,9 +98,9 @@ func executeInput(test *testing.T, how inputRun, environment []string, name stri
 // onNodeWith runs a program on Node through the oracle's runner, with the fixture's arguments.
 func onNodeWith(test *testing.T, how inputRun, path string) run {
 	test.Helper()
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return executeInput(
 		test,
@@ -115,17 +115,17 @@ func onNodeWith(test *testing.T, how inputRun, path string) run {
 // reach: test.TempDir's are root's alone.
 func sharedDirectory(test *testing.T) string {
 	test.Helper()
-	directory, err := os.MkdirTemp("", "adamic-input-")
-	if err != nil {
-		test.Fatal(err)
+	directory, temporaryDirectoryError := os.MkdirTemp("", "adamic-input-")
+	if temporaryDirectoryError != nil {
+		test.Fatal(temporaryDirectoryError)
 	}
 	test.Cleanup(func() {
-		if err := os.RemoveAll(directory); err != nil {
-			test.Errorf("the shared directory stays behind: %v", err)
+		if removeError := os.RemoveAll(directory); removeError != nil {
+			test.Errorf("the shared directory stays behind: %v", removeError)
 		}
 	})
-	if err := os.Chmod(directory, 0o755); err != nil {
-		test.Fatal(err)
+	if changeModeError := os.Chmod(directory, 0o755); changeModeError != nil {
+		test.Fatal(changeModeError)
 	}
 	return directory
 }
@@ -137,13 +137,13 @@ func TestInputAgreesWithNode(test *testing.T) {
 			test.Parallel()
 			cacheProbe(test, fixture.path, nil, inputIdentity(test), func() {
 
-				path, err := filepath.Abs(filepath.Join(repository, fixture.path))
-				if err != nil {
-					test.Fatal(err)
+				path, absolutePathError := filepath.Abs(filepath.Join(repository, fixture.path))
+				if absolutePathError != nil {
+					test.Fatal(absolutePathError)
 				}
-				program, err := lowered(test, path)
-				if err != nil {
-					test.Fatalf("Lower: %v", err)
+				program, loweredError := lowered(test, path)
+				if loweredError != nil {
+					test.Fatalf("Lower: %v", loweredError)
 				}
 				shared := sharedDirectory(test)
 				how := inputRun{directory: filepath.Dir(path), arguments: fixture.arguments}
@@ -152,8 +152,8 @@ func TestInputAgreesWithNode(test *testing.T) {
 				}
 				if fixture.unreadable {
 					unreadable := filepath.Join(shared, "unreadable.txt")
-					if err := os.WriteFile(unreadable, []byte("secret\n"), 0o000); err != nil {
-						test.Fatal(err)
+					if writeError := os.WriteFile(unreadable, []byte("secret\n"), 0o000); writeError != nil {
+						test.Fatal(writeError)
 					}
 					how.arguments = append(append([]string{}, how.arguments...), unreadable)
 				}
@@ -257,24 +257,24 @@ func writable(test *testing.T, shared string, name string) string {
 func writableDirectory(test *testing.T, shared string, name string, plainNames bool) string {
 	test.Helper()
 	directory := filepath.Join(shared, name)
-	if err := os.Mkdir(directory, 0o777); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.Mkdir(directory, 0o777); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	// Mkdir's mode passes through the umask; this one is meant whole.
-	if err := os.Chmod(directory, 0o777); err != nil {
-		test.Fatal(err)
+	if changeModeError := os.Chmod(directory, 0o777); changeModeError != nil {
+		test.Fatal(changeModeError)
 	}
-	if err := os.Mkdir(filepath.Join(directory, "locked"), 0o555); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.Mkdir(filepath.Join(directory, "locked"), 0o555); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	// A file whose name isn't valid UTF-8, which Node lists decoded, the bad byte as U+FFFD. Linux
 	// keeps any bytes; macOS's file system refuses such a name, so there the file is named what Node
 	// reads it back as, which lists, sorts among the rest and counts the same, and only the decoding
 	// goes unasked.
 	if !plainNames {
-		if err := os.WriteFile(filepath.Join(directory, "bad\xff name"), nil, 0o644); err != nil {
-			if err := os.WriteFile(filepath.Join(directory, "bad\uFFFD name"), nil, 0o644); err != nil {
-				test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, "bad\xff name"), nil, 0o644); writeError != nil {
+			if writeError := os.WriteFile(filepath.Join(directory, "bad\uFFFD name"), nil, 0o644); writeError != nil {
+				test.Fatal(writeError)
 			}
 		}
 	}
@@ -282,11 +282,11 @@ func writableDirectory(test *testing.T, shared string, name string, plainNames b
 	// even passed through. Mkdir's mode passes through the umask, so each is set whole.
 	for name, mode := range map[string]os.FileMode{"unlisted": 0o311, "closed": 0o000} {
 		path := filepath.Join(directory, name)
-		if err := os.Mkdir(path, 0o700); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.Mkdir(path, 0o700); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.Chmod(path, mode); err != nil {
-			test.Fatal(err)
+		if changeModeError := os.Chmod(path, mode); changeModeError != nil {
+			test.Fatal(changeModeError)
 		}
 	}
 	return directory
@@ -297,36 +297,36 @@ func writableDirectory(test *testing.T, shared string, name string, plainNames b
 func snapshot(test *testing.T, directory string) map[string]string {
 	test.Helper()
 	found := map[string]string{}
-	err := filepath.WalkDir(directory, func(path string, entry os.DirEntry, err error) error {
-		if err != nil {
+	walkError := filepath.WalkDir(directory, func(path string, entry os.DirEntry, pathError error) error {
+		if pathError != nil {
 			// A directory that can't be listed (unlisted and closed, when the test isn't root) is
 			// recorded by its permissions, already, and not gone into.
 			if entry != nil && entry.IsDir() {
 				return filepath.SkipDir
 			}
-			return err
+			return pathError
 		}
-		relative, err := filepath.Rel(directory, path)
-		if err != nil {
-			return err
+		relative, relativePathError := filepath.Rel(directory, path)
+		if relativePathError != nil {
+			return relativePathError
 		}
-		information, err := entry.Info()
-		if err != nil {
-			return err
+		information, infoError := entry.Info()
+		if infoError != nil {
+			return infoError
 		}
 		if entry.IsDir() {
 			found[relative] = fmt.Sprintf("directory %v", information.Mode().Perm())
 			return nil
 		}
-		contents, err := os.ReadFile(path)
-		if err != nil {
-			return err
+		contents, readError := os.ReadFile(path)
+		if readError != nil {
+			return readError
 		}
 		found[relative] = fmt.Sprintf("file %v %q", information.Mode().Perm(), contents)
 		return nil
 	})
-	if err != nil {
-		test.Fatal(err)
+	if walkError != nil {
+		test.Fatal(walkError)
 	}
 	if value, ok := probeRuns.Load(test.Name()); ok {
 		var files []recordedFile
@@ -357,8 +357,8 @@ func filesDiffer(want map[string]string, got map[string]string) string {
 func inputBackend(test *testing.T, how inputRun, program *ir.Program, shared string) run {
 	test.Helper()
 	path := filepath.Join(shared, "program.mjs")
-	if err := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return onNodeWith(test, how, path)
 }
@@ -367,8 +367,8 @@ func inputBackend(test *testing.T, how inputRun, program *ir.Program, shared str
 func inputNatively(test *testing.T, how inputRun, program *ir.Program, shared string) (run, string) {
 	test.Helper()
 	binary := filepath.Join(shared, "program")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	var environment []string
 	if runtime.GOOS == "linux" {
@@ -388,7 +388,7 @@ func inputLeaksUncached(test *testing.T, prepared func() inputRun, program *ir.P
 	test.Helper()
 	// Each run gets its own place to write, and runs where and as whom the fixture runs.
 	var how inputRun
-	report, err := leakcheck.Check(leakcheck.Program{
+	report, checkError := leakcheck.Check(leakcheck.Program{
 		C:         native.C(program),
 		Sanitized: sanitized,
 		Counted:   filepath.Join(sharedDirectory(test), "counted"),
@@ -400,8 +400,8 @@ func inputLeaksUncached(test *testing.T, prepared func() inputRun, program *ir.P
 			return leakRun(executeInput(test, how, environment, name, arguments...))
 		},
 	})
-	if err != nil {
-		test.Fatal(err)
+	if checkError != nil {
+		test.Fatal(checkError)
 	}
 	return report
 }

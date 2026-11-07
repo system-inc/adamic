@@ -19,33 +19,33 @@ var oracleProducer bool
 func EnableProduction() { oracleProducer = true }
 func Binary(test *testing.T) string {
 	test.Helper()
-	cohere, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		test.Fatal(err)
+	cohere, absolutePathError := filepath.Abs(filepath.Join(repository, "cohere"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	side, err := filepath.Abs("testdata/cohere_side_test.go")
-	if err != nil {
-		test.Fatal(err)
+	side, absolutePathError := filepath.Abs("testdata/cohere_side_test.go")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	overlay, err := json.Marshal(map[string]any{
+	overlay, encodeError := json.Marshal(map[string]any{
 		"Replace": map[string]string{filepath.Join(cohere, "internal", "gitignore", "adamic_port_side_test.go"): side},
 	})
-	if err != nil {
-		test.Fatal(err)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	// The overlay names this checkout's paths: GoTest keys its map and the side file's content, never its own path.
 	path := filepath.Join(test.TempDir(), "overlay.json")
-	if err := os.WriteFile(path, overlay, 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, overlay, 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	const output = "oracle-oracle-owner-v1"
 	arguments := []string{"-overlay=" + path}
 	if oracleProducer {
 		return buildcache.GoTest(test, "cohere", output, "./internal/gitignore", arguments)
 	}
-	inputs, err := buildcache.GoTestInputs("cohere", output, "./internal/gitignore", arguments, nil)
-	if err != nil {
-		test.Fatal(err)
+	inputs, goTestInputsError := buildcache.GoTestInputs("cohere", output, "./internal/gitignore", arguments, nil)
+	if goTestInputsError != nil {
+		test.Fatal(goTestInputsError)
 	}
 	product := buildcache.BuiltElsewhere(
 		test,

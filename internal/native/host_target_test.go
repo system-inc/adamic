@@ -14,8 +14,8 @@ func TestWASIHostTargetRefusals(test *testing.T) {
 	// Isolate it from the SDK version probe, tested separately and by the real WASI gate.
 	sdk := test.TempDir()
 	sysroot := filepath.Join(sdk, "share", "wasi-sysroot")
-	if err := os.MkdirAll(sysroot, 0755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(sysroot, 0755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	test.Setenv("WASI_SYSROOT", sysroot)
 	compiler := filepath.Join(sdk, "bin", "clang")
@@ -25,11 +25,11 @@ func TestWASIHostTargetRefusals(test *testing.T) {
 		test.Run(name, func(test *testing.T) {
 			source := "void example(void) { " + name + "(); }"
 			var refused *TargetRefused
-			if err := validateBuild(
+			if validateBuildError := validateBuild(
 				source,
 				Options{Target: "wasm32-wasi"},
-			); !errors.As(err, &refused) || *refused != want {
-				test.Fatalf("want %v, got %v", want, err)
+			); !errors.As(validateBuildError, &refused) || *refused != want {
+				test.Fatalf("want %v, got %v", want, validateBuildError)
 			}
 			output := filepath.Join(test.TempDir(), "refused.wasm")
 			for _, err := range []error{
@@ -41,16 +41,19 @@ func TestWASIHostTargetRefusals(test *testing.T) {
 				}
 			}
 
-			if err := validateBuild(source, Options{}); err != nil {
-				test.Fatal(err)
+			if validateBuildError := validateBuild(source, Options{}); validateBuildError != nil {
+				test.Fatal(validateBuildError)
 			}
 			for _, data := range []string{
 				"/* " + name + " */",
 				"// " + name + "\n",
 				`const char *text = "` + name + `\?";`,
 			} {
-				if err := validateBuild(data, Options{Target: "wasm32-wasi"}); err != nil {
-					test.Fatalf("data was refused: %v", err)
+				if validateBuildError := validateBuild(
+					data,
+					Options{Target: "wasm32-wasi"},
+				); validateBuildError != nil {
+					test.Fatalf("data was refused: %v", validateBuildError)
 				}
 			}
 			if !strings.Contains(refused.Error(), want.Reason) {

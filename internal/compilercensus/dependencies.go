@@ -16,14 +16,24 @@ import (
 
 // Compiler is the compiler's packages, by repository directory: what a compiler consumer depends on. A change to any
 // of them selects every consumer.
-var Compiler = []string{"internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"}
+var Compiler = []string{
+	"internal/load",
+	"internal/lower",
+	"internal/native",
+	"internal/javascript",
+	"internal/ir",
+	"internal/flow",
+	"cmd/adamic",
+}
 
 // The census's two kinds of evidence, as the gate tools' run.py reads them (compilerMarker and launchMarker): a
 // reference to the compiler itself, and launching a process, which may run it. cmd/adamic is bounded at its name
 // (compilerReference's check below, since Go's regexp has no lookahead), so cohere's cmd/adamic_<name> harness
 // commands are no reference to it.
 var (
-	compilerImport = regexp.MustCompile(`github\.com/system-inc/adamic/internal/(?:load|lower|native|javascript|ir|flow)|oracle/adamic|ADAMIC_(?:BIN|BINARY)|"adamic"`)
+	compilerImport = regexp.MustCompile(
+		`github\.com/system-inc/adamic/internal/(?:load|lower|native|javascript|ir|flow)|oracle/adamic|ADAMIC_(?:BIN|BINARY)|"adamic"`,
+	)
 	compilerDriver = regexp.MustCompile(`cmd/adamic`)
 	launch         = regexp.MustCompile(`"os/exec"|os\.StartProcess|syscall\.Exec`)
 )
@@ -54,14 +64,14 @@ func compilerReference(source []byte) bool {
 // The result is the "packages" of cloud/fast-gate/compiler-dependencies.json as it was hand-kept, where every entry
 // named all of Compiler (79 on Oct 16), and readers take it in that file's place (#ng0ksed).
 func Dependencies(root string) (map[string][]string, error) {
-	packages, err := packageDirectories(root)
-	if err != nil {
-		return nil, err
+	packages, packageDirectoriesError := packageDirectories(root)
+	if packageDirectoriesError != nil {
+		return nil, packageDirectoriesError
 	}
 	// tracked answers from git where root has .git, and from the tree's manifest on a runner, whose source has none.
-	entries, err := tracked.Files(root)
-	if err != nil {
-		return nil, fmt.Errorf("tracked files: %w", err)
+	entries, filesError := tracked.Files(root)
+	if filesError != nil {
+		return nil, fmt.Errorf("tracked files: %w", filesError)
 	}
 	consumers := map[string]bool{}
 	for _, directory := range Compiler {
@@ -79,9 +89,9 @@ func Dependencies(root string) (map[string][]string, error) {
 		if owner == "." && !packages["."] || consumers[owner] {
 			continue
 		}
-		source, err := os.ReadFile(filepath.Join(root, filepath.FromSlash(name)))
-		if err != nil {
-			return nil, err
+		source, readError := os.ReadFile(filepath.Join(root, filepath.FromSlash(name)))
+		if readError != nil {
+			return nil, readError
 		}
 		if compilerReference(source) || launch.Match(source) {
 			consumers[owner] = true
@@ -97,26 +107,26 @@ func Dependencies(root string) (map[string][]string, error) {
 // packageDirectories is every package of the repository's own module, by directory relative to root, as go list
 // names them: a nested module's (cohere's) are its own, and testdata holds none.
 func packageDirectories(root string) (map[string]bool, error) {
-	listing, err := output(toolchain.CommandIn(root, "go", "list", "-e", "-f", "{{.Dir}}", "./..."))
-	if err != nil {
-		return nil, fmt.Errorf("go list: %w", err)
+	listing, outputError := output(toolchain.CommandIn(root, "go", "list", "-e", "-f", "{{.Dir}}", "./..."))
+	if outputError != nil {
+		return nil, fmt.Errorf("go list: %w", outputError)
 	}
-	absolute, err := filepath.EvalSymlinks(root)
-	if err != nil {
-		return nil, err
+	absolute, resolveSymlinksError := filepath.EvalSymlinks(root)
+	if resolveSymlinksError != nil {
+		return nil, resolveSymlinksError
 	}
 	directories := map[string]bool{}
 	for _, line := range strings.Split(strings.TrimSpace(string(listing)), "\n") {
 		if line == "" {
 			continue
 		}
-		resolved, err := filepath.EvalSymlinks(line)
-		if err != nil {
-			return nil, err
+		resolved, resolveSymlinksError := filepath.EvalSymlinks(line)
+		if resolveSymlinksError != nil {
+			return nil, resolveSymlinksError
 		}
-		relative, err := filepath.Rel(absolute, resolved)
-		if err != nil {
-			return nil, err
+		relative, relativePathError := filepath.Rel(absolute, resolved)
+		if relativePathError != nil {
+			return nil, relativePathError
 		}
 		directories[filepath.ToSlash(relative)] = true
 	}
@@ -127,13 +137,13 @@ func packageDirectories(root string) (map[string]bool, error) {
 func output(command interface {
 	Output() ([]byte, error)
 }) ([]byte, error) {
-	result, err := command.Output()
-	if err != nil {
+	result, outputError := command.Output()
+	if outputError != nil {
 		var stderr []byte
-		if exit, ok := err.(interface{ Stderr() []byte }); ok {
+		if exit, ok := outputError.(interface{ Stderr() []byte }); ok {
 			stderr = exit.Stderr()
 		}
-		return nil, fmt.Errorf("%w: %s", err, bytes.TrimSpace(stderr))
+		return nil, fmt.Errorf("%w: %s", outputError, bytes.TrimSpace(stderr))
 	}
 	return result, nil
 }

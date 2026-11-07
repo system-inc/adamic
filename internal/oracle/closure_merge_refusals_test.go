@@ -23,9 +23,9 @@ func TestClosureMergeRefusals(test *testing.T) {
 	for _, path := range paths {
 		test.Run(path, func(test *testing.T) {
 			test.Parallel()
-			absolute, pathErr := filepath.Abs(filepath.Join(repository, path))
-			if pathErr != nil {
-				test.Fatal(pathErr)
+			absolute, pathError := filepath.Abs(filepath.Join(repository, path))
+			if pathError != nil {
+				test.Fatal(pathError)
 			}
 			var truth run
 			if strings.Contains(path, "node_fs_file_") {
@@ -36,16 +36,16 @@ func TestClosureMergeRefusals(test *testing.T) {
 			if truth.exitCode != 0 || len(truth.stderr) != 0 {
 				test.Fatalf("source Node: exit %d stderr %q", truth.exitCode, truth.stderr)
 			}
-			_, err := lowered(test, absolute)
+			_, loweredError := lowered(test, absolute)
 			var refused *lower.Refused
-			if !errors.As(err, &refused) {
-				test.Fatalf("want pinned refusal, got %v", err)
+			if !errors.As(loweredError, &refused) {
+				test.Fatalf("want pinned refusal, got %v", loweredError)
 			}
-			expected, readErr := os.ReadFile(strings.TrimSuffix(absolute, ".a") + ".refused")
-			if readErr != nil {
-				test.Fatal(readErr)
+			expected, readError := os.ReadFile(strings.TrimSuffix(absolute, ".a") + ".refused")
+			if readError != nil {
+				test.Fatal(readError)
 			}
-			got := strings.ReplaceAll(err.Error(), strings.TrimSuffix(absolute, path), "")
+			got := strings.ReplaceAll(loweredError.Error(), strings.TrimSuffix(absolute, path), "")
 			if got != strings.TrimSpace(string(expected)) {
 				test.Fatalf("diagnostic: got %q, want %q", got, strings.TrimSpace(string(expected)))
 			}

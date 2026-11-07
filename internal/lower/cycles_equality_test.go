@@ -25,13 +25,13 @@ import (
 
 var cycleComparisonInputs = sync.OnceValues(func() ([]string, error) {
 	var paths []string
-	err := filepath.WalkDir("../..", func(path string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
+	walkError := filepath.WalkDir("../..", func(path string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
-		relative, err := filepath.Rel("../..", path)
-		if err != nil {
-			return err
+		relative, relativePathError := filepath.Rel("../..", path)
+		if relativePathError != nil {
+			return relativePathError
 		}
 		relative = filepath.ToSlash(relative)
 		if entry.IsDir() {
@@ -57,7 +57,7 @@ var cycleComparisonInputs = sync.OnceValues(func() ([]string, error) {
 		return nil
 	})
 	slices.Sort(paths)
-	return paths, err
+	return paths, walkError
 })
 
 const cycleEqualityShardCount = 128
@@ -100,31 +100,31 @@ const cycleFrozenGeneratorGuard = "a Program region in a program with generator 
 
 func cycleCompareProgramModes(test *testing.T, path string, regions ...bool) {
 	test.Helper()
-	absolute, err := filepath.Abs(filepath.Join("../..", path))
-	if err != nil {
-		test.Fatal(err)
+	absolute, absolutePathError := filepath.Abs(filepath.Join("../..", path))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	loaded, err := load.Load([]string{absolute})
-	if err != nil {
-		test.Logf("%s: common loader refusal: %v", path, err)
+	loaded, loadError := load.Load([]string{absolute})
+	if loadError != nil {
+		test.Logf("%s: common loader refusal: %v", path, loadError)
 		return
 	}
 	for mode, region := range regions {
 		// Use fresh, independently initialized checkers. Reusing one checker changes
 		// fresh literal type IDs on the second lowering, even for scanner vs scanner.
 		if mode > 0 {
-			loaded, err = load.Load([]string{absolute})
-			if err != nil {
-				test.Fatal(err)
+			loaded, loadError = load.Load([]string{absolute})
+			if loadError != nil {
+				test.Fatal(loadError)
 			}
 		}
 		options := Options{ProgramRegion: region, OwnershipQuery: true}
-		before, scanTypes, scanErr := cycleLowerForComparison(loaded, options, false)
+		before, scanTypes, scanError := cycleLowerForComparison(loaded, options, false)
 		// Only the IR and resolved strings are compared below. Do not retain the
 		// scanning checker's quadratic relation cache while building the indexed copy.
 		loaded = nil
 		var frozenGuard *NotYet
-		if region && errors.As(scanErr, &frozenGuard) && frozenGuard.What == cycleFrozenGeneratorGuard {
+		if region && errors.As(scanError, &frozenGuard) && frozenGuard.What == cycleFrozenGeneratorGuard {
 			test.Logf(
 				"%s: ProgramRegion=true not compared: the frozen scanning reference refuses a Program region with generators, a guard the real pipeline lifted in #8xcz03h",
 				path,
@@ -135,32 +135,32 @@ func cycleCompareProgramModes(test *testing.T, path string, regions ...bool) {
 			test.Logf("%s: scanning snapshot ready, ProgramRegion=%t; release its checker", path, region)
 			runtime.GC()
 		}
-		indexedInput, err := load.Load([]string{absolute})
-		if err != nil {
-			test.Fatal(err)
+		indexedInput, loadError := load.Load([]string{absolute})
+		if loadError != nil {
+			test.Fatal(loadError)
 		}
-		after, indexTypes, indexErr := cycleLowerForComparison(indexedInput, options, true)
+		after, indexTypes, indexError := cycleLowerForComparison(indexedInput, options, true)
 		if cycleProgramStressInputs[path] {
 			test.Logf("%s: indexed snapshot ready, ProgramRegion=%t", path, region)
 		}
-		text := func(err error) string {
-			if err == nil {
+		text := func(sourceError error) string {
+			if sourceError == nil {
 				return ""
 			}
-			return fmt.Sprintf("%T: %v", err, err)
+			return fmt.Sprintf("%T: %v", sourceError, sourceError)
 		}
 		var scanRefused, indexRefused *Refused
-		errors.As(scanErr, &scanRefused)
-		errors.As(indexErr, &indexRefused)
+		errors.As(scanError, &scanRefused)
+		errors.As(indexError, &indexRefused)
 		cycle := func(r *Refused) bool { return r != nil && r.cycle }
-		if text(scanErr) != text(indexErr) || cycle(scanRefused) != cycle(indexRefused) {
+		if text(scanError) != text(indexError) || cycle(scanRefused) != cycle(indexRefused) {
 			test.Fatalf(
 				"cycle equality difference: %s ProgramRegion=%t\nscanning: %s (cycle=%t)\nindexed: %s (cycle=%t)",
 				path,
 				region,
-				text(scanErr),
+				text(scanError),
 				cycle(scanRefused),
-				text(indexErr),
+				text(indexError),
 				cycle(indexRefused),
 			)
 		}
@@ -173,7 +173,7 @@ func cycleCompareProgramModes(test *testing.T, path string, regions ...bool) {
 		); difference != "" {
 			test.Fatalf("cycle equality difference: %s ProgramRegion=%t: %s", path, region, difference)
 		}
-		if scanErr == nil && native.C(before) != native.C(after) {
+		if scanError == nil && native.C(before) != native.C(after) {
 			test.Fatalf("cycle equality difference: %s ProgramRegion=%t: emitted C differs", path, region)
 		}
 	}
@@ -209,15 +209,15 @@ func cycleLowerForComparison(
 	}
 	var plan *programMembership
 	if options.ProgramRegion {
-		discovery, err := lower(program, checked, entry, nil, true, types)
-		if err != nil {
-			return nil, nil, err
+		discovery, lowerError := lower(program, checked, entry, nil, true, types)
+		if lowerError != nil {
+			return nil, nil, lowerError
 		}
 		plan = discovery.programPlan
 	}
-	built, err := lower(program, checked, entry, plan, false, types, options.OwnershipQuery)
-	if err != nil {
-		return nil, nil, err
+	built, lowerError := lower(program, checked, entry, plan, false, types, options.OwnershipQuery)
+	if lowerError != nil {
+		return nil, nil, lowerError
 	}
 	resolved := map[int]string{}
 	for id, proven := range types {
@@ -271,27 +271,30 @@ func cycleFirstDifferenceResolved(a, b reflect.Value, path string, scanTypes, in
 			}
 			if value.Kind() == reflect.Map {
 				for _, key := range value.MapKeys() {
-					if err := add(int(key.Int()), fmt.Sprintf("=%#v", value.MapIndex(key).Interface())); err != nil {
-						return nil, err
+					if addError := add(
+						int(key.Int()),
+						fmt.Sprintf("=%#v", value.MapIndex(key).Interface()),
+					); addError != nil {
+						return nil, addError
 					}
 				}
 			} else {
 				for i := 0; i < value.Len(); i++ {
-					if err := add(int(value.Index(i).Int()), ""); err != nil {
-						return nil, err
+					if addError := add(int(value.Index(i).Int()), ""); addError != nil {
+						return nil, addError
 					}
 				}
 			}
 			slices.Sort(result)
 			return result, nil
 		}
-		left, err := resolve(a, scanTypes)
-		if err != nil {
-			return path + ": scanning " + err.Error()
+		left, resolveError := resolve(a, scanTypes)
+		if resolveError != nil {
+			return path + ": scanning " + resolveError.Error()
 		}
-		right, err := resolve(b, indexTypes)
-		if err != nil {
-			return path + ": indexed " + err.Error()
+		right, resolveError := resolve(b, indexTypes)
+		if resolveError != nil {
+			return path + ": indexed " + resolveError.Error()
 		}
 		if !slices.Equal(left, right) {
 			return fmt.Sprintf("%s: scanning=%v indexed=%v", path, left, right)
@@ -388,9 +391,9 @@ func cycleComparisonShardPaths(paths []string, shard uint64) []string {
 
 func runCycleFinderEqualityShard(test *testing.T, shard uint64) {
 	test.Helper()
-	paths, err := cycleComparisonInputs()
-	if err != nil {
-		test.Fatal(err)
+	paths, cycleComparisonInputsError := cycleComparisonInputs()
+	if cycleComparisonInputsError != nil {
+		test.Fatal(cycleComparisonInputsError)
 	}
 	if len(paths) < 3500 {
 		test.Fatalf("cycle comparison inventory shrank: %d", len(paths))
@@ -430,19 +433,19 @@ func TestCycleIndexArgumentsFunctionEquality(test *testing.T) {
 
 func TestCycleIndexLibraryFunctionLinks(test *testing.T) {
 	test.Parallel()
-	absolute, err := filepath.Abs("testdata/cycle_index_arguments_function.a")
-	if err != nil {
-		test.Fatal(err)
+	absolute, absolutePathError := filepath.Abs("testdata/cycle_index_arguments_function.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	loaded, err := load.Load([]string{absolute})
-	if err != nil {
-		test.Fatal(err)
+	loaded, loadError := load.Load([]string{absolute})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	checked, release := loaded.Checker(context.Background(), loaded.Files()[0])
 	defer release()
-	built, err := scanLowerChecked(loaded, checked, loaded.Files()[0], nil, true)
-	if err != nil {
-		test.Fatal(err)
+	built, scanLowerCheckedError := scanLowerChecked(loaded, checked, loaded.Files()[0], nil, true)
+	if scanLowerCheckedError != nil {
+		test.Fatal(scanLowerCheckedError)
 	}
 	var arguments *ast.Node
 	var visit ast.Visitor

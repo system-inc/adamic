@@ -76,9 +76,9 @@ func mergedFieldChecked(test *testing.T, index int) {
 	if node.exitCode != 0 || string(node.stdout) != fixture.sourceOutput || len(node.stderr) != 0 {
 		test.Fatalf("Node outcome: %#v", node)
 	}
-	program, err := rulingProgram(test, fixture.file, true)
-	if err != nil {
-		test.Fatal(err)
+	program, rulingProgramError := rulingProgram(test, fixture.file, true)
+	if rulingProgramError != nil {
+		test.Fatal(rulingProgramError)
 	}
 	actual, _ := natively(test, program)
 	for _, result := range []run{actual, onJavaScriptBackend(test, program), released(test, program)} {

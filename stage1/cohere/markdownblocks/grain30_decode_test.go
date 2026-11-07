@@ -15,15 +15,15 @@ import (
 )
 
 func grainDecodeInputs(test *testing.T) (string, []auditInput, int, int, int) {
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	inputs, files := auditCorpus(test, root)
 	source := filepath.Join(root, "cohere/internal/format/markdown/micromark/entities_generated.go")
-	tree, err := parser.ParseFile(token.NewFileSet(), source, nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	tree, parseFileError := parser.ParseFile(token.NewFileSet(), source, nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	entities := 0
 	ast.Inspect(tree, func(node ast.Node) bool {
@@ -31,9 +31,9 @@ func grainDecodeInputs(test *testing.T) (string, []auditInput, int, int, int) {
 		if !ok {
 			return true
 		}
-		name, err := strconv.Unquote(pair.Key.(*ast.BasicLit).Value)
-		if err != nil {
-			test.Fatal(err)
+		name, unquoteError := strconv.Unquote(pair.Key.(*ast.BasicLit).Value)
+		if unquoteError != nil {
+			test.Fatal(unquoteError)
 		}
 		for _, text := range []string{
 			"&" + name + ";",
@@ -129,13 +129,13 @@ func runGrainDecode(test *testing.T, shard int) {
 	if fork == "" {
 		fork = filepath.Join(cohere, "internal/format/prettier/bundles")
 	}
-	original, err := os.ReadFile(filepath.Join(cohere, "internal/format/prettier/bundles/plugins/markdown.js"))
-	if err != nil {
-		test.Fatal(err)
+	original, readError := os.ReadFile(filepath.Join(cohere, "internal/format/prettier/bundles/plugins/markdown.js"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	installed, err := os.ReadFile(filepath.Join(fork, "plugins/markdown.js"))
-	if err != nil {
-		test.Fatal(err)
+	installed, readError := os.ReadFile(filepath.Join(fork, "plugins/markdown.js"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	equal(test, "pinned original bundle", installed, original)
 	main := products.main
@@ -178,8 +178,8 @@ func runGrainDecode(test *testing.T, shard int) {
 		}
 		func(test *testing.T) {
 			scratch := test.TempDir()
-			if err := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); err != nil {
-				test.Fatal(err)
+			if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
 			for _, file := range []string{
 				"decodeString.ts",
@@ -190,9 +190,9 @@ func runGrainDecode(test *testing.T, shard int) {
 				"codec.ts",
 				"testdata/decode_probe.ts",
 			} {
-				b, err := os.ReadFile(file)
-				if err != nil {
-					test.Fatal(err)
+				b, readError := os.ReadFile(file)
+				if readError != nil {
+					test.Fatal(readError)
 				}
 				if file == "decodeString.ts" {
 					if strings.Count(string(b), m.from) != 1 {

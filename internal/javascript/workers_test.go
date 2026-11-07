@@ -55,9 +55,15 @@ console.log(adamicCall(adamicCallee(inherited,'run'),[40]));
 `
 			ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 			defer cancel()
-			output, err := exec.CommandContext(ctx, "node", "--input-type=module", "-e", code).CombinedOutput()
-			if err != nil || string(output) != "42\n42\n" {
-				test.Fatalf("Workers method dispatch without Node globals: %v\n%s", err, output)
+			output, combinedOutputError := exec.CommandContext(
+				ctx,
+				"node",
+				"--input-type=module",
+				"-e",
+				code,
+			).CombinedOutput()
+			if combinedOutputError != nil || string(output) != "42\n42\n" {
+				test.Fatalf("Workers method dispatch without Node globals: %v\n%s", combinedOutputError, output)
 			}
 		})
 	}

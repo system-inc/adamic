@@ -50,9 +50,9 @@ const pinFlag = "typescript "
 // .package-lock.json and every byte, against node_modules.sha256).
 func Product(test testing.TB) string {
 	test.Helper()
-	repository, err := filepath.Abs(repositoryFromLane)
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs(repositoryFromLane)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
 	if source == "" {
@@ -95,15 +95,15 @@ func build(handed buildcache.Handed, directory string) error {
 		)
 	}
 	source, install := handed.Paths[0], handed.Paths[1]
-	repository, err := filepath.Abs(repositoryFromLane)
-	if err != nil {
-		return err
+	repository, absolutePathError := filepath.Abs(repositoryFromLane)
+	if absolutePathError != nil {
+		return absolutePathError
 	}
-	pin, err := pinOf(handed.Inputs)
-	if err != nil {
-		return err
+	pin, pinOfError := pinOf(handed.Inputs)
+	if pinOfError != nil {
+		return pinOfError
 	}
-	objects, err := buildcache.PinnedGit(
+	objects, pinnedGitError := buildcache.PinnedGit(
 		source,
 		handed.Inputs,
 		pin,
@@ -113,13 +113,13 @@ func build(handed buildcache.Handed, directory string) error {
 		"--no-object-names",
 		pin,
 	)
-	if err != nil {
-		return err
+	if pinnedGitError != nil {
+		return pinnedGitError
 	}
 	// One thread, so the pack's bytes are a function of its objects: pack-objects' threaded delta search lays the same
 	// objects out differently from build to build, which an audit rebuild reads as Nondeterministic (Node's ruling on
 	// #qwfw9pv). Its objects are the pin's alone, since the source is the gate input's depth-one checkout.
-	pack, err := buildcache.PinnedGit(
+	pack, pinnedGitError := buildcache.PinnedGit(
 		source,
 		handed.Inputs,
 		pin,
@@ -129,8 +129,8 @@ func build(handed buildcache.Handed, directory string) error {
 		"pack-objects",
 		"--stdout",
 	)
-	if err != nil {
-		return err
+	if pinnedGitError != nil {
+		return pinnedGitError
 	}
 	tree := filepath.Join(directory, "tree")
 	// No template directory, so nothing of git's install enters the product, and no reflogs, which hold the time.
@@ -142,22 +142,22 @@ func build(handed buildcache.Handed, directory string) error {
 	// The build's home is an empty directory of its own, removed before the product settles (isolated says why).
 	home := filepath.Join(directory, "home")
 	for _, made := range []string{tree, home} {
-		if err := os.MkdirAll(made, 0o755); err != nil {
-			return err
+		if createDirectoryError := os.MkdirAll(made, 0o755); createDirectoryError != nil {
+			return createDirectoryError
 		}
 	}
-	if err := git(nil, "init", "--quiet", "--template=", "."); err != nil {
-		return err
+	if gitError := git(nil, "init", "--quiet", "--template=", "."); gitError != nil {
+		return gitError
 	}
-	if err := git(pack, "index-pack", "--stdin"); err != nil {
-		return err
+	if gitError := git(pack, "index-pack", "--stdin"); gitError != nil {
+		return gitError
 	}
 	// The pack holds the commit and no parent, as a depth-one clone does.
-	if err := os.WriteFile(filepath.Join(tree, ".git/shallow"), []byte(pin+"\n"), 0o644); err != nil {
-		return err
+	if writeError := os.WriteFile(filepath.Join(tree, ".git/shallow"), []byte(pin+"\n"), 0o644); writeError != nil {
+		return writeError
 	}
-	if err := git(nil, "checkout", "--quiet", "--detach", pin); err != nil {
-		return err
+	if gitError := git(nil, "checkout", "--quiet", "--detach", pin); gitError != nil {
+		return gitError
 	}
 	// -E and -S keep python off the box's PYTHON* settings and site directories, whose listing would enter the read
 	// set; not -I, which would also drop the script's directory, where apply.py finds caches.py.
@@ -173,47 +173,52 @@ func build(handed buildcache.Handed, directory string) error {
 			adapt.Env = append(adapt.Env, setting)
 		}
 	}
-	if err := described(adapt); err != nil {
-		return err
+	if describedError := described(adapt); describedError != nil {
+		return describedError
 	}
 	// The index records each file's inode and times, which differ on every build; nothing reads it after adaptation.
-	if err := os.Remove(filepath.Join(tree, ".git/index")); err != nil {
-		return err
+	if removeError := os.Remove(filepath.Join(tree, ".git/index")); removeError != nil {
+		return removeError
 	}
-	if _, err := os.Stat(install); err != nil {
+	if _, statError := os.Stat(install); statError != nil {
 		return fmt.Errorf(
 			"stage3/typescript's install, the adapted tree's devDependencies, isn't in the checkout: %w",
-			err,
+			statError,
 		)
 	}
 	link := filepath.Join(tree, "node_modules")
-	if err := os.Symlink(install, link); err != nil {
-		return err
+	if symlinkError := os.Symlink(install, link); symlinkError != nil {
+		return symlinkError
 	}
 	for _, task := range []string{"local", "tests"} {
-		if err := described(
+		if describedError := described(
 			isolated(home, toolchain.CommandIn(tree, "node", filepath.Join(install, "hereby/bin/hereby.js"), task)),
-		); err != nil {
-			return err
+		); describedError != nil {
+			return describedError
 		}
 	}
-	if err := os.Remove(link); err != nil {
-		return err
+	if removeError := os.Remove(link); removeError != nil {
+		return removeError
 	}
 	// The typecheck's tsconfig.tsbuildinfo files record each library's path relative to the build, up through the
 	// checkout to the install's real path, so two checkouts would build two products under one key (Golem, Oct 16:
 	// 13 files). They serve only an incremental rebuild, and nothing runs from them.
-	err = filepath.WalkDir(filepath.Join(tree, "built"), func(path string, entry os.DirEntry, err error) error {
-		if err != nil || entry.IsDir() || filepath.Ext(path) != ".tsbuildinfo" {
-			return err
+	walkError := filepath.WalkDir(filepath.Join(
+		tree,
+		"built",
+	), func(path string, entry os.DirEntry, pathError error) error {
+		if pathError != nil || entry.IsDir() || filepath.Ext(path) != ".tsbuildinfo" {
+			return pathError
 		}
 		return os.Remove(path)
 	})
-	if err != nil {
-		return err
+	if walkError != nil {
+		return walkError
 	}
-	if err := keepEmptyDirectories(filepath.Join(tree, ".git")); err != nil {
-		return err
+	if keepEmptyDirectoriesError := keepEmptyDirectories(
+		filepath.Join(tree, ".git"),
+	); keepEmptyDirectoriesError != nil {
+		return keepEmptyDirectoriesError
 	}
 	return os.RemoveAll(home)
 }
@@ -226,22 +231,22 @@ func build(handed buildcache.Handed, directory string) error {
 // before.
 func keepEmptyDirectories(root string) error {
 	empty := []string{}
-	err := filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {
-		if err != nil || !entry.IsDir() {
-			return err
+	walkError := filepath.WalkDir(root, func(path string, entry os.DirEntry, pathError error) error {
+		if pathError != nil || !entry.IsDir() {
+			return pathError
 		}
-		entries, err := os.ReadDir(path)
-		if err == nil && len(entries) == 0 {
+		entries, readDirectoryError := os.ReadDir(path)
+		if readDirectoryError == nil && len(entries) == 0 {
 			empty = append(empty, path)
 		}
-		return err
+		return readDirectoryError
 	})
-	if err != nil {
-		return err
+	if walkError != nil {
+		return walkError
 	}
 	for _, directory := range empty {
-		if err := os.WriteFile(filepath.Join(directory, ".keep"), nil, 0o644); err != nil {
-			return err
+		if writeError := os.WriteFile(filepath.Join(directory, ".keep"), nil, 0o644); writeError != nil {
+			return writeError
 		}
 	}
 	return nil
@@ -274,15 +279,15 @@ func isolated(home string, command *exec.Cmd) *exec.Cmd {
 // typescriptPin is the commit stage3/source.json pins.
 func typescriptPin(test testing.TB, repository string) string {
 	test.Helper()
-	data, err := os.ReadFile(filepath.Join(repository, "stage3/source.json"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(repository, "stage3/source.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var source struct {
 		Commit string `json:"commit"`
 	}
-	if err := json.Unmarshal(data, &source); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &source); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	return source.Commit
 }
@@ -292,8 +297,8 @@ func described(command *exec.Cmd) error {
 	if command.Err != nil {
 		return command.Err
 	}
-	if output, err := command.CombinedOutput(); err != nil {
-		return fmt.Errorf("%s: %w\n%s", command.String(), err, output)
+	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+		return fmt.Errorf("%s: %w\n%s", command.String(), combinedOutputError, output)
 	}
 	return nil
 }

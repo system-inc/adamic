@@ -87,13 +87,13 @@ func TestProduct_ProfileCompilationProfiled(test *testing.T) {
 	test.Logf("product wall=%s", time.Since(started))
 	// The binary names no checkout: clang ran in this package's directory, and its debug info says only
 	// profiledCompilationDirectory. Mutant: drop -ffile-compilation-dir (DW_AT_comp_dir is this directory).
-	here, err := os.Getwd()
-	if err != nil {
-		test.Fatal(err)
+	here, workingDirectoryError := os.Getwd()
+	if workingDirectoryError != nil {
+		test.Fatal(workingDirectoryError)
 	}
-	binary, err := os.ReadFile(filepath.Join(directory, "profiled"))
-	if err != nil {
-		test.Fatal(err)
+	binary, readError := os.ReadFile(filepath.Join(directory, "profiled"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if bytes.Contains(binary, []byte(here)) {
 		test.Fatalf("the profiled binary names the checkout it was built in, %s", here)

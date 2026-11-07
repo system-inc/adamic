@@ -19,13 +19,13 @@ func init() {
 
 func counterShapes(test *testing.T) (*ir.Program, string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/counters_shapes.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/counters_shapes.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	return program, path
 }
@@ -122,8 +122,8 @@ func TestCounterShapesProofAndFallbacks(test *testing.T) {
 		code = declaration.ReplaceAllString(code, `${1}`+"\n\tfprintf(stderr, \"integer:"+name+"\\n\");")
 	}
 	binary := filepath.Join(test.TempDir(), "trace")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(code, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	result := execute(test, binary)
 	expectedTrace := "integer:squareCounter\ninteger:parameterCounter\ninteger:guardedCounter\ninteger:edgeCounter\ninteger:descendingCounter\ninteger:dependencyOuterCounter\ninteger:dependentCounter\ninteger:dependentCounter\ninteger:dependentCounter\ninteger:squareEdgeCounter\ninteger:squareEdgeCounter\ninteger:squareEdgeCounter\ninteger:independentOuterCounter\ninteger:independentInnerCounter\ninteger:independentInnerCounter\ninteger:localCounter\n"
@@ -159,8 +159,8 @@ func TestCounterNonInvariantStepMutant(test *testing.T) {
 		Ascending: true, Inclusive: true,
 	}
 	binary := filepath.Join(test.TempDir(), "mutant")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	result := execute(test, binary)
 	if result.exitCode != 0 || len(result.stderr) != 0 {
@@ -189,8 +189,8 @@ func counterPathMutation(test *testing.T, representation, initial string) {
 	}
 	code = declaration.ReplaceAllString(code, `${1}`+initial+";")
 	binary := filepath.Join(test.TempDir(), "counter-path-mutant")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal("mutant must compile:", err)
+	if buildError := native.Build(code, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal("mutant must compile:", buildError)
 	}
 	result := execute(test, binary)
 	if result.exitCode != 0 || len(result.stderr) != 0 {

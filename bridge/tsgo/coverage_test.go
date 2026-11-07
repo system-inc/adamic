@@ -79,15 +79,15 @@ func TestBridgeUnitsCoverEveryPiece(test *testing.T) {
 			test.Fatalf("bridge piece %d changed: %+v, want %s/%s/%d/%s", index, unit, piece, file, round, helper)
 		}
 	}
-	repository, err := filepath.Abs("../..")
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs("../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	queries := 0
 	for _, file := range bridgeRoots(repository) {
-		text, err := os.ReadFile(file)
-		if err != nil {
-			test.Fatal(err)
+		text, readError := os.ReadFile(file)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		positions := bridgePositions(text)
 		if len(positions) != min(400, len(text)) {
@@ -160,52 +160,52 @@ func TestBridgeProductCacheIsVerified(test *testing.T) {
 		hashes := map[string]string{}
 		for _, name := range bridgeProductNames {
 			data := []byte(name)
-			if err := os.WriteFile(filepath.Join(directory, name), data, 0o600); err != nil {
-				return err
+			if writeError := os.WriteFile(filepath.Join(directory, name), data, 0o600); writeError != nil {
+				return writeError
 			}
 			hashes[name] = fmt.Sprintf("%x", sha256.Sum256(data))
 		}
-		data, err := json.Marshal(hashes)
-		if err != nil {
-			return err
+		data, encodeError := json.Marshal(hashes)
+		if encodeError != nil {
+			return encodeError
 		}
 		return os.WriteFile(filepath.Join(directory, "products.json"), data, 0o600)
 	}
-	first, err := bridgeProductGet("reuse", build)
-	if err != nil {
-		test.Fatal(err)
+	first, bridgeProductGetError := bridgeProductGet("reuse", build)
+	if bridgeProductGetError != nil {
+		test.Fatal(bridgeProductGetError)
 	}
-	second, err := bridgeProductGet("reuse", build)
-	if err != nil || first != second || builds != 1 {
-		test.Fatalf("product was rebuilt: %d builds, %s, %s, %v", builds, first, second, err)
+	second, bridgeProductGetError := bridgeProductGet("reuse", build)
+	if bridgeProductGetError != nil || first != second || builds != 1 {
+		test.Fatalf("product was rebuilt: %d builds, %s, %s, %v", builds, first, second, bridgeProductGetError)
 	}
-	if err := os.WriteFile(filepath.Join(first, "api"), []byte("corrupt"), 0o600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(first, "api"), []byte("corrupt"), 0o600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if _, err := bridgeProductGet("reuse", build); err == nil {
+	if _, bridgeProductGetError := bridgeProductGet("reuse", build); bridgeProductGetError == nil {
 		test.Fatal("corrupt product was accepted")
 	}
-	directory, err := bridgeProductGet("count", build)
-	if err != nil {
-		test.Fatal(err)
+	directory, bridgeProductGetError := bridgeProductGet("count", build)
+	if bridgeProductGetError != nil {
+		test.Fatal(bridgeProductGetError)
 	}
-	data, err := os.ReadFile(filepath.Join(directory, "products.json"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(directory, "products.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var hashes map[string]string
-	if err := json.Unmarshal(data, &hashes); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &hashes); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	hashes["extra"] = hashes["api"]
-	data, err = json.Marshal(hashes)
-	if err != nil {
-		test.Fatal(err)
+	data, encodeError := json.Marshal(hashes)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
-	if err := os.WriteFile(filepath.Join(directory, "products.json"), data, 0o600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(directory, "products.json"), data, 0o600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if _, err := bridgeProductGet("count", build); err == nil {
+	if _, bridgeProductGetError := bridgeProductGet("count", build); bridgeProductGetError == nil {
 		test.Fatal("wrong product count was accepted")
 	}
 	test.Log("same hash built once; corrupt bytes and extra product refused")

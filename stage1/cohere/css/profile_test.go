@@ -21,8 +21,8 @@ func TestCSSProfileArtifacts(test *testing.T) {
 	if directory == "" {
 		test.Skip("set ADAMIC_CSS_PROFILE_DIR")
 	}
-	if err := os.MkdirAll(directory, 0755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	cases, _ := askedCases(test)
 	expected := printerAnswers(test, cases, "default")
@@ -83,46 +83,46 @@ func TestCSSProfileArtifacts(test *testing.T) {
 			fmt.Sprintf("%d of %d stylesheets formatted, %d units\n", len(sample), len(sample), totalUnits),
 		),
 	} {
-		if err := os.WriteFile(filepath.Join(directory, name), data, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, name), data, 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	copied := portDirectory(test, nil)
 	snapshot := filepath.Join(directory, "source")
-	if err := os.MkdirAll(snapshot, 0755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(snapshot, 0755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	parent := filepath.Dir(copied)
 	for _, slice := range []string{"css", "selector", "values", "mediaquery", "cssstrings", "cssnumbers"} {
-		entries, err := os.ReadDir(filepath.Join(parent, slice))
-		if err != nil {
-			test.Fatal(err)
+		entries, readDirectoryError := os.ReadDir(filepath.Join(parent, slice))
+		if readDirectoryError != nil {
+			test.Fatal(readDirectoryError)
 		}
-		if err := os.MkdirAll(filepath.Join(snapshot, slice), 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(filepath.Join(snapshot, slice), 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 		for _, entry := range entries {
-			data, err := os.ReadFile(filepath.Join(parent, slice, entry.Name()))
-			if err != nil {
-				test.Fatal(err)
+			data, readError := os.ReadFile(filepath.Join(parent, slice, entry.Name()))
+			if readError != nil {
+				test.Fatal(readError)
 			}
-			if err := os.WriteFile(filepath.Join(snapshot, slice, entry.Name()), data, 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(filepath.Join(snapshot, slice, entry.Name()), data, 0644); writeError != nil {
+				test.Fatal(writeError)
 			}
 		}
 	}
 	program := lowered(test, filepath.Join(snapshot, "css/print_main.ts"))
 	code := native.C(program)
 	source := filepath.Join(directory, "main.c")
-	if err := os.WriteFile(source, []byte(code), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(source, []byte(code), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	for _, build := range []struct {
 		name    string
 		options native.Options
 	}{{"printer", native.Options{}}, {"counted", native.Options{Count: true}}} {
-		if err := native.Build(code, filepath.Join(directory, build.name), build.options); err != nil {
-			test.Fatal(err)
+		if buildError := native.Build(code, filepath.Join(directory, build.name), build.options); buildError != nil {
+			test.Fatal(buildError)
 		}
 	}
 	runtimeDir := filepath.Join(repo, "internal/native/runtime")
@@ -147,16 +147,16 @@ func TestCSSProfileArtifacts(test *testing.T) {
 	request, _ := json.Marshal(
 		map[string]any{"Cases": filepath.Join(directory, "shared.txt"), "Repeat": "once", "Rounds": 1},
 	)
-	if err := os.WriteFile(filepath.Join(directory, "go-request.json"), request, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(directory, "go-request.json"), request, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	side, _ := filepath.Abs("testdata/print_side_test.go")
 	overlay, _ := json.Marshal(map[string]any{
 		"Replace": map[string]string{filepath.Join(repo, "cohere/internal/format/css/adamic_print_side_test.go"): side},
 	})
 	overlayPath := filepath.Join(directory, "go-overlay.json")
-	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(overlayPath, overlay, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	cmd := bounded(
 		test,
@@ -169,8 +169,11 @@ func TestCSSProfileArtifacts(test *testing.T) {
 		"./internal/format/css",
 	)
 	cmd.Dir = filepath.Join(repo, "cohere")
-	if output, err := childguard.CombinedOutput(cmd, childguard.Options{Stall: oracles.ChildStallLimit}); err != nil {
-		test.Fatalf("Go benchmark build: %v %s", err, output)
+	if output, combinedOutputError := childguard.CombinedOutput(
+		cmd,
+		childguard.Options{Stall: oracles.ChildStallLimit},
+	); combinedOutputError != nil {
+		test.Fatalf("Go benchmark build: %v %s", combinedOutputError, output)
 	}
 	test.Logf("saved %d shared inputs and %d profile inputs, %d output units", len(shared), len(sample), totalUnits)
 }

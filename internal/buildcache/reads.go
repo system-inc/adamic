@@ -81,12 +81,13 @@ type readSet struct {
 }
 
 // A readEntry is one thing the build read, by kind: content, listing, exists or link (paths in the tree), above (paths
-// above the tree, relative to it), above cache (paths beside the build cache's parents, relative to it), home (paths in the home directory, ~-relative), absolute (any other path only looked
-// for, by whether and as what it exists), product (a name key), tool (a path
-// under the tools directory, exec'd), toolset (a tools directory read but not run), go (the release), system (a
-// machine file, by the dpkg package that installed it unchanged or by itself), filesystem (case: whether the file system
-// is case-sensitive, which osvfs asks as it starts) or settings (the build settings of the binary that ran the build). Value is what it was when recorded, shortened, so a miss can
-// name what changed; the key hashes the full value.
+// above the tree, relative to it), above cache (paths beside the build cache's parents, relative to it), home (paths in
+// the home directory, ~-relative), absolute (any other path only looked for, by whether and as what it exists), product
+// (a name key), tool (a path under the tools directory, exec'd), toolset (a tools directory read but not run), go (the
+// release), system (a machine file, by the dpkg package that installed it unchanged or by itself), filesystem (case:
+// whether the file system is case-sensitive, which osvfs asks as it starts) or settings (the build settings of the
+// binary that ran the build). Value is what it was when recorded, shortened, so a miss can name what changed; the key
+// hashes the full value.
 type readEntry struct {
 	Kind  string `json:"kind"`
 	Path  string `json:"path"`
@@ -132,9 +133,9 @@ func readsPath(cache, nameKey string) string {
 func loadReads(cache, nameKey string) (readsFile, error) {
 	var union readsFile
 	for index, path := range location.ReadPlaces(readsPath(cache, nameKey)) {
-		file, err := readsAt(path)
-		if err != nil {
-			return readsFile{}, err
+		file, readsAtError := readsAt(path)
+		if readsAtError != nil {
+			return readsFile{}, readsAtError
 		}
 		if index == 0 {
 			union = file
@@ -147,16 +148,16 @@ func loadReads(cache, nameKey string) (readsFile, error) {
 
 // readsAt is the read sets file at path: none when it isn't there or is another version's.
 func readsAt(path string) (readsFile, error) {
-	content, err := os.ReadFile(path)
-	if errors.Is(err, fs.ErrNotExist) {
+	content, readError := os.ReadFile(path)
+	if errors.Is(readError, fs.ErrNotExist) {
 		return readsFile{}, nil
 	}
-	if err != nil {
-		return readsFile{}, err
+	if readError != nil {
+		return readsFile{}, readError
 	}
 	var file readsFile
-	if err = json.Unmarshal(content, &file); err != nil {
-		return readsFile{}, fmt.Errorf("%s: %v", path, err)
+	if decodeError := json.Unmarshal(content, &file); decodeError != nil {
+		return readsFile{}, fmt.Errorf("%s: %v", path, decodeError)
 	}
 	if file.Version != readsVersion {
 		return readsFile{}, nil
@@ -243,13 +244,13 @@ func withReads(cache, nameKey string, change func(file *readsFile) error) error 
 // t.Parallel rows), each passed the check before the other wrote and made a ring (Planner's M1). It's taken before
 // withReads' lock and never inside it, so no two recorders wait on each other.
 func lockReadsGraph(cache string) (func(), error) {
-	lock, err := os.OpenFile(filepath.Join(cache, ".reads-graph.lock"), os.O_CREATE|os.O_RDWR, 0o644)
-	if err != nil {
-		return nil, err
+	lock, openError := os.OpenFile(filepath.Join(cache, ".reads-graph.lock"), os.O_CREATE|os.O_RDWR, 0o644)
+	if openError != nil {
+		return nil, openError
 	}
-	if err = syscall.Flock(int(lock.Fd()), syscall.LOCK_EX); err != nil {
+	if flockError := syscall.Flock(int(lock.Fd()), syscall.LOCK_EX); flockError != nil {
 		lock.Close()
-		return nil, err
+		return nil, flockError
 	}
 	return func() {
 		syscall.Flock(int(lock.Fd()), syscall.LOCK_UN)
@@ -279,7 +280,7 @@ func keptSetsOf(sets []readSet, tree string) []readSet {
 // pinTree names the tree a cache serves, for a pin: the cache's own directory, which a tree's build has to itself and a
 // seed carried to another tree doesn't share.
 func pinTree(cache string) string {
-	if absolute, err := filepath.Abs(cache); err == nil {
+	if absolute, absolutePathError := filepath.Abs(cache); absolutePathError == nil {
 		return absolute
 	}
 	return cache
@@ -290,8 +291,9 @@ func pinTree(cache string) string {
 func pinReads(cache string, products map[string]string) {
 	tree := pinTree(cache)
 	for nameKey, key := range products {
-		file, err := loadReads(cache, nameKey)
-		if err != nil || !slices.ContainsFunc(file.Sets, func(set readSet) bool { return set.Key == key && set.Pinned != tree }) {
+		file, loadReadsError := loadReads(cache, nameKey)
+		if loadReadsError != nil ||
+			!slices.ContainsFunc(file.Sets, func(set readSet) bool { return set.Key == key && set.Pinned != tree }) {
 			continue
 		}
 		withReads(cache, nameKey, func(file *readsFile) error {
@@ -357,9 +359,9 @@ func evaluate(root, cache, nameKey string, set readSet, depth int, known product
 	field("name key", nameKey)
 	result := evaluation{values: make([]string, len(set.Entries)), products: map[string]string{}}
 	for index, entry := range set.Entries {
-		value, product, err := entryValue(root, cache, entry, depth, known)
-		if err != nil {
-			return evaluation{}, err
+		value, product, entryValueError := entryValue(root, cache, entry, depth, known)
+		if entryValueError != nil {
+			return evaluation{}, entryValueError
 		}
 		result.values[index] = value
 		if product != "" {
@@ -375,32 +377,40 @@ func evaluate(root, cache, nameKey string, set readSet, depth int, known product
 func entryValue(root, cache string, entry readEntry, depth int, known productMemo) (string, string, error) {
 	switch entry.Kind {
 	case "product":
-		found, err := entryProduct(root, cache, entry, depth+1, known)
-		if err != nil {
-			return "", "", err
+		found, entryProductError := entryProduct(root, cache, entry, depth+1, known)
+		if entryProductError != nil {
+			return "", "", entryProductError
 		}
 		if found.key == "" {
-			return "", "", fmt.Errorf("it reads product %s, which has no product for this tree (%s)", entry.Path[:12], found.why)
+			return "", "", fmt.Errorf(
+				"it reads product %s, which has no product for this tree (%s)",
+				entry.Path[:12],
+				found.why,
+			)
 		}
 		// By the bytes it read, not by the key they're under: another trace settling the same product records the union
 		// of both read sets, which moves its key and not its bytes, and a reader keyed by the key went stale with it
 		// (home-7's dry run, Oct 11: 6 products, typeaware volume and the two that read it among them).
-		digest, err := productDigest(found.directory)
-		return digest, found.key, err
+		digest, productDigestError := productDigest(found.directory)
+		return digest, found.key, productDigestError
 	case productKeyKind:
 		// A test read set's product, by the key it's found under: its set holds every read of the window the test's set
 		// leaves out, so the key is what moves with them (#mmpt615).
-		found, err := entryProduct(root, cache, entry, depth+1, known)
-		if err != nil {
-			return "", "", err
+		found, entryProductError := entryProduct(root, cache, entry, depth+1, known)
+		if entryProductError != nil {
+			return "", "", entryProductError
 		}
 		if found.key == "" {
-			return "", "", fmt.Errorf("it used product %s, which has no product for this tree (%s)", entry.Path[:12], found.why)
+			return "", "", fmt.Errorf(
+				"it used product %s, which has no product for this tree (%s)",
+				entry.Path[:12],
+				found.why,
+			)
 		}
 		return found.key, found.key, nil
 	}
-	value, err := treeEntryValue(root, cache, entry)
-	return value, "", err
+	value, treeEntryValueError := treeEntryValue(root, cache, entry)
+	return value, "", treeEntryValueError
 }
 
 // entryProduct is the product a product entry reads on the tree at root: the newest its name key's sets find, unless
@@ -411,22 +421,26 @@ func entryValue(root, cache string, entry readEntry, depth int, known productMem
 // never one, and the product is wherever the lookup would find it (existingPlace). Newest stays the fallback.
 //
 // The pass's memo (known) holds each entry's answer, so a pass walks an upstream's sets once for each value its readers
-// recorded, however many readers and their upstreams ask: unheld, each level asked twice (evaluate, then setUpstreams), and a cold
-// tree's settle held the cache's graph lock for minutes with 36 settlers behind it (fafa8955, #xjqwsad). And a pass
-// evaluates at most fallbackBound sets for every fallback in it; past that, each takes the newest, a miss and never
-// another value.
+// recorded, however many readers and their upstreams ask: unheld, each level asked twice (evaluate, then setUpstreams),
+// and a cold tree's settle held the cache's graph lock for minutes with 36 settlers behind it (fafa8955, #xjqwsad). And
+// a pass evaluates at most fallbackBound sets for every fallback in it; past that, each takes the newest, a miss and
+// never another value.
 func entryProduct(root, cache string, entry readEntry, depth int, known productMemo) (found, error) {
-	newest, err := productFor(root, cache, entry.Path, depth, known)
-	if err != nil || newest.key == "" || entry.Value == "" {
-		return newest, err
+	newest, productForError := productFor(root, cache, entry.Path, depth, known)
+	if productForError != nil || newest.key == "" || entry.Value == "" {
+		return newest, productForError
 	}
-	if value, err := productEntryValue(entry.Kind, newest); err != nil || shortValue(value) == entry.Value {
+	if value, productEntryValueError := productEntryValue(
+		entry.Kind,
+		newest,
+	); productEntryValueError != nil || shortValue(value) == entry.Value {
 		return newest, nil
 	}
 	held := entryLookups + entry.Kind + "\x00" + entry.Path + "\x00" + entry.Value
 	if lookup, seen := known[held]; seen {
 		if !lookup.done {
-			// The walk under way met itself, which only a ring does, and refusedSet keeps a ring's sets out: the newest.
+			// The walk under way met itself, which only a ring does, and refusedSet keeps a ring's sets out: the
+			// newest.
 			return newest, nil
 		}
 		return lookup.result, nil
@@ -437,12 +451,12 @@ func entryProduct(root, cache string, entry readEntry, depth int, known productM
 	return lookup.result, nil
 }
 
-// entryFallback is entryProduct's walk of entry's upstream's sets for the one that gives the value entry recorded, newest
-// when none does or the pass's fallbackBound is spent.
+// entryFallback is entryProduct's walk of entry's upstream's sets for the one that gives the value entry recorded,
+// newest when none does or the pass's fallbackBound is spent.
 func entryFallback(root, cache string, entry readEntry, depth int, known productMemo, newest found) found {
 	fallbacksWalked.Add(1)
-	file, err := loadReads(cache, entry.Path)
-	if err != nil {
+	file, loadReadsError := loadReads(cache, entry.Path)
+	if loadReadsError != nil {
 		return newest
 	}
 	walks, ok := known[fallbackWalks]
@@ -458,8 +472,8 @@ func entryFallback(root, cache string, entry readEntry, depth int, known product
 		if !spendFallback(entry.Path, walks) {
 			return newest
 		}
-		evaluated, err := evaluate(root, cache, entry.Path, set, depth, known)
-		if err != nil || evaluated.key == newest.key {
+		evaluated, evaluateError := evaluate(root, cache, entry.Path, set, depth, known)
+		if evaluateError != nil || evaluated.key == newest.key {
 			continue
 		}
 		directory, ok := existingPlace(filepath.Join(cache, evaluated.key))
@@ -467,7 +481,10 @@ func entryFallback(root, cache string, entry readEntry, depth int, known product
 			continue
 		}
 		candidate := found{key: evaluated.key, directory: directory}
-		if value, err := productEntryValue(entry.Kind, candidate); err == nil && shortValue(value) == entry.Value {
+		if value, productEntryValueError := productEntryValue(
+			entry.Kind,
+			candidate,
+		); productEntryValueError == nil && shortValue(value) == entry.Value {
 			candidate.upstreams = setUpstreams(root, cache, set, depth, known)
 			return candidate
 		}
@@ -481,7 +498,11 @@ func spendFallback(nameKey string, walks *productLookup) bool {
 	if walks.walked >= fallbackBound {
 		if !walks.done {
 			walks.done = true
-			note("reads %s: the pass's fallbacks evaluated %d sets, its bound, so every further one takes its upstream's newest", nameKey[:min(12, len(nameKey))], fallbackBound)
+			note(
+				"reads %s: the pass's fallbacks evaluated %d sets, its bound, so every further one takes its upstream's newest",
+				nameKey[:min(12, len(nameKey))],
+				fallbackBound,
+			)
 		}
 		return false
 	}
@@ -512,8 +533,8 @@ func treeEntryValue(root, cache string, entry readEntry) (string, error) {
 			return "", fmt.Errorf("a tree entry %q isn't inside the tree", entry.Path)
 		}
 		path := filepath.Join(root, filepath.FromSlash(entry.Path))
-		target, err := os.Readlink(path)
-		if err != nil || !Tracked(root, path, false) {
+		target, readLinkError := os.Readlink(path)
+		if readLinkError != nil || !Tracked(root, path, false) {
 			return treeValue(root, "exists", entry.Path), nil
 		}
 		return "link " + target, nil
@@ -535,22 +556,22 @@ func treeEntryValue(root, cache string, entry readEntry) (string, error) {
 		}
 		return existence(entry.Path), nil
 	case "home":
-		home, err := os.UserHomeDir()
-		if err != nil {
-			return "no home: " + err.Error(), nil
+		home, homeDirectoryError := os.UserHomeDir()
+		if homeDirectoryError != nil {
+			return "no home: " + homeDirectoryError.Error(), nil
 		}
 		return existence(filepath.Join(home, filepath.FromSlash(strings.TrimPrefix(entry.Path, "~/")))), nil
 	case "tool":
-		tools, err := toolsRoot()
-		if err != nil {
-			return "", err
+		tools, toolsRootError := toolsRoot()
+		if toolsRootError != nil {
+			return "", toolsRootError
 		}
 		return Tool(filepath.Join(tools, filepath.FromSlash(entry.Path)), "--version"), nil
 	case "toolset":
 		// A tools directory read but never run (a sysroot, a resource directory): named by the release it resolves to.
-		tools, err := toolsRoot()
-		if err != nil {
-			return "", err
+		tools, toolsRootError := toolsRoot()
+		if toolsRootError != nil {
+			return "", toolsRootError
 		}
 		if real := resolved(filepath.Join(tools, entry.Path)); real != "" {
 			return filepath.Base(real), nil
@@ -605,7 +626,8 @@ func readMode() bool {
 // Settle); and over an unpacked source (unpackedSource), which Loom assembles once from the tree's chunks and nothing
 // changes after. A traced process that looked up each product afresh valued the whole chain each one reads every time:
 // css's PostCSS answers read the products their process read before them, about 30 siblings each, so one hit valued
-// 163,866 entries under strace and took 62 to 182 s, and a shard of 49 never finished inside the 14-minute bound (lap 3,
+// 163,866 entries under strace and took 62 to 182 s, and a shard of 49 never finished inside the 14-minute bound (lap
+// 3,
 // #47ykkmr). Loom's key check runs a package's product tests over an unpacked source untraced and not in read mode, and
 // css's ran into its 10-minute timeout the same way (lap 4, #y7c0t4q).
 func heldForLife(root string) bool {
@@ -624,9 +646,9 @@ func unpackedSource(root string) bool {
 	}
 	unpacked := false
 	keying(func() {
-		_, gitErr := statGit(filepath.Join(root, ".git"))
-		info, manifestErr := os.Stat(filepath.Join(root, trackedManifestDirectory, "files"))
-		unpacked = gitErr != nil && manifestErr == nil && info.Mode().IsRegular()
+		_, gitError := statGit(filepath.Join(root, ".git"))
+		info, manifestError := os.Stat(filepath.Join(root, trackedManifestDirectory, "files"))
+		unpacked = gitError != nil && manifestError == nil && info.Mode().IsRegular()
 	})
 	unpackedSources.Store(root, unpacked)
 	return unpacked
@@ -648,42 +670,42 @@ func productDigest(directory string) (string, error) {
 	}
 	places := location.ReadPlaces(directory + ".digest")
 	for _, kept := range places {
-		if content, err := os.ReadFile(kept); err == nil && len(content) == 64 {
+		if content, readError := os.ReadFile(kept); readError == nil && len(content) == 64 {
 			productDigests.Store(directory, string(content))
 			return string(content), nil
 		}
 	}
-	root, err := ProductRoot(directory)
-	if err != nil {
-		return "", fmt.Errorf("digest of product %s: %w", filepath.Base(directory), err)
+	root, productRootError := ProductRoot(directory)
+	if productRootError != nil {
+		return "", fmt.Errorf("digest of product %s: %w", filepath.Base(directory), productRootError)
 	}
 	hash := sha256.New()
-	err = filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
+	walkError := filepath.WalkDir(root, func(path string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
-		relative, err := filepath.Rel(root, path)
-		if err != nil {
-			return err
+		relative, relativePathError := filepath.Rel(root, path)
+		if relativePathError != nil {
+			return relativePathError
 		}
 		relative = filepath.ToSlash(relative)
-		info, err := entry.Info()
-		if err != nil {
-			return err
+		info, infoError := entry.Info()
+		if infoError != nil {
+			return infoError
 		}
 		switch {
 		case entry.IsDir():
 			fmt.Fprintf(hash, "directory %q\n", relative)
 		case info.Mode()&fs.ModeSymlink != 0:
-			target, err := os.Readlink(path)
-			if err != nil {
-				return err
+			target, readLinkError := os.Readlink(path)
+			if readLinkError != nil {
+				return readLinkError
 			}
 			fmt.Fprintf(hash, "link %q %q\n", relative, target)
 		case info.Mode().IsRegular():
-			content, err := os.ReadFile(path)
-			if err != nil {
-				return err
+			content, readError := os.ReadFile(path)
+			if readError != nil {
+				return readError
 			}
 			sum := sha256.Sum256(content)
 			fmt.Fprintf(hash, "file %q %t %x\n", relative, info.Mode()&0o111 != 0, sum)
@@ -692,8 +714,8 @@ func productDigest(directory string) (string, error) {
 		}
 		return nil
 	})
-	if err != nil {
-		return "", fmt.Errorf("digest of product %s: %w", filepath.Base(directory), err)
+	if walkError != nil {
+		return "", fmt.Errorf("digest of product %s: %w", filepath.Base(directory), walkError)
 	}
 	value := hex.EncodeToString(hash.Sum(nil))
 	productDigests.Store(directory, value)
@@ -702,13 +724,15 @@ func productDigest(directory string) (string, error) {
 	// failure to is no error.
 	kept := places[0]
 	if kept != directory+".digest" {
-		if err := os.MkdirAll(filepath.Dir(kept), 0o755); err != nil {
+		if createDirectoryError := os.MkdirAll(filepath.Dir(kept), 0o755); createDirectoryError != nil {
 			return value, nil
 		}
 	}
-	if temporary, err := os.CreateTemp(filepath.Dir(kept), ".digest-*"); err == nil {
-		_, writeErr := temporary.WriteString(value)
-		if closeErr := temporary.Close(); writeErr != nil || closeErr != nil || os.Rename(temporary.Name(), kept) != nil {
+	if temporary, temporaryFileError := os.CreateTemp(filepath.Dir(kept), ".digest-*"); temporaryFileError == nil {
+		_, writeError := temporary.WriteString(value)
+		if closeError := temporary.Close(); writeError != nil ||
+			closeError != nil ||
+			os.Rename(temporary.Name(), kept) != nil {
 			os.Remove(temporary.Name())
 		}
 	}
@@ -740,8 +764,8 @@ func readTreeValue(root, kind, name string) string {
 		return nodeInstallValue(filepath.Join(root, filepath.FromSlash(name), "node_modules"))
 	}
 	path := filepath.Join(root, filepath.FromSlash(name))
-	info, err := os.Stat(path)
-	if err != nil || name != "." && !Tracked(root, path, info.IsDir()) {
+	info, statError := os.Stat(path)
+	if statError != nil || name != "." && !Tracked(root, path, info.IsDir()) {
 		return "absent"
 	}
 	switch {
@@ -757,46 +781,49 @@ func readTreeValue(root, kind, name string) string {
 	return "other " + info.Mode().Type().String()
 }
 
-// nodeInstallValue is an installed node_modules at top as its manifest names it: each file's path, sha256 and executable
-// bit, and each link's target, sorted, hashed whole (#qx8fkaf). It's what's there, not what the lockfile meant, so
-// any byte npm made, any platform or install script that made another, and a file no lockfile names each move it. A
-// tree holds Loom's copy of the install and a runner the chunk it unpacked, the same entries, so the two value alike
-// at any checkout path, and no file the install holds stands in for its bytes.
+// nodeInstallValue is an installed node_modules at top as its manifest names it: each file's path, sha256 and
+// executable bit, and each link's target, sorted, hashed whole (#qx8fkaf). It's what's there, not what the lockfile
+// meant, so any byte npm made, any platform or install script that made another, and a file no lockfile names each move
+// it. A tree holds Loom's copy of the install and a runner the chunk it unpacked, the same entries, so the two value
+// alike at any checkout path, and no file the install holds stands in for its bytes.
 func nodeInstallValue(top string) string {
-	if real, err := filepath.EvalSymlinks(top); err == nil {
+	if real, resolveSymlinksError := filepath.EvalSymlinks(top); resolveSymlinksError == nil {
 		top = real
 	}
 	var lines []string
-	err := filepath.WalkDir(top, func(path string, entry fs.DirEntry, err error) error {
-		if err != nil || path == top {
-			return err
+	walkError := filepath.WalkDir(top, func(path string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil || path == top {
+			return pathError
 		}
 		relative := filepath.ToSlash(strings.TrimPrefix(path, top+string(filepath.Separator)))
 		switch {
 		case entry.Type()&fs.ModeSymlink != 0:
-			target, err := os.Readlink(path)
-			if err != nil {
-				return err
+			target, readLinkError := os.Readlink(path)
+			if readLinkError != nil {
+				return readLinkError
 			}
 			lines = append(lines, "link "+relative+" "+target)
 		case entry.Type().IsRegular():
-			info, err := entry.Info()
-			if err != nil {
-				return err
+			info, infoError := entry.Info()
+			if infoError != nil {
+				return infoError
 			}
-			content, err := os.ReadFile(path)
-			if err != nil {
-				return err
+			content, readError := os.ReadFile(path)
+			if readError != nil {
+				return readError
 			}
-			lines = append(lines, fmt.Sprintf("file %s %x %t", relative, sha256.Sum256(content), info.Mode()&0o111 != 0))
+			lines = append(
+				lines,
+				fmt.Sprintf("file %s %x %t", relative, sha256.Sum256(content), info.Mode()&0o111 != 0),
+			)
 		}
 		return nil
 	})
 	switch {
-	case errors.Is(err, fs.ErrNotExist):
+	case errors.Is(walkError, fs.ErrNotExist):
 		return "absent"
-	case err != nil:
-		return "unreadable: " + err.Error()
+	case walkError != nil:
+		return "unreadable: " + walkError.Error()
 	}
 	sort.Strings(lines)
 	return fmt.Sprintf("install %x", sha256.Sum256([]byte(strings.Join(lines, "\n"))))
@@ -804,9 +831,9 @@ func nodeInstallValue(top string) string {
 
 // fileValue is a file's content entry in a read set: gitValue, or why the file couldn't be read.
 func fileValue(root, path string, info fs.FileInfo) string {
-	value, err := gitValue(root, path, info)
-	if err != nil {
-		return "unreadable: " + err.Error()
+	value, gitValueError := gitValue(root, path, info)
+	if gitValueError != nil {
+		return "unreadable: " + gitValueError.Error()
 	}
 	return "file " + value
 }
@@ -822,9 +849,9 @@ func gitValue(root, path string, info fs.FileInfo) (string, error) {
 	if clean {
 		return fmt.Sprintf("%t %s", object.mode == "100755", object.id), nil
 	}
-	content, err := os.ReadFile(path)
-	if err != nil {
-		return "", err
+	content, readError := os.ReadFile(path)
+	if readError != nil {
+		return "", readError
 	}
 	return fmt.Sprintf("%t %s", info.Mode()&0o111 != 0, blobID(content, length)), nil
 }
@@ -850,15 +877,20 @@ func cleanObject(root, name string, info fs.FileInfo) (gitObject, int, bool) {
 			length = len(any.id)
 			break
 		}
-		relative, err := filepath.Rel(at, name)
-		if err != nil || files.all {
+		relative, relativePathError := filepath.Rel(at, name)
+		if relativePathError != nil || files.all {
 			return gitObject{}, length, false
 		}
 		relative = filepath.ToSlash(relative)
 		object, ok := files.objects[relative]
 		margin := files.taken.Add(-time.Second)
 		changed, known := changeTime(info)
-		if !ok || files.dirty[relative] || !strings.HasPrefix(object.mode, "100") || !info.ModTime().Before(margin) || !known || !changed.Before(margin) {
+		if !ok ||
+			files.dirty[relative] ||
+			!strings.HasPrefix(object.mode, "100") ||
+			!info.ModTime().Before(margin) ||
+			!known ||
+			!changed.Before(margin) {
 			return gitObject{}, length, false
 		}
 		return object, length, true
@@ -880,15 +912,15 @@ func blobID(content []byte, length int) string {
 
 // listing is a directory's tracked entries, by name and kind, sorted; .git never counts.
 func listing(root, directory string) string {
-	entries, err := os.ReadDir(directory)
-	if err != nil {
-		return "unreadable: " + err.Error()
+	entries, readDirectoryError := os.ReadDir(directory)
+	if readDirectoryError != nil {
+		return "unreadable: " + readDirectoryError.Error()
 	}
 	var names []string
 	for _, entry := range entries {
 		path := filepath.Join(directory, entry.Name())
-		info, err := os.Stat(path)
-		isDirectory := err == nil && info.IsDir()
+		info, statError := os.Stat(path)
+		isDirectory := statError == nil && info.IsDir()
 		if entry.Name() == ".git" || !Tracked(root, path, isDirectory) {
 			continue
 		}
@@ -909,9 +941,9 @@ func local(name string) bool {
 
 // existence is whether a path outside the tree exists and as what, never its content.
 func existence(path string) string {
-	info, err := os.Stat(path)
+	info, statError := os.Stat(path)
 	switch {
-	case err != nil:
+	case statError != nil:
 		return "absent"
 	case info.IsDir():
 		return "directory"
@@ -924,20 +956,20 @@ func existence(path string) string {
 // caseSensitivity is the file system's answer to osvfs's probe, asked as osvfs asks it: whether this process's own
 // executable exists with every letter's case swapped.
 func caseSensitivity() string {
-	executable, err := os.Executable()
-	if err != nil {
-		return "unknown: " + err.Error()
+	executable, executableError := os.Executable()
+	if executableError != nil {
+		return "unknown: " + executableError.Error()
 	}
 	swapped := swapCase(executable)
-	switch _, err := os.Stat(swapped); {
+	switch _, statError := os.Stat(swapped); {
 	case swapped == executable:
 		return "unknown: its executable's path has no letters"
-	case err == nil:
+	case statError == nil:
 		return "insensitive"
-	case errors.Is(err, fs.ErrNotExist):
+	case errors.Is(statError, fs.ErrNotExist):
 		return "sensitive"
 	default:
-		return "unknown: " + err.Error()
+		return "unknown: " + statError.Error()
 	}
 }
 
@@ -951,8 +983,8 @@ func toolsRoot() (string, error) {
 	if toolchain.Sandboxed() {
 		return "", errors.New("ADAMIC_SANDBOX=1 finds tools only where ADAMIC_TOOLS says, and ADAMIC_TOOLS is unset")
 	}
-	home, err := os.UserHomeDir()
-	if err != nil {
+	home, homeDirectoryError := os.UserHomeDir()
+	if homeDirectoryError != nil {
 		return "/opt/adamic-tools", nil
 	}
 	return filepath.Join(home, "adamic-tools"), nil
@@ -961,8 +993,8 @@ func toolsRoot() (string, error) {
 // found is a product looked up by its read sets: the key and directory of the first set (newest first) whose key
 // names a product in the cache, or why none did, and the keys each set gave (for the store to try). With the product,
 // its upstreams: every product the set that found it reads, through their sets in turn; with each key, the same for
-// the set that gave it (keyUpstreams). With each, the set that gave it as it values on this tree, when it stored another
-// key (refound, keyRefound): the set the caller re-records once it has the product (rerecord).
+// the set that gave it (keyUpstreams). With each, the set that gave it as it values on this tree, when it stored
+// another key (refound, keyRefound): the set the caller re-records once it has the product (rerecord).
 type found struct {
 	key, directory, why string
 	keys                []string
@@ -989,8 +1021,8 @@ func setUpstreams(root, cache string, set readSet, depth int, known productMemo)
 		if entry.Kind != "product" && entry.Kind != productKeyKind {
 			continue
 		}
-		read, err := entryProduct(root, cache, entry, depth+1, known)
-		if err != nil || read.directory == "" {
+		read, entryProductError := entryProduct(root, cache, entry, depth+1, known)
+		if entryProductError != nil || read.directory == "" {
 			continue
 		}
 		for _, one := range append([]upstream{{nameKey: entry.Path, directory: read.directory}}, read.upstreams...) {
@@ -1017,8 +1049,8 @@ func journalFound(nameKey, name, directory string, upstreams []upstream) {
 // process keeps what it found for its life besides (readProducts).
 type productMemo map[string]*productLookup
 
-// readProducts holds each product a process whose tree can't change under it (heldForLife) has found, by root, cache and
-// name key, so a test that looks up several products, or one product many times, values each one's read set once
+// readProducts holds each product a process whose tree can't change under it (heldForLife) has found, by root, cache
+// and name key, so a test that looks up several products, or one product many times, values each one's read set once
 // (#szswjtc, #47ykkmr). Only a found product is held: its tree never changes under the process and its directory is
 // never taken away, so the set that found it still finds it. A missing one is looked up again, since a product that
 // arrives later is found. What a traced build reads is never changed by it: a lookup is keying, which no read set takes
@@ -1051,8 +1083,8 @@ const (
 // cache's graph lock (recordUnion), so the walk's time is every waiting settler's. A var, so a test can spend it.
 var fallbackBound = 256
 
-// fallbackEvaluations and fallbacksWalked count the sets entryProduct's fallbacks have evaluated in this process and the
-// walks they made: a test asks them.
+// fallbackEvaluations and fallbacksWalked count the sets entryProduct's fallbacks have evaluated in this process and
+// the walks they made: a test asks them.
 var fallbackEvaluations, fallbacksWalked atomic.Int64
 
 // freshLookups, a key in a productMemo, makes its pass look up every product afresh, never through readProducts or into
@@ -1118,7 +1150,8 @@ func walkComponents(cache, start string, components map[string]string) {
 				continue
 			}
 			if _, entered := order[next]; entered {
-				// Entered and not yet given a component is still on the stack: a way back to a name key the walk is under.
+				// Entered and not yet given a component is still on the stack: a way back to a name key the walk is
+				// under.
 				lowest[top.nameKey] = min(lowest[top.nameKey], order[next])
 				continue
 			}
@@ -1155,9 +1188,9 @@ func productEdges(cache, nameKey string) []string {
 // recordedEdges is productEdges, or the error that read nameKey's file: one that isn't there, or is another version's,
 // reads as no sets and gives none (readsAt), and one that can't be read or doesn't decode is the error, never none.
 func recordedEdges(cache, nameKey string) ([]string, error) {
-	file, err := loadReads(cache, nameKey)
-	if err != nil {
-		return nil, err
+	file, loadReadsError := loadReads(cache, nameKey)
+	if loadReadsError != nil {
+		return nil, loadReadsError
 	}
 	var edges []string
 	seen := map[string]bool{}
@@ -1174,10 +1207,10 @@ func recordedEdges(cache, nameKey string) ([]string, error) {
 
 // readsBackTo says how from reaches nameKey through recorded sets, from itself included, "" when it doesn't: a set of
 // nameKey reading from would put the two in one component, so no lookup would ever use it (readComponents), and
-// recordUnion refuses it. A reached file that can't be read or doesn't decode (recordedEdges' error) could hold the edge
-// that closes the ring, so it reads as reaching back, named: the check fails closed (Node's must on #egjbcre). Loom's
-// copy-in walks the cache's files the same way, case for case (its builder.readsBackTo): a file not there, or another
-// version's, gives no edges; one that can't be read, or is garbled, reaches back.
+// recordUnion refuses it. A reached file that can't be read or doesn't decode (recordedEdges' error) could hold the
+// edge that closes the ring, so it reads as reaching back, named: the check fails closed (Node's must on #egjbcre).
+// Loom's copy-in walks the cache's files the same way, case for case (its builder.readsBackTo): a file not there, or
+// another version's, gives no edges; one that can't be read, or is garbled, reaches back.
 func readsBackTo(cache, from, nameKey string) string {
 	seen := map[string]bool{from: true}
 	next := []string{from}
@@ -1187,9 +1220,13 @@ func readsBackTo(cache, from, nameKey string) string {
 		if at == nameKey {
 			return "which reads it back through recorded sets, a cycle no key can value"
 		}
-		edges, err := recordedEdges(cache, at)
-		if err != nil {
-			return fmt.Sprintf("which reaches product %s, whose read sets can't be read (%v), so it may read it back: refused as a cycle no key could value", at[:min(12, len(at))], err)
+		edges, recordedEdgesError := recordedEdges(cache, at)
+		if recordedEdgesError != nil {
+			return fmt.Sprintf(
+				"which reaches product %s, whose read sets can't be read (%v), so it may read it back: refused as a cycle no key could value",
+				at[:min(12, len(at))],
+				recordedEdgesError,
+			)
 		}
 		for _, edge := range edges {
 			if !seen[edge] {
@@ -1255,12 +1292,12 @@ func productFor(root, cache, nameKey string, depth int, known productMemo) (foun
 func lookupProduct(root, cache, nameKey string, depth int, known productMemo) (found, error) {
 	productsLookedUp.Add(1)
 	// A resolved unit's lookups read the map its runner laid, never the read sets (resolved.go).
-	if products, resolved, err := resolvedProducts(); resolved {
-		return resolvedLookup(cache, nameKey, products, err), nil
+	if products, resolved, resolvedProductsError := resolvedProducts(); resolved {
+		return resolvedLookup(cache, nameKey, products, resolvedProductsError), nil
 	}
-	file, err := loadReads(cache, nameKey)
-	if err != nil {
-		return found{}, err
+	file, loadReadsError := loadReads(cache, nameKey)
+	if loadReadsError != nil {
+		return found{}, loadReadsError
 	}
 	if len(file.Sets) == 0 {
 		return found{why: "no traced build has recorded what it reads"}, nil
@@ -1275,10 +1312,10 @@ func lookupProduct(root, cache, nameKey string, depth int, known productMemo) (f
 			}
 			continue
 		}
-		evaluated, err := evaluate(root, cache, nameKey, set, depth, known)
-		if err != nil {
+		evaluated, evaluateError := evaluate(root, cache, nameKey, set, depth, known)
+		if evaluateError != nil {
 			if index == 0 {
-				result.why = err.Error()
+				result.why = evaluateError.Error()
 			}
 			continue
 		}
@@ -1310,7 +1347,10 @@ func refusedSet(set readSet, nameKey string, components map[string]string) strin
 		return "lean keys are off (ADAMIC_BUILD_LEAN=off), so its newest read set, keyed by the lean recipe, isn't matched"
 	}
 	if back := readBack(set, nameKey, components); back != "" {
-		return fmt.Sprintf("it reads product %s, which reads it back through recorded sets, a cycle no key can value", back[:min(12, len(back))])
+		return fmt.Sprintf(
+			"it reads product %s, which reads it back through recorded sets, a cycle no key can value",
+			back[:min(12, len(back))],
+		)
 	}
 	return ""
 }
@@ -1322,7 +1362,13 @@ func revalued(set readSet, evaluated evaluation) *readSet {
 	if set.Key == evaluated.key || readMode() {
 		return nil
 	}
-	again := readSet{Recorded: now(), Key: evaluated.key, Trace: set.Trace, Drift: set.Drift, Entries: make([]readEntry, len(set.Entries))}
+	again := readSet{
+		Recorded: now(),
+		Key:      evaluated.key,
+		Trace:    set.Trace,
+		Drift:    set.Drift,
+		Entries:  make([]readEntry, len(set.Entries)),
+	}
 	for index, entry := range set.Entries {
 		again.Entries[index] = readEntry{Kind: entry.Kind, Path: entry.Path, Value: shortValue(evaluated.values[index])}
 	}
@@ -1334,10 +1380,10 @@ func revalued(set readSet, evaluated evaluation) *readSet {
 var rerecorded sync.Map
 
 // rerecord records again, first among nameKey's sets, the set that found or fetched its product under a key it didn't
-// store (#xaz1487, system_adamic's yes on #2dkn3fb): each set stores what it valued to when it was recorded, so a product
-// found by one that values otherwise now sits under a key no set in the file names, and once newer sets push that set
-// past the file's keptSets, nothing finds the product any more. A failure to write is noted and never fails the
-// lookup.
+// store (#xaz1487, system_adamic's yes on #2dkn3fb): each set stores what it valued to when it was recorded, so a
+// product found by one that values otherwise now sits under a key no set in the file names, and once newer sets push
+// that set past the file's keptSets, nothing finds the product any more. A failure to write is noted and never fails
+// the lookup.
 func rerecord(cache, nameKey, name string, set *readSet) {
 	if set == nil {
 		return
@@ -1345,8 +1391,14 @@ func rerecord(cache, nameKey, name string, set *readSet) {
 	if _, done := rerecorded.LoadOrStore(cache+"\x00"+nameKey+"\x00"+set.Key, true); done {
 		return
 	}
-	if err := recordReads(cache, nameKey, name, *set); err != nil {
-		note("reads %s %s: recording the set that found %s again: %v", name, nameKey[:min(12, len(nameKey))], set.Key[:12], err)
+	if recordReadsError := recordReads(cache, nameKey, name, *set); recordReadsError != nil {
+		note(
+			"reads %s %s: recording the set that found %s again: %v",
+			name,
+			nameKey[:min(12, len(nameKey))],
+			set.Key[:12],
+			recordReadsError,
+		)
 	}
 }
 
@@ -1365,12 +1417,16 @@ func differing(set readSet, now evaluation) []string {
 // kind, then the first 8 by kind and path. The counts are every entry's, so a reader of the miss sees the kind of the
 // ones past the eighth too: Loom's judge voids a miss as the box's only when every differing entry is a system file,
 // and an unnamed tree file must not hide behind eight named system ones (Judge, #m5z9d6q). The shape is
-// "N of M entries it read differ from its newest traced build (by kind: content 2, system 18): <entries>[, and K more]",
-// kinds in byte order, each named as readEntry's Kind is.
+// "N of M entries it read differ from its newest traced build (by kind: content 2, system 18): <entries>[, and K
+// more]", kinds in byte order, each named as readEntry's Kind is.
 func changed(set readSet, now evaluation) string {
 	differ := differing(set, now)
 	if len(differ) == 0 {
-		return fmt.Sprintf("its newest read set (%d entries) values as recorded, but no product is cached under %s", len(set.Entries), now.key[:min(12, len(now.key))])
+		return fmt.Sprintf(
+			"its newest read set (%d entries) values as recorded, but no product is cached under %s",
+			len(set.Entries),
+			now.key[:min(12, len(now.key))],
+		)
 	}
 	counts := map[string]int{}
 	for _, entry := range differ {
@@ -1385,7 +1441,14 @@ func changed(set readSet, now evaluation) string {
 	if len(differ) > 8 {
 		named, more = differ[:8], fmt.Sprintf(", and %d more", len(differ)-8)
 	}
-	return fmt.Sprintf("%d of %d entries it read differ from its newest traced build (by kind: %s): %s%s", len(differ), len(set.Entries), strings.Join(kinds, ", "), strings.Join(named, ", "), more)
+	return fmt.Sprintf(
+		"%d of %d entries it read differ from its newest traced build (by kind: %s): %s%s",
+		len(differ),
+		len(set.Entries),
+		strings.Join(kinds, ", "),
+		strings.Join(named, ", "),
+		more,
+	)
 }
 
 // shortValue is what a set records of a value: enough to tell two apart for a person, never the key's input.

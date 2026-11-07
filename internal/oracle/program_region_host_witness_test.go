@@ -17,26 +17,26 @@ import (
 
 func programRegionPending(test *testing.T, path, feature string) {
 	test.Helper()
-	source, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	source, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	_, err = lower.LowerWithOptions(context.Background(), source, lower.Options{ProgramRegion: true})
-	if err == nil {
+	_, lowerWithOptionsError := lower.LowerWithOptions(context.Background(), source, lower.Options{ProgramRegion: true})
+	if lowerWithOptionsError == nil {
 		test.Fatalf("pending feature %s is now available; activate %s", feature, path)
 	}
-	if !strings.Contains(err.Error(), feature) {
-		test.Fatalf("pending %s failed elsewhere: %v", feature, err)
+	if !strings.Contains(lowerWithOptionsError.Error(), feature) {
+		test.Fatalf("pending %s failed elsewhere: %v", feature, lowerWithOptionsError)
 	}
 	// A pending feature is a pass that proves the boundary: the program is refused for this feature and nothing
 	// else, and the test fails the day the feature lowers, so the fixture is activated rather than skipped.
-	test.Logf("registered pending %s: %v", feature, err)
+	test.Logf("registered pending %s: %v", feature, lowerWithOptionsError)
 }
 func TestProgramRegionHost14AgreesWithNode(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("../../stage3/fixtures/host/14_getCurrentDirectory.a")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("../../stage3/fixtures/host/14_getCurrentDirectory.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	counts := checkProgramRegion(test, programRegionLowered(test, path, true), path)
 	if counts[5] != 4 {
@@ -46,9 +46,9 @@ func TestProgramRegionHost14AgreesWithNode(test *testing.T) {
 
 func TestProgramRegionHost14DefaultAgreesWithNode(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("../../stage3/fixtures/host/14_getCurrentDirectory.a")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("../../stage3/fixtures/host/14_getCurrentDirectory.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	checkProgramRegionMode(test, programRegionLowered(test, path, false), path, false)
 }
@@ -101,9 +101,9 @@ func TestProgramRegionHost14DefaultWASIAgreesWithNode(test *testing.T) {
 	if binary == "" {
 		return
 	}
-	path, err := filepath.Abs(filepath.Join(repository, programHost14Path))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, programHost14Path))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	expected := onNode(test, path)
 	actual := execute(
@@ -151,8 +151,8 @@ func TestProgramRegionHost14DefaultShimPending(test *testing.T) {
 	if inventory.exitCode != 0 {
 		test.Fatalf("imports: %s", inventory.stderr)
 	}
-	if err := json.Unmarshal(inventory.stdout, &imports); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(inventory.stdout, &imports); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	const want = "args_get, args_sizes_get, clock_time_get, environ_get, environ_sizes_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_readdir, fd_seek, fd_write, path_create_directory, path_filestat_get, path_open, path_readlink, path_remove_directory, path_unlink_file, proc_exit, random_get"
 	if actual := strings.Join(imports, ", "); actual != want {
@@ -176,10 +176,10 @@ func TestProgramRegionHost14DefaultShimPending(test *testing.T) {
 }
 func programHost14ProgramWASIPending(test *testing.T) {
 	test.Helper()
-	err := native.ValidateOptions(native.Options{ProgramRegion: true, Target: "wasm32-wasi"})
+	validateOptionsError := native.ValidateOptions(native.Options{ProgramRegion: true, Target: "wasm32-wasi"})
 	const reason = "native: Program regions require a one-shot native CLI"
-	if err == nil || err.Error() != reason {
-		test.Fatalf("pending Program WASI boundary changed: %v", err)
+	if validateOptionsError == nil || validateOptionsError.Error() != reason {
+		test.Fatalf("pending Program WASI boundary changed: %v", validateOptionsError)
 	}
 	// Program regions are refused off the native CLI, and this proves the refusal holds with its exact reason.
 	test.Log(reason)

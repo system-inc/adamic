@@ -13,7 +13,9 @@ import (
 
 // Numeric enums are numbers with named constants. String enums retain declaration identity.
 func (l *lowering) enumAssignable(from, to *checker.Type) bool {
-	if target := enumObjectSymbol(to); target != nil && from.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull|checker.TypeFlagsNever) == 0 {
+	if target := enumObjectSymbol(
+		to,
+	); target != nil && from.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull|checker.TypeFlagsNever) == 0 {
 		return enumObjectSymbol(from) == target
 	}
 	if to.Flags()&checker.TypeFlagsNumberLiteral != 0 && l.openNumericEnumType(from) && !l.openNumericEnumType(to) {
@@ -32,11 +34,15 @@ func (l *lowering) enumAssignable(from, to *checker.Type) bool {
 	}
 	if l.numericEnum(l.enumIdentity(to)) {
 		if !l.openNumericEnumType(to) {
-			return !l.openNumericEnumType(from) && from.Flags()&checker.TypeFlagsNumberLiteral != 0 && l.checker.IsTypeAssignableTo(from, to)
+			return !l.openNumericEnumType(from) &&
+				from.Flags()&checker.TypeFlagsNumberLiteral != 0 &&
+				l.checker.IsTypeAssignableTo(from, to)
 		}
 		return from.Flags()&(checker.TypeFlagsNumberLike|checker.TypeFlagsNever) != 0
 	}
-	return from.Flags()&checker.TypeFlagsEnumLike != 0 && l.enumIdentity(from) == l.enumIdentity(to) && l.checker.IsTypeAssignableTo(from, to)
+	return from.Flags()&checker.TypeFlagsEnumLike != 0 &&
+		l.enumIdentity(from) == l.enumIdentity(to) &&
+		l.checker.IsTypeAssignableTo(from, to)
 }
 
 // The whole declaration is open; a member-specific literal is a smaller promise. openNumericEnumType is
@@ -135,7 +141,13 @@ func (l *lowering) enumObjectView(node *ast.Node) error {
 	}
 	target = l.checker.GetNonNullableType(target)
 	if enumObjectSymbol(target) != nil && !l.enumAssignable(source, target) {
-		return &Refused{Where: l.program.Where(node), What: "a structural object used as " + l.checker.TypeToString(target) + "; reverse properties and the complete enum shape are unproven", Fix: "use the enum's runtime object or its typeof alias; give an ordinary object an explicit interface"}
+		return &Refused{
+			Where: l.program.Where(node),
+			What: "a structural object used as " +
+				l.checker.TypeToString(target) +
+				"; reverse properties and the complete enum shape are unproven",
+			Fix: "use the enum's runtime object or its typeof alias; give an ordinary object an explicit interface",
+		}
 	}
 	return nil
 }
@@ -156,7 +168,9 @@ func (l *lowering) enumIdentity(proven *checker.Type) *ast.Symbol {
 
 func (l *lowering) enumMember(node *ast.Node) *ast.Node {
 	node = ast.SkipParentheses(node)
-	if node.Kind != ast.KindPropertyAccessExpression && node.Kind != ast.KindElementAccessExpression && node.Kind != ast.KindIdentifier {
+	if node.Kind != ast.KindPropertyAccessExpression &&
+		node.Kind != ast.KindElementAccessExpression &&
+		node.Kind != ast.KindIdentifier {
 		return nil
 	}
 	symbol := l.symbol(node)
@@ -209,14 +223,24 @@ func (l *lowering) enumFields(node *ast.Node) ([]ir.Field, error) {
 	}
 	for _, member := range node.AsEnumDeclaration().Members.Nodes {
 		if member.Name().Text() == "__proto__" || strings.ContainsRune(member.Name().Text(), 0) {
-			return nil, &Refused{Where: l.program.Where(member), What: "an enum member name that changes the prototype or contains NUL", Fix: "rename the member; enum properties must be ordinary fixed slots"}
+			return nil, &Refused{
+				Where: l.program.Where(member),
+				What:  "an enum member name that changes the prototype or contains NUL",
+				Fix:   "rename the member; enum properties must be ordinary fixed slots",
+			}
 		}
-		value, err := l.enumConstant(member)
-		if err != nil {
-			return nil, err
+		value, enumConstantError := l.enumConstant(member)
+		if enumConstantError != nil {
+			return nil, enumConstantError
 		}
-		if value.Type() == ir.Number && (member.Name().Text() == "NaN" || member.Name().Text() == "Infinity" || member.Name().Text() == "-Infinity") {
-			return nil, &Refused{Where: l.program.Where(member), What: "a numeric enum member named like a non-finite number; numeric indexing could read a number where tsc promises a string", Fix: "rename the member so numeric reverse mapping stays string-valued"}
+		if value.Type() == ir.Number && (member.Name().Text() == "NaN" ||
+			member.Name().Text() == "Infinity" ||
+			member.Name().Text() == "-Infinity") {
+			return nil, &Refused{
+				Where: l.program.Where(member),
+				What:  "a numeric enum member named like a non-finite number; numeric indexing could read a number where tsc promises a string",
+				Fix:   "rename the member so numeric reverse mapping stays string-valued",
+			}
 		}
 		set(member.Name().Text(), value)
 		if number, numeric := value.(ir.NumberConstant); numeric {
@@ -236,9 +260,9 @@ func (l *lowering) enumFields(node *ast.Node) ([]ir.Field, error) {
 // In a declaration the enum name denotes its member type; in value position it denotes the
 // runtime object. Declare the latter explicitly instead of using the name node's number type.
 func (l *lowering) enumLocal(node *ast.Node) (int, error) {
-	local, err := l.declareLocal(node.Name())
-	if err != nil {
-		return 0, err
+	local, declareLocalError := l.declareLocal(node.Name())
+	if declareLocalError != nil {
+		return 0, declareLocalError
 	}
 	l.result.Locals[local].Type = ir.Object
 	l.noteLocal(local, l.checker.GetTypeOfSymbol(l.symbol(node.Name())), node.Name())
@@ -272,9 +296,9 @@ func (l *lowering) constEnumReached(declaration *ast.Node) (bool, error) {
 		return true, nil
 	}
 	if l.constEnumReach == nil {
-		reached, err := l.reachedConstEnums()
-		if err != nil {
-			return false, err
+		reached, reachedConstEnumsError := l.reachedConstEnums()
+		if reachedConstEnumsError != nil {
+			return false, reachedConstEnumsError
 		}
 		l.constEnumReach = reached
 	}
@@ -289,13 +313,16 @@ func (l *lowering) constEnumReached(declaration *ast.Node) (bool, error) {
 // inlines reaches it, and any use of a namespace other than a qualified read reaches every const enum
 // it exports, unless it's the namespace cast, which reaches the one export it names.
 func (l *lowering) reachedConstEnums() (map[*ast.Symbol]bool, error) {
-	modules, err := l.moduleOrder(l.entry)
-	if err != nil {
-		return nil, err
+	modules, moduleOrderError := l.moduleOrder(l.entry)
+	if moduleOrderError != nil {
+		return nil, moduleOrderError
 	}
 	reached := map[*ast.Symbol]bool{}
 	constEnum := func(symbol *ast.Symbol) bool {
-		return symbol != nil && symbol.ValueDeclaration != nil && symbol.ValueDeclaration.Kind == ast.KindEnumDeclaration && ast.HasSyntacticModifier(symbol.ValueDeclaration, ast.ModifierFlagsConst)
+		return symbol != nil &&
+			symbol.ValueDeclaration != nil &&
+			symbol.ValueDeclaration.Kind == ast.KindEnumDeclaration &&
+			ast.HasSyntacticModifier(symbol.ValueDeclaration, ast.ModifierFlagsConst)
 	}
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
@@ -329,28 +356,33 @@ func (l *lowering) reachedConstEnums() (map[*ast.Symbol]bool, error) {
 // reads, E.A or E["A"], which lowering inlines for a const enum.
 func (l *lowering) enumMemberReadOf(node *ast.Node) bool {
 	parent := node.Parent
-	return parent != nil && (parent.Kind == ast.KindPropertyAccessExpression || parent.Kind == ast.KindElementAccessExpression) && parent.Expression() == node && l.enumMember(parent) != nil
+	return parent != nil &&
+		(parent.Kind == ast.KindPropertyAccessExpression || parent.Kind == ast.KindElementAccessExpression) &&
+		parent.Expression() == node &&
+		l.enumMember(parent) != nil
 }
 
 func (l *lowering) enumDeclaration(node *ast.Node) ([]ir.Statement, error) {
-	built, err := l.enumObjectBuilt(node)
-	if err != nil || !built {
-		return nil, err
+	built, enumObjectBuiltError := l.enumObjectBuilt(node)
+	if enumObjectBuiltError != nil || !built {
+		return nil, enumObjectBuiltError
 	}
-	fields, err := l.enumFields(node)
-	if err != nil {
-		return nil, err
+	fields, enumFieldsError := l.enumFields(node)
+	if enumFieldsError != nil {
+		return nil, enumFieldsError
 	}
-	local, err := l.enumLocal(node)
-	if err != nil {
-		return nil, err
+	local, enumLocalError := l.enumLocal(node)
+	if enumLocalError != nil {
+		return nil, enumLocalError
 	}
 	return []ir.Statement{ir.Declare{Local: local, Value: ir.ObjectLiteral{Fields: fields}}}, nil
 }
 
 func (l *lowering) enumExpression(node *ast.Node) (ir.Expression, bool, error) {
 	member := l.enumMember(node)
-	if member != nil && node.Kind == ast.KindElementAccessExpression && !ast.HasSyntacticModifier(member.Parent, ast.ModifierFlagsConst) {
+	if member != nil &&
+		node.Kind == ast.KindElementAccessExpression &&
+		!ast.HasSyntacticModifier(member.Parent, ast.ModifierFlagsConst) {
 		index := ast.SkipParentheses(node.AsElementAccessExpression().ArgumentExpression)
 		if index.Kind != ast.KindStringLiteral && index.Kind != ast.KindNoSubstitutionTemplateLiteral {
 			member = nil
@@ -359,11 +391,11 @@ func (l *lowering) enumExpression(node *ast.Node) (ir.Expression, bool, error) {
 	if member != nil {
 		declaration := member.Parent
 		if ast.HasSyntacticModifier(declaration, ast.ModifierFlagsConst) {
-			value, err := l.enumConstant(member)
-			if err == nil {
+			value, enumConstantError := l.enumConstant(member)
+			if enumConstantError == nil {
 				value = l.namespaceReadyValue(node, value)
 			}
-			return value, true, err
+			return value, true, enumConstantError
 		}
 		var receiver *ast.Node
 		switch node.Kind {
@@ -374,11 +406,11 @@ func (l *lowering) enumExpression(node *ast.Node) (ir.Expression, bool, error) {
 		default:
 			return nil, true, l.notYet(node, "an unqualified enum member outside its initializer")
 		}
-		object, err := l.expression(receiver)
-		if err != nil {
-			return nil, true, err
+		object, expressionError := l.expression(receiver)
+		if expressionError != nil {
+			return nil, true, expressionError
 		}
-		of, err := l.typeOf(member.Name())
+		of, typeOfError := l.typeOf(member.Name())
 		optional := false
 		if node.Kind == ast.KindPropertyAccessExpression {
 			optional = node.AsPropertyAccessExpression().QuestionDotToken != nil
@@ -389,7 +421,7 @@ func (l *lowering) enumExpression(node *ast.Node) (ir.Expression, bool, error) {
 		if !optional && node.Flags&ast.NodeFlagsOptionalChain != 0 {
 			return nil, true, l.notYet(node, "an optional enum chain longer than one step")
 		}
-		return ir.Property{Object: object, Name: member.Name().Text(), Of: of, Optional: optional}, true, err
+		return ir.Property{Object: object, Name: member.Name().Text(), Of: of, Optional: optional}, true, typeOfError
 	}
 	if node.Kind != ast.KindElementAccessExpression {
 		return nil, false, nil
@@ -399,31 +431,35 @@ func (l *lowering) enumExpression(node *ast.Node) (ir.Expression, bool, error) {
 	if declaration == nil {
 		return nil, false, nil
 	}
-	fields, err := l.enumFields(declaration)
-	if err != nil {
-		return nil, true, err
+	fields, enumFieldsError := l.enumFields(declaration)
+	if enumFieldsError != nil {
+		return nil, true, enumFieldsError
 	}
-	object, err := l.expression(access.Expression)
-	if err != nil {
-		return nil, true, err
+	object, expressionError := l.expression(access.Expression)
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
-	key, err := l.expression(access.ArgumentExpression)
-	if err != nil {
-		return nil, true, err
+	key, expressionError := l.expression(access.ArgumentExpression)
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
 	if key.Type() != ir.Number && key.Type() != ir.String {
 		return nil, true, l.notYet(node, "an enum index other than number or string")
 	}
-	of, err := l.typeOf(node)
-	if err != nil {
-		return nil, true, err
+	of, typeOfError := l.typeOf(node)
+	if typeOfError != nil {
+		return nil, true, typeOfError
 	}
 	// A helper evaluates receiver and key exactly once, including a key with side effects. It
 	// uses ordinary IR so flow, ownership, regions and reuse all see its reads and returns.
 	index := len(l.result.Functions)
 	objectLocal := len(l.result.Locals)
 	keyLocal := objectLocal + 1
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: "enum_object", Type: ir.Object, Function: index}, ir.Local{Name: "enum_key", Type: key.Type(), Function: index})
+	l.result.Locals = append(
+		l.result.Locals,
+		ir.Local{Name: "enum_object", Type: ir.Object, Function: index},
+		ir.Local{Name: "enum_key", Type: key.Type(), Function: index},
+	)
 	readObject := ir.Read{Local: objectLocal, Of: ir.Object}
 	readKey := ir.Read{Local: keyLocal, Of: key.Type()}
 	var tested ir.Expression = readKey
@@ -435,7 +471,16 @@ func (l *lowering) enumExpression(node *ast.Node) (ir.Expression, bool, error) {
 		if field.Value.Type() != of.Present() {
 			continue
 		}
-		function.Body = append(function.Body, ir.If{Condition: ir.Binary{Operator: ir.Equal, Left: tested, Right: ir.StringConstant{Index: l.constant(field.Name)}}, Then: []ir.Statement{ir.Return{Value: fit(ir.Property{Object: readObject, Name: field.Name, Of: field.Value.Type()}, of)}}})
+		function.Body = append(function.Body, ir.If{
+			Condition: ir.Binary{
+				Operator: ir.Equal,
+				Left:     tested,
+				Right:    ir.StringConstant{Index: l.constant(field.Name)},
+			},
+			Then: []ir.Statement{
+				ir.Return{Value: fit(ir.Property{Object: readObject, Name: field.Name, Of: field.Value.Type()}, of)},
+			},
+		})
 	}
 	if !of.IsReference() && !of.IsMaybe() {
 		keys := l.checker.GetTypeAtLocation(access.ArgumentExpression)
@@ -458,7 +503,10 @@ func (l *lowering) enumExpression(node *ast.Node) (ir.Expression, bool, error) {
 				return nil, true, l.notYet(node, "an enum lookup without a proven member name")
 			}
 		}
-		function.Body = append(function.Body, ir.Panic{Message: ir.StringConstant{Index: l.constant("enum member name outside its proven union")}})
+		function.Body = append(
+			function.Body,
+			ir.Panic{Message: ir.StringConstant{Index: l.constant("enum member name outside its proven union")}},
+		)
 	} else {
 		function.Body = append(function.Body, ir.Return{Value: ir.Undefined{Of: of}})
 	}
@@ -481,36 +529,55 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
 					}
 				}
 			}
-			if objectMembers > 1 && declared.Flags()&checker.TypeFlagsUnion != 0 && observed != declared && refinedToObject(observed) {
+			if objectMembers > 1 &&
+				declared.Flags()&checker.TypeFlagsUnion != 0 &&
+				observed != declared &&
+				refinedToObject(observed) {
 				// A union whose tags can lie is admitted only where every step that refined this read
 				// is a comparison its incoming type proves (enum_tag_flow.go).
 				hazard := l.enumTagHazardOf(declared, "")
 				// A property's refused read is its name, which has no flow node: the walk follows the
 				// access the checker narrows (#qeanycw).
 				reference := node
-				if parent := node.Parent; parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Name() == node {
+				if parent := node.Parent; parent != nil &&
+					parent.Kind == ast.KindPropertyAccessExpression &&
+					parent.AsPropertyAccessExpression().Name() == node {
 					reference = parent
 				}
 				if hazard != enumTagNoHazard && !l.enumTagRefinementProven(reference, declared) {
 					if hazard == enumTagSharedValueHazard {
-						return &Refused{Where: l.program.Where(node), What: "an object refinement by tags from different numeric enums that share a value", Fix: "give the members tags from one enum, or tags with distinct values (adamic/enum-tag)"}
+						return &Refused{
+							Where: l.program.Where(node),
+							What:  "an object refinement by tags from different numeric enums that share a value",
+							Fix:   "give the members tags from one enum, or tags with distinct values (adamic/enum-tag)",
+						}
 					}
-					return &Refused{Where: l.program.Where(node), What: "an object refinement using an open numeric enum as a literal tag", Fix: "use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"}
+					return &Refused{
+						Where: l.program.Where(node),
+						What:  "an object refinement using an open numeric enum as a literal tag",
+						Fix:   "use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)",
+					}
 				}
 			}
 		}
 	}
 
-	if err := l.enumObjectView(node); err != nil {
-		return err
+	if enumObjectViewError := l.enumObjectView(node); enumObjectViewError != nil {
+		return enumObjectViewError
 	}
 	if node.Kind == ast.KindCallExpression {
 		call := node.AsCallExpression()
 		callee := ast.SkipParentheses(call.Expression)
 		if callee.Kind == ast.KindPropertyAccessExpression && len(call.Arguments.Nodes) > 0 {
 			access := callee.AsPropertyAccessExpression()
-			if access.Name().Text() == "assign" && l.isLibraryGlobal(access.Expression, "Object") && l.enumObject(call.Arguments.Nodes[0]) != nil {
-				return &Refused{Where: l.program.Where(node), What: "a write into an enum runtime object; named constants and reverse lookup must stay consistent", Fix: "copy the enum into an ordinary object before writing it (adamic/enum-object)"}
+			if access.Name().Text() == "assign" &&
+				l.isLibraryGlobal(access.Expression, "Object") &&
+				l.enumObject(call.Arguments.Nodes[0]) != nil {
+				return &Refused{
+					Where: l.program.Where(node),
+					What:  "a write into an enum runtime object; named constants and reverse lookup must stay consistent",
+					Fix:   "copy the enum into an ordinary object before writing it (adamic/enum-object)",
+				}
 			}
 		}
 	}
@@ -523,7 +590,9 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
 		// refuses any other value use of it (TS2475). So one inside a function or block, as debug.ts's
 		// formatControlFlowGraph declares BoxCharacter and Connection, lowers as one at module scope
 		// does (#xpjcdpf). A runtime enum there would need its object made each time its block runs.
-		if node.Parent.Kind != ast.KindSourceFile && node.Parent.Kind != ast.KindModuleBlock && !ast.HasSyntacticModifier(node, ast.ModifierFlagsConst) {
+		if node.Parent.Kind != ast.KindSourceFile &&
+			node.Parent.Kind != ast.KindModuleBlock &&
+			!ast.HasSyntacticModifier(node, ast.ModifierFlagsConst) {
 			return l.notYet(node, "an enum inside a function or block; declare it at module scope")
 		}
 		symbol := l.symbol(node.Name())
@@ -531,8 +600,8 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
 			return l.notYet(node, "merged enum declarations; put the members in one declaration")
 		}
 		// Signed masks, including 1 << 31, are ordinary numeric enum constants.
-		_, err := l.enumFields(node)
-		return err
+		_, enumFieldsError := l.enumFields(node)
+		return enumFieldsError
 	}
 	var updated *ast.Node
 	switch node.Kind {
@@ -551,17 +620,28 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
 	}
 	if updated != nil {
 		if slot := l.literalUpdateSlot(updated); slot != nil {
-			return &Refused{Where: l.program.Where(node), What: "an unproven value assigned to a numeric literal or enum member slot " + l.checker.TypeToString(slot), Fix: "assign this slot's literal constant, or widen the slot to the whole numeric enum or number (adamic/enum-literal)"}
+			return &Refused{
+				Where: l.program.Where(node),
+				What: "an unproven value assigned to a numeric literal or enum member slot " +
+					l.checker.TypeToString(slot),
+				Fix: "assign this slot's literal constant, or widen the slot to the whole numeric enum or number (adamic/enum-literal)",
+			}
 		}
 	}
-	if updated != nil && l.checker.GetTypeAtLocation(updated).Flags()&checker.TypeFlagsEnumLike != 0 && !l.numericEnum(l.enumIdentity(l.checker.GetTypeAtLocation(updated))) {
+	if updated != nil &&
+		l.checker.GetTypeAtLocation(updated).Flags()&checker.TypeFlagsEnumLike != 0 &&
+		!l.numericEnum(l.enumIdentity(l.checker.GetTypeAtLocation(updated))) {
 		if l.flagUpdate(node, updated) {
 			return nil
 		}
 		if l.flagEnum(l.enumIdentity(l.checker.GetTypeAtLocation(updated))) {
 			return l.flagWriteRefusal(node, l.checker.GetTypeAtLocation(updated))
 		}
-		return &Refused{Where: l.program.Where(node), What: "arithmetic assigned back into an enum; the result need not be one of its members", Fix: "assign a declared member, or keep arithmetic results in a number (adamic/enum-members)"}
+		return &Refused{
+			Where: l.program.Where(node),
+			What:  "arithmetic assigned back into an enum; the result need not be one of its members",
+			Fix:   "assign a declared member, or keep arithmetic results in a number (adamic/enum-members)",
+		}
 	}
 	return nil
 }
@@ -684,7 +764,8 @@ func (l *lowering) literalUpdateSlot(updated *ast.Node) *checker.Type {
 	}
 	for _, slot := range slots {
 		slot = l.checker.GetNonNullableType(slot)
-		if (slot.Flags()&checker.TypeFlagsNumberLiteral != 0 || l.numericEnum(l.enumIdentity(slot))) && !l.openNumericEnumType(slot) {
+		if (slot.Flags()&checker.TypeFlagsNumberLiteral != 0 || l.numericEnum(l.enumIdentity(slot))) &&
+			!l.openNumericEnumType(slot) {
 			return slot
 		}
 	}
@@ -712,7 +793,11 @@ func (l *lowering) enumSwitch(node *ast.Node) error {
 		}
 	}
 	if l.flagEnum(l.enumIdentity(proven)) {
-		return &Refused{Where: l.program.Where(node), What: "a flag-enum switch without a default", Fix: "add a default for combinations and zero (adamic/enum-flags)"}
+		return &Refused{
+			Where: l.program.Where(node),
+			What:  "a flag-enum switch without a default",
+			Fix:   "add a default for combinations and zero (adamic/enum-flags)",
+		}
 	}
 	members := []*checker.Type{proven}
 	if proven.Flags()&checker.TypeFlagsUnion != 0 {
@@ -723,7 +808,11 @@ func (l *lowering) enumSwitch(node *ast.Node) error {
 			return l.notYet(node, "a switch on a computed enum member")
 		}
 		if !covered[member.AsLiteralType().Value()] {
-			return &Refused{Where: l.program.Where(node), What: "a non-exhaustive enum switch; missing " + l.checker.TypeToString(member), Fix: "add the missing member's case or a default"}
+			return &Refused{
+				Where: l.program.Where(node),
+				What:  "a non-exhaustive enum switch; missing " + l.checker.TypeToString(member),
+				Fix:   "add the missing member's case or a default",
+			}
 		}
 	}
 	return nil
@@ -734,7 +823,8 @@ func (l *lowering) enumSwitch(node *ast.Node) error {
 func (l *lowering) enumDefaultUnreachable(node *ast.Node) bool {
 	statement := node.AsSwitchStatement()
 	proven := l.checker.GetTypeAtLocation(statement.Expression)
-	return l.enumSwitchCovered(node) && (!l.numericEnum(l.enumIdentity(proven)) || l.enumMemberOrigin(statement.Expression, l.enumIdentity(proven), map[*ast.Node]bool{}))
+	return l.enumSwitchCovered(node) && (!l.numericEnum(l.enumIdentity(proven)) ||
+		l.enumMemberOrigin(statement.Expression, l.enumIdentity(proven), map[*ast.Node]bool{}))
 }
 
 func (l *lowering) enumSwitchCovered(node *ast.Node) bool {

@@ -17,9 +17,9 @@ func runDecodeASCIIUnit(test *testing.T, target string, index int) {
 	if target == "wasi" && os.Getenv("ADAMIC_TEST_WASI") != "1" {
 		test.Skip("set ADAMIC_TEST_WASI=1")
 	}
-	repository, err := filepath.Abs("../..")
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs("../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	phase := time.Now()
 	corpusDirectory := decodeASCIICorpus(test)
@@ -32,9 +32,9 @@ func runDecodeASCIIUnit(test *testing.T, target string, index int) {
 	run := func(test *testing.T, name string, args ...string) []byte {
 		test.Helper()
 		command := programCommand(ctx, repository, name, args...)
-		output, err := command.CombinedOutput()
-		if err != nil {
-			test.Fatalf("%s %v: %v\n%s", name, args, err, output)
+		output, combinedOutputError := command.CombinedOutput()
+		if combinedOutputError != nil {
+			test.Fatalf("%s %v: %v\n%s", name, args, combinedOutputError, output)
 		}
 		return output
 	}

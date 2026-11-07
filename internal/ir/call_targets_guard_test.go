@@ -90,18 +90,18 @@ var targetReaders = map[string]targetReader{
 
 func checkCallTargetReaders(test *testing.T, selected string) {
 	test.Helper()
-	root, err := filepath.Abs("../..")
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs("../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	listingProduct := callTargetExports(test, selected)
-	encoded, err := os.ReadFile(filepath.Join(listingProduct, "listing.json"))
-	if err != nil {
-		test.Fatal(err)
+	encoded, readError := os.ReadFile(filepath.Join(listingProduct, "listing.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var packages []buildcache.ListedPackage
-	if err := json.Unmarshal(encoded, &packages); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(encoded, &packages); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	exports := map[string]string{}
 	for index, pkg := range packages {
@@ -128,9 +128,9 @@ func checkCallTargetReaders(test *testing.T, selected string) {
 		"gc",
 		func(path string) (io.ReadCloser, error) { return os.Open(exports[path]) },
 	)
-	irPackage, err := imports.Import("github.com/system-inc/adamic/internal/ir")
-	if err != nil {
-		test.Fatal(err)
+	irPackage, importError := imports.Import("github.com/system-inc/adamic/internal/ir")
+	if importError != nil {
+		test.Fatal(importError)
 	}
 	protected := map[types.Object]string{}
 	for _, field := range []string{"Call.Function", "CallClosure.Closure", "ArraySort.Comparator"} {
@@ -166,16 +166,16 @@ func checkCallTargetReaders(test *testing.T, selected string) {
 			}
 			files := []*ast.File{}
 			for _, name := range names {
-				file, err := parser.ParseFile(fset, filepath.Join(pkg.Dir, name), nil, 0)
-				if err != nil {
-					test.Fatal(err)
+				file, parseFileError := parser.ParseFile(fset, filepath.Join(pkg.Dir, name), nil, 0)
+				if parseFileError != nil {
+					test.Fatal(parseFileError)
 				}
 				files = append(files, file)
 			}
 			info := &types.Info{Selections: map[*ast.SelectorExpr]*types.Selection{}}
 			config := types.Config{Importer: imports}
-			if _, err := config.Check(packagePath, fset, files, info); err != nil {
-				test.Fatal(err)
+			if _, checkError := config.Check(packagePath, fset, files, info); checkError != nil {
+				test.Fatal(checkError)
 			}
 			for _, file := range files {
 				for _, declaration := range file.Decls {
@@ -213,9 +213,9 @@ func checkCallTargetReaders(test *testing.T, selected string) {
 						if writes {
 							return true
 						}
-						path, err := filepath.Rel(root, fset.Position(selector.Pos()).Filename)
-						if err != nil {
-							test.Fatal(err)
+						path, relativePathError := filepath.Rel(root, fset.Position(selector.Pos()).Filename)
+						if relativePathError != nil {
+							test.Fatal(relativePathError)
 						}
 						key := filepath.ToSlash(path) + ":" + functionName + ":" + field
 						seen[key] = true

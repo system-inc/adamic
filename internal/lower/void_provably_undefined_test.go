@@ -48,11 +48,12 @@ async function done(): Promise<void> {}
 		for _, extension := range []string{".a", ".ts"} {
 			test.Run(probe.name+extension, func(test *testing.T) {
 				test.Parallel()
-				_, err := lowerVoidProbe(test, extension, probe.source)
+				_, lowerVoidProbeError := lowerVoidProbe(test, extension, probe.source)
 				var refused *Refused
-				if !errors.As(err, &refused) || !strings.Contains(refused.Fix, "adamic/no-void-widening") &&
-					!strings.Contains(refused.Fix, "adamic/no-void-read") {
-					test.Fatalf("want it refused as a void function seen wider, got %v", err)
+				if !errors.As(lowerVoidProbeError, &refused) ||
+					!strings.Contains(refused.Fix, "adamic/no-void-widening") &&
+						!strings.Contains(refused.Fix, "adamic/no-void-read") {
+					test.Fatalf("want it refused as a void function seen wider, got %v", lowerVoidProbeError)
 				}
 			})
 		}
@@ -75,10 +76,11 @@ console.log("after");`},
 		for _, extension := range []string{".a", ".ts"} {
 			test.Run(probe.name+extension, func(test *testing.T) {
 				test.Parallel()
-				_, err := lowerVoidProbe(test, extension, probe.source)
+				_, lowerVoidProbeError := lowerVoidProbe(test, extension, probe.source)
 				var refused *Refused
-				if errors.As(err, &refused) && strings.Contains(refused.Fix, "adamic/no-void-widening") {
-					test.Fatalf("want the callback admitted, got %v", err)
+				if errors.As(lowerVoidProbeError, &refused) &&
+					strings.Contains(refused.Fix, "adamic/no-void-widening") {
+					test.Fatalf("want the callback admitted, got %v", lowerVoidProbeError)
 				}
 			})
 		}

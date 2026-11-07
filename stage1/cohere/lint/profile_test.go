@@ -20,8 +20,8 @@ func TestProfileArtifacts(test *testing.T) {
 	if directory == "" {
 		test.Skip("set ADAMIC_LINT_PROFILE_DIR to a scratch directory")
 	}
-	if err := os.MkdirAll(directory, 0755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	sourceRoot := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
 	if sourceRoot == "" {
@@ -34,73 +34,81 @@ func TestProfileArtifacts(test *testing.T) {
 	copyPort(test, directory, "", "")
 	prepareRegistry(test, directory)
 	var files []string
-	err := filepath.WalkDir(filepath.Join(
+	walkError := filepath.WalkDir(filepath.Join(
 		sourceRoot,
 		"src/compiler",
-	), func(path string, entry os.DirEntry, err error) error {
-		if err == nil && !entry.IsDir() && strings.HasSuffix(path, ".ts") {
+	), func(path string, entry os.DirEntry, pathError error) error {
+		if pathError == nil && !entry.IsDir() && strings.HasSuffix(path, ".ts") {
 			files = append(files, path)
 		}
-		return err
+		return pathError
 	})
-	if err != nil {
-		test.Fatal(err)
+	if walkError != nil {
+		test.Fatal(walkError)
 	}
 	var manifest strings.Builder
 	for _, path := range files {
 		manifest.WriteString(path + "\n")
 	}
-	if err := os.WriteFile(filepath.Join(directory, "compiler.txt"), []byte(manifest.String()), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(
+		filepath.Join(directory, "compiler.txt"),
+		[]byte(manifest.String()),
+		0644,
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
-	oracle, err := os.ReadFile(lintGoOracleProduct(test))
-	if err != nil {
-		test.Fatal(err)
+	oracle, readError := os.ReadFile(lintGoOracleProduct(test))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	if err := executable.Write(filepath.Join(directory, "oracle"), oracle); err != nil {
-		test.Fatal(err)
+	if writeError := executable.Write(filepath.Join(directory, "oracle"), oracle); writeError != nil {
+		test.Fatal(writeError)
 	}
 	buildProfile(test, directory)
 }
 
 func buildProfile(test *testing.T, directory string) {
 	test.Helper()
-	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{filepath.Join(directory, "main.ts")})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		test.Fatal(err)
+	lowered, lowerError := lower.Lower(context.Background(), program)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	source := native.C(lowered)
-	if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if err := native.Build(source, filepath.Join(directory, "scanner"), native.Options{}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(source, filepath.Join(directory, "scanner"), native.Options{}); buildError != nil {
+		test.Fatal(buildError)
 	}
-	if err := native.Build(source, filepath.Join(directory, "counted"), native.Options{Count: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(
+		source,
+		filepath.Join(directory, "counted"),
+		native.Options{Count: true},
+	); buildError != nil {
+		test.Fatal(buildError)
 	}
 	// Reads: internal/native/runtime/*.[ch]
 	runtime := filepath.Join(repository, "internal/native/runtime")
-	entries, err := os.ReadDir(runtime)
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(runtime)
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	units := []string{filepath.Join(directory, "main.c")}
 	for _, entry := range entries {
 		if !strings.HasSuffix(entry.Name(), ".c") && !strings.HasSuffix(entry.Name(), ".h") {
 			continue
 		}
-		data, err := os.ReadFile(filepath.Join(runtime, entry.Name()))
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(filepath.Join(runtime, entry.Name()))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		path := filepath.Join(directory, entry.Name())
-		if err := os.WriteFile(path, data, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, data, 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		if strings.HasSuffix(entry.Name(), ".c") {
 			units = append(units, path)
@@ -142,28 +150,28 @@ func TestProfileCompilation_000(test *testing.T) {
 		test.Fatal(diff)
 	}
 	want = countedWant
-	output, err := os.CreateTemp(test.TempDir(), "counted-output-")
-	if err != nil {
-		test.Fatal(err)
+	output, temporaryFileError := os.CreateTemp(test.TempDir(), "counted-output-")
+	if temporaryFileError != nil {
+		test.Fatal(temporaryFileError)
 	}
 	defer output.Close()
-	stats, err := os.CreateTemp(test.TempDir(), "counted-stats-")
-	if err != nil {
-		test.Fatal(err)
+	stats, temporaryFileError := os.CreateTemp(test.TempDir(), "counted-stats-")
+	if temporaryFileError != nil {
+		test.Fatal(temporaryFileError)
 	}
 	defer stats.Close()
 	command := compilationCommand(test, filepath.Join(products, "counted"), "--manifest", path, "--count")
 	command.Stdout, command.Stderr = output, stats
-	if err := command.Run(); err != nil {
-		test.Fatal(err)
+	if runError := command.Run(); runError != nil {
+		test.Fatal(runError)
 	}
-	got, err = os.ReadFile(output.Name())
-	if err != nil {
-		test.Fatal(err)
+	got, readError := os.ReadFile(output.Name())
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	counters, err := os.ReadFile(stats.Name())
-	if err != nil {
-		test.Fatal(err)
+	counters, readError := os.ReadFile(stats.Name())
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if !strings.HasPrefix(string(counters), "adamic: counts: allocations ") {
 		test.Fatalf("unexpected counted stderr: %s", counters)
@@ -193,21 +201,21 @@ func TestProfileSnapshotsAgree(test *testing.T) {
 		filepath.Join(os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"), "src/compiler"),
 		filepath.Join(repository, "stage1"),
 	} {
-		err := filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {
-			if err != nil {
-				return err
+		walkError := filepath.WalkDir(root, func(path string, entry os.DirEntry, pathError error) error {
+			if pathError != nil {
+				return pathError
 			}
 			if !entry.IsDir() && strings.HasSuffix(path, ".ts") {
-				absolute, err := filepath.Abs(path)
-				if err != nil {
-					return err
+				absolute, absolutePathError := filepath.Abs(path)
+				if absolutePathError != nil {
+					return absolutePathError
 				}
 				rows = append(rows, absolute)
 			}
 			return nil
 		})
-		if err != nil {
-			test.Fatal(err)
+		if walkError != nil {
+			test.Fatal(walkError)
 		}
 	}
 	oracle := lintGoOracleProduct(test)

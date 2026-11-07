@@ -47,9 +47,9 @@ func volumeProfileControlsManifest(h *harness) string {
 
 func volumeProfileHarness(test *testing.T) *harness {
 	test.Helper()
-	repository, err := filepath.Abs("../../..")
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs("../../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return &harness{t: test, repository: repository, directory: test.TempDir()}
 }
@@ -92,9 +92,9 @@ func typeAwareTrackedTypeScript(repository string, roots ...string) ([]string, e
 			err = filepath.WalkDir(filepath.Join(
 				repository,
 				root,
-			), func(path string, entry fs.DirEntry, err error) error {
-				if err != nil {
-					return err
+			), func(path string, entry fs.DirEntry, pathError error) error {
+				if pathError != nil {
+					return pathError
 				}
 				// Only what the tree carries: lint's tests write stage1/cohere/lint/.generated/registry.ts into a
 				// checkout, which a runner's source never has, and keyed it on Workshop alone (Planner's diff of
@@ -106,9 +106,9 @@ func typeAwareTrackedTypeScript(repository string, roots ...string) ([]string, e
 					return nil
 				}
 				if !entry.IsDir() && strings.HasSuffix(path, ".ts") {
-					relative, err := filepath.Rel(repository, path)
-					if err != nil {
-						return err
+					relative, relativePathError := filepath.Rel(repository, path)
+					if relativePathError != nil {
+						return relativePathError
 					}
 					files = append(files, filepath.ToSlash(relative))
 				}
@@ -129,14 +129,14 @@ func typeAwareTrackedTypeScript(repository string, roots ...string) ([]string, e
 func typeAwareCompilerKey(h *harness, inputs *buildcache.Inputs, sanitize bool) {
 	h.t.Helper()
 	inputs.Files = append(inputs.Files, typeAwareCompilerFiles...)
-	files, err := typeAwareTrackedTypeScript(
+	files, typeAwareTrackedTypeScriptError := typeAwareTrackedTypeScript(
 		h.repository,
 		"stage1/cohere/typeaware",
 		"stage1/cohere/lint",
 		"stage1/typescript",
 	)
-	if err != nil {
-		h.t.Fatal(err)
+	if typeAwareTrackedTypeScriptError != nil {
+		h.t.Fatal(typeAwareTrackedTypeScriptError)
 	}
 	inputs.Files = append(inputs.Files, files...)
 	// cgo's C compiler: the CC toolchain.Env runs the archive's go build with (clang where the caller sets none, as on
@@ -210,18 +210,20 @@ func volumeProfileNative(
 func volumeProfileControlsLowered(h *harness, stage0 string) string {
 	inputs := volumeProfileNativeInputs(h, stage0, "", false, "typeaware volume lowered")
 	directory := buildcache.Product(h.t, inputs, func(directory string) error {
-		program, err := load.Load([]string{filepath.Join(h.repository, "stage1/cohere/typeaware/volume_suite.ts")})
-		if err != nil {
-			return err
+		program, loadError := load.Load(
+			[]string{filepath.Join(h.repository, "stage1/cohere/typeaware/volume_suite.ts")},
+		)
+		if loadError != nil {
+			return loadError
 		}
 		program.EnableTSGo()
-		ir, err := lower.Lower(context.Background(), program)
-		if err != nil {
-			return err
+		ir, lowerError := lower.Lower(context.Background(), program)
+		if lowerError != nil {
+			return lowerError
 		}
-		source, err := native.TSGoC(ir)
-		if err != nil {
-			return err
+		source, tsGoCError := native.TSGoC(ir)
+		if tsGoCError != nil {
+			return tsGoCError
 		}
 		return os.WriteFile(filepath.Join(directory, "volume.c"), []byte(source), 0600)
 	})
@@ -278,13 +280,18 @@ func volumeProfileControlsBinary(h *harness, stage0, archive string, sanitize bo
 	}
 	lowered := volumeProfileControlsLowered(h, stage0)
 	binary := volumeProfileNative(h, stage0, archive, sanitize, name, func(local *harness) string {
-		source, err := os.ReadFile(lowered)
-		if err != nil {
-			test.Fatal(err)
+		source, readError := os.ReadFile(lowered)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		path := filepath.Join(local.directory, "volume")
-		if err := typeAwareNativeBuild(string(source), path, archive, sanitize); err != nil {
-			test.Fatal(err)
+		if typeAwareNativeBuildError := typeAwareNativeBuild(
+			string(source),
+			path,
+			archive,
+			sanitize,
+		); typeAwareNativeBuildError != nil {
+			test.Fatal(typeAwareNativeBuildError)
 		}
 		return path
 	})

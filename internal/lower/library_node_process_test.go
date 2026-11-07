@@ -15,10 +15,10 @@ func TestNodeProcessPerformanceAliasABI(test *testing.T) {
 	} {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, "import {performance} from 'node:perf_hooks'; "+source)
+			_, lowerSourceError := lowerSource(test, "import {performance} from 'node:perf_hooks'; "+source)
 			var missing *NotYet
-			if !errors.As(err, &missing) || !strings.Contains(missing.What, "performance.") {
-				test.Fatalf("want performance ABI refusal, got %v", err)
+			if !errors.As(lowerSourceError, &missing) || !strings.Contains(missing.What, "performance.") {
+				test.Fatalf("want performance ABI refusal, got %v", lowerSourceError)
 			}
 		})
 	}
@@ -28,8 +28,11 @@ func TestNodeProcessPerformanceAliasABI(test *testing.T) {
 	} {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			if _, err := lowerSource(test, "import {performance} from 'node:perf_hooks'; "+source); err != nil {
-				test.Fatal(err)
+			if _, lowerSourceError := lowerSource(
+				test,
+				"import {performance} from 'node:perf_hooks'; "+source,
+			); lowerSourceError != nil {
+				test.Fatal(lowerSourceError)
 			}
 		})
 	}
@@ -40,7 +43,7 @@ func TestNodeProcessDeferredSchedulingStaysLoud(test *testing.T) {
 	for _, source := range []string{"process.nextTick(()=>{});", "setTimeout(()=>{},0);"} {
 		test.Run(source, func(test *testing.T) {
 			test.Parallel()
-			if _, err := lowerSource(test, "import 'node:process'; "+source); err == nil {
+			if _, lowerSourceError := lowerSource(test, "import 'node:process'; "+source); lowerSourceError == nil {
 				test.Fatal("unsupported host operation silently compiled")
 			}
 		})
@@ -56,8 +59,8 @@ func TestNodeProcessPerformanceStructuralBoundaries(test *testing.T) {
 	} {
 		test.Run(source, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, "import {performance} from 'node:perf_hooks'; "+source)
-			if err == nil {
+			_, lowerSourceError := lowerSource(test, "import {performance} from 'node:perf_hooks'; "+source)
+			if lowerSourceError == nil {
 				test.Fatal("performance mutation/options escaped ABI proof")
 			}
 		})

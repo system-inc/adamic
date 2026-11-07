@@ -30,19 +30,25 @@ func checkRuntimeReferenceMutantCoverage(shards []runtimeReferenceMutant) error 
 
 func TestRuntimeReferenceShardCoverage(test *testing.T) {
 	test.Parallel()
-	source, err := os.ReadFile("parser.go")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("parser.go")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	shards := runtimeReferenceMutantShards(test, string(source))
-	if err := checkRuntimeReferenceMutantCoverage(shards); err != nil {
-		test.Fatal(err)
+	if checkRuntimeReferenceMutantCoverageError := checkRuntimeReferenceMutantCoverage(
+		shards,
+	); checkRuntimeReferenceMutantCoverageError != nil {
+		test.Fatal(checkRuntimeReferenceMutantCoverageError)
 	}
-	if err := checkRuntimeReferenceMutantCoverage(shards[1:]); err == nil {
+	if checkRuntimeReferenceMutantCoverageError := checkRuntimeReferenceMutantCoverage(
+		shards[1:],
+	); checkRuntimeReferenceMutantCoverageError == nil {
 		test.Fatal("dropped mutant survived")
 	}
 	duplicated := append(append([]runtimeReferenceMutant{}, shards...), shards[0])
-	if err := checkRuntimeReferenceMutantCoverage(duplicated); err == nil {
+	if checkRuntimeReferenceMutantCoverageError := checkRuntimeReferenceMutantCoverage(
+		duplicated,
+	); checkRuntimeReferenceMutantCoverageError == nil {
 		test.Fatal("duplicate mutant survived")
 	}
 	test.Logf("all %d unchanged mutants scheduled exactly once", len(shards))

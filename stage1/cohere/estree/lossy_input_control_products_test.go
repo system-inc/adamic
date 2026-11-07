@@ -54,8 +54,8 @@ func TestLossyInputControl(test *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	path := filepath.Join(test.TempDir(), "malformed.ts")
-	if err := os.WriteFile(path, []byte{47, 47, 240, 144, 128, 10, 120, 59}, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte{47, 47, 240, 144, 128, 10, 120, 59}, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	want := threePortExecute(test, ctx, lossyInputControlShared.oracle, path)
 	for name, got := range map[string][]byte{

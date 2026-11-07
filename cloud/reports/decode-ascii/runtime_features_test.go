@@ -17,13 +17,13 @@ import (
 // Not parallel: main reads process-wide os.Args.
 func TestRuntimeFeaturesMatchNode(test *testing.T) {
 	fixture := "../../../internal/oracle/testdata/closure_convention_nested.a"
-	program, err := load.Load([]string{fixture})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{fixture})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		test.Fatal(err)
+	lowered, lowerError := lower.Lower(context.Background(), program)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	if !strings.Contains(native.C(lowered), "#define ADAMIC_CLOSURE_CONVENTION 1\n") {
 		test.Fatal("fixture does not enable closure convention")
@@ -35,19 +35,19 @@ func TestRuntimeFeaturesMatchNode(test *testing.T) {
 	main()
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
-	actual, err := exec.CommandContext(ctx, binary).CombinedOutput()
-	if err != nil {
-		test.Fatalf("native: %v: %s", err, actual)
+	actual, combinedOutputError := exec.CommandContext(ctx, binary).CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("native: %v: %s", combinedOutputError, actual)
 	}
-	expected, err := exec.CommandContext(
+	expected, combinedOutputError := exec.CommandContext(
 		ctx,
 		"node",
 		"--disable-warning=ExperimentalWarning",
 		"../../../oracle/node.mjs",
 		fixture,
 	).CombinedOutput()
-	if err != nil {
-		test.Fatalf("Node: %v: %s", err, expected)
+	if combinedOutputError != nil {
+		test.Fatalf("Node: %v: %s", combinedOutputError, expected)
 	}
 	if string(actual) != string(expected) {
 		test.Fatalf("native %q != Node %q", actual, expected)

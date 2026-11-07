@@ -47,13 +47,16 @@ func (l *lowering) recordDeclaredKeyRefusal(node *ast.Node) error {
 	if !strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".a") {
 		return nil
 	}
-	if err := l.declaredKeyWrite(node); err != nil {
-		return err
+	if declaredKeyWriteError := l.declaredKeyWrite(node); declaredKeyWriteError != nil {
+		return declaredKeyWriteError
 	}
 	l.declaredKeys = true
 	defer func() { l.declaredKeys = false }()
-	if err := l.typeArgumentBindings(node, l.declaredKeyBinding); err != nil {
-		return err
+	if typeArgumentBindingsError := l.typeArgumentBindings(
+		node,
+		l.declaredKeyBinding,
+	); typeArgumentBindingsError != nil {
+		return typeArgumentBindingsError
 	}
 	if source, target := l.recordViewSite(node); source != nil {
 		// recordStorageView's own site and its own relation: the whole value seen as the slot, a
@@ -66,8 +69,10 @@ func (l *lowering) recordDeclaredKeyRefusal(node *ast.Node) error {
 	// Every other view site refuseWidening judges: a shorthand property, a spread, a branch's implied
 	// target. Only its declared-key refusals are this rule's; the rest it makes again at 3100.
 	var refused *Refused
-	if err := l.stringWideningRefusal(node); errors.As(err, &refused) && refused.Fix == declaredKeysFix {
-		return err
+	if stringWideningRefusalError := l.stringWideningRefusal(
+		node,
+	); errors.As(stringWideningRefusalError, &refused) && refused.Fix == declaredKeysFix {
+		return stringWideningRefusalError
 	}
 	return nil
 }
@@ -104,7 +109,10 @@ func (l *lowering) declaredKeyWrite(node *ast.Node) error {
 		value, written = l.writtenValue(node)
 	case ast.KindComputedPropertyName:
 		member := node.Parent
-		if member == nil || member.Parent == nil || member.Parent.Kind != ast.KindObjectLiteralExpression || ast.IsAssignmentTarget(member.Parent) {
+		if member == nil ||
+			member.Parent == nil ||
+			member.Parent.Kind != ast.KindObjectLiteralExpression ||
+			ast.IsAssignmentTarget(member.Parent) {
 			return nil
 		}
 		// { outFile: 'a', [name]: 3 } is itself a record declaring outFile, whatever it's written into.
@@ -135,16 +143,37 @@ func (l *lowering) declaredKeyWrite(node *ast.Node) error {
 					stored = info.ValueType()
 				}
 				if property := l.declaredKeyMisfit(member, stored, names); property != nil {
-					return &Refused{Where: l.program.Where(node), What: "a write into a record with declared properties through a key that is not one literal, of a value a declared property it can land under cannot take (" + l.checker.TypeToString(stored) + " written into " + l.checker.TypeToString(member) + " by " + sourceExpression(key) + ": " + property.Name + " is declared " + l.checker.TypeToString(l.checker.GetTypeOfSymbol(property)) + ")", Fix: declaredKeysFix}
+					return &Refused{
+						Where: l.program.Where(
+							node,
+						),
+						What: "a write into a record with declared properties through a key that is not one literal, of a value a declared property it can land under cannot take (" +
+							l.checker.TypeToString(stored) +
+							" written into " +
+							l.checker.TypeToString(member) +
+							" by " +
+							sourceExpression(key) +
+							": " +
+							property.Name +
+							" is declared " +
+							l.checker.TypeToString(l.checker.GetTypeOfSymbol(property)) +
+							")",
+						Fix: declaredKeysFix,
+					}
 				}
 				if value == nil {
 					if property := l.writtenWholly(member, stored, names); property != nil {
-						return l.notYet(node, "a write into a record with declared properties through a key that is not one literal, of no one expression's value, whose type isn't declared property "+property.Name+"'s type itself")
+						return l.notYet(
+							node,
+							"a write into a record with declared properties through a key that is not one literal, of no one expression's value, whose type isn't declared property "+
+								property.Name+
+								"'s type itself",
+						)
 					}
 					continue
 				}
-				if err := l.namedWriteStop(node, member, value, names); err != nil {
-					return err
+				if namedWriteStopError := l.namedWriteStop(node, member, value, names); namedWriteStopError != nil {
+					return namedWriteStopError
 				}
 			}
 		}
@@ -159,7 +188,9 @@ func (l *lowering) declaredKeyWrite(node *ast.Node) error {
 // check, so ["" + "constructor"] is judged as constructor is; or nil, when it can be any name.
 func (l *lowering) writtenNames(key *ast.Node) (map[string]bool, bool) {
 	key = ast.SkipParentheses(key)
-	if key.Kind == ast.KindStringLiteral || key.Kind == ast.KindNoSubstitutionTemplateLiteral || key.Kind == ast.KindNumericLiteral {
+	if key.Kind == ast.KindStringLiteral ||
+		key.Kind == ast.KindNoSubstitutionTemplateLiteral ||
+		key.Kind == ast.KindNumericLiteral {
 		return nil, true
 	}
 	proven := l.checker.GetTypeAtLocation(key)
@@ -197,7 +228,9 @@ func (l *lowering) declaredKeyMisfit(receiver, written *checker.Type, names map[
 		if names != nil && !names[property.Name] {
 			continue
 		}
-		if l.checker.IsReadonlySymbol(property) || !l.checker.IsTypeAssignableTo(written, l.checker.GetTypeOfSymbol(property)) || !l.sameRecordStorage(written, l.checker.GetNonMissingTypeOfSymbol(property), map[[2]*checker.Type]bool{}) {
+		if l.checker.IsReadonlySymbol(property) ||
+			!l.checker.IsTypeAssignableTo(written, l.checker.GetTypeOfSymbol(property)) ||
+			!l.sameRecordStorage(written, l.checker.GetNonMissingTypeOfSymbol(property), map[[2]*checker.Type]bool{}) {
 			return property
 		}
 	}
@@ -213,7 +246,9 @@ func (l *lowering) writtenWholly(receiver, written *checker.Type, names map[stri
 		if names != nil && !names[property.Name] {
 			continue
 		}
-		if to := l.checker.GetNonMissingTypeOfSymbol(property); widened != to || !l.sameKeeping(widened, to, map[[2]*checker.Type]bool{}) {
+		if to := l.checker.GetNonMissingTypeOfSymbol(
+			property,
+		); widened != to || !l.sameKeeping(widened, to, map[[2]*checker.Type]bool{}) {
 			return property
 		}
 	}
@@ -231,7 +266,9 @@ func (l *lowering) writtenValue(target *ast.Node) (*ast.Node, *checker.Type) {
 	switch {
 	case parent == nil:
 		return nil, nil
-	case parent.Kind == ast.KindBinaryExpression && parent.AsBinaryExpression().Left == target && ast.IsAssignmentOperator(parent.AsBinaryExpression().OperatorToken.Kind):
+	case parent.Kind == ast.KindBinaryExpression &&
+		parent.AsBinaryExpression().Left == target &&
+		ast.IsAssignmentOperator(parent.AsBinaryExpression().OperatorToken.Kind):
 		switch parent.AsBinaryExpression().OperatorToken.Kind {
 		case ast.KindEqualsToken, ast.KindQuestionQuestionEqualsToken, ast.KindBarBarEqualsToken, ast.KindAmpersandAmpersandEqualsToken:
 			return parent.AsBinaryExpression().Right, l.checker.GetTypeAtLocation(parent.AsBinaryExpression().Right)
@@ -268,12 +305,19 @@ func (l *lowering) declaredKeyWidened(from, to *checker.Type, skip map[string]bo
 	// The view's own writable string index signature, never its storage: a Pick of a record is stored as
 	// the record (#6c4swvt G1), but its type has no index signature to write through.
 	for _, info := range l.checker.GetIndexInfosOfType(to) {
-		if fresh || info.KeyType().Flags() != checker.TypeFlagsString || info.IsReadonly() || l.libraryIndexSignature(to) {
+		if fresh ||
+			info.KeyType().Flags() != checker.TypeFlagsString ||
+			info.IsReadonly() ||
+			l.libraryIndexSignature(to) {
 			continue
 		}
 		viewDeclares := func(name string) bool { return l.checker.GetPropertyOfType(to, name) != nil }
 		if property := l.declaredNarrower(from, info.ValueType(), viewDeclares); property != nil {
-			return &widening{source: l.checker.GetTypeOfSymbol(property), target: info.ValueType(), declaredKey: property.Name}
+			return &widening{
+				source:      l.checker.GetTypeOfSymbol(property),
+				target:      info.ValueType(),
+				declaredKey: property.Name,
+			}
 		}
 	}
 	for _, info := range l.checker.GetIndexInfosOfType(from) {
@@ -282,7 +326,12 @@ func (l *lowering) declaredKeyWidened(from, to *checker.Type, skip map[string]bo
 		}
 		sourceDeclares := func(name string) bool { return skip[name] || l.checker.GetPropertyOfType(from, name) != nil }
 		if property := l.declaredNarrower(to, info.ValueType(), sourceDeclares); property != nil {
-			return &widening{source: info.ValueType(), target: l.checker.GetTypeOfSymbol(property), declaredKey: property.Name, dictionary: true}
+			return &widening{
+				source:      info.ValueType(),
+				target:      l.checker.GetTypeOfSymbol(property),
+				declaredKey: property.Name,
+				dictionary:  true,
+			}
 		}
 	}
 	return nil
@@ -292,7 +341,8 @@ func (l *lowering) declaredKeyWidened(from, to *checker.Type, skip map[string]bo
 // of Object.values or Object.entries, which reads the record it's handed.
 func (l *lowering) libraryIndexSignature(proven *checker.Type) bool {
 	for _, info := range l.checker.GetIndexInfosOfType(l.concrete(proven)) {
-		if declaration := info.Declaration(); declaration != nil && load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+		if declaration := info.Declaration(); declaration != nil &&
+			load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
 			return true
 		}
 	}
@@ -309,7 +359,11 @@ func (l *lowering) libraryIndexSignature(proven *checker.Type) bool {
 func (l *lowering) declaredKeyBinding(binding typeArgumentBinding) error {
 	if binding.argument == nil {
 		if l.recordElement(l.checker.GetBaseConstraintOfType(binding.constraint)) != nil {
-			return l.notYet(binding.site, "a generic instantiation whose type argument for "+l.checker.TypeToString(binding.parameter)+", constrained to "+l.checker.TypeToString(binding.constraint)+", can't be read")
+			return l.notYet(binding.site, "a generic instantiation whose type argument for "+
+				l.checker.TypeToString(binding.parameter)+
+				", constrained to "+
+				l.checker.TypeToString(binding.constraint)+
+				", can't be read")
 		}
 		return nil
 	}
@@ -317,11 +371,43 @@ func (l *lowering) declaredKeyBinding(binding typeArgumentBinding) error {
 	if found == nil || found.declaredKey == "" {
 		return nil
 	}
-	bound := l.checker.TypeToString(binding.argument) + " as " + l.checker.TypeToString(binding.parameter) + ", constrained to " + l.checker.TypeToString(binding.constraint)
+	bound := l.checker.TypeToString(binding.argument) +
+		" as " +
+		l.checker.TypeToString(binding.parameter) +
+		", constrained to " +
+		l.checker.TypeToString(binding.constraint)
 	if found.dictionary {
-		return &Refused{Where: l.program.Where(binding.site), What: "a dictionary bound as a type argument whose constraint reads it through a declared property narrower than its values (" + bound + ": " + found.declaredKey + " is declared " + l.checker.TypeToString(found.target) + ", and the index signature holds " + l.checker.TypeToString(found.source) + ")", Fix: declaredKeysFix}
+		return &Refused{
+			Where: l.program.Where(
+				binding.site,
+			),
+			What: "a dictionary bound as a type argument whose constraint reads it through a declared property narrower than its values (" +
+				bound +
+				": " +
+				found.declaredKey +
+				" is declared " +
+				l.checker.TypeToString(found.target) +
+				", and the index signature holds " +
+				l.checker.TypeToString(found.source) +
+				")",
+			Fix: declaredKeysFix,
+		}
 	}
-	return &Refused{Where: l.program.Where(binding.site), What: "a type argument with declared properties bound to a type parameter constrained to a wider index signature, which can write under a declared property what it does not hold (" + bound + ": " + found.declaredKey + " is declared " + l.checker.TypeToString(found.source) + ", and the index signature holds " + l.checker.TypeToString(found.target) + ")", Fix: declaredKeysFix}
+	return &Refused{
+		Where: l.program.Where(
+			binding.site,
+		),
+		What: "a type argument with declared properties bound to a type parameter constrained to a wider index signature, which can write under a declared property what it does not hold (" +
+			bound +
+			": " +
+			found.declaredKey +
+			" is declared " +
+			l.checker.TypeToString(found.source) +
+			", and the index signature holds " +
+			l.checker.TypeToString(found.target) +
+			")",
+		Fix: declaredKeysFix,
+	}
 }
 
 // declaredKeyRefusal is a declared-key widening's refusal: one reason for each direction. A view found
@@ -332,7 +418,37 @@ func (l *lowering) declaredKeyRefusal(node *ast.Node, own, contextual *checker.T
 		own = found.viewed
 	}
 	if found.dictionary {
-		return &Refused{Where: l.program.Where(node), What: "a dictionary read through a declared property narrower than its values (" + l.checker.TypeToString(own) + " seen as " + l.checker.TypeToString(contextual) + ": " + found.declaredKey + " is declared " + l.checker.TypeToString(found.target) + ", and the index signature holds " + l.checker.TypeToString(found.source) + ")", Fix: declaredKeysFix}
+		return &Refused{
+			Where: l.program.Where(node),
+			What: "a dictionary read through a declared property narrower than its values (" +
+				l.checker.TypeToString(own) +
+				" seen as " +
+				l.checker.TypeToString(contextual) +
+				": " +
+				found.declaredKey +
+				" is declared " +
+				l.checker.TypeToString(found.target) +
+				", and the index signature holds " +
+				l.checker.TypeToString(found.source) +
+				")",
+			Fix: declaredKeysFix,
+		}
 	}
-	return &Refused{Where: l.program.Where(node), What: "a value with declared properties seen through a wider index signature, which can write under a declared property what it does not hold (" + l.checker.TypeToString(own) + " seen as " + l.checker.TypeToString(contextual) + ": " + found.declaredKey + " is declared " + l.checker.TypeToString(found.source) + ", and the index signature holds " + l.checker.TypeToString(found.target) + ")", Fix: declaredKeysFix}
+	return &Refused{
+		Where: l.program.Where(
+			node,
+		),
+		What: "a value with declared properties seen through a wider index signature, which can write under a declared property what it does not hold (" +
+			l.checker.TypeToString(own) +
+			" seen as " +
+			l.checker.TypeToString(contextual) +
+			": " +
+			found.declaredKey +
+			" is declared " +
+			l.checker.TypeToString(found.source) +
+			", and the index signature holds " +
+			l.checker.TypeToString(found.target) +
+			")",
+		Fix: declaredKeysFix,
+	}
 }

@@ -616,16 +616,16 @@ func runUnicodeCanonicalizeRange(test *testing.T, index int) {
 	if test.Name() != group.name {
 		test.Fatalf("top-level range %s dispatched as %s", test.Name(), group.name)
 	}
-	shards, err := unicodeCanonicalizeCensus()
-	if err != nil {
-		test.Fatal(err)
+	shards, unicodeCanonicalizeCensusError := unicodeCanonicalizeCensus()
+	if unicodeCanonicalizeCensusError != nil {
+		test.Fatal(unicodeCanonicalizeCensusError)
 	}
 	for _, shard := range shards[group.start:group.end] {
 		test.Run(shard.name(), func(test *testing.T) {
 			test.Parallel()
-			examined, disagreements, err := runUnicodeBatch(shard.input)
-			if err != nil {
-				test.Fatal(err)
+			examined, disagreements, runUnicodeBatchError := runUnicodeBatch(shard.input)
+			if runUnicodeBatchError != nil {
+				test.Fatal(runUnicodeBatchError)
 			}
 			want := (shard.end - shard.start) * 0x110000
 			if examined != want {
@@ -716,8 +716,8 @@ func unicodeNodeBatches(
 				start := index * batchSize
 				end := min(start+batchSize, len(lines))
 				input := strings.Join(lines[start:end], "\n") + "\n"
-				examined, disagreements, err := run(input)
-				completed <- unicodeNodeResult{index, examined, disagreements, err}
+				examined, disagreements, runError := run(input)
+				completed <- unicodeNodeResult{index, examined, disagreements, runError}
 			}
 		}()
 	}
@@ -778,9 +778,9 @@ func TestUnicodeNodeBatchOrderAndLimit(test *testing.T) {
 		mutex.Unlock()
 		return 0x110000, []string{strings.TrimSuffix(input, "\n")}, nil
 	}
-	results, err := unicodeNodeBatches([]string{"0", "1", "2", "3", "4", "5"}, 1, 20, run)
-	if err != nil {
-		test.Fatal(err)
+	results, unicodeNodeBatchesError := unicodeNodeBatches([]string{"0", "1", "2", "3", "4", "5"}, 1, 20, run)
+	if unicodeNodeBatchesError != nil {
+		test.Fatal(unicodeNodeBatchesError)
 	}
 	if peak != 2 {
 		test.Fatalf("peak workers %d, want GOMAXPROCS=2", peak)
@@ -1062,18 +1062,18 @@ func runUnicodeBatch(input string) (int, []string, error) {
 	// need proportionally more time, bounded by the gate's thirty-minute deadline.
 	batches := max(1, (strings.Count(input, "\n")+79)/80)
 	timeout := min(30*time.Minute, time.Duration(batches)*4*time.Minute)
-	output, err := runNodeOutput(unicodeScanScript, input, timeout)
-	if err != nil {
-		return 0, nil, err
+	output, runNodeOutputError := runNodeOutput(unicodeScanScript, input, timeout)
+	if runNodeOutputError != nil {
+		return 0, nil, runNodeOutputError
 	}
 	return parseBatchOutput(output, 0x110000)
 }
 
 func parseBatch(test *testing.T, output string, perPattern int) (int, []string) {
 	test.Helper()
-	examined, problems, err := parseBatchOutput(output, perPattern)
-	if err != nil {
-		test.Fatal(err)
+	examined, problems, parseBatchOutputError := parseBatchOutput(output, perPattern)
+	if parseBatchOutputError != nil {
+		test.Fatal(parseBatchOutputError)
 	}
 	return examined, problems
 }
@@ -1087,8 +1087,8 @@ func parseBatchOutput(output string, perPattern int) (int, []string, error) {
 		line := scanner.Text()
 		switch {
 		case strings.HasPrefix(line, "TOTAL "):
-			value, err := strconv.Atoi(strings.TrimPrefix(line, "TOTAL "))
-			if err != nil {
+			value, parseError := strconv.Atoi(strings.TrimPrefix(line, "TOTAL "))
+			if parseError != nil {
 				return 0, nil, fmt.Errorf("total %q", line)
 			}
 			checked = value
@@ -1098,8 +1098,8 @@ func parseBatchOutput(output string, perPattern int) (int, []string, error) {
 			return 0, nil, fmt.Errorf("node line %q", line)
 		}
 	}
-	if err := scanner.Err(); err != nil {
-		return 0, nil, err
+	if scanError := scanner.Err(); scanError != nil {
+		return 0, nil, scanError
 	}
 	if checked < 0 {
 		return 0, nil, fmt.Errorf("node did not report a total\n%s", output)
@@ -1109,9 +1109,9 @@ func parseBatchOutput(output string, perPattern int) (int, []string, error) {
 
 func runNode(test *testing.T, script, input string, timeout time.Duration) string {
 	test.Helper()
-	output, err := runNodeOutput(script, input, timeout)
-	if err != nil {
-		test.Fatal(err)
+	output, runNodeOutputError := runNodeOutput(script, input, timeout)
+	if runNodeOutputError != nil {
+		test.Fatal(runNodeOutputError)
 	}
 	return output
 }
@@ -1124,12 +1124,12 @@ func runNodeOutput(script, input string, timeout time.Duration) (string, error) 
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
-	if err := command.Run(); err != nil {
+	if runError := command.Run(); runError != nil {
 		tail := stdout.String()
 		if len(tail) > 800 {
 			tail = tail[len(tail)-800:]
 		}
-		return "", fmt.Errorf("node: %v\n%s\n%s", err, stderr.String(), tail)
+		return "", fmt.Errorf("node: %v\n%s\n%s", runError, stderr.String(), tail)
 	}
 	return stdout.String(), nil
 }
@@ -1148,9 +1148,9 @@ func reportDisagreements(test *testing.T, disagreements []string) {
 
 func parseHex16(test *testing.T, text string) uint16 {
 	test.Helper()
-	value, err := strconv.ParseUint(text, 16, 16)
-	if err != nil {
-		test.Fatalf("hex %q: %v", text, err)
+	value, parseError := strconv.ParseUint(text, 16, 16)
+	if parseError != nil {
+		test.Fatalf("hex %q: %v", text, parseError)
 	}
 	return uint16(value)
 }

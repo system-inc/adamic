@@ -29,16 +29,16 @@ func TestShapeChecksUseDeclaredNames(test *testing.T) {
 func checkUnallocatedShapeStartup(test *testing.T, source, kind string) {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "shapes.a")
-	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	loaded, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	loaded, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := lower.Lower(context.Background(), loaded)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerError := lower.Lower(context.Background(), loaded)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	node := inlineArrayRun(test, "node", "--input-type=module-typescript", "--eval", source)
 	if node.exit != 0 || string(node.stdout) != "alive\n" || len(node.stderr) != 0 {
@@ -62,8 +62,8 @@ func checkUnallocatedShapeStartup(test *testing.T, source, kind string) {
 		test.Logf("declared %v; startup checked %v", names, checked)
 	}
 	binary := filepath.Join(test.TempDir(), "control")
-	if err := Build(code, binary, Options{Count: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(code, binary, Options{Count: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	control := inlineArrayRun(test, binary)
 	if control.exit != 0 ||
@@ -91,8 +91,8 @@ func checkUnallocatedShapeStartup(test *testing.T, source, kind string) {
 	}
 	code = strings.Replace(code, target, strings.Replace(target, before, after, 1), 1)
 	binary = filepath.Join(test.TempDir(), "bitmap-mutant")
-	if err := Build(code, binary, Options{Count: true}); err != nil {
-		test.Fatal("mutant must compile:", err)
+	if buildError := Build(code, binary, Options{Count: true}); buildError != nil {
+		test.Fatal("mutant must compile:", buildError)
 	}
 	mutant := inlineArrayRun(test, binary)
 	if mutant.exit == 0 ||

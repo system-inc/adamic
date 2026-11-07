@@ -9,12 +9,12 @@ import (
 
 func TestMergePutsCasesBackInOrder(test *testing.T) {
 	test.Parallel()
-	merged, err := Merge([][]byte{
+	merged, mergeError := Merge([][]byte{
 		[]byte("case 0\nfixed\ta\ncase 2\nfixed\tc\n"),
 		[]byte("case 1\nfixed\tb\ncase 3\nfixed\td\n"),
 	}, 4)
-	if err != nil {
-		test.Fatal(err)
+	if mergeError != nil {
+		test.Fatal(mergeError)
 	}
 	if want := "case 0\nfixed\ta\ncase 1\nfixed\tb\ncase 2\nfixed\tc\ncase 3\nfixed\td\n"; string(merged) != want {
 		test.Fatalf("merged %q, want %q", merged, want)
@@ -24,9 +24,9 @@ func TestMergePutsCasesBackInOrder(test *testing.T) {
 // A line that only starts like a case line stays inside its block.
 func TestMergeKeepsLinesThatOnlyLookLikeCases(test *testing.T) {
 	test.Parallel()
-	merged, err := Merge([][]byte{[]byte("case 0\n  rule  case 12 of the message\ncase 1x\nfixed\ta\n")}, 1)
-	if err != nil {
-		test.Fatal(err)
+	merged, mergeError := Merge([][]byte{[]byte("case 0\n  rule  case 12 of the message\ncase 1x\nfixed\ta\n")}, 1)
+	if mergeError != nil {
+		test.Fatal(mergeError)
 	}
 	if string(merged) != "case 0\n  rule  case 12 of the message\ncase 1x\nfixed\ta\n" {
 		test.Fatalf("merged %q", merged)
@@ -52,8 +52,11 @@ func TestMergeRefusesAMissingOrRepeatedCase(test *testing.T) {
 		for _, output := range testCase.outputs {
 			outputs = append(outputs, []byte(output))
 		}
-		if _, err := Merge(outputs, testCase.rows); err == nil || !strings.Contains(err.Error(), testCase.want) {
-			test.Fatalf("%s: error %v, want %q", testCase.name, err, testCase.want)
+		if _, mergeError := Merge(
+			outputs,
+			testCase.rows,
+		); mergeError == nil || !strings.Contains(mergeError.Error(), testCase.want) {
+			test.Fatalf("%s: error %v, want %q", testCase.name, mergeError, testCase.want)
 		}
 	}
 }
@@ -69,21 +72,21 @@ func TestRunMergesAManifestThatOpensAProgram(test *testing.T) {
 	script := "#!/bin/sh\n" +
 		"shard=$4\n" +
 		"awk -v shard_index=\"${shard%/*}\" -v shard_count=\"${shard#*/}\" 'BEGIN { cases = 0 } $0 == \"\" { next } /^program / { next } { if (cases % shard_count == shard_index) print \"case \" cases; cases++ }' \"$2\"\n"
-	if err := os.WriteFile(driver, []byte(script), 0755); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(driver, []byte(script), 0755); writeError != nil {
+		test.Fatal(writeError)
 	}
 	manifest := filepath.Join(directory, "manifest.txt")
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		manifest,
 		[]byte("program /repository/tsconfig.json\na.ts\tall\n\nb.ts\tall\nc.ts\tall\n"),
 		0644,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
 	for _, count := range []int{1, 2, 3} {
-		merged, err := Run(driver, manifest, count, false)
-		if err != nil {
-			test.Fatalf("%d shards: %v", count, err)
+		merged, runError := Run(driver, manifest, count, false)
+		if runError != nil {
+			test.Fatalf("%d shards: %v", count, runError)
 		}
 		if want := "case 0\ncase 1\ncase 2\n"; string(merged) != want {
 			test.Fatalf("%d shards merged %q, want %q", count, merged, want)

@@ -72,8 +72,8 @@ func TestMaybeNumbersPackIntoOneDouble(test *testing.T) {
 		fmt.Fprintf(&input, "%d %016x\n", present, value.bits)
 	}
 	binary := filepath.Join(test.TempDir(), "harness")
-	if err := Build(maybeHarness, binary, Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(maybeHarness, binary, Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	lines := strings.Split(strings.TrimSuffix(runWithInput(test, input.String(), binary), "\n"), "\n")
 	if len(lines) != len(values) {

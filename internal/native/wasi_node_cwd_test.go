@@ -37,8 +37,12 @@ func nodeWASICwdRuntime(test *testing.T, host bool) {
 	if host {
 		source = "#define ADAMIC_NODE_HOST 1\n"
 	}
-	if _, err := RuntimeLibraryForSource("", source, Options{Target: "wasm32-wasi"}); err != nil {
-		test.Fatal(err)
+	if _, runtimeLibraryForSourceError := RuntimeLibraryForSource(
+		"",
+		source,
+		Options{Target: "wasm32-wasi"},
+	); runtimeLibraryForSourceError != nil {
+		test.Fatal(runtimeLibraryForSourceError)
 	}
 }
 
@@ -83,8 +87,8 @@ int main(int argc, char **argv) {
 		)
 	}
 	module := filepath.Join(test.TempDir(), "imports.wasm")
-	if err := Build(source, module, Options{Target: "wasm32-wasi"}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(source, module, Options{Target: "wasm32-wasi"}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	const inspect = `const fs=require('node:fs');console.log(JSON.stringify(WebAssembly.Module.imports(new WebAssembly.Module(fs.readFileSync(process.argv[1]))).map(i=>i.module==='wasi_snapshot_preview1'?i.name:i.module+'.'+i.name).sort()));`
 	got := observeWASI(test, "", "node", "-e", inspect, module)
@@ -92,8 +96,8 @@ int main(int argc, char **argv) {
 		test.Fatalf("import inspection: %+v", got)
 	}
 	var imports []string
-	if err := json.Unmarshal(got.stdout, &imports); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(got.stdout, &imports); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	same := slices.Equal(imports, nodeWASICwdBaseline)
 	if variant == 2 {
@@ -121,12 +125,12 @@ func nodeWASICwdAgreement(test *testing.T, variant int) {
 	directory := test.TempDir()
 	first := filepath.Join(directory, "first")
 	moved := filepath.Join(first, "nested")
-	if err := os.MkdirAll(moved, 0700); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(moved, 0700); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	for _, path := range []string{filepath.Join(first, "marker"), filepath.Join(moved, "marker")} {
-		if err := os.WriteFile(path, []byte("marker"), 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte("marker"), 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	truthSource := `const fs=require('node:fs'),path=require('node:path');`
@@ -141,9 +145,9 @@ func nodeWASICwdAgreement(test *testing.T, variant int) {
 	helper := ""
 	initializer := "adamic_node_wasi_cwd"
 	if variant >= 3 {
-		data, err := runtime.ReadFile("runtime/node_cwd_wasi.c")
-		if err != nil {
-			test.Fatal(err)
+		data, readFileError := runtime.ReadFile("runtime/node_cwd_wasi.c")
+		if readFileError != nil {
+			test.Fatal(readFileError)
 		}
 		helper = string(data)
 		before, after := `const char *directory = getenv("ADAMIC_WASI_CWD");`, `const char *directory = NULL;`
@@ -222,12 +226,12 @@ int main(int argc, char **argv) {
 		firstCall,
 	).Replace(source)
 	module := filepath.Join(directory, "cwd.wasm")
-	if err := Build(source, module, Options{Target: "wasm32-wasi"}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(source, module, Options{Target: "wasm32-wasi"}); buildError != nil {
+		test.Fatal(buildError)
 	}
-	runner, err := filepath.Abs("../../oracle/wasi.mjs")
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs("../../oracle/wasi.mjs")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	got := observeWASI(test, first, "node", "--disable-warning=ExperimentalWarning", runner, module)
 	if got.exit != 0 || len(got.stderr) != 0 {

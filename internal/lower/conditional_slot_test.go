@@ -25,8 +25,8 @@ func TestConditionalBranchesAreJudgedAgainstTheirSlot(test *testing.T) {
 		conditionalSlotPrelude +
 			"function count(spec: string): number { const all: readonly (readonly number[])[] = (spec ? (parse(spec)) : (emptyArray)); return all.length; }\nconsole.log(String(count('ab')));",
 	} {
-		if _, err := lowerSource(test, source); err != nil {
-			test.Errorf("%s: %v", source, err)
+		if _, lowerSourceError := lowerSource(test, source); lowerSourceError != nil {
+			test.Errorf("%s: %v", source, lowerSourceError)
 		}
 	}
 	for _, source := range []string{
@@ -57,10 +57,10 @@ func TestConditionalBranchesAreJudgedAgainstTheirSlot(test *testing.T) {
 		conditionalSlotPrelude +
 			"class Range { private readonly alternatives: readonly (readonly number[])[]; constructor(spec: string, nested: boolean) { this.alternatives = spec ? (nested ? parse(spec) : emptyArray) : emptyArray; } }\nconsole.log(String(new Range('ab', true) !== undefined));",
 	} {
-		_, err := lowerSource(test, source)
+		_, lowerSourceError := lowerSource(test, source)
 		var refused *Refused
-		if !errors.As(err, &refused) || !strings.Contains(refused.Error(), "adamic/invariant-mutable") {
-			test.Errorf("%s: got %v, want adamic/invariant-mutable", source, err)
+		if !errors.As(lowerSourceError, &refused) || !strings.Contains(refused.Error(), "adamic/invariant-mutable") {
+			test.Errorf("%s: got %v, want adamic/invariant-mutable", source, lowerSourceError)
 		}
 	}
 }

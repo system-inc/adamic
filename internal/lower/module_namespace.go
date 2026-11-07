@@ -15,7 +15,9 @@ func (l *lowering) moduleNamespace(node *ast.Node) bool {
 		return false
 	}
 	for _, declaration := range symbol.Declarations {
-		if declaration.Kind == ast.KindSourceFile && !load.IsLibrary(declaration.AsSourceFile()) && !load.IsPrelude(declaration.AsSourceFile()) {
+		if declaration.Kind == ast.KindSourceFile &&
+			!load.IsLibrary(declaration.AsSourceFile()) &&
+			!load.IsPrelude(declaration.AsSourceFile()) {
 			return true
 		}
 	}
@@ -24,12 +26,13 @@ func (l *lowering) moduleNamespace(node *ast.Node) bool {
 
 func (l *lowering) moduleNamespaceRefusal(node *ast.Node) error {
 	if l.namespaceValueNode(node) && l.moduleNamespace(node) {
-		view, err := l.namespaceEnumViewOf(node)
-		if err != nil {
-			return err
+		view, namespaceEnumViewOfError := l.namespaceEnumViewOf(node)
+		if namespaceEnumViewOfError != nil {
+			return namespaceEnumViewOfError
 		}
 		parent := node.Parent
-		if view == nil && (parent == nil || parent.Kind != ast.KindPropertyAccessExpression || parent.Expression() != node) {
+		if view == nil &&
+			(parent == nil || parent.Kind != ast.KindPropertyAccessExpression || parent.Expression() != node) {
 			return l.notYet(node, "an ESM namespace object used as a value; use qualified live bindings")
 		}
 	}
@@ -42,7 +45,10 @@ func (l *lowering) moduleNamespaceRefusal(node *ast.Node) error {
 	}
 	for _, declaration := range symbol.Declarations {
 		if ast.IsFunctionLike(declaration) && namespaceOwnThis(declaration) {
-			return l.notYet(node, "an ESM namespace function observing its receiver; the module object is not represented")
+			return l.notYet(
+				node,
+				"an ESM namespace function observing its receiver; the module object is not represented",
+			)
 		}
 	}
 	return nil
@@ -60,7 +66,9 @@ func (l *lowering) moduleNamespaceRefusal(node *ast.Node) error {
 // Such a read is the enum's live binding, the same one ns.K reads. Every other use of the namespace
 // object stays as it was.
 func (l *lowering) namespaceEnumView(node *ast.Node) (*ast.Node, error) {
-	if node.Kind != ast.KindPropertyAccessExpression || node.AsPropertyAccessExpression().QuestionDotToken != nil || node.Flags&ast.NodeFlagsOptionalChain != 0 {
+	if node.Kind != ast.KindPropertyAccessExpression ||
+		node.AsPropertyAccessExpression().QuestionDotToken != nil ||
+		node.Flags&ast.NodeFlagsOptionalChain != 0 {
 		return nil, nil
 	}
 	cast := ast.SkipParentheses(node.Expression())
@@ -74,25 +82,35 @@ func (l *lowering) namespaceEnumView(node *ast.Node) (*ast.Node, error) {
 	name := node.Name().Text()
 	viewed := l.checker.GetTypeAtLocation(cast)
 	properties := l.checker.GetPropertiesOfType(viewed)
-	if len(properties) != 1 || properties[0].Name != name || !l.checker.IsReadonlySymbol(properties[0]) || len(l.checker.GetIndexInfosOfType(viewed)) != 0 {
+	if len(properties) != 1 ||
+		properties[0].Name != name ||
+		!l.checker.IsReadonlySymbol(properties[0]) ||
+		len(l.checker.GetIndexInfosOfType(viewed)) != 0 {
 		return nil, nil
 	}
 	target := l.namespaceExport(namespace, name)
-	if target == nil || target.Flags&ast.SymbolFlagsEnum == 0 || target.ValueDeclaration == nil || target.ValueDeclaration.Kind != ast.KindEnumDeclaration || len(target.Declarations) != 1 {
+	if target == nil ||
+		target.Flags&ast.SymbolFlagsEnum == 0 ||
+		target.ValueDeclaration == nil ||
+		target.ValueDeclaration.Kind != ast.KindEnumDeclaration ||
+		len(target.Declarations) != 1 {
 		return nil, nil
 	}
 	declaration := target.ValueDeclaration
-	if built, err := l.enumObjectBuilt(declaration); err != nil || !built {
-		return nil, err
+	if built, enumObjectBuiltError := l.enumObjectBuilt(declaration); enumObjectBuiltError != nil || !built {
+		return nil, enumObjectBuiltError
 	}
 	view := l.checker.GetTypeOfSymbol(properties[0])
 	infos := l.checker.GetIndexInfosOfType(view)
-	if len(infos) != 1 || infos[0].KeyType().Flags() != checker.TypeFlagsString || !infos[0].IsReadonly() || len(l.checker.GetPropertiesOfType(view)) != 0 {
+	if len(infos) != 1 ||
+		infos[0].KeyType().Flags() != checker.TypeFlagsString ||
+		!infos[0].IsReadonly() ||
+		len(l.checker.GetPropertiesOfType(view)) != 0 {
 		return nil, nil
 	}
 	// An enum whose fields don't lower stops at its declaration, so the cast stays as it was.
-	fields, err := l.enumFields(declaration)
-	if err != nil {
+	fields, enumFieldsError := l.enumFields(declaration)
+	if enumFieldsError != nil {
 		return nil, nil
 	}
 	for _, field := range fields {
@@ -123,14 +141,18 @@ func (l *lowering) namespaceCastAccess(node *ast.Node) *ast.Node {
 	for cast != nil && cast.Kind == ast.KindParenthesizedExpression {
 		cast = cast.Parent
 	}
-	if cast == nil || cast.Kind != ast.KindAsExpression || ast.SkipParentheses(cast.AsAsExpression().Expression) != ast.SkipParentheses(node) {
+	if cast == nil ||
+		cast.Kind != ast.KindAsExpression ||
+		ast.SkipParentheses(cast.AsAsExpression().Expression) != ast.SkipParentheses(node) {
 		return nil
 	}
 	access := cast.Parent
 	for access != nil && access.Kind == ast.KindParenthesizedExpression {
 		access = access.Parent
 	}
-	if access == nil || access.Kind != ast.KindPropertyAccessExpression || ast.SkipParentheses(access.Expression()) != cast {
+	if access == nil ||
+		access.Kind != ast.KindPropertyAccessExpression ||
+		ast.SkipParentheses(access.Expression()) != cast {
 		return nil
 	}
 	return access

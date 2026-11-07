@@ -10,13 +10,13 @@ import (
 
 func requireDebugWitnessBytes(test *testing.T, directory, first, second string) {
 	test.Helper()
-	left, err := os.ReadFile(filepath.Join(directory, first))
-	if err != nil {
-		test.Fatal(err)
+	left, readError := os.ReadFile(filepath.Join(directory, first))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	right, err := os.ReadFile(filepath.Join(directory, second))
-	if err != nil {
-		test.Fatal(err)
+	right, readError := os.ReadFile(filepath.Join(directory, second))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if !bytes.Equal(left, right) {
 		test.Fatalf("debug witnesses %s and %s differ between entry directories", first, second)
@@ -34,13 +34,13 @@ func TestDebugLineWitnessReproducible(test *testing.T) {
 	directory := debugLineProduct(test, false)
 	requireDebugWitnessBytes(test, directory, "program", "program-again")
 	// A release build records no comp_dir, so it needs no map to match.
-	release, err := os.ReadFile(filepath.Join(directory, "release"))
-	if err != nil {
-		test.Fatal(err)
+	release, readError := os.ReadFile(filepath.Join(directory, "release"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	again, err := os.ReadFile(filepath.Join(directory, "release-again"))
-	if err != nil {
-		test.Fatal(err)
+	again, readError := os.ReadFile(filepath.Join(directory, "release-again"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if !bytes.Equal(release, again) {
 		test.Fatal("release witnesses differ between entry directories")
@@ -56,9 +56,9 @@ func TestDebugSharingWitnessReproducible(test *testing.T) {
 	test.Parallel()
 	directory := debugSharingProduct(test, false)
 	requireDebugWitnessBytes(test, directory, "one/entry/program", "two/entry/program")
-	contents, err := os.ReadFile(filepath.Join(directory, "build.log"))
-	if err != nil {
-		test.Fatal(err)
+	contents, readError := os.ReadFile(filepath.Join(directory, "build.log"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	for _, line := range strings.Split(strings.TrimSpace(string(contents)), "\n") {
 		fields := strings.Fields(line)

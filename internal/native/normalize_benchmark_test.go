@@ -19,30 +19,30 @@ func TestNormalizeLongMeasurements(test *testing.T) {
 	if destination == "" {
 		test.Skip("set ADAMIC_NORMALIZE_BENCH_LOG to run the long-string measurements")
 	}
-	destination, err := filepath.Abs(destination)
-	if err != nil {
-		test.Fatal(err)
+	destination, absolutePathError := filepath.Abs(destination)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	directory := test.TempDir()
 	binary := filepath.Join(directory, "probe")
-	if err := Build(normalizeLongProbe, binary, Options{}); err != nil {
-		test.Fatal(err)
+	if buildError := Build(normalizeLongProbe, binary, Options{}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	oracle := filepath.Join(directory, "oracle.js")
 	driver := filepath.Join(directory, "measure.py")
 	for path, content := range map[string]string{oracle: normalizeLongOracle, driver: normalizeLongDriver} {
-		if err := os.WriteFile(path, []byte(content), 0o600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(content), 0o600); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	// The driver runs node by the path toolchain resolves, never by its name on python3's PATH.
-	node, err := toolchain.Path("node")
-	if err != nil {
-		test.Fatal(err)
+	node, pathError := toolchain.Path("node")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
 	command := toolchain.Command("python3", driver, binary, node, oracle, destination)
-	if output, err := command.CombinedOutput(); err != nil {
-		test.Fatalf("measurements: %v\n%s", err, output)
+	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("measurements: %v\n%s", combinedOutputError, output)
 	} else {
 		test.Logf("%s", output)
 	}

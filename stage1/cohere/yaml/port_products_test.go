@@ -30,9 +30,9 @@ func yamlPortInputs(test *testing.T, name string) buildcache.Inputs {
 	test.Helper()
 	files := append(compilerinputs.Lowering(), "stage1/cohere/yaml/port_products_test.go")
 	for _, pattern := range []string{"*.ts", "gaps/*.ts"} {
-		sources, err := filepath.Glob(pattern)
-		if err != nil {
-			test.Fatal(err)
+		sources, globError := filepath.Glob(pattern)
+		if globError != nil {
+			test.Fatal(globError)
 		}
 		for _, source := range sources {
 			files = append(files, "stage1/cohere/yaml/"+source)
@@ -87,8 +87,8 @@ func (build yamlBuild) lowered(test *testing.T) string {
 		inputs.Flags = append(inputs.Flags, recipe)
 		return buildcache.Product(test, inputs, func(directory string) error {
 			for _, entry := range build.entries {
-				if err := yamlLower(directory, entry); err != nil {
-					return err
+				if yamlLowerError := yamlLower(directory, entry); yamlLowerError != nil {
+					return yamlLowerError
 				}
 			}
 			return nil
@@ -111,16 +111,16 @@ func (build yamlBuild) native(test *testing.T) string {
 		inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
 		return buildcache.Product(test, inputs, func(directory string) error {
 			for _, entry := range build.entries {
-				source, err := os.ReadFile(filepath.Join(lowered, yamlStem(entry)+".c"))
-				if err != nil {
-					return err
+				source, readError := os.ReadFile(filepath.Join(lowered, yamlStem(entry)+".c"))
+				if readError != nil {
+					return readError
 				}
-				if err := native.Build(
+				if buildError := native.Build(
 					string(source),
 					filepath.Join(directory, yamlStem(entry)),
 					build.options,
-				); err != nil {
-					return fmt.Errorf("%s: %w", entry, err)
+				); buildError != nil {
+					return fmt.Errorf("%s: %w", entry, buildError)
 				}
 			}
 			return nil
@@ -141,33 +141,33 @@ func (build yamlBuild) emitted(test *testing.T, entry string) string {
 }
 
 // yamlLower lowers entry, and writes its emitted JavaScript and its C into directory.
-func yamlLower(directory, entry string) (err error) {
-	path, err := filepath.Abs(entry)
-	if err != nil {
-		return err
+func yamlLower(directory, entry string) (yamlLowerError error) {
+	path, yamlLowerError := filepath.Abs(entry)
+	if yamlLowerError != nil {
+		return yamlLowerError
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		return fmt.Errorf("%s: %w", entry, err)
+	program, yamlLowerError := load.Load([]string{path})
+	if yamlLowerError != nil {
+		return fmt.Errorf("%s: %w", entry, yamlLowerError)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
-	lowered, err := lower.Lower(ctx, program)
-	if err != nil {
-		return fmt.Errorf("%s: %w", entry, err)
+	lowered, yamlLowerError := lower.Lower(ctx, program)
+	if yamlLowerError != nil {
+		return fmt.Errorf("%s: %w", entry, yamlLowerError)
 	}
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		filepath.Join(directory, yamlStem(entry)+".mjs"),
 		[]byte(javascript.JavaScript(lowered)),
 		0644,
-	); err != nil {
-		return err
+	); writeError != nil {
+		return writeError
 	}
 	// A program stage 0 lowers but can't emit as C is the compiler's red, named here, not a panic that takes the rest
 	// of the package down with it.
 	defer func() {
 		if recovered := recover(); recovered != nil {
-			err = fmt.Errorf("%s lowers, but emitting its C panics: %v", entry, recovered)
+			yamlLowerError = fmt.Errorf("%s lowers, but emitting its C panics: %v", entry, recovered)
 		}
 	}()
 	return os.WriteFile(filepath.Join(directory, yamlStem(entry)+".c"), []byte(native.C(lowered)), 0644)
@@ -271,9 +271,9 @@ func (mutants yamlMutants) product(test *testing.T, index int) string {
 	mutation := mutants.mutations[index]
 	files := mutants.files
 	if files == nil {
-		var err error
-		if files, err = filepath.Glob("*.ts"); err != nil {
-			test.Fatal(err)
+		var globError error
+		if files, globError = filepath.Glob("*.ts"); globError != nil {
+			test.Fatal(globError)
 		}
 	}
 	options := native.Options{}
@@ -294,13 +294,13 @@ func (mutants yamlMutants) product(test *testing.T, index int) string {
 		inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
 		return buildcache.Product(test, inputs, func(directory string) error {
 			sources := filepath.Join(directory, "sources")
-			if err := os.Mkdir(sources, 0755); err != nil {
-				return err
+			if createDirectoryError := os.Mkdir(sources, 0755); createDirectoryError != nil {
+				return createDirectoryError
 			}
 			for _, file := range files {
-				source, err := os.ReadFile(file)
-				if err != nil {
-					return err
+				source, readError := os.ReadFile(file)
+				if readError != nil {
+					return readError
 				}
 				if file == mutants.mutated ||
 					(mutants.mutated == "" && strings.Contains(string(source), mutation.from)) {
@@ -309,26 +309,26 @@ func (mutants yamlMutants) product(test *testing.T, index int) string {
 					}
 					source = []byte(strings.Replace(string(source), mutation.from, mutation.to, 1))
 				}
-				if err := os.WriteFile(filepath.Join(sources, file), source, 0644); err != nil {
-					return err
+				if writeError := os.WriteFile(filepath.Join(sources, file), source, 0644); writeError != nil {
+					return writeError
 				}
 			}
-			program, err := load.Load([]string{filepath.Join(sources, mutants.entry)})
-			if err != nil {
-				return err
+			program, loadError := load.Load([]string{filepath.Join(sources, mutants.entry)})
+			if loadError != nil {
+				return loadError
 			}
 			ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 			defer cancel()
-			lowered, err := lower.Lower(ctx, program)
-			if err != nil {
-				return err
+			lowered, lowerError := lower.Lower(ctx, program)
+			if lowerError != nil {
+				return lowerError
 			}
-			if err := os.WriteFile(
+			if writeError := os.WriteFile(
 				filepath.Join(directory, "mutant.mjs"),
 				[]byte(javascript.JavaScript(lowered)),
 				0644,
-			); err != nil {
-				return err
+			); writeError != nil {
+				return writeError
 			}
 			return native.Build(native.C(lowered), filepath.Join(directory, "mutant"), options)
 		})

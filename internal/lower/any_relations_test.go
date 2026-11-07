@@ -83,10 +83,14 @@ const w = { kind: 9, pos: 1, text: 5 }; show(w);`, "a member typed any (text) re
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerTypeScriptAssertionSource(test, anyRelationPrelude+probe.source)
+			_, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(
+				test,
+				anyRelationPrelude+probe.source,
+			)
 			var pending *NotYet
-			if !errors.As(err, &pending) || !strings.Contains(err.Error(), probe.want) {
-				test.Fatalf("want NotYet with %q, got %v", probe.want, err)
+			if !errors.As(lowerTypeScriptAssertionSourceError, &pending) ||
+				!strings.Contains(lowerTypeScriptAssertionSourceError.Error(), probe.want) {
+				test.Fatalf("want NotYet with %q, got %v", probe.want, lowerTypeScriptAssertionSourceError)
 			}
 		})
 	}
@@ -110,12 +114,12 @@ show([5]);`, "main.ts:5:84: error TS2345: Argument of type 'readonly unknown[]' 
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := load.Load([]string{writeAgreementSource(test, "main.ts", anyRelationPrelude+probe.source)})
+			_, loadError := load.Load([]string{writeAgreementSource(test, "main.ts", anyRelationPrelude+probe.source)})
 			var checkError *load.CheckError
-			if !errors.As(err, &checkError) ||
+			if !errors.As(loadError, &checkError) ||
 				len(checkError.Diagnostics) != 1 ||
 				!strings.HasSuffix(checkError.Diagnostics[0], "/"+probe.want) {
-				test.Fatalf("want the checker's %q, got %v", probe.want, err)
+				test.Fatalf("want the checker's %q, got %v", probe.want, loadError)
 			}
 		})
 	}
@@ -151,21 +155,21 @@ func TestAnyMemberRelationLosesToARefusal(test *testing.T) {
 	source := anyRelationPrelude + `function show(n: Loose): void { const h: HasText = n; console.log(h.text); }
 const w = { kind: 9, pos: 1, text: 5 }; show(w);
 const box: { tag?: number } = { tag: 1 }; delete box.tag;`
-	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	file := program.Files()[0]
 	checker, release := program.Checker(context.Background(), file)
 	defer release()
 	l := &lowering{checker: checker, program: program}
-	err = l.refuse(file)
+	refuseError := l.refuse(file)
 	var refused *Refused
-	if !errors.As(err, &refused) {
-		test.Fatalf("want the later delete's Refused, got %v", err)
+	if !errors.As(refuseError, &refused) {
+		test.Fatalf("want the later delete's Refused, got %v", refuseError)
 	}
 	var pending *NotYet
 	if !errors.As(l.refusal.deferred, &pending) ||
@@ -181,29 +185,29 @@ const box: { tag?: number } = { tag: 1 }; delete box.tag;`
 func TestAnyMemberRelationCountsAProgramDeclarationFile(test *testing.T) {
 	test.Parallel()
 	directory := test.TempDir()
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		filepath.Join(directory, "loader.d.ts"),
 		[]byte(`export declare function load(): { readonly text: any };
 `),
 		0o644,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
 	main := filepath.Join(directory, "main.ts")
-	if err := os.WriteFile(main, []byte(`import { load } from "./loader";
+	if writeError := os.WriteFile(main, []byte(`import { load } from "./loader";
 interface HasText { readonly text: string; }
 const h: HasText = load();
 console.log(h.text);
-`), 0o644); err != nil {
-		test.Fatal(err)
+`), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := load.Load([]string{main})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{main})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	_, err = Lower(context.Background(), program)
+	_, lowerError := Lower(context.Background(), program)
 	var refused *Refused
-	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "an ambient function declaration") {
-		test.Fatalf("want the ambient declaration's Refused, got %v", err)
+	if !errors.As(lowerError, &refused) || !strings.Contains(lowerError.Error(), "an ambient function declaration") {
+		test.Fatalf("want the ambient declaration's Refused, got %v", lowerError)
 	}
 }

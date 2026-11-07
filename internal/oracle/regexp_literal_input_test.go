@@ -17,24 +17,28 @@ func runRegExpLiteralInputNodeUnit(test *testing.T, target string) {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
 	path := filepath.Join(test.TempDir(), "literal.a")
-	if err := os.WriteFile(path, []byte(regexpLiteralInputSource), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(regexpLiteralInputSource), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	want := execute(test, "node", "-e", regexpLiteralInputSource)
 	if want.exitCode != 0 || len(want.stderr) != 0 || string(want.stdout) != "true true true true false true\n" {
 		test.Fatalf("Node: %+v", want)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	var got run
 	if target == "wasm32-wasi" {
 		got = onWASI(test, native.C(program))
 	} else {
 		binary := filepath.Join(test.TempDir(), "program")
-		if err := native.Build(native.C(program), binary, native.Options{Sanitize: target == "sanitized"}); err != nil {
-			test.Fatal(err)
+		if buildError := native.Build(
+			native.C(program),
+			binary,
+			native.Options{Sanitize: target == "sanitized"},
+		); buildError != nil {
+			test.Fatal(buildError)
 		}
 		got = execute(test, binary)
 	}
@@ -59,30 +63,30 @@ func TestRegExpLiteralInputWASMUnit(test *testing.T) {
 func TestRegExpLiteralInputUnsafeNode(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "unsafe.a")
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		path,
 		[]byte("console.log( /[\\q{Ss|x}]/iv.test('X') ? 'true' : 'false');"),
 		0600,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
-	source, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	want := execute(test, "node", "-e", string(source))
-	program, err := lowered(test, path)
-	if err != nil {
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
 		var refusal *lower.NotYet
-		if !errors.As(err, &refusal) {
-			test.Fatal(err)
+		if !errors.As(loweredError, &refusal) {
+			test.Fatal(loweredError)
 		}
-		test.Logf("unsafe literal refused: %v", err)
+		test.Logf("unsafe literal refused: %v", loweredError)
 		return
 	}
 	binary := filepath.Join(test.TempDir(), "program")
-	if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), binary, native.Options{}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	if difference := disagreement(want, execute(test, binary)); difference != "" {
 		test.Fatalf("admitted unsafe literal: %s", difference)

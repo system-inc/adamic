@@ -42,9 +42,9 @@ func insideTree(name string) bool {
 
 // checkGeneratedFile holds one declared file to its cap: a regular file, at most maxBytes.
 func checkGeneratedFile(root, name string, maxBytes int64) error {
-	information, err := os.Lstat(filepath.Join(root, filepath.FromSlash(name)))
-	if err != nil {
-		return fmt.Errorf("%s: %v", name, err)
+	information, statError := os.Lstat(filepath.Join(root, filepath.FromSlash(name)))
+	if statError != nil {
+		return fmt.Errorf("%s: %v", name, statError)
 	}
 	if !information.Mode().IsRegular() {
 		return fmt.Errorf("%s is not a regular file", name)
@@ -63,8 +63,8 @@ func checkGenerated(root string, data []byte) error {
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
 	var list generatedList
-	if err := decoder.Decode(&list); err != nil {
-		return fmt.Errorf("generated.json: %v", err)
+	if decodeError := decoder.Decode(&list); decodeError != nil {
+		return fmt.Errorf("generated.json: %v", decodeError)
 	}
 	if len(list.Files) == 0 {
 		return fmt.Errorf("generated.json declares no files")
@@ -95,8 +95,12 @@ func checkGenerated(root string, data []byte) error {
 			if file.Suffix != "" {
 				return fmt.Errorf("%s is a path with a suffix", file.Path)
 			}
-			if err := checkGeneratedFile(root, file.Path, file.MaxBytes); err != nil {
-				return err
+			if checkGeneratedFileError := checkGeneratedFile(
+				root,
+				file.Path,
+				file.MaxBytes,
+			); checkGeneratedFileError != nil {
+				return checkGeneratedFileError
 			}
 			paths = append(paths, file)
 			continue
@@ -113,13 +117,13 @@ func checkGenerated(root string, data []byte) error {
 		walkError := filepath.WalkDir(filepath.Join(
 			root,
 			filepath.FromSlash(file.Under),
-		), func(walked string, entry os.DirEntry, err error) error {
-			if err != nil || entry.IsDir() || !strings.HasSuffix(entry.Name(), file.Suffix) {
-				return err
+		), func(walked string, entry os.DirEntry, pathError error) error {
+			if pathError != nil || entry.IsDir() || !strings.HasSuffix(entry.Name(), file.Suffix) {
+				return pathError
 			}
-			relative, err := filepath.Rel(root, walked)
-			if err != nil {
-				return err
+			relative, relativePathError := filepath.Rel(root, walked)
+			if relativePathError != nil {
+				return relativePathError
 			}
 			held++
 			return checkGeneratedFile(root, filepath.ToSlash(relative), file.MaxBytes)
@@ -157,13 +161,13 @@ func checkGenerated(root string, data []byte) error {
 
 func TestGeneratedListKeepsItsContract(test *testing.T) {
 	test.Parallel()
-	data, err := os.ReadFile(filepath.Join("fast-gate", "generated.json"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join("fast-gate", "generated.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	// Reads: *
-	if err := checkGenerated("..", data); err != nil {
-		test.Fatal(err)
+	if checkGeneratedError := checkGenerated("..", data); checkGeneratedError != nil {
+		test.Fatal(checkGeneratedError)
 	}
 }
 
@@ -171,31 +175,34 @@ func TestGeneratedListKeepsItsContract(test *testing.T) {
 func TestGeneratedListRefusesABrokenList(test *testing.T) {
 	test.Parallel()
 	root := test.TempDir()
-	if err := os.WriteFile(filepath.Join(root, "table.md"), []byte("12345"), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(root, "table.md"), []byte("12345"), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if err := os.Mkdir(filepath.Join(root, "directory"), 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.Mkdir(filepath.Join(root, "directory"), 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	for name, content := range map[string]string{
 		"counts/a.a.counts":      "123",
 		"counts/deep/b.a.counts": "1234",
 		"counts/README.md":       "hand-written, over every cap",
 	} {
-		if err := os.MkdirAll(filepath.Join(root, filepath.Dir(name)), 0o755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(
+			filepath.Join(root, filepath.Dir(name)),
+			0o755,
+		); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.WriteFile(filepath.Join(root, name), []byte(content), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(root, name), []byte(content), 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	good := `{"maxFiles": 1, "files": [{"path": "table.md", "command": ["go", "run", "./tool"], "maxBytes": 5}]}`
-	if err := checkGenerated(root, []byte(good)); err != nil {
-		test.Fatalf("a good list was refused: %v", err)
+	if checkGeneratedError := checkGenerated(root, []byte(good)); checkGeneratedError != nil {
+		test.Fatalf("a good list was refused: %v", checkGeneratedError)
 	}
 	under := `{"maxFiles": 2, "files": [{"path": "table.md", "command": ["go"], "maxBytes": 5}, {"under": "counts/", "suffix": ".counts", "command": ["go"], "maxBytes": 4}]}`
-	if err := checkGenerated(root, []byte(under)); err != nil {
-		test.Fatalf("a good under entry was refused: %v", err)
+	if checkGeneratedError := checkGenerated(root, []byte(under)); checkGeneratedError != nil {
+		test.Fatalf("a good under entry was refused: %v", checkGeneratedError)
 	}
 	for name, list := range map[string]string{
 		"no files":       `{"maxFiles": 1, "files": []}`,
@@ -226,7 +233,7 @@ func TestGeneratedListRefusesABrokenList(test *testing.T) {
 		"held path":      `{"maxFiles": 2, "files": [{"path": "counts/a.a.counts", "command": ["go"], "maxBytes": 4}, {"under": "counts/", "suffix": ".counts", "command": ["go"], "maxBytes": 4}]}`,
 		"nested unders":  `{"maxFiles": 2, "files": [{"under": "counts/", "suffix": ".counts", "command": ["go"], "maxBytes": 4}, {"under": "counts/deep/", "suffix": ".a.counts", "command": ["go"], "maxBytes": 4}]}`,
 	} {
-		if err := checkGenerated(root, []byte(list)); err == nil {
+		if checkGeneratedError := checkGenerated(root, []byte(list)); checkGeneratedError == nil {
 			test.Errorf("%s: the list was accepted", name)
 		}
 	}

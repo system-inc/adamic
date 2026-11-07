@@ -76,12 +76,15 @@ func compilerAgreementCases(test *testing.T) []compilerAgreementCase {
 	rows := corpusfiles.Upstream(test, source, compilerCommit, []string{"src/compiler"}, []string{"*.ts", "*.a"})
 	upstreamCount := len(rows)
 	stage1 := compilerStage1Sources(test, repository)
-	generated, err := filepath.Abs(".generated/registry.ts")
-	if err != nil {
-		test.Fatal(err)
+	generated, absolutePathError := filepath.Abs(".generated/registry.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	if err := compilerRegistryListedOnce(stage1, generated); err != nil {
-		test.Fatal(err)
+	if compilerRegistryListedOnceError := compilerRegistryListedOnce(
+		stage1,
+		generated,
+	); compilerRegistryListedOnceError != nil {
+		test.Fatal(compilerRegistryListedOnceError)
 	}
 	rows = append(rows, stage1...)
 	descriptors := prepareRegistry(test, ".")
@@ -92,13 +95,13 @@ func compilerAgreementCases(test *testing.T) []compilerAgreementCase {
 		if i < upstreamCount {
 			root, prefix = source, "compiler/"
 		}
-		absolute, err := filepath.Abs(root)
-		if err != nil {
-			test.Fatal(err)
+		absolute, absolutePathError := filepath.Abs(root)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
-		relative, err := filepath.Rel(absolute, path)
-		if err != nil {
-			test.Fatal(err)
+		relative, relativePathError := filepath.Rel(absolute, path)
+		if relativePathError != nil {
+			test.Fatal(relativePathError)
 		}
 		key := prefix + filepath.ToSlash(relative)
 		for _, d := range descriptors {
@@ -176,11 +179,11 @@ func compilerAgreementCommand(name string, args ...string) (*exec.Cmd, context.C
 		if command.Process == nil {
 			return os.ErrProcessDone
 		}
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
+		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if errors.Is(killError, syscall.ESRCH) {
 			return os.ErrProcessDone
 		}
-		return err
+		return killError
 	}
 	return command, ctx, cancel
 }
@@ -195,9 +198,9 @@ func compilerAgreementInputs(test *testing.T, name string, flags []string) build
 	if compilerAgreementFiles == nil {
 		// git ls-files --recurse-submodules where the tree has .git, else the same listing, in the same order, from
 		// the manifest a Loom runner's unpacked source carries: the key must be one on both.
-		listed, err := tracked.Recursive(repository)
-		if err != nil {
-			test.Fatal(err)
+		listed, recursiveError := tracked.Recursive(repository)
+		if recursiveError != nil {
+			test.Fatal(recursiveError)
 		}
 		var files []string
 		for _, path := range listed {
@@ -256,16 +259,20 @@ func compilerAgreementLowered(test *testing.T) string {
 		"compiler-agreement-lowered",
 		[]string{"C and JavaScript", "registered rules"},
 	), func(directory string) error {
-		program, err := load.Load([]string{filepath.Join(packageDirectory, "main.ts")})
-		if err != nil {
-			return err
+		program, loadError := load.Load([]string{filepath.Join(packageDirectory, "main.ts")})
+		if loadError != nil {
+			return loadError
 		}
-		lowered, err := lower.Lower(context.Background(), program)
-		if err != nil {
-			return err
+		lowered, lowerError := lower.Lower(context.Background(), program)
+		if lowerError != nil {
+			return lowerError
 		}
-		if err := os.WriteFile(filepath.Join(directory, "lint.c"), []byte(native.C(lowered)), 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(
+			filepath.Join(directory, "lint.c"),
+			[]byte(native.C(lowered)),
+			0644,
+		); writeError != nil {
+			return writeError
 		}
 		return os.WriteFile(filepath.Join(directory, "lint.mjs"), []byte(javascript.JavaScript(lowered)), 0644)
 	})
@@ -280,9 +287,9 @@ func compilerAgreementNative(test *testing.T, sanitize bool) string {
 		append(native.Flags(options), "Split=false", "Jobs=1"),
 	), func(directory string) error {
 		lowered := compilerAgreementLowered(test)
-		c, err := os.ReadFile(filepath.Join(lowered, "lint.c"))
-		if err != nil {
-			return err
+		c, readError := os.ReadFile(filepath.Join(lowered, "lint.c"))
+		if readError != nil {
+			return readError
 		}
 		return native.Build(string(c), filepath.Join(directory, "lint"), options)
 	})
@@ -492,15 +499,15 @@ func compilerAgreementUnitRun(test *testing.T, owner, side, unit int) {
 	var got execution
 	switch side {
 	case 1:
-		runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-		if err != nil {
-			test.Fatal(err)
+		runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		got = execute(test, "", "node", "--disable-warning=ExperimentalWarning", runner, module, "--manifest", path)
 	case 2:
-		runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-		if err != nil {
-			test.Fatal(err)
+		runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		got = execute(
 			test,
@@ -27304,17 +27311,17 @@ func TestCompilerAndStage1AgreePlantedDisagreement(test *testing.T) {
 			"-test.v",
 		)
 		command.Env = append(os.Environ(), "ADAMIC_COMPILER_AGREEMENT_PROBE=1")
-		stdout, stderr, err := childguard.Capture(ctx, command)
+		stdout, stderr, captureError := childguard.Capture(ctx, command)
 		output := append(stdout, stderr...)
 		cancel()
 		if shard == target {
-			if err == nil ||
+			if captureError == nil ||
 				bytes.Count(output, []byte("--- FAIL:")) != 1 ||
 				!bytes.Contains(output, []byte("--- FAIL: "+name)) {
 				test.Fatalf("planted disagreement not caught exactly once: %s", output)
 			}
 			failures++
-		} else if err != nil {
+		} else if captureError != nil {
 			test.Fatalf("unaffected shard failed: %s", output)
 		}
 	}

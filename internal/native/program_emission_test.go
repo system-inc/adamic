@@ -26,8 +26,8 @@ func programCompilerWitness(test *testing.T, source string, mutant func(string) 
 	test.Helper()
 	directory := test.TempDir()
 	path := filepath.Join(directory, "main.a")
-	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	run := func(env []string, name string, args ...string) ([]byte, []byte, error) {
 		ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
@@ -37,28 +37,38 @@ func programCompilerWitness(test *testing.T, source string, mutant func(string) 
 		var out, diagnostic bytes.Buffer
 		command.Stdout = &out
 		command.Stderr = &diagnostic
-		err := command.Run()
-		return out.Bytes(), diagnostic.Bytes(), err
+		runError := command.Run()
+		return out.Bytes(), diagnostic.Bytes(), runError
 	}
-	truth, diagnostic, err := run(nil, "node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", path)
-	if err != nil {
-		test.Fatalf("source Node: %v\n%s", err, diagnostic)
+	truth, diagnostic, runError := run(
+		nil,
+		"node",
+		"--disable-warning=ExperimentalWarning",
+		"../../oracle/node.mjs",
+		path,
+	)
+	if runError != nil {
+		test.Fatalf("source Node: %v\n%s", runError, diagnostic)
 	}
-	checked, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	checked, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	program, err := lower.LowerWithOptions(context.Background(), checked, lower.Options{ProgramRegion: true})
-	if err != nil {
-		test.Fatal(err)
+	program, lowerWithOptionsError := lower.LowerWithOptions(
+		context.Background(),
+		checked,
+		lower.Options{ProgramRegion: true},
+	)
+	if lowerWithOptionsError != nil {
+		test.Fatal(lowerWithOptionsError)
 	}
 	js := filepath.Join(directory, "main.mjs")
-	if err := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	got, diagnostic, err := run(nil, "node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", js)
-	if err != nil || !bytes.Equal(got, truth) {
-		test.Fatalf("JavaScript: %v\n%s\n%s, Node %s", err, diagnostic, got, truth)
+	got, diagnostic, runError := run(nil, "node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", js)
+	if runError != nil || !bytes.Equal(got, truth) {
+		test.Fatalf("JavaScript: %v\n%s\n%s, Node %s", runError, diagnostic, got, truth)
 	}
 	code := native.C(program)
 	if source == programMapperSource {
@@ -88,37 +98,41 @@ func programCompilerWitness(test *testing.T, source string, mutant func(string) 
 		code = changed
 	}
 	binary := filepath.Join(directory, "native")
-	if err := native.Build(code, binary, native.Options{Sanitize: true, ProgramRegion: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(
+		code,
+		binary,
+		native.Options{Sanitize: true, ProgramRegion: true},
+	); buildError != nil {
+		test.Fatal(buildError)
 	}
-	got, diagnostic, err = run([]string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
+	got, diagnostic, runError = run([]string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
 	if mutant != nil {
-		if err == nil && bytes.Equal(got, truth) {
+		if runError == nil && bytes.Equal(got, truth) {
 			if report := leakcheck.Report(test, code, binary); report == "" {
 				test.Fatal("Program ownership mutant survived")
 			}
-		} else if err != nil &&
+		} else if runError != nil &&
 			!strings.Contains(string(diagnostic), "AddressSanitizer") &&
 			!strings.Contains(string(diagnostic), "runtime error:") &&
 			!strings.Contains(string(diagnostic), "LeakSanitizer") &&
 			!strings.Contains(string(diagnostic), "compiler bug: graph edge crosses regions") &&
 			!strings.Contains(string(diagnostic), "compiler bug: graph adoption truncates object storage") {
-			test.Fatalf("mutant failed outside sanitizer: %v\n%s", err, diagnostic)
+			test.Fatalf("mutant failed outside sanitizer: %v\n%s", runError, diagnostic)
 		}
 		return program
 	}
-	if err != nil || !bytes.Equal(got, truth) {
-		test.Fatalf("native: %v\n%s\n%s, Node %s", err, diagnostic, got, truth)
+	if runError != nil || !bytes.Equal(got, truth) {
+		test.Fatalf("native: %v\n%s\n%s, Node %s", runError, diagnostic, got, truth)
 	}
 	if report := leakcheck.Report(test, code, binary); report != "" {
 		test.Fatal(report)
 	}
-	if err := native.Build(code, binary, native.Options{Count: true, ProgramRegion: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(code, binary, native.Options{Count: true, ProgramRegion: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
-	got, diagnostic, err = run(nil, binary)
-	if err != nil || !bytes.Equal(got, truth) {
-		test.Fatalf("counted: %v\n%s\n%s", err, got, diagnostic)
+	got, diagnostic, runError = run(nil, binary)
+	if runError != nil || !bytes.Equal(got, truth) {
+		test.Fatalf("counted: %v\n%s\n%s", runError, got, diagnostic)
 	}
 	if report := leakcheck.Unbalanced(leakcheck.Run{Stdout: got, Stderr: diagnostic}); report != "" {
 		test.Fatal(report)

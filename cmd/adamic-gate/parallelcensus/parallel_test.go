@@ -36,7 +36,7 @@ func TestEveryTestIsParallelOrSaysWhy(test *testing.T) {
 	root := parallelCheckRoot(test)
 	failures := make(map[string]bool)
 	tests := 0
-	err := parallelCheckEachTest(root, func(
+	parallelCheckEachTestError := parallelCheckEachTest(root, func(
 		rel string,
 		fn *ast.FuncDecl,
 		param string,
@@ -49,8 +49,8 @@ func TestEveryTestIsParallelOrSaysWhy(test *testing.T) {
 		}
 		failures[rel+"\t"+fn.Name.Name] = true
 	})
-	if err != nil {
-		test.Fatal(err)
+	if parallelCheckEachTestError != nil {
+		test.Fatal(parallelCheckEachTestError)
 	}
 	keys := make([]string, 0, len(failures))
 	for key := range failures {
@@ -60,22 +60,22 @@ func TestEveryTestIsParallelOrSaysWhy(test *testing.T) {
 	test.Logf("checked %d top-level tests; %d fail the parallel rule", tests, len(keys))
 	baselinePath := filepath.Join(root, "cmd", "adamic-gate", "parallelcensus", "testdata", "serial-baseline.txt")
 	if *updateSerialBaseline {
-		if err := os.MkdirAll(filepath.Dir(baselinePath), 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(filepath.Dir(baselinePath), 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 		content := strings.Join(keys, "\n")
 		if len(keys) > 0 {
 			content += "\n"
 		}
-		if err := os.WriteFile(baselinePath, []byte(content), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(baselinePath, []byte(content), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		test.Logf("wrote %d serial baseline entries", len(keys))
 		return
 	}
-	baseline, err := os.Open(baselinePath)
-	if err != nil {
-		test.Fatalf("read serial baseline: %v (regenerate with -update-serial-baseline)", err)
+	baseline, openError := os.Open(baselinePath)
+	if openError != nil {
+		test.Fatalf("read serial baseline: %v (regenerate with -update-serial-baseline)", openError)
 	}
 	defer baseline.Close()
 	allowed := make(map[string]bool)
@@ -91,8 +91,8 @@ func TestEveryTestIsParallelOrSaysWhy(test *testing.T) {
 			test.Logf("stale serial baseline entry (now passes or no longer exists): %s", key)
 		}
 	}
-	if err := scanner.Err(); err != nil {
-		test.Fatal(err)
+	if scanError := scanner.Err(); scanError != nil {
+		test.Fatal(scanError)
 	}
 	test.Logf("serial baseline contains %d entries", len(allowed))
 	for _, key := range keys {
@@ -111,13 +111,13 @@ func TestEveryTestIsParallelOrSaysWhy(test *testing.T) {
 
 func parallelCheckRoot(test *testing.T) string {
 	test.Helper()
-	dir, err := os.Getwd()
-	if err != nil {
-		test.Fatal(err)
+	dir, workingDirectoryError := os.Getwd()
+	if workingDirectoryError != nil {
+		test.Fatal(workingDirectoryError)
 	}
 	for {
-		data, err := os.ReadFile(filepath.Join(dir, "go.mod"))
-		if err == nil && strings.Contains(string(data), "module github.com/system-inc/adamic\n") {
+		data, readError := os.ReadFile(filepath.Join(dir, "go.mod"))
+		if readError == nil && strings.Contains(string(data), "module github.com/system-inc/adamic\n") {
 			return dir
 		}
 		parent := filepath.Dir(dir)
@@ -134,9 +134,9 @@ func parallelCheckEachTest(
 	root string,
 	visit func(rel string, fn *ast.FuncDecl, param string, positions *token.FileSet, lines []string),
 ) error {
-	return filepath.WalkDir(root, func(path string, entry fs.DirEntry, walkErr error) error {
-		if walkErr != nil {
-			return walkErr
+	return filepath.WalkDir(root, func(path string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
 		if entry.IsDir() {
 			if entry.Name() == ".git" ||
@@ -150,14 +150,14 @@ func parallelCheckEachTest(
 		if !strings.HasSuffix(entry.Name(), "_test.go") {
 			return nil
 		}
-		source, err := os.ReadFile(path)
-		if err != nil {
-			return err
+		source, readError := os.ReadFile(path)
+		if readError != nil {
+			return readError
 		}
 		positions := token.NewFileSet()
-		file, err := parser.ParseFile(positions, path, source, parser.ParseComments)
-		if err != nil {
-			return err
+		file, parseFileError := parser.ParseFile(positions, path, source, parser.ParseComments)
+		if parseFileError != nil {
+			return parseFileError
 		}
 		testingNames := make(map[string]bool)
 		for _, imp := range file.Imports {
@@ -170,9 +170,9 @@ func parallelCheckEachTest(
 			}
 		}
 		lines := strings.Split(string(source), "\n")
-		rel, err := filepath.Rel(root, path)
-		if err != nil {
-			return err
+		rel, relativePathError := filepath.Rel(root, path)
+		if relativePathError != nil {
+			return relativePathError
 		}
 		for _, decl := range file.Decls {
 			fn, ok := decl.(*ast.FuncDecl)

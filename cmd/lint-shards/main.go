@@ -23,13 +23,13 @@ func main() {
 		flag.Usage()
 		os.Exit(2)
 	}
-	output, err := shards.Run(flag.Arg(0), flag.Arg(1), *count, *countOnly)
-	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
+	output, runError := shards.Run(flag.Arg(0), flag.Arg(1), *count, *countOnly)
+	if runError != nil {
+		fmt.Fprintln(os.Stderr, runError)
 		os.Exit(1)
 	}
-	if _, err := os.Stdout.Write(output); err != nil {
-		fmt.Fprintln(os.Stderr, err)
+	if _, writeError := os.Stdout.Write(output); writeError != nil {
+		fmt.Fprintln(os.Stderr, writeError)
 		os.Exit(1)
 	}
 }

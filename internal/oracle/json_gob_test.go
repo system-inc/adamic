@@ -29,9 +29,9 @@ func TestJSONCheckedIRGobRoundTrip(test *testing.T) {
 		"json_schema_names.a",
 		"json_encode_refused/*.a",
 	} {
-		matches, err := filepath.Glob(filepath.Join(repository, "internal/oracle/testdata", pattern))
-		if err != nil {
-			test.Fatal(err)
+		matches, globError := filepath.Glob(filepath.Join(repository, "internal/oracle/testdata", pattern))
+		if globError != nil {
+			test.Fatal(globError)
 		}
 		paths = append(paths, matches...)
 	}
@@ -40,13 +40,13 @@ func TestJSONCheckedIRGobRoundTrip(test *testing.T) {
 	}
 	for _, path := range paths {
 		test.Run(filepath.Base(path), func(test *testing.T) {
-			source, err := load.Load([]string{path})
-			if err != nil {
-				test.Fatal(err)
+			source, loadError := load.Load([]string{path})
+			if loadError != nil {
+				test.Fatal(loadError)
 			}
-			program, err := lower.Lower(context.Background(), source)
+			program, lowerError := lower.Lower(context.Background(), source)
 			if jsonDecodeEnumerationRefused(filepath.Base(path)) {
-				assertJSONDecodeEnumerationRefusal(test, err)
+				assertJSONDecodeEnumerationRefusal(test, lowerError)
 				return
 			}
 			if strings.Contains(filepath.ToSlash(path), "/json_encode_refused/") {
@@ -54,21 +54,21 @@ func TestJSONCheckedIRGobRoundTrip(test *testing.T) {
 				if filepath.Base(path) == "getter.a" {
 					expected = "Object enumeration with getter or accessor descriptors"
 				}
-				if err == nil || !strings.Contains(err.Error(), expected) {
-					test.Fatalf("want %s, got %v", expected, err)
+				if lowerError == nil || !strings.Contains(lowerError.Error(), expected) {
+					test.Fatalf("want %s, got %v", expected, lowerError)
 				}
 				return
 			}
-			if err != nil {
-				test.Fatal(err)
+			if lowerError != nil {
+				test.Fatal(lowerError)
 			}
 			var data bytes.Buffer
-			if err := gob.NewEncoder(&data).Encode(program); err != nil {
-				test.Fatalf("encode checked IR: %v", err)
+			if encodeError := gob.NewEncoder(&data).Encode(program); encodeError != nil {
+				test.Fatalf("encode checked IR: %v", encodeError)
 			}
 			var decoded ir.Program
-			if err := gob.NewDecoder(&data).Decode(&decoded); err != nil {
-				test.Fatalf("decode checked IR: %v", err)
+			if decodeError := gob.NewDecoder(&data).Decode(&decoded); decodeError != nil {
+				test.Fatalf("decode checked IR: %v", decodeError)
 			}
 			if len(program.Functions) != len(decoded.Functions) {
 				test.Fatal("function count changed")

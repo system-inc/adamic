@@ -23,9 +23,9 @@ func TestAKeyFromARunnersSourceIsTheCheckoutsKey(test *testing.T) {
 			[]string{"-C", directory, "-c", "user.name=t", "-c", "user.email=t@t", "-c", "commit.gpgsign=false"},
 			arguments...,
 		)...)
-		output, err := command.Output()
-		if err != nil {
-			test.Fatalf("git %v: %v", arguments, err)
+		output, outputError := command.Output()
+		if outputError != nil {
+			test.Fatalf("git %v: %v", arguments, outputError)
 		}
 		return output
 	}
@@ -62,8 +62,11 @@ func TestAKeyFromARunnersSourceIsTheCheckoutsKey(test *testing.T) {
 	}
 
 	// The check can fail: without the manifest the shipped package is keyed, and the key moves.
-	if err := os.Rename(filepath.Join(runner, ".tracked"), filepath.Join(test.TempDir(), "moved")); err != nil {
-		test.Fatal(err)
+	if renameError := os.Rename(
+		filepath.Join(runner, ".tracked"),
+		filepath.Join(test.TempDir(), "moved"),
+	); renameError != nil {
+		test.Fatal(renameError)
 	}
 	forgetTracked()
 	if key(test, runner, inputs) == want {
@@ -84,9 +87,9 @@ func TestAKeyFromARunnersSourceIsTheCheckoutsKey(test *testing.T) {
 func TestAnUnpackedSourceValuesACleanFileByItsManifest(test *testing.T) {
 	test.Parallel()
 	tree := checkout(test)
-	listing, err := toolchain.GitCommand("-C", tree, "ls-tree", "-r", "-z", "--full-tree", "HEAD").Output()
-	if err != nil {
-		test.Fatal(err)
+	listing, outputError := toolchain.GitCommand("-C", tree, "ls-tree", "-r", "-z", "--full-tree", "HEAD").Output()
+	if outputError != nil {
+		test.Fatal(outputError)
 	}
 	clean := key(test, tree, declared)
 	// runner is declaredTree unpacked an hour ago, its listing (with extra entries after the tree's) a minute ago.
@@ -96,13 +99,17 @@ func TestAnUnpackedSourceValuesACleanFileByItsManifest(test *testing.T) {
 		root := unpacked(test, nil)
 		old := time.Now().Add(-time.Hour)
 		for name := range declaredTree {
-			if err := os.Chtimes(filepath.Join(root, name), old, old); err != nil {
-				test.Fatal(err)
+			if changeTimesError := os.Chtimes(filepath.Join(root, name), old, old); changeTimesError != nil {
+				test.Fatal(changeTimesError)
 			}
 		}
 		write(test, root, ".tracked/files", string(listing)+extra)
-		if err := os.Chtimes(filepath.Join(root, ".tracked/files"), written, written); err != nil {
-			test.Fatal(err)
+		if changeTimesError := os.Chtimes(
+			filepath.Join(root, ".tracked/files"),
+			written,
+			written,
+		); changeTimesError != nil {
+			test.Fatal(changeTimesError)
 		}
 		return root
 	}
@@ -110,22 +117,26 @@ func TestAnUnpackedSourceValuesACleanFileByItsManifest(test *testing.T) {
 		test.Parallel()
 		root := runner(test, "")
 		unreadable := filepath.Join(root, "source/a.c")
-		if err := os.Chmod(unreadable, 0); err != nil {
-			test.Fatal(err)
+		if changeModeError := os.Chmod(unreadable, 0); changeModeError != nil {
+			test.Fatal(changeModeError)
 		}
 		test.Cleanup(func() { os.Chmod(unreadable, 0o644) })
-		if _, err := os.ReadFile(unreadable); err == nil {
+		if _, readError := os.ReadFile(unreadable); readError == nil {
 			test.Skip("this user reads a file with no permissions, so a file valued unread can't be told from one read")
 		}
 		// The chmod set a.c's change time to now, and nothing sets one back: the listing is written after it, as Loom
 		// writes it after the files it lists, past the racy margin.
 		time.Sleep(1100 * time.Millisecond)
-		if err := os.Chtimes(filepath.Join(root, ".tracked/files"), time.Now(), time.Now()); err != nil {
-			test.Fatal(err)
+		if changeTimesError := os.Chtimes(
+			filepath.Join(root, ".tracked/files"),
+			time.Now(),
+			time.Now(),
+		); changeTimesError != nil {
+			test.Fatal(changeTimesError)
 		}
-		got, err := Key(root, declared)
-		if err != nil {
-			test.Fatalf("keying a clean file of an unpacked source read it: %v", err)
+		got, keyError := Key(root, declared)
+		if keyError != nil {
+			test.Fatalf("keying a clean file of an unpacked source read it: %v", keyError)
 		}
 		if got != clean {
 			test.Fatalf("an unpacked source valued by its manifest keys %s, its checkout %s", got, clean)
@@ -145,8 +156,8 @@ func TestAnUnpackedSourceValuesACleanFileByItsManifest(test *testing.T) {
 		write(test, root, "source/a.c", changed["source/a.c"])
 		// Changed half a minute after the listing was written: a lookup asking now finds it changed long before.
 		since := written.Add(30 * time.Second)
-		if err := os.Chtimes(filepath.Join(root, "source/a.c"), since, since); err != nil {
-			test.Fatal(err)
+		if changeTimesError := os.Chtimes(filepath.Join(root, "source/a.c"), since, since); changeTimesError != nil {
+			test.Fatal(changeTimesError)
 		}
 		// Its change time is now; past the racy margin, it reads old to a lookup that took the listing's time as when
 		// it was read, as the mutant does.
@@ -172,8 +183,8 @@ func TestAnUnpackedSourceValuesACleanFileByItsManifest(test *testing.T) {
 		// Edited, then its modification time set back an hour before the listing (Operations' scout): only its change
 		// time, now, says it moved.
 		old := written.Add(-time.Hour)
-		if err := os.Chtimes(filepath.Join(root, "source/a.c"), old, old); err != nil {
-			test.Fatal(err)
+		if changeTimesError := os.Chtimes(filepath.Join(root, "source/a.c"), old, old); changeTimesError != nil {
+			test.Fatal(changeTimesError)
 		}
 		if got, want := key(
 			test,
@@ -193,8 +204,8 @@ func TestAnUnpackedSourceValuesACleanFileByItsManifest(test *testing.T) {
 		root := runner(test, "160000 commit "+strings.Repeat("ab", 20)+"\tvendor\x00")
 		write(test, root, "vendor", "a file where the commit has a submodule\n")
 		old := time.Now().Add(-time.Hour)
-		if err := os.Chtimes(filepath.Join(root, "vendor"), old, old); err != nil {
-			test.Fatal(err)
+		if changeTimesError := os.Chtimes(filepath.Join(root, "vendor"), old, old); changeTimesError != nil {
+			test.Fatal(changeTimesError)
 		}
 		if _, held := repositoryAt(root).objects["vendor"]; held {
 			test.Fatal("the listing's submodule entry is held as a file's id")

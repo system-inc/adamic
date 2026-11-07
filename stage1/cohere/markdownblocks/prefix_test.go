@@ -16,9 +16,9 @@ import (
 // Not parallel: shared markdownMemory configuration; existing helper controls parallel execution.
 func TestMarkdownParserPrefixes(test *testing.T) {
 	parallelMarkdown(test)
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	inputs, files := auditCorpus(test, root)
 	// This file sweep is small beside the mandatory generated and fixed checks.
@@ -86,9 +86,9 @@ func TestMarkdownParserPrefixes(test *testing.T) {
 	goBinary := prefixGoOracle(test)
 	want := execute(test, nil, goBinary, cases)
 	clean(test, "actual Go parser primitives", want)
-	main, err := filepath.Abs("testdata/prefix_probe.ts")
-	if err != nil {
-		test.Fatal(err)
+	main, absolutePathError := filepath.Abs("testdata/prefix_probe.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	program := lowered(test, main)
 	binary := filepath.Join(probeNative(test, prefixProbe, native.Options{Sanitize: true}), "port")
@@ -118,13 +118,13 @@ func TestMarkdownParserPrefixes(test *testing.T) {
 	} {
 		test.Run(mutation.name, func(test *testing.T) {
 			scratch := test.TempDir()
-			if err := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); err != nil {
-				test.Fatal(err)
+			if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
 			for _, name := range []string{"preprocess.ts", "quotePrefix.ts", "codec.ts"} {
-				content, err := os.ReadFile(name)
-				if err != nil {
-					test.Fatal(err)
+				content, readError := os.ReadFile(name)
+				if readError != nil {
+					test.Fatal(readError)
 				}
 				if name == mutation.file {
 					if strings.Count(string(content), mutation.from) != 1 {
@@ -134,9 +134,9 @@ func TestMarkdownParserPrefixes(test *testing.T) {
 				}
 				write(test, filepath.Join(scratch, name), content)
 			}
-			content, err := os.ReadFile(main)
-			if err != nil {
-				test.Fatal(err)
+			content, readError := os.ReadFile(main)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			mutantMain := filepath.Join(scratch, "testdata/prefix_probe.ts")
 			write(test, mutantMain, content)

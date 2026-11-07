@@ -14,9 +14,9 @@ import (
 // have identical gates. No production code or production synchronization changes.
 func staticsSteadySource(test *testing.T, file string) string {
 	test.Helper()
-	source, err := os.ReadFile(filepath.Join(*runtimeStaticsDirectory, file))
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(filepath.Join(*runtimeStaticsDirectory, file))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return string(source)
 }
@@ -132,7 +132,7 @@ func staticsSteadyRun(test *testing.T, binary, kind string, mutant bool) {
 					"TSAN_OPTIONS=halt_on_error=1:exitcode=66",
 					"ADAMIC_NORMALIZATION_KIND="+kind,
 				)
-				output, err := command.CombinedOutput()
+				output, combinedOutputError := command.CombinedOutput()
 				timedOut := ctx.Err() != nil
 				cancel()
 				function := map[string]string{
@@ -144,8 +144,14 @@ func staticsSteadyRun(test *testing.T, binary, kind string, mutant bool) {
 				report := strings.Contains(string(output), "WARNING: ThreadSanitizer: data race") &&
 					strings.Contains(string(output), " in "+function+"\n")
 				if mutant {
-					if err == nil || timedOut || !report {
-						test.Fatalf("%s mutant not caught (attempt %d): %v\n%s", kind, attempt, err, output)
+					if combinedOutputError == nil || timedOut || !report {
+						test.Fatalf(
+							"%s mutant not caught (attempt %d): %v\n%s",
+							kind,
+							attempt,
+							combinedOutputError,
+							output,
+						)
 					}
 					for _, line := range strings.Split(string(output), "\n") {
 						if strings.Contains(line, "SUMMARY: ThreadSanitizer:") {
@@ -157,11 +163,17 @@ func staticsSteadyRun(test *testing.T, binary, kind string, mutant bool) {
 					if kind == "exit_flush" {
 						expected = "signal worker line\n"
 					}
-					if err != nil ||
+					if combinedOutputError != nil ||
 						timedOut ||
 						strings.Contains(string(output), "ThreadSanitizer:") ||
 						!strings.Contains(string(output), expected) {
-						test.Fatalf("%s guarded fixture failed (attempt %d): %v\n%s", kind, attempt, err, output)
+						test.Fatalf(
+							"%s guarded fixture failed (attempt %d): %v\n%s",
+							kind,
+							attempt,
+							combinedOutputError,
+							output,
+						)
 					}
 				}
 			}

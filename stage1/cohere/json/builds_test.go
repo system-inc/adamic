@@ -52,9 +52,9 @@ func buildJSONLoweredPort(dir string) error { return buildJSONLoweredPortMutatio
 
 func buildJSONLoweredPortMutation(dir string, mutation *printerMutation) error {
 	for _, name := range portFiles {
-		contents, err := os.ReadFile(name)
-		if err != nil {
-			return err
+		contents, readError := os.ReadFile(name)
+		if readError != nil {
+			return readError
 		}
 		if mutation != nil && name == mutation.file {
 			if strings.Count(string(contents), mutation.from) != 1 {
@@ -62,20 +62,20 @@ func buildJSONLoweredPortMutation(dir string, mutation *printerMutation) error {
 			}
 			contents = []byte(strings.Replace(string(contents), mutation.from, mutation.to, 1))
 		}
-		if err := os.WriteFile(filepath.Join(dir, name), contents, 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(filepath.Join(dir, name), contents, 0644); writeError != nil {
+			return writeError
 		}
 	}
-	program, err := load.Load([]string{filepath.Join(dir, "main.ts")})
-	if err != nil {
-		return fmt.Errorf("Load: %w", err)
+	program, loadError := load.Load([]string{filepath.Join(dir, "main.ts")})
+	if loadError != nil {
+		return fmt.Errorf("Load: %w", loadError)
 	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		return fmt.Errorf("Lower: %w", err)
+	lowered, lowerError := lower.Lower(context.Background(), program)
+	if lowerError != nil {
+		return fmt.Errorf("Lower: %w", lowerError)
 	}
-	if err := os.WriteFile(filepath.Join(dir, "main.c"), []byte(native.C(lowered)), 0644); err != nil {
-		return err
+	if writeError := os.WriteFile(filepath.Join(dir, "main.c"), []byte(native.C(lowered)), 0644); writeError != nil {
+		return writeError
 	}
 	return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(lowered)), 0644)
 }
@@ -150,9 +150,9 @@ func jsonBuildUnit(parent *testing.T, name string, in buildcache.Inputs, build f
 
 func jsonLoweredProducts(test *testing.T, dir, entry string) jsonProducts {
 	test.Helper()
-	source, err := os.ReadFile(filepath.Join(dir, "main.c"))
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(filepath.Join(dir, "main.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return jsonProducts{entry: filepath.Join(dir, entry), script: filepath.Join(dir, "program.mjs"), c: string(source)}
 }
@@ -161,16 +161,16 @@ func jsonOracleAnswers(test *testing.T, oracle string, cases []textCase) []answe
 	test.Helper()
 	input, _ := protocol(cases, make([]answer, len(cases)))
 	path := filepath.Join(test.TempDir(), "cases.txt")
-	if err := os.WriteFile(path, []byte(input), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(input), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	result := execute(test, nil, oracle, "--cases", path)
 	if result.exitCode != 0 || len(result.stderr) != 0 {
 		test.Fatalf("%s Go oracle: exit %d stderr %s", test.Name(), result.exitCode, result.stderr)
 	}
-	answers, err := jsonPortAnswers(string(result.stdout), len(cases))
-	if err != nil {
-		test.Fatal(err)
+	answers, jsonPortAnswersError := jsonPortAnswers(string(result.stdout), len(cases))
+	if jsonPortAnswersError != nil {
+		test.Fatal(jsonPortAnswersError)
 	}
 	return answers
 }

@@ -38,12 +38,12 @@ p.mark('x'); p.measure('x'); p.clearMarks();
 console.log(String(p.now()>=0));
 `
 	path := filepath.Join(test.TempDir(), "main.a")
-	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	truth := onNodeWith(test, inputRun{}, path)
 	nodeProcessRuntimeAgreement(test, program, truth, shard)
@@ -61,22 +61,26 @@ func TestNodeProcessPerformanceOptionsMutant_001(test *testing.T) {
 func nodeProcessPerformanceOptionsMutant(test *testing.T, shard int) {
 	source := `import {performance} from 'node:perf_hooks'; const p=performance; const m=p.measure('x',{start:0,end:0}); console.log(String(m.duration===0));`
 	path := filepath.Join(test.TempDir(), "main.a")
-	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	_, err := lowered(test, path)
+	_, loweredError := lowered(test, path)
 	var missing *lower.NotYet
-	if !errors.As(err, &missing) {
-		test.Fatalf("want explicit options ABI refusal, got %v", err)
+	if !errors.As(loweredError, &missing) {
+		test.Fatalf("want explicit options ABI refusal, got %v", loweredError)
 	}
 	truth := onNodeWith(test, inputRun{}, path)
 	mutantPath := filepath.Join(test.TempDir(), "main.a")
-	if err := os.WriteFile(mutantPath, []byte(strings.Replace(source, ",{start:0,end:0}", "", 1)), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(
+		mutantPath,
+		[]byte(strings.Replace(source, ",{start:0,end:0}", "", 1)),
+		0600,
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := lowered(test, mutantPath)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, mutantPath)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	var got run
 	var binary string
@@ -114,13 +118,13 @@ func TestNodeProcessPerformanceMutationMutant_001(test *testing.T) {
 func nodeProcessPerformanceMutationMutant(test *testing.T, shard int) {
 	source := `import {performance} from 'node:perf_hooks'; const p:{now:()=>number}=performance; p.now=()=>-1; console.log(String(performance.now()===-1));`
 	path := filepath.Join(test.TempDir(), "main.a")
-	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	_, err := lowered(test, path)
+	_, loweredError := lowered(test, path)
 	var missing *lower.NotYet
-	if !errors.As(err, &missing) {
-		test.Fatalf("want explicit host slot refusal, got %v", err)
+	if !errors.As(loweredError, &missing) {
+		test.Fatalf("want explicit host slot refusal, got %v", loweredError)
 	}
 	truth := onNodeWith(test, inputRun{}, path)
 	program := &ir.Program{Source: "performance-mutation-mutant.a", Locals: []ir.Local{

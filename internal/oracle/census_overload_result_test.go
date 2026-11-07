@@ -20,13 +20,15 @@ func init() {
 
 func TestCensusAppendResultProof(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/census_append_overload.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/census_append_overload.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	for _, constant := range program.Strings {
 		if strings.Contains(constant, "of append result:") {
@@ -39,13 +41,13 @@ func TestCensusAppendResultProof(test *testing.T) {
 // backends are independently held to the ruled loud stop, including its text.
 func TestCensusOverloadResultStop(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/census_overload_lie.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/census_overload_lie.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	node := onNode(test, path)
 	if difference := disagreement(run{stdout: []byte("called\nundefined\n")}, node); difference != "" {

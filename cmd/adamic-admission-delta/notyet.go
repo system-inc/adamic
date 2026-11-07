@@ -104,30 +104,38 @@ func runtimeNotYetForm(stderr string) (string, string, bool) {
 }
 func readRuntimeNotYetStops(path string) (runtimeNotYetStopList, error) {
 	var list runtimeNotYetStopList
-	data, err := os.ReadFile(path)
-	if err != nil {
-		return list, err
+	data, readError := os.ReadFile(path)
+	if readError != nil {
+		return list, readError
 	}
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
-	if err = decoder.Decode(&list); err != nil {
-		return list, err
+	if decodeError := decoder.Decode(&list); decodeError != nil {
+		return list, decodeError
 	}
 	var extra any
-	if err = decoder.Decode(&extra); err != io.EOF {
+	if decodeError := decoder.Decode(&extra); decodeError != io.EOF {
 		return list, fmt.Errorf("run-time NotYet list has trailing JSON")
 	}
-	if !strings.Contains(list.Comment, "Adding an entry is a ruling") || !strings.Contains(list.Comment, "@system_adamic") || list.Stops == nil {
+	if !strings.Contains(list.Comment, "Adding an entry is a ruling") ||
+		!strings.Contains(list.Comment, "@system_adamic") ||
+		list.Stops == nil {
 		return list, fmt.Errorf("run-time NotYet list needs its ruling header and stops object")
 	}
 	for hash, stop := range list.Stops {
 		if !validContentHash(hash) {
 			return list, fmt.Errorf("invalid run-time NotYet content hash %q", hash)
 		}
-		if stop.Path == "" || filepath.IsAbs(stop.Path) || filepath.ToSlash(filepath.Clean(stop.Path)) != stop.Path || stop.Path == ".." || strings.HasPrefix(stop.Path, "../") {
+		if stop.Path == "" ||
+			filepath.IsAbs(stop.Path) ||
+			filepath.ToSlash(filepath.Clean(stop.Path)) != stop.Path ||
+			stop.Path == ".." ||
+			strings.HasPrefix(stop.Path, "../") {
 			return list, fmt.Errorf("run-time NotYet needs its program's repository path: %s", hash)
 		}
-		if !taskReference.MatchString(stop.RulingTask) || !taskReference.MatchString(stop.LiftingTask) || stop.LiftingTask == stop.RulingTask {
+		if !taskReference.MatchString(stop.RulingTask) ||
+			!taskReference.MatchString(stop.LiftingTask) ||
+			stop.LiftingTask == stop.RulingTask {
 			return list, fmt.Errorf("run-time NotYet needs its ruling task and the task that lifts it: %s", hash)
 		}
 		_, ruling, allowed := runtimeNotYetForm(stop.Stderr)
@@ -135,7 +143,12 @@ func readRuntimeNotYetStops(path string) (runtimeNotYetStopList, error) {
 			return list, fmt.Errorf("run-time NotYet stop message is not a ruled form: %s", hash)
 		}
 		if stop.RulingTask != ruling {
-			return list, fmt.Errorf("run-time NotYet ruling task %s is not its form's ruling %s: %s", stop.RulingTask, ruling, hash)
+			return list, fmt.Errorf(
+				"run-time NotYet ruling task %s is not its form's ruling %s: %s",
+				stop.RulingTask,
+				ruling,
+				hash,
+			)
 		}
 	}
 	return list, nil
@@ -153,7 +166,9 @@ func acceptsRuntimeNotYet(stop runtimeNotYetStop, node, javascript, native obser
 			return false
 		}
 	}
-	return javascript.Stdout == native.Stdout && strings.HasPrefix(node.Stdout, native.Stdout) && len(node.Stdout) > len(native.Stdout)
+	return javascript.Stdout == native.Stdout &&
+		strings.HasPrefix(node.Stdout, native.Stdout) &&
+		len(node.Stdout) > len(native.Stdout)
 }
 
 // runtimeNotYetRelated schedules a listed program, or an edit at a listed path, for a run, as

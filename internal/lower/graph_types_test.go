@@ -14,12 +14,12 @@ import (
 
 func TestGraphLiteralMethodAllocation(test *testing.T) {
 	test.Parallel()
-	program, err := lowerSource(
+	program, lowerSourceError := lowerSource(
 		test,
 		`function make():void {let holder:{read():number}|undefined;const value={read():number{return holder===undefined?0:1;}};holder=value;console.log('made');}make();`,
 	)
-	if err != nil {
-		test.Fatal(err)
+	if lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
 	test.Logf("graph types %v", program.GraphTypes)
 	found := false
@@ -113,24 +113,24 @@ show({visible:1});`, "Object.entries(view)", "a dynamic-shape object in a graph 
 			main := filepath.Join(directory, "main"+extension)
 			cause := filepath.Join(directory, "cause"+extension)
 			source := "// The offending node is in an imported module.\n\n" + probe.source + "\nexport {};\n"
-			if err := os.WriteFile(cause, []byte(source), 0600); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(cause, []byte(source), 0600); writeError != nil {
+				test.Fatal(writeError)
 			}
-			if err := os.WriteFile(
+			if writeError := os.WriteFile(
 				main,
 				[]byte("import './cause"+extension+"';\n"+graphReviewCycle),
 				0600,
-			); err != nil {
-				test.Fatal(err)
+			); writeError != nil {
+				test.Fatal(writeError)
 			}
-			checked, err := load.Load([]string{main})
-			if err != nil {
-				test.Fatal(err)
+			checked, loadError := load.Load([]string{main})
+			if loadError != nil {
+				test.Fatal(loadError)
 			}
-			_, err = Lower(context.Background(), checked)
+			_, lowerError := Lower(context.Background(), checked)
 			var refusal *Refused
-			if !errors.As(err, &refusal) {
-				test.Fatalf("want graph boundary refusal, got %v", err)
+			if !errors.As(lowerError, &refusal) {
+				test.Fatalf("want graph boundary refusal, got %v", lowerError)
 			}
 			offset := strings.LastIndex(source, probe.marker)
 			if offset < 0 {

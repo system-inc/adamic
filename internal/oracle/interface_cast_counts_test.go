@@ -82,9 +82,9 @@ func interfaceCastCounted(test *testing.T, path string) (string, func() string) 
 	command := exec.Command(buildcache.AdamicBuiltElsewhere(test), "c", path)
 	command.Dir = repository
 
-	source, err := command.Output()
-	if err != nil {
-		test.Fatalf("default compiler for %s: %v", path, err)
+	source, outputError := command.Output()
+	if outputError != nil {
+		test.Fatalf("default compiler for %s: %v", path, outputError)
 	}
 	return countPortable(
 		test,
@@ -97,8 +97,8 @@ func interfaceCastCounted(test *testing.T, path string) (string, func() string) 
 func interfaceCastRun(test *testing.T, path string, source string) string {
 	test.Helper()
 	binary := filepath.Join(test.TempDir(), "counted")
-	if err := native.Build(source, binary, native.Options{Count: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(source, binary, native.Options{Count: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	name, arguments := pinnedStack(binary)
 	result := execute(test, name, arguments...)

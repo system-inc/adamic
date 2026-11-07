@@ -28,18 +28,20 @@ func BuildCache() (string, error) {
 		return filepath.Abs(directory)
 	}
 	if toolchain.Sandboxed() {
-		return "", errors.New("ADAMIC_SANDBOX=1 keeps products only where ADAMIC_BUILD_CACHE_DIR says, and ADAMIC_BUILD_CACHE_DIR is unset")
+		return "", errors.New(
+			"ADAMIC_SANDBOX=1 keeps products only where ADAMIC_BUILD_CACHE_DIR says, and ADAMIC_BUILD_CACHE_DIR is unset",
+		)
 	}
-	user, err := os.UserCacheDir()
-	if err != nil {
-		return "", err
+	user, userCacheDirectoryError := os.UserCacheDir()
+	if userCacheDirectoryError != nil {
+		return "", userCacheDirectoryError
 	}
 	return filepath.Join(user, "adamic-build"), nil
 }
 
-// Output is where this process writes: ADAMIC_BUILD_OUTPUT_DIR made absolute, or the build cache (BuildCache) when it is
-// unset. A sandbox allows it whenever it is set, since then the sandbox named it; the build cache keeps its own rule.
-// Making the directory is the writer's, as making the build cache is.
+// Output is where this process writes: ADAMIC_BUILD_OUTPUT_DIR made absolute, or the build cache (BuildCache) when it
+// is unset. A sandbox allows it whenever it is set, since then the sandbox named it; the build cache keeps its own
+// rule. Making the directory is the writer's, as making the build cache is.
 func Output() (string, error) {
 	if directory := os.Getenv(OutputDirectoryVariable); directory != "" {
 		return filepath.Abs(directory)
@@ -50,13 +52,13 @@ func Output() (string, error) {
 // Roots are the directories a lookup reads, in order: the output directory, then the build cache, or one directory when
 // they are the same, as they are while ADAMIC_BUILD_OUTPUT_DIR is unset.
 func Roots() ([]string, error) {
-	output, err := Output()
-	if err != nil {
-		return nil, err
+	output, outputError := Output()
+	if outputError != nil {
+		return nil, outputError
 	}
-	cache, err := BuildCache()
-	if err != nil {
-		return nil, err
+	cache, buildCacheError := BuildCache()
+	if buildCacheError != nil {
+		return nil, buildCacheError
 	}
 	if cache == output {
 		return []string{output}, nil
@@ -64,15 +66,15 @@ func Roots() ([]string, error) {
 	return []string{output, cache}, nil
 }
 
-// ReadPlaces is where a lookup reads path: for a path at or under one of Roots, the same place under each root, in their
-// order, so what the output directory holds is read before what the build cache holds; any other path, and every path
-// while ADAMIC_BUILD_OUTPUT_DIR is unset, alone. A root is matched as Roots spells it.
+// ReadPlaces is where a lookup reads path: for a path at or under one of Roots, the same place under each root, in
+// their order, so what the output directory holds is read before what the build cache holds; any other path, and every
+// path while ADAMIC_BUILD_OUTPUT_DIR is unset, alone. A root is matched as Roots spells it.
 func ReadPlaces(path string) []string {
 	if os.Getenv(OutputDirectoryVariable) == "" {
 		return []string{path}
 	}
-	roots, err := Roots()
-	if err != nil || len(roots) == 1 {
+	roots, rootsError := Roots()
+	if rootsError != nil || len(roots) == 1 {
 		return []string{path}
 	}
 	for _, root := range roots {
@@ -101,7 +103,10 @@ func within(root, path string) (string, bool) {
 	if path == root {
 		return ".", true
 	}
-	if rest, ok := strings.CutPrefix(path, strings.TrimSuffix(root, string(filepath.Separator))+string(filepath.Separator)); ok {
+	if rest, ok := strings.CutPrefix(
+		path,
+		strings.TrimSuffix(root, string(filepath.Separator))+string(filepath.Separator),
+	); ok {
 		return rest, true
 	}
 	return "", false

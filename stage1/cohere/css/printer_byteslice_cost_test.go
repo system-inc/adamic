@@ -72,17 +72,17 @@ func cssPrinterCounted(test *testing.T, index int) string {
 		}
 		directory := buildcache.Product(test, inputs, func(dir string) error {
 			copied := portDirectory(test, cssPrinterCostMutants[index])
-			if err := moveTree(filepath.Dir(copied), filepath.Join(dir, "sources")); err != nil {
-				return err
+			if moveTreeError := moveTree(filepath.Dir(copied), filepath.Join(dir, "sources")); moveTreeError != nil {
+				return moveTreeError
 			}
 			source := filepath.Join(dir, "sources/css/print_main.ts")
-			checked, err := load.Load([]string{source})
-			if err != nil {
-				return err
+			checked, loadError := load.Load([]string{source})
+			if loadError != nil {
+				return loadError
 			}
-			program, err := lower.Lower(test.Context(), checked)
-			if err != nil {
-				return err
+			program, lowerError := lower.Lower(test.Context(), checked)
+			if lowerError != nil {
+				return lowerError
 			}
 			return native.Build(native.C(program), filepath.Join(dir, "native"), options)
 		})
@@ -109,11 +109,11 @@ func TestProduct_CSSPrinterPrefixCostMutant(test *testing.T) {
 
 func cssPrinterPreflightCases(test *testing.T) [2]string {
 	test.Helper()
-	source, err := os.ReadFile(
+	source, readError := os.ReadFile(
 		filepath.Join(repository, "cohere/internal/lint/rules/tailwind/vendored/testdata/tailwindcss/index.css"),
 	)
-	if err != nil {
-		test.Fatal(err)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	escape := strings.NewReplacer("\\", "\\\\", "\n", "\\n", "\r", "\\r", "\t", "\\t")
 	escaped := escape.Replace(string(source))
@@ -154,12 +154,12 @@ func cssPrinterPreflightCases(test *testing.T) [2]string {
 		text += strings.Repeat(" ", size-len(text))
 		paths[index] = filepath.Join(test.TempDir(), "preflight.txt")
 		// Preserve both syntax modes from the original printer corpus.
-		if err := os.WriteFile(
+		if writeError := os.WriteFile(
 			paths[index],
 			[]byte(">C"+escape.Replace(text)+"\n>S"+escape.Replace(text)+"\n"),
 			0644,
-		); err != nil {
-			test.Fatal(err)
+		); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	return paths
@@ -197,9 +197,9 @@ func cssPrinterPreflightCost(test *testing.T, binary, oracle string) error {
 		expected := cssPrinterAnswers(test, oracle, path, "default")
 		// The guard rests on a count being exact, so each input runs twice and a count that moved is an error.
 		for repeat := 0; repeat < 2; repeat++ {
-			counted, err := cssPrinterCountedAllocations(test, binary, expected, path)
-			if err != nil {
-				return err
+			counted, cssPrinterCountedAllocationsError := cssPrinterCountedAllocations(test, binary, expected, path)
+			if cssPrinterCountedAllocationsError != nil {
+				return cssPrinterCountedAllocationsError
 			}
 			if repeat == 1 && counted != allocations[index] {
 				return fmt.Errorf(
@@ -236,20 +236,24 @@ func cssPrinterPreflightCost(test *testing.T, binary, oracle string) error {
 func TestCSSPrinterPreflightCost(test *testing.T) {
 	test.Parallel()
 	oracle := oracles.ComparisonOracle(test, true)
-	if err := cssPrinterPreflightCost(test, cssPrinterCounted(test, 0), oracle); err != nil {
-		test.Fatal(err)
+	if cssPrinterPreflightCostError := cssPrinterPreflightCost(
+		test,
+		cssPrinterCounted(test, 0),
+		oracle,
+	); cssPrinterPreflightCostError != nil {
+		test.Fatal(cssPrinterPreflightCostError)
 	}
 }
 
 func TestCSSPrinterPreflightCostMutant(test *testing.T) {
 	test.Parallel()
 	oracle := oracles.ComparisonOracle(test, true)
-	err := cssPrinterPreflightCost(test, cssPrinterCounted(test, 1), oracle)
-	if err == nil {
+	cssPrinterPreflightCostError := cssPrinterPreflightCost(test, cssPrinterCounted(test, 1), oracle)
+	if cssPrinterPreflightCostError == nil {
 		test.Fatal("prefix-rebuild cost mutant survived the scaling guard")
 	}
-	if !strings.Contains(err.Error(), "exceeds scaling bound") {
-		test.Fatal(err)
+	if !strings.Contains(cssPrinterPreflightCostError.Error(), "exceeds scaling bound") {
+		test.Fatal(cssPrinterPreflightCostError)
 	}
-	test.Logf("cost mutant caught by the same guard: %v", err)
+	test.Logf("cost mutant caught by the same guard: %v", cssPrinterPreflightCostError)
 }

@@ -68,23 +68,32 @@ func (l *lowering) throwStatement(node *ast.Node) ([]ir.Statement, error) {
 		}
 		seen[symbol] = true
 		declaration := symbol.Declarations[0]
-		if declaration.Kind != ast.KindVariableDeclaration || declaration.Parent == nil || declaration.Parent.Kind != ast.KindVariableDeclarationList || declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
+		if declaration.Kind != ast.KindVariableDeclaration ||
+			declaration.Parent == nil ||
+			declaration.Parent.Kind != ast.KindVariableDeclarationList ||
+			declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
 			return false
 		}
 		return madeError(declaration.AsVariableDeclaration().Initializer)
 	}
-	isStoredError := !isNewError && !isCaught && l.isLibraryType(l.checker.GetTypeAtLocation(thrown), errorClasses...) && madeError(thrown)
+	isStoredError := !isNewError &&
+		!isCaught &&
+		l.isLibraryType(l.checker.GetTypeAtLocation(thrown), errorClasses...) &&
+		madeError(thrown)
 	if !isNewError && !isCaught && !isStoredError {
 		if l.isLibraryType(l.checker.GetTypeAtLocation(thrown), errorClasses...) {
-			return nil, l.notYet(thrown, "throwing an Error that isn't made where it's thrown or caught by the catch around it")
+			return nil, l.notYet(
+				thrown,
+				"throwing an Error that isn't made where it's thrown or caught by the catch around it",
+			)
 		}
 		// Any value may be thrown (docs/0.1.md, ruled October 19): until the runtime carries one that
 		// isn't an Error, it isn't built yet, never refused.
 		return nil, l.notYet(thrown, "throwing "+l.thrownCategory(l.checker.GetTypeAtLocation(thrown)))
 	}
-	value, err := l.expression(thrown)
-	if err != nil {
-		return nil, err
+	value, expressionError := l.expression(thrown)
+	if expressionError != nil {
+		return nil, expressionError
 	}
 	return []ir.Statement{ir.Throw{Value: value}}, nil
 }
@@ -146,9 +155,9 @@ func (l *lowering) newError(node *ast.Node) (ir.Expression, error) {
 		if len(created.Arguments.Nodes) > 1 {
 			return nil, l.notYet(node, "new "+class+" with options")
 		}
-		var err error
-		if message, err = l.expression(created.Arguments.Nodes[0]); err != nil {
-			return nil, err
+		var expressionError error
+		if message, expressionError = l.expression(created.Arguments.Nodes[0]); expressionError != nil {
+			return nil, expressionError
 		}
 		message = fit(message, ir.String)
 		if message.Type() != ir.String {
@@ -165,9 +174,11 @@ func (l *lowering) newError(node *ast.Node) (ir.Expression, error) {
 func (l *lowering) tryStatement(node *ast.Node) ([]ir.Statement, error) {
 	statement := node.AsTryStatement()
 	lowered := ir.Try{CatchLocal: -1}
-	var err error
-	if lowered.Body, err = l.statements(statement.TryBlock.AsBlock().Statements.Nodes); err != nil {
-		return nil, err
+	var statementsError error
+	if lowered.Body, statementsError = l.statements(
+		statement.TryBlock.AsBlock().Statements.Nodes,
+	); statementsError != nil {
+		return nil, statementsError
 	}
 	l.tries = append(l.tries, tryRecord{node: node, body: lowered.Body})
 	if clause := statement.CatchClause; clause != nil {
@@ -181,12 +192,15 @@ func (l *lowering) tryStatement(node *ast.Node) ([]ir.Statement, error) {
 				l.caught = map[*ast.Symbol]bool{}
 			}
 			l.caught[l.symbol(name)] = true
-			if lowered.CatchLocal, err = l.declareLocal(name); err != nil {
-				return nil, err
+			var declareLocalError error
+			if lowered.CatchLocal, declareLocalError = l.declareLocal(name); declareLocalError != nil {
+				return nil, declareLocalError
 			}
 		}
-		if lowered.Catch, err = l.statements(clause.AsCatchClause().Block.AsBlock().Statements.Nodes); err != nil {
-			return nil, err
+		if lowered.Catch, statementsError = l.statements(
+			clause.AsCatchClause().Block.AsBlock().Statements.Nodes,
+		); statementsError != nil {
+			return nil, statementsError
 		}
 	}
 	if block := statement.FinallyBlock; block != nil {
@@ -194,8 +208,8 @@ func (l *lowering) tryStatement(node *ast.Node) ([]ir.Statement, error) {
 		// A return, break or continue out of the finally overrides whatever the try was doing, a
 		// throw or a return included: the emitter lets go of the pending error or the held result on
 		// the way out, as the scopes they wait in are left.
-		if lowered.Finally, err = l.statements(block.AsBlock().Statements.Nodes); err != nil {
-			return nil, err
+		if lowered.Finally, statementsError = l.statements(block.AsBlock().Statements.Nodes); statementsError != nil {
+			return nil, statementsError
 		}
 	}
 	return []ir.Statement{lowered}, nil
@@ -205,7 +219,10 @@ func (l *lowering) tryStatement(node *ast.Node) ([]ir.Statement, error) {
 func (l *lowering) caughtInstanceOfError(node *ast.Node) (ir.Expression, bool) {
 	binary := node.AsBinaryExpression()
 	left := ast.SkipParentheses(binary.Left)
-	if binary.OperatorToken.Kind != ast.KindInstanceOfKeyword || !ast.IsIdentifier(left) || !l.caught[l.symbol(left)] || !l.isLibraryGlobal(binary.Right, "Error") {
+	if binary.OperatorToken.Kind != ast.KindInstanceOfKeyword ||
+		!ast.IsIdentifier(left) ||
+		!l.caught[l.symbol(left)] ||
+		!l.isLibraryGlobal(binary.Right, "Error") {
 		return nil, false
 	}
 	l.local(left)
@@ -234,7 +251,9 @@ func (l *lowering) exceptions() error {
 	for changed := true; changed; {
 		changed = false
 		for index := range functions {
-			if (functions[index].Closure || dispatched[index]) && functions[index].MayThrow && !l.result.ClosuresMayThrow {
+			if (functions[index].Closure || dispatched[index]) &&
+				functions[index].MayThrow &&
+				!l.result.ClosuresMayThrow {
 				l.result.ClosuresMayThrow = true
 				changed = true
 			}
@@ -252,7 +271,9 @@ func (l *lowering) exceptions() error {
 	}
 	for _, record := range l.tries {
 		if failing := l.libraryFailure(record.body, map[int]bool{}); failing != "" {
-			return l.notYet(record.node, "a try around "+failing+", whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md)")
+			return l.notYet(record.node, "a try around "+
+				failing+
+				", whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md)")
 		}
 	}
 	return nil
@@ -272,7 +293,12 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 				return false
 			}
 		case ir.ProcessCall:
-			found = found || node.Operation == "exit" || node.Operation == "setExitCode" || node.Operation == "cwd" || node.Operation == "chdir" || node.Operation == "measure"
+			found = found ||
+				node.Operation == "exit" ||
+				node.Operation == "setExitCode" ||
+				node.Operation == "cwd" ||
+				node.Operation == "chdir" ||
+				node.Operation == "measure"
 		case ir.NodeHostCall:
 			found = found || node.Throws
 		case ir.NodeFSFile:
@@ -329,7 +355,8 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 				found = true
 			}
 		case ir.ArraySort:
-			if (node.Callback != nil && l.result.ClosuresMayThrow) || (node.Callback == nil && l.result.Functions[node.Comparator].MayThrow) {
+			if (node.Callback != nil && l.result.ClosuresMayThrow) ||
+				(node.Callback == nil && l.result.Functions[node.Comparator].MayThrow) {
 				found = true
 			}
 		}

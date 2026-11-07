@@ -15,7 +15,7 @@ import (
 func generatorLeaked(stderr string) string {
 	lines := strings.Split(strings.TrimSuffix(stderr, "\n"), "\n")
 	var allocations, frees, retains, releases, peak, regions int
-	if _, err := fmt.Sscanf(
+	if _, scanError := fmt.Sscanf(
 		lines[len(lines)-1],
 		"adamic: counts: allocations %d frees %d retains %d releases %d peak %d regions %d",
 		&allocations,
@@ -24,8 +24,8 @@ func generatorLeaked(stderr string) string {
 		&releases,
 		&peak,
 		&regions,
-	); err != nil {
-		return "no counts line: " + err.Error()
+	); scanError != nil {
+		return "no counts line: " + scanError.Error()
 	}
 	if allocations != frees+regions {
 		return fmt.Sprintf(
@@ -45,21 +45,21 @@ func generatorLeaked(stderr string) string {
 // of generator.c replaced, which must fail with diagnostic.
 func generatorRuntimeGuard(test *testing.T, mode, want, old, replacement, diagnostic string) {
 	test.Helper()
-	files, flags, compiler, version, err := runtimeInputs(
+	files, flags, compiler, version, runtimeInputsError := runtimeInputs(
 		"",
 		Options{Sanitize: true, Count: true},
 		[]string{"-DADAMIC_CANONICAL_CLOSURES=1"},
 	)
-	if err != nil {
-		test.Fatal(err)
+	if runtimeInputsError != nil {
+		test.Fatal(runtimeInputsError)
 	}
-	cache, err := cacheDirectory("generator-runtime")
-	if err != nil {
-		test.Fatal(err)
+	cache, cacheDirectoryError := cacheDirectory("generator-runtime")
+	if cacheDirectoryError != nil {
+		test.Fatal(cacheDirectoryError)
 	}
-	source, err := os.ReadFile("testdata/generator/runtime.c")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("testdata/generator/runtime.c")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	mutants := []bool{false}
 	if old != "" {
@@ -83,16 +83,16 @@ func generatorRuntimeGuard(test *testing.T, mode, want, old, replacement, diagno
 				test.Fatal("missing runtime file generator.c")
 			}
 		}
-		library, err := cachedRuntime(files, flags, compiler, version, cache)
-		if err != nil {
-			test.Fatal(err)
+		library, cachedRuntimeError := cachedRuntime(files, flags, compiler, version, cache)
+		if cachedRuntimeError != nil {
+			test.Fatal(cachedRuntimeError)
 		}
 		binary := buildHarnessWithLibrary(test, string(source), flags, compiler, library)
 		command, release := boundedrun.Command(5*time.Second, binary, mode)
 		command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0:halt_on_error=1")
 		var stdout, stderr strings.Builder
 		command.Stdout, command.Stderr = &stdout, &stderr
-		err = command.Run()
+		runError := command.Run()
 		release()
 		exit := 0
 		if command.ProcessState != nil {
@@ -101,20 +101,20 @@ func generatorRuntimeGuard(test *testing.T, mode, want, old, replacement, diagno
 		output := stdout.String() + stderr.String()
 		if mutant {
 			leaked := generatorLeaked(stderr.String())
-			if (err == nil && leaked == "") || !strings.Contains(output+leaked, diagnostic) {
-				test.Fatalf("mutant survived or failed for another reason: %v %s\n%s", err, leaked, output)
+			if (runError == nil && leaked == "") || !strings.Contains(output+leaked, diagnostic) {
+				test.Fatalf("mutant survived or failed for another reason: %v %s\n%s", runError, leaked, output)
 			}
 			test.Logf("%s mutant caught by %s: %s", mode, diagnostic, firstSanitizerLine(output))
 			continue
 		}
 		if panic, panics := runningPanics[mode]; panics {
 			if exit != 70 || !strings.Contains(stderr.String(), panic) {
-				test.Fatalf("%s: %v\n%s", mode, err, output)
+				test.Fatalf("%s: %v\n%s", mode, runError, output)
 			}
 			continue
 		}
-		if err != nil || stdout.String() != want {
-			test.Fatalf("control: %v\nwant stdout %q\n%s", err, want, output)
+		if runError != nil || stdout.String() != want {
+			test.Fatalf("control: %v\nwant stdout %q\n%s", runError, want, output)
 		}
 		if leaked := generatorLeaked(stderr.String()); leaked != "" {
 			test.Fatalf("control: %s\n%s", leaked, output)

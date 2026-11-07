@@ -46,9 +46,9 @@ func (l *lowering) regexConstant(node *ast.Node) (ir.Expression, error) {
 			}
 		}
 		for _, arg := range args {
-			value, err := l.expression(arg)
-			if err != nil {
-				return nil, err
+			value, expressionError := l.expression(arg)
+			if expressionError != nil {
+				return nil, expressionError
 			}
 			evaluated = append(evaluated, value)
 		}
@@ -61,13 +61,21 @@ func (l *lowering) regexConstant(node *ast.Node) (ir.Expression, error) {
 	declarations, err := program.NativeDeclarations(fmt.Sprintf("adamic_regex_%d", index))
 	if err != nil {
 		if input, literal := regexLiteralTestInput(node); literal {
-			declarations, err = regex.NativeLiteralTestDeclarations(pattern, flags, input, fmt.Sprintf("adamic_regex_%d", index))
+			declarations, err = regex.NativeLiteralTestDeclarations(
+				pattern,
+				flags,
+				input,
+				fmt.Sprintf("adamic_regex_%d", index),
+			)
 		}
 	}
 	if err != nil {
 		return nil, l.notYet(node, err.Error())
 	}
-	l.result.Regexps = append(l.result.Regexps, ir.RegExpProgram{Pattern: pattern, Flags: flags, Declarations: declarations})
+	l.result.Regexps = append(
+		l.result.Regexps,
+		ir.RegExpProgram{Pattern: pattern, Flags: flags, Declarations: declarations},
+	)
 	source := escapeRegexSource(pattern, flags)
 	ordered := ""
 	for _, flag := range "dgimsuvy" {
@@ -103,7 +111,10 @@ func (l *lowering) constantPattern(node *ast.Node, depth int) (string, bool) {
 		symbol := l.symbol(node)
 		if symbol != nil && len(symbol.Declarations) == 1 {
 			declaration := symbol.Declarations[0]
-			if declaration.Kind == ast.KindVariableDeclaration && declaration.Parent != nil && declaration.Parent.Flags&ast.NodeFlagsConst != 0 && declaration.AsVariableDeclaration().Initializer != nil {
+			if declaration.Kind == ast.KindVariableDeclaration &&
+				declaration.Parent != nil &&
+				declaration.Parent.Flags&ast.NodeFlagsConst != 0 &&
+				declaration.AsVariableDeclaration().Initializer != nil {
 				return l.constantPattern(declaration.AsVariableDeclaration().Initializer, depth+1)
 			}
 		}
@@ -138,8 +149,8 @@ func joinPatternStrings(left, right string) string {
 func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
 	if l.isLibraryGlobal(callee, "RegExp") {
-		value, err := l.regexConstant(node)
-		return value, true, err
+		value, regexConstantError := l.regexConstant(node)
+		return value, true, regexConstantError
 	}
 	if callee.Kind != ast.KindPropertyAccessExpression {
 		return nil, false, nil
@@ -170,7 +181,9 @@ func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
 		result = ir.Object
 	default:
 		of, _ := l.representation(proven)
-		if of != ir.String || len(args) == 0 || !l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(args[0])), "RegExp") {
+		if of != ir.String ||
+			len(args) == 0 ||
+			!l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(args[0])), "RegExp") {
 			return nil, false, nil
 		}
 		switch name {
@@ -186,18 +199,18 @@ func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
 			return nil, true, l.notYet(node, "String."+name+" with a RegExp")
 		}
 	}
-	value, err := l.expression(receiver)
-	if err != nil {
-		return nil, true, err
+	value, expressionError := l.expression(receiver)
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
 	if callee.AsPropertyAccessExpression().QuestionDotToken != nil {
 		return nil, true, l.notYet(node, "an optional RegExp call")
 	}
 	var arguments []ir.Expression
 	for _, arg := range args {
-		v, e := l.expression(arg)
-		if e != nil {
-			return nil, true, e
+		v, expressionError := l.expression(arg)
+		if expressionError != nil {
+			return nil, true, expressionError
 		}
 		arguments = append(arguments, v)
 	}
@@ -221,7 +234,11 @@ func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
 				arguments[1] = ir.NumberConstant{Value: 4294967295}
 			}
 			if arguments[1].Type() == ir.MaybeNumber {
-				arguments[1] = ir.Coalesce{Value: arguments[1], Fallback: ir.NumberConstant{Value: 4294967295}, Of: ir.Number}
+				arguments[1] = ir.Coalesce{
+					Value:    arguments[1],
+					Fallback: ir.NumberConstant{Value: 4294967295},
+					Of:       ir.Number,
+				}
 			}
 		}
 		if len(arguments) != 2 || arguments[1].Type() != ir.Number {
@@ -314,9 +331,13 @@ func (l *lowering) regexUnsupportedUse(node *ast.Node) error {
 	if parent.Kind == ast.KindSpreadAssignment {
 		return l.notYet(parent, "spreading a RegExp or its iterator")
 	}
-	if parent.Kind == ast.KindPropertyAccessExpression && parent.Parent != nil && parent.Parent.Kind == ast.KindBinaryExpression {
+	if parent.Kind == ast.KindPropertyAccessExpression &&
+		parent.Parent != nil &&
+		parent.Parent.Kind == ast.KindBinaryExpression {
 		assignment := parent.Parent.AsBinaryExpression()
-		if assignment.Left == parent && assignment.OperatorToken.Kind == ast.KindEqualsToken && (parent.Name().Text() != "lastIndex" || l.regexGroups(node)) {
+		if assignment.Left == parent &&
+			assignment.OperatorToken.Kind == ast.KindEqualsToken &&
+			(parent.Name().Text() != "lastIndex" || l.regexGroups(node)) {
 			return l.notYet(parent, "overriding a RegExp or iterator property")
 		}
 	}

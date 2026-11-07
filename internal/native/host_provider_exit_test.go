@@ -72,10 +72,10 @@ func hostProviderExitMutantDirectory(test *testing.T) string {
 
 func TestProduct_HostProviderExitStateMutant(test *testing.T) {
 	test.Parallel()
-	if _, err := native.RuntimeLibrary(
+	if _, runtimeLibraryError := native.RuntimeLibrary(
 		hostProviderExitMutantDirectory(test),
 		native.Options{Sanitize: true},
-	); err != nil {
-		test.Fatal(err)
+	); runtimeLibraryError != nil {
+		test.Fatal(runtimeLibraryError)
 	}
 }

@@ -19,9 +19,9 @@ func TestShardPartitionKeepsDiff(test *testing.T) {
 	}
 	seen := map[string]int{}
 	for i := 1; i <= 3; i++ {
-		selected, complete, err := selectCorpora(corpora, "", fmt.Sprintf("%d/3", i))
-		if err != nil || complete {
-			test.Fatal("shard claims complete coverage", err)
+		selected, complete, selectCorporaError := selectCorpora(corpora, "", fmt.Sprintf("%d/3", i))
+		if selectCorporaError != nil || complete {
+			test.Fatal("shard claims complete coverage", selectCorporaError)
 		}
 		if len(selected[0].Programs) != 1 || selected[0].Programs[0].Path != "changed.a" {
 			test.Fatal("diff was split or lost")
@@ -41,16 +41,16 @@ func TestShardPartitionKeepsDiff(test *testing.T) {
 			test.Fatal("overlapping shards", path, count)
 		}
 	}
-	selected, complete, err := selectCorpora(corpora, "diff", "")
-	if err != nil || complete || len(selected) != 1 || len(selected[0].Programs) != 1 {
-		test.Fatal("diff-only filter", selected, complete, err)
+	selected, complete, selectCorporaError := selectCorpora(corpora, "diff", "")
+	if selectCorporaError != nil || complete || len(selected) != 1 || len(selected[0].Programs) != 1 {
+		test.Fatal("diff-only filter", selected, complete, selectCorporaError)
 	}
 	for _, shard := range []string{"0/3", "4/3", "1/0", "1", "1/3junk"} {
-		if _, _, err := selectCorpora(corpora, "", shard); err == nil {
+		if _, _, selectCorporaError := selectCorpora(corpora, "", shard); selectCorporaError == nil {
 			test.Fatal("bad shard accepted", shard)
 		}
 	}
-	if _, _, err := selectCorpora(corpora, "missing", ""); err == nil {
+	if _, _, selectCorporaError := selectCorpora(corpora, "missing", ""); selectCorporaError == nil {
 		test.Fatal("unknown corpus accepted")
 	}
 }
@@ -74,8 +74,8 @@ func TestShardCommandScope(test *testing.T) {
 		}
 		o := invokeCommand(test, dir, append(args, selector...)...)
 		var r report
-		if err := json.Unmarshal([]byte(o.Stdout), &r); err != nil {
-			test.Fatal(err, o.Stderr)
+		if decodeError := json.Unmarshal([]byte(o.Stdout), &r); decodeError != nil {
+			test.Fatal(decodeError, o.Stderr)
 		}
 		if o.Exit != 0 || r.Verdict != "partial" || r.CompleteCorpus || r.Admitted != 0 || r.DiffCount != 0 {
 			test.Fatalf("partial run looks clean: %+v %s", r, o.Stderr)

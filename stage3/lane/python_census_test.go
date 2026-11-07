@@ -93,13 +93,16 @@ func pythonSuiteGaps(suites []string, wrapped map[string]bool, listed map[string
 func stage3PythonSuites(test *testing.T, root string) []string {
 	test.Helper()
 	suites := []string{}
-	err := filepath.WalkDir(filepath.Join(root, "stage3"), func(name string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
+	walkError := filepath.WalkDir(filepath.Join(
+		root,
+		"stage3",
+	), func(name string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
-		relative, err := filepath.Rel(root, name)
-		if err != nil {
-			return err
+		relative, relativePathError := filepath.Rel(root, name)
+		if relativePathError != nil {
+			return relativePathError
 		}
 		relative = filepath.ToSlash(relative)
 		if entry.IsDir() {
@@ -113,8 +116,8 @@ func stage3PythonSuites(test *testing.T, root string) []string {
 		}
 		return nil
 	})
-	if err != nil {
-		test.Fatal(err)
+	if walkError != nil {
+		test.Fatal(walkError)
 	}
 	return suites
 }
@@ -124,17 +127,17 @@ func stage3PythonSuites(test *testing.T, root string) []string {
 // literals count, so a wrapper is read as written.
 func wrappedPythonSuites(test *testing.T, file string) map[string]bool {
 	test.Helper()
-	parsed, err := parser.ParseFile(token.NewFileSet(), file, nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	parsed, parseFileError := parser.ParseFile(token.NewFileSet(), file, nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	literal := func(expression ast.Expr) (string, bool) {
 		basic, ok := expression.(*ast.BasicLit)
 		if !ok || basic.Kind != token.STRING {
 			return "", false
 		}
-		value, err := strconv.Unquote(basic.Value)
-		return value, err == nil
+		value, unquoteError := strconv.Unquote(basic.Value)
+		return value, unquoteError == nil
 	}
 	wrapped := map[string]bool{}
 	ast.Inspect(parsed, func(node ast.Node) bool {

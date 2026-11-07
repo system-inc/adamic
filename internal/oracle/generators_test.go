@@ -29,9 +29,9 @@ import (
 func TestGeneratorsAgreeWithNode(test *testing.T) {
 	test.Parallel()
 	directory := "internal/oracle/testdata/generators"
-	entries, err := os.ReadDir(filepath.Join(repository, directory))
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(filepath.Join(repository, directory))
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -57,14 +57,14 @@ func TestGeneratorsAgreeWithNode(test *testing.T) {
 // finishes it, to leaking nothing.
 func generatorAgrees(test *testing.T, relative string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, relative))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, relative))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	want := onNode(test, path)
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	sanitized, binary := natively(test, program)
 	for _, candidate := range []struct {

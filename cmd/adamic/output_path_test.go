@@ -22,18 +22,18 @@ import (
 // filepath.Abs, and native is handed the relative path.
 func TestBuildWritesARelativeOutputUnderTheWorkingDirectory(test *testing.T) {
 	test.Parallel()
-	directory, err := os.Getwd()
-	if err != nil {
-		test.Fatal(err)
+	directory, workingDirectoryError := os.Getwd()
+	if workingDirectoryError != nil {
+		test.Fatal(workingDirectoryError)
 	}
 	binary := filepath.Join(test.TempDir(), "program")
-	relative, err := filepath.Rel(directory, binary)
-	if err != nil {
-		test.Fatal(err)
+	relative, relativePathError := filepath.Rel(directory, binary)
+	if relativePathError != nil {
+		test.Fatal(relativePathError)
 	}
-	source, err := filepath.Abs("testdata/build_target.a")
-	if err != nil {
-		test.Fatal(err)
+	source, absolutePathError := filepath.Abs("testdata/build_target.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	compile := func(source, output string, options native.Options) error {
 		if output != binary {
@@ -44,11 +44,11 @@ func TestBuildWritesARelativeOutputUnderTheWorkingDirectory(test *testing.T) {
 	if code := buildWithNative(source, relative, nil, compile); code != 0 {
 		test.Fatalf("adamic build -o %s exit %d", relative, code)
 	}
-	result, err := exec.Command(binary).CombinedOutput()
-	if err != nil || string(result) != "ready\n" {
+	result, combinedOutputError := exec.Command(binary).CombinedOutput()
+	if combinedOutputError != nil || string(result) != "ready\n" {
 		test.Fatalf(
 			"the binary a relative -o names: %v, %q; want it under the working directory, printing ready",
-			err,
+			combinedOutputError,
 			result,
 		)
 	}
@@ -63,13 +63,13 @@ func TestBuildExitsThreeWhenTheWorkingDirectoryIsGone(test *testing.T) {
 		// macOS's getcwd still answers with a removed directory's old path, so Abs succeeds there; Linux's says ENOENT.
 		test.Skip("macOS reads a removed working directory")
 	}
-	source, err := filepath.Abs("testdata/build_target.a")
-	if err != nil {
-		test.Fatal(err)
+	source, absolutePathError := filepath.Abs("testdata/build_target.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	directory := filepath.Join(test.TempDir(), "gone")
-	if err := os.Mkdir(directory, 0o700); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.Mkdir(directory, 0o700); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
@@ -88,10 +88,10 @@ func TestBuildExitsThreeWhenTheWorkingDirectoryIsGone(test *testing.T) {
 	var output, diagnostic bytes.Buffer
 	command.Stdout, command.Stderr = &output, &diagnostic
 	code := 0
-	if err := command.Run(); err != nil {
+	if runError := command.Run(); runError != nil {
 		var exit *exec.ExitError
-		if !errors.As(err, &exit) {
-			test.Fatal(err)
+		if !errors.As(runError, &exit) {
+			test.Fatal(runError)
 		}
 		code = exit.ExitCode()
 	}
@@ -110,12 +110,12 @@ func TestRemovedWorkingDirectoryDriver(test *testing.T) {
 	if os.Getenv("ADAMIC_REMOVED_DIRECTORY_TEST_DRIVER") != "1" {
 		return
 	}
-	directory, err := os.Getwd()
-	if err != nil {
-		test.Fatal(err)
+	directory, workingDirectoryError := os.Getwd()
+	if workingDirectoryError != nil {
+		test.Fatal(workingDirectoryError)
 	}
-	if err := os.Remove(directory); err != nil {
-		test.Fatal(err)
+	if removeError := os.Remove(directory); removeError != nil {
+		test.Fatal(removeError)
 	}
 	for index, argument := range os.Args {
 		if argument == "--" {

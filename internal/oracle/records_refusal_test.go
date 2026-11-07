@@ -12,16 +12,16 @@ import (
 // must then compile and diverge in both backends; no runtime guard is removed.
 func recordRefusalMutant(test *testing.T, name string) bool {
 	test.Helper()
-	path, pathErr := filepath.Abs(
+	path, pathError := filepath.Abs(
 		filepath.Join(repository, "internal/oracle/testdata/records_refused/records_"+name+".a"),
 	)
-	if pathErr != nil {
-		test.Fatal(pathErr)
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
 	if os.Getenv("ADAMIC_RECORD_REFUSAL_MUTANT") == "1" {
-		p, err := lowered(test, path)
-		if err != nil {
-			test.Fatalf("refusal mutant must admit the witness: %v", err)
+		p, loweredError := lowered(test, path)
+		if loweredError != nil {
+			test.Fatalf("refusal mutant must admit the witness: %v", loweredError)
 		}
 		truth := onNode(test, path)
 		native, _ := nativelyUncached(test, p)
@@ -33,19 +33,19 @@ func recordRefusalMutant(test *testing.T, name string) bool {
 		}
 		return true
 	}
-	source, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	for _, extension := range []string{".a", ".ts"} {
 		probe := filepath.Join(test.TempDir(), "records_"+name+extension)
-		if err := os.WriteFile(probe, source, 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(probe, source, 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
-		_, err := lowered(test, probe)
+		_, loweredError := lowered(test, probe)
 		var refusal *lower.Refused
-		if !errors.As(err, &refusal) {
-			test.Fatalf("%s must be refused: %v", extension, err)
+		if !errors.As(loweredError, &refusal) {
+			test.Fatalf("%s must be refused: %v", extension, loweredError)
 		}
 		want := recordRefusalPin(name)
 		if refusal.Where != probe+want[0] || refusal.What != want[1] || refusal.Fix != want[2] {

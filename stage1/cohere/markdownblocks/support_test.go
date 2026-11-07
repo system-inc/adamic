@@ -46,9 +46,9 @@ func configureMarkdownMemory(test *testing.T) {
 		first = true
 		units := markdownMemoryDefaultUnits
 		if value, set := os.LookupEnv("ADAMIC_MARKDOWNBLOCKS_MEMORY_UNITS"); set {
-			var err error
-			units, err = strconv.Atoi(value)
-			if err != nil || units < markdownMemoryLargestWeight {
+			var parseError error
+			units, parseError = strconv.Atoi(value)
+			if parseError != nil || units < markdownMemoryLargestWeight {
 				markdownMemoryConfigurationError = fmt.Errorf(
 					"ADAMIC_MARKDOWNBLOCKS_MEMORY_UNITS=%q: must be a positive integer of at least %d (512 MiB units; largest test weight)",
 					value,
@@ -144,14 +144,14 @@ type artifactBuild struct {
 }
 
 func TestMain(m *testing.M) {
-	var err error
-	artifactDirectory, err = os.MkdirTemp("", "adamic-markdown-build-")
-	if err != nil {
-		panic(err)
+	var temporaryDirectoryError error
+	artifactDirectory, temporaryDirectoryError = os.MkdirTemp("", "adamic-markdown-build-")
+	if temporaryDirectoryError != nil {
+		panic(temporaryDirectoryError)
 	}
 	code := m.Run()
-	if err := os.RemoveAll(artifactDirectory); err != nil {
-		fmt.Fprintln(os.Stderr, err)
+	if removeError := os.RemoveAll(artifactDirectory); removeError != nil {
+		fmt.Fprintln(os.Stderr, removeError)
 		code = 1
 	}
 	os.Exit(code)
@@ -161,9 +161,9 @@ func TestMain(m *testing.M) {
 // All corpora, oracle comparisons and leak checks execute afresh even uncached.
 func nativeBinary(test *testing.T, source string, sanitize bool) string {
 	test.Helper()
-	binary, err := nativeBinaryResult(source, native.Options{Sanitize: sanitize})
-	if err != nil {
-		test.Fatal(err)
+	binary, nativeBinaryResultError := nativeBinaryResult(source, native.Options{Sanitize: sanitize})
+	if nativeBinaryResultError != nil {
+		test.Fatal(nativeBinaryResultError)
 	}
 	return binary
 }
@@ -215,21 +215,21 @@ type run struct {
 // lowered checks and lowers a program, failing the test with stage 0's refusal if it can't.
 func lowered(test *testing.T, path string) *ir.Program {
 	test.Helper()
-	result, err := loweredResult(path)
-	if err != nil {
-		test.Fatal(err)
+	result, loweredResultError := loweredResult(path)
+	if loweredResultError != nil {
+		test.Fatal(loweredResultError)
 	}
 	return result
 }
 
 func loweredResult(path string) (*ir.Program, error) {
-	program, err := load.Load([]string{path})
-	if err != nil {
-		return nil, fmt.Errorf("Load: %v", err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		return nil, fmt.Errorf("Load: %v", loadError)
 	}
-	result, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		return nil, fmt.Errorf("Lower: %v", err)
+	result, lowerError := lower.Lower(context.Background(), program)
+	if lowerError != nil {
+		return nil, fmt.Errorf("Lower: %v", lowerError)
 	}
 	return result, nil
 }
@@ -249,9 +249,9 @@ func combinedOutput(command *exec.Cmd) ([]byte, error) {
 
 func execute(test *testing.T, environment []string, name string, arguments ...string) run {
 	test.Helper()
-	result, err := executeResult(test, environment, name, arguments...)
-	if err != nil {
-		test.Fatal(err)
+	result, executeResultError := executeResult(test, environment, name, arguments...)
+	if executeResultError != nil {
+		test.Fatal(executeResultError)
 	}
 	return result
 }
@@ -265,10 +265,10 @@ func executeResult(test *testing.T, environment []string, name string, arguments
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
-	err := childguard.Run(command, childguard.Options{})
+	runError := childguard.Run(command, childguard.Options{})
 	var exitError *exec.ExitError
-	if err != nil && !errors.As(err, &exitError) {
-		return run{}, fmt.Errorf("running %s: %v", name, err)
+	if runError != nil && !errors.As(runError, &exitError) {
+		return run{}, fmt.Errorf("running %s: %v", name, runError)
 	}
 	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}, nil
 }
@@ -276,18 +276,18 @@ func executeResult(test *testing.T, environment []string, name string, arguments
 // onNode runs a program's source on Node, through the oracle's runner, with its arguments.
 func onNode(test *testing.T, path string, arguments ...string) run {
 	test.Helper()
-	result, err := onNodeResult(test, path, arguments...)
-	if err != nil {
-		test.Fatal(err)
+	result, onNodeResultError := onNodeResult(test, path, arguments...)
+	if onNodeResultError != nil {
+		test.Fatal(onNodeResultError)
 	}
 	return result
 }
 
 func onNodeResult(test *testing.T, path string, arguments ...string) (run, error) {
 	test.Helper()
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
-	if err != nil {
-		return run{}, err
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
+	if absolutePathError != nil {
+		return run{}, absolutePathError
 	}
 	return executeResult(
 		test,
@@ -301,8 +301,8 @@ func onNodeResult(test *testing.T, path string, arguments ...string) (run, error
 func onJavaScriptBackend(test *testing.T, program *ir.Program, arguments ...string) run {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "program.mjs")
-	if err := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return onNode(test, path, arguments...)
 }
@@ -313,9 +313,9 @@ func nativeMutant(test *testing.T, program *ir.Program, arguments ...string) run
 	test.Helper()
 	directory := test.TempDir()
 	options := native.Options{Sanitize: true}
-	library, err := native.RuntimeLibrary("", options)
-	if err != nil {
-		test.Fatal(err)
+	library, runtimeLibraryError := native.RuntimeLibrary("", options)
+	if runtimeLibraryError != nil {
+		test.Fatal(runtimeLibraryError)
 	}
 	source, binary := filepath.Join(directory, "main.c"), filepath.Join(directory, "mutant")
 	write(test, source, []byte(native.C(program)))
@@ -328,8 +328,8 @@ func nativeMutant(test *testing.T, program *ir.Program, arguments ...string) run
 	flags = append(flags, "-I", filepath.Dir(library), "-o", binary, source)
 	flags = append(flags, native.RuntimeLinkFlags(library)...)
 	flags = append(flags, "-lm")
-	if output, err := combinedOutput(bounded(test, "clang", flags...)); err != nil {
-		test.Fatalf("mutant build: %v\n%s", err, output)
+	if output, combinedOutputError := combinedOutput(bounded(test, "clang", flags...)); combinedOutputError != nil {
+		test.Fatalf("mutant build: %v\n%s", combinedOutputError, output)
 	}
 	return execute(test, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary, arguments...)
 }
@@ -348,8 +348,8 @@ func leaks(test *testing.T, program *ir.Program, sanitized string, arguments ...
 	switch runtime.GOOS {
 	case "darwin":
 		binary := filepath.Join(test.TempDir(), "port")
-		if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
-			test.Fatal(err)
+		if buildError := native.Build(native.C(program), binary, native.Options{}); buildError != nil {
+			test.Fatal(buildError)
 		}
 		report := execute(test, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
 		if report.exitCode == 0 {
@@ -369,8 +369,8 @@ func leaks(test *testing.T, program *ir.Program, sanitized string, arguments ...
 
 func write(test *testing.T, path string, b []byte) {
 	test.Helper()
-	if err := os.WriteFile(path, b, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, b, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 }
 func clean(test *testing.T, name string, r run) {
@@ -417,9 +417,9 @@ func (task *fixtureTask[T]) result() (T, error) {
 
 func (task *fixtureTask[T]) await(test *testing.T) T {
 	test.Helper()
-	value, err := task.result()
-	if err != nil {
-		test.Fatal(err)
+	value, resultError := task.result()
+	if resultError != nil {
+		test.Fatal(resultError)
 	}
 	return value
 }

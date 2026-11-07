@@ -53,12 +53,19 @@ func predictions(p plan, weights map[string]float64) []prediction {
 		if _, ok := weights[u.key()]; !ok {
 			r.Unknown++
 		}
-		if r.Largest.Package == "" || u.Seconds > r.Largest.Seconds || (u.Seconds == r.Largest.Seconds && u.key() < r.Largest.key()) {
+		if r.Largest.Package == "" ||
+			u.Seconds > r.Largest.Seconds ||
+			(u.Seconds == r.Largest.Seconds && u.key() < r.Largest.key()) {
 			r.Largest = u
 		}
 		if strings.Contains(u.Test, "/") {
 			parent := u.Package + "::" + strings.Split(u.Test, "/")[0]
-			invocation := fmt.Sprintf("%d::%s::%s", u.Shard, parent, strings.Join(strings.Split(u.Test, "/")[:len(strings.Split(u.Test, "/"))-1], "/"))
+			invocation := fmt.Sprintf(
+				"%d::%s::%s",
+				u.Shard,
+				parent,
+				strings.Join(strings.Split(u.Test, "/")[:len(strings.Split(u.Test, "/"))-1], "/"),
+			)
 			if !seen[invocation] && known[parent] {
 				residual := weights[parent] - childSeconds[parent]
 				if residual > 0 {
@@ -79,71 +86,71 @@ func digestJSON(value any) string {
 func planDigest(p plan) string  { p.Digest = ""; return digestJSON(p) }
 func shortHash(s string) string { h := sha256.Sum256([]byte(s)); return hex.EncodeToString(h[:16]) }
 func fileDigest(path string) (string, error) {
-	f, err := os.Open(path)
-	if err != nil {
-		return "", err
+	f, openError := os.Open(path)
+	if openError != nil {
+		return "", openError
 	}
 	defer f.Close()
 	h := sha256.New()
-	if _, err := io.Copy(h, f); err != nil {
-		return "", err
+	if _, copyError := io.Copy(h, f); copyError != nil {
+		return "", copyError
 	}
 	return hex.EncodeToString(h.Sum(nil)), nil
 }
 func pathDigest(path string) (string, error) { return digestPath(path, map[string]bool{}) }
 func digestPath(path string, active map[string]bool) (string, error) {
-	absolute, err := filepath.Abs(path)
-	if err != nil {
-		return "", err
+	absolute, absolutePathError := filepath.Abs(path)
+	if absolutePathError != nil {
+		return "", absolutePathError
 	}
 	if active[absolute] {
 		return "", fmt.Errorf("cyclic resume input %s", path)
 	}
 	active[absolute] = true
 	defer delete(active, absolute)
-	info, err := os.Lstat(path)
-	if os.IsNotExist(err) {
+	info, statError := os.Lstat(path)
+	if os.IsNotExist(statError) {
 		return "missing", nil
 	}
-	if err != nil {
-		return "", err
+	if statError != nil {
+		return "", statError
 	}
 	if info.Mode()&os.ModeSymlink != 0 {
-		target, err := os.Readlink(path)
-		if err != nil {
-			return "", err
+		target, readLinkError := os.Readlink(path)
+		if readLinkError != nil {
+			return "", readLinkError
 		}
-		resolved, err := filepath.EvalSymlinks(path)
-		if os.IsNotExist(err) {
+		resolved, resolveSymlinksError := filepath.EvalSymlinks(path)
+		if os.IsNotExist(resolveSymlinksError) {
 			return digestJSON([]string{target, "dangling"}), nil
 		}
-		if err != nil {
-			return "", err
+		if resolveSymlinksError != nil {
+			return "", resolveSymlinksError
 		}
-		answer, err := digestPath(resolved, active)
-		return digestJSON([]string{target, answer}), err
+		answer, digestPathError := digestPath(resolved, active)
+		return digestJSON([]string{target, answer}), digestPathError
 	}
 	if !info.IsDir() {
 		if !info.Mode().IsRegular() {
 			return "", fmt.Errorf("unsupported resume input %s", path)
 		}
-		data, err := fileDigest(path)
-		if err != nil {
-			return "", err
+		data, fileDigestError := fileDigest(path)
+		if fileDigestError != nil {
+			return "", fileDigestError
 		}
 		stat := info.Sys().(*syscall.Stat_t)
 		return digestJSON([]any{uint32(info.Mode()), stat.Uid, stat.Gid, data}), nil
 	}
-	entries, err := os.ReadDir(path)
-	if err != nil {
-		return "", err
+	entries, readDirectoryError := os.ReadDir(path)
+	if readDirectoryError != nil {
+		return "", readDirectoryError
 	}
 	stat := info.Sys().(*syscall.Stat_t)
 	records := []string{digestJSON([]any{uint32(info.Mode()), stat.Uid, stat.Gid})}
 	for _, e := range entries {
-		key, err := digestPath(filepath.Join(path, e.Name()), active)
-		if err != nil {
-			return "", err
+		key, digestPathError := digestPath(filepath.Join(path, e.Name()), active)
+		if digestPathError != nil {
+			return "", digestPathError
 		}
 		records = append(records, e.Name(), key)
 	}
@@ -164,72 +171,72 @@ func executionIdentity() (string, error) {
 	for k, v := range effective {
 		env = append(env, k+"="+v)
 		if strings.HasPrefix(k, "ADAMIC_") && v != "" {
-			if _, err := os.Lstat(v); err == nil {
-				d, err := pathDigest(v)
-				if err != nil {
-					return "", err
+			if _, statError := os.Lstat(v); statError == nil {
+				d, pathDigestError := pathDigest(v)
+				if pathDigestError != nil {
+					return "", pathDigestError
 				}
 				external[k] = d
-			} else if !os.IsNotExist(err) {
-				return "", err
+			} else if !os.IsNotExist(statError) {
+				return "", statError
 			}
 		}
 	}
 	sort.Strings(env)
-	defaultWidth, err := pathDigest("/tmp/adamic-markdown-width")
-	if err != nil {
-		return "", err
+	defaultWidth, pathDigestError := pathDigest("/tmp/adamic-markdown-width")
+	if pathDigestError != nil {
+		return "", pathDigestError
 	}
 	external["default-width"] = defaultWidth
 	tools := map[string]string{}
-	executable, err := os.Executable()
-	if err != nil {
-		return "", err
+	executable, executableError := os.Executable()
+	if executableError != nil {
+		return "", executableError
 	}
-	gateHash, err := fileDigest(executable)
-	if err != nil {
-		return "", err
+	gateHash, fileDigestError := fileDigest(executable)
+	if fileDigestError != nil {
+		return "", fileDigestError
 	}
 	tools["gate"] = gateHash
 	for _, tool := range []string{"go", "clang", "node", "gofmt"} {
-		path, err := exec.LookPath(tool)
-		if err != nil {
-			return "", err
+		path, lookPathError := exec.LookPath(tool)
+		if lookPathError != nil {
+			return "", lookPathError
 		}
-		path, err = filepath.EvalSymlinks(path)
-		if err != nil {
-			return "", err
+		path, resolveSymlinksError := filepath.EvalSymlinks(path)
+		if resolveSymlinksError != nil {
+			return "", resolveSymlinksError
 		}
-		hash, err := fileDigest(path)
-		if err != nil {
-			return "", err
+		hash, fileDigestError := fileDigest(path)
+		if fileDigestError != nil {
+			return "", fileDigestError
 		}
 		tools[tool] = path + ":" + hash
 	}
-	goEnv, err := output("go", "env", "-json")
-	if err != nil {
-		return "", err
+	goEnv, outputError := output("go", "env", "-json")
+	if outputError != nil {
+		return "", outputError
 	}
 	var values map[string]string
-	if err := json.Unmarshal([]byte(goEnv), &values); err != nil {
-		return "", err
+	if decodeError := json.Unmarshal([]byte(goEnv), &values); decodeError != nil {
+		return "", decodeError
 	}
 	tools["go-env"] = stableGoEnvironment(values)
 	for _, name := range []string{"compile", "link", "asm", "cgo"} {
 		path := filepath.Join(values["GOTOOLDIR"], name)
-		hash, err := fileDigest(path)
-		if err != nil {
-			return "", err
+		hash, fileDigestError := fileDigest(path)
+		if fileDigestError != nil {
+			return "", fileDigestError
 		}
 		tools[name] = hash
 	}
-	resource, err := output("clang", "-print-resource-dir")
-	if err != nil {
-		return "", err
+	resource, outputError := output("clang", "-print-resource-dir")
+	if outputError != nil {
+		return "", outputError
 	}
-	hash, err := pathDigest(resource)
-	if err != nil {
-		return "", err
+	hash, pathDigestError := pathDigest(resource)
+	if pathDigestError != nil {
+		return "", pathDigestError
 	}
 	tools["clang-resources"] = hash
 	return executionKey(env, tools, external), nil
@@ -242,7 +249,10 @@ func stableGoEnvironment(values map[string]string) string {
 	}
 	// Go creates this random work-directory remapping even for `go env`.
 	// The actual TMPDIR and all compiler flags remain independently keyed.
-	copy["GOGCCFLAGS"] = regexp.MustCompile(`go-build[0-9]+=/tmp/go-build`).ReplaceAllString(copy["GOGCCFLAGS"], "go-build=/tmp/go-build")
+	copy["GOGCCFLAGS"] = regexp.MustCompile(`go-build[0-9]+=/tmp/go-build`).ReplaceAllString(
+		copy["GOGCCFLAGS"],
+		"go-build=/tmp/go-build",
+	)
 	return digestJSON(copy)
 }
 
@@ -274,13 +284,13 @@ func testArgs(pkg, pattern string) []string {
 	return []string{"test", "-count=1", "-json", "-timeout", "60m", "-run", pattern, pkg}
 }
 func appendFile(out io.Writer, path string) error {
-	f, err := os.Open(path)
-	if err != nil {
-		return err
+	f, openError := os.Open(path)
+	if openError != nil {
+		return openError
 	}
 	defer f.Close()
-	_, err = io.Copy(out, f)
-	return err
+	_, copyError := io.Copy(out, f)
+	return copyError
 }
 func atomicJSON(path string, v any) error {
 	f, err := os.CreateTemp(filepath.Dir(path), ".checkpoint-")
@@ -297,8 +307,8 @@ func atomicJSON(path string, v any) error {
 	if err != nil {
 		return err
 	}
-	if err := os.Rename(tmp, path); err != nil {
-		return err
+	if renameError := os.Rename(tmp, path); renameError != nil {
+		return renameError
 	}
 	d, err := os.Open(filepath.Dir(path))
 	if err != nil {
@@ -308,13 +318,13 @@ func atomicJSON(path string, v any) error {
 	return d.Sync()
 }
 func completePackage(dir string, e packageEvidence, p plan, index int, pkg string) error {
-	results, lines, _, err := readLog(filepath.Join(dir, "test.jsonl"))
-	if err != nil {
-		return err
+	results, lines, _, readLogError := readLog(filepath.Join(dir, "test.jsonl"))
+	if readLogError != nil {
+		return readLogError
 	}
-	runs, err := readRuns(filepath.Join(dir, "test.jsonl"))
-	if err != nil {
-		return err
+	runs, readRunsError := readRuns(filepath.Join(dir, "test.jsonl"))
+	if readRunsError != nil {
+		return readRunsError
 	}
 	units := []unit{}
 	for _, u := range p.Units {
@@ -381,30 +391,30 @@ func completePackage(dir string, e packageEvidence, p plan, index int, pkg strin
 func loadPackage(dir, key string, p plan, index int, pkg string) (packageEvidence, bool, error) {
 	var e packageEvidence
 	path := filepath.Join(dir, "complete.json")
-	if _, err := os.Stat(path); os.IsNotExist(err) {
+	if _, statError := os.Stat(path); os.IsNotExist(statError) {
 		return e, false, nil
-	} else if err != nil {
-		return e, false, err
+	} else if statError != nil {
+		return e, false, statError
 	}
-	if err := loadJSON(path, &e); err != nil {
-		return e, false, err
+	if loadJsonError := loadJSON(path, &e); loadJsonError != nil {
+		return e, false, loadJsonError
 	}
 	if e.Key != key || e.Package != pkg {
 		return e, false, errors.New("package resume key differs")
 	}
-	log, err := fileDigest(filepath.Join(dir, "test.jsonl"))
-	if err != nil {
-		return e, false, err
+	log, fileDigestError := fileDigest(filepath.Join(dir, "test.jsonl"))
+	if fileDigestError != nil {
+		return e, false, fileDigestError
 	}
-	stderr, err := fileDigest(filepath.Join(dir, "test.stderr"))
-	if err != nil {
-		return e, false, err
+	stderr, fileDigestError := fileDigest(filepath.Join(dir, "test.stderr"))
+	if fileDigestError != nil {
+		return e, false, fileDigestError
 	}
 	if log != e.LogDigest || stderr != e.StderrDigest {
 		return e, false, errors.New("package checkpoint checksum differs")
 	}
-	if err := completePackage(dir, e, p, index, pkg); err != nil {
-		return e, false, err
+	if completePackageError := completePackage(dir, e, p, index, pkg); completePackageError != nil {
+		return e, false, completePackageError
 	}
 	return e, true, nil
 }
@@ -413,8 +423,8 @@ func loadPackage(dir, key string, p plan, index int, pkg string) (packageEvidenc
 // durable evidence. Verify both representations, including their terminal events.
 func validatePackageFiles(dir string, p plan, s summary) []string {
 	var state resumeState
-	if err := loadJSON(filepath.Join(dir, "run.json"), &state); err != nil {
-		return []string{"missing package checkpoint state: " + err.Error()}
+	if loadJsonError := loadJSON(filepath.Join(dir, "run.json"), &state); loadJsonError != nil {
+		return []string{"missing package checkpoint state: " + loadJsonError.Error()}
 	}
 	if state.PlanDigest != p.Digest || state.Index != s.Index || state.Context == "" {
 		return []string{"package checkpoint state differs from plan"}
@@ -435,18 +445,27 @@ func validatePackageFiles(dir string, p plan, s summary) []string {
 	var problems []string
 	for _, pkg := range packages {
 		packageDir := filepath.Join(dir, "packages", shortHash(pkg))
-		e, found, err := loadPackage(packageDir, checkpointKey(state, pkg, patterns(byPackage[pkg])), p, s.Index, pkg)
-		if err != nil || !found {
-			problems = append(problems, fmt.Sprintf("shard %d package %s has no valid complete log: %v", s.Index, pkg, err))
+		e, found, loadPackageError := loadPackage(
+			packageDir,
+			checkpointKey(state, pkg, patterns(byPackage[pkg])),
+			p,
+			s.Index,
+			pkg,
+		)
+		if loadPackageError != nil || !found {
+			problems = append(
+				problems,
+				fmt.Sprintf("shard %d package %s has no valid complete log: %v", s.Index, pkg, loadPackageError),
+			)
 			continue
 		}
 		calls = append(calls, e.Invocations...)
-		if err := appendFile(h, filepath.Join(packageDir, "test.jsonl")); err != nil {
-			problems = append(problems, err.Error())
+		if appendFileError := appendFile(h, filepath.Join(packageDir, "test.jsonl")); appendFileError != nil {
+			problems = append(problems, appendFileError.Error())
 		}
 	}
-	digest, err := fileDigest(filepath.Join(dir, "test.jsonl"))
-	if err != nil || digest != hex.EncodeToString(h.Sum(nil)) {
+	digest, fileDigestError := fileDigest(filepath.Join(dir, "test.jsonl"))
+	if fileDigestError != nil || digest != hex.EncodeToString(h.Sum(nil)) {
 		problems = append(problems, "aggregate differs from complete package logs")
 	}
 	if !reflect.DeepEqual(calls, s.Invocations) {
@@ -460,24 +479,24 @@ type scratchRecord struct{ Key, Path string }
 
 func cleanupPackageScratch(dir, key, root string) error {
 	path := filepath.Join(dir, "scratch.json")
-	if _, err := os.Stat(path); os.IsNotExist(err) {
+	if _, statError := os.Stat(path); os.IsNotExist(statError) {
 		return nil
-	} else if err != nil {
-		return err
+	} else if statError != nil {
+		return statError
 	}
 	var record scratchRecord
-	if err := loadJSON(path, &record); err != nil {
-		return err
+	if loadJsonError := loadJSON(path, &record); loadJsonError != nil {
+		return loadJsonError
 	}
-	absolute, err := filepath.Abs(record.Path)
-	if err != nil {
-		return err
+	absolute, absolutePathError := filepath.Abs(record.Path)
+	if absolutePathError != nil {
+		return absolutePathError
 	}
 	if record.Key != key || filepath.Dir(absolute) != root || !strings.HasPrefix(filepath.Base(absolute), "package-") {
 		return errors.New("refusing unowned package scratch path")
 	}
-	if err := os.RemoveAll(absolute); err != nil {
-		return err
+	if removeError := os.RemoveAll(absolute); removeError != nil {
+		return removeError
 	}
 	return os.Remove(path)
 }

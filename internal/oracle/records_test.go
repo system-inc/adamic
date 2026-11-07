@@ -41,13 +41,15 @@ func TestRecordJavaScriptAgreesWithNode(test *testing.T) {
 	test.Parallel()
 	for _, name := range []string{"operations", "ownership", "for_in", "census", "scalars", "optional"} {
 		test.Run(name, func(test *testing.T) {
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_"+name+".a"))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/records_"+name+".a"),
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			p, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			p, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			want, got := onNode(test, path), onJavaScriptBackend(test, p)
 			if diff := disagreement(want, got); diff != "" {
@@ -134,15 +136,15 @@ func TestRecordOperationMutants(test *testing.T) {
 	} {
 		test.Run(mutant.name, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(
+			path, absolutePathError := filepath.Abs(
 				filepath.Join(repository, "internal/oracle/testdata/records_"+mutant.fixture+".a"),
 			)
-			if err != nil {
-				test.Fatal(err)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			p, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			p, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			code := native.C(p)
 			changed := strings.ReplaceAll(code, mutant.find, mutant.replace)
@@ -153,8 +155,8 @@ func TestRecordOperationMutants(test *testing.T) {
 				changed = insertCollectionMutant(changed, mutant.helper)
 			}
 			binary := filepath.Join(test.TempDir(), "mutant")
-			if err := native.Build(changed, binary, native.Options{Sanitize: true}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(changed, binary, native.Options{Sanitize: true}); buildError != nil {
+				test.Fatal(buildError)
 			}
 			got := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
 			if got.exitCode != 0 || len(got.stderr) > 0 {
@@ -173,15 +175,15 @@ func TestRecordPrototypeMutant(test *testing.T) {
 	if !recordRefusalMutant(test, "prototype_read") {
 		return
 	}
-	path, err := filepath.Abs(
+	path, absolutePathError := filepath.Abs(
 		filepath.Join(repository, "internal/oracle/testdata/records_refused/records_prototype_read.a"),
 	)
-	if err != nil {
-		test.Fatal(err)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	p, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	p, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	code := javascript.JavaScript(p)
 	// This is JavaScript's actual inherited function, rather than an invented sentinel.
@@ -189,8 +191,8 @@ func TestRecordPrototypeMutant(test *testing.T) {
 	end := strings.Index(code[start:], "const adamicRecordHas =") + start
 	mutated := code[:start] + "const adamicRecordGet = (record,key) => record[key];\n" + code[end:]
 	file := filepath.Join(test.TempDir(), "mutant.mjs")
-	if err := os.WriteFile(file, []byte(mutated), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(file, []byte(mutated), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	got, want := onNode(test, file), onJavaScriptBackend(test, p)
 	if got.exitCode != 0 || want.exitCode != 70 || disagreement(want, got) == "" {
@@ -204,13 +206,13 @@ func TestRecordOwnershipMutant(test *testing.T) {
 	if runtime.GOOS != "linux" {
 		test.Skip("this mutant uses LeakSanitizer")
 	}
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_ownership.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_ownership.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	p, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	p, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	code := native.C(p)
 	// Keeping the iterator forever preserves all output, but leaks its record and keys.
@@ -219,8 +221,8 @@ func TestRecordOwnershipMutant(test *testing.T) {
 		test.Fatal("mutant changed no releases")
 	}
 	binary := filepath.Join(test.TempDir(), "mutant")
-	if err := native.Build(changed, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(changed, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	got := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary)
 	if diff := disagreement(onNode(test, path), got); diff != "" {
@@ -235,13 +237,13 @@ func TestRecordOwnershipMutant(test *testing.T) {
 
 func TestRecordCoalesceMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_census.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_census.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	p, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	p, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	code := javascript.JavaScript(p)
 	changed := strings.ReplaceAll(
@@ -253,8 +255,8 @@ func TestRecordCoalesceMutant(test *testing.T) {
 		test.Fatal("mutant changed no coalescing write")
 	}
 	file := filepath.Join(test.TempDir(), "mutant.mjs")
-	if err := os.WriteFile(file, []byte(changed), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(file, []byte(changed), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	got := onNode(test, file)
 	if got.exitCode != 0 || disagreement(onNode(test, path), got) != "stdout differs" {
@@ -268,15 +270,15 @@ func TestRecordNarrowingMutant(test *testing.T) {
 	if !recordRefusalMutant(test, "narrowed_number") {
 		return
 	}
-	path, err := filepath.Abs(
+	path, absolutePathError := filepath.Abs(
 		filepath.Join(repository, "internal/oracle/testdata/records_refused/records_narrowed_number.a"),
 	)
-	if err != nil {
-		test.Fatal(err)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	p, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	p, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	code := javascript.JavaScript(p)
 	changed := strings.ReplaceAll(code, "value === undefined ? panic(message) : value", "value")
@@ -284,8 +286,8 @@ func TestRecordNarrowingMutant(test *testing.T) {
 		test.Fatal("mutant changed no narrowed read check")
 	}
 	file := filepath.Join(test.TempDir(), "mutant.mjs")
-	if err := os.WriteFile(file, []byte(changed), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(file, []byte(changed), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	got, want := onNode(test, file), onJavaScriptBackend(test, p)
 	if got.exitCode != 0 || want.exitCode != 70 || disagreement(want, got) == "" {

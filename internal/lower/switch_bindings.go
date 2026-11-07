@@ -33,21 +33,28 @@ func (l *lowering) switchBindings(block *ast.Node) ([]ir.Statement, error) {
 		if name.Kind == ast.KindArrayBindingPattern || name.Kind == ast.KindObjectBindingPattern {
 			for _, element := range name.AsBindingPattern().Elements.Nodes {
 				if !skipped(element) {
-					if err := bind(element.Name()); err != nil {
-						return err
+					if bindError := bind(element.Name()); bindError != nil {
+						return bindError
 					}
 				}
 			}
 			return nil
 		}
-		local, err := l.declareLocal(name)
-		if err != nil {
-			return err
+		local, declareLocalError := l.declareLocal(name)
+		if declareLocalError != nil {
+			return declareLocalError
 		}
 		ready := len(l.result.Locals)
-		l.result.Locals = append(l.result.Locals, ir.Local{Name: name.Text() + "_ready", Type: ir.Boolean, Function: l.functionIndex})
+		l.result.Locals = append(
+			l.result.Locals,
+			ir.Local{Name: name.Text() + "_ready", Type: ir.Boolean, Function: l.functionIndex},
+		)
 		l.result.Locals[local].Ready = ready + 1
-		storage = append(storage, ir.Declare{Local: ready, Value: ir.BooleanConstant{Value: false}}, ir.Declare{Local: local})
+		storage = append(
+			storage,
+			ir.Declare{Local: ready, Value: ir.BooleanConstant{Value: false}},
+			ir.Declare{Local: local},
+		)
 		return nil
 	}
 	for _, clause := range block.AsCaseBlock().Clauses.Nodes {
@@ -55,22 +62,22 @@ func (l *lowering) switchBindings(block *ast.Node) ([]ir.Statement, error) {
 			switch statement.Kind {
 			case ast.KindVariableStatement:
 				for _, declaration := range statement.AsVariableStatement().DeclarationList.AsVariableDeclarationList().Declarations.Nodes {
-					if err := bind(declaration.Name()); err != nil {
-						return nil, err
+					if bindError := bind(declaration.Name()); bindError != nil {
+						return nil, bindError
 					}
 				}
 			case ast.KindFunctionDeclaration:
-				if err := bind(statement.Name()); err != nil {
-					return nil, err
+				if bindError := bind(statement.Name()); bindError != nil {
+					return nil, bindError
 				}
 				functions = append(functions, statement)
 			}
 		}
 	}
 	for _, declaration := range functions {
-		value, err := l.functionExpression(declaration)
-		if err != nil {
-			return nil, err
+		value, functionExpressionError := l.functionExpression(declaration)
+		if functionExpressionError != nil {
+			return nil, functionExpressionError
 		}
 		local := l.locals[l.symbol(declaration.Name())]
 		storage = append(storage, l.initializeLocal(local, value)...)

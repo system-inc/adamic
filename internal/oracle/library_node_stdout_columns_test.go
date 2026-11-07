@@ -29,9 +29,9 @@ func stdoutColumnsAgreement(test *testing.T, transport string) {
 	test.Helper()
 	path, binary, js := sanitized(test, "internal/oracle/testdata/stdout_columns/columns.a")
 	loader := filepath.Join(repository, "oracle/node.mjs")
-	node, err := toolchain.Path("node")
-	if err != nil {
-		test.Fatal(err)
+	node, pathError := toolchain.Path("node")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
 	variants := [][]string{
 		{node, "--disable-warning=ExperimentalWarning", loader, path},
@@ -100,30 +100,37 @@ func stdoutColumnsProducts(test *testing.T) string {
 	}
 	return buildcache.Product(test, inputs, func(directory string) error {
 		read := func(path string) (string, error) {
-			b, e := os.ReadFile(filepath.Join(repository, path))
-			return string(b), e
+			b, readError := os.ReadFile(filepath.Join(repository, path))
+			return string(b), readError
 		}
-		probe, err := read("internal/oracle/testdata/stdout_columns/loop.c")
-		if err != nil {
-			return err
+		probe, readError := read("internal/oracle/testdata/stdout_columns/loop.c")
+		if readError != nil {
+			return readError
 		}
-		if err := native.Build(probe, filepath.Join(directory, "control"), native.Options{Sanitize: true}); err != nil {
-			return err
+		if buildError := native.Build(
+			probe,
+			filepath.Join(directory, "control"),
+			native.Options{Sanitize: true},
+		); buildError != nil {
+			return buildError
 		}
-		shim, err := read("internal/oracle/testdata/stdout_columns/ioctl.c")
-		if err != nil {
-			return err
+		shim, readError := read("internal/oracle/testdata/stdout_columns/ioctl.c")
+		if readError != nil {
+			return readError
 		}
-		if err := native.BuildSharedProbe(shim, filepath.Join(directory, "ioctl.so")); err != nil {
-			return err
+		if buildSharedProbeError := native.BuildSharedProbe(
+			shim,
+			filepath.Join(directory, "ioctl.so"),
+		); buildSharedProbeError != nil {
+			return buildSharedProbeError
 		}
-		source, err := read("internal/native/runtime/adamic.c")
-		if err != nil {
-			return err
+		source, readError := read("internal/native/runtime/adamic.c")
+		if readError != nil {
+			return readError
 		}
-		header, err := read("internal/native/runtime/stdout_tty_impl.h")
-		if err != nil {
-			return err
+		header, readError := read("internal/native/runtime/stdout_tty_impl.h")
+		if readError != nil {
+			return readError
 		}
 		for _, m := range columnsMutants {
 			if m.name == "premature-turn" {
@@ -148,27 +155,27 @@ func stdoutColumnsProducts(test *testing.T) string {
 			if len(matches) < 10 {
 				return fmt.Errorf("stdout mutant public-symbol inventory changed")
 			}
-			if err := native.BuildFlags(
+			if buildFlagsError := native.BuildFlags(
 				prefix+code,
 				filepath.Join(directory, m.name),
 				native.Options{Sanitize: true},
 				flags,
-			); err != nil {
-				return err
+			); buildFlagsError != nil {
+				return buildFlagsError
 			}
 		}
 		resolved := filepath.Join(repository, "internal/oracle/testdata/stdout_columns/resolved_await.a")
-		program, err := lowered(test, resolved)
-		if err != nil {
-			return err
+		program, loweredError := lowered(test, resolved)
+		if loweredError != nil {
+			return loweredError
 		}
 		code := native.C(program)
-		if err := native.Build(
+		if buildError := native.Build(
 			code,
 			filepath.Join(directory, "resolved-await"),
 			native.Options{Sanitize: true},
-		); err != nil {
-			return err
+		); buildError != nil {
+			return buildError
 		}
 		wrapper := `
 #include "async.h"
@@ -179,13 +186,13 @@ void __wrap_adamic_async_run(void) {
 }
 `
 		flags := append(native.SourceFlags(code, native.Options{Sanitize: true}), "-Wl,--wrap=adamic_async_run")
-		if err := native.BuildFlags(
+		if buildFlagsError := native.BuildFlags(
 			code+wrapper,
 			filepath.Join(directory, "premature-turn"),
 			native.Options{Sanitize: true},
 			flags,
-		); err != nil {
-			return err
+		); buildFlagsError != nil {
+			return buildFlagsError
 		}
 		return os.WriteFile(
 			filepath.Join(directory, "resolved-await.mjs"),
@@ -202,9 +209,9 @@ func stdoutColumnsLifecycle(test *testing.T) {
 		test.Fatal("manual stdout columns lifecycle probes require Linux")
 	}
 	products := stdoutColumnsProducts(test)
-	node, err := toolchain.Path("node")
-	if err != nil {
-		test.Fatal(err)
+	node, pathError := toolchain.Path("node")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
 	for _, name := range []string{
 		"SynchronousResize",
@@ -288,12 +295,12 @@ func columnsLifecycleRun(test *testing.T, products, node, fixture, mutant string
 	var output strings.Builder
 	cmd.Stdout = &output
 	cmd.Stderr = &output
-	if err := childguard.Run(cmd, childguard.Options{}); err != nil {
-		test.Fatalf("pty protocol: %v\n%s", err, output.String())
+	if runError := childguard.Run(cmd, childguard.Options{}); runError != nil {
+		test.Fatalf("pty protocol: %v\n%s", runError, output.String())
 	}
 	var result columnsLifecycleResult
-	if err := json.Unmarshal([]byte(output.String()), &result); err != nil {
-		test.Fatalf("pty result: %v\n%s", err, output.String())
+	if decodeError := json.Unmarshal([]byte(output.String()), &result); decodeError != nil {
+		test.Fatalf("pty result: %v\n%s", decodeError, output.String())
 	}
 	result.Difference = disagreement(
 		run{stdout: []byte(result.Node.Stdout), stderr: []byte(result.Node.Stderr), exitCode: result.Node.ExitCode},
@@ -324,20 +331,20 @@ func columnsLifecycleRun(test *testing.T, products, node, fixture, mutant string
 func TestStdoutColumnsRefusesWASI(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(repository, "internal/oracle/testdata/stdout_columns/columns.a")
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
-	err = native.Build(
+	buildError := native.Build(
 		native.C(program),
 		filepath.Join(test.TempDir(), "columns.wasm"),
 		native.Options{Target: "wasm32-wasi"},
 	)
 	var refused *native.TargetRefused
-	if !errors.As(err, &refused) ||
+	if !errors.As(buildError, &refused) ||
 		refused.Member != "process.stdout.columns" ||
 		refused.Reason != "wasi preview1 reports no terminal size" {
-		test.Fatalf("want typed, named WASI refusal, got %v", err)
+		test.Fatalf("want typed, named WASI refusal, got %v", buildError)
 	}
 	if reason := buildWASI(
 		test,

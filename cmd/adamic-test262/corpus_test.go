@@ -14,9 +14,9 @@ import (
 // ignores a negative expectation classifies those fixtures as attempted, and this fails.
 func TestClassifyCorpus(test *testing.T) {
 	test.Parallel()
-	matches, err := filepath.Glob("testdata/corpus/*.js")
-	if err != nil {
-		test.Fatal(err)
+	matches, globError := filepath.Glob("testdata/corpus/*.js")
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	if len(matches) == 0 {
 		test.Fatal("no corpus fixtures")
@@ -24,13 +24,13 @@ func TestClassifyCorpus(test *testing.T) {
 	for _, path := range matches {
 		test.Run(filepath.Base(path), func(test *testing.T) {
 			test.Parallel()
-			source, err := os.ReadFile(path)
-			if err != nil {
-				test.Fatal(err)
+			source, readError := os.ReadFile(path)
+			if readError != nil {
+				test.Fatal(readError)
 			}
-			want, err := os.ReadFile(strings.TrimSuffix(path, ".js") + ".want")
-			if err != nil {
-				test.Fatal(err)
+			want, readError := os.ReadFile(strings.TrimSuffix(path, ".js") + ".want")
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			lines := strings.Split(strings.TrimSpace(string(want)), "\n")
 			got := classify(filepath.Base(path), string(source), false)
@@ -62,9 +62,9 @@ func TestClassifyCorpus(test *testing.T) {
 // because both sides exited non-zero and an ordinary comparison only passes when both exit 0.
 func TestVerdictCorpus(test *testing.T) {
 	test.Parallel()
-	matches, err := filepath.Glob("testdata/verdicts/*.json")
-	if err != nil {
-		test.Fatal(err)
+	matches, globError := filepath.Glob("testdata/verdicts/*.json")
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	if len(matches) == 0 {
 		test.Fatal("no verdict fixtures")
@@ -72,17 +72,17 @@ func TestVerdictCorpus(test *testing.T) {
 	for _, path := range matches {
 		test.Run(filepath.Base(path), func(test *testing.T) {
 			test.Parallel()
-			data, err := os.ReadFile(path)
-			if err != nil {
-				test.Fatal(err)
+			data, readError := os.ReadFile(path)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			var fixture struct {
 				verdictInput
 				Name string `json:"name"`
 				Want string `json:"want"`
 			}
-			if err := json.Unmarshal(data, &fixture); err != nil {
-				test.Fatal(err)
+			if decodeError := json.Unmarshal(data, &fixture); decodeError != nil {
+				test.Fatal(decodeError)
 			}
 			got := decide(fixture.verdictInput)
 			if string(got.Kind) != fixture.Want {
@@ -197,21 +197,21 @@ func TestMiniRunner(test *testing.T) {
 	test.Parallel()
 	// A sandbox declares its tools, so one missing there is a failure, never a skip that passes having run nothing.
 	for _, tool := range []string{"clang", "node"} {
-		if _, err := toolchain.Path(tool); err != nil {
+		if _, pathError := toolchain.Path(tool); pathError != nil {
 			if toolchain.Sandboxed() {
-				test.Fatal(err)
+				test.Fatal(pathError)
 			}
-			test.Skip(tool, "not found:", err)
+			test.Skip(tool, "not found:", pathError)
 		}
 	}
 	work := test.TempDir()
-	engine, err := prepare(test, "testdata/mini", work)
-	if err != nil {
-		test.Fatal(err)
+	engine, prepareError := prepare(test, "testdata/mini", work)
+	if prepareError != nil {
+		test.Fatal(prepareError)
 	}
-	passed, err := engine.runFilter("pass", 0, false)
-	if err != nil {
-		test.Fatal(err)
+	passed, runFilterError := engine.runFilter("pass", 0, false)
+	if runFilterError != nil {
+		test.Fatal(runFilterError)
 	}
 	if passed.Pass != 1 || passed.Fail != 0 || passed.Refused != 0 || passed.Crashed != 0 {
 		test.Fatalf(
@@ -222,9 +222,9 @@ func TestMiniRunner(test *testing.T) {
 			passed.CrashReasons,
 		)
 	}
-	skipped, err := engine.runFilter("skip", 0, false)
-	if err != nil {
-		test.Fatal(err)
+	skipped, runFilterError := engine.runFilter("skip", 0, false)
+	if runFilterError != nil {
+		test.Fatal(runFilterError)
 	}
 	if skipped.Skipped != 1 || skipped.Pass != 0 {
 		test.Fatalf(
@@ -234,9 +234,9 @@ func TestMiniRunner(test *testing.T) {
 			skipped.SkipReasons,
 		)
 	}
-	refused, err := engine.runFilter("refuse", 0, false)
-	if err != nil {
-		test.Fatal(err)
+	refused, runFilterError := engine.runFilter("refuse", 0, false)
+	if runFilterError != nil {
+		test.Fatal(runFilterError)
 	}
 	if refused.Refused != 1 || refused.Pass != 0 {
 		test.Fatalf("var fixture: refused %d pass %d reasons %v", refused.Refused, refused.Pass, refused.RefusalReasons)
@@ -250,31 +250,31 @@ func TestMiniRunner(test *testing.T) {
 func TestLargeCompilerOutputIsComplete(test *testing.T) {
 	test.Parallel()
 	root := test.TempDir()
-	if err := os.MkdirAll(filepath.Join(root, "test"), 0755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(filepath.Join(root, "test"), 0755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	// Each line is about 442 bytes of C, so 1000 lines are about 455 KB, 1.7 times the old limit: room for a
 	// leaner emitter, without the 800 KB main of 1800 lines, which made this test 23 s alone on one core.
 	source := strings.Repeat("assert.sameValue(1, 1);\n", 1000)
-	if err := os.WriteFile(filepath.Join(root, "test", "large.js"), []byte(source), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(root, "test", "large.js"), []byte(source), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	engine, err := prepare(test, root, test.TempDir())
-	if err != nil {
-		test.Fatal(err)
+	engine, prepareError := prepare(test, root, test.TempDir())
+	if prepareError != nil {
+		test.Fatal(prepareError)
 	}
-	report, err := engine.runFilter("large.js", 0, false)
-	if err != nil {
-		test.Fatal(err)
+	report, runFilterError := engine.runFilter("large.js", 0, false)
+	if runFilterError != nil {
+		test.Fatal(runFilterError)
 	}
 	if report.Pass != 1 {
 		test.Fatalf("large program: %+v", report)
 	}
-	generated, err := os.ReadFile(
+	generated, readError := os.ReadFile(
 		filepath.Join(engine.programDirectory(classify("large.js", source, false)), "program.c"),
 	)
-	if err != nil {
-		test.Fatal(err)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if len(generated) <= outputLimit || generated[len(generated)-1] != '\n' {
 		test.Fatalf("fixture must exceed old limit and end with newline: %d bytes", len(generated))
@@ -284,8 +284,8 @@ func TestLargeCompilerOutputIsComplete(test *testing.T) {
 func TestOutputOverflowIsReported(test *testing.T) {
 	test.Parallel()
 	buffer := limitedBuffer{limit: 3}
-	written, err := buffer.Write([]byte("abcdef"))
-	if err != nil || written != 6 || !buffer.exceeded || buffer.String() != "abc" {
-		test.Fatalf("overflow: written=%d error=%v buffer=%+v", written, err, buffer)
+	written, writeError := buffer.Write([]byte("abcdef"))
+	if writeError != nil || written != 6 || !buffer.exceeded || buffer.String() != "abc" {
+		test.Fatalf("overflow: written=%d error=%v buffer=%+v", written, writeError, buffer)
 	}
 }

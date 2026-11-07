@@ -57,14 +57,14 @@ func copyPort(test *testing.T, file, from, to string) string {
 	test.Helper()
 	directory := test.TempDir()
 	for _, name := range portFiles {
-		data, err := os.ReadFile(name)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(name)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		source := string(data)
-		scannerDirectory, err := filepath.Abs("../scanner/scanner.ts")
-		if err != nil {
-			test.Fatal(err)
+		scannerDirectory, absolutePathError := filepath.Abs("../scanner/scanner.ts")
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		source = strings.ReplaceAll(source, "../scanner/scanner.ts", scannerDirectory)
 		if name == file {
@@ -73,8 +73,8 @@ func copyPort(test *testing.T, file, from, to string) string {
 			}
 			source = strings.Replace(source, from, to, 1)
 		}
-		if err := os.WriteFile(filepath.Join(directory, name), []byte(source), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, name), []byte(source), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	return directory
@@ -82,9 +82,9 @@ func copyPort(test *testing.T, file, from, to string) string {
 
 func node(test *testing.T, directory, manifest string, count bool) execution {
 	test.Helper()
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	args := []string{
 		"--disable-warning=ExperimentalWarning",
@@ -147,18 +147,18 @@ func compilerManifest(test *testing.T) (string, int) {
 	if source == "" {
 		test.Skip("set ADAMIC_TYPESCRIPT_SOURCE to the pinned v6.0.3 checkout")
 	}
-	output, err := toolchain.GitCommand("-C", source, "rev-parse", "HEAD").Output()
-	if err != nil || strings.TrimSpace(string(output)) != compilerCommit {
-		test.Fatalf("corpus pin differs: %q %v", output, err)
+	output, outputError := toolchain.GitCommand("-C", source, "rev-parse", "HEAD").Output()
+	if outputError != nil || strings.TrimSpace(string(output)) != compilerCommit {
+		test.Fatalf("corpus pin differs: %q %v", output, outputError)
 	}
 	var manifest strings.Builder
 	files := 0
-	err = filepath.WalkDir(filepath.Join(
+	walkError := filepath.WalkDir(filepath.Join(
 		source,
 		"src/compiler",
-	), func(path string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
+	), func(path string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
 		if !entry.IsDir() && strings.HasSuffix(path, ".ts") {
 			manifest.WriteString(path + "\n")
@@ -166,12 +166,12 @@ func compilerManifest(test *testing.T) (string, int) {
 		}
 		return nil
 	})
-	if err != nil {
-		test.Fatal(err)
+	if walkError != nil {
+		test.Fatal(walkError)
 	}
 	path := filepath.Join(test.TempDir(), "compiler.txt")
-	if err := os.WriteFile(path, []byte(manifest.String()), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(manifest.String()), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return path, files
 }

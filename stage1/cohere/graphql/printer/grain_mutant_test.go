@@ -167,8 +167,8 @@ func printerMutantUnit(test *testing.T, unit int) {
 	if len(shards) != testPrinterMutantsShards {
 		test.Fatalf("enumerated %d shards, declared %d", len(shards), testPrinterMutantsShards)
 	}
-	if err := printerShardUnion(whole, shards); err != nil {
-		test.Fatal(err)
+	if printerShardUnionError := printerShardUnion(whole, shards); printerShardUnionError != nil {
+		test.Fatal(printerShardUnionError)
 	}
 	test.Logf(
 		"union: %d unique mutant/case ids across %d shards (%d cases per mutant)",
@@ -179,9 +179,9 @@ func printerMutantUnit(test *testing.T, unit int) {
 	if unit < 0 {
 		return
 	}
-	selected, err := printerShardSelection(os.Getenv("ADAMIC_TEST_SHARD"), len(shards))
-	if err != nil {
-		test.Fatal(err)
+	selected, printerShardSelectionError := printerShardSelection(os.Getenv("ADAMIC_TEST_SHARD"), len(shards))
+	if printerShardSelectionError != nil {
+		test.Fatal(printerShardSelectionError)
 	}
 	for number, mutation := range printerMutations {
 		if number != unit || !selected[number] {
@@ -205,9 +205,14 @@ func printerMutantUnit(test *testing.T, unit int) {
 				{"native", execute(test, []string{"ASAN_OPTIONS=detect_leaks=0"}, product.sanitized, "--cases", cases)},
 				{"Node", onNode(test, product.source, "--cases", cases)},
 			} {
-				difference, err := printerMutantDisagreement(number, side.name, side.result, want)
-				if err != nil {
-					test.Error(err)
+				difference, printerMutantDisagreementError := printerMutantDisagreement(
+					number,
+					side.name,
+					side.result,
+					want,
+				)
+				if printerMutantDisagreementError != nil {
+					test.Error(printerMutantDisagreementError)
 				} else {
 					test.Logf("%s caught: %s", side.name, difference)
 				}
@@ -254,17 +259,18 @@ func TestPrinterMutantPlantedSurvivor(test *testing.T) {
 		}
 		encoded, _ := json.Marshal(answer)
 		result := execute(test, nil, "node", "-e", "process.stdout.write("+string(encoded)+")")
-		_, err := printerMutantDisagreement(number, "Node", result, "ok\toriginal\n")
-		if err == nil {
+		_, printerMutantDisagreementError := printerMutantDisagreement(number, "Node", result, "ok\toriginal\n")
+		if printerMutantDisagreementError == nil {
 			if number == 1 {
 				test.Fatal("planted survivor escaped shard-001")
 			}
 			continue
 		}
-		if number != 1 || !strings.Contains(err.Error(), "shard-001 Node mutant escaped oracle") {
-			test.Fatalf("wrong owner: %v", err)
+		if number != 1 ||
+			!strings.Contains(printerMutantDisagreementError.Error(), "shard-001 Node mutant escaped oracle") {
+			test.Fatalf("wrong owner: %v", printerMutantDisagreementError)
 		}
-		test.Log(err)
+		test.Log(printerMutantDisagreementError)
 		caught++
 	}
 	if caught != 1 {

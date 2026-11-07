@@ -51,9 +51,9 @@ func Upstream(test testing.TB, checkout, pin string, roots, patterns []string) [
 
 func checked(test testing.TB, checkout, pin string, roots, patterns, skip []string) []string {
 	test.Helper()
-	files, actual, counts, err := selectFiles(checkout, pin, roots, patterns, skip)
-	if err != nil {
-		test.Fatalf("corpus-files: %v", err)
+	files, actual, counts, selectFilesError := selectFiles(checkout, pin, roots, patterns, skip)
+	if selectFilesError != nil {
+		test.Fatalf("corpus-files: %v", selectFilesError)
 	}
 	kind := "repository"
 	if pin != "" {
@@ -103,13 +103,13 @@ func selectFiles(checkout, pin string, roots, patterns, skip []string) ([]string
 		return nil, "", nil, fmt.Errorf("%s: named roots and patterns are required", checkout)
 	}
 	for _, pattern := range patterns {
-		if _, err := path.Match(pattern, ""); err != nil || strings.Contains(pattern, "/") {
+		if _, matchError := path.Match(pattern, ""); matchError != nil || strings.Contains(pattern, "/") {
 			return nil, "", nil, fmt.Errorf("%s: invalid basename pattern %q", checkout, pattern)
 		}
 	}
-	checkout, err := filepath.Abs(checkout)
-	if err != nil {
-		return nil, "", nil, err
+	checkout, absolutePathError := filepath.Abs(checkout)
+	if absolutePathError != nil {
+		return nil, "", nil, absolutePathError
 	}
 	for _, root := range roots {
 		if root == "" ||
@@ -123,9 +123,9 @@ func selectFiles(checkout, pin string, roots, patterns, skip []string) ([]string
 	if !tracked.Git(checkout) {
 		return selectManifest(checkout, pin, roots, patterns, skip)
 	}
-	head, err := git(checkout, "rev-parse", "HEAD")
-	if err != nil {
-		return nil, "", nil, err
+	head, gitError := git(checkout, "rev-parse", "HEAD")
+	if gitError != nil {
+		return nil, "", nil, gitError
 	}
 	actual := strings.TrimSpace(string(head))
 	if pin != "" && actual != pin {
@@ -134,15 +134,15 @@ func selectFiles(checkout, pin string, roots, patterns, skip []string) ([]string
 	counts := make([]int, len(roots))
 	selected := map[string]bool{}
 	for i, root := range roots {
-		if _, err := os.Stat(filepath.Join(checkout, root)); err != nil {
-			return nil, actual, nil, fmt.Errorf("%s: missing named root %s: %w", checkout, root, err)
+		if _, statError := os.Stat(filepath.Join(checkout, root)); statError != nil {
+			return nil, actual, nil, fmt.Errorf("%s: missing named root %s: %w", checkout, root, statError)
 		}
 		spec := ":(top,literal)" + filepath.ToSlash(root)
 		if root == "." {
 			spec = ":(top)**"
 		}
 		if pin != "" {
-			status, err := git(
+			status, gitError := git(
 				checkout,
 				"status",
 				"--porcelain=v1",
@@ -152,8 +152,8 @@ func selectFiles(checkout, pin string, roots, patterns, skip []string) ([]string
 				"--",
 				spec,
 			)
-			if err != nil {
-				return nil, actual, nil, err
+			if gitError != nil {
+				return nil, actual, nil, gitError
 			}
 			if len(status) != 0 {
 				return nil, actual, nil, fmt.Errorf(
@@ -172,9 +172,9 @@ func selectFiles(checkout, pin string, roots, patterns, skip []string) ([]string
 			{"index", []string{"diff", "--cached", "--name-only", "--no-renames", "-z", "HEAD", "--", spec}},
 			{"worktree", []string{"diff", "--name-only", "--no-renames", "-z", "--", spec}},
 		} {
-			data, err := git(checkout, side.args...)
-			if err != nil {
-				return nil, actual, nil, err
+			data, gitError := git(checkout, side.args...)
+			if gitError != nil {
+				return nil, actual, nil, gitError
 			}
 			var dirty []string
 			for _, name := range names(data) {
@@ -193,9 +193,9 @@ func selectFiles(checkout, pin string, roots, patterns, skip []string) ([]string
 			}
 		}
 		// git ls-files, or under Workshop's trace a walk the build's read set keys (tracked.PathsUnder).
-		listed, err := tracked.PathsUnder(checkout, root, skip...)
-		if err != nil {
-			return nil, actual, nil, err
+		listed, pathsUnderError := tracked.PathsUnder(checkout, root, skip...)
+		if pathsUnderError != nil {
+			return nil, actual, nil, pathsUnderError
 		}
 		var missing []string
 		for _, name := range listed {
@@ -203,8 +203,8 @@ func selectFiles(checkout, pin string, roots, patterns, skip []string) ([]string
 				continue
 			}
 			absolute := filepath.Join(checkout, filepath.FromSlash(name))
-			info, err := os.Stat(absolute)
-			if err != nil || info.IsDir() {
+			info, statError := os.Stat(absolute)
+			if statError != nil || info.IsDir() {
 				missing = append(missing, name)
 				continue
 			}
@@ -238,22 +238,22 @@ func selectFiles(checkout, pin string, roots, patterns, skip []string) ([]string
 // becomes: every matching entry is on disk as recorded, and no matching file that the .gitignore files leave in is
 // missing from the record, which would make the selection smaller than git's.
 func selectManifest(checkout, pin string, roots, patterns, skip []string) ([]string, string, []int, error) {
-	actual, err := tracked.Head(checkout)
-	if err != nil {
-		return nil, "", nil, err
+	actual, headError := tracked.Head(checkout)
+	if headError != nil {
+		return nil, "", nil, headError
 	}
 	if pin != "" && actual != pin {
 		return nil, actual, nil, fmt.Errorf("%s: HEAD %s differs from pin %s", checkout, actual, pin)
 	}
-	entries, err := tracked.Files(checkout)
-	if err != nil {
-		return nil, actual, nil, err
+	entries, filesError := tracked.Files(checkout)
+	if filesError != nil {
+		return nil, actual, nil, filesError
 	}
 	counts := make([]int, len(roots))
 	selected := map[string]bool{}
 	for i, root := range roots {
-		if _, err := os.Stat(filepath.Join(checkout, root)); err != nil {
-			return nil, actual, nil, fmt.Errorf("%s: missing named root %s: %w", checkout, root, err)
+		if _, statError := os.Stat(filepath.Join(checkout, root)); statError != nil {
+			return nil, actual, nil, fmt.Errorf("%s: missing named root %s: %w", checkout, root, statError)
 		}
 		var under []tracked.Entry
 		for _, entry := range tracked.Under(entries, filepath.ToSlash(root)) {
@@ -268,9 +268,9 @@ func selectManifest(checkout, pin string, roots, patterns, skip []string) ([]str
 			}
 		}
 		if pin != "" {
-			found, err := unrecorded(checkout, root, under)
-			if err != nil {
-				return nil, actual, nil, err
+			found, unrecordedError := unrecorded(checkout, root, under)
+			if unrecordedError != nil {
+				return nil, actual, nil, unrecordedError
 			}
 			var dirty []string
 			for _, name := range found {
@@ -278,9 +278,9 @@ func selectManifest(checkout, pin string, roots, patterns, skip []string) ([]str
 					dirty = append(dirty, name)
 				}
 			}
-			missing, changed, err := tracked.Changed(checkout, under)
-			if err != nil {
-				return nil, actual, nil, err
+			missing, changed, changedError := tracked.Changed(checkout, under)
+			if changedError != nil {
+				return nil, actual, nil, changedError
 			}
 			dirty = append(dirty, changed...)
 			for _, name := range missing {
@@ -299,9 +299,9 @@ func selectManifest(checkout, pin string, roots, patterns, skip []string) ([]str
 				)
 			}
 		} else {
-			_, changed, err := tracked.Changed(checkout, matching)
-			if err != nil {
-				return nil, actual, nil, err
+			_, changed, changedError := tracked.Changed(checkout, matching)
+			if changedError != nil {
+				return nil, actual, nil, changedError
 			}
 			if len(changed) != 0 {
 				return nil, actual, nil, fmt.Errorf(
@@ -312,9 +312,9 @@ func selectManifest(checkout, pin string, roots, patterns, skip []string) ([]str
 				)
 			}
 			// git would select a file its commit tracks; one the manifest leaves out means the manifest is stale.
-			extra, err := tracked.Unrecorded(checkout, root)
-			if err != nil {
-				return nil, actual, nil, err
+			extra, unrecordedError := tracked.Unrecorded(checkout, root)
+			if unrecordedError != nil {
+				return nil, actual, nil, unrecordedError
 			}
 			var unlisted []string
 			for _, name := range extra {
@@ -334,8 +334,8 @@ func selectManifest(checkout, pin string, roots, patterns, skip []string) ([]str
 		var missing []string
 		for _, entry := range matching {
 			absolute := filepath.Join(checkout, filepath.FromSlash(entry.Path))
-			info, err := os.Stat(absolute)
-			if err != nil || info.IsDir() {
+			info, statError := os.Stat(absolute)
+			if statError != nil || info.IsDir() {
 				missing = append(missing, entry.Path)
 				continue
 			}
@@ -375,13 +375,16 @@ func unrecorded(checkout, root string, under []tracked.Entry) ([]string, error) 
 		}
 	}
 	var found []string
-	err := filepath.WalkDir(filepath.Join(checkout, root), func(name string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
+	walkError := filepath.WalkDir(filepath.Join(
+		checkout,
+		root,
+	), func(name string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
-		relative, err := filepath.Rel(checkout, name)
-		if err != nil {
-			return err
+		relative, relativePathError := filepath.Rel(checkout, name)
+		if relativePathError != nil {
+			return relativePathError
 		}
 		relative = filepath.ToSlash(relative)
 		if entry.IsDir() {
@@ -395,5 +398,5 @@ func unrecorded(checkout, root string, under []tracked.Entry) ([]string, error) 
 		}
 		return nil
 	})
-	return found, err
+	return found, walkError
 }

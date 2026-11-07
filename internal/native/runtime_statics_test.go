@@ -277,13 +277,13 @@ func storageDeclarators(file string, declaration []storageToken) []runtimeStatic
 
 func TestRuntimeStaticsAreListed(test *testing.T) {
 	test.Parallel()
-	files, err := filepath.Glob(filepath.Join(*runtimeStaticsDirectory, "*"))
-	if err != nil {
-		test.Fatal(err)
+	files, globError := filepath.Glob(filepath.Join(*runtimeStaticsDirectory, "*"))
+	if globError != nil {
+		test.Fatal(globError)
 	}
-	table, err := os.ReadFile("testdata/runtime-statics/storage.txt")
-	if err != nil && !*listRuntimeStatics {
-		test.Fatal(err)
+	table, readError := os.ReadFile("testdata/runtime-statics/storage.txt")
+	if readError != nil && !*listRuntimeStatics {
+		test.Fatal(readError)
 	}
 	for _, file := range files {
 		if filepath.Ext(file) != ".c" && filepath.Ext(file) != ".h" {
@@ -295,9 +295,9 @@ func TestRuntimeStaticsAreListed(test *testing.T) {
 				file,
 			)
 		}
-		source, err := os.ReadFile(file)
-		if err != nil {
-			test.Fatal(err)
+		source, readError := os.ReadFile(file)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		occurrences := map[string]int{}
 		for _, variable := range runtimeStorage(filepath.Base(file), string(source)) {

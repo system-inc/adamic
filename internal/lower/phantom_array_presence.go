@@ -55,15 +55,25 @@ func (l *lowering) phantomArrayPresenceRefusal(node *ast.Node) error {
 		switch {
 		case l.isLibraryGlobal(access.Expression, "Object") && name == "hasOwn" && len(arguments) == 2:
 			return l.phantomPresenceKeyed(node, arguments[0], arguments[1], "Object.hasOwn")
-		case l.isLibraryGlobal(access.Expression, "Object") && (name == "keys" || name == "values" || name == "entries" || name == "getOwnPropertyNames" || name == "assign"):
+		case l.isLibraryGlobal(access.Expression, "Object") && (name == "keys" ||
+			name == "values" ||
+			name == "entries" ||
+			name == "getOwnPropertyNames" ||
+			name == "assign"):
 			for _, argument := range arguments {
-				if err := l.phantomPresenceWhole(node, argument, "Object."+name); err != nil {
-					return err
+				if phantomPresenceWholeError := l.phantomPresenceWhole(
+					node,
+					argument,
+					"Object."+name,
+				); phantomPresenceWholeError != nil {
+					return phantomPresenceWholeError
 				}
 			}
 		case l.isLibraryGlobal(access.Expression, "JSON") && name == "stringify" && len(arguments) > 0:
 			return l.phantomPresenceWhole(node, arguments[0], "JSON.stringify")
-		case l.holdsArrayBrand(access.Expression) && !l.arrayOwnMember(callee) && slices.ContainsFunc(arguments, l.propertyKeyArgument):
+		case l.holdsArrayBrand(access.Expression) &&
+			!l.arrayOwnMember(callee) &&
+			slices.ContainsFunc(arguments, l.propertyKeyArgument):
 			return l.phantomPresenceWhole(node, access.Expression, name)
 		}
 	}
@@ -159,7 +169,9 @@ func (l *lowering) phantomPresenceWrite(node, target *ast.Node) error {
 		}
 		key := ast.SkipParentheses(access.ArgumentExpression)
 		switch {
-		case key.Kind == ast.KindStringLiteral || key.Kind == ast.KindNoSubstitutionTemplateLiteral || key.Kind == ast.KindNumericLiteral:
+		case key.Kind == ast.KindStringLiteral ||
+			key.Kind == ast.KindNoSubstitutionTemplateLiteral ||
+			key.Kind == ast.KindNumericLiteral:
 			if !slices.Contains(members, key.Text()) {
 				return nil
 			}
@@ -174,7 +186,17 @@ func (l *lowering) phantomPresenceWrite(node, target *ast.Node) error {
 
 // phantomPresenceRefused is the refusal, in the words Diagnostics gave (#gb0fqaa).
 func (l *lowering) phantomPresenceRefused(node *ast.Node, brand *checker.Type, members []string, road string) error {
-	return &Refused{Where: l.program.Where(node), What: "an observation of " + l.checker.TypeToString(brand) + "'s phantom member " + strings.Join(members, ", ") + " (" + road + ")", Fix: "a phantom brand is never present at run time, so test or copy the value as its base array (`readonly T[]`), or test the other arm's own field (rulings.md:31)"}
+	return &Refused{
+		Where: l.program.Where(node),
+		What: "an observation of " +
+			l.checker.TypeToString(brand) +
+			"'s phantom member " +
+			strings.Join(members, ", ") +
+			" (" +
+			road +
+			")",
+		Fix: "a phantom brand is never present at run time, so test or copy the value as its base array (`readonly T[]`), or test the other arm's own field (rulings.md:31)",
+	}
 }
 
 // arrayOwnMember is whether a method call's member is declared by Array or ReadonlyArray itself, the base a
@@ -195,7 +217,10 @@ func (l *lowering) arrayOwnMember(callee *ast.Node) bool {
 		}
 		for _, declaration := range root.Declarations {
 			owner := declaration.Parent
-			if !load.IsLibrary(ast.GetSourceFileOfNode(declaration)) || owner == nil || owner.Kind != ast.KindInterfaceDeclaration || (owner.Name().Text() != "Array" && owner.Name().Text() != "ReadonlyArray") {
+			if !load.IsLibrary(ast.GetSourceFileOfNode(declaration)) ||
+				owner == nil ||
+				owner.Kind != ast.KindInterfaceDeclaration ||
+				(owner.Name().Text() != "Array" && owner.Name().Text() != "ReadonlyArray") {
 				return false
 			}
 		}

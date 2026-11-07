@@ -86,17 +86,17 @@ func graphOracleWitness(test *testing.T, path string) {
 
 func graphOracleWitnessWithLayout(test *testing.T, path string, million bool) {
 	test.Helper()
-	absolute, err := filepath.Abs(filepath.Join(repository, path))
-	if err != nil {
-		test.Fatal(err)
+	absolute, absolutePathError := filepath.Abs(filepath.Join(repository, path))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := onNode(test, absolute)
 	if truth.exitCode != 0 {
 		test.Fatalf("Node: %d %s", truth.exitCode, truth.stderr)
 	}
-	program, err := lowered(test, absolute)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, absolute)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	actual, binary := natively(test, program)
 	if difference := disagreement(truth, actual); difference != "" {
@@ -110,8 +110,8 @@ func graphOracleWitnessWithLayout(test *testing.T, path string, million bool) {
 	}
 	code := native.C(program)
 	countedBinary := filepath.Join(test.TempDir(), "counted")
-	if err := native.Build(code, countedBinary, native.Options{Count: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(code, countedBinary, native.Options{Count: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	name, arguments := pinnedStack(countedBinary)
 	var countedResult run
@@ -142,9 +142,9 @@ func graphOracleCounts(test *testing.T, path string) {
 	if *updateCounts {
 		measuredCounts.Store(path, row)
 	} else {
-		rows, err := recordedCounts()
-		if err != nil {
-			test.Fatal(err)
+		rows, recordedCountsError := recordedCounts()
+		if recordedCountsError != nil {
+			test.Fatal(recordedCountsError)
 		}
 		if row != rows[path] {
 			test.Fatalf("counts changed: got %s; recorded %s", row, rows[path])

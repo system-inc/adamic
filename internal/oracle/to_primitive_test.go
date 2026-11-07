@@ -13,9 +13,9 @@ import (
 // built it goes red here and joins the answers.
 func toPrimitiveFixture(test *testing.T, name string) string {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/to_primitive", name))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/to_primitive", name))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return path
 }
@@ -94,9 +94,9 @@ func TestToPrimitiveAnswersAgreeWithNode(test *testing.T) {
 					truth.stderr,
 				)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatalf("String of an unknown must lower: %v", err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatalf("String of an unknown must lower: %v", loweredError)
 			}
 			native, binary := natively(test, program)
 			for name, got := range map[string]run{
@@ -152,9 +152,9 @@ func TestToPrimitiveStopsAlikeOnBothBackends(test *testing.T) {
 			if truth := onNode(test, path); disagreement(run{stdout: []byte(probe.node)}, truth) != "" {
 				test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatalf("String of an unknown must lower and stop at run time: %v", err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatalf("String of an unknown must lower and stop at run time: %v", loweredError)
 			}
 			want := run{
 				stdout:   []byte("before\n"),

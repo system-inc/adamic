@@ -8,11 +8,29 @@ import (
 )
 
 func init() {
-	RegisterNodeLibraryMembers("node:fs.symlinkSync", "node:fs.readdirSync", "node:fs.realpathSync", "node:fs.native",
-		"node:fs.StatsBase.isBlockDevice", "node:fs.StatsBase.isCharacterDevice", "node:fs.StatsBase.isFIFO", "node:fs.StatsBase.isSocket",
-		"node:fs.Dirent.isBlockDevice", "node:fs.Dirent.isCharacterDevice", "node:fs.Dirent.isFIFO", "node:fs.Dirent.isSocket",
-		"node:fs.Dirent.name", "node:fs.Dirent.isFile", "node:fs.Dirent.isDirectory", "node:fs.Dirent.isSymbolicLink",
-		"node:path.resolve", "node:path.dirname", "node:path.join", "node:path.relative", "node:path.basename")
+	RegisterNodeLibraryMembers(
+		"node:fs.symlinkSync",
+		"node:fs.readdirSync",
+		"node:fs.realpathSync",
+		"node:fs.native",
+		"node:fs.StatsBase.isBlockDevice",
+		"node:fs.StatsBase.isCharacterDevice",
+		"node:fs.StatsBase.isFIFO",
+		"node:fs.StatsBase.isSocket",
+		"node:fs.Dirent.isBlockDevice",
+		"node:fs.Dirent.isCharacterDevice",
+		"node:fs.Dirent.isFIFO",
+		"node:fs.Dirent.isSocket",
+		"node:fs.Dirent.name",
+		"node:fs.Dirent.isFile",
+		"node:fs.Dirent.isDirectory",
+		"node:fs.Dirent.isSymbolicLink",
+		"node:path.resolve",
+		"node:path.dirname",
+		"node:path.join",
+		"node:path.relative",
+		"node:path.basename",
+	)
 }
 
 // nodeHostMember follows @types/node declarations, including aliases and the
@@ -34,7 +52,9 @@ func (l *lowering) nodeHostMember(node *ast.Node) (string, string) {
 		}
 		owner := ""
 		for parent := declaration.Parent; parent != nil; parent = parent.Parent {
-			if parent.Kind != ast.KindModuleDeclaration && parent.Kind != ast.KindClassDeclaration && parent.Kind != ast.KindInterfaceDeclaration {
+			if parent.Kind != ast.KindModuleDeclaration &&
+				parent.Kind != ast.KindClassDeclaration &&
+				parent.Kind != ast.KindInterfaceDeclaration {
 				continue
 			}
 			if parent.Name() == nil {
@@ -82,8 +102,8 @@ func (l *lowering) nodeHostMember(node *ast.Node) (string, string) {
 	return "", ""
 }
 func (l *lowering) nodeFSDirectoryCall(node *ast.Node) (ir.Expression, bool, error) {
-	if value, found, err := l.nodeRealpathCall(node); found {
-		return value, found, err
+	if value, found, nodeRealpathCallError := l.nodeRealpathCall(node); found {
+		return value, found, nodeRealpathCallError
 	}
 	call := node.AsCallExpression()
 	module, member := l.nodeHostMember(call.Expression)
@@ -114,9 +134,9 @@ func (l *lowering) nodeFSDirectoryCall(node *ast.Node) (ir.Expression, bool, err
 			if call.Expression.Kind != ast.KindPropertyAccessExpression {
 				return nil, true, l.notYet(node, "a detached Dirent method")
 			}
-			receiver, err := l.expression(call.Expression.AsPropertyAccessExpression().Expression)
-			if err != nil {
-				return nil, true, err
+			receiver, expressionError := l.expression(call.Expression.AsPropertyAccessExpression().Expression)
+			if expressionError != nil {
+				return nil, true, expressionError
 			}
 			lowered.Arguments = append(lowered.Arguments, receiver)
 			lowered.Returns = ir.Boolean
@@ -130,7 +150,10 @@ func (l *lowering) nodeFSDirectoryCall(node *ast.Node) (ir.Expression, bool, err
 			outer = outer.Parent
 		}
 		discarded := outer.Parent != nil && outer.Parent.Kind == ast.KindExpressionStatement
-		returned := outer.Parent != nil && outer.Parent.Kind == ast.KindReturnStatement && l.function != nil && l.function.Returns == 0
+		returned := outer.Parent != nil &&
+			outer.Parent.Kind == ast.KindReturnStatement &&
+			l.function != nil &&
+			l.function.Returns == 0
 		if !discarded && !returned {
 			return nil, true, l.notYet(node, "node:fs.symlinkSync used as a value")
 		}
@@ -139,9 +162,16 @@ func (l *lowering) nodeFSDirectoryCall(node *ast.Node) (ir.Expression, bool, err
 		}
 		if len(call.Arguments.Nodes) == 3 {
 			typeArgument := ast.SkipParentheses(call.Arguments.Nodes[2])
-			if typeArgument.Kind != ast.KindNullKeyword && !(ast.IsIdentifier(typeArgument) && typeArgument.Text() == "undefined" && l.checker.GetTypeAtLocation(typeArgument).Flags()&checker.TypeFlagsUndefined != 0) &&
-				!(typeArgument.Kind == ast.KindStringLiteral && (typeArgument.Text() == "file" || typeArgument.Text() == "dir" || typeArgument.Text() == "junction")) {
-				return nil, true, l.notYet(node, "node:fs.symlinkSync type other than constant file, dir, junction, null or undefined")
+			if typeArgument.Kind != ast.KindNullKeyword && !(ast.IsIdentifier(typeArgument) &&
+				typeArgument.Text() == "undefined" &&
+				l.checker.GetTypeAtLocation(typeArgument).Flags()&checker.TypeFlagsUndefined != 0) &&
+				!(typeArgument.Kind == ast.KindStringLiteral && (typeArgument.Text() == "file" ||
+					typeArgument.Text() == "dir" ||
+					typeArgument.Text() == "junction")) {
+				return nil, true, l.notYet(
+					node,
+					"node:fs.symlinkSync type other than constant file, dir, junction, null or undefined",
+				)
 			}
 		}
 	}
@@ -149,9 +179,9 @@ func (l *lowering) nodeFSDirectoryCall(node *ast.Node) (ir.Expression, bool, err
 		if argument.Kind == ast.KindSpreadElement {
 			return nil, true, l.notYet(argument, module+"."+member+" with a spread")
 		}
-		value, err := l.expression(argument)
-		if err != nil {
-			return nil, true, err
+		value, expressionError := l.expression(argument)
+		if expressionError != nil {
+			return nil, true, expressionError
 		}
 		lowered.Arguments = append(lowered.Arguments, value)
 	}
@@ -173,7 +203,8 @@ func (l *lowering) nodeFSDirectoryCall(node *ast.Node) (ir.Expression, bool, err
 				}
 			}
 		}
-		if (member == "dirname" && len(lowered.Arguments) != 1) || (member == "relative" && len(lowered.Arguments) != 2) {
+		if (member == "dirname" && len(lowered.Arguments) != 1) ||
+			(member == "relative" && len(lowered.Arguments) != 2) {
 			return nil, true, l.notYet(node, module+"."+member+" with these arguments")
 		}
 		for _, value := range lowered.Arguments {
@@ -199,7 +230,8 @@ func (l *lowering) nodeFSDirectoryCall(node *ast.Node) (ir.Expression, bool, err
 				}
 				name := property.Name().Text()
 				value := ast.SkipParentheses(property.AsPropertyAssignment().Initializer)
-				if name == "withFileTypes" && (value.Kind == ast.KindTrueKeyword || value.Kind == ast.KindFalseKeyword) {
+				if name == "withFileTypes" &&
+					(value.Kind == ast.KindTrueKeyword || value.Kind == ast.KindFalseKeyword) {
 					continue
 				}
 				if name == "encoding" && value.Kind == ast.KindStringLiteral && value.Text() == "utf8" {
@@ -214,8 +246,8 @@ func (l *lowering) nodeFSDirectoryCall(node *ast.Node) (ir.Expression, bool, err
 
 // Realpath function values are used by sys.ts's native fallback selection.
 func (l *lowering) nodeFSDirectoryValue(node *ast.Node) (ir.Expression, bool, error) {
-	if value, found, err := l.nodeRealpathValue(node); found {
-		return value, found, err
+	if value, found, nodeRealpathValueError := l.nodeRealpathValue(node); found {
+		return value, found, nodeRealpathValueError
 	}
 	module, member := l.nodeHostMember(node)
 	if module == "" {
@@ -230,9 +262,25 @@ func (l *lowering) nodeFSDirectoryValue(node *ast.Node) (ir.Expression, bool, er
 	index := len(l.result.Functions)
 	parameter := len(l.result.Locals)
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "path", Type: ir.String, Function: index})
-	value := ir.NodeHostCall{Module: module, Member: member, Arguments: []ir.Expression{ir.Read{Local: parameter, Of: ir.String}}, Returns: ir.String, Throws: true}
-	l.result.Functions = append(l.result.Functions, ir.Function{Name: "node_realpath", Parameters: []int{parameter}, Returns: ir.String, Closure: true, MayThrow: true, Body: []ir.Statement{ir.Return{Value: value}}})
-	l.closureRecords = append(l.closureRecords, closureRecord{proven: l.concrete(l.checker.GetTypeAtLocation(node)), function: index, node: node})
+	value := ir.NodeHostCall{
+		Module:    module,
+		Member:    member,
+		Arguments: []ir.Expression{ir.Read{Local: parameter, Of: ir.String}},
+		Returns:   ir.String,
+		Throws:    true,
+	}
+	l.result.Functions = append(l.result.Functions, ir.Function{
+		Name:       "node_realpath",
+		Parameters: []int{parameter},
+		Returns:    ir.String,
+		Closure:    true,
+		MayThrow:   true,
+		Body:       []ir.Statement{ir.Return{Value: value}},
+	})
+	l.closureRecords = append(
+		l.closureRecords,
+		closureRecord{proven: l.concrete(l.checker.GetTypeAtLocation(node)), function: index, node: node},
+	)
 	return ir.MakeClosure{Function: index}, true, nil
 }
 
@@ -246,14 +294,20 @@ func (l *lowering) nodeFSDirectorySignature(node *ast.Node) error {
 	module, member := l.nodeHostMember(call.Expression)
 	if module == "node:fs" && member == "realpathSync" {
 		if len(call.Arguments.Nodes) != 1 {
-			return l.notYet(node, "node:fs.realpathSync with encoding, options, or callback arguments; need exactly one string path")
+			return l.notYet(
+				node,
+				"node:fs.realpathSync with encoding, options, or callback arguments; need exactly one string path",
+			)
 		}
 		argument := call.Arguments.Nodes[0]
 		if argument.Kind == ast.KindSpreadElement {
 			return l.notYet(argument, "node:fs.realpathSync with spread arguments")
 		}
 		if l.checker.GetTypeAtLocation(argument).Flags()&checker.TypeFlagsStringLike == 0 {
-			return l.notYet(argument, "node:fs.realpathSync with a non-string path (Buffer and URL paths aren't bound yet)")
+			return l.notYet(
+				argument,
+				"node:fs.realpathSync with a non-string path (Buffer and URL paths aren't bound yet)",
+			)
 		}
 		return nil
 	}
@@ -275,7 +329,8 @@ func (l *lowering) nodeFSDirectorySignature(node *ast.Node) error {
 	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
 		outer = outer.Parent
 	}
-	if outer.Parent == nil || (outer.Parent.Kind != ast.KindExpressionStatement && outer.Parent.Kind != ast.KindReturnStatement) {
+	if outer.Parent == nil ||
+		(outer.Parent.Kind != ast.KindExpressionStatement && outer.Parent.Kind != ast.KindReturnStatement) {
 		return l.notYet(node, "node:fs.symlinkSync used as a value")
 	}
 	if len(call.Arguments.Nodes) < 2 || len(call.Arguments.Nodes) > 3 {
@@ -326,8 +381,14 @@ func (l *lowering) nodeFSDirectoryClosureABI() error {
 				if !host {
 					continue
 				}
-				if len(call.Arguments) != 1 || len(call.Spread) > 0 && call.Spread[0] || call.Arguments[0].Type() != ir.String || call.Returns != ir.String {
-					failure = l.notYet(node, "node:fs.realpathSync function value outside one string argument and string result")
+				if len(call.Arguments) != 1 ||
+					len(call.Spread) > 0 && call.Spread[0] ||
+					call.Arguments[0].Type() != ir.String ||
+					call.Returns != ir.String {
+					failure = l.notYet(
+						node,
+						"node:fs.realpathSync function value outside one string argument and string result",
+					)
 					return false
 				}
 			}

@@ -14,9 +14,9 @@ import (
 // build with -Werror, exit zero and leak nothing; only the byte oracle may kill it.
 func TestJSONEncodeNativeMutants(test *testing.T) {
 	test.Parallel()
-	original, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_encode.c"))
-	if err != nil {
-		test.Fatal(err)
+	original, readError := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_encode.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	const field = "adamic_encode_field *field = &type->fields[i];\n\t\t\tadamic_value child = {0};"
 	cases := []struct{ name, source, from, to string }{
@@ -83,16 +83,16 @@ if (!isfinite(value.number)) { ascii(builder,"null");return; }`,
 				)
 			}
 			path := filepath.Join(test.TempDir(), "mutant.a")
-			if err := os.WriteFile(
+			if writeError := os.WriteFile(
 				path,
 				[]byte("import {encodeJson} from 'adamic';\n"+testCase.source),
 				0600,
-			); err != nil {
-				test.Fatal(err)
+			); writeError != nil {
+				test.Fatal(writeError)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			code := strings.ReplaceAll(mutated, "adamic_json_encode(", "mutant_json_encode(") +
 				"\n" +
@@ -108,13 +108,15 @@ if (!isfinite(value.number)) { ascii(builder,"null");return; }`,
 }
 func TestJSONEncodePlainStringifyMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/json_encode_differences.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/json_encode_differences.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	code := javascript.JavaScript(program)
 	mutant := strings.ReplaceAll(code, "encodeJson(", "JSON.stringify(")
@@ -122,8 +124,8 @@ func TestJSONEncodePlainStringifyMutant(test *testing.T) {
 		test.Fatal("mutant changed nothing")
 	}
 	file := filepath.Join(test.TempDir(), "mutant.mjs")
-	if err := os.WriteFile(file, []byte(mutant), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(file, []byte(mutant), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	got := onNode(test, file)
 	if got.exitCode != 70 || !strings.Contains(string(got.stderr), "declared fields differ") {
@@ -137,19 +139,19 @@ func TestJSONEncodePlainStringifyMutant(test *testing.T) {
 
 func TestJSONEncodeNativeStringMetadata(test *testing.T) {
 	test.Parallel()
-	runtime, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_encode.c"))
-	if err != nil {
-		test.Fatal(err)
+	runtime, readError := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_encode.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	path := filepath.Join(test.TempDir(), "metadata.a")
-	if err := os.WriteFile(path, []byte(
+	if writeError := os.WriteFile(path, []byte(
 		"import {encodeJson} from 'adamic'; console.log(encodeJson<string>('x🌍é\\ud800')); console.log(encodeJson<string>('abc'));",
-	), 0600); err != nil {
-		test.Fatal(err)
+	), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	const wrapper = `static adamic_string *checked_encode(adamic_value value, const adamic_encode_schema *schema) {
  adamic_string *result=metadata_target(value,schema);

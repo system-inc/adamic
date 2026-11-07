@@ -30,15 +30,15 @@ func recoveryCacheInputs(test *testing.T, path string) buildcache.Inputs {
 	sources := recoveryDependencies(test, repo)
 	names := append([]string(nil), sources.names...)
 	external := append([]string(nil), sources.external...)
-	sourceFiles, err := filepath.Glob(filepath.Join(filepath.Dir(path), "*.ts"))
-	if err != nil {
-		test.Fatal(err)
+	sourceFiles, globError := filepath.Glob(filepath.Join(filepath.Dir(path), "*.ts"))
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	flags := []string{"load.Load", "lower.Lower", "native.C", "javascript.JavaScript"}
 	for _, file := range sourceFiles {
-		source, err := os.ReadFile(file)
-		if err != nil {
-			test.Fatal(err)
+		source, readError := os.ReadFile(file)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		normalized := strings.ReplaceAll(
 			string(source),
@@ -101,22 +101,22 @@ func recoveryDependencies(test *testing.T, repo string) recoverySources {
 		"./internal/native",
 		"./internal/javascript",
 	)
-	output, err := cmd.Output()
-	if err != nil {
-		test.Fatal(err)
+	output, outputError := cmd.Output()
+	if outputError != nil {
+		test.Fatal(outputError)
 	}
 	decoder := json.NewDecoder(strings.NewReader(string(output)))
 	files := map[string]bool{}
 	var external []string
 	add := func(path string) {
-		relative, err := filepath.Rel(repo, path)
-		if err != nil {
-			test.Fatal(err)
+		relative, relativePathError := filepath.Rel(repo, path)
+		if relativePathError != nil {
+			test.Fatal(relativePathError)
 		}
 		if relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
-			content, readErr := os.ReadFile(path)
-			if readErr != nil {
-				test.Fatal(readErr)
+			content, readError := os.ReadFile(path)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			external = append(external, filepath.Base(path)+":"+fmt.Sprintf("%x", sha256.Sum256(content)))
 			return
@@ -130,10 +130,10 @@ func recoveryDependencies(test *testing.T, repo string) recoverySources {
 			GoFiles, CgoFiles, CFiles, CXXFiles, HFiles, SFiles, SysoFiles, EmbedFiles []string
 			Module                                                                     *struct{ GoMod string }
 		}
-		if err := decoder.Decode(&p); err == io.EOF {
+		if decodeError := decoder.Decode(&p); decodeError == io.EOF {
 			break
-		} else if err != nil {
-			test.Fatal(err)
+		} else if decodeError != nil {
+			test.Fatal(decodeError)
 		}
 		if p.Standard {
 			continue
@@ -154,13 +154,13 @@ func recoveryDependencies(test *testing.T, repo string) recoverySources {
 		}
 		if p.Module != nil && p.Module.GoMod != "" {
 			add(p.Module.GoMod)
-			if _, err := os.Stat(filepath.Join(filepath.Dir(p.Module.GoMod), "go.sum")); err == nil {
+			if _, statError := os.Stat(filepath.Join(filepath.Dir(p.Module.GoMod), "go.sum")); statError == nil {
 				add(filepath.Join(filepath.Dir(p.Module.GoMod), "go.sum"))
 			}
 		}
 	}
 	add(filepath.Join(repo, "go.mod"))
-	if _, err := os.Stat(filepath.Join(repo, "go.sum")); err == nil {
+	if _, statError := os.Stat(filepath.Join(repo, "go.sum")); statError == nil {
 		add(filepath.Join(repo, "go.sum"))
 	}
 	// This file is part of the builder recipe, including compiler feature selection.
@@ -191,16 +191,16 @@ var recoveryDiscovered struct {
 // survive Product's byte-for-byte audit on another machine.
 func recoveryStableNative(repo, directory, source string) error {
 	work := filepath.Join(directory, "compile")
-	if err := os.MkdirAll(filepath.Join(work, "runtime"), 0755); err != nil {
-		return err
+	if createDirectoryError := os.MkdirAll(filepath.Join(work, "runtime"), 0755); createDirectoryError != nil {
+		return createDirectoryError
 	}
 	defer os.RemoveAll(work)
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		filepath.Join(work, "port.c"),
 		[]byte("#line 1 \"/adamic-estree/port.c\"\n"+source),
 		0644,
-	); err != nil {
-		return err
+	); writeError != nil {
+		return writeError
 	}
 	var features []string
 	enabled := map[string]bool{}
@@ -217,9 +217,9 @@ func recoveryStableNative(repo, directory, source string) error {
 			enabled[feature] = true
 		}
 	}
-	inputs, err := filepath.Glob(filepath.Join(repo, "internal/native/runtime/*"))
-	if err != nil {
-		return err
+	inputs, globError := filepath.Glob(filepath.Join(repo, "internal/native/runtime/*"))
+	if globError != nil {
+		return globError
 	}
 	var units []string
 	for _, input := range inputs {
@@ -233,12 +233,12 @@ func recoveryStableNative(repo, directory, source string) error {
 		if name == "node_host.c" && !enabled["ADAMIC_NODE_HOST"] {
 			continue
 		}
-		content, err := os.ReadFile(input)
-		if err != nil {
-			return err
+		content, readError := os.ReadFile(input)
+		if readError != nil {
+			return readError
 		}
-		if err := os.WriteFile(filepath.Join(work, "runtime", name), content, 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(filepath.Join(work, "runtime", name), content, 0644); writeError != nil {
+			return writeError
 		}
 		if strings.HasSuffix(name, ".c") {
 			units = append(units, filepath.Join("runtime", name))
@@ -257,8 +257,8 @@ func recoveryStableNative(repo, directory, source string) error {
 	args = append(args, units...)
 	args = append(args, "-o", filepath.Join(directory, "port"), "-lm")
 	cmd := recoveryClang(work, args...)
-	if output, err := cmd.CombinedOutput(); err != nil {
-		return fmt.Errorf("sanitized native build: %w: %s", err, output)
+	if output, combinedOutputError := cmd.CombinedOutput(); combinedOutputError != nil {
+		return fmt.Errorf("sanitized native build: %w: %s", combinedOutputError, output)
 	}
 	return nil
 }
@@ -340,13 +340,13 @@ func TestRecoveryNativeRecipe(test *testing.T) {
 	setup := beginRecoverySetup(test)
 	defer setup.report(test)
 	first, second := recoveryNativeRecipe(test, setup)
-	a, err := os.ReadFile(filepath.Join(first, "port"))
-	if err != nil {
-		test.Fatal(err)
+	a, readError := os.ReadFile(filepath.Join(first, "port"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	b, err := os.ReadFile(filepath.Join(second, "port"))
-	if err != nil {
-		test.Fatal(err)
+	b, readError := os.ReadFile(filepath.Join(second, "port"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if !bytes.Equal(a, b) {
 		test.Fatal("native products differ across independent build directories")
@@ -366,10 +366,10 @@ func TestRecoveryNativeRecipe(test *testing.T) {
 				"LSAN_OPTIONS=exitcode=23",
 				"UBSAN_OPTIONS=halt_on_error=1",
 			)
-			output, err := cmd.CombinedOutput()
+			output, combinedOutputError := cmd.CombinedOutput()
 			if c.source == "normal" {
-				if err != nil || len(output) != 0 {
-					test.Fatalf("positive fixture: %v: %s", err, output)
+				if combinedOutputError != nil || len(output) != 0 {
+					test.Fatalf("positive fixture: %v: %s", combinedOutputError, output)
 				}
 				continue
 			}
@@ -378,8 +378,8 @@ func TestRecoveryNativeRecipe(test *testing.T) {
 				"undefined": "runtime error: signed integer overflow",
 				"leak":      "LeakSanitizer: detected memory leaks",
 			}[c.source]
-			if err == nil || !strings.Contains(string(output), diagnostic) {
-				test.Fatalf("%s sanitizer failed to catch fixture: %v: %s", c.source, err, output)
+			if combinedOutputError == nil || !strings.Contains(string(output), diagnostic) {
+				test.Fatalf("%s sanitizer failed to catch fixture: %v: %s", c.source, combinedOutputError, output)
 			}
 		}
 	})

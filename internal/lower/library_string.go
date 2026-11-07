@@ -17,7 +17,9 @@ func (l *lowering) stringPrototypeMethod(node *ast.Node) (string, bool) {
 		return "", false
 	}
 	prototype := ast.SkipParentheses(node.AsPropertyAccessExpression().Expression)
-	if prototype.Kind != ast.KindPropertyAccessExpression || prototype.Name().Text() != "prototype" || !l.isLibraryGlobal(prototype.AsPropertyAccessExpression().Expression, "String") {
+	if prototype.Kind != ast.KindPropertyAccessExpression ||
+		prototype.Name().Text() != "prototype" ||
+		!l.isLibraryGlobal(prototype.AsPropertyAccessExpression().Expression, "String") {
 		return "", false
 	}
 	return node.Name().Text(), true
@@ -41,7 +43,9 @@ func (l *lowering) stringMethodObservation(node *ast.Node) bool {
 	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
 		outer = outer.Parent
 	}
-	if outer.Parent != nil && outer.Parent.Kind == ast.KindTaggedTemplateExpression && outer.Parent.AsTaggedTemplateExpression().Tag == outer {
+	if outer.Parent != nil &&
+		outer.Parent.Kind == ast.KindTaggedTemplateExpression &&
+		outer.Parent.AsTaggedTemplateExpression().Tag == outer {
 		return node.Name().Text() == "raw" && l.isLibraryGlobal(node.AsPropertyAccessExpression().Expression, "String")
 	}
 	if outer.Parent != nil && outer.Parent.Kind == ast.KindTypeOfExpression {
@@ -50,7 +54,10 @@ func (l *lowering) stringMethodObservation(node *ast.Node) bool {
 	if _, prototype := l.stringPrototypeMethod(node); !prototype {
 		return false
 	}
-	return outer.Parent != nil && outer.Parent.Kind == ast.KindPropertyAccessExpression && outer.Parent.Name().Text() == "call" && called(outer.Parent)
+	return outer.Parent != nil &&
+		outer.Parent.Kind == ast.KindPropertyAccessExpression &&
+		outer.Parent.Name().Text() == "call" &&
+		called(outer.Parent)
 }
 
 func (l *lowering) stringTypeOf(node *ast.Node) (ir.Expression, bool) {
@@ -68,12 +75,15 @@ func (l *lowering) stringConversion(node *ast.Node) (ir.Expression, error) {
 	if ast.SkipParentheses(node).Kind == ast.KindNullKeyword {
 		return ir.StringConstant{Index: l.constant("null")}, nil
 	}
-	value, err := l.expression(node)
-	if err != nil {
-		return nil, err
+	value, expressionError := l.expression(node)
+	if expressionError != nil {
+		return nil, expressionError
 	}
 	if l.checker.GetTypeAtLocation(node).Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsUndefined) != 0 {
-		return ir.Effects{Body: []ir.Statement{ir.Evaluate{Value: value}}, Result: ir.StringConstant{Index: l.constant("undefined")}}, nil
+		return ir.Effects{
+			Body:   []ir.Statement{ir.Evaluate{Value: value}},
+			Result: ir.StringConstant{Index: l.constant("undefined")},
+		}, nil
 	}
 	if _, member := value.(ir.PhantomMember); member {
 		return l.phantomSpelling(value), nil
@@ -114,16 +124,16 @@ func (l *lowering) libraryString(node *ast.Node) (ir.Expression, bool, error) {
 		if len(written) != 1 {
 			return nil, true, l.notYet(node, "String with spread or extra arguments")
 		}
-		value, err := l.stringConversion(written[0])
-		return value, true, err
+		value, stringConversionError := l.stringConversion(written[0])
+		return value, true, stringConversionError
 	}
 	if callee.Kind != ast.KindPropertyAccessExpression {
 		return nil, false, nil
 	}
 	receiver, name := callee.AsPropertyAccessExpression().Expression, callee.Name().Text()
 	if l.isLibraryGlobal(receiver, "String") && name == "raw" {
-		value, err := l.stringRaw(node, written)
-		return value, true, err
+		value, stringRawError := l.stringRaw(node, written)
+		return value, true, stringRawError
 	}
 	if name == "call" {
 		if method, intrinsic := l.stringPrototypeMethod(receiver); intrinsic {
@@ -132,16 +142,22 @@ func (l *lowering) libraryString(node *ast.Node) (ir.Expression, bool, error) {
 			}
 			proven := l.checker.GetTypeAtLocation(written[0])
 			if l.mayBeUndefined(written[0]) || proven.Flags()&checker.TypeFlagsNull != 0 {
-				return nil, true, l.notYet(node, "String prototype call on null or undefined (its TypeError is not catchable natively yet)")
+				return nil, true, l.notYet(
+					node,
+					"String prototype call on null or undefined (its TypeError is not catchable natively yet)",
+				)
 			}
 			if method == "toString" || method == "valueOf" {
 				if proven.Flags()&checker.TypeFlagsStringLike == 0 {
-					return nil, true, l.notYet(node, "String.prototype."+method+" on a non-string receiver (requires a String internal slot)")
+					return nil, true, l.notYet(
+						node,
+						"String.prototype."+method+" on a non-string receiver (requires a String internal slot)",
+					)
 				}
 			}
-			value, err := l.stringConversion(written[0])
-			if err != nil {
-				return nil, true, err
+			value, stringConversionError := l.stringConversion(written[0])
+			if stringConversionError != nil {
+				return nil, true, stringConversionError
 			}
 			return l.libraryStringMethod(node, value, method, written[1:])
 		}
@@ -149,9 +165,9 @@ func (l *lowering) libraryString(node *ast.Node) (ir.Expression, bool, error) {
 	if of, _ := l.representation(l.checker.GetTypeAtLocation(receiver)); of == ir.String {
 		switch name {
 		case "charAt", "substring", "substr", "concat", "toString", "valueOf":
-			value, err := l.expression(receiver)
-			if err != nil {
-				return nil, true, err
+			value, expressionError := l.expression(receiver)
+			if expressionError != nil {
+				return nil, true, expressionError
 			}
 			return l.libraryStringMethod(node, value, name, written)
 		case "localeCompare":
@@ -161,10 +177,15 @@ func (l *lowering) libraryString(node *ast.Node) (ir.Expression, bool, error) {
 	return nil, false, nil
 }
 
-func (l *lowering) libraryStringMethod(node *ast.Node, value ir.Expression, name string, written []*ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) libraryStringMethod(
+	node *ast.Node,
+	value ir.Expression,
+	name string,
+	written []*ast.Node,
+) (ir.Expression, bool, error) {
 	if name == "substr" {
-		result, err := l.stringSubstr(node, value, written)
-		return result, true, err
+		result, stringSubstrError := l.stringSubstr(node, value, written)
+		return result, true, stringSubstrError
 	}
 	if name == "toString" || name == "valueOf" {
 		if len(written) != 0 {
@@ -175,9 +196,9 @@ func (l *lowering) libraryStringMethod(node *ast.Node, value ir.Expression, name
 	if name == "concat" {
 		parts := []ir.Expression{value}
 		for _, arg := range written {
-			part, err := l.stringConversion(arg)
-			if err != nil {
-				return nil, true, err
+			part, stringConversionError := l.stringConversion(arg)
+			if stringConversionError != nil {
+				return nil, true, stringConversionError
 			}
 			parts = append(parts, part)
 		}
@@ -212,9 +233,9 @@ func (l *lowering) libraryStringMethod(node *ast.Node, value ir.Expression, name
 	}
 	arguments := []ir.Expression{}
 	for index, arg := range written {
-		lowered, err := l.expression(arg)
-		if err != nil {
-			return nil, true, err
+		lowered, expressionError := l.expression(arg)
+		if expressionError != nil {
+			return nil, true, expressionError
 		}
 		if fallback, optional := optionalStrings[name][index]; optional {
 			lowered = l.orDefault(arg, lowered, fallback)
@@ -243,11 +264,25 @@ func (l *lowering) libraryStringMethod(node *ast.Node, value ir.Expression, name
 			// Bind all operands before reading lengths so effectful receiver and arguments run once.
 			b := l.libraryArrayBuilder([]ir.Expression{value, arguments[0], arguments[1]})
 			text, search, position := b.read(b.parameters[0]), b.read(b.parameters[1]), b.read(b.parameters[2])
-			integer := ir.Conditional{Condition: ir.NumberCall{Function: "isNaN", Arguments: []ir.Expression{position}}, WhenTrue: ir.NumberConstant{Value: math.Inf(1)}, WhenNot: ir.MathCall{Function: "trunc", Arguments: []ir.Expression{position}}}
-			start := ir.MathCall{Function: "min", Arguments: []ir.Expression{ir.StringLength{Value: text}, ir.MathCall{Function: "max", Arguments: []ir.Expression{integer, ir.NumberConstant{Value: 0}}}}}
+			integer := ir.Conditional{
+				Condition: ir.NumberCall{Function: "isNaN", Arguments: []ir.Expression{position}},
+				WhenTrue:  ir.NumberConstant{Value: math.Inf(1)},
+				WhenNot:   ir.MathCall{Function: "trunc", Arguments: []ir.Expression{position}},
+			}
+			start := ir.MathCall{Function: "min", Arguments: []ir.Expression{
+				ir.StringLength{Value: text},
+				ir.MathCall{Function: "max", Arguments: []ir.Expression{integer, ir.NumberConstant{Value: 0}}},
+			}}
 			end := ir.Binary{Operator: ir.Add, Left: start, Right: ir.StringLength{Value: search}}
-			prefix := ir.StringCall{Value: text, Method: "slice", Arguments: []ir.Expression{ir.NumberConstant{Value: 0}, end}}
-			return b.finish("string_last_index_of_position", ir.StringCall{Value: prefix, Method: "lastIndexOf", Arguments: []ir.Expression{search}}), true, nil
+			prefix := ir.StringCall{
+				Value:     text,
+				Method:    "slice",
+				Arguments: []ir.Expression{ir.NumberConstant{Value: 0}, end},
+			}
+			return b.finish(
+				"string_last_index_of_position",
+				ir.StringCall{Value: prefix, Method: "lastIndexOf", Arguments: []ir.Expression{search}},
+			), true, nil
 		}
 	case "trim":
 		return ir.Trim{Value: value}, true, nil
@@ -292,7 +327,11 @@ func (l *lowering) stringHelper(name string, values []ir.Expression) (int, []ir.
 }
 
 func stringInteger(value ir.Expression) ir.Expression {
-	return ir.Conditional{Condition: ir.NumberCall{Function: "isNaN", Arguments: []ir.Expression{value}}, WhenTrue: ir.NumberConstant{Value: 0}, WhenNot: ir.MathCall{Function: "trunc", Arguments: []ir.Expression{value}}}
+	return ir.Conditional{
+		Condition: ir.NumberCall{Function: "isNaN", Arguments: []ir.Expression{value}},
+		WhenTrue:  ir.NumberConstant{Value: 0},
+		WhenNot:   ir.MathCall{Function: "trunc", Arguments: []ir.Expression{value}},
+	}
 }
 
 func (l *lowering) stringIndexMethod(value ir.Expression, name string, arguments []ir.Expression) ir.Expression {
@@ -304,18 +343,28 @@ func (l *lowering) stringIndexMethod(value ir.Expression, name string, arguments
 	}
 	var result ir.Expression
 	if name == "charAt" {
-		result = ir.Coalesce{Value: ir.StringIndex{Value: reads[0], Index: position}, Fallback: ir.StringConstant{Index: l.constant("")}, Of: ir.String}
+		result = ir.Coalesce{
+			Value:    ir.StringIndex{Value: reads[0], Index: position},
+			Fallback: ir.StringConstant{Index: l.constant("")},
+			Of:       ir.String,
+		}
 	} else {
 		length := ir.StringLength{Value: reads[0]}
 		clamp := func(index ir.Expression) ir.Expression {
-			return ir.MathCall{Function: "min", Arguments: []ir.Expression{ir.MathCall{Function: "max", Arguments: []ir.Expression{index, ir.NumberConstant{Value: 0}}}, length}}
+			return ir.MathCall{Function: "min", Arguments: []ir.Expression{
+				ir.MathCall{Function: "max", Arguments: []ir.Expression{index, ir.NumberConstant{Value: 0}}},
+				length,
+			}}
 		}
 		start := clamp(position)
 		end := ir.Expression(length)
 		if len(reads) > 2 {
 			end = clamp(stringInteger(reads[2]))
 		}
-		result = ir.StringCall{Method: "slice", Value: reads[0], Arguments: []ir.Expression{ir.MathCall{Function: "min", Arguments: []ir.Expression{start, end}}, ir.MathCall{Function: "max", Arguments: []ir.Expression{start, end}}}}
+		result = ir.StringCall{Method: "slice", Value: reads[0], Arguments: []ir.Expression{
+			ir.MathCall{Function: "min", Arguments: []ir.Expression{start, end}},
+			ir.MathCall{Function: "max", Arguments: []ir.Expression{start, end}},
+		}}
 	}
 	l.result.Functions[function].Body = []ir.Statement{ir.Return{Value: result}}
 	return ir.Call{Function: function, Arguments: values, Returns: ir.String}
@@ -335,18 +384,18 @@ func (l *lowering) stringRaw(node *ast.Node, written []*ast.Node) (ir.Expression
 	if element.Flags()&checker.TypeFlagsStringLike == 0 {
 		return nil, l.notYet(node, "String.raw with raw elements that are not strings")
 	}
-	template, err := l.expression(written[0])
-	if err != nil {
-		return nil, err
+	template, expressionError := l.expression(written[0])
+	if expressionError != nil {
+		return nil, expressionError
 	}
 	if template.Type() != ir.Object {
 		return nil, l.notYet(node, "String.raw with a template that is not an object")
 	}
 	values := []ir.Expression{template}
 	for _, arg := range written[1:] {
-		value, err := l.stringConversion(arg)
-		if err != nil {
-			return nil, err
+		value, stringConversionError := l.stringConversion(arg)
+		if stringConversionError != nil {
+			return nil, stringConversionError
 		}
 		values = append(values, value)
 	}
@@ -362,14 +411,28 @@ func (l *lowering) stringRaw(node *ast.Node, written []*ast.Node) (ir.Expression
 	readText := ir.Read{Local: text, Of: ir.String}
 	next := ir.Binary{Operator: ir.Add, Left: readIndex, Right: ir.NumberConstant{Value: 1}}
 	length := ir.Length{Array: readRaw}
-	body := []ir.Statement{ir.Assign{Local: text, Value: ir.Concat{Parts: []ir.Expression{readText, ir.Coalesce{Value: ir.ArrayIndex{Array: readRaw, Index: readIndex, Element: ir.String}, Fallback: ir.StringConstant{Index: l.constant("undefined")}, Of: ir.String}}}}}
+	body := []ir.Statement{ir.Assign{Local: text, Value: ir.Concat{Parts: []ir.Expression{readText, ir.Coalesce{
+		Value:    ir.ArrayIndex{Array: readRaw, Index: readIndex, Element: ir.String},
+		Fallback: ir.StringConstant{Index: l.constant("undefined")},
+		Of:       ir.String,
+	}}}}}
 	for sub, value := range reads[1:] {
-		body = append(body, ir.If{Condition: ir.Binary{Operator: ir.And, Left: ir.Binary{Operator: ir.Equal, Left: readIndex, Right: ir.NumberConstant{Value: float64(sub)}}, Right: ir.Binary{Operator: ir.Less, Left: next, Right: length}}, Then: []ir.Statement{ir.Assign{Local: text, Value: ir.Concat{Parts: []ir.Expression{readText, value}}}}})
+		body = append(body, ir.If{Condition: ir.Binary{
+			Operator: ir.And,
+			Left:     ir.Binary{Operator: ir.Equal, Left: readIndex, Right: ir.NumberConstant{Value: float64(sub)}},
+			Right:    ir.Binary{Operator: ir.Less, Left: next, Right: length},
+		}, Then: []ir.Statement{ir.Assign{Local: text, Value: ir.Concat{Parts: []ir.Expression{readText, value}}}}})
 	}
 	l.result.Functions[function].Body = []ir.Statement{
 		ir.Declare{Local: raw, Value: ir.Property{Object: reads[0], Name: "raw", Of: ir.Array}},
-		ir.Declare{Local: index, Value: ir.NumberConstant{Value: 0}}, ir.Declare{Local: text, Value: ir.StringConstant{Index: l.constant("")}},
-		ir.Loop{Condition: ir.Binary{Operator: ir.Less, Left: readIndex, Right: length}, Body: body, Update: []ir.Statement{ir.Assign{Local: index, Value: next}}}, ir.Return{Value: readText},
+		ir.Declare{Local: index, Value: ir.NumberConstant{Value: 0}},
+		ir.Declare{Local: text, Value: ir.StringConstant{Index: l.constant("")}},
+		ir.Loop{
+			Condition: ir.Binary{Operator: ir.Less, Left: readIndex, Right: length},
+			Body:      body,
+			Update:    []ir.Statement{ir.Assign{Local: index, Value: next}},
+		},
+		ir.Return{Value: readText},
 	}
 	return ir.Call{Function: function, Arguments: values, Returns: ir.String}, nil
 }
@@ -391,7 +454,9 @@ func (l *lowering) stringReadOnlyArgument(node *ast.Node) bool {
 		return false
 	}
 	callee := ast.SkipParentheses(call.Expression)
-	return callee.Kind == ast.KindPropertyAccessExpression && callee.Name().Text() == "raw" && l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "String")
+	return callee.Kind == ast.KindPropertyAccessExpression &&
+		callee.Name().Text() == "raw" &&
+		l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "String")
 }
 
 // Prefer the writable-slot explanation when both a mutable view and nominal ancestry fail.
@@ -422,7 +487,10 @@ func (l *lowering) refuseStringWidening(node *ast.Node) error {
 func (l *lowering) stringRawTemplate(node *ast.Node) (ir.Expression, error) {
 	tagged := node.AsTaggedTemplateExpression()
 	tag := ast.SkipParentheses(tagged.Tag)
-	if tagged.QuestionDotToken != nil || tag.Kind != ast.KindPropertyAccessExpression || tag.Name().Text() != "raw" || !l.isLibraryGlobal(tag.AsPropertyAccessExpression().Expression, "String") {
+	if tagged.QuestionDotToken != nil ||
+		tag.Kind != ast.KindPropertyAccessExpression ||
+		tag.Name().Text() != "raw" ||
+		!l.isLibraryGlobal(tag.AsPropertyAccessExpression().Expression, "String") {
 		return nil, l.notYet(node, "a tagged template other than the intrinsic String.raw")
 	}
 	raw := func(text string) ir.Expression {
@@ -437,9 +505,9 @@ func (l *lowering) stringRawTemplate(node *ast.Node) (ir.Expression, error) {
 	}
 	parts := []ir.Expression{raw(template.AsTemplateExpression().Head.RawText())}
 	for _, span := range template.AsTemplateExpression().TemplateSpans.Nodes {
-		substitution, err := l.stringConversion(span.AsTemplateSpan().Expression)
-		if err != nil {
-			return nil, err
+		substitution, stringConversionError := l.stringConversion(span.AsTemplateSpan().Expression)
+		if stringConversionError != nil {
+			return nil, stringConversionError
 		}
 		parts = append(parts, substitution, raw(span.AsTemplateSpan().Literal.RawText()))
 	}

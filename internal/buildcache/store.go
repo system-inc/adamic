@@ -27,16 +27,17 @@ import (
 )
 
 // The shared tier (@system_adamic's ruling, Oct 9: one store, Loom's): a product another machine built is fetched by
-// its key from Loom's artifacts store, read directly and unauthenticated, so a test anywhere starts after a fetch instead of a
-// build. A product is a manifest blob naming one blob per file; refs/build/<key> holds the manifest's sha256. Every
-// blob is checked against its own hash and the manifest against the key it was asked for, so a stored product can't
-// be wrong without failing loudly: a mismatch is an error, never a quiet rebuild. An unreachable store is a miss.
+// its key from Loom's artifacts store, read directly and unauthenticated, so a test anywhere starts after a fetch
+// instead of a build. A product is a manifest blob naming one blob per file; refs/build/<key> holds the manifest's
+// sha256. Every blob is checked against its own hash and the manifest against the key it was asked for, so a stored
+// product can't be wrong without failing loudly: a mismatch is an error, never a quiet rebuild. An unreachable store is
+// a miss.
 //
-// The shared tier is off unless ADAMIC_BUILD_STORE turns it on: "on" for Loom's artifacts store, or another store's address
-// (@system_adamic_release, Oct 9 20:38Z: native products embed their build directory, so a stored one never matches a
-// rebuild and every audited hit reds a gate, and a test that asserts a cold build fetched one instead; it stays off
-// until those are fixed, and gocacheprog is untouched). Workshop's tree builder opts in with ADAMIC_BUILD_STORE=traced
-// (traced=<address> for another store) and runs under cmd/traced.
+// The shared tier is off unless ADAMIC_BUILD_STORE turns it on: "on" for Loom's artifacts store, or another store's
+// address (@system_adamic_release, Oct 9 20:38Z: native products embed their build directory, so a stored one never
+// matches a rebuild and every audited hit reds a gate, and a test that asserts a cold build fetched one instead; it
+// stays off until those are fixed, and gocacheprog is untouched). Workshop's tree builder opts in with
+// ADAMIC_BUILD_STORE=traced (traced=<address> for another store) and runs under cmd/traced.
 //
 // buildcache only reads the store, and only products: it never writes one, and never asks it for a read set. A product
 // reaches a runner through Loom, whose tree index carries each tree's read sets into the unit's cache and whose held
@@ -49,7 +50,7 @@ const defaultStore = "https://artifacts.loom.system.inc"
 // that served a wrong product fails the test as poisoned (the ruling on #x2651cf: audit every gate's hits).
 const defaultAudit = 0.05
 
-var errNotStored = errors.New("not in the store")
+var errorNotStored = errors.New("not in the store")
 
 type manifest struct {
 	Version int            `json:"version"`
@@ -96,8 +97,8 @@ var storeClient = sync.OnceValue(func() *http.Client {
 var systemRoots = x509.SystemCertPool
 
 // storeResolved is where the caller already resolved the store's hosts, ADAMIC_BUILD_STORE_RESOLVED: entries
-// "<host>=<address>,<address>…" separated by spaces. Workshop's tree builder resolves them outside the trace (build-tree)
-// so a traced product test's store lookups read no DNS configuration: /etc/resolv.conf, /etc/hosts and
+// "<host>=<address>,<address>…" separated by spaces. Workshop's tree builder resolves them outside the trace
+// (build-tree) so a traced product test's store lookups read no DNS configuration: /etc/resolv.conf, /etc/hosts and
 // /etc/nsswitch.conf were in every product a lookup's trace settled, each box's own (its nameserver), so no runner on
 // another box matched a native product Workshop built (Fabric on Cloud, Oct 12, #vdha67a). With it a lookup never asks
 // the resolver, so a DNS file in a read set is one the product's own build read, keyed as before.
@@ -105,9 +106,9 @@ const storeResolved = "ADAMIC_BUILD_STORE_RESOLVED"
 
 // storeTransport is http.DefaultTransport's, dialing a host storeResolved names at its addresses, each in turn, rather
 // than resolving it: an address that doesn't answer is a miss like any other, never a lookup. Any other host resolves
-// as usual. Its certificate roots are the machine's, loaded once here as keying work: a handshake left to load them read
-// /etc/ssl/certs inside a product's trace, each box's own bundle, so the product missed on every other box (Loom and
-// Tests, Oct 12, the smoke's css and yaml reds). Roots that don't load leave the handshake to load them, as before.
+// as usual. Its certificate roots are the machine's, loaded once here as keying work: a handshake left to load them
+// read /etc/ssl/certs inside a product's trace, each box's own bundle, so the product missed on every other box (Loom
+// and Tests, Oct 12, the smoke's css and yaml reds). Roots that don't load leave the handshake to load them, as before.
 func storeTransport() http.RoundTripper {
 	resolved := map[string][]string{}
 	for _, entry := range strings.Fields(os.Getenv(storeResolved)) {
@@ -127,8 +128,8 @@ func storeTransport() http.RoundTripper {
 	}
 	dialer := &net.Dialer{Timeout: 30 * time.Second, KeepAlive: 30 * time.Second}
 	transport.DialContext = func(dialContext context.Context, network, address string) (net.Conn, error) {
-		host, port, err := net.SplitHostPort(address)
-		if err != nil || len(resolved[host]) == 0 {
+		host, port, splitHostPortError := net.SplitHostPort(address)
+		if splitHostPortError != nil || len(resolved[host]) == 0 {
 			return dialer.DialContext(dialContext, network, address)
 		}
 		var errs []error
@@ -137,26 +138,32 @@ func storeTransport() http.RoundTripper {
 				errs = append(errs, fmt.Errorf("%s=%s isn't an address", host, ip))
 				continue
 			}
-			connection, err := dialer.DialContext(dialContext, network, net.JoinHostPort(ip, port))
-			if err == nil {
+			connection, dialContextError := dialer.DialContext(dialContext, network, net.JoinHostPort(ip, port))
+			if dialContextError == nil {
 				return connection, nil
 			}
-			errs = append(errs, err)
+			errs = append(errs, dialContextError)
 		}
-		return nil, fmt.Errorf("%s at %s, as %s names it: %w", host, strings.Join(resolved[host], ","), storeResolved, errors.Join(errs...))
+		return nil, fmt.Errorf(
+			"%s at %s, as %s names it: %w",
+			host,
+			strings.Join(resolved[host], ","),
+			storeResolved,
+			errors.Join(errs...),
+		)
 	}
 	return transport
 }
 
 // download reads one object, or errNotStored for a 404.
 func download(address string) ([]byte, error) {
-	response, err := storeClient().Get(address)
-	if err != nil {
-		return nil, err
+	response, getError := storeClient().Get(address)
+	if getError != nil {
+		return nil, getError
 	}
 	defer response.Body.Close()
 	if response.StatusCode == http.StatusNotFound {
-		return nil, errNotStored
+		return nil, errorNotStored
 	}
 	if response.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("%s answered %s", address, response.Status)
@@ -166,9 +173,9 @@ func download(address string) ([]byte, error) {
 
 // blob reads the blob with this sha256 and checks it is that blob.
 func blob(store, sum string) ([]byte, error) {
-	content, err := download(store + "/blobs/" + sum)
-	if err != nil {
-		return nil, err
+	content, downloadError := download(store + "/blobs/" + sum)
+	if downloadError != nil {
+		return nil, downloadError
 	}
 	if actual := sha256.Sum256(content); hex.EncodeToString(actual[:]) != sum {
 		return nil, poisoned(fmt.Errorf("blob %s has sha256 %x", sum, actual))
@@ -182,11 +189,11 @@ type poisonedError struct{ err error }
 func (e poisonedError) Error() string { return "cache poisoning: " + e.err.Error() }
 func (e poisonedError) Unwrap() error { return e.err }
 
-func poisoned(err error) error { return poisonedError{err} }
+func poisoned(sourceError error) error { return poisonedError{sourceError} }
 
-// Refs are split by trust (Loom, Oct 9: a key covers a product's inputs, not the caller's build function, so a candidate
-// could define a different build under main's key): refs/build holds main's products, refs/build-candidate everyone
-// else's. A reader trusted as main's (ADAMIC_BUILD_STORE_TRUST=main) reads refs/build alone; a candidate reads
+// Refs are split by trust (Loom, Oct 9: a key covers a product's inputs, not the caller's build function, so a
+// candidate could define a different build under main's key): refs/build holds main's products, refs/build-candidate
+// everyone else's. A reader trusted as main's (ADAMIC_BUILD_STORE_TRUST=main) reads refs/build alone; a candidate reads
 // refs/build, then refs/build-candidate, so a candidate can only ever mislead candidates.
 func trusted() bool { return os.Getenv("ADAMIC_BUILD_STORE_TRUST") == "main" }
 
@@ -203,49 +210,51 @@ func fetch(key, directory string) error {
 	store := storeAddress()
 	var reference []byte
 	var namespace string
-	err := errNotStored
+	err := errorNotStored
 	for _, namespace = range readNamespaces() {
-		if reference, err = download(store + "/refs/" + namespace + "/" + key); !errors.Is(err, errNotStored) {
+		if reference, err = download(store + "/refs/" + namespace + "/" + key); !errors.Is(err, errorNotStored) {
 			break
 		}
 	}
 	if err != nil {
-		if errors.Is(err, errNotStored) {
-			return errNotStored
+		if errors.Is(err, errorNotStored) {
+			return errorNotStored
 		}
-		return fmt.Errorf("%w: %v", errNotStored, err)
+		return fmt.Errorf("%w: %v", errorNotStored, err)
 	}
 	// Whatever the ref holds, the manifest is checked against it as a hash, so a ref that isn't one names nothing.
 	sum := strings.TrimSpace(string(reference))
-	content, err := blob(store, sum)
-	if err != nil {
-		return named(err, fmt.Sprintf("refs/%s/%s names manifest %s", namespace, key, sum))
+	content, blobError := blob(store, sum)
+	if blobError != nil {
+		return named(blobError, fmt.Sprintf("refs/%s/%s names manifest %s", namespace, key, sum))
 	}
 	var product manifest
-	if err = json.Unmarshal(content, &product); err != nil {
-		return poisoned(fmt.Errorf("manifest %s: %v", sum, err))
+	if decodeError := json.Unmarshal(content, &product); decodeError != nil {
+		return poisoned(fmt.Errorf("manifest %s: %v", sum, decodeError))
 	}
 	if product.Version != 1 || product.Key != key {
-		return poisoned(fmt.Errorf("manifest %s is version %d for key %s, asked for %s", sum, product.Version, product.Key, key))
+		return poisoned(
+			fmt.Errorf("manifest %s is version %d for key %s, asked for %s", sum, product.Version, product.Key, key),
+		)
 	}
 	for _, file := range product.Files {
 		clean := path.Clean(file.Path)
 		if file.Path != clean || path.IsAbs(clean) || clean == "." || strings.HasPrefix(clean, "../") || clean == ".." {
 			return poisoned(fmt.Errorf("manifest %s names the path %q", sum, file.Path))
 		}
-		content, err := blob(store, file.SHA256)
-		if err != nil {
-			return named(err, fmt.Sprintf("manifest %s names blob %s for %s", sum, file.SHA256, file.Path))
+		content, blobError := blob(store, file.SHA256)
+		if blobError != nil {
+			return named(blobError, fmt.Sprintf("manifest %s names blob %s for %s", sum, file.SHA256, file.Path))
 		}
 		if int64(len(content)) != file.Size {
 			return poisoned(fmt.Errorf("%s is %d bytes, its manifest says %d", file.Path, len(content), file.Size))
 		}
 		target := filepath.Join(directory, filepath.FromSlash(clean))
-		if err = os.MkdirAll(filepath.Dir(target), 0o755); err != nil {
-			return err
+		if createDirectoryError := os.MkdirAll(filepath.Dir(target), 0o755); createDirectoryError != nil {
+			return createDirectoryError
 		}
-		if err = os.WriteFile(target, content, fs.FileMode(file.Mode&0o755)); err != nil {
-			return err
+		if writeError := os.WriteFile(target, content, fs.FileMode(file.Mode&0o755)); writeError != nil {
+			return writeError
 		}
 	}
 	return nil
@@ -253,15 +262,15 @@ func fetch(key, directory string) error {
 
 // named sorts a failure to read a blob something named: a wrong blob is poisoned, a named blob the store doesn't hold
 // is poisoned too (a ref or manifest pointing at nothing), and anything else (the network) is a miss.
-func named(err error, what string) error {
+func named(blobError error, what string) error {
 	var wrong poisonedError
 	switch {
-	case errors.As(err, &wrong):
-		return err
-	case errors.Is(err, errNotStored):
+	case errors.As(blobError, &wrong):
+		return blobError
+	case errors.Is(blobError, errorNotStored):
 		return poisoned(fmt.Errorf("%s, which the store doesn't hold", what))
 	default:
-		return fmt.Errorf("%w: reading what %s: %v", errNotStored, what, err)
+		return fmt.Errorf("%w: reading what %s: %v", errorNotStored, what, blobError)
 	}
 }
 
@@ -269,46 +278,51 @@ func named(err error, what string) error {
 // Anything else in a product (a symlink, a device) can't be stored, so it is an error.
 func describeProduct(key, name, directory string) (manifest, error) {
 	product := manifest{Version: 1, Key: key, Name: name}
-	root, err := ProductRoot(directory)
-	if err != nil {
-		return product, err
+	root, productRootError := ProductRoot(directory)
+	if productRootError != nil {
+		return product, productRootError
 	}
-	err = filepath.WalkDir(root, func(file string, entry fs.DirEntry, err error) error {
-		if err != nil || entry.IsDir() {
-			return err
+	walkError := filepath.WalkDir(root, func(file string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil || entry.IsDir() {
+			return pathError
 		}
-		info, err := entry.Info()
-		if err != nil {
-			return err
+		info, infoError := entry.Info()
+		if infoError != nil {
+			return infoError
 		}
 		if !info.Mode().IsRegular() {
 			return fmt.Errorf("%s is not a regular file, so the product can't be stored", file)
 		}
-		content, err := os.ReadFile(file)
-		if err != nil {
-			return err
+		content, readError := os.ReadFile(file)
+		if readError != nil {
+			return readError
 		}
-		relative, err := filepath.Rel(root, file)
-		if err != nil {
-			return err
+		relative, relativePathError := filepath.Rel(root, file)
+		if relativePathError != nil {
+			return relativePathError
 		}
 		sum := sha256.Sum256(content)
 		mode := uint32(0o644)
 		if info.Mode()&0o111 != 0 {
 			mode = 0o755
 		}
-		product.Files = append(product.Files, manifestFile{Path: filepath.ToSlash(relative), SHA256: hex.EncodeToString(sum[:]), Size: int64(len(content)), Mode: mode})
+		product.Files = append(product.Files, manifestFile{
+			Path:   filepath.ToSlash(relative),
+			SHA256: hex.EncodeToString(sum[:]),
+			Size:   int64(len(content)),
+			Mode:   mode,
+		})
 		return nil
 	})
 	sort.Slice(product.Files, func(i, j int) bool { return product.Files[i].Path < product.Files[j].Path })
-	return product, err
+	return product, walkError
 }
 
 // auditing says whether this fetched product is rebuilt and compared.
 func auditing() bool {
 	rate := defaultAudit
 	if value := os.Getenv("ADAMIC_BUILD_AUDIT"); value != "" {
-		if parsed, err := strconv.ParseFloat(value, 64); err == nil {
+		if parsed, parseError := strconv.ParseFloat(value, 64); parseError == nil {
 			rate = parsed
 		}
 	}
@@ -325,9 +339,9 @@ func auditListed(nameKey string) (bool, error) {
 		return false, nil
 	}
 	read, _ := auditLists.LoadOrStore(path, sync.OnceValues(func() ([]string, error) {
-		content, err := os.ReadFile(path)
-		if err != nil {
-			return nil, fmt.Errorf("the audit's list of name keys (ADAMIC_BUILD_AUDIT_KEYS): %w", err)
+		content, readError := os.ReadFile(path)
+		if readError != nil {
+			return nil, fmt.Errorf("the audit's list of name keys (ADAMIC_BUILD_AUDIT_KEYS): %w", readError)
 		}
 		return strings.Fields(string(content)), nil
 	}))
@@ -341,27 +355,27 @@ var auditLists sync.Map
 // auditHit rebuilds a product found in the cache, directory under key, into a new directory under the process's
 // temporary directory, never beside the product, so a build that bakes in a path its key doesn't name differs too
 // (Tests' change 2), and appends the audit line Loom reads (builder.AuditTree's auditLine) to $ADAMIC_BUILD_LOG: clean
-// with the digest, or mismatch with the stored digest, the rebuilt one and where the rebuilt copy is kept, followed on a
-// mismatch by an audit-difference line naming the first differing file and its section (firstDifference). A rebuild
+// with the digest, or mismatch with the stored digest, the rebuilt one and where the rebuilt copy is kept, followed on
+// a mismatch by an audit-difference line naming the first differing file and its section (firstDifference). A rebuild
 // that fails is the lookup's error, since nothing was compared.
 func auditHit(key, name, directory string, build func(directory string) error) error {
-	rebuilt, err := os.MkdirTemp("", ".audit-"+key[:12]+"-")
-	if err != nil {
-		return err
+	rebuilt, temporaryDirectoryError := os.MkdirTemp("", ".audit-"+key[:12]+"-")
+	if temporaryDirectoryError != nil {
+		return temporaryDirectoryError
 	}
-	if err = build(rebuilt); err != nil {
+	if buildError := build(rebuilt); buildError != nil {
 		os.RemoveAll(rebuilt)
-		return fmt.Errorf("audit of %s (%s): its rebuild failed: %w", key[:12], name, err)
+		return fmt.Errorf("audit of %s (%s): its rebuild failed: %w", key[:12], name, buildError)
 	}
-	stored, err := productDigest(directory)
-	if err != nil {
+	stored, productDigestError := productDigest(directory)
+	if productDigestError != nil {
 		os.RemoveAll(rebuilt)
-		return err
+		return productDigestError
 	}
-	fresh, err := productDigest(rebuilt)
-	if err != nil {
+	fresh, productDigestError := productDigest(rebuilt)
+	if productDigestError != nil {
 		os.RemoveAll(rebuilt)
-		return err
+		return productDigestError
 	}
 	name = strings.ReplaceAll(name, " ", "_")
 	if fresh == stored {
@@ -370,12 +384,12 @@ func auditHit(key, name, directory string, build func(directory string) error) e
 		return nil
 	}
 	note("audit %s %s mismatch %s %s %s", name, key, stored, fresh, rebuilt)
-	// Where the two copies first differ, on a line of its own after the mismatch line, whose fields Loom reads and which
-	// stays as it was: a path baked into a binary is found where it lands, in a file and a section, without unpacking
-	// the two copies by hand. A difference that can't be read is said so; the mismatch stands either way.
-	where, err := firstDifference(directory, rebuilt)
-	if err != nil {
-		where = "unread: " + err.Error()
+	// Where the two copies first differ, on a line of its own after the mismatch line, whose fields Loom reads and
+	// which stays as it was: a path baked into a binary is found where it lands, in a file and a section, without
+	// unpacking the two copies by hand. A difference that can't be read is said so; the mismatch stands either way.
+	where, firstDifferenceError := firstDifference(directory, rebuilt)
+	if firstDifferenceError != nil {
+		where = "unread: " + firstDifferenceError.Error()
 	}
 	note("audit-difference %s %s %s", name, key, where)
 	return nil
@@ -383,26 +397,32 @@ func auditHit(key, name, directory string, build func(directory string) error) e
 
 // audit rebuilds a fetched product beside it and compares the two file by file.
 func audit(key, name, fetched string, build func(directory string) error) error {
-	rebuilt, err := os.MkdirTemp(filepath.Dir(fetched), ".audit-"+key[:12]+"-")
-	if err != nil {
-		return err
+	rebuilt, temporaryDirectoryError := os.MkdirTemp(filepath.Dir(fetched), ".audit-"+key[:12]+"-")
+	if temporaryDirectoryError != nil {
+		return temporaryDirectoryError
 	}
 	defer os.RemoveAll(rebuilt)
-	if err = build(rebuilt); err != nil {
-		return err
+	if buildError := build(rebuilt); buildError != nil {
+		return buildError
 	}
-	want, err := describeProduct(key, name, rebuilt)
-	if err != nil {
-		return err
+	want, describeProductError := describeProduct(key, name, rebuilt)
+	if describeProductError != nil {
+		return describeProductError
 	}
-	got, err := describeProduct(key, name, fetched)
-	if err != nil {
-		return err
+	got, describeProductError := describeProduct(key, name, fetched)
+	if describeProductError != nil {
+		return describeProductError
 	}
 	wantJSON, _ := json.Marshal(want.Files)
 	gotJSON, _ := json.Marshal(got.Files)
 	if !bytes.Equal(wantJSON, gotJSON) {
-		return poisoned(fmt.Errorf("the stored product for %s (%s) differs from a rebuild: stored %s, rebuilt %s (or the build isn't reproducible)", key[:12], name, gotJSON, wantJSON))
+		return poisoned(fmt.Errorf(
+			"the stored product for %s (%s) differs from a rebuild: stored %s, rebuilt %s (or the build isn't reproducible)",
+			key[:12],
+			name,
+			gotJSON,
+			wantJSON,
+		))
 	}
 	return nil
 }

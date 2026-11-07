@@ -65,8 +65,8 @@ func tokenizerEventUnion(total int, shards [][]int) error {
 
 func validateTokenizerEventUnion(test *testing.T, total int, shards [][]int) {
 	test.Helper()
-	if err := tokenizerEventUnion(total, shards); err != nil {
-		test.Fatal(err)
+	if tokenizerEventUnionError := tokenizerEventUnion(total, shards); tokenizerEventUnionError != nil {
+		test.Fatal(tokenizerEventUnionError)
 	}
 	test.Logf("union: %d/%d cases; exact id set; no repeats; %d shards", total, total, len(shards))
 }
@@ -81,9 +81,9 @@ func tokenizerEventSelection(test *testing.T) func(int) bool {
 	if len(parts) != 2 {
 		test.Fatalf("ADAMIC_TEST_SHARD=%q: expected zero-based i/n", value)
 	}
-	i, errI := strconv.Atoi(parts[0])
-	n, errN := strconv.Atoi(parts[1])
-	if errI != nil || errN != nil || n <= 0 || i < 0 || i >= n {
+	i, iError := strconv.Atoi(parts[0])
+	n, nError := strconv.Atoi(parts[1])
+	if iError != nil || nError != nil || n <= 0 || i < 0 || i >= n {
 		test.Fatalf("ADAMIC_TEST_SHARD=%q: require 0 <= i < n", value)
 	}
 	return func(ordinal int) bool { return ordinal%n == i }
@@ -115,7 +115,7 @@ func TestTokenizerEventShardUnion(test *testing.T) {
 		{{0}},         // missing
 		{{0}, {1, 2}}, // unexpected
 	} {
-		if err := tokenizerEventUnion(2, bad); err == nil {
+		if tokenizerEventUnionError := tokenizerEventUnion(2, bad); tokenizerEventUnionError == nil {
 			test.Fatal("invalid union accepted")
 		}
 	}
@@ -140,15 +140,17 @@ func TestTokenizerEventShardPlantedDisagreement(test *testing.T) {
 				owner = true
 			}
 		}
-		err := tokenizerEventDifference(shard, "planted oracle", want, got, rows)
+		tokenizerEventDifferenceError := tokenizerEventDifference(shard, "planted oracle", want, got, rows)
 		if owner {
-			if err == nil || !strings.Contains(err.Error(), shard) || !strings.Contains(err.Error(), "2345") {
-				test.Fatalf("planted disagreement lost: %v", err)
+			if tokenizerEventDifferenceError == nil ||
+				!strings.Contains(tokenizerEventDifferenceError.Error(), shard) ||
+				!strings.Contains(tokenizerEventDifferenceError.Error(), "2345") {
+				test.Fatalf("planted disagreement lost: %v", tokenizerEventDifferenceError)
 			}
-			test.Logf("caught by %s: %v", shard, err)
+			test.Logf("caught by %s: %v", shard, tokenizerEventDifferenceError)
 			caught++
-		} else if err != nil {
-			test.Fatalf("unrelated shard failed: %v", err)
+		} else if tokenizerEventDifferenceError != nil {
+			test.Fatalf("unrelated shard failed: %v", tokenizerEventDifferenceError)
 		}
 	}
 	if caught != 1 {

@@ -42,23 +42,30 @@ func (l *lowering) newClassValue(node *ast.Node) (ir.Expression, bool, error) {
 	type candidate struct{ identity, constructor int }
 	candidates := []candidate{}
 	for _, declaration := range declarations {
-		signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(l.symbol(declaration.Name())), checker.SignatureKindConstruct)
+		signatures := l.checker.GetSignaturesOfType(
+			l.checker.GetTypeOfSymbol(l.symbol(declaration.Name())),
+			checker.SignatureKindConstruct,
+		)
 		if len(signatures) != 1 {
 			return nil, true, l.notYet(node, "an overloaded class constructor value")
 		}
-		instance, err := l.instantiate(declaration, l.checker.GetReturnTypeOfSignature(signatures[0]), node)
-		if err != nil {
-			return nil, true, err
+		instance, instantiateError := l.instantiate(
+			declaration,
+			l.checker.GetReturnTypeOfSignature(signatures[0]),
+			node,
+		)
+		if instantiateError != nil {
+			return nil, true, instantiateError
 		}
-		static, err := l.staticInstance(declaration)
-		if err != nil {
-			return nil, true, err
+		static, staticInstanceError := l.staticInstance(declaration)
+		if staticInstanceError != nil {
+			return nil, true, staticInstanceError
 		}
 		candidates = append(candidates, candidate{identity: static.class, constructor: instance.constructor})
 	}
-	constructor, err := l.classConstructorValue(created.Expression)
-	if err != nil {
-		return nil, true, err
+	constructor, classConstructorValueError := l.classConstructorValue(created.Expression)
+	if classConstructorValueError != nil {
+		return nil, true, classConstructorValueError
 	}
 	if constructor.Type() != ir.Object {
 		return nil, true, l.notYet(node, "a constructor value without class storage")
@@ -68,9 +75,9 @@ func (l *lowering) newClassValue(node *ast.Node) (ir.Expression, bool, error) {
 		if argument.Kind == ast.KindSpreadElement {
 			return nil, true, l.notYet(argument, "a spread into a constructor value")
 		}
-		value, err := l.expression(argument)
-		if err != nil {
-			return nil, true, err
+		value, expressionError := l.expression(argument)
+		if expressionError != nil {
+			return nil, true, expressionError
 		}
 		arguments = append(arguments, value)
 	}
@@ -91,11 +98,15 @@ func (l *lowering) newClassValue(node *ast.Node) (ir.Expression, bool, error) {
 		}
 		b.body = append(b.body, ir.If{
 			Condition: ir.InstanceOf{Value: receiver, Class: candidate.identity, Exact: true},
-			Then:      []ir.Statement{ir.Return{Value: ir.Call{Function: candidate.constructor, Arguments: forwarded, Returns: ir.Object}}},
+			Then: []ir.Statement{
+				ir.Return{Value: ir.Call{Function: candidate.constructor, Arguments: forwarded, Returns: ir.Object}},
+			},
 		})
 	}
 	// Never silently substitute a statically guessed allocator for an unknown value.
-	b.body = append(b.body, ir.Panic{Message: ir.StringConstant{Index: l.constant("a constructor value without a registered class allocator")}})
+	b.body = append(b.body, ir.Panic{
+		Message: ir.StringConstant{Index: l.constant("a constructor value without a registered class allocator")},
+	})
 	return b.finish("class_value_new", ir.Undefined{Of: ir.Object}), true, nil
 }
 
@@ -110,13 +121,13 @@ func (l *lowering) classConstructorValue(node *ast.Node) (ir.Expression, error) 
 	binary := node.AsBinaryExpression()
 	switch binary.OperatorToken.Kind {
 	case ast.KindQuestionQuestionToken, ast.KindBarBarToken:
-		left, err := l.classConstructorValue(binary.Left)
-		if err != nil {
-			return nil, err
+		left, classConstructorValueError := l.classConstructorValue(binary.Left)
+		if classConstructorValueError != nil {
+			return nil, classConstructorValueError
 		}
-		right, err := l.classConstructorValue(binary.Right)
-		if err != nil {
-			return nil, err
+		right, classConstructorValueError := l.classConstructorValue(binary.Right)
+		if classConstructorValueError != nil {
+			return nil, classConstructorValueError
 		}
 		if left.Type() != ir.Object || right.Type() != ir.Object {
 			return nil, l.notYet(node, "a constructor cache without class storage")
@@ -132,9 +143,9 @@ func (l *lowering) classConstructorValue(node *ast.Node) (ir.Expression, error) 
 		if !known {
 			return nil, l.notYet(node, "a constructor-cache assignment without a known identifier binding")
 		}
-		statements, err := l.assignment(node)
-		if err != nil {
-			return nil, err
+		statements, assignmentError := l.assignment(node)
+		if assignmentError != nil {
+			return nil, assignmentError
 		}
 		if l.result.Locals[local].Type != ir.Object {
 			return nil, l.notYet(node, "a constructor cache without class storage")

@@ -194,9 +194,9 @@ func TestSignalALRMInheritedBackend(test *testing.T) {
 func signalLeg(test *testing.T, stop syscall.Signal, ignored bool, leg string) {
 	test.Helper()
 	const fixture = "internal/oracle/testdata/killed_after_output.a"
-	path, err := filepath.Abs(filepath.Join(repository, fixture))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, fixture))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	name := "node"
 	arguments := []string{"--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), path}
@@ -218,8 +218,8 @@ func signalLeg(test *testing.T, stop syscall.Signal, ignored bool, leg string) {
 	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
 	var stdout, stderr lockedBuffer
 	command.Stdout, command.Stderr = &stdout, &stderr
-	if err := command.Start(); err != nil {
-		test.Fatal(err)
+	if startError := command.Start(); startError != nil {
+		test.Fatal(startError)
 	}
 	defer command.Process.Kill()
 	ready := func() bool {
@@ -235,8 +235,8 @@ func signalLeg(test *testing.T, stop syscall.Signal, ignored bool, leg string) {
 		}
 		time.Sleep(10 * time.Millisecond)
 	}
-	if err := command.Process.Signal(stop); err != nil {
-		test.Fatal(err)
+	if signalError := command.Process.Signal(stop); signalError != nil {
+		test.Fatal(signalError)
 	}
 	command.Wait()
 	status := command.ProcessState.Sys().(syscall.WaitStatus)

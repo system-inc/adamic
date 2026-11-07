@@ -14,21 +14,21 @@ import (
 // fails rather than passing having compared nothing. Mutant: one name dropped from the table.
 func TestDynamicKeyedArrayPrototypeNamesAreNodes(test *testing.T) {
 	test.Parallel()
-	node, err := toolchain.Path("node")
-	if err != nil {
-		test.Fatal(err)
+	node, pathError := toolchain.Path("node")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
-	output, err := toolchain.Command(
+	output, outputError := toolchain.Command(
 		node,
 		"-e",
 		"console.log(JSON.stringify(Object.getOwnPropertyNames(Array.prototype)))",
 	).Output()
-	if err != nil {
-		test.Fatal(err)
+	if outputError != nil {
+		test.Fatal(outputError)
 	}
 	var names []string
-	if err := json.Unmarshal(output, &names); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(output, &names); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if !slices.Contains(names, "length") {
 		test.Fatalf("Node's Array.prototype has no own length: %q", names)
@@ -59,21 +59,21 @@ func TestDynamicKeyedArrayPrototypeNamesAreNodes(test *testing.T) {
 // it fails. Mutant: one length changed in the table.
 func TestDynamicKeyedArrayPrototypeLengthsAreNodes(test *testing.T) {
 	test.Parallel()
-	node, err := toolchain.Path("node")
-	if err != nil {
-		test.Fatal(err)
+	node, pathError := toolchain.Path("node")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
-	output, err := toolchain.Command(
+	output, outputError := toolchain.Command(
 		node,
 		"-e",
 		"console.log(JSON.stringify(Object.fromEntries(Object.getOwnPropertyNames(Array.prototype).filter((name) => name !== 'length').map((name) => [name, Array.prototype[name].length]))))",
 	).Output()
-	if err != nil {
-		test.Fatal(err)
+	if outputError != nil {
+		test.Fatal(outputError)
 	}
 	var lengths map[string]int
-	if err := json.Unmarshal(output, &lengths); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(output, &lengths); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if len(lengths) == 0 {
 		test.Fatal("Node's Array.prototype has no functions")
@@ -106,25 +106,25 @@ func TestDynamicKeyedArrayPrototypeLengthsAreNodes(test *testing.T) {
 // toolchain's, and a run without it fails. Mutant: one name dropped from the table.
 func TestDynamicKeyedRegExpStringIteratorNamesAreNodes(test *testing.T) {
 	test.Parallel()
-	node, err := toolchain.Path("node")
-	if err != nil {
-		test.Fatal(err)
+	node, pathError := toolchain.Path("node")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
-	output, err := toolchain.Command(
+	output, outputError := toolchain.Command(
 		node,
 		"-e",
 		"const iterator = ''.matchAll(/(?:)/g); const prototype = Object.getPrototypeOf(iterator); const above = Object.getPrototypeOf(prototype); console.log(JSON.stringify({own: Object.getOwnPropertyNames(iterator), names: [...Object.getOwnPropertyNames(prototype), ...Object.getOwnPropertyNames(above)], objectAbove: Object.getPrototypeOf(above) === Object.prototype}))",
 	).Output()
-	if err != nil {
-		test.Fatal(err)
+	if outputError != nil {
+		test.Fatal(outputError)
 	}
 	var chain struct {
 		Own         []string `json:"own"`
 		Names       []string `json:"names"`
 		ObjectAbove bool     `json:"objectAbove"`
 	}
-	if err := json.Unmarshal(output, &chain); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(output, &chain); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if len(chain.Own) != 0 || !chain.ObjectAbove {
 		test.Fatalf(
@@ -150,21 +150,21 @@ func TestDynamicKeyedRegExpStringIteratorNamesAreNodes(test *testing.T) {
 // one length changed in the table.
 func TestDynamicKeyedRegExpStringIteratorLengthsAreNodes(test *testing.T) {
 	test.Parallel()
-	node, err := toolchain.Path("node")
-	if err != nil {
-		test.Fatal(err)
+	node, pathError := toolchain.Path("node")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
-	output, err := toolchain.Command(
+	output, outputError := toolchain.Command(
 		node,
 		"-e",
 		"const iterator = ''.matchAll(/(?:)/g); const prototype = Object.getPrototypeOf(iterator); const names = [...Object.getOwnPropertyNames(prototype), ...Object.getOwnPropertyNames(Object.getPrototypeOf(prototype))]; console.log(JSON.stringify(Object.fromEntries(names.map((name) => [name, iterator[name].length]))))",
 	).Output()
-	if err != nil {
-		test.Fatal(err)
+	if outputError != nil {
+		test.Fatal(outputError)
 	}
 	var lengths map[string]int
-	if err := json.Unmarshal(output, &lengths); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(output, &lengths); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if len(lengths) == 0 {
 		test.Fatal("Node's matchAll iterator inherits no functions")
@@ -215,17 +215,17 @@ type dynamicKeyedStatsLayout struct {
 // test unless its premises hold. A run without Node fails rather than passing having compared nothing.
 func dynamicKeyedStatsLayoutOfNode(test *testing.T) dynamicKeyedStatsLayout {
 	test.Helper()
-	node, err := toolchain.Path("node")
-	if err != nil {
-		test.Fatal(err)
+	node, pathError := toolchain.Path("node")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
-	output, err := toolchain.Command(node, "-e", dynamicKeyedStatsChain).Output()
-	if err != nil {
-		test.Fatal(err)
+	output, outputError := toolchain.Command(node, "-e", dynamicKeyedStatsChain).Output()
+	if outputError != nil {
+		test.Fatal(outputError)
 	}
 	var layout dynamicKeyedStatsLayout
-	if err := json.Unmarshal(output, &layout); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(output, &layout); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if !layout.StatsPrototype ||
 		!layout.ObjectAbove ||

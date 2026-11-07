@@ -29,12 +29,12 @@ const primitive: number | boolean | string | undefined | null = null;
 const nested: Readonly<{ field: Readonly<{ values: ReadonlyArray<string> }> }> = { field: { values: ['x'] } };
 const bad: Readonly<{ field: Readonly<{ values: string[] }> }> = { field: { values: ['x'] } };
 `
-	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	c, release := program.Checker(context.Background(), program.Files()[0])
 	defer release()
@@ -91,15 +91,15 @@ const bad: Readonly<{ field: Readonly<{ values: string[] }> }> = { field: { valu
 
 func TestParallelGlobalMarkingRoots(test *testing.T) {
 	test.Parallel()
-	program, err := lowerSource(test, `import { parallelMap } from 'adamic';
+	program, lowerSourceError := lowerSource(test, `import { parallelMap } from 'adamic';
 const lookup: ReadonlyMap<string, number> = new Map([['a', 1]]);
 const pick = (item: string): number => lookup.get(item) ?? 0;
 function summarize(item: string): number { return pick(item); }
 const items: readonly string[] = ['a'];
 parallelMap(items, summarize);
 `)
-	if err != nil {
-		test.Fatal(err)
+	if lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
 	found := false
 	walk(program.Main, func(node any) bool {

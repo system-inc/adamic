@@ -24,16 +24,16 @@ func TestCheckedNonNullTypeScript(test *testing.T) {
 	for _, name := range []string{"narrowed", "present", "undefined", "null", "initializer", "let_initializer"} {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(
+			path, absolutePathError := filepath.Abs(
 				filepath.Join(repository, "internal/oracle/testdata/non_null_checked_"+name+".ts"),
 			)
-			if err != nil {
-				test.Fatal(err)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			program, err := lowered(test, path)
+			program, loweredError := lowered(test, path)
 
-			if err != nil {
-				test.Fatal(err)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			counts := program.NonNullChecks
 			if name == "narrowed" {
@@ -143,27 +143,27 @@ func TestCheckedNonNullTypeScript(test *testing.T) {
 
 func TestCheckedNonNullAdamicRefusal(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(
+	path, absolutePathError := filepath.Abs(
 		filepath.Join(repository, "internal/oracle/testdata/non_null_refused/non_null_refuse_checked.a"),
 	)
-	if err != nil {
-		test.Fatal(err)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	_, err = lowered(test, path)
+	_, loweredError := lowered(test, path)
 	var refused *lower.Refused
-	if !errors.As(err, &refused) ||
+	if !errors.As(loweredError, &refused) ||
 		refused.What != "the non-null assertion !" ||
 		refused.Fix != "write ?? panic('why it can't be missing'), or narrow and handle the missing case" {
-		test.Fatalf("wrong .a refusal: %v", err)
+		test.Fatalf("wrong .a refusal: %v", loweredError)
 	}
 }
 
 // Measure the new rows independently without rewriting the area's existing counts.
 func TestCheckedNonNullCounts(test *testing.T) {
 	test.Parallel()
-	recorded, err := recordedCounts()
-	if err != nil {
-		test.Fatal(err)
+	recorded, recordedCountsError := recordedCounts()
+	if recordedCountsError != nil {
+		test.Fatal(recordedCountsError)
 	}
 	for _, name := range []string{"narrowed", "present", "undefined", "null", "initializer", "let_initializer"} {
 		path := "internal/oracle/testdata/non_null_checked_" + name + ".ts"

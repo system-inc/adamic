@@ -25,7 +25,7 @@ import (
 // the mutant without it is red only on TestGenericGeneratorRoadsAreNotYet's unread row.
 func TestGenericGeneratorsLowerPerInstance(test *testing.T) {
 	test.Parallel()
-	program, err := lowerSource(test, `function* each<T>(items: readonly T[]) {
+	program, lowerSourceError := lowerSource(test, `function* each<T>(items: readonly T[]) {
 	for (const item of items) {
 		yield item;
 	}
@@ -40,8 +40,8 @@ console.log([...each([1, 2])].join(","));
 console.log(Array.from(each(["c"])).join(","));
 console.log(collect([true]).join(","));
 each([3]);`)
-	if err != nil {
-		test.Fatal(err)
+	if lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
 	yields := map[ir.Type]int{}
 	for _, function := range program.Functions {
@@ -59,8 +59,8 @@ each([3]);`)
 	if len(yields) != 3 || yields[ir.String] != 1 || yields[ir.Number] != 1 || yields[ir.Boolean] != 1 {
 		test.Errorf("instances by what they yield: %v; want one each of string, number and boolean", yields)
 	}
-	if err := checkGeneratorRoads(program); err != nil {
-		test.Errorf("the lowered program's roads: %v", err)
+	if checkGeneratorRoadsError := checkGeneratorRoads(program); checkGeneratorRoadsError != nil {
+		test.Errorf("the lowered program's roads: %v", checkGeneratorRoadsError)
 	}
 }
 
@@ -146,10 +146,10 @@ func TestGenericGeneratorRoadsAreNotYet(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var gap *NotYet
-			if !errors.As(err, &gap) || !strings.Contains(gap.What, probe.reason) {
-				test.Fatalf("got %v, want a NotYet saying %q", err, probe.reason)
+			if !errors.As(lowerSourceError, &gap) || !strings.Contains(gap.What, probe.reason) {
+				test.Fatalf("got %v, want a NotYet saying %q", lowerSourceError, probe.reason)
 			}
 		})
 	}
@@ -178,18 +178,22 @@ func TestGenericGeneratorCalledOtherThanByItsNameIsNotYet(test *testing.T) {
 			test.Parallel()
 			directory := test.TempDir()
 			for name, source := range map[string]string{"library.ts": library, "main.ts": probe.main} {
-				if err := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); err != nil {
-					test.Fatal(err)
+				if writeError := os.WriteFile(
+					filepath.Join(directory, name),
+					[]byte(source),
+					0o644,
+				); writeError != nil {
+					test.Fatal(writeError)
 				}
 			}
-			program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-			if err != nil {
-				test.Fatalf("Load: %v", err)
+			program, loadError := load.Load([]string{filepath.Join(directory, "main.ts")})
+			if loadError != nil {
+				test.Fatalf("Load: %v", loadError)
 			}
-			_, err = Lower(context.Background(), program)
+			_, lowerError := Lower(context.Background(), program)
 			var gap *NotYet
-			if !errors.As(err, &gap) || !strings.Contains(gap.What, "called other than by its name") {
-				test.Fatalf("got %v, want the generator's called-other-than-by-its-name stop", err)
+			if !errors.As(lowerError, &gap) || !strings.Contains(gap.What, "called other than by its name") {
+				test.Fatalf("got %v, want the generator's called-other-than-by-its-name stop", lowerError)
 			}
 		})
 	}
@@ -209,18 +213,21 @@ func TestTscMapIteratorOverAnArrayStops(test *testing.T) {
     }
 }
 `
-	_, err := lowerSource(test, mapIterator+`console.log([...mapIterator([1, 2, 3], x => x * 2)].join(","));`)
+	_, lowerSourceError := lowerSource(
+		test,
+		mapIterator+`console.log([...mapIterator([1, 2, 3], x => x * 2)].join(","));`,
+	)
 	var gap *NotYet
-	if !errors.As(err, &gap) ||
+	if !errors.As(lowerSourceError, &gap) ||
 		!strings.Contains(gap.Where, "main.a:6:29") ||
 		!strings.Contains(gap.What, "an array going where a plain object type is held") {
-		test.Fatalf("got %v, want a NotYet at the array, 6:29", err)
+		test.Fatalf("got %v, want a NotYet at the array, 6:29", lowerSourceError)
 	}
 	keys := "const ids = new Map<number, string>();\nfor (let index = 1; index < 4; index++) { ids.set(index * 10, `id ${String(index)}`); }\n"
-	if _, err := lowerSource(
+	if _, lowerSourceError := lowerSource(
 		test,
 		mapIterator+keys+`console.log([...mapIterator(ids.keys(), x => x + 1)].join(","));`,
-	); err != nil {
-		test.Fatalf("over a Map's keys(): %v", err)
+	); lowerSourceError != nil {
+		test.Fatalf("over a Map's keys(): %v", lowerSourceError)
 	}
 }

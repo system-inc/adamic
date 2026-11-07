@@ -22,10 +22,10 @@ func TestDetachedOwnRefusals(test *testing.T) {
 		"const own=Object.prototype.hasOwnProperty; own?.call({}, 'x');",
 	} {
 		test.Run(source, func(test *testing.T) {
-			_, err := lowerSource(test, source)
+			_, lowerSourceError := lowerSource(test, source)
 			var refused *Refused
-			if !errors.As(err, &refused) || !strings.Contains(err.Error(), "hasOwnProperty") {
-				test.Fatalf("want detached-method refusal, got %v", err)
+			if !errors.As(lowerSourceError, &refused) || !strings.Contains(lowerSourceError.Error(), "hasOwnProperty") {
+				test.Fatalf("want detached-method refusal, got %v", lowerSourceError)
 			}
 		})
 	}
@@ -42,7 +42,7 @@ func TestDetachedOwnRepresentation(test *testing.T) {
 		"function own(map: object, key: string): boolean {const other=map; return Object.prototype.hasOwnProperty.call(map,key);}",
 	} {
 		test.Run(source, func(test *testing.T) {
-			if _, err := lowerSource(test, source); err == nil {
+			if _, lowerSourceError := lowerSource(test, source); lowerSourceError == nil {
 				test.Fatal("an erased or unsupported storage representation must not compile")
 			}
 		})
@@ -58,8 +58,8 @@ func TestDetachedOwnAreaAdapters(test *testing.T) {
 		`const values=Object.values; const fixed={x:1}; console.log(values(fixed).join(','));`,
 	} {
 		test.Run(source, func(test *testing.T) {
-			if _, err := lowerSource(test, source); err != nil {
-				test.Fatal(err)
+			if _, lowerSourceError := lowerSource(test, source); lowerSourceError != nil {
+				test.Fatal(lowerSourceError)
 			}
 		})
 	}

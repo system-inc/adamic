@@ -127,8 +127,8 @@ func TestJSONPortShardUnion(test *testing.T) {
 	}
 	cases[17].Text = strings.Repeat(" ", 128*1024+1)
 	shards := jsonPortShards(cases)
-	if err := jsonPortUnion(cases, shards); err != nil {
-		test.Fatal(err)
+	if jsonPortUnionError := jsonPortUnion(cases, shards); jsonPortUnionError != nil {
+		test.Fatal(jsonPortUnionError)
 	}
 	for _, mutant := range []struct {
 		name   string
@@ -139,22 +139,22 @@ func TestJSONPortShardUnion(test *testing.T) {
 		{"out of bounds", []nativeChunk{{start: 0, end: len(cases) + 1}}},
 	} {
 		test.Run(mutant.name, func(test *testing.T) {
-			if err := jsonPortUnion(cases, mutant.shards); err == nil {
+			if jsonPortUnionError := jsonPortUnion(cases, mutant.shards); jsonPortUnionError == nil {
 				test.Fatal("invalid union survived")
 			}
 		})
 	}
 	for _, value := range []string{"0/0", "-1/2", "2/2", "bad", "0/2/3"} {
-		if _, _, err := jsonPortSelection(value); err == nil {
+		if _, _, jsonPortSelectionError := jsonPortSelection(value); jsonPortSelectionError == nil {
 			test.Fatalf("invalid selector %q survived", value)
 		}
 	}
 	for boxes := 1; boxes <= 7; boxes++ {
 		seen := make([]int, len(shards))
 		for box := 0; box < boxes; box++ {
-			i, n, err := jsonPortSelection(fmt.Sprintf("%d/%d", box, boxes))
-			if err != nil {
-				test.Fatal(err)
+			i, n, jsonPortSelectionError := jsonPortSelection(fmt.Sprintf("%d/%d", box, boxes))
+			if jsonPortSelectionError != nil {
+				test.Fatal(jsonPortSelectionError)
 			}
 			for ordinal := range shards {
 				if ordinal%n == i {
@@ -180,8 +180,8 @@ func TestJSONPortShardDisagreement(test *testing.T) {
 	}
 	const plantedKey = "case-17.json"
 	shards := jsonHashShards(cases, 2048)
-	if err := jsonPortUnion(cases, shards); err != nil {
-		test.Fatal(err)
+	if jsonPortUnionError := jsonPortUnion(cases, shards); jsonPortUnionError != nil {
+		test.Fatal(jsonPortUnionError)
 	}
 	caught := 0
 	for ordinal, shard := range shards {
@@ -245,8 +245,8 @@ func TestJSONHashShardsStayStable(test *testing.T) {
 				test.Fatal("packing changed a case")
 			}
 		}
-		if err := jsonPortUnion(cases, shards); err != nil {
-			test.Fatal(err)
+		if jsonPortUnionError := jsonPortUnion(cases, shards); jsonPortUnionError != nil {
+			test.Fatal(jsonPortUnionError)
 		}
 		result := map[string]int{}
 		for bucket, shard := range shards {
@@ -298,9 +298,9 @@ func TestEveryTopShardHasAnAgreementTest(test *testing.T) {
 	for _, family := range []struct{ file, prefix, helper string }{
 		{"top_portmatchesgocohere_test.go", "TestPortMatchesGoCohere_", "jsonPortTopShard"},
 	} {
-		tree, err := parser.ParseFile(token.NewFileSet(), family.file, nil, 0)
-		if err != nil {
-			test.Fatal(err)
+		tree, parseFileError := parser.ParseFile(token.NewFileSet(), family.file, nil, 0)
+		if parseFileError != nil {
+			test.Fatal(parseFileError)
 		}
 		bound := map[int]bool{}
 		for _, declaration := range tree.Decls {
@@ -308,8 +308,8 @@ func TestEveryTopShardHasAnAgreementTest(test *testing.T) {
 			if !ok || !strings.HasPrefix(function.Name.Name, family.prefix) {
 				continue
 			}
-			ordinal, err := strconv.Atoi(strings.TrimPrefix(function.Name.Name, family.prefix))
-			if err != nil || len(function.Body.List) != 2 {
+			ordinal, parseError := strconv.Atoi(strings.TrimPrefix(function.Name.Name, family.prefix))
+			if parseError != nil || len(function.Body.List) != 2 {
 				test.Fatalf("%s: not a generated wrapper", function.Name.Name)
 			}
 			call, ok := function.Body.List[1].(*ast.ExprStmt).X.(*ast.CallExpr)

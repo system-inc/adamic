@@ -33,17 +33,17 @@ func TestObjectDestructuringAssignmentSwaps(test *testing.T) {
 // native ("two 5.27e-310"). It isn't lowered yet.
 func TestObjectDestructuringAssignmentOfALiteralIsNotYet(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(test, `let first: number | string = 1;
+	_, lowerSourceError := lowerSource(test, `let first: number | string = 1;
 let second: number | string = 'two';
 ({ first, second } = { first: second, second: first });
 console.log(`+"`${first} ${second}`"+`);
 `)
 	var notYet *NotYet
-	if !errors.As(err, &notYet) || !strings.Contains(
-		err.Error(),
+	if !errors.As(lowerSourceError, &notYet) || !strings.Contains(
+		lowerSourceError.Error(),
 		"main.a:3:22: stage 0 can't lower destructuring a value made in the assignment itself yet",
 	) {
-		test.Errorf("got %v, want the literal's NotYet", err)
+		test.Errorf("got %v, want the literal's NotYet", lowerSourceError)
 	}
 }
 
@@ -53,7 +53,7 @@ console.log(`+"`${first} ${second}`"+`);
 // number (#fsb6n82's class, Lower's probe; Node prints 5 c).
 func TestObjectDestructuringAssignmentOfAUnionFieldIsNotYet(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(test, `let first: number | string = 1;
+	_, lowerSourceError := lowerSource(test, `let first: number | string = 1;
 let second: number | string = 'b';
 const held: { x: number | string; y: number | string } = { x: 2, y: 'c' };
 held.x = 5;
@@ -61,10 +61,10 @@ held.x = 5;
 console.log(`+"`${first} ${second}`"+`);
 `)
 	var notYet *NotYet
-	if !errors.As(err, &notYet) || !strings.Contains(
-		err.Error(),
+	if !errors.As(lowerSourceError, &notYet) || !strings.Contains(
+		lowerSourceError.Error(),
 		"main.a:5:4: stage 0 can't lower a destructured field of type string | number yet",
 	) {
-		test.Errorf("got %v, want the union field's NotYet", err)
+		test.Errorf("got %v, want the union field's NotYet", lowerSourceError)
 	}
 }

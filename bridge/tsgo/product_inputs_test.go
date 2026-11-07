@@ -24,43 +24,43 @@ func checkBridgeProductInput(test *testing.T, name string) {
 	}
 	for _, file := range inputs.Files {
 		path := filepath.Join(root, file)
-		if err := os.MkdirAll(filepath.Dir(path), 0700); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0700); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.WriteFile(path, []byte("dependency"), 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte("dependency"), 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	recipe := filepath.Join(root, "bridge/tsgo/products_test.go")
-	if err := os.MkdirAll(filepath.Dir(recipe), 0700); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(filepath.Dir(recipe), 0700); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	var keys []string
 	fetch := func(version string) string {
-		if err := os.WriteFile(recipe, []byte(version), 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(recipe, []byte(version), 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
-		key, err := buildcache.Key(root, inputs)
-		if err != nil {
-			test.Fatal(err)
+		key, keyError := buildcache.Key(root, inputs)
+		if keyError != nil {
+			test.Fatal(keyError)
 		}
 		keys = append(keys, key)
-		directory, err := buildcache.Get(buildcache.Inputs{
+		directory, getError := buildcache.Get(buildcache.Inputs{
 			Name:  "bridge-input-proof-" + name,
 			Flags: []string{key},
 		}, func(directory string) error {
-			source, err := os.ReadFile(recipe)
-			if err != nil {
-				return err
+			source, readError := os.ReadFile(recipe)
+			if readError != nil {
+				return readError
 			}
 			return os.WriteFile(filepath.Join(directory, "product"), source, 0600)
 		})
-		if err != nil {
-			test.Fatal(err)
+		if getError != nil {
+			test.Fatal(getError)
 		}
-		data, err := os.ReadFile(filepath.Join(directory, "product"))
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(filepath.Join(directory, "product"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		return string(data)
 	}

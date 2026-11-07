@@ -38,11 +38,11 @@ var jsonDecodeFixtures = []string{
 func jsonDecodeEnumerationRefused(name string) bool {
 	return name == "json_decode_empty_object.a" || name == "json_decode_coverage_empty.a"
 }
-func assertJSONDecodeEnumerationRefusal(test *testing.T, err error) {
+func assertJSONDecodeEnumerationRefusal(test *testing.T, sourceError error) {
 	test.Helper()
 	var gap *lower.NotYet
-	if !errors.As(err, &gap) || !strings.Contains(gap.What, "Object.keys on a non-object") {
-		test.Fatalf("want main's empty-object enumeration refusal, got %v", err)
+	if !errors.As(sourceError, &gap) || !strings.Contains(gap.What, "Object.keys on a non-object") {
+		test.Fatalf("want main's empty-object enumeration refusal, got %v", sourceError)
 	}
 }
 
@@ -61,17 +61,17 @@ func runJSONDecodeShard(test *testing.T, shard int) {
 	for _, index := range familyCases(test, "TestJSONDecode", shard, jsonDecodeKeys()) {
 		name := jsonDecodeFixtures[index]
 		test.Run(name, func(test *testing.T) {
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", name))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", name))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			p, err := lowered(test, path)
+			p, loweredError := lowered(test, path)
 			if jsonDecodeEnumerationRefused(name) {
-				assertJSONDecodeEnumerationRefusal(test, err)
+				assertJSONDecodeEnumerationRefusal(test, loweredError)
 				return
 			}
-			if err != nil {
-				test.Fatal(err)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			truth := onNode(test, path)
 			if _, probing := familyProbe("TestJSONDecode"); probing {
@@ -133,26 +133,30 @@ func TestJSONDecodeRefusals(test *testing.T) {
 	for _, c := range cases {
 		test.Run(c.name, func(test *testing.T) {
 			path := filepath.Join(test.TempDir(), "probe.a")
-			if err := os.WriteFile(path, []byte("import { decodeJson } from 'adamic';\n"+c.source), 0600); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(
+				path,
+				[]byte("import { decodeJson } from 'adamic';\n"+c.source),
+				0600,
+			); writeError != nil {
+				test.Fatal(writeError)
 			}
-			p, err := load.Load([]string{path})
-			if err != nil {
-				test.Fatal(err)
+			p, loadError := load.Load([]string{path})
+			if loadError != nil {
+				test.Fatal(loadError)
 			}
-			_, err = lower.Lower(context.Background(), p)
+			_, lowerError := lower.Lower(context.Background(), p)
 			if c.want == "containing null" {
 				var gap *lower.NotYet
 				const fix = "nullable JSON fields come with the representation of T | null; decode the field as a discriminated union or leave it out"
-				if !errors.As(err, &gap) ||
+				if !errors.As(lowerError, &gap) ||
 					!strings.Contains(gap.What, "decodeJson<") ||
 					!strings.Contains(gap.Where, path+":2:") ||
-					!strings.HasSuffix(err.Error(), "\nfix: "+fix) {
-					test.Fatalf("wanted NotYet with what, where and exact fix line, got %v", err)
+					!strings.HasSuffix(lowerError.Error(), "\nfix: "+fix) {
+					test.Fatalf("wanted NotYet with what, where and exact fix line, got %v", lowerError)
 				}
 			}
-			if err == nil || !strings.Contains(err.Error(), c.want) {
-				test.Fatalf("want %q, got %v", c.want, err)
+			if lowerError == nil || !strings.Contains(lowerError.Error(), c.want) {
+				test.Fatalf("want %q, got %v", c.want, lowerError)
 			}
 		})
 	}

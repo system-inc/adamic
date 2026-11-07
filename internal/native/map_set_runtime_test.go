@@ -15,21 +15,21 @@ import (
 // shows in the counts on every platform.
 func mapSetRuntimeRun(test *testing.T, mode string) (exit int, stdout, stderr string) {
 	test.Helper()
-	files, flags, compiler, version, err := runtimeInputs("", Options{Sanitize: true, Count: true}, nil)
-	if err != nil {
-		test.Fatal(err)
+	files, flags, compiler, version, runtimeInputsError := runtimeInputs("", Options{Sanitize: true, Count: true}, nil)
+	if runtimeInputsError != nil {
+		test.Fatal(runtimeInputsError)
 	}
-	cache, err := cacheDirectory("map-set-runtime")
-	if err != nil {
-		test.Fatal(err)
+	cache, cacheDirectoryError := cacheDirectory("map-set-runtime")
+	if cacheDirectoryError != nil {
+		test.Fatal(cacheDirectoryError)
 	}
-	source, err := os.ReadFile("testdata/map_set/runtime.c")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("testdata/map_set/runtime.c")
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	library, err := cachedRuntime(files, flags, compiler, version, cache)
-	if err != nil {
-		test.Fatal(err)
+	library, cachedRuntimeError := cachedRuntime(files, flags, compiler, version, cache)
+	if cachedRuntimeError != nil {
+		test.Fatal(cachedRuntimeError)
 	}
 	binary := buildHarnessWithLibrary(test, string(source), flags, compiler, library)
 	command, release := boundedrun.Command(5*time.Second, binary, mode)

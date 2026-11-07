@@ -17,9 +17,9 @@ import (
 // parser and scanner the port imports go unkeyed).
 func TestPrinterGateLoweredKeyCoversWhatItReads(test *testing.T) {
 	test.Parallel()
-	root, err := filepath.Abs(oracles.Repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(oracles.Repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	declared := printerGateLoweredFiles()
 	for _, input := range declared {
@@ -29,9 +29,9 @@ func TestPrinterGateLoweredKeyCoversWhatItReads(test *testing.T) {
 		}
 	}
 	for _, entry := range []string{"main.ts", "statementsMain.ts"} {
-		program, err := load.Load([]string{filepath.Join(root, "stage1/cohere/tsprinter", entry)})
-		if err != nil {
-			test.Fatalf("%s: %v", entry, err)
+		program, loadError := load.Load([]string{filepath.Join(root, "stage1/cohere/tsprinter", entry)})
+		if loadError != nil {
+			test.Fatalf("%s: %v", entry, loadError)
 		}
 		sources, compiledIn := map[string]bool{}, 0
 		for _, file := range program.CompilerProgram().GetSourceFiles() {
@@ -40,8 +40,10 @@ func TestPrinterGateLoweredKeyCoversWhatItReads(test *testing.T) {
 				compiledIn++
 				continue
 			}
-			relative, err := filepath.Rel(root, name)
-			if err != nil || relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
+			relative, relativePathError := filepath.Rel(root, name)
+			if relativePathError != nil ||
+				relative == ".." ||
+				strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
 				test.Fatalf("%s reads %s, outside the repository", entry, name)
 			}
 			sources[filepath.ToSlash(relative)] = true

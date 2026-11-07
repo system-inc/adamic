@@ -44,7 +44,9 @@ func (l *lowering) phantomBase(proven *checker.Type) *checker.Type {
 		return nil
 	}
 	for _, object := range objects {
-		if len(l.checker.GetSignaturesOfType(object, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(object, checker.SignatureKindConstruct)) != 0 || len(l.checker.GetIndexInfosOfType(object)) != 0 {
+		if len(l.checker.GetSignaturesOfType(object, checker.SignatureKindCall)) != 0 ||
+			len(l.checker.GetSignaturesOfType(object, checker.SignatureKindConstruct)) != 0 ||
+			len(l.checker.GetIndexInfosOfType(object)) != 0 {
 			return nil
 		}
 		for _, field := range l.checker.GetPropertiesOfType(object) {
@@ -81,8 +83,12 @@ func phantomField(proven *checker.Type) bool {
 // These inventories are the own names of boxed primitives and their complete prototype chains,
 // observed on Node and independently checked in TestPhantomPrimitiveNames. The checker library is
 // intentionally smaller than JavaScript's, so its declarations alone cannot prove absence.
-var phantomObjectNames = strings.Fields("__defineGetter__ __defineSetter__ __lookupGetter__ __lookupSetter__ __proto__ constructor hasOwnProperty isPrototypeOf propertyIsEnumerable toLocaleString toString valueOf")
-var phantomStringNames = strings.Fields("anchor at big blink bold charAt charCodeAt codePointAt concat endsWith fixed fontcolor fontsize includes indexOf isWellFormed italics lastIndexOf length link localeCompare match matchAll normalize padEnd padStart repeat replace replaceAll search slice small split startsWith strike sub substr substring sup toLocaleLowerCase toLocaleUpperCase toLowerCase toUpperCase toWellFormed trim trimEnd trimLeft trimRight trimStart")
+var phantomObjectNames = strings.Fields(
+	"__defineGetter__ __defineSetter__ __lookupGetter__ __lookupSetter__ __proto__ constructor hasOwnProperty isPrototypeOf propertyIsEnumerable toLocaleString toString valueOf",
+)
+var phantomStringNames = strings.Fields(
+	"anchor at big blink bold charAt charCodeAt codePointAt concat endsWith fixed fontcolor fontsize includes indexOf isWellFormed italics lastIndexOf length link localeCompare match matchAll normalize padEnd padStart repeat replace replaceAll search slice small split startsWith strike sub substr substring sup toLocaleLowerCase toLocaleUpperCase toLowerCase toUpperCase toWellFormed trim trimEnd trimLeft trimRight trimStart",
+)
 var phantomNumberNames = strings.Fields("toExponential toFixed toPrecision")
 
 // A symbol key's checker name is internal (a well-known or unique symbol), so no inventory above
@@ -101,8 +107,8 @@ func primitiveMember(flags checker.TypeFlags, name string) bool {
 		}
 		// A string may have any nonnegative integer index below its length. Noncanonical spellings
 		// such as 00 and -0 aren't string exotic own properties.
-		index, err := strconv.ParseUint(name, 10, 64)
-		return err == nil && index < 1<<53 && strconv.FormatUint(index, 10) == name
+		index, parseError := strconv.ParseUint(name, 10, 64)
+		return parseError == nil && index < 1<<53 && strconv.FormatUint(index, 10) == name
 	}
 	return flags&checker.TypeFlagsNumberLike != 0 && slices.Contains(phantomNumberNames, name)
 }

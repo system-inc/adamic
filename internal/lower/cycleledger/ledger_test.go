@@ -33,9 +33,9 @@ func TestOriginalCycleLedger(test *testing.T) {
 	if root == "" {
 		test.Skip("set ADAMIC_CYCLE_LEDGER_ROOT to pristine TypeScript 6.0.3 with generated diagnostics")
 	}
-	pin, err := toolchain.GitCommand("-C", root, "rev-parse", "HEAD").Output()
-	if err != nil || strings.TrimSpace(string(pin)) != "050880ce59e30b356b686bd3144efe24f875ebc8" {
-		test.Fatalf("original source pin: %s %v", pin, err)
+	pin, outputError := toolchain.GitCommand("-C", root, "rev-parse", "HEAD").Output()
+	if outputError != nil || strings.TrimSpace(string(pin)) != "050880ce59e30b356b686bd3144efe24f875ebc8" {
+		test.Fatalf("original source pin: %s %v", pin, outputError)
 	}
 	entry := tspath.RootedFilePathFromAbsolute(filepath.ToSlash(filepath.Join(root, "src/tsc/tsc.ts")))
 	fs := bundled.WrapFS(osvfs.FS())
@@ -68,14 +68,14 @@ func TestOriginalCycleLedger(test *testing.T) {
 	if !cyclic {
 		test.Fatal("original program lost its import cycle")
 	}
-	findings, err := rule_runner.RunRule(
+	findings, runRuleError := rule_runner.RunRule(
 		program,
 		typeChecker,
 		modules,
 		"nexus/correctness-no-import-cycle-load-time-read",
 	)
-	if err != nil {
-		test.Fatal(err)
+	if runRuleError != nil {
+		test.Fatal(runRuleError)
 	}
 	for index := range findings {
 		findings[index].File = strings.TrimPrefix(findings[index].File, filepath.ToSlash(root)+"/")
@@ -85,9 +85,9 @@ func TestOriginalCycleLedger(test *testing.T) {
 	}
 	provenModuleReads := lower.ProvenModuleReads(typeChecker, modules)
 	relative := func(file *ast.SourceFile) string {
-		path, err := filepath.Rel(root, file.FileName().AsString())
-		if err != nil {
-			test.Fatal(err)
+		path, relativePathError := filepath.Rel(root, file.FileName().AsString())
+		if relativePathError != nil {
+			test.Fatal(relativePathError)
 		}
 		return filepath.ToSlash(path)
 	}
@@ -138,25 +138,25 @@ func TestOriginalCycleLedger(test *testing.T) {
 		visit(file.AsNode())
 	}
 	bucket := filepath.Join("..", "..", "..", "stage3", "fixtures", "cycles")
-	input, err := os.Open(filepath.Join(bucket, "trace.json.gz"))
-	if err != nil {
-		test.Fatal(err)
+	input, openError := os.Open(filepath.Join(bucket, "trace.json.gz"))
+	if openError != nil {
+		test.Fatal(openError)
 	}
 	defer input.Close()
-	compressed, err := gzip.NewReader(input)
-	if err != nil {
-		test.Fatal(err)
+	compressed, gzipError := gzip.NewReader(input)
+	if gzipError != nil {
+		test.Fatal(gzipError)
 	}
 	defer compressed.Close()
-	traceData, err := io.ReadAll(compressed)
-	if err != nil {
-		test.Fatal(err)
+	traceData, readError := io.ReadAll(compressed)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var trace struct {
 		Reads []struct{ Location, Binding, Statement, Provider, Declaration string }
 	}
-	if err := json.Unmarshal(traceData, &trace); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(traceData, &trace); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	var ledger struct {
 		Statements []struct {
@@ -167,12 +167,12 @@ func TestOriginalCycleLedger(test *testing.T) {
 			}
 		}
 	}
-	data, err := os.ReadFile(filepath.Join(bucket, "ledger.json"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(bucket, "ledger.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	if err := json.Unmarshal(data, &ledger); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &ledger); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	counts := map[string]int{"refused": 0, "checked": 0, "proven": 0}
 	statementCounts := map[string]int{"refused": 0, "checked": 0, "proven": 0}
@@ -232,13 +232,13 @@ func TestOriginalCycleLedger(test *testing.T) {
 	if len(classified) != 914 || len(rowDecisions) != 58 {
 		test.Fatalf("ledger totals: %d reads %d statements", len(classified), len(rowDecisions))
 	}
-	referenceData, err := os.ReadFile(filepath.Join(bucket, "order.json"))
-	if err != nil {
-		test.Fatal(err)
+	referenceData, readError := os.ReadFile(filepath.Join(bucket, "order.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var reference struct{ Order []string }
-	if err := json.Unmarshal(referenceData, &reference); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(referenceData, &reference); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if strings.Join(order, "\n") != strings.Join(reference.Order, "\n") {
 		test.Fatal("compiler ESM order differs from independently verified Node order")
@@ -254,16 +254,16 @@ func TestOriginalCycleLedger(test *testing.T) {
 		"reads":              classified,
 		"scope":              "Source binding-initialization proof/check obligations, not a full native tsc build. Statement decisions cover bounded ledger reads, not unexecuted branches.",
 	}
-	encoded, err := json.MarshalIndent(output, "", "  ")
-	if err != nil {
-		test.Fatal(err)
+	encoded, encodeError := json.MarshalIndent(output, "", "  ")
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	destination := os.Getenv("ADAMIC_CYCLE_LEDGER_OUTPUT")
 	if destination == "" {
 		test.Fatal("set ADAMIC_CYCLE_LEDGER_OUTPUT")
 	}
-	if err := os.WriteFile(destination, append(encoded, '\n'), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(destination, append(encoded, '\n'), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	test.Logf("statements=%v reads=%v findings=%d", statementCounts, counts, len(findings))
 }

@@ -24,9 +24,9 @@ import (
 // reaching more.
 func TestRefusalRulesReadTheirSlotThroughSlotType(test *testing.T) {
 	test.Parallel()
-	entries, err := os.ReadDir(".")
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(".")
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	files := token.NewFileSet()
 	functions := map[string][]*ast.FuncDecl{}
@@ -35,9 +35,9 @@ func TestRefusalRulesReadTheirSlotThroughSlotType(test *testing.T) {
 		if entry.IsDir() || !strings.HasSuffix(entry.Name(), ".go") || strings.HasSuffix(entry.Name(), "_test.go") {
 			continue
 		}
-		file, err := parser.ParseFile(files, entry.Name(), nil, 0)
-		if err != nil {
-			test.Fatal(err)
+		file, parseFileError := parser.ParseFile(files, entry.Name(), nil, 0)
+		if parseFileError != nil {
+			test.Fatal(parseFileError)
 		}
 		for _, declaration := range file.Decls {
 			switch declaration := declaration.(type) {
@@ -200,9 +200,9 @@ var signatureReaders = map[string]string{
 func TestRefuseNodeWalksAsRefuseDoes(test *testing.T) {
 	test.Parallel()
 	files := token.NewFileSet()
-	file, err := parser.ParseFile(files, "refusals.go", nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	file, parseFileError := parser.ParseFile(files, "refusals.go", nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	visits := map[string]string{}
 	for _, declaration := range file.Decls {
@@ -218,8 +218,8 @@ func TestRefuseNodeWalksAsRefuseDoes(test *testing.T) {
 			if name, isName := assignment.Lhs[0].(*ast.Ident); isName && name.Name == "visit" {
 				if literal, isLiteral := assignment.Rhs[0].(*ast.FuncLit); isLiteral {
 					var printed bytes.Buffer
-					if err := format.Node(&printed, files, literal); err != nil {
-						test.Fatal(err)
+					if nodeError := format.Node(&printed, files, literal); nodeError != nil {
+						test.Fatal(nodeError)
 					}
 					visits[function.Name.Name] = printed.String()
 				}

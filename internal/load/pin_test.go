@@ -17,9 +17,12 @@ const typeScriptCommit = "d92d9bfee114c80be2c375d72edae966176e3a4f"
 func TestTypeScriptIsThePinnedCommit(test *testing.T) {
 	test.Parallel()
 	// git where the submodule has .git, else the tree's manifest, as a Loom runner's unpacked source has.
-	got, err := tracked.Head("../../cohere/TypeScript")
-	if err != nil {
-		test.Fatalf("reading the TypeScript submodule's commit: %v (run git submodule update --init --recursive)", err)
+	got, headError := tracked.Head("../../cohere/TypeScript")
+	if headError != nil {
+		test.Fatalf(
+			"reading the TypeScript submodule's commit: %v (run git submodule update --init --recursive)",
+			headError,
+		)
 	}
 	if got != typeScriptCommit {
 		test.Errorf(

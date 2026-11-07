@@ -37,9 +37,9 @@ func TestEachGapStandsWhereGapsMdSaysItDoes(test *testing.T) {
 	for _, gap := range gaps {
 		test.Run(gap.path, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(gap.path)
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(gap.path)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			// What the program means, whatever stage 0 makes of it.
 			nodeRun := onNode(test, path)
@@ -52,39 +52,47 @@ func TestEachGapStandsWhereGapsMdSaysItDoes(test *testing.T) {
 				)
 			}
 
-			program, err := load.Load([]string{path})
-			if err != nil {
-				test.Fatalf("Load: %v", err)
+			program, loadError := load.Load([]string{path})
+			if loadError != nil {
+				test.Fatalf("Load: %v", loadError)
 			}
-			lowered, err := lower.Lower(context.Background(), program)
+			lowered, lowerError := lower.Lower(context.Background(), program)
 			switch {
 			case gap.refused != "":
 				var refused *lower.Refused
-				if err == nil {
+				if lowerError == nil {
 					test.Fatalf(
 						"this gap lowers now: mark it closed here and in GAPS.md, and undo the port's workaround for it (grep -n 'gap N' *.ts)",
 					)
 				}
-				if !errors.As(err, &refused) || refused.What != gap.refused {
-					test.Fatalf("stage 0 refuses another way now (%v), where GAPS.md records %q", err, gap.refused)
+				if !errors.As(lowerError, &refused) || refused.What != gap.refused {
+					test.Fatalf(
+						"stage 0 refuses another way now (%v), where GAPS.md records %q",
+						lowerError,
+						gap.refused,
+					)
 				}
 				return
 			case gap.notYet != "":
 				var notYet *lower.NotYet
-				if err == nil {
+				if lowerError == nil {
 					test.Fatalf(
 						"this gap lowers now: mark it closed here and in GAPS.md, and undo the port's workaround for it (grep -n 'gap N' *.ts)",
 					)
 				}
-				if !errors.As(err, &notYet) || notYet.What != gap.notYet {
-					test.Fatalf("stage 0 refuses another way now (%v), where GAPS.md records %q", err, gap.notYet)
+				if !errors.As(lowerError, &notYet) || notYet.What != gap.notYet {
+					test.Fatalf(
+						"stage 0 refuses another way now (%v), where GAPS.md records %q",
+						lowerError,
+						gap.notYet,
+					)
 				}
 				return
 			}
-			if err != nil {
+			if lowerError != nil {
 				test.Fatalf(
 					"stage 0 refuses this gap now (%v): record that in GAPS.md, where it says the program lowers",
-					err,
+					lowerError,
 				)
 			}
 			sanitized := filepath.Join(gapSanitized(test, gap.path), "port")

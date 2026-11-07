@@ -55,14 +55,26 @@ type Reducible interface {
 // until a whole round changes nothing or budget candidates have been tried. When several candidates
 // at once are kept, the first in order wins, so the result is the same at any number of workers.
 func reduce(start Reducible, keep func(Reducible) bool, workers int, budget int) Reducible {
-	shrinker := &shrinker{current: start, keep: keep, workers: max(workers, 1), budget: budget, seen: map[string]bool{start.Source(): true}}
+	shrinker := &shrinker{
+		current: start,
+		keep:    keep,
+		workers: max(workers, 1),
+		budget:  budget,
+		seen:    map[string]bool{start.Source(): true},
+	}
 	for shrinker.budget > 0 {
 		before := shrinker.current.Source()
 		for list := 0; list < shrinker.current.Lists(); list++ {
 			shrinker.items(list)
 		}
-		shrinker.each(func() int { return shrinker.current.Compounds() }, func(index int) []Reducible { return shrinker.current.Inlined(index) })
-		shrinker.each(func() int { return shrinker.current.Expressions() }, func(index int) []Reducible { return shrinker.current.Simpler(index) })
+		shrinker.each(
+			func() int { return shrinker.current.Compounds() },
+			func(index int) []Reducible { return shrinker.current.Inlined(index) },
+		)
+		shrinker.each(
+			func() int { return shrinker.current.Expressions() },
+			func(index int) []Reducible { return shrinker.current.Simpler(index) },
+		)
 		if shrinker.current.Source() == before {
 			break
 		}
@@ -210,7 +222,10 @@ func (t *programTree) Inlined(index int) []Reducible {
 		if statement.Parts[part].Block == nil {
 			continue
 		}
-		block.Statements = append(append(append([]*Statement{}, block.Statements[:where.statement]...), statement.Parts[part].Block.Statements...), block.Statements[where.statement+1:]...)
+		block.Statements = append(append(
+			append([]*Statement{}, block.Statements[:where.statement]...),
+			statement.Parts[part].Block.Statements...,
+		), block.Statements[where.statement+1:]...)
 		candidates = append(candidates, &programTree{program: copied})
 	}
 	return candidates
@@ -315,8 +330,8 @@ func simplest(t Type) *Expression {
 // WriteFinding writes a shrunk finding as a program with a header that says where it came from and
 // how to make it again.
 func WriteFinding(path string, program *Program, seed uint64, without []string, with []string, key string) error {
-	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
-		return err
+	if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0o755); createDirectoryError != nil {
+		return createDirectoryError
 	}
 	command := fmt.Sprintf("go run ./cmd/adamic-fuzz -seed %d -count 1", seed)
 	if program.Feature == "moves" {
@@ -328,6 +343,11 @@ func WriteFinding(path string, program *Program, seed uint64, without []string, 
 	if len(with) > 0 {
 		command += " -with " + strings.Join(with, ",")
 	}
-	header := fmt.Sprintf("// Found by adamic-fuzz from seed %d (%s), shrunk: %s.\n", seed, command, strings.ReplaceAll(key, "\n", " "))
+	header := fmt.Sprintf(
+		"// Found by adamic-fuzz from seed %d (%s), shrunk: %s.\n",
+		seed,
+		command,
+		strings.ReplaceAll(key, "\n", " "),
+	)
 	return os.WriteFile(path, []byte(header+program.Source()), 0o644)
 }

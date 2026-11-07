@@ -7,9 +7,9 @@ import (
 )
 
 func (e *emitter) jsonDescriptor(schema ir.JSONDecodeSchema) string {
-	descriptor, err := json.Marshal(schema)
-	if err != nil {
-		panic(err)
+	descriptor, encodeError := json.Marshal(schema)
+	if encodeError != nil {
+		panic(encodeError)
 	}
 	key := string(descriptor)
 	if name, ok := e.jsonDescriptorNames[key]; ok {

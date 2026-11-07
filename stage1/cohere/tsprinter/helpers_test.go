@@ -47,21 +47,21 @@ func firstDifference(got string, want string) string {
 // lowered checks and lowers a program, failing the test with stage 0's refusal if it can't.
 func lowered(test *testing.T, path string) *ir.Program {
 	test.Helper()
-	program, err := lowerProgram(path)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerProgramError := lowerProgram(path)
+	if lowerProgramError != nil {
+		test.Fatal(lowerProgramError)
 	}
 	return program
 }
 
 func lowerProgram(path string) (*ir.Program, error) {
-	program, err := load.Load([]string{path})
-	if err != nil {
-		return nil, fmt.Errorf("Load: %w", err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		return nil, fmt.Errorf("Load: %w", loadError)
 	}
-	result, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		return nil, fmt.Errorf("Lower: %w", err)
+	result, lowerError := lower.Lower(context.Background(), program)
+	if lowerError != nil {
+		return nil, fmt.Errorf("Lower: %w", lowerError)
 	}
 	return result, nil
 }
@@ -97,10 +97,10 @@ func executeOne(test *testing.T, environment []string, name string, arguments ..
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
-	err := childguard.Run(command, childguard.Options{})
+	runError := childguard.Run(command, childguard.Options{})
 	var exitError *exec.ExitError
-	if err != nil && !errors.As(err, &exitError) {
-		test.Fatalf("running %s: %v", name, err)
+	if runError != nil && !errors.As(runError, &exitError) {
+		test.Fatalf("running %s: %v", name, runError)
 	}
 	return oracles.Run{Stdout: stdout.Bytes(), Stderr: stderr.Bytes(), ExitCode: command.ProcessState.ExitCode()}
 }
@@ -108,9 +108,9 @@ func executeOne(test *testing.T, environment []string, name string, arguments ..
 // onNode runs a program's source on Node, through the oracle's runner, with its arguments.
 func onNode(test *testing.T, path string, arguments ...string) oracles.Run {
 	test.Helper()
-	runner, err := filepath.Abs(filepath.Join(oracles.Repository, "oracle", "node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(oracles.Repository, "oracle", "node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return execute(
 		test,
@@ -124,8 +124,8 @@ func onNode(test *testing.T, path string, arguments ...string) oracles.Run {
 func onJavaScriptBackend(test *testing.T, program *ir.Program, arguments ...string) oracles.Run {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "program.mjs")
-	if err := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return onNode(test, path, arguments...)
 }
@@ -138,8 +138,8 @@ func leaks(test *testing.T, program *ir.Program, sanitized string, arguments ...
 	switch runtime.GOOS {
 	case "darwin":
 		binary := filepath.Join(test.TempDir(), "port")
-		if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
-			test.Fatal(err)
+		if buildError := native.Build(native.C(program), binary, native.Options{}); buildError != nil {
+			test.Fatal(buildError)
 		}
 		report := execute(test, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
 		if report.ExitCode == 0 {
@@ -165,9 +165,9 @@ func output(command *exec.Cmd) ([]byte, error) {
 	if captureStderr {
 		command.Stderr = &stderr
 	}
-	err := childguard.Run(command, childguard.Options{})
-	if exitError, ok := err.(*exec.ExitError); ok && captureStderr {
+	runError := childguard.Run(command, childguard.Options{})
+	if exitError, ok := runError.(*exec.ExitError); ok && captureStderr {
 		exitError.Stderr = stderr.Bytes()
 	}
-	return stdout.Bytes(), err
+	return stdout.Bytes(), runError
 }

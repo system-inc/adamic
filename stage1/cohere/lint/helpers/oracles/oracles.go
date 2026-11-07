@@ -25,8 +25,8 @@ func Helpers(test *testing.T) string {
 		filepath.Join(root, "adamic_helper_descriptors.go"): descriptors,
 	}})
 	path := filepath.Join(test.TempDir(), "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, overlay, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	// Cohere with the oracle laid over it is a product built ahead, keyed through the overlay (#5qykzj5).
 	return stock(
@@ -43,9 +43,9 @@ func stock(test testing.TB, output, pkg string, arguments []string, environment 
 	if producer {
 		return buildcache.GoBuildIn(test, "cohere", output, pkg, arguments, environment...)
 	}
-	inputs, err := buildcache.GoBuildInInputs("cohere", output, pkg, arguments, nil, environment...)
-	if err != nil {
-		test.Fatal(err)
+	inputs, goBuildInInputsError := buildcache.GoBuildInInputs("cohere", output, pkg, arguments, nil, environment...)
+	if goBuildInInputsError != nil {
+		test.Fatal(goBuildInInputsError)
 	}
 	directory := buildcache.BuiltElsewhere(
 		test,

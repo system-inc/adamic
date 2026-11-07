@@ -26,8 +26,8 @@ func TestEnumInitializationReach(test *testing.T) {
 			test.Parallel()
 			path := "../../stage3/fixtures/enum-init-reach/" + name + ".a"
 			source := readEnumInitFixture(test, path)
-			if _, err := lowerSource(test, source); err != nil {
-				test.Fatal(err)
+			if _, lowerSourceError := lowerSource(test, source); lowerSourceError != nil {
+				test.Fatal(lowerSourceError)
 			}
 		})
 	}
@@ -40,12 +40,15 @@ func TestEnumInitializationReach(test *testing.T) {
 	} {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, readEnumInitFixture(test, "../../stage3/fixtures/enum-init-reach/"+name+".a"))
+			_, lowerSourceError := lowerSource(
+				test,
+				readEnumInitFixture(test, "../../stage3/fixtures/enum-init-reach/"+name+".a"),
+			)
 			var gap *NotYet
-			if !errors.As(err, &gap) ||
+			if !errors.As(lowerSourceError, &gap) ||
 				gap.What != "reading an enum before its runtime initialization; move the call after the enum declaration" ||
 				!strings.Contains(gap.Where, ":2:") {
-				test.Fatalf("pending enum read on line 2 must stay refused: %v", err)
+				test.Fatalf("pending enum read on line 2 must stay refused: %v", lowerSourceError)
 			}
 		})
 	}
@@ -82,9 +85,9 @@ func TestEnumInitializationGraphMemo(test *testing.T) {
 
 func readEnumInitFixture(test *testing.T, path string) string {
 	test.Helper()
-	data, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return string(data)
 }

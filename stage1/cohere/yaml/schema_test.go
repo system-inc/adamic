@@ -12,9 +12,9 @@ import (
 
 func schemaCases(test *testing.T) (string, int, int) {
 	path, files, count := lexCases(test)
-	data, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var extra strings.Builder
 	escape := strings.NewReplacer("\\", "\\\\", "\n", "\\n", "\r", "\\r", "\t", "\\t")
@@ -70,8 +70,8 @@ func schemaCases(test *testing.T) (string, int, int) {
 		}
 	}
 	target := filepath.Join(test.TempDir(), "schema-cases.txt")
-	if err := os.WriteFile(target, append(data, []byte(extra.String())...), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(target, append(data, []byte(extra.String())...), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return target, files, count
 }
@@ -96,13 +96,13 @@ func TestSchemaMatchesGo(test *testing.T) {
 	emitted := yamlSchemaBuild.emitted(test, "schema_main.ts")
 	cases, files, count := schemaCases(test)
 	expected := goSchema(test, cases)
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	entry, err := filepath.Abs("schema_main.ts")
-	if err != nil {
-		test.Fatal(err)
+	entry, absolutePathError := filepath.Abs("schema_main.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	nativeOut := run(test, "", []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, cases)
 	runner := filepath.Join(root, "oracle/node.mjs")
@@ -172,9 +172,9 @@ func TestSchemaMutants(test *testing.T) {
 	test.Parallel()
 	cases, _, _ := schemaCases(test)
 	expected := goSchema(test, cases)
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	for index, mutant := range schemaMutants.mutations {
 		// Not parallel: one mutant at a time keeps this test to one child at a time, its share.

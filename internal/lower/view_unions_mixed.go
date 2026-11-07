@@ -9,7 +9,12 @@ import (
 // Shared union read dispatch interns a complete graph with its member builder.
 // Reserve before recursion, but discard every newly reserved id on failure:
 // a later lookup must not mistake a partial graph for a complete contract.
-func internMixedUnionViewContract(l *lowering, node *ast.Node, target *checker.Type, build viewContractBuilder) (id ir.ViewContractID, err error) {
+func internMixedUnionViewContract(
+	l *lowering,
+	node *ast.Node,
+	target *checker.Type,
+	build viewContractBuilder,
+) (id ir.ViewContractID, internMixedUnionViewContractError error) {
 	if target.Flags()&checker.TypeFlagsUnion == 0 {
 		return 0, l.notYet(node, "a mixed union contract for a non-union type")
 	}
@@ -32,7 +37,7 @@ func internMixedUnionViewContract(l *lowering, node *ast.Node, target *checker.T
 	l.result.ViewContracts = append(l.result.ViewContracts, contract)
 	l.result.ViewContractTypes[int(target.Id())] = id
 	defer func() {
-		if err == nil {
+		if internMixedUnionViewContractError == nil {
 			return
 		}
 		l.result.ViewContracts = l.result.ViewContracts[:start]
@@ -45,11 +50,13 @@ func internMixedUnionViewContract(l *lowering, node *ast.Node, target *checker.T
 	}()
 	for _, member := range target.Types() {
 		var child ir.ViewContractID
-		child, err = build(member)
-		if err != nil {
-			return 0, err
+		child, internMixedUnionViewContractError = build(member)
+		if internMixedUnionViewContractError != nil {
+			return 0, internMixedUnionViewContractError
 		}
-		if child <= 0 || int(child) > len(l.result.ViewContracts) || l.result.ViewContracts[int(child)-1].Kind == ir.ViewUnknown {
+		if child <= 0 ||
+			int(child) > len(l.result.ViewContracts) ||
+			l.result.ViewContracts[int(child)-1].Kind == ir.ViewUnknown {
 			return 0, l.notYet(node, "an unavailable checked union member contract for "+l.checker.TypeToString(member))
 		}
 		contract.Members = append(contract.Members, child)

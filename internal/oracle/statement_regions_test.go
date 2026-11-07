@@ -9,9 +9,9 @@ import (
 // Updating the count golden must not hide loss of the statement-region optimization.
 func TestStatementRegionsAreUsed(test *testing.T) {
 	test.Parallel()
-	recorded, err := recordedCounts()
-	if err != nil {
-		test.Fatal(err)
+	recorded, recordedCountsError := recordedCounts()
+	if recordedCountsError != nil {
+		test.Fatal(recordedCountsError)
 	}
 	rows := make(map[string][]string)
 	for key, row := range recorded {
@@ -33,8 +33,8 @@ func TestStatementRegionsAreUsed(test *testing.T) {
 			}
 			read := func(column int) int64 {
 				test.Helper()
-				value, err := strconv.ParseInt(strings.TrimSpace(fields[column]), 10, 64)
-				if err != nil || value < 0 {
+				value, parseError := strconv.ParseInt(strings.TrimSpace(fields[column]), 10, 64)
+				if parseError != nil || value < 0 {
 					test.Fatalf("%s: invalid count in column %d: %q", path, column, fields[column])
 				}
 				return value

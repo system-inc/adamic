@@ -17,16 +17,16 @@ func TestBoxedUnionSlotPaths(test *testing.T) {
 		{`const made = Array.from({ length: 2 }, (value: string | number | undefined, index: number) => index);`, ""},
 	} {
 		test.Run(probe.source, func(test *testing.T) {
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			if probe.refusal != "" {
 				var refused *Refused
-				if !errors.As(err, &refused) || refused.What != probe.refusal {
-					test.Fatalf("want FX5 refusal %q, got %v", probe.refusal, err)
+				if !errors.As(lowerSourceError, &refused) || refused.What != probe.refusal {
+					test.Fatalf("want FX5 refusal %q, got %v", probe.refusal, lowerSourceError)
 				}
 				return
 			}
-			if err != nil {
-				test.Fatal(err)
+			if lowerSourceError != nil {
+				test.Fatal(lowerSourceError)
 			}
 		})
 	}

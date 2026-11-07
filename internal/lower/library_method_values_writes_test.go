@@ -56,10 +56,11 @@ console.log(String((array[0] ?? "").length));`, "delayed Array.prototype.unshift
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerTypeScriptAssertionSource(test, probe.source)
+			_, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(test, probe.source)
 			var pending *NotYet
-			if !errors.As(err, &pending) || !strings.Contains(err.Error(), probe.want) {
-				test.Fatalf("want NotYet with %q, got %v", probe.want, err)
+			if !errors.As(lowerTypeScriptAssertionSourceError, &pending) ||
+				!strings.Contains(lowerTypeScriptAssertionSourceError.Error(), probe.want) {
+				test.Fatalf("want NotYet with %q, got %v", probe.want, lowerTypeScriptAssertionSourceError)
 			}
 		})
 	}
@@ -104,10 +105,11 @@ console.log(String(fs.length));`, "a void-returning function at the argument sit
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerTypeScriptAssertionSource(test, probe.source)
+			_, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(test, probe.source)
 			var refused *Refused
-			if !errors.As(err, &refused) || !strings.Contains(err.Error(), probe.want) {
-				test.Fatalf("want Refused with %q, got %v", probe.want, err)
+			if !errors.As(lowerTypeScriptAssertionSourceError, &refused) ||
+				!strings.Contains(lowerTypeScriptAssertionSourceError.Error(), probe.want) {
+				test.Fatalf("want Refused with %q, got %v", probe.want, lowerTypeScriptAssertionSourceError)
 			}
 		})
 	}
@@ -222,16 +224,16 @@ func TestDelayedArrayWritesAreJudgedAsTheirDirectTwins(test *testing.T) {
 }
 
 // stoppedFor is whether an error is a refusal or a NotYet, and what it says, without where.
-func stoppedFor(err error) string {
+func stoppedFor(sourceError error) string {
 	var refused *Refused
-	if errors.As(err, &refused) {
+	if errors.As(sourceError, &refused) {
 		return "Refused: " + refused.What
 	}
 	var pending *NotYet
-	if errors.As(err, &pending) {
+	if errors.As(sourceError, &pending) {
 		return "NotYet: " + pending.What
 	}
-	return err.Error()
+	return sourceError.Error()
 }
 
 // What the identity check head 1 held a delayed write to refused, the registry gives back: an object
@@ -295,10 +297,11 @@ console.log(String(handlers.length));`, "a function written in place in a value 
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerTypeScriptAssertionSource(test, probe.source)
+			_, lowerTypeScriptAssertionSourceError := lowerTypeScriptAssertionSource(test, probe.source)
 			var pending *NotYet
-			if !errors.As(err, &pending) || !strings.Contains(err.Error(), probe.want) {
-				test.Fatalf("want NotYet with %q, got %v", probe.want, err)
+			if !errors.As(lowerTypeScriptAssertionSourceError, &pending) ||
+				!strings.Contains(lowerTypeScriptAssertionSourceError.Error(), probe.want) {
+				test.Fatalf("want NotYet with %q, got %v", probe.want, lowerTypeScriptAssertionSourceError)
 			}
 		})
 	}
@@ -334,9 +337,9 @@ func TestDelayedArrayWritesOfTheElementsLower(test *testing.T) {
 // delayedArrayReaders, which this reports, and which the switch's default then makes NotYet.
 func TestDelayedArrayMethodsAreClassified(test *testing.T) {
 	test.Parallel()
-	file, err := parser.ParseFile(token.NewFileSet(), "library_method_values.go", nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	file, parseFileError := parser.ParseFile(token.NewFileSet(), "library_method_values.go", nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	var names []string
 	ast.Inspect(file, func(node ast.Node) bool {
@@ -355,9 +358,9 @@ func TestDelayedArrayMethodsAreClassified(test *testing.T) {
 			for _, clause := range inner.Body.List {
 				for _, expression := range clause.(*ast.CaseClause).List {
 					if literal, isLiteral := expression.(*ast.BasicLit); isLiteral {
-						name, err := strconv.Unquote(literal.Value)
-						if err != nil {
-							test.Fatal(err)
+						name, unquoteError := strconv.Unquote(literal.Value)
+						if unquoteError != nil {
+							test.Fatal(unquoteError)
 						}
 						names = append(names, name)
 					}

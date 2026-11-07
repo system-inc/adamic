@@ -15,10 +15,10 @@ import (
 func lookedUpAlone(test *testing.T, r *rig, nameKey string) Finding {
 	test.Helper()
 	answer := Finding{NameKey: nameKey, Outcome: FindingMissing}
-	looked, err := productFor(r.root, r.cache, nameKey, 0, nil)
+	looked, productForError := productFor(r.root, r.cache, nameKey, 0, nil)
 	switch {
-	case err != nil:
-		answer.Why = err.Error()
+	case productForError != nil:
+		answer.Why = productForError.Error()
 	case looked.directory != "":
 		file, _ := loadReads(r.cache, nameKey)
 		answer.Outcome, answer.Key, answer.Name = FindingFound, looked.key, file.Name
@@ -34,9 +34,9 @@ func settledPair(test *testing.T, r *rig) (string, string) {
 	header := Inputs{Name: "header", Files: []string{"include"}}
 	headerProduct := Product(test, header, building("header"))
 	Product(test, port, func(directory string) error {
-		content, err := os.ReadFile(filepath.Join(headerProduct, "product"))
-		if err != nil {
-			return err
+		content, readError := os.ReadFile(filepath.Join(headerProduct, "product"))
+		if readError != nil {
+			return readError
 		}
 		return os.WriteFile(filepath.Join(directory, "product"), append(content, " and port"...), 0o644)
 	})
@@ -73,9 +73,9 @@ func TestFindAnswersEveryNameKeyAsItsOwnLookupDoes(test *testing.T) {
 	asked := []string{portKey, headerKey, notesBuild.NameKey, strings.Repeat("0", 64)}
 	compare := func(want map[string]string) {
 		test.Helper()
-		findings, err := Find(asked)
-		if err != nil {
-			test.Fatal(err)
+		findings, findError := Find(asked)
+		if findError != nil {
+			test.Fatal(findError)
 		}
 		if len(findings) != len(asked) {
 			test.Fatalf("%d findings for %d name keys", len(findings), len(asked))
@@ -138,29 +138,32 @@ func TestFindValuesTheTreeOncePerRun(test *testing.T) {
 				}
 			}
 			set.Entries = sortedEntries(set.Entries)
-			evaluated, err := evaluate(r.root, r.cache, nameKeyOf(layer, index), set, 0, nil)
-			if err != nil {
-				test.Fatal(err)
+			evaluated, evaluateError := evaluate(r.root, r.cache, nameKeyOf(layer, index), set, 0, nil)
+			if evaluateError != nil {
+				test.Fatal(evaluateError)
 			}
 			set.Key = evaluated.key
-			if err := recordReads(
+			if recordReadsError := recordReads(
 				r.cache,
 				nameKeyOf(layer, index),
 				fmt.Sprintf("layer %d product %d", layer, index),
 				set,
-			); err != nil {
-				test.Fatal(err)
+			); recordReadsError != nil {
+				test.Fatal(recordReadsError)
 			}
-			if err := os.MkdirAll(filepath.Join(r.cache, evaluated.key), 0o755); err != nil {
-				test.Fatal(err)
+			if createDirectoryError := os.MkdirAll(
+				filepath.Join(r.cache, evaluated.key),
+				0o755,
+			); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
 			asked = append(asked, nameKeyOf(layer, index))
 		}
 	}
 	before := treeValuesRead.Load()
-	findings, err := Find(asked)
-	if err != nil {
-		test.Fatal(err)
+	findings, findError := Find(asked)
+	if findError != nil {
+		test.Fatal(findError)
 	}
 	for _, finding := range findings {
 		if finding.Outcome != FindingFound {
@@ -190,28 +193,29 @@ func TestFindReadsOnlyTheCachesReadSetsAndLeavesFetchesToTheTest(test *testing.T
 	test.Setenv("ADAMIC_BUILD_TRACE", "")
 	file, _ := loadReads(r.cache, build.NameKey)
 	key := file.Sets[0].Key
-	findings, err := Find([]string{build.NameKey})
-	if err != nil || findings[0] != (Finding{NameKey: build.NameKey, Outcome: FindingFound, Key: key, Name: "port"}) {
-		test.Fatalf("a product the cache holds: %+v, %v", findings, err)
+	findings, findError := Find([]string{build.NameKey})
+	if findError != nil ||
+		findings[0] != (Finding{NameKey: build.NameKey, Outcome: FindingFound, Key: key, Name: "port"}) {
+		test.Fatalf("a product the cache holds: %+v, %v", findings, findError)
 	}
-	if err := os.RemoveAll(filepath.Join(r.cache, key)); err != nil {
-		test.Fatal(err)
+	if removeError := os.RemoveAll(filepath.Join(r.cache, key)); removeError != nil {
+		test.Fatal(removeError)
 	}
-	findings, err = Find([]string{build.NameKey})
-	if err != nil ||
+	findings, findError = Find([]string{build.NameKey})
+	if findError != nil ||
 		findings[0].Outcome != FindingMissing ||
 		!strings.Contains(findings[0].Why, "the store may hold it under "+key[:12]) {
-		test.Fatalf("a product only the store holds: %+v, %v", findings, err)
+		test.Fatalf("a product only the store holds: %+v, %v", findings, findError)
 	}
-	if _, err := os.Stat(filepath.Join(r.cache, key)); err == nil {
+	if _, statError := os.Stat(filepath.Join(r.cache, key)); statError == nil {
 		test.Fatal("Find fetched a product, which only its test may")
 	}
-	if err := os.Remove(readsPath(r.cache, build.NameKey)); err != nil {
-		test.Fatal(err)
+	if removeError := os.Remove(readsPath(r.cache, build.NameKey)); removeError != nil {
+		test.Fatal(removeError)
 	}
-	findings, err = Find([]string{build.NameKey})
-	if err != nil || findings[0].Outcome != FindingMissing {
-		test.Fatalf("a product whose read sets the cache doesn't hold: %+v, %v", findings, err)
+	findings, findError = Find([]string{build.NameKey})
+	if findError != nil || findings[0].Outcome != FindingMissing {
+		test.Fatalf("a product whose read sets the cache doesn't hold: %+v, %v", findings, findError)
 	}
 	if len(store.reads)+len(store.writes) != 0 {
 		test.Fatalf("Find reached the store: read %q, wrote %q", store.reads, store.writes)
@@ -223,17 +227,20 @@ func TestFindReadsOnlyTheCachesReadSetsAndLeavesFetchesToTheTest(test *testing.T
 func recordedProduct(test *testing.T, r *rig, nameKey string, entries []readEntry, made bool) string {
 	test.Helper()
 	set := readSet{Entries: sortedEntries(entries)}
-	evaluated, err := evaluate(r.root, r.cache, nameKey, set, 0, nil)
-	if err != nil {
-		test.Fatal(err)
+	evaluated, evaluateError := evaluate(r.root, r.cache, nameKey, set, 0, nil)
+	if evaluateError != nil {
+		test.Fatal(evaluateError)
 	}
 	set.Key = evaluated.key
-	if err := recordReads(r.cache, nameKey, "product "+nameKey[:12], set); err != nil {
-		test.Fatal(err)
+	if recordReadsError := recordReads(r.cache, nameKey, "product "+nameKey[:12], set); recordReadsError != nil {
+		test.Fatal(recordReadsError)
 	}
 	if made {
-		if err := os.MkdirAll(filepath.Join(r.cache, evaluated.key), 0o755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(
+			filepath.Join(r.cache, evaluated.key),
+			0o755,
+		); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 	}
 	return evaluated.key
@@ -291,9 +298,9 @@ func processValuesEachProductOnce(test *testing.T, mode string) {
 	lookup := func(nameKey string) (found, int64) {
 		test.Helper()
 		before, productsBefore := treeValuesRead.Load(), productsLookedUp.Load()
-		looked, err := productFor(root, r.cache, nameKey, 0, nil)
-		if err != nil {
-			test.Fatal(err)
+		looked, productForError := productFor(root, r.cache, nameKey, 0, nil)
+		if productForError != nil {
+			test.Fatal(productForError)
 		}
 		products = productsLookedUp.Load() - productsBefore
 		return looked, treeValuesRead.Load() - before
@@ -326,14 +333,14 @@ func processValuesEachProductOnce(test *testing.T, mode string) {
 			looked,
 		)
 	}
-	if _, err := Find(nil); err != nil {
-		test.Fatal(err)
+	if _, findError := Find(nil); findError != nil {
+		test.Fatal(findError)
 	}
 	if looked, read = lookup(late); looked.directory != "" || read != 0 {
 		test.Fatalf("after Find, a product reading go.mod read %d tree values: %+v", read, looked)
 	}
-	if err := os.MkdirAll(filepath.Join(r.cache, lateKey), 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(filepath.Join(r.cache, lateKey), 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	if looked, _ = lookup(late); looked.key != lateKey {
 		test.Fatalf("a product that arrived after a lookup missed it isn't found: %+v", looked)
@@ -346,17 +353,17 @@ func unpackedRig(test *testing.T, r *rig) string {
 	test.Helper()
 	git := func(arguments ...string) string {
 		test.Helper()
-		output, err := toolchain.GitCommand(append([]string{"-C", r.root}, arguments...)...).Output()
-		if err != nil {
-			test.Fatalf("git %v: %v", arguments, err)
+		output, outputError := toolchain.GitCommand(append([]string{"-C", r.root}, arguments...)...).Output()
+		if outputError != nil {
+			test.Fatalf("git %v: %v", arguments, outputError)
 		}
 		return string(output)
 	}
 	root := test.TempDir()
 	for _, name := range strings.Split(strings.TrimSpace(git("ls-files")), "\n") {
-		content, err := os.ReadFile(filepath.Join(r.root, name))
-		if err != nil {
-			test.Fatal(err)
+		content, readError := os.ReadFile(filepath.Join(r.root, name))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		write(test, root, name, string(content))
 	}

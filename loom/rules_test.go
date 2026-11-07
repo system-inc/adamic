@@ -9,9 +9,9 @@ import (
 // The landed rules.json reads cleanly, so the rule.changed that names its commit carries a value the queue takes.
 func TestRulesFileReads(test *testing.T) {
 	test.Parallel()
-	rules, err := ReadRules()
-	if err != nil {
-		test.Fatal(err)
+	rules, readRulesError := ReadRules()
+	if readRulesError != nil {
+		test.Fatal(readRulesError)
 	}
 	test.Logf(
 		"blocks on %v, budget %d, sizing %v; restack on %v; first %v",
@@ -358,12 +358,12 @@ func TestRulesRefuseMistakes(test *testing.T) {
 	for _, testCase := range cases {
 		test.Run(testCase.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := ParseRules([]byte(testCase.file))
-			if err == nil {
+			_, parseRulesError := ParseRules([]byte(testCase.file))
+			if parseRulesError == nil {
 				test.Fatalf("%s was taken", testCase.file)
 			}
-			if !strings.Contains(err.Error(), testCase.says) {
-				test.Fatalf("%s was refused with %q, not naming %q", testCase.file, err, testCase.says)
+			if !strings.Contains(parseRulesError.Error(), testCase.says) {
+				test.Fatalf("%s was refused with %q, not naming %q", testCase.file, parseRulesError, testCase.says)
 			}
 		})
 	}
@@ -372,17 +372,21 @@ func TestRulesRefuseMistakes(test *testing.T) {
 // A depth the lander takes reads here too (Loom 0.8.71, #wpcbqpd): from 2 to 32, and absent as absent.
 func TestRulesTakeADepth(test *testing.T) {
 	test.Parallel()
-	rules, err := ParseRules([]byte(`{"blocks": {"on": true, "budget": 4, "depth": 2}, "restack": {"on": false}}`))
-	if err != nil || rules.Blocks.Depth == nil || *rules.Blocks.Depth != 2 {
-		test.Fatalf("%+v, %v", rules.Blocks, err)
+	rules, parseRulesError := ParseRules(
+		[]byte(`{"blocks": {"on": true, "budget": 4, "depth": 2}, "restack": {"on": false}}`),
+	)
+	if parseRulesError != nil || rules.Blocks.Depth == nil || *rules.Blocks.Depth != 2 {
+		test.Fatalf("%+v, %v", rules.Blocks, parseRulesError)
 	}
-	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4, "depth": 32}, "restack": {"on": false}}`))
-	if err != nil || *rules.Blocks.Depth != 32 {
-		test.Fatalf("%+v, %v", rules.Blocks, err)
+	rules, parseRulesError = ParseRules(
+		[]byte(`{"blocks": {"on": true, "budget": 4, "depth": 32}, "restack": {"on": false}}`),
+	)
+	if parseRulesError != nil || *rules.Blocks.Depth != 32 {
+		test.Fatalf("%+v, %v", rules.Blocks, parseRulesError)
 	}
-	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}}`))
-	if err != nil || rules.Blocks.Depth != nil {
-		test.Fatalf("%+v, %v", rules.Blocks, err)
+	rules, parseRulesError = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}}`))
+	if parseRulesError != nil || rules.Blocks.Depth != nil {
+		test.Fatalf("%+v, %v", rules.Blocks, parseRulesError)
 	}
 }
 
@@ -390,10 +394,10 @@ func TestRulesTakeADepth(test *testing.T) {
 // absent as absent, and an empty door as no bounds, the rollback.
 func TestRulesTakeADoor(test *testing.T) {
 	test.Parallel()
-	rules, err := ParseRules([]byte(
+	rules, parseRulesError := ParseRules([]byte(
 		`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}, "door": {"heavy": 100000, "files": 9007199254740991}}`,
 	))
-	if err != nil ||
+	if parseRulesError != nil ||
 		rules.Door == nil ||
 		rules.Door.Heavy == nil ||
 		*rules.Door.Heavy != 100000 ||
@@ -401,15 +405,17 @@ func TestRulesTakeADoor(test *testing.T) {
 		rules.Door.PacedAfter != nil ||
 		rules.Door.Waiting != nil ||
 		rules.Door.Lines != nil {
-		test.Fatalf("%+v, %v", rules.Door, err)
+		test.Fatalf("%+v, %v", rules.Door, parseRulesError)
 	}
-	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}, "door": {}}`))
-	if err != nil || rules.Door == nil || rules.Door.Heavy != nil {
-		test.Fatalf("%+v, %v", rules.Door, err)
+	rules, parseRulesError = ParseRules(
+		[]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}, "door": {}}`),
+	)
+	if parseRulesError != nil || rules.Door == nil || rules.Door.Heavy != nil {
+		test.Fatalf("%+v, %v", rules.Door, parseRulesError)
 	}
-	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}}`))
-	if err != nil || rules.Door != nil {
-		test.Fatalf("%+v, %v", rules.Door, err)
+	rules, parseRulesError = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}}`))
+	if parseRulesError != nil || rules.Door != nil {
+		test.Fatalf("%+v, %v", rules.Door, parseRulesError)
 	}
 }
 
@@ -418,21 +424,21 @@ func TestRulesTakeADoor(test *testing.T) {
 // absent as absent. Mutant that fails it: the field dropped from DoorRule (an unknown field, refused).
 func TestRulesTakeACensusWithin(test *testing.T) {
 	test.Parallel()
-	rules, err := ParseRules([]byte(
+	rules, parseRulesError := ParseRules([]byte(
 		`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}, "door": {"heavy": 1000, "censusWithin": 10}}`,
 	))
-	if err != nil ||
+	if parseRulesError != nil ||
 		rules.Door == nil ||
 		rules.Door.CensusWithin == nil ||
 		*rules.Door.CensusWithin != 10 ||
 		*rules.Door.Heavy != 1000 {
-		test.Fatalf("%+v, %v", rules.Door, err)
+		test.Fatalf("%+v, %v", rules.Door, parseRulesError)
 	}
-	rules, err = ParseRules(
+	rules, parseRulesError = ParseRules(
 		[]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}, "door": {"heavy": 1000}}`),
 	)
-	if err != nil || rules.Door.CensusWithin != nil {
-		test.Fatalf("%+v, %v", rules.Door, err)
+	if parseRulesError != nil || rules.Door.CensusWithin != nil {
+		test.Fatalf("%+v, %v", rules.Door, parseRulesError)
 	}
 }
 
@@ -441,28 +447,30 @@ func TestRulesTakeACensusWithin(test *testing.T) {
 // dropped (TestRulesRefuseMistakes' "builders twice").
 func TestRulesTakeBuilders(test *testing.T) {
 	test.Parallel()
-	rules, err := ParseRules(
+	rules, parseRulesError := ParseRules(
 		[]byte(`{"blocks": {"on": true, "budget": 4, "builders": ["Adam", "Eve"]}, "restack": {"on": false}}`),
 	)
-	if err != nil ||
+	if parseRulesError != nil ||
 		len(rules.Blocks.Builders) != 2 ||
 		rules.Blocks.Builders[0] != "Adam" ||
 		rules.Blocks.Builders[1] != "Eve" {
-		test.Fatalf("%+v, %v", rules.Blocks, err)
+		test.Fatalf("%+v, %v", rules.Blocks, parseRulesError)
 	}
-	rules, err = ParseRules([]byte(
+	rules, parseRulesError = ParseRules([]byte(
 		`{"blocks": {"on": true, "budget": 4, "builders": ["a", "b", "c", "d", "e", "f", "g", "h"]}, "restack": {"on": false}}`,
 	))
-	if err != nil || len(rules.Blocks.Builders) != 8 {
-		test.Fatalf("%+v, %v", rules.Blocks, err)
+	if parseRulesError != nil || len(rules.Blocks.Builders) != 8 {
+		test.Fatalf("%+v, %v", rules.Blocks, parseRulesError)
 	}
-	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4, "builders": []}, "restack": {"on": false}}`))
-	if err != nil || rules.Blocks.Builders == nil || len(rules.Blocks.Builders) != 0 {
-		test.Fatalf("%+v, %v", rules.Blocks, err)
+	rules, parseRulesError = ParseRules(
+		[]byte(`{"blocks": {"on": true, "budget": 4, "builders": []}, "restack": {"on": false}}`),
+	)
+	if parseRulesError != nil || rules.Blocks.Builders == nil || len(rules.Blocks.Builders) != 0 {
+		test.Fatalf("%+v, %v", rules.Blocks, parseRulesError)
 	}
-	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}}`))
-	if err != nil || rules.Blocks.Builders != nil {
-		test.Fatalf("%+v, %v", rules.Blocks, err)
+	rules, parseRulesError = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}}`))
+	if parseRulesError != nil || rules.Blocks.Builders != nil {
+		test.Fatalf("%+v, %v", rules.Blocks, parseRulesError)
 	}
 }
 
@@ -471,16 +479,16 @@ func TestRulesTakeBuilders(test *testing.T) {
 func TestRulesTakeATipFirst(test *testing.T) {
 	test.Parallel()
 	for _, on := range []bool{true, false} {
-		rules, err := ParseRules([]byte(`{"blocks": {"on": true, "budget": 4, "tipFirst": ` +
+		rules, parseRulesError := ParseRules([]byte(`{"blocks": {"on": true, "budget": 4, "tipFirst": ` +
 			strconv.FormatBool(on) +
 			`}, "restack": {"on": false}}`))
-		if err != nil || rules.Blocks.TipFirst == nil || *rules.Blocks.TipFirst != on {
-			test.Fatalf("%+v, %v", rules.Blocks, err)
+		if parseRulesError != nil || rules.Blocks.TipFirst == nil || *rules.Blocks.TipFirst != on {
+			test.Fatalf("%+v, %v", rules.Blocks, parseRulesError)
 		}
 	}
-	rules, err := ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}}`))
-	if err != nil || rules.Blocks.TipFirst != nil {
-		test.Fatalf("%+v, %v", rules.Blocks, err)
+	rules, parseRulesError := ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}}`))
+	if parseRulesError != nil || rules.Blocks.TipFirst != nil {
+		test.Fatalf("%+v, %v", rules.Blocks, parseRulesError)
 	}
 }
 
@@ -489,16 +497,16 @@ func TestRulesTakeATipFirst(test *testing.T) {
 func TestRulesTakeAStacked(test *testing.T) {
 	test.Parallel()
 	for _, on := range []bool{true, false} {
-		rules, err := ParseRules([]byte(`{"blocks": {"on": true, "budget": 4, "stacked": ` +
+		rules, parseRulesError := ParseRules([]byte(`{"blocks": {"on": true, "budget": 4, "stacked": ` +
 			strconv.FormatBool(on) +
 			`}, "restack": {"on": false}}`))
-		if err != nil || rules.Blocks.Stacked == nil || *rules.Blocks.Stacked != on {
-			test.Fatalf("%+v, %v", rules.Blocks, err)
+		if parseRulesError != nil || rules.Blocks.Stacked == nil || *rules.Blocks.Stacked != on {
+			test.Fatalf("%+v, %v", rules.Blocks, parseRulesError)
 		}
 	}
-	rules, err := ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}}`))
-	if err != nil || rules.Blocks.Stacked != nil {
-		test.Fatalf("%+v, %v", rules.Blocks, err)
+	rules, parseRulesError := ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}}`))
+	if parseRulesError != nil || rules.Blocks.Stacked != nil {
+		test.Fatalf("%+v, %v", rules.Blocks, parseRulesError)
 	}
 }
 
@@ -507,37 +515,40 @@ func TestRulesTakeAStacked(test *testing.T) {
 // witness check dropped from ParseRules (TestRulesRefuseMistakes' "witness every zero" and the rest).
 func TestRulesTakeAWitness(test *testing.T) {
 	test.Parallel()
-	rules, err := ParseRules([]byte(
+	rules, parseRulesError := ParseRules([]byte(
 		`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}, "witness": {"every": 10, "hours": 4, "machines": ["Home-f3279c"]}}`,
 	))
-	if err != nil ||
+	if parseRulesError != nil ||
 		rules.Witness == nil ||
 		rules.Witness.Every != 10 ||
 		rules.Witness.Hours != 4 ||
 		len(rules.Witness.Machines) != 1 ||
 		rules.Witness.Machines[0] != "Home-f3279c" {
-		test.Fatalf("%+v, %v", rules.Witness, err)
+		test.Fatalf("%+v, %v", rules.Witness, parseRulesError)
 	}
-	rules, err = ParseRules([]byte(
+	rules, parseRulesError = ParseRules([]byte(
 		`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}, "witness": {"every": 1000, "hours": 168, "machines": ["a", "b", "c", "d", "e", "f", "g", "h"]}}`,
 	))
-	if err != nil || rules.Witness.Every != 1000 || rules.Witness.Hours != 168 || len(rules.Witness.Machines) != 8 {
-		test.Fatalf("%+v, %v", rules.Witness, err)
+	if parseRulesError != nil ||
+		rules.Witness.Every != 1000 ||
+		rules.Witness.Hours != 168 ||
+		len(rules.Witness.Machines) != 8 {
+		test.Fatalf("%+v, %v", rules.Witness, parseRulesError)
 	}
-	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}}`))
-	if err != nil || rules.Witness != nil {
-		test.Fatalf("%+v, %v", rules.Witness, err)
+	rules, parseRulesError = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}}`))
+	if parseRulesError != nil || rules.Witness != nil {
+		test.Fatalf("%+v, %v", rules.Witness, parseRulesError)
 	}
 }
 
 // A sizing rule reads by its unabbreviated names, the spelling the lander posts and the queue takes (#qt36cwf).
 func TestRulesReadSizingByItsNames(test *testing.T) {
 	test.Parallel()
-	rules, err := ParseRules([]byte(
+	rules, parseRulesError := ParseRules([]byte(
 		`{"blocks": {"on": true, "budget": 2, "sizing": {"minimum": 3, "maximum": 16, "target": 0.8, "window": 20}}, "restack": {"on": false}}`,
 	))
-	if err != nil {
-		test.Fatal(err)
+	if parseRulesError != nil {
+		test.Fatal(parseRulesError)
 	}
 	if sizing := rules.Blocks.Sizing; sizing == nil || *sizing.Minimum != 3 || *sizing.Maximum != 16 {
 		test.Fatalf("sizing read as %+v, want minimum 3 and maximum 16", sizing)

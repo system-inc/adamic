@@ -63,19 +63,19 @@ func longStackArguments(size, count int) []string {
 func stackProbe(test *testing.T, limit int, arguments, environment []string, alone bool) {
 	test.Helper()
 	path, sanitizedBinary, _ := sanitized(test, "internal/oracle/testdata/stack_over.a")
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	plain := filepath.Join(test.TempDir(), "plain")
-	if err := native.Build(native.C(program), plain, native.Options{}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), plain, native.Options{}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	ran := func(name string, prefix ...string) run {
 		test.Helper()
-		resolved, err := toolchain.Path(name)
-		if err != nil {
-			test.Fatal(err)
+		resolved, pathError := toolchain.Path(name)
+		if pathError != nil {
+			test.Fatal(pathError)
 		}
 		args := append(append([]string{}, prefix...), arguments...)
 		if limit > 0 {
@@ -88,9 +88,9 @@ func stackProbe(test *testing.T, limit int, arguments, environment []string, alo
 		if alone {
 			command.Env = []string{}
 		}
-		stdout, stderr, err := childguard.Capture(ctx, command)
-		if err != nil && command.ProcessState == nil {
-			test.Fatal(err)
+		stdout, stderr, captureError := childguard.Capture(ctx, command)
+		if captureError != nil && command.ProcessState == nil {
+			test.Fatal(captureError)
 		}
 		result := run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}
 		rememberRun(test, result)

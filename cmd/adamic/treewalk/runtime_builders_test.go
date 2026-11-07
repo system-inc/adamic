@@ -35,9 +35,9 @@ func TestRuntimeBuildersAreWhatTheWalkFinds(test *testing.T) {
 // fixtures, dependencies or ignored local output; never ask git for a listing.
 func runtimeBuilderPackagesIn(test *testing.T, root string) []string {
 	test.Helper()
-	ignored, err := os.ReadFile(filepath.Join(root, ".gitignore"))
-	if err != nil {
-		test.Fatal(err)
+	ignored, readError := os.ReadFile(filepath.Join(root, ".gitignore"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var directories []string
 	for _, line := range strings.Split(string(ignored), "\n") {
@@ -53,9 +53,9 @@ func runtimeBuilderPackagesIn(test *testing.T, root string) []string {
 		directories = append(directories, strings.TrimSuffix(line, "/"))
 	}
 	var submodules []string
-	modules, err := os.ReadFile(filepath.Join(root, ".gitmodules"))
-	if err != nil && !os.IsNotExist(err) {
-		test.Fatal(err)
+	modules, readError := os.ReadFile(filepath.Join(root, ".gitmodules"))
+	if readError != nil && !os.IsNotExist(readError) {
+		test.Fatal(readError)
 	}
 	for _, line := range strings.Split(string(modules), "\n") {
 		key, value, found := strings.Cut(line, "=")
@@ -64,13 +64,13 @@ func runtimeBuilderPackagesIn(test *testing.T, root string) []string {
 		}
 	}
 	var files []string
-	err = filepath.WalkDir(root, func(filename string, entry fs.DirEntry, walkError error) error {
-		if walkError != nil {
-			return walkError
+	walkError := filepath.WalkDir(root, func(filename string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
-		name, err := filepath.Rel(root, filename)
-		if err != nil {
-			return err
+		name, relativePathError := filepath.Rel(root, filename)
+		if relativePathError != nil {
+			return relativePathError
 		}
 		name = filepath.ToSlash(name)
 		if entry.IsDir() {
@@ -89,9 +89,9 @@ func runtimeBuilderPackagesIn(test *testing.T, root string) []string {
 				if !strings.HasPrefix(rule, "/") && !strings.Contains(rule, "/") {
 					target = entry.Name()
 				}
-				match, err := path.Match(strings.TrimPrefix(rule, "/"), target)
-				if err != nil {
-					return err
+				match, matchError := path.Match(strings.TrimPrefix(rule, "/"), target)
+				if matchError != nil {
+					return matchError
 				}
 				if match {
 					return filepath.SkipDir
@@ -104,8 +104,8 @@ func runtimeBuilderPackagesIn(test *testing.T, root string) []string {
 		}
 		return nil
 	})
-	if err != nil {
-		test.Fatal(err)
+	if walkError != nil {
+		test.Fatal(walkError)
 	}
 	test.Logf(
 		"census: %d Go files; skip testdata, vendor, node_modules, .git; ignored directories %v; submodules %v",
@@ -115,15 +115,15 @@ func runtimeBuilderPackagesIn(test *testing.T, root string) []string {
 	)
 	var packages []string
 	for _, name := range files {
-		file, err := parser.ParseFile(token.NewFileSet(), filepath.Join(root, name), nil, 0)
-		if err != nil {
-			test.Fatal(err)
+		file, parseFileError := parser.ParseFile(token.NewFileSet(), filepath.Join(root, name), nil, 0)
+		if parseFileError != nil {
+			test.Fatal(parseFileError)
 		}
 		aliases := map[string]bool{}
 		for _, imported := range file.Imports {
-			path, err := strconv.Unquote(imported.Path.Value)
-			if err != nil {
-				test.Fatal(err)
+			path, unquoteError := strconv.Unquote(imported.Path.Value)
+			if unquoteError != nil {
+				test.Fatal(unquoteError)
 			}
 			if path == "github.com/system-inc/adamic/internal/native/runtimeproducts" {
 				alias := "runtimeproducts"
@@ -206,11 +206,11 @@ func TestCommandRuntimeCensusWalksSourceTree(test *testing.T) {
 	}
 	for name, contents := range files {
 		filename := filepath.Join(root, filepath.FromSlash(name))
-		if err := os.MkdirAll(filepath.Dir(filename), 0o755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(filepath.Dir(filename), 0o755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.WriteFile(filename, []byte(contents), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filename, []byte(contents), 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	if got := runtimeBuilderPackagesIn(test, root); !slices.Equal(got, want) {

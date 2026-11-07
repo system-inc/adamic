@@ -27,15 +27,15 @@ func TestGraphAllocationSiteContainers(test *testing.T) {
 		covered[reflect.TypeOf(allocation).Name()] = true
 	}
 	// Reads: internal/ir/*.go
-	files, err := filepath.Glob("../ir/*.go")
-	if err != nil {
-		test.Fatal(err)
+	files, globError := filepath.Glob("../ir/*.go")
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	found := map[string]bool{}
 	for _, path := range files {
-		file, err := parser.ParseFile(token.NewFileSet(), path, nil, 0)
-		if err != nil {
-			test.Fatal(err)
+		file, parseFileError := parser.ParseFile(token.NewFileSet(), path, nil, 0)
+		if parseFileError != nil {
+			test.Fatal(parseFileError)
 		}
 		ast.Inspect(file, func(node ast.Node) bool {
 			declaration, ok := node.(*ast.TypeSpec)

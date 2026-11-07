@@ -40,9 +40,9 @@ import (
 func TestDeadZoneStopsArePinned(test *testing.T) {
 	test.Parallel()
 	directory := "internal/oracle/testdata/dead_zone_stops"
-	entries, err := os.ReadDir(filepath.Join(repository, directory))
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(filepath.Join(repository, directory))
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -53,26 +53,30 @@ func TestDeadZoneStopsArePinned(test *testing.T) {
 		test.Run(entry.Name(), func(test *testing.T) {
 			test.Parallel()
 			path := filepath.Join(directory, entry.Name())
-			absolute, err := filepath.Abs(filepath.Join(repository, path))
-			if err != nil {
-				test.Fatal(err)
+			absolute, absolutePathError := filepath.Abs(filepath.Join(repository, path))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			expected, err := os.ReadFile(absolute + ".stop")
-			if err != nil {
-				test.Fatal(err)
+			expected, readError := os.ReadFile(absolute + ".stop")
+			if readError != nil {
+				test.Fatal(readError)
 			}
-			program, err := lowered(test, absolute)
+			program, loweredError := lowered(test, absolute)
 			if stop := strings.TrimSpace(string(expected)); stop != "lowers" {
-				if err == nil {
+				if loweredError == nil {
 					test.Fatalf("lowered, want %q: Node prints %q", stop, onNode(test, absolute).stdout)
 				}
-				if got := strings.ReplaceAll(err.Error(), strings.TrimSuffix(absolute, path), ""); got != stop {
+				if got := strings.ReplaceAll(
+					loweredError.Error(),
+					strings.TrimSuffix(absolute, path),
+					"",
+				); got != stop {
 					test.Fatalf("stop: got %q, want %q", got, stop)
 				}
 				return
 			}
-			if err != nil {
-				test.Fatalf("Lower: %v", err)
+			if loweredError != nil {
+				test.Fatalf("Lower: %v", loweredError)
 			}
 			truth := onNode(test, absolute)
 			sanitized, _ := natively(test, program)

@@ -17,9 +17,9 @@ func TestProcessPlatformReadIsAHostRead(test *testing.T) {
 	} {
 		test.Run(one.name, func(test *testing.T) {
 			test.Parallel()
-			program, err := lowerSource(test, one.source)
-			if err != nil {
-				test.Fatal(err)
+			program, lowerSourceError := lowerSource(test, one.source)
+			if lowerSourceError != nil {
+				test.Fatal(lowerSourceError)
 			}
 			if reads := strings.Count(fmt.Sprintf("%#v", program), `Operation:"host_platform"`); reads != 1 {
 				test.Fatalf("want one host_platform read, got %d", reads)
@@ -44,10 +44,10 @@ func TestProcessPlatformRejectsNonReadUses(test *testing.T) {
 	} {
 		test.Run(one.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, `import process from 'node:process'; `+one.source)
+			_, lowerSourceError := lowerSource(test, `import process from 'node:process'; `+one.source)
 			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(notYet.What, one.want) {
-				test.Fatalf("want platform NotYet %s, got %v", one.want, err)
+			if !errors.As(lowerSourceError, &notYet) || !strings.Contains(notYet.What, one.want) {
+				test.Fatalf("want platform NotYet %s, got %v", one.want, lowerSourceError)
 			}
 		})
 	}

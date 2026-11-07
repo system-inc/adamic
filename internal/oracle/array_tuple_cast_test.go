@@ -29,20 +29,20 @@ func TestArrayToTupleCastsAreNotYet(test *testing.T) {
 	} {
 		test.Run(program.name, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(
+			path, absolutePathError := filepath.Abs(
 				filepath.Join(repository, "internal/oracle/testdata/array_tuple_casts", program.name),
 			)
-			if err != nil {
-				test.Fatal(err)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			truth := onNode(test, path)
 			if truth.exitCode != 0 || len(truth.stderr) != 0 || string(truth.stdout) != program.stdout {
 				test.Fatalf("Node: %+v", truth)
 			}
-			_, err = lowered(test, path)
+			_, loweredError := lowered(test, path)
 			var notYet *lower.NotYet
-			if !errors.As(err, &notYet) || err.Error() != path+program.want {
-				test.Fatalf("got %v; want %s", err, path+program.want)
+			if !errors.As(loweredError, &notYet) || loweredError.Error() != path+program.want {
+				test.Fatalf("got %v; want %s", loweredError, path+program.want)
 			}
 		})
 	}

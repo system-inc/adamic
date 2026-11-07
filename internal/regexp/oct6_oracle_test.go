@@ -101,13 +101,13 @@ func oct6Loops() []oct6Loop {
 
 func oct6NodeLoops(test *testing.T, loops []oct6Loop) [][]executionResult {
 	test.Helper()
-	data, err := json.Marshal(loops)
-	if err != nil {
-		test.Fatal(err)
+	data, encodeError := json.Marshal(loops)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
-	node, err := toolchain.Path("node")
-	if err != nil {
-		test.Fatalf("Node loop oracle: %v", err)
+	node, pathError := toolchain.Path("node")
+	if pathError != nil {
+		test.Fatalf("Node loop oracle: %v", pathError)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
@@ -130,13 +130,13 @@ const results=cases.map(c=>{
 });process.stdout.write(JSON.stringify(results));`)
 	command.Env = toolchain.Env()
 	command.Stdin = bytes.NewReader(data)
-	output, err := command.CombinedOutput()
-	if err != nil {
-		test.Fatalf("Node loop oracle: %v\n%s", err, output)
+	output, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("Node loop oracle: %v\n%s", combinedOutputError, output)
 	}
 	var results [][]executionResult
-	if err := json.Unmarshal(output, &results); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(output, &results); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if len(results) != len(loops) {
 		test.Fatal("Node loop result count")
@@ -151,9 +151,9 @@ func TestMatcherOct6LoopsNode(test *testing.T) {
 	executions := 0
 	for index, loop := range loops {
 		test.Run(loop.Name, func(test *testing.T) {
-			program, err := Compile(loop.Pattern, loop.Flags)
-			if err != nil {
-				test.Fatal(err)
+			program, compileError := Compile(loop.Pattern, loop.Flags)
+			if compileError != nil {
+				test.Fatal(compileError)
 			}
 			matcher := program.New()
 			matcher.LastIndex = loop.LastIndex
@@ -162,9 +162,9 @@ func TestMatcherOct6LoopsNode(test *testing.T) {
 				test.Fatal("Node step count")
 			}
 			for step := 0; step < loop.Steps; step++ {
-				got, err := matcherResult(matcher, loop.Input)
-				if err != nil {
-					test.Fatal(err)
+				got, matcherResultError := matcherResult(matcher, loop.Input)
+				if matcherResultError != nil {
+					test.Fatal(matcherResultError)
 				}
 				executions++
 				if !reflect.DeepEqual(got, expected[index][step]) {

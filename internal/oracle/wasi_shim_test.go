@@ -43,13 +43,13 @@ func TestWASIShimCwdImports(test *testing.T) {
 	if !shimFileFixtures[fixture] {
 		test.Fatal("cwd requires the host filesystem")
 	}
-	program, err := lowered(test, filepath.Join(repository, fixture))
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, filepath.Join(repository, fixture))
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	binary := filepath.Join(test.TempDir(), "cwd.wasm")
-	if err := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	inventory := execute(
 		test,
@@ -62,8 +62,8 @@ func TestWASIShimCwdImports(test *testing.T) {
 		test.Fatalf("imports: %s", inventory.stderr)
 	}
 	var imports []string
-	if err := json.Unmarshal(inventory.stdout, &imports); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(inventory.stdout, &imports); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	const want = "args_get, args_sizes_get, clock_time_get, environ_get, environ_sizes_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_filestat_get, proc_exit"
 	if actual := strings.Join(imports, ", "); actual != want {
@@ -86,8 +86,10 @@ func runWASIShimShard(test *testing.T, shard int) {
 		return
 	}
 	planted, probing := familyProbe("TestWASIShimAgreesWithNode")
-	if err := native.ValidateOptions(native.Options{Target: "wasm32-wasi"}); err != nil {
-		test.Fatal(err)
+	if validateOptionsError := native.ValidateOptions(
+		native.Options{Target: "wasm32-wasi"},
+	); validateOptionsError != nil {
+		test.Fatal(validateOptionsError)
 	}
 	var ran, agreed, notYet, refused, excluded atomic.Int32
 	// Cleanups run after the parallel subtests, so the counts are the shard's whole.
@@ -106,20 +108,20 @@ func runWASIShimShard(test *testing.T, shard int) {
 		fixture := fixtures[index]
 		test.Run(fixture.path, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, fixture.path))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(filepath.Join(repository, fixture.path))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			program, err := lowered(test, path)
+			program, loweredError := lowered(test, path)
 			// Held to the refusal TestWASIAgreesWithNode holds them to (runtime_boundary_test.go).
 			if runtimeBoundaryViewFixture(fixture.path) {
-				assertRuntimeBoundaryViewRefusal(test, err)
+				assertRuntimeBoundaryViewRefusal(test, loweredError)
 				refused.Add(1)
 				return
 			}
-			if assertAsyncWitnessRefusal(test, fixture.path, path, err) {
+			if assertAsyncWitnessRefusal(test, fixture.path, path, loweredError) {
 				var refusal *lower.Refused
-				if errors.As(err, &refusal) {
+				if errors.As(loweredError, &refusal) {
 					refused.Add(1)
 				} else {
 					notYet.Add(1)
@@ -128,14 +130,14 @@ func runWASIShimShard(test *testing.T, shard int) {
 			}
 			if !fixture.lowers {
 				var refusal *lower.NotYet
-				if !errors.As(err, &refusal) {
-					test.Fatalf("want NotYet, got %v", err)
+				if !errors.As(loweredError, &refusal) {
+					test.Fatalf("want NotYet, got %v", loweredError)
 				}
 				notYet.Add(1)
 				return
 			}
-			if err != nil {
-				test.Fatal(err)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			platform, readsPlatform := wasiHostPlatform(test, fixture.path, program)
 			// The witness comes from the program as lowered, before the probe's mutant can reach it.
@@ -176,8 +178,8 @@ func runWASIShimShard(test *testing.T, shard int) {
 				test.Fatalf("inventory: %s", inventory.stderr)
 			}
 			var imports []string
-			if err := json.Unmarshal(inventory.stdout, &imports); err != nil {
-				test.Fatal(err)
+			if decodeError := json.Unmarshal(inventory.stdout, &imports); decodeError != nil {
+				test.Fatal(decodeError)
 			}
 			test.Logf("IMPORTS %s | %s", fixture.path, strings.Join(imports, ", "))
 			fileAccess := ""
@@ -268,17 +270,17 @@ func TestWASIShimCheckedWitnessControl(test *testing.T) {
 	if !checked {
 		test.Fatal("control must remain a checked fixture")
 	}
-	path, err := filepath.Abs(filepath.Join(repository, fixturePath))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, fixturePath))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	binary := filepath.Join(test.TempDir(), "program.wasm")
-	if err := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	actual := execute(test, "node", filepath.Join(repository, "oracle", "wasi-shim.mjs"), binary)
 	backend := onJavaScriptBackend(test, program)
@@ -305,9 +307,9 @@ func TestWASIShimContractsAndMutants(test *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
-	original, err := os.ReadFile(filepath.Join(repository, "internal/native/wasm/shim.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	original, readError := os.ReadFile(filepath.Join(repository, "internal/native/wasm/shim.mjs"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	checks := `import assert from 'node:assert/strict';
 import { wasiShim } from './shim.mjs';
@@ -350,12 +352,12 @@ if(check==='iovecs') {
 	for _, check := range []string{"iovecs", "exit", "preopens", "empty", "clock", "monotonic"} {
 		test.Run(check, func(test *testing.T) {
 			directory := test.TempDir()
-			if err := os.WriteFile(filepath.Join(directory, "shim.mjs"), original, 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(filepath.Join(directory, "shim.mjs"), original, 0644); writeError != nil {
+				test.Fatal(writeError)
 			}
 			script := filepath.Join(directory, "check.mjs")
-			if err := os.WriteFile(script, []byte(checks), 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(script, []byte(checks), 0644); writeError != nil {
+				test.Fatal(writeError)
 			}
 			actual := execute(test, "node", script, check)
 			if actual.exitCode != 0 {
@@ -383,8 +385,12 @@ if(check==='iovecs') {
 				if mutant == string(original) {
 					test.Fatal("mutant did not change shim")
 				}
-				if err := os.WriteFile(filepath.Join(directory, "shim.mjs"), []byte(mutant), 0644); err != nil {
-					test.Fatal(err)
+				if writeError := os.WriteFile(
+					filepath.Join(directory, "shim.mjs"),
+					[]byte(mutant),
+					0644,
+				); writeError != nil {
+					test.Fatal(writeError)
 				}
 				actual = execute(test, "node", script, check)
 				if actual.exitCode == 0 || !strings.Contains(string(actual.stderr), "AssertionError") {
@@ -402,14 +408,14 @@ func TestWASIShimRequest(test *testing.T) {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
 	directory := test.TempDir()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	path := filepath.Join(root, "cmd/adamic/testdata/wasi/request.a")
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	handler := -1
 	for index, function := range program.Functions {
@@ -417,17 +423,17 @@ func TestWASIShimRequest(test *testing.T) {
 			handler = index
 		}
 	}
-	source, err := native.WASI(program, handler)
-	if err != nil || handler == -1 {
-		test.Fatalf("request emission: handler=%d error=%v", handler, err)
+	source, wasiError := native.WASI(program, handler)
+	if wasiError != nil || handler == -1 {
+		test.Fatalf("request emission: handler=%d error=%v", handler, wasiError)
 	}
 	binary := filepath.Join(directory, "request.wasm")
-	if err := native.Build(
+	if buildError := native.Build(
 		source,
 		binary,
 		native.Options{Target: "wasm32-wasi", Request: true, Count: true},
-	); err != nil {
-		test.Fatal(err)
+	); buildError != nil {
+		test.Fatal(buildError)
 	}
 	script := filepath.Join(directory, "request.mjs")
 	probe := `import assert from 'node:assert/strict';
@@ -462,8 +468,8 @@ if(mode==='source') {
  }
 }
 `
-	if err := os.WriteFile(script, []byte(probe), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(script, []byte(probe), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	shim := execute(test, "node", "--disable-warning=ExperimentalWarning", script, "shim", binary, root)
 	reference := execute(test, "node", "--disable-warning=ExperimentalWarning", script, "wasi", binary, root)
@@ -497,9 +503,9 @@ func TestWASIShimClockReadsTheHost(test *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
-	clang, err := native.WASIClang()
-	if err != nil {
-		test.Fatal(err)
+	clang, wasiClangError := native.WASIClang()
+	if wasiClangError != nil {
+		test.Fatal(wasiClangError)
 	}
 	directory := test.TempDir()
 	source := filepath.Join(directory, "clock.c")
@@ -510,11 +516,11 @@ func TestWASIShimClockReadsTheHost(test *testing.T) {
 		"\tprintf(\"monotonic started and forward: %d\\n\", (first.tv_sec > 0 || first.tv_nsec > 0) && (second.tv_sec > first.tv_sec || (second.tv_sec == first.tv_sec && second.tv_nsec >= first.tv_nsec)));\n" +
 		"\tprintf(\"monotonic is not the wall clock: %d\\n\", first.tv_sec < wall.tv_sec / 2);\n" +
 		"\treturn 0;\n}\n"
-	if err := os.WriteFile(source, []byte(probe), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(source, []byte(probe), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	binary := filepath.Join(directory, "clock.wasm")
-	if output, err := toolchain.Command(
+	if output, combinedOutputError := toolchain.Command(
 		clang,
 		"--target=wasm32-wasi",
 		"--sysroot="+os.Getenv("WASI_SYSROOT"),
@@ -522,8 +528,8 @@ func TestWASIShimClockReadsTheHost(test *testing.T) {
 		source,
 		"-o",
 		binary,
-	).CombinedOutput(); err != nil {
-		test.Fatalf("clock probe: %v\n%s", err, output)
+	).CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("clock probe: %v\n%s", combinedOutputError, output)
 	}
 	const agreed = "realtime after 2023: 1\nmonotonic started and forward: 1\nmonotonic is not the wall clock: 1\n"
 	reference := execute(
@@ -552,13 +558,13 @@ func TestWASIShimClockReadsTheHost(test *testing.T) {
 		)
 	}
 	// The same runner over a shim whose clock returns without writing the time.
-	original, err := os.ReadFile(filepath.Join(repository, "internal/native/wasm/shim.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	original, readError := os.ReadFile(filepath.Join(repository, "internal/native/wasm/shim.mjs"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	runner, err := os.ReadFile(filepath.Join(repository, "oracle", "wasi-shim.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, readError := os.ReadFile(filepath.Join(repository, "oracle", "wasi-shim.mjs"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	const write = "new DataView(memory.buffer).setBigUint64(time, nanoseconds, true);\n            return 0;"
 	mutant := strings.Replace(string(original), write, "return 0;", 1)
@@ -569,11 +575,14 @@ func TestWASIShimClockReadsTheHost(test *testing.T) {
 		"internal/native/wasm/shim.mjs": mutant,
 		"oracle/wasi-shim.mjs":          string(runner),
 	} {
-		if err := os.MkdirAll(filepath.Join(directory, filepath.Dir(path)), 0o755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(
+			filepath.Join(directory, filepath.Dir(path)),
+			0o755,
+		); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.WriteFile(filepath.Join(directory, path), []byte(contents), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, path), []byte(contents), 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	mutated := execute(test, "node", filepath.Join(directory, "oracle", "wasi-shim.mjs"), binary)

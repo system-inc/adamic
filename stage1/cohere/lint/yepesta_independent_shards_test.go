@@ -42,9 +42,9 @@ func jsxTextnodesDescriptor(test *testing.T) registry.Descriptor {
 func jsxTextnodesKey(test *testing.T, row string) string {
 	test.Helper()
 	fields := strings.SplitN(row, "\t", 2)
-	data, err := os.ReadFile(fields[0])
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(fields[0])
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	options := ""
 	if len(fields) == 2 {
@@ -128,9 +128,9 @@ func TestMutantsReactJsxNoCommentTextnodesUnion(test *testing.T) {
 		test.Fatal("shard enumeration mismatch")
 	}
 	// Check the gate-visible top-level enumeration, not merely the array size.
-	file, err := parser.ParseFile(token.NewFileSet(), "yepesta_independent_shards_test.go", nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	file, parseFileError := parser.ParseFile(token.NewFileSet(), "yepesta_independent_shards_test.go", nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	functions := map[int]bool{}
 	for _, decl := range file.Decls {
@@ -142,8 +142,8 @@ func TestMutantsReactJsxNoCommentTextnodesUnion(test *testing.T) {
 		if !ok {
 			continue
 		}
-		i, err := strconv.Atoi(suffix)
-		if err != nil || suffix != fmt.Sprintf("%03d", i) || i < 0 || i >= len(slices) {
+		i, parseError := strconv.Atoi(suffix)
+		if parseError != nil || suffix != fmt.Sprintf("%03d", i) || i < 0 || i >= len(slices) {
 			test.Fatalf("invalid shard function %s", fn.Name.Name)
 		}
 		functions[i] = true
@@ -326,13 +326,13 @@ func yepestaFetch(test *testing.T) (yepestaBundle, string) {
 	if directory == "" {
 		test.Fatal("shared preparation failed")
 	}
-	data, err := os.ReadFile(filepath.Join(directory, "bundle.json"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(directory, "bundle.json"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var bundle yepestaBundle
-	if err := json.Unmarshal(data, &bundle); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &bundle); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	bundle.Oracle = filepath.Join(directory, bundle.Oracle)
 	for _, rows := range [][]string{bundle.Rows, bundle.Witnesses} {
@@ -354,30 +354,30 @@ func yepestaExecute(test *testing.T, directory, name string, args ...string) exe
 	ctx, cancel := context.WithDeadline(context.Background(), deadline)
 	defer cancel()
 	cmd := lintCommand(ctx, directory, name, args...)
-	out, err := os.CreateTemp(test.TempDir(), "stdout-")
-	if err != nil {
-		test.Fatal(err)
+	out, temporaryFileError := os.CreateTemp(test.TempDir(), "stdout-")
+	if temporaryFileError != nil {
+		test.Fatal(temporaryFileError)
 	}
 	defer out.Close()
 	cmd.Stdout = out
 	var stderr bytes.Buffer
 	cmd.Stderr = &stderr
 	started := time.Now()
-	err = cmd.Run()
-	if err != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
-		test.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
+	runError := cmd.Run()
+	if runError != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
+		test.Fatalf("%s %v: %v\n%s", name, args, runError, &stderr)
 	}
-	data, err := os.ReadFile(out.Name())
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(out.Name())
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return execution{data, time.Since(started)}
 }
 func yepestaJavaScript(test *testing.T, module, path string, count bool) execution {
 	test.Helper()
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	args := []string{"--disable-warning=ExperimentalWarning", runner, module, "--manifest", path}
 	if count {

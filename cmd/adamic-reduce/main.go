@@ -26,14 +26,23 @@ func main() {
 }
 
 func run() int {
-	root := flag.String("root", ".", "the checkout whose compiler the program fails: its adamic command, runtime and oracle/node.mjs")
-	written := flag.String("signature", "", "what to keep, as <kind>:<text>, kind one of "+strings.Join(fuzz.SignatureKinds, ", ")+" (default: the program's first failure)")
+	root := flag.String(
+		"root",
+		".",
+		"the checkout whose compiler the program fails: its adamic command, runtime and oracle/node.mjs",
+	)
+	written := flag.String("signature", "", "what to keep, as <kind>:<text>, kind one of "+
+		strings.Join(fuzz.SignatureKinds, ", ")+
+		" (default: the program's first failure)")
 	output := flag.String("o", "", "where the reduced program is written (default: stdout)")
 	parallel := flag.Int("parallel", runtime.GOMAXPROCS(0), "how many candidates at once")
 	budget := flag.Int("budget", 5000, "the most candidates tried")
 	work := flag.String("work", filepath.Join(os.TempDir(), "adamic-reduce"), "where candidates are built and run")
 	flag.Usage = func() {
-		fmt.Fprintln(os.Stderr, "usage: adamic-reduce [-signature <kind>:<text>] [-o out.a] [-root <checkout>] <program.a|.ts>")
+		fmt.Fprintln(
+			os.Stderr,
+			"usage: adamic-reduce [-signature <kind>:<text>] [-o out.a] [-root <checkout>] <program.a|.ts>",
+		)
 		flag.PrintDefaults()
 	}
 	flag.Parse()
@@ -42,15 +51,15 @@ func run() int {
 		return 2
 	}
 	path := flag.Arg(0)
-	source, err := os.ReadFile(path)
-	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
+	source, readError := os.ReadFile(path)
+	if readError != nil {
+		fmt.Fprintln(os.Stderr, readError)
 		return 1
 	}
 	started := time.Now()
-	checkout, err := fuzz.Prepare(*root, filepath.Join(*work, "checkout"))
-	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
+	checkout, prepareError := fuzz.Prepare(*root, filepath.Join(*work, "checkout"))
+	if prepareError != nil {
+		fmt.Fprintln(os.Stderr, prepareError)
 		return 1
 	}
 	name := "program" + filepath.Ext(path)
@@ -58,37 +67,59 @@ func run() int {
 	original := checkout.Observe(string(source), name, filepath.Join(*work, "original"), "")
 	var signature fuzz.Signature
 	if *written == "" {
-		signature, err = fuzz.Derive(original)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "adamic-reduce: %s: %s\n", path, err)
+		var deriveError error
+		signature, deriveError = fuzz.Derive(original)
+		if deriveError != nil {
+			fmt.Fprintf(os.Stderr, "adamic-reduce: %s: %s\n", path, deriveError)
 			return 1
 		}
 		fmt.Fprintf(os.Stderr, "adamic-reduce: signature %s\n", signature)
 	} else {
-		signature, err = fuzz.ParseSignature(*written)
-		if err != nil {
-			fmt.Fprintln(os.Stderr, "adamic-reduce:", err)
+		var parseSignatureError error
+		signature, parseSignatureError = fuzz.ParseSignature(*written)
+		if parseSignatureError != nil {
+			fmt.Fprintln(os.Stderr, "adamic-reduce:", parseSignatureError)
 			return 2
 		}
 		if !original.Has(signature) {
-			fmt.Fprintf(os.Stderr, "adamic-reduce: %s doesn't fail with %s: %s %v\n", path, signature, original.Verdict, original.Lines)
+			fmt.Fprintf(
+				os.Stderr,
+				"adamic-reduce: %s doesn't fail with %s: %s %v\n",
+				path,
+				signature,
+				original.Verdict,
+				original.Lines,
+			)
 			return 1
 		}
 	}
 	// A refusal or a crash needs only the compiler; anything else runs three ways.
 	observe := func(candidate string, slot int) fuzz.Observation {
-		return checkout.Observe(candidate, name, filepath.Join(*work, "candidates", fmt.Sprintf("slot%d", slot)), signature.Kind)
+		return checkout.Observe(
+			candidate,
+			name,
+			filepath.Join(*work, "candidates", fmt.Sprintf("slot%d", slot)),
+			signature.Kind,
+		)
 	}
 	reduced := fuzz.Reduce(path, string(source), signature, original, observe, *parallel, *budget)
 
 	if *output == "" {
 		fmt.Print(reduced.Source)
-	} else if err := os.WriteFile(*output, []byte(reduced.Source), 0o644); err != nil {
-		fmt.Fprintln(os.Stderr, err)
+	} else if writeError := os.WriteFile(*output, []byte(reduced.Source), 0o644); writeError != nil {
+		fmt.Fprintln(os.Stderr, writeError)
 		return 1
 	}
-	fmt.Fprintf(os.Stderr, "adamic-reduce: %d lines, %d bytes to %d lines, %d bytes; %d candidates in %s\n",
-		lines(string(source)), len(source), lines(reduced.Source), len(reduced.Source), reduced.Tried, time.Since(started).Round(100*time.Millisecond))
+	fmt.Fprintf(
+		os.Stderr,
+		"adamic-reduce: %d lines, %d bytes to %d lines, %d bytes; %d candidates in %s\n",
+		lines(string(source)),
+		len(source),
+		lines(reduced.Source),
+		len(reduced.Source),
+		reduced.Tried,
+		time.Since(started).Round(100*time.Millisecond),
+	)
 	return 0
 }
 

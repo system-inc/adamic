@@ -95,13 +95,13 @@ func TestPostcssSelectorParserParsesAsGoCohereDoes(test *testing.T) {
 		)
 	}
 	casesPath, goAnswers := askedCases(test)
-	script, err := filepath.Abs(filepath.Join("testdata", "library.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	script, absolutePathError := filepath.Abs(filepath.Join("testdata", "library.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	answersPath := filepath.Join(test.TempDir(), "go-answers.txt")
-	if err := os.WriteFile(answersPath, []byte(goAnswers), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(answersPath, []byte(goAnswers), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	libraryRun := execute(test, nil, "node", script, library, casesPath, answersPath)
 	if libraryRun.exitCode != 0 {
@@ -219,14 +219,14 @@ func selectorAnswersInputs(seed int64, generated int, oracleDigest, libraryDiges
 // placeholders: keying builds nothing.
 func TestSelectorAnswersRekey(test *testing.T) {
 	test.Parallel()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	keys := func(inputs buildcache.Inputs) (string, string) {
-		declared, err := buildcache.Key(root, inputs)
-		if err != nil {
-			test.Fatal(err)
+		declared, keyError := buildcache.Key(root, inputs)
+		if keyError != nil {
+			test.Fatal(keyError)
 		}
 		return buildcache.NameKey(root, inputs), declared
 	}
@@ -266,9 +266,9 @@ func portDirectory(test *testing.T, applied *mutant) string {
 	test.Helper()
 	directory := test.TempDir()
 	for _, name := range portFiles {
-		contents, err := os.ReadFile(name)
-		if err != nil {
-			test.Fatal(err)
+		contents, readError := os.ReadFile(name)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		source := string(contents)
 		if applied != nil && applied.file == name {
@@ -277,8 +277,8 @@ func portDirectory(test *testing.T, applied *mutant) string {
 			}
 			source = strings.Replace(source, applied.from, applied.to, 1)
 		}
-		if err := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	return directory
@@ -314,13 +314,13 @@ func firstDifference(got string, want string) string {
 // lowered checks and lowers a program, failing the test with stage 0's refusal if it can't.
 func lowered(test *testing.T, path string) *ir.Program {
 	test.Helper()
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatalf("Load: %v", err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatalf("Load: %v", loadError)
 	}
-	result, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		test.Fatalf("Lower: %v", err)
+	result, lowerError := lower.Lower(context.Background(), program)
+	if lowerError != nil {
+		test.Fatalf("Lower: %v", lowerError)
 	}
 	return result
 }
@@ -348,10 +348,10 @@ func execute(test *testing.T, environment []string, name string, arguments ...st
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
-	err := childguard.Run(command, childguard.Options{})
+	runError := childguard.Run(command, childguard.Options{})
 	var exitError *exec.ExitError
-	if err != nil && !errors.As(err, &exitError) {
-		test.Fatalf("running %s: %v", name, err)
+	if runError != nil && !errors.As(runError, &exitError) {
+		test.Fatalf("running %s: %v", name, runError)
 	}
 	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
 }
@@ -359,9 +359,9 @@ func execute(test *testing.T, environment []string, name string, arguments ...st
 // onNode runs a program's source on Node, through the oracle's runner, with its arguments.
 func onNode(test *testing.T, path string, arguments ...string) run {
 	test.Helper()
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return execute(
 		test,
@@ -375,8 +375,8 @@ func onNode(test *testing.T, path string, arguments ...string) run {
 func onJavaScriptBackend(test *testing.T, program *ir.Program, arguments ...string) run {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "program.mjs")
-	if err := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return onNode(test, path, arguments...)
 }
@@ -389,8 +389,8 @@ func leaks(test *testing.T, program *ir.Program, sanitized string, arguments ...
 	switch runtime.GOOS {
 	case "darwin":
 		binary := filepath.Join(test.TempDir(), "port")
-		if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
-			test.Fatal(err)
+		if buildError := native.Build(native.C(program), binary, native.Options{}); buildError != nil {
+			test.Fatal(buildError)
 		}
 		report := execute(test, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
 		if report.exitCode == 0 {
@@ -416,13 +416,13 @@ func TestSelectorThroughput(test *testing.T) {
 	casesPath, answers := askedCases(test)
 	program := lowered(test, filepath.Join(portDirectory(test, nil), "main.ts"))
 	binary := filepath.Join(test.TempDir(), "selector")
-	if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(program), binary, native.Options{}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	count := strings.Count(answers, "case ") * 10
 	answersPath := filepath.Join(test.TempDir(), "answers.txt")
-	if err := os.WriteFile(answersPath, []byte(answers), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(answersPath, []byte(answers), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	script, _ := filepath.Abs(filepath.Join("testdata", "library.mjs"))
 	library := os.Getenv("ADAMIC_SELECTOR_LIBRARY")
@@ -491,16 +491,16 @@ func TestCorpusKeepsEveryParseableFile(test *testing.T) {
 		excluded:             "a {.bordered();}",
 	} {
 		path := filepath.Join(root, name)
-		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
-	script, err := filepath.Abs(filepath.Join("testdata", "library.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	script, absolutePathError := filepath.Abs(filepath.Join("testdata", "library.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	corpus := filepath.Join(test.TempDir(), "corpus.txt")
 	// These are explicit generated controls, not an enumerated repository corpus.
@@ -511,12 +511,12 @@ func TestCorpusKeepsEveryParseableFile(test *testing.T) {
 	}
 	fileList := filepath.Join(test.TempDir(), "css-files.json")
 	writeList := func() {
-		data, err := json.Marshal(files)
-		if err != nil {
-			test.Fatal(err)
+		data, encodeError := json.Marshal(files)
+		if encodeError != nil {
+			test.Fatal(encodeError)
 		}
-		if err := os.WriteFile(fileList, data, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(fileList, data, 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	writeList()
@@ -524,9 +524,9 @@ func TestCorpusKeepsEveryParseableFile(test *testing.T) {
 	if result.exitCode != 0 {
 		test.Fatalf("corpus: %s", result.stderr)
 	}
-	selectors, err := os.ReadFile(corpus)
-	if err != nil {
-		test.Fatal(err)
+	selectors, readError := os.ReadFile(corpus)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if string(selectors) != "\".also-required\"\n\".required\"\n" {
 		test.Fatalf("parseable files lost selectors: %q", selectors)
@@ -535,25 +535,33 @@ func TestCorpusKeepsEveryParseableFile(test *testing.T) {
 		test.Fatalf("expected CSS error was not counted: %s", result.stdout)
 	}
 	// A file not named by the Git manifest cannot silently join the corpus.
-	if err := os.WriteFile(filepath.Join(root, "unlisted.css"), []byte(".stray {}"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(root, "unlisted.css"), []byte(".stray {}"), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	unchanged := execute(test, nil, "node", script, library, "corpus", root, corpus, "", fileList)
 	if unchanged.exitCode != 0 || string(unchanged.stdout) != string(result.stdout) {
 		test.Fatalf("unlisted file changed corpus: exit %d, %s", unchanged.exitCode, unchanged.stderr)
 	}
-	if err := os.WriteFile(filepath.Join(root, excluded), []byte(".newly-parseable {}"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(
+		filepath.Join(root, excluded),
+		[]byte(".newly-parseable {}"),
+		0644,
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
 	result = execute(test, nil, "node", script, library, "corpus", root, corpus, "", fileList)
 	if result.exitCode == 0 || !strings.Contains(string(result.stderr), "expected CSS error became parseable") {
 		test.Fatalf("parseable exclusion was omitted: exit %d, %s", result.exitCode, result.stderr)
 	}
-	if err := os.WriteFile(filepath.Join(root, excluded), []byte("a {.bordered();}"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(root, excluded), []byte("a {.bordered();}"), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if err := os.WriteFile(filepath.Join(root, "unexpected.css"), []byte("a {.bordered();}"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(
+		filepath.Join(root, "unexpected.css"),
+		[]byte("a {.bordered();}"),
+		0644,
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
 	files = append(files, filepath.Join(root, "unexpected.css"))
 	writeList()
@@ -572,14 +580,14 @@ type parserEntry struct {
 }
 
 func (output *parserEntry) Write(data []byte) (int, error) {
-	n, err := output.Buffer.Write(data)
+	n, writeError := output.Buffer.Write(data)
 	if !output.sent {
 		if end := bytes.IndexByte(output.Bytes(), '\n'); end >= 0 {
 			output.sent = true
 			output.entered <- string(output.Bytes()[:end+1])
 		}
 	}
-	return n, err
+	return n, writeError
 }
 
 // The explicit exception to JS agreement is observable, not an inference from Go.

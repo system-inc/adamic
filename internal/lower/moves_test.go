@@ -17,9 +17,9 @@ function run(): void {
 }
 run();
 `
-	program, err := lowerSource(test, source)
-	if err != nil {
-		test.Fatal(err)
+	program, lowerSourceError := lowerSource(test, source)
+	if lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
 	found := 0
 	for _, function := range program.Functions {
@@ -40,7 +40,7 @@ run();
 
 func TestMoveRejectsLaterSourceUse(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(test, `import { parallelMap } from 'adamic';
+	_, lowerSourceError := lowerSource(test, `import { parallelMap } from 'adamic';
 function run(): void {
  const items = [{ value: 1 }];
  const results = parallelMap(items, (item) => { item.value += 1; return item; });
@@ -51,9 +51,9 @@ function run(): void {
 run();
 `)
 	var refused *Refused
-	if !errors.As(err, &refused) ||
+	if !errors.As(lowerSourceError, &refused) ||
 		refused.What != "use after move: items.length; items was moved into parallelMap" ||
 		refused.Fix != "don't use it after the parallelMap" {
-		test.Fatalf("want exact use-after-move refusal, got %v", err)
+		test.Fatalf("want exact use-after-move refusal, got %v", lowerSourceError)
 	}
 }

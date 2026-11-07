@@ -24,9 +24,9 @@ func performance(test *testing.T, whole bool) {
 		test.Skip("set ADAMIC_PARSER_BENCH=1 for best-of-five whole compiler parsing")
 	}
 	manifest, files := compilerManifest(test)
-	directory, err := filepath.Abs(".")
-	if err != nil {
-		test.Fatal(err)
+	directory, absolutePathError := filepath.Abs(".")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	oracle := goOracle(test)
 	binary := buildPort(test, directory, false)
@@ -52,9 +52,9 @@ func performance(test *testing.T, whole bool) {
 		"/sys/fs/cgroup/memory.max",
 		"/proc/loadavg",
 	} {
-		data, err := os.ReadFile(path)
-		if err != nil {
-			test.Logf("machine %s: %v", path, err)
+		data, readError := os.ReadFile(path)
+		if readError != nil {
+			test.Logf("machine %s: %v", path, readError)
 			continue
 		}
 		text := strings.TrimSpace(string(data))
@@ -103,9 +103,9 @@ func performance(test *testing.T, whole bool) {
 			test.Fatalf("%s warm-up count %q differs from %q", runner.name, result.output, want)
 		}
 	}
-	count, err := strconv.Atoi(strings.TrimSpace(string(want)))
-	if err != nil || count <= 0 {
-		test.Fatalf("bad count %q: %v", want, err)
+	count, parseError := strconv.Atoi(strings.TrimSpace(string(want)))
+	if parseError != nil || count <= 0 {
+		test.Fatalf("bad count %q: %v", want, parseError)
 	}
 	best := []time.Duration{time.Hour, time.Hour, time.Hour}
 	for sample := 0; sample < 5; sample++ {
@@ -148,20 +148,20 @@ func performance(test *testing.T, whole bool) {
 		best[2].Seconds()/best[1].Seconds(),
 	)
 	if destination := os.Getenv("ADAMIC_PARSER_ARTIFACTS"); destination != "" {
-		if err := os.MkdirAll(destination, 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(destination, 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 		for _, file := range []struct{ from, name string }{
 			{binary, "parser-native"},
 			{oracle, "parser-go"},
 			{manifest, "compiler.manifest"},
 		} {
-			data, err := os.ReadFile(file.from)
-			if err != nil {
-				test.Fatal(err)
+			data, readError := os.ReadFile(file.from)
+			if readError != nil {
+				test.Fatal(readError)
 			}
-			if err := os.WriteFile(filepath.Join(destination, file.name), data, 0755); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(filepath.Join(destination, file.name), data, 0755); writeError != nil {
+				test.Fatal(writeError)
 			}
 		}
 		test.Log(fmt.Sprintf("artifacts: %s", destination))
@@ -174,19 +174,19 @@ func TestNodeCountCheckCatchesMutant(test *testing.T) {
 	test.Parallel()
 	directory := test.TempDir()
 	source := filepath.Join(directory, "expressions.ts")
-	if err := os.WriteFile(source, []byte("x + y * z; a?.b(x); (x) => x;"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(source, []byte("x + y * z; a?.b(x); (x) => x;"), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	manifest := filepath.Join(directory, "manifest")
-	if err := os.WriteFile(manifest, []byte(source+"\n"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(manifest, []byte(source+"\n"), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	oracle := goOracle(test)
 	wantCount := execute(test, "", oracle, "--manifest", manifest, "--count").output
 	wantTree := execute(test, "", oracle, "--manifest", manifest).output
-	absolute, err := filepath.Abs(".")
-	if err != nil {
-		test.Fatal(err)
+	absolute, absolutePathError := filepath.Abs(".")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	baseline := buildPort(test, absolute, true)
 	for _, result := range []execution{

@@ -42,13 +42,13 @@ func TestEnumSemanticMutants(test *testing.T) {
 			if family == "const member" {
 				fixture = "enums_const.a"
 			}
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			changed := false
 			for position, statement := range program.Main {
@@ -108,8 +108,12 @@ func TestEnumSemanticMutants(test *testing.T) {
 				test.Fatal("mutant changed no IR")
 			}
 			binary := filepath.Join(test.TempDir(), "mutant")
-			if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-				test.Fatal(err)
+			if buildError := native.Build(
+				native.C(program),
+				binary,
+				native.Options{Sanitize: true},
+			); buildError != nil {
+				test.Fatal(buildError)
 			}
 			result := executeWith(
 				test,
@@ -129,13 +133,13 @@ func TestEnumSemanticMutants(test *testing.T) {
 
 func TestEnumCleanupMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/enums.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/enums.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	code := native.C(program)
 	release := ""
@@ -149,12 +153,12 @@ func TestEnumCleanupMutant(test *testing.T) {
 	}
 	code = strings.Replace(code, release, "", 1)
 	binary := filepath.Join(test.TempDir(), "mutant")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(code, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	// Dead compiler temporaries may still resemble roots in registers or the returned main stack.
 	// Keep global roots enabled: the emitted global clearing is still required.
-	report, err := leakcheck.Check(leakcheck.Program{
+	report, checkError := leakcheck.Check(leakcheck.Program{
 		C: code, Sanitized: binary, Counted: filepath.Join(test.TempDir(), "counted"),
 		Execute: func(environment []string, name string, arguments ...string) leakcheck.Run {
 			environment = append(
@@ -165,8 +169,8 @@ func TestEnumCleanupMutant(test *testing.T) {
 			return leakRun(executeWith(test, environment, name, arguments...))
 		},
 	})
-	if err != nil {
-		test.Fatal(err)
+	if checkError != nil {
+		test.Fatal(checkError)
 	}
 	if !strings.Contains(report, "LeakSanitizer: detected memory leaks") &&
 		!strings.Contains(report, "heap values leaked:") {

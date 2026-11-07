@@ -92,14 +92,17 @@ type cDeclaration struct {
 }
 
 func splitDeclarations(source string) ([]cDeclaration, error) {
-	tokens, err := cTokens(source)
-	if err != nil {
-		return nil, err
+	tokens, cTokensError := cTokens(source)
+	if cTokensError != nil {
+		return nil, cTokensError
 	}
 	var declarations []cDeclaration
 	for begin := 0; begin < len(tokens); {
 		if strings.HasPrefix(tokens[begin].text, "#") {
-			declarations = append(declarations, cDeclaration{tokens: tokens[begin : begin+1], body: -1, initializer: -1})
+			declarations = append(
+				declarations,
+				cDeclaration{tokens: tokens[begin : begin+1], body: -1, initializer: -1},
+			)
 			begin++
 			continue
 		}
@@ -207,13 +210,18 @@ func splitDeclarations(source string) ([]cDeclaration, error) {
 		// Runtime entry points may be declared by an emitted helper's consumer.
 		// Their prototypes belong in every unit's header, with external linkage and
 		// their API names intact. Non-static definitions remain unsupported.
-		if prototype && !declaration.function && declaration.initializer < 0 && declaration.tokens[0].text != "static" && cName.MatchString(declaration.name) {
+		if prototype &&
+			!declaration.function &&
+			declaration.initializer < 0 &&
+			declaration.tokens[0].text != "static" &&
+			cName.MatchString(declaration.name) {
 			declaration.name = ""
 			declarations = append(declarations, declaration)
 			begin = end
 			continue
 		}
-		if declaration.name != "main" && (!cName.MatchString(declaration.name) || declaration.tokens[0].text != "static") {
+		if declaration.name != "main" &&
+			(!cName.MatchString(declaration.name) || declaration.tokens[0].text != "static") {
 			return nil, fmt.Errorf("native: split: unsupported declaration near %q", declaration.tokens[0].text)
 		}
 		declarations = append(declarations, declaration)
@@ -244,9 +252,9 @@ func generatedTypeDeclaration(tokens []cToken) bool {
 // touches literal bytes. The fixed namespace cannot collide with runtime API names. Existing
 // program-wide indexes distinguish symbols; no whole-program content hash invalidates all units.
 func splitC(source string) (string, []compilationUnit, error) {
-	declarations, err := splitDeclarations(source)
-	if err != nil {
-		return "", nil, err
+	declarations, splitDeclarationsError := splitDeclarations(source)
+	if splitDeclarationsError != nil {
+		return "", nil, splitDeclarationsError
 	}
 	names := map[string]string{}
 	for _, d := range declarations {
@@ -341,7 +349,9 @@ func splitC(source string) (string, []compilationUnit, error) {
 	}
 	units = append([]compilationUnit{{"state.c", state.String()}}, groups...)
 	for i := range units {
-		units[i].source = unmarked(resolveSourceLines("#include \"units.h\"\n"+units[i].source, "/adamic-units/"+units[i].name))
+		units[i].source = unmarked(
+			resolveSourceLines("#include \"units.h\"\n"+units[i].source, "/adamic-units/"+units[i].name),
+		)
 	}
 	return unmarked(header.String()), units, nil
 }
@@ -403,7 +413,14 @@ const UnitMismatchPrefix = "native: unit cache mismatch: "
 
 // unitMismatchLine is mismatch as that line says it: the unit, its key and both digests.
 func unitMismatchLine(mismatch unitMismatch) string {
-	return fmt.Sprintf("%sunit %s key %s cached %s cold %s", UnitMismatchPrefix, mismatch.Unit, mismatch.Key, mismatch.Cached, mismatch.Cold)
+	return fmt.Sprintf(
+		"%sunit %s key %s cached %s cold %s",
+		UnitMismatchPrefix,
+		mismatch.Unit,
+		mismatch.Key,
+		mismatch.Cached,
+		mismatch.Cold,
+	)
 }
 
 // unitBuildLog is the file a build's census lines go to, where Loom's builder reads each product's (adamic's
@@ -417,37 +434,37 @@ func noteUnitMismatch(mismatch unitMismatch) {
 	if path == "" {
 		return
 	}
-	file, err := os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o644)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "native: the unit cache mismatch couldn't be noted in %s: %v\n", path, err)
+	file, openError := os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o644)
+	if openError != nil {
+		fmt.Fprintf(os.Stderr, "native: the unit cache mismatch couldn't be noted in %s: %v\n", path, openError)
 		return
 	}
 	defer file.Close()
-	if _, err := file.WriteString(unitMismatchLine(mismatch) + "\n"); err != nil {
-		fmt.Fprintf(os.Stderr, "native: the unit cache mismatch couldn't be noted in %s: %v\n", path, err)
+	if _, writeStringError := file.WriteString(unitMismatchLine(mismatch) + "\n"); writeStringError != nil {
+		fmt.Fprintf(os.Stderr, "native: the unit cache mismatch couldn't be noted in %s: %v\n", path, writeStringError)
 	}
 }
 
 // markUnitCacheOff leaves mismatch's mark in cache, made whole before it's in place.
 func markUnitCacheOff(cache string, mismatch unitMismatch) error {
-	content, err := json.Marshal(mismatch)
-	if err != nil {
-		return err
+	content, encodeError := json.Marshal(mismatch)
+	if encodeError != nil {
+		return encodeError
 	}
-	if err := os.MkdirAll(cache, 0o755); err != nil {
-		return err
+	if createDirectoryError := os.MkdirAll(cache, 0o755); createDirectoryError != nil {
+		return createDirectoryError
 	}
-	temporary, err := os.CreateTemp(cache, ".off-")
-	if err != nil {
-		return err
+	temporary, temporaryFileError := os.CreateTemp(cache, ".off-")
+	if temporaryFileError != nil {
+		return temporaryFileError
 	}
 	defer os.Remove(temporary.Name())
-	if _, err := temporary.Write(append(content, '\n')); err != nil {
+	if _, writeError := temporary.Write(append(content, '\n')); writeError != nil {
 		temporary.Close()
-		return err
+		return writeError
 	}
-	if err := temporary.Close(); err != nil {
-		return err
+	if closeError := temporary.Close(); closeError != nil {
+		return closeError
 	}
 	return os.Rename(temporary.Name(), filepath.Join(cache, unitCacheOffName))
 }
@@ -456,7 +473,16 @@ func markUnitCacheOff(cache string, mismatch unitMismatch) error {
 // under directory holding common beside it, and kept in cache. A nil keying, or a unit whose source the key can't take
 // (unitSourceRefusal), compiles uncached. A sampled hit is compiled again, and a mismatch marks the cache off, prints
 // UnitMismatchPrefix's line naming the unit, the key and both digests, and is the cold object, never an error.
-func compileUnit(unit compilationUnit, common []runtimeFile, flags []string, compiler string, keying *unitKeying, cache, directory string, jobserver *Jobserver, sanitized bool) (string, error) {
+func compileUnit(
+	unit compilationUnit,
+	common []runtimeFile,
+	flags []string,
+	compiler string,
+	keying *unitKeying,
+	cache, directory string,
+	jobserver *Jobserver,
+	sanitized bool,
+) (string, error) {
 	return compileUnitAs(unit, common, flags, compiler, keying, cache, directory, jobserver, "off", sanitized)
 }
 
@@ -464,7 +490,17 @@ func compileUnit(unit compilationUnit, common []runtimeFile, flags []string, com
 // for a build that read no cache, repass for compileUnits' second pass after a mismatch (Performance on #m62spx0), so
 // a reader counting units or a hit rate leaves the pass out from the line alone, in a log several processes append to,
 // whose order no reader can trust.
-func compileUnitAs(unit compilationUnit, common []runtimeFile, flags []string, compiler string, keying *unitKeying, cache, directory string, jobserver *Jobserver, uncached string, sanitized bool) (string, error) {
+func compileUnitAs(
+	unit compilationUnit,
+	common []runtimeFile,
+	flags []string,
+	compiler string,
+	keying *unitKeying,
+	cache, directory string,
+	jobserver *Jobserver,
+	uncached string,
+	sanitized bool,
+) (string, error) {
 	environment := toolchain.Env()
 	if keying != nil {
 		environment = keying.environment
@@ -474,11 +510,21 @@ func compileUnitAs(unit compilationUnit, common []runtimeFile, flags []string, c
 		}
 	}
 	if keying == nil {
-		object, clang, err := compileUnitObject(unit, common, flags, compiler, environment, directory, jobserver, sanitized)
-		if err != nil {
-			return "", err
+		object, clang, compileUnitObjectError := compileUnitObject(
+			unit,
+			common,
+			flags,
+			compiler,
+			environment,
+			directory,
+			jobserver,
+			sanitized,
+		)
+		if compileUnitObjectError != nil {
+			return "", compileUnitObjectError
 		}
-		// An uncached unit is never keyed, since keying is what reads clang's facts before it runs, so its line names no key.
+		// An uncached unit is never keyed, since keying is what reads clang's facts before it runs, so its line names
+		// no key.
 		buildLog("cCompile", unit.name, "", uncached, clang)
 		path := filepath.Join(directory, "uncached-"+unit.name+".o")
 		return path, os.WriteFile(path, object, 0o644)
@@ -500,21 +546,37 @@ func compileUnitAs(unit compilationUnit, common []runtimeFile, flags []string, c
 			buildLog("cCompile", unit.name, key, "hit", keyed)
 			return found, nil
 		}
-		cached, err := os.ReadFile(found)
-		if err != nil {
-			return "", err
+		cached, readError := os.ReadFile(found)
+		if readError != nil {
+			return "", readError
 		}
-		cold, clang, err := compileUnitObject(unit, common, flags, compiler, environment, directory, jobserver, sanitized)
-		if err != nil {
-			return "", err
+		cold, clang, compileUnitObjectError := compileUnitObject(
+			unit,
+			common,
+			flags,
+			compiler,
+			environment,
+			directory,
+			jobserver,
+			sanitized,
+		)
+		if compileUnitObjectError != nil {
+			return "", compileUnitObjectError
 		}
 		if !bytes.Equal(cached, cold) {
-			mismatch := unitMismatch{Unit: unit.name, Key: key, Cached: fmt.Sprintf("%x", sha256.Sum256(cached)), Cold: fmt.Sprintf("%x", sha256.Sum256(cold)), At: time.Now().UTC()}
-			// The cold bytes were compiled fresh from this unit's sources, so they're its object: the build goes on with
-			// them, green, and the hole is the house's to read, never a red charged to whatever change was building.
+			mismatch := unitMismatch{
+				Unit:   unit.name,
+				Key:    key,
+				Cached: fmt.Sprintf("%x", sha256.Sum256(cached)),
+				Cold:   fmt.Sprintf("%x", sha256.Sum256(cold)),
+				At:     time.Now().UTC(),
+			}
+			// The cold bytes were compiled fresh from this unit's sources, so they're its object: the build goes on
+			// with them, green, and the hole is the house's to read, never a red charged to whatever change was
+			// building.
 			marked := "marked off at " + filepath.Join(cache, unitCacheOffName)
-			if err := markUnitCacheOff(cache, mismatch); err != nil {
-				marked = "its mark couldn't be written: " + err.Error()
+			if markUnitCacheOffError := markUnitCacheOff(cache, mismatch); markUnitCacheOffError != nil {
+				marked = "its mark couldn't be written: " + markUnitCacheOffError.Error()
 			}
 			fmt.Fprintln(os.Stderr, unitMismatchLine(mismatch)+"; the unit cache is "+marked)
 			noteUnitMismatch(mismatch)
@@ -528,27 +590,36 @@ func compileUnitAs(unit compilationUnit, common []runtimeFile, flags []string, c
 		buildLog("cCompile", unit.name, key, "hit", keyed+clang)
 		return found, nil
 	}
-	contents, clang, err := compileUnitObject(unit, common, flags, compiler, environment, directory, jobserver, sanitized)
-	if err != nil {
-		return "", err
+	contents, clang, compileUnitObjectError := compileUnitObject(
+		unit,
+		common,
+		flags,
+		compiler,
+		environment,
+		directory,
+		jobserver,
+		sanitized,
+	)
+	if compileUnitObjectError != nil {
+		return "", compileUnitObjectError
 	}
 	// clang compiled it, so it is a miss even when another process published the same entry first.
 	buildLog("cCompile", unit.name, key, "miss", keyed+clang)
-	if err := os.MkdirAll(cache, 0o755); err != nil {
-		return "", err
+	if createDirectoryError := os.MkdirAll(cache, 0o755); createDirectoryError != nil {
+		return "", createDirectoryError
 	}
-	published, err := os.MkdirTemp(cache, ".publish-")
-	if err != nil {
-		return "", err
+	published, temporaryDirectoryError := os.MkdirTemp(cache, ".publish-")
+	if temporaryDirectoryError != nil {
+		return "", temporaryDirectoryError
 	}
 	defer os.RemoveAll(published)
-	if err := os.WriteFile(filepath.Join(published, "unit.o"), contents, 0o644); err != nil {
-		return "", err
+	if writeError := os.WriteFile(filepath.Join(published, "unit.o"), contents, 0o644); writeError != nil {
+		return "", writeError
 	}
-	if err := os.Rename(published, entry); err != nil {
+	if renameError := os.Rename(published, entry); renameError != nil {
 		found, ok := cachedFile(object)
 		if !ok {
-			return "", err
+			return "", renameError
 		}
 		return found, nil
 	}
@@ -558,18 +629,31 @@ func compileUnitAs(unit compilationUnit, common []runtimeFile, flags []string, c
 // compileUnitObject compiles unit from its .c, in a directory of its own under directory holding common beside it,
 // under environment exactly, and is the object's bytes and how long clang ran, timed inside its jobserver.Hold so a
 // token's wait isn't counted (library.go's buildLog).
-func compileUnitObject(unit compilationUnit, common []runtimeFile, flags []string, compiler string, environment []string, directory string, jobserver *Jobserver, sanitized bool) ([]byte, time.Duration, error) {
-	temporary, err := os.MkdirTemp(directory, ".unit-")
-	if err != nil {
-		return nil, 0, err
+func compileUnitObject(
+	unit compilationUnit,
+	common []runtimeFile,
+	flags []string,
+	compiler string,
+	environment []string,
+	directory string,
+	jobserver *Jobserver,
+	sanitized bool,
+) ([]byte, time.Duration, error) {
+	temporary, temporaryDirectoryError := os.MkdirTemp(directory, ".unit-")
+	if temporaryDirectoryError != nil {
+		return nil, 0, temporaryDirectoryError
 	}
 	defer os.RemoveAll(temporary)
 	for _, file := range append([]runtimeFile{{unit.name, []byte(unit.source)}}, common...) {
-		if err := os.WriteFile(filepath.Join(temporary, file.name), file.contents, 0o644); err != nil {
-			return nil, 0, err
+		if writeError := os.WriteFile(filepath.Join(temporary, file.name), file.contents, 0o644); writeError != nil {
+			return nil, 0, writeError
 		}
 	}
-	command := clangIn(temporary, compiler, append(slices.Clone(flags), unitCompileArguments(unit.name, temporary, flags, sanitized)...)...)
+	command := clangIn(
+		temporary,
+		compiler,
+		append(slices.Clone(flags), unitCompileArguments(unit.name, temporary, flags, sanitized)...)...,
+	)
 	// The environment the key read, with the directory CommandIn names as the compile's own.
 	working := []string{}
 	for _, setting := range command.Env {
@@ -580,19 +664,29 @@ func compileUnitObject(unit compilationUnit, common []runtimeFile, flags []strin
 	command.Env = append(slices.Clone(environment), working...)
 	var output []byte
 	var clang time.Duration
-	if err := jobserver.Hold(func() error {
+	if holdError := jobserver.Hold(func() error {
 		return timed(&clang, func() (err error) { output, err = command.CombinedOutput(); return err })
-	}); err != nil {
-		return nil, 0, fmt.Errorf("native: compiling unit %s: %w\n%s", unit.name, err, output)
+	}); holdError != nil {
+		return nil, 0, fmt.Errorf("native: compiling unit %s: %w\n%s", unit.name, holdError, output)
 	}
-	object, err := os.ReadFile(filepath.Join(temporary, "unit.o"))
-	return object, clang, err
+	object, readError := os.ReadFile(filepath.Join(temporary, "unit.o"))
+	return object, clang, readError
 }
 
 // compileUnits is every unit's object, jobs at once (compileUnit). Once any unit's cold check mismatches, the build's
 // cache is proved incomplete, not that unit's alone: every unit compiles again uncached, the hits already taken
 // included, so nothing is linked from keys this build caught short (Node's M4).
-func compileUnits(units []compilationUnit, common []runtimeFile, flags []string, compiler string, keying *unitKeying, cache, directory string, jobs int, jobserver *Jobserver, sanitized bool) ([]string, error) {
+func compileUnits(
+	units []compilationUnit,
+	common []runtimeFile,
+	flags []string,
+	compiler string,
+	keying *unitKeying,
+	cache, directory string,
+	jobs int,
+	jobserver *Jobserver,
+	sanitized bool,
+) ([]string, error) {
 	objects := make([]string, len(units))
 	failures := make([]error, len(units))
 	pass := func(keying *unitKeying, uncached string) error {
@@ -601,7 +695,18 @@ func compileUnits(units []compilationUnit, common []runtimeFile, flags []string,
 		for range jobs {
 			workers.Go(func() {
 				for index := range work {
-					objects[index], failures[index] = compileUnitAs(units[index], common, flags, compiler, keying, cache, directory, jobserver, uncached, sanitized)
+					objects[index], failures[index] = compileUnitAs(
+						units[index],
+						common,
+						flags,
+						compiler,
+						keying,
+						cache,
+						directory,
+						jobserver,
+						uncached,
+						sanitized,
+					)
 				}
 			})
 		}
@@ -612,13 +717,16 @@ func compileUnits(units []compilationUnit, common []runtimeFile, flags []string,
 		workers.Wait()
 		return errors.Join(failures...)
 	}
-	if err := pass(keying, "off"); err != nil {
-		return nil, err
+	if passError := pass(keying, "off"); passError != nil {
+		return nil, passError
 	}
 	if keying != nil && keying.mismatched.Load() {
-		fmt.Fprintln(os.Stderr, "native: units compile uncached: a unit's cold check mismatched in this build, so every unit compiles again")
-		if err := pass(nil, "repass"); err != nil {
-			return nil, err
+		fmt.Fprintln(
+			os.Stderr,
+			"native: units compile uncached: a unit's cold check mismatched in this build, so every unit compiles again",
+		)
+		if passError := pass(nil, "repass"); passError != nil {
+			return nil, passError
 		}
 	}
 	return objects, nil
@@ -631,35 +739,36 @@ func buildUnits(source, output string, options Options) error {
 // buildUnitsWithLibrary links the units with library, or the program's own runtime when it is empty, and with the
 // checker archive at the absolute path archive (checkerArchivePath) when it isn't empty.
 func buildUnitsWithLibrary(source, output string, options Options, library string, archive string) error {
-	header, units, err := splitC(source)
-	if err != nil {
-		return err
+	header, units, splitCError := splitC(source)
+	if splitCError != nil {
+		return splitCError
 	}
-	jobserver, err := defaultJobserver()
-	if err != nil {
-		return err
+	jobserver, defaultJobserverError := defaultJobserver()
+	if defaultJobserverError != nil {
+		return defaultJobserverError
 	}
-	directory, err := os.MkdirTemp("", "adamic-units-")
-	if err != nil {
-		return err
+	directory, temporaryDirectoryError := os.MkdirTemp("", "adamic-units-")
+	if temporaryDirectoryError != nil {
+		return temporaryDirectoryError
 	}
 	defer os.RemoveAll(directory)
 	if library == "" {
 		// Split and Jobs describe program compilation, never a different runtime archive.
 		runtimeOptions := options
 		runtimeOptions.Split, runtimeOptions.Jobs = false, 0
-		library, err = RuntimeLibraryForSource("", source, runtimeOptions)
-		if err != nil {
-			return err
+		var runtimeLibraryForSourceError error
+		library, runtimeLibraryForSourceError = RuntimeLibraryForSource("", source, runtimeOptions)
+		if runtimeLibraryForSourceError != nil {
+			return runtimeLibraryForSourceError
 		}
 	}
-	compiler, err := toolchain.Path("clang")
-	if err != nil {
-		return err
+	compiler, pathError := toolchain.Path("clang")
+	if pathError != nil {
+		return pathError
 	}
-	runtimeFiles, err := readRuntime(runtime, "runtime")
-	if err != nil {
-		return err
+	runtimeFiles, readRuntimeError := readRuntime(runtime, "runtime")
+	if readRuntimeError != nil {
+		return readRuntimeError
 	}
 	common := []runtimeFile{{"units.h", []byte(header)}}
 	for _, file := range runtimeFiles {
@@ -667,16 +776,17 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 			common = append(common, file)
 		}
 	}
-	cache, err := cacheDirectory("native-units")
-	if err != nil {
-		return err
+	cache, cacheDirectoryError := cacheDirectory("native-units")
+	if cacheDirectoryError != nil {
+		return cacheDirectoryError
 	}
 	jobs := options.Jobs
 	if jobs == 0 {
 		if value := os.Getenv("ADAMIC_NATIVE_JOBS"); value != "" {
-			jobs, err = strconv.Atoi(value)
-			if err != nil {
-				return fmt.Errorf("native: invalid ADAMIC_NATIVE_JOBS: %w", err)
+			var parseError error
+			jobs, parseError = strconv.Atoi(value)
+			if parseError != nil {
+				return fmt.Errorf("native: invalid ADAMIC_NATIVE_JOBS: %w", parseError)
 			}
 		}
 	}
@@ -697,49 +807,68 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 	// off for, compiles every unit uncached and says why.
 	var keying *unitKeying
 	if os.Getenv("ADAMIC_GATE_UNCACHED") != "1" {
+		var newUnitKeyingError error
 		if why, off := unitCacheOff(cache); off {
 			fmt.Fprintf(os.Stderr, "native: units compile uncached: %s\n", why)
-		} else if keying, err = newUnitKeying(unitFirst, common, flags, compiler, toolchain.Env(), sanitized); errors.Is(err, errUncachedUnit) {
-			fmt.Fprintf(os.Stderr, "%v\n", err)
+		} else if keying, newUnitKeyingError = newUnitKeying(
+			unitFirst,
+			common,
+			flags,
+			compiler,
+			toolchain.Env(),
+			sanitized,
+		); errors.Is(newUnitKeyingError, errorUncachedUnit) {
+			fmt.Fprintf(os.Stderr, "%v\n", newUnitKeyingError)
 			keying = nil
-		} else if err != nil {
-			return err
+		} else if newUnitKeyingError != nil {
+			return newUnitKeyingError
 		}
 	}
-	objects, err := compileUnits(units, common, flags, compiler, keying, cache, directory, jobs, jobserver, sanitized)
-	if err != nil {
-		return err
+	objects, compileUnitsError := compileUnits(
+		units,
+		common,
+		flags,
+		compiler,
+		keying,
+		cache,
+		directory,
+		jobs,
+		jobserver,
+		sanitized,
+	)
+	if compileUnitsError != nil {
+		return compileUnitsError
 	}
 	// The link runs from the units' directory and gives it no input by its place on the machine: each unit's object,
 	// the runtime library and the checker archive go by a link's name there, and only the output by its absolute path,
 	// as BuildTSGo links. On macOS ld's debug map records every object it links that carries debug info, a sanitized
 	// build's all do, by the path it was given made absolute, which -oso_prefix takes the directory back off. Named by
 	// their places, a sanitized split binary held the build cache's path 57 times (measured on a Mac, Oct 11).
-	output, err = filepath.Abs(output)
-	if err != nil {
-		return err
+	output, absolutePathError := filepath.Abs(output)
+	if absolutePathError != nil {
+		return absolutePathError
 	}
 	arguments := append(LinkFlags(options), "-o", output)
 	for index, object := range objects {
 		name := fmt.Sprintf("unit-%d.o", index)
-		if err := os.Symlink(object, filepath.Join(directory, name)); err != nil {
-			return err
+		if symlinkError := os.Symlink(object, filepath.Join(directory, name)); symlinkError != nil {
+			return symlinkError
 		}
 		arguments = append(arguments, name)
 	}
-	if err := os.Symlink(filepath.Dir(library), filepath.Join(directory, "runtime")); err != nil {
-		return err
+	if symlinkError := os.Symlink(filepath.Dir(library), filepath.Join(directory, "runtime")); symlinkError != nil {
+		return symlinkError
 	}
 	arguments = append(arguments, RuntimeLinkFlags(filepath.Join("runtime", filepath.Base(library)))...)
 	if archive != "" {
-		if err := os.Symlink(archive, filepath.Join(directory, checkerArchive)); err != nil {
-			return err
+		if symlinkError := os.Symlink(archive, filepath.Join(directory, checkerArchive)); symlinkError != nil {
+			return symlinkError
 		}
 		arguments = append(arguments, checkerArchive, "-lpthread", "-ldl")
 	}
-	compilerLink, err := regexpCompilerLinkFlags(source, options, directory)
-	if err != nil {
-		return err
+	compilerLink, regexpCompilerLinkFlagsError := regexpCompilerLinkFlags(source, options, directory)
+	if regexpCompilerLinkFlagsError != nil {
+		return regexpCompilerLinkFlagsError
 	}
 	arguments = append(arguments, compilerLink...)
 	arguments = append(arguments, objectPrefixFlags()...)
@@ -747,10 +876,10 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 	link := clangIn(directory, compiler, arguments...)
 	var linked []byte
 	var linking time.Duration
-	if err := jobserver.Hold(func() error {
+	if holdError := jobserver.Hold(func() error {
 		return timed(&linking, func() (err error) { linked, err = link.CombinedOutput(); return err })
-	}); err != nil {
-		return fmt.Errorf("native: linking units: %w\n%s", err, linked)
+	}); holdError != nil {
+		return fmt.Errorf("native: linking units: %w\n%s", holdError, linked)
 	}
 	buildLog("cLink", filepath.Base(output), "", "off", linking)
 	return nil

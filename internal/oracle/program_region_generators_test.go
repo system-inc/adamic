@@ -27,9 +27,9 @@ var programGeneratorConstructor = regexp.MustCompile(
 // returns its frame, that the frame is no Program member, so no run can pass with one adopted.
 func programGenerators(test *testing.T) (run, string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, programGeneratorsFixture))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, programGeneratorsFixture))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	oracle := onNode(test, path)
 	want := "branch2\nroot1\nbranch2,root1,\n"
@@ -79,19 +79,19 @@ func TestProgramRegionGeneratorsNotAdopted(test *testing.T) {
 func programGeneratorsHold(test *testing.T, oracle run, checked, name string) {
 	test.Helper()
 	binary := filepath.Join(test.TempDir(), name)
-	if err := programRegionBuild(
+	if programRegionBuildError := programRegionBuild(
 		test,
 		checked,
 		binary,
 		native.Options{ProgramRegion: true, Sanitize: true},
-	); err != nil {
-		test.Fatal(err)
+	); programRegionBuildError != nil {
+		test.Fatal(programRegionBuildError)
 	}
 	result := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
 	if difference := disagreement(oracle, result); difference != "" {
 		test.Fatalf("generators over members: %s %s", difference, result.stderr)
 	}
-	report, err := leakcheck.Check(leakcheck.Program{
+	report, checkError := leakcheck.Check(leakcheck.Program{
 		C: checked, Sanitized: binary, Counted: filepath.Join(test.TempDir(), "counted"),
 		BuildCounted: func(code, output string) error {
 			return programRegionBuild(test, code, output, native.Options{ProgramRegion: true, Count: true})
@@ -100,18 +100,18 @@ func programGeneratorsHold(test *testing.T, oracle run, checked, name string) {
 			return leakRun(executeWith(test, environment, name, args...))
 		},
 	})
-	if err != nil || report != "" {
-		test.Fatalf("leak check: %v %s", err, report)
+	if checkError != nil || report != "" {
+		test.Fatalf("leak check: %v %s", checkError, report)
 	}
 	// LeakSanitizer is the Linux leak proof; counters independently account for every member and frame.
 	countedBinary := filepath.Join(test.TempDir(), name+"-counts")
-	if err := programRegionBuild(
+	if programRegionBuildError := programRegionBuild(
 		test,
 		checked,
 		countedBinary,
 		native.Options{ProgramRegion: true, Count: true},
-	); err != nil {
-		test.Fatal(err)
+	); programRegionBuildError != nil {
+		test.Fatal(programRegionBuildError)
 	}
 	command, args := pinnedStack(countedBinary)
 	counted := execute(test, command, args...)
@@ -146,9 +146,9 @@ var programClosureGeneratorEntry = regexp.MustCompile(
 // held to Node under the sanitizers, LeakSanitizer and the counted build.
 func TestProgramRegionGeneratorInPlaceNotAdopted(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, programGeneratorInPlaceFixture))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, programGeneratorInPlaceFixture))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	oracle := onNode(test, path)
 	want := "branch2\nroot1\nbranch2,root1,\n"

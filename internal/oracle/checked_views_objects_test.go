@@ -49,17 +49,19 @@ func TestCheckedViewObjects(test *testing.T) {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
 			if probe.notYet != "" {
-				path, err := filepath.Abs(filepath.Join(repository, interfaceFixturePath("lane1/"+probe.name)))
-				if err != nil {
-					test.Fatal(err)
+				path, absolutePathError := filepath.Abs(
+					filepath.Join(repository, interfaceFixturePath("lane1/"+probe.name)),
+				)
+				if absolutePathError != nil {
+					test.Fatal(absolutePathError)
 				}
 				if difference := disagreement(run{stdout: []byte(probe.stdout)}, onNode(test, path)); difference != "" {
 					test.Fatal("Node: " + difference)
 				}
-				_, err = lowered(test, path)
+				_, loweredError := lowered(test, path)
 				var notYet *lower.NotYet
-				if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.notYet) {
-					test.Fatalf("want %q, got %v", probe.notYet, err)
+				if !errors.As(loweredError, &notYet) || !strings.Contains(loweredError.Error(), probe.notYet) {
+					test.Fatalf("want %q, got %v", probe.notYet, loweredError)
 				}
 				return
 			}

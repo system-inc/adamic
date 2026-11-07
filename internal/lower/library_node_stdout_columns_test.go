@@ -11,13 +11,13 @@ import (
 func TestNodeStdoutColumnsReadAdmission(test *testing.T) {
 	test.Parallel()
 	for _, ext := range []string{"a", "ts"} {
-		source, err := os.ReadFile(filepath.Join("testdata/stdout", "columns."+ext))
-		if err != nil {
-			test.Fatal(err)
+		source, readError := os.ReadFile(filepath.Join("testdata/stdout", "columns."+ext))
+		if readError != nil {
+			test.Fatal(readError)
 		}
-		program, err := lowerSourceAs(test, string(source), "."+ext)
-		if err != nil {
-			test.Fatal(err)
+		program, lowerSourceAsError := lowerSourceAs(test, string(source), "."+ext)
+		if lowerSourceAsError != nil {
+			test.Fatal(lowerSourceAsError)
 		}
 		_ = program
 	}
@@ -25,8 +25,8 @@ func TestNodeStdoutColumnsReadAdmission(test *testing.T) {
 		`import process from 'node:process'; const width = process.stdout.columns ?? 0;`,
 		`import host from 'node:process'; const missing = (host.stdout).columns === undefined;`,
 	} {
-		if _, err := lowerSource(test, source); err != nil {
-			test.Fatal(err)
+		if _, lowerSourceError := lowerSource(test, source); lowerSourceError != nil {
+			test.Fatal(lowerSourceError)
 		}
 	}
 	if (ir.NodeFSFile{Operation: "host_stdout_columns", Of: ir.MaybeNumber}).MayThrow() {
@@ -66,10 +66,10 @@ func TestNodeStdoutColumnsRefusesOtherUses(test *testing.T) {
 	} {
 		for _, ext := range []string{".a", ".ts"} {
 			test.Run(one.source+ext, func(test *testing.T) {
-				_, err := lowerSourceAs(test, "import process from 'node:process';"+one.source, ext)
+				_, lowerSourceAsError := lowerSourceAs(test, "import process from 'node:process';"+one.source, ext)
 				var ny *NotYet
-				if !errors.As(err, &ny) || ny.What != one.reason {
-					test.Fatalf("want %q, got %v", one.reason, err)
+				if !errors.As(lowerSourceAsError, &ny) || ny.What != one.reason {
+					test.Fatalf("want %q, got %v", one.reason, lowerSourceAsError)
 				}
 			})
 		}

@@ -53,9 +53,9 @@ func gapSanitized(test *testing.T, path string) string {
 	test.Helper()
 	inputs := sanitizedInputs("values gap "+path+" native sanitized", "stage1/cohere/values/"+path)
 	return buildcache.Product(test, inputs, func(directory string) error {
-		entry, err := filepath.Abs(path)
-		if err != nil {
-			return err
+		entry, absolutePathError := filepath.Abs(path)
+		if absolutePathError != nil {
+			return absolutePathError
 		}
 		return buildSanitized(entry, directory)
 	})
@@ -80,13 +80,13 @@ func portSanitized(test *testing.T, applied *mutant) string {
 	inputs.Flags = append(inputs.Flags, mutation)
 	return buildcache.Product(test, inputs, func(directory string) error {
 		source := filepath.Join(directory, "source")
-		if err := os.Mkdir(source, 0o755); err != nil {
-			return err
+		if createDirectoryError := os.Mkdir(source, 0o755); createDirectoryError != nil {
+			return createDirectoryError
 		}
 		for _, file := range portFiles {
-			contents, err := os.ReadFile(file)
-			if err != nil {
-				return err
+			contents, readError := os.ReadFile(file)
+			if readError != nil {
+				return readError
 			}
 			text := string(contents)
 			if applied != nil && applied.file == file {
@@ -95,8 +95,8 @@ func portSanitized(test *testing.T, applied *mutant) string {
 				}
 				text = strings.Replace(text, applied.from, applied.to, 1)
 			}
-			if err := os.WriteFile(filepath.Join(source, file), []byte(text), 0o644); err != nil {
-				return err
+			if writeError := os.WriteFile(filepath.Join(source, file), []byte(text), 0o644); writeError != nil {
+				return writeError
 			}
 		}
 		return buildSanitized(filepath.Join(source, "main.ts"), directory)
@@ -134,13 +134,13 @@ func sanitizedInputs(name string, sources ...string) buildcache.Inputs {
 
 // buildSanitized lowers the program at entry and builds it under the sanitizers as directory/port.
 func buildSanitized(entry, directory string) error {
-	program, err := load.Load([]string{entry})
-	if err != nil {
-		return fmt.Errorf("Load: %w", err)
+	program, loadError := load.Load([]string{entry})
+	if loadError != nil {
+		return fmt.Errorf("Load: %w", loadError)
 	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		return fmt.Errorf("Lower: %w", err)
+	lowered, lowerError := lower.Lower(context.Background(), program)
+	if lowerError != nil {
+		return fmt.Errorf("Lower: %w", lowerError)
 	}
 	return native.Build(native.C(lowered), filepath.Join(directory, "port"), native.Options{Sanitize: true})
 }

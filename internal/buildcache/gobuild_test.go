@@ -30,9 +30,9 @@ func forgetInputs() {
 // Not parallel: points the build cache (ADAMIC_BUILD_CACHE_DIR, ADAMIC_BUILD_LOG) and the store at this test through test.Setenv.
 func TestGoBuildKeysWhatTheBuildCompilesAndRuns(test *testing.T) {
 	_, log := cached(test)
-	inputs, err := GoInputs("withc", "./internal/buildcache/testdata/withc", nil, nil)
-	if err != nil {
-		test.Fatal(err)
+	inputs, goInputsError := GoInputs("withc", "./internal/buildcache/testdata/withc", nil, nil)
+	if goInputsError != nil {
+		test.Fatal(goInputsError)
 	}
 	for _, want := range []string{
 		"internal/buildcache/testdata/withc/main.go",
@@ -49,7 +49,7 @@ func TestGoBuildKeysWhatTheBuildCompilesAndRuns(test *testing.T) {
 	// A module the main module replaces with a directory of the tree is keyed by its go.mod, though the build compiles
 	// none of it (#c2chyab). Mutant: keyInputs without the replacements. Holds where the cohere submodule is checked
 	// out.
-	if root, err := repositoryRoot(); err == nil &&
+	if root, repositoryRootError := repositoryRoot(); repositoryRootError == nil &&
 		len(existing(filepath.Join(root, "cohere/TypeScript-shim/ast"), "go.mod")) == 1 &&
 		!slices.Contains(inputs.Files, "cohere/TypeScript-shim/ast/go.mod") {
 		test.Fatalf("a locally replaced module's go.mod isn't in the key's files: %v", inputs.Files)
@@ -72,14 +72,14 @@ func TestGoBuildKeysWhatTheBuildCompilesAndRuns(test *testing.T) {
 	}
 	binary := GoBuild(test, "withc", "./internal/buildcache/testdata/withc", nil)
 	// GoBuild built it with the reproducible flags, as its recorded inputs say.
-	if described, err := os.ReadFile(
+	if described, readError := os.ReadFile(
 		filepath.Dir(binary) + ".inputs",
-	); err != nil || !strings.Contains(string(described), "flag arguments -trimpath -ldflags=-buildid=") {
-		test.Fatalf("the product's inputs: %q, %v", described, err)
+	); readError != nil || !strings.Contains(string(described), "flag arguments -trimpath -ldflags=-buildid=") {
+		test.Fatalf("the product's inputs: %q, %v", described, readError)
 	}
-	output, err := exec.Command(binary).Output()
-	if err != nil || strings.TrimSpace(string(output)) != "hello from a header" {
-		test.Fatalf("the product printed %q, %v", output, err)
+	output, outputError := exec.Command(binary).Output()
+	if outputError != nil || strings.TrimSpace(string(output)) != "hello from a header" {
+		test.Fatalf("the product printed %q, %v", output, outputError)
 	}
 	// Built once: the second call is a hit.
 	GoBuild(test, "withc", "./internal/buildcache/testdata/withc", nil)
@@ -94,15 +94,15 @@ func TestGoBuildKeysWhatTheBuildCompilesAndRuns(test *testing.T) {
 // Not parallel: points the build cache (ADAMIC_BUILD_CACHE_DIR, ADAMIC_BUILD_LOG) and the store at this test through test.Setenv.
 func TestGoBuildKeysArgumentsAndEnvironment(test *testing.T) {
 	cached(test)
-	root, err := repositoryRoot()
-	if err != nil {
-		test.Fatal(err)
+	root, repositoryRootError := repositoryRoot()
+	if repositoryRootError != nil {
+		test.Fatal(repositoryRootError)
 	}
 	keyOf := func(arguments []string, environment ...string) string {
 		test.Helper()
-		inputs, err := GoInputs("hello", "./internal/buildcache/testdata/hello", arguments, environment)
-		if err != nil {
-			test.Fatal(err)
+		inputs, goInputsError := GoInputs("hello", "./internal/buildcache/testdata/hello", arguments, environment)
+		if goInputsError != nil {
+			test.Fatal(goInputsError)
 		}
 		return key(test, root, inputs)
 	}
@@ -123,8 +123,8 @@ func TestGoBuildKeysArgumentsAndEnvironment(test *testing.T) {
 		path := filepath.Join(test.TempDir(), "overlay.json")
 		declared, _ := json.Marshal(map[string]map[string]string{"Replace": {
 			filepath.Join(root, "internal/buildcache/testdata/hello/main.go"): replacement}})
-		if err := os.WriteFile(path, declared, 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, declared, 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		return path
 	}
@@ -140,20 +140,25 @@ func TestGoBuildKeysArgumentsAndEnvironment(test *testing.T) {
 		test.Fatalf("a replacement's content didn't move the key: %s, %s, plain %s", first, other, plain)
 	}
 	// The replacement is an input file, hashed by content like any other, not just a name in the map.
-	inputs, err := GoInputs("hello", "./internal/buildcache/testdata/hello", []string{"-overlay=" + overlay(one)}, nil)
-	if err != nil || !slices.Contains(inputs.Files, "internal/buildcache/testdata/overlay/one.go.txt") {
-		test.Fatalf("the overlay's replacement isn't among the key's files: %v %v", inputs.Files, err)
+	inputs, goInputsError := GoInputs(
+		"hello",
+		"./internal/buildcache/testdata/hello",
+		[]string{"-overlay=" + overlay(one)},
+		nil,
+	)
+	if goInputsError != nil || !slices.Contains(inputs.Files, "internal/buildcache/testdata/overlay/one.go.txt") {
+		test.Fatalf("the overlay's replacement isn't among the key's files: %v %v", inputs.Files, goInputsError)
 	}
 	outside := filepath.Join(test.TempDir(), "main.go")
 	os.WriteFile(outside, []byte("package main\n\nfunc main() {}\n"), 0o644)
-	if _, err := GoInputs(
+	if _, goInputsError := GoInputs(
 		"hello",
 		"./internal/buildcache/testdata/hello",
 		[]string{"-overlay=" + overlay(outside)},
 		nil,
-	); err == nil ||
-		!strings.Contains(err.Error(), "outside the repository") {
-		test.Fatalf("an overlay reading a file outside the repository was keyed: %v", err)
+	); goInputsError == nil ||
+		!strings.Contains(goInputsError.Error(), "outside the repository") {
+		test.Fatalf("an overlay reading a file outside the repository was keyed: %v", goInputsError)
 	}
 }
 
@@ -190,13 +195,13 @@ func TestGoBuildKeysTheSameTreeTheSameFromAnyMachine(test *testing.T) {
 		inRepository(test, on.directory)
 		test.Setenv("GOWORK", on.workspace)
 		test.Setenv("GOFLAGS", on.flags)
-		inputs, err := GoInputs("app", "./app", reproducible(arguments), nil)
-		if err != nil {
-			test.Fatal(err)
+		inputs, goInputsError := GoInputs("app", "./app", reproducible(arguments), nil)
+		if goInputsError != nil {
+			test.Fatal(goInputsError)
 		}
-		root, err := repositoryRoot()
-		if err != nil {
-			test.Fatal(err)
+		root, repositoryRootError := repositoryRoot()
+		if repositoryRootError != nil {
+			test.Fatal(repositoryRootError)
 		}
 		return key(test, root, inputs), describe(root, inputs)
 	}
@@ -245,13 +250,13 @@ func TestGoBuildKeysTheSameTreeTheSameFromAnyMachine(test *testing.T) {
 	// Another release, as a go that reports go1.99.0 and otherwise is this one (the release keys twice: Tool's go
 	// version and GOTOOLCHAIN's selection, which is go env's GOVERSION). The key runs the go toolchain.Path finds, a
 	// tools directory's before PATH's, so the fake stands in a tools directory of the test's own.
-	real, err := toolchain.Path("go")
-	if err != nil {
-		test.Fatal(err)
+	real, pathError := toolchain.Path("go")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
 	standIn := filepath.Join(test.TempDir(), "bin")
-	if err := os.MkdirAll(standIn, 0o755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(standIn, 0o755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	fake := filepath.Join(standIn, "go")
 	os.WriteFile(fake, []byte("#!/bin/sh\ncase \"$1\" in\nversion) echo 'go version go1.99.0 fake/arch'; exit 0 ;;\n"+
@@ -275,17 +280,17 @@ func TestGoBuildKeysTheSameTreeTheSameFromAnyMachine(test *testing.T) {
 // package, copied into two module directories at different paths and built with GoBuild's flags, is byte-identical.
 func TestGoBuildIsReproducibleAcrossCheckoutPathsAndCommits(test *testing.T) {
 	test.Parallel()
-	root, err := repositoryRoot()
-	if err != nil {
-		test.Fatal(err)
+	root, repositoryRootError := repositoryRoot()
+	if repositoryRootError != nil {
+		test.Fatal(repositoryRootError)
 	}
 	var products [][]byte
 	for _, name := range []string{"one", "elsewhere/two"} {
 		module := filepath.Join(test.TempDir(), name)
 		for _, file := range []string{"withc/main.go", "include/greeting.h"} {
-			content, err := os.ReadFile(filepath.Join(root, "internal/buildcache/testdata", file))
-			if err != nil {
-				test.Fatal(err)
+			content, readError := os.ReadFile(filepath.Join(root, "internal/buildcache/testdata", file))
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			os.MkdirAll(filepath.Join(module, filepath.Dir(file)), 0o755)
 			os.WriteFile(filepath.Join(module, file), content, 0o644)
@@ -298,10 +303,10 @@ func TestGoBuildIsReproducibleAcrossCheckoutPathsAndCommits(test *testing.T) {
 			{"add", "."},
 			{"-c", "user.name=t", "-c", "user.email=t@t", "commit", "-q", "-m", "commit " + name},
 		} {
-			if output, err := toolchain.GitCommand(
+			if output, combinedOutputError := toolchain.GitCommand(
 				append([]string{"-C", module}, git...)...,
-			).CombinedOutput(); err != nil {
-				test.Fatalf("git %v: %v\n%s", git, err, output)
+			).CombinedOutput(); combinedOutputError != nil {
+				test.Fatalf("git %v: %v\n%s", git, combinedOutputError, output)
 			}
 		}
 		command := toolchain.CommandIn(
@@ -310,12 +315,12 @@ func TestGoBuildIsReproducibleAcrossCheckoutPathsAndCommits(test *testing.T) {
 			append(append([]string{"build"}, reproducible(nil)...), "-o", filepath.Join(module, "out"), "./withc")...,
 		)
 		command.Env = append(command.Env, "GOWORK=off", "GOFLAGS=")
-		if output, err := command.CombinedOutput(); err != nil {
-			test.Fatalf("%v\n%s", err, output)
+		if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+			test.Fatalf("%v\n%s", combinedOutputError, output)
 		}
-		content, err := os.ReadFile(filepath.Join(module, "out"))
-		if err != nil {
-			test.Fatal(err)
+		content, readError := os.ReadFile(filepath.Join(module, "out"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		products = append(products, content)
 	}
@@ -349,9 +354,9 @@ func TestGoBuildIsReproducibleAcrossCheckoutPathsAndCommits(test *testing.T) {
 // machine's own go env file, which may set -trimpath itself (Kirk's Mac does), out of both builds.
 func TestAHandBuiltOracleIsTheSameFromAnyCheckoutPathOnlyWithTheReproducibleFlags(test *testing.T) {
 	test.Parallel()
-	root, err := repositoryRoot()
-	if err != nil {
-		test.Fatal(err)
+	root, repositoryRootError := repositoryRoot()
+	if repositoryRootError != nil {
+		test.Fatal(repositoryRootError)
 	}
 	build := func(flags []string) [][]byte {
 		var products [][]byte
@@ -363,9 +368,9 @@ func TestAHandBuiltOracleIsTheSameFromAnyCheckoutPathOnlyWithTheReproducibleFlag
 				"module/greet/greet_test.go",
 				"module-side/side_test.go.txt",
 			} {
-				content, err := os.ReadFile(filepath.Join(root, "internal/buildcache/testdata", file))
-				if err != nil {
-					test.Fatal(err)
+				content, readError := os.ReadFile(filepath.Join(root, "internal/buildcache/testdata", file))
+				if readError != nil {
+					test.Fatal(readError)
 				}
 				os.MkdirAll(filepath.Join(module, filepath.Dir(file)), 0o755)
 				os.WriteFile(filepath.Join(module, file), content, 0o644)
@@ -384,12 +389,12 @@ func TestAHandBuiltOracleIsTheSameFromAnyCheckoutPathOnlyWithTheReproducibleFlag
 				filepath.Join(module, "oracle"),
 			), "./greet")...)
 			command.Env = append(command.Env, "GOENV=off", "GOWORK=off", "GOFLAGS=")
-			if output, err := command.CombinedOutput(); err != nil {
-				test.Fatalf("%v\n%s", err, output)
+			if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+				test.Fatalf("%v\n%s", combinedOutputError, output)
 			}
-			content, err := os.ReadFile(filepath.Join(module, "oracle"))
-			if err != nil {
-				test.Fatal(err)
+			content, readError := os.ReadFile(filepath.Join(module, "oracle"))
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			products = append(products, content)
 		}
@@ -419,17 +424,17 @@ func TestAHandBuiltOracleIsTheSameFromAnyCheckoutPathOnlyWithTheReproducibleFlag
 func TestGoTestKeysAModulesTestBinary(test *testing.T) {
 	_, log := cached(test)
 	forgetInputs()
-	root, err := repositoryRoot()
-	if err != nil {
-		test.Fatal(err)
+	root, repositoryRootError := repositoryRoot()
+	if repositoryRootError != nil {
+		test.Fatal(repositoryRootError)
 	}
 	module := "internal/buildcache/testdata/module"
 	virtual := filepath.Join(root, module, "greet/adamic_side_test.go")
 	side := filepath.Join(root, "internal/buildcache/testdata/module-side/side_test.go.txt")
 	overlay := filepath.Join(test.TempDir(), "overlay.json")
 	declared, _ := json.Marshal(map[string]map[string]string{"Replace": {virtual: side}})
-	if err := os.WriteFile(overlay, declared, 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(overlay, declared, 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	request := goRequest{
 		verb:        "test -c",
@@ -439,9 +444,9 @@ func TestGoTestKeysAModulesTestBinary(test *testing.T) {
 		arguments:   reproducible([]string{"-overlay=" + overlay}),
 		environment: []string{"GOWORK=off"},
 	}
-	inputs, err := request.inputs()
-	if err != nil {
-		test.Fatal(err)
+	inputs, inputsError := request.inputs()
+	if inputsError != nil {
+		test.Fatal(inputsError)
 	}
 	for _, want := range []string{
 		module + "/greet/greet.go",
@@ -457,9 +462,9 @@ func TestGoTestKeysAModulesTestBinary(test *testing.T) {
 		test.Fatalf("the harness's virtual path, which isn't on disk, is keyed as a file: %v", inputs.Files)
 	}
 	binary := GoTest(test, module, "greet.test", "./greet", []string{"-overlay=" + overlay}, "GOWORK=off")
-	output, err := exec.Command(binary, "-test.run=^TestSide$", "-test.v").Output()
-	if err != nil || !strings.Contains(string(output), "side says hello") {
-		test.Fatalf("the test binary ran %q, %v", output, err)
+	output, outputError := exec.Command(binary, "-test.run=^TestSide$", "-test.v").Output()
+	if outputError != nil || !strings.Contains(string(output), "side says hello") {
+		test.Fatalf("the test binary ran %q, %v", output, outputError)
 	}
 	GoTest(test, module, "greet.test", "./greet", []string{"-overlay=" + overlay}, "GOWORK=off")
 	if lines, _ := os.ReadFile(
@@ -468,7 +473,7 @@ func TestGoTestKeysAModulesTestBinary(test *testing.T) {
 		test.Fatalf("census: %q", lines)
 	}
 	// Without the harness it's another test binary.
-	plain, err := goRequest{
+	plain, inputsError := goRequest{
 		verb:        "test -c",
 		module:      module,
 		output:      "greet.test",
@@ -476,8 +481,8 @@ func TestGoTestKeysAModulesTestBinary(test *testing.T) {
 		arguments:   reproducible(nil),
 		environment: []string{"GOWORK=off"},
 	}.inputs()
-	if err != nil {
-		test.Fatal(err)
+	if inputsError != nil {
+		test.Fatal(inputsError)
 	}
 	if key(test, root, plain) == key(test, root, inputs) {
 		test.Fatal("the harness left the key as it was")
@@ -494,8 +499,12 @@ func TestAGoRequestsOverlayIsItsPlansMap(test *testing.T) {
 	root := repositoryRootForTest(test)
 	overlay := filepath.Join(test.TempDir(), "overlay.json")
 	replacement := filepath.Join(root, "internal/buildcache/testdata/module/greet/greet.go")
-	if err := os.WriteFile(overlay, []byte(`{"Replace":{"greet/extra.go":"`+replacement+`"}}`), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(
+		overlay,
+		[]byte(`{"Replace":{"greet/extra.go":"`+replacement+`"}}`),
+		0o644,
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
 	request := goRequest{
 		verb:   "test -c",
@@ -505,9 +514,9 @@ func TestAGoRequestsOverlayIsItsPlansMap(test *testing.T) {
 	}
 	for _, arguments := range [][]string{{"-overlay=" + overlay}, {"-trimpath", "-overlay", overlay}} {
 		request.arguments = arguments
-		parts, err := request.planned(root, Inputs{})
-		if err != nil {
-			test.Fatalf("arguments %q: %v", arguments, err)
+		parts, plannedError := request.planned(root, Inputs{})
+		if plannedError != nil {
+			test.Fatalf("arguments %q: %v", arguments, plannedError)
 		}
 		if slices.ContainsFunc(
 			parts.command.Arguments,
@@ -532,8 +541,8 @@ func TestAGoRequestsOverlayIsItsPlansMap(test *testing.T) {
 		}
 	}
 	request.arguments = []string{"-trimpath"}
-	if parts, err := request.planned(root, Inputs{}); err != nil || parts.replace != nil {
-		test.Errorf("a request without an overlay plans %q, %v", parts.replace, err)
+	if parts, plannedError := request.planned(root, Inputs{}); plannedError != nil || parts.replace != nil {
+		test.Errorf("a request without an overlay plans %q, %v", parts.replace, plannedError)
 	}
 }
 
@@ -545,17 +554,17 @@ func TestARequestIsKeyedOnceAndCanBeKeyedAhead(test *testing.T) {
 	forgetInputs()
 	record := filepath.Join(test.TempDir(), "inputs.jsonl")
 	test.Setenv("ADAMIC_BUILD_INPUTS_RECORD", record)
-	first, err := GoInputs("hello", "./internal/buildcache/testdata/hello", nil, nil)
-	if err != nil {
-		test.Fatal(err)
+	first, goInputsError := GoInputs("hello", "./internal/buildcache/testdata/hello", nil, nil)
+	if goInputsError != nil {
+		test.Fatal(goInputsError)
 	}
-	if again, err := GoInputs(
+	if again, goInputsError := GoInputs(
 		"hello",
 		"./internal/buildcache/testdata/hello",
 		nil,
 		nil,
-	); err != nil || !slices.Equal(again.Files, first.Files) {
-		test.Fatalf("asked again: %v, %v", again, err)
+	); goInputsError != nil || !slices.Equal(again.Files, first.Files) {
+		test.Fatalf("asked again: %v, %v", again, goInputsError)
 	}
 	if lines, _ := os.ReadFile(record); strings.Count(string(lines), "\n") != 1 {
 		test.Fatalf("a request keyed twice in one process was recorded %d times", strings.Count(string(lines), "\n"))
@@ -565,13 +574,13 @@ func TestARequestIsKeyedOnceAndCanBeKeyedAhead(test *testing.T) {
 	// No go anywhere toolchain.Path looks: no tools directory, and nothing on PATH.
 	test.Setenv("ADAMIC_TOOLS", "")
 	test.Setenv("PATH", test.TempDir())
-	if _, err := GoInputs("hello", "./internal/buildcache/testdata/hello", nil, nil); err == nil {
+	if _, goInputsError := GoInputs("hello", "./internal/buildcache/testdata/hello", nil, nil); goInputsError == nil {
 		test.Fatal("keyed with no go and no index")
 	}
 	test.Setenv("ADAMIC_BUILD_INPUTS", record)
-	ahead, err := GoInputs("hello", "./internal/buildcache/testdata/hello", nil, nil)
-	if err != nil {
-		test.Fatalf("the index didn't key the request: %v", err)
+	ahead, goInputsError := GoInputs("hello", "./internal/buildcache/testdata/hello", nil, nil)
+	if goInputsError != nil {
+		test.Fatalf("the index didn't key the request: %v", goInputsError)
 	}
 	if !slices.Equal(ahead.Files, first.Files) || !slices.Equal(ahead.Flags, first.Flags) || ahead.Name != first.Name {
 		test.Fatalf("the index keyed %+v, go keyed %+v", ahead, first)
@@ -602,13 +611,13 @@ func TestGoTestKeysTheSameTreeTheSameFromAnyPath(test *testing.T) {
 				directory,
 				"cohere/format/adamic_side_test.go",
 			): filepath.Join(directory, "port/side_test.go.txt")}})
-		if err := os.WriteFile(overlay, declared, 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(overlay, declared, 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
-		inputs, err := goRequest{verb: "test -c", module: "cohere", output: "format.test", pkg: "./format",
+		inputs, inputsError := goRequest{verb: "test -c", module: "cohere", output: "format.test", pkg: "./format",
 			arguments: reproducible([]string{"-overlay=" + overlay}), environment: []string{"GOWORK=off"}}.inputs()
-		if err != nil {
-			test.Fatal(err)
+		if inputsError != nil {
+			test.Fatal(inputsError)
 		}
 		return key(test, directory, inputs), inputs
 	}
@@ -630,9 +639,9 @@ func TestGoTestKeysTheSameTreeTheSameFromAnyPath(test *testing.T) {
 func TestGoBuildInBuildsASynthesizedMainInAModule(test *testing.T) {
 	cached(test)
 	forgetInputs()
-	root, err := repositoryRoot()
-	if err != nil {
-		test.Fatal(err)
+	root, repositoryRootError := repositoryRoot()
+	if repositoryRootError != nil {
+		test.Fatal(repositoryRootError)
 	}
 	module := "internal/buildcache/testdata/module"
 	virtual := filepath.Join(root, module, "cmd/greeter/main.go")
@@ -640,15 +649,15 @@ func TestGoBuildInBuildsASynthesizedMainInAModule(test *testing.T) {
 	declared, _ := json.Marshal(map[string]map[string]string{
 		"Replace": {virtual: filepath.Join(root, "internal/buildcache/testdata/module-side/main.go.txt")},
 	})
-	if err := os.WriteFile(overlay, declared, 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(overlay, declared, 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	binary := GoBuildIn(test, module, "greeter", virtual, []string{"-overlay=" + overlay}, "GOWORK=off")
-	output, err := exec.Command(binary).Output()
-	if err != nil || strings.TrimSpace(string(output)) != "synthesized hello" {
-		test.Fatalf("the synthesized main printed %q, %v", output, err)
+	output, outputError := exec.Command(binary).Output()
+	if outputError != nil || strings.TrimSpace(string(output)) != "synthesized hello" {
+		test.Fatalf("the synthesized main printed %q, %v", output, outputError)
 	}
-	inputs, err := goRequest{
+	inputs, inputsError := goRequest{
 		verb:        "build",
 		module:      module,
 		output:      "greeter",
@@ -656,8 +665,8 @@ func TestGoBuildInBuildsASynthesizedMainInAModule(test *testing.T) {
 		arguments:   reproducible([]string{"-overlay=" + overlay}),
 		environment: []string{"GOWORK=off"},
 	}.inputs()
-	if err != nil {
-		test.Fatal(err)
+	if inputsError != nil {
+		test.Fatal(inputsError)
 	}
 	if !strings.HasPrefix(inputs.Name, "go build "+module+" ") ||
 		!slices.Contains(inputs.Files, module+"/greet/greet.go") ||
@@ -674,23 +683,23 @@ func TestGoBuildInBuildsASynthesizedMainInAModule(test *testing.T) {
 func TestGoTestMutatedPlantsAndKeysEachMutation(test *testing.T) {
 	_, log := cached(test)
 	forgetInputs()
-	root, err := repositoryRoot()
-	if err != nil {
-		test.Fatal(err)
+	root, repositoryRootError := repositoryRoot()
+	if repositoryRootError != nil {
+		test.Fatal(repositoryRootError)
 	}
 	module := "internal/buildcache/testdata/module"
 	source := module + "/greet/greet.go"
-	before, err := os.ReadFile(filepath.Join(root, source))
-	if err != nil {
-		test.Fatal(err)
+	before, readError := os.ReadFile(filepath.Join(root, source))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	sideFile := "internal/buildcache/testdata/module-side/side_test.go.txt"
 	overlay := filepath.Join(test.TempDir(), "overlay.json")
 	declared, _ := json.Marshal(map[string]map[string]string{
 		"Replace": {filepath.Join(root, module, "greet/adamic_side_test.go"): filepath.Join(root, sideFile)},
 	})
-	if err := os.WriteFile(overlay, declared, 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(overlay, declared, 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	arguments := []string{"-overlay=" + overlay}
 	run := func(binary, test string) string {
@@ -741,9 +750,9 @@ func TestGoTestMutatedPlantsAndKeysEachMutation(test *testing.T) {
 	}
 	keyOf := func(mutations []Mutation) string {
 		test.Helper()
-		inputs, err := keyed(mutations)
-		if err != nil {
-			test.Fatal(err)
+		inputs, keyedError := keyed(mutations)
+		if keyedError != nil {
+			test.Fatal(keyedError)
 		}
 		return key(test, root, inputs)
 	}
@@ -759,7 +768,7 @@ func TestGoTestMutatedPlantsAndKeysEachMutation(test *testing.T) {
 		{{File: source, Before: "", After: "x"}},
 		{{File: "internal/buildcache/testdata/hello/main.go", Before: "hello", After: "x"}},
 	} {
-		if _, err := keyed(refused); err == nil {
+		if _, keyedError := keyed(refused); keyedError == nil {
 			test.Errorf("%+v was keyed, want it refused", refused)
 		}
 	}
@@ -773,9 +782,9 @@ func TestGoTestMutatedPlantsAndKeysEachMutation(test *testing.T) {
 // length. Mutants: GoExports' go list without -buildvcs=false; a test main's export data kept.
 // Not parallel: inRepository changes the working directory and repositoryRoot.
 func TestGoExportsAreTheSameAtEveryCommitAndFromEveryGoCache(test *testing.T) {
-	root, err := filepath.EvalSymlinks(test.TempDir())
-	if err != nil {
-		test.Fatal(err)
+	root, resolveSymlinksError := filepath.EvalSymlinks(test.TempDir())
+	if resolveSymlinksError != nil {
+		test.Fatal(resolveSymlinksError)
 	}
 	write(test, root, "go.mod", "module github.com/system-inc/adamic\n\ngo 1.22\n")
 	write(test, root, "tool/main.go", "package main\n\nfunc main() {}\n")
@@ -795,20 +804,20 @@ func TestGoExportsAreTheSameAtEveryCommitAndFromEveryGoCache(test *testing.T) {
 		test.Setenv("GOCACHE", filepath.Join(caches, goCache))
 		directory := GoExports(test, "./tool")
 		files := map[string][]byte{}
-		err := filepath.WalkDir(directory, func(path string, entry fs.DirEntry, err error) error {
-			if err != nil || entry.IsDir() {
-				return err
+		walkError := filepath.WalkDir(directory, func(path string, entry fs.DirEntry, pathError error) error {
+			if pathError != nil || entry.IsDir() {
+				return pathError
 			}
-			content, err := os.ReadFile(path)
+			content, readError := os.ReadFile(path)
 			files[mustRelative(directory, path)] = content
-			return err
+			return readError
 		})
-		if err != nil {
-			test.Fatal(err)
+		if walkError != nil {
+			test.Fatal(walkError)
 		}
 		var listing []ListedPackage
-		if err := json.Unmarshal(files["listing.json"], &listing); err != nil {
-			test.Fatal(err)
+		if decodeError := json.Unmarshal(files["listing.json"], &listing); decodeError != nil {
+			test.Fatal(decodeError)
 		}
 		mains := 0
 		for _, listed := range listing {
@@ -849,9 +858,9 @@ func TestGoExportsAreTheSameAtEveryCommitAndFromEveryGoCache(test *testing.T) {
 // product answers.
 // Not parallel: inRepository changes the working directory and repositoryRoot.
 func TestGoDirectExportsKeepOnlyWhatTheNamedPackagesImport(test *testing.T) {
-	root, err := filepath.EvalSymlinks(test.TempDir())
-	if err != nil {
-		test.Fatal(err)
+	root, resolveSymlinksError := filepath.EvalSymlinks(test.TempDir())
+	if resolveSymlinksError != nil {
+		test.Fatal(resolveSymlinksError)
 	}
 	write(test, root, "go.mod", "module github.com/system-inc/adamic\n\ngo 1.22\n")
 	write(test, root, "lib/c/c.go", "package c\n\ntype T struct{ Field int }\n")
@@ -882,13 +891,13 @@ func TestGoDirectExportsKeepOnlyWhatTheNamedPackagesImport(test *testing.T) {
 	test.Setenv("GOFLAGS", "")
 	listed := func(directory string) []string {
 		test.Helper()
-		content, err := os.ReadFile(filepath.Join(directory, "listing.json"))
-		if err != nil {
-			test.Fatal(err)
+		content, readError := os.ReadFile(filepath.Join(directory, "listing.json"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		var listing []ListedPackage
-		if err := json.Unmarshal(content, &listing); err != nil {
-			test.Fatal(err)
+		if decodeError := json.Unmarshal(content, &listing); decodeError != nil {
+			test.Fatal(decodeError)
 		}
 		paths := []string{}
 		for _, one := range listing {
@@ -934,12 +943,12 @@ func TestABusyToolIsAskedAgain(test *testing.T) {
 		test.Skip("exec refuses a file open for writing on Linux; elsewhere a tool is never busy this way")
 	}
 	tool := filepath.Join(test.TempDir(), "busytool")
-	writer, err := os.OpenFile(tool, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0o755)
-	if err != nil {
-		test.Fatal(err)
+	writer, openError := os.OpenFile(tool, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0o755)
+	if openError != nil {
+		test.Fatal(openError)
 	}
-	if _, err := writer.WriteString("#!/bin/sh\necho 'busytool 1.0'\n"); err != nil {
-		test.Fatal(err)
+	if _, writeStringError := writer.WriteString("#!/bin/sh\necho 'busytool 1.0'\n"); writeStringError != nil {
+		test.Fatal(writeStringError)
 	}
 	go func() {
 		time.Sleep(100 * time.Millisecond)
@@ -964,15 +973,15 @@ func TestEveryVerbButBuildKeysItsTests(test *testing.T) {
 		"list -export direct",
 		"a verb not yet asked for",
 	} {
-		inputs, err := goRequest{
+		inputs, keyInputsError := goRequest{
 			verb:        verb,
 			module:      module,
 			output:      "greet",
 			pkg:         "./greet",
 			environment: []string{"GOWORK=off"},
 		}.keyInputs(root, overlayKey{})
-		if err != nil {
-			test.Fatalf("%s: %v", verb, err)
+		if keyInputsError != nil {
+			test.Fatalf("%s: %v", verb, keyInputsError)
 		}
 		if keyed := slices.Contains(inputs.Files, module+"/greet/greet_test.go"); keyed != (verb != "build") {
 			test.Errorf("%s keys greet's test file: %v, want %v", verb, keyed, verb != "build")

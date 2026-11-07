@@ -19,23 +19,23 @@ import (
 // could stay green after a test is removed or renamed out of go test's list.
 func TestFixtureDirectoriesHaveTopLevelTests(test *testing.T) {
 	test.Parallel()
-	files, err := filepath.Glob("*_test.go")
-	if err != nil {
-		test.Fatal(err)
+	files, globError := filepath.Glob("*_test.go")
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	units := map[string]string{}
 	selectedFiles := map[string]map[string]string{}
 	for _, path := range files {
-		active, err := build.Default.MatchFile(".", path)
-		if err != nil {
-			test.Fatal(err)
+		active, matchFileError := build.Default.MatchFile(".", path)
+		if matchFileError != nil {
+			test.Fatal(matchFileError)
 		}
 		if !active {
 			continue
 		}
-		source, err := parser.ParseFile(token.NewFileSet(), path, nil, 0)
-		if err != nil {
-			test.Fatal(err)
+		source, parseFileError := parser.ParseFile(token.NewFileSet(), path, nil, 0)
+		if parseFileError != nil {
+			test.Fatal(parseFileError)
 		}
 		for _, declaration := range source.Decls {
 			function, ok := declaration.(*ast.FuncDecl)
@@ -102,9 +102,9 @@ func TestFixtureDirectoriesHaveTopLevelTests(test *testing.T) {
 				test.Errorf("%s must name a literal fixture directory", function.Name.Name)
 				continue
 			}
-			directory, err := strconv.Unquote(literal.Value)
-			if err != nil {
-				test.Fatal(err)
+			directory, unquoteError := strconv.Unquote(literal.Value)
+			if unquoteError != nil {
+				test.Fatal(unquoteError)
 			}
 			if len(call.Args) == 2 {
 				if previous, exists := units[directory]; exists {
@@ -132,9 +132,9 @@ func TestFixtureDirectoriesHaveTopLevelTests(test *testing.T) {
 						test.Errorf("%s must name literal fixture files", function.Name.Name)
 						continue
 					}
-					file, err := strconv.Unquote(literal.Value)
-					if err != nil {
-						test.Fatal(err)
+					file, unquoteError := strconv.Unquote(literal.Value)
+					if unquoteError != nil {
+						test.Fatal(unquoteError)
 					}
 					if !validFixturePath(file) {
 						test.Errorf("invalid fixture unit %q", file)
@@ -153,9 +153,9 @@ func TestFixtureDirectoriesHaveTopLevelTests(test *testing.T) {
 			}
 		}
 	}
-	entries, err := os.ReadDir(*fixtureRoot)
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(*fixtureRoot)
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	var directories, fixtures int
 	for _, entry := range entries {
@@ -169,12 +169,12 @@ func TestFixtureDirectoriesHaveTopLevelTests(test *testing.T) {
 			continue
 		}
 		isFixture := false
-		err := filepath.WalkDir(filepath.Join(
+		walkError := filepath.WalkDir(filepath.Join(
 			*fixtureRoot,
 			directory,
-		), func(path string, entry fs.DirEntry, err error) error {
-			if err != nil {
-				return err
+		), func(path string, entry fs.DirEntry, pathError error) error {
+			if pathError != nil {
+				return pathError
 			}
 			if !entry.IsDir() &&
 				(entry.Name() == "status.json" || filepath.Ext(path) == ".a" || filepath.Ext(path) == ".ts") {
@@ -182,8 +182,8 @@ func TestFixtureDirectoriesHaveTopLevelTests(test *testing.T) {
 			}
 			return nil
 		})
-		if err != nil {
-			test.Fatal(err)
+		if walkError != nil {
+			test.Fatal(walkError)
 		}
 		if !isFixture {
 			continue
@@ -194,15 +194,15 @@ func TestFixtureDirectoriesHaveTopLevelTests(test *testing.T) {
 			test.Errorf("fixture directory %s has no top-level test", directory)
 			continue
 		}
-		data, err := os.ReadFile(filepath.Join(*fixtureRoot, directory, "status.json"))
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(filepath.Join(*fixtureRoot, directory, "status.json"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		// Count the exact original status rows; the directory tests use the
 		// same manifests and retain all existing per-fixture checks.
 		var rows []fixture
-		if err := json.Unmarshal(data, &rows); err != nil {
-			test.Fatal(err)
+		if decodeError := json.Unmarshal(data, &rows); decodeError != nil {
+			test.Fatal(decodeError)
 		}
 		if len(rows) == 0 {
 			test.Errorf("fixture directory %s is empty", directory)
@@ -220,9 +220,9 @@ func TestFixtureDirectoriesHaveTopLevelTests(test *testing.T) {
 			delete(selectedFiles, directory)
 		}
 		for index, row := range rows {
-			_, skip, err := hostconfiguration.Resolve(index+1, row.Configuration, os.Getenv)
-			if err != nil {
-				test.Fatal(err)
+			_, skip, resolveError := hostconfiguration.Resolve(index+1, row.Configuration, os.Getenv)
+			if resolveError != nil {
+				test.Fatal(resolveError)
 			}
 			if skip != "" {
 				test.Log(skip)

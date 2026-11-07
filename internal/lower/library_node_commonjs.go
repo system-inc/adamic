@@ -61,10 +61,18 @@ func (l *lowering) nodeCommonJSUseRefusal(node *ast.Node) (bool, error) {
 	}
 	argument := nodeCommonJSRequireArgument(call)
 	if argument.Kind != ast.KindStringLiteral && argument.Kind != ast.KindNoSubstitutionTemplateLiteral {
-		return true, l.notYet(node, nodeRequireMember+" of a computed module path called with a spread or a second argument"+nodeCommonJSLoading+" (fix: pass the module path as its one argument)")
+		return true, l.notYet(node, nodeRequireMember+
+			" of a computed module path called with a spread or a second argument"+
+			nodeCommonJSLoading+
+			" (fix: pass the module path as its one argument)")
 	}
 	if argument.Text() == "crypto" {
-		return true, l.notYet(node, nodeRequireMember+`("`+argument.Text()+`")`+nodeCommonJSLoading+" (fix: import it with an import declaration)")
+		return true, l.notYet(node, nodeRequireMember+
+			`("`+
+			argument.Text()+
+			`")`+
+			nodeCommonJSLoading+
+			" (fix: import it with an import declaration)")
 	}
 	return false, nil
 }
@@ -130,35 +138,55 @@ func (l *lowering) nodeCommonJSRequireValue(node *ast.Node) (ir.Expression, bool
 	}
 	effects := ir.Effects{Result: ir.Undefined{}}
 	if outer := nodeGlobalsOuter(node); outer.Parent == nil || outer.Parent.Kind != ast.KindExpressionStatement {
-		of, err := l.typeOf(node)
-		if err != nil {
-			return nil, true, err
+		of, typeOfError := l.typeOf(node)
+		if typeOfError != nil {
+			return nil, true, typeOfError
 		}
 		effects.Result = placeholderZero(of)
 	}
 	if nodeInspectorRequireThrows(call) {
-		effects.Body = append(effects.Body, ir.Evaluate{Value: ir.NodeFSFile{Operation: "host_inspector_unavailable", Of: ir.Number}})
+		effects.Body = append(
+			effects.Body,
+			ir.Evaluate{Value: ir.NodeFSFile{Operation: "host_inspector_unavailable", Of: ir.Number}},
+		)
 		return effects, true, nil
 	}
-	if argument := nodeCommonJSRequireArgument(call); argument.Kind == ast.KindStringLiteral || argument.Kind == ast.KindNoSubstitutionTemplateLiteral {
-		missing := ir.NodeFSFile{Operation: "host_require_missing", Arguments: []ir.Expression{ir.StringConstant{Index: l.constant(argument.Text())}}, Of: ir.Number}
+	if argument := nodeCommonJSRequireArgument(
+		call,
+	); argument.Kind == ast.KindStringLiteral || argument.Kind == ast.KindNoSubstitutionTemplateLiteral {
+		missing := ir.NodeFSFile{
+			Operation: "host_require_missing",
+			Arguments: []ir.Expression{ir.StringConstant{Index: l.constant(argument.Text())}},
+			Of:        ir.Number,
+		}
 		effects.Body = append(effects.Body, ir.Evaluate{Value: missing})
 		return effects, true, nil
 	}
 	// The path is evaluated as written, wrappers and all: a non-null assertion may carry a check.
 	argument := call.AsCallExpression().Arguments.Nodes[0]
-	path, err := l.expression(argument)
-	if err != nil {
-		return nil, true, err
+	path, expressionError := l.expression(argument)
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
 	if path.Type() != ir.String {
-		return nil, true, l.notYet(argument, nodeRequireMember+" of a computed module path that isn't a string"+nodeCommonJSLoading+" (fix: pass the module path as a string)")
+		return nil, true, l.notYet(argument, nodeRequireMember+
+			" of a computed module path that isn't a string"+
+			nodeCommonJSLoading+
+			" (fix: pass the module path as a string)")
 	}
 	index := len(l.result.Functions)
 	parameter := len(l.result.Locals)
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "modulePath", Type: ir.String, Function: index})
-	failure := ir.MakeError{Message: ir.Concat{Parts: []ir.Expression{ir.StringConstant{Index: l.constant(nodeJavaScriptModuleOpening)}, ir.Read{Local: parameter, Of: ir.String}, ir.StringConstant{Index: l.constant(nodeJavaScriptModuleClosing)}}}}
-	l.result.Functions = append(l.result.Functions, ir.Function{Name: "require_javascript", Parameters: []int{parameter}, Body: []ir.Statement{ir.Throw{Value: failure}}})
+	failure := ir.MakeError{Message: ir.Concat{Parts: []ir.Expression{
+		ir.StringConstant{Index: l.constant(nodeJavaScriptModuleOpening)},
+		ir.Read{Local: parameter, Of: ir.String},
+		ir.StringConstant{Index: l.constant(nodeJavaScriptModuleClosing)},
+	}}}
+	l.result.Functions = append(l.result.Functions, ir.Function{
+		Name:       "require_javascript",
+		Parameters: []int{parameter},
+		Body:       []ir.Statement{ir.Throw{Value: failure}},
+	})
 	effects.Body = append(effects.Body, ir.Evaluate{Value: ir.Call{Function: index, Arguments: []ir.Expression{path}}})
 	return effects, true, nil
 }

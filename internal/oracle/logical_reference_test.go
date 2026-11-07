@@ -26,9 +26,9 @@ func TestLogicalReferenceOperandsAgreeWithNode(test *testing.T) {
 		test.Run(path, func(test *testing.T) {
 			test.Parallel()
 			loomViewsDAgrees(test, path)
-			program, err := lowered(test, repository+"/"+path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, repository+"/"+path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			_, binary := natively(test, program)
 			if report := leaks(test, program, binary); report != "" {

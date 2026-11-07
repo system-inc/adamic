@@ -36,9 +36,9 @@ const testProfileCompilationShards = 1
 
 func compilationCase(test *testing.T) string {
 	test.Helper()
-	paths, err := registry.Witnesses("rules/no-var")
-	if err != nil {
-		test.Fatal(err)
+	paths, witnessesError := registry.Witnesses("rules/no-var")
+	if witnessesError != nil {
+		test.Fatal(witnessesError)
 	}
 	if len(paths) == 0 {
 		test.Fatal("profile witness corpus is empty")
@@ -111,9 +111,9 @@ func compilationBudget(test *testing.T) func() {
 // go list enumerates the compiler implementation, embeds and module pins.
 func compilationInputs(test *testing.T) buildcache.Inputs {
 	test.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	command := toolchain.CommandIn(
 		root,
@@ -127,16 +127,16 @@ func compilationInputs(test *testing.T) buildcache.Inputs {
 		"./internal/javascript",
 		"./stage1/cohere/lint/registry",
 	)
-	output, err := command.Output()
-	if err != nil {
-		test.Fatal(err)
+	output, outputError := command.Output()
+	if outputError != nil {
+		test.Fatal(outputError)
 	}
 	decoder := json.NewDecoder(bytes.NewReader(output))
 	files := map[string]bool{}
 	add := func(path string) {
-		rel, err := filepath.Rel(root, path)
-		if err != nil {
-			test.Fatal(err)
+		rel, relativePathError := filepath.Rel(root, path)
+		if relativePathError != nil {
+			test.Fatal(relativePathError)
 		}
 		if !strings.HasPrefix(rel, "../") {
 			files[filepath.ToSlash(rel)] = true
@@ -148,12 +148,12 @@ func compilationInputs(test *testing.T) buildcache.Inputs {
 			GoFiles, CgoFiles, CFiles, CXXFiles, HFiles, SFiles, EmbedFiles []string
 			Module                                                          *struct{ GoMod string }
 		}
-		err := decoder.Decode(&p)
-		if err == io.EOF {
+		decodeError := decoder.Decode(&p)
+		if decodeError == io.EOF {
 			break
 		}
-		if err != nil {
-			test.Fatal(err)
+		if decodeError != nil {
+			test.Fatal(decodeError)
 		}
 		for _, names := range [][]string{
 			p.GoFiles,
@@ -171,7 +171,7 @@ func compilationInputs(test *testing.T) buildcache.Inputs {
 		if p.Module != nil && p.Module.GoMod != "" {
 			add(p.Module.GoMod)
 			sum := filepath.Join(filepath.Dir(p.Module.GoMod), "go.sum")
-			if _, err := os.Stat(sum); err == nil {
+			if _, statError := os.Stat(sum); statError == nil {
 				add(sum)
 			}
 		}
@@ -221,9 +221,9 @@ func compilationProductKinds(test *testing.T, kinds []string) string {
 	inputs := compilationInputs(test)
 	cdir := compilationEmission(test, inputs, "c")
 	jsdir := compilationEmission(test, inputs, "javascript")
-	source, err := os.ReadFile(filepath.Join(cdir, "main.c"))
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(filepath.Join(cdir, "main.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	inputs.Flags = append(inputs.Flags, fmt.Sprintf("lowered-sha256=%x", sha256.Sum256(source)))
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
@@ -247,26 +247,26 @@ func compilationProductKinds(test *testing.T, kinds []string) string {
 				if kind != "profiled" {
 					return native.Build(string(source), filepath.Join(dir, kind), options)
 				}
-				if err := os.WriteFile(filepath.Join(dir, "main.c"), source, 0644); err != nil {
-					return err
+				if writeError := os.WriteFile(filepath.Join(dir, "main.c"), source, 0644); writeError != nil {
+					return writeError
 				}
 				// Reads: internal/native/runtime/*.[ch]
-				entries, err := os.ReadDir(filepath.Join(repository, "internal/native/runtime"))
-				if err != nil {
-					return err
+				entries, readDirectoryError := os.ReadDir(filepath.Join(repository, "internal/native/runtime"))
+				if readDirectoryError != nil {
+					return readDirectoryError
 				}
 				units := []string{filepath.Join(dir, "main.c")}
 				for _, entry := range entries {
 					if !strings.HasSuffix(entry.Name(), ".c") && !strings.HasSuffix(entry.Name(), ".h") {
 						continue
 					}
-					data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime", entry.Name()))
-					if err != nil {
-						return err
+					data, readError := os.ReadFile(filepath.Join(repository, "internal/native/runtime", entry.Name()))
+					if readError != nil {
+						return readError
 					}
 					path := filepath.Join(dir, entry.Name())
-					if err := os.WriteFile(path, data, 0644); err != nil {
-						return err
+					if writeError := os.WriteFile(path, data, 0644); writeError != nil {
+						return writeError
 					}
 					if strings.HasSuffix(path, ".c") {
 						units = append(units, path)
@@ -289,8 +289,8 @@ func compilationProductKinds(test *testing.T, kinds []string) string {
 				flags = append(flags, units...)
 				flags = append(flags, "-lm")
 				command := profiledClang("clang", flags...)
-				if output, err := command.CombinedOutput(); err != nil {
-					return fmt.Errorf("profile clang: %w\n%s", err, output)
+				if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+					return fmt.Errorf("profile clang: %w\n%s", combinedOutputError, output)
 				}
 				return nil
 			})
@@ -307,12 +307,12 @@ func compilationProductKinds(test *testing.T, kinds []string) string {
 	if test.Failed() {
 		test.FailNow()
 	}
-	module, err := os.ReadFile(filepath.Join(jsdir, "lint.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	module, readError := os.ReadFile(filepath.Join(jsdir, "lint.mjs"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	if err := os.WriteFile(filepath.Join(directory, "lint.mjs"), module, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(directory, "lint.mjs"), module, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return directory
 }
@@ -325,17 +325,20 @@ func compilationOracleOutputs(test *testing.T, oracle, manifestPath string) ([]b
 func compilationLowered(test *testing.T, inputs buildcache.Inputs) string {
 	return buildcache.Product(test, inputs, func(dir string) error {
 		// Named placelessly: the IR's positions would otherwise carry this checkout's path (#tqrqx60).
-		program, err := load.LoadDisplayed([]string{filepath.Join(packageDirectory, "main.ts")}, buildcache.Relative)
-		if err != nil {
-			return err
+		program, loadDisplayedError := load.LoadDisplayed(
+			[]string{filepath.Join(packageDirectory, "main.ts")},
+			buildcache.Relative,
+		)
+		if loadDisplayedError != nil {
+			return loadDisplayedError
 		}
-		value, err := lower.Lower(context.Background(), program)
-		if err != nil {
-			return err
+		value, lowerError := lower.Lower(context.Background(), program)
+		if lowerError != nil {
+			return lowerError
 		}
-		file, err := os.Create(filepath.Join(dir, "program.gob"))
-		if err != nil {
-			return err
+		file, createError := os.Create(filepath.Join(dir, "program.gob"))
+		if createError != nil {
+			return createError
 		}
 		defer file.Close()
 		return gob.NewEncoder(file).Encode(value)
@@ -344,16 +347,16 @@ func compilationLowered(test *testing.T, inputs buildcache.Inputs) string {
 
 func compilationEmission(test *testing.T, inputs buildcache.Inputs, kind string) string {
 	lowered := compilationLowered(test, inputs)
-	data, err := os.ReadFile(filepath.Join(lowered, "program.gob"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(lowered, "program.gob"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	inputs.Name = "lint-profile-emit-" + kind
 	inputs.Flags = append(append([]string{}, inputs.Flags...), fmt.Sprintf("ir-sha256=%x", sha256.Sum256(data)))
 	return buildcache.Product(test, inputs, func(dir string) error {
 		var value ir.Program
-		if err := gob.NewDecoder(bytes.NewReader(data)).Decode(&value); err != nil {
-			return err
+		if decodeError := gob.NewDecoder(bytes.NewReader(data)).Decode(&value); decodeError != nil {
+			return decodeError
 		}
 		if kind == "c" {
 			return os.WriteFile(filepath.Join(dir, "main.c"), []byte(native.C(&value)), 0644)
@@ -376,11 +379,11 @@ func compilationCommand(test *testing.T, name string, args ...string) *exec.Cmd 
 	command := exec.CommandContext(ctx, name, args...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if err == syscall.ESRCH {
+		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if killError == syscall.ESRCH {
 			return os.ErrProcessDone
 		}
-		return err
+		return killError
 	}
 	return command
 }

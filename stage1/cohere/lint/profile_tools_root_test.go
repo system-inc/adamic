@@ -18,13 +18,13 @@ import (
 // second's.
 func secondToolsRoot(test *testing.T) (string, string) {
 	test.Helper()
-	compiler, err := toolchain.Path("clang")
-	if err != nil {
-		test.Fatal(err)
+	compiler, pathError := toolchain.Path("clang")
+	if pathError != nil {
+		test.Fatal(pathError)
 	}
-	real, err := filepath.EvalSymlinks(compiler)
-	if err != nil {
-		test.Fatal(err)
+	real, resolveSymlinksError := filepath.EvalSymlinks(compiler)
+	if resolveSymlinksError != nil {
+		test.Fatal(resolveSymlinksError)
 	}
 	installation := filepath.Dir(filepath.Dir(real))
 	if installation == filepath.Dir(installation) {
@@ -32,36 +32,39 @@ func secondToolsRoot(test *testing.T) (string, string) {
 	}
 	root := filepath.Join(test.TempDir(), "tools-reached-at-a-second-place")
 	link := func(from, to string) {
-		entries, err := os.ReadDir(from)
-		if err != nil {
-			test.Fatal(err)
+		entries, readDirectoryError := os.ReadDir(from)
+		if readDirectoryError != nil {
+			test.Fatal(readDirectoryError)
 		}
-		if err := os.MkdirAll(to, 0o755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(to, 0o755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 		for _, entry := range entries {
 			if from == filepath.Dir(real) && entry.Name() == filepath.Base(real) {
 				continue
 			}
-			if err := os.Symlink(filepath.Join(from, entry.Name()), filepath.Join(to, entry.Name())); err != nil {
-				test.Fatal(err)
+			if symlinkError := os.Symlink(
+				filepath.Join(from, entry.Name()),
+				filepath.Join(to, entry.Name()),
+			); symlinkError != nil {
+				test.Fatal(symlinkError)
 			}
 		}
 	}
 	bin := filepath.Join(root, filepath.Base(filepath.Dir(real)))
 	link(installation, root)
-	if err := os.Remove(bin); err != nil {
-		test.Fatal(err)
+	if removeError := os.Remove(bin); removeError != nil {
+		test.Fatal(removeError)
 	}
 	link(filepath.Dir(real), bin)
 	second := filepath.Join(bin, filepath.Base(real))
-	if err := os.Link(real, second); err != nil {
-		contents, err := os.ReadFile(real)
-		if err != nil {
-			test.Fatal(err)
+	if linkError := os.Link(real, second); linkError != nil {
+		contents, readError := os.ReadFile(real)
+		if readError != nil {
+			test.Fatal(readError)
 		}
-		if err := os.WriteFile(second, contents, 0o755); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(second, contents, 0o755); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	return real, second
@@ -82,8 +85,8 @@ func TestProfiledBuildIsTheSameBytesFromTwoToolsRoots(test *testing.T) {
 	build := func(compiler string, bare bool) []byte {
 		test.Helper()
 		directory := test.TempDir()
-		if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0o644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0o644); writeError != nil {
+			test.Fatal(writeError)
 		}
 		flags := append(
 			native.SourceFlags(source, options),
@@ -101,12 +104,12 @@ func TestProfiledBuildIsTheSameBytesFromTwoToolsRoots(test *testing.T) {
 		} else {
 			command = profiledClang(compiler, flags...)
 		}
-		if output, err := command.CombinedOutput(); err != nil {
-			test.Fatalf("clang %s: %v\n%s", compiler, err, output)
+		if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+			test.Fatalf("clang %s: %v\n%s", compiler, combinedOutputError, output)
 		}
-		contents, err := os.ReadFile(filepath.Join(directory, "profiled"))
-		if err != nil {
-			test.Fatal(err)
+		contents, readError := os.ReadFile(filepath.Join(directory, "profiled"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		return contents
 	}

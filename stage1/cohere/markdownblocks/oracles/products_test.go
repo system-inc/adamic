@@ -7,17 +7,17 @@ import (
 )
 
 func TestMain(m *testing.M) {
-	if err := os.Chdir(".."); err != nil {
-		panic(err)
+	if chdirError := os.Chdir(".."); chdirError != nil {
+		panic(chdirError)
 	}
 	EnableProductProduction()
 	os.Exit(m.Run())
 }
 func productRoot(test *testing.T) string {
 	test.Helper()
-	root, err := filepath.Abs("../../..")
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs("../../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return root
 }

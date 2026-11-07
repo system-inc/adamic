@@ -47,9 +47,9 @@ func recoveryProduct(test *testing.T, s *recoverySetup, in buildcache.Inputs, bu
 	start := time.Now()
 	dir := buildcache.Product(test, in, func(dir string) error {
 		cold := time.Now()
-		err := build(dir)
+		buildError := build(dir)
 		test.Logf("BUILD %s cold wall=%.6fs", in.Name, time.Since(cold).Seconds())
-		return err
+		return buildError
 	})
 	s.builds += time.Since(start)
 	return dir
@@ -68,22 +68,22 @@ func recoveryPort(test *testing.T, s *recoverySetup, path string) (string, strin
 	test.Helper()
 	inputs := recoveryCacheInputs(test, path)
 	lowered := recoveryProduct(test, s, inputs, func(dir string) error {
-		program, err := load.Load([]string{path})
-		if err != nil {
-			return err
+		program, loadError := load.Load([]string{path})
+		if loadError != nil {
+			return loadError
 		}
-		ir, err := lower.Lower(context.Background(), program)
-		if err != nil {
-			return err
+		ir, lowerError := lower.Lower(context.Background(), program)
+		if lowerError != nil {
+			return lowerError
 		}
-		if err = os.WriteFile(filepath.Join(dir, "port.c"), []byte(native.C(ir)), 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(filepath.Join(dir, "port.c"), []byte(native.C(ir)), 0644); writeError != nil {
+			return writeError
 		}
 		return os.WriteFile(filepath.Join(dir, "port.mjs"), []byte(javascript.JavaScript(ir)), 0644)
 	})
-	code, err := os.ReadFile(filepath.Join(lowered, "port.c"))
-	if err != nil {
-		test.Fatal(err)
+	code, readError := os.ReadFile(filepath.Join(lowered, "port.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	inputs = buildcache.Inputs{
 		Name: "estree-sanitized-native",
@@ -253,13 +253,13 @@ func proveRecoveryVerdict(test *testing.T, cases []recoveryCase, count int, mode
 	for _, c := range cases {
 		config.IDs = append(config.IDs, c.id)
 	}
-	data, err := json.Marshal(config)
-	if err != nil {
-		test.Fatal(err)
+	data, encodeError := json.Marshal(config)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
-	executable, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	executable, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
 	command := exec.Command(executable, "-test.v", "-test.run=^TestRecoveryShardProofChild$")
 	for _, entry := range os.Environ() {
@@ -268,11 +268,13 @@ func proveRecoveryVerdict(test *testing.T, cases []recoveryCase, count int, mode
 		}
 	}
 	command.Env = append(command.Env, "ADAMIC_ESTREE_SHARD_PROOF="+string(data))
-	output, err := command.CombinedOutput()
+	output, combinedOutputError := command.CombinedOutput()
 	owner := fmt.Sprintf("shard-%03d", planted%count)
 	prefix := "--- FAIL: TestRecoveryShardProofChild/"
-	if err == nil || strings.Count(string(output), prefix) != 1 || !strings.Contains(string(output), prefix+owner+" ") {
-		test.Fatalf("planted %s must fail only %s: %v\n%s", cases[planted].id, owner, err, output)
+	if combinedOutputError == nil ||
+		strings.Count(string(output), prefix) != 1 ||
+		!strings.Contains(string(output), prefix+owner+" ") {
+		test.Fatalf("planted %s must fail only %s: %v\n%s", cases[planted].id, owner, combinedOutputError, output)
 	}
 	test.Logf("planted %s %s failed only %s", mode, cases[planted].id, owner)
 }
@@ -283,8 +285,8 @@ func TestRecoveryShardProofChild(test *testing.T) {
 		return
 	}
 	var config recoveryProof
-	if err := json.Unmarshal([]byte(data), &config); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal([]byte(data), &config); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	var cases []recoveryCase
 	for _, id := range config.IDs {
@@ -335,11 +337,11 @@ func TestRecoveryShardProofChild(test *testing.T) {
 func recoveryCPU(test *testing.T) time.Duration {
 	test.Helper()
 	var self, children syscall.Rusage
-	if err := syscall.Getrusage(syscall.RUSAGE_SELF, &self); err != nil {
-		test.Fatal(err)
+	if getrusageError := syscall.Getrusage(syscall.RUSAGE_SELF, &self); getrusageError != nil {
+		test.Fatal(getrusageError)
 	}
-	if err := syscall.Getrusage(syscall.RUSAGE_CHILDREN, &children); err != nil {
-		test.Fatal(err)
+	if getrusageError := syscall.Getrusage(syscall.RUSAGE_CHILDREN, &children); getrusageError != nil {
+		test.Fatal(getrusageError)
 	}
 	seconds := self.Utime.Sec + self.Stime.Sec + children.Utime.Sec + children.Stime.Sec
 	micros := self.Utime.Usec + self.Stime.Usec + children.Utime.Usec + children.Stime.Usec

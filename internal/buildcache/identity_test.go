@@ -50,12 +50,12 @@ func freshGoBuild(
 		append(append(append(append([]string{"build"}, freshFlags...), arguments...), "-o", path), pkg)...,
 	)
 	command.Env = append(append(command.Env, environment...), "GOCACHE="+goCache)
-	if combined, err := command.CombinedOutput(); err != nil {
-		test.Fatalf("go build %s: %v\n%s", pkg, err, combined)
+	if combined, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+		test.Fatalf("go build %s: %v\n%s", pkg, combinedOutputError, combined)
 	}
-	content, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	content, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return content, time.Since(started).Seconds()
 }
@@ -133,8 +133,8 @@ func describeRanges(ranges [][2]int, regions map[string][2]int) string {
 
 // uuidAndSignature is where a Mach-O's LC_UUID bytes and its code signature sit, or nothing for another format.
 func uuidAndSignature(content []byte) map[string][2]int {
-	file, err := macho.NewFile(bytes.NewReader(content))
-	if err != nil {
+	file, newFileError := macho.NewFile(bytes.NewReader(content))
+	if newFileError != nil {
 		return nil
 	}
 	defer file.Close()
@@ -161,9 +161,9 @@ func uuidAndSignature(content []byte) map[string][2]int {
 // from that store, is the same bytes all three ways.
 // Not parallel: points the build cache (ADAMIC_BUILD_CACHE_DIR, ADAMIC_BUILD_LOG) and the store at this test through test.Setenv.
 func TestProductIdentityOfGoBuildProducts(test *testing.T) {
-	root, err := repositoryRoot()
-	if err != nil {
-		test.Fatal(err)
+	root, repositoryRootError := repositoryRoot()
+	if repositoryRootError != nil {
+		test.Fatal(repositoryRootError)
 	}
 	for _, built := range []struct{ output, pkg string }{
 		{"hello", "./internal/buildcache/testdata/hello"},
@@ -178,9 +178,9 @@ func TestProductIdentityOfGoBuildProducts(test *testing.T) {
 			fresh, freshSeconds := freshGoBuild(test, root, built.output, built.pkg, freshGoCache(test)(), nil)
 
 			started := time.Now()
-			cold, err := os.ReadFile(GoBuild(test, built.output, built.pkg, nil))
-			if err != nil {
-				test.Fatal(err)
+			cold, readError := os.ReadFile(GoBuild(test, built.output, built.pkg, nil))
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			coldSeconds := time.Since(started).Seconds()
 			test.Logf(
@@ -225,8 +225,8 @@ func freshGoCache(test *testing.T) func() string {
 	return func() string {
 		test.Helper()
 		directory := filepath.Join(test.TempDir(), "go-build")
-		if err := os.CopyFS(directory, os.DirFS(freshTemplate.directory)); err != nil {
-			test.Fatal(err)
+		if copyFsError := os.CopyFS(directory, os.DirFS(freshTemplate.directory)); copyFsError != nil {
+			test.Fatal(copyFsError)
 		}
 		return directory
 	}
@@ -240,20 +240,20 @@ var freshTemplate struct {
 }
 
 func buildFreshTemplate() (string, error) {
-	directory, err := os.MkdirTemp("", "buildcache-fresh-template-")
-	if err != nil {
-		return "", err
+	directory, temporaryDirectoryError := os.MkdirTemp("", "buildcache-fresh-template-")
+	if temporaryDirectoryError != nil {
+		return "", temporaryDirectoryError
 	}
 	template, module := filepath.Join(directory, "go-build"), filepath.Join(directory, "module")
 	for name, content := range map[string]string{
 		"go.mod":  "module example.com/template\n\ngo 1.21\n",
 		"main.go": "package main\n\n// int one(void) { return 1; }\nimport \"C\"\n\nimport \"fmt\"\n\nfunc main() { fmt.Println(C.one()) }\n",
 	} {
-		if err := os.MkdirAll(module, 0o755); err != nil {
-			return directory, err
+		if createDirectoryError := os.MkdirAll(module, 0o755); createDirectoryError != nil {
+			return directory, createDirectoryError
 		}
-		if err := os.WriteFile(filepath.Join(module, name), []byte(content), 0o644); err != nil {
-			return directory, err
+		if writeError := os.WriteFile(filepath.Join(module, name), []byte(content), 0o644); writeError != nil {
+			return directory, writeError
 		}
 	}
 	command := toolchain.CommandIn(
@@ -262,8 +262,8 @@ func buildFreshTemplate() (string, error) {
 		append(append([]string{"build"}, freshFlags...), "-o", filepath.Join(module, "template"), ".")...,
 	)
 	command.Env = append(command.Env, "GOCACHE="+template, "GOWORK=off", "GOFLAGS=")
-	if combined, err := command.CombinedOutput(); err != nil {
-		return directory, fmt.Errorf("the template Go build cache: %v\n%s", err, combined)
+	if combined, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
+		return directory, fmt.Errorf("the template Go build cache: %v\n%s", combinedOutputError, combined)
 	}
 	return template, nil
 }
@@ -272,8 +272,10 @@ func TestMain(m *testing.M) {
 	code := m.Run()
 	if freshTemplate.directory != "" {
 		// Go writes its cache read-only, so the copy's tree is made writable before it goes.
-		filepath.WalkDir(filepath.Dir(freshTemplate.directory), func(path string, entry fs.DirEntry, err error) error {
-			if err == nil {
+		filepath.WalkDir(filepath.Dir(
+			freshTemplate.directory,
+		), func(path string, entry fs.DirEntry, pathError error) error {
+			if pathError == nil {
 				os.Chmod(path, 0o755)
 			}
 			return nil
@@ -349,9 +351,9 @@ func changeEachInput(
 					outcome = fields
 				}
 			}
-			content, err := os.ReadFile(binary)
-			if err != nil {
-				test.Fatal(err)
+			content, readError := os.ReadFile(binary)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			got := run(test, binary, nil)
 			stale := got != step.output ||
@@ -394,9 +396,9 @@ func run(test *testing.T, path string, content []byte) string {
 	if content != nil {
 		writeExecutable(test, path, string(content))
 	}
-	output, err := exec.Command(path).Output()
-	if err != nil {
-		test.Fatalf("%s: %v", path, err)
+	output, outputError := exec.Command(path).Output()
+	if outputError != nil {
+		test.Fatalf("%s: %v", path, outputError)
 	}
 	return strings.TrimSpace(string(output))
 }
@@ -404,9 +406,9 @@ func run(test *testing.T, path string, content []byte) string {
 func replaceIn(test *testing.T, directory, name, old, new string) func() {
 	return func() {
 		test.Helper()
-		content, err := os.ReadFile(filepath.Join(directory, name))
-		if err != nil || !bytes.Contains(content, []byte(old)) {
-			test.Fatalf("%s has no %q: %v", name, old, err)
+		content, readError := os.ReadFile(filepath.Join(directory, name))
+		if readError != nil || !bytes.Contains(content, []byte(old)) {
+			test.Fatalf("%s has no %q: %v", name, old, readError)
 		}
 		write(test, directory, name, strings.Replace(string(content), old, new, 1))
 	}
@@ -523,9 +525,9 @@ func everyInputPart(t *testing.T, steps []inputChange, test string) (int, int) {
 // changeEveryInputPart. It builds nothing.
 func TestEveryInputStepRunsInExactlyOnePart(test *testing.T) {
 	test.Parallel()
-	file, err := parser.ParseFile(gotoken.NewFileSet(), "identity_test.go", nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	file, parseFileError := parser.ParseFile(gotoken.NewFileSet(), "identity_test.go", nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	callers := map[string]bool{}
 	for _, declaration := range file.Decls {

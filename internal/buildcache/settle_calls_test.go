@@ -25,9 +25,9 @@ const settleCallsSum = "3b1429cee2b83bd711bb4bbfc24a914c1defc5e39715fa987ece01b8
 // pinnedSettleCalls is the pinned list's names.
 func pinnedSettleCalls(test *testing.T) []string {
 	test.Helper()
-	text, err := os.ReadFile("testdata/settle-calls.txt")
-	if err != nil {
-		test.Fatal(err)
+	text, readError := os.ReadFile("testdata/settle-calls.txt")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if sum := sha256.Sum256(text); hex.EncodeToString(sum[:]) != settleCallsSum {
 		test.Fatalf(
@@ -52,16 +52,16 @@ func pinnedSettleCalls(test *testing.T) []string {
 // file of the package is seen.
 func settleParsedCalls(test *testing.T) []string {
 	test.Helper()
-	paths, err := filepath.Glob("*.go")
-	if err != nil || len(paths) == 0 {
-		test.Fatalf("no Go files here: %v", err)
+	paths, globError := filepath.Glob("*.go")
+	if globError != nil || len(paths) == 0 {
+		test.Fatalf("no Go files here: %v", globError)
 	}
 	names := map[string]bool{}
 	literal := func(expression ast.Expr) {
 		if basic, ok := expression.(*ast.BasicLit); ok && basic.Kind == token.STRING {
-			value, err := strconv.Unquote(basic.Value)
-			if err != nil {
-				test.Fatal(err)
+			value, unquoteError := strconv.Unquote(basic.Value)
+			if unquoteError != nil {
+				test.Fatal(unquoteError)
 			}
 			names[value] = true
 		}
@@ -125,9 +125,9 @@ func settleParsedCalls(test *testing.T) []string {
 		if strings.HasSuffix(path, "_test.go") {
 			continue
 		}
-		file, err := parser.ParseFile(token.NewFileSet(), path, nil, 0)
-		if err != nil {
-			test.Fatal(err)
+		file, parseFileError := parser.ParseFile(token.NewFileSet(), path, nil, 0)
+		if parseFileError != nil {
+			test.Fatal(parseFileError)
 		}
 		ast.Inspect(file, inspect)
 	}
@@ -200,9 +200,9 @@ var namedCallExclusions = map[string]namedCallExclusion{
 // different number of times, is red too, so the list stays exactly the literals there are.
 func TestEveryCallNamedInTheReaderIsPinned(test *testing.T) {
 	test.Parallel()
-	table, err := os.ReadFile("cmd/traced/testdata/strace-6.8-x86_64.txt")
-	if err != nil {
-		test.Fatal(err)
+	table, readError := os.ReadFile("cmd/traced/testdata/strace-6.8-x86_64.txt")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	known := map[string]bool{}
 	for _, line := range strings.Split(string(table), "\n") {
@@ -211,23 +211,23 @@ func TestEveryCallNamedInTheReaderIsPinned(test *testing.T) {
 		}
 	}
 	pinned := pinnedSettleCalls(test)
-	paths, err := filepath.Glob("*.go")
-	if err != nil {
-		test.Fatal(err)
+	paths, globError := filepath.Glob("*.go")
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	seen := map[string]int{}
 	for _, path := range paths {
 		if strings.HasSuffix(path, "_test.go") {
 			continue
 		}
-		source, err := os.ReadFile(path)
-		if err != nil {
-			test.Fatal(err)
+		source, readError := os.ReadFile(path)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		files := token.NewFileSet()
-		file, err := parser.ParseFile(files, path, source, 0)
-		if err != nil {
-			test.Fatal(err)
+		file, parseFileError := parser.ParseFile(files, path, source, 0)
+		if parseFileError != nil {
+			test.Fatal(parseFileError)
 		}
 		imports := map[*ast.BasicLit]bool{}
 		for _, spec := range file.Imports {
@@ -245,8 +245,8 @@ func TestEveryCallNamedInTheReaderIsPinned(test *testing.T) {
 			if !ok || basic.Kind != token.STRING || imports[basic] {
 				return true
 			}
-			value, err := strconv.Unquote(basic.Value)
-			if err != nil {
+			value, unquoteError := strconv.Unquote(basic.Value)
+			if unquoteError != nil {
 				return true
 			}
 			enclosing := literalExpression(basic, stack)
@@ -344,9 +344,9 @@ func f(x string) {
 		`"cased"`:    `"cased"`,
 	}
 	files := token.NewFileSet()
-	file, err := parser.ParseFile(files, "p.go", source, 0)
-	if err != nil {
-		test.Fatal(err)
+	file, parseFileError := parser.ParseFile(files, "p.go", source, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	got := map[string]string{}
 	var stack []ast.Node

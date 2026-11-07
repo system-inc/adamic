@@ -13,8 +13,8 @@ import (
 func typedArrayDecision(test *testing.T, source string) split.Function {
 	test.Helper()
 	path := filepath.Join(test.TempDir(), "typed.a")
-	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	decisions := split.Analyze(lowered(test, path))
 	for _, decision := range decisions {

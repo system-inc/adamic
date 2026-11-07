@@ -46,19 +46,34 @@ func run(arguments []string) (exit int) {
 	test262 := flags.String("test262", "", "test262 checkout (a clone at a pinned commit, not part of this repo)")
 	root := flags.String("root", ".", "Adamic checkout whose cmd/adamic and runtime are under test")
 	work := flags.String("work", "", "scratch directory (default: a directory under the system temp)")
-	profilePath := flags.String("profile", "", "write phase durations, cache hits and worker timeline to this JSON file")
+	profilePath := flags.String(
+		"profile",
+		"",
+		"write phase durations, cache hits and worker timeline to this JSON file",
+	)
 	asJSON := flags.Bool("json", false, "write the report as JSON on stdout; the table goes to stderr")
 	classifyOnly := flags.Bool("classify-only", false, "classify every test and do not compile or run")
-	adapt := flags.Bool("adapt", false, "rewrite test262 style in memory (var to let, callback params, strict equality, Test262Error) and count each rewrite")
-	subprocess := flags.Bool("compiler-subprocess", false, "start adamic c for each test (reference path; also used with an explicit -root)")
+	adapt := flags.Bool(
+		"adapt",
+		false,
+		"rewrite test262 style in memory (var to let, callback params, strict equality, Test262Error) and count each rewrite",
+	)
+	subprocess := flags.Bool(
+		"compiler-subprocess",
+		false,
+		"start adamic c for each test (reference path; also used with an explicit -root)",
+	)
 	jobs := flags.Int("jobs", runtime.GOMAXPROCS(0), "number of concurrent tests")
 	limit := flags.Int("limit", 0, "run at most this many attempted tests per filter (0 is all)")
 	flags.Usage = func() {
 		fmt.Fprintf(os.Stderr, "usage: adamic-test262 [flags] <filter>...\n\n")
-		fmt.Fprintf(os.Stderr, "  filter is a directory under test262's test/, like built-ins/String/prototype/padStart\n\n")
+		fmt.Fprintf(
+			os.Stderr,
+			"  filter is a directory under test262's test/, like built-ins/String/prototype/padStart\n\n",
+		)
 		flags.PrintDefaults()
 	}
-	if err := flags.Parse(arguments); err != nil {
+	if parseError := flags.Parse(arguments); parseError != nil {
 		return 2
 	}
 	if *jobs < 1 {
@@ -71,10 +86,10 @@ func run(arguments []string) (exit int) {
 	}
 	workDirectory := *work
 	if workDirectory == "" {
-		var err error
-		workDirectory, err = os.MkdirTemp("", "adamic-test262-")
-		if err != nil {
-			fmt.Fprintln(os.Stderr, err)
+		var temporaryDirectoryError error
+		workDirectory, temporaryDirectoryError = os.MkdirTemp("", "adamic-test262-")
+		if temporaryDirectoryError != nil {
+			fmt.Fprintln(os.Stderr, temporaryDirectoryError)
 			return 1
 		}
 	}
@@ -82,8 +97,8 @@ func run(arguments []string) (exit int) {
 	if *profilePath != "" {
 		profile = newRunProfile()
 		defer func() {
-			if err := profile.write(*profilePath); err != nil {
-				fmt.Fprintln(os.Stderr, err)
+			if writeError := profile.write(*profilePath); writeError != nil {
+				fmt.Fprintln(os.Stderr, writeError)
 				exit = 1
 			}
 		}()
@@ -95,11 +110,18 @@ func run(arguments []string) (exit int) {
 		}
 	})
 	var prepared *engine
-	var err error
+	var prepareModeError error
 	if !*classifyOnly {
-		prepared, err = prepareMode(*root, *test262, workDirectory, goBuildAdamic(*root), profile, inProcess)
-		if err != nil {
-			fmt.Fprintln(os.Stderr, err)
+		prepared, prepareModeError = prepareMode(
+			*root,
+			*test262,
+			workDirectory,
+			goBuildAdamic(*root),
+			profile,
+			inProcess,
+		)
+		if prepareModeError != nil {
+			fmt.Fprintln(os.Stderr, prepareModeError)
 			return 1
 		}
 	} else {
@@ -110,17 +132,17 @@ func run(arguments []string) (exit int) {
 	prepared.inProcess = inProcess
 	document := reportDocument{Test262: *test262, Commit: test262Commit(*test262), Adapt: *adapt}
 	for _, filter := range flags.Args() {
-		report, err := prepared.runFilter(filter, *limit, *classifyOnly)
-		if err != nil {
-			fmt.Fprintln(os.Stderr, err)
+		report, runFilterError := prepared.runFilter(filter, *limit, *classifyOnly)
+		if runFilterError != nil {
+			fmt.Fprintln(os.Stderr, runFilterError)
 			return 1
 		}
 		document.Filters = append(document.Filters, report)
 	}
 	if *asJSON {
 		printTables(os.Stderr, document)
-		if err := writeJSON(os.Stdout, document); err != nil {
-			fmt.Fprintln(os.Stderr, err)
+		if writeJsonError := writeJSON(os.Stdout, document); writeJsonError != nil {
+			fmt.Fprintln(os.Stderr, writeJsonError)
 			return 1
 		}
 		return 0
@@ -154,9 +176,29 @@ func printTables(writer io.Writer, document reportDocument) {
 				width = len(directory.Path)
 			}
 		}
-		fmt.Fprintf(writer, "%-*s  %6s  %6s  %8s  %8s  %8s\n", width, "directory", "pass", "fail", "refused", "crashed", "skipped")
+		fmt.Fprintf(
+			writer,
+			"%-*s  %6s  %6s  %8s  %8s  %8s\n",
+			width,
+			"directory",
+			"pass",
+			"fail",
+			"refused",
+			"crashed",
+			"skipped",
+		)
 		for _, directory := range filter.Directories {
-			fmt.Fprintf(writer, "%-*s  %6d  %6d  %8d  %8d  %8d\n", width, directory.Path, directory.Pass, directory.Fail, directory.Refused, directory.Crashed, directory.Skipped)
+			fmt.Fprintf(
+				writer,
+				"%-*s  %6d  %6d  %8d  %8d  %8d\n",
+				width,
+				directory.Path,
+				directory.Pass,
+				directory.Fail,
+				directory.Refused,
+				directory.Crashed,
+				directory.Skipped,
+			)
 		}
 		fmt.Fprintln(writer)
 		printReasons(writer, "refusal reasons", filter.RefusalReasons)

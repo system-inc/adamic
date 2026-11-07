@@ -18,23 +18,23 @@ func main() {
 	capture := flag.Bool("capture-tests", true, "execute cohere rule tests and count harness invocations")
 	measure := flag.Bool("measure", true, "run every applicable Go cohere rule on both corpora")
 	flag.Parse()
-	absolute, err := filepath.Abs(*root)
-	must(err)
+	absolute, absolutePathError := filepath.Abs(*root)
+	must(absolutePathError)
 	destination := *output
 	if !filepath.IsAbs(destination) {
 		destination = filepath.Join(absolute, destination)
 	}
 	must(os.MkdirAll(destination, 0755))
-	scratch, err := os.MkdirTemp("", "adamic-lint-inventory-")
-	must(err)
+	scratch, temporaryDirectoryError := os.MkdirTemp("", "adamic-lint-inventory-")
+	must(temporaryDirectoryError)
 	// Keep scratch paths in the log for inspection. Never remove another worker's files.
 	fmt.Println("scratch:", scratch)
 	cohere := filepath.Join(absolute, "cohere")
 	engine := filepath.Join(absolute, "stage1/cohere/lint/inventory/testdata/engine.go")
 	virtual := filepath.Join(cohere, "adamic_inventory.go")
 	overlay := filepath.Join(scratch, "build-overlay.json")
-	data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: engine}})
-	must(err)
+	data, encodeError := json.Marshal(map[string]any{"Replace": map[string]string{virtual: engine}})
+	must(encodeError)
 	must(os.WriteFile(overlay, data, 0644))
 	binary := filepath.Join(scratch, "inventory-engine")
 	run(cohere, filepath.Join(destination, "build.log"), nil, "go", "build", "-overlay="+overlay, "-o", binary, virtual)
@@ -51,15 +51,15 @@ func main() {
 	run(cohere, filepath.Join(destination, "generation.log"), nil, binary, args...)
 	fmt.Println("wrote", filepath.Join(destination, "inventory.json"), "and inventory.md")
 }
-func must(err error) {
-	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
+func must(sourceError error) {
+	if sourceError != nil {
+		fmt.Fprintln(os.Stderr, sourceError)
 		os.Exit(1)
 	}
 }
 func run(directory, log string, environment []string, name string, args ...string) {
-	file, err := os.Create(log)
-	must(err)
+	file, createError := os.Create(log)
+	must(createError)
 	command := exec.Command(name, args...)
 	command.Dir = directory
 	command.Stdout = file
@@ -67,9 +67,9 @@ func run(directory, log string, environment []string, name string, args ...strin
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
-	err = command.Run()
+	runError := command.Run()
 	must(file.Close())
-	if err != nil {
-		must(fmt.Errorf("%s: %w; read %s", name, err, log))
+	if runError != nil {
+		must(fmt.Errorf("%s: %w; read %s", name, runError, log))
 	}
 }

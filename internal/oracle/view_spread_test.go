@@ -34,18 +34,20 @@ func TestViewSpreadNotYet(test *testing.T) {
 	} {
 		test.Run(probe.file, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/reland_refused", probe.file))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/reland_refused", probe.file),
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			truth := onNode(test, path)
 			if disagreement(run{stdout: []byte("5\n")}, truth) != "" {
 				test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
-			program, err := lowered(test, path)
+			program, loweredError := lowered(test, path)
 			if os.Getenv("ADAMIC_VIEW_SPREAD_MUTANT") == "1" {
-				if err != nil {
-					test.Fatalf("the mutant must admit the program: %v", err)
+				if loweredError != nil {
+					test.Fatalf("the mutant must admit the program: %v", loweredError)
 				}
 				native, _ := nativelyUncached(test, program)
 				for name, got := range map[string]run{"native": native, "release": releasedUncached(test, program)} {
@@ -64,10 +66,10 @@ func TestViewSpreadNotYet(test *testing.T) {
 				return
 			}
 			var notYet *lower.NotYet
-			if !errors.As(err, &notYet) ||
-				!strings.Contains(err.Error(), probe.file+":"+probe.at) ||
-				!strings.Contains(err.Error(), probe.what) {
-				test.Fatalf("want the whole-object copy NotYet at the spread, got %v", err)
+			if !errors.As(loweredError, &notYet) ||
+				!strings.Contains(loweredError.Error(), probe.file+":"+probe.at) ||
+				!strings.Contains(loweredError.Error(), probe.what) {
+				test.Fatalf("want the whole-object copy NotYet at the spread, got %v", loweredError)
 			}
 		})
 	}
@@ -87,18 +89,20 @@ func TestViewCopyVariantsRefused(test *testing.T) {
 	} {
 		test.Run(probe.file, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/reland_refused", probe.file))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/reland_refused", probe.file),
+			)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			if truth := onNode(test, path); disagreement(run{stdout: []byte("5\n")}, truth) != "" {
 				test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
-			_, err = lowered(test, path)
-			if err == nil ||
-				!strings.Contains(err.Error(), probe.file+":"+probe.at) ||
-				!strings.Contains(err.Error(), probe.what) {
-				test.Fatalf("want the copy refused at %s, got %v", probe.at, err)
+			_, loweredError := lowered(test, path)
+			if loweredError == nil ||
+				!strings.Contains(loweredError.Error(), probe.file+":"+probe.at) ||
+				!strings.Contains(loweredError.Error(), probe.what) {
+				test.Fatalf("want the copy refused at %s, got %v", probe.at, loweredError)
 			}
 		})
 	}
@@ -119,16 +123,16 @@ console.log(` + "`${c.x} ${c.label} ${p.x}`" + `);
 const v = { kind: 9, pos: 1, text: "t" };
 show(v);
 `
-	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	truth := onNode(test, path)
 	if disagreement(run{stdout: []byte("2 a 1\nt\n")}, truth) != "" {
 		test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatalf("an honest spread must lower: %v", err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatalf("an honest spread must lower: %v", loweredError)
 	}
 	native, _ := natively(test, program)
 	for name, got := range map[string]run{

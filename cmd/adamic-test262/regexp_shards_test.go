@@ -64,8 +64,8 @@ func regExpRunnerWASIShard(test *testing.T, name string) {
 	test.Helper()
 	e := regExpCompilerEngine(test, "testdata/regexp")
 	one := regExpFixture(test, e.test262, name)
-	if err := os.WriteFile(filepath.Join(e.work, "program.a"), []byte(one.Program), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(filepath.Join(e.work, "program.a"), []byte(one.Program), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	regExpWASIAgrees(test, e, one)
 }
@@ -91,8 +91,8 @@ func regExpWASIAgrees(test testing.TB, e *engine, one classified) {
 		test.Fatalf("undeclared RegExp runner runtime features: %v", features)
 	}
 	cPath := filepath.Join(e.work, "program.c")
-	if err := os.WriteFile(cPath, []byte(compiled.Stdout), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(cPath, []byte(compiled.Stdout), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	binary := filepath.Join(e.work, "program.wasm")
 	args := append(native.Flags(options), "-I", directory, cPath, "-o", binary)
@@ -113,8 +113,8 @@ func regExpWASIAgrees(test testing.TB, e *engine, one classified) {
 	)
 	original := e.originalRegExp(one)
 	module := filepath.Join(e.work, "program.mts")
-	if err := os.WriteFile(module, []byte(one.Program), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(module, []byte(one.Program), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
 	adapted := runProgram(15*time.Second, nil, e.tools.node, "--disable-warning=ExperimentalWarning", module)
 	if original.Exit != 0 ||

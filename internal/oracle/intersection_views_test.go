@@ -20,9 +20,9 @@ import (
 func TestIntersectionViewsAgreeWithNode(test *testing.T) {
 	test.Parallel()
 	directory := "internal/oracle/testdata/intersection_views"
-	entries, err := os.ReadDir(filepath.Join(repository, directory))
-	if err != nil {
-		test.Fatal(err)
+	entries, readDirectoryError := os.ReadDir(filepath.Join(repository, directory))
+	if readDirectoryError != nil {
+		test.Fatal(readDirectoryError)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -81,16 +81,16 @@ func TestIntersectionViewsStopAtTheRead(test *testing.T) {
 	} {
 		test.Run(stop.name, func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, directory+stop.name))
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(filepath.Join(repository, directory+stop.name))
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
 			if truth := onNode(test, path); truth.exitCode != 0 || string(truth.stdout) != stop.node {
 				test.Fatalf("Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			want := run{
 				exitCode: 70,
@@ -167,9 +167,11 @@ func TestIntersectionViewWidenedReadNotYet(test *testing.T) {
 	} {
 		test.Run(probe.file, func(test *testing.T) {
 			test.Parallel()
-			source, err := os.ReadFile(filepath.Join(repository, "internal/oracle/testdata/reland_refused", probe.file))
-			if err != nil {
-				test.Fatal(err)
+			source, readError := os.ReadFile(
+				filepath.Join(repository, "internal/oracle/testdata/reland_refused", probe.file),
+			)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			lines := strings.Split(string(source), "\n")
 			if len(lines) < 4 || lines[1] != declared || lines[3] != lying {
@@ -193,18 +195,20 @@ func TestIntersectionViewWidenedReadNotYet(test *testing.T) {
 				test.Fatalf("%s has %d casts to Lit, want 1", probe.file, casts)
 			}
 			path := filepath.Join(test.TempDir(), probe.file)
-			if err := os.WriteFile(path, []byte(strings.Join(lines, "\n")), 0o644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, []byte(strings.Join(lines, "\n")), 0o644); writeError != nil {
+				test.Fatal(writeError)
 			}
 			if truth := onNode(test, path); disagreement(run{stdout: []byte(probe.node)}, truth) != "" {
 				test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
-			_, err = lowered(test, path)
+			_, loweredError := lowered(test, path)
 			at := probe.file + ":" + strconv.Itoa(line) + ":" + strconv.Itoa(column)
 			what := "a read of field text through type " + probe.through + ", which may hold a checked view's value"
 			var notYet *lower.NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), at) || !strings.Contains(err.Error(), what) {
-				test.Fatalf("want the widened read NotYet at %s, got %v", at, err)
+			if !errors.As(loweredError, &notYet) ||
+				!strings.Contains(loweredError.Error(), at) ||
+				!strings.Contains(loweredError.Error(), what) {
+				test.Fatalf("want the widened read NotYet at %s, got %v", at, loweredError)
 			}
 		})
 	}
@@ -237,18 +241,20 @@ func TestIntersectionDirectEntryFailsClosed(test *testing.T) {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
 			path := filepath.Join(test.TempDir(), probe.name)
-			if err := os.WriteFile(path, []byte(probe.source), 0o644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, []byte(probe.source), 0o644); writeError != nil {
+				test.Fatal(writeError)
 			}
-			_, err := lowered(test, path)
+			_, loweredError := lowered(test, path)
 			var refused *lower.Refused
 			var notYet *lower.NotYet
-			kind := errors.As(err, &notYet)
+			kind := errors.As(loweredError, &notYet)
 			if probe.refused {
-				kind = errors.As(err, &refused)
+				kind = errors.As(loweredError, &refused)
 			}
-			if !kind || !strings.Contains(err.Error(), probe.at) || !strings.Contains(err.Error(), probe.words) {
-				test.Fatalf("want %q at %s (refused %v), got %v", probe.words, probe.at, probe.refused, err)
+			if !kind ||
+				!strings.Contains(loweredError.Error(), probe.at) ||
+				!strings.Contains(loweredError.Error(), probe.words) {
+				test.Fatalf("want %q at %s (refused %v), got %v", probe.words, probe.at, probe.refused, loweredError)
 			}
 		})
 	}

@@ -42,23 +42,28 @@ func TestTypeScriptConditionsAgreeWithNode(test *testing.T) {
 	for _, name := range conditionRepresentations {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
-			source, err := os.ReadFile(filepath.Join(repository, "internal/oracle/testdata/conditions_"+name+".a"))
-			if err != nil {
-				test.Fatal(err)
+			source, readError := os.ReadFile(
+				filepath.Join(repository, "internal/oracle/testdata/conditions_"+name+".a"),
+			)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			// Store source as .a in the repository; exercise the TypeScript loader explicitly.
 			path := filepath.Join(test.TempDir(), "conditions.ts")
-			if err := os.WriteFile(path, source, 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, source, 0644); writeError != nil {
+				test.Fatal(writeError)
 			}
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatal(err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatal(loweredError)
 			}
 			truth := onNode(test, path)
 			if name == "ledger78" {
-				if err := conditionLedgerDifference(source, truth.stdout); err != nil {
-					test.Fatal(err)
+				if conditionLedgerDifferenceError := conditionLedgerDifference(
+					source,
+					truth.stdout,
+				); conditionLedgerDifferenceError != nil {
+					test.Fatal(conditionLedgerDifferenceError)
 				}
 			}
 			native, binary := nativelyUncached(test, program)
@@ -81,13 +86,13 @@ func TestTypeScriptConditionsAgreeWithNode(test *testing.T) {
 
 func TestConditionNaNMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/conditions_number.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/conditions_number.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	truth := onNode(test, path)
 	changed := 0
@@ -119,17 +124,17 @@ func TestConditionNaNMutant(test *testing.T) {
 // Check the independent historical row list as well as the executable reduction manifest.
 func conditionLedgerDifference(source, stdout []byte) error {
 	root := filepath.Join(repository, "docs/verification/conditions")
-	original, err := os.ReadFile(filepath.Join(root, "ledger-sites.json"))
-	if err != nil {
-		return err
+	original, readError := os.ReadFile(filepath.Join(root, "ledger-sites.json"))
+	if readError != nil {
+		return readError
 	}
 	var sites []struct{ Where string }
-	if err := json.Unmarshal(original, &sites); err != nil {
-		return err
+	if decodeError := json.Unmarshal(original, &sites); decodeError != nil {
+		return decodeError
 	}
-	coverage, err := os.ReadFile(filepath.Join(root, "ledger-coverage.json"))
-	if err != nil {
-		return err
+	coverage, readError := os.ReadFile(filepath.Join(root, "ledger-coverage.json"))
+	if readError != nil {
+		return readError
 	}
 	var recorded struct {
 		Sites []struct {
@@ -138,8 +143,8 @@ func conditionLedgerDifference(source, stdout []byte) error {
 			Samples                    []string
 		}
 	}
-	if err := json.Unmarshal(coverage, &recorded); err != nil {
-		return err
+	if decodeError := json.Unmarshal(coverage, &recorded); decodeError != nil {
+		return decodeError
 	}
 	if len(sites) != 78 || len(recorded.Sites) != 78 {
 		return fmt.Errorf("want exactly 78 original and reduced sites")
@@ -190,9 +195,9 @@ func conditionLedgerDifference(source, stdout []byte) error {
 
 func TestConditionLedgerMissingSiteMutant(test *testing.T) {
 	test.Parallel()
-	source, err := os.ReadFile(filepath.Join(repository, "internal/oracle/testdata/conditions_ledger78.a"))
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(filepath.Join(repository, "internal/oracle/testdata/conditions_ledger78.a"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var lines []string
 	removed := 0
@@ -208,31 +213,34 @@ func TestConditionLedgerMissingSiteMutant(test *testing.T) {
 	}
 	path := filepath.Join(test.TempDir(), "missing-site.ts")
 	mutantSource := []byte(strings.Join(lines, "\n"))
-	if err := os.WriteFile(path, mutantSource, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, mutantSource, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	mutant := onNode(test, path)
 	if mutant.exitCode != 0 {
 		test.Fatalf("mutant failed execution: %#v", mutant)
 	}
-	if err := conditionLedgerDifference(
+	if conditionLedgerDifferenceError := conditionLedgerDifference(
 		mutantSource,
 		mutant.stdout,
-	); err == nil || !strings.Contains(err.Error(), "missing or duplicate sample src/compiler/builder.ts:642:13") {
-		test.Fatalf("missing-site mutant escaped intended coverage check: %v", err)
+	); conditionLedgerDifferenceError == nil || !strings.Contains(
+		conditionLedgerDifferenceError.Error(),
+		"missing or duplicate sample src/compiler/builder.ts:642:13",
+	) {
+		test.Fatalf("missing-site mutant escaped intended coverage check: %v", conditionLedgerDifferenceError)
 	}
 	test.Log("missing-site source mutant caught by the independent historical-site coverage check")
 }
 
 func TestConditionLedgerNullMutant(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/conditions_ledger78.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/conditions_ledger78.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	truth := onNode(test, path)
 	changed := 0

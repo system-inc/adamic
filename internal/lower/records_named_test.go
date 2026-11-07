@@ -10,12 +10,12 @@ import (
 
 func TestNamedRecordReadTypes(test *testing.T) {
 	test.Parallel()
-	p, err := lowerSource(
+	p, lowerSourceError := lowerSource(
 		test,
 		`interface Options { target?:number; [key:string]:number|string|undefined } function named(o:Options):number|undefined{return o.target;} function indexed(o:Options,k:string):number|string|undefined{return o[k];}`,
 	)
-	if err != nil {
-		test.Fatal(err)
+	if lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
 	for _, f := range p.Functions {
 		if f.Name == "named" {
@@ -37,12 +37,12 @@ func TestNamedRecordReadTypes(test *testing.T) {
 // checked tag, since a write through the index signature can put any value of the union under a declared key.
 func TestNullableRecordSlots(test *testing.T) {
 	test.Parallel()
-	p, err := lowerSource(
+	p, lowerSourceError := lowerSource(
 		test,
 		`interface R {named?:number;[key:string]:number|string|boolean|null|undefined} function named(r:R):number|undefined{return r.named;} function indexed(r:R,k:string):number|string|boolean|null|undefined{return r[k];}`,
 	)
-	if err != nil {
-		test.Fatal(err)
+	if lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
 	checked := false
 	for _, f := range p.Functions {
@@ -71,13 +71,14 @@ func TestNarrowedUnionMemberBesideRecord(test *testing.T) {
 	test.Parallel()
 	for _, declared := range []string{"Box | Record<string, number>", "Box | Record<string, number> | null"} {
 		test.Run(declared, func(test *testing.T) {
-			_, err := lowerSource(test, `class Box { v = 1; }
+			_, lowerSourceError := lowerSource(test, `class Box { v = 1; }
 let x: `+declared+` = new Box();
 function swap(): void { const d: Record<string, number> = {}; d["v"] = 5; x = d; }
 if (x instanceof Box) { swap(); console.log(String(x.v)); }`)
 			var ny *NotYet
-			if !errors.As(err, &ny) || !strings.Contains(err.Error(), "object tag cannot be checked with typeof") {
-				test.Fatalf("got %v, want the object-tag NotYet", err)
+			if !errors.As(lowerSourceError, &ny) ||
+				!strings.Contains(lowerSourceError.Error(), "object tag cannot be checked with typeof") {
+				test.Fatalf("got %v, want the object-tag NotYet", lowerSourceError)
 			}
 		})
 	}
@@ -104,9 +105,9 @@ interface Options { configFile?: Source; paths?: { [index: string]: string[] }; 
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			p, err := lowerSource(test, probe.source)
-			if err != nil {
-				test.Fatal(err)
+			p, lowerSourceError := lowerSource(test, probe.source)
+			if lowerSourceError != nil {
+				test.Fatal(lowerSourceError)
 			}
 			checked := false
 			for _, f := range p.Functions {
@@ -121,12 +122,15 @@ interface Options { configFile?: Source; paths?: { [index: string]: string[] }; 
 		})
 	}
 	// An array read stops under its own reason until the element-checked view lands (#y852c3c).
-	_, err := lowerSource(test, options(tscShape)+
+	_, lowerSourceError := lowerSource(test, options(tscShape)+
 		"function read(o: Options): number { const roots = o.rootDirs; return roots ? roots.length : 0; }")
 	var arrayStop *NotYet
-	if !errors.As(err, &arrayStop) ||
-		!strings.Contains(err.Error(), "a dictionary member narrowed to an array without an element-checked view") {
-		test.Fatalf("an array beside arrays: got %v, want the array NotYet", err)
+	if !errors.As(lowerSourceError, &arrayStop) ||
+		!strings.Contains(
+			lowerSourceError.Error(),
+			"a dictionary member narrowed to an array without an element-checked view",
+		) {
+		test.Fatalf("an array beside arrays: got %v, want the array NotYet", lowerSourceError)
 	}
 	for _, probe := range []struct{ name, source string }{
 		{"two fixed objects", options(
@@ -142,13 +146,13 @@ interface Options { configFile?: Source; paths?: { [index: string]: string[] }; 
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var ny *NotYet
-			if !errors.As(err, &ny) || !strings.Contains(
-				err.Error(),
+			if !errors.As(lowerSourceError, &ny) || !strings.Contains(
+				lowerSourceError.Error(),
 				"dictionary member narrowed to an object kind without a checked runtime tag",
 			) {
-				test.Fatalf("got %v, want the object-kind NotYet", err)
+				test.Fatalf("got %v, want the object-kind NotYet", lowerSourceError)
 			}
 		})
 	}
@@ -193,10 +197,10 @@ func TestNamedRecordRefusals(test *testing.T) {
 				continue
 			}
 			test.Run(extension+" "+probe.source, func(test *testing.T) {
-				_, err := lowerSourceAs(test, probe.source, extension)
+				_, lowerSourceAsError := lowerSourceAs(test, probe.source, extension)
 				var ny *NotYet
-				if !errors.As(err, &ny) || !strings.Contains(err.Error(), probe.reason) {
-					test.Fatalf("got %v, want NotYet %s", err, probe.reason)
+				if !errors.As(lowerSourceAsError, &ny) || !strings.Contains(lowerSourceAsError.Error(), probe.reason) {
+					test.Fatalf("got %v, want NotYet %s", lowerSourceAsError, probe.reason)
 				}
 			})
 		}
@@ -227,10 +231,10 @@ func TestNamedRecordLiesAreRefusedInA(test *testing.T) {
 		},
 	} {
 		test.Run(probe.source, func(test *testing.T) {
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var refused *Refused
-			if !errors.As(err, &refused) || !strings.HasPrefix(refused.What, probe.reason) {
-				test.Fatalf("got %v, want refused %s", err, probe.reason)
+			if !errors.As(lowerSourceError, &refused) || !strings.HasPrefix(refused.What, probe.reason) {
+				test.Fatalf("got %v, want refused %s", lowerSourceError, probe.reason)
 			}
 		})
 	}
@@ -448,41 +452,44 @@ console.log((tables.names["a"] ?? "").toUpperCase());
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSourceAs(test, probe.source, ".ts")
+			_, lowerSourceAsError := lowerSourceAs(test, probe.source, ".ts")
 			var ny *NotYet
-			if !errors.As(err, &ny) || !strings.Contains(err.Error(), probe.reason) {
-				test.Fatalf("got %v, want the NotYet %s", err, probe.reason)
+			if !errors.As(lowerSourceAsError, &ny) || !strings.Contains(lowerSourceAsError.Error(), probe.reason) {
+				test.Fatalf("got %v, want the NotYet %s", lowerSourceAsError, probe.reason)
 			}
-			if _, err := lowerSource(test, probe.source); err == nil || ruleOf(err) != probe.inA {
-				test.Fatalf("in .a: got %v, want %s", err, probe.inA)
+			if _, lowerSourceError := lowerSource(
+				test,
+				probe.source,
+			); lowerSourceError == nil || ruleOf(lowerSourceError) != probe.inA {
+				test.Fatalf("in .a: got %v, want %s", lowerSourceError, probe.inA)
 			}
 		})
 	}
 	for _, extension := range []string{".a", ".ts"} {
-		if _, err := lowerSourceAs(
+		if _, lowerSourceAsError := lowerSourceAs(
 			test,
 			`interface Options { target?: number; required: number; [option: string]: number | undefined }
 function write(options: Options, key: string): void { options[key] = 9; }`,
 			extension,
-		); err != nil {
-			test.Fatalf("an honest write in %s: %v", extension, err)
+		); lowerSourceAsError != nil {
+			test.Fatalf("an honest write in %s: %v", extension, lowerSourceAsError)
 		}
 	}
 	// A computed name strings joined by + make is judged as that name: tsc's ["" + "constructor"] beside
 	// the keywords its literal declares names none of them (01_scanner_keywords.a's shape).
-	if _, err := lowerSource(
+	if _, lowerSourceError := lowerSource(
 		test,
 		"const SyntaxKind = { AbstractKeyword: 128, AccessorKeyword: 129, ConstructorKeyword: 137 } as const;\ntype KeywordSyntaxKind = (typeof SyntaxKind)[keyof typeof SyntaxKind];\ninterface MapLike<T> { [index: string]: T; }\nconst kinds: MapLike<KeywordSyntaxKind> = {\n    abstract: SyntaxKind.AbstractKeyword,\n    accessor: SyntaxKind.AccessorKeyword,\n    [\"\" + \"constructor\"]: SyntaxKind.ConstructorKeyword,\n};\nconsole.log(`${String(kinds[\"abstract\"])} ${Object.keys(kinds).join(\",\")}`);\n",
-	); err != nil {
-		test.Fatalf("a folded name no named property takes: %v", err)
+	); lowerSourceError != nil {
+		test.Fatalf("a folded name no named property takes: %v", lowerSourceError)
 	}
 }
 
 // ruleOf is whether an error is a refusal or a NotYet, and the fix a refusal names, which names its rule.
-func ruleOf(err error) string {
+func ruleOf(sourceError error) string {
 	var refused *Refused
-	if errors.As(err, &refused) {
+	if errors.As(sourceError, &refused) {
 		return "Refused: " + refused.Fix
 	}
-	return stoppedFor(err)
+	return stoppedFor(sourceError)
 }

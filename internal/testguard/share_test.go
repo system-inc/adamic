@@ -14,16 +14,16 @@ func TestShareDividesTheUnitsCPUsAmongParallelTests(test *testing.T) {
 	previous, previousParallel := runtime.GOMAXPROCS(8), setting.Value.String()
 	defer func() {
 		runtime.GOMAXPROCS(previous)
-		if err := flag.Set("test.parallel", previousParallel); err != nil {
-			test.Fatal(err)
+		if setError := flag.Set("test.parallel", previousParallel); setError != nil {
+			test.Fatal(setError)
 		}
 	}()
 	for _, check := range []struct {
 		parallel string
 		want     int
 	}{{"8", 1}, {"2", 4}, {"1", 8}, {"16", 1}} {
-		if err := flag.Set("test.parallel", check.parallel); err != nil {
-			test.Fatal(err)
+		if setError := flag.Set("test.parallel", check.parallel); setError != nil {
+			test.Fatal(setError)
 		}
 		if got := Share(); got != check.want {
 			test.Errorf("GOMAXPROCS 8, -test.parallel %s: Share %d, want %d", check.parallel, got, check.want)
@@ -37,13 +37,13 @@ func TestEachRunsEveryIndexAtMostShareAtOnce(test *testing.T) {
 	previous, previousParallel := runtime.GOMAXPROCS(8), setting.Value.String()
 	defer func() {
 		runtime.GOMAXPROCS(previous)
-		if err := flag.Set("test.parallel", previousParallel); err != nil {
-			test.Fatal(err)
+		if setError := flag.Set("test.parallel", previousParallel); setError != nil {
+			test.Fatal(setError)
 		}
 	}()
 	for _, parallel := range []string{"8", "2"} {
-		if err := flag.Set("test.parallel", parallel); err != nil {
-			test.Fatal(err)
+		if setError := flag.Set("test.parallel", parallel); setError != nil {
+			test.Fatal(setError)
 		}
 		var running, most atomic.Int32
 		var ran [12]atomic.Bool

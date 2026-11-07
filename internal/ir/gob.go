@@ -100,15 +100,15 @@ func encodeFloatBits[Fields any](fields Fields, floats ...float64) ([]byte, erro
 		bits[index] = math.Float64bits(float)
 	}
 	var encoded bytes.Buffer
-	err := gob.NewEncoder(&encoded).Encode(floatBits[Fields]{fields, bits})
-	return encoded.Bytes(), err
+	encodeError := gob.NewEncoder(&encoded).Encode(floatBits[Fields]{fields, bits})
+	return encoded.Bytes(), encodeError
 }
 
 // decodeFloatBits reads the fields, then sets each float from its bits, in the order encodeFloatBits was given them.
 func decodeFloatBits[Fields any](data []byte, fields *Fields, floats ...*float64) error {
 	var decoded floatBits[Fields]
-	if err := gob.NewDecoder(bytes.NewReader(data)).Decode(&decoded); err != nil {
-		return err
+	if decodeError := gob.NewDecoder(bytes.NewReader(data)).Decode(&decoded); decodeError != nil {
+		return decodeError
 	}
 	if len(decoded.Bits) != len(floats) {
 		return fmt.Errorf("ir: %T holds %d floats, read %d", decoded.Fields, len(floats), len(decoded.Bits))
@@ -134,15 +134,15 @@ func (generated GeneratedType) GobEncode() ([]byte, error) {
 		wire.Identity = generated.identity.kind
 	}
 	var encoded bytes.Buffer
-	err := gob.NewEncoder(&encoded).Encode(wire)
-	return encoded.Bytes(), err
+	encodeError := gob.NewEncoder(&encoded).Encode(wire)
+	return encoded.Bytes(), encodeError
 }
 
 // GobDecode reads what GobEncode wrote, back to the one canonical identity of its kind.
 func (generated *GeneratedType) GobDecode(data []byte) error {
 	var wire generatedTypeWire
-	if err := gob.NewDecoder(bytes.NewReader(data)).Decode(&wire); err != nil {
-		return err
+	if decodeError := gob.NewDecoder(bytes.NewReader(data)).Decode(&wire); decodeError != nil {
+		return decodeError
 	}
 	generated.Name, generated.identity = wire.Name, nil
 	if wire.Identity == 0 {

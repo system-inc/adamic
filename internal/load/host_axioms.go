@@ -36,8 +36,8 @@ func parseHostAxioms(data []byte) ([]hostAxiom, error) {
 	var rows []hostAxiom
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
-	if err := decoder.Decode(&rows); err != nil {
-		return nil, fmt.Errorf("load: host_axioms.json: %w", err)
+	if decodeError := decoder.Decode(&rows); decodeError != nil {
+		return nil, fmt.Errorf("load: host_axioms.json: %w", decodeError)
 	}
 	if decoder.Decode(new(any)) != io.EOF {
 		return nil, fmt.Errorf("load: host_axioms.json: trailing data")
@@ -45,9 +45,17 @@ func parseHostAxioms(data []byte) ([]hostAxiom, error) {
 	seen := map[string]bool{}
 	for index, row := range rows {
 		key := fmt.Sprintf("%s:%d", row.File, row.Line)
-		if row.File == "." || !fs.ValidPath(row.File) || path.Ext(row.File) != ".ts" || row.Line < 1 ||
-			row.Published == "" || row.Corrected == "" || row.Published == row.Corrected ||
-			strings.ContainsAny(row.Published+row.Corrected, "\r\n") || len(row.Node) == 0 || row.Ruling == "" || seen[key] {
+		if row.File == "." ||
+			!fs.ValidPath(row.File) ||
+			path.Ext(row.File) != ".ts" ||
+			row.Line < 1 ||
+			row.Published == "" ||
+			row.Corrected == "" ||
+			row.Published == row.Corrected ||
+			strings.ContainsAny(row.Published+row.Corrected, "\r\n") ||
+			len(row.Node) == 0 ||
+			row.Ruling == "" ||
+			seen[key] {
 			return nil, hostAxiomError(index, row, "invalid or duplicate row")
 		}
 		seen[key] = true
@@ -62,9 +70,9 @@ func hostAxiomError(index int, row hostAxiom, reason string) error {
 // NodeHostAxiomFiles names the published package files with host corrections.
 // Disk-based checker preparations use the same table as the bundled view.
 func NodeHostAxiomFiles() ([]string, error) {
-	rows, err := hostAxioms()
-	if err != nil {
-		return nil, err
+	rows, hostAxiomsError := hostAxioms()
+	if hostAxiomsError != nil {
+		return nil, hostAxiomsError
 	}
 	var files []string
 	for _, row := range rows {
@@ -80,9 +88,9 @@ func NodeHostAxiomFiles() ([]string, error) {
 // an uncorrected axiom. ReadStream and WriteStream have identical isTTY lines;
 // each is anchored once on its own line and explicitly accounted for in the file.
 func CorrectNodeHostAxioms(file, published string) (string, error) {
-	rows, err := hostAxioms()
-	if err != nil {
-		return "", err
+	rows, hostAxiomsError := hostAxioms()
+	if hostAxiomsError != nil {
+		return "", hostAxiomsError
 	}
 	return correctNodeHostAxioms(file, published, rows)
 }
@@ -97,7 +105,11 @@ func correctNodeHostAxioms(file, published string, rows []hostAxiom) (string, er
 			continue
 		}
 		if strings.Contains(published, row.Corrected) {
-			return "", hostAxiomError(index, row, "corrected text already appears in the published file; retire the row")
+			return "", hostAxiomError(
+				index,
+				row,
+				"corrected text already appears in the published file; retire the row",
+			)
 		}
 		if row.Line > len(lines) || strings.Count(lines[row.Line-1], row.Published) != 1 {
 			return "", hostAxiomError(index, row, "published text must occur exactly once on its published line")
@@ -111,7 +123,11 @@ func correctNodeHostAxioms(file, published string, rows []hostAxiom) (string, er
 			}
 		}
 		if strings.Count(published, row.Published) != expected {
-			return "", hostAxiomError(index, row, "published text occurrences in the file do not match the line-anchored rows")
+			return "", hostAxiomError(
+				index,
+				row,
+				"published text occurrences in the file do not match the line-anchored rows",
+			)
 		}
 	}
 	for _, row := range rows {
@@ -123,9 +139,9 @@ func correctNodeHostAxioms(file, published string, rows []hostAxiom) (string, er
 }
 
 func validateNodeHostAxioms(files fs.FS) error {
-	rows, err := hostAxioms()
-	if err != nil {
-		return err
+	rows, hostAxiomsError := hostAxioms()
+	if hostAxiomsError != nil {
+		return hostAxiomsError
 	}
 	seen := map[string]bool{}
 	for index, row := range rows {
@@ -133,12 +149,15 @@ func validateNodeHostAxioms(files fs.FS) error {
 			continue
 		}
 		seen[row.File] = true
-		data, err := fs.ReadFile(files, "node_types/node_modules/@types/node/"+row.File)
-		if err != nil {
-			return hostAxiomError(index, row, "cannot read published file: "+err.Error())
+		data, readFileError := fs.ReadFile(files, "node_types/node_modules/@types/node/"+row.File)
+		if readFileError != nil {
+			return hostAxiomError(index, row, "cannot read published file: "+readFileError.Error())
 		}
-		if _, err := CorrectNodeHostAxioms(row.File, string(data)); err != nil {
-			return err
+		if _, correctNodeHostAxiomsError := CorrectNodeHostAxioms(
+			row.File,
+			string(data),
+		); correctNodeHostAxiomsError != nil {
+			return correctNodeHostAxiomsError
 		}
 	}
 	return nil

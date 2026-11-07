@@ -18,10 +18,10 @@ func TestLogicalStringOperandHeldOtherwiseIsNotYet(test *testing.T) {
 		"interface Item { readonly label: string }\nconst table = new Map<string, Item>();\nfunction find(text: string): Item | undefined { const name = nameOf(text); return name && table.get(text); }\nconsole.log(String(find('a') === undefined));",
 		"const tables = new Map<string, Map<string, number>>();\nfunction find(text: string): Map<string, number> | undefined { const name = nameOf(text); return name && tables.get(text); }\nconsole.log(String(find('a') === undefined));",
 	} {
-		_, err := lowerSource(test, brand+body)
+		_, lowerSourceError := lowerSource(test, brand+body)
 		var gap *NotYet
-		if !errors.As(err, &gap) || !strings.Contains(gap.What, "a logical string operand") {
-			test.Errorf("got %v, want the logical string operand stop", err)
+		if !errors.As(lowerSourceError, &gap) || !strings.Contains(gap.What, "a logical string operand") {
+			test.Errorf("got %v, want the logical string operand stop", lowerSourceError)
 		}
 	}
 }

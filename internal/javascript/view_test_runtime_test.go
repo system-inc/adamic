@@ -22,13 +22,13 @@ func runViewNode(test *testing.T, source, stdout, stderr string, exit int) {
 	command.Stdin = strings.NewReader(source)
 	var out, errout bytes.Buffer
 	command.Stdout, command.Stderr = &out, &errout
-	err := command.Run()
+	runError := command.Run()
 	code := 0
-	if err != nil {
-		if failure, ok := err.(*exec.ExitError); ok {
+	if runError != nil {
+		if failure, ok := runError.(*exec.ExitError); ok {
 			code = failure.ExitCode()
 		} else {
-			test.Fatal(err)
+			test.Fatal(runError)
 		}
 	}
 	if code != exit || out.String() != stdout || errout.String() != stderr {

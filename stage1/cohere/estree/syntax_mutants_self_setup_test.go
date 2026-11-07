@@ -74,15 +74,15 @@ func syntaxMutantIRProduct(test *testing.T, item syntaxMutant) string {
 	inputs.Name = "estree-syntax-mutant-ir-v2-" + item.name
 	return buildcache.Product(test, inputs, func(dir string) error {
 		main := mutantPort(test, item.file, item.from, item.to)
-		files, err := filepath.Glob(filepath.Join(filepath.Dir(main), "*.ts"))
-		if err != nil {
-			return err
+		files, globError := filepath.Glob(filepath.Join(filepath.Dir(main), "*.ts"))
+		if globError != nil {
+			return globError
 		}
 		snapshot := map[string][]byte{}
 		for _, file := range files {
-			data, err := os.ReadFile(file)
-			if err != nil {
-				return err
+			data, readError := os.ReadFile(file)
+			if readError != nil {
+				return readError
 			}
 			snapshot[filepath.Base(file)] = data
 		}
@@ -95,21 +95,21 @@ func syntaxMutantLoweredProduct(test *testing.T, item syntaxMutant) string {
 	inputs := syntaxMutantProductInputs(test, item)
 	inputs.Name = "estree-syntax-mutant-emitted-" + item.name
 	return buildcache.Product(test, inputs, func(dir string) error {
-		program, err := estreeFamilyReadCheckpoint(checkpoint)
-		if err != nil {
-			return err
+		program, estreeFamilyReadCheckpointError := estreeFamilyReadCheckpoint(checkpoint)
+		if estreeFamilyReadCheckpointError != nil {
+			return estreeFamilyReadCheckpointError
 		}
-		files, err := filepath.Glob(filepath.Join(checkpoint, "source", "*.ts"))
-		if err != nil {
-			return err
+		files, globError := filepath.Glob(filepath.Join(checkpoint, "source", "*.ts"))
+		if globError != nil {
+			return globError
 		}
 		for _, file := range files {
-			data, err := os.ReadFile(file)
-			if err != nil {
-				return err
+			data, readError := os.ReadFile(file)
+			if readError != nil {
+				return readError
 			}
-			if err := os.WriteFile(filepath.Join(dir, filepath.Base(file)), data, 0644); err != nil {
-				return err
+			if writeError := os.WriteFile(filepath.Join(dir, filepath.Base(file)), data, 0644); writeError != nil {
+				return writeError
 			}
 		}
 		return os.WriteFile(filepath.Join(dir, "port.c"), []byte(native.C(program)), 0644)
@@ -124,9 +124,9 @@ func syntaxMutantNativeProduct(test *testing.T, item syntaxMutant) string {
 	inputs.Flags = append(inputs.Flags, native.Flags(estreeFamilyNativeOptions())...)
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
 	return buildcache.Product(test, inputs, func(dir string) error {
-		data, err := os.ReadFile(filepath.Join(lowered, "port.c"))
-		if err != nil {
-			return err
+		data, readError := os.ReadFile(filepath.Join(lowered, "port.c"))
+		if readError != nil {
+			return readError
 		}
 		return native.Build(string(data), filepath.Join(dir, "port"), estreeFamilyNativeOptions())
 	})
@@ -205,14 +205,14 @@ func syntaxMutantPreparedProduct(test *testing.T, index int) string {
 		// paths.
 		want := bytes.ReplaceAll(execute(test, "", oracle, args...), []byte(filepath.Dir(list)), []byte("<sources>"))
 		// Main and Binary are other products, named by their keys (#tqrqx60).
-		data, err := json.Marshal(syntaxMutantPrepared{
+		data, encodeError := json.Marshal(syntaxMutantPrepared{
 			Main:    buildcache.Relative(main),
 			Binary:  buildcache.Relative(binary),
 			Sources: sources,
 			Want:    want,
 		})
-		if err != nil {
-			return err
+		if encodeError != nil {
+			return encodeError
 		}
 		return os.WriteFile(filepath.Join(dir, "ready.json"), data, 0644)
 	})
@@ -222,24 +222,24 @@ func prepareSyntaxMutants(test *testing.T) {
 	test.Helper()
 	// The union's planted-survivor children are handed their parent's prepared mutants, so they fetch nothing.
 	if descriptor := os.Getenv(syntaxMutantsPreparedEnv); descriptor != "" {
-		data, err := os.ReadFile(descriptor)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(descriptor)
+		if readError != nil {
+			test.Fatal(readError)
 		}
-		if err := json.Unmarshal(data, &syntaxMutantsPrepared); err != nil {
-			test.Fatal(err)
+		if decodeError := json.Unmarshal(data, &syntaxMutantsPrepared); decodeError != nil {
+			test.Fatal(decodeError)
 		}
 		return
 	}
 	for index := range syntaxMutantEnumeration() {
 		dir := syntaxMutantPreparedProduct(test, index)
-		data, err := os.ReadFile(filepath.Join(dir, "ready.json"))
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(filepath.Join(dir, "ready.json"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		var prepared syntaxMutantPrepared
-		if err := json.Unmarshal(data, &prepared); err != nil {
-			test.Fatal(err)
+		if decodeError := json.Unmarshal(data, &prepared); decodeError != nil {
+			test.Fatal(decodeError)
 		}
 		prepared.Main, prepared.Binary = buildcache.Absolute(prepared.Main), buildcache.Absolute(prepared.Binary)
 		prepared.Main = resolvedPort(test, filepath.Dir(prepared.Main), filepath.Base(prepared.Main))
@@ -383,28 +383,28 @@ func TestSyntaxMutantsUnion(test *testing.T) {
 			}
 		}
 	}
-	executable, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	executable, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
-	encoded, err := json.Marshal(prepared)
-	if err != nil {
-		test.Fatal(err)
+	encoded, encodeError := json.Marshal(prepared)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	descriptor := filepath.Join(test.TempDir(), "prepared.json")
-	if err := os.WriteFile(descriptor, encoded, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(descriptor, encoded, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	caught := []int{}
 	for i := range syntaxMutantRunners {
 		name := fmt.Sprintf("TestSyntaxMutants_%03d", i)
 		command := exec.Command(executable, "-test.run=^"+name+"$", "-test.timeout=90s", "-test.v")
 		command.Env = append(os.Environ(), "ADAMIC_SYNTAX_MUTANTS_PLANT=1", syntaxMutantsPreparedEnv+"="+descriptor)
-		output, err := command.CombinedOutput()
-		if err != nil {
+		output, combinedOutputError := command.CombinedOutput()
+		if combinedOutputError != nil {
 			if !strings.Contains(string(output), "mutant survived") ||
 				!strings.Contains(string(output), "--- FAIL: "+name) {
-				test.Fatalf("unexpected failure: %v\n%s", err, output)
+				test.Fatalf("unexpected failure: %v\n%s", combinedOutputError, output)
 			}
 			caught = append(caught, i)
 		}

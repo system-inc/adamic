@@ -42,17 +42,17 @@ func TestUncaughtNoArgument(test *testing.T) {
 
 func checkUncaughtName(test *testing.T, fixture string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	want := onNode(test, path)
 	if want.exitCode != 70 {
 		test.Fatalf("Node did not throw: %+v", want)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	got, _ := natively(test, program)
 	for _, result := range []run{got, released(test, program), onJavaScriptBackend(test, program)} {

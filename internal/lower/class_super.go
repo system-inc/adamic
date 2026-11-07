@@ -26,11 +26,17 @@ func (flow *constructorSuperFlow) reads(node *ast.Node, state uint8) error {
 	var failed error
 	var visit ast.Visitor
 	visit = func(child *ast.Node) bool {
-		if (child.Kind == ast.KindThisKeyword || (child.Kind == ast.KindSuperKeyword && child.Parent != nil && child.Parent.Kind == ast.KindPropertyAccessExpression)) && state&superUninitialized != 0 {
+		if (child.Kind == ast.KindThisKeyword || (child.Kind == ast.KindSuperKeyword &&
+			child.Parent != nil &&
+			child.Parent.Kind == ast.KindPropertyAccessExpression)) && state&superUninitialized != 0 {
 			flow.instance.unreadyThis[child] = true
 		}
-		if child.Kind == ast.KindCallExpression && ast.SkipParentheses(child.AsCallExpression().Expression).Kind == ast.KindSuperKeyword {
-			failed = flow.l.notYet(child, "super used as a value or in a deferred function; call it as a statement in each branch")
+		if child.Kind == ast.KindCallExpression &&
+			ast.SkipParentheses(child.AsCallExpression().Expression).Kind == ast.KindSuperKeyword {
+			failed = flow.l.notYet(
+				child,
+				"super used as a value or in a deferred function; call it as a statement in each branch",
+			)
 			return true
 		}
 		return child.ForEachChild(visit)
@@ -41,9 +47,9 @@ func (flow *constructorSuperFlow) reads(node *ast.Node, state uint8) error {
 
 func (flow *constructorSuperFlow) list(nodes []*ast.Node, state uint8) (uint8, error) {
 	for _, node := range nodes {
-		next, err := flow.statement(node, state)
-		if err != nil {
-			return 0, err
+		next, statementError := flow.statement(node, state)
+		if statementError != nil {
+			return 0, statementError
 		}
 		state = next
 	}
@@ -52,10 +58,11 @@ func (flow *constructorSuperFlow) list(nodes []*ast.Node, state uint8) (uint8, e
 
 func (flow *constructorSuperFlow) expression(node *ast.Node, state uint8) (uint8, error) {
 	node = ast.SkipParentheses(node)
-	if node.Kind == ast.KindCallExpression && ast.SkipParentheses(node.AsCallExpression().Expression).Kind == ast.KindSuperKeyword {
+	if node.Kind == ast.KindCallExpression &&
+		ast.SkipParentheses(node.AsCallExpression().Expression).Kind == ast.KindSuperKeyword {
 		for _, argument := range nodesOf(node.AsCallExpression().Arguments) {
-			if err := flow.reads(argument, state); err != nil {
-				return 0, err
+			if readsError := flow.reads(argument, state); readsError != nil {
+				return 0, readsError
 			}
 		}
 		flow.instance.superStates[node] |= state
@@ -70,15 +77,15 @@ func (flow *constructorSuperFlow) expression(node *ast.Node, state uint8) (uint8
 	}
 	if node.Kind == ast.KindConditionalExpression {
 		expression := node.AsConditionalExpression()
-		if err := flow.reads(expression.Condition, state); err != nil {
-			return 0, err
+		if readsError := flow.reads(expression.Condition, state); readsError != nil {
+			return 0, readsError
 		}
-		left, err := flow.expression(expression.WhenTrue, state)
-		if err != nil {
-			return 0, err
+		left, expressionError := flow.expression(expression.WhenTrue, state)
+		if expressionError != nil {
+			return 0, expressionError
 		}
-		right, err := flow.expression(expression.WhenFalse, state)
-		return left | right, err
+		right, expressionError := flow.expression(expression.WhenFalse, state)
+		return left | right, expressionError
 	}
 	return state, flow.reads(node, state)
 }
@@ -94,42 +101,42 @@ func (flow *constructorSuperFlow) statement(node *ast.Node, state uint8) (uint8,
 		return flow.expression(node.AsExpressionStatement().Expression, state)
 	case ast.KindIfStatement:
 		branch := node.AsIfStatement()
-		if err := flow.reads(branch.Expression, state); err != nil {
-			return 0, err
+		if readsError := flow.reads(branch.Expression, state); readsError != nil {
+			return 0, readsError
 		}
-		left, err := flow.statement(branch.ThenStatement, state)
-		if err != nil {
-			return 0, err
+		left, statementError := flow.statement(branch.ThenStatement, state)
+		if statementError != nil {
+			return 0, statementError
 		}
-		right, err := flow.statement(branch.ElseStatement, state)
-		return left | right, err
+		right, statementError := flow.statement(branch.ElseStatement, state)
+		return left | right, statementError
 	case ast.KindThrowStatement:
 		return 0, flow.reads(node.AsThrowStatement().Expression, state)
 	case ast.KindReturnStatement:
 		return 0, flow.l.notYet(node, "an explicit return from a derived constructor")
 	case ast.KindTryStatement:
 		tried := node.AsTryStatement()
-		normal, err := flow.statement(tried.TryBlock, state)
-		if err != nil {
-			return 0, err
+		normal, statementError := flow.statement(tried.TryBlock, state)
+		if statementError != nil {
+			return 0, statementError
 		}
 		if tried.CatchClause != nil {
 			// A failure may occur on either side of super returning. The runtime flag
 			// distinguishes a retry from a second successful initialization.
-			caught, err := flow.statement(tried.CatchClause.AsCatchClause().Block, state|superInitialized)
-			if err != nil {
-				return 0, err
+			caught, statementError := flow.statement(tried.CatchClause.AsCatchClause().Block, state|superInitialized)
+			if statementError != nil {
+				return 0, statementError
 			}
 			normal |= caught
 		}
 		if tried.FinallyBlock != nil {
 			// Finally also runs on exceptional exits, before this might be initialized.
-			if _, err := flow.statement(tried.FinallyBlock, state|normal); err != nil {
-				return 0, err
+			if _, statementError := flow.statement(tried.FinallyBlock, state|normal); statementError != nil {
+				return 0, statementError
 			}
-			normal, err = flow.statement(tried.FinallyBlock, normal)
+			normal, statementError = flow.statement(tried.FinallyBlock, normal)
 		}
-		return normal, err
+		return normal, statementError
 	case ast.KindBreakStatement:
 		if len(flow.breaks) > 0 {
 			flow.breaks[len(flow.breaks)-1] |= state
@@ -154,26 +161,39 @@ func (l *lowering) prepareSuper(constructor *ast.Node, initializer int) (uint8, 
 	instance.superStates = map[*ast.Node]uint8{}
 	flow := constructorSuperFlow{l: l, instance: instance}
 	for _, parameter := range constructor.Parameters() {
-		if err := flow.reads(parameter, superUninitialized); err != nil {
-			return 0, err
+		if readsError := flow.reads(parameter, superUninitialized); readsError != nil {
+			return 0, readsError
 		}
 	}
-	state, err := flow.statement(constructor.Body(), superUninitialized)
-	if err != nil {
-		return 0, err
+	state, statementError := flow.statement(constructor.Body(), superUninitialized)
+	if statementError != nil {
+		return 0, statementError
 	}
 	instance.superReady = len(l.result.Locals)
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "superReady", Type: ir.Boolean, Function: initializer})
-	l.result.Functions[initializer].Body = append(l.result.Functions[initializer].Body, ir.Declare{Local: instance.superReady, Value: ir.BooleanConstant{}})
+	l.result.Functions[initializer].Body = append(
+		l.result.Functions[initializer].Body,
+		ir.Declare{Local: instance.superReady, Value: ir.BooleanConstant{}},
+	)
 	return state, nil
 }
 
 func (l *lowering) superError(message string) ir.Statement {
-	return ir.Throw{Value: ir.MakeError{Message: ir.StringConstant{Index: l.constant(message)}, Name: ir.StringConstant{Index: l.constant("ReferenceError")}}}
+	return ir.Throw{Value: ir.MakeError{
+		Message: ir.StringConstant{Index: l.constant(message)},
+		Name:    ir.StringConstant{Index: l.constant("ReferenceError")},
+	}}
 }
 
 func (l *lowering) superEnd() ir.Statement {
-	return ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: ir.Read{Local: l.instance.superReady, Of: ir.Boolean}}, Then: []ir.Statement{l.superError("Must call super constructor in derived class before accessing 'this' or returning from derived constructor")}}
+	return ir.If{
+		Condition: ir.Unary{Operator: ir.Not, Operand: ir.Read{Local: l.instance.superReady, Of: ir.Boolean}},
+		Then: []ir.Statement{
+			l.superError(
+				"Must call super constructor in derived class before accessing 'this' or returning from derived constructor",
+			),
+		},
+	}
 }
 
 // Conditional super used for effects has the same branch and field-initializer order as if.
@@ -188,7 +208,8 @@ func (l *lowering) conditionalSuper(node *ast.Node) ([]ir.Statement, bool, error
 		if ast.IsFunctionLike(child) {
 			return false
 		}
-		if child.Kind == ast.KindCallExpression && ast.SkipParentheses(child.AsCallExpression().Expression).Kind == ast.KindSuperKeyword {
+		if child.Kind == ast.KindCallExpression &&
+			ast.SkipParentheses(child.AsCallExpression().Expression).Kind == ast.KindSuperKeyword {
 			hasSuper = true
 			return true
 		}
@@ -198,17 +219,17 @@ func (l *lowering) conditionalSuper(node *ast.Node) ([]ir.Statement, bool, error
 	if !hasSuper {
 		return nil, false, nil
 	}
-	condition, err := l.condition(conditional.Condition)
-	if err != nil {
-		return nil, true, err
+	condition, conditionError := l.condition(conditional.Condition)
+	if conditionError != nil {
+		return nil, true, conditionError
 	}
-	yes, err := l.expressionStatement(conditional.WhenTrue)
-	if err != nil {
-		return nil, true, err
+	yes, expressionStatementError := l.expressionStatement(conditional.WhenTrue)
+	if expressionStatementError != nil {
+		return nil, true, expressionStatementError
 	}
-	no, err := l.expressionStatement(conditional.WhenFalse)
-	if err != nil {
-		return nil, true, err
+	no, expressionStatementError := l.expressionStatement(conditional.WhenFalse)
+	if expressionStatementError != nil {
+		return nil, true, expressionStatementError
 	}
 	return []ir.Statement{ir.If{Condition: condition, Then: yes, Else: no}}, true, nil
 }
@@ -239,8 +260,8 @@ func (flow *constructorSuperFlow) loop(node *ast.Node, state uint8) (uint8, erro
 	case ast.KindForOfStatement:
 		loop := node.AsForInOrOfStatement()
 		body = loop.Statement
-		if err := flow.reads(loop.Expression, state); err != nil {
-			return 0, err
+		if readsError := flow.reads(loop.Expression, state); readsError != nil {
+			return 0, readsError
 		}
 	}
 	entry := state | superInitialized
@@ -248,30 +269,31 @@ func (flow *constructorSuperFlow) loop(node *ast.Node, state uint8) (uint8, erro
 		entry = 0
 	}
 	if node.Kind != ast.KindDoStatement {
-		if err := flow.reads(condition, entry); err != nil {
-			return 0, err
+		if readsError := flow.reads(condition, entry); readsError != nil {
+			return 0, readsError
 		}
 	}
 	flow.breaks = append(flow.breaks, 0)
 	flow.continues = append(flow.continues, 0)
-	normal, err := flow.statement(body, entry)
+	normal, statementError := flow.statement(body, entry)
 	broken := flow.breaks[len(flow.breaks)-1]
 	continued := flow.continues[len(flow.continues)-1]
 	flow.breaks = flow.breaks[:len(flow.breaks)-1]
 	flow.continues = flow.continues[:len(flow.continues)-1]
-	if err != nil {
-		return 0, err
+	if statementError != nil {
+		return 0, statementError
 	}
 	normal |= continued
 	if increment != nil {
-		normal, err = flow.expression(increment, normal)
-		if err != nil {
-			return 0, err
+		var expressionError error
+		normal, expressionError = flow.expression(increment, normal)
+		if expressionError != nil {
+			return 0, expressionError
 		}
 	}
 	if node.Kind == ast.KindDoStatement {
-		if err := flow.reads(condition, normal); err != nil {
-			return 0, err
+		if readsError := flow.reads(condition, normal); readsError != nil {
+			return 0, readsError
 		}
 	}
 	result := normal | broken
@@ -283,8 +305,8 @@ func (flow *constructorSuperFlow) loop(node *ast.Node, state uint8) (uint8, erro
 
 func (flow *constructorSuperFlow) switchCases(node *ast.Node, state uint8) (uint8, error) {
 	switched := node.AsSwitchStatement()
-	if err := flow.reads(switched.Expression, state); err != nil {
-		return 0, err
+	if readsError := flow.reads(switched.Expression, state); readsError != nil {
+		return 0, readsError
 	}
 	flow.breaks = append(flow.breaks, 0)
 	fallback, fallthroughState := false, uint8(0)
@@ -294,14 +316,14 @@ func (flow *constructorSuperFlow) switchCases(node *ast.Node, state uint8) (uint
 		if clause.Kind == ast.KindDefaultClause {
 			fallback = true
 		}
-		if err := flow.reads(branch.Expression, state); err != nil {
+		if readsError := flow.reads(branch.Expression, state); readsError != nil {
 			flow.breaks = flow.breaks[:len(flow.breaks)-1]
-			return 0, err
+			return 0, readsError
 		}
-		normal, err := flow.list(branch.Statements.Nodes, state|fallthroughState)
-		if err != nil {
+		normal, listError := flow.list(branch.Statements.Nodes, state|fallthroughState)
+		if listError != nil {
 			flow.breaks = flow.breaks[:len(flow.breaks)-1]
-			return 0, err
+			return 0, listError
 		}
 		fallthroughState = normal
 	}

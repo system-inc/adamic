@@ -26,13 +26,13 @@ func guardProgram(test *testing.T, name, text string) (*Program, string) {
 		),
 		file: text,
 	} {
-		if err := os.WriteFile(path, []byte(contents), 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(contents), 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
-	program, err := Open(config, []string{file})
-	if err != nil {
-		test.Fatal(err)
+	program, openError := Open(config, []string{file})
+	if openError != nil {
+		test.Fatal(openError)
 	}
 	return program, filepath.ToSlash(file)
 }
@@ -42,9 +42,9 @@ const guardValueSource = "declare const value: number;\nvalue;\n"
 func guardValueFacts(test *testing.T, program *Program, file, question string) []string {
 	test.Helper()
 	start := uint64(strings.LastIndex(guardValueSource, "\nvalue"))
-	wire, err := program.Inspect(file, start, start+6, "Identifier", question)
-	if err != nil {
-		test.Fatal(err)
+	wire, inspectError := program.Inspect(file, start, start+6, "Identifier", question)
+	if inspectError != nil {
+		test.Fatal(inspectError)
 	}
 	return decodedFields(test, wire)
 }
@@ -122,10 +122,10 @@ func TestGuardQuery(test *testing.T) {
 	test.Parallel()
 	const source = "const value = 1 + 2;\n"
 	program, file := guardProgram(test, "query.a", source)
-	got, err := program.Query(file, uint64(strings.Index(source, "1")))
+	got, queryError := program.Query(file, uint64(strings.Index(source, "1")))
 	want := Result{Kind: uint32(ast.KindBinaryExpression), Type: "number"}
-	if err != nil || got != want {
-		test.Fatalf("binary expression query: got %+v, %v; want %+v", got, err, want)
+	if queryError != nil || got != want {
+		test.Fatalf("binary expression query: got %+v, %v; want %+v", got, queryError, want)
 	}
 }
 
@@ -133,10 +133,10 @@ func TestGuardTypeParts(test *testing.T) {
 	test.Parallel()
 	program, file := guardProgram(test, "parts.a", guardValueSource)
 	start := uint64(strings.LastIndex(guardValueSource, "\nvalue"))
-	got, err := program.TypeParts(file, start, start+6, "Identifier")
+	got, typePartsError := program.TypeParts(file, start, start+6, "Identifier")
 	want := fmt.Sprintf("%d\n6\nnumber", types.TypeFlagsNumber)
-	if err != nil || got != want {
-		test.Fatalf("number type parts: got %q, %v; want %q", got, err, want)
+	if typePartsError != nil || got != want {
+		test.Fatalf("number type parts: got %q, %v; want %q", got, typePartsError, want)
 	}
 }
 

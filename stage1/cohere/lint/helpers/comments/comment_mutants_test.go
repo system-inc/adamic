@@ -87,12 +87,12 @@ func runCommentMutant(test *testing.T, index int) {
 		if len(parts) != 2 {
 			test.Fatalf("invalid ADAMIC_TEST_SHARD %q", selection)
 		}
-		selected, err := strconv.Atoi(parts[0])
-		if err != nil {
-			test.Fatal(err)
+		selected, parseError := strconv.Atoi(parts[0])
+		if parseError != nil {
+			test.Fatal(parseError)
 		}
-		count, err := strconv.Atoi(parts[1])
-		if err != nil || count < 1 || selected < 0 || selected >= count {
+		count, parseError := strconv.Atoi(parts[1])
+		if parseError != nil || count < 1 || selected < 0 || selected >= count {
 			test.Fatalf("invalid ADAMIC_TEST_SHARD %q", selection)
 		}
 		if index%count != selected {
@@ -111,9 +111,9 @@ func runCommentMutant(test *testing.T, index int) {
 	}
 	m := mutants[index]
 	test.Logf("shard-%03d: mutant %s, full witness corpus", index, m.file)
-	path, err := filepath.Abs("testdata/witnesses.json")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("testdata/witnesses.json")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	want := run(test, "", oracle(test), path)
 	got := run(test, "", helpersNative(test, m), path)
@@ -140,13 +140,13 @@ func TestCommentMutantsUnion(test *testing.T) {
 	if len(mutants) != testCommentMutantsShards {
 		test.Fatalf("enumerated %d shards, declared %d", len(mutants), testCommentMutantsShards)
 	}
-	data, err := os.ReadFile("testdata/witnesses.json")
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile("testdata/witnesses.json")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var rows []struct{ Name string }
-	if err := json.Unmarshal(data, &rows); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &rows); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if len(rows) == 0 {
 		test.Fatal("comment mutant corpus must be non-empty")
@@ -186,9 +186,9 @@ func TestCommentMutantsUnion(test *testing.T) {
 
 func TestCommentMutantsPlantedFailure(test *testing.T) {
 	test.Parallel()
-	binary, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	binary, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
 	for shard := 0; shard < testCommentMutantsShards; shard++ {
 		name := fmt.Sprintf("TestCommentMutants_%03d", shard)
@@ -196,11 +196,11 @@ func TestCommentMutantsPlantedFailure(test *testing.T) {
 		command := exec.CommandContext(ctx, binary, "-test.run=^"+name+"$", "-test.timeout=75s", "-test.v")
 		command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 		command.Cancel = func() error {
-			err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-			if err == syscall.ESRCH {
+			killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+			if killError == syscall.ESRCH {
 				return os.ErrProcessDone
 			}
-			return err
+			return killError
 		}
 		for _, value := range os.Environ() {
 			if !strings.HasPrefix(value, "ADAMIC_TEST_SHARD=") &&
@@ -214,18 +214,18 @@ func TestCommentMutantsPlantedFailure(test *testing.T) {
 		// shard exited, so a shard that had finished could fail this check under load (#n3gk22h's shape). ctx's 90 s
 		// deadline ends a hung shard. Stdout comes before stderr; the checks below look for their lines anywhere in
 		// either.
-		stdout, stderr, err := childguard.Capture(ctx, command)
+		stdout, stderr, captureError := childguard.Capture(ctx, command)
 		output := append(stdout, stderr...)
 		cancel()
 		if shard == 2 {
-			if err == nil ||
+			if captureError == nil ||
 				!bytes.Contains(output, []byte("compiled semantic mutant survived")) ||
 				!bytes.Contains(output, []byte("--- FAIL: "+name)) {
-				test.Fatalf("%s did not catch planted survivor: %v\n%s", name, err, output)
+				test.Fatalf("%s did not catch planted survivor: %v\n%s", name, captureError, output)
 			}
 			test.Logf("planted survivor caught only by %s (shard-002)", name)
-		} else if err != nil {
-			test.Fatalf("survivor leaked into %s: %v\n%s", name, err, output)
+		} else if captureError != nil {
+			test.Fatalf("survivor leaked into %s: %v\n%s", name, captureError, output)
 		}
 	}
 }

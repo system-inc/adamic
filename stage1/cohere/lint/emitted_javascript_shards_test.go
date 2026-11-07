@@ -48,8 +48,8 @@ func emittedMismatchSetup(test *testing.T) {
 				emittedMismatchProducts.binary,
 				emittedMismatchProducts.module,
 			} {
-				if _, err := os.Stat(path); err != nil {
-					test.Fatal(err)
+				if _, statError := os.Stat(path); statError != nil {
+					test.Fatal(statError)
 				}
 			}
 			return
@@ -68,9 +68,9 @@ func emittedMismatchSetup(test *testing.T) {
 // path, rather than the temporary materialization path, is the assignment key.
 func emittedMismatchCases(test *testing.T) []string {
 	test.Helper()
-	paths, err := registry.Witnesses(filepath.Join(packageDirectory, "rules/no-var"))
-	if err != nil {
-		test.Fatal(err)
+	paths, witnessesError := registry.Witnesses(filepath.Join(packageDirectory, "rules/no-var"))
+	if witnessesError != nil {
+		test.Fatal(witnessesError)
 	}
 	if len(paths) == 0 {
 		test.Fatal("no-var has no witnesses")
@@ -80,9 +80,9 @@ func emittedMismatchCases(test *testing.T) []string {
 
 func emittedMismatchAssignment(key string) int {
 	hash := fnv.New32a()
-	relative, err := filepath.Rel(packageDirectory, key)
-	if err != nil {
-		panic(err)
+	relative, relativePathError := filepath.Rel(packageDirectory, key)
+	if relativePathError != nil {
+		panic(relativePathError)
 	}
 	hash.Write([]byte(filepath.ToSlash(relative)))
 	return int(hash.Sum32() % testEmittedJavaScriptMismatchShards)
@@ -91,9 +91,9 @@ func emittedMismatchAssignment(key string) int {
 func emittedMismatchUnion(test *testing.T) {
 	test.Helper()
 	// Check the actual top-level declaration census, including accidental extras.
-	tree, err := parser.ParseFile(token.NewFileSet(), "emitted_javascript_shards_test.go", nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	tree, parseFileError := parser.ParseFile(token.NewFileSet(), "emitted_javascript_shards_test.go", nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	count := 0
 	for _, declaration := range tree.Decls {
@@ -145,14 +145,14 @@ func TestEmittedJavaScriptMismatch_000(test *testing.T) {
 		path := manifest(test, []string{source + "\tno-var"})
 		module := emittedMismatchProducts.module
 		if os.Getenv("ADAMIC_LINT_MISMATCH_PROBE") == "1" {
-			data, err := os.ReadFile(module)
-			if err != nil {
-				test.Fatal(err)
+			data, readError := os.ReadFile(module)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			module = filepath.Join(test.TempDir(), "lint.mjs")
 			data = append(data, []byte("\nconsole.log('planted emitted JavaScript mismatch');\n")...)
-			if err := os.WriteFile(module, data, 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(module, data, 0644); writeError != nil {
+				test.Fatal(writeError)
 			}
 			compareWithJavaScript(
 				test,
@@ -183,11 +183,11 @@ func TestEmittedJavaScriptMismatch_000(test *testing.T) {
 		)
 		command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 		command.Cancel = func() error {
-			err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-			if err == syscall.ESRCH {
+			killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+			if killError == syscall.ESRCH {
 				return os.ErrProcessDone
 			}
-			return err
+			return killError
 		}
 		command.Env = append(
 			os.Environ(),
@@ -196,9 +196,9 @@ func TestEmittedJavaScriptMismatch_000(test *testing.T) {
 			"ADAMIC_MISMATCH_NATIVE="+emittedMismatchProducts.binary,
 			"ADAMIC_MISMATCH_MODULE="+module,
 		)
-		log, err := os.Create(filepath.Join(test.TempDir(), "mismatch.log"))
-		if err != nil {
-			test.Fatal(err)
+		log, createError := os.Create(filepath.Join(test.TempDir(), "mismatch.log"))
+		if createError != nil {
+			test.Fatal(createError)
 		}
 		command.Stdout, command.Stderr = log, log
 		runError := command.Run()
@@ -207,12 +207,12 @@ func TestEmittedJavaScriptMismatch_000(test *testing.T) {
 		if contextError != nil {
 			test.Fatalf("P0: mutant child cooked at 90s: %v", contextError)
 		}
-		if err := log.Close(); err != nil {
-			test.Fatal(err)
+		if closeError := log.Close(); closeError != nil {
+			test.Fatal(closeError)
 		}
-		data, err := os.ReadFile(log.Name())
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(log.Name())
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		if runError == nil ||
 			!bytes.Contains(data, []byte("emitted JavaScript:")) ||
@@ -264,14 +264,17 @@ func emittedMismatchInputs(test *testing.T) []string {
 	// Reads: stage1/typescript/scanner/tokens.ts
 	// Reads: internal/load/prelude.d.ts
 	// Reads: internal/native/runtime/*.[ch]
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	for _, input := range files {
-		err := filepath.WalkDir(filepath.Join(root, input), func(path string, entry fs.DirEntry, err error) error {
-			if err != nil {
-				return err
+		walkError := filepath.WalkDir(filepath.Join(
+			root,
+			input,
+		), func(path string, entry fs.DirEntry, pathError error) error {
+			if pathError != nil {
+				return pathError
 			}
 			if entry.IsDir() {
 				if entry.Name() == "testdata" || entry.Name() == "performance" {
@@ -282,15 +285,15 @@ func emittedMismatchInputs(test *testing.T) []string {
 			if strings.HasSuffix(path, "_test.go") {
 				return nil
 			}
-			relative, err := filepath.Rel(root, path)
-			if err != nil {
-				return err
+			relative, relativePathError := filepath.Rel(root, path)
+			if relativePathError != nil {
+				return relativePathError
 			}
 			production = append(production, filepath.ToSlash(relative))
 			return nil
 		})
-		if err != nil {
-			test.Fatal(err)
+		if walkError != nil {
+			test.Fatal(walkError)
 		}
 	}
 	files = production
@@ -306,23 +309,23 @@ func emittedMismatchLowered(test *testing.T) string {
 			Files:     files,
 			Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
 		}, func(out string) error {
-			if _, err := registry.Generate(packageDirectory); err != nil {
-				return err
+			if _, generateError := registry.Generate(packageDirectory); generateError != nil {
+				return generateError
 			}
-			program, err := load.Load([]string{filepath.Join(packageDirectory, "main.ts")})
-			if err != nil {
-				return err
+			program, loadError := load.Load([]string{filepath.Join(packageDirectory, "main.ts")})
+			if loadError != nil {
+				return loadError
 			}
-			lowered, err := lower.Lower(context.Background(), program)
-			if err != nil {
-				return err
+			lowered, lowerError := lower.Lower(context.Background(), program)
+			if lowerError != nil {
+				return lowerError
 			}
-			if err := os.WriteFile(
+			if writeError := os.WriteFile(
 				filepath.Join(out, "lint.mjs"),
 				[]byte(javascript.JavaScript(lowered)),
 				0644,
-			); err != nil {
-				return err
+			); writeError != nil {
+				return writeError
 			}
 			return os.WriteFile(filepath.Join(out, "lint.c"), []byte(native.C(lowered)), 0644)
 		})
@@ -352,9 +355,9 @@ func emittedMismatchNative(test *testing.T) string {
 			Flags:     flags,
 			Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version")},
 		}, func(out string) error {
-			source, err := os.ReadFile(filepath.Join(lowered, "lint.c"))
-			if err != nil {
-				return err
+			source, readError := os.ReadFile(filepath.Join(lowered, "lint.c"))
+			if readError != nil {
+				return readError
 			}
 			return native.Build(string(source), filepath.Join(out, "scanner"), options)
 		})

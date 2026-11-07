@@ -92,8 +92,8 @@ func helperMutantProduct(test *testing.T, index int) string {
 			Toolchain: tools,
 		}, func(directory string) error {
 			source := filepath.Join(directory, "source")
-			if err := os.Mkdir(source, 0755); err != nil {
-				return err
+			if createDirectoryError := os.Mkdir(source, 0755); createDirectoryError != nil {
+				return createDirectoryError
 			}
 			for _, file := range []string{
 				"main.ts",
@@ -102,9 +102,9 @@ func helperMutantProduct(test *testing.T, index int) string {
 				"policy_message.ts",
 				"strict_options.ts",
 			} {
-				data, err := os.ReadFile(file)
-				if err != nil {
-					return err
+				data, readError := os.ReadFile(file)
+				if readError != nil {
+					return readError
 				}
 				if file == m.file {
 					if strings.Count(string(data), m.old) != 1 {
@@ -112,17 +112,17 @@ func helperMutantProduct(test *testing.T, index int) string {
 					}
 					data = []byte(strings.Replace(string(data), m.old, m.replacement, 1))
 				}
-				if err := os.WriteFile(filepath.Join(source, file), data, 0644); err != nil {
-					return err
+				if writeError := os.WriteFile(filepath.Join(source, file), data, 0644); writeError != nil {
+					return writeError
 				}
 			}
 			// native.Build's process-local caches are shared by parallel declarations.
 			helperNativeBuild.Lock()
 			defer helperNativeBuild.Unlock()
 			binary := build(test, source)
-			data, err := os.ReadFile(binary)
-			if err != nil {
-				return err
+			data, readError := os.ReadFile(binary)
+			if readError != nil {
+				return readError
 			}
 			return os.WriteFile(filepath.Join(directory, "binary"), data, 0755)
 		})
@@ -166,9 +166,9 @@ func runHelperMutant(test *testing.T, index int) {
 	goOracle := oracle(test)
 	binary := helperMutantProduct(test, index)
 	cases := fixture(test)
-	catalog, err := filepath.Abs("testdata/catalog.json")
-	if err != nil {
-		test.Fatal(err)
+	catalog, absolutePathError := filepath.Abs("testdata/catalog.json")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	test.Logf("setup %.3fs", time.Since(setup).Seconds())
 	// Setup has no test-side deadline. Only executing the prepared corpus does.
@@ -179,9 +179,9 @@ func runHelperMutant(test *testing.T, index int) {
 		cmd := exec.CommandContext(ctx, binary, args...)
 		var stderr bytes.Buffer
 		cmd.Stderr = &stderr
-		output, err := cmd.Output()
-		if err != nil || stderr.Len() != 0 {
-			test.Fatalf("%s: %v stderr %s", binary, err, &stderr)
+		output, outputError := cmd.Output()
+		if outputError != nil || stderr.Len() != 0 {
+			test.Fatalf("%s: %v stderr %s", binary, outputError, &stderr)
 		}
 		return output
 	}
@@ -226,12 +226,12 @@ func TestHelperMutantsUnion(test *testing.T) {
 		test.Fatal("mutant count differs from declared shards")
 	}
 	var corpus struct{ Cases []json.RawMessage }
-	data, err := os.ReadFile(fixture(test))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(fixture(test))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	if err := json.Unmarshal(data, &corpus); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &corpus); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	if len(corpus.Cases) == 0 {
 		test.Fatal("empty witness corpus")
@@ -265,9 +265,9 @@ func TestHelperMutantsUnion(test *testing.T) {
 
 func TestHelperMutantsPlantedFailure(test *testing.T) {
 	test.Parallel()
-	binary, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	binary, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
 	for index := 0; index < helperMutantShards; index++ {
 		name := fmt.Sprintf("TestHelperMutants_%03d", index)
@@ -279,12 +279,12 @@ func TestHelperMutantsPlantedFailure(test *testing.T) {
 			}
 		}
 		cmd.Env = append(cmd.Env, "ADAMIC_HELPER_MUTANT_PROBE="+strconv.Itoa(index))
-		output, err := cmd.CombinedOutput()
+		output, combinedOutputError := cmd.CombinedOutput()
 		cancel()
-		if err == nil ||
+		if combinedOutputError == nil ||
 			!bytes.Contains(output, []byte("compiled mutant survived")) ||
 			!bytes.Contains(output, []byte("--- FAIL: "+name)) {
-			test.Fatalf("%s missed planted failure: %v\n%s", name, err, output)
+			test.Fatalf("%s missed planted failure: %v\n%s", name, combinedOutputError, output)
 		}
 		test.Logf("%s rejected planted survivor", name)
 	}

@@ -34,29 +34,29 @@ func TestClockGenericReturnsT01Shapes(test *testing.T) {
 			source := `interface Base<T> { readonly token: T; } function make(): (Base<"="> & ` +
 				probe.shape +
 				`) | undefined { return undefined; } console.log(typeof make());`
-			_, err := lowerSource(test, source)
+			_, lowerSourceError := lowerSource(test, source)
 			if probe.supported {
-				if err != nil {
-					test.Fatal(err)
+				if lowerSourceError != nil {
+					test.Fatal(lowerSourceError)
 				}
 				return
 			}
 			var stop *NotYet
 			var refusal *Refused
-			if !errors.As(err, &stop) && !errors.As(err, &refusal) {
-				test.Fatalf("want unsupported shape stop, got %v", err)
+			if !errors.As(lowerSourceError, &stop) && !errors.As(lowerSourceError, &refusal) {
+				test.Fatalf("want unsupported shape stop, got %v", lowerSourceError)
 			}
 		})
 	}
 	test.Run("null remains distinct", func(test *testing.T) {
 		test.Parallel()
-		_, err := lowerSource(test, `interface Base<T> { readonly token: T; }
+		_, lowerSourceError := lowerSource(test, `interface Base<T> { readonly token: T; }
 function make(): (Base<"="> & { readonly left: { readonly text: string } }) | undefined | null { return null; }
 console.log(typeof make());`)
 		// The intersection is an object, so the union is the boxed one that keeps null apart from
 		// undefined (object_intersection_fields/null_distinct.a holds that to Node on both backends).
-		if err != nil {
-			test.Fatal(err)
+		if lowerSourceError != nil {
+			test.Fatal(lowerSourceError)
 		}
 	})
 
@@ -72,9 +72,9 @@ func TestClockGenericReturnsT01SupportsPhantomPrimitives(test *testing.T) {
 		`type Path = string & { __pathBrand: void }; function read(values: readonly Path[], index: number): Path | undefined { return values[index]; } console.log(typeof read([], 0));`,
 		`type Count = number & { __countBrand: void }; function read(values: readonly Count[], index: number): Count | undefined { return values[index]; } console.log(typeof read([], 0));`,
 	} {
-		_, err := lowerSource(test, source)
-		if err != nil {
-			test.Fatalf("phantom primitive result did not lower: %v", err)
+		_, lowerSourceError := lowerSource(test, source)
+		if lowerSourceError != nil {
+			test.Fatalf("phantom primitive result did not lower: %v", lowerSourceError)
 		}
 	}
 }
@@ -87,12 +87,12 @@ func TestClockGenericReturnsT01RejectsNullBeforeBody(test *testing.T) {
 	source := `interface Base<T> { readonly token: T; }
 function make(): (Base<"="> & { readonly left: { readonly text: string } }) | undefined | null { return null; }
 console.log(typeof make());`
-	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	file := program.Files()[0]
 	checked, release := program.Checker(context.Background(), file)
@@ -126,12 +126,12 @@ func TestClockGenericReturnsT01RejectsIndexBeforeBody(test *testing.T) {
 	source := `interface Base<T> { readonly token: T; }
 function make(): (Base<"="> & { readonly [key: string]: unknown; readonly left: { readonly text: string } }) | undefined { return undefined; }
 console.log(typeof make());`
-	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	file := program.Files()[0]
 	checked, release := program.Checker(context.Background(), file)

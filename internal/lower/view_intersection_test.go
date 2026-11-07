@@ -42,9 +42,9 @@ console.log("loaded");
 func intersectionViewTypes(test *testing.T) (*lowering, map[string]*checker.Type, map[string]*ast.Node) {
 	test.Helper()
 	path := writeAgreementSource(test, "main.ts", intersectionViewSource)
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	var file *ast.SourceFile
 	for _, candidate := range program.Files() {
@@ -118,9 +118,9 @@ func TestIntersectionViewFamily(test *testing.T) {
 func TestIntersectionViewContractRefinesFields(test *testing.T) {
 	test.Parallel()
 	l, types, nodes := intersectionViewTypes(test)
-	id, err := l.viewContract(nodes["Plain"], types["Plain"])
-	if err != nil {
-		test.Fatal(err)
+	id, viewContractError := l.viewContract(nodes["Plain"], types["Plain"])
+	if viewContractError != nil {
+		test.Fatal(viewContractError)
 	}
 	contract := l.result.ViewContracts[id-1]
 	if contract.Unsupported != "" || contract.Kind != ir.ViewObject {
@@ -145,9 +145,9 @@ func TestIntersectionViewContractRefinesFields(test *testing.T) {
 func TestIntersectionViewContractRefinesNodeField(test *testing.T) {
 	test.Parallel()
 	l, types, nodes := intersectionViewTypes(test)
-	id, err := l.viewContract(nodes["TypeOnlyImportClause"], types["TypeOnlyImportClause"])
-	if err != nil {
-		test.Fatal(err)
+	id, viewContractError := l.viewContract(nodes["TypeOnlyImportClause"], types["TypeOnlyImportClause"])
+	if viewContractError != nil {
+		test.Fatal(viewContractError)
 	}
 	contract := l.result.ViewContracts[id-1]
 	if contract.Unsupported != "" || contract.Kind != ir.ViewObject || contract.Of != ir.Object {
@@ -182,8 +182,8 @@ func TestIntersectionViewContractRefinesNodeField(test *testing.T) {
 func TestIntersectionViewDepthBound(test *testing.T) {
 	test.Parallel()
 	l, types, nodes := intersectionViewTypes(test)
-	if _, err := l.viewContract(nodes["D1"], types["D1"]); err != nil {
-		test.Fatal(err)
+	if _, viewContractError := l.viewContract(nodes["D1"], types["D1"]); viewContractError != nil {
+		test.Fatal(viewContractError)
 	}
 	if got := l.result.ViewContracts[l.result.ViewContractTypes[int(
 		types["D9"].Id(),

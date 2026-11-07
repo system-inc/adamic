@@ -79,8 +79,8 @@ func TestEnumTagAccessLocalShapes(test *testing.T) {
 			test.Parallel()
 			source := kindPredicateTypes + accessHolder + probe.source
 			for _, extension := range []string{".ts", ".a"} {
-				if _, err := lowerSourceAs(test, source, extension); err != nil {
-					test.Fatalf("%s: want it lowered, got %v", extension, err)
+				if _, lowerSourceAsError := lowerSourceAs(test, source, extension); lowerSourceAsError != nil {
+					test.Fatalf("%s: want it lowered, got %v", extension, lowerSourceAsError)
 				}
 			}
 			program := lowersAndAgreesWithNodeAs(test, source, ".ts")
@@ -149,9 +149,9 @@ func TestEnumTagAccessRefusals(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSourceAs(test, kindPredicateTypes+accessHolder+probe.source, ".ts")
-			if err == nil || !strings.Contains(err.Error(), kindPredicateRefusal) {
-				test.Fatalf("want %q, got %v", kindPredicateRefusal, err)
+			_, lowerSourceAsError := lowerSourceAs(test, kindPredicateTypes+accessHolder+probe.source, ".ts")
+			if lowerSourceAsError == nil || !strings.Contains(lowerSourceAsError.Error(), kindPredicateRefusal) {
+				test.Fatalf("want %q, got %v", kindPredicateRefusal, lowerSourceAsError)
 			}
 		})
 	}

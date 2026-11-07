@@ -75,14 +75,14 @@ func (h *harness) run(name string, command *exec.Cmd) result {
 		command.Dir = h.repository
 	}
 	stem := filepath.Join(h.directory, fmt.Sprintf("%03d-%s", h.next, strings.ReplaceAll(name, "/", "-")))
-	out, err := os.Create(stem + ".stdout")
-	if err != nil {
-		h.t.Fatal(err)
+	out, createError := os.Create(stem + ".stdout")
+	if createError != nil {
+		h.t.Fatal(createError)
 	}
 	defer out.Close()
-	report, err := os.Create(stem + ".stderr")
-	if err != nil {
-		h.t.Fatal(err)
+	report, createError := os.Create(stem + ".stderr")
+	if createError != nil {
+		h.t.Fatal(createError)
 	}
 	defer report.Close()
 	command.Stdout = out
@@ -103,13 +103,13 @@ func (h *harness) run(name string, command *exec.Cmd) result {
 	}
 	elapsed := time.Since(started)
 	h.t.Logf("phase command %s %.6fs", name, elapsed.Seconds())
-	stdout, err := os.ReadFile(out.Name())
-	if err != nil {
-		h.t.Fatal(err)
+	stdout, readError := os.ReadFile(out.Name())
+	if readError != nil {
+		h.t.Fatal(readError)
 	}
-	stderr, err := os.ReadFile(report.Name())
-	if err != nil {
-		h.t.Fatal(err)
+	stderr, readError := os.ReadFile(report.Name())
+	if readError != nil {
+		h.t.Fatal(readError)
 	}
 	return result{stdout, stderr, elapsed, runError}
 }
@@ -124,8 +124,8 @@ func (h *harness) must(name string, command *exec.Cmd) result {
 func (h *harness) write(name, text string) string {
 	h.t.Helper()
 	path := filepath.Join(h.directory, name)
-	if err := os.WriteFile(path, []byte(text), 0644); err != nil {
-		h.t.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(text), 0644); writeError != nil {
+		h.t.Fatal(writeError)
 	}
 	return path
 }
@@ -166,22 +166,22 @@ func (h *harness) lowerToC(entry, name string) (string, error) {
 // (load.LoadOverlay; a nil overlay loads the files as they are).
 func (h *harness) lowerOverlayToC(entry string, overlay map[string]string, name string) (string, error) {
 	started := time.Now()
-	loaded, err := load.LoadOverlay([]string{entry}, overlay)
+	loaded, loadOverlayError := load.LoadOverlay([]string{entry}, overlay)
 	h.t.Logf("phase load %s %.6fs", name, time.Since(started).Seconds())
-	if err != nil {
-		return "", err
+	if loadOverlayError != nil {
+		return "", loadOverlayError
 	}
 	loaded.EnableTSGo()
 	started = time.Now()
-	program, err := lower.Lower(context.Background(), loaded)
+	program, lowerError := lower.Lower(context.Background(), loaded)
 	h.t.Logf("phase lowering %s %.6fs", name, time.Since(started).Seconds())
-	if err != nil {
-		return "", err
+	if lowerError != nil {
+		return "", lowerError
 	}
 	started = time.Now()
-	source, err := native.TSGoC(program)
+	source, tsGoCError := native.TSGoC(program)
 	h.t.Logf("phase emission %s %.6fs", name, time.Since(started).Seconds())
-	return source, err
+	return source, tsGoCError
 }
 
 func (h *harness) lowered(entry, name string) string {
@@ -190,9 +190,9 @@ func (h *harness) lowered(entry, name string) string {
 	var source string
 	var err error
 	if strings.HasPrefix(entry, h.repository+string(os.PathSeparator)) {
-		key, keyErr := typeAwareLoweredKey(h.repository, entry)
-		if keyErr != nil {
-			h.t.Fatal(keyErr)
+		key, keyError := typeAwareLoweredKey(h.repository, entry)
+		if keyError != nil {
+			h.t.Fatal(keyError)
 		}
 		source, err = cachedTypeAwareProduct(key, build)
 	} else {
@@ -211,9 +211,12 @@ func (h *harness) lowered(entry, name string) string {
 // mutant took 16 to 20 s of its shard's own time under load (Pupa, load 13), the native already a product.
 func (h *harness) loweredMutant(entry, name, key string) string {
 	h.t.Helper()
-	source, err := cachedTypeAwareProduct(key, func(_ string) (string, error) { return h.lowerToC(entry, name) })
-	if err != nil {
-		h.t.Fatal(err)
+	source, cachedTypeAwareProductError := cachedTypeAwareProduct(
+		key,
+		func(_ string) (string, error) { return h.lowerToC(entry, name) },
+	)
+	if cachedTypeAwareProductError != nil {
+		h.t.Fatal(cachedTypeAwareProductError)
 	}
 	return source
 }
@@ -221,9 +224,9 @@ func (h *harness) loweredMutant(entry, name, key string) string {
 // typeAwareBadKindSource is testdata/query_cost.ts asking for an Identifier where it asks for a PrefixUnaryExpression,
 // so the exact-kind lookup refuses.
 func typeAwareBadKindSource(repository string) (string, error) {
-	text, err := os.ReadFile(filepath.Join(repository, "stage1/cohere/typeaware/testdata/query_cost.ts"))
-	if err != nil {
-		return "", err
+	text, readError := os.ReadFile(filepath.Join(repository, "stage1/cohere/typeaware/testdata/query_cost.ts"))
+	if readError != nil {
+		return "", readError
 	}
 	if !strings.Contains(string(text), "'PrefixUnaryExpression'") {
 		return "", fmt.Errorf("bad-kind anchor changed")
@@ -238,20 +241,22 @@ func typeAwareBadKindSource(repository string) (string, error) {
 func typeAwareBadKindNative(h *harness, name, archive string) string {
 	h.t.Helper()
 	return typeAwareSetup(h, name, func() string {
-		source, err := cachedTypeAwareProduct("C typeaware mutant bad-kind", func(_ string) (string, error) {
-			mutant, err := typeAwareBadKindSource(h.repository)
-			if err != nil {
-				return "", err
+		source, cachedTypeAwareProductError := cachedTypeAwareProduct("C typeaware mutant bad-kind", func(
+			_ string,
+		) (string, error) {
+			mutant, typeAwareBadKindSourceError := typeAwareBadKindSource(h.repository)
+			if typeAwareBadKindSourceError != nil {
+				return "", typeAwareBadKindSourceError
 			}
 			entry := filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/query_cost.ts")
-			source, err := h.lowerOverlayToC(entry, map[string]string{entry: mutant}, "bad-kind")
-			if err != nil {
-				return "", err
+			source, lowerOverlayToCError := h.lowerOverlayToC(entry, map[string]string{entry: mutant}, "bad-kind")
+			if lowerOverlayToCError != nil {
+				return "", lowerOverlayToCError
 			}
 			return source, typeAwareCNamesNoCheckout(source, h.repository)
 		})
-		if err != nil {
-			h.t.Fatal(err)
+		if cachedTypeAwareProductError != nil {
+			h.t.Fatal(cachedTypeAwareProductError)
 		}
 		return h.mutantNativeOf(name, source, archive, false)
 	})
@@ -263,39 +268,39 @@ func (h *harness) build(_ string, name, entry, archive string, sanitize bool) st
 	h.t.Helper()
 	path := filepath.Join(h.directory, name)
 	source := h.lowered(entry, name)
-	var err error
+	var typeAwareNativeKeyError error
 	compile := func(output string) error {
 		started := time.Now()
-		err := typeAwareNativeBuild(source, output, archive, sanitize)
+		typeAwareNativeBuildError := typeAwareNativeBuild(source, output, archive, sanitize)
 		h.t.Logf("phase clang %s %.6fs", name, time.Since(started).Seconds())
-		return err
+		return typeAwareNativeBuildError
 	}
 	// Only unchanged repository programs can be reused by another test. A mutant
 	// runs once and stays in its child directory, avoiding a retained binary copy.
 	if !strings.HasPrefix(entry, h.repository+string(os.PathSeparator)) || !unchangedArchive(archive) {
-		if err := compile(path); err != nil {
-			h.t.Fatal(err)
+		if compileError := compile(path); compileError != nil {
+			h.t.Fatal(compileError)
 		}
 		return path
 	}
-	key, err := typeAwareNativeKey("binary", source, archive, sanitize)
-	if err != nil {
-		h.t.Fatal(err)
+	key, typeAwareNativeKeyError := typeAwareNativeKey("binary", source, archive, sanitize)
+	if typeAwareNativeKeyError != nil {
+		h.t.Fatal(typeAwareNativeKeyError)
 	}
-	binary, err := cachedTypeAwareProduct(key, func(directory string) (string, error) {
+	binary, cachedTypeAwareProductError := cachedTypeAwareProduct(key, func(directory string) (string, error) {
 		binary := filepath.Join(directory, "native")
 		return binary, compile(binary)
 	})
-	if err != nil {
-		h.t.Fatal(err)
+	if cachedTypeAwareProductError != nil {
+		h.t.Fatal(cachedTypeAwareProductError)
 	}
 	// Callers may remove their binaries. Give them copies, preserving the product.
-	data, err := os.ReadFile(binary)
-	if err != nil {
-		h.t.Fatal(err)
+	data, readError := os.ReadFile(binary)
+	if readError != nil {
+		h.t.Fatal(readError)
 	}
-	if err := executable.Write(path, data); err != nil {
-		h.t.Fatal(err)
+	if writeError := executable.Write(path, data); writeError != nil {
+		h.t.Fatal(writeError)
 	}
 
 	return path
@@ -316,19 +321,19 @@ func (h *harness) mutantNative(name, entry, archive string, sanitize bool) strin
 // mutantNativeOf is mutantNative for a mutant whose C is already emitted (loweredMutant).
 func (h *harness) mutantNativeOf(name, source, archive string, sanitize bool) string {
 	h.t.Helper()
-	key, err := typeAwareNativeKey("mutant native "+name, source, archive, sanitize)
-	if err != nil {
-		h.t.Fatal(err)
+	key, typeAwareNativeKeyError := typeAwareNativeKey("mutant native "+name, source, archive, sanitize)
+	if typeAwareNativeKeyError != nil {
+		h.t.Fatal(typeAwareNativeKeyError)
 	}
-	binary, err := cachedTypeAwareProduct(key, func(directory string) (string, error) {
+	binary, cachedTypeAwareProductError := cachedTypeAwareProduct(key, func(directory string) (string, error) {
 		binary := filepath.Join(directory, "native")
 		started := time.Now()
-		err := typeAwareNativeBuild(source, binary, archive, sanitize)
+		typeAwareNativeBuildError := typeAwareNativeBuild(source, binary, archive, sanitize)
 		h.t.Logf("phase clang %s %.6fs", name, time.Since(started).Seconds())
-		return binary, err
+		return binary, typeAwareNativeBuildError
 	})
-	if err != nil {
-		h.t.Fatal(err)
+	if cachedTypeAwareProductError != nil {
+		h.t.Fatal(cachedTypeAwareProductError)
 	}
 	return binary
 }
@@ -336,9 +341,9 @@ func (h *harness) mutantNativeOf(name, source, archive string, sanitize bool) st
 // typeAwareLoweredKey keys an entry's emitted C by the entry's path in the repository, never where the checkout sits:
 // a key carries no machine path, or a runner's checkout reads none of the builder's products.
 func typeAwareLoweredKey(repository, entry string) (string, error) {
-	relative, err := filepath.Rel(repository, entry)
-	if err != nil {
-		return "", err
+	relative, relativePathError := filepath.Rel(repository, entry)
+	if relativePathError != nil {
+		return "", relativePathError
 	}
 	return "C " + filepath.ToSlash(relative), nil
 }
@@ -347,9 +352,9 @@ func typeAwareLoweredKey(repository, entry string) (string, error) {
 // is a product whose path names the cache directory, and so the machine, it sits in: by its bytes, the same archive
 // keys the same native wherever it is cached (tsgo's archive rebuilds byte for byte, Builder's Linux proof, Oct 12).
 func typeAwareNativeKey(kind, source, archive string, sanitize bool) (string, error) {
-	digest, err := typeAwareArchiveDigest(archive)
-	if err != nil {
-		return "", err
+	digest, typeAwareArchiveDigestError := typeAwareArchiveDigest(archive)
+	if typeAwareArchiveDigestError != nil {
+		return "", typeAwareArchiveDigestError
 	}
 	return fmt.Sprintf("%s %x archive=%s sanitize=%t", kind, sha256.Sum256([]byte(source)), digest, sanitize), nil
 }
@@ -361,9 +366,9 @@ func typeAwareArchiveDigest(archive string) (string, error) {
 	if digest, ok := typeAwareArchiveDigests.Load(archive); ok {
 		return digest.(string), nil
 	}
-	data, err := os.ReadFile(archive)
-	if err != nil {
-		return "", err
+	data, readError := os.ReadFile(archive)
+	if readError != nil {
+		return "", readError
 	}
 	digest := fmt.Sprintf("%x", sha256.Sum256(data))
 	typeAwareArchiveDigests.Store(archive, digest)
@@ -380,28 +385,35 @@ func typeAwareArchiveDigest(archive string) (string, error) {
 // typeaware#2/7 for chg_rcdxaf56 against a two-day p90 of 43.8 s (Oct 19), a red on a change that never touched it.
 func TestTypeAwareKeysCarryNoMachinePath(test *testing.T) {
 	test.Parallel()
-	repository, err := filepath.Abs("../../..")
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs("../../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	var natives, lowered []string
 	for _, machine := range []string{test.TempDir(), test.TempDir()} {
 		// Where the archive product sits under this machine's ADAMIC_BUILD_CACHE_DIR, and where its checkout is.
 		archive := filepath.Join(machine, "cache", "local", "d91f8adc3a72", "checker.a")
-		if err := os.MkdirAll(filepath.Dir(archive), 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(filepath.Dir(archive), 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		if err := os.WriteFile(archive, []byte("the same archive bytes on both machines"), 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(
+			archive,
+			[]byte("the same archive bytes on both machines"),
+			0644,
+		); writeError != nil {
+			test.Fatal(writeError)
 		}
-		native, err := typeAwareNativeKey("binary", "int main(void) { return 0; }\n", archive, true)
-		if err != nil {
-			test.Fatal(err)
+		native, typeAwareNativeKeyError := typeAwareNativeKey("binary", "int main(void) { return 0; }\n", archive, true)
+		if typeAwareNativeKeyError != nil {
+			test.Fatal(typeAwareNativeKeyError)
 		}
 		checkout := filepath.Join(machine, "checkout")
-		c, err := typeAwareLoweredKey(checkout, filepath.Join(checkout, "stage1/cohere/typeaware/main.ts"))
-		if err != nil {
-			test.Fatal(err)
+		c, typeAwareLoweredKeyError := typeAwareLoweredKey(
+			checkout,
+			filepath.Join(checkout, "stage1/cohere/typeaware/main.ts"),
+		)
+		if typeAwareLoweredKeyError != nil {
+			test.Fatal(typeAwareLoweredKeyError)
 		}
 		natives, lowered = append(natives, native), append(lowered, c)
 	}
@@ -439,33 +451,35 @@ func TestTypeAwareKeysCarryNoMachinePath(test *testing.T) {
 // a product keyed by name, as a six mutant's is (loweredMutant), and refuses to be one if it names the checkout.
 func typeAwareWrongNodeNative(h *harness, archive string, sanitize bool) string {
 	h.t.Helper()
-	source, err := cachedTypeAwareProduct("C typeaware mutant wrong-node", func(_ string) (string, error) {
-		mutant, err := typeAwareWrongNodeSource(h.repository)
-		if err != nil {
-			return "", err
+	source, cachedTypeAwareProductError := cachedTypeAwareProduct("C typeaware mutant wrong-node", func(
+		_ string,
+	) (string, error) {
+		mutant, typeAwareWrongNodeSourceError := typeAwareWrongNodeSource(h.repository)
+		if typeAwareWrongNodeSourceError != nil {
+			return "", typeAwareWrongNodeSourceError
 		}
 		unary := filepath.Join(h.repository, "stage1/cohere/typeaware/unary_minus.ts")
-		source, err := h.lowerOverlayToC(
+		source, lowerOverlayToCError := h.lowerOverlayToC(
 			filepath.Join(h.repository, "stage1/cohere/typeaware/main.ts"),
 			map[string]string{unary: mutant},
 			"wrong-node",
 		)
-		if err != nil {
-			return "", err
+		if lowerOverlayToCError != nil {
+			return "", lowerOverlayToCError
 		}
 		return source, typeAwareCNamesNoCheckout(source, h.repository)
 	})
-	if err != nil {
-		h.t.Fatal(err)
+	if cachedTypeAwareProductError != nil {
+		h.t.Fatal(cachedTypeAwareProductError)
 	}
 	return h.mutantNativeOf("wrong-node", source, archive, sanitize)
 }
 
 // typeAwareWrongNodeSource is unary_minus.ts with the wrong-node mutation: the type asked of the whole expression.
 func typeAwareWrongNodeSource(repository string) (string, error) {
-	text, err := os.ReadFile(filepath.Join(repository, "stage1/cohere/typeaware/unary_minus.ts"))
-	if err != nil {
-		return "", err
+	text, readError := os.ReadFile(filepath.Join(repository, "stage1/cohere/typeaware/unary_minus.ts"))
+	if readError != nil {
+		return "", readError
 	}
 	anchor := "this.parser.node(node.children[0] ?? panic('minus without operand'))"
 	if strings.Count(string(text), anchor) != 1 {
@@ -491,8 +505,11 @@ func TestTypeAwareCNamesNoCheckoutCanFail(test *testing.T) {
 	if typeAwareCNamesNoCheckout(named, repository) == nil {
 		test.Fatal("C naming the checkout passed")
 	}
-	if err := typeAwareCNamesNoCheckout("/* ../../typescript/scanner.ts */\n", repository); err != nil {
-		test.Fatal(err)
+	if typeAwareCNamesNoCheckoutError := typeAwareCNamesNoCheckout(
+		"/* ../../typescript/scanner.ts */\n",
+		repository,
+	); typeAwareCNamesNoCheckoutError != nil {
+		test.Fatal(typeAwareCNamesNoCheckoutError)
 	}
 }
 
@@ -536,21 +553,21 @@ const testTypeAwareAgreementAndMutantsShards = 21
 
 func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 	started := time.Now()
-	repository, err := filepath.Abs("../../..")
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs("../../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	directory := filepath.Join(productDirectory, "typeaware-plan")
-	if err := os.MkdirAll(directory, 0755); err != nil {
-		test.Fatal(err)
+	if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+		test.Fatal(createDirectoryError)
 	}
 	if artifacts := os.Getenv("ADAMIC_TYPEAWARE_ARTIFACTS"); artifacts != "" {
-		directory, err = filepath.Abs(artifacts)
-		if err != nil {
-			test.Fatal(err)
+		directory, absolutePathError = filepath.Abs(artifacts)
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
-		if err = os.MkdirAll(directory, 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
 	}
 	h := &harness{t: test, repository: repository, directory: directory, sixBuilds: true, setupStarted: started}
@@ -580,8 +597,11 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 	}
 	finish := func(compiler []string, benchmark bool) *typeAwarePlan {
 		unsplit := typeAwareUnsplitIDs(generatedPathsForUnion, compiler, rounds, benchmark)
-		if err := sixUnion(unsplit, []sixShard{{name: "original-work", ids: expected}}); err != nil {
-			test.Fatal(err)
+		if sixUnionError := sixUnion(
+			unsplit,
+			[]sixShard{{name: "original-work", ids: expected}},
+		); sixUnionError != nil {
+			test.Fatal(sixUnionError)
 		}
 		return newTypeAwarePlan(test, h, unsplit, shards, testTypeAwareAgreementAndMutantsShards)
 	}
@@ -592,9 +612,9 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 	// Extract the production rule's table sources without duplicating its verdicts.
 	pinnedFixtureFiles(test, repository, []string{"no_unsafe_unary_minus"})
 	sourceFile := filepath.Join(repository, "cohere/internal/lint/rules/typescript/no_unsafe_unary_minus_test.go")
-	tree, err := parser.ParseFile(token.NewFileSet(), sourceFile, nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	tree, parseFileError := parser.ParseFile(token.NewFileSet(), sourceFile, nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	unique := map[string]bool{}
 	goast.Inspect(tree, func(n goast.Node) bool {
@@ -606,8 +626,8 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 		if !ok || value.Kind != token.STRING {
 			return true
 		}
-		text, err := strconv.Unquote(value.Value)
-		if err == nil && strings.Contains(text, ";") {
+		text, unquoteError := strconv.Unquote(value.Value)
+		if unquoteError == nil && strings.Contains(text, ";") {
 			unique[text] = true
 		}
 		return true
@@ -639,8 +659,8 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 	add("agreement/generated", sixIDs("agreement/generated", generatedPaths), func(h *harness) {
 		test := h.t
 		truth := h.compare("generated", oracle, binary(h), config, manifest)
-		if err := sixFindingUnion(truth.stdout, generatedPaths); err != nil {
-			test.Fatal(err)
+		if sixFindingUnionError := sixFindingUnion(truth.stdout, generatedPaths); sixFindingUnionError != nil {
+			test.Fatal(sixFindingUnionError)
 		}
 		if !bytes.Contains(truth.stdout, []byte("is false instead.")) ||
 			!bytes.Contains(truth.stdout, []byte("is string instead.")) {
@@ -838,8 +858,8 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 			h.t.Skip("set ADAMIC_TYPESCRIPT_SOURCE")
 		}
 		truth := h.compare("compiler", oracle, binary(h), compilerConfig, compilerManifest)
-		if err := sixFindingUnion(truth.stdout, paths); err != nil {
-			h.t.Fatal(err)
+		if sixFindingUnionError := sixFindingUnion(truth.stdout, paths); sixFindingUnionError != nil {
+			h.t.Fatal(sixFindingUnionError)
 		}
 	})
 	{
@@ -878,13 +898,13 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 						}
 						expected = r.stdout
 						var findings, queries int
-						if _, err := fmt.Sscanf(
+						if _, scanError := fmt.Sscanf(
 							string(r.stdout),
 							"findings %d queries %d",
 							&findings,
 							&queries,
-						); err != nil {
-							test.Fatal(err)
+						); scanError != nil {
+							test.Fatal(scanError)
 						}
 						test.Logf(
 							"%s round %d %s: %.6fs %.2f findings/s findings=%d queries=%d; %s",

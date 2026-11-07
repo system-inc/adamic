@@ -94,9 +94,9 @@ func buildCompositionProducts(test *testing.T) compositionProducts {
 	started := time.Now()
 	// Shared setup has no deadline; the shard starts its clock after setup returns.
 	cases := compositionCases(test)
-	data, err := os.ReadFile(cases)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(cases)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	lines := strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")
 	shards := compositionPartition(test, lines)
@@ -131,13 +131,13 @@ func compositionRunShard(test *testing.T, index int) {
 	dir := test.TempDir()
 	cases := filepath.Join(dir, "cases.txt")
 	answers := filepath.Join(dir, "answers.txt")
-	if err := os.WriteFile(cases, []byte(strings.Join(shard, "\n")+"\n"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(cases, []byte(strings.Join(shard, "\n")+"\n"), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	request, _ := json.Marshal(map[string]string{"Cases": cases, "Answers": answers})
 	requestPath := filepath.Join(dir, "request.json")
-	if err := os.WriteFile(requestPath, request, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(requestPath, request, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	result := compositionExecute(
 		test,
@@ -150,9 +150,9 @@ func compositionRunShard(test *testing.T, index int) {
 	if result.exitCode != 0 || len(result.stderr) != 0 {
 		test.Fatalf("Go composition oracle: %d %s %s", result.exitCode, result.stdout, result.stderr)
 	}
-	data, err := os.ReadFile(answers)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(answers)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if strings.Count(string(data), "\n") != len(shard)*2 {
 		test.Fatal("Go answer count differs from live cases")
@@ -241,8 +241,8 @@ func compositionCatchesMutant(test *testing.T, index int) {
 	timer := time.AfterFunc(90*time.Second, func() { panic("cooked: composition mutant exceeded 90s") })
 	defer timer.Stop()
 	cases := filepath.Join(test.TempDir(), "cases.txt")
-	if err := os.WriteFile(cases, []byte(strings.Join(state.lines, "\n")+"\n"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(cases, []byte(strings.Join(state.lines, "\n")+"\n"), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	source, _ := filepath.Abs("compose_main.ts")
 	mutation := mutants[index]
@@ -270,8 +270,8 @@ func compositionCatchesMutant(test *testing.T, index int) {
 		test.Fatalf("Node baseline: %d %s", baseline.exitCode, baseline.stderr)
 	}
 	if keep := os.Getenv("ADAMIC_CSS_KEEP_COMPOSED"); keep != "" && index == 0 {
-		if err := os.WriteFile(keep, baseline.stdout, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(keep, baseline.stdout, 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
 	if result.exitCode != 0 || len(result.stderr) != 0 {
@@ -326,8 +326,8 @@ func compositionCases(test *testing.T) string {
 		"fixtures":   os.Getenv("ADAMIC_CSS_FIXTURES"),
 	})
 	requestPath := filepath.Join(dir, "request.json")
-	if err := os.WriteFile(requestPath, request, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(requestPath, request, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	oracle := oracles.CompositionOracle(
 		test,
@@ -347,10 +347,10 @@ func compositionCases(test *testing.T) string {
 	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
 	// Read through childguard.Capture for compositionExecute's reason: a WaitDelay could fail a run that had finished.
 	// The run has no deadline of its own, and the unit's own ceiling bounds it.
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	output := append(stdout, stderr...)
-	if err != nil {
-		test.Fatalf("composition corpus: %v\n%s", err, output)
+	if captureError != nil {
+		test.Fatalf("composition corpus: %v\n%s", captureError, output)
 	}
 	test.Logf("%s", output)
 	return cases
@@ -664,9 +664,9 @@ func compositionCommand(test *testing.T, name string, arguments ...string) (*exe
 // first byte) are longer than the command's 90 s deadline, which ends a hung run sooner.
 func compositionExecute(test *testing.T, environment []string, name string, arguments ...string) run {
 	test.Helper()
-	result, err := compositionRun(test, environment, name, arguments...)
-	if err != nil {
-		test.Fatal(err)
+	result, compositionRunError := compositionRun(test, environment, name, arguments...)
+	if compositionRunError != nil {
+		test.Fatal(compositionRunError)
 	}
 	return result
 }
@@ -678,28 +678,28 @@ func compositionRun(test *testing.T, environment []string, name string, argument
 	if environment != nil {
 		cmd.Env = append(os.Environ(), environment...)
 	}
-	stdout, stderr, err := childguard.Capture(ctx, cmd)
+	stdout, stderr, captureError := childguard.Capture(ctx, cmd)
 	var exit *exec.ExitError
-	if err != nil && !errors.As(err, &exit) {
-		return run{}, fmt.Errorf("running %s: %v", name, err)
+	if captureError != nil && !errors.As(captureError, &exit) {
+		return run{}, fmt.Errorf("running %s: %v", name, captureError)
 	}
 	return run{stdout: stdout, stderr: stderr, exitCode: cmd.ProcessState.ExitCode()}, nil
 }
 
 func compositionNode(test *testing.T, path string, arguments ...string) run {
 	test.Helper()
-	result, err := compositionNodeRun(test, path, arguments...)
-	if err != nil {
-		test.Fatal(err)
+	result, compositionNodeRunError := compositionNodeRun(test, path, arguments...)
+	if compositionNodeRunError != nil {
+		test.Fatal(compositionNodeRunError)
 	}
 	return result
 }
 
 // compositionNodeRun is compositionNode for a goroutine: it returns its failure rather than failing the test.
 func compositionNodeRun(test *testing.T, path string, arguments ...string) (run, error) {
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
-	if err != nil {
-		return run{}, err
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
+	if absolutePathError != nil {
+		return run{}, absolutePathError
 	}
 	return compositionRun(
 		test,
@@ -718,13 +718,13 @@ func compositionLeaks(test *testing.T, state compositionProducts, cases string) 
 			return fmt.Sprintf("exit %d\n%s", report.exitCode, report.stderr)
 		}
 	case "darwin":
-		source, err := os.ReadFile(filepath.Join(state.product, "program.c"))
-		if err != nil {
-			test.Fatal(err)
+		source, readError := os.ReadFile(filepath.Join(state.product, "program.c"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		binary := filepath.Join(test.TempDir(), "port")
-		if err := native.Build(string(source), binary, native.Options{}); err != nil {
-			test.Fatal(err)
+		if buildError := native.Build(string(source), binary, native.Options{}); buildError != nil {
+			test.Fatal(buildError)
 		}
 		report := compositionExecute(test, nil, "leaks", "--atExit", "--", binary, cases)
 		if report.exitCode != 0 {
@@ -757,8 +757,12 @@ func compositionLoweredProduct(test *testing.T) (string, string) {
 	inputs := compositionInputs()
 	product := buildcache.Product(test, inputs, func(dir string) error {
 		program := lowered(test, source)
-		if err := os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(program)), 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(
+			filepath.Join(dir, "program.c"),
+			[]byte(native.C(program)),
+			0644,
+		); writeError != nil {
+			return writeError
 		}
 		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
 	})
@@ -768,9 +772,9 @@ func compositionLoweredProduct(test *testing.T) (string, string) {
 func compositionNativeProduct(test *testing.T) string {
 	test.Helper()
 	_, product := compositionLoweredProduct(test)
-	c, err := os.ReadFile(filepath.Join(product, "program.c"))
-	if err != nil {
-		test.Fatal(err)
+	c, readError := os.ReadFile(filepath.Join(product, "program.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	inputs := compositionInputs()
 	inputs.Name = "css-composition-native"

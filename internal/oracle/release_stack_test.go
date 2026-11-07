@@ -21,13 +21,13 @@ func TestStackReservationMeasuresEnvironment(test *testing.T) {
 // exercises that reservation with real strings and a controlled initial frame and soft limit.
 func reservationProbe(test *testing.T, argv bool) {
 	test.Helper()
-	runtimeDirectory, err := filepath.Abs(filepath.Join(repository, "internal/native/runtime"))
-	if err != nil {
-		test.Fatal(err)
+	runtimeDirectory, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/native/runtime"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	source, err := os.ReadFile(filepath.Join(runtimeDirectory, "stack.c"))
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(filepath.Join(runtimeDirectory, "stack.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	for _, mutant := range []bool{false, true} {
 		body := string(source)
@@ -58,8 +58,8 @@ int main(void) {
 		directory := test.TempDir()
 		path := filepath.Join(directory, "probe.c")
 		binary := filepath.Join(directory, "probe")
-		if err := os.WriteFile(path, []byte(harness), 0600); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(path, []byte(harness), 0600); writeError != nil {
+			test.Fatal(writeError)
 		}
 		ctx, command := bounded(
 			test,
@@ -76,8 +76,8 @@ int main(void) {
 			binary,
 		)
 		command.Env = toolchain.Env()
-		if stdout, stderr, err := childguard.Capture(ctx, command); err != nil {
-			test.Fatalf("compile mutant=%v: %v\n%s%s", mutant, err, stdout, stderr)
+		if stdout, stderr, captureError := childguard.Capture(ctx, command); captureError != nil {
+			test.Fatalf("compile mutant=%v: %v\n%s%s", mutant, captureError, stdout, stderr)
 		}
 		got := execute(test, binary)
 		if !mutant && got.exitCode != 0 {

@@ -21,13 +21,13 @@ func init() {
 
 func scalarUnionViewMisfit(test *testing.T, name, declared, backend string) {
 	test.Helper()
-	path, err := filepath.Abs("../lower/testdata/scalar_union_views/" + name + ".ts")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("../lower/testdata/scalar_union_views/" + name + ".ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	source := onNode(test, path)
 	if source.exitCode != 0 || string(source.stdout) != "wrong\n" {

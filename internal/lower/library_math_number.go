@@ -34,7 +34,9 @@ func (l *lowering) libraryMathNumberProperty(node *ast.Node) (ir.Expression, boo
 
 func (l *lowering) numberPrototype(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
-	return node.Kind == ast.KindPropertyAccessExpression && node.Name().Text() == "prototype" && l.isLibraryGlobal(node.AsPropertyAccessExpression().Expression, "Number")
+	return node.Kind == ast.KindPropertyAccessExpression &&
+		node.Name().Text() == "prototype" &&
+		l.isLibraryGlobal(node.AsPropertyAccessExpression().Expression, "Number")
 }
 
 // libraryNumber implements primitive ToNumber and delegates represented conversion methods.
@@ -43,9 +45,9 @@ func (l *lowering) libraryNumber(node *ast.Node) (ir.Expression, error) {
 	if ast.SkipParentheses(node).Kind == ast.KindNullKeyword {
 		return ir.NumberConstant{}, nil
 	}
-	value, err := l.expression(node)
-	if err != nil {
-		return nil, err
+	value, expressionError := l.expression(node)
+	if expressionError != nil {
+		return nil, expressionError
 	}
 	if _, missing := value.(ir.Undefined); missing {
 		return ir.NumberConstant{Value: math.NaN()}, nil
@@ -81,8 +83,8 @@ func (l *lowering) libraryMathNumberCall(node *ast.Node) (ir.Expression, bool, e
 		if len(written) != 1 || hasSpread(node) {
 			return nil, true, l.notYet(node, "Number with spread or extra arguments")
 		}
-		value, err := l.libraryNumber(written[0])
-		return value, true, err
+		value, libraryNumberError := l.libraryNumber(written[0])
+		return value, true, libraryNumberError
 	}
 	if callee.Kind != ast.KindPropertyAccessExpression {
 		return nil, false, nil
@@ -98,9 +100,9 @@ func (l *lowering) libraryMathNumberCall(node *ast.Node) (ir.Expression, bool, e
 		}
 		arguments := []ir.Expression{}
 		for _, argument := range written {
-			value, err := l.libraryNumber(argument)
-			if err != nil {
-				return nil, true, err
+			value, libraryNumberError := l.libraryNumber(argument)
+			if libraryNumberError != nil {
+				return nil, true, libraryNumberError
 			}
 			arguments = append(arguments, value)
 		}
@@ -113,9 +115,9 @@ func (l *lowering) libraryMathNumberCall(node *ast.Node) (ir.Expression, bool, e
 		if len(written) != 1 {
 			return nil, true, l.notYet(node, "Number.hasOwnProperty with other than one key")
 		}
-		key, err := l.expression(written[0])
-		if err != nil {
-			return nil, true, err
+		key, expressionError := l.expression(written[0])
+		if expressionError != nil {
+			return nil, true, expressionError
 		}
 		if key.Type() != ir.String {
 			return nil, true, l.notYet(node, "Number.hasOwnProperty with a non-string key")
@@ -140,13 +142,13 @@ func (l *lowering) libraryMathNumberCall(node *ast.Node) (ir.Expression, bool, e
 		if len(written) == 0 {
 			return nil, true, l.notYet(node, "Number prototype method without a numeric receiver")
 		}
-		var err error
+		var expressionError error
 		if l.numberPrototype(written[0]) {
 			value = ir.NumberConstant{}
 		} else {
-			value, err = l.expression(written[0])
-			if err != nil {
-				return nil, true, err
+			value, expressionError = l.expression(written[0])
+			if expressionError != nil {
+				return nil, true, expressionError
 			}
 			if value.Type() != ir.Number {
 				return nil, true, l.notYet(node, "Number prototype method on a non-number receiver")
@@ -167,10 +169,10 @@ func (l *lowering) libraryMathNumberCall(node *ast.Node) (ir.Expression, bool, e
 	}
 	var argument ir.Expression
 	if len(written) == 1 {
-		var err error
-		argument, err = l.expression(written[0])
-		if err != nil {
-			return nil, true, err
+		var expressionError error
+		argument, expressionError = l.expression(written[0])
+		if expressionError != nil {
+			return nil, true, expressionError
 		}
 		if _, missing := argument.(ir.Undefined); missing {
 			argument = nil
@@ -196,5 +198,8 @@ func (l *lowering) libraryNumberBoundMethod(node *ast.Node) bool {
 	for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
 		parent = parent.Parent
 	}
-	return parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.Name().Text() == "call" && called(parent)
+	return parent != nil &&
+		parent.Kind == ast.KindPropertyAccessExpression &&
+		parent.Name().Text() == "call" &&
+		called(parent)
 }

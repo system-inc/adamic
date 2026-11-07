@@ -22,13 +22,13 @@ func TestNoReaderCallingConvention(test *testing.T) {
 	} {
 		test.Run(probe.file, func(test *testing.T) {
 			test.Parallel()
-			checked, err := load.Load([]string{filepath.Join("..", "oracle", "testdata", probe.file)})
-			if err != nil {
-				test.Fatal(err)
+			checked, loadError := load.Load([]string{filepath.Join("..", "oracle", "testdata", probe.file)})
+			if loadError != nil {
+				test.Fatal(loadError)
 			}
-			program, err := lower.Lower(context.Background(), checked)
-			if err != nil {
-				test.Fatal(err)
+			program, lowerError := lower.Lower(context.Background(), checked)
+			if lowerError != nil {
+				test.Fatal(lowerError)
 			}
 			code := C(program)
 			if strings.Contains(code, "/* actual argument count */") {

@@ -22,9 +22,9 @@ func TestRecordForms(test *testing.T) {
 		`interface Recovery { b: number; [key: string]: number | string } const r: Recovery = { b: 1, 2: "two", 0x1F: 3 }; console.log(Object.keys(r).join(','));`,
 	} {
 		test.Run(source, func(test *testing.T) {
-			_, err := lowerSource(test, source)
-			if err != nil {
-				test.Fatal(err)
+			_, lowerSourceError := lowerSource(test, source)
+			if lowerSourceError != nil {
+				test.Fatal(lowerSourceError)
 			}
 		})
 	}
@@ -77,14 +77,14 @@ func TestRecordRefusals(test *testing.T) {
 		{`interface Node {links:Record<string,Node>} const a:Node={links:{}}; a.links['self']=a;`, "cycle", false},
 	} {
 		test.Run(probe.source, func(test *testing.T) {
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var ny *NotYet
 			var refused *Refused
-			if err == nil ||
-				!strings.Contains(err.Error(), probe.reason) ||
-				(probe.notYet && !errors.As(err, &ny)) ||
-				(!probe.notYet && !errors.As(err, &refused)) {
-				test.Fatalf("got %v, want %q (NotYet=%t)", err, probe.reason, probe.notYet)
+			if lowerSourceError == nil ||
+				!strings.Contains(lowerSourceError.Error(), probe.reason) ||
+				(probe.notYet && !errors.As(lowerSourceError, &ny)) ||
+				(!probe.notYet && !errors.As(lowerSourceError, &refused)) {
+				test.Fatalf("got %v, want %q (NotYet=%t)", lowerSourceError, probe.reason, probe.notYet)
 			}
 		})
 	}
@@ -111,10 +111,10 @@ func TestRecordPrototypeLiteralNames(test *testing.T) {
 			`const r:Record<string,number>={}; console.log(String('` + name + `' in r));`,
 		} {
 			test.Run(source, func(test *testing.T) {
-				_, err := lowerSource(test, source)
+				_, lowerSourceError := lowerSource(test, source)
 				var refusal *Refused
-				if !errors.As(err, &refusal) || !strings.Contains(err.Error(), name) {
-					test.Fatalf("got %v, want literal member refusal naming %s", err, name)
+				if !errors.As(lowerSourceError, &refusal) || !strings.Contains(lowerSourceError.Error(), name) {
+					test.Fatalf("got %v, want literal member refusal naming %s", lowerSourceError, name)
 				}
 			})
 		}

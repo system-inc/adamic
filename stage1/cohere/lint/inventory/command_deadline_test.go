@@ -27,11 +27,11 @@ func inventoryEngineCommand(
 		if command.Process == nil {
 			return os.ErrProcessDone
 		}
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
+		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if errors.Is(killError, syscall.ESRCH) {
 			return os.ErrProcessDone
 		}
-		return err
+		return killError
 	}
 	return command, ctx, cancel
 }
@@ -60,6 +60,6 @@ func inventoryEngineTestCommand(
 // the command's own deadline, still ends a hung case, and the deadlines above are unchanged. It returns stdout, then
 // stderr; the callers log the output or look for a line anywhere in it.
 func inventoryEngineOutput(ctx context.Context, command *exec.Cmd) ([]byte, error) {
-	stdout, stderr, err := childguard.Capture(ctx, command)
-	return append(stdout, stderr...), err
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
+	return append(stdout, stderr...), captureError
 }

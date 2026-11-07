@@ -30,18 +30,18 @@ func ownedWitnessCases(test *testing.T, directory string) []ownedWitnessCase {
 	test.Helper()
 	var cases []ownedWitnessCase
 	for _, d := range prepareRegistry(test, directory) {
-		paths, err := registry.Witnesses(filepath.Join(directory, "rules", d.Slug))
-		if err != nil {
-			test.Fatal(err)
+		paths, witnessesError := registry.Witnesses(filepath.Join(directory, "rules", d.Slug))
+		if witnessesError != nil {
+			test.Fatal(witnessesError)
 		}
 		rows := ownedWitnessRows(test, directory, d)
 		if len(paths) != len(rows) {
 			test.Fatalf("%s: %d paths, %d rows", d.Slug, len(paths), len(rows))
 		}
 		for index, row := range rows {
-			relative, err := filepath.Rel(directory, paths[index])
-			if err != nil {
-				test.Fatal(err)
+			relative, relativePathError := filepath.Rel(directory, paths[index])
+			if relativePathError != nil {
+				test.Fatal(relativePathError)
 			}
 			cases = append(cases, ownedWitnessCase{filepath.ToSlash(relative), row, d})
 		}
@@ -65,8 +65,8 @@ func planOwnedWitnesses(cases []ownedWitnessCase, count int) ([][]ownedWitnessCa
 		shard := ownedWitnessShard(witness.id, count)
 		plan[shard] = append(plan[shard], witness)
 	}
-	if err := checkOwnedWitnessUnion(cases, plan); err != nil {
-		return nil, err
+	if checkOwnedWitnessUnionError := checkOwnedWitnessUnion(cases, plan); checkOwnedWitnessUnionError != nil {
+		return nil, checkOwnedWitnessUnionError
 	}
 	return plan, nil
 }
@@ -82,9 +82,9 @@ func ownedWitnessShard(id string, count int) int {
 func TestOwnedWitnessesAssignmentStable(test *testing.T) {
 	test.Parallel()
 	cases := ownedWitnessCases(test, ".")
-	original, err := planOwnedWitnesses(cases, testOwnedWitnessesShards)
-	if err != nil {
-		test.Fatal(err)
+	original, planOwnedWitnessesError := planOwnedWitnesses(cases, testOwnedWitnessesShards)
+	if planOwnedWitnessesError != nil {
+		test.Fatal(planOwnedWitnessesError)
 	}
 	assignments := make(map[string]int)
 	for shard, group := range original {
@@ -96,9 +96,9 @@ func TestOwnedWitnessesAssignmentStable(test *testing.T) {
 	for i, j := 0, len(grown)-1; i < j; i, j = i+1, j-1 {
 		grown[i], grown[j] = grown[j], grown[i]
 	}
-	plan, err := planOwnedWitnesses(grown, testOwnedWitnessesShards)
-	if err != nil {
-		test.Fatal(err)
+	plan, planOwnedWitnessesError := planOwnedWitnesses(grown, testOwnedWitnessesShards)
+	if planOwnedWitnessesError != nil {
+		test.Fatal(planOwnedWitnessesError)
 	}
 	for shard, group := range plan {
 		for _, witness := range group {
@@ -107,7 +107,7 @@ func TestOwnedWitnessesAssignmentStable(test *testing.T) {
 			}
 		}
 	}
-	if _, err := planOwnedWitnesses(nil, testOwnedWitnessesShards); err == nil {
+	if _, planOwnedWitnessesError := planOwnedWitnesses(nil, testOwnedWitnessesShards); planOwnedWitnessesError == nil {
 		test.Fatal("empty repository corpus survived")
 	}
 }
@@ -164,14 +164,14 @@ func ownedWitnessUnit(test *testing.T, shard int) {
 			test.Skip("assigned to another box")
 		}
 	}
-	directory, err := filepath.Abs(".")
-	if err != nil {
-		test.Fatal(err)
+	directory, absolutePathError := filepath.Abs(".")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	cases := ownedWitnessCases(test, directory)
-	plan, err := planOwnedWitnesses(cases, testOwnedWitnessesShards)
-	if err != nil {
-		test.Fatal(err)
+	plan, planOwnedWitnessesError := planOwnedWitnesses(cases, testOwnedWitnessesShards)
+	if planOwnedWitnessesError != nil {
+		test.Fatal(planOwnedWitnessesError)
 	}
 	if os.Getenv("ADAMIC_OWNED_WITNESS_PROBE") == "1" {
 		for _, witness := range plan[shard] {
@@ -180,8 +180,13 @@ func ownedWitnessUnit(test *testing.T, shard int) {
 			if witness.id == cases[0].id {
 				got = []byte("case 0\nplanted disagreement\n")
 			}
-			if err := ownedWitnessAgreement(witness.id, "native", got, want); err != nil {
-				test.Fatal(err)
+			if ownedWitnessAgreementError := ownedWitnessAgreement(
+				witness.id,
+				"native",
+				got,
+				want,
+			); ownedWitnessAgreementError != nil {
+				test.Fatal(ownedWitnessAgreementError)
 			}
 		}
 		return
@@ -236,13 +241,13 @@ func ownedWitnessUnit(test *testing.T, shard int) {
 		)},
 		{"native", ownedWitnessExecute(test, ctx, binary, "--manifest", path)},
 	} {
-		if err := ownedWitnessAgreement(
+		if ownedWitnessAgreementError := ownedWitnessAgreement(
 			fmt.Sprintf("shard-%03d", shard),
 			side.name,
 			side.run.output,
 			want.output,
-		); err != nil {
-			test.Fatal(err)
+		); ownedWitnessAgreementError != nil {
+			test.Fatal(ownedWitnessAgreementError)
 		}
 	}
 }
@@ -258,9 +263,9 @@ func ownedWitnessSetup(test *testing.T) {
 		// No deadline of its own: setup is the build phase's to make fast, and Loom's 90 s kill still covers
 		// the unit (@system_adamic's ruling). A shard's clock starts only after this returns.
 		started := time.Now()
-		directory, err := filepath.Abs(".")
-		if err != nil {
-			test.Fatal(err)
+		directory, absolutePathError := filepath.Abs(".")
+		if absolutePathError != nil {
+			test.Fatal(absolutePathError)
 		}
 		oracle := lintGoOracleProduct(test)
 		binary, module := ownedWitnessProducts(test, directory)
@@ -275,25 +280,25 @@ func ownedWitnessSetup(test *testing.T) {
 func ownedWitnessExecute(test *testing.T, ctx context.Context, name string, args ...string) execution {
 	test.Helper()
 	command := lintCommand(ctx, "", name, args...)
-	output, err := os.CreateTemp(test.TempDir(), "stdout-")
-	if err != nil {
-		test.Fatal(err)
+	output, temporaryFileError := os.CreateTemp(test.TempDir(), "stdout-")
+	if temporaryFileError != nil {
+		test.Fatal(temporaryFileError)
 	}
 	defer output.Close()
 	command.Stdout = output
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
 	started := time.Now()
-	err = command.Run()
+	runError := command.Run()
 	if ctx.Err() != nil {
 		test.Fatalf("cooked: shard exceeded 90s: %v", ctx.Err())
 	}
-	if err != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
-		test.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
+	if runError != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
+		test.Fatalf("%s %v: %v\n%s", name, args, runError, &stderr)
 	}
-	data, err := os.ReadFile(output.Name())
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(output.Name())
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return execution{data, time.Since(started)}
 }
@@ -335,9 +340,9 @@ func ownedWitnessAgreement(id, side string, got, want []byte) error {
 func TestOwnedWitnessesUnion(test *testing.T) {
 	test.Parallel()
 	cases := ownedWitnessCases(test, ".")
-	plan, err := planOwnedWitnesses(cases, testOwnedWitnessesShards)
-	if err != nil {
-		test.Fatal(err)
+	plan, planOwnedWitnessesError := planOwnedWitnesses(cases, testOwnedWitnessesShards)
+	if planOwnedWitnessesError != nil {
+		test.Fatal(planOwnedWitnessesError)
 	}
 	if len(plan) != testOwnedWitnessesShards {
 		test.Fatalf("enumerated %d shards, want %d", len(plan), testOwnedWitnessesShards)
@@ -362,9 +367,9 @@ func TestOwnedWitnessesUnion(test *testing.T) {
 
 func TestOwnedWitnessesPlantedDisagreement(test *testing.T) {
 	test.Parallel()
-	binary, err := os.Executable()
-	if err != nil {
-		test.Fatal(err)
+	binary, executableError := os.Executable()
+	if executableError != nil {
+		test.Fatal(executableError)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
@@ -373,19 +378,19 @@ func TestOwnedWitnessesPlantedDisagreement(test *testing.T) {
 	command := exec.CommandContext(ctx, binary, "-test.run=^"+want+"$", "-test.timeout=90s", "-test.v")
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if err == syscall.ESRCH {
+		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if killError == syscall.ESRCH {
 			return os.ErrProcessDone
 		}
-		return err
+		return killError
 	}
 	command.Env = append(os.Environ(), "ADAMIC_OWNED_WITNESS_PROBE=1", "ADAMIC_TEST_SHARD=")
 	// Read through childguard.Capture, to its end with no WaitDelay deciding when: exec's copying under a one-second
 	// WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF a second after the child exited, an
 	// error that reads as the child's failure here whatever it exited with, beside output cut short (#n3gk22h's shape).
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	output := append(stdout, stderr...)
-	if err == nil {
+	if captureError == nil {
 		test.Fatal("planted disagreement survived")
 	}
 	failures := 0

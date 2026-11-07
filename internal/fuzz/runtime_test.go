@@ -11,25 +11,25 @@ import (
 func TestFuzzerSharesRuntimeLibrary(test *testing.T) {
 	test.Parallel()
 	directory := test.TempDir()
-	checkout, err := PrepareBuilt("../..", buildcache.Adamic(test), filepath.Join(directory, "checkout"))
-	if err != nil {
-		test.Fatal(err)
+	checkout, prepareBuiltError := PrepareBuilt("../..", buildcache.Adamic(test), filepath.Join(directory, "checkout"))
+	if prepareBuiltError != nil {
+		test.Fatal(prepareBuiltError)
 	}
 	for _, name := range []string{"library", "program"} {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
 			if name == "library" {
-				library, err := native.RuntimeLibrary("", native.Options{Sanitize: true})
-				if err != nil {
-					test.Fatal(err)
+				library, runtimeLibraryError := native.RuntimeLibrary("", native.Options{Sanitize: true})
+				if runtimeLibraryError != nil {
+					test.Fatal(runtimeLibraryError)
 				}
-				checkoutLibrary, err := native.RuntimeLibraryForSource(
+				checkoutLibrary, runtimeLibraryForSourceError := native.RuntimeLibraryForSource(
 					filepath.Join(checkout.Root, "internal", "native", "runtime"),
 					"",
 					native.Options{Sanitize: true},
 				)
-				if err != nil {
-					test.Fatal(err)
+				if runtimeLibraryForSourceError != nil {
+					test.Fatal(runtimeLibraryForSourceError)
 				}
 				if checkoutLibrary != library {
 					test.Fatalf("fuzzer uses %q, Build uses %q", checkoutLibrary, library)

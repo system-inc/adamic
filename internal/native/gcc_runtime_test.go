@@ -24,9 +24,9 @@ func gccRuntimeUnit(test *testing.T, name string) string {
 func gccRuntimeProduct(test *testing.T, name, mutant string) string {
 	test.Helper()
 	compiler := gccAuditCompiler(test)
-	files, flags, _, _, err := gccAuditRuntimeInputs(Options{Count: true, ProgramRegion: true})
-	if err != nil {
-		test.Fatal(err)
+	files, flags, _, _, gccAuditRuntimeInputsError := gccAuditRuntimeInputs(Options{Count: true, ProgramRegion: true})
+	if gccAuditRuntimeInputsError != nil {
+		test.Fatal(gccAuditRuntimeInputsError)
 	}
 	flags = slices.DeleteFunc(flags, func(s string) bool {
 		return s == "-Wcast-function-type-strict" ||
@@ -41,9 +41,9 @@ func gccRuntimeProduct(test *testing.T, name, mutant string) string {
 		"-Werror=stringop-overflow",
 		"-Werror=infinite-recursion",
 	)
-	headers, err := headersRead(files, flags, compiler)
-	if err != nil {
-		test.Fatal(err)
+	headers, headersReadError := headersRead(files, flags, compiler)
+	if headersReadError != nil {
+		test.Fatal(headersReadError)
 	}
 	inputs := buildcache.Inputs{
 		Name: "gcc-runtime-" + name + mutant,
@@ -84,8 +84,12 @@ func gccRuntimeProduct(test *testing.T, name, mutant string) string {
 				}
 			}
 			if strings.HasSuffix(file.name, ".h") || file.name == name {
-				if err := os.WriteFile(filepath.Join(directory, file.name), file.contents, 0600); err != nil {
-					return err
+				if writeError := os.WriteFile(
+					filepath.Join(directory, file.name),
+					file.contents,
+					0600,
+				); writeError != nil {
+					return writeError
 				}
 			}
 		}
@@ -102,15 +106,15 @@ func gccRuntimeProduct(test *testing.T, name, mutant string) string {
 		command, release := boundedrun.Command(45*time.Second, compiler, args...)
 		defer release()
 		command.Dir = directory
-		output, err := command.CombinedOutput()
+		output, combinedOutputError := command.CombinedOutput()
 		if mutant == "" {
-			if err != nil {
-				return fmt.Errorf("GCC %s: %w\n%s", name, err, output)
+			if combinedOutputError != nil {
+				return fmt.Errorf("GCC %s: %w\n%s", name, combinedOutputError, output)
 			}
 		} else {
 			diagnostic := gccMutantDiagnostic(mutant)
-			if err == nil || !strings.Contains(string(output), diagnostic) {
-				return fmt.Errorf("GCC mutant %s survived: %v\n%s", mutant, err, output)
+			if combinedOutputError == nil || !strings.Contains(string(output), diagnostic) {
+				return fmt.Errorf("GCC mutant %s survived: %v\n%s", mutant, combinedOutputError, output)
 			}
 		}
 		return os.WriteFile(filepath.Join(directory, "diagnostics"), output, 0600)
@@ -120,9 +124,9 @@ func gccRuntimeProduct(test *testing.T, name, mutant string) string {
 func checkGCCRuntimeUnit(test *testing.T, name string) {
 	test.Helper()
 	directory := gccRuntimeUnit(test, name)
-	diagnostics, err := os.ReadFile(filepath.Join(directory, "diagnostics"))
-	if err != nil {
-		test.Fatal(err)
+	diagnostics, readError := os.ReadFile(filepath.Join(directory, "diagnostics"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if len(diagnostics) != 0 {
 		test.Logf("GCC advisory warnings for %s:\n%s", name, diagnostics)
@@ -130,9 +134,9 @@ func checkGCCRuntimeUnit(test *testing.T, name string) {
 }
 func TestGCCRuntimeInventory(test *testing.T) {
 	test.Parallel()
-	files, err := readRuntime(runtime, "runtime")
-	if err != nil {
-		test.Fatal(err)
+	files, readRuntimeError := readRuntime(runtime, "runtime")
+	if readRuntimeError != nil {
+		test.Fatal(readRuntimeError)
 	}
 	var names []string
 	for _, file := range files {
@@ -164,9 +168,9 @@ func gccMutantDiagnostic(mutant string) string {
 }
 func checkGCCDiagnosticMutant(test *testing.T, name, mutant string) {
 	test.Helper()
-	data, err := os.ReadFile(filepath.Join(gccRuntimeProduct(test, name, mutant), "diagnostics"))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(gccRuntimeProduct(test, name, mutant), "diagnostics"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if !strings.Contains(string(data), gccMutantDiagnostic(mutant)) {
 		test.Fatalf("mutant not caught: %s", data)
@@ -213,15 +217,15 @@ func gccAuditCompiler(test *testing.T) string {
 	if goruntime.GOOS != "linux" {
 		test.Skip("GNU gcc audits run on Linux; macOS gcc is clang")
 	}
-	compiler, err := exec.LookPath("gcc")
-	if err != nil {
-		test.Fatal(err)
+	compiler, lookPathError := exec.LookPath("gcc")
+	if lookPathError != nil {
+		test.Fatal(lookPathError)
 	}
 	command, release := boundedrun.Command(5*time.Second, compiler, "--version")
 	defer release()
-	version, err := command.CombinedOutput()
-	if err != nil || !strings.Contains(string(version), "Free Software Foundation") {
-		test.Fatalf("GNU GCC required: %v\n%s", err, version)
+	version, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError != nil || !strings.Contains(string(version), "Free Software Foundation") {
+		test.Fatalf("GNU GCC required: %v\n%s", combinedOutputError, version)
 	}
 	return compiler
 }
@@ -234,13 +238,13 @@ func gccAuditRuntimeInputs(options Options) ([]runtimeFile, []string, string, st
 		features = append(features, "-D"+feature+"=1")
 	}
 	features = append(features, "-DADAMIC_REGEXP_RUNTIME_COMPILER=1", "-DADAMIC_TSGO=1")
-	files, flags, compiler, version, err := runtimeInputs("", options, features)
-	if err != nil {
-		return nil, nil, "", "", err
+	files, flags, compiler, version, runtimeInputsError := runtimeInputs("", options, features)
+	if runtimeInputsError != nil {
+		return nil, nil, "", "", runtimeInputsError
 	}
-	header, err := os.ReadFile("../../bridge/tsgo/tsgo.h")
-	if err != nil {
-		return nil, nil, "", "", err
+	header, readError := os.ReadFile("../../bridge/tsgo/tsgo.h")
+	if readError != nil {
+		return nil, nil, "", "", readError
 	}
 	files = append(files, runtimeFile{"tsgo.h", header})
 	return files, flags, compiler, version, nil

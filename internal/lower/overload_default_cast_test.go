@@ -70,34 +70,38 @@ func TestOverloadDefaultCastIsProvenPerOverload(test *testing.T) {
 	} {
 		test.Run(twin.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSourceAs(test, twin.text, ".ts")
-			if err == nil ||
-				!strings.Contains(err.Error(), twin.where+": Adamic 0.1 refuses a cast the runtime can't check") {
-				test.Fatalf("want the cast refused at %s, got %v", twin.where, err)
+			_, lowerSourceAsError := lowerSourceAs(test, twin.text, ".ts")
+			if lowerSourceAsError == nil ||
+				!strings.Contains(
+					lowerSourceAsError.Error(),
+					twin.where+": Adamic 0.1 refuses a cast the runtime can't check",
+				) {
+				test.Fatalf("want the cast refused at %s, got %v", twin.where, lowerSourceAsError)
 			}
 		})
 	}
 	test.Run("a", func(test *testing.T) {
 		test.Parallel()
-		_, err := lowerSourceAs(
+		_, lowerSourceAsError := lowerSourceAs(
 			test,
 			"type Comparison = -1 | 0 | 1;\ntype Comparer<T> = (a: T, b: T) => Comparison;\nfunction compareStringsCaseSensitive(a: string, b: string): Comparison { return a < b ? -1 : a > b ? 1 : 0; }\nfunction compareNumbers(a: number, b: number): Comparison { return a < b ? -1 : a > b ? 1 : 0; }\nfunction sortWith<T>(array: readonly T[], comparer: Comparer<T>): T[] { return [...array].sort(comparer); }\nfunction dedupeSorted<T>(sorted: readonly T[], comparer: Comparer<T>): T[] {\n\tconst out: T[] = [];\n\tfor (const item of sorted) {\n\t\tif (!out.some(seen => comparer(seen, item) === 0)) {\n\t\t\tout.push(item);\n\t\t}\n\t}\n\treturn out;\n}\nfunction sortAndDeduplicate(array: readonly string[]): string[];\nfunction sortAndDeduplicate<T>(array: readonly T[], comparer: Comparer<T>, equalityComparer?: Comparer<T>): T[];\nfunction sortAndDeduplicate<T>(array: readonly T[], comparer?: Comparer<T>, equalityComparer?: Comparer<T>): T[] {\n\treturn dedupeSorted(sortWith(array, comparer ?? compareStringsCaseSensitive as unknown as Comparer<T>), equalityComparer ?? comparer ?? compareStringsCaseSensitive as unknown as Comparer<T>);\n}\nconsole.log(sortAndDeduplicate(['b', 'a', 'c', 'a']).join(','));\nconsole.log(sortAndDeduplicate([3, 1, 2, 1], compareNumbers).join(','));\n",
 			".a",
 		)
-		if err == nil {
+		if lowerSourceAsError == nil {
 			test.Fatal("want the pair refused in .a, got it lowered")
 		}
-		test.Logf("a: %v", err)
+		test.Logf("a: %v", lowerSourceAsError)
 	})
 	test.Run("no_overloads", func(test *testing.T) {
 		test.Parallel()
-		_, err := lowerSourceAs(
+		_, lowerSourceAsError := lowerSourceAs(
 			test,
 			"type Comparison = -1 | 0 | 1;\ntype Comparer<T> = (a: T, b: T) => Comparison;\nfunction compareStringsCaseSensitive(a: string, b: string): Comparison { return a < b ? -1 : a > b ? 1 : 0; }\nfunction compareNumbers(a: number, b: number): Comparison { return a < b ? -1 : a > b ? 1 : 0; }\nfunction sortWith<T>(array: readonly T[], comparer: Comparer<T>): T[] { return [...array].sort(comparer); }\nfunction dedupeSorted<T>(sorted: readonly T[], comparer: Comparer<T>): T[] {\n\tconst out: T[] = [];\n\tfor (const item of sorted) {\n\t\tif (!out.some(seen => comparer(seen, item) === 0)) {\n\t\t\tout.push(item);\n\t\t}\n\t}\n\treturn out;\n}\nfunction pick<T>(comparer?: Comparer<T>): unknown {\n\treturn comparer ?? compareStringsCaseSensitive as unknown;\n}\nfunction pick2(comparer?: Comparer<string>): Comparer<string> {\n\treturn comparer ?? compareStringsCaseSensitive as unknown as Comparer<string>;\n}\nconsole.log(String(pick() === compareStringsCaseSensitive));\nconsole.log(String(pick2()('a', 'b')));\n",
 			".ts",
 		)
-		if err == nil || !strings.Contains(err.Error(), ":19:21: Adamic 0.1 refuses a cast the runtime can't check") {
-			test.Fatalf("want pick2's pair refused at :19:21, got %v", err)
+		if lowerSourceAsError == nil ||
+			!strings.Contains(lowerSourceAsError.Error(), ":19:21: Adamic 0.1 refuses a cast the runtime can't check") {
+			test.Fatalf("want pick2's pair refused at :19:21, got %v", lowerSourceAsError)
 		}
 	})
 }

@@ -47,17 +47,17 @@ func TestParserConstructionSourceNodeArrayRecords(test *testing.T) {
 
 func assertParserConstructionSource(test *testing.T, name string) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "stage3/parser-ahead/rulings", name+".a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "stage3/parser-ahead/rulings", name+".a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := onSliceNode(test, path)
 	if truth.exitCode != 0 || len(truth.stderr) != 0 {
 		test.Fatalf("Node: %+v", truth)
 	}
-	program, err := loweredParser(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredParserError := loweredParser(test, path)
+	if loweredParserError != nil {
+		test.Fatal(loweredParserError)
 	}
 	actual, binary := nativelyUncached(test, program)
 	for backend, got := range map[string]run{"native": actual, "JavaScript": onSliceJavaScript(test, program)} {
@@ -73,9 +73,9 @@ func assertParserConstructionSource(test *testing.T, name string) {
 
 func TestParserConstructionUnsetUse(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "stage3/parser-ahead/rulings/factory-use.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(filepath.Join(repository, "stage3/parser-ahead/rulings/factory-use.a"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := onSliceNode(test, path)
 	if truth.exitCode != 70 ||
@@ -83,9 +83,9 @@ func TestParserConstructionUnsetUse(test *testing.T) {
 		!strings.Contains(string(truth.stderr), "TypeError") {
 		test.Fatalf("Node %+v", truth)
 	}
-	program, err := loweredParser(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredParserError := loweredParser(test, path)
+	if loweredParserError != nil {
+		test.Fatal(loweredParserError)
 	}
 	message := "unset use failed: field 'text', factory 'createBaseNode', use 'node.text' at " +
 		parserDisplayedPath(test, path) +
@@ -103,17 +103,19 @@ func TestParserConstructionUnsetUse(test *testing.T) {
 // The delivered placeholder machinery retains null independently of factory unset.
 func TestParserConstructionNullPlaceholderDelivered(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "stage3/parser-ahead/rulings/null-placeholder-pending.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "stage3/parser-ahead/rulings/null-placeholder-pending.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	truth := onSliceNode(test, path)
 	if truth.exitCode != 0 || string(truth.stdout) != "true\ntrue\n" || len(truth.stderr) != 0 {
 		test.Fatalf("Node %+v", truth)
 	}
-	program, err := loweredParser(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredParserError := loweredParser(test, path)
+	if loweredParserError != nil {
+		test.Fatal(loweredParserError)
 	}
 	actual, binary := nativelyUncached(test, program)
 	for backend, got := range map[string]run{"native": actual, "JavaScript": onSliceJavaScript(test, program)} {

@@ -16,9 +16,9 @@ func TestRecordDiscardedReadProof(test *testing.T) {
 		`function show(r:Record<string,number>,k:string):void {const value=r[k]; if(Object.hasOwn(r,k)){console.log(String(value));}}`,
 	} {
 		test.Run(source, func(test *testing.T) {
-			p, err := lowerSource(test, source)
-			if err != nil {
-				test.Fatal(err)
+			p, lowerSourceError := lowerSource(test, source)
+			if lowerSourceError != nil {
+				test.Fatal(lowerSourceError)
 			}
 			found := false
 			for _, f := range p.Functions {
@@ -43,16 +43,16 @@ func TestRecordObservationMustNotEscapeGuard(test *testing.T) {
 		`const r:Record<string,number>={}; console.log(String(r['toString'] === undefined));`,
 	} {
 		test.Run(source, func(test *testing.T) {
-			p, err := lowerSource(test, source)
+			p, lowerSourceError := lowerSource(test, source)
 			if strings.Contains(source, "r['toString']") {
 				var refusal *Refused
-				if !errors.As(err, &refusal) {
-					test.Fatalf("want literal-member refusal, got %v", err)
+				if !errors.As(lowerSourceError, &refusal) {
+					test.Fatalf("want literal-member refusal, got %v", lowerSourceError)
 				}
 				return
 			}
-			if err != nil {
-				test.Fatal(err)
+			if lowerSourceError != nil {
+				test.Fatal(lowerSourceError)
 			}
 			for _, f := range p.Functions {
 				if f.Name == "record_own_read" {

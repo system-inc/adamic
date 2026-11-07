@@ -14,9 +14,9 @@ func TestTransformedNodeRunnerGuardHook(test *testing.T) {
 		test.Skip("subprocess hook")
 	}
 	path := transformedNodeRunner(test, repository)
-	data, err := os.ReadFile(path)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(path)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	text := string(data)
 	transformed := strings.Count(text, "stripTypeScriptTypes(source, { mode: 'transform' })") +
@@ -57,11 +57,15 @@ func TestTransformedNodeRunnerGuard(test *testing.T) {
 			test.Parallel()
 			repository := test.TempDir()
 			oracle := filepath.Join(repository, "oracle")
-			if err := os.Mkdir(oracle, 0700); err != nil {
-				test.Fatal(err)
+			if createDirectoryError := os.Mkdir(oracle, 0700); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
-			if err := os.WriteFile(filepath.Join(oracle, "node.mjs"), []byte(probe.source), 0600); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(
+				filepath.Join(oracle, "node.mjs"),
+				[]byte(probe.source),
+				0600,
+			); writeError != nil {
+				test.Fatal(writeError)
 			}
 			result := execute(
 				test,

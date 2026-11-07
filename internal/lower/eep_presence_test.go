@@ -9,16 +9,16 @@ import (
 
 func checkEEPPresenceRefusal(test *testing.T, name, message string) {
 	test.Helper()
-	source, err := os.ReadFile("testdata/eep_presence/" + name + ".a")
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile("testdata/eep_presence/" + name + ".a")
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	_, err = lowerSource(test, string(source))
+	_, lowerSourceError := lowerSource(test, string(source))
 	var notYet *NotYet
-	if !errors.As(err, &notYet) ||
+	if !errors.As(lowerSourceError, &notYet) ||
 		!strings.Contains(notYet.What, message) ||
 		!strings.Contains(notYet.Where, "main.a:") {
-		test.Fatalf("want located presence refusal with workaround, got %v", err)
+		test.Fatalf("want located presence refusal with workaround, got %v", lowerSourceError)
 	}
 }
 
@@ -63,11 +63,11 @@ func TestEEPPresence6(test *testing.T) {
 
 func TestEEPPresenceSupported(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(
+	_, lowerSourceError := lowerSource(
 		test,
 		`const pair: [string, number] = ['a', 1]; console.log(String(pair.length)); const values: number[] = [1,2]; console.log(String(values?.length)); class Safe { static label = 'ok'; static early = this.read(); static read(): string { return this.label; } } console.log(Safe.early);`,
 	)
-	if err != nil {
-		test.Fatal(err)
+	if lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
 }

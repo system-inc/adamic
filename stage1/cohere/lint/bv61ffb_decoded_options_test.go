@@ -54,9 +54,9 @@ func TestDecodedOptionsAndMutantUnion(test *testing.T) {
 	test.Parallel()
 	// Read actual top-level registrations: a missing, repeated, or misnumbered
 	// wrapper must fail even if the slice helper itself still covers every case.
-	file, err := parser.ParseFile(token.NewFileSet(), "bv61ffb_decoded_options_test.go", nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	file, parseFileError := parser.ParseFile(token.NewFileSet(), "bv61ffb_decoded_options_test.go", nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	registrations := map[int]int{}
 	const prefix = "TestDecodedOptionsAndMutant_"
@@ -69,8 +69,8 @@ func TestDecodedOptionsAndMutantUnion(test *testing.T) {
 		if suffix == "Setup" {
 			continue
 		}
-		shard, err := strconv.Atoi(suffix)
-		if err != nil ||
+		shard, parseError := strconv.Atoi(suffix)
+		if parseError != nil ||
 			shard < 0 ||
 			shard >= testDecodedOptionsAndMutantShards ||
 			suffix != fmt.Sprintf("%03d", shard) {
@@ -153,8 +153,8 @@ func TestDecodedOptionsAndMutantPlantedFailure(test *testing.T) {
 			if index >= 4 {
 				got = []byte("case catch\n1 finding\n")
 			}
-			if err := decodedOptionsCheck(index, got, want); err != nil {
-				test.Fatalf("unplanted case %s: %v", decodedOptionsCases()[index], err)
+			if decodedOptionsCheckError := decodedOptionsCheck(index, got, want); decodedOptionsCheckError != nil {
+				test.Fatalf("unplanted case %s: %v", decodedOptionsCases()[index], decodedOptionsCheckError)
 			}
 			if index == planted {
 				got = []byte("case catch\nplanted disagreement\n")
@@ -191,12 +191,12 @@ func decodedOptionsInputs(test *testing.T, name string) buildcache.Inputs {
 	}
 	// Hash implementation sources, excluding unrelated tests and evidence trees.
 	// Reads: internal/native/runtime/*.[ch]
-	err := filepath.WalkDir(filepath.Join(
+	walkError := filepath.WalkDir(filepath.Join(
 		repository,
 		"internal",
-	), func(path string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
+	), func(path string, entry fs.DirEntry, pathError error) error {
+		if pathError != nil {
+			return pathError
 		}
 		if entry.IsDir() && (entry.Name() == "testdata" || entry.Name() == "performance") {
 			return filepath.SkipDir
@@ -205,16 +205,16 @@ func decodedOptionsInputs(test *testing.T, name string) buildcache.Inputs {
 		if !entry.IsDir() &&
 			(extension == ".go" || extension == ".c" || extension == ".h") &&
 			!strings.HasSuffix(path, "_test.go") {
-			relative, err := filepath.Rel(repository, path)
-			if err != nil {
-				return err
+			relative, relativePathError := filepath.Rel(repository, path)
+			if relativePathError != nil {
+				return relativePathError
 			}
 			files = append(files, filepath.ToSlash(relative))
 		}
 		return nil
 	})
-	if err != nil {
-		test.Fatal(err)
+	if walkError != nil {
+		test.Fatal(walkError)
 	}
 	sort.Strings(files)
 	return buildcache.Inputs{Name: name, Files: files, Flags: []string{
@@ -262,9 +262,9 @@ func decodedOptionsSetupTest(test *testing.T) {
 	// product, rather than in a setup test's TempDir.
 	lowered := decodedOptionsFoundLowered(test, false)
 	// Node runs the changed port, so it reads the copy whose imports name this checkout.
-	changed, err := buildcache.Resolved(decodedOptionsFoundLowered(test, true))
-	if err != nil {
-		test.Fatal(err)
+	changed, resolvedError := buildcache.Resolved(decodedOptionsFoundLowered(test, true))
+	if resolvedError != nil {
+		test.Fatal(resolvedError)
 	}
 	inputs, build := decodedOptionsNative(test)
 	nativeProduct := buildcache.BuiltElsewhere(
@@ -277,13 +277,13 @@ func decodedOptionsSetupTest(test *testing.T) {
 	// The fixture and manifest belong to TestMain's directory and remain valid
 	// after the shard that prepares them finishes, until the process exits.
 	fixture := filepath.Join(filepath.Dir(path), "catch.ts")
-	if err := os.WriteFile(fixture, []byte("try { work(); } catch(e) {}\n"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(fixture, []byte("try { work(); } catch(e) {}\n"), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	manifestPath := filepath.Join(filepath.Dir(path), "decoded-options-manifest.txt")
 	row := fixture + "\tno-empty\t\t\tfalse\t{\"AllowEmptyCatch\":true}\n"
-	if err := os.WriteFile(manifestPath, []byte(row), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(manifestPath, []byte(row), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	ready := decodedOptionsProducts{
 		Directory: packageDirectory, Changed: filepath.Join(changed, "port"),
@@ -319,9 +319,9 @@ func decodedOptionsNative(test *testing.T) (buildcache.Inputs, func(output strin
 	inputs := decodedOptionsInputs(test, "lint-decoded-options-native-setup-v2")
 	inputs.Flags = append(inputs.Flags, "registry=no-empty")
 	return inputs, func(output string) error {
-		source, err := os.ReadFile(filepath.Join(lowered, "lint.c"))
-		if err != nil {
-			return err
+		source, readError := os.ReadFile(filepath.Join(lowered, "lint.c"))
+		if readError != nil {
+			return readError
 		}
 		return native.Build(
 			string(source),
@@ -365,35 +365,39 @@ func decodedOptionsLowered(test *testing.T, mutated bool) (buildcache.Inputs, fu
 		directory := copyPort(test, filepath.Join(output, "port"), from, to, "main.ts")
 		// Keep the original main/options decoder and no-empty implementation. Only
 		// unused factories are omitted; Node and the Go oracle retain the full registry.
-		entries, err := os.ReadDir(filepath.Join(directory, "rules"))
-		if err != nil {
-			return err
+		entries, readDirectoryError := os.ReadDir(filepath.Join(directory, "rules"))
+		if readDirectoryError != nil {
+			return readDirectoryError
 		}
 		for _, entry := range entries {
 			if entry.IsDir() && entry.Name() != "no-empty" {
-				if err := os.RemoveAll(filepath.Join(directory, "rules", entry.Name())); err != nil {
-					return err
+				if removeError := os.RemoveAll(filepath.Join(directory, "rules", entry.Name())); removeError != nil {
+					return removeError
 				}
 			}
 		}
 		prepareRegistry(test, directory)
-		program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-		if err != nil {
-			return err
+		program, loadError := load.Load([]string{filepath.Join(directory, "main.ts")})
+		if loadError != nil {
+			return loadError
 		}
-		lowered, err := lower.Lower(context.Background(), program)
-		if err != nil {
-			return err
+		lowered, lowerError := lower.Lower(context.Background(), program)
+		if lowerError != nil {
+			return lowerError
 		}
-		if err := os.WriteFile(filepath.Join(output, "lint.c"), []byte(native.C(lowered)), 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(
+			filepath.Join(output, "lint.c"),
+			[]byte(native.C(lowered)),
+			0644,
+		); writeError != nil {
+			return writeError
 		}
-		if err := os.WriteFile(
+		if writeError := os.WriteFile(
 			filepath.Join(output, "lint.mjs"),
 			[]byte(javascript.JavaScript(lowered)),
 			0644,
-		); err != nil {
-			return err
+		); writeError != nil {
+			return writeError
 		}
 		// The port's imports name this checkout for the build's own lowering; the product names it <repository>
 		// (#tqrqx60).
@@ -404,23 +408,23 @@ func decodedOptionsLowered(test *testing.T, mutated bool) (buildcache.Inputs, fu
 func decodedOptionsExecute(test *testing.T, ctx context.Context, name string, args ...string) []byte {
 	test.Helper()
 	command := lintCommand(ctx, "", name, args...)
-	output, err := os.CreateTemp(test.TempDir(), "stdout-")
-	if err != nil {
-		test.Fatal(err)
+	output, temporaryFileError := os.CreateTemp(test.TempDir(), "stdout-")
+	if temporaryFileError != nil {
+		test.Fatal(temporaryFileError)
 	}
 	defer output.Close()
 	var stderr bytes.Buffer
 	command.Stdout, command.Stderr = output, &stderr
-	err = command.Run()
+	runError := command.Run()
 	if ctx.Err() != nil {
 		test.Fatalf("cooked: shard exceeded 90s: %v", ctx.Err())
 	}
-	if err != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
-		test.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
+	if runError != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
+		test.Fatalf("%s %v: %v\n%s", name, args, runError, &stderr)
 	}
-	data, err := os.ReadFile(output.Name())
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(output.Name())
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return data
 }
@@ -433,9 +437,9 @@ func decodedOptionsShard(test *testing.T, shard int) {
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	started := time.Now()
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	for _, index := range decodedOptionsSlice(shard) {
 		var got []byte
@@ -491,8 +495,8 @@ func decodedOptionsShard(test *testing.T, shard int) {
 		default:
 			test.Fatalf("unhandled case %d", index)
 		}
-		if err := decodedOptionsCheck(index, got, s.Want); err != nil {
-			test.Fatal(err)
+		if decodedOptionsCheckError := decodedOptionsCheck(index, got, s.Want); decodedOptionsCheckError != nil {
+			test.Fatal(decodedOptionsCheckError)
 		}
 		if index >= 4 {
 			test.Logf(

@@ -18,8 +18,8 @@ func TestAsyncCompletionLeavesSynchronousFlowUnchanged(test *testing.T) {
 		Functions: []ir.Function{{Name: "sync", Returns: ir.Number, Body: body}},
 	}
 	before := Build(program, 0)
-	if err := NormalizeAsync(program); err != nil {
-		test.Fatal(err)
+	if normalizeAsyncError := NormalizeAsync(program); normalizeAsyncError != nil {
+		test.Fatal(normalizeAsyncError)
 	}
 	if !reflect.DeepEqual(body, program.Functions[0].Body) {
 		test.Fatal("synchronous IR changed")

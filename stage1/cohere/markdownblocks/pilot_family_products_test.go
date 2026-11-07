@@ -82,12 +82,18 @@ func pilotLoweredProduct(test *testing.T, family string) string {
 		Flags:     flags,
 		Toolchain: []string{buildcache.Tool("go", "version")},
 	}, func(dir string) error {
-		program, err := loweredResult(filepath.Join(root, "stage1/cohere/markdownblocks/testdata", family+"_probe.ts"))
-		if err != nil {
-			return err
+		program, loweredResultError := loweredResult(
+			filepath.Join(root, "stage1/cohere/markdownblocks/testdata", family+"_probe.ts"),
+		)
+		if loweredResultError != nil {
+			return loweredResultError
 		}
-		if err := os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(program)), 0644); err != nil {
-			return err
+		if writeError := os.WriteFile(
+			filepath.Join(dir, "program.c"),
+			[]byte(native.C(program)),
+			0644,
+		); writeError != nil {
+			return writeError
 		}
 		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
 	})
@@ -100,9 +106,9 @@ func pilotNativeProduct(test *testing.T, family string, sanitize bool) string {
 
 func pilotNativeProductFromLowered(test *testing.T, family, lowered string, sanitize bool) string {
 	test.Helper()
-	source, err := os.ReadFile(filepath.Join(lowered, "program.c"))
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(filepath.Join(lowered, "program.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	options := native.Options{Sanitize: sanitize}
 	flags := append(native.Flags(options), fmt.Sprintf("source=%x", sha256.Sum256(source)))
@@ -187,13 +193,13 @@ func tokenizerEventReady(test *testing.T) tokenizerEventSetup {
 		if fork == "" {
 			fork = filepath.Join(cohere, "internal/format/prettier/bundles")
 		}
-		installed, err := os.ReadFile(filepath.Join(fork, "plugins/markdown.js"))
-		if err != nil {
-			test.Fatal(err)
+		installed, readError := os.ReadFile(filepath.Join(fork, "plugins/markdown.js"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
-		pinned, err := os.ReadFile(filepath.Join(cohere, "internal/format/prettier/bundles/plugins/markdown.js"))
-		if err != nil {
-			test.Fatal(err)
+		pinned, readError := os.ReadFile(filepath.Join(cohere, "internal/format/prettier/bundles/plugins/markdown.js"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		equal(test, "pinned bundle", installed, pinned)
 		tokenizerEventShared = tokenizerEventSetup{
@@ -231,13 +237,13 @@ func pilotExecuteResult(ctx context.Context, environment []string, name string, 
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	if ctx.Err() != nil {
 		return run{}, ctx.Err()
 	}
 	var exitError *exec.ExitError
-	if err != nil && !errors.As(err, &exitError) {
-		return run{}, err
+	if captureError != nil && !errors.As(captureError, &exitError) {
+		return run{}, captureError
 	}
 	return run{stdout, stderr, command.ProcessState.ExitCode()}, nil
 }

@@ -22,12 +22,12 @@ func TestMarkdownASTPreprocessing(test *testing.T) {
 	fixture := markdownASTPrepare(test)
 	inputs, files, goBinary, nativeCases, fork, want := fixture.inputs, fixture.files, fixture.goBinary, fixture.nativeCases, fixture.fork, fixture.want
 	if keep := os.Getenv("ADAMIC_MARKDOWNAST_KEEP"); keep != "" {
-		if err := os.MkdirAll(keep, 0755); err != nil {
-			test.Fatal(err)
+		if createDirectoryError := os.MkdirAll(keep, 0755); createDirectoryError != nil {
+			test.Fatal(createDirectoryError)
 		}
-		data, err := os.ReadFile(nativeCases)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(nativeCases)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		write(test, filepath.Join(keep, "native.txt"), data)
 		write(test, filepath.Join(keep, "want.txt"), want.stdout)
@@ -41,9 +41,9 @@ func TestMarkdownASTPreprocessing(test *testing.T) {
 		sanitized: pilotNativeProductFromLowered(test, "ast", lowered, true),
 		release:   pilotNativeProductFromLowered(test, "ast", lowered, false),
 	}
-	main, err := filepath.Abs("testdata/ast_probe.ts")
-	if err != nil {
-		test.Fatal(err)
+	main, absolutePathError := filepath.Abs("testdata/ast_probe.ts")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	var environment []string
 	if runtime.GOOS == "linux" {
@@ -107,8 +107,8 @@ func TestMarkdownASTPreprocessing(test *testing.T) {
 	} {
 		test.Run(m.name, func(test *testing.T) {
 			scratch := test.TempDir()
-			if err := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); err != nil {
-				test.Fatal(err)
+			if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
+				test.Fatal(createDirectoryError)
 			}
 			for _, file := range []string{
 				"astArena.ts",
@@ -126,9 +126,9 @@ func TestMarkdownASTPreprocessing(test *testing.T) {
 				"codec.ts",
 				"testdata/ast_probe.ts",
 			} {
-				data, err := os.ReadFile(file)
-				if err != nil {
-					test.Fatal(err)
+				data, readError := os.ReadFile(file)
+				if readError != nil {
+					test.Fatal(readError)
 				}
 				if file == m.file {
 					if strings.Count(string(data), m.from) != 1 {
@@ -217,9 +217,9 @@ type markdownASTFixture struct {
 
 func markdownASTPrepare(test *testing.T) markdownASTFixture {
 	test.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		test.Fatal(err)
+	root, absolutePathError := filepath.Abs(repository)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	corpus, files := blockCorpus(test, root, "whitespace")
 	// This file sweep is small beside the mandatory generated and fixed checks.
@@ -280,8 +280,8 @@ func markdownASTPrepare(test *testing.T) markdownASTFixture {
 	var batch bytes.Buffer
 	encoder := json.NewEncoder(&batch)
 	for _, item := range inputs {
-		if err := encoder.Encode(item); err != nil {
-			test.Fatal(err)
+		if encodeError := encoder.Encode(item); encodeError != nil {
+			test.Fatal(encodeError)
 		}
 	}
 	cases := filepath.Join(dir, "cases.jsonl")
@@ -295,13 +295,13 @@ func markdownASTPrepare(test *testing.T) markdownASTFixture {
 	if fork == "" {
 		fork = filepath.Join(cohere, "internal/format/prettier/bundles")
 	}
-	installed, err := os.ReadFile(filepath.Join(fork, "plugins/markdown.js"))
-	if err != nil {
-		test.Fatal(err)
+	installed, readError := os.ReadFile(filepath.Join(fork, "plugins/markdown.js"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	pinned, err := os.ReadFile(filepath.Join(cohere, "internal/format/prettier/bundles/plugins/markdown.js"))
-	if err != nil {
-		test.Fatal(err)
+	pinned, readError := os.ReadFile(filepath.Join(cohere, "internal/format/prettier/bundles/plugins/markdown.js"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	equal(test, "pinned bundle", installed, pinned)
 	return markdownASTFixture{

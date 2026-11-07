@@ -41,8 +41,8 @@ func TestCycleScalarLiteralShapesOnce(test *testing.T) {
 		test.Fatalf("literals = %d, want %d", literals, elements)
 	}
 	// Run the complete cycle analysis too, after pinning the bounded graph size.
-	if err := l.findCycles(l.program.Files()); err != nil {
-		test.Fatal(err)
+	if findCyclesError := l.findCycles(l.program.Files()); findCyclesError != nil {
+		test.Fatal(findCyclesError)
 	}
 }
 
@@ -50,12 +50,12 @@ func TestCycleScalarShapeKeysPreserveDistinctFields(test *testing.T) {
 	test.Parallel()
 	source := `const a={value:1};const b={other:1};const c={value:"one"};const d={value:1 as const};const e={value:2 as const};const nested={value:{back:1}};const spread={...a};const method={value(){return 1;}};const computed={["value"]:1};const frozen={value:1} as const;console.log(String(a.value));`
 	path := filepath.Join(test.TempDir(), "main.a")
-	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	checked, release := program.Checker(context.Background(), program.Files()[0])
 	test.Cleanup(release)

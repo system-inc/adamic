@@ -8,12 +8,12 @@ import (
 // This fails during lowering, before the raw double could reach adamic_retain.
 func TestPrimitiveAdmittingSlotsUseBoxes(test *testing.T) {
 	test.Parallel()
-	program, err := lowerSource(
+	program, lowerSourceError := lowerSource(
 		test,
 		`const object = {}; const array = [0, object]; let value: {} = 1; value = 'x'; value = object; function kind(argument: {}): string { return typeof argument; } console.log(kind(2));`,
 	)
-	if err != nil {
-		test.Fatal(err)
+	if lowerSourceError != nil {
+		test.Fatal(lowerSourceError)
 	}
 	foundArray, foundParameter, foundBinding := false, false, false
 	for _, local := range program.Locals {

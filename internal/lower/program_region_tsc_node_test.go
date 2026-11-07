@@ -13,20 +13,20 @@ import (
 
 func TestProgramRegionTscNodeMemberSites(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs("../oracle/testdata/program_region/tsc_node_membership.a")
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs("../oracle/testdata/program_region/tsc_node_membership.a")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	loaded, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	loaded, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	entry := loaded.Files()[0]
 	typeChecker, release := loaded.Checker(context.Background(), entry)
 	defer release()
-	discovery, err := lowerChecked(loaded, typeChecker, entry, nil, true, false)
-	if err != nil {
-		test.Fatal(err)
+	discovery, lowerCheckedError := lowerChecked(loaded, typeChecker, entry, nil, true, false)
+	if lowerCheckedError != nil {
+		test.Fatal(lowerCheckedError)
 	}
 	var nodeType, arrayType *checker.Type
 	allocations := 0
@@ -71,9 +71,9 @@ func TestProgramRegionTscNodeMemberSites(test *testing.T) {
 			allocations,
 		)
 	}
-	built, err := lowerChecked(loaded, typeChecker, entry, discovery.programPlan, false, false)
-	if err != nil {
-		test.Fatal(err)
+	built, lowerCheckedError := lowerChecked(loaded, typeChecker, entry, discovery.programPlan, false, false)
+	if lowerCheckedError != nil {
+		test.Fatal(lowerCheckedError)
 	}
 	objects, arrays := 0, 0
 	inspect := func(node any) bool {

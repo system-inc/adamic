@@ -16,7 +16,9 @@ func (l *lowering) staticBase(declaration *ast.Node) *ast.Node {
 		}
 		for _, node := range clause.AsHeritageClause().Types.Nodes {
 			symbol := l.symbol(ast.SkipParentheses(node.AsExpressionWithTypeArguments().Expression))
-			if symbol != nil && len(symbol.Declarations) == 1 && symbol.Declarations[0].Kind == ast.KindClassDeclaration {
+			if symbol != nil &&
+				len(symbol.Declarations) == 1 &&
+				symbol.Declarations[0].Kind == ast.KindClassDeclaration {
 				return symbol.Declarations[0]
 			}
 		}
@@ -31,7 +33,8 @@ func (l *lowering) needsStatics(declaration *ast.Node) bool {
 		return true
 	}
 	for _, member := range declaration.Members() {
-		if member.Kind == ast.KindClassStaticBlockDeclaration || ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
+		if member.Kind == ast.KindClassStaticBlockDeclaration ||
+			ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 			return true
 		}
 	}
@@ -52,8 +55,8 @@ func (l *lowering) staticClass(proven *checker.Type, fallback *ast.Node) *ast.No
 
 // Static layouts belong to source classes, independent of instance type arguments.
 func (l *lowering) staticInstance(declaration *ast.Node) (*instance, error) {
-	if err := l.staticClassDeclaration(declaration); err != nil {
-		return nil, err
+	if staticClassDeclarationError := l.staticClassDeclaration(declaration); staticClassDeclarationError != nil {
+		return nil, staticClassDeclarationError
 	}
 	symbol := l.symbol(declaration.Name())
 	if existing := l.statics[symbol]; existing != nil {
@@ -66,28 +69,47 @@ func (l *lowering) staticInstance(declaration *ast.Node) (*instance, error) {
 		l.staticGlobals = map[*ast.Symbol]int{}
 	}
 	if _, exists := l.staticGlobals[symbol]; !exists {
-		local, err := l.declareLocal(declaration.Name())
-		if err != nil {
-			return nil, err
+		local, declareLocalError := l.declareLocal(declaration.Name())
+		if declareLocalError != nil {
+			return nil, declareLocalError
 		}
 		l.result.Locals[local].Global = true
 		l.staticStorage(declaration)
 	}
 	var base *instance
 	if parent := l.staticBase(declaration); parent != nil {
-		var err error
-		base, err = l.staticInstance(parent)
-		if err != nil {
-			return nil, err
+		var staticInstanceError error
+		base, staticInstanceError = l.staticInstance(parent)
+		if staticInstanceError != nil {
+			return nil, staticInstanceError
 		}
 	}
 	if base != nil {
-		if err := l.checkMemberOverrides(declaration, l.checker.GetTypeOfSymbol(symbol), l.checker.GetTypeOfSymbol(l.symbol(l.staticBase(declaration).Name())), true); err != nil {
-			return nil, err
+		if checkMemberOverridesError := l.checkMemberOverrides(
+			declaration,
+			l.checker.GetTypeOfSymbol(symbol),
+			l.checker.GetTypeOfSymbol(l.symbol(l.staticBase(declaration).Name())),
+			true,
+		); checkMemberOverridesError != nil {
+			return nil, checkMemberOverridesError
 		}
 	}
-	lowered := &instance{static: true, constructor: -1, initializer: -1, superReady: -1, class: len(l.result.Classes) + 1, base: base, methods: map[string]int{}, slots: map[string]int{}}
-	metadata := ir.Class{Source: l.functionSource(declaration), Name: declaration.Name().Text() + "_static", Constructor: -1, Static: true}
+	lowered := &instance{
+		static:      true,
+		constructor: -1,
+		initializer: -1,
+		superReady:  -1,
+		class:       len(l.result.Classes) + 1,
+		base:        base,
+		methods:     map[string]int{},
+		slots:       map[string]int{},
+	}
+	metadata := ir.Class{
+		Source:      l.functionSource(declaration),
+		Name:        declaration.Name().Text() + "_static",
+		Constructor: -1,
+		Static:      true,
+	}
 	if base != nil {
 		parent := l.result.Classes[base.class-1]
 		metadata.Base = base.class
@@ -103,7 +125,11 @@ func (l *lowering) staticInstance(declaration *ast.Node) (*instance, error) {
 	}
 	metadata.OwnStart = len(metadata.Fields)
 	if base != nil {
-		metadata.Fields = append(metadata.Fields, ir.Field{Name: "#static-parent:" + strconv.Itoa(lowered.class), Value: ir.Undefined{Of: ir.Object}, Private: true})
+		metadata.Fields = append(metadata.Fields, ir.Field{
+			Name:    "#static-parent:" + strconv.Itoa(lowered.class),
+			Value:   ir.Undefined{Of: ir.Object},
+			Private: true,
+		})
 		metadata.StaticFlags = append(metadata.StaticFlags, 0)
 		metadata.StaticParent = len(metadata.Fields)
 	}
@@ -111,28 +137,40 @@ func (l *lowering) staticInstance(declaration *ast.Node) (*instance, error) {
 		if !ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 			continue
 		}
-		if member.Name() == nil || (!ast.IsIdentifier(member.Name()) && member.Name().Kind != ast.KindPrivateIdentifier) {
+		if member.Name() == nil ||
+			(!ast.IsIdentifier(member.Name()) && member.Name().Kind != ast.KindPrivateIdentifier) {
 			return nil, l.notYet(member, "a static member without an identifier name")
 		}
 		if member.Kind == ast.KindPropertyDeclaration {
 			if ast.HasSyntacticModifier(member, ast.ModifierFlagsAmbient|ast.ModifierFlagsAbstract) {
 				return nil, l.notYet(member, "a declare or abstract static field")
 			}
-			of, err := l.typeOf(member.Name())
-			if err != nil {
-				return nil, err
+			of, typeOfError := l.typeOf(member.Name())
+			if typeOfError != nil {
+				return nil, typeOfError
 			}
 			if slotless(of) && l.placeholderOrigin(member.Name()) == "" {
 				return nil, l.notYet(member, "a static field without a native slot")
 			}
-			if member.AsPropertyDeclaration().Initializer == nil && !l.uninitializedDeclaration(member) && !l.includesUndefined(l.checker.GetTypeAtLocation(member.Name())) {
-				return nil, l.notYet(member, "an uninitialized nonnullable static field; initialize it at its declaration")
+			if member.AsPropertyDeclaration().Initializer == nil &&
+				!l.uninitializedDeclaration(member) &&
+				!l.includesUndefined(l.checker.GetTypeAtLocation(member.Name())) {
+				return nil, l.notYet(
+					member,
+					"an uninitialized nonnullable static field; initialize it at its declaration",
+				)
 			}
 			value := zeroValue(of)
 			if of.IsReference() {
 				value = ir.Undefined{Of: of}
 			}
-			field := ir.Field{Name: l.memberKey(member.Name(), lowered.class), Value: value, Private: member.Name().Kind == ast.KindPrivateIdentifier, Uninitialized: l.uninitializedDeclaration(member), Unset: l.placeholderOrigin(member.Name()) != ""}
+			field := ir.Field{
+				Name:          l.memberKey(member.Name(), lowered.class),
+				Value:         value,
+				Private:       member.Name().Kind == ast.KindPrivateIdentifier,
+				Uninitialized: l.uninitializedDeclaration(member),
+				Unset:         l.placeholderOrigin(member.Name()) != "",
+			}
 			slot := -1
 			for i, previous := range metadata.Fields {
 				if previous.Name == field.Name {
@@ -147,7 +185,10 @@ func (l *lowering) staticInstance(declaration *ast.Node) (*instance, error) {
 				slot = len(metadata.Fields)
 				metadata.Fields = append(metadata.Fields, field)
 				metadata.StaticFlags = append(metadata.StaticFlags, 0)
-				metadata.Fields = append(metadata.Fields, ir.Field{Name: "#static-present:" + field.Name, Value: ir.NumberConstant{}, Private: true})
+				metadata.Fields = append(
+					metadata.Fields,
+					ir.Field{Name: "#static-present:" + field.Name, Value: ir.NumberConstant{}, Private: true},
+				)
 				metadata.StaticFlags = append(metadata.StaticFlags, 0)
 				if !field.Private {
 					metadata.StaticFlags[slot] = len(metadata.Fields)
@@ -199,19 +240,26 @@ func (l *lowering) staticInstance(declaration *ast.Node) (*instance, error) {
 			continue
 		}
 		function := lowered.methods[l.methodKey(member, lowered.class)]
-		if err := l.signature(function, member, l.thisLocal(function)); err != nil {
-			return nil, err
+		if signatureError := l.signature(function, member, l.thisLocal(function)); signatureError != nil {
+			return nil, signatureError
 		}
-		if err := l.validateAccessorSignature(member, function); err != nil {
-			return nil, err
+		if validateAccessorSignatureError := l.validateAccessorSignature(
+			member,
+			function,
+		); validateAccessorSignatureError != nil {
+			return nil, validateAccessorSignatureError
 		}
 	}
 	for _, member := range declaration.Members() {
 		if !classFunction(member) || !ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 			continue
 		}
-		if err := l.lowerFunction(lowered.methods[l.methodKey(member, lowered.class)], member, -1); err != nil {
-			return nil, err
+		if lowerFunctionError := l.lowerFunction(
+			lowered.methods[l.methodKey(member, lowered.class)],
+			member,
+			-1,
+		); lowerFunctionError != nil {
+			return nil, lowerFunctionError
 		}
 	}
 	return lowered, nil
@@ -221,8 +269,8 @@ func (l *lowering) staticInstance(declaration *ast.Node) (*instance, error) {
 // The named map uses this static side's implementations, including inherited ones, while
 // the class's virtual slots still serve nominal calls. Both keep the actual receiver as this.
 func (l *lowering) staticDeclaration(declaration *ast.Node) ([]ir.Statement, error) {
-	if err := l.staticClassDeclaration(declaration); err != nil {
-		return nil, err
+	if staticClassDeclarationError := l.staticClassDeclaration(declaration); staticClassDeclarationError != nil {
+		return nil, staticClassDeclarationError
 	}
 	if !l.needsStatics(declaration) && l.statics[l.symbol(declaration.Name())] == nil {
 		return nil, nil
@@ -252,9 +300,16 @@ func (l *lowering) staticDeclaration(declaration *ast.Node) ([]ir.Statement, err
 		fields[slot].Value = ir.Read{Local: l.locals[l.symbol(parent.Name())], Of: ir.Object, Checked: checked}
 	}
 	object := ir.Read{Local: l.staticGlobals[l.symbol(declaration.Name())], Of: ir.Object}
-	statements := []ir.Statement{ir.Declare{Local: object.Local, Value: ir.ObjectLiteral{ProgramRegion: l.programClass(lowered.class), Fields: fields, Class: lowered.class, Methods: lowered.methodList()}}}
+	statements := []ir.Statement{ir.Declare{Local: object.Local, Value: ir.ObjectLiteral{
+		ProgramRegion: l.programClass(lowered.class),
+		Fields:        fields,
+		Class:         lowered.class,
+		Methods:       lowered.methodList(),
+	}}}
 	outerInstance, outerType, outerNode := l.instance, l.classType, l.classNode
-	l.instance, l.classType, l.classNode = lowered, l.checker.GetTypeOfSymbol(l.symbol(declaration.Name())), declaration.Name()
+	l.instance, l.classType, l.classNode = lowered, l.checker.GetTypeOfSymbol(
+		l.symbol(declaration.Name()),
+	), declaration.Name()
 	defer func() { l.instance, l.classType, l.classNode = outerInstance, outerType, outerNode }()
 	available := map[string]bool{}
 	if lowered.base != nil {
@@ -263,7 +318,8 @@ func (l *lowering) staticDeclaration(declaration *ast.Node) ([]ir.Statement, err
 		}
 	}
 	for _, member := range declaration.Members() {
-		if member.Kind != ast.KindClassStaticBlockDeclaration && !(member.Kind == ast.KindPropertyDeclaration && ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic)) {
+		if member.Kind != ast.KindClassStaticBlockDeclaration &&
+			!(member.Kind == ast.KindPropertyDeclaration && ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic)) {
 			continue
 		}
 		{
@@ -273,12 +329,21 @@ func (l *lowering) staticDeclaration(declaration *ast.Node) ([]ir.Statement, err
 			} else {
 				body = member.AsPropertyDeclaration().Initializer
 			}
-			if err := l.staticInitializationReads(body, declaration, available, map[*ast.Node]uint8{}, true); err != nil {
-				return nil, err
+			if staticInitializationReadsError := l.staticInitializationReads(
+				body,
+				declaration,
+				available,
+				map[*ast.Node]uint8{},
+				true,
+			); staticInitializationReadsError != nil {
+				return nil, staticInitializationReadsError
 			}
 		}
 		index := len(l.result.Functions)
-		l.result.Functions = append(l.result.Functions, ir.Function{Name: declaration.Name().Text() + "_static_initialize"})
+		l.result.Functions = append(
+			l.result.Functions,
+			ir.Function{Name: declaration.Name().Text() + "_static_initialize"},
+		)
 		self := l.thisLocal(index)
 		l.result.Functions[index].Parameters = []int{self}
 		outerThis, outerFunction, outerIndex, outerLocals := l.this, l.function, l.functionIndex, l.locals
@@ -311,7 +376,15 @@ func (l *lowering) staticDeclaration(declaration *ast.Node) ([]ir.Statement, err
 				value = ir.Undefined{Of: of}
 			}
 			if err == nil {
-				function.Body = []ir.Statement{ir.SetProperty{Object: ir.Read{Local: self, Of: ir.Object}, Name: l.memberKey(member.Name(), lowered.class), Value: value, Define: true, Uninitialized: l.uninitializedDeclaration(member), Unset: l.placeholderOrigin(member.Name()) != "", Site: l.staticWriteSite(declaration.Name())}}
+				function.Body = []ir.Statement{ir.SetProperty{
+					Object:        ir.Read{Local: self, Of: ir.Object},
+					Name:          l.memberKey(member.Name(), lowered.class),
+					Value:         value,
+					Define:        true,
+					Uninitialized: l.uninitializedDeclaration(member),
+					Unset:         l.placeholderOrigin(member.Name()) != "",
+					Site:          l.staticWriteSite(declaration.Name()),
+				}}
 			}
 			available[member.Name().Text()] = true
 		}
@@ -320,14 +393,19 @@ func (l *lowering) staticDeclaration(declaration *ast.Node) ([]ir.Statement, err
 			return nil, err
 		}
 		l.result.Functions[index] = function
-		statements = append(statements, ir.Evaluate{Value: ir.Call{Function: index, Arguments: []ir.Expression{object}}})
+		statements = append(
+			statements,
+			ir.Evaluate{Value: ir.Call{Function: index, Arguments: []ir.Expression{object}}},
+		)
 	}
 	statements = append(statements, ir.Declare{Local: l.locals[l.symbol(declaration.Name())], Value: object})
 	return statements, nil
 }
 
 func (l *lowering) isStaticType(proven *checker.Type) bool {
-	return proven != nil && len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 && l.staticClass(proven, nil) != nil
+	return proven != nil &&
+		len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 &&
+		l.staticClass(proven, nil) != nil
 }
 func (l *lowering) staticWriteSite(node *ast.Node) int {
 	l.writeSites = append(l.writeSites, writeSite{holder: l.classType, node: node})
@@ -336,10 +414,17 @@ func (l *lowering) staticWriteSite(node *ast.Node) int {
 
 // JavaScript leaves future fields undefined. A nonnullable native slot cannot pretend that
 // value is its declared type, including when an initializer calls a helper that reads it.
-func (l *lowering) staticInitializationReads(node, declaration *ast.Node, available map[string]bool, seen map[*ast.Node]uint8, receiver bool) error {
+func (l *lowering) staticInitializationReads(
+	node, declaration *ast.Node,
+	available map[string]bool,
+	seen map[*ast.Node]uint8,
+	receiver bool,
+) error {
 	pending := false
 	for _, member := range declaration.Members() {
-		if member.Kind == ast.KindPropertyDeclaration && ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) && !available[member.Name().Text()] {
+		if member.Kind == ast.KindPropertyDeclaration &&
+			ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) &&
+			!available[member.Name().Text()] {
 			pending = true
 		}
 	}
@@ -372,13 +457,23 @@ func (l *lowering) staticInitializationReads(node, declaration *ast.Node, availa
 				if symbol != nil && len(symbol.Declarations) > 0 {
 					member := symbol.Declarations[0]
 					if member.Kind == ast.KindPropertyDeclaration && !available[member.Name().Text()] {
-						failure = &Refused{Where: l.program.Where(child), What: "a static field read before its initializer has run", Fix: "declare the field earlier, or move the read after that field's initialization"}
+						failure = &Refused{
+							Where: l.program.Where(child),
+							What:  "a static field read before its initializer has run",
+							Fix:   "declare the field earlier, or move the read after that field's initialization",
+						}
 						return true
 					}
 					if accessorMember(member) {
 						for _, candidate := range symbol.Declarations {
 							if accessorMember(candidate) {
-								failure = l.staticInitializationReads(candidate.Body(), declaration, available, seen, true)
+								failure = l.staticInitializationReads(
+									candidate.Body(),
+									declaration,
+									available,
+									seen,
+									true,
+								)
 								if failure != nil {
 									break
 								}
@@ -393,19 +488,35 @@ func (l *lowering) staticInitializationReads(node, declaration *ast.Node, availa
 		}
 		if ast.IsIdentifier(child) && l.symbol(child) == l.symbol(declaration.Name()) && !ast.IsDeclarationName(child) {
 			if !insideClass(child, declaration) {
-				failure = &Refused{Where: l.program.Where(child), What: "an outside helper reading a class during its declaration (the temporal dead zone)", Fix: "run the helper after the class declaration, or read this inside a static method"}
+				failure = &Refused{
+					Where: l.program.Where(child),
+					What:  "an outside helper reading a class during its declaration (the temporal dead zone)",
+					Fix:   "run the helper after the class declaration, or read this inside a static method",
+				}
 				return true
 			}
 			parent := child.Parent
-			if pending && (parent == nil || parent.Kind != ast.KindPropertyAccessExpression || parent.AsPropertyAccessExpression().Expression != child) {
-				failure = &Refused{Where: l.program.Where(child), What: "a constructor object escaping before static fields are initialized", Fix: "publish the class value after the last static field initializer"}
+			if pending && (parent == nil ||
+				parent.Kind != ast.KindPropertyAccessExpression ||
+				parent.AsPropertyAccessExpression().Expression != child) {
+				failure = &Refused{
+					Where: l.program.Where(child),
+					What:  "a constructor object escaping before static fields are initialized",
+					Fix:   "publish the class value after the last static field initializer",
+				}
 				return true
 			}
 		}
 		if child.Kind == ast.KindThisKeyword && receiver {
 			parent := child.Parent
-			if pending && (parent == nil || parent.Kind != ast.KindPropertyAccessExpression || parent.AsPropertyAccessExpression().Expression != child) {
-				failure = &Refused{Where: l.program.Where(child), What: "a constructor object escaping before static fields are initialized", Fix: "publish this after the last static field initializer"}
+			if pending && (parent == nil ||
+				parent.Kind != ast.KindPropertyAccessExpression ||
+				parent.AsPropertyAccessExpression().Expression != child) {
+				failure = &Refused{
+					Where: l.program.Where(child),
+					What:  "a constructor object escaping before static fields are initialized",
+					Fix:   "publish this after the last static field initializer",
+				}
 				return true
 			}
 		}
@@ -418,34 +529,53 @@ func (l *lowering) staticInitializationReads(node, declaration *ast.Node, availa
 			known := false
 			if symbol != nil && len(symbol.Declarations) > 0 {
 				target := symbol.Declarations[0]
-				known = load.IsLibrary(ast.GetSourceFileOfNode(target)) || load.IsPrelude(ast.GetSourceFileOfNode(target))
+				known = load.IsLibrary(ast.GetSourceFileOfNode(target)) ||
+					load.IsPrelude(ast.GetSourceFileOfNode(target))
 				if target.Kind == ast.KindFunctionDeclaration {
 					known = true
 					failure = l.staticInitializationReads(target.Body(), declaration, available, seen, false)
 				}
-				if target.Kind == ast.KindMethodDeclaration && ast.HasSyntacticModifier(target, ast.ModifierFlagsStatic) {
+				if target.Kind == ast.KindMethodDeclaration &&
+					ast.HasSyntacticModifier(target, ast.ModifierFlagsStatic) {
 					known = true
 					current := false
 					if callee.Kind == ast.KindPropertyAccessExpression {
 						object := ast.SkipParentheses(callee.AsPropertyAccessExpression().Expression)
-						current = (receiver && (object.Kind == ast.KindThisKeyword || object.Kind == ast.KindSuperKeyword)) || (ast.IsIdentifier(object) && l.symbol(object) == l.symbol(declaration.Name()))
+						current = (receiver &&
+							(object.Kind == ast.KindThisKeyword || object.Kind == ast.KindSuperKeyword)) ||
+							(ast.IsIdentifier(object) && l.symbol(object) == l.symbol(declaration.Name()))
 					}
 					failure = l.staticInitializationReads(target.Body(), declaration, available, seen, current)
 				}
 			}
-			if known && symbol != nil && len(symbol.Declarations) > 0 && (load.IsLibrary(ast.GetSourceFileOfNode(symbol.Declarations[0])) || load.IsPrelude(ast.GetSourceFileOfNode(symbol.Declarations[0]))) {
+			if known && symbol != nil && len(symbol.Declarations) > 0 && (load.IsLibrary(
+				ast.GetSourceFileOfNode(symbol.Declarations[0]),
+			) || load.IsPrelude(ast.GetSourceFileOfNode(symbol.Declarations[0]))) {
 				for _, argument := range nodesOf(child.AsCallExpression().Arguments) {
-					if len(l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(argument), checker.SignatureKindCall)) == 0 {
+					if len(
+						l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(argument), checker.SignatureKindCall),
+					) == 0 {
 						continue
 					}
 					if ast.IsFunctionLike(ast.SkipParentheses(argument)) {
 						continue
 					}
 					target := l.symbol(ast.SkipParentheses(argument))
-					if target != nil && len(target.Declarations) == 1 && target.Declarations[0].Kind == ast.KindFunctionDeclaration {
-						failure = l.staticInitializationReads(target.Declarations[0].Body(), declaration, available, seen, false)
+					if target != nil &&
+						len(target.Declarations) == 1 &&
+						target.Declarations[0].Kind == ast.KindFunctionDeclaration {
+						failure = l.staticInitializationReads(
+							target.Declarations[0].Body(),
+							declaration,
+							available,
+							seen,
+							false,
+						)
 					} else {
-						failure = l.notYet(argument, "an indirect callback before static fields are initialized; move it after the field initializers")
+						failure = l.notYet(
+							argument,
+							"an indirect callback before static fields are initialized; move it after the field initializers",
+						)
 					}
 					if failure != nil {
 						break
@@ -453,7 +583,10 @@ func (l *lowering) staticInitializationReads(node, declaration *ast.Node, availa
 				}
 			}
 			if !known && failure == nil {
-				failure = l.notYet(child, "an indirect call before static fields are initialized; move it after the field initializers")
+				failure = l.notYet(
+					child,
+					"an indirect call before static fields are initialized; move it after the field initializers",
+				)
 			}
 			if failure != nil {
 				return true
@@ -468,13 +601,16 @@ func (l *lowering) staticInitializationReads(node, declaration *ast.Node, availa
 // Constructor built-ins have function semantics, not ordinary class storage.
 func (l *lowering) staticProperty(node *ast.Node) error {
 	receiver := node.AsPropertyAccessExpression().Expression
-	if !l.isStaticType(l.checker.GetTypeAtLocation(receiver)) && !(l.instance != nil && l.instance.static && ast.SkipParentheses(receiver).Kind == ast.KindThisKeyword) {
+	if !l.isStaticType(l.checker.GetTypeAtLocation(receiver)) &&
+		!(l.instance != nil && l.instance.static && ast.SkipParentheses(receiver).Kind == ast.KindThisKeyword) {
 		return nil
 	}
 	symbol := l.checker.GetSymbolAtLocation(node.Name())
 	if symbol != nil {
 		for _, member := range symbol.Declarations {
-			if member.Parent != nil && member.Parent.Kind == ast.KindClassDeclaration && ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
+			if member.Parent != nil &&
+				member.Parent.Kind == ast.KindClassDeclaration &&
+				ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 				return nil
 			}
 		}
@@ -495,7 +631,8 @@ func (l *lowering) staticClassDeclaration(declaration *ast.Node) error {
 	// Diagnose this shape before registering static bodies: the wrong method key can
 	// otherwise reach call-target analysis as an internal compiler error.
 	for _, member := range declaration.Members() {
-		if member.Kind != ast.KindClassStaticBlockDeclaration && !ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
+		if member.Kind != ast.KindClassStaticBlockDeclaration &&
+			!ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 			continue
 		}
 		var failure error
@@ -506,7 +643,15 @@ func (l *lowering) staticClassDeclaration(declaration *ast.Node) error {
 				if symbol != nil && len(symbol.Declarations) > 0 {
 					target := symbol.Declarations[0]
 					if target.Parent == declaration && !ast.HasSyntacticModifier(target, ast.ModifierFlagsStatic) {
-						failure = &Refused{Where: l.program.Where(node), What: "instance private storage reached from a static member: " + declaration.Name().Text() + "." + node.Name().Text() + " (adamic/private-instance-from-static)", Fix: "move the private access into an instance method; call that instance method from the static member"}
+						failure = &Refused{
+							Where: l.program.Where(node),
+							What: "instance private storage reached from a static member: " +
+								declaration.Name().Text() +
+								"." +
+								node.Name().Text() +
+								" (adamic/private-instance-from-static)",
+							Fix: "move the private access into an instance method; call that instance method from the static member",
+						}
 						return true
 					}
 				}
@@ -527,7 +672,10 @@ func (l *lowering) staticStorage(declaration *ast.Node) {
 		return
 	}
 	local := len(l.result.Locals)
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: declaration.Name().Text() + "_class", Type: ir.Object, Function: -1, Global: true})
+	l.result.Locals = append(
+		l.result.Locals,
+		ir.Local{Name: declaration.Name().Text() + "_class", Type: ir.Object, Function: -1, Global: true},
+	)
 	l.staticGlobals[symbol] = local
 	l.noteLocal(local, l.checker.GetTypeOfSymbol(symbol), declaration.Name())
 }
@@ -551,21 +699,34 @@ func (l *lowering) staticClassRead(node *ast.Node) (ir.Expression, bool) {
 
 // Looking up the constructor precedes evaluating new's arguments. Instance allocators
 // remain independent functions, so make that declaration-readiness check explicit here.
-func (l *lowering) staticConstruct(node, declaration *ast.Node, constructor int, arguments []ir.Expression) ir.Expression {
+func (l *lowering) staticConstruct(
+	node, declaration *ast.Node,
+	constructor int,
+	arguments []ir.Expression,
+) ir.Expression {
 	symbol := l.symbol(declaration.Name())
 	_, hasStorage := l.staticGlobals[symbol]
 	if !hasStorage {
 		return ir.Call{Function: constructor, Arguments: arguments, Returns: ir.Object}
 	}
 	expression := ast.SkipParentheses(node.AsNewExpression().Expression)
-	receiver := ir.Expression(ir.Read{Local: l.locals[symbol], Of: ir.Object, Checked: !l.provenModuleReads[expression]})
+	receiver := ir.Expression(
+		ir.Read{Local: l.locals[symbol], Of: ir.Object, Checked: !l.provenModuleReads[expression]},
+	)
 	if inner, handled := l.staticClassRead(ast.SkipParentheses(node.AsNewExpression().Expression)); handled {
 		receiver = inner
 	}
 	index := len(l.result.Functions)
 	self := len(l.result.Locals)
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "class", Type: ir.Object, Function: index})
-	function := ir.Function{Name: "class_ready_new", Parameters: []int{self}, Returns: ir.Object, Receiver: true, ForwardsArguments: constructor + 1, RestElement: l.result.Functions[constructor].RestElement}
+	function := ir.Function{
+		Name:              "class_ready_new",
+		Parameters:        []int{self},
+		Returns:           ir.Object,
+		Receiver:          true,
+		ForwardsArguments: constructor + 1,
+		RestElement:       l.result.Functions[constructor].RestElement,
+	}
 	forwarded := []ir.Expression{}
 	for _, parameter := range l.result.Functions[constructor].Parameters {
 		local := len(l.result.Locals)
@@ -575,7 +736,13 @@ func (l *lowering) staticConstruct(node, declaration *ast.Node, constructor int,
 		function.Parameters = append(function.Parameters, local)
 		forwarded = append(forwarded, ir.Read{Local: local, Of: incoming.Type})
 	}
-	function.Body = []ir.Statement{ir.Return{Value: ir.Call{Function: constructor, Arguments: forwarded, Returns: ir.Object, ForwardCount: true, RestPacked: true}}}
+	function.Body = []ir.Statement{ir.Return{Value: ir.Call{
+		Function:     constructor,
+		Arguments:    forwarded,
+		Returns:      ir.Object,
+		ForwardCount: true,
+		RestPacked:   true,
+	}}}
 	l.result.Functions = append(l.result.Functions, function)
 	return ir.Call{Function: index, Arguments: append([]ir.Expression{receiver}, arguments...), Returns: ir.Object}
 }

@@ -20,12 +20,12 @@ func TestRegExpV8Refusals(test *testing.T) {
 		`console.log( /[\q{ab|a|}]/v.test('a') ? 'yes' : 'no');`,
 		`const regex = new RegExp('[\\q{Ss|x}]','iv'); console.log(regex.test('sſ') ? 'yes' : 'no');`,
 	} {
-		_, err := lowerSource(test, source)
+		_, lowerSourceError := lowerSource(test, source)
 		var notYet *NotYet
-		if !errors.As(err, &notYet) ||
-			!strings.Contains(err.Error(), "V8") ||
-			!strings.Contains(err.Error(), "ECMA-262 22.2.") {
-			test.Fatalf("expected named V8/spec refusal: %s: %v", source, err)
+		if !errors.As(lowerSourceError, &notYet) ||
+			!strings.Contains(lowerSourceError.Error(), "V8") ||
+			!strings.Contains(lowerSourceError.Error(), "ECMA-262 22.2.") {
+			test.Fatalf("expected named V8/spec refusal: %s: %v", source, lowerSourceError)
 		}
 	}
 }

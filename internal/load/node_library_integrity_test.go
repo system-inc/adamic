@@ -22,28 +22,28 @@ import (
 // copy. Their integrity values are recorded from the locked registry packages.
 func publishedNodeTypeFiles(test *testing.T, archive, integrity string) map[string][]byte {
 	test.Helper()
-	data, err := os.ReadFile(archive)
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(archive)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	digest := sha512.Sum512(data)
 	if got := "sha512-" + base64.StdEncoding.EncodeToString(digest[:]); got != integrity {
 		test.Fatalf("published package integrity: %s != %s", got, integrity)
 	}
-	compressed, err := gzip.NewReader(bytes.NewReader(data))
-	if err != nil {
-		test.Fatal(err)
+	compressed, gzipError := gzip.NewReader(bytes.NewReader(data))
+	if gzipError != nil {
+		test.Fatal(gzipError)
 	}
 	defer compressed.Close()
 	reader := tar.NewReader(compressed)
 	files := map[string][]byte{}
 	for {
-		entry, err := reader.Next()
-		if err == io.EOF {
+		entry, nextError := reader.Next()
+		if nextError == io.EOF {
 			break
 		}
-		if err != nil {
-			test.Fatal(err)
+		if nextError != nil {
+			test.Fatal(nextError)
 		}
 		if entry.Typeflag != tar.TypeReg {
 			continue
@@ -52,9 +52,9 @@ func publishedNodeTypeFiles(test *testing.T, archive, integrity string) map[stri
 		if !ok || !fs.ValidPath(name) {
 			test.Fatalf("invalid published file name %q", entry.Name)
 		}
-		data, err := io.ReadAll(reader)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := io.ReadAll(reader)
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		files[name] = data
 	}
@@ -63,9 +63,9 @@ func publishedNodeTypeFiles(test *testing.T, archive, integrity string) map[stri
 
 func TestEmbeddedNodeTypesIntegrity(test *testing.T) {
 	test.Parallel()
-	data, err := os.ReadFile("node_types_manifest.json")
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile("node_types_manifest.json")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	var manifest struct {
 		Packages []struct {
@@ -73,8 +73,8 @@ func TestEmbeddedNodeTypesIntegrity(test *testing.T) {
 			Files                                    map[string]string
 		}
 	}
-	if err := json.Unmarshal(data, &manifest); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &manifest); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	expected := map[string]string{
 		"@types/node@25.3.3":  "sha512-DpzbrH7wIcBaJibpKo9nnSQL0MTRdnWttGyE5haGwK86xgMOkFLp7vEyfQPGLOJh5wNYiJ3V9PmUMDhV9u8kkQ==",
@@ -99,19 +99,19 @@ func TestEmbeddedNodeTypesIntegrity(test *testing.T) {
 				test.Fatalf("recorded hash differs from published package: %s/%s", pin.Name, name)
 			}
 			file := "node_types/" + pin.Directory + "/" + name
-			embedded, err := embeddedNodeTypes.ReadFile(file)
-			if err != nil {
-				test.Fatal(err)
+			embedded, readFileError := embeddedNodeTypes.ReadFile(file)
+			if readFileError != nil {
+				test.Fatal(readFileError)
 			}
 			got := sha256.Sum256(embedded)
 			if got != want {
 				test.Errorf("embedded byte mismatch: %s/%s", pin.Name, name)
 			}
 		}
-		err := fs.WalkDir(embeddedNodeTypes, "node_types/"+
-			pin.Directory, func(file string, entry fs.DirEntry, err error) error {
-			if err != nil {
-				return err
+		walkDirectoryError := fs.WalkDir(embeddedNodeTypes, "node_types/"+
+			pin.Directory, func(file string, entry fs.DirEntry, pathError error) error {
+			if pathError != nil {
+				return pathError
 			}
 			if entry.IsDir() {
 				return nil
@@ -122,8 +122,8 @@ func TestEmbeddedNodeTypesIntegrity(test *testing.T) {
 			}
 			return nil
 		})
-		if err != nil {
-			test.Fatal(err)
+		if walkDirectoryError != nil {
+			test.Fatal(walkDirectoryError)
 		}
 	}
 }

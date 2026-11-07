@@ -105,11 +105,11 @@ func textCommand(test *testing.T, ctx context.Context, name string, arguments ..
 		if command.Process == nil {
 			return os.ErrProcessDone
 		}
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
+		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if errors.Is(killError, syscall.ESRCH) {
 			return os.ErrProcessDone
 		}
-		return err
+		return killError
 	}
 	textActiveCommands.Store(command, test)
 	return command
@@ -122,8 +122,8 @@ func textCommand(test *testing.T, ctx context.Context, name string, arguments ..
 // run sooner.
 func textCombinedOutput(ctx context.Context, command *exec.Cmd) ([]byte, error) {
 	defer textActiveCommands.Delete(command)
-	stdout, stderr, err := childguard.Capture(ctx, command)
-	return append(stdout, stderr...), err
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
+	return append(stdout, stderr...), captureError
 }
 
 // textExecute reads a run's output through childguard.Capture, to its end with no timer deciding when: exec's own
@@ -138,19 +138,19 @@ func textExecute(test *testing.T, environment []string, name string, arguments .
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
-	stdout, stderr, err := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	var exitError *exec.ExitError
-	if err != nil && !errors.As(err, &exitError) {
-		test.Fatalf("running %s: %v", name, err)
+	if captureError != nil && !errors.As(captureError, &exitError) {
+		test.Fatalf("running %s: %v", name, captureError)
 	}
 	return run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}
 }
 
 func textOnNode(test *testing.T, path string, arguments ...string) run {
 	test.Helper()
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
-	if err != nil {
-		test.Fatal(err)
+	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return textExecute(
 		test,
@@ -167,9 +167,9 @@ func textShardFor(key string, count int) int {
 
 func textVerifyLeaves(test *testing.T) {
 	test.Helper()
-	file, err := parser.ParseFile(token.NewFileSet(), "text_independent_shards_test.go", nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	file, parseFileError := parser.ParseFile(token.NewFileSet(), "text_independent_shards_test.go", nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	seen := make(map[int]bool)
 	for _, decl := range file.Decls {
@@ -181,8 +181,12 @@ func textVerifyLeaves(test *testing.T) {
 		if !ok {
 			continue
 		}
-		index, err := strconv.Atoi(suffix)
-		if err != nil || len(suffix) != 3 || index < 0 || index >= testMarkdownTextSplittingShards || seen[index] {
+		index, parseError := strconv.Atoi(suffix)
+		if parseError != nil ||
+			len(suffix) != 3 ||
+			index < 0 ||
+			index >= testMarkdownTextSplittingShards ||
+			seen[index] {
 			test.Fatalf("invalid top-level shard %s", function.Name.Name)
 		}
 		if len(function.Body.List) != 2 {
@@ -286,9 +290,9 @@ func textShardSelected(test *testing.T, shard int) bool {
 	if len(fields) != 2 {
 		test.Fatalf("invalid ADAMIC_TEST_SHARD %q", value)
 	}
-	i, e := strconv.Atoi(fields[0])
+	i, parseError := strconv.Atoi(fields[0])
 	n, f := strconv.Atoi(fields[1])
-	if e != nil || f != nil || n < 1 || i < 0 || i >= n || n > testMarkdownTextSplittingShards {
+	if parseError != nil || f != nil || n < 1 || i < 0 || i >= n || n > testMarkdownTextSplittingShards {
 		test.Fatalf("invalid ADAMIC_TEST_SHARD %q", value)
 	}
 	return shard%n == i
@@ -357,18 +361,22 @@ func textBuildProduct(test *testing.T, root, target string) textProducts {
 			Files:     files,
 			Toolchain: tools,
 		}, func(dir string) error {
-			program, err := loweredResult(main)
-			if err != nil {
-				return err
+			program, loweredResultError := loweredResult(main)
+			if loweredResultError != nil {
+				return loweredResultError
 			}
-			if err = os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(program)), 0644); err != nil {
-				return err
+			if writeError := os.WriteFile(
+				filepath.Join(dir, "program.c"),
+				[]byte(native.C(program)),
+				0644,
+			); writeError != nil {
+				return writeError
 			}
 			return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
 		})
-		source, err := os.ReadFile(filepath.Join(lowerDir, "program.c"))
-		if err != nil {
-			test.Fatal(err)
+		source, readError := os.ReadFile(filepath.Join(lowerDir, "program.c"))
+		if readError != nil {
+			test.Fatal(readError)
 		}
 		products.backend = filepath.Join(lowerDir, "program.mjs")
 		for _, sanitize := range []bool{true, false} {
@@ -420,8 +428,8 @@ func textBuildProduct(test *testing.T, root, target string) textProducts {
 			filepath.Join(formatterDir, "cohere"),
 		)
 		command.Dir = root
-		if output, err := textCombinedOutput(ctx, command); err != nil {
-			test.Fatalf("regeneration: %v\n%s", err, output)
+		if output, textCombinedOutputError := textCombinedOutput(ctx, command); textCombinedOutputError != nil {
+			test.Fatalf("regeneration: %v\n%s", textCombinedOutputError, output)
 		}
 	}
 	test.Logf("text input preparation including builds %.3fs", time.Since(started).Seconds())

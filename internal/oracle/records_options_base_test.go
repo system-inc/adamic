@@ -17,9 +17,11 @@ import (
 // optionsBasePath is a fixture of records_options_base, absolute, as a stop's Where names it.
 func optionsBasePath(test *testing.T, name string) string {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_options_base", name))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/records_options_base", name),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	return path
 }
@@ -48,9 +50,9 @@ func TestOptionsBaseReadsAgreeWithNode(test *testing.T) {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
 			path := optionsBasePath(test, name)
-			program, err := lowered(test, path)
-			if err != nil {
-				test.Fatalf("a record seen as OptionsBase in .ts must lower: %v", err)
+			program, loweredError := lowered(test, path)
+			if loweredError != nil {
+				test.Fatalf("a record seen as OptionsBase in .ts must lower: %v", loweredError)
 			}
 			node := onNode(test, path)
 			if node.exitCode != 0 || string(node.stdout) != printed {
@@ -99,16 +101,16 @@ func TestOptionsBaseWrittenReadsStop(test *testing.T) {
 			if node.exitCode != 0 || string(node.stdout) != written+"yes\n" {
 				test.Fatalf("Node: %s", optionsBaseShown(node))
 			}
-			program, err := lowered(test, path)
+			program, loweredError := lowered(test, path)
 			if stop.notYet != "" {
 				var notYet *lower.NotYet
-				if !errors.As(err, &notYet) || notYet.What != stop.notYet || notYet.Where != path+stop.at {
-					test.Fatalf("want NotYet %q at %s, got %v", stop.notYet, stop.at, err)
+				if !errors.As(loweredError, &notYet) || notYet.What != stop.notYet || notYet.Where != path+stop.at {
+					test.Fatalf("want NotYet %q at %s, got %v", stop.notYet, stop.at, loweredError)
 				}
 				return
 			}
-			if err != nil {
-				test.Fatalf("must lower: %v", err)
+			if loweredError != nil {
+				test.Fatalf("must lower: %v", loweredError)
 			}
 			native, _ := natively(test, program)
 			want := run{
@@ -140,11 +142,11 @@ func TestOptionsBaseWrittenReadsStop(test *testing.T) {
 func TestOptionsBaseBackCastRefused(test *testing.T) {
 	test.Parallel()
 	path := optionsBasePath(test, "back_cast.ts")
-	_, err := lowered(test, path)
+	_, loweredError := lowered(test, path)
 	const want = ":22:17: Adamic 0.1 refuses an unproven relation from OptionsBase to CompilerOptions: optional field strict has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
 	var refused *lower.Refused
-	if !errors.As(err, &refused) || err.Error() != path+want {
-		test.Fatalf("want the cast refused, %q, got %v", want, err)
+	if !errors.As(loweredError, &refused) || loweredError.Error() != path+want {
+		test.Fatalf("want the cast refused, %q, got %v", want, loweredError)
 	}
 }
 
@@ -156,11 +158,11 @@ func TestOptionsBaseBackCastRefused(test *testing.T) {
 func TestOptionsBaseRepresentationMismatchStops(test *testing.T) {
 	test.Parallel()
 	path := optionsBasePath(test, "representation.ts")
-	_, err := lowered(test, path)
+	_, loweredError := lowered(test, path)
 	const want = "a (options: Options) => string seen as (options: { [option: string]: string; }) => string (fixed objects and records have different storage; copy explicitly)"
 	var notYet *lower.NotYet
-	if !errors.As(err, &notYet) || notYet.What != want || notYet.Where != path+":8:7" {
-		test.Fatalf("want NotYet %q at :8:7, got %v", want, err)
+	if !errors.As(loweredError, &notYet) || notYet.What != want || notYet.Where != path+":8:7" {
+		test.Fatalf("want NotYet %q at :8:7, got %v", want, loweredError)
 	}
 }
 
@@ -169,11 +171,11 @@ func TestOptionsBaseRepresentationMismatchStops(test *testing.T) {
 func TestOptionsBaseUncheckedFieldStops(test *testing.T) {
 	test.Parallel()
 	path := optionsBasePath(test, "unchecked_union.ts")
-	_, err := lowered(test, path)
+	_, loweredError := lowered(test, path)
 	const want = "a Options seen as OptionsBase (fixed objects and records have different storage; copy explicitly)"
 	var notYet *lower.NotYet
-	if !errors.As(err, &notYet) || notYet.What != want || notYet.Where != path+":19:22" {
-		test.Fatalf("want NotYet %q at :19:22, got %v", want, err)
+	if !errors.As(loweredError, &notYet) || notYet.What != want || notYet.Where != path+":19:22" {
+		test.Fatalf("want NotYet %q at :19:22, got %v", want, loweredError)
 	}
 }
 
@@ -201,8 +203,8 @@ func TestOptionsBaseObjectFieldStops(test *testing.T) {
 			if node.exitCode != 0 || string(node.stdout) != printed {
 				test.Fatalf("Node: %s", optionsBaseShown(node))
 			}
-			program, err := lowered(test, path)
-			if err == nil {
+			program, loweredError := lowered(test, path)
+			if loweredError == nil {
 				native, _ := natively(test, program)
 				test.Fatalf(
 					"lowered, want NotYet %q at :19:12; Node %s; native %s; javascript %s",
@@ -213,8 +215,8 @@ func TestOptionsBaseObjectFieldStops(test *testing.T) {
 				)
 			}
 			var notYet *lower.NotYet
-			if !errors.As(err, &notYet) || notYet.What != want || notYet.Where != path+":19:12" {
-				test.Fatalf("want NotYet %q at :19:12, got %v", want, err)
+			if !errors.As(loweredError, &notYet) || notYet.What != want || notYet.Where != path+":19:12" {
+				test.Fatalf("want NotYet %q at :19:12, got %v", want, loweredError)
 			}
 		})
 	}
@@ -240,10 +242,10 @@ func TestOptionsBaseParameterViewStops(test *testing.T) {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
 			path := optionsBasePath(test, name)
-			_, err := lowered(test, path)
+			_, loweredError := lowered(test, path)
 			var notYet *lower.NotYet
-			if !errors.As(err, &notYet) || notYet.What != stop.what || notYet.Where != path+stop.at {
-				test.Fatalf("want NotYet %q at %s, got %v", stop.what, stop.at, err)
+			if !errors.As(loweredError, &notYet) || notYet.What != stop.what || notYet.Where != path+stop.at {
+				test.Fatalf("want NotYet %q at %s, got %v", stop.what, stop.at, loweredError)
 			}
 		})
 	}
@@ -256,9 +258,9 @@ func TestOptionsBaseParameterViewStops(test *testing.T) {
 func TestOptionsBaseLiteralMethodStopsAtRead(test *testing.T) {
 	test.Parallel()
 	path := optionsBasePath(test, "method_parameter.ts")
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatalf("must lower, as on main: %v", err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatalf("must lower, as on main: %v", loweredError)
 	}
 	node := onNode(test, path)
 	if node.exitCode != 0 || string(node.stdout) != "on\n" {
@@ -287,10 +289,10 @@ func TestOptionsBaseRefusedInAdamic(test *testing.T) {
 		test.Run(name, func(test *testing.T) {
 			test.Parallel()
 			path := optionsBasePath(test, name)
-			_, err := lowered(test, path)
+			_, loweredError := lowered(test, path)
 			var refused *lower.Refused
-			if !errors.As(err, &refused) || err.Error() != path+want {
-				test.Fatalf("want the view refused, %q, got %v", want, err)
+			if !errors.As(loweredError, &refused) || loweredError.Error() != path+want {
+				test.Fatalf("want the view refused, %q, got %v", want, loweredError)
 			}
 		})
 	}

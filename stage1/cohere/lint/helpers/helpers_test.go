@@ -31,23 +31,23 @@ func run(test *testing.T, dir, name string, args ...string) []byte {
 		// process's environment.
 		cmd = toolchain.CommandIn(dir, name, args...)
 	}
-	f, err := os.CreateTemp(test.TempDir(), "output-")
-	if err != nil {
-		test.Fatal(err)
+	f, temporaryFileError := os.CreateTemp(test.TempDir(), "output-")
+	if temporaryFileError != nil {
+		test.Fatal(temporaryFileError)
 	}
 	defer f.Close()
 	cmd.Stdout = f
 	var stderr bytes.Buffer
 	cmd.Stderr = &stderr
-	if err = childguard.Run(cmd, childguard.Options{}); err != nil {
-		test.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
+	if runError := childguard.Run(cmd, childguard.Options{}); runError != nil {
+		test.Fatalf("%s %v: %v\n%s", name, args, runError, &stderr)
 	}
 	if stderr.Len() != 0 {
 		test.Fatalf("%s stderr: %s", name, &stderr)
 	}
-	data, err := os.ReadFile(f.Name())
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(f.Name())
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return data
 }
@@ -61,17 +61,17 @@ func TestProduct_HelpersFindsGoOracle(test *testing.T) {
 }
 func build(test *testing.T, directory string) string {
 	test.Helper()
-	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{filepath.Join(directory, "main.ts")})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
-	ir, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		test.Fatal(err)
+	ir, lowerError := lower.Lower(context.Background(), program)
+	if lowerError != nil {
+		test.Fatal(lowerError)
 	}
 	binary := filepath.Join(test.TempDir(), "helpers")
-	if err := native.Build(native.C(ir), binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(native.C(ir), binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal(buildError)
 	}
 	return binary
 }
@@ -81,13 +81,13 @@ func TestHelpersMatchCohere(test *testing.T) {
 	goOracle := oracle(test)
 	catalog := run(test, "", goOracle, "catalog")
 	descriptor := run(test, "", goOracle, "descriptors")
-	pinned, err := os.ReadFile("testdata/descriptors.json")
-	if err != nil || !bytes.Equal(descriptor, pinned) {
+	pinned, readError := os.ReadFile("testdata/descriptors.json")
+	if readError != nil || !bytes.Equal(descriptor, pinned) {
 		test.Fatal("regenerate target descriptors against Go cohere")
 	}
-	current, err := os.ReadFile("testdata/catalog.json")
-	if err != nil {
-		test.Fatal(err)
+	current, readError := os.ReadFile("testdata/catalog.json")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if !bytes.Equal(catalog, current) {
 		test.Fatal("regenerate catalog against pinned Go cohere")
@@ -121,39 +121,39 @@ func compare(test *testing.T, got, want []byte) {
 
 func fixture(test *testing.T) string {
 	test.Helper()
-	f, err := os.Open("testdata/cases.json.gz")
-	if err != nil {
-		test.Fatal(err)
+	f, openError := os.Open("testdata/cases.json.gz")
+	if openError != nil {
+		test.Fatal(openError)
 	}
 	defer f.Close()
-	reader, err := gzip.NewReader(f)
-	if err != nil {
-		test.Fatal(err)
+	reader, gzipError := gzip.NewReader(f)
+	if gzipError != nil {
+		test.Fatal(gzipError)
 	}
 	defer reader.Close()
 	path := filepath.Join(test.TempDir(), "cases.json")
-	out, err := os.Create(path)
-	if err != nil {
-		test.Fatal(err)
+	out, createError := os.Create(path)
+	if createError != nil {
+		test.Fatal(createError)
 	}
-	if _, err = io.Copy(out, reader); err != nil {
-		test.Fatal(err)
+	if _, copyError := io.Copy(out, reader); copyError != nil {
+		test.Fatal(copyError)
 	}
-	if err = out.Close(); err != nil {
-		test.Fatal(err)
+	if closeError := out.Close(); closeError != nil {
+		test.Fatal(closeError)
 	}
 	return path
 }
 
 func smallFixture(test *testing.T, corpus any) string {
 	test.Helper()
-	data, err := json.Marshal(corpus)
-	if err != nil {
-		test.Fatal(err)
+	data, encodeError := json.Marshal(corpus)
+	if encodeError != nil {
+		test.Fatal(encodeError)
 	}
 	path := filepath.Join(test.TempDir(), "cases.json")
-	if err := os.WriteFile(path, data, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, data, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	return path
 }
@@ -232,18 +232,18 @@ func TestMessageRefusalsMatchGo(test *testing.T) {
 			) { // node, through internal/toolchain; the native build runs as named
 				cmd = toolchain.Command(command[0], command[1:]...)
 			}
-			output, err := os.CreateTemp(test.TempDir(), "stdout-")
-			if err != nil {
-				test.Fatal(err)
+			output, temporaryFileError := os.CreateTemp(test.TempDir(), "stdout-")
+			if temporaryFileError != nil {
+				test.Fatal(temporaryFileError)
 			}
 			cmd.Stdout = output
 			var stderr bytes.Buffer
 			cmd.Stderr = &stderr
-			err = childguard.Run(cmd, childguard.Options{})
+			runError := childguard.Run(cmd, childguard.Options{})
 			output.Close()
-			exit, ok := err.(*exec.ExitError)
+			exit, ok := runError.(*exec.ExitError)
 			if !ok || exit.ExitCode() != 70 || stderr.String() != expected {
-				test.Fatalf("guard %d %s: %v stderr %q, Go %q", i, command[0], err, stderr.String(), expected)
+				test.Fatalf("guard %d %s: %v stderr %q, Go %q", i, command[0], runError, stderr.String(), expected)
 			}
 		}
 	}

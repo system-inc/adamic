@@ -64,7 +64,12 @@ func (p *testProfile) command(stage string, execute func() execution) execution 
 	p.Phases = append(p.Phases, phaseProfile{Stage: stage, Start: start, End: p.owner.offset()})
 	return result
 }
-func (p *testProfile) observation(stage string, cache *resultCache, key string, execute func() (execution, bool)) execution {
+func (p *testProfile) observation(
+	stage string,
+	cache *resultCache,
+	key string,
+	execute func() (execution, bool),
+) execution {
 	if p == nil {
 		return cache.observe(key, execute)
 	}
@@ -76,9 +81,9 @@ func (p *testProfile) observation(stage string, cache *resultCache, key string, 
 }
 func (p *runProfile) write(path string) error {
 	sort.Slice(p.Tests, func(i, j int) bool { return p.Tests[i].Path < p.Tests[j].Path })
-	data, err := json.MarshalIndent(p, "", "  ")
-	if err != nil {
-		return err
+	data, encodeError := json.MarshalIndent(p, "", "  ")
+	if encodeError != nil {
+		return encodeError
 	}
 	return os.WriteFile(path, append(data, '\n'), 0600)
 }

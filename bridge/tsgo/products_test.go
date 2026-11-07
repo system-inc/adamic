@@ -165,9 +165,9 @@ func bridgeDependencies(test testing.TB, repository string) bridgeSources {
 		"./bridge/tsgo/oracle",
 		"./cmd/adamic",
 	)
-	data, err := command.Output()
-	if err != nil {
-		test.Fatalf("product dependencies: %v", err)
+	data, outputError := command.Output()
+	if outputError != nil {
+		test.Fatalf("product dependencies: %v", outputError)
 	}
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	external := map[string]string{}
@@ -180,14 +180,16 @@ func bridgeDependencies(test testing.TB, repository string) bridgeSources {
 			GoFiles, CgoFiles, CFiles, CXXFiles, HFiles, SFiles, SysoFiles, EmbedFiles []string
 			Module                                                                     *struct{ Path, Version, GoMod, Dir string }
 		}
-		if err := decoder.Decode(&dependency); err == io.EOF {
+		if decodeError := decoder.Decode(&dependency); decodeError == io.EOF {
 			break
-		} else if err != nil {
-			test.Fatal(err)
+		} else if decodeError != nil {
+			test.Fatal(decodeError)
 		}
 		add := func(path string) {
-			relative, err := filepath.Rel(repository, path)
-			if err == nil && relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
+			relative, relativePathError := filepath.Rel(repository, path)
+			if relativePathError == nil &&
+				relative != ".." &&
+				!strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
 				files[filepath.ToSlash(relative)] = true
 				return
 			}
@@ -195,18 +197,19 @@ func bridgeDependencies(test testing.TB, repository string) bridgeSources {
 			// their content fingerprints as named flags, without copying them.
 			// GOROOT belongs to Toolchain; generated test mains are not sources.
 			if dependency.Module != nil {
-				module, err := filepath.Rel(repository, dependency.Module.Dir)
-				if err == nil && (module == ".." || strings.HasPrefix(module, ".."+string(filepath.Separator))) {
-					content, err := os.ReadFile(path)
-					if err != nil {
-						test.Fatal(err)
+				module, relativePathError := filepath.Rel(repository, dependency.Module.Dir)
+				if relativePathError == nil &&
+					(module == ".." || strings.HasPrefix(module, ".."+string(filepath.Separator))) {
+					content, readError := os.ReadFile(path)
+					if readError != nil {
+						test.Fatal(readError)
 					}
 					// Named by module, version and the file's path inside the module, never by where this machine's
 					// module cache sits: a Loom runner's is /tmp/loom-sources/<blob>-modcache, and an absolute path
 					// keyed every bridge product apart from Workshop's (landable-10's run, 35 go builds on Cloud).
-					inside, err := filepath.Rel(dependency.Module.Dir, path)
-					if err != nil {
-						test.Fatal(err)
+					inside, relativePathError := filepath.Rel(dependency.Module.Dir, path)
+					if relativePathError != nil {
+						test.Fatal(relativePathError)
 					}
 					external[dependency.Module.Path+
 						"@"+
@@ -237,13 +240,13 @@ func bridgeDependencies(test testing.TB, repository string) bridgeSources {
 		if dependency.Module != nil {
 			add(dependency.Module.GoMod)
 			sum := filepath.Join(filepath.Dir(dependency.Module.GoMod), "go.sum")
-			if _, err := os.Stat(sum); err == nil {
+			if _, statError := os.Stat(sum); statError == nil {
 				add(sum)
 			}
 		}
 	}
 	for _, optional := range []string{"go.sum", "go.work.sum"} {
-		if _, err := os.Stat(filepath.Join(repository, optional)); err == nil {
+		if _, statError := os.Stat(filepath.Join(repository, optional)); statError == nil {
 			files[optional] = true
 		}
 	}
@@ -290,22 +293,27 @@ func fetchBridgeProduct(test testing.TB, repository, name string) string {
 	test.Helper()
 	inputs := bridgeProductInputs(test, repository, name)
 	directory := buildcache.Product(test, inputs, func(directory string) error {
-		if err := buildBridgeProduct(test, repository, directory, name); err != nil {
-			return err
+		if buildBridgeProductError := buildBridgeProduct(
+			test,
+			repository,
+			directory,
+			name,
+		); buildBridgeProductError != nil {
+			return buildBridgeProductError
 		}
-		data, err := os.ReadFile(filepath.Join(directory, name))
-		if err != nil {
-			return err
+		data, readError := os.ReadFile(filepath.Join(directory, name))
+		if readError != nil {
+			return readError
 		}
 		return os.WriteFile(filepath.Join(directory, "sha256"), []byte(fmt.Sprintf("%x", sha256.Sum256(data))), 0o644)
 	})
-	data, err := os.ReadFile(filepath.Join(directory, name))
-	if err != nil {
-		test.Fatal(err)
+	data, readError := os.ReadFile(filepath.Join(directory, name))
+	if readError != nil {
+		test.Fatal(readError)
 	}
-	digest, err := os.ReadFile(filepath.Join(directory, "sha256"))
-	if err != nil {
-		test.Fatal(err)
+	digest, readError := os.ReadFile(filepath.Join(directory, "sha256"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if string(digest) != fmt.Sprintf("%x", sha256.Sum256(data)) {
 		test.Fatalf("product digest: %s", name)
@@ -338,35 +346,35 @@ func buildBridgeProduct(test testing.TB, repository, directory, name string) err
 			// exec.Cmd sets PWD only for a command with no Env of its own; toolchain's have one.
 			command.Env = append(command.Env, "PWD="+repository)
 		}
-		output, err := command.CombinedOutput()
+		output, combinedOutputError := command.CombinedOutput()
 		if write := os.WriteFile(filepath.Join(directory, "build.log"), output, 0o644); write != nil {
 			return write
 		}
-		if err != nil {
-			return fmt.Errorf("%s: %w\n%s", name, err, output)
+		if combinedOutputError != nil {
+			return fmt.Errorf("%s: %w\n%s", name, combinedOutputError, output)
 		}
 		return nil
 	}
 	overlay := func(path, before, after string) (string, error) {
 		original := filepath.Join(repository, path)
-		text, err := os.ReadFile(original)
-		if err != nil {
-			return "", err
+		text, readError := os.ReadFile(original)
+		if readError != nil {
+			return "", readError
 		}
 		if strings.Count(string(text), before) != 1 {
 			return "", fmt.Errorf("mutant %s has no unique target", name)
 		}
 		replacement := filepath.Join(directory, "mutant"+filepath.Ext(path))
-		if err := os.WriteFile(
+		if writeError := os.WriteFile(
 			replacement,
 			[]byte(strings.Replace(string(text), before, after, 1)),
 			0o644,
-		); err != nil {
-			return "", err
+		); writeError != nil {
+			return "", writeError
 		}
-		data, err := json.Marshal(map[string]any{"Replace": map[string]string{original: replacement}})
-		if err != nil {
-			return "", err
+		data, encodeError := json.Marshal(map[string]any{"Replace": map[string]string{original: replacement}})
+		if encodeError != nil {
+			return "", encodeError
 		}
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 		output := filepath.Join(test.TempDir(), "overlay.json")
@@ -413,9 +421,9 @@ func buildBridgeProduct(test testing.TB, repository, directory, name string) err
 			},
 		}
 		if mutant, ok := mutants[name]; ok {
-			replacement, err := overlay(mutant[0], mutant[1], mutant[2])
-			if err != nil {
-				return err
+			replacement, overlayError := overlay(mutant[0], mutant[1], mutant[2])
+			if overlayError != nil {
+				return overlayError
 			}
 			arguments = append(arguments, "-overlay", replacement)
 		} else if name != "tsgo.a" && name != "tsgo-asan.a" {
@@ -446,9 +454,9 @@ func buildBridgeProduct(test testing.TB, repository, directory, name string) err
 		if name == "linkage.test" {
 			path, before, after = "internal/lower/tsgo.go", "if !l.program.TSGoEnabled() {", "if false {"
 		}
-		replacement, err := overlay(path, before, after)
-		if err != nil {
-			return err
+		replacement, overlayError := overlay(path, before, after)
+		if overlayError != nil {
+			return overlayError
 		}
 		if name == "linkage.test" {
 			return run(command("go", append(

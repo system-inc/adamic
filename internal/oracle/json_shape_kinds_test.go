@@ -71,8 +71,12 @@ int main(int argc,char **argv) {
 func jsonDecodeShapeRun(test *testing.T, code string, sanitize bool) run {
 	test.Helper()
 	binary := filepath.Join(test.TempDir(), "shape")
-	if err := native.Build(code, binary, native.Options{Count: !sanitize, Sanitize: sanitize}); err != nil {
-		test.Fatal(err)
+	if buildError := native.Build(
+		code,
+		binary,
+		native.Options{Count: !sanitize, Sanitize: sanitize},
+	); buildError != nil {
+		test.Fatal(buildError)
 	}
 	return executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
 }
@@ -99,9 +103,9 @@ func TestJSONDecodeShapeKinds(test *testing.T) {
 
 func TestJSONDecodeShapeInternKindMutant(test *testing.T) {
 	test.Parallel()
-	original, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_decode.c"))
-	if err != nil {
-		test.Fatal(err)
+	original, readError := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_decode.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	before := "entry->shape.kinds[i]!=shape->kinds[i] || "
 	if strings.Count(string(original), before) != 1 {
@@ -121,9 +125,9 @@ func TestJSONDecodeShapeInternKindMutant(test *testing.T) {
 
 func TestJSONDecodeShapeKindMutant(test *testing.T) {
 	test.Parallel()
-	original, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_decode.c"))
-	if err != nil {
-		test.Fatal(err)
+	original, readError := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_decode.c"))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	before := "((adamic_field_kind *)o->shape->kinds)[written]=storage_kind(schema->nodes[f->node].representation);"
 	if strings.Count(string(original), before) != 1 {
@@ -136,14 +140,14 @@ func TestJSONDecodeShapeKindMutant(test *testing.T) {
 		1,
 	)
 	path := filepath.Join(test.TempDir(), "kind.a")
-	if err := os.WriteFile(path, []byte(
+	if writeError := os.WriteFile(path, []byte(
 		`import {decodeJson} from 'adamic'; const value=decodeJson<{readonly value:boolean}>('{"value":true}'); console.log(value.kind);`,
-	), 0600); err != nil {
-		test.Fatal(err)
+	), 0600); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	got := jsonDecodeShapeRun(test, inlineDecodeMutant(mutant, native.C(program)), false)
 	if got.exitCode == 0 ||

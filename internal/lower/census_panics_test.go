@@ -17,19 +17,19 @@ func TestCensusQualifiedCast(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "qualified.a")
 	source := censusPanicSource(test, "qualified.a")
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		filepath.Join(filepath.Dir(path), "types.a"),
 		[]byte(censusPanicSource(test, "types.a")),
 		0644,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	var file *ast.SourceFile
 	for _, candidate := range program.Files() {
@@ -56,11 +56,11 @@ func TestCensusQualifiedCast(test *testing.T) {
 	if cast == nil {
 		test.Fatal("missing cast")
 	}
-	if _, err := l.castProof(cast); err != nil {
-		test.Fatal(err)
+	if _, castProofError := l.castProof(cast); castProofError != nil {
+		test.Fatal(castProofError)
 	}
-	if err := l.refuseWidening(cast); err != nil {
-		test.Fatal(err)
+	if refuseWideningError := l.refuseWidening(cast); refuseWideningError != nil {
+		test.Fatal(refuseWideningError)
 	}
 }
 
@@ -71,12 +71,12 @@ func TestCensusQualifiedCast(test *testing.T) {
 func TestCensusGenericRefusalInsideClosure(test *testing.T) {
 	test.Parallel()
 	source := censusPanicSource(test, "generic_closure.a")
-	_, err := lowerSource(test, source)
-	if err == nil || !strings.Contains(
-		err.Error(),
+	_, lowerSourceError := lowerSource(test, source)
+	if lowerSourceError == nil || !strings.Contains(
+		lowerSourceError.Error(),
 		"main.a:7:35: Adamic 0.1 refuses a value of type string[] seen as (string | undefined)[], which can write string | undefined where string is read",
 	) {
-		test.Fatalf("want the binding's invariant-mutable refusal, got %v", err)
+		test.Fatalf("want the binding's invariant-mutable refusal, got %v", lowerSourceError)
 	}
 }
 
@@ -84,18 +84,21 @@ func TestCensusGenericRefusalInsideClosure(test *testing.T) {
 func TestCensusComputedRelation(test *testing.T) {
 	test.Parallel()
 	source := censusPanicSource(test, "computed_relation.a")
-	_, err := lowerSource(test, source)
-	if err == nil ||
-		!strings.Contains(err.Error(), "optional field arrow.suggestion has no proven compatible presence/type") {
-		test.Fatalf("want named optional-field proof refusal, got %v", err)
+	_, lowerSourceError := lowerSource(test, source)
+	if lowerSourceError == nil ||
+		!strings.Contains(
+			lowerSourceError.Error(),
+			"optional field arrow.suggestion has no proven compatible presence/type",
+		) {
+		test.Fatalf("want named optional-field proof refusal, got %v", lowerSourceError)
 	}
 }
 
 func censusPanicSource(test *testing.T, name string) string {
 	test.Helper()
-	source, err := os.ReadFile(filepath.Join("testdata", "census_panics", name))
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(filepath.Join("testdata", "census_panics", name))
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	return string(source)
 }

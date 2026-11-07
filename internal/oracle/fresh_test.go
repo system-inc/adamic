@@ -16,9 +16,11 @@ import (
 // must agree with source Node and return every value, including the closed cycle.
 func TestFreshWriteProbesStayRefused(test *testing.T) {
 	test.Parallel()
-	probes, err := filepath.Glob(filepath.Join(repository, "internal", "oracle", "testdata", "fresh_refused", "*.a"))
-	if err != nil {
-		test.Fatal(err)
+	probes, globError := filepath.Glob(
+		filepath.Join(repository, "internal", "oracle", "testdata", "fresh_refused", "*.a"),
+	)
+	if globError != nil {
+		test.Fatal(globError)
 	}
 	if len(probes) < 20 {
 		test.Fatalf("found only %d probes", len(probes))
@@ -29,13 +31,13 @@ func TestFreshWriteProbesStayRefused(test *testing.T) {
 		}
 		test.Run(filepath.Base(probe), func(test *testing.T) {
 			test.Parallel()
-			path, err := filepath.Abs(probe)
-			if err != nil {
-				test.Fatal(err)
+			path, absolutePathError := filepath.Abs(probe)
+			if absolutePathError != nil {
+				test.Fatal(absolutePathError)
 			}
-			source, err := os.ReadFile(path)
-			if err != nil {
-				test.Fatal(err)
+			source, readError := os.ReadFile(path)
+			if readError != nil {
+				test.Fatal(readError)
 			}
 			marked := 0
 			for index, line := range strings.Split(string(source), "\n") {
@@ -46,9 +48,9 @@ func TestFreshWriteProbesStayRefused(test *testing.T) {
 			if marked == 0 {
 				test.Fatal("no line is marked // closes the cycle")
 			}
-			program, err := lowered(test, path)
+			program, loweredError := lowered(test, path)
 			var refused *lower.Refused
-			if errors.As(err, &refused) {
+			if errors.As(loweredError, &refused) {
 				want := fmt.Sprintf("the write at %s:%d:", path, marked)
 				if !strings.Contains(refused.Error(), want) ||
 					!strings.Contains(refused.Error(), "(adamic/cycle-capable)") {
@@ -56,8 +58,8 @@ func TestFreshWriteProbesStayRefused(test *testing.T) {
 				}
 				return
 			}
-			if err != nil {
-				test.Fatalf("want the cycle refused, got %v", err)
+			if loweredError != nil {
+				test.Fatalf("want the cycle refused, got %v", loweredError)
 			}
 			checkGraphAdmission(test, path, program)
 		})
@@ -88,15 +90,15 @@ func checkGraphAdmission(test *testing.T, path string, program *ir.Program) {
 // Admission cannot weaken the independent escape proof in internal/fresh.
 func TestMethodKeepsArgumentAgreesWithNode(test *testing.T) {
 	test.Parallel()
-	path, err := filepath.Abs(
+	path, absolutePathError := filepath.Abs(
 		filepath.Join(repository, "internal/oracle/testdata/fresh_refused/devirt_fresh_method_keeps_argument.a"),
 	)
-	if err != nil {
-		test.Fatal(err)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	truth := onNode(test, path)
 	if truth.exitCode != 0 || string(truth.stdout) != "1\n" || len(truth.stderr) != 0 {

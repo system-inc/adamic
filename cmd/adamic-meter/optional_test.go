@@ -14,17 +14,17 @@ import (
 func TestAdaptOptionalPropertiesPreservesRuntimeAndDisk(test *testing.T) {
 	test.Parallel()
 	const name = "testdata/optional/main.ts"
-	source, err := os.ReadFile(name)
-	if err != nil {
-		test.Fatal(err)
+	source, readError := os.ReadFile(name)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	_, before := load.Load([]string{name})
 	if optionalDiagnosticCount(before) != 5 {
 		test.Fatalf("want five exact-optional diagnostics, got %v", before)
 	}
-	overlay, rewrites, err := adaptations([]string{name}, before)
-	if err != nil {
-		test.Fatal(err)
+	overlay, rewrites, adaptationsError := adaptations([]string{name}, before)
+	if adaptationsError != nil {
+		test.Fatal(adaptationsError)
 	}
 	absolute, _ := filepath.Abs(name)
 	adapted := overlay[absolute]
@@ -34,8 +34,8 @@ func TestAdaptOptionalPropertiesPreservesRuntimeAndDisk(test *testing.T) {
 		rewrites[0].DeclarationsChanged != 3 {
 		test.Fatalf("adaptations = %#v", rewrites)
 	}
-	if _, err := load.LoadOverlay([]string{name}, overlay); err != nil {
-		test.Fatal(err)
+	if _, loadOverlayError := load.LoadOverlay([]string{name}, overlay); loadOverlayError != nil {
+		test.Fatal(loadOverlayError)
 	}
 	if !strings.Contains(adapted, "callback?: (() => string) | undefined") {
 		test.Fatalf("function union precedence not preserved: %s", adapted)
@@ -47,21 +47,21 @@ func TestAdaptOptionalPropertiesPreservesRuntimeAndDisk(test *testing.T) {
 			test.Fatalf("%s runtime output = %q, want %q", label, actual, want)
 		}
 	}
-	after, err := os.ReadFile(name)
-	if err != nil {
-		test.Fatal(err)
+	after, readError := os.ReadFile(name)
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	if !bytes.Equal(source, after) {
 		test.Fatal("adaptation changed source on disk")
 	}
 	_, afterCheck := load.LoadOverlay([]string{name}, overlay)
-	next, changed, err := optionalAdaptations([]string{name}, overlay, afterCheck)
-	if err != nil || changed != 0 || next[absolute] != adapted {
-		test.Fatalf("not idempotent: changed=%d, err=%v", changed, err)
+	next, changed, optionalAdaptationsError := optionalAdaptations([]string{name}, overlay, afterCheck)
+	if optionalAdaptationsError != nil || changed != 0 || next[absolute] != adapted {
+		test.Fatalf("not idempotent: changed=%d, err=%v", changed, optionalAdaptationsError)
 	}
-	measured, err := measure("testdata/optional", true)
-	if err != nil {
-		test.Fatal(err)
+	measured, measureError := measure("testdata/optional", true)
+	if measureError != nil {
+		test.Fatal(measureError)
 	}
 	if measured.FilesReachingLowering != 1 {
 		test.Fatalf("lowering entries = %d, reasons %#v", measured.FilesReachingLowering, measured.Reasons)
@@ -78,9 +78,9 @@ func nodeOptionalSource(test *testing.T, source string) []byte {
 		`import {stripTypeScriptTypes} from 'node:module'; let source = ''; for await (const part of process.stdin) source += part; await import('data:text/javascript;base64,' + Buffer.from(stripTypeScriptTypes(source)).toString('base64'));`,
 	)
 	command.Stdin = strings.NewReader(source)
-	out, err := command.CombinedOutput()
-	if err != nil {
-		test.Fatalf("Node source oracle: %v\n%s", err, out)
+	out, combinedOutputError := command.CombinedOutput()
+	if combinedOutputError != nil {
+		test.Fatalf("Node source oracle: %v\n%s", combinedOutputError, out)
 	}
 	return out
 }
@@ -104,16 +104,16 @@ func TestOptionalAdaptationLeavesUnsafeContractsRejected(test *testing.T) {
 		test.Run(testCase.name, func(test *testing.T) {
 			test.Parallel()
 			path := filepath.Join(test.TempDir(), "main.ts")
-			if err := os.WriteFile(path, []byte(testCase.source), 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, []byte(testCase.source), 0644); writeError != nil {
+				test.Fatal(writeError)
 			}
 			_, before := load.Load([]string{path})
 			if diagnosticCount(before, testCase.code) == 0 {
 				test.Fatalf("missing initial diagnostic %s: %v", testCase.code, before)
 			}
-			overlay, rewrites, err := adaptations([]string{path}, before)
-			if err != nil {
-				test.Fatal(err)
+			overlay, rewrites, adaptationsError := adaptations([]string{path}, before)
+			if adaptationsError != nil {
+				test.Fatal(adaptationsError)
 			}
 			if len(rewrites) != 0 || len(overlay) != 0 {
 				test.Fatalf("unsafe contract adapted: %#v %#v", rewrites, overlay)
@@ -130,13 +130,13 @@ func TestOptionalAdaptationRechecksPresenceNarrowing(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "main.ts")
 	source := "interface S { p?: string }; const s: S = {}; s.p = undefined; function f(s: S): number { if ('p' in s) return s.p.length; return 0; }"
-	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	_, before := load.Load([]string{path})
-	overlay, rewrites, err := adaptations([]string{path}, before)
-	if err != nil {
-		test.Fatal(err)
+	overlay, rewrites, adaptationsError := adaptations([]string{path}, before)
+	if adaptationsError != nil {
+		test.Fatal(adaptationsError)
 	}
 	if len(rewrites) != 1 || rewrites[0].Removed != 1 {
 		test.Fatalf("adaptations = %#v", rewrites)
@@ -163,22 +163,22 @@ func TestOptionalAdaptationContextualDeclarations(test *testing.T) {
 		test.Run(source, func(test *testing.T) {
 			test.Parallel()
 			path := filepath.Join(test.TempDir(), "main.ts")
-			if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+				test.Fatal(writeError)
 			}
 			_, before := load.Load([]string{path})
 			if optionalDiagnosticCount(before) == 0 {
 				test.Fatalf("initial diagnostic: %v", before)
 			}
-			overlay, rewrites, err := adaptations([]string{path}, before)
-			if err != nil {
-				test.Fatal(err)
+			overlay, rewrites, adaptationsError := adaptations([]string{path}, before)
+			if adaptationsError != nil {
+				test.Fatal(adaptationsError)
 			}
 			if len(rewrites) != 1 || rewrites[0].Removed != optionalDiagnosticCount(before) {
 				test.Fatalf("adaptations = %#v", rewrites)
 			}
-			if _, err := load.LoadOverlay([]string{path}, overlay); err != nil {
-				test.Fatal(err)
+			if _, loadOverlayError := load.LoadOverlay([]string{path}, overlay); loadOverlayError != nil {
+				test.Fatal(loadOverlayError)
 			}
 		})
 	}
@@ -189,20 +189,20 @@ func TestOptionalAdaptationOwnsOnlyNamedRoots(test *testing.T) {
 	dir := test.TempDir()
 	external := filepath.Join(dir, "external.ts")
 	main := filepath.Join(dir, "main.ts")
-	if err := os.WriteFile(external, []byte("export interface S {p?: string}"), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(external, []byte("export interface S {p?: string}"), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if err := os.WriteFile(
+	if writeError := os.WriteFile(
 		main,
 		[]byte("import type {S} from './external.ts'; const s:S={};s.p=undefined;"),
 		0644,
-	); err != nil {
-		test.Fatal(err)
+	); writeError != nil {
+		test.Fatal(writeError)
 	}
 	_, before := load.Load([]string{main})
-	overlay, rewrites, err := adaptations([]string{main}, before)
-	if err != nil {
-		test.Fatal(err)
+	overlay, rewrites, adaptationsError := adaptations([]string{main}, before)
+	if adaptationsError != nil {
+		test.Fatal(adaptationsError)
 	}
 	if len(overlay) != 0 || len(rewrites) != 0 {
 		test.Fatalf("rewrote an external declaration: %#v %#v", overlay, rewrites)
@@ -217,16 +217,16 @@ func TestOptionalAdaptationPreservesLiveMethodPlacement(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "main.ts")
 	source := "class Action { optional?(): string { return 'x'; } }; const action = new Action(); console.log(`${Object.hasOwn(action, 'optional')} ${Object.hasOwn(Action.prototype, 'optional')}`); action.optional = undefined; interface Settings { value?: string }; const settings: Settings = {}; settings.value = undefined;"
-	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	_, before := load.Load([]string{path})
 	if diagnosticCount(before, "2412") != 2 {
 		test.Fatalf("initial diagnostic: %v", before)
 	}
-	overlay, rewrites, err := adaptations([]string{path}, before)
-	if err != nil {
-		test.Fatal(err)
+	overlay, rewrites, adaptationsError := adaptations([]string{path}, before)
+	if adaptationsError != nil {
+		test.Fatal(adaptationsError)
 	}
 	adapted, changed := overlay[path]
 	if !changed {
@@ -259,19 +259,19 @@ func TestOptionalAdaptationUTF16AndAdamicExtension(test *testing.T) {
 			test.Parallel()
 			path := filepath.Join(test.TempDir(), "main"+extension)
 			source := "const glyph = '😀'; interface S {p?: string}; const s: S = {}; s.p = undefined; void glyph;"
-			if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
+				test.Fatal(writeError)
 			}
 			_, before := load.Load([]string{path})
-			overlay, rewrites, err := adaptations([]string{path}, before)
-			if err != nil {
-				test.Fatal(err)
+			overlay, rewrites, adaptationsError := adaptations([]string{path}, before)
+			if adaptationsError != nil {
+				test.Fatal(adaptationsError)
 			}
 			if len(rewrites) != 1 || rewrites[0].Removed != 1 {
 				test.Fatalf("adaptations = %#v; original=%v", rewrites, before)
 			}
-			if _, err := load.LoadOverlay([]string{path}, overlay); err != nil {
-				test.Fatal(err)
+			if _, loadOverlayError := load.LoadOverlay([]string{path}, overlay); loadOverlayError != nil {
+				test.Fatal(loadOverlayError)
 			}
 		})
 	}

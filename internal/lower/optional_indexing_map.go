@@ -34,16 +34,19 @@ func (l *lowering) optionalMapGet(node *ast.Node) (ir.Expression, bool, error) {
 	}
 	keyType, keyKnown := l.representation(types[0])
 	valueType, valueKnown := l.kept(types[1])
-	if !keyKnown || !keyable(keyType) || !valueKnown || (slotless(valueType) && !(valueType == ir.Union && l.writable(types[1]))) {
+	if !keyKnown ||
+		!keyable(keyType) ||
+		!valueKnown ||
+		(slotless(valueType) && !(valueType == ir.Union && l.writable(types[1]))) {
 		return nil, true, l.notYet(node, "an optional Map get with unsupported key or value storage")
 	}
-	base, err := l.expression(access.Expression)
-	if err != nil {
-		return nil, true, err
+	base, expressionError := l.expression(access.Expression)
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
-	key, err := l.expression(call.Arguments.Nodes[0])
-	if err != nil {
-		return nil, true, err
+	key, expressionError := l.expression(call.Arguments.Nodes[0])
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
 	key = fit(key, keyType)
 	if base.Type() != ir.Map || key.Type() != keyType {
@@ -54,13 +57,19 @@ func (l *lowering) optionalMapGet(node *ast.Node) (ir.Expression, bool, error) {
 		function = l.functionIndex
 	}
 	local := len(l.result.Locals)
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: "optional_map_base", Type: ir.Map, Function: function, ExpressionAssigned: true})
+	l.result.Locals = append(
+		l.result.Locals,
+		ir.Local{Name: "optional_map_base", Type: ir.Map, Function: function, ExpressionAssigned: true},
+	)
 	read := ir.Read{Local: local, Of: ir.Map}
 	value := ir.MapGet{Map: read, Key: key, KeyType: keyType, ValueType: valueType}
 	of := value.Type()
 	return ir.Effects{Body: []ir.Statement{ir.Declare{Local: local, Value: base}}, Result: ir.Conditional{
-		Condition: ir.Unary{Operator: ir.Not, Operand: ir.Binary{Operator: ir.Or, Left: ir.IsUndefined{Value: read}, Right: ir.IsNull{Value: read}}},
-		WhenTrue:  value, WhenNot: fit(ir.Undefined{}, of), Of: of,
+		Condition: ir.Unary{
+			Operator: ir.Not,
+			Operand:  ir.Binary{Operator: ir.Or, Left: ir.IsUndefined{Value: read}, Right: ir.IsNull{Value: read}},
+		},
+		WhenTrue: value, WhenNot: fit(ir.Undefined{}, of), Of: of,
 	}}, true, nil
 }
 
@@ -69,8 +78,8 @@ func (l *lowering) optionalMapGet(node *ast.Node) (ir.Expression, bool, error) {
 // intrinsic path, including ones hidden behind a ReadonlyMap annotation.
 func (l *lowering) optionalMapStructuralReceiver(receiver *ast.Node) bool {
 	view := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver))
-	modules, err := l.moduleOrder(l.program.Files()[0])
-	if err != nil {
+	modules, moduleOrderError := l.moduleOrder(l.program.Files()[0])
+	if moduleOrderError != nil {
 		return true
 	}
 	hazard := false

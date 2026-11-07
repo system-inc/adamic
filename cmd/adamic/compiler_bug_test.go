@@ -66,10 +66,10 @@ func TestCompilerPanicExitsFourThroughTheCommand(test *testing.T) {
 	var output, diagnostic bytes.Buffer
 	command.Stdout, command.Stderr = &output, &diagnostic
 	code := 0
-	if err := command.Run(); err != nil {
-		exit, ok := err.(*exec.ExitError)
+	if runError := command.Run(); runError != nil {
+		exit, ok := runError.(*exec.ExitError)
 		if !ok {
-			test.Fatal(err)
+			test.Fatal(runError)
 		}
 		code = exit.ExitCode()
 	}
@@ -106,9 +106,9 @@ func TestCompilerBugDriver(test *testing.T) {
 // the defer.
 func TestRunRecoversCompilerBugs(test *testing.T) {
 	test.Parallel()
-	file, err := parser.ParseFile(token.NewFileSet(), "main.go", nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	file, parseFileError := parser.ParseFile(token.NewFileSet(), "main.go", nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	for _, declaration := range file.Decls {
 		function, ok := declaration.(*ast.FuncDecl)

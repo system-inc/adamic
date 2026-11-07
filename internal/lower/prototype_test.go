@@ -103,9 +103,9 @@ func TestInheritedLibraryReadsNeverLoadOwnFieldsUnion(test *testing.T) {
 func TestInheritedLibraryReadReceiversEachHaveOneTest(test *testing.T) {
 	test.Parallel()
 	const prefix = "TestInheritedLibraryReadsNeverLoadOwnFields"
-	file, err := parser.ParseFile(token.NewFileSet(), "prototype_test.go", nil, 0)
-	if err != nil {
-		test.Fatal(err)
+	file, parseFileError := parser.ParseFile(token.NewFileSet(), "prototype_test.go", nil, 0)
+	if parseFileError != nil {
+		test.Fatal(parseFileError)
 	}
 	wrappers := make(map[string]int)
 	for _, declaration := range file.Decls {
@@ -198,8 +198,8 @@ func sweepInheritedLibraryReads(test *testing.T, receiver string) {
 					read = fmt.Sprintf("value['%s']", member)
 				}
 				path := filepath.Join(test.TempDir(), "sweep.a")
-				if err := os.WriteFile(path, []byte(source+"\n"+read+";\n"), 0644); err != nil {
-					test.Fatal(err)
+				if writeError := os.WriteFile(path, []byte(source+"\n"+read+";\n"), 0644); writeError != nil {
+					test.Fatal(writeError)
 				}
 				program, err := load.Load([]string{path})
 				if err != nil {
@@ -219,11 +219,13 @@ func sweepInheritedLibraryReads(test *testing.T, receiver string) {
 					this:          -1,
 					functionIndex: -1,
 				}
-				if err := lowering.declareModule(entry.Statements.Nodes); err != nil {
-					test.Fatal(err)
+				if declareModuleError := lowering.declareModule(entry.Statements.Nodes); declareModuleError != nil {
+					test.Fatal(declareModuleError)
 				}
-				if _, err := lowering.statements(entry.Statements.Nodes[:len(entry.Statements.Nodes)-1]); err != nil {
-					test.Fatal(err)
+				if _, statementsError := lowering.statements(
+					entry.Statements.Nodes[:len(entry.Statements.Nodes)-1],
+				); statementsError != nil {
+					test.Fatal(statementsError)
 				}
 				expression := entry.Statements.Nodes[len(entry.Statements.Nodes)-1].AsExpressionStatement().Expression
 				var got ir.Expression
@@ -255,10 +257,10 @@ func TestPrototypeMethodsAreRefusedWithReasons(test *testing.T) {
 		"const value = [1000]; value.toLocaleString();",
 		"const value = { __proto__: { toString: (): string => 'custom' } }; value.toString();",
 	} {
-		_, err := lowerSource(test, source)
+		_, lowerSourceError := lowerSource(test, source)
 		var refused *Refused
-		if !errors.As(err, &refused) || refused.Fix == "" {
-			test.Fatalf("got %v, want a reasoned refusal", err)
+		if !errors.As(lowerSourceError, &refused) || refused.Fix == "" {
+			test.Fatalf("got %v, want a reasoned refusal", lowerSourceError)
 		}
 	}
 	for _, member := range []string{
@@ -270,10 +272,10 @@ func TestPrototypeMethodsAreRefusedWithReasons(test *testing.T) {
 		"isPrototypeOf",
 		"constructor",
 	} {
-		_, err := lowerSource(test, "const value = {}; const { "+member+": detached } = value;")
+		_, lowerSourceError := lowerSource(test, "const value = {}; const { "+member+": detached } = value;")
 		var refused *Refused
-		if !errors.As(err, &refused) {
-			test.Errorf("destructured %s: %v", member, err)
+		if !errors.As(lowerSourceError, &refused) {
+			test.Errorf("destructured %s: %v", member, lowerSourceError)
 		}
 	}
 }
@@ -284,13 +286,17 @@ func TestNullishPrototypeReadsAreRejectedByChecker(test *testing.T) {
 	for _, value := range []string{"null", "undefined"} {
 		for _, member := range nodePrototypeMembers(test) {
 			path := filepath.Join(test.TempDir(), "nullish.a")
-			if err := os.WriteFile(path, []byte("const value = "+value+"; value."+member+";"), 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(
+				path,
+				[]byte("const value = "+value+"; value."+member+";"),
+				0644,
+			); writeError != nil {
+				test.Fatal(writeError)
 			}
-			_, err := load.Load([]string{path})
+			_, loadError := load.Load([]string{path})
 			var check *load.CheckError
-			if !errors.As(err, &check) {
-				test.Errorf("%s.%s: %v", value, member, err)
+			if !errors.As(loadError, &check) {
+				test.Errorf("%s.%s: %v", value, member, loadError)
 			}
 		}
 	}
@@ -312,15 +318,15 @@ func TestPrototypeHazardsBehindObjectViewsAreNotYet(test *testing.T) {
 		"const value = { 'a\\0b': 1 }; value.hasOwnProperty('a\\0b');",
 		"function absent(): { readonly field: number; readonly label: string } | undefined { return undefined; } const value = { ...absent(), label: 'x' }; console.log(`${value.hasOwnProperty('field')}`);",
 	} {
-		_, err := lowerSource(test, source)
+		_, lowerSourceError := lowerSource(test, source)
 		var notYet *NotYet
 		want := "through an object view"
 		if strings.Contains(source, "declare field") {
 			// Declared fields are refused before prototype analysis in integration 13.
 			want = "a declare or abstract class field"
 		}
-		if !errors.As(err, &notYet) || !strings.Contains(notYet.What, want) {
-			test.Errorf("%s: got %v, want an explicit NotYet containing %q", source, err, want)
+		if !errors.As(lowerSourceError, &notYet) || !strings.Contains(notYet.What, want) {
+			test.Errorf("%s: got %v, want an explicit NotYet containing %q", source, lowerSourceError, want)
 		}
 	}
 }
@@ -331,24 +337,24 @@ func TestPrototypeHazardsBehindObjectViewsAreNotYet(test *testing.T) {
 // having swept nothing.
 func nodePrototypeMembers(test *testing.T) []string {
 	test.Helper()
-	node, err := toolchain.Path("node")
-	if err != nil {
+	node, pathError := toolchain.Path("node")
+	if pathError != nil {
 		if toolchain.Sandboxed() {
-			test.Fatal(err)
+			test.Fatal(pathError)
 		}
 		test.Skip("Node is needed to enumerate Object.prototype")
 	}
-	output, err := toolchain.Command(
+	output, outputError := toolchain.Command(
 		node,
 		"-e",
 		"console.log(JSON.stringify(Object.getOwnPropertyNames(Object.prototype)))",
 	).Output()
-	if err != nil {
-		test.Fatal(err)
+	if outputError != nil {
+		test.Fatal(outputError)
 	}
 	var names []string
-	if err := json.Unmarshal(output, &names); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(output, &names); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	return names
 }
@@ -365,10 +371,10 @@ func TestUnrepresentedPrototypeCallsAreNotYet(test *testing.T) {
 		"const value = [1, 'x'] as const; value.propertyIsEnumerable('0');",
 		"const value = new Error('message'); value.toString();",
 	} {
-		_, err := lowerSource(test, source)
+		_, lowerSourceError := lowerSource(test, source)
 		var notYet *NotYet
-		if !errors.As(err, &notYet) {
-			test.Errorf("%s: %v", source, err)
+		if !errors.As(lowerSourceError, &notYet) {
+			test.Errorf("%s: %v", source, lowerSourceError)
 		}
 	}
 }
@@ -379,10 +385,10 @@ func TestIsPrototypeOfReadsExplainThePrototypeRefusal(test *testing.T) {
 		"const value = {}; const detached = value.isPrototypeOf;",
 		"const value = {}; const detached = value['isPrototypeOf'];",
 	} {
-		_, err := lowerSource(test, source)
+		_, lowerSourceError := lowerSource(test, source)
 		var refused *Refused
-		if !errors.As(err, &refused) || !strings.Contains(refused.Fix, "no observable prototype chain") {
-			test.Errorf("got %v", err)
+		if !errors.As(lowerSourceError, &refused) || !strings.Contains(refused.Fix, "no observable prototype chain") {
+			test.Errorf("got %v", lowerSourceError)
 		}
 	}
 }

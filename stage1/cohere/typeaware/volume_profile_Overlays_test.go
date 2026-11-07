@@ -95,9 +95,9 @@ func TestVolumeProfileOverlays_002(test *testing.T) {
 // (buildcache.GoTestMutated) built ahead by TestProduct_profile_overlay_*, and the directory go test would run it in.
 func volumeProfileOverlayBinary(test *testing.T, change volumeProfileOverlayChange) (binary, directory string) {
 	test.Helper()
-	repository, err := filepath.Abs("../../..")
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs("../../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	binary = buildcache.GoTestMutated(test, "", "checker-"+change.name+".test", "./bridge/tsgo/checker", nil,
 		[]buildcache.Mutation{{File: "bridge/tsgo/checker/facts.go", Before: change.from, After: change.to}})
@@ -106,9 +106,9 @@ func volumeProfileOverlayBinary(test *testing.T, change volumeProfileOverlayChan
 
 func runVolumeProfileOverlayShard(test *testing.T, shard int) {
 	test.Helper()
-	repository, err := filepath.Abs("../../..")
-	if err != nil {
-		test.Fatal(err)
+	repository, absolutePathError := filepath.Abs("../../..")
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
 	h := &harness{t: test, repository: repository, directory: test.TempDir()}
 	for _, name := range volumeProfileOverlaySlices[shard] {

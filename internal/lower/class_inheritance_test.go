@@ -55,12 +55,12 @@ child.next = child;`, "cycle-capable", "Weak"},
 				graphAccepted(test, probe.source)
 				return
 			}
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var refused *Refused
-			if !errors.As(err, &refused) ||
-				!strings.Contains(err.Error(), probe.rule) ||
-				!strings.Contains(err.Error(), probe.fix) {
-				test.Fatalf("want refusal naming %s with fix %q, got %v", probe.rule, probe.fix, err)
+			if !errors.As(lowerSourceError, &refused) ||
+				!strings.Contains(lowerSourceError.Error(), probe.rule) ||
+				!strings.Contains(lowerSourceError.Error(), probe.fix) {
+				test.Fatalf("want refusal naming %s with fix %q, got %v", probe.rule, probe.fix, lowerSourceError)
 			}
 		})
 	}
@@ -81,16 +81,16 @@ new B();`, "abstract"},
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
 			path := filepath.Join(test.TempDir(), "main.a")
-			if err := os.WriteFile(path, []byte(probe.source), 0644); err != nil {
-				test.Fatal(err)
+			if writeError := os.WriteFile(path, []byte(probe.source), 0644); writeError != nil {
+				test.Fatal(writeError)
 			}
-			_, err := load.Load([]string{path})
+			_, loadError := load.Load([]string{path})
 			var checked *load.CheckError
-			if !errors.As(err, &checked) {
-				test.Fatalf("want checker refusal, got %v", err)
+			if !errors.As(loadError, &checked) {
+				test.Fatalf("want checker refusal, got %v", loadError)
 			}
-			if !strings.Contains(err.Error(), probe.message) {
-				test.Fatalf("want %s, got %v", probe.message, err)
+			if !strings.Contains(loadError.Error(), probe.message) {
+				test.Fatalf("want %s, got %v", probe.message, loadError)
 			}
 		})
 	}
@@ -119,13 +119,13 @@ func TestInheritanceHasClassIdentity(test *testing.T) {
 func TestInheritanceCycleFinderIncludesInheritedFields(test *testing.T) {
 	test.Parallel()
 	path := filepath.Join(test.TempDir(), "main.a")
-	if err := os.WriteFile(path, []byte(`class Base { parent: Base | undefined = undefined; }
-class Child extends Base { readonly label = 'child'; }`), 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(`class Base { parent: Base | undefined = undefined; }
+class Child extends Base { readonly label = 'child'; }`), 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		test.Fatal(err)
+	program, loadError := load.Load([]string{path})
+	if loadError != nil {
+		test.Fatal(loadError)
 	}
 	file := program.Files()[0]
 	checked, release := program.Checker(context.Background(), file)
@@ -165,10 +165,10 @@ func TestInheritanceRejectsUnsupportedConstructorShapes(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var gap *NotYet
-			if !errors.As(err, &gap) || !strings.Contains(err.Error(), probe.want) {
-				test.Fatalf("want explicit unsupported construct %q, got %v", probe.want, err)
+			if !errors.As(lowerSourceError, &gap) || !strings.Contains(lowerSourceError.Error(), probe.want) {
+				test.Fatalf("want explicit unsupported construct %q, got %v", probe.want, lowerSourceError)
 			}
 		})
 	}
@@ -208,11 +208,12 @@ func TestInheritanceRefusesFalseNominalViews(test *testing.T) {
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var refusal *Refused
-			if !errors.As(err, &refusal) || (!strings.Contains(err.Error(), "nominal-class") &&
-				!strings.Contains(err.Error(), "contravariant-override")) {
-				test.Fatalf("want nominal class refusal, got %v", err)
+			if !errors.As(lowerSourceError, &refusal) ||
+				(!strings.Contains(lowerSourceError.Error(), "nominal-class") &&
+					!strings.Contains(lowerSourceError.Error(), "contravariant-override")) {
+				test.Fatalf("want nominal class refusal, got %v", lowerSourceError)
 			}
 		})
 	}
@@ -220,15 +221,15 @@ func TestInheritanceRefusesFalseNominalViews(test *testing.T) {
 
 func TestInheritanceRefusesThisBeforeSuperReturns(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(test, `class A {} class B extends A {
+	_, lowerSourceError := lowerSource(test, `class A {} class B extends A {
  readonly value = 'ready';
  constructor() { const read = () => this.value; console.log(read()); super(); }
 } const value = new B();`)
 	var refusal *Refused
-	if !errors.As(err, &refusal) ||
-		!strings.Contains(err.Error(), "this before super returns") ||
-		!strings.Contains(err.Error(), "call super(...)") {
-		test.Fatalf("want pre-super this refusal with fix, got %v", err)
+	if !errors.As(lowerSourceError, &refusal) ||
+		!strings.Contains(lowerSourceError.Error(), "this before super returns") ||
+		!strings.Contains(lowerSourceError.Error(), "call super(...)") {
+		test.Fatalf("want pre-super this refusal with fix, got %v", lowerSourceError)
 	}
 }
 
@@ -272,14 +273,14 @@ console.log([a.read().toString(), b.read(), c.read().join(','), d.read().n.toStr
 
 func TestInheritanceRefusesGrowingGenericClasses(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(test, `class Base {}
+	_, lowerSourceError := lowerSource(test, `class Base {}
 class Grow<T> extends Base { readonly value: T; constructor(value: T) { super(); this.value = value; } next(): Grow<readonly T[]> { return new Grow<readonly T[]>([this.value]); } }
 const value = new Grow<number>(1);`)
 	var refusal *Refused
-	if !errors.As(err, &refusal) ||
-		!strings.Contains(err.Error(), "polymorphic recursion") ||
-		!strings.Contains(err.Error(), "recursive type arguments unchanged") {
-		test.Fatalf("want bounded monomorphization refusal with fix, got %v", err)
+	if !errors.As(lowerSourceError, &refusal) ||
+		!strings.Contains(lowerSourceError.Error(), "polymorphic recursion") ||
+		!strings.Contains(lowerSourceError.Error(), "recursive type arguments unchanged") {
+		test.Fatalf("want bounded monomorphization refusal with fix, got %v", lowerSourceError)
 	}
 }
 
@@ -299,10 +300,10 @@ const child = new Child<Holder>(); const holder: Holder = { back: child }; child
 				graphAccepted(test, probe.source)
 				return
 			}
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var refusal *Refused
-			if !errors.As(err, &refusal) || !strings.Contains(err.Error(), probe.rule) {
-				test.Fatalf("want %s refusal, got %v", probe.rule, err)
+			if !errors.As(lowerSourceError, &refusal) || !strings.Contains(lowerSourceError.Error(), probe.rule) {
+				test.Fatalf("want %s refusal, got %v", probe.rule, lowerSourceError)
 			}
 		})
 	}
@@ -315,19 +316,19 @@ func TestInheritanceConditionalThisRules(test *testing.T) {
 		`class A { read(): string { return 'a'; } } class B extends A { constructor(flag: boolean) { const read = () => super.read(); console.log(read()); if (flag) { super(); } else { super(); } } } const b = new B(false);`,
 		`class A {} class B extends A { readonly value = 'b'; constructor(read: () => string = () => this.value) { super(); console.log(read()); } } const b = new B();`,
 	} {
-		_, err := lowerSource(test, source)
+		_, lowerSourceError := lowerSource(test, source)
 		var refusal *Refused
-		if !errors.As(err, &refusal) ||
-			!strings.Contains(err.Error(), "this before super returns") ||
-			!strings.Contains(err.Error(), "call super") {
-			test.Fatalf("want pre-super binding refusal with fix, got %v", err)
+		if !errors.As(lowerSourceError, &refusal) ||
+			!strings.Contains(lowerSourceError.Error(), "this before super returns") ||
+			!strings.Contains(lowerSourceError.Error(), "call super") {
+			test.Fatalf("want pre-super binding refusal with fix, got %v", lowerSourceError)
 		}
 	}
 }
 
 func TestInheritanceGenericViewsKeepNominalArguments(test *testing.T) {
 	test.Parallel()
-	_, err := lowerSource(
+	_, lowerSourceError := lowerSource(
 		test,
 		`class Root { first(): string { return 'first'; } second(): string { return 'second'; } }
 class Other { second(): string { return 'other second'; } first(): string { return 'other first'; } }
@@ -336,8 +337,8 @@ class Box<T> extends Base { readonly value: T; constructor(value: T) { super(); 
 const actual = new Box<Other>(new Other()); const view: Box<Root> = actual; console.log(view.read().first());`,
 	)
 	var refusal *Refused
-	if !errors.As(err, &refusal) || !strings.Contains(err.Error(), "nominal ancestry") {
-		test.Fatalf("want nominal generic argument refusal, got %v", err)
+	if !errors.As(lowerSourceError, &refusal) || !strings.Contains(lowerSourceError.Error(), "nominal ancestry") {
+		test.Fatalf("want nominal generic argument refusal, got %v", lowerSourceError)
 	}
 }
 
@@ -347,12 +348,12 @@ func TestInheritanceGenericNominalConstraints(test *testing.T) {
 		`class Root { read(): string { return 'root'; } } class Other { read(): string { return 'other'; } } class Box<T extends Root> { readonly value: T; constructor(value: T) { this.value = value; } } const box = new Box<Other>(new Other());`,
 		`class Root { read(): string { return 'root'; } } class Other { read(): string { return 'other'; } } function read<T extends Root>(value: T): string { return value.read(); } console.log(read<Other>(new Other()));`,
 	} {
-		_, err := lowerSource(test, source)
+		_, lowerSourceError := lowerSource(test, source)
 		var refusal *Refused
-		if !errors.As(err, &refusal) ||
-			!strings.Contains(err.Error(), "nominal ancestry") ||
-			!strings.Contains(err.Error(), "interface") {
-			test.Fatalf("want nominal constraint refusal with structural repair, got %v", err)
+		if !errors.As(lowerSourceError, &refusal) ||
+			!strings.Contains(lowerSourceError.Error(), "nominal ancestry") ||
+			!strings.Contains(lowerSourceError.Error(), "interface") {
+			test.Fatalf("want nominal constraint refusal with structural repair, got %v", lowerSourceError)
 		}
 	}
 }
@@ -407,12 +408,12 @@ const value: Base = new Child();`, "result representation", "result form"},
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			_, err := lowerSource(test, probe.source)
+			_, lowerSourceError := lowerSource(test, probe.source)
 			var gap *NotYet
-			if !errors.As(err, &gap) ||
-				!strings.Contains(err.Error(), probe.want) ||
-				!strings.Contains(err.Error(), "keep the base method's "+probe.fix) {
-				test.Fatalf("want NotYet naming %s and its repair, got %v", probe.want, err)
+			if !errors.As(lowerSourceError, &gap) ||
+				!strings.Contains(lowerSourceError.Error(), probe.want) ||
+				!strings.Contains(lowerSourceError.Error(), "keep the base method's "+probe.fix) {
+				test.Fatalf("want NotYet naming %s and its repair, got %v", probe.want, lowerSourceError)
 			}
 		})
 	}

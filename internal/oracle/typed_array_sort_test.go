@@ -16,13 +16,15 @@ import (
 
 func typedArraySortFixture(test *testing.T) (*ir.Program, run) {
 	test.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/typed_arrays_sort_uint16array.a"))
-	if err != nil {
-		test.Fatal(err)
+	path, absolutePathError := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/typed_arrays_sort_uint16array.a"),
+	)
+	if absolutePathError != nil {
+		test.Fatal(absolutePathError)
 	}
-	program, err := lowered(test, path)
-	if err != nil {
-		test.Fatal(err)
+	program, loweredError := lowered(test, path)
+	if loweredError != nil {
+		test.Fatal(loweredError)
 	}
 	expected := onNode(test, path)
 	if expected.exitCode != 0 || len(expected.stderr) != 0 {
@@ -45,8 +47,8 @@ func TestTypedArraySortNativeCallMutant(test *testing.T) {
 	}
 	source = call.ReplaceAllString(source, "(void)($1);")
 	binary := filepath.Join(test.TempDir(), "without-sort")
-	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
-		test.Fatal("mutant must compile:", err)
+	if buildError := native.Build(source, binary, native.Options{Sanitize: true}); buildError != nil {
+		test.Fatal("mutant must compile:", buildError)
 	}
 	leaks := "0"
 	if runtime.GOOS == "linux" {
@@ -76,8 +78,8 @@ func TestTypedArraySortJavaScriptCallMutant(test *testing.T) {
 	}
 	source = strings.ReplaceAll(source, ".sort()", "")
 	path := filepath.Join(test.TempDir(), "without-sort.mjs")
-	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	actual := onNode(test, path)
 	if actual.exitCode != 0 || len(actual.stderr) != 0 || bytes.Equal(actual.stdout, expected.stdout) {

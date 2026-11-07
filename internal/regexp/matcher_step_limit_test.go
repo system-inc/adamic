@@ -7,9 +7,9 @@ import (
 
 func TestMatcherStepLimitBoundary(test *testing.T) {
 	test.Parallel()
-	program, err := Compile("ab", "")
-	if err != nil {
-		test.Fatal(err)
+	program, compileError := Compile("ab", "")
+	if compileError != nil {
+		test.Fatal(compileError)
 	}
 	// Two character instructions followed by accept require exactly three steps.
 	// A budget of two must interrupt before accept, rather than report no match.
@@ -25,22 +25,22 @@ func TestMatcherStepLimitBoundary(test *testing.T) {
 		test.Run(testCase.name, func(test *testing.T) {
 			test.Parallel()
 			budget := executionBudget{limit: testCase.limit}
-			_, matched, err := program.run([]uint16{'a', 'b'}, 0, []int{0, -1}, &budget)
+			_, matched, runError := program.run([]uint16{'a', 'b'}, 0, []int{0, -1}, &budget)
 			if testCase.wantLimit {
-				if !errors.Is(err, ErrStepLimit) || matched {
+				if !errors.Is(runError, ErrStepLimit) || matched {
 					test.Fatalf(
 						"limit %d: matched=%t error=%v; want ErrStepLimit before accept",
 						testCase.limit,
 						matched,
-						err,
+						runError,
 					)
 				}
-			} else if err != nil || !matched {
+			} else if runError != nil || !matched {
 				test.Fatalf(
 					"limit %d: matched=%t error=%v; want a match at exactly the limit",
 					testCase.limit,
 					matched,
-					err,
+					runError,
 				)
 			}
 			if budget.steps != testCase.wantSteps {
@@ -49,21 +49,26 @@ func TestMatcherStepLimitBoundary(test *testing.T) {
 			// The public matcher must propagate exhaustion as an error, never a miss.
 			matcher := program.New()
 			matcher.StepLimit = testCase.limit
-			match, err := matcher.ExecString("ab")
+			match, execStringError := matcher.ExecString("ab")
 			if testCase.wantLimit {
-				if !errors.Is(err, ErrStepLimit) || match != nil {
+				if !errors.Is(execStringError, ErrStepLimit) || match != nil {
 					test.Fatalf(
 						"ExecString limit %d: match=%+v error=%v; want nil, ErrStepLimit",
 						testCase.limit,
 						match,
-						err,
+						execStringError,
 					)
 				}
-			} else if err != nil ||
+			} else if execStringError != nil ||
 				match == nil ||
 				len(match.Captures) != 1 ||
 				match.Captures[0] != (Capture{Start: 0, End: 2}) {
-				test.Fatalf("ExecString limit %d: match=%+v error=%v; want capture [0,2]", testCase.limit, match, err)
+				test.Fatalf(
+					"ExecString limit %d: match=%+v error=%v; want capture [0,2]",
+					testCase.limit,
+					match,
+					execStringError,
+				)
 			}
 		})
 	}

@@ -31,13 +31,25 @@ func (l *lowering) phantomRefusal(node *ast.Node) error {
 	for _, object := range objects {
 		for _, field := range l.checker.GetPropertiesOfType(object) {
 			if checker.IsKnownSymbol(field) {
-				return &Refused{Where: l.program.Where(node), What: "a primitive brand member keyed by a symbol", Fix: "key the brand member by a name the primitive does not have on its own properties or prototype chain"}
+				return &Refused{
+					Where: l.program.Where(node),
+					What:  "a primitive brand member keyed by a symbol",
+					Fix:   "key the brand member by a name the primitive does not have on its own properties or prototype chain",
+				}
 			}
 			if primitiveMember(primitive.Flags(), field.Name) {
-				return &Refused{Where: l.program.Where(node), What: "a primitive brand member " + field.Name + " that exists on the primitive", Fix: "use a member name the primitive does not have on its own properties or prototype chain"}
+				return &Refused{
+					Where: l.program.Where(node),
+					What:  "a primitive brand member " + field.Name + " that exists on the primitive",
+					Fix:   "use a member name the primitive does not have on its own properties or prototype chain",
+				}
 			}
 			if !phantomField(l.checker.GetTypeOfSymbol(field)) {
-				return &Refused{Where: l.program.Where(node), What: "a primitive brand member " + field.Name + " whose type is not void", Fix: "make " + field.Name + " undefined (or void) so the brand is phantom"}
+				return &Refused{
+					Where: l.program.Where(node),
+					What:  "a primitive brand member " + field.Name + " whose type is not void",
+					Fix:   "make " + field.Name + " undefined (or void) so the brand is phantom",
+				}
 			}
 		}
 	}
@@ -156,9 +168,9 @@ func (l *lowering) phantomMember(node *ast.Node) (ir.Expression, bool, error) {
 	if !l.phantomMemberType(l.concrete(l.checker.GetTypeAtLocation(receiver)), name) {
 		return nil, false, nil
 	}
-	value, err := l.expression(receiver)
-	if err != nil {
-		return nil, true, err
+	value, expressionError := l.expression(receiver)
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
 	// A stale narrowing is checked here with a catchable TypeError, not Defined's panic.
 	if defined, ok := value.(ir.Defined); ok {
@@ -167,7 +179,10 @@ func (l *lowering) phantomMember(node *ast.Node) (ir.Expression, bool, error) {
 	if unwrapped, ok := value.(ir.Unwrap); ok {
 		value = unwrapped.Value
 	}
-	failure := ir.MakeError{Message: ir.StringConstant{Index: l.constant("Cannot read properties of undefined (reading '" + name + "')")}, Name: ir.StringConstant{Index: l.constant("TypeError")}}
+	failure := ir.MakeError{
+		Message: ir.StringConstant{Index: l.constant("Cannot read properties of undefined (reading '" + name + "')")},
+		Name:    ir.StringConstant{Index: l.constant("TypeError")},
+	}
 	return ir.PhantomMember{Value: value, Name: name, Optional: optional, Failure: failure}, true, nil
 }
 

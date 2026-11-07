@@ -46,9 +46,9 @@ func (l *lowering) indexedTupleRead(node *ast.Node, object ir.Expression) (ir.Ex
 			}
 		}
 	}
-	result, err := l.typeOf(node)
-	if err != nil {
-		return nil, true, err
+	result, typeOfError := l.typeOf(node)
+	if typeOfError != nil {
+		return nil, true, typeOfError
 	}
 	// The unmatched numeric keys (including negative, fractional and NaN) read
 	// undefined. Do not manufacture a value when the result cannot hold it.
@@ -56,9 +56,9 @@ func (l *lowering) indexedTupleRead(node *ast.Node, object ir.Expression) (ir.Ex
 	if missing.Type() != result || (!result.IsReference() && !result.IsMaybe()) {
 		return nil, true, l.notYet(node, "a dynamic tuple read without an undefined representation")
 	}
-	key, err := l.expression(access.ArgumentExpression)
-	if err != nil {
-		return nil, true, err
+	key, expressionError := l.expression(access.ArgumentExpression)
+	if expressionError != nil {
+		return nil, true, expressionError
 	}
 	if key.Type() != ir.Number {
 		return nil, true, l.notYet(node, "a tuple index that is not a number")
@@ -79,7 +79,10 @@ func (l *lowering) indexedTupleRead(node *ast.Node, object ir.Expression) (ir.Ex
 		if read.Type() != result {
 			return nil, true, l.notYet(node, "a dynamic tuple result with an incompatible element representation")
 		}
-		b.body = append(b.body, ir.If{Condition: ir.Binary{Operator: ir.Equal, Left: heldKey, Right: ir.NumberConstant{Value: float64(index)}}, Then: []ir.Statement{ir.Return{Value: read}}})
+		b.body = append(b.body, ir.If{
+			Condition: ir.Binary{Operator: ir.Equal, Left: heldKey, Right: ir.NumberConstant{Value: float64(index)}},
+			Then:      []ir.Statement{ir.Return{Value: read}},
+		})
 	}
 	return b.finish("element_access_tuple", missing), true, nil
 }

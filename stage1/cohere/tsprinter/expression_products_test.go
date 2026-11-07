@@ -18,38 +18,48 @@ func TestTSPrinterCachedMetadataRelocation(test *testing.T) {
 		Want:   "typescript/keep.ts",
 	}
 	data, _ := json.Marshal([]oracles.PrinterCase{original})
-	if err := os.WriteFile(product+"/cases.json", data, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(product+"/cases.json", data, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
 	report, _ := json.Marshal(
 		map[string]any{"file_refusals": map[string]string{first + "/case.ts": first + "/case.ts: refused"}, "cases": 1},
 	)
-	if err := os.WriteFile(product+"/coverage.json", report, 0644); err != nil {
-		test.Fatal(err)
+	if writeError := os.WriteFile(product+"/coverage.json", report, 0644); writeError != nil {
+		test.Fatal(writeError)
 	}
-	if err := oracles.TSPrinterRewriteMetadata(product, first, "", true); err != nil {
-		test.Fatal(err)
+	if tsPrinterRewriteMetadataError := oracles.TSPrinterRewriteMetadata(
+		product,
+		first,
+		"",
+		true,
+	); tsPrinterRewriteMetadataError != nil {
+		test.Fatal(tsPrinterRewriteMetadataError)
 	}
-	canonical, err := os.ReadFile(product + "/cases.json")
-	if err != nil {
-		test.Fatal(err)
+	canonical, readError := os.ReadFile(product + "/cases.json")
+	if readError != nil {
+		test.Fatal(readError)
 	}
 	for _, name := range []string{"cases.json", "coverage.json"} {
-		data, err := os.ReadFile(product + "/" + name)
-		if err != nil {
-			test.Fatal(err)
+		data, readError := os.ReadFile(product + "/" + name)
+		if readError != nil {
+			test.Fatal(readError)
 		}
-		if err := os.WriteFile(copy+"/"+name, data, 0644); err != nil {
-			test.Fatal(err)
+		if writeError := os.WriteFile(copy+"/"+name, data, 0644); writeError != nil {
+			test.Fatal(writeError)
 		}
 	}
-	if err := oracles.TSPrinterRewriteMetadata(copy, second, "", false); err != nil {
-		test.Fatal(err)
+	if tsPrinterRewriteMetadataError := oracles.TSPrinterRewriteMetadata(
+		copy,
+		second,
+		"",
+		false,
+	); tsPrinterRewriteMetadataError != nil {
+		test.Fatal(tsPrinterRewriteMetadataError)
 	}
 	data, _ = os.ReadFile(copy + "/cases.json")
 	var relocated []oracles.PrinterCase
-	if err := json.Unmarshal(data, &relocated); err != nil {
-		test.Fatal(err)
+	if decodeError := json.Unmarshal(data, &relocated); decodeError != nil {
+		test.Fatal(decodeError)
 	}
 	want := original
 	want.Label = second + "/case.ts:3:expression"
@@ -60,8 +70,13 @@ func TestTSPrinterCachedMetadataRelocation(test *testing.T) {
 	if !bytes.Equal(unchanged, canonical) {
 		test.Fatal("materialization changed shared product")
 	}
-	if err := oracles.TSPrinterRewriteMetadata(copy, second, "", true); err != nil {
-		test.Fatal(err)
+	if tsPrinterRewriteMetadataError := oracles.TSPrinterRewriteMetadata(
+		copy,
+		second,
+		"",
+		true,
+	); tsPrinterRewriteMetadataError != nil {
+		test.Fatal(tsPrinterRewriteMetadataError)
 	}
 	roundtrip, _ := os.ReadFile(copy + "/cases.json")
 	if !bytes.Equal(roundtrip, canonical) {
