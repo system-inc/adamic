@@ -11,8 +11,9 @@ import (
 // #c3bk0fp). word below rejects only that way. Two of its promises pending, awaited in one template,
 // stop as NotYet named for the string-length limit, at word's template: if the first await throws,
 // the second's rejection goes unobserved. One pending promise awaited first in a template still lowers:
-// nothing in the statement can run code or throw before that await observes it (leadingAwait). A template between a
-// pending promise and its await stops the same way, at that template. A callee that throws for
+// NormalizeAsync gives the await its own declaration before the proof runs, and that declaration
+// consumes the promise. A template between a pending promise and its await stops the same way, at
+// that template. A callee that throws for
 // another reason, with nothing else between, keeps the general stop.
 func TestAsyncStringLengthConsumption(t *testing.T) {
 	t.Parallel()
@@ -77,7 +78,9 @@ func TestAsyncStringLengthProbes(t *testing.T) {
 		// One pending promise (Language's probes, 11:34Z, on Language's later(), which rejects only at
 		// the limit, and in d1 to d3 otherwise): an await consumes its promise only when nothing in the
 		// statement that can run code or throw is evaluated before it, a callee among them unless it's a
-		// function declaration (Adamic, 11:36Z).
+		// function declaration (Adamic, 11:36Z). NormalizeAsync holds that order: it moves every operand
+		// evaluated before an await, a callee's read among them, into a declaration of its own ahead of
+		// the await's, so the proof sees each one as a statement before the await consumes its promise.
 		{"c1: a declared function as callee", "async function later(text: string): Promise<string> { return `${text}!`; }\nfunction wrap(s: string): string { return s; }\nasync function run(): Promise<string> { const first = later(\"a\"); return wrap(`${await first}|`); }\nconsole.log(await run());\n", lowers},
 		{"c2: a property read before the await", "async function later(text: string): Promise<string> { return `${text}!`; }\nconst o = { prefix: \"p\" };\nasync function run(): Promise<string> { const first = later(\"a\"); return `${o.prefix}${await first}|`; }\nconsole.log(await run());\n", ""},
 		{"c6: a comma before the await", "async function later(text: string): Promise<string> { return `${text}!`; }\nlet counter = 0;\nasync function run(): Promise<string> { const first = later(\"a\"); return (counter++, `${await first}|`); }\nconsole.log(await run());\n", ""},
@@ -90,8 +93,8 @@ func TestAsyncStringLengthProbes(t *testing.T) {
 		{"c11: a method as callee", "async function later(text: string): Promise<string> { return `${text}!`; }\nconst o = { wrap(s: string): string { return s; } };\nasync function run(): Promise<string> { const first = later(\"a\"); return o.wrap(`${await first}|`); }\nconsole.log(await run());\n", "await among structural method operands is not yet proven"},
 		{"c12: a concatenation inside the template before the await", "async function later(text: string): Promise<string> { return `${text}!`; }\nconst big = \"x\"; const more = \"y\";\nasync function run(): Promise<string> { const first = later(\"a\"); return `${big + more}${await first}`; }\nconsole.log(await run());\n", ""},
 		{"c13: the await as a second argument", "async function later(text: string): Promise<string> { return `${text}!`; }\nfunction join2(a: string, b: string): string { return a + b; }\nconst big = \"x\";\nasync function run(): Promise<string> { const first = later(\"a\"); return join2(big + \"y\", await first); }\nconsole.log(await run());\n", ""},
-		// console.log fails closed: a written line's await never counts as leading (statementValue), so
-		// with a second promise pending, the concatenation after the first await stops it at the limit.
+		// With a second promise pending, the concatenation the first await's line writes stops it at the
+		// limit.
 		{"c14: console.log of the await then a concatenation, a second promise pending", "async function later(text: string): Promise<string> { return `${text}!`; }\nconst big = \"x\";\nasync function run(): Promise<string> { const first = later(\"a\"); const second = later(\"b\"); console.log(`${await first}${big}`); return await second; }\nconsole.log(await run());\n", ""},
 		{"d1: a const callee in its dead zone, the promise rejecting otherwise", "async function later(text: string): Promise<string> { if (text === 'a') throw new Error('boom'); return `${text}!`; }\nasync function run(): Promise<string> { const first = later('a'); return wrap(`${await first}|`); }\ntry { console.log(await run()); } catch (error) { console.log(error instanceof Error ? error.name : 'other'); }\nconst wrap = (s: string): string => s;\nconsole.log('end');\n", general},
 		{"d2: a declared callee, the promise rejecting otherwise", "async function later(text: string): Promise<string> { if (text === 'a') throw new Error('boom'); return `${text}!`; }\nfunction wrap(s: string): string { return s; }\nasync function run(): Promise<string> { const first = later('a'); return wrap(`${await first}|`); }\ntry { console.log(await run()); } catch (error) { console.log(error instanceof Error ? error.message : 'other'); }\nconsole.log('end');\n", lowers},

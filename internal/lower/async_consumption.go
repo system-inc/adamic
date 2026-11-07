@@ -71,74 +71,6 @@ func lengthSite(value any) int {
 	return site
 }
 
-// statementValue is the expression a statement evaluates first and whole: a declaration's or an
-// assignment's value, or an evaluated expression, or nil. A written line (console.log) is none of
-// these, so an await in one never counts as leading and the proof fails closed on it (Runtime's and
-// Language's read on #c3bk0fp).
-func statementValue(statement ir.Statement) ir.Expression {
-	switch statement := statement.(type) {
-	case ir.Declare:
-		return statement.Value
-	case ir.Assign:
-		return statement.Value
-	case ir.Evaluate:
-		return statement.Value
-	}
-	return nil
-}
-
-// leadingAwait is the await value evaluates before anything that can run code or throw, by
-// JavaScript's order, if there is one: value itself; a concatenation's first part, since the parts are
-// evaluated in order and the joining comes after them all; what a conversion to a string writes; and a
-// call's first argument when its callee is inert. Anything else, a property read, a comma, a
-// conditional, a callee that can run, is something that may run first, and fails closed.
-func (l *lowering) leadingAwait(value ir.Expression) (ir.Await, bool) {
-	for {
-		switch node := value.(type) {
-		case ir.Await:
-			return node, true
-		case ir.Concat:
-			if len(node.Parts) == 0 {
-				return ir.Await{}, false
-			}
-			value = node.Parts[0]
-		case ir.NumberToString:
-			value = node.Value
-		case ir.BooleanToString:
-			value = node.Value
-		case ir.MaybeToString:
-			value = node.Value
-		case ir.UnionToString:
-			value = node.Value
-		case ir.Call:
-			if !l.inertCallee(node) || len(node.Arguments) == 0 || len(node.Spread) > 0 && node.Spread[0] {
-				return ir.Await{}, false
-			}
-			value = node.Arguments[0]
-		default:
-			return ir.Await{}, false
-		}
-	}
-}
-
-// inertCallee reports whether evaluating a call's callee runs nothing and throws nothing: a plain
-// call to a function declaration, local or imported, which is initialized when its scope is entered,
-// can't be assigned, and has no getter. An arrow or other function value (a const or let read in its
-// dead zone among them), a method, an accessor and a dispatched call all count as running first
-// (Adamic's ruling on #c3bk0fp, 11:36Z). A call that isn't dispatched has one target, which
-// CallTargets names.
-func (l *lowering) inertCallee(call ir.Call) bool {
-	if call.Virtual != 0 || call.Accessor != "" || call.Setter || call.ArgumentCount != nil {
-		return false
-	}
-	targets := l.result.CallTargets(call)
-	if len(targets) != 1 {
-		return false
-	}
-	target := l.result.Functions[targets[0]]
-	return !target.Closure && !target.Receiver && target.MethodName == ""
-}
-
 // asyncCompletion is how an async function's graph can end by a throw: safe when it can't at all,
 // lengthOnly when every way out by a throw is an instruction that can throw only past V8's longest,
 // and site the first template or concatenation among those.
@@ -274,13 +206,7 @@ func (l *lowering) promiseConsumption(graphs map[int]*flow.Function, lengths boo
 				expression = value.Value
 			case ir.Return:
 				read, ok := value.Value.(ir.Read)
-				if ok && read.Of == ir.Promise && origin(read.Local, map[int]bool{}) == origin(local, map[int]bool{}) {
-					return true
-				}
-				// A returned value whose first evaluated part awaits it consumes it too (below).
-				awaited, ok := l.leadingAwait(value.Value)
-				read, isRead := awaited.Value.(ir.Read)
-				return ok && isRead && origin(read.Local, map[int]bool{}) == origin(local, map[int]bool{})
+				return ok && read.Of == ir.Promise && origin(read.Local, map[int]bool{}) == origin(local, map[int]bool{})
 			case ir.Block:
 				if consumedAfter(value.Body, local) {
 					return true
@@ -294,15 +220,10 @@ func (l *lowering) promiseConsumption(graphs map[int]*flow.Function, lengths boo
 					return true
 				}
 			}
+			// NormalizeAsync (run before this proof) gives every await its own declaration, after one for
+			// each operand evaluated before it, so an await is only ever a declaration's whole value or a
+			// void one evaluated alone, and that statement consumes its promise.
 			if awaited, ok := expression.(ir.Await); ok {
-				if read, ok := awaited.Value.(ir.Read); ok && origin(read.Local, map[int]bool{}) == origin(local, map[int]bool{}) {
-					return true
-				}
-			}
-			// An await the statement evaluates before anything that can run code or throw observes its
-			// promise's rejection first, so it consumes that promise, and only that one: a later await in
-			// the statement is still behind whatever runs between (Adamic's ruling on #c3bk0fp, 11:36Z).
-			if awaited, ok := l.leadingAwait(statementValue(statement)); ok {
 				if read, ok := awaited.Value.(ir.Read); ok && origin(read.Local, map[int]bool{}) == origin(local, map[int]bool{}) {
 					return true
 				}
