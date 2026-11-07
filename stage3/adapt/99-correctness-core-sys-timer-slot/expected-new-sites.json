@@ -1,0 +1,50 @@
+[
+  {
+    "where": "src/compiler/sys.ts:490:9",
+    "kind": "NotYet",
+    "reason": "a union of differently held members variable a function value captures",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:496:37",
+    "kind": "NotYet",
+    "reason": "a union of differently held members variable a function value captures",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:497:25",
+    "kind": "NotYet",
+    "reason": "a call through a function value whose rest parameter isn't an array",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1501:13",
+    "kind": "Refused",
+    "reason": "a function taking (...args: TArgs) => void seen as one taking (...args: NoInfer<A>) => void (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1502:13",
+    "kind": "Refused",
+    "reason": "a function taking string | number | Timeout | undefined seen as one taking unknown (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1519:36",
+    "kind": "NotYet",
+    "reason": "a member typed any (require()module) related to {} at the initializer site",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1599:13",
+    "kind": "Refused",
+    "reason": "a function taking (...args: TArgs) => void seen as one taking (...args: NoInfer<A>) => void (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1600:13",
+    "kind": "Refused",
+    "reason": "a function taking string | number | Timeout | undefined seen as one taking unknown (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "phase": "refusal_scan"
+  }
+]
