@@ -25,6 +25,7 @@
         "stage1/cohere/markdownblocks/mutant_evidence/**",
         "stage1/cohere/markdownblocks/fixture_speed_evidence/**",
         "stage1/cohere/lint/inventory/inventory.json",
+        "stage1/cohere/lint/.generated/**",
         "stage1/cohere/lint/rules/*/rule.json",
         "stage1/cohere/lint/rules/*/mutant.json",
         "stage1/**/*.md"
