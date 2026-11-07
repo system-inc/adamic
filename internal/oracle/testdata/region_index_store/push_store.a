@@ -1,6 +1,7 @@
 // keep pushes its parameter onto an outer array, so the point make(7) built outlives the statement
-// that made it and must stay off the statement's region. The label is built at runtime, since an
-// immortal string literal would hide a use after free.
+// that made it and must stay off the statement's region. keep returns a Binary, which escaping
+// consumes, so the push is what marks the escape. The label is built at runtime, since an immortal
+// string literal would hide a use after free.
 interface P {
 	readonly x: number;
 	readonly label: string;
@@ -14,7 +15,7 @@ const outer: P[] = [{ x: 0, label: 'seed' }];
 
 function keep(p: P): number {
 	outer.push(p);
-	return p.x;
+	return p.x + p.label.length;
 }
 
 let total = 0;

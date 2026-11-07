@@ -1,0 +1,72 @@
+[
+  {
+    "owner": "30",
+    "file": "core.ts",
+    "exactMeasuredCandidate": true,
+    "idempotent": true,
+    "beforeCheckRed": true
+  },
+  {
+    "owner": "30",
+    "preOwnerPhaseAccepted": true
+  },
+  {
+    "owner": "32",
+    "file": "symbolWalker.ts",
+    "exactMeasuredCandidate": true,
+    "idempotent": true,
+    "beforeCheckRed": true
+  },
+  {
+    "owner": "32",
+    "preOwnerPhaseAccepted": true
+  },
+  {
+    "owner": "30",
+    "mutant": "parameter-only",
+    "red": true,
+    "reason": "getOwnValues whole owner drift or half-adapted owner"
+  },
+  {
+    "owner": "30",
+    "mutant": "read-only",
+    "red": true,
+    "reason": "getOwnValues whole owner drift or half-adapted owner"
+  },
+  {
+    "owner": "30",
+    "mutant": "missing-check",
+    "red": true,
+    "reason": "getOwnValues whole owner drift or half-adapted owner"
+  },
+  {
+    "owner": "30",
+    "mutant": "foreign-body",
+    "red": true,
+    "reason": "getOwnValues whole owner drift or half-adapted owner"
+  },
+  {
+    "owner": "32",
+    "mutant": "one-table",
+    "red": true,
+    "reason": "symbolWalker whole owner/import drift or half-adapted owner"
+  },
+  {
+    "owner": "32",
+    "mutant": "cleanup",
+    "red": true,
+    "reason": "symbolWalker whole owner/import drift or half-adapted owner"
+  },
+  {
+    "owner": "32",
+    "mutant": "import",
+    "red": true,
+    "reason": "symbolWalker whole owner/import drift or half-adapted owner"
+  },
+  {
+    "owner": "32",
+    "mutant": "foreign-owner",
+    "red": true,
+    "reason": "symbolWalker whole owner/import drift or half-adapted owner"
+  }
+]

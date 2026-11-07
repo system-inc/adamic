@@ -1,0 +1,11 @@
+--- expected/typescript.js
++++ restored/typescript.js
+@@ -114271,7 +114271,7 @@
+         function emitBuildInfo(writeFile2, cancellationToken) {
+             Debug.assert(isBuilderProgramStateWithDefinedProgram(state));
+             if (getBuildInfoEmitPending(state)) {
+-                const result = state.program.emitBuildInfo(writeFile2 || __99x_bound(host, host.writeFile), cancellationToken);
++                const result = state.program.emitBuildInfo(writeFile2 || maybeBind(host, host.writeFile), cancellationToken);
+                 state.buildInfoEmitPending = false;
+                 return result;
+             }

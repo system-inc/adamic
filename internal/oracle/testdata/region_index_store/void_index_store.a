@@ -1,0 +1,22 @@
+// keep stores its parameter into an outer array by index and returns nothing, so the SetIndex arm of
+// escaping (internal/native/region.go) is the only thing that can mark the escape: no return reads
+// the parameter. The point make(7) built outlives the statement that made it, and freed at that
+// statement's end, the print below would read it after free. The label is built at runtime, since an
+// immortal string literal would hide that.
+interface P {
+	readonly x: number;
+	readonly label: string;
+}
+
+function make(n: number): P {
+	return { x: n, label: `p${n}` };
+}
+
+const outer: P[] = [{ x: 0, label: 'seed' }];
+
+function keep(p: P): void {
+	outer[0] = p;
+}
+
+keep(make(7));
+console.log(`${outer[0]?.label} ${outer[0]?.x}`);

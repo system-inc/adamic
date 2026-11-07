@@ -1,0 +1,47 @@
+{
+  "bothFullAppliesExit0": true,
+  "beforeApply": "retained full-before apply on the same frozen main plus 99z base",
+  "afterApply": "fresh full-after apply with amended 30 and 32",
+  "sourceFiles": 746,
+  "onlySourceChanges": [
+    "src/compiler/core.ts",
+    "src/compiler/symbolWalker.ts"
+  ],
+  "exactMeasuredPortIgnoringWalkerLFOnly": true,
+  "ownerVerifiers": [
+    {
+      "owner": "30-indexed-reads",
+      "exit": 0,
+      "seconds": 11.56490216400016,
+      "refs": {
+        "before": "3e0c5592dc85bb75ad8bce250413eebfc365ffb9",
+        "after": "0a17dbf590c4836a05909404aa00ff44ca509d33"
+      }
+    },
+    {
+      "owner": "32-indexed-reads-program",
+      "exit": 0,
+      "seconds": 39.12750049799979,
+      "refs": {
+        "before": "0d2d1cb1fe0c5f7870dfbb038aded1684241e60b",
+        "after": "69bcdc1ba335b5c0871d2225a27cce3d8102ba2a"
+      }
+    }
+  ],
+  "types79BeforeExit": 0,
+  "types79AfterExit": 0,
+  "nineCompilerFilesOnlyApprovedTableChanges": true,
+  "coreJavaScriptIdenticalBothCommentModes": true,
+  "publicDeclarationsIdentical": [
+    "typescript.d.ts",
+    "tsserverlibrary.d.ts"
+  ],
+  "internalDeclarationOnlyGetOwnValuesSignature": true,
+  "privateTableTypesDoNotSurface": true,
+  "otherDeclarationFilesIdentical": true,
+  "bothRestoredSourceMutantsRed": true,
+  "baselineCensus79Complete": true,
+  "pairedReplay": "passed; all outcomes identical",
+  "amendedCensus": "passed; 73 reach 1364:29, six unchanged",
+  "normalLane": "passed; all 398 units, one original timeout retained with guarded retry"
+}

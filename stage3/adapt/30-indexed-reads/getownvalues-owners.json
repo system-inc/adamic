@@ -1,0 +1,6 @@
+{
+  "ruling": "b5w3ycg, Nov 7 00:55Z",
+  "raw": "export function getOwnValues<T>(collection: MapLike<T> | T[]): T[] {\r\n    const values: T[] = [];\r\n    for (const key in collection) {\r\n        if (hasOwnProperty.call(collection, key)) {\r\n            values.push((collection as MapLike<T>)[key]);\r\n        }\r\n    }\r\n\r\n    return values;\r\n}",
+  "before": "export function getOwnValues<T>(collection: MapLike<T> | T[]): T[] {\r\n    const values: T[] = [];\r\n    for (const key in collection) {\r\n        if (hasOwnProperty.call(collection, key)) {\r\n            values.push((collection as MapLike<T>)[key]!);\r\n        }\r\n    }\r\n\r\n    return values;\r\n}",
+  "after": "export function getOwnValues<T>(collection: MapLike<T>): T[] {\r\n    const values: T[] = [];\r\n    for (const key in collection) {\r\n        if (hasOwnProperty.call(collection, key)) {\r\n            values.push(collection[key]!);\r\n        }\r\n    }\r\n\r\n    return values;\r\n}"
+}

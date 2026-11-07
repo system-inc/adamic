@@ -1,0 +1,59 @@
+{
+  "measurementOnly": true,
+  "beforeTypes": {
+    "exit": 0,
+    "roots": 79,
+    "seconds": 19.02944656100044
+  },
+  "candidateTypes": {
+    "exit": 0,
+    "roots": 79,
+    "measurementOnly": true
+  },
+  "beforeBinder": [
+    {
+      "roots": [
+        "/workspace/scratch/gov-b/full-before/src/compiler/binder.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/gov-b/full-before/src/compiler/core.ts:1326:26",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 39.6461532
+    },
+    {
+      "roots": [
+        "/workspace/scratch/gov-b/full-before/src/compiler/binder.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/gov-b/full-before/src/compiler/core.ts:1326:26",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 31.804218964
+    }
+  ],
+  "candidateBinder": [
+    {
+      "roots": [
+        "/workspace/scratch/gov-b/candidate-probe/src/compiler/binder.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/gov-b/candidate-probe/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 47.19916923
+    },
+    {
+      "roots": [
+        "/workspace/scratch/gov-b/candidate-probe/src/compiler/binder.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/gov-b/candidate-probe/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 50.012061906
+    }
+  ],
+  "candidateStopOwner": "assign",
+  "compilerFunction": "(*lowering).detachedOwnRefusal",
+  "compilerSource": "internal/lower/detached_own.go:94",
+  "nextStopSource": "export function assign<T extends object>(t: T, ...args: (T | undefined)[]): T {\n    for (const arg of args) {\n        if (arg === undefined) continue;\n        for (const p in arg) {\n            if (hasProperty(arg, p)) {\n                t[p] = arg[p];\n            }\n        }\n    }\n    return t;\n}"
+}

@@ -1025,3 +1025,27 @@ and raw census streams remain under /workspace/scratch with the adapt32-91 prefi
 The separate requested inventory is /workspace/scratch/remaining-whole-file-pins.md:
 90-void-widening still pins seven complete files, and 92-tty-host-results and
 93-builtin-imports each pin sys.ts. None was changed.
+
+## symbolWalker record id tables, b5w3ycg
+
+Ledger: Adamic ruling b5w3ycg, Nov 7 00:55Z, road (b). JavaScript-changing.
+32 owns the visitedTypes[type.id] and visitedSymbols[symbolId] test/store pins,
+so this amendment changes both private tables to MapLike records and clears
+them in place by deletion in both finally blocks. The clear import leaves and
+a type-only MapLike import enters. Existing id reads, tests, stores, accept
+callbacks and traversal order stay at their original points. 30 owns the
+paired record-only getOwnValues parameter and direct checked indexed read.
+
+record-tables-owners.json pins the complete nested getSymbolWalker owner and
+its single namespace import before and after, including both the pre-43 void
+and completed undefined return phases. Partial table/import/cleanup changes
+refuse. Four introduced pure-delete operands join the complete indexed-read
+inventory. No new assertion or default is applied to table tests or stores.
+The emitter proof independently applies only the six listed literal changes
+before comparing the remaining JavaScript bytes. Production CRLF is retained;
+the measured walker copy used LF, with identical normalized source and emit.
+
+The prior measurement stop was resolved by the user's explicit acceptance:
+public typescript.d.ts and tsserverlibrary.d.ts must remain byte-identical;
+typescript.internal.d.ts may change only getOwnValues's declaration and any
+surfaced internal table types. See RECORD-TABLES-PROOF.md for final receipts.

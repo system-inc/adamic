@@ -1,0 +1,38 @@
+{
+  "adapter": "40-explicit-any",
+  "condition": "refusal names a file 99x edits",
+  "recordsIdentical": true,
+  "refusal": "missing reviewed brands: src/compiler/builder.ts",
+  "before": [
+    {
+      "key": "__incrementalBuildInfoFileIdBrand",
+      "owner": "IncrementalBuildInfoFileId",
+      "pinnedLine": 1074,
+      "actualLine": 1098,
+      "text": "__incrementalBuildInfoFileIdBrand: undefined;"
+    },
+    {
+      "key": "__incrementalBuildInfoFileIdListIdBrand",
+      "owner": "IncrementalBuildInfoFileIdListId",
+      "pinnedLine": 1076,
+      "actualLine": 1100,
+      "text": "__incrementalBuildInfoFileIdListIdBrand: undefined;"
+    }
+  ],
+  "after": [
+    {
+      "key": "__incrementalBuildInfoFileIdBrand",
+      "owner": "IncrementalBuildInfoFileId",
+      "pinnedLine": 1074,
+      "actualLine": 1097,
+      "text": "__incrementalBuildInfoFileIdBrand: undefined;"
+    },
+    {
+      "key": "__incrementalBuildInfoFileIdListIdBrand",
+      "owner": "IncrementalBuildInfoFileIdListId",
+      "pinnedLine": 1076,
+      "actualLine": 1099,
+      "text": "__incrementalBuildInfoFileIdListIdBrand: undefined;"
+    }
+  ]
+}

@@ -1,0 +1,120 @@
+{
+  "allPass": true,
+  "lane": {
+    "units": 398,
+    "pieces": 20,
+    "counts": {
+      "pass": 106366,
+      "fail": 1,
+      "skip": 0
+    },
+    "maxPieceSeconds": 202.68995612099934,
+    "allArchiveAndRawEvidenceHashesPass": true,
+    "unexpectedTimeoutsRetained": 1,
+    "retriedUnits": [
+      "stage3-lane-file-013"
+    ],
+    "noTimeoutWaiver": true,
+    "retryPieceWallSeconds": 344.01394414901733
+  },
+  "census": {
+    "roots": 79,
+    "groups": [
+      20,
+      20,
+      20,
+      19
+    ],
+    "moved73": 73,
+    "next": "core.ts:1364:29",
+    "otherSixUnchanged": true
+  },
+  "replay": {
+    "pass": true,
+    "adapters": 83,
+    "different": [],
+    "allowedDifferences": [
+      "30-indexed-reads",
+      "32-indexed-reads-program"
+    ],
+    "sourceChangesConfinedToApprovedOwners": true,
+    "inheritedNonzeroOutcomesPerSide": 14,
+    "allOutcomesExactlyIdentical": true,
+    "actualSourceDeltas": {
+      "before": [],
+      "after": []
+    }
+  },
+  "immutableFreshSourceAndBuild": true,
+  "ruling": "b5w3ycg, Nov 7 00:55Z, road (b)",
+  "originMain": "61880be6dd7884dec15cf17c73fd9d56ee760ee4",
+  "elementAtDependency": "efa9c7dd7ffd4504068e6beeae26a2365eb145f1",
+  "owners": {
+    "symbolWalker": "32-indexed-reads-program",
+    "getOwnValues": "30-indexed-reads"
+  },
+  "bothFullAppliesExit0": true,
+  "bothOwnerVerifiersPass": true,
+  "types79BeforeAndAfterExit0": true,
+  "measurement": {
+    "wholeOraclePairPassed": true,
+    "exactlyOnceUnitsPerSide": 398,
+    "callsPerSide": 1109,
+    "beforeArrays": 692,
+    "afterArrays": 0,
+    "previouslySparse": 445,
+    "returnedElementsPerSide": 1985,
+    "idWritesPerSide": 734,
+    "allIdsCanonicalIntegers": true,
+    "allReturnKeysCanonical": true,
+    "allOrderedValuesAndWritesEqual": true,
+    "allWithinRunRecordProjectionsReferenceIdentical": true,
+    "oracleCounts": {
+      "before": {
+        "pass": 106366,
+        "fail": 1,
+        "skip": 0
+      },
+      "after": {
+        "pass": 106366,
+        "fail": 1,
+        "skip": 0
+      }
+    },
+    "maxPieceSeconds": 201.76068840299922
+  },
+  "publicDeclarationsIdentical": [
+    "typescript.d.ts",
+    "tsserverlibrary.d.ts"
+  ],
+  "internalDeclarationsOnlyApprovedGetOwnValuesLine": true,
+  "internalTableTypesDoNotSurface": true,
+  "nineJavaScriptFilesOnlyTablePort": true,
+  "coreJavaScriptIdenticalBothCommentModes": true,
+  "witnessFreshness": {
+    "freshGetOwnValuesExactlyMatchesTestedWitness": true,
+    "freshTableDeclarationsExactlyMatch": true,
+    "freshIdReadTestWriteOperationsExactlyMatch": true,
+    "bothFreshFinallyBlocksExactlyMatchTestedCleanup": true,
+    "lineEndingsOnlyNormalized": true,
+    "alreadyAssignedPositiveIds": true,
+    "backendResults": "/workspace/scratch/gov-b/raw/backend-witnesses.json"
+  },
+  "bothSourceMutantsRed": true,
+  "mutantFreshScope": {
+    "cast": {
+      "differentFromFreshAfter": [
+        "compiler/core.ts"
+      ],
+      "allOtherSourceBytesIdentical": true
+    },
+    "sparse": {
+      "differentFromFreshAfter": [
+        "compiler/symbolWalker.ts"
+      ],
+      "allOtherSourceBytesIdentical": true
+    }
+  },
+  "adamicCompilerSourceModified": false,
+  "loomSubmitted": false
+}
