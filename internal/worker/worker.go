@@ -247,12 +247,12 @@ func BuildWith(entry, output string, options Options) error {
 		configuration += "\n[[rules]]\ntype = \"CompiledWasm\"\nglobs = [\"**/*.wasm\"]\nfallthrough = false\n"
 	}
 	runtime := strings.Replace(workerRuntime, "/* UTF8_RUNTIME */", strings.Replace(utf8Runtime, "export function createUtf8", "function createUtf8", 1), 1)
-	const decoderStub = "// The JavaScript backend imports decodeJson. Its Workers implementation is a separate unit, so until it\n// lands a call panics, loudly, rather than decoding with code the oracle also runs.\nexport function decodeJson() { panic('decodeJson: not yet available on Workers'); }"
+	const decoderStub = "// The JavaScript backend imports decodeJson. Its Workers implementation is a separate unit, so until it\n// lands a call panics, loudly, rather than decoding with code the oracle also runs.\nexport function decodeJson() {\n    panic('decodeJson: not yet available on Workers');\n}"
 	if strings.Count(runtime, decoderStub) != 1 {
 		return fmt.Errorf("worker: decodeJson runtime assembly marker missing")
 	}
 	runtime = strings.Replace(runtime, decoderStub, jsonDecodeRuntime, 1)
-	const encoderStub = "// Keep the backend's encoder import linkable until the Workers JSON runtime unit lands.\nexport function encodeJson() { panic('encodeJson: not yet available on Workers'); }"
+	const encoderStub = "// Keep the backend's encoder import linkable until the Workers JSON runtime unit lands.\nexport function encodeJson() {\n    panic('encodeJson: not yet available on Workers');\n}"
 	if strings.Count(runtime, encoderStub) != 1 {
 		return fmt.Errorf("worker: encodeJson runtime assembly marker missing")
 	}
