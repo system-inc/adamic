@@ -1,0 +1,15 @@
+{
+  "source_manifest_equal_after_run": true,
+  "adapted_file_identical": true,
+  "main_sha_still_pinned": true,
+  "source_files_hashed": 746,
+  "debug_sites": 53,
+  "refusal_scan_sites": 11,
+  "full_units": 105,
+  "checker_diagnostics": 0,
+  "dependency_sites": 3,
+  "all_emitters_mapped": true,
+  "forecast_gone_coordinates_absent": true,
+  "first_error_not_run": true,
+  "reason": "Pinned first-error loop ignores LATENT_ONLY_FILE; scratch guard approval unanswered."
+}

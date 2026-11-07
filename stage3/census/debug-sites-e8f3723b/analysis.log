@@ -1,0 +1,54 @@
+full units 105 diagnostics 0 findings 112
+F1 252:33 assertNever NotYet lowering a value of type never
+F2 257:86 assertEachNode Refused lowering overload 1 of assertEachNode parameter test cannot be served by implementation parameter test
+F3 267:72 assertEachNode Refused refusal_scan a value of type (node: Node) => boolean seen as AnyFunction, which can write void where boolean is read
+F4 273:82 assertNode Refused lowering overload 1 of assertNode parameter test cannot be served by implementation parameter test
+F5 280:98 assertNode Refused refusal_scan a value of type (node: Node) => boolean seen as AnyFunction, which can write void where boolean is read
+F6 293:108 assertNotNode Refused refusal_scan a value of type (node: Node) => boolean seen as AnyFunction, which can write void where boolean is read
+F7 299:78 assertOptionalNode Refused lowering overload 1 of assertOptionalNode parameter test cannot be served by implementation parameter test
+F8 307:98 assertOptionalNode Refused refusal_scan a value of type (node: Node) => boolean seen as AnyFunction, which can write void where boolean is read
+F9 352:20 getFunctionName Refused lowering inherited library member name read as an own field
+F10 355:26 getFunctionName Refused lowering inherited library member call read as an own field
+F11 355:26 getFunctionName Refused refusal_scan a method read as a value (toString would lose its object, and this with it)
+F12 356:60 getFunctionName NotYet lowering reading text
+F13 357:20 getFunctionName NotYet lowering reading match
+F14 362:135 formatSymbol NotYet lowering a template interpolating an object, an array, a map, a function or undefined
+F15 412:27 getEnumMembers NotYet lowering a readonly view read by a run-time key in a program with a class getter that does more than return its fields and literals joined by operators (the getter runs inside the read, unseen by the passes that follow calls)
+F16 413:24 getEnumMembers NotYet lowering reading value
+F17 496:15 attachFlowNodeDebugInfoWorker Refused lowering in that narrows a union of object types (any object with the key passes)
+F18 537:37 attachFlowNodeDebugInfo Refused lowering a cast the runtime can't check
+F19 537:37 attachFlowNodeDebugInfo Refused refusal_scan a cast the runtime can't check
+F20 540:17 attachFlowNodeDebugInfo Refused lowering Object.setPrototypeOf
+F21 553:15 attachNodeArrayDebugInfoWorker NotYet lowering in when a possibly absent spread has no property presence descriptors
+F22 577:38 attachNodeArrayDebugInfo Refused lowering a cast the runtime can't check
+F23 577:38 attachNodeArrayDebugInfo Refused refusal_scan a cast the runtime can't check
+F24 580:17 attachNodeArrayDebugInfo Refused lowering Object.setPrototypeOf
+F25 596:33 enableDebugInfo NotYet lowering new an Identifier
+F26 597:33 enableDebugInfo NotYet lowering new an Identifier
+F27 600:9 enableDebugInfo Refused lowering Object.defineProperties
+F28 617:9 enableDebugInfo Refused lowering Object.defineProperties
+F29 671:9 enableDebugInfo Refused lowering Object.defineProperties
+F30 774:70 enableDebugInfo Refused refusal_scan an unproven value assigned to a numeric literal or enum member slot SyntaxKind.SourceFile
+F31 874:20 attachDebugPrototypeIfDebug Refused lowering Object.setPrototypeOf
+F32 959:15 formatControlFlowGraph NotYet lowering a value of type Record<number, FlowGraphNode>
+F33 973:9 isFlowSwitchClause NotYet lowering a checked predicate target whose check would read past the depth bound (FlowSwitchClause)
+F34 980:39 hasAntecedents NotYet lowering in when a possibly absent spread has no property presence descriptors
+F35 981:32 hasAntecedents NotYet lowering reading hasAntecedentList
+F36 982:26 hasAntecedents NotYet lowering reading hasAntecedentList
+F37 983:20 hasAntecedents NotYet lowering reading antecedent
+F38 1016:29 buildGraphNode NotYet lowering reading links
+F39 1017:17 buildGraphNode NotYet lowering reading graphNode
+F40 1033:18 buildGraphNode NotYet lowering reading graphNode
+F41 1034:29 buildGraphNode Refused refusal_scan a value of type { id: number; flowNode: FlowNode; edges: never[]; text: string; lane: number; endLane: number; level: number; circular: false; } seen as FlowGraphNode, which can write FlowGraphEdge[] where never[] is read
+F42 1046:20 buildGraphNode NotYet lowering reading graphNode
+F43 1065:20 computeLevel NotYet lowering returning a property or element assignment
+F44 1077:39 computeColumnWidths NotYet refusal_scan a member typed any ([]) related to number at the initializer site
+F45 1079:17 computeColumnWidths NotYet lowering reading columns
+F46 1081:20 computeColumnWidths NotYet lowering reading columns
+F47 1152:82 renderGraph NotYet lowering Array as a value outside equality or typeof (overloaded calls and static properties need their own representation)
+F48 1153:48 renderGraph Refused refusal_scan an unproven value assigned to a numeric literal or enum member slot Connection
+F49 1165:21 renderGraph NotYet lowering assigning to a NonNullExpression
+F50 1168:21 renderGraph NotYet lowering assigning to a NonNullExpression
+F51 1176:21 renderGraph NotYet lowering assigning to a NonNullExpression
+F52 1219:17 writeLane NotYet lowering assigning to a NonNullExpression
+F53 1251:38 fill NotYet lowering a value of type T

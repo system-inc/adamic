@@ -1,0 +1,577 @@
+{
+  "F1": [
+    {
+      "file": "internal/lower/expression.go",
+      "line": 53,
+      "source_line": "\treturn 0, l.notYet(node, \"a value of type \"+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))",
+      "function_declaration_line": 16,
+      "function_declaration": "func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {"
+    }
+  ],
+  "F2": [
+    {
+      "file": "internal/lower/census_small.go",
+      "line": 233,
+      "source_line": "\t\t\treturn &Refused{Where: l.program.Where(parameter), What: label + \" parameter \" + name(parameter) + \" cannot be served by implementation parameter \" + name(actual), Fix: \"make the implementation accept every value admitted by this overload, without mutable widening or bivariance\"}",
+      "function_declaration_line": 160,
+      "function_declaration": "func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal int) error {"
+    }
+  ],
+  "F3": [
+    {
+      "file": "internal/lower/invariance.go",
+      "line": 1039,
+      "source_line": "\twhat := \"a value of type \" + l.checker.TypeToString(own) + \" seen as \" + l.checker.TypeToString(contextual) + \", which can write \" + l.checker.TypeToString(found.target) + \" where \" + l.checker.TypeToString(found.source) + \" is read\"",
+      "function_declaration_line": 1023,
+      "function_declaration": "func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {"
+    },
+    {
+      "file": "internal/lower/invariance.go",
+      "line": 1053,
+      "source_line": "\treturn &Refused{Where: l.program.Where(node), What: what, Fix: fix}",
+      "function_declaration_line": 1023,
+      "function_declaration": "func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {"
+    }
+  ],
+  "F4": [
+    {
+      "file": "internal/lower/census_small.go",
+      "line": 233,
+      "source_line": "\t\t\treturn &Refused{Where: l.program.Where(parameter), What: label + \" parameter \" + name(parameter) + \" cannot be served by implementation parameter \" + name(actual), Fix: \"make the implementation accept every value admitted by this overload, without mutable widening or bivariance\"}",
+      "function_declaration_line": 160,
+      "function_declaration": "func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal int) error {"
+    }
+  ],
+  "F5": [
+    {
+      "file": "internal/lower/invariance.go",
+      "line": 1039,
+      "source_line": "\twhat := \"a value of type \" + l.checker.TypeToString(own) + \" seen as \" + l.checker.TypeToString(contextual) + \", which can write \" + l.checker.TypeToString(found.target) + \" where \" + l.checker.TypeToString(found.source) + \" is read\"",
+      "function_declaration_line": 1023,
+      "function_declaration": "func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {"
+    },
+    {
+      "file": "internal/lower/invariance.go",
+      "line": 1053,
+      "source_line": "\treturn &Refused{Where: l.program.Where(node), What: what, Fix: fix}",
+      "function_declaration_line": 1023,
+      "function_declaration": "func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {"
+    }
+  ],
+  "F6": [
+    {
+      "file": "internal/lower/invariance.go",
+      "line": 1039,
+      "source_line": "\twhat := \"a value of type \" + l.checker.TypeToString(own) + \" seen as \" + l.checker.TypeToString(contextual) + \", which can write \" + l.checker.TypeToString(found.target) + \" where \" + l.checker.TypeToString(found.source) + \" is read\"",
+      "function_declaration_line": 1023,
+      "function_declaration": "func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {"
+    },
+    {
+      "file": "internal/lower/invariance.go",
+      "line": 1053,
+      "source_line": "\treturn &Refused{Where: l.program.Where(node), What: what, Fix: fix}",
+      "function_declaration_line": 1023,
+      "function_declaration": "func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {"
+    }
+  ],
+  "F7": [
+    {
+      "file": "internal/lower/census_small.go",
+      "line": 233,
+      "source_line": "\t\t\treturn &Refused{Where: l.program.Where(parameter), What: label + \" parameter \" + name(parameter) + \" cannot be served by implementation parameter \" + name(actual), Fix: \"make the implementation accept every value admitted by this overload, without mutable widening or bivariance\"}",
+      "function_declaration_line": 160,
+      "function_declaration": "func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal int) error {"
+    }
+  ],
+  "F8": [
+    {
+      "file": "internal/lower/invariance.go",
+      "line": 1039,
+      "source_line": "\twhat := \"a value of type \" + l.checker.TypeToString(own) + \" seen as \" + l.checker.TypeToString(contextual) + \", which can write \" + l.checker.TypeToString(found.target) + \" where \" + l.checker.TypeToString(found.source) + \" is read\"",
+      "function_declaration_line": 1023,
+      "function_declaration": "func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {"
+    },
+    {
+      "file": "internal/lower/invariance.go",
+      "line": 1053,
+      "source_line": "\treturn &Refused{Where: l.program.Where(node), What: what, Fix: fix}",
+      "function_declaration_line": 1023,
+      "function_declaration": "func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {"
+    }
+  ],
+  "F9": [
+    {
+      "file": "internal/lower/prototype.go",
+      "line": 124,
+      "source_line": "\treturn &Refused{Where: l.program.Where(node), What: \"inherited library member \" + name + \" read as an own field\", Fix: \"prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)\"}",
+      "function_declaration_line": 120,
+      "function_declaration": "func (l *lowering) prototypeRead(node *ast.Node, name string) error {"
+    }
+  ],
+  "F10": [
+    {
+      "file": "internal/lower/prototype.go",
+      "line": 124,
+      "source_line": "\treturn &Refused{Where: l.program.Where(node), What: \"inherited library member \" + name + \" read as an own field\", Fix: \"prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)\"}",
+      "function_declaration_line": 120,
+      "function_declaration": "func (l *lowering) prototypeRead(node *ast.Node, name string) error {"
+    }
+  ],
+  "F11": [
+    {
+      "file": "internal/lower/refusals.go",
+      "line": 282,
+      "source_line": "\t\t\treturn &Refused{Where: l.program.Where(node), What: \"a method read as a value (\" + symbol.Name + \" would lose its object, and this with it)\", Fix: \"call it in an arrow that keeps the object: (\" + parameters + \") => \" + object + \".\" + symbol.Name + \"(\" + parameters + \") (unbound-method)\"}",
+      "function_declaration_line": 260,
+      "function_declaration": "func (l *lowering) methodValueRefusal(node *ast.Node) error {"
+    }
+  ],
+  "F12": [
+    {
+      "file": "internal/lower/expression.go",
+      "line": 672,
+      "source_line": "\t\t\treturn nil, l.notYet(node, \"reading \"+node.Text())",
+      "function_declaration_line": 574,
+      "function_declaration": "func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {"
+    }
+  ],
+  "F13": [
+    {
+      "file": "internal/lower/expression.go",
+      "line": 672,
+      "source_line": "\t\t\treturn nil, l.notYet(node, \"reading \"+node.Text())",
+      "function_declaration_line": 574,
+      "function_declaration": "func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {"
+    }
+  ],
+  "F14": [
+    {
+      "file": "internal/lower/expression.go",
+      "line": 1217,
+      "source_line": "\t\t\t\treturn nil, l.notYet(span, \"a template interpolating an object, an array, a map, a function or undefined\")",
+      "function_declaration_line": 1177,
+      "function_declaration": "func (l *lowering) template(node *ast.Node) (ir.Expression, error) {"
+    }
+  ],
+  "F15": [
+    {
+      "file": "internal/lower/reflect_get.go",
+      "line": 111,
+      "source_line": "\t\t\t\treturn l.notYet(node, dynamicKeyedRead(node)+\" \"+reason)",
+      "function_declaration_line": 104,
+      "function_declaration": "func (l *lowering) checkDynamicKeyedGetterSyntax(node *ast.Node) error {"
+    }
+  ],
+  "F16": [
+    {
+      "file": "internal/lower/expression.go",
+      "line": 672,
+      "source_line": "\t\t\treturn nil, l.notYet(node, \"reading \"+node.Text())",
+      "function_declaration_line": 574,
+      "function_declaration": "func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {"
+    }
+  ],
+  "F17": [
+    {
+      "file": "internal/lower/unknown.go",
+      "line": 46,
+      "source_line": "\t\t\treturn nil, &Refused{Where: l.program.Where(node), What: \"in that narrows a union of object types (any object with the key passes)\", Fix: \"use a discriminant, or a Map\"}",
+      "function_declaration_line": 26,
+      "function_declaration": "func (l *lowering) inProperty(node *ast.Node) (ir.Expression, error) {"
+    }
+  ],
+  "F18": [
+    {
+      "file": "internal/lower/cast_proof.go",
+      "line": 191,
+      "source_line": "\trefused := &Refused{Where: l.program.Where(node), What: \"a cast the runtime can't check\", Fix: l.castRepair(node)}",
+      "function_declaration_line": 177,
+      "function_declaration": "func (l *lowering) castProof(node *ast.Node) (castProof, error) {"
+    }
+  ],
+  "F19": [
+    {
+      "file": "internal/lower/cast_proof.go",
+      "line": 191,
+      "source_line": "\trefused := &Refused{Where: l.program.Where(node), What: \"a cast the runtime can't check\", Fix: l.castRepair(node)}",
+      "function_declaration_line": 177,
+      "function_declaration": "func (l *lowering) castProof(node *ast.Node) (castProof, error) {"
+    }
+  ],
+  "F20": [
+    {
+      "file": "internal/lower/library_object.go",
+      "line": 20,
+      "source_line": "\t\treturn nil, true, &Refused{Where: l.program.Where(node), What: \"Object.\" + name, Fix: reason}",
+      "function_declaration_line": 15,
+      "function_declaration": "func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {"
+    },
+    {
+      "file": "internal/lower/library_object.go",
+      "line": 26,
+      "source_line": "\t\treturn refused(\"prototypes expose or replace fields outside the declared shape; use a declared object or class with composition\")",
+      "function_declaration_line": 15,
+      "function_declaration": "func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {"
+    }
+  ],
+  "F21": [
+    {
+      "file": "internal/lower/unknown.go",
+      "line": 56,
+      "source_line": "\t\treturn nil, l.notYet(node, \"in when \"+reason)",
+      "function_declaration_line": 26,
+      "function_declaration": "func (l *lowering) inProperty(node *ast.Node) (ir.Expression, error) {"
+    },
+    {
+      "file": "internal/lower/unknown.go",
+      "line": 314,
+      "source_line": "\t\t\t\t\treason = \"a possibly absent spread has no property presence descriptors\"",
+      "function_declaration_line": 303,
+      "function_declaration": "func (l *lowering) presenceHazard(name string) string {"
+    }
+  ],
+  "F22": [
+    {
+      "file": "internal/lower/cast_proof.go",
+      "line": 191,
+      "source_line": "\trefused := &Refused{Where: l.program.Where(node), What: \"a cast the runtime can't check\", Fix: l.castRepair(node)}",
+      "function_declaration_line": 177,
+      "function_declaration": "func (l *lowering) castProof(node *ast.Node) (castProof, error) {"
+    }
+  ],
+  "F23": [
+    {
+      "file": "internal/lower/cast_proof.go",
+      "line": 191,
+      "source_line": "\trefused := &Refused{Where: l.program.Where(node), What: \"a cast the runtime can't check\", Fix: l.castRepair(node)}",
+      "function_declaration_line": 177,
+      "function_declaration": "func (l *lowering) castProof(node *ast.Node) (castProof, error) {"
+    }
+  ],
+  "F24": [
+    {
+      "file": "internal/lower/library_object.go",
+      "line": 20,
+      "source_line": "\t\treturn nil, true, &Refused{Where: l.program.Where(node), What: \"Object.\" + name, Fix: reason}",
+      "function_declaration_line": 15,
+      "function_declaration": "func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {"
+    },
+    {
+      "file": "internal/lower/library_object.go",
+      "line": 26,
+      "source_line": "\t\treturn refused(\"prototypes expose or replace fields outside the declared shape; use a declared object or class with composition\")",
+      "function_declaration_line": 15,
+      "function_declaration": "func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {"
+    }
+  ],
+  "F25": [
+    {
+      "file": "internal/lower/object.go",
+      "line": 1822,
+      "source_line": "\t\treturn nil, l.notYet(node, \"new \"+describe(created.Expression))",
+      "function_declaration_line": 1801,
+      "function_declaration": "func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {"
+    }
+  ],
+  "F26": [
+    {
+      "file": "internal/lower/object.go",
+      "line": 1822,
+      "source_line": "\t\treturn nil, l.notYet(node, \"new \"+describe(created.Expression))",
+      "function_declaration_line": 1801,
+      "function_declaration": "func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {"
+    }
+  ],
+  "F27": [
+    {
+      "file": "internal/lower/library_object.go",
+      "line": 20,
+      "source_line": "\t\treturn nil, true, &Refused{Where: l.program.Where(node), What: \"Object.\" + name, Fix: reason}",
+      "function_declaration_line": 15,
+      "function_declaration": "func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {"
+    },
+    {
+      "file": "internal/lower/library_object.go",
+      "line": 24,
+      "source_line": "\t\treturn refused(\"property descriptors can change the presence, type or access behavior of fields; Adamic fields have a fixed shape and are plain loads and stores\")",
+      "function_declaration_line": 15,
+      "function_declaration": "func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {"
+    }
+  ],
+  "F28": [
+    {
+      "file": "internal/lower/library_object.go",
+      "line": 20,
+      "source_line": "\t\treturn nil, true, &Refused{Where: l.program.Where(node), What: \"Object.\" + name, Fix: reason}",
+      "function_declaration_line": 15,
+      "function_declaration": "func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {"
+    },
+    {
+      "file": "internal/lower/library_object.go",
+      "line": 24,
+      "source_line": "\t\treturn refused(\"property descriptors can change the presence, type or access behavior of fields; Adamic fields have a fixed shape and are plain loads and stores\")",
+      "function_declaration_line": 15,
+      "function_declaration": "func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {"
+    }
+  ],
+  "F29": [
+    {
+      "file": "internal/lower/library_object.go",
+      "line": 20,
+      "source_line": "\t\treturn nil, true, &Refused{Where: l.program.Where(node), What: \"Object.\" + name, Fix: reason}",
+      "function_declaration_line": 15,
+      "function_declaration": "func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {"
+    },
+    {
+      "file": "internal/lower/library_object.go",
+      "line": 24,
+      "source_line": "\t\treturn refused(\"property descriptors can change the presence, type or access behavior of fields; Adamic fields have a fixed shape and are plain loads and stores\")",
+      "function_declaration_line": 15,
+      "function_declaration": "func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {"
+    }
+  ],
+  "F30": [
+    {
+      "file": "internal/lower/invariance.go",
+      "line": 1035,
+      "source_line": "\t\t\treturn &Refused{Where: l.program.Where(node), What: \"an unproven value assigned to a numeric literal or enum member slot \" + l.checker.TypeToString(found.target), Fix: \"compare with this literal and return that constant, or widen the slot to the whole numeric enum or number (adamic/enum-literal)\"}",
+      "function_declaration_line": 1023,
+      "function_declaration": "func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {"
+    }
+  ],
+  "F31": [
+    {
+      "file": "internal/lower/library_object.go",
+      "line": 20,
+      "source_line": "\t\treturn nil, true, &Refused{Where: l.program.Where(node), What: \"Object.\" + name, Fix: reason}",
+      "function_declaration_line": 15,
+      "function_declaration": "func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {"
+    },
+    {
+      "file": "internal/lower/library_object.go",
+      "line": 26,
+      "source_line": "\t\treturn refused(\"prototypes expose or replace fields outside the declared shape; use a declared object or class with composition\")",
+      "function_declaration_line": 15,
+      "function_declaration": "func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {"
+    }
+  ],
+  "F32": [
+    {
+      "file": "internal/lower/expression.go",
+      "line": 53,
+      "source_line": "\treturn 0, l.notYet(node, \"a value of type \"+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))",
+      "function_declaration_line": 16,
+      "function_declaration": "func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {"
+    }
+  ],
+  "F33": [
+    {
+      "file": "internal/lower/predicates_proof.go",
+      "line": 949,
+      "source_line": "\t\treturn nil, nil, l.notYet(node, cause+\" (\"+l.checker.TypeToString(target)+\")\")",
+      "function_declaration_line": 808,
+      "function_declaration": "func (l *lowering) predicateMembership(node *ast.Node, value ir.Expression, source, target *checker.Type, local func(string, ir.Type) int, depth int) ([]ir.Statement, ir.Expression, error) {"
+    },
+    {
+      "file": "internal/lower/predicates_proof.go",
+      "line": 988,
+      "source_line": "\t\t\treturn \"a checked predicate target whose check would read past the depth bound\"",
+      "function_declaration_line": 961,
+      "function_declaration": "func (l *lowering) checkedPredicateTargetCause(target *checker.Type) string {"
+    }
+  ],
+  "F34": [
+    {
+      "file": "internal/lower/unknown.go",
+      "line": 56,
+      "source_line": "\t\treturn nil, l.notYet(node, \"in when \"+reason)",
+      "function_declaration_line": 26,
+      "function_declaration": "func (l *lowering) inProperty(node *ast.Node) (ir.Expression, error) {"
+    },
+    {
+      "file": "internal/lower/unknown.go",
+      "line": 314,
+      "source_line": "\t\t\t\t\treason = \"a possibly absent spread has no property presence descriptors\"",
+      "function_declaration_line": 303,
+      "function_declaration": "func (l *lowering) presenceHazard(name string) string {"
+    }
+  ],
+  "F35": [
+    {
+      "file": "internal/lower/expression.go",
+      "line": 672,
+      "source_line": "\t\t\treturn nil, l.notYet(node, \"reading \"+node.Text())",
+      "function_declaration_line": 574,
+      "function_declaration": "func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {"
+    }
+  ],
+  "F36": [
+    {
+      "file": "internal/lower/expression.go",
+      "line": 672,
+      "source_line": "\t\t\treturn nil, l.notYet(node, \"reading \"+node.Text())",
+      "function_declaration_line": 574,
+      "function_declaration": "func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {"
+    }
+  ],
+  "F37": [
+    {
+      "file": "internal/lower/expression.go",
+      "line": 672,
+      "source_line": "\t\t\treturn nil, l.notYet(node, \"reading \"+node.Text())",
+      "function_declaration_line": 574,
+      "function_declaration": "func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {"
+    }
+  ],
+  "F38": [
+    {
+      "file": "internal/lower/expression.go",
+      "line": 672,
+      "source_line": "\t\t\treturn nil, l.notYet(node, \"reading \"+node.Text())",
+      "function_declaration_line": 574,
+      "function_declaration": "func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {"
+    }
+  ],
+  "F39": [
+    {
+      "file": "internal/lower/expression.go",
+      "line": 672,
+      "source_line": "\t\t\treturn nil, l.notYet(node, \"reading \"+node.Text())",
+      "function_declaration_line": 574,
+      "function_declaration": "func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {"
+    }
+  ],
+  "F40": [
+    {
+      "file": "internal/lower/expression.go",
+      "line": 672,
+      "source_line": "\t\t\treturn nil, l.notYet(node, \"reading \"+node.Text())",
+      "function_declaration_line": 574,
+      "function_declaration": "func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {"
+    }
+  ],
+  "F41": [
+    {
+      "file": "internal/lower/invariance.go",
+      "line": 1039,
+      "source_line": "\twhat := \"a value of type \" + l.checker.TypeToString(own) + \" seen as \" + l.checker.TypeToString(contextual) + \", which can write \" + l.checker.TypeToString(found.target) + \" where \" + l.checker.TypeToString(found.source) + \" is read\"",
+      "function_declaration_line": 1023,
+      "function_declaration": "func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {"
+    },
+    {
+      "file": "internal/lower/invariance.go",
+      "line": 1053,
+      "source_line": "\treturn &Refused{Where: l.program.Where(node), What: what, Fix: fix}",
+      "function_declaration_line": 1023,
+      "function_declaration": "func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {"
+    }
+  ],
+  "F42": [
+    {
+      "file": "internal/lower/expression.go",
+      "line": 672,
+      "source_line": "\t\t\treturn nil, l.notYet(node, \"reading \"+node.Text())",
+      "function_declaration_line": 574,
+      "function_declaration": "func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {"
+    }
+  ],
+  "F43": [
+    {
+      "file": "internal/lower/statements.go",
+      "line": 337,
+      "source_line": "\t\treturn nil, l.notYet(node, \"returning a property or element assignment\")",
+      "function_declaration_line": 324,
+      "function_declaration": "func (l *lowering) returnAssignment(node *ast.Node) ([]ir.Statement, error) {"
+    }
+  ],
+  "F44": [
+    {
+      "file": "internal/lower/any_relations.go",
+      "line": 43,
+      "source_line": "\t\t\tl.refusal.deferred = l.notYet(node, \"a member typed any (\"+found.path+\") related to \"+l.checker.TypeToString(found.target)+\" at the \"+name+\" site\")",
+      "function_declaration_line": 27,
+      "function_declaration": "func (l *lowering) refuseAnyRelation(node *ast.Node) error {"
+    }
+  ],
+  "F45": [
+    {
+      "file": "internal/lower/expression.go",
+      "line": 672,
+      "source_line": "\t\t\treturn nil, l.notYet(node, \"reading \"+node.Text())",
+      "function_declaration_line": 574,
+      "function_declaration": "func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {"
+    }
+  ],
+  "F46": [
+    {
+      "file": "internal/lower/expression.go",
+      "line": 672,
+      "source_line": "\t\t\treturn nil, l.notYet(node, \"reading \"+node.Text())",
+      "function_declaration_line": 574,
+      "function_declaration": "func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {"
+    }
+  ],
+  "F47": [
+    {
+      "file": "internal/lower/library_globals.go",
+      "line": 29,
+      "source_line": "\t\treturn nil, true, l.notYet(node, name+\" as a value outside equality or typeof (overloaded calls and static properties need their own representation)\")",
+      "function_declaration_line": 11,
+      "function_declaration": "func (l *lowering) libraryGlobalValue(node *ast.Node) (ir.Expression, bool, error) {"
+    }
+  ],
+  "F48": [
+    {
+      "file": "internal/lower/invariance.go",
+      "line": 1035,
+      "source_line": "\t\t\treturn &Refused{Where: l.program.Where(node), What: \"an unproven value assigned to a numeric literal or enum member slot \" + l.checker.TypeToString(found.target), Fix: \"compare with this literal and return that constant, or widen the slot to the whole numeric enum or number (adamic/enum-literal)\"}",
+      "function_declaration_line": 1023,
+      "function_declaration": "func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {"
+    }
+  ],
+  "F49": [
+    {
+      "file": "internal/lower/assignments.go",
+      "line": 65,
+      "source_line": "\t\treturn nil, l.notYet(target, \"assigning to \"+describe(target))",
+      "function_declaration_line": 12,
+      "function_declaration": "func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {"
+    }
+  ],
+  "F50": [
+    {
+      "file": "internal/lower/assignments.go",
+      "line": 65,
+      "source_line": "\t\treturn nil, l.notYet(target, \"assigning to \"+describe(target))",
+      "function_declaration_line": 12,
+      "function_declaration": "func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {"
+    }
+  ],
+  "F51": [
+    {
+      "file": "internal/lower/assignments.go",
+      "line": 65,
+      "source_line": "\t\treturn nil, l.notYet(target, \"assigning to \"+describe(target))",
+      "function_declaration_line": 12,
+      "function_declaration": "func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {"
+    }
+  ],
+  "F52": [
+    {
+      "file": "internal/lower/assignments.go",
+      "line": 65,
+      "source_line": "\t\treturn nil, l.notYet(target, \"assigning to \"+describe(target))",
+      "function_declaration_line": 12,
+      "function_declaration": "func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {"
+    }
+  ],
+  "F53": [
+    {
+      "file": "internal/lower/expression.go",
+      "line": 53,
+      "source_line": "\treturn 0, l.notYet(node, \"a value of type \"+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))",
+      "function_declaration_line": 16,
+      "function_declaration": "func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {"
+    }
+  ]
+}
