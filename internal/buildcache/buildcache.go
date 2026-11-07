@@ -1074,7 +1074,13 @@ func toolValue(name, label string, arguments, environment []string) string {
 			report = diagnostics.String()
 		}
 		// The report's config files are read by the paths it names, so they're keyed before the install prefix is rewritten.
-		value = label + ": " + installedAs(path, toolReport(report))
+		// A config that can't be read refuses the report: the tool is named by that error alone, as one that can't run
+		// is, so no key reads as one whose configs it read.
+		reported, refused := toolReport(report)
+		if refused != nil {
+			return label + ":  (" + refused.Error() + ")"
+		}
+		value = label + ": " + installedAs(path, reported)
 		if err != nil {
 			value += " (" + err.Error() + ")"
 		}
@@ -1087,16 +1093,20 @@ func toolValue(name, label string, arguments, environment []string) string {
 // and would key one product apart on every machine (Loom, Oct 9: a key that depends on the home directory is a
 // reproducibility bug). Everything that names what the tool is (its version, target and thread model) stays. Each
 // config file clang reports reading is keyed by what it holds and by the files it names, never by its path
-// (toolchain.ConfigurationsByContent, Node's rule on #t3rw158).
-func toolReport(output string) string {
+// (toolchain.ConfigurationsByContent, Node's rule on #t3rw158), and a config it can't read is the report's error.
+func toolReport(output string) (string, error) {
+	configured, err := toolchain.ConfigurationsByContent(strings.TrimSpace(output))
+	if err != nil {
+		return "", err
+	}
 	lines := []string{}
-	for _, line := range strings.Split(toolchain.ConfigurationsByContent(strings.TrimSpace(output)), "\n") {
+	for _, line := range strings.Split(configured, "\n") {
 		if strings.HasPrefix(strings.TrimSpace(line), "InstalledDir:") {
 			continue
 		}
 		lines = append(lines, line)
 	}
-	return strings.TrimSpace(strings.Join(lines, "\n"))
+	return strings.TrimSpace(strings.Join(lines, "\n")), nil
 }
 
 // installedAs rewrites the tool's install prefix, the directory above the bin it runs from, to <name> in its report:
