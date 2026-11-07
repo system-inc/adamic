@@ -14,7 +14,7 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 	case "set_timeout":
 		return "adamicSetTimeout(" + args[0] + ", " + args[1] + ", [" + strings.Join(args[2:], ", ") + "])"
 	case "clear_timeout":
-		return "globalThis.clearTimeout(" + args[0] + ")"
+		return "adamicClearTimeout(" + args[0] + ")"
 	case "host_watch_file":
 		return "adamicNodeFSFile.watchFile(" + args[0] + ", {persistent:" + args[1] + ", interval:" + args[2] + "}, " + "adamicWatchFileListener(" + args[3] + "))"
 	case "host_watch":
@@ -116,9 +116,17 @@ const adamicWatchFileListener = callback => {
 // setTimeout called from source is Node's own, its Timeout Node's, and its callback a function in
 // the closure calling convention, handed the extra arguments Node hands it. A delay native's timer
 // provider names NotYet (timers_impl.h) stops here in the same words, before Node would warn.
+// clearTimeout is Node's own after native's check (#995spev): an object that isn't a Timeout, known
+// by the prototype a probe timer has, but holds a truthy own _onTimeout stops before Node would
+// unenroll it.
 const nodeTimersRuntime = `const adamicSetTimeout = (callback, delay, values) => {
  if (!(delay >= 0 && delay <= 2147483647)) panic('NotYet: timer delay requiring Node warnings');
  return globalThis.setTimeout((...handed) => { adamicCall(callback, handed); }, delay, ...values);
+};
+const adamicTimeoutPrototype = (() => { const probe = globalThis.setTimeout(() => {}, 1); globalThis.clearTimeout(probe); return Object.getPrototypeOf(probe); })();
+const adamicClearTimeout = (value) => {
+ if (typeof value === 'object' && value !== null && Object.getPrototypeOf(value) !== adamicTimeoutPrototype && Object.hasOwn(value, '_onTimeout') && value._onTimeout) panic("clearTimeout of an object that isn't a timer but holds _onTimeout isn't built yet");
+ globalThis.clearTimeout(value);
 };
 `
 

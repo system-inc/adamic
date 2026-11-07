@@ -120,10 +120,43 @@ adamic_object *adamic_node_set_timeout(adamic_closure *callback, adamic_timer_in
     timeout->slots[0].number = (double)handle.identity;
     return timeout;
 }
+/* ToBoolean of a slot by how its field holds it. An absent number | undefined is a NaN and an absent
+ * boolean | undefined is 2, both false, as undefined is. */
+static bool timer_slot_truthy(bool reference, adamic_field_kind kind, adamic_value slot) {
+    if (reference) return adamic_census_to_boolean(slot.reference);
+    if (kind == adamic_field_boolean) return slot.maybe_boolean == 1;
+    return slot.number != 0 && !isnan(slot.number);
+}
+/* Node's clearTimeout unenrolls any value whose _onTimeout is truthy, writing its fields, which a
+ * no-op wouldn't (Adamic's ruling on #995spev, Nov 7), so an object that isn't a Timeout but holds a
+ * truthy _onTimeout, found by its name as an object's own field or a record's key, stops. A runtime
+ * host shape holds none. A method or accessor of the name isn't a field: lowering refuses the clear
+ * where the program declares one (library_node_timers.go). */
+static bool timer_foreign_handle(const adamic_object *object) {
+    if (adamic_record_is(object)) {
+        adamic_string key = ADAMIC_STRING("_onTimeout");
+        const adamic_value *slot = adamic_record_get(object, &key);
+        adamic_field_kind kind = adamic_record_values(object);
+        return slot != NULL && timer_slot_truthy(kind == adamic_field_reference, kind, *slot);
+    }
+    if (object->shape->methods == &adamic_host_methods) return false;
+    for (size_t index = 0; index < object->shape->count; index++) {
+        if (strcmp(object->shape->names[index], "_onTimeout") != 0 || !adamic_object_present(object, index)) continue;
+        adamic_field_kind kind = object->shape->kinds == NULL ? adamic_field_number : object->shape->kinds[index];
+        return timer_slot_truthy(object->shape->references[index], kind, object->slots[index]);
+    }
+    return false;
+}
 double adamic_node_clear_timeout(const adamic_heap *value) {
     if (value == NULL || value->kind != adamic_kind_object) return 0;
     const adamic_object *object = (const adamic_object *)value;
-    if (object->shape != &timeout_shape) return 0;
+    if (object->shape != &timeout_shape) {
+        if (timer_foreign_handle(object)) {
+            static const char message[] = "clearTimeout of an object that isn't a timer but holds _onTimeout isn't built yet";
+            adamic_panic(message, sizeof message - 1);
+        }
+        return 0;
+    }
     /* A fired or cleared Timeout's identity is stale, which cancel answers false. */
     (void)adamic_timer_cancel((adamic_timer_handle){&timer_provider, (uintptr_t)object->slots[0].number});
     return 0;

@@ -177,7 +177,8 @@ one of the three on the second allowlist (`runtimeNotYetConversions`, #09dvwny:
 String and a template of an unknown), matched whole, never as a pattern, or
 exactly `adamic: panic: <message>` with `<message>` one on the third allowlist
 (`runtimeNotYetKeyless`, #ey7aysy under #0sps03r: Object.keys of a runtime host
-value), matched whole too. Each form names the ruling that made it, and the tool
+value; #995spev: clearTimeout of an object that isn't a timer but holds a truthy
+`_onTimeout`), matched whole too. Each form names the ruling that made it, and the tool
 refuses an entry whose `ruling_task` is not its form's ruling. The first
 allowlist holds the ten `internal/ir` DynamicKeyedStops forms a ruled fixture
 reaches; a `compiler bug:` stop never qualifies, listed or allowlisted.
