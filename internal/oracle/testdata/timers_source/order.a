@@ -1,0 +1,13 @@
+// Timers at 0, 0, 5 and 1 ms run in Node's order: a 0 ms timer is a 1 ms one, so the three at 1 ms
+// run as they were set, before the one at 5 ms, and the one cleared before it's due never runs. The
+// synchronous line and an awaited promise's continuation come first, as microtasks do.
+import 'node:timers';
+
+setTimeout(() => { console.log('zero first'); }, 0);
+setTimeout(() => { console.log('zero second'); }, 0);
+setTimeout(() => { console.log('five'); }, 5);
+setTimeout(() => { console.log('one'); }, 1);
+const cleared = setTimeout(() => { console.log('cleared'); }, 0);
+clearTimeout(cleared);
+console.log('synchronous');
+console.log(`awaited ${await Promise.resolve('reaction')}`);
