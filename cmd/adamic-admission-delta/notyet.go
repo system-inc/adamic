@@ -68,12 +68,15 @@ const (
 // nor the conversion sentence (#ey7aysy, Adamic, Nov 4, under #0sps03r). A collator's compare stops
 // whole too, with neither string it was handed, since operands would put run-time data in an entry
 // (#zjndrx5, Adamic, Nov 7 06:39Z), and so does a collator's construction from a defined locale, with
-// no locale in it (#zjndrx5, Adamic, Nov 7 06:48Z), both lifted by #s82g5nx. Only these exact words
-// qualify, matched against the whole stderr: a new message needs Adamic's ruling and its line here.
+// no locale in it (#zjndrx5, Adamic, Nov 7 06:48Z), both lifted by #s82g5nx. clearTimeout of an object
+// that isn't a timer but holds a truthy _onTimeout, which Node would unenroll, reads no key either
+// (Adamic, #995spev, Nov 7). Only these exact words qualify, matched against the whole stderr: a new
+// message needs Adamic's ruling and its line here.
 var runtimeNotYetKeyless = map[string]string{
-	"this runtime value's own keys aren't enumerated yet": "#0sps03r",
-	"Intl.Collator's compare isn't built yet":             "#zjndrx5",
-	"Intl.Collator with a defined locale isn't built yet": "#zjndrx5",
+	"this runtime value's own keys aren't enumerated yet":                               "#0sps03r",
+	"Intl.Collator's compare isn't built yet":                                           "#zjndrx5",
+	"Intl.Collator with a defined locale isn't built yet":                               "#zjndrx5",
+	"clearTimeout of an object that isn't a timer but holds _onTimeout isn't built yet": "#995spev",
 }
 
 // runtimeNotYetKeylessPrefix is what every keyless message is said after.
