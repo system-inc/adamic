@@ -1,10 +1,12 @@
 package oracle
 
 import (
+	"errors"
 	"path/filepath"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/lower"
 )
 
 // Intl.Collator's head 1 (#zjndrx5, Adamic's ruling at 06:39Z, Runtime's two musts): tsc's collator
@@ -110,6 +112,69 @@ func TestIntlCollatorStopsAlikeOnBothBackends(t *testing.T) {
 			}
 			if difference := disagreement(native, backend); difference != "" {
 				t.Errorf("the backends differ: %s", difference)
+			}
+		})
+	}
+}
+
+// intlCollatorWriteStop is what a write to a collator's member stops in, named by its member.
+func intlCollatorWriteStop(member string) string {
+	return "a write to an Intl.Collator's " + member + ", which Node's collator holds only on Intl.Collator.prototype (compare there is a getter, and writing it throws a TypeError)"
+}
+
+// intlCollatorOwnPropertiesStop is what an Object call reading a collator's own properties stops in.
+func intlCollatorOwnPropertiesStop(call string) string {
+	return "Object." + call + " on an Intl.Collator, which has no own property on Node"
+}
+
+// intlCollatorCompileStops are the roads Runtime named reviewing head 1's C (#zjndrx5), each a program
+// that type-checks, since TypeScript types compare as an assignable method, and that native would
+// answer from its shape's slots where Node's collator has no own property: compare is a getter on
+// Intl.Collator.prototype. Each stops at compile time by name, a NotYet, or, for the spread, the
+// library spread rule's refusal (librarySpreadRefusal), never lowering. node and exit are what Node
+// does with the source. Mutants: library_intl.go's write stop dropped, so write.a and write_caught.a
+// meet the method value refusal's words; that and the method value refusal skipping a write's target,
+// so the write lowers; Object.assign, entries, values and getOwnPropertyNames let by
+// intlCollatorOwnProperties, so each meets other words or lowers.
+var intlCollatorCompileStops = []struct {
+	file, node string
+	exit       int
+	refused    bool
+	what       string
+}{
+	{"write.a", "collator\n", 70, false, intlCollatorWriteStop("compare")},
+	{"write_caught.a", "collator\nTypeError\n", 0, false, intlCollatorWriteStop("compare")},
+	{"spread.a", "collator\nkeys 0\n", 0, true, "an object spread through a view that may hold library class Collator (its internal fields are not own enumerable properties)"},
+	{"assign.a", "collator\nkeys 0\n", 0, false, intlCollatorOwnPropertiesStop("assign")},
+	{"entries.a", "collator\nentries 0\n", 0, false, intlCollatorOwnPropertiesStop("entries")},
+	{"values.a", "collator\nvalues 0\n", 0, false, intlCollatorOwnPropertiesStop("values")},
+	{"own_names.a", "collator\nnames []\n", 0, false, intlCollatorOwnPropertiesStop("getOwnPropertyNames")},
+}
+
+// Each road stops before anything of it lowers, in its own words, where Node runs on.
+func TestIntlCollatorWritesAndCopiesStopByName(t *testing.T) {
+	t.Parallel()
+	for _, probe := range intlCollatorCompileStops {
+		t.Run(probe.file, func(t *testing.T) {
+			t.Parallel()
+			path := intlCollatorFixture(t, probe.file)
+			if truth := onNode(t, path); truth.exitCode != probe.exit || string(truth.stdout) != probe.node {
+				t.Fatalf("source Node: exit %d, stdout %q, stderr %q, want exit %d, stdout %q", truth.exitCode, truth.stdout, truth.stderr, probe.exit, probe.node)
+			}
+			_, err := lowered(t, path)
+			var notYet *lower.NotYet
+			var refused *lower.Refused
+			switch {
+			case probe.refused && errors.As(err, &refused):
+				if refused.What != probe.what {
+					t.Errorf("refused %q, want %q", refused.What, probe.what)
+				}
+			case !probe.refused && errors.As(err, &notYet):
+				if notYet.What != probe.what {
+					t.Errorf("NotYet %q, want %q", notYet.What, probe.what)
+				}
+			default:
+				t.Errorf("got %v, want the stop %q (refused %v)", err, probe.what, probe.refused)
 			}
 		})
 	}
