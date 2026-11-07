@@ -1,0 +1,7 @@
+// A collator has no own property on Node, its compare a getter on Intl.Collator.prototype (Runtime's
+// must 2 on #zjndrx5), so Object.keys of one is []. Native's shape holds compare as its own, so
+// Object.keys of it stops in the keyless host form on both backends (#ey7aysy), never listing compare.
+const collator = new Intl.Collator(undefined, { usage: 'sort', sensitivity: 'variant', numeric: true });
+console.log('collator');
+const keys = Object.keys(collator);
+console.log(`keys [${keys.join(',')}]`);

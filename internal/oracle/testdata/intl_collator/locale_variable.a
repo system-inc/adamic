@@ -1,0 +1,11 @@
+// A locale held in a variable is defined only at run time (Runtime's must 1 on #zjndrx5): typed
+// string | undefined, it lowers, and natively it stops at the construction in the ruled form where
+// Node resolves 'en' and goes on.
+function getUILocale(): string | undefined {
+	return 'en';
+}
+
+const locale = getUILocale();
+console.log(`locale ${locale ?? 'undefined'}`);
+const collator = new Intl.Collator(locale, { usage: 'sort', sensitivity: 'variant', numeric: true });
+console.log(`collator ${typeof collator}`);
