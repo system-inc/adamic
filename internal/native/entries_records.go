@@ -7,7 +7,8 @@ import (
 
 func (e *emitter) recordLiteral(literal ir.ObjectLiteral) string {
 	object := e.own(ir.Object, "adamic_record_new(adamic_field_reference)")
-	e.programObject(object, literal.ProgramRegion)
+	// A record never takes a graph region, so its fallback is its own count.
+	e.programObject(object, literal.ProgramRegion, false)
 	for _, field := range literal.Fields {
 		value := e.value(field.Value)
 		key := e.recordKey(field.Name)

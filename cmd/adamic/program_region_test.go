@@ -22,7 +22,7 @@ func TestProgramRegionCLIHandsMembershipAndRuntimeOneMode(t *testing.T) {
 		if !options.ProgramRegion {
 			t.Fatal("Program lowering must hand the same mode to every native builder, including the checker-archive paths")
 		}
-		if !strings.Contains(code, "adamic_program_adopt_owned") {
+		if !strings.Contains(code, "adamic_program_adopt_or_fallback") {
 			t.Fatal("CLI did not infer the cyclic member")
 		}
 		return nil

@@ -17,11 +17,16 @@ func (e *emitter) adoptGraphObject(value string, literal ir.ObjectLiteral) {
 	if literal.ProgramRegion {
 		return
 	}
+	e.adoptGraph(value, fmt.Sprintf("adamic_object_allocation_size(%s)", value), e.graphObject(literal))
+}
+
+// graphObject is a literal's graph answer as if it were not a Program member.
+func (e *emitter) graphObject(literal ir.ObjectLiteral) bool {
 	graph := e.graphTypes(literal.GraphTypes)
 	if literal.Class != 0 {
 		graph = graph || e.program.Classes[literal.Class-1].Graph
 	}
-	e.adoptGraph(value, fmt.Sprintf("adamic_object_allocation_size(%s)", value), graph)
+	return graph
 }
 
 // The runtime decides boundary ownership from both actual allocations. This

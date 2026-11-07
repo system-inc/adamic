@@ -138,7 +138,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			e.checkThrown()
 		}
 		e.adoptGraphObject(object, literal)
-		e.programObject(object, literal.ProgramRegion)
+		e.programObject(object, literal.ProgramRegion, e.graphObject(literal))
 		e.emptySpread(literal, source, object)
 		values := make([]string, 0, len(literal.Fields))
 		for _, field := range literal.Fields {
@@ -196,7 +196,9 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		object = e.own(ir.Object, fmt.Sprintf("adamic_object_new(&%s)", e.literalShape(literal)))
 		e.adoptGraphObject(object, literal)
 	}
-	e.programObject(object, literal.ProgramRegion)
+	// A constructed object never takes a graph region (only adamic_object_new's does), and a
+	// member is never made in a statement region, so only the plain allocation falls back to one.
+	e.programObject(object, literal.ProgramRegion, !constructionFields(literal.Fields) && e.graphObject(literal))
 	if literal.Tuple {
 		e.line("%s->tuple = true;", object)
 	}

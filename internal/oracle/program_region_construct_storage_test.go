@@ -20,7 +20,7 @@ const programConstructFixture = "internal/oracle/testdata/program_region/program
 
 // programConstructSite is the constructed literal and its Program adoption, which the emitter writes
 // back to back (emit_objects.go). The adoption must size the object by its whole allocation.
-var programConstructSite = regexp.MustCompile(`adamic_object \*\s*(\w+) = adamic_object_construct\([^)]*\);\s*(\w+) = adamic_program_adopt_owned\((\w+), adamic_object_allocation_size\((\w+)\)\);`)
+var programConstructSite = regexp.MustCompile(`adamic_object \*\s*(\w+) = adamic_object_construct\([^)]*\);\s*(\w+) = adamic_program_adopt_or_fallback\((\w+), adamic_object_allocation_size\((\w+)\), (?:true|false)\);`)
 
 // programConstructed is the fixture's Node run, and its C with a check, right after the adoption, that
 // the constructed literal really is a Program member, so no run can pass without adopting it. It
@@ -41,7 +41,7 @@ func programConstructed(t *testing.T) (run, string, string) {
 		t.Fatalf("JavaScript backend: %s", diff)
 	}
 	code := native.C(program)
-	if !strings.Contains(code, "adamic_object_construct(") || !strings.Contains(code, "adamic_program_adopt_owned(") {
+	if !strings.Contains(code, "adamic_object_construct(") || !strings.Contains(code, "adamic_program_adopt_or_fallback(") {
 		t.Fatal("the fixture must construct an object and adopt Program members")
 	}
 	matches := programConstructSite.FindAllStringSubmatchIndex(code, -1)

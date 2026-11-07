@@ -239,13 +239,10 @@ func (e *emitter) makeCell(local int, value string, owned bool) {
 	if declared.Type.IsReference() && !owned {
 		value = retained(value)
 	}
-	if declared.ProgramRegion {
-		e.line("adamic_cell *%s = adamic_cell_new((adamic_value){0}, %t);", cell, declared.Type.IsReference())
-		e.adoptProgram(cell, "sizeof *"+cell, true)
-		e.line("%s->value.%s = %s;", cell, member(declared.Type), slotted(declared.Type, value))
-	} else {
-		e.line("adamic_cell *%s = adamic_cell_new((adamic_value){.%s = %s}, %t);", cell, member(declared.Type), slotted(declared.Type, value), declared.Type.IsReference())
-	}
+	e.line("adamic_cell *%s = adamic_cell_new((adamic_value){.%s = %s}, %t);", cell, member(declared.Type), slotted(declared.Type, value), declared.Type.IsReference())
+	// The value goes in before adoption: once a second Program begins, a graph cell's adoption
+	// joins it as graph_hold would, and a later graph_drop finds the edge it expects.
+	e.adoptProgram(cell, "sizeof *"+cell, declared.ProgramRegion, declared.GraphCell)
 	e.hold(cell)
 }
 
@@ -318,7 +315,7 @@ func (e *emitter) allocateEnvironment(site *ir.Statement) {
 			member = member || e.program.Locals[local].ProgramRegion
 		}
 		e.adoptGraph(environment, fmt.Sprintf("sizeof *%s + %d * sizeof(adamic_cell)", environment, len(cells)), graph && !member)
-		e.adoptProgram(environment, fmt.Sprintf("sizeof *%s + %d * sizeof %s->cells[0]", environment, len(cells), environment), member)
+		e.adoptProgram(environment, fmt.Sprintf("sizeof *%s + %d * sizeof %s->cells[0]", environment, len(cells), environment), member, graph)
 		e.hold(environment)
 	}
 	for position, local := range cells {

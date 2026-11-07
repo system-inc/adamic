@@ -167,8 +167,12 @@ func TestConstantNumbersKeepPlacement(t *testing.T) {
 			t.Fatal("no numeric template")
 		}
 		text := e.out.String()
-		if strings.Contains(text, "adamic_graph_adopt_owned") != (mode.graph && !mode.program) || strings.Contains(text, "adamic_program_adopt_owned") != mode.program {
+		if strings.Contains(text, "adamic_graph_adopt_owned") != (mode.graph && !mode.program) || strings.Contains(text, "adamic_program_adopt_or_fallback") != mode.program {
 			t.Fatalf("wrong adoption graph=%t program=%t: %s", mode.graph, mode.program, text)
+		}
+		// A member's fallback, once a second Program begins, is the graph answer it would have had.
+		if mode.program && !regexp.MustCompile(fmt.Sprintf(`= adamic_program_adopt_or_fallback\((\w+), sizeof \*(\w+), %t\);`, mode.graph)).MatchString(text) {
+			t.Fatalf("member's fallback must carry graph=%t: %s", mode.graph, text)
 		}
 	}
 }
@@ -217,7 +221,7 @@ func constantNumbersAdoptionWitness(t *testing.T, programMode bool) {
 			t.Fatalf("annotated %d numeric literals, want 1", marked)
 		}
 	})
-	if strings.Contains(code, " = adamic_graph_adopt_owned(") == programMode || strings.Contains(code, " = adamic_program_adopt_owned(") != programMode {
+	if strings.Contains(code, " = adamic_graph_adopt_owned(") == programMode || strings.Contains(code, " = adamic_program_adopt_or_fallback(") != programMode {
 		t.Fatal("wrong allocation-site adoption")
 	}
 }

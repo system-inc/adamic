@@ -33,7 +33,7 @@ func (e *emitter) constantNumericArray(literal ir.ArrayLiteral) (string, bool) {
 	helper := e.numberTableCopy()
 	array := e.own(ir.Array, fmt.Sprintf("%s(%d, %s)", helper, len(values), name))
 	e.adoptGraph(array, "sizeof *"+array, e.graphTypes(literal.GraphTypes) && !literal.ProgramRegion)
-	e.programArray(array, literal.ProgramRegion)
+	e.programArray(array, literal.ProgramRegion, e.graphTypes(literal.GraphTypes))
 	return array, true
 }
 

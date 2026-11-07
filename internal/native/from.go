@@ -20,7 +20,7 @@ func (e *emitter) arrayFrom(from ir.ArrayFrom) string {
 	}
 	made := e.own(ir.Array, fmt.Sprintf("adamic_array_make(%s, %s)", count, arrayElement(from.Element)))
 	e.adoptGraph(made, "sizeof *"+made, e.graphTypes(from.GraphTypes) && !from.ProgramRegion)
-	e.programArray(made, from.ProgramRegion)
+	e.programArray(made, from.ProgramRegion, e.graphTypes(from.GraphTypes))
 	e.line("for (size_t %s = 0; %s < %s; %s++) {", index, index, count, index)
 	// Undefined as the first parameter holds it: a null reference, or a packed word.
 	undefined := "{.reference = NULL}"
