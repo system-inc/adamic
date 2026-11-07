@@ -60,6 +60,23 @@ func dynamicKeyedNamesHeader() []byte {
 		}
 		text.WriteString("\n")
 	}
+	// A run-time key read of one of those functions' name answers Node's (#xdcec18), an immortal string
+	// union.c makes from each literal with a name(text) macro, so no read allocates.
+	for _, table := range []struct {
+		name, describes string
+		names           []string
+	}{{"object", "Object and then each of adamic_dynamic_keyed_prototype_method_names' functions", ir.DynamicKeyedObjectNodeNames}, {"array_prototype", "each of adamic_dynamic_keyed_array_prototype_names' functions", ir.DynamicKeyedArrayPrototypeNodeNames}, {"regexp_string_iterator", "each of adamic_dynamic_keyed_regexp_string_iterator_names' functions", ir.DynamicKeyedRegExpStringIteratorNodeNames}, {"stats", "each of adamic_dynamic_keyed_stats_names' functions", ir.DynamicKeyedStatsNodeNames}} {
+		fmt.Fprintf(&text, "// Node's name for %s, in order.\n", table.describes)
+		fmt.Fprintf(&text, "#define ADAMIC_DYNAMIC_KEYED_%s_NODE_NAMES(name) \\\n", strings.ToUpper(table.name))
+		for index, name := range table.names {
+			fmt.Fprintf(&text, "\tname(%s)", cString(name))
+			if index < len(table.names)-1 {
+				text.WriteString(" \\")
+			}
+			text.WriteString("\n")
+		}
+		text.WriteString("\n")
+	}
 	text.WriteString("#endif\n")
 	return text.Bytes()
 }

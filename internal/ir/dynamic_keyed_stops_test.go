@@ -154,6 +154,68 @@ func TestDynamicKeyedRegExpStringIteratorLengthsAreNodes(t *testing.T) {
 	}
 }
 
+// dynamicKeyedFunctionNodeNames reads, on the pinned Node, the name of each function a run-time key
+// read hands out, by its key off a receiver of its family, in each table's order: an object's, an
+// array's, a matchAll iterator's and a Stats'. The keys come from the tables, written into the script
+// as JSON, so a key the tables add is read too.
+const dynamicKeyedFunctionNodeNames = "const receivers = {object: {}, array: [], iterator: ''.matchAll(/(?:)/g), stats: require('node:fs').statSync('.')}; console.log(JSON.stringify(Object.fromEntries(Object.entries(tables).map(([family, keys]) => [family, keys.map((key) => typeof receivers[family][key] === 'function' ? receivers[family][key].name : null)]))))"
+
+// Each function a run-time key read hands out answers its name by a run-time key as the pinned Node's
+// does (#xdcec18), and this holds the names native answers to Node's, every table entry: natively an
+// immortal string the table writes (dynamic_keyed_names.h, union.c), where the JavaScript backend
+// reads Node's own function's name, so a name the table has wrong reads wrong natively alone. A name
+// is its key, but each family's constructor's, which is its constructor's own (Object, Array,
+// Iterator, Stats), and a Stats' eight other functions', which are anonymous on Node and named the
+// empty string. Node is the toolchain's, and a run without it fails. Mutant: one of
+// DynamicKeyedStatsNodeNames' empty names written as its key.
+func TestDynamicKeyedFunctionNodeNamesAreNodes(t *testing.T) {
+	t.Parallel()
+	node, err := toolchain.Path("node")
+	if err != nil {
+		t.Fatal(err)
+	}
+	tables := map[string][]string{
+		"object":   append([]string{"constructor"}, DynamicKeyedPrototypeMethods...),
+		"array":    DynamicKeyedArrayPrototypeNames.Names(),
+		"iterator": DynamicKeyedRegExpStringIteratorNames.Names(),
+		"stats":    DynamicKeyedStatsNames.Names(),
+	}
+	held := map[string][]string{
+		"object":   DynamicKeyedObjectNodeNames,
+		"array":    DynamicKeyedArrayPrototypeNodeNames,
+		"iterator": DynamicKeyedRegExpStringIteratorNodeNames,
+		"stats":    DynamicKeyedStatsNodeNames,
+	}
+	keys, err := json.Marshal(tables)
+	if err != nil {
+		t.Fatal(err)
+	}
+	output, err := toolchain.Command(node, "-e", "const tables = "+string(keys)+"; "+dynamicKeyedFunctionNodeNames).Output()
+	if err != nil {
+		t.Fatal(err)
+	}
+	var names map[string][]*string
+	if err := json.Unmarshal(output, &names); err != nil {
+		t.Fatal(err)
+	}
+	for family, keys := range tables {
+		if len(names[family]) != len(keys) || len(held[family]) != len(keys) {
+			t.Errorf("the %s family has %d keys, Node read %d names and the table holds %d", family, len(keys), len(names[family]), len(held[family]))
+			continue
+		}
+		for index, key := range keys {
+			name := names[family][index]
+			if name == nil {
+				t.Errorf("Node's %s family hands out no function under %q", family, key)
+				continue
+			}
+			if *name != held[family][index] {
+				t.Errorf("Node names the %s family's %s %q, where native answers %q", family, key, *name, held[family][index])
+			}
+		}
+	}
+}
+
 // dynamicKeyedStatsChain is how the pinned Node's fs.Stats is laid out: its own names, and of its
 // prototype, Stats.prototype, the accessors and then the functions, StatsBase.prototype's functions
 // after them less its constructor, which Stats.prototype's shadows, and any name on either prototype

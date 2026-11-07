@@ -304,6 +304,12 @@
 `union.c:prototype_to_locale_string:1`
 `union.c:prototype_to_string:1`
 `union.c:prototype_value_of:1`
+# The names Node gives the immortal closures a run-time key read hands out (#xdcec18), immortal
+# strings a read of one's name answers, are never written.
+`union.c:array_prototype_node_names:1`
+`union.c:object_node_names:1`
+`union.c:regexp_string_iterator_node_names:1`
+`union.c:stats_node_names:1`
 # The fs.Stats shape a run-time key read knows a Stats by (#zhrjf2t): an atomic pointer, null until
 # node_fs_file.c's file_stat_value publishes &stat_shape with a release store, every publish the same
 # address, read with an acquire load.

@@ -1,9 +1,13 @@
-// A function's length answers by a run-time key (#xdcec18, function_length.a), and its name still
-// stops on both backends alike in the Function form: natively an array's map is an immortal
-// closure, which carries no name, and on the JavaScript backend Node's own function stops in the
-// same words. Node prints map function 1 and then string.
+// A program's own function, read by a run-time key, answers its length as Node's does (#xdcec18,
+// function_length.a), and its name still stops on both backends alike in the Function form: natively
+// the arrow is a closure, which carries no name, and on the JavaScript backend an AdamicClosure stops
+// in the same words, while a function a run-time key read hands out answers its name
+// (function_name.a). The arrow is read off an object, since an arrow viewed as unknown directly isn't
+// lowered yet. Node prints double function 1 and then string.
 import { propertyOf } from './hostErrors.ts';
 
-const map = propertyOf([1], 'map');
-console.log(`map ${typeof map} ${String(propertyOf(map, 'length'))}`);
-console.log(typeof propertyOf(map, 'name'));
+const double = (value: number): number => value * 2;
+const holder = { double };
+const read = propertyOf(holder, 'double');
+console.log(`double ${typeof read} ${String(propertyOf(read, 'length'))}`);
+console.log(typeof propertyOf(read, 'name'));
