@@ -78,3 +78,54 @@ func TestAConfigNamingADirectoryIsRefusedByName(t *testing.T) {
 		}
 	}
 }
+
+// A directory a config names is taken inside the compiler's own installation, the directory above the bin/ the config
+// sits in, as wasi-sdk 27's bin/clang.cfg names `--sysroot=<CFGDIR>/../share/wasi-sysroot`: the release its version
+// report names holds it, and the config's lines name no path. A directory outside it, `..` leading out, or a config that
+// sits in no bin/, is refused by name as before. Mutants: insideInstallation true for every directory; `..` left
+// unresolved, so <CFGDIR>/../../outside reads as inside; the next word left unread for a flag apart from its directory.
+func TestAConfigMayNameADirectoryInsideItsOwnInstallation(t *testing.T) {
+	t.Parallel()
+	for contents, refused := range map[string]string{
+		"--sysroot=<CFGDIR>/../share/wasi-sysroot\n": "",
+		"-isysroot <CFGDIR>/../share/wasi-sysroot\n": "",
+		"-B <CFGDIR>/../lib\n-fno-plt\n":             "",
+		"--sysroot=/usr/lib\n":                       "--sysroot=",
+		"--sysroot=<CFGDIR>/../../outside\n":         "--sysroot=",
+		"--sysroot <CFGDIR>/../..\n":                 "--sysroot=",
+		"-B <CFGDIR>/../../elsewhere\n":              "-B",
+		"--gcc-toolchain=<CFGDIR>/../../../usr\n":    "--gcc-toolchain=",
+		"--sysroot=relative/sysroot\n":               "--sysroot=",
+	} {
+		installation := filepath.Join(t.TempDir(), "wasi-sdk")
+		config := filepath.Join(installation, "bin", "clang.cfg")
+		if err := os.MkdirAll(filepath.Dir(config), 0o755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(config, []byte(contents), 0o644); err != nil {
+			t.Fatal(err)
+		}
+		lines, err := ConfigurationFile(config)
+		if refused == "" {
+			if err != nil || len(lines) != 1 || !strings.HasPrefix(lines[0], "Configuration file: sha256 ") {
+				t.Errorf("a config of %q inside its installation gave %q, %v; want its own line alone", contents, lines, err)
+			}
+			continue
+		}
+		want := "a clang config naming a directory, " + refused + ", isn't keyed until its archive digest is pinned (#5xsd2ha)"
+		if err == nil || err.Error() != want {
+			t.Errorf("a config of %q gave %q, %v; want %q", contents, lines, err, want)
+		}
+	}
+	// A config in no bin/ has no installation of its own.
+	elsewhere := filepath.Join(t.TempDir(), "wasi-sdk", "etc", "clang.cfg")
+	if err := os.MkdirAll(filepath.Dir(elsewhere), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(elsewhere, []byte("--sysroot=<CFGDIR>/../share/wasi-sysroot\n"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	if lines, err := ConfigurationFile(elsewhere); err == nil {
+		t.Errorf("a config in no bin/ naming a directory gave %q, want it refused", lines)
+	}
+}
