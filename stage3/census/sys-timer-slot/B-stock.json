@@ -1,0 +1,109 @@
+{
+  "version": "6.0.3",
+  "adamicRoots": 79,
+  "options": {
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "erasableSyntaxOnly": false,
+    "verbatimModuleSyntax": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "module": 99,
+    "moduleDetection": 3,
+    "moduleResolution": 100,
+    "target": 11,
+    "lib": [
+      "lib.es2024.d.ts"
+    ],
+    "types": [],
+    "typeRoots": [
+      "/workspace/adamic/internal/load/node_types/node_modules/@types"
+    ]
+  },
+  "adamic": [
+    {
+      "code": 2322,
+      "category": "Error",
+      "message": "Type 'unknown' is not assignable to type 'boolean'.",
+      "file": "src/compiler/sys.ts",
+      "line": 384,
+      "column": 9
+    },
+    {
+      "code": 2554,
+      "category": "Error",
+      "message": "Expected 2 arguments, but got 3.",
+      "file": "src/compiler/sys.ts",
+      "line": 497,
+      "column": 74
+    },
+    {
+      "code": 2554,
+      "category": "Error",
+      "message": "Expected 2 arguments, but got 3.",
+      "file": "src/compiler/sys.ts",
+      "line": 777,
+      "column": 83
+    },
+    {
+      "code": 2322,
+      "category": "Error",
+      "message": "Type '(handler: () => void, timeout: number) => Timeout' is not assignable to type '<A extends unknown[]>(callback: (...args: A) => void, ms: number, ...args: A) => unknown'.\n  Types of parameters 'timeout' and 'ms' are incompatible.\n    Type '[ms: number, ...args: A]' is not assignable to type '[timeout: number]'.\n      Type '[ms: number, ...args: unknown[]]' is not assignable to type '[timeout: number]'.\n        Target allows only 1 element(s) but source may have more.",
+      "file": "src/compiler/sys.ts",
+      "line": 1501,
+      "column": 13
+    },
+    {
+      "code": 2322,
+      "category": "Error",
+      "message": "Type '(handler: () => void, timeout: number) => Timeout' is not assignable to type '<A extends unknown[]>(callback: (...args: A) => void, ms: number, ...args: A) => unknown'.\n  Types of parameters 'timeout' and 'ms' are incompatible.\n    Type '[ms: number, ...args: A]' is not assignable to type '[timeout: number]'.\n      Type '[ms: number, ...args: unknown[]]' is not assignable to type '[timeout: number]'.\n        Target allows only 1 element(s) but source may have more.",
+      "file": "src/compiler/sys.ts",
+      "line": 1599,
+      "column": 13
+    }
+  ],
+  "solution": [
+    {
+      "code": 2322,
+      "category": "Error",
+      "message": "Type 'unknown' is not assignable to type 'boolean'.",
+      "file": "src/compiler/sys.ts",
+      "line": 384,
+      "column": 9
+    },
+    {
+      "code": 2554,
+      "category": "Error",
+      "message": "Expected 2 arguments, but got 3.",
+      "file": "src/compiler/sys.ts",
+      "line": 497,
+      "column": 74
+    },
+    {
+      "code": 2554,
+      "category": "Error",
+      "message": "Expected 2 arguments, but got 3.",
+      "file": "src/compiler/sys.ts",
+      "line": 777,
+      "column": 83
+    },
+    {
+      "code": 2322,
+      "category": "Error",
+      "message": "Type '(handler: () => void, timeout: number) => Timeout' is not assignable to type '<A extends unknown[]>(callback: (...args: A) => void, ms: number, ...args: A) => unknown'.\n  Types of parameters 'timeout' and 'ms' are incompatible.\n    Type '[ms: number, ...args: A]' is not assignable to type '[timeout: number]'.\n      Type '[ms: number, ...args: unknown[]]' is not assignable to type '[timeout: number]'.\n        Target allows only 1 element(s) but source may have more.",
+      "file": "src/compiler/sys.ts",
+      "line": 1501,
+      "column": 13
+    },
+    {
+      "code": 2322,
+      "category": "Error",
+      "message": "Type '(handler: () => void, timeout: number) => Timeout' is not assignable to type '<A extends unknown[]>(callback: (...args: A) => void, ms: number, ...args: A) => unknown'.\n  Types of parameters 'timeout' and 'ms' are incompatible.\n    Type '[ms: number, ...args: A]' is not assignable to type '[timeout: number]'.\n      Type '[ms: number, ...args: unknown[]]' is not assignable to type '[timeout: number]'.\n        Target allows only 1 element(s) but source may have more.",
+      "file": "src/compiler/sys.ts",
+      "line": 1599,
+      "column": 13
+    }
+  ],
+  "solutionExit": 2
+}

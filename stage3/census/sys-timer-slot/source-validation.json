@@ -1,0 +1,20 @@
+{
+  "canonicalApplyExit": 0,
+  "canonicalHasNodeModules": false,
+  "files": 746,
+  "mainBytesEqualCanonical": true,
+  "candidates": {
+    "A": {
+      "changed": [
+        "src/compiler/sys.ts"
+      ],
+      "exactTwoDeclarationEdits": true
+    },
+    "B": {
+      "changed": [
+        "src/compiler/sys.ts"
+      ],
+      "exactTwoDeclarationEdits": true
+    }
+  }
+}

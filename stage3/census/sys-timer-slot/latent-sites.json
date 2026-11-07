@@ -1,0 +1,3710 @@
+{
+  "main": {
+    "checkerRejected": false,
+    "diagnostics": [],
+    "units": 140,
+    "unitStatuses": {
+      "attempted": 137,
+      "deferred_generic_instantiation": 3
+    },
+    "rawEventKinds": {
+      "Refused": 38,
+      "NotYet": 145,
+      "Boundary": 239
+    },
+    "distinctSites": 123,
+    "sites": [
+      {
+        "where": "src/compiler/sys.ts:1654:13",
+        "kind": "Refused",
+        "reason": "a checked view with a callable contract",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:57:1",
+        "kind": "Refused",
+        "reason": "an ambient function declaration",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:57:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:58:1",
+        "kind": "Refused",
+        "reason": "an ambient function declaration",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:58:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:144:81",
+        "kind": "Refused",
+        "reason": "a value of type typeof PollingInterval seen as Levels, whose readonly field Low becomes writable: a readonly field may hold something narrower than PollingInterval.Low, which a write of number would replace",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:140:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:162:35",
+        "kind": "Refused",
+        "reason": "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:159:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:207:32",
+        "kind": "Refused",
+        "reason": "a value of type undefined seen as T, a type parameter whose constraint WatchedFileWithIsClosed can be written, so it can write what undefined can't hold",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:192:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:216:32",
+        "kind": "Refused",
+        "reason": "a value of type undefined seen as T, a type parameter whose constraint WatchedFileWithIsClosed can be written, so it can write what undefined can't hold",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:192:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:226:36",
+        "kind": "Refused",
+        "reason": "a value of type undefined seen as T, a type parameter whose constraint WatchedFileWithIsClosed can be written, so it can write what undefined can't hold",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:192:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:289:23",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:288:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:310:19",
+        "kind": "Refused",
+        "reason": "a value of type WatchedFileWithUnchangedPolls[] seen as (WatchedFileWithUnchangedPolls | undefined)[], which can write WatchedFileWithUnchangedPolls | undefined where WatchedFileWithUnchangedPolls is read",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:308:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:324:13",
+        "kind": "Refused",
+        "reason": "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:321:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:521:17",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:505:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:627:33",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:599:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:794:87",
+        "kind": "Refused",
+        "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:780:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:881:34",
+        "kind": "Refused",
+        "reason": "a value of type never[] seen as ChildDirectoryWatcher[], which can write ChildDirectoryWatcher where never is read",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:880:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1198:13",
+        "kind": "Refused",
+        "reason": "a value of type Map<string, SingleFileWatcher<FileWatcherCallback>> seen as Map<string, SingleFileWatcher<FileWatcherCallback | FsWatchCallback>>, which can write SingleFileWatcher<FileWatcherCallback | FsWatchCallback> where SingleFileWatcher<FileWatcherCallback> is read",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1196:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1214:25",
+        "kind": "Refused",
+        "reason": "a value of type Map<string, SingleFileWatcher<FsWatchCallback>> seen as Map<string, SingleFileWatcher<FileWatcherCallback | FsWatchCallback>>, which can write SingleFileWatcher<FileWatcherCallback | FsWatchCallback> where SingleFileWatcher<FsWatchCallback> is read",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1205:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1387:31",
+        "kind": "Refused",
+        "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1385:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1388:5",
+        "kind": "Refused",
+        "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1385:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1494:35",
+        "kind": "NotYet",
+        "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1494:92",
+        "kind": "NotYet",
+        "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1494:121",
+        "kind": "NotYet",
+        "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1534:13",
+        "kind": "Refused",
+        "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1535:13",
+        "kind": "Refused",
+        "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1590:192",
+        "kind": "NotYet",
+        "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1605:32",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1605:33",
+        "kind": "NotYet",
+        "reason": "node:process.Process.stdout used as a value",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1612:22",
+        "kind": "Refused",
+        "reason": "a value of type (baseDir: string, moduleName: string) => { module: any; modulePath: string; error: undefined; } | { module: undefined; modulePath: undefined; error: unknown; } seen as (baseDir: string, moduleName: string) => ModuleImportResult, which can write string | undefined where string is read",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1614:77",
+        "kind": "Refused",
+        "reason": "a value of type System seen as ModuleResolutionHost, which can write boolean | (() => boolean) | undefined where boolean is read",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1647:32",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1647:42",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1651:29",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1651:33",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1651:43",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1652:13",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session.connect",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1652:21",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session.connect",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1654:13",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session.post",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1654:21",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session.post",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1655:17",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session.post",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1655:25",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session.post",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1692:17",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session.post",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1689:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1692:31",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session.post",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1689:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1706:21",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session.disconnect",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1689:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1706:23",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session.disconnect",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1689:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1724:41",
+        "kind": "NotYet",
+        "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1718:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1967:12",
+        "kind": "Refused",
+        "reason": "a method read as a value (getEnvironmentVariable would lose its object, and this with it)",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1967:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:384:79",
+        "kind": "NotYet",
+        "reason": "a member typed any ((0)) related to string at the argument site",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1978:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:57:1",
+        "kind": "NotYet",
+        "reason": "a function without a body",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5",
+          "src/compiler/sys.ts:57:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:58:1",
+        "kind": "NotYet",
+        "reason": "a function without a body",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:58:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:129:9",
+        "kind": "NotYet",
+        "reason": "a computed field name",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:127:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:162:17",
+        "kind": "NotYet",
+        "reason": "assigning an element of a value",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:140:1",
+          "src/compiler/sys.ts:152:5",
+          "src/compiler/sys.ts:159:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:178:13",
+        "kind": "NotYet",
+        "reason": "assigning an element of a value",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:140:1",
+          "src/compiler/sys.ts:167:5",
+          "src/compiler/sys.ts:177:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:185:81",
+        "kind": "Refused",
+        "reason": "a spread after the first field",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:140:1",
+          "src/compiler/sys.ts:182:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:141:10",
+        "kind": "NotYet",
+        "reason": "a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:140:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:263:11",
+        "kind": "NotYet",
+        "reason": "a value of type PollingIntervalQueue",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:251:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:288:14",
+        "kind": "NotYet",
+        "reason": "a function returning PollingIntervalQueue",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:288:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:296:61",
+        "kind": "NotYet",
+        "reason": "a value of type PollingIntervalQueue",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:296:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:308:64",
+        "kind": "NotYet",
+        "reason": "a value of type PollingIntervalQueue",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:308:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:240:17",
+        "kind": "NotYet",
+        "reason": "assigning a field of a value",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:321:5",
+          "src/compiler/sys.ts:489:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:201:79",
+        "kind": "NotYet",
+        "reason": "a PostfixUnaryExpression",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:321:5",
+          "src/compiler/sys.ts:489:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:356:14",
+        "kind": "NotYet",
+        "reason": "a function returning PollingIntervalQueue",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:356:5",
+          "src/compiler/sys.ts:377:5",
+          "src/compiler/sys.ts:383:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:368:9",
+        "kind": "Refused",
+        "reason": "inherited library member push read as an own field",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:367:5"
+        ]
+      },
+      {
+        "where": "src/compiler/core.ts:2365:60",
+        "kind": "NotYet",
+        "reason": "function identity comparison in a program with specialized generic function values",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:388:1",
+          "src/compiler/sys.ts:401:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:436:25",
+        "kind": "NotYet",
+        "reason": "a value of type any",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:388:1",
+          "src/compiler/sys.ts:424:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:441:29",
+        "kind": "NotYet",
+        "reason": "assigning to an Identifier",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:388:1",
+          "src/compiler/sys.ts:424:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:442:33",
+        "kind": "NotYet",
+        "reason": "reading currentModifiedTime",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:388:1",
+          "src/compiler/sys.ts:424:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:444:25",
+        "kind": "NotYet",
+        "reason": "a value of type any",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:388:1",
+          "src/compiler/sys.ts:424:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:445:54",
+        "kind": "NotYet",
+        "reason": "reading currentModifiedTime",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:388:1",
+          "src/compiler/sys.ts:424:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:447:34",
+        "kind": "NotYet",
+        "reason": "reading currentModifiedTime",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:388:1",
+          "src/compiler/sys.ts:424:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:450:59",
+        "kind": "NotYet",
+        "reason": "reading currentModifiedTime",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:388:1",
+          "src/compiler/sys.ts:424:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:470:9",
+        "kind": "NotYet",
+        "reason": "a value of type any",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:464:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:490:9",
+        "kind": "NotYet",
+        "reason": "assigning to an Identifier",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:489:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:496:37",
+        "kind": "NotYet",
+        "reason": "reading pollScheduled",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:495:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:497:9",
+        "kind": "NotYet",
+        "reason": "assigning to an Identifier",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:495:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:603:5",
+        "kind": "Refused",
+        "reason": "a method in object destructuring",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:599:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:655:29",
+        "kind": "NotYet",
+        "reason": "optional record property access",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:637:5"
+        ]
+      },
+      {
+        "where": "src/compiler/debug.ts:227:5",
+        "kind": "NotYet",
+        "reason": "a checked predicate target whose check would read past the depth bound (HostDirectoryWatcher)",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:637:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:690:27",
+        "kind": "NotYet",
+        "reason": "a call through ?. (an optional call)",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:637:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:739:9",
+        "kind": "NotYet",
+        "reason": "a call through ?. (an optional call)",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:705:5",
+          "src/compiler/sys.ts:706:5",
+          "src/compiler/sys.ts:707:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:773:13",
+        "kind": "NotYet",
+        "reason": "reading timerToUpdateChildWatches",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:765:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:777:9",
+        "kind": "NotYet",
+        "reason": "assigning to an Identifier",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:765:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:781:9",
+        "kind": "NotYet",
+        "reason": "assigning to an Identifier",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:780:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:786:17",
+        "kind": "NotYet",
+        "reason": "reading timerToUpdateChildWatches",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:780:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:813:117",
+        "kind": "NotYet",
+        "reason": "reading timerToUpdateChildWatches",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:780:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:838:13",
+        "kind": "NotYet",
+        "reason": "a value of type any",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:833:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:941:13",
+        "kind": "NotYet",
+        "reason": "optional record property access",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:935:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1007:5",
+        "kind": "Refused",
+        "reason": "a method in object destructuring",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:997:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1030:54",
+        "kind": "NotYet",
+        "reason": "a boolean | undefined variable a function value captures",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1029:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1052:140",
+        "kind": "NotYet",
+        "reason": "a boolean | undefined variable a function value captures",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1029:5"
+        ]
+      },
+      {
+        "where": "src/compiler/debug.ts:252:33",
+        "kind": "NotYet",
+        "reason": "a value of type never",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1029:5",
+          "src/compiler/sys.ts:1136:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1061:84",
+        "kind": "NotYet",
+        "reason": "reading getModifiedTime",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1060:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1065:90",
+        "kind": "NotYet",
+        "reason": "reading getModifiedTime",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1064:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1100:40",
+        "kind": "NotYet",
+        "reason": "optional record property access",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1095:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1103:30",
+        "kind": "NotYet",
+        "reason": "reading defaultFallbackPolling",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1095:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1125:17",
+        "kind": "NotYet",
+        "reason": "reading fileSystemEntryExists",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1109:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1186:48",
+        "kind": "NotYet",
+        "reason": "optional record property access",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1176:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:521:17",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1196:5",
+          "src/compiler/sys.ts:1205:5"
+        ]
+      },
+      {
+        "where": "src/compiler/core.ts:2332:13",
+        "kind": "NotYet",
+        "reason": "function identity comparison in a program with specialized generic function values",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1196:5",
+          "src/compiler/sys.ts:1205:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1253:77",
+        "kind": "NotYet",
+        "reason": "function identity comparison in a program with specialized generic function values",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1222:5",
+          "src/compiler/sys.ts:1250:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1269:89",
+        "kind": "NotYet",
+        "reason": "a boolean | undefined variable a function value captures",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1222:5",
+          "src/compiler/sys.ts:1263:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1277:17",
+        "kind": "NotYet",
+        "reason": "reading presentWatcher",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1222:5",
+          "src/compiler/sys.ts:1263:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1281:24",
+        "kind": "NotYet",
+        "reason": "reading presentWatcher",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1222:5",
+          "src/compiler/sys.ts:1263:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1388:5",
+        "kind": "NotYet",
+        "reason": "replacing a represented method at runtime",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1385:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1642:17",
+        "kind": "NotYet",
+        "reason": "a union of differently held members variable a function value captures",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5",
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1646:59",
+        "kind": "NotYet",
+        "reason": "a value of type any",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5",
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1647:18",
+        "kind": "NotYet",
+        "reason": "reading inspector",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5",
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1651:29",
+        "kind": "NotYet",
+        "reason": "new a PropertyAccessExpression",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5",
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1652:13",
+        "kind": "NotYet",
+        "reason": "a method of a class stage 0 doesn't have",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5",
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1654:13",
+        "kind": "NotYet",
+        "reason": "reading session",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5",
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1690:17",
+        "kind": "NotYet",
+        "reason": "a union of differently held members variable a function value captures",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5",
+          "src/compiler/sys.ts:1689:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1694:29",
+        "kind": "NotYet",
+        "reason": "node:fs.StatsBase.isDirectory through an optional call",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5",
+          "src/compiler/sys.ts:1689:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1703:25",
+        "kind": "NotYet",
+        "reason": "node:fs.writeFileSync: JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5",
+          "src/compiler/sys.ts:1689:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1706:21",
+        "kind": "NotYet",
+        "reason": "a method of a class stage 0 doesn't have",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5",
+          "src/compiler/sys.ts:1689:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1724:41",
+        "kind": "NotYet",
+        "reason": "reading __filename",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5",
+          "src/compiler/sys.ts:1718:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1869:17",
+        "kind": "Refused",
+        "reason": "sort without a comparator",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5",
+          "src/compiler/sys.ts:1834:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1870:17",
+        "kind": "Refused",
+        "reason": "sort without a comparator",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5",
+          "src/compiler/sys.ts:1834:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1494:35",
+        "kind": "NotYet",
+        "reason": "reading __filename",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1519:15",
+        "kind": "NotYet",
+        "reason": "a function value that captures the variable its own initializer declares",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1578:21",
+        "kind": "NotYet",
+        "reason": "node:fs.StatsBase.isFile through an optional call",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1588:42",
+        "kind": "NotYet",
+        "reason": "a union of differently held members variable a function value captures",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1590:191",
+        "kind": "NotYet",
+        "reason": "process.recordreplay as a value (use its supported process operation directly)",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1818:24",
+        "kind": "NotYet",
+        "reason": "reading byteOrderMarkIndicator",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1475:5",
+          "src/compiler/sys.ts:1815:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1967:12",
+        "kind": "NotYet",
+        "reason": "a literal method through a view that erases its receiver",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1967:1"
+        ]
+      }
+    ],
+    "splitCheckerBodies": []
+  },
+  "A": {
+    "checkerRejected": true,
+    "diagnostics": [
+      "/workspace/scratch/sys-timer-slot/A/src/compiler/sys.ts:384:79: error TS2345: Argument of type '(_timeoutType: string, queue: PollingIntervalQueue) => void' is not assignable to parameter of type '(...args: unknown[]) => void'.\n  Types of parameters '_timeoutType' and 'args' are incompatible.\n    Type 'unknown' is not assignable to type 'string'.",
+      "/workspace/scratch/sys-timer-slot/A/src/compiler/sys.ts:384:9: error TS2322: Type 'unknown' is not assignable to type 'boolean'."
+    ],
+    "units": 140,
+    "unitStatuses": {
+      "attempted": 136,
+      "deferred_generic_instantiation": 3,
+      "split_checker_body": 1
+    },
+    "rawEventKinds": {
+      "Refused": 40,
+      "NotYet": 144,
+      "Boundary": 238
+    },
+    "distinctSites": 125,
+    "sites": [
+      {
+        "where": "src/compiler/sys.ts:1654:13",
+        "kind": "Refused",
+        "reason": "a checked view with a callable contract",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:57:1",
+        "kind": "Refused",
+        "reason": "an ambient function declaration",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:57:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:58:1",
+        "kind": "Refused",
+        "reason": "an ambient function declaration",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:58:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:144:81",
+        "kind": "Refused",
+        "reason": "a value of type typeof PollingInterval seen as Levels, whose readonly field Low becomes writable: a readonly field may hold something narrower than PollingInterval.Low, which a write of number would replace",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:140:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:162:35",
+        "kind": "Refused",
+        "reason": "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:159:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:207:32",
+        "kind": "Refused",
+        "reason": "a value of type undefined seen as T, a type parameter whose constraint WatchedFileWithIsClosed can be written, so it can write what undefined can't hold",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:192:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:216:32",
+        "kind": "Refused",
+        "reason": "a value of type undefined seen as T, a type parameter whose constraint WatchedFileWithIsClosed can be written, so it can write what undefined can't hold",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:192:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:226:36",
+        "kind": "Refused",
+        "reason": "a value of type undefined seen as T, a type parameter whose constraint WatchedFileWithIsClosed can be written, so it can write what undefined can't hold",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:192:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:289:23",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:288:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:310:19",
+        "kind": "Refused",
+        "reason": "a value of type WatchedFileWithUnchangedPolls[] seen as (WatchedFileWithUnchangedPolls | undefined)[], which can write WatchedFileWithUnchangedPolls | undefined where WatchedFileWithUnchangedPolls is read",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:308:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:324:13",
+        "kind": "Refused",
+        "reason": "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:321:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:521:17",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:505:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:627:33",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:599:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:794:87",
+        "kind": "Refused",
+        "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:780:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:881:34",
+        "kind": "Refused",
+        "reason": "a value of type never[] seen as ChildDirectoryWatcher[], which can write ChildDirectoryWatcher where never is read",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:880:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1198:13",
+        "kind": "Refused",
+        "reason": "a value of type Map<string, SingleFileWatcher<FileWatcherCallback>> seen as Map<string, SingleFileWatcher<FileWatcherCallback | FsWatchCallback>>, which can write SingleFileWatcher<FileWatcherCallback | FsWatchCallback> where SingleFileWatcher<FileWatcherCallback> is read",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1196:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1214:25",
+        "kind": "Refused",
+        "reason": "a value of type Map<string, SingleFileWatcher<FsWatchCallback>> seen as Map<string, SingleFileWatcher<FileWatcherCallback | FsWatchCallback>>, which can write SingleFileWatcher<FileWatcherCallback | FsWatchCallback> where SingleFileWatcher<FsWatchCallback> is read",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1205:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1387:31",
+        "kind": "Refused",
+        "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1385:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1388:5",
+        "kind": "Refused",
+        "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1385:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1494:35",
+        "kind": "NotYet",
+        "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1494:92",
+        "kind": "NotYet",
+        "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1494:121",
+        "kind": "NotYet",
+        "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1502:13",
+        "kind": "Refused",
+        "reason": "a function taking Timeout | undefined seen as one taking unknown (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1534:13",
+        "kind": "Refused",
+        "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1535:13",
+        "kind": "Refused",
+        "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1590:192",
+        "kind": "NotYet",
+        "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1600:13",
+        "kind": "Refused",
+        "reason": "a function taking Timeout | undefined seen as one taking unknown (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1605:32",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1605:33",
+        "kind": "NotYet",
+        "reason": "node:process.Process.stdout used as a value",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1612:22",
+        "kind": "Refused",
+        "reason": "a value of type (baseDir: string, moduleName: string) => { module: any; modulePath: string; error: undefined; } | { module: undefined; modulePath: undefined; error: unknown; } seen as (baseDir: string, moduleName: string) => ModuleImportResult, which can write string | undefined where string is read",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1614:77",
+        "kind": "Refused",
+        "reason": "a value of type System seen as ModuleResolutionHost, which can write boolean | (() => boolean) | undefined where boolean is read",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1647:32",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1647:42",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1651:29",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1651:33",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1651:43",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1652:13",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session.connect",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1652:21",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session.connect",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1654:13",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session.post",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1654:21",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session.post",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1655:17",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session.post",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1655:25",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session.post",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1692:17",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session.post",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1689:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1692:31",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session.post",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1689:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1706:21",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session.disconnect",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1689:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1706:23",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session.disconnect",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1689:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1724:41",
+        "kind": "NotYet",
+        "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1718:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1967:12",
+        "kind": "Refused",
+        "reason": "a method read as a value (getEnvironmentVariable would lose its object, and this with it)",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1967:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1519:36",
+        "kind": "NotYet",
+        "reason": "a member typed any (require()module) related to {} at the initializer site",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1978:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:57:1",
+        "kind": "NotYet",
+        "reason": "a function without a body",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5",
+          "src/compiler/sys.ts:57:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:58:1",
+        "kind": "NotYet",
+        "reason": "a function without a body",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:58:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:129:9",
+        "kind": "NotYet",
+        "reason": "a computed field name",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:127:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:162:17",
+        "kind": "NotYet",
+        "reason": "assigning an element of a value",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:140:1",
+          "src/compiler/sys.ts:152:5",
+          "src/compiler/sys.ts:159:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:178:13",
+        "kind": "NotYet",
+        "reason": "assigning an element of a value",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:140:1",
+          "src/compiler/sys.ts:167:5",
+          "src/compiler/sys.ts:177:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:185:81",
+        "kind": "Refused",
+        "reason": "a spread after the first field",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:140:1",
+          "src/compiler/sys.ts:182:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:141:10",
+        "kind": "NotYet",
+        "reason": "a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:140:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:263:11",
+        "kind": "NotYet",
+        "reason": "a value of type PollingIntervalQueue",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:251:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:288:14",
+        "kind": "NotYet",
+        "reason": "a function returning PollingIntervalQueue",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:288:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:296:61",
+        "kind": "NotYet",
+        "reason": "a value of type PollingIntervalQueue",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:296:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:308:64",
+        "kind": "NotYet",
+        "reason": "a value of type PollingIntervalQueue",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:308:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:240:17",
+        "kind": "NotYet",
+        "reason": "assigning a field of a value",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:321:5",
+          "src/compiler/sys.ts:489:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:201:79",
+        "kind": "NotYet",
+        "reason": "a PostfixUnaryExpression",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:321:5",
+          "src/compiler/sys.ts:489:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:356:14",
+        "kind": "NotYet",
+        "reason": "a function returning PollingIntervalQueue",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:356:5",
+          "src/compiler/sys.ts:377:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:368:9",
+        "kind": "Refused",
+        "reason": "inherited library member push read as an own field",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:367:5"
+        ]
+      },
+      {
+        "where": "src/compiler/core.ts:2365:60",
+        "kind": "NotYet",
+        "reason": "function identity comparison in a program with specialized generic function values",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:388:1",
+          "src/compiler/sys.ts:401:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:436:25",
+        "kind": "NotYet",
+        "reason": "a value of type any",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:388:1",
+          "src/compiler/sys.ts:424:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:441:29",
+        "kind": "NotYet",
+        "reason": "assigning to an Identifier",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:388:1",
+          "src/compiler/sys.ts:424:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:442:33",
+        "kind": "NotYet",
+        "reason": "reading currentModifiedTime",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:388:1",
+          "src/compiler/sys.ts:424:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:444:25",
+        "kind": "NotYet",
+        "reason": "a value of type any",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:388:1",
+          "src/compiler/sys.ts:424:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:445:54",
+        "kind": "NotYet",
+        "reason": "reading currentModifiedTime",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:388:1",
+          "src/compiler/sys.ts:424:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:447:34",
+        "kind": "NotYet",
+        "reason": "reading currentModifiedTime",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:388:1",
+          "src/compiler/sys.ts:424:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:450:59",
+        "kind": "NotYet",
+        "reason": "reading currentModifiedTime",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:388:1",
+          "src/compiler/sys.ts:424:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:470:9",
+        "kind": "NotYet",
+        "reason": "a value of type any",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:464:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:490:9",
+        "kind": "NotYet",
+        "reason": "assigning to an Identifier",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:489:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:496:37",
+        "kind": "NotYet",
+        "reason": "reading pollScheduled",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:495:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:497:9",
+        "kind": "NotYet",
+        "reason": "assigning to an Identifier",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:495:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:603:5",
+        "kind": "Refused",
+        "reason": "a method in object destructuring",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:599:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:655:29",
+        "kind": "NotYet",
+        "reason": "optional record property access",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:637:5"
+        ]
+      },
+      {
+        "where": "src/compiler/debug.ts:227:5",
+        "kind": "NotYet",
+        "reason": "a checked predicate target whose check would read past the depth bound (HostDirectoryWatcher)",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:637:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:690:27",
+        "kind": "NotYet",
+        "reason": "a call through ?. (an optional call)",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:637:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:739:9",
+        "kind": "NotYet",
+        "reason": "a call through ?. (an optional call)",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:705:5",
+          "src/compiler/sys.ts:706:5",
+          "src/compiler/sys.ts:707:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:773:13",
+        "kind": "NotYet",
+        "reason": "reading timerToUpdateChildWatches",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:765:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:777:9",
+        "kind": "NotYet",
+        "reason": "assigning to an Identifier",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:765:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:781:9",
+        "kind": "NotYet",
+        "reason": "assigning to an Identifier",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:780:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:786:17",
+        "kind": "NotYet",
+        "reason": "reading timerToUpdateChildWatches",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:780:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:813:117",
+        "kind": "NotYet",
+        "reason": "reading timerToUpdateChildWatches",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:780:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:838:13",
+        "kind": "NotYet",
+        "reason": "a value of type any",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:833:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:941:13",
+        "kind": "NotYet",
+        "reason": "optional record property access",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:935:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1007:5",
+        "kind": "Refused",
+        "reason": "a method in object destructuring",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:997:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1030:54",
+        "kind": "NotYet",
+        "reason": "a boolean | undefined variable a function value captures",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1029:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1052:140",
+        "kind": "NotYet",
+        "reason": "a boolean | undefined variable a function value captures",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1029:5"
+        ]
+      },
+      {
+        "where": "src/compiler/debug.ts:252:33",
+        "kind": "NotYet",
+        "reason": "a value of type never",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1029:5",
+          "src/compiler/sys.ts:1136:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1061:84",
+        "kind": "NotYet",
+        "reason": "reading getModifiedTime",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1060:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1065:90",
+        "kind": "NotYet",
+        "reason": "reading getModifiedTime",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1064:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1100:40",
+        "kind": "NotYet",
+        "reason": "optional record property access",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1095:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1103:30",
+        "kind": "NotYet",
+        "reason": "reading defaultFallbackPolling",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1095:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1125:17",
+        "kind": "NotYet",
+        "reason": "reading fileSystemEntryExists",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1109:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1186:48",
+        "kind": "NotYet",
+        "reason": "optional record property access",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1176:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:521:17",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1196:5",
+          "src/compiler/sys.ts:1205:5"
+        ]
+      },
+      {
+        "where": "src/compiler/core.ts:2332:13",
+        "kind": "NotYet",
+        "reason": "function identity comparison in a program with specialized generic function values",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1196:5",
+          "src/compiler/sys.ts:1205:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1253:77",
+        "kind": "NotYet",
+        "reason": "function identity comparison in a program with specialized generic function values",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1222:5",
+          "src/compiler/sys.ts:1250:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1269:89",
+        "kind": "NotYet",
+        "reason": "a boolean | undefined variable a function value captures",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1222:5",
+          "src/compiler/sys.ts:1263:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1277:17",
+        "kind": "NotYet",
+        "reason": "reading presentWatcher",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1222:5",
+          "src/compiler/sys.ts:1263:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1281:24",
+        "kind": "NotYet",
+        "reason": "reading presentWatcher",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1222:5",
+          "src/compiler/sys.ts:1263:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1388:5",
+        "kind": "NotYet",
+        "reason": "replacing a represented method at runtime",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1385:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1642:17",
+        "kind": "NotYet",
+        "reason": "a union of differently held members variable a function value captures",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5",
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1646:59",
+        "kind": "NotYet",
+        "reason": "a value of type any",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5",
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1647:18",
+        "kind": "NotYet",
+        "reason": "reading inspector",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5",
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1651:29",
+        "kind": "NotYet",
+        "reason": "new a PropertyAccessExpression",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5",
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1652:13",
+        "kind": "NotYet",
+        "reason": "a method of a class stage 0 doesn't have",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5",
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1654:13",
+        "kind": "NotYet",
+        "reason": "reading session",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5",
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1690:17",
+        "kind": "NotYet",
+        "reason": "a union of differently held members variable a function value captures",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5",
+          "src/compiler/sys.ts:1689:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1694:29",
+        "kind": "NotYet",
+        "reason": "node:fs.StatsBase.isDirectory through an optional call",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5",
+          "src/compiler/sys.ts:1689:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1703:25",
+        "kind": "NotYet",
+        "reason": "node:fs.writeFileSync: JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5",
+          "src/compiler/sys.ts:1689:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1706:21",
+        "kind": "NotYet",
+        "reason": "a method of a class stage 0 doesn't have",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5",
+          "src/compiler/sys.ts:1689:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1724:41",
+        "kind": "NotYet",
+        "reason": "reading __filename",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5",
+          "src/compiler/sys.ts:1718:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1869:17",
+        "kind": "Refused",
+        "reason": "sort without a comparator",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5",
+          "src/compiler/sys.ts:1834:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1870:17",
+        "kind": "Refused",
+        "reason": "sort without a comparator",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5",
+          "src/compiler/sys.ts:1834:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1494:35",
+        "kind": "NotYet",
+        "reason": "reading __filename",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1519:15",
+        "kind": "NotYet",
+        "reason": "a function value that captures the variable its own initializer declares",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1578:21",
+        "kind": "NotYet",
+        "reason": "node:fs.StatsBase.isFile through an optional call",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1588:42",
+        "kind": "NotYet",
+        "reason": "a union of differently held members variable a function value captures",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1590:191",
+        "kind": "NotYet",
+        "reason": "process.recordreplay as a value (use its supported process operation directly)",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1818:24",
+        "kind": "NotYet",
+        "reason": "reading byteOrderMarkIndicator",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1475:5",
+          "src/compiler/sys.ts:1815:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1967:12",
+        "kind": "NotYet",
+        "reason": "a literal method through a view that erases its receiver",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1967:1"
+        ]
+      }
+    ],
+    "splitCheckerBodies": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/sys-timer-slot/A/src/compiler/sys.ts:383:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 14091,
+        "body_end": 14436,
+        "instantiated": false,
+        "status": "split_checker_body",
+        "checker_diagnostics": [
+          "/workspace/scratch/sys-timer-slot/A/src/compiler/sys.ts:384:9: error TS2322: Type 'unknown' is not assignable to type 'boolean'.",
+          "/workspace/scratch/sys-timer-slot/A/src/compiler/sys.ts:384:79: error TS2345: Argument of type '(_timeoutType: string, queue: PollingIntervalQueue) => void' is not assignable to parameter of type '(...args: unknown[]) => void'.\n  Types of parameters '_timeoutType' and 'args' are incompatible.\n    Type 'unknown' is not assignable to type 'string'."
+        ],
+        "name": "scheduleNextPoll",
+        "parent": "/workspace/scratch/sys-timer-slot/A/src/compiler/sys.ts:251:1",
+        "top": "/workspace/scratch/sys-timer-slot/A/src/compiler/sys.ts:251:1",
+        "depth": 1
+      }
+    ],
+    "added": [
+      {
+        "where": "src/compiler/sys.ts:1502:13",
+        "kind": "Refused",
+        "reason": "a function taking Timeout | undefined seen as one taking unknown (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1519:36",
+        "kind": "NotYet",
+        "reason": "a member typed any (require()module) related to {} at the initializer site",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1978:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1600:13",
+        "kind": "Refused",
+        "reason": "a function taking Timeout | undefined seen as one taking unknown (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1475:5"
+        ]
+      }
+    ],
+    "removed": [
+      {
+        "where": "src/compiler/sys.ts:384:79",
+        "kind": "NotYet",
+        "reason": "a member typed any ((0)) related to string at the argument site",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1978:1"
+        ]
+      }
+    ],
+    "common": 122
+  },
+  "B": {
+    "checkerRejected": true,
+    "diagnostics": [
+      "/workspace/scratch/sys-timer-slot/B/src/compiler/sys.ts:1501:13: error TS2322: Type '(handler: () => void, timeout: number) => Timeout' is not assignable to type '<A extends unknown[]>(callback: (...args: A) => void, ms: number, ...args: A) => unknown'.\n  Types of parameters 'timeout' and 'ms' are incompatible.\n    Type '[ms: number, ...args: A]' is not assignable to type '[timeout: number]'.\n      Type '[ms: number, ...args: unknown[]]' is not assignable to type '[timeout: number]'.\n        Target allows only 1 element(s) but source may have more.",
+      "/workspace/scratch/sys-timer-slot/B/src/compiler/sys.ts:1599:13: error TS2322: Type '(handler: () => void, timeout: number) => Timeout' is not assignable to type '<A extends unknown[]>(callback: (...args: A) => void, ms: number, ...args: A) => unknown'.\n  Types of parameters 'timeout' and 'ms' are incompatible.\n    Type '[ms: number, ...args: A]' is not assignable to type '[timeout: number]'.\n      Type '[ms: number, ...args: unknown[]]' is not assignable to type '[timeout: number]'.\n        Target allows only 1 element(s) but source may have more.",
+      "/workspace/scratch/sys-timer-slot/B/src/compiler/sys.ts:384:9: error TS2322: Type 'unknown' is not assignable to type 'boolean'.",
+      "/workspace/scratch/sys-timer-slot/B/src/compiler/sys.ts:497:74: error TS2554: Expected 2 arguments, but got 3.",
+      "/workspace/scratch/sys-timer-slot/B/src/compiler/sys.ts:777:83: error TS2554: Expected 2 arguments, but got 3."
+    ],
+    "units": 140,
+    "unitStatuses": {
+      "attempted": 133,
+      "deferred_generic_instantiation": 3,
+      "split_checker_body": 4
+    },
+    "rawEventKinds": {
+      "Refused": 29,
+      "NotYet": 98,
+      "Boundary": 109,
+      "SkippedDependency": 1
+    },
+    "distinctSites": 102,
+    "sites": [
+      {
+        "where": "src/compiler/sys.ts:1654:13",
+        "kind": "Refused",
+        "reason": "a checked view with a callable contract",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:57:1",
+        "kind": "Refused",
+        "reason": "an ambient function declaration",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:57:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:58:1",
+        "kind": "Refused",
+        "reason": "an ambient function declaration",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:58:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:144:81",
+        "kind": "Refused",
+        "reason": "a value of type typeof PollingInterval seen as Levels, whose readonly field Low becomes writable: a readonly field may hold something narrower than PollingInterval.Low, which a write of number would replace",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:140:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:162:35",
+        "kind": "Refused",
+        "reason": "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:159:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:207:32",
+        "kind": "Refused",
+        "reason": "a value of type undefined seen as T, a type parameter whose constraint WatchedFileWithIsClosed can be written, so it can write what undefined can't hold",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:192:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:216:32",
+        "kind": "Refused",
+        "reason": "a value of type undefined seen as T, a type parameter whose constraint WatchedFileWithIsClosed can be written, so it can write what undefined can't hold",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:192:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:226:36",
+        "kind": "Refused",
+        "reason": "a value of type undefined seen as T, a type parameter whose constraint WatchedFileWithIsClosed can be written, so it can write what undefined can't hold",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:192:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:289:23",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:288:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:310:19",
+        "kind": "Refused",
+        "reason": "a value of type WatchedFileWithUnchangedPolls[] seen as (WatchedFileWithUnchangedPolls | undefined)[], which can write WatchedFileWithUnchangedPolls | undefined where WatchedFileWithUnchangedPolls is read",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:308:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:324:13",
+        "kind": "Refused",
+        "reason": "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:321:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:521:17",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:505:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:627:33",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:599:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:794:87",
+        "kind": "Refused",
+        "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:780:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:881:34",
+        "kind": "Refused",
+        "reason": "a value of type never[] seen as ChildDirectoryWatcher[], which can write ChildDirectoryWatcher where never is read",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:880:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1198:13",
+        "kind": "Refused",
+        "reason": "a value of type Map<string, SingleFileWatcher<FileWatcherCallback>> seen as Map<string, SingleFileWatcher<FileWatcherCallback | FsWatchCallback>>, which can write SingleFileWatcher<FileWatcherCallback | FsWatchCallback> where SingleFileWatcher<FileWatcherCallback> is read",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1196:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1214:25",
+        "kind": "Refused",
+        "reason": "a value of type Map<string, SingleFileWatcher<FsWatchCallback>> seen as Map<string, SingleFileWatcher<FileWatcherCallback | FsWatchCallback>>, which can write SingleFileWatcher<FileWatcherCallback | FsWatchCallback> where SingleFileWatcher<FsWatchCallback> is read",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1205:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1387:31",
+        "kind": "Refused",
+        "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1385:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1388:5",
+        "kind": "Refused",
+        "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1385:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1647:32",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1647:42",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1651:29",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1651:33",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1651:43",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1652:13",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session.connect",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1652:21",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session.connect",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1654:13",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session.post",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1654:21",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session.post",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1655:17",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session.post",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1655:25",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session.post",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1692:17",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session.post",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1689:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1692:31",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session.post",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1689:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1706:21",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session.disconnect",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1689:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1706:23",
+        "kind": "NotYet",
+        "reason": "node:inspector.Session.disconnect",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1689:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1724:41",
+        "kind": "NotYet",
+        "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1718:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1967:12",
+        "kind": "Refused",
+        "reason": "a method read as a value (getEnvironmentVariable would lose its object, and this with it)",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1967:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:57:1",
+        "kind": "NotYet",
+        "reason": "a function without a body",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:57:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:58:1",
+        "kind": "NotYet",
+        "reason": "a function without a body",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:58:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:129:9",
+        "kind": "NotYet",
+        "reason": "a computed field name",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:127:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:162:17",
+        "kind": "NotYet",
+        "reason": "assigning an element of a value",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:140:1",
+          "src/compiler/sys.ts:152:5",
+          "src/compiler/sys.ts:159:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:178:13",
+        "kind": "NotYet",
+        "reason": "assigning an element of a value",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:140:1",
+          "src/compiler/sys.ts:167:5",
+          "src/compiler/sys.ts:177:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:185:81",
+        "kind": "Refused",
+        "reason": "a spread after the first field",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:140:1",
+          "src/compiler/sys.ts:182:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:141:10",
+        "kind": "NotYet",
+        "reason": "a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:140:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:263:11",
+        "kind": "NotYet",
+        "reason": "a value of type PollingIntervalQueue",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:251:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:288:14",
+        "kind": "NotYet",
+        "reason": "a function returning PollingIntervalQueue",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:288:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:296:61",
+        "kind": "NotYet",
+        "reason": "a value of type PollingIntervalQueue",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:296:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:308:64",
+        "kind": "NotYet",
+        "reason": "a value of type PollingIntervalQueue",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:308:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:240:17",
+        "kind": "NotYet",
+        "reason": "assigning a field of a value",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:321:5",
+          "src/compiler/sys.ts:489:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:201:79",
+        "kind": "NotYet",
+        "reason": "a PostfixUnaryExpression",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:321:5",
+          "src/compiler/sys.ts:489:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:356:14",
+        "kind": "NotYet",
+        "reason": "a function returning PollingIntervalQueue",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:356:5",
+          "src/compiler/sys.ts:377:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:368:9",
+        "kind": "Refused",
+        "reason": "inherited library member push read as an own field",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:367:5"
+        ]
+      },
+      {
+        "where": "src/compiler/core.ts:2365:60",
+        "kind": "NotYet",
+        "reason": "function identity comparison in a program with specialized generic function values",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:388:1",
+          "src/compiler/sys.ts:401:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:436:25",
+        "kind": "NotYet",
+        "reason": "a value of type any",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:388:1",
+          "src/compiler/sys.ts:424:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:441:29",
+        "kind": "NotYet",
+        "reason": "assigning to an Identifier",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:388:1",
+          "src/compiler/sys.ts:424:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:442:33",
+        "kind": "NotYet",
+        "reason": "reading currentModifiedTime",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:388:1",
+          "src/compiler/sys.ts:424:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:444:25",
+        "kind": "NotYet",
+        "reason": "a value of type any",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:388:1",
+          "src/compiler/sys.ts:424:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:445:54",
+        "kind": "NotYet",
+        "reason": "reading currentModifiedTime",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:388:1",
+          "src/compiler/sys.ts:424:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:447:34",
+        "kind": "NotYet",
+        "reason": "reading currentModifiedTime",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:388:1",
+          "src/compiler/sys.ts:424:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:450:59",
+        "kind": "NotYet",
+        "reason": "reading currentModifiedTime",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:388:1",
+          "src/compiler/sys.ts:424:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:470:9",
+        "kind": "NotYet",
+        "reason": "a value of type any",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:464:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:490:9",
+        "kind": "NotYet",
+        "reason": "assigning to an Identifier",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:489:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:603:5",
+        "kind": "Refused",
+        "reason": "a method in object destructuring",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:599:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:655:29",
+        "kind": "NotYet",
+        "reason": "optional record property access",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:637:5"
+        ]
+      },
+      {
+        "where": "src/compiler/debug.ts:227:5",
+        "kind": "NotYet",
+        "reason": "a checked predicate target whose check would read past the depth bound (HostDirectoryWatcher)",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:637:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:690:27",
+        "kind": "NotYet",
+        "reason": "a call through ?. (an optional call)",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:637:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:739:9",
+        "kind": "NotYet",
+        "reason": "a call through ?. (an optional call)",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:705:5",
+          "src/compiler/sys.ts:706:5",
+          "src/compiler/sys.ts:707:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:781:9",
+        "kind": "NotYet",
+        "reason": "assigning to an Identifier",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:780:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:786:17",
+        "kind": "NotYet",
+        "reason": "reading timerToUpdateChildWatches",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:780:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:813:117",
+        "kind": "NotYet",
+        "reason": "reading timerToUpdateChildWatches",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:780:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:838:13",
+        "kind": "NotYet",
+        "reason": "a value of type any",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:833:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:941:13",
+        "kind": "NotYet",
+        "reason": "optional record property access",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:935:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1007:5",
+        "kind": "Refused",
+        "reason": "a method in object destructuring",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:997:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1030:54",
+        "kind": "NotYet",
+        "reason": "a boolean | undefined variable a function value captures",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1029:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1052:140",
+        "kind": "NotYet",
+        "reason": "a boolean | undefined variable a function value captures",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1029:5"
+        ]
+      },
+      {
+        "where": "src/compiler/debug.ts:252:33",
+        "kind": "NotYet",
+        "reason": "a value of type never",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1029:5",
+          "src/compiler/sys.ts:1136:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1061:84",
+        "kind": "NotYet",
+        "reason": "reading getModifiedTime",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1060:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1065:90",
+        "kind": "NotYet",
+        "reason": "reading getModifiedTime",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1064:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1100:40",
+        "kind": "NotYet",
+        "reason": "optional record property access",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1095:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1103:30",
+        "kind": "NotYet",
+        "reason": "reading defaultFallbackPolling",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1095:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1125:17",
+        "kind": "NotYet",
+        "reason": "reading fileSystemEntryExists",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1109:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1186:48",
+        "kind": "NotYet",
+        "reason": "optional record property access",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1176:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:521:17",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1196:5",
+          "src/compiler/sys.ts:1205:5"
+        ]
+      },
+      {
+        "where": "src/compiler/core.ts:2332:13",
+        "kind": "NotYet",
+        "reason": "function identity comparison in a program with specialized generic function values",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1196:5",
+          "src/compiler/sys.ts:1205:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1253:77",
+        "kind": "NotYet",
+        "reason": "function identity comparison in a program with specialized generic function values",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1222:5",
+          "src/compiler/sys.ts:1250:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1269:89",
+        "kind": "NotYet",
+        "reason": "a boolean | undefined variable a function value captures",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1222:5",
+          "src/compiler/sys.ts:1263:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1277:17",
+        "kind": "NotYet",
+        "reason": "reading presentWatcher",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1222:5",
+          "src/compiler/sys.ts:1263:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1281:24",
+        "kind": "NotYet",
+        "reason": "reading presentWatcher",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1222:5",
+          "src/compiler/sys.ts:1263:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1388:5",
+        "kind": "NotYet",
+        "reason": "replacing a represented method at runtime",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1385:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1642:17",
+        "kind": "NotYet",
+        "reason": "a union of differently held members variable a function value captures",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1646:59",
+        "kind": "NotYet",
+        "reason": "a value of type any",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1647:18",
+        "kind": "NotYet",
+        "reason": "reading inspector",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1651:29",
+        "kind": "NotYet",
+        "reason": "new a PropertyAccessExpression",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1652:13",
+        "kind": "NotYet",
+        "reason": "a method of a class stage 0 doesn't have",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1654:13",
+        "kind": "NotYet",
+        "reason": "reading session",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1641:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1690:17",
+        "kind": "NotYet",
+        "reason": "a union of differently held members variable a function value captures",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1689:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1694:29",
+        "kind": "NotYet",
+        "reason": "node:fs.StatsBase.isDirectory through an optional call",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1689:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1703:25",
+        "kind": "NotYet",
+        "reason": "node:fs.writeFileSync: JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1689:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1706:21",
+        "kind": "NotYet",
+        "reason": "a method of a class stage 0 doesn't have",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1689:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1724:41",
+        "kind": "NotYet",
+        "reason": "reading __filename",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1718:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1818:24",
+        "kind": "NotYet",
+        "reason": "reading byteOrderMarkIndicator",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1815:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1869:17",
+        "kind": "Refused",
+        "reason": "sort without a comparator",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1834:9"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1870:17",
+        "kind": "Refused",
+        "reason": "sort without a comparator",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1834:9"
+        ]
+      }
+    ],
+    "splitCheckerBodies": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/sys-timer-slot/B/src/compiler/sys.ts:383:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 14091,
+        "body_end": 14436,
+        "instantiated": false,
+        "status": "split_checker_body",
+        "checker_diagnostics": [
+          "/workspace/scratch/sys-timer-slot/B/src/compiler/sys.ts:384:9: error TS2322: Type 'unknown' is not assignable to type 'boolean'."
+        ],
+        "name": "scheduleNextPoll",
+        "parent": "/workspace/scratch/sys-timer-slot/B/src/compiler/sys.ts:251:1",
+        "top": "/workspace/scratch/sys-timer-slot/B/src/compiler/sys.ts:251:1",
+        "depth": 1
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/sys-timer-slot/B/src/compiler/sys.ts:495:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 19478,
+        "body_end": 19635,
+        "instantiated": false,
+        "status": "split_checker_body",
+        "checker_diagnostics": [
+          "/workspace/scratch/sys-timer-slot/B/src/compiler/sys.ts:497:74: error TS2554: Expected 2 arguments, but got 3."
+        ],
+        "name": "scheduleNextPoll",
+        "parent": "/workspace/scratch/sys-timer-slot/B/src/compiler/sys.ts:464:1",
+        "top": "/workspace/scratch/sys-timer-slot/B/src/compiler/sys.ts:464:1",
+        "depth": 1
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/sys-timer-slot/B/src/compiler/sys.ts:765:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 30319,
+        "body_end": 30875,
+        "instantiated": false,
+        "status": "split_checker_body",
+        "checker_diagnostics": [
+          "/workspace/scratch/sys-timer-slot/B/src/compiler/sys.ts:777:83: error TS2554: Expected 2 arguments, but got 3."
+        ],
+        "name": "scheduleUpdateChildWatches",
+        "parent": "/workspace/scratch/sys-timer-slot/B/src/compiler/sys.ts:599:1",
+        "top": "/workspace/scratch/sys-timer-slot/B/src/compiler/sys.ts:599:1",
+        "depth": 1
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/sys-timer-slot/B/src/compiler/sys.ts:1475:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 65128,
+        "body_end": 85459,
+        "instantiated": false,
+        "status": "split_checker_body",
+        "checker_diagnostics": [
+          "/workspace/scratch/sys-timer-slot/B/src/compiler/sys.ts:1501:13: error TS2322: Type '(handler: () => void, timeout: number) => Timeout' is not assignable to type '<A extends unknown[]>(callback: (...args: A) => void, ms: number, ...args: A) => unknown'.\n  Types of parameters 'timeout' and 'ms' are incompatible.\n    Type '[ms: number, ...args: A]' is not assignable to type '[timeout: number]'.\n      Type '[ms: number, ...args: unknown[]]' is not assignable to type '[timeout: number]'.\n        Target allows only 1 element(s) but source may have more.",
+          "/workspace/scratch/sys-timer-slot/B/src/compiler/sys.ts:1599:13: error TS2322: Type '(handler: () => void, timeout: number) => Timeout' is not assignable to type '<A extends unknown[]>(callback: (...args: A) => void, ms: number, ...args: A) => unknown'.\n  Types of parameters 'timeout' and 'ms' are incompatible.\n    Type '[ms: number, ...args: A]' is not assignable to type '[timeout: number]'.\n      Type '[ms: number, ...args: unknown[]]' is not assignable to type '[timeout: number]'.\n        Target allows only 1 element(s) but source may have more."
+        ],
+        "name": "getNodeSystem",
+        "parent": "/workspace/scratch/sys-timer-slot/B/src/compiler/sys.ts:1469:1",
+        "top": "/workspace/scratch/sys-timer-slot/B/src/compiler/sys.ts:1469:1"
+      }
+    ],
+    "added": [],
+    "removed": [
+      {
+        "where": "src/compiler/sys.ts:1494:121",
+        "kind": "NotYet",
+        "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1494:35",
+        "kind": "NotYet",
+        "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1494:35",
+        "kind": "NotYet",
+        "reason": "reading __filename",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1494:92",
+        "kind": "NotYet",
+        "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1519:15",
+        "kind": "NotYet",
+        "reason": "a function value that captures the variable its own initializer declares",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1534:13",
+        "kind": "Refused",
+        "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1535:13",
+        "kind": "Refused",
+        "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1578:21",
+        "kind": "NotYet",
+        "reason": "node:fs.StatsBase.isFile through an optional call",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1588:42",
+        "kind": "NotYet",
+        "reason": "a union of differently held members variable a function value captures",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1590:191",
+        "kind": "NotYet",
+        "reason": "process.recordreplay as a value (use its supported process operation directly)",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1469:1",
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1590:192",
+        "kind": "NotYet",
+        "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1605:32",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1605:33",
+        "kind": "NotYet",
+        "reason": "node:process.Process.stdout used as a value",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1612:22",
+        "kind": "Refused",
+        "reason": "a value of type (baseDir: string, moduleName: string) => { module: any; modulePath: string; error: undefined; } | { module: undefined; modulePath: undefined; error: unknown; } seen as (baseDir: string, moduleName: string) => ModuleImportResult, which can write string | undefined where string is read",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1614:77",
+        "kind": "Refused",
+        "reason": "a value of type System seen as ModuleResolutionHost, which can write boolean | (() => boolean) | undefined where boolean is read",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1475:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:1967:12",
+        "kind": "NotYet",
+        "reason": "a literal method through a view that erases its receiver",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:1967:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:384:79",
+        "kind": "NotYet",
+        "reason": "a member typed any ((0)) related to string at the argument site",
+        "phase": "refusal_scan",
+        "units": [
+          "src/compiler/sys.ts:1978:1"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:496:37",
+        "kind": "NotYet",
+        "reason": "reading pollScheduled",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:495:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:497:9",
+        "kind": "NotYet",
+        "reason": "assigning to an Identifier",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:495:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:773:13",
+        "kind": "NotYet",
+        "reason": "reading timerToUpdateChildWatches",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:765:5"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:777:9",
+        "kind": "NotYet",
+        "reason": "assigning to an Identifier",
+        "phase": "lowering",
+        "units": [
+          "src/compiler/sys.ts:765:5"
+        ]
+      }
+    ],
+    "common": 102
+  },
+  "emitters": [
+    {
+      "file": "internal/lower/any_relations.go",
+      "line": 43,
+      "source": "l.refusal.deferred = l.notYet(node, \"a member typed any (\"+found.path+\") related to \"+l.checker.TypeToString(found.target)+\" at the \"+name+\" site\")",
+      "sourceSha256": "fdcbd5b55bd65f4b907eda851cbaaffd016cb40395406e5b2fa2cda93ac38d94"
+    },
+    {
+      "file": "internal/lower/invariance.go",
+      "line": 1042,
+      "source": "what = \"a function taking \" + l.checker.TypeToString(found.source) + \" seen as one taking \" + l.checker.TypeToString(found.target) + \" (tsc relates a method's parameters both ways), so it can be handed what it can't take\"",
+      "sourceSha256": "2509f8840f894cf8ef7ee2c1d687251eea58736a37eff7c0070794271e32cd60"
+    },
+    {
+      "file": "internal/lower/invariance.go",
+      "line": 1053,
+      "source": "return &Refused{Where: l.program.Where(node), What: what, Fix: fix}",
+      "sourceSha256": "2509f8840f894cf8ef7ee2c1d687251eea58736a37eff7c0070794271e32cd60"
+    },
+    {
+      "file": "internal/lower/expression.go",
+      "line": 53,
+      "source": "return 0, l.notYet(node, \"a value of type \"+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))",
+      "sourceSha256": "2c547beec9628f4a56c3e8646e574b41bda06509a396a72a0c78caf197321445"
+    }
+  ]
+}

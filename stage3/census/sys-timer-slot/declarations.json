@@ -1,0 +1,112 @@
+{
+  "A": {
+    "typescript.d.ts": {
+      "identical": false,
+      "diff": "--- a/built/local/typescript.d.ts\n+++ b/built/local/typescript.d.ts\n@@ -8542,8 +8542,8 @@\n         getMemoryUsage?(): number;\n         exit(exitCode?: number): number | undefined;\n         realpath?(path: string): string;\n-        setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;\n-        clearTimeout?(timeoutId: any): void;\n+        setTimeout?(callback: (...args: unknown[]) => void, ms: number, ...args: unknown[]): unknown;\n+        clearTimeout?(timeoutId: unknown): void;\n         clearScreen?(): void;\n         base64decode?(input: string): string;\n         base64encode?(input: string): string;\n",
+      "mainSha256": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b",
+      "candidateSha256": "b59b128047df5be99ba13ef4956c7f8c232a3c3e65d65f44575d7a98ac4fef17"
+    },
+    "typescript.internal.d.ts": {
+      "identical": false,
+      "diff": "--- a/built/local/typescript.internal.d.ts\n+++ b/built/local/typescript.internal.d.ts\n@@ -16660,8 +16660,8 @@\n         /** @internal */ tryEnableSourceMapsForHost?(): void;\n         /** @internal */ getAccessibleFileSystemEntries?(path: string): FileSystemEntries;\n         /** @internal */ debugMode?: boolean;\n-        setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;\n-        clearTimeout?(timeoutId: any): void;\n+        setTimeout?(callback: (...args: unknown[]) => void, ms: number, ...args: unknown[]): unknown;\n+        clearTimeout?(timeoutId: unknown): void;\n         clearScreen?(): void;\n         /** @internal */ setBlocking?(): void;\n         base64decode?(input: string): string;\n",
+      "mainSha256": "1d9d6a7e52314588ab588b273949ccad9568c4579a867e18d0e5455ef88ebb9e",
+      "candidateSha256": "bb91b015cb18d40b5637b92369d43933e2be06ee7579e64806e31d5f4eedf5e1"
+    },
+    "referenceBaseline": {
+      "draft": true,
+      "diff": "--- a/tests/baselines/reference/api/typescript.d.ts\n+++ b/tests/baselines/reference/api/typescript.d.ts\n@@ -8488,8 +8488,8 @@\n         getMemoryUsage?(): number;\n         exit(exitCode?: number): void;\n         realpath?(path: string): string;\n-        setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;\n-        clearTimeout?(timeoutId: any): void;\n+        setTimeout?(callback: (...args: unknown[]) => void, ms: number, ...args: unknown[]): unknown;\n+        clearTimeout?(timeoutId: unknown): void;\n         clearScreen?(): void;\n         base64decode?(input: string): string;\n         base64encode?(input: string): string;\n"
+    },
+    "partialJavascript": {
+      "typescript.js": "afb77fc8c5af8c16d91b9a55088afebabf480becf17fe9c55dd72afa16509a0d",
+      "watchGuard.js": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+      "_typingsInstaller.js": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+      "_tsc.js": "a8cc931a928cc891beb6d5af5ed0978c2ca01e997a6b88f1993079e10c11153d",
+      "typingsInstaller.js": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+      "_tsserver.js": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+      "tsc.js": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+      "tsserver.js": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb"
+    },
+    "javascript": {
+      "mainCount": 9,
+      "candidateCount": 9,
+      "identical": true,
+      "main": {
+        "typescript.js": "afb77fc8c5af8c16d91b9a55088afebabf480becf17fe9c55dd72afa16509a0d",
+        "watchGuard.js": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+        "_typingsInstaller.js": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+        "_tsc.js": "a8cc931a928cc891beb6d5af5ed0978c2ca01e997a6b88f1993079e10c11153d",
+        "typingsInstaller.js": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+        "tsserverlibrary.js": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+        "_tsserver.js": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+        "tsc.js": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+        "tsserver.js": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb"
+      },
+      "candidate": {
+        "typescript.js": "afb77fc8c5af8c16d91b9a55088afebabf480becf17fe9c55dd72afa16509a0d",
+        "watchGuard.js": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+        "_typingsInstaller.js": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+        "_tsc.js": "a8cc931a928cc891beb6d5af5ed0978c2ca01e997a6b88f1993079e10c11153d",
+        "typingsInstaller.js": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+        "tsserverlibrary.js": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+        "_tsserver.js": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+        "tsc.js": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+        "tsserver.js": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb"
+      }
+    }
+  },
+  "B": {
+    "typescript.d.ts": {
+      "identical": false,
+      "diff": "--- a/built/local/typescript.d.ts\n+++ b/built/local/typescript.d.ts\n@@ -8542,8 +8542,8 @@\n         getMemoryUsage?(): number;\n         exit(exitCode?: number): number | undefined;\n         realpath?(path: string): string;\n-        setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;\n-        clearTimeout?(timeoutId: any): void;\n+        setTimeout?<A extends unknown[]>(callback: (...args: A) => void, ms: number, ...args: A): unknown;\n+        clearTimeout?(timeoutId: unknown): void;\n         clearScreen?(): void;\n         base64decode?(input: string): string;\n         base64encode?(input: string): string;\n",
+      "mainSha256": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b",
+      "candidateSha256": "6cf265608efa5bb8723daa5fd86b828c2e3faf196868395e599de23f7f6aa74b"
+    },
+    "typescript.internal.d.ts": {
+      "identical": false,
+      "diff": "--- a/built/local/typescript.internal.d.ts\n+++ b/built/local/typescript.internal.d.ts\n@@ -16660,8 +16660,8 @@\n         /** @internal */ tryEnableSourceMapsForHost?(): void;\n         /** @internal */ getAccessibleFileSystemEntries?(path: string): FileSystemEntries;\n         /** @internal */ debugMode?: boolean;\n-        setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;\n-        clearTimeout?(timeoutId: any): void;\n+        setTimeout?<A extends unknown[]>(callback: (...args: A) => void, ms: number, ...args: A): unknown;\n+        clearTimeout?(timeoutId: unknown): void;\n         clearScreen?(): void;\n         /** @internal */ setBlocking?(): void;\n         base64decode?(input: string): string;\n",
+      "mainSha256": "1d9d6a7e52314588ab588b273949ccad9568c4579a867e18d0e5455ef88ebb9e",
+      "candidateSha256": "3e709594190eb0fdde478536114d6598e5c701690e4804e3802e510d5a5d61bf"
+    },
+    "referenceBaseline": {
+      "draft": true,
+      "diff": "--- a/tests/baselines/reference/api/typescript.d.ts\n+++ b/tests/baselines/reference/api/typescript.d.ts\n@@ -8488,8 +8488,8 @@\n         getMemoryUsage?(): number;\n         exit(exitCode?: number): void;\n         realpath?(path: string): string;\n-        setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;\n-        clearTimeout?(timeoutId: any): void;\n+        setTimeout?<A extends unknown[]>(callback: (...args: A) => void, ms: number, ...args: A): unknown;\n+        clearTimeout?(timeoutId: unknown): void;\n         clearScreen?(): void;\n         base64decode?(input: string): string;\n         base64encode?(input: string): string;\n"
+    },
+    "partialJavascript": {
+      "typescript.js": "afb77fc8c5af8c16d91b9a55088afebabf480becf17fe9c55dd72afa16509a0d",
+      "watchGuard.js": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+      "_typingsInstaller.js": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+      "_tsc.js": "a8cc931a928cc891beb6d5af5ed0978c2ca01e997a6b88f1993079e10c11153d",
+      "typingsInstaller.js": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+      "_tsserver.js": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+      "tsc.js": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+      "tsserver.js": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb"
+    },
+    "javascript": {
+      "mainCount": 9,
+      "candidateCount": 9,
+      "identical": true,
+      "main": {
+        "typescript.js": "afb77fc8c5af8c16d91b9a55088afebabf480becf17fe9c55dd72afa16509a0d",
+        "watchGuard.js": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+        "_typingsInstaller.js": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+        "_tsc.js": "a8cc931a928cc891beb6d5af5ed0978c2ca01e997a6b88f1993079e10c11153d",
+        "typingsInstaller.js": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+        "tsserverlibrary.js": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+        "_tsserver.js": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+        "tsc.js": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+        "tsserver.js": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb"
+      },
+      "candidate": {
+        "typescript.js": "afb77fc8c5af8c16d91b9a55088afebabf480becf17fe9c55dd72afa16509a0d",
+        "watchGuard.js": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+        "_typingsInstaller.js": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+        "_tsc.js": "a8cc931a928cc891beb6d5af5ed0978c2ca01e997a6b88f1993079e10c11153d",
+        "typingsInstaller.js": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+        "tsserverlibrary.js": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+        "_tsserver.js": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+        "tsc.js": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+        "tsserver.js": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb"
+      }
+    }
+  }
+}
