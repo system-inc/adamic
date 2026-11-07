@@ -195,6 +195,12 @@ func fsWatchProduct(t *testing.T, variant string, options native.Options) string
 				}
 				before := "    /* mutant: an inotify instance per watcher, as head 2 opened, held to process exit */\n    if (inotify_init1(IN_NONBLOCK | IN_CLOEXEC) == -1) { system_error(errno, \"watch\", name); free(name); return NULL; }\n"
 				data = []byte(strings.Replace(string(data), anchor, before+anchor, 1))
+			case "shared-mutant-persistent-count":
+				anchor := "    if (watcher->persistent) fs_watch_persistent_count--;\n"
+				if strings.Count(string(data), anchor) != 1 {
+					return fmt.Errorf("persistent-count mutant needs exactly one close decrement")
+				}
+				data = []byte(strings.Replace(string(data), anchor, "    /* mutant: the closed persistent watcher still counts */\n", 1))
 			case "shared-mutant-refness":
 				before := "    } else if (referenced) {\n        (void)adamic_source_ref(fs_watch_source);\n    } else {\n        (void)adamic_source_unref(fs_watch_source);\n    }"
 				after := "    } else {\n        (void)adamic_source_close(fs_watch_source);\n        fs_watch_source = adamic_source_register(fs_watch_descriptor, fs_watcher_dispatch,\n            (void *)fs_watch_generation, referenced);\n    }"
@@ -395,4 +401,21 @@ func TestFSWatchMutantRefnessClosesAndReregisters(t *testing.T) {
 func TestProduct_FSWatchSharedMutantRefness(t *testing.T) {
 	t.Parallel()
 	fsWatchProduct(t, "shared-mutant-refness", native.Options{Sanitize: true, Count: true})
+}
+
+func TestFSWatchMutantPersistentCountKeepsSource(t *testing.T) {
+	t.Parallel()
+	truth := fsWatchSharedNode(t, "unref")
+	if string(truth.Stdout) != "unref exits\n" {
+		t.Fatalf("Node unref: %+v", truth)
+	}
+	got, expired := fsWatchRun(t, fsWatchSanitizers, fsWatchProduct(t, "shared-mutant-persistent-count", native.Options{Sanitize: true, Count: true}), "unref")
+	if !expired || len(got.Stdout) != 0 || len(got.Stderr) != 0 {
+		t.Fatalf("persistent-count mutant must keep the source referenced past its deadline: expired=%t %+v", expired, got)
+	}
+	t.Logf("TestFSWatchSharedSourceUnrefMatchesNode goes red without the persistent-count decrement: deadline exceeded; stdout=%q", got.Stdout)
+}
+func TestProduct_FSWatchSharedMutantPersistentCount(t *testing.T) {
+	t.Parallel()
+	fsWatchProduct(t, "shared-mutant-persistent-count", native.Options{Sanitize: true, Count: true})
 }
