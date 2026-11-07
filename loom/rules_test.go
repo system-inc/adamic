@@ -97,6 +97,15 @@ func TestRulesRefuseMistakes(t *testing.T) {
 		{"witness machines twice", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 10, "hours": 4, "machines": ["Home", "Home"]}}`, `each once, not "Home"`},
 		{"witness machines a path", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 10, "hours": 4, "machines": ["Home/0"]}}`, `not "Home/0"`},
 		{"witness a list", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": [10]}`, "cannot unmarshal array"},
+		{"witness at past midnight", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 10, "hours": 4, "machines": ["Pupa"], "at": "24:00"}}`, `witness's at is "24:00"`},
+		{"witness at without its zero", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 10, "hours": 4, "machines": ["Pupa"], "at": "9:00"}}`, `witness's at is "9:00"`},
+		{"witness at null", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 10, "hours": 4, "machines": ["Pupa"], "at": null}}`, "witness's at is null"},
+		{"witness fullBlock null", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 10, "hours": 4, "machines": ["Pupa"], "fullBlock": null}}`, "exactly {box, hours}"},
+		{"witness fullBlock without hours", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 10, "hours": 4, "machines": ["Pupa"], "fullBlock": {"box": "Adam"}}}`, "exactly {box, hours}"},
+		{"witness fullBlock unknown field", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 10, "hours": 4, "machines": ["Pupa"], "fullBlock": {"box": "Adam", "hours": 24, "on": true}}}`, `unknown field "on"`},
+		{"witness fullBlock a path", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 10, "hours": 4, "machines": ["Pupa"], "fullBlock": {"box": "Adam/0", "hours": 24}}}`, `fullBlock's box is "Adam/0"`},
+		{"witness fullBlock hours zero", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 10, "hours": 4, "machines": ["Pupa"], "fullBlock": {"box": "Adam", "hours": 0}}}`, "fullBlock's hours is 0"},
+		{"witness fullBlock hours past a week", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 10, "hours": 4, "machines": ["Pupa"], "fullBlock": {"box": "Adam", "hours": 169}}}`, "fullBlock's hours is 169"},
 	}
 	for _, testCase := range cases {
 		t.Run(testCase.name, func(t *testing.T) {
@@ -232,6 +241,28 @@ func TestRulesTakeAWitness(t *testing.T) {
 	}
 	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}}`))
 	if err != nil || rules.Witness != nil {
+		t.Fatalf("%+v, %v", rules.Witness, err)
+	}
+}
+
+// A witness's at and fullBlock read here as the lander and the queue take them (#h9p10te, #xtymtgv, before any rules.json
+// names either): at a UTC "HH:MM" at both ends of the day, fullBlock exactly {box, hours} with hours at both ends of its
+// range, and each absent as absent. Mutants: the at check dropped ("witness at past midnight" taken), the fullBlock check
+// dropped ("witness fullBlock hours zero" taken), and either field missing from WitnessRule (this test's files refused as
+// an unknown field).
+func TestRulesTakeAWitnessAtAndFullBlock(t *testing.T) {
+	t.Parallel()
+	rules, err := ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}, "witness": {"every": 1000, "hours": 36, "machines": ["Pupa-9c63e0"], "at": "10:00", "fullBlock": {"box": "Adam", "hours": 24}}}`))
+	if err != nil || rules.Witness == nil || rules.Witness.At == nil || *rules.Witness.At != "10:00" || rules.Witness.FullBlock == nil || rules.Witness.FullBlock.Box != "Adam" || rules.Witness.FullBlock.Hours != 24 {
+		t.Fatalf("%+v, %v", rules.Witness, err)
+	}
+	for _, edge := range []string{`"at": "00:00", "fullBlock": {"box": "Eve", "hours": 1}`, `"at": "23:59", "fullBlock": {"box": "Eve", "hours": 168}`} {
+		if _, err := ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}, "witness": {"every": 10, "hours": 4, "machines": ["Pupa"], ` + edge + `}}`)); err != nil {
+			t.Fatalf("%s refused: %v", edge, err)
+		}
+	}
+	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}, "witness": {"every": 10, "hours": 4, "machines": ["Pupa"]}}`))
+	if err != nil || rules.Witness.At != nil || rules.Witness.FullBlock != nil {
 		t.Fatalf("%+v, %v", rules.Witness, err)
 	}
 }
