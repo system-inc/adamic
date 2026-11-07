@@ -66,10 +66,15 @@ const (
 // runtimeNotYetKeyless is the third closed allowlist, of keyless stops that aren't a conversion: each
 // message whole, said as "adamic: panic: <message>\n", and the ruling that made it. Object.keys of a
 // runtime host value names no key it was reading and converts nothing, so it has neither the keyed shape
-// nor the conversion sentence (#ey7aysy, Adamic, Nov 4, under #0sps03r). Only these exact words qualify,
-// matched against the whole stderr: a new message needs Adamic's ruling and its line here.
+// nor the conversion sentence (#ey7aysy, Adamic, Nov 4, under #0sps03r). A collator's compare stops
+// whole too, with neither string it was handed, since operands would put run-time data in an entry
+// (#zjndrx5, Adamic, Nov 7 06:39Z), and so does a collator's construction from a defined locale, with
+// no locale in it (#zjndrx5, Adamic, Nov 7 06:48Z), both lifted by #s82g5nx. Only these exact words
+// qualify, matched against the whole stderr: a new message needs Adamic's ruling and its line here.
 var runtimeNotYetKeyless = map[string]string{
 	"this runtime value's own keys aren't enumerated yet": "#0sps03r",
+	"Intl.Collator's compare isn't built yet":             "#zjndrx5",
+	"Intl.Collator with a defined locale isn't built yet": "#zjndrx5",
 }
 
 // runtimeNotYetKeylessPrefix is what every keyless message is said after.

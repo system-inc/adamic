@@ -55,6 +55,8 @@ func uniformFieldOffsets(program *ir.Program) map[string]int {
 		{"name", "message", "code"}, {"name", "message", "code", "syscall", "path", "errno"}, {"_fsFileTime"}, {"size", "mtimeMs", "mtime", "_fsFileMode", "atime"},
 		{"close", "on"},
 		{"next"}, {"iterator", "part", "key", "value", "set"}, {"value", "done"}, {"string", "offset"},
+		// An Intl.Collator's (library_intl.c).
+		{"compare", "#locale"},
 		{"__program", "lastIndex", "source", "flags", "global", "ignoreCase", "multiline", "unicode", "sticky", "hasIndices", "unicodeSets", "dotAll"},
 		{"index", "input", "groups", "indices"}, {"regex", "input", "done"},
 		{"nodeKind", "symbolName", "type"},

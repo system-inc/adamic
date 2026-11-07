@@ -134,6 +134,10 @@ var hostShapeTable = []hostShapeRow{
 	{file: hostShapeRuntime + "json_decode.c", name: "number_shape", verdict: hostShapePlain, answer: plainFixture, row: "show('decoded number', "},
 	{file: hostShapeRuntime + "json_decode.c", name: "boolean_shape", verdict: hostShapePlain, answer: plainFixture, row: "show('decoded boolean', "},
 	{file: hostShapeRuntime + "json_decode.c", name: "error_shape", verdict: hostShapePlain, answer: plainFixture, row: "show('decode error', "},
+	// An Intl.Collator (#zjndrx5): Node's has no own property, its compare a getter on
+	// Intl.Collator.prototype, where native's shape holds compare as its own, so a run-time key read of
+	// compare is the pin (Runtime's must 2).
+	{file: hostShapeRuntime + "library_intl.c", name: "collator_shape", verdict: hostShapeHost, stop: "stop_host_collator.a"},
 	{file: hostShapeRuntime + "library_object.c", scope: "adamic_object_values", name: "number_pair", verdict: hostShapeHost, internal: "an Object.entries pair: " + tupleReason},
 	{file: hostShapeRuntime + "library_object.c", scope: "adamic_object_values", name: "string_pair", verdict: hostShapeHost, internal: "an Object.entries pair: " + tupleReason},
 	{file: hostShapeRuntime + "library_object.c", scope: "adamic_object_values", name: "boolean_pair", verdict: hostShapeHost, internal: "an Object.entries pair: " + tupleReason},
@@ -214,6 +218,7 @@ var hostShapeTable = []hostShapeRow{
 var hostShapeWrappers = []struct {
 	file, declaration, construction, native string
 }{
+	{"internal/javascript/library_intl.go", "class AdamicIntlCollator {", "new AdamicIntlCollator(", hostShapeRuntime + "library_intl.c  collator_shape[0]"},
 	{"internal/javascript/library_map_set.go", "class AdamicIterator {", "new AdamicIterator(", hostShapeRuntime + "map_set.c  iterator_shape[0]"},
 	{"internal/javascript/library_node_process.go", "class AdamicHostObject {}", "Object.setPrototypeOf(usage, AdamicHostObject.prototype)", hostShapeRuntime + "node_process.c adamic_node_memory_usage shape[0]"},
 	{"internal/javascript/library_node_fs_file.go", "class AdamicFSWatcher {", "new AdamicFSWatcher(", hostShapeRuntime + "node_fs_watch_impl.h  fs_watcher_shape[0]"},

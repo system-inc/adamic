@@ -222,6 +222,48 @@
       "ruling_task": "#zhrjf2t",
       "lifting_task": "#xdcec18",
       "stderr": "adamic: panic: a function's properties aren't read by a run-time key yet (reading 'name')\n"
+    },
+    "3de8221b6596d0df1ee1ec7237073e7135aea33b6aebf57fac7e6c9e2d714063": {
+      "path": "internal/oracle/testdata/intl_collator/tsc_shape.a",
+      "ruling_task": "#zjndrx5",
+      "lifting_task": "#s82g5nx",
+      "stderr": "adamic: panic: Intl.Collator's compare isn't built yet\n"
+    },
+    "50d8e44d7dc0e61c7b90e69e26f9ed4cf052f8af0acbda1149ffa2bf635d3937": {
+      "path": "internal/oracle/testdata/intl_collator/locale_en.a",
+      "ruling_task": "#zjndrx5",
+      "lifting_task": "#s82g5nx",
+      "stderr": "adamic: panic: Intl.Collator with a defined locale isn't built yet\n"
+    },
+    "10018d18712ebe91d646415dd9ca8deec7298f874f4e3c0e2bb15816cf9c37b7": {
+      "path": "internal/oracle/testdata/intl_collator/locale_malformed.a",
+      "ruling_task": "#zjndrx5",
+      "lifting_task": "#s82g5nx",
+      "stderr": "adamic: panic: Intl.Collator with a defined locale isn't built yet\n"
+    },
+    "13aecd56bdab1dcd792efc118e16c9090682f63b05427c021b15b8190266ca0f": {
+      "path": "internal/oracle/testdata/intl_collator/locale_variable.a",
+      "ruling_task": "#zjndrx5",
+      "lifting_task": "#s82g5nx",
+      "stderr": "adamic: panic: Intl.Collator with a defined locale isn't built yet\n"
+    },
+    "6380eea6d3b9f38a061455f5ef45f91090617ce7edfc42afd67ac7bf34312db3": {
+      "path": "internal/oracle/testdata/intl_collator/own_keys.a",
+      "ruling_task": "#0sps03r",
+      "lifting_task": "#zhrjf2t",
+      "stderr": "adamic: panic: this runtime value's own keys aren't enumerated yet\n"
+    },
+    "8bae138cf034825f24b5880490abe2ded7d5adb1a766f1ab0c3f845b8e17d627": {
+      "path": "internal/oracle/testdata/intl_collator/in_compare.a",
+      "ruling_task": "#0sps03r",
+      "lifting_task": "#zhrjf2t",
+      "stderr": "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading 'compare')\n"
+    },
+    "e99fc458f38b356640370bde3b3f0e0da4dc15870f1acb12417f51e89f988757": {
+      "path": "internal/oracle/testdata/reflect_get/stop_host_collator.a",
+      "ruling_task": "#0sps03r",
+      "lifting_task": "#zhrjf2t",
+      "stderr": "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading 'compare')\n"
     }
   }
 }

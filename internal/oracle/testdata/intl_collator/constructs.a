@@ -1,0 +1,11 @@
+// tsc builds its comparer and never calls it in a compile (#zjndrx5): a collator made from an
+// undefined locale and tsc's options goes on as Node's does, each one its own object, and natively
+// each collator and the compare closure it holds are freed, which the leak check holds.
+function getUILocale(): string | undefined {
+	return undefined;
+}
+
+const collator = new Intl.Collator(getUILocale(), { usage: 'sort', sensitivity: 'variant', numeric: true });
+console.log(`collator ${typeof collator}`);
+const again = new Intl.Collator(undefined, { usage: 'sort', sensitivity: 'variant', numeric: true });
+console.log(`two ${collator === again ? 'same' : 'distinct'}`);
