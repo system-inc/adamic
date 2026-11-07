@@ -74,7 +74,7 @@ export function clean(path: string): string {
     }
     const joined = kept.join('/');
     if(rooted) {
-        return '/' + joined;
+        return `/${joined}`;
     }
     return joined === '' ? '.' : joined;
 }
