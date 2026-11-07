@@ -13,10 +13,10 @@ import (
 
 // A finite key reads the same own data slots as named access. Ordinary IR calls
 // hold the receiver before evaluating the key, including a key that replaces it.
-func (l *lowering) finiteElementRead(node *ast.Node, object ir.Expression) (ir.Expression, error) {
+func (lowering *lowering) finiteElementRead(node *ast.Node, object ir.Expression) (ir.Expression, error) {
 	access := node.AsElementAccessExpression()
-	receiver := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression))
-	keyType := l.checker.GetTypeAtLocation(access.ArgumentExpression)
+	receiver := lowering.checker.GetNonNullableType(lowering.checker.GetTypeAtLocation(access.Expression))
+	keyType := lowering.checker.GetTypeAtLocation(access.ArgumentExpression)
 	members := []*checker.Type{keyType}
 	if keyType.Flags()&checker.TypeFlagsUnion != 0 {
 		members = keyType.Types()
@@ -30,11 +30,11 @@ func (l *lowering) finiteElementRead(node *ast.Node, object ir.Expression) (ir.E
 		switch {
 		case member.Flags()&checker.TypeFlagsStringLiteral != 0:
 			name = member.AsLiteralType().Value().(string)
-			test = ir.StringConstant{Index: l.constant(name)}
+			test = ir.StringConstant{Index: lowering.constant(name)}
 		case member.Flags()&checker.TypeFlagsNumberLiteral != 0:
 			number := reflect.ValueOf(member.AsLiteralType().Value()).Float()
 			if math.Trunc(number) != number || math.Abs(number) > 9007199254740991 {
-				return nil, l.notYet(node, "a computed numeric key outside exact integer names")
+				return nil, lowering.notYet(node, "a computed numeric key outside exact integer names")
 			}
 			if number == 0 {
 				number = 0
@@ -42,36 +42,39 @@ func (l *lowering) finiteElementRead(node *ast.Node, object ir.Expression) (ir.E
 			name = strconv.FormatFloat(number, 'f', -1, 64)
 			test = ir.NumberConstant{Value: number}
 		default:
-			return nil, l.notYet(node, describe(node))
+			return nil, lowering.notYet(node, describe(node))
 		}
-		field := l.checker.GetPropertyOfType(receiver, name)
+		field := lowering.checker.GetPropertyOfType(receiver, name)
 		if field == nil ||
 			accessorSymbol(field) ||
-			(l.accessorNames[name] && field.Flags&ast.SymbolFlagsOptional != 0) ||
+			(lowering.accessorNames[name] && field.Flags&ast.SymbolFlagsOptional != 0) ||
 			name == "__proto__" {
-			return nil, l.notYet(node, "a computed key without an own data field")
+			return nil, lowering.notYet(node, "a computed key without an own data field")
 		}
 		for _, declaration := range field.Declarations {
 			if load.IsLibrary(ast.GetSourceFileOfNode(declaration)) || declaration.Kind == ast.KindMethodDeclaration {
-				return nil, l.notYet(node, "a computed prototype or method read")
+				return nil, lowering.notYet(node, "a computed prototype or method read")
 			}
 		}
-		stored, known := l.representation(l.checker.GetTypeOfSymbol(field))
+		stored, known := lowering.representation(lowering.checker.GetTypeOfSymbol(field))
 		if !known ||
 			censusFieldSlotless(stored) ||
 			stored == ir.Weak ||
-			l.includesNull(l.checker.GetTypeOfSymbol(field)) {
-			return nil, l.notYet(node, "a computed field with an unsupported representation")
+			lowering.includesNull(lowering.checker.GetTypeOfSymbol(field)) {
+			return nil, lowering.notYet(node, "a computed field with an unsupported representation")
 		}
 		if receiver.Flags()&checker.TypeFlagsUnion != 0 {
 			for _, alternative := range receiver.Types() {
-				own := l.checker.GetPropertyOfType(alternative, name)
+				own := lowering.checker.GetPropertyOfType(alternative, name)
 				if own == nil {
-					return nil, l.notYet(node, "a computed field absent from a receiver alternative")
+					return nil, lowering.notYet(node, "a computed field absent from a receiver alternative")
 				}
-				held, known := l.representation(l.checker.GetTypeOfSymbol(own))
+				held, known := lowering.representation(lowering.checker.GetTypeOfSymbol(own))
 				if !known || held != stored {
-					return nil, l.notYet(node, "a computed field stored differently across receiver alternatives")
+					return nil, lowering.notYet(
+						node,
+						"a computed field stored differently across receiver alternatives",
+					)
 				}
 			}
 		}
@@ -80,21 +83,21 @@ func (l *lowering) finiteElementRead(node *ast.Node, object ir.Expression) (ir.E
 		fields = append(fields, field)
 	}
 	if len(names) == 0 {
-		return nil, l.notYet(node, "a computed key without finite alternatives")
+		return nil, lowering.notYet(node, "a computed key without finite alternatives")
 	}
-	result, typeOfError := l.typeOf(node)
+	result, typeOfError := lowering.typeOf(node)
 	if typeOfError != nil {
 		return nil, typeOfError
 	}
-	key, expressionError := l.expression(access.ArgumentExpression)
+	key, expressionError := lowering.expression(access.ArgumentExpression)
 	if expressionError != nil {
 		return nil, expressionError
 	}
-	b := l.libraryArrayBuilder([]ir.Expression{object, key})
+	b := lowering.libraryArrayBuilder([]ir.Expression{object, key})
 	heldObject, heldKey := b.read(b.parameters[0]), b.read(b.parameters[1])
 	var read ir.Expression
 	for index, name := range names {
-		stored, _ := l.representation(l.checker.GetTypeOfSymbol(fields[index]))
+		stored, _ := lowering.representation(lowering.checker.GetTypeOfSymbol(fields[index]))
 		read = ir.Property{
 			Object: heldObject,
 			Name:   name,
@@ -103,7 +106,7 @@ func (l *lowering) finiteElementRead(node *ast.Node, object ir.Expression) (ir.E
 		}
 		read = fit(read, result)
 		if read.Type() != result {
-			return nil, l.notYet(node, "a computed field with differently represented alternatives")
+			return nil, lowering.notYet(node, "a computed field with differently represented alternatives")
 		}
 		b.body = append(b.body, ir.If{
 			Condition: ir.Binary{Operator: ir.Equal, Left: heldKey, Right: tests[index]},
@@ -112,20 +115,22 @@ func (l *lowering) finiteElementRead(node *ast.Node, object ir.Expression) (ir.E
 	}
 	b.body = append(
 		b.body,
-		ir.Panic{Message: ir.StringConstant{Index: l.constant("computed object key outside its proven finite union")}},
+		ir.Panic{
+			Message: ir.StringConstant{Index: lowering.constant("computed object key outside its proven finite union")},
+		},
 	)
 	value := b.finish("element_access_fields", read)
 	if result.IsReference() &&
 		result != ir.Union &&
-		!l.includesUndefined(l.checker.GetTypeAtLocation(node)) &&
-		!l.acceptsUndefined(node) {
+		!lowering.includesUndefined(lowering.checker.GetTypeAtLocation(node)) &&
+		!lowering.acceptsUndefined(node) {
 		for _, field := range fields {
-			if l.includesUndefined(l.checker.GetTypeOfSymbol(field)) {
-				return l.computedFieldPresence(node, value), nil
+			if lowering.includesUndefined(lowering.checker.GetTypeOfSymbol(field)) {
+				return lowering.computedFieldPresence(node, value), nil
 			}
 		}
 	}
-	return l.defined(node, value), nil
+	return lowering.defined(node, value), nil
 }
 
 // viewKeyedRead reads a readonly string-index view held as the object it views (readonlyObjectView)
@@ -133,47 +138,47 @@ func (l *lowering) finiteElementRead(node *ast.Node, object ir.Expression) (ir.E
 // run-time key read Reflect.get lowers to, ir.DynamicKeyedProperty: an own data slot answers with its
 // value, a missing name with undefined and an inherited one as Node's, and the result is a union, so
 // typeof value === "number" stays a real check where the view's type says string | number.
-func (l *lowering) viewKeyedRead(node *ast.Node, object ir.Expression) (ir.Expression, bool, error) {
+func (lowering *lowering) viewKeyedRead(node *ast.Node, object ir.Expression) (ir.Expression, bool, error) {
 	access := node.AsElementAccessExpression()
-	if !l.readonlyObjectView(l.checker.GetTypeAtLocation(access.Expression)) {
+	if !lowering.readonlyObjectView(lowering.checker.GetTypeAtLocation(access.Expression)) {
 		return nil, false, nil
 	}
-	keyType := l.checker.GetTypeAtLocation(access.ArgumentExpression)
-	if held, known := l.representation(
+	keyType := lowering.checker.GetTypeAtLocation(access.ArgumentExpression)
+	if held, known := lowering.representation(
 		keyType,
-	); !known || held != ir.String || l.includesNull(keyType) || l.includesUndefined(keyType) {
-		return nil, true, l.notYet(
+	); !known || held != ir.String || lowering.includesNull(keyType) || lowering.includesUndefined(keyType) {
+		return nil, true, lowering.notYet(
 			access.ArgumentExpression,
 			"a readonly view read by a key that isn't a string (symbol keys and key coercion)",
 		)
 	}
-	key, expressionError := l.expression(access.ArgumentExpression)
+	key, expressionError := lowering.expression(access.ArgumentExpression)
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
 	if key.Type() != ir.String {
-		return nil, true, l.notYet(
+		return nil, true, lowering.notYet(
 			access.ArgumentExpression,
 			"a readonly view read by a key that isn't a string (symbol keys and key coercion)",
 		)
 	}
 	// The read can call a class getter the key names, from inside the runtime, so it arms the same
 	// program-wide getter judgment Reflect.get's read does (checkDynamicKeyedGetters).
-	if checkDynamicKeyedGetterSyntaxError := l.checkDynamicKeyedGetterSyntax(
+	if checkDynamicKeyedGetterSyntaxError := lowering.checkDynamicKeyedGetterSyntax(
 		node,
 	); checkDynamicKeyedGetterSyntaxError != nil {
 		return nil, true, checkDynamicKeyedGetterSyntaxError
 	}
-	if l.dynamicKeyedSite == nil {
-		l.dynamicKeyedSite = node
+	if lowering.dynamicKeyedSite == nil {
+		lowering.dynamicKeyedSite = node
 	}
-	l.graphDynamicSite = node
+	lowering.graphDynamicSite = node
 	return ir.DynamicKeyedProperty{Object: fit(object, ir.Union), Key: key}, true, nil
 }
 
 // Indexed narrowing needs the declared field types: a computed access does not
 // necessarily have the symbol that the named-read presence helper uses.
-func (l *lowering) computedFieldPresence(node *ast.Node, value ir.Expression) ir.Expression {
+func (lowering *lowering) computedFieldPresence(node *ast.Node, value ir.Expression) ir.Expression {
 	message := "undefined where the checker narrowed it away: a call since the narrowing put it back"
 	at := node
 	for at.Parent != nil && at.Parent.Kind == ast.KindParenthesizedExpression {
@@ -203,8 +208,8 @@ func (l *lowering) computedFieldPresence(node *ast.Node, value ir.Expression) ir
 
 // Until finite reads share the checked member boundary, refuse every matching
 // object read in the program, including aliases and reads lowered before the cast.
-func (l *lowering) refuseViewElementReads(fields map[string]bool) error {
-	modules, moduleOrderError := l.moduleOrder(l.program.Files()[0])
+func (lowering *lowering) refuseViewElementReads(fields map[string]bool) error {
+	modules, moduleOrderError := lowering.moduleOrder(lowering.program.Files()[0])
 	if moduleOrderError != nil {
 		return moduleOrderError
 	}
@@ -216,11 +221,13 @@ func (l *lowering) refuseViewElementReads(fields map[string]bool) error {
 		}
 		if node.Kind == ast.KindElementAccessExpression && !ast.IsAssignmentTarget(node) {
 			access := node.AsElementAccessExpression()
-			key := l.checker.GetTypeAtLocation(access.ArgumentExpression)
+			key := lowering.checker.GetTypeAtLocation(access.ArgumentExpression)
 			if key.Flags()&checker.TypeFlagsStringLiteral != 0 && fields[key.AsLiteralType().Value().(string)] {
-				if of, _ := l.representation(l.checker.GetTypeAtLocation(access.Expression)); of == ir.Object {
+				if of, _ := lowering.representation(
+					lowering.checker.GetTypeAtLocation(access.Expression),
+				); of == ir.Object {
 					refused = &Refused{
-						Where: l.program.Where(node),
+						Where: lowering.program.Where(node),
 						What:  "view member read by element access is not yet checked",
 						Fix:   "use view." + key.AsLiteralType().Value().(string),
 					}

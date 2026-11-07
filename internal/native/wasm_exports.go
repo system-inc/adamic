@@ -26,8 +26,8 @@ type ABITable struct {
 	Exports []ABIExport `json:"exports"`
 }
 
-func (t ABIType) representation() ir.Type {
-	switch t.Kind {
+func (abiType ABIType) representation() ir.Type {
+	switch abiType.Kind {
 	case "number":
 		return ir.Number
 	case "boolean":
@@ -75,7 +75,10 @@ func WASIExports(program *ir.Program, exports []ABIExport) (string, error) {
 				fields = append(fields, ir.Field{Name: f.Name, Value: witness(f.Type)})
 			}
 			literal := ir.ObjectLiteral{Fields: fields}
-			copyProgram.Functions = append(copyProgram.Functions, ir.Function{Name: "abi_layout", Returns: ir.Object, Body: []ir.Statement{ir.Return{Value: literal}}})
+			copyProgram.Functions = append(
+				copyProgram.Functions,
+				ir.Function{Name: "abi_layout", Returns: ir.Object, Body: []ir.Statement{ir.Return{Value: literal}}},
+			)
 			return literal
 		default:
 			return ir.Undefined{Of: t.representation()}
@@ -120,7 +123,11 @@ func WASIExports(program *ir.Program, exports []ABIExport) (string, error) {
 			if refs {
 				element = ir.String
 			}
-			fmt.Fprintf(&declarations, " uint32_t count = adamic_abi_u32_read(b);\n adamic_array *v = adamic_array_make(count, %s);\n", arrayElement(element))
+			fmt.Fprintf(
+				&declarations,
+				" uint32_t count = adamic_abi_u32_read(b);\n adamic_array *v = adamic_array_make(count, %s);\n",
+				arrayElement(element),
+			)
 			if !refs {
 				declarations.WriteString(" adamic_abi_align(b);\n")
 			}
@@ -128,7 +135,12 @@ func WASIExports(program *ir.Program, exports []ABIExport) (string, error) {
 			if refs {
 				read, member = "adamic_abi_string_read(b)", "reference"
 			}
-			fmt.Fprintf(&declarations, " for (uint32_t i=0; i<count; i++) adamic_array_push(v, (adamic_value){.%s = %s});\n return v;\n", member, read)
+			fmt.Fprintf(
+				&declarations,
+				" for (uint32_t i=0; i<count; i++) adamic_array_push(v, (adamic_value){.%s = %s});\n return v;\n",
+				member,
+				read,
+			)
 		case "record":
 			fmt.Fprintf(&declarations, " static const char *const names[%d] = {", max(1, len(t.Fields)))
 			for i, f := range t.Fields {
@@ -163,9 +175,19 @@ func WASIExports(program *ir.Program, exports []ABIExport) (string, error) {
 				declarations.WriteString("adamic_field_number")
 			}
 			declarations.WriteString("};\n")
-			fmt.Fprintf(&declarations, " static const adamic_shape shape = {%d,names,refs,NULL,kinds};\n adamic_object *v = adamic_object_new(&shape);\n", len(t.Fields))
+			fmt.Fprintf(
+				&declarations,
+				" static const adamic_shape shape = {%d,names,refs,NULL,kinds};\n adamic_object *v = adamic_object_new(&shape);\n",
+				len(t.Fields),
+			)
 			for i, f := range t.Fields {
-				fmt.Fprintf(&declarations, " v->slots[%d].%s = %s_read(b);\n", i, member(f.Type.representation()), children[i])
+				fmt.Fprintf(
+					&declarations,
+					" v->slots[%d].%s = %s_read(b);\n",
+					i,
+					member(f.Type.representation()),
+					children[i],
+				)
 			}
 			declarations.WriteString(" return v;\n")
 		}
@@ -190,7 +212,13 @@ func WASIExports(program *ir.Program, exports []ABIExport) (string, error) {
 			if t.Kind == "string[]" {
 				cast = "(adamic_string *)"
 			}
-			fmt.Fprintf(&declarations, " for (size_t i=0; i<v->length; i++) %s(b,%sv->elements[i].%s);\n", fn, cast, mem)
+			fmt.Fprintf(
+				&declarations,
+				" for (size_t i=0; i<v->length; i++) %s(b,%sv->elements[i].%s);\n",
+				fn,
+				cast,
+				mem,
+			)
 		case "record":
 			for i, f := range t.Fields {
 				fmt.Fprintf(&declarations, " static adamic_slot_cache cache_%d;\n", i)
@@ -198,7 +226,15 @@ func WASIExports(program *ir.Program, exports []ABIExport) (string, error) {
 				if f.Type.representation().IsReference() {
 					cast = "(" + cType(f.Type.representation()) + ")"
 				}
-				fmt.Fprintf(&declarations, " %s_write(b, %sadamic_object_field(v,%s,&cache_%d)->%s);\n", children[i], cast, cString(f.Name), i, member(f.Type.representation()))
+				fmt.Fprintf(
+					&declarations,
+					" %s_write(b, %sadamic_object_field(v,%s,&cache_%d)->%s);\n",
+					children[i],
+					cast,
+					cString(f.Name),
+					i,
+					member(f.Type.representation()),
+				)
 			}
 		}
 		declarations.WriteString("}\n")
@@ -226,10 +262,30 @@ func WASIExports(program *ir.Program, exports []ABIExport) (string, error) {
 				if t.Kind == "string" {
 					fmt.Fprintf(&body, " adamic_string *%s = adamic_abi_wtf8(%s,%s_length);\n", value, name, name)
 				} else if t.Kind == "number[]" {
-					fmt.Fprintf(&body, " adamic_array *%s = adamic_array_make(%s_length,adamic_ir_Number);\n for (uint32_t i=0; i<%s_length; i++) { double v; memcpy(&v,%s+8*i,8); adamic_array_push(%s,(adamic_value){.number=v}); }\n", value, name, name, name, value)
+					fmt.Fprintf(
+						&body,
+						" adamic_array *%s = adamic_array_make(%s_length,adamic_ir_Number);\n for (uint32_t i=0; i<%s_length; i++) { double v; memcpy(&v,%s+8*i,8); adamic_array_push(%s,(adamic_value){.number=v}); }\n",
+						value,
+						name,
+						name,
+						name,
+						value,
+					)
 				} else {
 					coder := codec(t)
-					fmt.Fprintf(&body, " adamic_abi_buffer %s_buffer = {%s,%s_length,0,false};\n %s %s = %s_read(&%s_buffer);\n if (%s_buffer.offset != %s_length) adamic_panic_c(\"ABI trailing input bytes\");\n", name, name, name, cType(t.representation()), value, coder, name, name, name)
+					fmt.Fprintf(
+						&body,
+						" adamic_abi_buffer %s_buffer = {%s,%s_length,0,false};\n %s %s = %s_read(&%s_buffer);\n if (%s_buffer.offset != %s_length) adamic_panic_c(\"ABI trailing input bytes\");\n",
+						name,
+						name,
+						name,
+						cType(t.representation()),
+						value,
+						coder,
+						name,
+						name,
+						name,
+					)
 				}
 				if e.reuse.consumed[f.Parameters[i]] {
 					args[len(args)-1] = "adamic_retain(" + value + ")"
@@ -247,7 +303,14 @@ func WASIExports(program *ir.Program, exports []ABIExport) (string, error) {
 		if len(params) == 0 {
 			params = append(params, "void")
 		}
-		fmt.Fprintf(&wrappers, "__attribute__((export_name(%s))) %s %s(%s) {\n", cString("adamic_export_"+export.Name), ret, stableName("adamic_abi_export", export.Name, export.Name+"/"+e.functionName(export.Function)), strings.Join(params, ", "))
+		fmt.Fprintf(
+			&wrappers,
+			"__attribute__((export_name(%s))) %s %s(%s) {\n",
+			cString("adamic_export_"+export.Name),
+			ret,
+			stableName("adamic_abi_export", export.Name, export.Name+"/"+e.functionName(export.Function)),
+			strings.Join(params, ", "),
+		)
 		wrappers.WriteString(body.String())
 		call := fmt.Sprintf("%s(%s)", e.functionName(export.Function), strings.Join(args, ", "))
 		if export.Returns.Kind == "void" {
@@ -281,7 +344,10 @@ func WASIExports(program *ir.Program, exports []ABIExport) (string, error) {
 	}
 	// Preserve the earlier request host API for the ordinary string handler.
 	for _, export := range exports {
-		if export.Name == "handleRequest" && export.Returns.Kind == "string" && len(export.Parameters) == 1 && export.Parameters[0].Type.Kind == "string" {
+		if export.Name == "handleRequest" &&
+			export.Returns.Kind == "string" &&
+			len(export.Parameters) == 1 &&
+			export.Parameters[0].Type.Kind == "string" {
 			legacy := e.requestABI(export.Function)
 			start := strings.Index(legacy, "// Borrowed UTF-8 input")
 			end := strings.Index(legacy, "#ifdef ADAMIC_COUNT")

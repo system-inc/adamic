@@ -8,17 +8,17 @@ import (
 
 // This host slice recognizes library declarations, including import aliases.
 // It borrows only strings and does not expose a mutable process object.
-func (l *lowering) nodeHost(node *ast.Node) (ir.Expression, bool, error) {
-	if value, found, nodeWatchFileError := l.nodeWatchFile(node); found {
+func (lowering *lowering) nodeHost(node *ast.Node) (ir.Expression, bool, error) {
+	if value, found, nodeWatchFileError := lowering.nodeWatchFile(node); found {
 		return value, true, nodeWatchFileError
 	}
-	if value, found, nodeRealpathCallError := l.nodeRealpathCall(node); found {
+	if value, found, nodeRealpathCallError := lowering.nodeRealpathCall(node); found {
 		return value, true, nodeRealpathCallError
 	}
-	if value, found, nodeStdoutWriteError := l.nodeStdoutWrite(node); found {
+	if value, found, nodeStdoutWriteError := lowering.nodeStdoutWrite(node); found {
 		return value, true, nodeStdoutWriteError
 	}
-	name := l.nodeLibraryMember(node)
+	name := lowering.nodeLibraryMember(node)
 	operation, of := "", ir.String
 	switch name {
 	case "node:path.join":
@@ -35,7 +35,7 @@ func (l *lowering) nodeHost(node *ast.Node) (ir.Expression, bool, error) {
 	call := node.AsCallExpression()
 	if operation != "host_join" &&
 		len(call.Arguments.Nodes) != map[string]int{"host_tmpdir": 0, "host_cwd": 0, "host_chdir": 1}[operation] {
-		return nil, true, l.notYet(node, name+" outside the implemented host signature")
+		return nil, true, lowering.notYet(node, name+" outside the implemented host signature")
 	}
 	if operation == "host_chdir" {
 		outer := node
@@ -45,23 +45,23 @@ func (l *lowering) nodeHost(node *ast.Node) (ir.Expression, bool, error) {
 		discarded := outer.Parent != nil && outer.Parent.Kind == ast.KindExpressionStatement
 		returned := outer.Parent != nil &&
 			outer.Parent.Kind == ast.KindReturnStatement &&
-			l.function != nil &&
-			l.function.Returns == 0
+			lowering.function != nil &&
+			lowering.function.Returns == 0
 		if !discarded && !returned {
-			return nil, true, l.notYet(node, name+" used as a value")
+			return nil, true, lowering.notYet(node, name+" used as a value")
 		}
 	}
 	args := []ir.Expression{}
 	for _, argument := range call.Arguments.Nodes {
 		if argument.Kind == ast.KindSpreadElement {
-			return nil, true, l.notYet(argument, name+" with spread arguments")
+			return nil, true, lowering.notYet(argument, name+" with spread arguments")
 		}
-		value, expressionError := l.expression(argument)
+		value, expressionError := lowering.expression(argument)
 		if expressionError != nil {
 			return nil, true, expressionError
 		}
 		if value.Type() != ir.String {
-			return nil, true, l.notYet(argument, name+" with non-string arguments")
+			return nil, true, lowering.notYet(argument, name+" with non-string arguments")
 		}
 		args = append(args, value)
 	}
@@ -84,12 +84,12 @@ func init() {
 // nodePlatformRead lowers process.platform, recognized by its library member, never its spelling,
 // to a host read (#t90fcv5): the binary answers the platform it runs on, as Node does, and the answer
 // is never folded into a constant at compile time. Only a plain read is admitted.
-func (l *lowering) nodePlatformRead(node *ast.Node) (ir.Expression, bool, error) {
-	if l.nodeLibraryMember(node) != "node:process.Process.platform" ||
+func (lowering *lowering) nodePlatformRead(node *ast.Node) (ir.Expression, bool, error) {
+	if lowering.nodeLibraryMember(node) != "node:process.Process.platform" ||
 		(node.Kind != ast.KindPropertyAccessExpression && node.Kind != ast.KindElementAccessExpression) {
 		return nil, false, nil
 	}
-	if nodePlatformReadRefusalError := l.nodePlatformReadRefusal(node); nodePlatformReadRefusalError != nil {
+	if nodePlatformReadRefusalError := lowering.nodePlatformReadRefusal(node); nodePlatformReadRefusalError != nil {
 		return nil, true, nodePlatformReadRefusalError
 	}
 	return ir.NodeFSFile{Operation: "host_platform", Of: ir.String}, true, nil
@@ -97,10 +97,10 @@ func (l *lowering) nodePlatformRead(node *ast.Node) (ir.Expression, bool, error)
 
 // nodePlatformReadRefusal names every use of process.platform but a plain read: a write, a delete,
 // an optional or element read, and the member anywhere else, such as a destructured binding.
-func (l *lowering) nodePlatformReadRefusal(node *ast.Node) error {
+func (lowering *lowering) nodePlatformReadRefusal(node *ast.Node) error {
 	const member = "node:process.Process.platform"
 	if node.Kind != ast.KindPropertyAccessExpression {
-		return l.notYet(node, member+" used as a value")
+		return lowering.notYet(node, member+" used as a value")
 	}
 	outer := node
 	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
@@ -108,11 +108,11 @@ func (l *lowering) nodePlatformReadRefusal(node *ast.Node) error {
 	}
 	switch {
 	case outer.Parent != nil && outer.Parent.Kind == ast.KindDeleteExpression:
-		return l.notYet(node, member+" deleted")
+		return lowering.notYet(node, member+" deleted")
 	case ast.IsAssignmentTarget(outer):
-		return l.notYet(node, member+" written")
+		return lowering.notYet(node, member+" written")
 	case node.Flags&ast.NodeFlagsOptionalChain != 0:
-		return l.notYet(node, member+" read through an optional chain")
+		return lowering.notYet(node, member+" read through an optional chain")
 	}
 	return nil
 }
@@ -121,21 +121,21 @@ func (l *lowering) nodePlatformReadRefusal(node *ast.Node) error {
 // part of the admitted read, the read itself is judged by nodePlatformReadRefusal, and the member
 // anywhere else is NotYet. It answers for every position of the member, so, as with process.env,
 // the member isn't registered: unregistered, a position this misses falls to the generic NotYet.
-func (l *lowering) nodePlatformUseRefusal(node *ast.Node) (bool, error) {
+func (lowering *lowering) nodePlatformUseRefusal(node *ast.Node) (bool, error) {
 	if node.Parent != nil &&
 		node.Parent.Kind == ast.KindPropertyAccessExpression &&
 		node.Parent.Name() == node &&
-		l.nodeLibraryMember(node.Parent) == "node:process.Process.platform" {
-		return true, l.nodePlatformReadRefusal(node.Parent)
+		lowering.nodeLibraryMember(node.Parent) == "node:process.Process.platform" {
+		return true, lowering.nodePlatformReadRefusal(node.Parent)
 	}
-	if l.nodeLibraryMember(node) != "node:process.Process.platform" {
+	if lowering.nodeLibraryMember(node) != "node:process.Process.platform" {
 		return false, nil
 	}
-	return true, l.nodePlatformReadRefusal(node)
+	return true, lowering.nodePlatformReadRefusal(node)
 }
 
 // nodeEnvironmentAccess recognizes the library declaration, never a receiver's spelling.
-func (l *lowering) nodeEnvironmentAccess(node *ast.Node) (*ast.Node, bool) {
+func (lowering *lowering) nodeEnvironmentAccess(node *ast.Node) (*ast.Node, bool) {
 	node = ast.SkipParentheses(node)
 	var receiver *ast.Node
 	switch node.Kind {
@@ -146,7 +146,7 @@ func (l *lowering) nodeEnvironmentAccess(node *ast.Node) (*ast.Node, bool) {
 	default:
 		return nil, false
 	}
-	return receiver, l.nodeLibraryMember(receiver) == "node:process.Process.env"
+	return receiver, lowering.nodeLibraryMember(receiver) == "node:process.Process.env"
 }
 
 // String unions remain strings; an undefined or non-string arm is not admitted.
@@ -170,7 +170,7 @@ func nodeEnvironmentString(proven *checker.Type) bool {
 	return proven.Flags()&checker.TypeFlagsStringLike != 0
 }
 
-func (l *lowering) nodeEnvironmentReadRefusal(node *ast.Node) error {
+func (lowering *lowering) nodeEnvironmentReadRefusal(node *ast.Node) error {
 	const member = "node:process.Process.env"
 	outer := node
 	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
@@ -182,51 +182,53 @@ func (l *lowering) nodeEnvironmentReadRefusal(node *ast.Node) error {
 		if outer.Parent == nil ||
 			outer.Parent.Kind != ast.KindBinaryExpression ||
 			outer.Parent.AsBinaryExpression().OperatorToken.Kind != ast.KindEqualsToken {
-			return l.notYet(node, member+" written with compound assignment or update")
+			return lowering.notYet(node, member+" written with compound assignment or update")
 		}
 		assigned = outer.Parent.AsBinaryExpression().Right
 	}
 	if node.Flags&ast.NodeFlagsOptionalChain != 0 {
-		return l.notYet(node, member+" used as a value (optional chain)")
+		return lowering.notYet(node, member+" used as a value (optional chain)")
 	}
 	if node.Kind == ast.KindPropertyAccessExpression {
 		if ir.IsNodeEnvironmentPrototypeKey(node.Name().Text()) {
-			return l.notYet(node, member+
+			return lowering.notYet(node, member+
 				" literal prototype key "+
 				node.Name().Text()+
 				" (fix: use process.env['NAME'] for a real variable, or a plain object for the method)")
 		}
 	} else {
 		key := node.AsElementAccessExpression().ArgumentExpression
-		if of, known := l.representation(l.checker.GetTypeAtLocation(key)); !known || of != ir.String {
-			return l.notYet(node, member+" read with a non-string key")
+		if of, known := lowering.representation(lowering.checker.GetTypeAtLocation(key)); !known || of != ir.String {
+			return lowering.notYet(node, member+" read with a non-string key")
 		}
 	}
 	if assigned != nil || deleting {
 		if node.Kind == ast.KindElementAccessExpression {
 			key := node.AsElementAccessExpression().ArgumentExpression
-			if !nodeEnvironmentString(l.checker.GetTypeAtLocation(key)) {
-				return l.notYet(key, member+" mutation with a non-string key")
+			if !nodeEnvironmentString(lowering.checker.GetTypeAtLocation(key)) {
+				return lowering.notYet(key, member+" mutation with a non-string key")
 			}
 			if key.Kind == ast.KindStringLiteral && ir.IsNodeEnvironmentPrototypeKey(key.Text()) {
-				return l.notYet(key, member+" mutation with literal prototype key "+key.Text())
+				return lowering.notYet(key, member+" mutation with literal prototype key "+key.Text())
 			}
 		}
-		if assigned != nil && !nodeEnvironmentString(l.checker.GetTypeAtLocation(assigned)) {
-			return l.notYet(assigned, member+" written with a non-string value")
+		if assigned != nil && !nodeEnvironmentString(lowering.checker.GetTypeAtLocation(assigned)) {
+			return lowering.notYet(assigned, member+" written with a non-string value")
 		}
 	}
 	return nil
 }
 
-func (l *lowering) nodeEnvironmentRead(node *ast.Node) (ir.Expression, bool, error) {
-	if _, found := l.nodeEnvironmentAccess(node); !found {
+func (lowering *lowering) nodeEnvironmentRead(node *ast.Node) (ir.Expression, bool, error) {
+	if _, found := lowering.nodeEnvironmentAccess(node); !found {
 		return nil, false, nil
 	}
-	if nodeEnvironmentReadRefusalError := l.nodeEnvironmentReadRefusal(node); nodeEnvironmentReadRefusalError != nil {
+	if nodeEnvironmentReadRefusalError := lowering.nodeEnvironmentReadRefusal(
+		node,
+	); nodeEnvironmentReadRefusalError != nil {
 		return nil, true, nodeEnvironmentReadRefusalError
 	}
-	name, nodeEnvironmentKeyError := l.nodeEnvironmentKey(node)
+	name, nodeEnvironmentKeyError := lowering.nodeEnvironmentKey(node)
 	if nodeEnvironmentKeyError != nil {
 		return nil, true, nodeEnvironmentKeyError
 	}
@@ -234,18 +236,18 @@ func (l *lowering) nodeEnvironmentRead(node *ast.Node) (ir.Expression, bool, err
 }
 
 // One key conversion for reads, string assignments and deletes.
-func (l *lowering) nodeEnvironmentKey(node *ast.Node) (ir.Expression, error) {
+func (lowering *lowering) nodeEnvironmentKey(node *ast.Node) (ir.Expression, error) {
 	var name ir.Expression
 	if node.Kind == ast.KindPropertyAccessExpression {
-		name = ir.StringConstant{Index: l.constant(node.Name().Text())}
+		name = ir.StringConstant{Index: lowering.constant(node.Name().Text())}
 	} else {
 		var expressionError error
-		name, expressionError = l.expression(node.AsElementAccessExpression().ArgumentExpression)
+		name, expressionError = lowering.expression(node.AsElementAccessExpression().ArgumentExpression)
 		if expressionError != nil {
 			return nil, expressionError
 		}
 		if name.Type() != ir.String {
-			return nil, l.notYet(node, "node:process.Process.env read with a non-string key")
+			return nil, lowering.notYet(node, "node:process.Process.env read with a non-string key")
 		}
 	}
 	return name, nil
@@ -253,33 +255,33 @@ func (l *lowering) nodeEnvironmentKey(node *ast.Node) (ir.Expression, error) {
 
 // The refusal visitor sees both process.env and its env name. Exempt them only
 // as the receiver of an admitted outer read; the host object itself stays opaque.
-func (l *lowering) nodeEnvironmentUseRefusal(node *ast.Node) (bool, error) {
+func (lowering *lowering) nodeEnvironmentUseRefusal(node *ast.Node) (bool, error) {
 	// Property-name tokens otherwise resolve to Node's generic Dict index signature.
 	if node.Parent != nil && node.Parent.Kind == ast.KindPropertyAccessExpression && node.Parent.Name() == node {
-		if _, found := l.nodeEnvironmentAccess(node.Parent); found {
-			return true, l.nodeEnvironmentReadRefusal(node.Parent)
+		if _, found := lowering.nodeEnvironmentAccess(node.Parent); found {
+			return true, lowering.nodeEnvironmentReadRefusal(node.Parent)
 		}
 	}
 	if node.Kind == ast.KindBinaryExpression {
 		binary := node.AsBinaryExpression()
 		if binary.OperatorToken.Kind == ast.KindInKeyword &&
-			l.nodeLibraryMember(binary.Right) == "node:process.Process.env" {
-			return true, l.notYet(binary.Right, "node:process.Process.env used as a value")
+			lowering.nodeLibraryMember(binary.Right) == "node:process.Process.env" {
+			return true, lowering.notYet(binary.Right, "node:process.Process.env used as a value")
 		}
 	}
 	if node.Kind == ast.KindDeleteExpression {
 		target := ast.SkipParentheses(node.AsDeleteExpression().Expression)
-		if _, found := l.nodeEnvironmentAccess(target); found {
-			return true, l.nodeEnvironmentReadRefusal(target)
+		if _, found := lowering.nodeEnvironmentAccess(target); found {
+			return true, lowering.nodeEnvironmentReadRefusal(target)
 		}
-		if l.nodeLibraryMember(target) == "node:process.Process.env" {
-			return true, l.notYet(node, "node:process.Process.env deleted")
+		if lowering.nodeLibraryMember(target) == "node:process.Process.env" {
+			return true, lowering.notYet(node, "node:process.Process.env deleted")
 		}
 	}
-	if _, found := l.nodeEnvironmentAccess(node); found {
-		return true, l.nodeEnvironmentReadRefusal(node)
+	if _, found := lowering.nodeEnvironmentAccess(node); found {
+		return true, lowering.nodeEnvironmentReadRefusal(node)
 	}
-	if l.nodeLibraryMember(node) != "node:process.Process.env" {
+	if lowering.nodeLibraryMember(node) != "node:process.Process.env" {
 		return false, nil
 	}
 	access := node
@@ -291,77 +293,79 @@ func (l *lowering) nodeEnvironmentUseRefusal(node *ast.Node) (bool, error) {
 		outer = outer.Parent
 	}
 	if outer.Parent != nil {
-		if receiver, found := l.nodeEnvironmentAccess(outer.Parent); found && ast.SkipParentheses(receiver) == access {
-			return true, l.nodeEnvironmentReadRefusal(outer.Parent)
+		if receiver, found := lowering.nodeEnvironmentAccess(
+			outer.Parent,
+		); found && ast.SkipParentheses(receiver) == access {
+			return true, lowering.nodeEnvironmentReadRefusal(outer.Parent)
 		}
 		if outer.Parent.Kind == ast.KindDeleteExpression {
-			return true, l.notYet(access, "node:process.Process.env deleted")
+			return true, lowering.notYet(access, "node:process.Process.env deleted")
 		}
 	}
 	if ast.IsAssignmentTarget(outer) {
-		return true, l.notYet(access, "node:process.Process.env written")
+		return true, lowering.notYet(access, "node:process.Process.env written")
 	}
-	return true, l.notYet(access, "node:process.Process.env used as a value")
+	return true, lowering.notYet(access, "node:process.Process.env used as a value")
 }
 
 // The namespace's native declaration is identified by the Node library symbol;
 // the receiver disambiguates it from any other namespace's native member.
-func (l *lowering) nodeRealpathNative(node *ast.Node) bool {
+func (lowering *lowering) nodeRealpathNative(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
 	return node.Kind == ast.KindPropertyAccessExpression &&
-		l.nodeLibraryMember(node) == "node:fs.native" &&
-		l.nodeLibraryMember(node.AsPropertyAccessExpression().Expression) == "node:fs.realpathSync"
+		lowering.nodeLibraryMember(node) == "node:fs.native" &&
+		lowering.nodeLibraryMember(node.AsPropertyAccessExpression().Expression) == "node:fs.realpathSync"
 }
 
-func (l *lowering) nodeRealpathUseRefusal(node *ast.Node) (bool, error) {
+func (lowering *lowering) nodeRealpathUseRefusal(node *ast.Node) (bool, error) {
 	if node.Kind == ast.KindCallExpression {
 		node = ast.SkipParentheses(node.AsCallExpression().Expression)
 	}
 	if node.Parent != nil && node.Parent.Kind == ast.KindPropertyAccessExpression && node.Parent.Name() == node {
 		node = node.Parent
 	}
-	if l.nodeRealpathNative(node) {
+	if lowering.nodeRealpathNative(node) {
 		if node.Flags&ast.NodeFlagsOptionalChain != 0 || ast.IsAssignmentTarget(node) {
-			return true, l.notYet(node, "node:fs.realpathSync.native outside a read or call")
+			return true, lowering.notYet(node, "node:fs.realpathSync.native outside a read or call")
 		}
-		return true, l.nodeRealpathReferenceRefusal(node)
+		return true, lowering.nodeRealpathReferenceRefusal(node)
 	}
-	if l.nodeLibraryMember(node) == "node:fs.realpathSync" {
-		if node.Parent != nil && l.nodeRealpathNative(node.Parent) {
+	if lowering.nodeLibraryMember(node) == "node:fs.realpathSync" {
+		if node.Parent != nil && lowering.nodeRealpathNative(node.Parent) {
 			return true, nil
 		}
-		return true, l.nodeRealpathReferenceRefusal(node)
+		return true, lowering.nodeRealpathReferenceRefusal(node)
 	}
 	return false, nil
 }
 
-func (l *lowering) nodeRealpathCall(node *ast.Node) (ir.Expression, bool, error) {
-	if node.Kind != ast.KindCallExpression || !l.nodeRealpathNative(node.AsCallExpression().Expression) {
+func (lowering *lowering) nodeRealpathCall(node *ast.Node) (ir.Expression, bool, error) {
+	if node.Kind != ast.KindCallExpression || !lowering.nodeRealpathNative(node.AsCallExpression().Expression) {
 		return nil, false, nil
 	}
 	call := node.AsCallExpression()
 	if len(call.Arguments.Nodes) != 1 {
-		return nil, true, l.notYet(
+		return nil, true, lowering.notYet(
 			node,
 			"node:fs.realpathSync.native with encoding, options, or callback arguments; need exactly one string path",
 		)
 	}
 	argument := call.Arguments.Nodes[0]
 	if argument.Kind == ast.KindSpreadElement {
-		return nil, true, l.notYet(argument, "node:fs.realpathSync.native with spread arguments")
+		return nil, true, lowering.notYet(argument, "node:fs.realpathSync.native with spread arguments")
 	}
-	if l.checker.GetTypeAtLocation(argument).Flags()&checker.TypeFlagsStringLike == 0 {
-		return nil, true, l.notYet(
+	if lowering.checker.GetTypeAtLocation(argument).Flags()&checker.TypeFlagsStringLike == 0 {
+		return nil, true, lowering.notYet(
 			argument,
 			"node:fs.realpathSync.native with a non-string path (Buffer and URL paths aren't bound yet)",
 		)
 	}
-	value, expressionError := l.expression(argument)
+	value, expressionError := lowering.expression(argument)
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
 	if value.Type() != ir.String {
-		return nil, true, l.notYet(
+		return nil, true, lowering.notYet(
 			argument,
 			"node:fs.realpathSync.native with a non-string path (Buffer and URL paths aren't bound yet)",
 		)
@@ -371,17 +375,17 @@ func (l *lowering) nodeRealpathCall(node *ast.Node) (ir.Expression, bool, error)
 
 // Use the ordinary global forwarder initialization: one owned closure per program,
 // with a real throwing IR body rather than an opaque intrinsic alias token.
-func (l *lowering) nodeRealpathValue(node *ast.Node) (ir.Expression, bool, error) {
-	plain := node.Kind != ast.KindCallExpression && l.nodeLibraryMember(node) == "node:fs.realpathSync"
-	if !l.nodeRealpathNative(node) && !plain {
+func (lowering *lowering) nodeRealpathValue(node *ast.Node) (ir.Expression, bool, error) {
+	plain := node.Kind != ast.KindCallExpression && lowering.nodeLibraryMember(node) == "node:fs.realpathSync"
+	if !lowering.nodeRealpathNative(node) && !plain {
 		return nil, false, nil
 	}
 	role := "host_realpath"
 	if plain {
 		role = "host_realpath_walk"
 	}
-	if expected := l.slotType(node); expected != nil {
-		signatures := l.checker.GetSignaturesOfType(expected, checker.SignatureKindCall)
+	if expected := lowering.slotType(node); expected != nil {
+		signatures := lowering.checker.GetSignaturesOfType(expected, checker.SignatureKindCall)
 		valid := len(signatures) == 1
 		if valid {
 			signature := signatures[0]
@@ -392,25 +396,29 @@ func (l *lowering) nodeRealpathValue(node *ast.Node) (ir.Expression, bool, error
 				signature.Flags()&checker.SignatureFlagsHasRestParameter == 0 &&
 				len(signature.TypeParameters()) == 0
 			if valid {
-				valid = l.concrete(l.checker.GetTypeOfSymbol(parameters[0])).Flags() == checker.TypeFlagsString &&
-					l.concrete(l.checker.GetReturnTypeOfSignature(signature)).Flags() == checker.TypeFlagsString
+				valid = lowering.concrete(
+					lowering.checker.GetTypeOfSymbol(parameters[0]),
+				).Flags() == checker.TypeFlagsString &&
+					lowering.concrete(
+						lowering.checker.GetReturnTypeOfSignature(signature),
+					).Flags() == checker.TypeFlagsString
 			}
 		}
 		if !valid {
-			return nil, true, l.notYet(
+			return nil, true, lowering.notYet(
 				node,
 				"node:fs.realpathSync.native value needs exactly (path: string) => string, not "+
-					l.checker.TypeToString(expected),
+					lowering.checker.TypeToString(expected),
 			)
 		}
 	}
-	for index, function := range l.result.Functions {
+	for index, function := range lowering.result.Functions {
 		if function.Source.Role == role {
-			return ir.Read{Local: l.forwarders[index], Of: ir.Closure}, true, nil
+			return ir.Read{Local: lowering.forwarders[index], Of: ir.Closure}, true, nil
 		}
 	}
-	index, parameter := len(l.result.Functions), len(l.result.Locals)
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: "path", Type: ir.String, Function: index})
+	index, parameter := len(lowering.result.Functions), len(lowering.result.Locals)
+	lowering.result.Locals = append(lowering.result.Locals, ir.Local{Name: "path", Type: ir.String, Function: index})
 	result := ir.Expression(ir.NodeFSFile{
 		Operation: "host_realpath",
 		Arguments: []ir.Expression{ir.Read{Local: parameter, Of: ir.String}},
@@ -434,97 +442,100 @@ func (l *lowering) nodeRealpathValue(node *ast.Node) (ir.Expression, bool, error
 		Body:         []ir.Statement{ir.Return{Value: result}},
 	}
 	function.Source.Role = role
-	l.result.Functions = append(l.result.Functions, function)
-	held := len(l.result.Locals)
-	l.result.Locals = append(
-		l.result.Locals,
+	lowering.result.Functions = append(lowering.result.Functions, function)
+	held := len(lowering.result.Locals)
+	lowering.result.Locals = append(
+		lowering.result.Locals,
 		ir.Local{Name: role + "_value", Type: ir.Closure, Global: true, Function: -1},
 	)
-	l.forwarderValues = append(l.forwarderValues, ir.Declare{Local: held, Value: ir.MakeClosure{Function: index}})
-	if l.forwarders == nil {
-		l.forwarders = map[int]int{}
+	lowering.forwarderValues = append(
+		lowering.forwarderValues,
+		ir.Declare{Local: held, Value: ir.MakeClosure{Function: index}},
+	)
+	if lowering.forwarders == nil {
+		lowering.forwarders = map[int]int{}
 	}
-	l.forwarders[index] = held
+	lowering.forwarders[index] = held
 	return ir.Read{Local: held, Of: ir.Closure}, true, nil
 }
 
 // Only a discarded one-string write is bound: Node's boolean is backpressure,
 // while the native primitive reports blocking success. Never expose that value.
-func (l *lowering) nodeStdoutWriteMember(node *ast.Node) bool {
+func (lowering *lowering) nodeStdoutWriteMember(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
 	return node.Kind == ast.KindPropertyAccessExpression &&
-		l.nodeLibraryMember(node) == "node:net.Socket.write" &&
-		l.nodeLibraryMember(node.AsPropertyAccessExpression().Expression) == "node:process.Process.stdout"
+		lowering.nodeLibraryMember(node) == "node:net.Socket.write" &&
+		lowering.nodeLibraryMember(node.AsPropertyAccessExpression().Expression) == "node:process.Process.stdout"
 }
 
-func (l *lowering) nodeStdoutWriteRefusal(node *ast.Node) error {
+func (lowering *lowering) nodeStdoutWriteRefusal(node *ast.Node) error {
 	const name = "node:process.Process.stdout.write"
 	outer := node
 	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
 		outer = outer.Parent
 	}
 	if outer.Parent == nil || outer.Parent.Kind != ast.KindExpressionStatement {
-		return l.notYet(
+		return lowering.notYet(
 			node,
 			name+" used as a value: its boolean is backpressure in Node and blocking success natively",
 		)
 	}
 	call := node.AsCallExpression()
 	if node.Flags&ast.NodeFlagsOptionalChain != 0 || call.Expression.Flags&ast.NodeFlagsOptionalChain != 0 {
-		return l.notYet(node, name+" through an optional chain")
+		return lowering.notYet(node, name+" through an optional chain")
 	}
 	if len(call.Arguments.Nodes) != 1 {
-		return l.notYet(node, name+" requires exactly one string argument, without encoding or callback")
+		return lowering.notYet(node, name+" requires exactly one string argument, without encoding or callback")
 	}
 	argument := call.Arguments.Nodes[0]
 	if argument.Kind == ast.KindSpreadElement {
-		return l.notYet(argument, name+" with spread arguments")
+		return lowering.notYet(argument, name+" with spread arguments")
 	}
-	if of, known := l.representation(l.checker.GetTypeAtLocation(argument)); !known || of != ir.String {
-		return l.notYet(argument, name+" with a non-string argument (Buffer and Uint8Array are not bound)")
+	if of, known := lowering.representation(lowering.checker.GetTypeAtLocation(argument)); !known || of != ir.String {
+		return lowering.notYet(argument, name+" with a non-string argument (Buffer and Uint8Array are not bound)")
 	}
 	return nil
 }
 
-func (l *lowering) nodeStdoutWrite(node *ast.Node) (ir.Expression, bool, error) {
-	if node.Kind != ast.KindCallExpression || !l.nodeStdoutWriteMember(node.AsCallExpression().Expression) {
+func (lowering *lowering) nodeStdoutWrite(node *ast.Node) (ir.Expression, bool, error) {
+	if node.Kind != ast.KindCallExpression || !lowering.nodeStdoutWriteMember(node.AsCallExpression().Expression) {
 		return nil, false, nil
 	}
-	if nodeStdoutWriteRefusalError := l.nodeStdoutWriteRefusal(node); nodeStdoutWriteRefusalError != nil {
+	if nodeStdoutWriteRefusalError := lowering.nodeStdoutWriteRefusal(node); nodeStdoutWriteRefusalError != nil {
 		return nil, true, nodeStdoutWriteRefusalError
 	}
-	value, expressionError := l.expression(node.AsCallExpression().Arguments.Nodes[0])
+	value, expressionError := lowering.expression(node.AsCallExpression().Arguments.Nodes[0])
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
 	if value.Type() != ir.String {
-		return nil, true, l.notYet(node, "node:process.Process.stdout.write with a non-string argument")
+		return nil, true, lowering.notYet(node, "node:process.Process.stdout.write with a non-string argument")
 	}
 	return ir.NodeFSFile{Operation: "host_stdout_write", Arguments: []ir.Expression{value}, Of: ir.Number}, true, nil
 }
 
 // Only stdout's library member is bound. Streams remain opaque values.
-func (l *lowering) nodeStdoutIsTTYMember(node *ast.Node) bool {
+func (lowering *lowering) nodeStdoutIsTTYMember(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
 	return node.Kind == ast.KindPropertyAccessExpression &&
-		l.nodeLibraryMember(node) == "node:tty.WriteStream.isTTY" &&
-		l.nodeLibraryMember(node.AsPropertyAccessExpression().Expression) == "node:process.Process.stdout"
+		lowering.nodeLibraryMember(node) == "node:tty.WriteStream.isTTY" &&
+		lowering.nodeLibraryMember(node.AsPropertyAccessExpression().Expression) == "node:process.Process.stdout"
 }
 
-func (l *lowering) nodeStdoutColumnsMember(node *ast.Node) bool {
+func (lowering *lowering) nodeStdoutColumnsMember(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
 	return node.Kind == ast.KindPropertyAccessExpression &&
-		l.nodeLibraryMember(node) == "node:tty.WriteStream.columns" &&
-		l.nodeLibraryMember(node.AsPropertyAccessExpression().Expression) == "node:process.Process.stdout"
+		lowering.nodeLibraryMember(node) == "node:tty.WriteStream.columns" &&
+		lowering.nodeLibraryMember(node.AsPropertyAccessExpression().Expression) == "node:process.Process.stdout"
 }
 
-func (l *lowering) nodeStdoutTTYMember(node *ast.Node) bool {
-	return l.nodeStdoutIsTTYMember(node) || l.nodeStdoutColumnsMember(node)
+func (lowering *lowering) nodeStdoutTTYMember(node *ast.Node) bool {
+	return lowering.nodeStdoutIsTTYMember(node) || lowering.nodeStdoutColumnsMember(node)
 }
 
-func (l *lowering) nodeStdoutIsTTYRefusal(node *ast.Node) error {
+func (lowering *lowering) nodeStdoutIsTTYRefusal(node *ast.Node) error {
 	member := "isTTY"
-	if l.nodeStdoutColumnsMember(node) {
+	if lowering.nodeStdoutColumnsMember(node) {
 		member = "columns"
 	}
 	name := "node:process.Process.stdout." + member
@@ -533,25 +544,34 @@ func (l *lowering) nodeStdoutIsTTYRefusal(node *ast.Node) error {
 		outer = outer.Parent
 	}
 	if outer.Parent != nil && outer.Parent.Kind == ast.KindDeleteExpression {
-		return l.notYet(node, name+" deleted (fix: read process.stdout."+member+"; terminal status is read-only)")
+		return lowering.notYet(
+			node,
+			name+" deleted (fix: read process.stdout."+member+"; terminal status is read-only)",
+		)
 	}
 	if ast.IsAssignmentTarget(outer) {
-		return l.notYet(node, name+" written (fix: read process.stdout."+member+"; terminal status is read-only)")
+		return lowering.notYet(
+			node,
+			name+" written (fix: read process.stdout."+member+"; terminal status is read-only)",
+		)
 	}
 	if node.Flags&ast.NodeFlagsOptionalChain != 0 {
-		return l.notYet(node, name+" read through an optional chain (fix: read process.stdout."+member+" directly)")
+		return lowering.notYet(
+			node,
+			name+" read through an optional chain (fix: read process.stdout."+member+" directly)",
+		)
 	}
 	return nil
 }
 
-func (l *lowering) nodeStdoutIsTTYRead(node *ast.Node) (ir.Expression, bool, error) {
-	if !l.nodeStdoutTTYMember(node) {
+func (lowering *lowering) nodeStdoutIsTTYRead(node *ast.Node) (ir.Expression, bool, error) {
+	if !lowering.nodeStdoutTTYMember(node) {
 		return nil, false, nil
 	}
-	if nodeStdoutIsTtyRefusalError := l.nodeStdoutIsTTYRefusal(node); nodeStdoutIsTtyRefusalError != nil {
+	if nodeStdoutIsTtyRefusalError := lowering.nodeStdoutIsTTYRefusal(node); nodeStdoutIsTtyRefusalError != nil {
 		return nil, true, nodeStdoutIsTtyRefusalError
 	}
-	if l.nodeStdoutColumnsMember(node) {
+	if lowering.nodeStdoutColumnsMember(node) {
 		return ir.NodeFSFile{Operation: "host_stdout_columns", Of: ir.MaybeNumber}, true, nil
 	}
 	return ir.NodeFSFile{Operation: "host_stdout_is_tty", Of: ir.MaybeBoolean}, true, nil
@@ -559,14 +579,14 @@ func (l *lowering) nodeStdoutIsTTYRead(node *ast.Node) (ir.Expression, bool, err
 
 // The scanner sees the receiver, each property name and the call separately.
 // Admit those nodes only inside this exact call, without registering stdout.
-func (l *lowering) nodeStdoutUseRefusal(node *ast.Node) (bool, error) {
-	if l.nodeProcessGuardedStdoutUse(node) {
+func (lowering *lowering) nodeStdoutUseRefusal(node *ast.Node) (bool, error) {
+	if lowering.nodeProcessGuardedStdoutUse(node) {
 		return false, nil
 	}
 	if node.Kind == ast.KindDeleteExpression {
 		target := ast.SkipParentheses(node.AsDeleteExpression().Expression)
-		if l.nodeStdoutTTYMember(target) {
-			return true, l.nodeStdoutIsTTYRefusal(target)
+		if lowering.nodeStdoutTTYMember(target) {
+			return true, lowering.nodeStdoutIsTTYRefusal(target)
 		}
 	}
 
@@ -579,31 +599,31 @@ func (l *lowering) nodeStdoutUseRefusal(node *ast.Node) (bool, error) {
 		receiver = receiver.Parent
 	}
 	if receiver.Parent != nil &&
-		l.nodeStdoutTTYMember(receiver.Parent) &&
+		lowering.nodeStdoutTTYMember(receiver.Parent) &&
 		ast.SkipParentheses(receiver.Parent.AsPropertyAccessExpression().Expression) == access {
-		return true, l.nodeStdoutIsTTYRefusal(receiver.Parent)
+		return true, lowering.nodeStdoutIsTTYRefusal(receiver.Parent)
 	}
-	name := l.nodeLibraryMember(access)
+	name := lowering.nodeLibraryMember(access)
 	switch name {
 	case "node:tty.WriteStream.isTTY", "node:tty.ReadStream.isTTY":
-		if l.nodeStdoutIsTTYMember(access) {
-			return true, l.nodeStdoutIsTTYRefusal(access)
+		if lowering.nodeStdoutIsTTYMember(access) {
+			return true, lowering.nodeStdoutIsTTYRefusal(access)
 		}
 		receiver := "node:tty stream"
 		if access.Kind == ast.KindPropertyAccessExpression {
-			receiver = l.nodeLibraryMember(access.AsPropertyAccessExpression().Expression)
+			receiver = lowering.nodeLibraryMember(access.AsPropertyAccessExpression().Expression)
 		}
-		return true, l.notYet(access, receiver+".isTTY is not bound (fix: read process.stdout.isTTY)")
+		return true, lowering.notYet(access, receiver+".isTTY is not bound (fix: read process.stdout.isTTY)")
 	case "node:tty.WriteStream.columns":
-		if l.nodeStdoutColumnsMember(access) {
-			return true, l.nodeStdoutIsTTYRefusal(access)
+		if lowering.nodeStdoutColumnsMember(access) {
+			return true, lowering.nodeStdoutIsTTYRefusal(access)
 		}
-		return true, l.notYet(
+		return true, lowering.notYet(
 			access,
 			"node:tty.WriteStream.columns on another stream (fix: read process.stdout.columns)",
 		)
 	case "node:tty.WriteStream.rows":
-		return true, l.notYet(
+		return true, lowering.notYet(
 			access,
 			"node:tty.WriteStream.rows is not bound (fix: use process.stdout.columns for terminal width)",
 		)
@@ -613,16 +633,17 @@ func (l *lowering) nodeStdoutUseRefusal(node *ast.Node) (bool, error) {
 		for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
 			outer = outer.Parent
 		}
-		if outer.Parent != nil && l.nodeStdoutTTYMember(outer.Parent) {
-			return true, l.nodeStdoutIsTTYRefusal(outer.Parent)
+		if outer.Parent != nil && lowering.nodeStdoutTTYMember(outer.Parent) {
+			return true, lowering.nodeStdoutIsTTYRefusal(outer.Parent)
 		}
-		if outer.Parent == nil || !l.nodeStdoutWriteMember(outer.Parent) {
-			return true, l.notYet(access, "node:process.Process.stdout used as a value")
+		if outer.Parent == nil || !lowering.nodeStdoutWriteMember(outer.Parent) {
+			return true, lowering.notYet(access, "node:process.Process.stdout used as a value")
 		}
 		access = outer.Parent
-	} else if !l.nodeStdoutWriteMember(access) {
-		if access.Kind == ast.KindCallExpression && l.nodeStdoutWriteMember(access.AsCallExpression().Expression) {
-			return true, l.nodeStdoutWriteRefusal(access)
+	} else if !lowering.nodeStdoutWriteMember(access) {
+		if access.Kind == ast.KindCallExpression &&
+			lowering.nodeStdoutWriteMember(access.AsCallExpression().Expression) {
+			return true, lowering.nodeStdoutWriteRefusal(access)
 		}
 		return false, nil
 	}
@@ -633,9 +654,9 @@ func (l *lowering) nodeStdoutUseRefusal(node *ast.Node) (bool, error) {
 	if outer.Parent != nil &&
 		outer.Parent.Kind == ast.KindCallExpression &&
 		ast.SkipParentheses(outer.Parent.AsCallExpression().Expression) == access {
-		return true, l.nodeStdoutWriteRefusal(outer.Parent)
+		return true, lowering.nodeStdoutWriteRefusal(outer.Parent)
 	}
-	return true, l.notYet(
+	return true, lowering.notYet(
 		access,
 		"node:process.Process.stdout.write used as a value: its boolean is backpressure in Node and blocking success natively",
 	)
@@ -643,19 +664,22 @@ func (l *lowering) nodeStdoutUseRefusal(node *ast.Node) (bool, error) {
 
 // nodeWatchFile binds only the stat-polling forms used by sys.ts. The returned
 // StatWatcher is not exposed: cancellation uses the original listener identity.
-func (l *lowering) nodeWatchFile(node *ast.Node) (ir.Expression, bool, error) {
-	name := l.nodeLibraryMember(node)
+func (lowering *lowering) nodeWatchFile(node *ast.Node) (ir.Expression, bool, error) {
+	name := lowering.nodeLibraryMember(node)
 	if name != "node:fs.watchFile" && name != "node:fs.unwatchFile" {
 		return nil, false, nil
 	}
 	call := node.AsCallExpression()
-	refuse := func(why string) (ir.Expression, bool, error) { return nil, true, l.notYet(node, name+" "+why) }
+	refuse := func(why string) (ir.Expression, bool, error) { return nil, true, lowering.notYet(node, name+" "+why) }
 	outer := node
 	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
 		outer = outer.Parent
 	}
 	discarded := outer.Parent != nil && outer.Parent.Kind == ast.KindExpressionStatement
-	if name == "node:fs.unwatchFile" && l.function != nil && l.function.Returns == 0 && outer.Parent != nil {
+	if name == "node:fs.unwatchFile" &&
+		lowering.function != nil &&
+		lowering.function.Returns == 0 &&
+		outer.Parent != nil {
 		discarded = discarded ||
 			outer.Parent.Kind == ast.KindReturnStatement ||
 			outer.Parent.Kind == ast.KindArrowFunction && outer.Parent.Body() == outer
@@ -676,7 +700,7 @@ func (l *lowering) nodeWatchFile(node *ast.Node) (ir.Expression, bool, error) {
 		name == "node:fs.unwatchFile" && len(written) != 1 && len(written) != 2 {
 		return refuse("outside the stat-polling signature")
 	}
-	path, expressionError := l.expression(written[0])
+	path, expressionError := lowering.expression(written[0])
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
@@ -698,7 +722,7 @@ func (l *lowering) nodeWatchFile(node *ast.Node) (ir.Expression, bool, error) {
 			if field.Kind != ast.KindPropertyAssignment || field.Name() == nil || field.Name().Text() != key {
 				return refuse("outside {persistent, interval} options in that order")
 			}
-			value, expressionError := l.expression(field.AsPropertyAssignment().Initializer)
+			value, expressionError := lowering.expression(field.AsPropertyAssignment().Initializer)
 			if expressionError != nil {
 				return nil, true, expressionError
 			}
@@ -714,21 +738,24 @@ func (l *lowering) nodeWatchFile(node *ast.Node) (ir.Expression, bool, error) {
 	}
 	if len(written) > 1 {
 		listener := written[len(written)-1]
-		if !l.nodeWatchListener(listener, map[*ast.Symbol]bool{}) {
+		if !lowering.nodeWatchListener(listener, map[*ast.Symbol]bool{}) {
 			return refuse("with a listener outside a known (curr: Stats, prev: Stats) => void function")
 		}
-		signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(listener), checker.SignatureKindCall)
+		signatures := lowering.checker.GetSignaturesOfType(
+			lowering.checker.GetTypeAtLocation(listener),
+			checker.SignatureKindCall,
+		)
 		if len(signatures) != 1 ||
 			len(signatures[0].Parameters()) != 2 ||
-			l.checker.GetReturnTypeOfSignature(signatures[0]).Flags()&checker.TypeFlagsVoid == 0 {
+			lowering.checker.GetReturnTypeOfSignature(signatures[0]).Flags()&checker.TypeFlagsVoid == 0 {
 			return refuse("with a listener outside (curr: Stats, prev: Stats) => void")
 		}
 		for _, parameter := range signatures[0].Parameters() {
-			if nodeLibraryName(l.checker.GetTypeOfSymbol(parameter).Symbol()) != "node:fs.Stats" {
+			if nodeLibraryName(lowering.checker.GetTypeOfSymbol(parameter).Symbol()) != "node:fs.Stats" {
 				return refuse("with a listener outside (curr: Stats, prev: Stats) => void")
 			}
 		}
-		callback, expressionError := l.expression(listener)
+		callback, expressionError := lowering.expression(listener)
 		if expressionError != nil {
 			return nil, true, expressionError
 		}
@@ -747,10 +774,10 @@ func init() { RegisterNodeLibraryMembers("node:fs.watchFile", "node:fs.unwatchFi
 
 // Resolve const aliases to the actual function, rather than trusting a void
 // callback view which can hide an owned return value or extra optional slots.
-func (l *lowering) nodeWatchListener(node *ast.Node, seen map[*ast.Symbol]bool) bool {
+func (lowering *lowering) nodeWatchListener(node *ast.Node, seen map[*ast.Symbol]bool) bool {
 	node = ast.SkipParentheses(node)
 	if ast.IsIdentifier(node) {
-		symbol := l.symbol(node)
+		symbol := lowering.symbol(node)
 		if symbol == nil || seen[symbol] || len(symbol.Declarations) != 1 {
 			return false
 		}
@@ -760,7 +787,7 @@ func (l *lowering) nodeWatchListener(node *ast.Node, seen map[*ast.Symbol]bool) 
 			declaration.Parent != nil &&
 			declaration.Parent.Flags&ast.NodeFlagsConst != 0 {
 			value := declaration.AsVariableDeclaration().Initializer
-			return value != nil && l.nodeWatchListener(value, seen)
+			return value != nil && lowering.nodeWatchListener(value, seen)
 		}
 		node = declaration
 	}
@@ -770,8 +797,8 @@ func (l *lowering) nodeWatchListener(node *ast.Node, seen map[*ast.Symbol]bool) 
 	if len(node.Parameters()) != 2 || node.Body() == nil {
 		return false
 	}
-	signature := l.checker.GetSignatureFromDeclaration(node)
-	if signature == nil || l.checker.GetReturnTypeOfSignature(signature).Flags()&checker.TypeFlagsVoid == 0 {
+	signature := lowering.checker.GetSignatureFromDeclaration(node)
+	if signature == nil || lowering.checker.GetReturnTypeOfSignature(signature).Flags()&checker.TypeFlagsVoid == 0 {
 		return false
 	}
 	for _, parameter := range node.Parameters() {
@@ -780,7 +807,7 @@ func (l *lowering) nodeWatchListener(node *ast.Node, seen map[*ast.Symbol]bool) 
 		}
 	}
 	for _, parameter := range signature.Parameters() {
-		if nodeLibraryName(l.checker.GetTypeOfSymbol(parameter).Symbol()) != "node:fs.Stats" {
+		if nodeLibraryName(lowering.checker.GetTypeOfSymbol(parameter).Symbol()) != "node:fs.Stats" {
 			return false
 		}
 	}

@@ -8,7 +8,7 @@ import "github.com/system-inc/adamic/internal/ir"
 // through the view by one is refused and a plain = isn't lowered, and the checked read has none for an
 // optional field. It runs once lowering is done, since a cast lowered after the assignment can still
 // make its field checked.
-func (l *lowering) checkViewLogicalWrites() error {
+func (lowering *lowering) checkViewLogicalWrites() error {
 	var refused error
 	visit := func(node any) bool {
 		if refused != nil {
@@ -31,23 +31,27 @@ func (l *lowering) checkViewLogicalWrites() error {
 			names = assignment.KeyNames
 		}
 		for _, name := range names {
-			if l.result.CheckedField(write.ViewReceiverTypeID, name) {
+			if lowering.result.CheckedField(write.ViewReceiverTypeID, name) {
 				// A write without a recorded site is refused all the same, at its read's place or the program's.
-				where := l.result.Source
+				where := lowering.result.Source
 				if isProperty && read.ViewWhere != "" {
 					where = read.ViewWhere
 				}
 				if write.Site != 0 {
-					where = l.program.Where(l.writeSites[write.Site-1].node)
+					where = lowering.program.Where(lowering.writeSites[write.Site-1].node)
 				}
-				refused = &Refused{Where: where, What: "a logical assignment through a checked view", Fix: "write the field through the object's own type, or read it, decide, then assign with ="}
+				refused = &Refused{
+					Where: where,
+					What:  "a logical assignment through a checked view",
+					Fix:   "write the field through the object's own type, or read it, decide, then assign with =",
+				}
 				return false
 			}
 		}
 		return true
 	}
-	walk(l.result.Main, visit)
-	for _, function := range l.result.Functions {
+	walk(lowering.result.Main, visit)
+	for _, function := range lowering.result.Functions {
 		walk(function.Body, visit)
 	}
 	return refused

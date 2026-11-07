@@ -10,4 +10,4 @@ type NodeBufferCall struct {
 	Returns   Type
 }
 
-func (c NodeBufferCall) Type() Type { return c.Returns }
+func (call NodeBufferCall) Type() Type { return call.Returns }

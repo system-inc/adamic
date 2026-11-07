@@ -33,13 +33,13 @@ func beginRecoverySetup(test *testing.T) *recoverySetup {
 	test.Cleanup(func() { test.Logf("TEST totalCPU=%.6fs", (recoveryCPU(test) - cpu).Seconds()) })
 	return s
 }
-func (s *recoverySetup) report(test *testing.T) {
-	wall := time.Since(s.start)
+func (setup *recoverySetup) report(test *testing.T) {
+	wall := time.Since(setup.start)
 	test.Logf(
 		"setup wall=%.6fs builds=%.6fs without-builds=%.6fs",
 		wall.Seconds(),
-		s.builds.Seconds(),
-		(wall - s.builds).Seconds(),
+		setup.builds.Seconds(),
+		(wall - setup.builds).Seconds(),
 	)
 }
 func recoveryProduct(test *testing.T, s *recoverySetup, in buildcache.Inputs, build func(string) error) string {

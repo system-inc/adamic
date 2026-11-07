@@ -56,7 +56,7 @@ func hostBindingNamed(name string) *load.HostBinding {
 }
 
 // hostBindingRow is the row a declarator is the declaration of, or nil.
-func (l *lowering) hostBindingRow(declaration *ast.Node) *load.HostBinding {
+func (lowering *lowering) hostBindingRow(declaration *ast.Node) *load.HostBinding {
 	if declaration.Kind != ast.KindVariableDeclaration ||
 		!ast.IsIdentifier(declaration.Name()) ||
 		declaration.Initializer() != nil {
@@ -103,18 +103,18 @@ func (l *lowering) hostBindingRow(declaration *ast.Node) *load.HostBinding {
 
 // hostBindingStatement reports whether every declarator of an ambient variable statement is a host
 // binding's declaration, and if so, the stop for the first whose row doesn't lower, or nil.
-func (l *lowering) hostBindingStatement(statement *ast.Node) (bool, error) {
+func (lowering *lowering) hostBindingStatement(statement *ast.Node) (bool, error) {
 	if _, hostBindingsError := load.HostBindings(); hostBindingsError != nil {
 		return true, hostBindingsError
 	}
 	var stop error
 	for _, declaration := range statement.AsVariableStatement().DeclarationList.AsVariableDeclarationList().Declarations.Nodes {
-		row := l.hostBindingRow(declaration)
+		row := lowering.hostBindingRow(declaration)
 		if row == nil {
 			return false, nil
 		}
 		if reason := hostBindingStop(*row); stop == nil && reason != "" {
-			stop = l.notYet(declaration, reason)
+			stop = lowering.notYet(declaration, reason)
 		}
 	}
 	return true, stop
@@ -122,11 +122,11 @@ func (l *lowering) hostBindingStatement(statement *ast.Node) (bool, error) {
 
 // hostBindingDeclared reports whether a statement declares only host bindings that lower: it declares
 // nothing, since the host's names are the host's.
-func (l *lowering) hostBindingDeclared(statement *ast.Node) bool {
+func (lowering *lowering) hostBindingDeclared(statement *ast.Node) bool {
 	if statement.Kind != ast.KindVariableStatement || !ambientDeclaration(statement) {
 		return false
 	}
-	matched, hostBindingStatementError := l.hostBindingStatement(statement)
+	matched, hostBindingStatementError := lowering.hostBindingStatement(statement)
 	return matched && hostBindingStatementError == nil
 }
 
@@ -175,7 +175,7 @@ func possessive(owner string) string {
 
 // hostBindingOf is the row an identifier reads, by the symbol it resolves to, and that symbol; nil when
 // it reads anything else.
-func (l *lowering) hostBindingOf(node *ast.Node) (*load.HostBinding, *ast.Symbol) {
+func (lowering *lowering) hostBindingOf(node *ast.Node) (*load.HostBinding, *ast.Symbol) {
 	node = ast.SkipParentheses(node)
 	if !ast.IsIdentifier(node) {
 		return nil, nil
@@ -187,19 +187,19 @@ func (l *lowering) hostBindingOf(node *ast.Node) (*load.HostBinding, *ast.Symbol
 	var symbol *ast.Symbol
 	switch parent := node.Parent; {
 	case parent != nil && parent.Kind == ast.KindShorthandPropertyAssignment && parent.Name() == node:
-		symbol = l.checker.GetShorthandAssignmentValueSymbol(parent)
+		symbol = lowering.checker.GetShorthandAssignmentValueSymbol(parent)
 	case parent != nil && parent.Kind == ast.KindExportSpecifier:
-		symbol = l.checker.GetExportSpecifierLocalTargetSymbol(parent)
+		symbol = lowering.checker.GetExportSpecifierLocalTargetSymbol(parent)
 	default:
-		symbol = l.checker.GetSymbolAtLocation(node)
+		symbol = lowering.checker.GetSymbolAtLocation(node)
 	}
 	if symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 {
-		symbol = l.checker.GetAliasedSymbol(symbol)
+		symbol = lowering.checker.GetAliasedSymbol(symbol)
 	}
 	if symbol == nil || len(symbol.Declarations) != 1 {
 		return nil, nil
 	}
-	row := l.hostBindingRow(symbol.Declarations[0])
+	row := lowering.hostBindingRow(symbol.Declarations[0])
 	if row == nil {
 		return nil, nil
 	}
@@ -214,7 +214,7 @@ func hostBindingAbsent(row load.HostBinding) bool {
 // hostBindingGuard is the symbol of the Absent host binding a condition's typeof test proves missing:
 // `typeof X === "t"` with t not "undefined", or `typeof X !== "undefined"`, through parentheses. Any
 // other condition, a negation, a local holding the test or a call that makes it, proves nothing.
-func (l *lowering) hostBindingGuard(condition *ast.Node) *ast.Symbol {
+func (lowering *lowering) hostBindingGuard(condition *ast.Node) *ast.Symbol {
 	condition = ast.SkipParentheses(condition)
 	if condition.Kind != ast.KindBinaryExpression {
 		return nil
@@ -237,7 +237,7 @@ func (l *lowering) hostBindingGuard(condition *ast.Node) *ast.Symbol {
 	default:
 		return nil
 	}
-	row, symbol := l.hostBindingOf(test.AsTypeOfExpression().Expression)
+	row, symbol := lowering.hostBindingOf(test.AsTypeOfExpression().Expression)
 	if row == nil || !hostBindingAbsent(*row) {
 		return nil
 	}
@@ -246,7 +246,7 @@ func (l *lowering) hostBindingGuard(condition *ast.Node) *ast.Symbol {
 
 // hostBindingDominated reports whether a read sits in the then-branch of an if, the right of an && or
 // the true arm of a ?: whose guard proves its binding missing, within the read's own function.
-func (l *lowering) hostBindingDominated(read *ast.Node, symbol *ast.Symbol) bool {
+func (lowering *lowering) hostBindingDominated(read *ast.Node, symbol *ast.Symbol) bool {
 	for child, parent := read, read.Parent; parent != nil &&
 		!ast.IsFunctionLike(parent) &&
 		parent.Kind != ast.KindClassStaticBlockDeclaration; child, parent = parent, parent.Parent {
@@ -266,7 +266,7 @@ func (l *lowering) hostBindingDominated(read *ast.Node, symbol *ast.Symbol) bool
 				guard = parent.AsConditionalExpression().Condition
 			}
 		}
-		if guard != nil && l.hostBindingGuard(guard) == symbol {
+		if guard != nil && lowering.hostBindingGuard(guard) == symbol {
 			return true
 		}
 	}
@@ -276,23 +276,23 @@ func (l *lowering) hostBindingDominated(read *ast.Node, symbol *ast.Symbol) bool
 // hostBindingRefusal judges every use of a host binding before lowering: a write is refused, a row that
 // doesn't lower is not yet at each use, and an Absent name's read is admitted only at typeof or where a
 // guard proves it dead (hostBindingDominated).
-func (l *lowering) hostBindingRefusal(node *ast.Node) error {
+func (lowering *lowering) hostBindingRefusal(node *ast.Node) error {
 	if !ast.IsIdentifier(node) {
 		return nil
 	}
-	row, symbol := l.hostBindingOf(node)
+	row, symbol := lowering.hostBindingOf(node)
 	if row == nil || symbol.Declarations[0].Name() == node || ast.IsPartOfTypeNode(node) {
 		return nil
 	}
 	if ast.IsAssignmentTarget(node) {
 		return &Refused{
-			Where: l.program.Where(node),
+			Where: lowering.program.Where(node),
 			What:  "a write to the host binding " + row.Name,
 			Fix:   hostBindingWriteFix,
 		}
 	}
 	if stop := hostBindingStop(*row); stop != "" {
-		return l.notYet(node, stop)
+		return lowering.notYet(node, stop)
 	}
 	operand := node
 	for operand.Parent != nil && operand.Parent.Kind == ast.KindParenthesizedExpression {
@@ -301,8 +301,8 @@ func (l *lowering) hostBindingRefusal(node *ast.Node) error {
 	if operand.Parent != nil && operand.Parent.Kind == ast.KindTypeOfExpression {
 		return nil
 	}
-	if !l.hostBindingDominated(node, symbol) {
-		return l.notYet(node, "a read of "+
+	if !lowering.hostBindingDominated(node, symbol) {
+		return lowering.notYet(node, "a read of "+
 			row.Name+
 			", a host binding absent on every target, outside the then-branch of if, the right of && or the true arm of ?: under a typeof guard that proves it dead,")
 	}
@@ -321,7 +321,7 @@ const hostBindingWriteFix = "a host binding is the host's to define, and nothing
 // other rule, so the stop is this ruling's, not a rule's that happens to meet the receiver or delete
 // first. A receiver widened to another type (object, a record view) is no longer typeof globalThis; the
 // stop that judges those, the global object as a value, is global_object.go's.
-func (l *lowering) hostBindingGlobalThisRefusal(node *ast.Node) error {
+func (lowering *lowering) hostBindingGlobalThisRefusal(node *ast.Node) error {
 	var target *ast.Node
 	switch node.Kind {
 	case ast.KindBinaryExpression:
@@ -349,7 +349,7 @@ func (l *lowering) hostBindingGlobalThisRefusal(node *ast.Node) error {
 		receiver, name, known = target.AsPropertyAccessExpression().Expression, target.AsPropertyAccessExpression().Name().Text(), true
 	case ast.KindElementAccessExpression:
 		receiver = target.AsElementAccessExpression().Expression
-		if key := l.checker.GetTypeAtLocation(
+		if key := lowering.checker.GetTypeAtLocation(
 			target.AsElementAccessExpression().ArgumentExpression,
 		); key.Flags()&checker.TypeFlagsStringLiteral != 0 {
 			name, known = key.AsLiteralType().Value().(string)
@@ -358,7 +358,7 @@ func (l *lowering) hostBindingGlobalThisRefusal(node *ast.Node) error {
 		return nil
 	}
 	receiver = ast.SkipParentheses(receiver)
-	if !l.globalObject(receiver) && !l.globalObjectOperand(receiver) {
+	if !lowering.globalObject(receiver) && !lowering.globalObjectOperand(receiver) {
 		return nil
 	}
 	if known && hostBindingNamed(name) == nil {
@@ -368,7 +368,7 @@ func (l *lowering) hostBindingGlobalThisRefusal(node *ast.Node) error {
 	if !known {
 		what = "a write through globalThis whose key may name a host binding"
 	}
-	return &Refused{Where: l.program.Where(target), What: what, Fix: hostBindingWriteFix}
+	return &Refused{Where: lowering.program.Where(target), What: what, Fix: hostBindingWriteFix}
 }
 
 func init() {
@@ -378,45 +378,45 @@ func init() {
 
 // hostBindingDeadRead is the unreachable placeholder for what a guard proves dead: the guard's test
 // compares typeof's constant "undefined" at run time, so this runs only if that was wrong.
-func (l *lowering) hostBindingDeadRead(symbol *ast.Symbol) ir.Statement {
-	return ir.Panic{Message: ir.StringConstant{Index: l.constant(
+func (lowering *lowering) hostBindingDeadRead(symbol *ast.Symbol) ir.Statement {
+	return ir.Panic{Message: ir.StringConstant{Index: lowering.constant(
 		"compiler bug: the typeof guard of " + symbol.Name + ", a host binding absent on every target, was taken",
 	)}}
 }
 
 // hostBindingTypeOf lowers typeof of a host binding: "undefined" for an Absent one.
-func (l *lowering) hostBindingTypeOf(node *ast.Node) (ir.Expression, bool, error) {
-	row, _ := l.hostBindingOf(node.AsTypeOfExpression().Expression)
+func (lowering *lowering) hostBindingTypeOf(node *ast.Node) (ir.Expression, bool, error) {
+	row, _ := lowering.hostBindingOf(node.AsTypeOfExpression().Expression)
 	if row == nil {
 		return nil, false, nil
 	}
 	if stop := hostBindingStop(*row); stop != "" {
-		return nil, true, l.notYet(node, stop)
+		return nil, true, lowering.notYet(node, stop)
 	}
-	return ir.StringConstant{Index: l.constant("undefined")}, true, nil
+	return ir.StringConstant{Index: lowering.constant("undefined")}, true, nil
 }
 
 // hostBindingAnd lowers guard && right, whose right a guard proves dead, as a value: the guard, and the
 // placeholder where right would be. Only a boolean result is held; another stops as not yet.
-func (l *lowering) hostBindingAnd(node *ast.Node) (ir.Expression, bool, error) {
+func (lowering *lowering) hostBindingAnd(node *ast.Node) (ir.Expression, bool, error) {
 	binary := node.AsBinaryExpression()
 	if binary.OperatorToken.Kind != ast.KindAmpersandAmpersandToken {
 		return nil, false, nil
 	}
-	symbol := l.hostBindingGuard(binary.Left)
+	symbol := lowering.hostBindingGuard(binary.Left)
 	if symbol == nil {
 		return nil, false, nil
 	}
-	left, expressionError := l.expression(binary.Left)
+	left, expressionError := lowering.expression(binary.Left)
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
-	of, typeOfError := l.typeOf(node)
+	of, typeOfError := lowering.typeOf(node)
 	if typeOfError != nil {
 		return nil, true, typeOfError
 	}
 	if of != ir.Boolean {
-		return nil, true, l.notYet(
+		return nil, true, lowering.notYet(
 			node,
 			"the value of an && whose right a host binding's typeof guard proves dead, held as a "+typeName(of),
 		)
@@ -424,42 +424,50 @@ func (l *lowering) hostBindingAnd(node *ast.Node) (ir.Expression, bool, error) {
 	return ir.Binary{
 		Operator: ir.And,
 		Left:     left,
-		Right:    ir.Effects{Body: []ir.Statement{l.hostBindingDeadRead(symbol)}, Result: unreachablePlaceholder(of)},
+		Right: ir.Effects{
+			Body:   []ir.Statement{lowering.hostBindingDeadRead(symbol)},
+			Result: unreachablePlaceholder(of),
+		},
 	}, true, nil
 }
 
 // hostBindingAndStatement lowers guard && right as a statement, as if (guard) right.
-func (l *lowering) hostBindingAndStatement(node *ast.Node) ([]ir.Statement, bool, error) {
+func (lowering *lowering) hostBindingAndStatement(node *ast.Node) ([]ir.Statement, bool, error) {
 	binary := node.AsBinaryExpression()
 	if binary.OperatorToken.Kind != ast.KindAmpersandAmpersandToken {
 		return nil, false, nil
 	}
-	symbol := l.hostBindingGuard(binary.Left)
+	symbol := lowering.hostBindingGuard(binary.Left)
 	if symbol == nil {
 		return nil, false, nil
 	}
-	condition, conditionError := l.condition(binary.Left)
+	condition, conditionError := lowering.condition(binary.Left)
 	if conditionError != nil {
 		return nil, true, conditionError
 	}
-	return []ir.Statement{ir.If{Condition: condition, Then: []ir.Statement{l.hostBindingDeadRead(symbol)}}}, true, nil
+	return []ir.Statement{
+		ir.If{Condition: condition, Then: []ir.Statement{lowering.hostBindingDeadRead(symbol)}},
+	}, true, nil
 }
 
 // hostBindingConditional lowers guard ? whenTrue : whenFalse, whose true arm the guard proves dead: the
 // placeholder there, and the false arm as it is.
-func (l *lowering) hostBindingConditional(
+func (lowering *lowering) hostBindingConditional(
 	node *ast.Node,
 	condition ir.Expression,
 	symbol *ast.Symbol,
 ) (ir.Expression, error) {
-	of, typeOfError := l.typeOf(node)
+	of, typeOfError := lowering.typeOf(node)
 	if typeOfError != nil {
 		return nil, typeOfError
 	}
-	whenNot, expressionError := l.expression(node.AsConditionalExpression().WhenFalse)
+	whenNot, expressionError := lowering.expression(node.AsConditionalExpression().WhenFalse)
 	if expressionError != nil {
 		return nil, expressionError
 	}
-	whenTrue := ir.Effects{Body: []ir.Statement{l.hostBindingDeadRead(symbol)}, Result: unreachablePlaceholder(of)}
+	whenTrue := ir.Effects{
+		Body:   []ir.Statement{lowering.hostBindingDeadRead(symbol)},
+		Result: unreachablePlaceholder(of),
+	}
 	return ir.Conditional{Condition: condition, WhenTrue: whenTrue, WhenNot: fit(whenNot, of), Of: of}, nil
 }

@@ -95,52 +95,52 @@ type jump struct {
 }
 
 // tracked reports whether a local is a value the graph follows: one only its own function writes.
-func (b *builder) tracked(local int) bool {
-	declared := b.program.Locals[local]
+func (builder *builder) tracked(local int) bool {
+	declared := builder.program.Locals[local]
 	return !declared.Global && !declared.Captured && !declared.ExpressionAssigned
 }
 
 // place is a tracked local's place: its one identifier, minted the first time it's met.
-func (b *builder) place(local int) Place {
-	identifier, ok := b.identifiers[local]
+func (builder *builder) place(local int) Place {
+	identifier, ok := builder.identifiers[local]
 	if !ok {
-		identifier = b.function.NewIdentifier(b.program.Locals[local].Name, DeclarationId(local+1)).Id
-		b.identifiers[local] = identifier
+		identifier = builder.function.NewIdentifier(builder.program.Locals[local].Name, DeclarationId(local+1)).Id
+		builder.identifiers[local] = identifier
 	}
 	return Place{Identifier: identifier}
 }
 
 // emit adds an instruction to the current block: part of the statement at at (see Instruction.Part).
 // One that can throw ends its block, which goes on to the next or to wherever a throw goes from here.
-func (b *builder) emit(at *ir.Statement, part int, expression ir.Expression, uses []Place, defines []Place) {
+func (builder *builder) emit(at *ir.Statement, part int, expression ir.Expression, uses []Place, defines []Place) {
 	instruction := &Instruction{At: at, Part: part, Expression: expression, Uses: uses, Defines: defines}
-	b.function.AddInstruction(b.current, instruction)
-	if CanThrow(b.program, instruction) {
-		next := b.function.NewBlock()
-		b.current.Terminal = &MayThrow{Next: next.Id, Handler: b.throwTarget()}
-		b.current = next
+	builder.function.AddInstruction(builder.current, instruction)
+	if CanThrow(builder.program, instruction) {
+		next := builder.function.NewBlock()
+		builder.current.Terminal = &MayThrow{Next: next.Id, Handler: builder.throwTarget()}
+		builder.current = next
 	}
 }
 
 // throwTarget is where a throw goes from here.
-func (b *builder) throwTarget() BlockId {
-	if len(b.throwTo) > 0 {
-		return b.throwTo[len(b.throwTo)-1]
+func (builder *builder) throwTarget() BlockId {
+	if len(builder.throwTo) > 0 {
+		return builder.throwTo[len(builder.throwTo)-1]
 	}
-	if b.thrown == nil {
-		b.thrown = b.function.NewBlock()
-		b.thrown.Terminal = &Throw{}
+	if builder.thrown == nil {
+		builder.thrown = builder.function.NewBlock()
+		builder.thrown.Terminal = &Throw{}
 	}
-	return b.thrown.Id
+	return builder.thrown.Id
 }
 
 // route is where a jump to target goes first when it leaves every try from the one at index on: the
 // innermost finally among them, each of which is told to go on to the next one out, and the
 // outermost to target.
-func (b *builder) route(target BlockId, index int) BlockId {
+func (builder *builder) route(target BlockId, index int) BlockId {
 	next := target
-	for ; index < len(b.attempts); index++ {
-		if attempt := b.attempts[index]; attempt.finally != nil {
+	for ; index < len(builder.attempts); index++ {
+		if attempt := builder.attempts[index]; attempt.finally != nil {
 			attempt.exits = append(attempt.exits, next)
 			next = attempt.finally.Id
 		}
@@ -149,37 +149,37 @@ func (b *builder) route(target BlockId, index int) BlockId {
 }
 
 // leaving is the index of the first open try a jump to the jump at depth leaves.
-func (b *builder) leaving(depth int) int {
-	for index, attempt := range b.attempts {
+func (builder *builder) leaving(depth int) int {
+	for index, attempt := range builder.attempts {
 		if attempt.jumpDepth > depth {
 			return index
 		}
 	}
-	return len(b.attempts)
+	return len(builder.attempts)
 }
 
 // terminate ends the current block and starts a new one with no way in yet: what follows a return,
 // a break or a panic is unreachable until something jumps to it, and Finalize drops it if nothing does.
-func (b *builder) terminate(terminal Terminal) {
-	b.current.Terminal = terminal
-	b.current = b.function.NewBlock()
+func (builder *builder) terminate(terminal Terminal) {
+	builder.current.Terminal = terminal
+	builder.current = builder.function.NewBlock()
 }
 
 // enter ends the current block with a jump to block, and makes block current.
-func (b *builder) enter(block *BasicBlock) {
-	b.current.Terminal = &Goto{Block: block.Id}
-	b.current = block
+func (builder *builder) enter(block *BasicBlock) {
+	builder.current.Terminal = &Goto{Block: block.Id}
+	builder.current = block
 }
 
 // statements builds each statement where it stands in its slice, so an instruction can name it by
 // address: the same address the JavaScript backend's trace names it by.
-func (b *builder) statements(statements []ir.Statement) {
+func (builder *builder) statements(statements []ir.Statement) {
 	for index := range statements {
-		b.statement(&statements[index])
+		builder.statement(&statements[index])
 	}
 }
 
-func (b *builder) statement(at *ir.Statement) {
+func (builder *builder) statement(at *ir.Statement) {
 	switch statement := (*at).(type) {
 	case ir.SourceLine:
 		// Source metadata emits no instruction and keeps the path.
@@ -187,73 +187,73 @@ func (b *builder) statement(at *ir.Statement) {
 		// With no debugger attached, it reads and writes nothing and keeps the path.
 		return
 	case ir.WriteLine:
-		b.emit(at, 0, statement.Value, b.uses(statement.Value), nil)
+		builder.emit(at, 0, statement.Value, builder.uses(statement.Value), nil)
 	case ir.Evaluate:
 		if wait, ok := statement.Value.(ir.Await); ok {
-			b.suspend(at, wait, -1)
+			builder.suspend(at, wait, -1)
 			return
 		}
 		if yield, ok := statement.Value.(ir.Yield); ok {
-			b.yield(at, yield)
+			builder.yield(at, yield)
 			return
 		}
-		b.emit(at, 0, statement.Value, b.uses(statement.Value), nil)
+		builder.emit(at, 0, statement.Value, builder.uses(statement.Value), nil)
 	case ir.SetIndex:
-		b.emit(at, 0, nil, b.uses(statement), nil)
+		builder.emit(at, 0, nil, builder.uses(statement), nil)
 	case ir.SetProperty:
-		b.emit(at, 0, nil, b.uses(statement), nil)
+		builder.emit(at, 0, nil, builder.uses(statement), nil)
 	case ir.AllocateEnvironment:
-		b.emit(at, 0, nil, nil, nil)
+		builder.emit(at, 0, nil, nil, nil)
 	case ir.Declare:
 		if wait, ok := statement.Value.(ir.Await); ok {
-			b.suspend(at, wait, statement.Local)
+			builder.suspend(at, wait, statement.Local)
 			return
 		}
-		b.emit(at, 0, statement.Value, b.uses(statement.Value), b.defines(statement.Local))
+		builder.emit(at, 0, statement.Value, builder.uses(statement.Value), builder.defines(statement.Local))
 	case ir.Assign:
-		b.emit(at, 0, statement.Value, b.uses(statement.Value), b.defines(statement.Local))
+		builder.emit(at, 0, statement.Value, builder.uses(statement.Value), builder.defines(statement.Local))
 	case ir.Return:
-		b.emit(at, 0, statement.Value, b.uses(statement.Value), nil)
-		if !slices.ContainsFunc(b.attempts, func(attempt *attempt) bool { return attempt.finally != nil }) {
-			b.terminate(&Return{})
+		builder.emit(at, 0, statement.Value, builder.uses(statement.Value), nil)
+		if !slices.ContainsFunc(builder.attempts, func(attempt *attempt) bool { return attempt.finally != nil }) {
+			builder.terminate(&Return{})
 			break
 		}
 		// Through every finally around it, then out.
-		out := b.function.NewBlock()
+		out := builder.function.NewBlock()
 		out.Terminal = &Return{}
-		b.terminate(&Goto{Block: b.route(out.Id, 0)})
+		builder.terminate(&Goto{Block: builder.route(out.Id, 0)})
 	case ir.Panic:
-		b.emit(at, 0, statement.Message, b.uses(statement.Message), nil)
-		b.terminate(&Unreachable{})
+		builder.emit(at, 0, statement.Message, builder.uses(statement.Message), nil)
+		builder.terminate(&Unreachable{})
 	case ir.Labeled:
-		after := b.function.NewBlock()
-		b.jumps = append(b.jumps, jump{name: statement.Name, breakTo: after.Id, continueTo: InvalidBlock})
-		b.statements(statement.Body)
-		b.enter(after)
-		b.jumps = b.jumps[:len(b.jumps)-1]
+		after := builder.function.NewBlock()
+		builder.jumps = append(builder.jumps, jump{name: statement.Name, breakTo: after.Id, continueTo: InvalidBlock})
+		builder.statements(statement.Body)
+		builder.enter(after)
+		builder.jumps = builder.jumps[:len(builder.jumps)-1]
 	case ir.Block:
-		b.statements(statement.Body)
+		builder.statements(statement.Body)
 	case ir.If:
-		b.emit(at, 0, statement.Condition, b.uses(statement.Condition), nil)
-		consequent, alternate, after := b.function.NewBlock(), b.function.NewBlock(), b.function.NewBlock()
-		b.current.Terminal = &If{Consequent: consequent.Id, Alternate: alternate.Id}
-		b.current = consequent
-		b.statements(statement.Then)
-		b.enter(after)
-		b.current = alternate
-		b.statements(statement.Else)
-		b.enter(after)
+		builder.emit(at, 0, statement.Condition, builder.uses(statement.Condition), nil)
+		consequent, alternate, after := builder.function.NewBlock(), builder.function.NewBlock(), builder.function.NewBlock()
+		builder.current.Terminal = &If{Consequent: consequent.Id, Alternate: alternate.Id}
+		builder.current = consequent
+		builder.statements(statement.Then)
+		builder.enter(after)
+		builder.current = alternate
+		builder.statements(statement.Else)
+		builder.enter(after)
 	case ir.Loop:
-		b.loop(at, statement)
+		builder.loop(at, statement)
 	case ir.ForOf:
-		b.forOf(at, statement)
+		builder.forOf(at, statement)
 	case ir.Switch:
-		b.switchStatement(at, statement)
+		builder.switchStatement(at, statement)
 	case ir.Break:
-		depth := len(b.jumps) - 1
+		depth := len(builder.jumps) - 1
 		remaining := statement.Depth
 		for depth >= 0 {
-			target := b.jumps[depth]
+			target := builder.jumps[depth]
 			if statement.Label != "" {
 				if target.name == statement.Label {
 					break
@@ -269,21 +269,22 @@ func (b *builder) statement(at *ir.Statement) {
 		if depth < 0 {
 			panic("flow: unknown break target")
 		}
-		b.terminate(&Goto{Block: b.route(b.jumps[depth].breakTo, b.leaving(depth))})
+		builder.terminate(&Goto{Block: builder.route(builder.jumps[depth].breakTo, builder.leaving(depth))})
 	case ir.Continue:
-		for index := len(b.jumps) - 1; index >= 0; index-- {
-			if b.jumps[index].continueTo != InvalidBlock &&
-				((statement.Label == "" && b.jumps[index].name == "") || b.jumps[index].name == statement.Label) {
-				b.terminate(&Goto{Block: b.route(b.jumps[index].continueTo, b.leaving(index))})
+		for index := len(builder.jumps) - 1; index >= 0; index-- {
+			if builder.jumps[index].continueTo != InvalidBlock &&
+				((statement.Label == "" && builder.jumps[index].name == "") ||
+					builder.jumps[index].name == statement.Label) {
+				builder.terminate(&Goto{Block: builder.route(builder.jumps[index].continueTo, builder.leaving(index))})
 				return
 			}
 		}
 		panic("flow: a continue outside every loop")
 	case ir.Throw:
-		b.emit(at, 0, statement.Value, b.uses(statement.Value), nil)
-		b.terminate(&Goto{Block: b.throwTarget()})
+		builder.emit(at, 0, statement.Value, builder.uses(statement.Value), nil)
+		builder.terminate(&Goto{Block: builder.throwTarget()})
 	case ir.Try:
-		b.try(at, statement)
+		builder.try(at, statement)
 	default:
 		// Lowering only produces statements this switch knows. A new one has to be taught here, or
 		// every analysis over the graph would miss what it reads and writes.
@@ -293,93 +294,93 @@ func (b *builder) statement(at *ir.Statement) {
 
 // loop lays out every loop: the test before the body (for, while) or after it (do...while), the
 // update after the body, and continue going to the update.
-func (b *builder) loop(at *ir.Statement, statement ir.Loop) {
-	test, body, update, after := b.function.NewBlock(), b.function.NewBlock(), b.function.NewBlock(), b.function.NewBlock()
+func (builder *builder) loop(at *ir.Statement, statement ir.Loop) {
+	test, body, update, after := builder.function.NewBlock(), builder.function.NewBlock(), builder.function.NewBlock(), builder.function.NewBlock()
 	if statement.CheckAfter {
-		b.enter(body)
+		builder.enter(body)
 	} else {
-		b.enter(test)
+		builder.enter(test)
 	}
-	b.linkLabels(statement.Labels, update.Id)
-	b.jumps = append(b.jumps, jump{breakTo: after.Id, continueTo: update.Id})
-	b.current = body
-	b.statements(statement.Body)
-	b.enter(update)
-	b.statements(statement.Update)
-	b.enter(test)
-	b.jumps = b.jumps[:len(b.jumps)-1]
-	b.statements(statement.Test)
+	builder.linkLabels(statement.Labels, update.Id)
+	builder.jumps = append(builder.jumps, jump{breakTo: after.Id, continueTo: update.Id})
+	builder.current = body
+	builder.statements(statement.Body)
+	builder.enter(update)
+	builder.statements(statement.Update)
+	builder.enter(test)
+	builder.jumps = builder.jumps[:len(builder.jumps)-1]
+	builder.statements(statement.Test)
 	if statement.Condition == nil {
-		b.current.Terminal = &Goto{Block: body.Id}
+		builder.current.Terminal = &Goto{Block: body.Id}
 	} else {
-		b.emit(at, 0, statement.Condition, b.uses(statement.Condition), nil)
-		b.current.Terminal = &If{Consequent: body.Id, Alternate: after.Id}
+		builder.emit(at, 0, statement.Condition, builder.uses(statement.Condition), nil)
+		builder.current.Terminal = &If{Consequent: body.Id, Alternate: after.Id}
 	}
-	b.current = after
+	builder.current = after
 }
 
 // forOf evaluates the iterable once, then at the head of each pass either binds the next element
 // and runs the body, or leaves. continue goes back to the head.
-func (b *builder) forOf(at *ir.Statement, statement ir.ForOf) {
-	b.emit(at, 0, statement.Iterable, b.uses(statement.Iterable), nil)
-	head, body, after := b.function.NewBlock(), b.function.NewBlock(), b.function.NewBlock()
-	b.enter(head)
+func (builder *builder) forOf(at *ir.Statement, statement ir.ForOf) {
+	builder.emit(at, 0, statement.Iterable, builder.uses(statement.Iterable), nil)
+	head, body, after := builder.function.NewBlock(), builder.function.NewBlock(), builder.function.NewBlock()
+	builder.enter(head)
 	head.Terminal = &If{Consequent: body.Id, Alternate: after.Id}
-	b.current = body
+	builder.current = body
 	var defines []Place
 	if statement.Pattern != nil {
 		for _, binding := range statement.Pattern {
-			defines = append(defines, b.defines(binding.Local)...)
+			defines = append(defines, builder.defines(binding.Local)...)
 		}
 	} else {
-		defines = b.defines(statement.Local)
+		defines = builder.defines(statement.Local)
 	}
-	b.emit(at, 1, nil, nil, defines)
-	b.linkLabels(statement.Labels, head.Id)
-	b.jumps = append(b.jumps, jump{breakTo: after.Id, continueTo: head.Id})
-	b.statements(statement.Body)
-	b.jumps = b.jumps[:len(b.jumps)-1]
-	b.enter(head)
-	b.current = after
+	builder.emit(at, 1, nil, nil, defines)
+	builder.linkLabels(statement.Labels, head.Id)
+	builder.jumps = append(builder.jumps, jump{breakTo: after.Id, continueTo: head.Id})
+	builder.statements(statement.Body)
+	builder.jumps = builder.jumps[:len(builder.jumps)-1]
+	builder.enter(head)
+	builder.current = after
 }
 
 // switchStatement evaluates the value, then each case's tests in order until one matches, and runs
 // that case's body, or the default's when none does. 0.1 has no fallthrough: every body ends by
 // leaving the switch.
-func (b *builder) switchStatement(at *ir.Statement, statement ir.Switch) {
-	b.emit(at, 0, statement.Value, b.uses(statement.Value), nil)
-	after := b.function.NewBlock()
-	b.jumps = append(b.jumps, jump{breakTo: after.Id})
+func (builder *builder) switchStatement(at *ir.Statement, statement ir.Switch) {
+	builder.emit(at, 0, statement.Value, builder.uses(statement.Value), nil)
+	after := builder.function.NewBlock()
+	builder.jumps = append(builder.jumps, jump{breakTo: after.Id})
 	bodies := make([]*BasicBlock, len(statement.Cases))
 	part := 0
 	for index, switchCase := range statement.Cases {
-		bodies[index] = b.function.NewBlock()
+		bodies[index] = builder.function.NewBlock()
 		for _, testCase := range switchCase.Tests {
-			next := b.function.NewBlock()
+			next := builder.function.NewBlock()
 			part++
-			b.emit(at, part, testCase, b.uses(testCase), nil)
-			b.current.Terminal = &If{Consequent: bodies[index].Id, Alternate: next.Id}
-			b.current = next
+			builder.emit(at, part, testCase, builder.uses(testCase), nil)
+			builder.current.Terminal = &If{Consequent: bodies[index].Id, Alternate: next.Id}
+			builder.current = next
 		}
 	}
 	// No test matched: the default, from the block the last test left current.
-	b.statements(statement.Default)
-	b.enter(after)
+	builder.statements(statement.Default)
+	builder.enter(after)
 	for index, switchCase := range statement.Cases {
-		b.current = bodies[index]
-		b.statements(switchCase.Body)
-		b.enter(after)
+		builder.current = bodies[index]
+		builder.statements(switchCase.Body)
+		builder.enter(after)
 	}
-	b.jumps = b.jumps[:len(b.jumps)-1]
-	b.current = after
+	builder.jumps = builder.jumps[:len(builder.jumps)-1]
+	builder.current = after
 }
 
 // defines is the place a write to local defines, or none for a local the graph doesn't track.
-func (b *builder) defines(local int) []Place {
-	if !b.tracked(local) {
+func (builder *builder) defines(local int) []Place {
+	if !builder.tracked(local) {
 		return nil
 	}
-	return []Place{b.place(local)}
+	return []Place{builder.place(local)}
 }
 
 // uses is every tracked local an IR node reads, found by walking every field it holds.
@@ -389,7 +390,7 @@ func (b *builder) defines(local int) []Place {
 // use is a wrong answer from every analysis built on this, while the reflective walk can't miss one.
 // It never meets a statement inside an expression, because the IR has none (only statements hold
 // statements), so the only reads it can find are ir.Read.
-func (b *builder) uses(node any) []Place {
+func (builder *builder) uses(node any) []Place {
 	var places []Place
 	var walk func(value reflect.Value)
 	walk = func(value reflect.Value) {
@@ -400,8 +401,8 @@ func (b *builder) uses(node any) []Place {
 			}
 		case reflect.Struct:
 			if value.Type() == readType {
-				if local := int(value.FieldByName("Local").Int()); b.tracked(local) {
-					places = append(places, b.place(local))
+				if local := int(value.FieldByName("Local").Int()); builder.tracked(local) {
+					places = append(places, builder.place(local))
 				}
 				return
 			}
@@ -427,12 +428,12 @@ var readType = reflect.TypeOf(ir.Read{})
 // taking the error (part 1). The finally is entered from every way out of the try, and its end goes
 // on to wherever any of them was going: after the try, a rethrow out, or a jump or return that left
 // it. That's more paths than run, which only makes more live, never less.
-func (b *builder) try(at *ir.Statement, statement ir.Try) {
-	outerThrow := b.throwTarget()
-	after := b.function.NewBlock()
-	attempt := &attempt{jumpDepth: len(b.jumps)}
+func (builder *builder) try(at *ir.Statement, statement ir.Try) {
+	outerThrow := builder.throwTarget()
+	after := builder.function.NewBlock()
+	attempt := &attempt{jumpDepth: len(builder.jumps)}
 	if statement.HasFinally {
-		attempt.finally = b.function.NewBlock()
+		attempt.finally = builder.function.NewBlock()
 		attempt.exits = []BlockId{after.Id, outerThrow}
 	}
 	// ended is where the body and the catch go when they finish.
@@ -444,45 +445,45 @@ func (b *builder) try(at *ir.Statement, statement ir.Try) {
 	bodyThrow := outerThrow
 	switch {
 	case statement.HasCatch:
-		catch = b.function.NewBlock()
+		catch = builder.function.NewBlock()
 		bodyThrow = catch.Id
 	case attempt.finally != nil:
 		bodyThrow = attempt.finally.Id
 	}
-	b.attempts = append(b.attempts, attempt)
-	b.throwTo = append(b.throwTo, bodyThrow)
-	b.statements(statement.Body)
-	b.throwTo = b.throwTo[:len(b.throwTo)-1]
-	b.enter(ended)
+	builder.attempts = append(builder.attempts, attempt)
+	builder.throwTo = append(builder.throwTo, bodyThrow)
+	builder.statements(statement.Body)
+	builder.throwTo = builder.throwTo[:len(builder.throwTo)-1]
+	builder.enter(ended)
 	if catch != nil {
-		b.current = catch
+		builder.current = catch
 		catchThrow := outerThrow
 		if attempt.finally != nil {
 			catchThrow = attempt.finally.Id
 		}
-		b.throwTo = append(b.throwTo, catchThrow)
+		builder.throwTo = append(builder.throwTo, catchThrow)
 		var defines []Place
 		if statement.CatchLocal >= 0 {
-			defines = b.defines(statement.CatchLocal)
+			defines = builder.defines(statement.CatchLocal)
 		}
-		b.emit(at, 1, nil, nil, defines)
-		b.statements(statement.Catch)
-		b.throwTo = b.throwTo[:len(b.throwTo)-1]
-		b.enter(ended)
+		builder.emit(at, 1, nil, nil, defines)
+		builder.statements(statement.Catch)
+		builder.throwTo = builder.throwTo[:len(builder.throwTo)-1]
+		builder.enter(ended)
 	}
-	b.attempts = b.attempts[:len(b.attempts)-1]
+	builder.attempts = builder.attempts[:len(builder.attempts)-1]
 	if attempt.finally != nil {
-		b.current = attempt.finally
-		b.statements(statement.Finally)
+		builder.current = attempt.finally
+		builder.statements(statement.Finally)
 		exits := []BlockId{}
 		for _, exit := range attempt.exits {
 			if !slices.Contains(exits, exit) {
 				exits = append(exits, exit)
 			}
 		}
-		b.current.Terminal = &Choose{Blocks: exits}
+		builder.current.Terminal = &Choose{Blocks: exits}
 	}
-	b.current = after
+	builder.current = after
 }
 
 // CanThrow reports whether an instruction can throw: it calls a function a throw can leave, directly,
@@ -624,24 +625,29 @@ var (
 	generatorNextType = reflect.TypeOf(ir.GeneratorNext{})
 )
 
-func (b *builder) linkLabels(names []string, target BlockId) {
+func (builder *builder) linkLabels(names []string, target BlockId) {
 	for _, name := range names {
-		for index := len(b.jumps) - 1; index >= 0; index-- {
-			if b.jumps[index].name == name {
-				b.jumps[index].continueTo = target
+		for index := len(builder.jumps) - 1; index >= 0; index-- {
+			if builder.jumps[index].name == name {
+				builder.jumps[index].continueTo = target
 				break
 			}
 		}
 	}
 }
 
-func (b *builder) suspend(at *ir.Statement, wait ir.Await, local int) {
-	b.emit(at, 0, wait.Value, b.uses(wait.Value), nil)
-	fulfilled := b.function.NewBlock()
-	b.current.Terminal = &Suspend{Fulfilled: fulfilled.Id, Rejected: b.throwTarget(), Local: local, Of: wait.Of}
-	b.current = fulfilled
+func (builder *builder) suspend(at *ir.Statement, wait ir.Await, local int) {
+	builder.emit(at, 0, wait.Value, builder.uses(wait.Value), nil)
+	fulfilled := builder.function.NewBlock()
+	builder.current.Terminal = &Suspend{
+		Fulfilled: fulfilled.Id,
+		Rejected:  builder.throwTarget(),
+		Local:     local,
+		Of:        wait.Of,
+	}
+	builder.current = fulfilled
 	if local >= 0 {
-		b.function.AddInstruction(b.current, &Instruction{At: at, Part: 1, Defines: b.defines(local)})
+		builder.function.AddInstruction(builder.current, &Instruction{At: at, Part: 1, Defines: builder.defines(local)})
 	}
 }
 
@@ -649,12 +655,12 @@ func (b *builder) suspend(at *ir.Statement, wait ir.Await, local int) {
 // the next step goes on in a new block. The emitter reads the value from that last instruction, so
 // one that could throw would end its block first and leave the yield with nothing to hand over:
 // normalization makes the value a read of its own snapshot, which can't.
-func (b *builder) yield(at *ir.Statement, yield ir.Yield) {
-	b.emit(at, 0, yield.Value, b.uses(yield.Value), nil)
-	if len(b.current.Instructions) == 0 {
+func (builder *builder) yield(at *ir.Statement, yield ir.Yield) {
+	builder.emit(at, 0, yield.Value, builder.uses(yield.Value), nil)
+	if len(builder.current.Instructions) == 0 {
 		panic("flow: a yield whose value can throw was not normalized")
 	}
-	next := b.function.NewBlock()
-	b.current.Terminal = &Yield{Next: next.Id}
-	b.current = next
+	next := builder.function.NewBlock()
+	builder.current.Terminal = &Yield{Next: next.Id}
+	builder.current = next
 }

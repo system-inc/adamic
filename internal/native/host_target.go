@@ -10,8 +10,8 @@ import (
 // Lowering is target independent; the build boundary knows the selected target.
 type TargetRefused struct{ Member, Reason string }
 
-func (r *TargetRefused) Error() string {
-	return fmt.Sprintf("wasm32-wasi refuses %s: %s; use a native Node host target", r.Member, r.Reason)
+func (refused *TargetRefused) Error() string {
+	return fmt.Sprintf("wasm32-wasi refuses %s: %s; use a native Node host target", refused.Member, refused.Reason)
 }
 
 var wasiHostRefusals = map[string]TargetRefused{

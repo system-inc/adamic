@@ -15,37 +15,42 @@ import (
 // identity test. castRefusal (1900) runs first, so a cast no check can hold, and stage 1's vacuous tag
 // test, keep their own refusals. The angle-bracket form <Circle>shape is NotYet in stage 0 (conformance's
 // refusals/angle_bracket_downcast.a); whoever teaches stage 0 to lower it takes it in here too.
-func (l *lowering) keptCheckDowncastRefusal(node *ast.Node) error {
+func (lowering *lowering) keptCheckDowncastRefusal(node *ast.Node) error {
 	if node.Kind != ast.KindAsExpression ||
-		!strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".a") ||
-		l.processPath(node.AsAsExpression().Expression) != "" {
+		!strings.HasSuffix(lowering.program.FileName(ast.GetSourceFileOfNode(node)), ".a") ||
+		lowering.processPath(node.AsAsExpression().Expression) != "" {
 		return nil
 	}
-	proof, castProofError := l.castProof(node)
+	proof, castProofError := lowering.castProof(node)
 	if castProofError != nil {
 		return castProofError
 	}
 	if len(proof.classes) > 0 || !proof.interfaceView && !proof.structuralView && len(proof.allowed) == 0 {
 		return nil
 	}
-	source := l.checker.TypeToString(l.concrete(l.checker.GetTypeAtLocation(node.AsAsExpression().Expression)))
-	target := l.checker.TypeToString(l.concrete(l.checker.GetTypeAtLocation(node)))
+	source := lowering.checker.TypeToString(
+		lowering.concrete(lowering.checker.GetTypeAtLocation(node.AsAsExpression().Expression)),
+	)
+	target := lowering.checker.TypeToString(lowering.concrete(lowering.checker.GetTypeAtLocation(node)))
 	refused := &Refused{
-		Where: l.program.Where(node),
+		Where: lowering.program.Where(node),
 		What:  "a downcast from " + source + " to " + target + " in .a whose checks no proof erases",
 	}
 	const ts = "or move the file to .ts, where the cast stays a checked cast"
-	literal := l.fieldLiteral(l.concrete(l.checker.GetTypeAtLocation(node)), proof.field)
+	literal := lowering.fieldLiteral(lowering.concrete(lowering.checker.GetTypeAtLocation(node)), proof.field)
 	switch {
 	case len(proof.allowed) > 0:
-		refused.Fix = "narrow it, as .a writes !: " + l.tagNarrowing(node, proof.field, proof.allowed) + ", " + ts
+		refused.Fix = "narrow it, as .a writes !: " +
+			lowering.tagNarrowing(node, proof.field, proof.allowed) +
+			", " +
+			ts
 	case proof.interfaceView && literal != nil:
 		refused.Fix = "declare " +
 			source +
 			" as a union with " +
 			target +
 			" as a member and narrow it, as .a writes !: " +
-			l.tagNarrowing(node, proof.field, []*checker.Type{literal}) +
+			lowering.tagNarrowing(node, proof.field, []*checker.Type{literal}) +
 			", " +
 			ts
 	default:
@@ -65,7 +70,7 @@ func init() {
 
 // tagNarrowing is the statement that narrows a cast's operand to the members whose field holds one of
 // allowed, written with the operand's own name when it's a reference a narrowing can name.
-func (l *lowering) tagNarrowing(node *ast.Node, field string, allowed []*checker.Type) string {
+func (lowering *lowering) tagNarrowing(node *ast.Node, field string, allowed []*checker.Type) string {
 	operand := ast.SkipParentheses(node.AsAsExpression().Expression)
 	reference := ast.IsIdentifier(operand) ||
 		operand.Kind == ast.KindPropertyAccessExpression ||
@@ -76,7 +81,7 @@ func (l *lowering) tagNarrowing(node *ast.Node, field string, allowed []*checker
 	}
 	tests := []string{}
 	for _, literal := range allowed {
-		tests = append(tests, held+"."+field+" !== "+l.checker.TypeToString(literal))
+		tests = append(tests, held+"."+field+" !== "+lowering.checker.TypeToString(literal))
 	}
 	narrowing := "if (" + strings.Join(tests, " && ") + ") panic('why')"
 	if !reference {

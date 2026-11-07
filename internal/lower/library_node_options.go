@@ -9,19 +9,19 @@ import (
 // general exemption for Node declarations or for readonly arguments. The fs-file
 // lowerer replaces these option objects with scalar arguments; it neither stores
 // nor returns the object, nor passes it to the runtime as a wider object view.
-func (l *lowering) nodeHostConsumesArgument(node *ast.Node, index int) bool {
-	if !l.nodeHostConsumesOptionsPosition(node, index) {
+func (lowering *lowering) nodeHostConsumesArgument(node *ast.Node, index int) bool {
+	if !lowering.nodeHostConsumesOptionsPosition(node, index) {
 		return false
 	}
 	call := node.AsCallExpression()
 	argument := ast.SkipParentheses(call.Arguments.Nodes[index])
-	if !l.nodeHostExactOptions(argument, node) {
+	if !lowering.nodeHostExactOptions(argument, node) {
 		return false
 	}
 	// The consumed fs options are scalar. Do not let an exact outer literal hide
 	// a nested optional widening through an object-valued field or a callback.
-	for _, field := range l.checker.GetPropertiesOfType(l.checker.GetTypeAtLocation(argument)) {
-		if !nodeHostScalarOption(l.checker.GetTypeOfSymbol(field)) {
+	for _, field := range lowering.checker.GetPropertiesOfType(lowering.checker.GetTypeAtLocation(argument)) {
+		if !nodeHostScalarOption(lowering.checker.GetTypeOfSymbol(field)) {
 			return false
 		}
 	}
@@ -30,11 +30,11 @@ func (l *lowering) nodeHostConsumesArgument(node *ast.Node, index int) bool {
 
 // Separate the lowerer's consuming position from the binding proof so every
 // reference can be checked without recursively proving the same binding.
-func (l *lowering) nodeHostConsumesOptionsPosition(node *ast.Node, index int) bool {
+func (lowering *lowering) nodeHostConsumesOptionsPosition(node *ast.Node, index int) bool {
 	if node == nil || node.Kind != ast.KindCallExpression {
 		return false
 	}
-	if !l.optionalNodeHostCall(node) {
+	if !lowering.optionalNodeHostCall(node) {
 		return false
 	}
 	call := node.AsCallExpression()
@@ -42,7 +42,7 @@ func (l *lowering) nodeHostConsumesOptionsPosition(node *ast.Node, index int) bo
 		return false
 	}
 	optionIndex := 1
-	switch l.nodeLibraryMember(node) {
+	switch lowering.nodeLibraryMember(node) {
 	case "node:fs.watchFile", "node:fs.statSync", "node:fs.mkdirSync", "node:fs.readFileSync", "node:fs.rmSync", "node:fs.mkdtempSync":
 	case "node:fs.writeFileSync":
 		optionIndex = 2
@@ -72,7 +72,7 @@ func nodeHostScalarOption(proven *checker.Type) bool {
 // consuming host argument. Captures obey the same rule as direct references.
 // Exports and all non-consuming references fail, regardless of execution order.
 // Structural casts are not const assertions and cannot hide fields.
-func (l *lowering) nodeHostExactOptions(argument, call *ast.Node) bool {
+func (lowering *lowering) nodeHostExactOptions(argument, call *ast.Node) bool {
 	unwrap := func(node *ast.Node) *ast.Node {
 		for {
 			node = ast.SkipParentheses(node)
@@ -85,12 +85,12 @@ func (l *lowering) nodeHostExactOptions(argument, call *ast.Node) bool {
 	}
 	argument = unwrap(argument)
 	if argument.Kind == ast.KindObjectLiteralExpression {
-		return l.exactObject(argument, 0)
+		return lowering.exactObject(argument, 0)
 	}
 	if !ast.IsIdentifier(argument) {
 		return false
 	}
-	symbol := l.symbol(argument)
+	symbol := lowering.symbol(argument)
 	if symbol == nil || len(symbol.Declarations) != 1 {
 		return false
 	}
@@ -103,7 +103,7 @@ func (l *lowering) nodeHostExactOptions(argument, call *ast.Node) bool {
 		return false
 	}
 	literal := unwrap(binding.Initializer)
-	if literal.Kind != ast.KindObjectLiteralExpression || !l.exactObject(literal, 0) {
+	if literal.Kind != ast.KindObjectLiteralExpression || !lowering.exactObject(literal, 0) {
 		return false
 	}
 	// Export exposes the object to callers whose writes cannot be inspected.
@@ -114,9 +114,9 @@ func (l *lowering) nodeHostExactOptions(argument, call *ast.Node) bool {
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
 		if ast.IsIdentifier(node) && node != binding.Name() {
-			reference := l.symbol(node)
+			reference := lowering.symbol(node)
 			if node.Parent != nil && ast.IsShorthandPropertyAssignment(node.Parent) {
-				reference = l.checker.GetShorthandAssignmentValueSymbol(node.Parent)
+				reference = lowering.checker.GetShorthandAssignmentValueSymbol(node.Parent)
 			}
 			if reference == symbol {
 				use := node
@@ -126,10 +126,12 @@ func (l *lowering) nodeHostExactOptions(argument, call *ast.Node) bool {
 				consumed := false
 				if parent := use.Parent; parent != nil && parent.Kind == ast.KindCallExpression {
 					for index, argument := range parent.AsCallExpression().Arguments.Nodes {
-						if argument == use && l.nodeHostConsumesOptionsPosition(parent, index) {
+						if argument == use && lowering.nodeHostConsumesOptionsPosition(parent, index) {
 							consumed = true
-							for _, field := range l.checker.GetPropertiesOfType(l.checker.GetTypeAtLocation(argument)) {
-								if !nodeHostScalarOption(l.checker.GetTypeOfSymbol(field)) {
+							for _, field := range lowering.checker.GetPropertiesOfType(
+								lowering.checker.GetTypeAtLocation(argument),
+							) {
+								if !nodeHostScalarOption(lowering.checker.GetTypeOfSymbol(field)) {
 									consumed = false
 								}
 							}
@@ -144,10 +146,10 @@ func (l *lowering) nodeHostExactOptions(argument, call *ast.Node) bool {
 		node.ForEachChild(visit)
 		return false
 	}
-	if l.program == nil {
+	if lowering.program == nil {
 		return false // No complete reference inventory is available.
 	}
-	for _, file := range l.program.CompilerProgram().GetSourceFiles() {
+	for _, file := range lowering.program.CompilerProgram().GetSourceFiles() {
 		if !file.IsDeclarationFile {
 			file.AsNode().ForEachChild(visit)
 		}

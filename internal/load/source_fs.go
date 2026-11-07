@@ -52,103 +52,103 @@ type adamicAnswer struct {
 // Where for every unit and finding, so one internal/lower test binary stat'd one fixture's pair 238,336
 // times (#npd568j). A load's sources don't change while it is read, as cachedvfs already assumes of the
 // same disk, and a new load is a new sourceFS, so a file written between two loads is seen by the second.
-func (s *sourceFS) adamicFile(path tspath.RootedFilePath) (tspath.RootedFilePath, bool) {
+func (fileSystem *sourceFS) adamicFile(path tspath.RootedFilePath) (tspath.RootedFilePath, bool) {
 	if !strings.HasSuffix(path.AsString(), ".a.ts") {
 		return "", false
 	}
-	if kept, ok := s.adamicFiles.Load(path); ok {
+	if kept, ok := fileSystem.adamicFiles.Load(path); ok {
 		answer := kept.(adamicAnswer)
 		return answer.path, answer.found
 	}
 	answer := adamicAnswer{}
-	if !s.FS.FileExists(path) {
+	if !fileSystem.FS.FileExists(path) {
 		answer.path = path.RemoveExtension(".ts").AppendSuffix("")
-		answer.found = s.FS.FileExists(answer.path)
+		answer.found = fileSystem.FS.FileExists(answer.path)
 	}
-	s.adamicFiles.Store(path, answer)
+	fileSystem.adamicFiles.Store(path, answer)
 	return answer.path, answer.found
 }
 
 // displayName is the name a person wrote, for a file name the checker uses, as display shows it.
-func (s *sourceFS) displayName(path tspath.RootedFilePath) string {
+func (fileSystem *sourceFS) displayName(path tspath.RootedFilePath) string {
 	name := path.AsString()
-	if adamicPath, isAdamic := s.adamicFile(path); isAdamic {
+	if adamicPath, isAdamic := fileSystem.adamicFile(path); isAdamic {
 		name = adamicPath.AsString()
 	}
-	if s.display != nil {
-		return s.display(name)
+	if fileSystem.display != nil {
+		return fileSystem.display(name)
 	}
 	return name
 }
 
-func (s *sourceFS) FileExists(path tspath.RootedFilePath) bool {
+func (fileSystem *sourceFS) FileExists(path tspath.RootedFilePath) bool {
 	if path == preludePath {
 		return true
 	}
-	if _, isAdamic := s.adamicFile(path); isAdamic {
+	if _, isAdamic := fileSystem.adamicFile(path); isAdamic {
 		return true
 	}
-	if _, exists := s.overlay[path]; exists {
+	if _, exists := fileSystem.overlay[path]; exists {
 		return true
 	}
-	return s.FS.FileExists(path)
+	return fileSystem.FS.FileExists(path)
 }
 
-func (s *sourceFS) ReadFile(path tspath.RootedFilePath) (string, bool) {
+func (fileSystem *sourceFS) ReadFile(path tspath.RootedFilePath) (string, bool) {
 	if path == preludePath {
-		if s.nodeTypes {
-			return s.nodePreludeText, true
+		if fileSystem.nodeTypes {
+			return fileSystem.nodePreludeText, true
 		}
 		return prelude, true
 	}
-	if source, exists := s.overlay[path]; exists {
+	if source, exists := fileSystem.overlay[path]; exists {
 		return source, true
 	}
-	if adamicPath, isAdamic := s.adamicFile(path); isAdamic {
-		if source, exists := s.overlay[adamicPath]; exists {
+	if adamicPath, isAdamic := fileSystem.adamicFile(path); isAdamic {
+		if source, exists := fileSystem.overlay[adamicPath]; exists {
 			return source, true
 		}
-		return s.FS.ReadFile(adamicPath)
+		return fileSystem.FS.ReadFile(adamicPath)
 	}
-	return s.FS.ReadFile(path)
+	return fileSystem.FS.ReadFile(path)
 }
 
-func (s *sourceFS) DirectoryExists(path tspath.RootedDirectoryPath) bool {
-	return path == preludeDirectory || s.FS.DirectoryExists(path)
+func (fileSystem *sourceFS) DirectoryExists(path tspath.RootedDirectoryPath) bool {
+	return path == preludeDirectory || fileSystem.FS.DirectoryExists(path)
 }
 
-func (s *sourceFS) Stat(path tspath.RootedPath) vfs.FileInfo {
-	if adamicPath, isAdamic := s.adamicFile(tspath.RootedFilePathFromPath(path)); isAdamic {
-		return s.FS.Stat(adamicPath.AsPath())
+func (fileSystem *sourceFS) Stat(path tspath.RootedPath) vfs.FileInfo {
+	if adamicPath, isAdamic := fileSystem.adamicFile(tspath.RootedFilePathFromPath(path)); isAdamic {
+		return fileSystem.FS.Stat(adamicPath.AsPath())
 	}
-	return s.FS.Stat(path)
+	return fileSystem.FS.Stat(path)
 }
 
-func (s *sourceFS) Realpath(path tspath.RootedPath) tspath.RootedPath {
+func (fileSystem *sourceFS) Realpath(path tspath.RootedPath) tspath.RootedPath {
 	if path == preludePath {
 		return path
 	}
-	if adamicPath, isAdamic := s.adamicFile(tspath.RootedFilePathFromPath(path)); isAdamic {
-		return tspath.RootedFilePathFromPath(s.FS.Realpath(adamicPath.AsPath())).AppendSuffix(".ts").AsPath()
+	if adamicPath, isAdamic := fileSystem.adamicFile(tspath.RootedFilePathFromPath(path)); isAdamic {
+		return tspath.RootedFilePathFromPath(fileSystem.FS.Realpath(adamicPath.AsPath())).AppendSuffix(".ts").AsPath()
 	}
-	return s.FS.Realpath(path)
+	return fileSystem.FS.Realpath(path)
 }
 
 // The checker never writes. These refuse rather than pass through, so a write can't land on disk by
 // accident through a file system that exists to read.
 
-func (s *sourceFS) WriteFile(path tspath.RootedFilePath, data string) error {
+func (fileSystem *sourceFS) WriteFile(path tspath.RootedFilePath, data string) error {
 	return errorReadOnly
 }
 
-func (s *sourceFS) AppendFile(path tspath.RootedFilePath, data string) error {
+func (fileSystem *sourceFS) AppendFile(path tspath.RootedFilePath, data string) error {
 	return errorReadOnly
 }
 
-func (s *sourceFS) Remove(path tspath.RootedPath) error {
+func (fileSystem *sourceFS) Remove(path tspath.RootedPath) error {
 	return errorReadOnly
 }
 
-func (s *sourceFS) Chtimes(path tspath.RootedPath, aTime time.Time, mTime time.Time) error {
+func (fileSystem *sourceFS) Chtimes(path tspath.RootedPath, aTime time.Time, mTime time.Time) error {
 	return errorReadOnly
 }

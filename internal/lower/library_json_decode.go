@@ -16,14 +16,14 @@ import (
 // Keep the language-level NotYet classification while adding this decoder's concrete fix.
 type jsonDecodeNullableNotYet struct{ NotYet }
 
-func (n *jsonDecodeNullableNotYet) Error() string {
-	return n.NotYet.Error() +
+func (notYet *jsonDecodeNullableNotYet) Error() string {
+	return notYet.NotYet.Error() +
 		"\nfix: nullable JSON fields come with the representation of T | null; decode the field as a discriminated union or leave it out"
 }
-func (n *jsonDecodeNullableNotYet) Unwrap() error { return &n.NotYet }
+func (notYet *jsonDecodeNullableNotYet) Unwrap() error { return &notYet.NotYet }
 
 // Check the complete data graph before representation selection can reject a nullable union.
-func (l *lowering) jsonDecodeContainsNull(t *checker.Type, seen map[*checker.Type]bool) bool {
+func (lowering *lowering) jsonDecodeContainsNull(t *checker.Type, seen map[*checker.Type]bool) bool {
 	if seen[t] {
 		return false
 	}
@@ -33,23 +33,23 @@ func (l *lowering) jsonDecodeContainsNull(t *checker.Type, seen map[*checker.Typ
 	}
 	if t.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range t.Types() {
-			if l.jsonDecodeContainsNull(member, seen) {
+			if lowering.jsonDecodeContainsNull(member, seen) {
 				return true
 			}
 		}
 	} else if t.Flags()&checker.TypeFlagsObject != 0 {
-		if l.isArrayType(t) {
-			return l.jsonDecodeContainsNull(l.elementTypeOfArray(t), seen)
+		if lowering.isArrayType(t) {
+			return lowering.jsonDecodeContainsNull(lowering.elementTypeOfArray(t), seen)
 		}
 		if checker.IsTupleType(t) {
-			for _, element := range l.checker.GetTypeArguments(t) {
-				if l.jsonDecodeContainsNull(element, seen) {
+			for _, element := range lowering.checker.GetTypeArguments(t) {
+				if lowering.jsonDecodeContainsNull(element, seen) {
 					return true
 				}
 			}
 		} else {
-			for _, field := range l.checker.GetPropertiesOfType(t) {
-				if l.jsonDecodeContainsNull(l.checker.GetTypeOfSymbol(field), seen) {
+			for _, field := range lowering.checker.GetPropertiesOfType(t) {
+				if lowering.jsonDecodeContainsNull(lowering.checker.GetTypeOfSymbol(field), seen) {
 					return true
 				}
 			}
@@ -74,17 +74,17 @@ func (mode jsonSchemaMode) functionName() string {
 }
 
 // Only call-site dispatch inspects the prelude callee; the type walker uses mode.
-func (l *lowering) isJSONSchemaCall(node *ast.Node) bool {
-	return node.Kind == ast.KindCallExpression && (l.isPreludeFunction(
+func (lowering *lowering) isJSONSchemaCall(node *ast.Node) bool {
+	return node.Kind == ast.KindCallExpression && (lowering.isPreludeFunction(
 		node.AsCallExpression().Expression,
 		"decodeJson",
-	) || l.isPreludeFunction(node.AsCallExpression().Expression, "encodeJson"))
+	) || lowering.isPreludeFunction(node.AsCallExpression().Expression, "encodeJson"))
 }
 
 // jsonSchemaCallRefusal refuses a decodeJson or encodeJson call whose type has no schema.
-func (l *lowering) jsonSchemaCallRefusal(node *ast.Node) error {
-	if l.isJSONSchemaCall(node) {
-		_, jsonSchemaCallTypeError := l.jsonSchemaCallType(node)
+func (lowering *lowering) jsonSchemaCallRefusal(node *ast.Node) error {
+	if lowering.isJSONSchemaCall(node) {
+		_, jsonSchemaCallTypeError := lowering.jsonSchemaCallType(node)
 		if jsonSchemaCallTypeError != nil {
 			return jsonSchemaCallTypeError
 		}
@@ -94,19 +94,19 @@ func (l *lowering) jsonSchemaCallRefusal(node *ast.Node) error {
 
 func init() { refusalRules.register(1500, "jsonSchemaCallRefusal", (*lowering).jsonSchemaCallRefusal) }
 
-func (l *lowering) jsonSchemaCallType(node *ast.Node) (ir.JSONDecodeSchema, error) {
+func (lowering *lowering) jsonSchemaCallType(node *ast.Node) (ir.JSONDecodeSchema, error) {
 	mode := jsonSchemaDecode
-	if l.isPreludeFunction(node.AsCallExpression().Expression, "encodeJson") {
+	if lowering.isPreludeFunction(node.AsCallExpression().Expression, "encodeJson") {
 		mode = jsonSchemaEncode
 	}
-	return l.jsonSchemaType(node, mode)
+	return lowering.jsonSchemaType(node, mode)
 }
 
-func (l *lowering) decodeJsonType(node *ast.Node) (ir.JSONDecodeSchema, error) {
-	return l.jsonSchemaType(node, jsonSchemaDecode)
+func (lowering *lowering) decodeJsonType(node *ast.Node) (ir.JSONDecodeSchema, error) {
+	return lowering.jsonSchemaType(node, jsonSchemaDecode)
 }
 
-func (l *lowering) jsonSchemaType(node *ast.Node, mode jsonSchemaMode) (ir.JSONDecodeSchema, error) {
+func (lowering *lowering) jsonSchemaType(node *ast.Node, mode jsonSchemaMode) (ir.JSONDecodeSchema, error) {
 	schema := ir.JSONDecodeSchema{}
 	call := node.AsCallExpression()
 	operation, argument := mode.functionName(), "text"
@@ -115,19 +115,19 @@ func (l *lowering) jsonSchemaType(node *ast.Node, mode jsonSchemaMode) (ir.JSOND
 	}
 	if call.TypeArguments == nil || len(call.TypeArguments.Nodes) != 1 {
 		return schema, &Refused{
-			Where: l.program.Where(node),
+			Where: lowering.program.Where(node),
 			What:  operation + " requires a type argument",
 			Fix:   "name the type: " + operation + "<YourType>(" + argument + ")",
 		}
 	}
-	rootType := l.checker.GetTypeFromTypeNode(call.TypeArguments.Nodes[0])
-	if l.jsonDecodeContainsNull(rootType, map[*checker.Type]bool{}) {
+	rootType := lowering.checker.GetTypeFromTypeNode(call.TypeArguments.Nodes[0])
+	if lowering.jsonDecodeContainsNull(rootType, map[*checker.Type]bool{}) {
 		return schema, &jsonDecodeNullableNotYet{NotYet{
-			Where: l.program.Where(node),
-			What:  operation + "<" + l.checker.TypeToString(rootType) + "> containing null",
+			Where: lowering.program.Where(node),
+			What:  operation + "<" + lowering.checker.TypeToString(rootType) + "> containing null",
 		}}
 	}
-	return l.jsonDecodeSchema(node, rootType, mode, l.constant)
+	return lowering.jsonDecodeSchema(node, rootType, mode, lowering.constant)
 }
 
 // typeString is l.checker.TypeToString(t), held per type for the lowering. TypeToString takes no enclosing node and no
@@ -135,21 +135,21 @@ func (l *lowering) jsonSchemaType(node *ast.Node, mode jsonSchemaMode) (ir.JSOND
 // is asked once a node and a node once a function's return type, so tsc's entry census asked 1,866,154 times for 3,790
 // types, and each answer's synthesized type nodes stayed live in the checker: 7.57 against 5.04 GiB at its peak
 // (#wy2dyf0, #rw2vjhn). A lowering is one goroutine's, as sourceIdentities is.
-func (l *lowering) typeString(t *checker.Type) string {
-	if text, found := l.typeStrings[t]; found {
+func (lowering *lowering) typeString(t *checker.Type) string {
+	if text, found := lowering.typeStrings[t]; found {
 		return text
 	}
-	if l.typeStrings == nil {
-		l.typeStrings = map[*checker.Type]string{}
+	if lowering.typeStrings == nil {
+		lowering.typeStrings = map[*checker.Type]string{}
 	}
-	text := l.checker.TypeToString(t)
-	l.typeStrings[t] = text
+	text := lowering.checker.TypeToString(t)
+	lowering.typeStrings[t] = text
 	return text
 }
 
 // jsonDecodeSchema is the one checker-type descriptor builder. Boundary mode
 // preserves undefined for fields; decode and encode retain JSON admission rules.
-func (l *lowering) jsonDecodeSchema(
+func (lowering *lowering) jsonDecodeSchema(
 	node *ast.Node,
 	rootType *checker.Type,
 	mode jsonSchemaMode,
@@ -161,16 +161,16 @@ func (l *lowering) jsonDecodeSchema(
 	var visit func(*checker.Type) (int, error)
 	refuse := func(t *checker.Type) error {
 		return &Refused{
-			Where: l.program.Where(node),
-			What:  operation + " cannot prove " + l.checker.TypeToString(t) + " is JSON data",
+			Where: lowering.program.Where(node),
+			What:  operation + " cannot prove " + lowering.checker.TypeToString(t) + " is JSON data",
 			Fix:   "name a data type made of JSON scalars, arrays, tuples and plain fields; give object unions one distinct literal discriminant",
 		}
 	}
 	visit = func(t *checker.Type) (int, error) {
 		if mode == jsonSchemaBoundary {
-			t = l.concrete(t)
-			held, _ := l.representation(t)
-			if l.weakTarget(t) != nil || held == ir.Weak {
+			t = lowering.concrete(t)
+			held, _ := lowering.representation(t)
+			if lowering.weakTarget(t) != nil || held == ir.Weak {
 				return 0, refuse(t)
 			}
 		}
@@ -184,7 +184,7 @@ func (l *lowering) jsonDecodeSchema(
 		index := len(schema.Nodes)
 		seen[t] = index
 		schema.Nodes = append(schema.Nodes, ir.JSONDecodeNode{})
-		n := ir.JSONDecodeNode{Expected: l.typeString(t)}
+		n := ir.JSONDecodeNode{Expected: lowering.typeString(t)}
 		flags := t.Flags()
 		var literal ir.Expression
 		var of ir.Type
@@ -193,7 +193,7 @@ func (l *lowering) jsonDecodeSchema(
 			text, isText := t.AsLiteralType().Value().(string)
 			literal, of, ok = ir.StringConstant{Index: intern(text)}, ir.String, isText
 		} else {
-			literal, of, ok = l.literalConstant(t)
+			literal, of, ok = lowering.literalConstant(t)
 		}
 		if ok {
 			n.Kind = "literal"
@@ -227,7 +227,7 @@ func (l *lowering) jsonDecodeSchema(
 			n.Of = ir.Boolean
 		} else if flags&checker.TypeFlagsUnion != 0 {
 			n.Kind = "union"
-			of, ok := l.representation(t)
+			of, ok := lowering.representation(t)
 			if !ok && mode != jsonSchemaBoundary {
 				return 0, refuse(t)
 			}
@@ -256,17 +256,17 @@ func (l *lowering) jsonDecodeSchema(
 					return 0, refuse(t)
 				}
 				if len(objects) > 1 {
-					for _, field := range l.checker.GetPropertiesOfType(objects[0]) {
+					for _, field := range lowering.checker.GetPropertiesOfType(objects[0]) {
 						distinct := map[string]bool{}
 						valid := true
 						for _, member := range objects {
-							property := l.checker.GetPropertyOfType(member, field.Name)
-							literal := l.fieldLiteral(member, field.Name)
+							property := lowering.checker.GetPropertyOfType(member, field.Name)
+							literal := lowering.fieldLiteral(member, field.Name)
 							if property == nil || property.Flags&ast.SymbolFlagsOptional != 0 || literal == nil {
 								valid = false
 								break
 							}
-							key := l.checker.TypeToString(literal)
+							key := lowering.checker.TypeToString(literal)
 							if distinct[key] {
 								valid = false
 								break
@@ -286,32 +286,34 @@ func (l *lowering) jsonDecodeSchema(
 			}
 		} else if flags&checker.TypeFlagsObject != 0 {
 			if mode == jsonSchemaEncode && isClassInstance(t) {
-				return 0, l.notYet(
+				return 0, lowering.notYet(
 					node,
 					"encodeJson of a class instance is not yet supported; describe the data with an interface",
 				)
 			}
 			if isClassInstance(t) ||
-				l.isLibraryType(t, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Date", "RegExp") ||
-				len(l.checker.GetSignaturesOfType(t, checker.SignatureKindCall)) != 0 ||
-				len(l.checker.GetSignaturesOfType(t, checker.SignatureKindConstruct)) != 0 ||
-				len(l.checker.GetIndexInfosOfType(t)) != 0 && !l.isArrayType(t) && !checker.IsTupleType(t) {
+				lowering.isLibraryType(t, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Date", "RegExp") ||
+				len(lowering.checker.GetSignaturesOfType(t, checker.SignatureKindCall)) != 0 ||
+				len(lowering.checker.GetSignaturesOfType(t, checker.SignatureKindConstruct)) != 0 ||
+				len(lowering.checker.GetIndexInfosOfType(t)) != 0 &&
+					!lowering.isArrayType(t) &&
+					!checker.IsTupleType(t) {
 				return 0, refuse(t)
 			}
 			if checker.IsTupleType(t) {
 				n.Kind = "tuple"
 				n.Of = ir.Object
-				for i, element := range l.checker.GetTypeArguments(t) {
+				for i, element := range lowering.checker.GetTypeArguments(t) {
 					child, visitError := visit(element)
 					if visitError != nil {
 						return 0, visitError
 					}
 					n.Fields = append(n.Fields, ir.JSONDecodeField{Name: strconv.Itoa(i), Node: child})
 				}
-			} else if l.isArrayType(t) {
+			} else if lowering.isArrayType(t) {
 				n.Kind = "array"
 				n.Of = ir.Array
-				child, visitError := visit(l.elementTypeOfArray(t))
+				child, visitError := visit(lowering.elementTypeOfArray(t))
 				if visitError != nil {
 					return 0, visitError
 				}
@@ -319,24 +321,24 @@ func (l *lowering) jsonDecodeSchema(
 			} else {
 				n.Kind = "object"
 				n.Of = ir.Object
-				for _, field := range l.checker.GetPropertiesOfType(t) {
+				for _, field := range lowering.checker.GetPropertiesOfType(t) {
 					if strings.ContainsRune(field.Name, 0) {
 						return 0, refuse(t)
 					}
-					ft := l.checker.GetTypeOfSymbol(field)
+					ft := lowering.checker.GetTypeOfSymbol(field)
 					optional := field.Flags&ast.SymbolFlagsOptional != 0
 					if mode != jsonSchemaBoundary && optional && ft.Flags()&checker.TypeFlagsUnion != 0 {
 						members := []*checker.Type{}
 						for _, member := range ft.Types() {
 							if member.Flags()&checker.TypeFlagsUndefined != 0 {
-								if member == checker.Checker_undefinedType(l.checker) {
+								if member == checker.Checker_undefinedType(lowering.checker) {
 									return 0, refuse(ft)
 								}
 								continue // The checker's missing-property type, not JSON undefined.
 							}
 							members = append(members, member)
 						}
-						ft = l.checker.GetUnionType(members)
+						ft = lowering.checker.GetUnionType(members)
 					}
 					child, visitError := visit(ft)
 					if visitError != nil {
@@ -360,19 +362,19 @@ func (l *lowering) jsonDecodeSchema(
 	schema.Root = root
 	return schema, visitError
 }
-func (l *lowering) decodeJson(node *ast.Node) (ir.Expression, bool, error) {
-	if !l.isPreludeFunction(node.AsCallExpression().Expression, "decodeJson") {
+func (lowering *lowering) decodeJson(node *ast.Node) (ir.Expression, bool, error) {
+	if !lowering.isPreludeFunction(node.AsCallExpression().Expression, "decodeJson") {
 		return nil, false, nil
 	}
-	schema, decodeJsonTypeError := l.decodeJsonType(node)
+	schema, decodeJsonTypeError := lowering.decodeJsonType(node)
 	if decodeJsonTypeError != nil {
 		return nil, true, decodeJsonTypeError
 	}
 	args := node.AsCallExpression().Arguments.Nodes
 	if len(args) != 1 || hasSpread(node) {
-		return nil, true, l.notYet(node, "decodeJson requires one text argument")
+		return nil, true, lowering.notYet(node, "decodeJson requires one text argument")
 	}
-	text, expressionError := l.expression(args[0])
+	text, expressionError := lowering.expression(args[0])
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
@@ -441,7 +443,7 @@ func DecodeJsonSources(callerContext context.Context, program *load.Program) (ma
 
 // A decoder result's readonly value field is always an own plain data value, with no hidden
 // prototype fields. Keys can inspect its actual shape without trusting a structural view.
-func (l *lowering) decodedResultValue(node *ast.Node) bool {
+func (lowering *lowering) decodedResultValue(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
 	if node.Kind != ast.KindPropertyAccessExpression || node.Name().Text() != "value" {
 		return false
@@ -450,7 +452,7 @@ func (l *lowering) decodedResultValue(node *ast.Node) bool {
 	if !ast.IsIdentifier(receiver) {
 		return false
 	}
-	symbol := l.symbol(receiver)
+	symbol := lowering.symbol(receiver)
 	if symbol == nil || len(symbol.Declarations) != 1 {
 		return false
 	}
@@ -464,5 +466,5 @@ func (l *lowering) decodedResultValue(node *ast.Node) bool {
 	}
 	initializer = ast.SkipParentheses(initializer)
 	return initializer.Kind == ast.KindCallExpression &&
-		l.isPreludeFunction(initializer.AsCallExpression().Expression, "decodeJson")
+		lowering.isPreludeFunction(initializer.AsCallExpression().Expression, "decodeJson")
 }

@@ -20,9 +20,9 @@ func typedArrayName(kind ir.Type) string {
 	return "typed array"
 }
 
-func (l *lowering) typedArrayKind(proven *checker.Type) ir.Type {
+func (lowering *lowering) typedArrayKind(proven *checker.Type) ir.Type {
 	for _, kind := range []ir.Type{ir.Uint8Array, ir.Uint16Array, ir.Int32Array, ir.Float64Array} {
-		if l.isLibraryType(proven, typedArrayName(kind)) {
+		if lowering.isLibraryType(proven, typedArrayName(kind)) {
 			return kind
 		}
 	}
@@ -30,11 +30,11 @@ func (l *lowering) typedArrayKind(proven *checker.Type) ir.Type {
 }
 
 // Reject unsupported buffer facilities while their library identity is still visible.
-func (l *lowering) typedArrayUnsupported(node *ast.Node) error {
+func (lowering *lowering) typedArrayUnsupported(node *ast.Node) error {
 	if node.Kind == ast.KindTypeReference {
-		proven := l.checker.GetTypeAtLocation(node)
-		if l.isLibraryType(proven, "SharedArrayBuffer") {
-			return l.notYet(node, "sharing typed arrays across parallel tasks")
+		proven := lowering.checker.GetTypeAtLocation(node)
+		if lowering.isLibraryType(proven, "SharedArrayBuffer") {
+			return lowering.notYet(node, "sharing typed arrays across parallel tasks")
 		}
 		for _, name := range []string{
 			"ArrayBuffer",
@@ -47,24 +47,24 @@ func (l *lowering) typedArrayUnsupported(node *ast.Node) error {
 			"BigInt64Array",
 			"BigUint64Array",
 		} {
-			if l.isLibraryType(proven, name) {
-				return l.notYet(node, "typed array facility "+name)
+			if lowering.isLibraryType(proven, name) {
+				return lowering.notYet(node, "typed array facility "+name)
 			}
 		}
 	}
 	if node.Kind == ast.KindNewExpression {
 		made := node.AsNewExpression()
-		if l.isLibraryGlobal(made.Expression, "SharedArrayBuffer") {
-			return l.notYet(node, "sharing typed arrays across parallel tasks")
+		if lowering.isLibraryGlobal(made.Expression, "SharedArrayBuffer") {
+			return lowering.notYet(node, "sharing typed arrays across parallel tasks")
 		}
-		if l.isLibraryGlobal(made.Expression, "ArrayBuffer") {
+		if lowering.isLibraryGlobal(made.Expression, "ArrayBuffer") {
 			if made.Arguments != nil && len(made.Arguments.Nodes) > 1 {
-				return l.notYet(node, "resizable ArrayBuffer buffers")
+				return lowering.notYet(node, "resizable ArrayBuffer buffers")
 			}
-			return l.notYet(node, "ArrayBuffer")
+			return lowering.notYet(node, "ArrayBuffer")
 		}
-		if l.isLibraryGlobal(made.Expression, "DataView") {
-			return l.notYet(node, "DataView")
+		if lowering.isLibraryGlobal(made.Expression, "DataView") {
+			return lowering.notYet(node, "DataView")
 		}
 		for _, name := range []string{
 			"Int8Array",
@@ -75,17 +75,17 @@ func (l *lowering) typedArrayUnsupported(node *ast.Node) error {
 			"BigInt64Array",
 			"BigUint64Array",
 		} {
-			if l.isLibraryGlobal(made.Expression, name) {
-				return l.notYet(node, "typed array element type "+name)
+			if lowering.isLibraryGlobal(made.Expression, name) {
+				return lowering.notYet(node, "typed array element type "+name)
 			}
 		}
 	}
 	if node.Kind == ast.KindPropertyAccessExpression {
 		access := node.AsPropertyAccessExpression()
-		if kind := l.typedArrayKind(
-			l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression)),
+		if kind := lowering.typedArrayKind(
+			lowering.checker.GetNonNullableType(lowering.checker.GetTypeAtLocation(access.Expression)),
 		); kind != 0 && access.Name().Text() == "buffer" {
-			return l.notYet(node, "constructing a view over another view's buffer")
+			return lowering.notYet(node, "constructing a view over another view's buffer")
 		}
 	}
 	return nil
@@ -93,15 +93,15 @@ func (l *lowering) typedArrayUnsupported(node *ast.Node) error {
 
 func init() { refusalRules.register(1600, "typedArrayUnsupported", (*lowering).typedArrayUnsupported) }
 
-func (l *lowering) typedArrayExpression(node *ast.Node) (ir.Expression, bool, error) {
-	if typedArrayUnsupportedError := l.typedArrayUnsupported(node); typedArrayUnsupportedError != nil {
+func (lowering *lowering) typedArrayExpression(node *ast.Node) (ir.Expression, bool, error) {
+	if typedArrayUnsupportedError := lowering.typedArrayUnsupported(node); typedArrayUnsupportedError != nil {
 		return nil, true, typedArrayUnsupportedError
 	}
 	switch node.Kind {
 	case ast.KindNewExpression:
 		made := node.AsNewExpression()
 		for _, kind := range []ir.Type{ir.Uint8Array, ir.Uint16Array, ir.Int32Array, ir.Float64Array} {
-			if !l.isLibraryGlobal(made.Expression, typedArrayName(kind)) {
+			if !lowering.isLibraryGlobal(made.Expression, typedArrayName(kind)) {
 				continue
 			}
 			var arguments []*ast.Node
@@ -109,7 +109,7 @@ func (l *lowering) typedArrayExpression(node *ast.Node) (ir.Expression, bool, er
 				arguments = made.Arguments.Nodes
 			}
 			if len(arguments) > 1 {
-				return nil, true, l.notYet(node, "constructing a typed array view over a buffer")
+				return nil, true, lowering.notYet(node, "constructing a typed array view over a buffer")
 			}
 			if len(arguments) == 0 {
 				return ir.TypedArrayNew{Of: kind, Source: ir.NumberConstant{Value: 0}}, true, nil
@@ -122,7 +122,7 @@ func (l *lowering) typedArrayExpression(node *ast.Node) (ir.Expression, bool, er
 					FromArray: true,
 				}, true, nil
 			}
-			source, expressionError := l.expression(arguments[0])
+			source, expressionError := lowering.expression(arguments[0])
 			if expressionError != nil {
 				return nil, true, expressionError
 			}
@@ -130,37 +130,42 @@ func (l *lowering) typedArrayExpression(node *ast.Node) (ir.Expression, bool, er
 				return ir.TypedArrayNew{Of: kind, Source: source}, true, nil
 			}
 			if source.Type() != ir.Array {
-				return nil, true, l.notYet(node, "constructing a typed array from other than a length or number[]")
+				return nil, true, lowering.notYet(
+					node,
+					"constructing a typed array from other than a length or number[]",
+				)
 			}
-			element, elementTypeError := l.elementType(arguments[0])
+			element, elementTypeError := lowering.elementType(arguments[0])
 			if elementTypeError != nil {
 				return nil, true, elementTypeError
 			}
 			if element != ir.Number {
-				return nil, true, l.notYet(node, "constructing a typed array from other than number[]")
+				return nil, true, lowering.notYet(node, "constructing a typed array from other than number[]")
 			}
 			return ir.TypedArrayNew{Of: kind, Source: source, FromArray: true}, true, nil
 		}
 	case ast.KindPropertyAccessExpression:
 		access := node.AsPropertyAccessExpression()
-		kind := l.typedArrayKind(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression)))
+		kind := lowering.typedArrayKind(
+			lowering.checker.GetNonNullableType(lowering.checker.GetTypeAtLocation(access.Expression)),
+		)
 		if kind == 0 {
 			break
 		}
 		if access.QuestionDotToken == nil && node.Flags&ast.NodeFlagsOptionalChain != 0 {
-			return nil, true, l.notYet(node, "an optional chain longer than one step")
+			return nil, true, lowering.notYet(node, "an optional chain longer than one step")
 		}
 		member := access.Name().Text()
 		if member != "length" && !(kind == ir.Uint16Array && member == "byteLength") {
-			return nil, true, l.notYet(node, "typed array member "+access.Name().Text())
+			return nil, true, lowering.notYet(node, "typed array member "+access.Name().Text())
 		}
-		array, expressionError := l.expression(access.Expression)
+		array, expressionError := lowering.expression(access.Expression)
 		if expressionError != nil {
 			return nil, true, expressionError
 		}
 		if member == "byteLength" {
 			if access.QuestionDotToken != nil {
-				return nil, true, l.notYet(node, "optional typed array byteLength access")
+				return nil, true, lowering.notYet(node, "optional typed array byteLength access")
 			}
 			return ir.Binary{
 				Operator: ir.Multiply,
@@ -171,36 +176,38 @@ func (l *lowering) typedArrayExpression(node *ast.Node) (ir.Expression, bool, er
 		return ir.Length{Array: array, Optional: access.QuestionDotToken != nil}, true, nil
 	case ast.KindElementAccessExpression:
 		access := node.AsElementAccessExpression()
-		if l.typedArrayKind(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression))) == 0 {
+		if lowering.typedArrayKind(
+			lowering.checker.GetNonNullableType(lowering.checker.GetTypeAtLocation(access.Expression)),
+		) == 0 {
 			break
 		}
 		if access.QuestionDotToken == nil && node.Flags&ast.NodeFlagsOptionalChain != 0 {
-			value, optionalIndexContinuationError := l.optionalIndexContinuation(node)
+			value, optionalIndexContinuationError := lowering.optionalIndexContinuation(node)
 			return value, true, optionalIndexContinuationError
 		}
 		if access.QuestionDotToken != nil {
-			array, expressionError := l.expression(access.Expression)
+			array, expressionError := lowering.expression(access.Expression)
 			if expressionError != nil {
 				return nil, true, expressionError
 			}
-			value, optionalIndexError := l.optionalIndex(node, array)
+			value, optionalIndexError := lowering.optionalIndex(node, array)
 			return value, true, optionalIndexError
 		}
-		array, expressionError := l.expression(access.Expression)
+		array, expressionError := lowering.expression(access.Expression)
 		if expressionError != nil {
 			return nil, true, expressionError
 		}
-		index, expressionError := l.expression(access.ArgumentExpression)
+		index, expressionError := lowering.expression(access.ArgumentExpression)
 		if expressionError != nil {
 			return nil, true, expressionError
 		}
 		if index.Type() != ir.Number {
-			return nil, true, l.notYet(node, "a typed array index that isn't a number")
+			return nil, true, lowering.notYet(node, "a typed array index that isn't a number")
 		}
 		read := ir.Expression(ir.ArrayIndex{Array: array, Index: index, Element: ir.Number})
-		if held, _ := l.representation(
-			l.checker.GetTypeAtLocation(node),
-		); held == ir.Number && !l.acceptsUndefined(node) {
+		if held, _ := lowering.representation(
+			lowering.checker.GetTypeAtLocation(node),
+		); held == ir.Number && !lowering.acceptsUndefined(node) {
 			read = ir.Unwrap{Value: read}
 		}
 		return read, true, nil
@@ -211,11 +218,13 @@ func (l *lowering) typedArrayExpression(node *ast.Node) (ir.Expression, bool, er
 			break
 		}
 		receiver := callee.AsPropertyAccessExpression().Expression
-		kind := l.typedArrayKind(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver)))
+		kind := lowering.typedArrayKind(
+			lowering.checker.GetNonNullableType(lowering.checker.GetTypeAtLocation(receiver)),
+		)
 		if kind == 0 {
 			break
 		}
-		if optionalCallError := l.optionalCall(node); optionalCallError != nil {
+		if optionalCallError := lowering.optionalCall(node); optionalCallError != nil {
 			return nil, true, optionalCallError
 		}
 		method := callee.Name().Text()
@@ -223,49 +232,49 @@ func (l *lowering) typedArrayExpression(node *ast.Node) (ir.Expression, bool, er
 		switch method {
 		case "sort":
 			if len(args) != 0 {
-				return nil, true, l.notYet(node, "typed array sort with a comparator")
+				return nil, true, lowering.notYet(node, "typed array sort with a comparator")
 			}
 		case "fill":
 			if len(args) < 1 || len(args) > 3 {
-				return nil, true, l.notYet(node, "typed array fill argument count")
+				return nil, true, lowering.notYet(node, "typed array fill argument count")
 			}
 		case "set":
 			if len(args) < 1 || len(args) > 2 {
-				return nil, true, l.notYet(node, "typed array set argument count")
+				return nil, true, lowering.notYet(node, "typed array set argument count")
 			}
 		case "subarray":
 			if len(args) > 2 {
-				return nil, true, l.notYet(node, "typed array subarray argument count")
+				return nil, true, lowering.notYet(node, "typed array subarray argument count")
 			}
 		default:
-			return nil, true, l.notYet(node, "typed array method "+method)
+			return nil, true, lowering.notYet(node, "typed array method "+method)
 		}
-		array, expressionError := l.expression(receiver)
+		array, expressionError := lowering.expression(receiver)
 		if expressionError != nil {
 			return nil, true, expressionError
 		}
 		lowered := []ir.Expression{}
 		for index, argument := range args {
-			value, expressionError := l.expression(argument)
+			value, expressionError := lowering.expression(argument)
 			if expressionError != nil {
 				return nil, true, expressionError
 			}
 			if index == 0 && method == "set" {
 				if value.Type() != kind {
-					return nil, true, l.notYet(
+					return nil, true, lowering.notYet(
 						argument,
 						"typed array set from a different element type or a plain array",
 					)
 				}
 			} else if method == "fill" && index == 0 {
 				if value.Type() != ir.Number {
-					return nil, true, l.notYet(argument, "typed array fill with other than a number")
+					return nil, true, lowering.notYet(argument, "typed array fill with other than a number")
 				}
 			} else {
 				// Optional numeric arguments may explicitly be undefined, as well as omitted.
 				value = fit(value, ir.MaybeNumber)
 				if value.Type() != ir.MaybeNumber {
-					return nil, true, l.notYet(argument, "a typed array offset that isn't number or undefined")
+					return nil, true, lowering.notYet(argument, "a typed array offset that isn't number or undefined")
 				}
 			}
 			lowered = append(lowered, value)
@@ -284,56 +293,62 @@ func (l *lowering) typedArrayExpression(node *ast.Node) (ir.Expression, bool, er
 	return nil, false, nil
 }
 
-func (l *lowering) typedArrayWrite(target, valueNode *ast.Node) ([]ir.Statement, bool, error) {
+func (lowering *lowering) typedArrayWrite(target, valueNode *ast.Node) ([]ir.Statement, bool, error) {
 	access := target.AsElementAccessExpression()
-	if l.typedArrayKind(l.checker.GetTypeAtLocation(access.Expression)) == 0 {
+	if lowering.typedArrayKind(lowering.checker.GetTypeAtLocation(access.Expression)) == 0 {
 		return nil, false, nil
 	}
-	array, expressionError := l.expression(access.Expression)
+	array, expressionError := lowering.expression(access.Expression)
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
-	index, expressionError := l.expression(access.ArgumentExpression)
+	index, expressionError := lowering.expression(access.ArgumentExpression)
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
-	value, expressionError := l.expression(valueNode)
+	value, expressionError := lowering.expression(valueNode)
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
 	if index.Type() != ir.Number || value.Type() != ir.Number {
-		return nil, true, l.notYet(target, "a typed array write with nonnumeric index or value")
+		return nil, true, lowering.notYet(target, "a typed array write with nonnumeric index or value")
 	}
 	return []ir.Statement{
-		ir.SetIndex{Array: array, Index: index, Value: value, Element: ir.Number, Site: l.writeSite(access.Expression)},
+		ir.SetIndex{
+			Array:   array,
+			Index:   index,
+			Value:   value,
+			Element: ir.Number,
+			Site:    lowering.writeSite(access.Expression),
+		},
 	}, true, nil
 }
 
-func (l *lowering) typedArrayForOf(node *ast.Node) ([]ir.Statement, bool, error) {
+func (lowering *lowering) typedArrayForOf(node *ast.Node) ([]ir.Statement, bool, error) {
 	statement := node.AsForInOrOfStatement()
-	if l.typedArrayKind(l.checker.GetTypeAtLocation(statement.Expression)) == 0 {
+	if lowering.typedArrayKind(lowering.checker.GetTypeAtLocation(statement.Expression)) == 0 {
 		return nil, false, nil
 	}
 	initializer := statement.Initializer
 	if statement.AwaitModifier != nil {
-		return nil, true, l.notYet(node, "for await over a typed array")
+		return nil, true, lowering.notYet(node, "for await over a typed array")
 	}
 	if initializer.Kind != ast.KindVariableDeclarationList || initializer.Flags&ast.NodeFlagsBlockScoped == 0 {
-		return nil, true, l.notYet(initializer, "a typed array loop without a const or let declaration")
+		return nil, true, lowering.notYet(initializer, "a typed array loop without a const or let declaration")
 	}
 	declarations := initializer.AsVariableDeclarationList().Declarations.Nodes
 	if len(declarations) != 1 || !ast.IsIdentifier(declarations[0].Name()) {
-		return nil, true, l.notYet(initializer, "a typed array loop without a plain element name")
+		return nil, true, lowering.notYet(initializer, "a typed array loop without a plain element name")
 	}
-	array, expressionError := l.expression(statement.Expression)
+	array, expressionError := lowering.expression(statement.Expression)
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
-	local, declareLocalError := l.declareLocal(declarations[0].Name())
+	local, declareLocalError := lowering.declareLocal(declarations[0].Name())
 	if declareLocalError != nil {
 		return nil, true, declareLocalError
 	}
-	body, statementError := l.statement(statement.Statement)
+	body, statementError := lowering.statement(statement.Statement)
 	if statementError != nil {
 		return nil, true, statementError
 	}
@@ -342,7 +357,7 @@ func (l *lowering) typedArrayForOf(node *ast.Node) ([]ir.Statement, bool, error)
 
 // set's ArrayLike<number> parameter is a library protocol, not a kept object view.
 // Its dedicated lowering checks same-kind storage and never passes an object shape.
-func (l *lowering) typedArraySetArgument(node *ast.Node) bool {
+func (lowering *lowering) typedArraySetArgument(node *ast.Node) bool {
 	for node.Parent != nil && node.Parent.Kind == ast.KindParenthesizedExpression {
 		node = node.Parent
 	}
@@ -354,7 +369,9 @@ func (l *lowering) typedArraySetArgument(node *ast.Node) bool {
 	if callee.Kind != ast.KindPropertyAccessExpression || callee.Name().Text() != "set" {
 		return false
 	}
-	return l.typedArrayKind(
-		l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression)),
+	return lowering.typedArrayKind(
+		lowering.checker.GetNonNullableType(
+			lowering.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression),
+		),
 	) != 0
 }

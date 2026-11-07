@@ -22,7 +22,7 @@ type GeneratorNext struct {
 	Of        Type
 }
 
-func (g GeneratorNext) Type() Type { return g.Of }
+func (next GeneratorNext) Type() Type { return next.Of }
 
 // IterableOf is a generator held where a slot typed Iterable<T> or IterableIterator<T> is, an
 // object: the only door from a Generator value to an Object-typed slot (Compiler, on #qk8rztp S2c-1).
@@ -58,8 +58,8 @@ type GeneratorDone struct {
 func (GeneratorDone) Type() Type { return Boolean }
 
 // HasGenerators is a program with a generator function.
-func (p *Program) HasGenerators() bool {
-	for _, function := range p.Functions {
+func (program *Program) HasGenerators() bool {
+	for _, function := range program.Functions {
 		if function.Generator {
 			return true
 		}
@@ -68,6 +68,6 @@ func (p *Program) HasGenerators() bool {
 }
 
 // GeneratorNextMayThrow is a step that can leave a throw pending: one whose body a throw can leave.
-func (p *Program) GeneratorNextMayThrow(next GeneratorNext) bool {
-	return p.Functions[next.Function].ResumeMayThrow
+func (program *Program) GeneratorNextMayThrow(next GeneratorNext) bool {
+	return program.Functions[next.Function].ResumeMayThrow
 }

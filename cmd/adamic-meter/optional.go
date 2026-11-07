@@ -102,15 +102,15 @@ type optionalFS struct {
 	source map[string]string
 }
 
-func (fs *optionalFS) ReadFile(path tspath.RootedFilePath) (string, bool) {
-	if source, ok := fs.source[path.AsString()]; ok {
+func (fileSystem *optionalFS) ReadFile(path tspath.RootedFilePath) (string, bool) {
+	if source, ok := fileSystem.source[path.AsString()]; ok {
 		return source, true
 	}
-	return fs.FS.ReadFile(path)
+	return fileSystem.FS.ReadFile(path)
 }
-func (fs *optionalFS) FileExists(path tspath.RootedFilePath) bool {
-	_, ok := fs.source[path.AsString()]
-	return ok || fs.FS.FileExists(path)
+func (fileSystem *optionalFS) FileExists(path tspath.RootedFilePath) bool {
+	_, ok := fileSystem.source[path.AsString()]
+	return ok || fileSystem.FS.FileExists(path)
 }
 
 type optionalEdit struct {

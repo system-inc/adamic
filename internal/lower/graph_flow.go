@@ -70,17 +70,20 @@ func graphAllocationSites(value reflect.Value, next *int) reflect.Value {
 // is a may-flow proof, not an execution or a choice of one conditional branch.
 // Negative IDs name allocation sites in this IR, independently of fresh checker
 // identities. They select the existing allocation emission without runtime work.
-func (f *cycleFinder) graphFlows() {
-	program := f.l.result
+func (finder *cycleFinder) graphFlows() {
+	program := finder.l.result
 	next := 0
 	program.Main = graphAllocationSites(reflect.ValueOf(program.Main), &next).Interface().([]ir.Statement)
 	for i := range program.Functions {
-		program.Functions[i].Body = graphAllocationSites(reflect.ValueOf(program.Functions[i].Body), &next).Interface().([]ir.Statement)
+		program.Functions[i].Body = graphAllocationSites(
+			reflect.ValueOf(program.Functions[i].Body),
+			&next,
+		).Interface().([]ir.Statement)
 	}
 
 	var graphType func(*checker.Type) bool
 	graphType = func(proven *checker.Type) bool {
-		if proven == nil || f.weak(proven) {
+		if proven == nil || finder.weak(proven) {
 			return false
 		}
 		if program.GraphTypes[int(proven.Id())] {
@@ -106,12 +109,12 @@ func (f *cycleFinder) graphFlows() {
 			queue = append(queue, node)
 		}
 	}
-	for local, proven := range f.l.localTypes {
+	for local, proven := range finder.l.localTypes {
 		if graphType(proven) {
 			demand(local + 1)
 		}
 	}
-	for local, types := range f.l.localAlso {
+	for local, types := range finder.l.localAlso {
 		for _, proven := range types {
 			if graphType(proven) {
 				demand(local + 1)
@@ -121,42 +124,45 @@ func (f *cycleFinder) graphFlows() {
 	pending := []ir.Expression{}
 	// Site retains the checker view of the actual slot being written.
 	slot := func(site int, name string, argument int) bool {
-		if site <= 0 || site > len(f.l.writeSites) {
+		if site <= 0 || site > len(finder.l.writeSites) {
 			return false
 		}
-		holder := f.l.writeSites[site-1].holder
+		holder := finder.l.writeSites[site-1].holder
 		if holder == nil {
 			return false
 		}
 		if name != "" {
-			for _, field := range f.fields(holder) {
-				if f.l.cycleFieldMatches(holder, field.Name, name) {
-					return graphType(f.l.checker.GetTypeOfSymbol(field))
+			for _, field := range finder.fields(holder) {
+				if finder.l.cycleFieldMatches(holder, field.Name, name) {
+					return graphType(finder.l.checker.GetTypeOfSymbol(field))
 				}
 			}
 			return false
 		}
-		args := f.graphArguments(holder)
+		args := finder.graphArguments(holder)
 		return argument < len(args) && graphType(args[argument])
 	}
 	// A counted aggregate can have graph-typed fields/elements. Seed those
 	// initializer slots individually, rather than promoting its whole payload.
 	returns := map[int]*checker.Type{}
-	for symbol, index := range f.l.functions {
-		signatures := f.l.checker.GetSignaturesOfType(f.l.checker.GetTypeOfSymbol(symbol), checker.SignatureKindCall)
+	for symbol, index := range finder.l.functions {
+		signatures := finder.l.checker.GetSignaturesOfType(
+			finder.l.checker.GetTypeOfSymbol(symbol),
+			checker.SignatureKindCall,
+		)
 		if len(signatures) > 0 {
-			returns[index] = f.l.checker.GetReturnTypeOfSignature(signatures[0])
+			returns[index] = finder.l.checker.GetReturnTypeOfSignature(signatures[0])
 		}
 	}
-	for _, closure := range f.l.closureRecords {
-		signatures := f.l.checker.GetSignaturesOfType(closure.proven, checker.SignatureKindCall)
+	for _, closure := range finder.l.closureRecords {
+		signatures := finder.l.checker.GetSignaturesOfType(closure.proven, checker.SignatureKindCall)
 		if len(signatures) > 0 {
-			returns[closure.function] = f.l.checker.GetReturnTypeOfSignature(signatures[0])
+			returns[closure.function] = finder.l.checker.GetReturnTypeOfSignature(signatures[0])
 		}
 	}
 	var members func(ir.Expression, *checker.Type)
 	members = func(expression ir.Expression, proven *checker.Type) {
-		if expression == nil || proven == nil || f.weak(proven) {
+		if expression == nil || proven == nil || finder.weak(proven) {
 			return
 		}
 		if graphType(proven) {
@@ -164,15 +170,15 @@ func (f *cycleFinder) graphFlows() {
 		}
 		switch value := expression.(type) {
 		case ir.ObjectLiteral:
-			for _, field := range f.fields(proven) {
+			for _, field := range finder.fields(proven) {
 				for _, initializer := range value.Fields {
-					if f.l.cycleFieldMatches(proven, field.Name, initializer.Name) {
-						members(initializer.Value, f.l.checker.GetTypeOfSymbol(field))
+					if finder.l.cycleFieldMatches(proven, field.Name, initializer.Name) {
+						members(initializer.Value, finder.l.checker.GetTypeOfSymbol(field))
 					}
 				}
 			}
 		case ir.ArrayLiteral:
-			arguments := f.graphArguments(proven)
+			arguments := finder.graphArguments(proven)
 			if len(arguments) > 0 {
 				for _, element := range value.Elements {
 					members(element, arguments[0])
@@ -187,10 +193,10 @@ func (f *cycleFinder) graphFlows() {
 		walk(body, func(node any) bool {
 			switch value := node.(type) {
 			case ir.Declare:
-				members(value.Value, f.l.localTypes[value.Local])
+				members(value.Value, finder.l.localTypes[value.Local])
 				sources[value.Local+1] = append(sources[value.Local+1], value.Value)
 			case ir.Assign:
-				members(value.Value, f.l.localTypes[value.Local])
+				members(value.Value, finder.l.localTypes[value.Local])
 				sources[value.Local+1] = append(sources[value.Local+1], value.Value)
 			case ir.Return:
 				members(value.Value, returns[function])

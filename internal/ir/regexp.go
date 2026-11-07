@@ -20,20 +20,20 @@ type RegExpCall struct {
 	Replacement *RegExpReplacement
 }
 
-func (r RegExpCall) Type() Type { return r.Returns }
+func (call RegExpCall) Type() Type { return call.Returns }
 
 // GlobalFlagMayThrow says a matchAll or replaceAll can throw Node's TypeError for a RegExp without
 // the g flag (runtime/regexp.c and regexp_replace.c set it on the pending word): unless the pattern
 // is a literal made right there with it, whose flags can't change. Lowering counts the calls that
 // can, the flow graph gives them an exception edge, and the emitter tests the word after each one.
-func (p *Program) GlobalFlagMayThrow(call RegExpCall) bool {
+func (program *Program) GlobalFlagMayThrow(call RegExpCall) bool {
 	// Given no argument there is no RegExp to lack the flag: matchAll() and replaceAll() given nothing
 	// don't throw this, and an IR-built call may carry none (fresh's regexp_test.go).
 	if (call.Method != "matchAll" && call.Method != "replaceAll") || len(call.Arguments) == 0 {
 		return false
 	}
 	made, literal := call.Arguments[0].(RegExpNew)
-	return !literal || !strings.Contains(p.Regexps[made.Index].Flags, "g")
+	return !literal || !strings.Contains(program.Regexps[made.Index].Flags, "g")
 }
 
 // RegExpProperty reads result-array metadata, preserving optional access.
@@ -44,19 +44,19 @@ type RegExpProperty struct {
 	Optional bool
 }
 
-func (r RegExpProperty) Type() Type {
-	if r.Optional {
-		return Maybe(r.Of)
+func (property RegExpProperty) Type() Type {
+	if property.Optional {
+		return Maybe(property.Of)
 	}
-	return r.Of
+	return property.Of
 }
 
 // Null is distinct in JavaScript; nullable references use a null pointer in C.
 type Null struct{ Of Type }
 
-func (n Null) Type() Type {
-	if n.Of != 0 {
-		return n.Of
+func (null Null) Type() Type {
+	if null.Of != 0 {
+		return null.Of
 	}
 	return Object
 }
@@ -76,7 +76,7 @@ type RegExpGroup struct {
 	Optional bool
 }
 
-func (r RegExpGroup) Type() Type { return r.Of }
+func (group RegExpGroup) Type() Type { return group.Of }
 
 // RegExpReplacement describes the closure ABI; Rest is its final array element type.
 type RegExpReplacement struct {

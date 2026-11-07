@@ -10,14 +10,14 @@ import (
 	"strings"
 )
 
-func (l *lowering) regexConstant(node *ast.Node) (ir.Expression, error) {
+func (lowering *lowering) regexConstant(node *ast.Node) (ir.Expression, error) {
 	pattern, flags := "", ""
 	var evaluated []ir.Expression
 	if node.Kind == ast.KindRegularExpressionLiteral {
 		var written bool
 		pattern, flags, written = regexLiteralParts(node)
 		if !written {
-			return nil, l.notYet(node, "a malformed regular expression literal")
+			return nil, lowering.notYet(node, "a malformed regular expression literal")
 		}
 	} else {
 		var args []*ast.Node
@@ -29,24 +29,24 @@ func (l *lowering) regexConstant(node *ast.Node) (ir.Expression, error) {
 			args = node.AsCallExpression().Arguments.Nodes
 		}
 		if len(args) > 2 {
-			return nil, l.notYet(node, "RegExp with more than two arguments")
+			return nil, lowering.notYet(node, "RegExp with more than two arguments")
 		}
 		if len(args) > 0 {
 			var ok bool
-			pattern, ok = l.constantPattern(args[0], 0)
+			pattern, ok = lowering.constantPattern(args[0], 0)
 			if !ok {
-				return nil, l.notYet(args[0], "RegExp with a nonconstant pattern")
+				return nil, lowering.notYet(args[0], "RegExp with a nonconstant pattern")
 			}
 		}
 		if len(args) > 1 {
 			var ok bool
-			flags, ok = l.constantPattern(args[1], 0)
+			flags, ok = lowering.constantPattern(args[1], 0)
 			if !ok {
-				return nil, l.notYet(args[1], "RegExp with nonconstant flags")
+				return nil, lowering.notYet(args[1], "RegExp with nonconstant flags")
 			}
 		}
 		for _, arg := range args {
-			value, expressionError := l.expression(arg)
+			value, expressionError := lowering.expression(arg)
 			if expressionError != nil {
 				return nil, expressionError
 			}
@@ -55,9 +55,9 @@ func (l *lowering) regexConstant(node *ast.Node) (ir.Expression, error) {
 	}
 	program, err := regex.Compile(pattern, flags)
 	if err != nil {
-		return nil, fmt.Errorf("%s: invalid RegExp: %w", l.program.Where(node), err)
+		return nil, fmt.Errorf("%s: invalid RegExp: %w", lowering.program.Where(node), err)
 	}
-	index := len(l.result.Regexps)
+	index := len(lowering.result.Regexps)
 	declarations, err := program.NativeDeclarations(fmt.Sprintf("adamic_regex_%d", index))
 	if err != nil {
 		if input, literal := regexLiteralTestInput(node); literal {
@@ -70,10 +70,10 @@ func (l *lowering) regexConstant(node *ast.Node) (ir.Expression, error) {
 		}
 	}
 	if err != nil {
-		return nil, l.notYet(node, err.Error())
+		return nil, lowering.notYet(node, err.Error())
 	}
-	l.result.Regexps = append(
-		l.result.Regexps,
+	lowering.result.Regexps = append(
+		lowering.result.Regexps,
 		ir.RegExpProgram{Pattern: pattern, Flags: flags, Declarations: declarations},
 	)
 	source := escapeRegexSource(pattern, flags)
@@ -83,7 +83,12 @@ func (l *lowering) regexConstant(node *ast.Node) (ir.Expression, error) {
 			ordered += string(flag)
 		}
 	}
-	return ir.RegExpNew{Index: index, Source: l.constant(source), Flags: l.constant(ordered), Arguments: evaluated}, nil
+	return ir.RegExpNew{
+		Index:     index,
+		Source:    lowering.constant(source),
+		Flags:     lowering.constant(ordered),
+		Arguments: evaluated,
+	}, nil
 }
 
 // regexLiteralParts is a RegExp literal's pattern, between its slashes, and its flags, after the last one.
@@ -96,7 +101,7 @@ func regexLiteralParts(node *ast.Node) (string, string, bool) {
 	return text[1:end], text[end+1:], true
 }
 
-func (l *lowering) constantPattern(node *ast.Node, depth int) (string, bool) {
+func (lowering *lowering) constantPattern(node *ast.Node, depth int) (string, bool) {
 	if depth > 32 {
 		return "", false
 	}
@@ -105,24 +110,24 @@ func (l *lowering) constantPattern(node *ast.Node, depth int) (string, bool) {
 	case ast.KindStringLiteral, ast.KindNoSubstitutionTemplateLiteral:
 		return node.Text(), true
 	case ast.KindIdentifier:
-		if l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 {
+		if lowering.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 {
 			return "", true
 		}
-		symbol := l.symbol(node)
+		symbol := lowering.symbol(node)
 		if symbol != nil && len(symbol.Declarations) == 1 {
 			declaration := symbol.Declarations[0]
 			if declaration.Kind == ast.KindVariableDeclaration &&
 				declaration.Parent != nil &&
 				declaration.Parent.Flags&ast.NodeFlagsConst != 0 &&
 				declaration.AsVariableDeclaration().Initializer != nil {
-				return l.constantPattern(declaration.AsVariableDeclaration().Initializer, depth+1)
+				return lowering.constantPattern(declaration.AsVariableDeclaration().Initializer, depth+1)
 			}
 		}
 	case ast.KindBinaryExpression:
 		b := node.AsBinaryExpression()
 		if b.OperatorToken.Kind == ast.KindPlusToken {
-			a, ok := l.constantPattern(b.Left, depth+1)
-			c, other := l.constantPattern(b.Right, depth+1)
+			a, ok := lowering.constantPattern(b.Left, depth+1)
+			c, other := lowering.constantPattern(b.Right, depth+1)
 			return joinPatternStrings(a, c), ok && other
 		}
 	}
@@ -146,10 +151,10 @@ func joinPatternStrings(left, right string) string {
 	return left[:len(left)-3] + string(point) + right[3:]
 }
 
-func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
+func (lowering *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
-	if l.isLibraryGlobal(callee, "RegExp") {
-		value, regexConstantError := l.regexConstant(node)
+	if lowering.isLibraryGlobal(callee, "RegExp") {
+		value, regexConstantError := lowering.regexConstant(node)
 		return value, true, regexConstantError
 	}
 	if callee.Kind != ast.KindPropertyAccessExpression {
@@ -157,33 +162,36 @@ func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
 	}
 	receiver := callee.AsPropertyAccessExpression().Expression
 	name := callee.Name().Text()
-	proven := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver))
+	proven := lowering.checker.GetNonNullableType(lowering.checker.GetTypeAtLocation(receiver))
 	args := node.AsCallExpression().Arguments.Nodes
 	method := name
 	result := ir.Type(0)
 	switch {
-	case l.isLibraryType(proven, "RegExp"):
+	case lowering.isLibraryType(proven, "RegExp"):
 		if name == "test" {
 			result = ir.Boolean
 		} else if name == "exec" {
 			result = ir.Array
 		} else {
-			return nil, true, l.notYet(node, "RegExp."+name)
+			return nil, true, lowering.notYet(node, "RegExp."+name)
 		}
 		if len(args) != 1 {
-			return nil, true, l.notYet(node, "RegExp."+name+" without exactly one string")
+			return nil, true, lowering.notYet(node, "RegExp."+name+" without exactly one string")
 		}
-	case l.isLibraryType(proven, "RegExpStringIterator"):
+	case lowering.isLibraryType(proven, "RegExpStringIterator"):
 		if name != "next" || len(args) != 0 {
-			return nil, true, l.notYet(node, "RegExp iterator."+name)
+			return nil, true, lowering.notYet(node, "RegExp iterator."+name)
 		}
 		method = "next"
 		result = ir.Object
 	default:
-		of, _ := l.representation(proven)
+		of, _ := lowering.representation(proven)
 		if of != ir.String ||
 			len(args) == 0 ||
-			!l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(args[0])), "RegExp") {
+			!lowering.isLibraryType(
+				lowering.checker.GetNonNullableType(lowering.checker.GetTypeAtLocation(args[0])),
+				"RegExp",
+			) {
 			return nil, false, nil
 		}
 		switch name {
@@ -196,33 +204,33 @@ func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
 		case "replace", "replaceAll":
 			result = ir.String
 		default:
-			return nil, true, l.notYet(node, "String."+name+" with a RegExp")
+			return nil, true, lowering.notYet(node, "String."+name+" with a RegExp")
 		}
 	}
-	value, expressionError := l.expression(receiver)
+	value, expressionError := lowering.expression(receiver)
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
 	if callee.AsPropertyAccessExpression().QuestionDotToken != nil {
-		return nil, true, l.notYet(node, "an optional RegExp call")
+		return nil, true, lowering.notYet(node, "an optional RegExp call")
 	}
 	var arguments []ir.Expression
 	for _, arg := range args {
-		v, expressionError := l.expression(arg)
+		v, expressionError := lowering.expression(arg)
 		if expressionError != nil {
 			return nil, true, expressionError
 		}
 		arguments = append(arguments, v)
 	}
 	if (name == "exec" || name == "test") && arguments[0].Type() != ir.String {
-		return nil, true, l.notYet(node, "RegExp input other than a string")
+		return nil, true, lowering.notYet(node, "RegExp input other than a string")
 	}
 	if name == "replace" || name == "replaceAll" {
 		if len(arguments) == 2 && arguments[1].Type() == ir.Closure {
-			return l.regexReplacement(node, value, arguments, name, args[1])
+			return lowering.regexReplacement(node, value, arguments, name, args[1])
 		}
 		if len(arguments) != 2 || arguments[1].Type() != ir.String {
-			return nil, true, l.notYet(node, "regex replacement other than a string")
+			return nil, true, lowering.notYet(node, "regex replacement other than a string")
 		}
 	}
 	if name == "split" {
@@ -242,7 +250,7 @@ func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
 			}
 		}
 		if len(arguments) != 2 || arguments[1].Type() != ir.Number {
-			return nil, true, l.notYet(node, "regex split limit other than a number")
+			return nil, true, lowering.notYet(node, "regex split limit other than a number")
 		}
 	}
 	return ir.RegExpCall{Value: value, Arguments: arguments, Method: method, Returns: result}, true, nil
@@ -306,9 +314,9 @@ func escapeRegexSource(pattern, flags string) string {
 	return result.String()
 }
 
-func (l *lowering) regexGroups(node *ast.Node) bool {
-	proven := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node))
-	for _, info := range l.checker.GetIndexInfosOfType(proven) {
+func (lowering *lowering) regexGroups(node *ast.Node) bool {
+	proven := lowering.checker.GetNonNullableType(lowering.checker.GetTypeAtLocation(node))
+	for _, info := range lowering.checker.GetIndexInfosOfType(proven) {
 		if declaration := info.Declaration(); declaration != nil {
 			file := ast.GetSourceFileOfNode(declaration)
 			if load.IsLibrary(file) && strings.Contains(file.AsSourceFile().FileName().AsString(), ".regexp.") {
@@ -319,9 +327,9 @@ func (l *lowering) regexGroups(node *ast.Node) bool {
 	return false
 }
 
-func (l *lowering) regexUnsupportedUse(node *ast.Node) error {
-	proven := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node))
-	if !l.isLibraryType(proven, "RegExp", "RegExpStringIterator") && !l.regexGroups(node) {
+func (lowering *lowering) regexUnsupportedUse(node *ast.Node) error {
+	proven := lowering.checker.GetNonNullableType(lowering.checker.GetTypeAtLocation(node))
+	if !lowering.isLibraryType(proven, "RegExp", "RegExpStringIterator") && !lowering.regexGroups(node) {
 		return nil
 	}
 	parent := node.Parent
@@ -329,7 +337,7 @@ func (l *lowering) regexUnsupportedUse(node *ast.Node) error {
 		return nil
 	}
 	if parent.Kind == ast.KindSpreadAssignment {
-		return l.notYet(parent, "spreading a RegExp or its iterator")
+		return lowering.notYet(parent, "spreading a RegExp or its iterator")
 	}
 	if parent.Kind == ast.KindPropertyAccessExpression &&
 		parent.Parent != nil &&
@@ -337,8 +345,8 @@ func (l *lowering) regexUnsupportedUse(node *ast.Node) error {
 		assignment := parent.Parent.AsBinaryExpression()
 		if assignment.Left == parent &&
 			assignment.OperatorToken.Kind == ast.KindEqualsToken &&
-			(parent.Name().Text() != "lastIndex" || l.regexGroups(node)) {
-			return l.notYet(parent, "overriding a RegExp or iterator property")
+			(parent.Name().Text() != "lastIndex" || lowering.regexGroups(node)) {
+			return lowering.notYet(parent, "overriding a RegExp or iterator property")
 		}
 	}
 	return nil
@@ -346,19 +354,19 @@ func (l *lowering) regexUnsupportedUse(node *ast.Node) error {
 
 // These library fields have explicit native storage. Other library members remain inherited
 // prototype reads, so recognizing regex metadata must not admit arbitrary own-field loads.
-func (l *lowering) regexRuntimeProperty(receiver *ast.Node, name string) bool {
-	if l.regexGroups(receiver) {
+func (lowering *lowering) regexRuntimeProperty(receiver *ast.Node, name string) bool {
+	if lowering.regexGroups(receiver) {
 		// Named-group dictionaries have dynamic own keys; regexGroups lowering checks their value type.
 		return true
 	}
-	proven := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver))
+	proven := lowering.checker.GetNonNullableType(lowering.checker.GetTypeAtLocation(receiver))
 	switch {
-	case l.isLibraryType(proven, "RegExp"):
+	case lowering.isLibraryType(proven, "RegExp"):
 		switch name {
 		case "lastIndex", "source", "flags", "global", "ignoreCase", "multiline", "unicode", "sticky", "hasIndices", "unicodeSets", "dotAll":
 			return true
 		}
-	case l.isLibraryType(proven, "RegExpExecArray", "RegExpMatchArray", "RegExpIndicesArray"):
+	case lowering.isLibraryType(proven, "RegExpExecArray", "RegExpMatchArray", "RegExpIndicesArray"):
 		return name == "index" || name == "input" || name == "groups" || name == "indices"
 	}
 	return false

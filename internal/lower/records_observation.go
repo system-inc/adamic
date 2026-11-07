@@ -8,7 +8,7 @@ import (
 
 // A plain dictionary read has no getter effects. Its receiver and key still run,
 // but a value discarded before any observation need not fetch an inherited member.
-func (l *lowering) recordReadDiscarded(node *ast.Node) bool {
+func (lowering *lowering) recordReadDiscarded(node *ast.Node) bool {
 	at := node
 	for at.Parent != nil && at.Parent.Kind == ast.KindParenthesizedExpression {
 		at = at.Parent
@@ -28,7 +28,7 @@ func (l *lowering) recordReadDiscarded(node *ast.Node) bool {
 		declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
 		return false
 	}
-	symbol := l.checker.GetSymbolAtLocation(declaration.Name())
+	symbol := lowering.checker.GetSymbolAtLocation(declaration.Name())
 	if symbol == nil || ast.GetCombinedModifierFlags(declaration)&ast.ModifierFlagsExport != 0 {
 		return false
 	}
@@ -45,7 +45,7 @@ func (l *lowering) recordReadDiscarded(node *ast.Node) bool {
 		for i, sibling := range statements {
 			if sibling == statement && i+1 < len(statements) && statements[i+1].Kind == ast.KindIfStatement {
 				check := statements[i+1].AsIfStatement()
-				if l.recordOwnCheck(check.Expression, node) {
+				if lowering.recordOwnCheck(check.Expression, node) {
 					guarded = check.ThenStatement
 				}
 			}
@@ -54,7 +54,7 @@ func (l *lowering) recordReadDiscarded(node *ast.Node) bool {
 	safe := true
 	var visit ast.Visitor
 	visit = func(use *ast.Node) bool {
-		if ast.IsIdentifier(use) && use != declaration.Name() && l.checker.GetSymbolAtLocation(use) == symbol {
+		if ast.IsIdentifier(use) && use != declaration.Name() && lowering.checker.GetSymbolAtLocation(use) == symbol {
 			inside := false
 			for parent := use.Parent; parent != nil; parent = parent.Parent {
 				if parent == guarded {
@@ -75,7 +75,7 @@ func (l *lowering) recordReadDiscarded(node *ast.Node) bool {
 // A guard can also dominate the read itself. Walk only evaluation paths with
 // no intervening side effect: the first statement, a return or binding, and the
 // first argument of a call whose callee is a plain identifier or console.
-func (l *lowering) recordReadOwnGuarded(node *ast.Node) bool {
+func (lowering *lowering) recordReadOwnGuarded(node *ast.Node) bool {
 	at := node
 	for at.Parent != nil {
 		parent := at.Parent
@@ -86,7 +86,7 @@ func (l *lowering) recordReadOwnGuarded(node *ast.Node) bool {
 			callee := ast.SkipParentheses(call.Expression)
 			if len(call.Arguments.Nodes) == 0 ||
 				call.Arguments.Nodes[0] != at ||
-				(!ast.IsIdentifier(callee) && !l.isConsole(callee)) {
+				(!ast.IsIdentifier(callee) && !lowering.isConsole(callee)) {
 				return false
 			}
 		case ast.KindReturnStatement, ast.KindExpressionStatement:
@@ -106,7 +106,7 @@ func (l *lowering) recordReadOwnGuarded(node *ast.Node) bool {
 			}
 		case ast.KindIfStatement:
 			check := parent.AsIfStatement()
-			return check.ThenStatement == at && l.recordOwnCheck(check.Expression, node)
+			return check.ThenStatement == at && lowering.recordOwnCheck(check.Expression, node)
 		default:
 			return false
 		}
@@ -115,7 +115,7 @@ func (l *lowering) recordReadOwnGuarded(node *ast.Node) bool {
 	return false
 }
 
-func (l *lowering) recordOwnCheck(condition, read *ast.Node) bool {
+func (lowering *lowering) recordOwnCheck(condition, read *ast.Node) bool {
 	condition = ast.SkipParentheses(condition)
 	if condition.Kind != ast.KindCallExpression || read.Kind != ast.KindElementAccessExpression {
 		return false
@@ -124,8 +124,8 @@ func (l *lowering) recordOwnCheck(condition, read *ast.Node) bool {
 	callee := ast.SkipParentheses(call.Expression)
 	ordinary := callee.Kind == ast.KindPropertyAccessExpression &&
 		callee.Name().Text() == "hasOwn" &&
-		l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Object")
-	if (!ordinary && l.detachedOwnCallReceiver(condition) == nil) || len(call.Arguments.Nodes) != 2 {
+		lowering.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Object")
+	if (!ordinary && lowering.detachedOwnCallReceiver(condition) == nil) || len(call.Arguments.Nodes) != 2 {
 		return false
 	}
 	access := read.AsElementAccessExpression()
@@ -134,7 +134,7 @@ func (l *lowering) recordOwnCheck(condition, read *ast.Node) bool {
 		// Reading an identifier itself cannot call or mutate anything between the
 		// snapshot and the immediately following library ownership check.
 		if ast.IsIdentifier(a) && ast.IsIdentifier(b) {
-			return l.checker.GetSymbolAtLocation(a) == l.checker.GetSymbolAtLocation(b)
+			return lowering.checker.GetSymbolAtLocation(a) == lowering.checker.GetSymbolAtLocation(b)
 		}
 		literal := func(n *ast.Node) bool {
 			return n.Kind == ast.KindStringLiteral ||
@@ -146,8 +146,8 @@ func (l *lowering) recordOwnCheck(condition, read *ast.Node) bool {
 	return same(call.Arguments.Nodes[0], access.Expression) && same(call.Arguments.Nodes[1], access.ArgumentExpression)
 }
 
-func (l *lowering) recordOwnRead(record, key ir.Expression, element ir.Type) ir.Expression {
-	b := l.libraryArrayBuilder([]ir.Expression{record, key})
+func (lowering *lowering) recordOwnRead(record, key ir.Expression, element ir.Type) ir.Expression {
+	b := lowering.libraryArrayBuilder([]ir.Expression{record, key})
 	r, k := b.read(b.parameters[0]), b.read(b.parameters[1])
 	of := ir.Maybe(element)
 	return b.finish("record_own_read", ir.Conditional{
@@ -166,7 +166,7 @@ func (l *lowering) recordOwnRead(record, key ir.Expression, element ir.Type) ir.
 // Strict equality with a present primitive cannot observe any Object.prototype
 // value: those members are functions or the prototype object. This proves the
 // compareDataObjects scalar bucket without guessing at any-valued object reads.
-func (l *lowering) recordScalarComparison(node *ast.Node) (ir.Expression, bool, error) {
+func (lowering *lowering) recordScalarComparison(node *ast.Node) (ir.Expression, bool, error) {
 	if node.Kind != ast.KindBinaryExpression {
 		return nil, false, nil
 	}
@@ -177,22 +177,22 @@ func (l *lowering) recordScalarComparison(node *ast.Node) (ir.Expression, bool, 
 	}
 	access, other := comparison.Left, comparison.Right
 	reversed := false
-	if !l.recordTarget(access) {
+	if !lowering.recordTarget(access) {
 		access, other, reversed = other, access, true
 	}
-	if !l.recordTarget(access) {
+	if !lowering.recordTarget(access) {
 		return nil, false, nil
 	}
-	proven := l.checker.GetTypeAtLocation(other)
+	proven := lowering.checker.GetTypeAtLocation(other)
 	if proven.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike) == 0 ||
-		l.includesUndefined(proven) {
+		lowering.includesUndefined(proven) {
 		return nil, false, nil
 	}
-	r, k, element, recordAccessError := l.recordAccess(access, false)
+	r, k, element, recordAccessError := lowering.recordAccess(access, false)
 	if recordAccessError != nil {
 		return nil, true, recordAccessError
 	}
-	value, expressionError := l.expression(other)
+	value, expressionError := lowering.expression(other)
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
@@ -200,7 +200,7 @@ func (l *lowering) recordScalarComparison(node *ast.Node) (ir.Expression, bool, 
 	if reversed {
 		arguments = []ir.Expression{value, r, k}
 	}
-	b := l.libraryArrayBuilder(arguments)
+	b := lowering.libraryArrayBuilder(arguments)
 	offset := 0
 	if reversed {
 		offset = 1
@@ -224,7 +224,7 @@ func (l *lowering) recordScalarComparison(node *ast.Node) (ir.Expression, bool, 
 	} else {
 		otherRead = b.read(b.declare("other", value))
 	}
-	result, combineError := l.combine(node, operator, b.read(observed), otherRead)
+	result, combineError := lowering.combine(node, operator, b.read(observed), otherRead)
 	if combineError != nil {
 		return nil, true, combineError
 	}

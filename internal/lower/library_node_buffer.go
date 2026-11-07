@@ -34,11 +34,11 @@ func nodeBufferModule(symbol *ast.Symbol) string {
 	}
 	return ""
 }
-func (l *lowering) nodeBufferSymbol(node *ast.Node, name string) bool {
-	symbol := l.symbol(node)
+func (lowering *lowering) nodeBufferSymbol(node *ast.Node, name string) bool {
+	symbol := lowering.symbol(node)
 	return symbol != nil && symbol.Name == name && nodeBufferModule(symbol) != ""
 }
-func (l *lowering) nodeBufferType(proven *checker.Type, name string) bool {
+func (lowering *lowering) nodeBufferType(proven *checker.Type, name string) bool {
 	if proven == nil {
 		return false
 	}
@@ -47,10 +47,12 @@ func (l *lowering) nodeBufferType(proven *checker.Type, name string) bool {
 }
 
 // nodeBufferAccessRefusal checks a member read that isn't called.
-func (l *lowering) nodeBufferAccessRefusal(node *ast.Node) error {
+func (lowering *lowering) nodeBufferAccessRefusal(node *ast.Node) error {
 	if (node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression) &&
 		!called(node) {
-		if nodeBufferUnsupportedUseError := l.nodeBufferUnsupportedUse(node); nodeBufferUnsupportedUseError != nil {
+		if nodeBufferUnsupportedUseError := lowering.nodeBufferUnsupportedUse(
+			node,
+		); nodeBufferUnsupportedUseError != nil {
 			return nodeBufferUnsupportedUseError
 		}
 	}
@@ -63,32 +65,32 @@ func init() {
 
 // Reading a host member as a value must not fall through to ordinary object
 // slots. Hash's private runtime layout is not its inherited stream layout.
-func (l *lowering) nodeBufferUnsupportedUse(node *ast.Node) error {
+func (lowering *lowering) nodeBufferUnsupportedUse(node *ast.Node) error {
 	node = ast.SkipParentheses(node)
 	if node.Kind == ast.KindPropertyAccessExpression {
 		access := node.AsPropertyAccessExpression()
 		name := node.Name().Text()
-		receiver := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression))
+		receiver := lowering.checker.GetNonNullableType(lowering.checker.GetTypeAtLocation(access.Expression))
 		switch {
-		case l.nodeBufferSymbol(access.Expression, "Buffer"):
-			return l.notYet(node, "Buffer."+name+" read as a value")
-		case l.nodeBufferType(receiver, "Buffer"):
+		case lowering.nodeBufferSymbol(access.Expression, "Buffer"):
+			return lowering.notYet(node, "Buffer."+name+" read as a value")
+		case lowering.nodeBufferType(receiver, "Buffer"):
 			if name != "length" {
-				return l.notYet(node, "Buffer."+name+" outside the census value reads")
+				return lowering.notYet(node, "Buffer."+name+" outside the census value reads")
 			}
-		case l.nodeBufferType(receiver, "Hash"):
-			return l.notYet(node, "Hash."+name+" outside the census value reads")
+		case lowering.nodeBufferType(receiver, "Hash"):
+			return lowering.notYet(node, "Hash."+name+" outside the census value reads")
 		}
 	}
 	if node.Kind == ast.KindElementAccessExpression {
 		access := node.AsElementAccessExpression()
 		member := ast.SkipParentheses(access.ArgumentExpression)
-		receiver := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression))
+		receiver := lowering.checker.GetNonNullableType(lowering.checker.GetTypeAtLocation(access.Expression))
 		if member.Kind == ast.KindStringLiteral {
 			for _, name := range []string{"Buffer", "Hash"} {
-				if l.nodeBufferType(receiver, name) ||
-					(name == "Buffer" && l.nodeBufferSymbol(access.Expression, name)) {
-					return l.notYet(node, name+"."+member.Text()+" accessed through a string index")
+				if lowering.nodeBufferType(receiver, name) ||
+					(name == "Buffer" && lowering.nodeBufferSymbol(access.Expression, name)) {
+					return lowering.notYet(node, name+"."+member.Text()+" accessed through a string index")
 				}
 			}
 		}
@@ -96,7 +98,7 @@ func (l *lowering) nodeBufferUnsupportedUse(node *ast.Node) error {
 	if node.Kind == ast.KindIdentifier ||
 		node.Kind == ast.KindPropertyAccessExpression ||
 		node.Kind == ast.KindElementAccessExpression {
-		symbol := l.symbol(node)
+		symbol := lowering.symbol(node)
 		if module := nodeBufferModule(symbol); module != "" {
 			if symbol.Name == "Buffer" &&
 				node.Parent != nil &&
@@ -105,18 +107,18 @@ func (l *lowering) nodeBufferUnsupportedUse(node *ast.Node) error {
 				called(node.Parent) {
 				return nil
 			}
-			return l.notYet(node, module+"."+symbol.Name+" read as a value")
+			return lowering.notYet(node, module+"."+symbol.Name+" read as a value")
 		}
 	}
 	if node.Kind == ast.KindNewExpression {
-		symbol := l.symbol(node.AsNewExpression().Expression)
+		symbol := lowering.symbol(node.AsNewExpression().Expression)
 		if module := nodeBufferModule(symbol); module != "" {
-			return l.notYet(node, module+"."+symbol.Name+" outside the host census")
+			return lowering.notYet(node, module+"."+symbol.Name+" outside the host census")
 		}
 	}
 	return nil
 }
-func (l *lowering) nodeBufferReadArgument(node *ast.Node) bool {
+func (lowering *lowering) nodeBufferReadArgument(node *ast.Node) bool {
 	outer := node
 	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
 		outer = outer.Parent
@@ -131,18 +133,18 @@ func (l *lowering) nodeBufferReadArgument(node *ast.Node) bool {
 		call.Arguments.Nodes[0] == outer &&
 		callee.Kind == ast.KindPropertyAccessExpression &&
 		callee.Name().Text() == "from" &&
-		l.nodeBufferSymbol(callee.AsPropertyAccessExpression().Expression, "Buffer")
+		lowering.nodeBufferSymbol(callee.AsPropertyAccessExpression().Expression, "Buffer")
 }
-func (l *lowering) nodeBufferView(from, to *checker.Type) bool {
+func (lowering *lowering) nodeBufferView(from, to *checker.Type) bool {
 	for _, name := range []string{"Buffer", "Hash"} {
-		if l.nodeBufferType(from, name) != l.nodeBufferType(to, name) {
+		if lowering.nodeBufferType(from, name) != lowering.nodeBufferType(to, name) {
 			return false
 		}
 	}
 	return true
 }
 
-func (l *lowering) nodeBufferEncoding(node *ast.Node, fallback int) (int, error) {
+func (lowering *lowering) nodeBufferEncoding(node *ast.Node, fallback int) (int, error) {
 	if node == nil {
 		return fallback, nil
 	}
@@ -159,58 +161,58 @@ func (l *lowering) nodeBufferEncoding(node *ast.Node, fallback int) (int, error)
 			return 3, nil
 		}
 	}
-	return 0, l.notYet(node, "a Buffer encoding other than a census literal")
+	return 0, lowering.notYet(node, "a Buffer encoding other than a census literal")
 }
-func (l *lowering) libraryNodeBuffer(node *ast.Node) (ir.Expression, bool, error) {
+func (lowering *lowering) libraryNodeBuffer(node *ast.Node) (ir.Expression, bool, error) {
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
 	args := call.Arguments.Nodes
 	operation, encoding, result := "", 0, ir.Array
 	var receiver *ast.Node
-	if l.nodeBufferSymbol(callee, "createHash") {
+	if lowering.nodeBufferSymbol(callee, "createHash") {
 		if len(args) != 1 || ast.SkipParentheses(args[0]).Kind != ast.KindStringLiteral || args[0].Text() != "sha256" {
-			return nil, true, l.notYet(node, "crypto.createHash outside the census's sha256 algorithm")
+			return nil, true, lowering.notYet(node, "crypto.createHash outside the census's sha256 algorithm")
 		}
 		return ir.NodeBufferCall{Function: "hash_new", Returns: ir.Object}, true, nil
 	}
 	if callee.Kind != ast.KindPropertyAccessExpression {
-		if symbol := l.symbol(callee); nodeBufferModule(symbol) != "" {
-			return nil, true, l.notYet(node, nodeBufferModule(symbol)+"."+symbol.Name+" outside the host census")
+		if symbol := lowering.symbol(callee); nodeBufferModule(symbol) != "" {
+			return nil, true, lowering.notYet(node, nodeBufferModule(symbol)+"."+symbol.Name+" outside the host census")
 		}
 		return nil, false, nil
 	}
 	access := callee.AsPropertyAccessExpression()
 	name := callee.Name().Text()
 	switch {
-	case l.nodeBufferSymbol(access.Expression, "Buffer"):
+	case lowering.nodeBufferSymbol(access.Expression, "Buffer"):
 		if name != "from" || len(args) < 1 || len(args) > 2 {
-			return nil, true, l.notYet(node, "Buffer."+name+" outside from(input, encoding)")
+			return nil, true, lowering.notYet(node, "Buffer."+name+" outside from(input, encoding)")
 		}
 		operation = "buffer_from"
-	case l.nodeBufferType(l.checker.GetTypeAtLocation(access.Expression), "Buffer"):
+	case lowering.nodeBufferType(lowering.checker.GetTypeAtLocation(access.Expression), "Buffer"):
 		if name != "toString" || len(args) > 3 {
-			return nil, true, l.notYet(node, "Buffer."+name+" outside the host census")
+			return nil, true, lowering.notYet(node, "Buffer."+name+" outside the host census")
 		}
 		operation, result, receiver = "buffer_string", ir.String, access.Expression
-	case l.nodeBufferType(l.checker.GetTypeAtLocation(access.Expression), "Hash"):
+	case lowering.nodeBufferType(lowering.checker.GetTypeAtLocation(access.Expression), "Hash"):
 		receiver = access.Expression
 		switch name {
 		case "update":
 			if len(args) < 1 || len(args) > 2 {
-				return nil, true, l.notYet(node, "Hash.update with these arguments")
+				return nil, true, lowering.notYet(node, "Hash.update with these arguments")
 			}
 			operation, result = "hash_update", ir.Object
 		case "digest":
 			if len(args) != 1 || args[0].Kind != ast.KindStringLiteral || args[0].Text() != "hex" {
-				return nil, true, l.notYet(node, "Hash.digest outside hex")
+				return nil, true, lowering.notYet(node, "Hash.digest outside hex")
 			}
 			operation, result, args = "hash_digest", ir.String, nil
 		default:
-			return nil, true, l.notYet(node, "Hash."+name+" outside the host census")
+			return nil, true, lowering.notYet(node, "Hash."+name+" outside the host census")
 		}
 	default:
-		if symbol := l.symbol(callee); nodeBufferModule(symbol) != "" {
-			return nil, true, l.notYet(node, nodeBufferModule(symbol)+"."+symbol.Name+" outside the host census")
+		if symbol := lowering.symbol(callee); nodeBufferModule(symbol) != "" {
+			return nil, true, lowering.notYet(node, nodeBufferModule(symbol)+"."+symbol.Name+" outside the host census")
 		}
 		return nil, false, nil
 	}
@@ -223,12 +225,15 @@ func (l *lowering) libraryNodeBuffer(node *ast.Node) (ir.Expression, bool, error
 		encodingNode = args[1]
 	}
 	var nodeBufferEncodingError error
-	if encoding, nodeBufferEncodingError = l.nodeBufferEncoding(encodingNode, 0); nodeBufferEncodingError != nil {
+	if encoding, nodeBufferEncodingError = lowering.nodeBufferEncoding(
+		encodingNode,
+		0,
+	); nodeBufferEncodingError != nil {
 		return nil, true, nodeBufferEncodingError
 	}
 	values := []ir.Expression{}
 	if receiver != nil {
-		value, expressionError := l.expression(receiver)
+		value, expressionError := lowering.expression(receiver)
 		if expressionError != nil {
 			return nil, true, expressionError
 		}
@@ -242,36 +247,36 @@ func (l *lowering) libraryNodeBuffer(node *ast.Node) (ir.Expression, bool, error
 			}
 			if len(args) > index {
 				var expressionError error
-				value, expressionError = l.expression(args[index])
+				value, expressionError = lowering.expression(args[index])
 				if expressionError != nil {
 					return nil, true, expressionError
 				}
 				if value.Type() != ir.Number {
-					return nil, true, l.notYet(args[index], "a non-number Buffer byte offset")
+					return nil, true, lowering.notYet(args[index], "a non-number Buffer byte offset")
 				}
 			}
 			values = append(values, value)
 		}
 	} else {
 		if operation != "hash_digest" {
-			value, expressionError := l.expression(args[0])
+			value, expressionError := lowering.expression(args[0])
 			if expressionError != nil {
 				return nil, true, expressionError
 			}
 			if operation == "buffer_from" && value.Type() == ir.Array {
 				if len(args) != 1 {
-					return nil, true, l.notYet(node, "Buffer.from(array) with an encoding")
+					return nil, true, lowering.notYet(node, "Buffer.from(array) with an encoding")
 				}
-				element, elementTypeError := l.elementType(args[0])
+				element, elementTypeError := lowering.elementType(args[0])
 				if elementTypeError != nil {
 					return nil, true, elementTypeError
 				}
 				if element != ir.Number {
-					return nil, true, l.notYet(node, "Buffer.from with non-number elements")
+					return nil, true, lowering.notYet(node, "Buffer.from with non-number elements")
 				}
 				operation = "buffer_copy"
 			} else if value.Type() != ir.String {
-				return nil, true, l.notYet(node, "Buffer or Hash input other than a string or numeric array")
+				return nil, true, lowering.notYet(node, "Buffer or Hash input other than a string or numeric array")
 			}
 			values = append(values, value)
 		}

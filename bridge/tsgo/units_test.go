@@ -93,37 +93,37 @@ type bridgeRun struct {
 	ctx                 context.Context
 }
 
-func (r *bridgeRun) product(name string) string {
-	r.t.Helper()
-	return bridgeProduct(r.t, r.repository, name)
+func (run *bridgeRun) product(name string) string {
+	run.t.Helper()
+	return bridgeProduct(run.t, run.repository, name)
 }
-func (r *bridgeRun) sample() string {
-	return filepath.Join(r.repository, "bridge/tsgo/testdata/sample.ts")
+func (run *bridgeRun) sample() string {
+	return filepath.Join(run.repository, "bridge/tsgo/testdata/sample.ts")
 }
-func (r *bridgeRun) config() string {
-	return filepath.Join(r.repository, "bridge/tsgo/testdata/tsconfig.json")
+func (run *bridgeRun) config() string {
+	return filepath.Join(run.repository, "bridge/tsgo/testdata/tsconfig.json")
 }
-func (r *bridgeRun) command(binary string, arguments ...string) *exec.Cmd {
-	command := exec.CommandContext(r.ctx, binary, arguments...)
-	command.Dir = r.repository
+func (run *bridgeRun) command(binary string, arguments ...string) *exec.Cmd {
+	command := exec.CommandContext(run.ctx, binary, arguments...)
+	command.Dir = run.repository
 	return command
 }
-func (r *bridgeRun) run(name string, command *exec.Cmd) ([]byte, error) {
-	r.t.Helper()
+func (run *bridgeRun) run(name string, command *exec.Cmd) ([]byte, error) {
+	run.t.Helper()
 	output, combinedOutputError := command.CombinedOutput()
-	if write := os.WriteFile(filepath.Join(r.scratch, name+".log"), output, 0o644); write != nil {
-		r.t.Fatal(write)
+	if write := os.WriteFile(filepath.Join(run.scratch, name+".log"), output, 0o644); write != nil {
+		run.t.Fatal(write)
 	}
-	if r.ctx.Err() != nil {
-		r.t.Fatalf("bridge subprocess exceeded five minutes: %v", r.ctx.Err())
+	if run.ctx.Err() != nil {
+		run.t.Fatalf("bridge subprocess exceeded five minutes: %v", run.ctx.Err())
 	}
 	return output, combinedOutputError
 }
-func (r *bridgeRun) mustRun(name string, command *exec.Cmd) []byte {
-	r.t.Helper()
-	output, runError := r.run(name, command)
+func (run *bridgeRun) mustRun(name string, command *exec.Cmd) []byte {
+	run.t.Helper()
+	output, runError := run.run(name, command)
 	if runError != nil {
-		r.t.Fatalf("%s: %v\n%s", name, runError, output)
+		run.t.Fatalf("%s: %v\n%s", name, runError, output)
 	}
 	return output
 }
@@ -145,9 +145,9 @@ func bridgePositions(text []byte) []int {
 	}
 	return positions
 }
-func (r *bridgeRun) arguments(file string) []string {
-	r.t.Helper()
-	roots := bridgeRoots(r.repository)
+func (run *bridgeRun) arguments(file string) []string {
+	run.t.Helper()
+	roots := bridgeRoots(run.repository)
 	var queries strings.Builder
 	count := 0
 	for _, path := range roots {
@@ -156,7 +156,7 @@ func (r *bridgeRun) arguments(file string) []string {
 		}
 		text, readError := os.ReadFile(path)
 		if readError != nil {
-			r.t.Fatal(readError)
+			run.t.Fatal(readError)
 		}
 		for _, position := range bridgePositions(text) {
 			fmt.Fprintf(&queries, "%s\t%d\n", path, position)
@@ -164,34 +164,34 @@ func (r *bridgeRun) arguments(file string) []string {
 		}
 	}
 	if count == 0 {
-		r.t.Fatal("no queries in the active corpus piece")
+		run.t.Fatal("no queries in the active corpus piece")
 	}
-	manifest := filepath.Join(r.scratch, "queries.tsv")
+	manifest := filepath.Join(run.scratch, "queries.tsv")
 	if writeError := os.WriteFile(manifest, []byte(queries.String()), 0o644); writeError != nil {
-		r.t.Fatal(writeError)
+		run.t.Fatal(writeError)
 	}
-	r.t.Logf("queries: %s, %d positions, %d unchanged program roots", file, count, len(roots))
-	return append([]string{r.config(), manifest}, roots...)
+	run.t.Logf("queries: %s, %d positions, %d unchanged program roots", file, count, len(roots))
+	return append([]string{run.config(), manifest}, roots...)
 }
-func (r *bridgeRun) answers(name, binary string, arguments []string, timing bool) []byte {
-	r.t.Helper()
-	command := r.command(binary, arguments...)
+func (run *bridgeRun) answers(name, binary string, arguments []string, timing bool) []byte {
+	run.t.Helper()
+	command := run.command(binary, arguments...)
 	if timing {
 		command.Env = append(os.Environ(), "ADAMIC_TSGO_TIMING=1")
 	}
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
 	stdout, outputError := command.Output()
-	if write := os.WriteFile(filepath.Join(r.scratch, name+".log"), stderr.Bytes(), 0o644); write != nil {
-		r.t.Fatal(write)
+	if write := os.WriteFile(filepath.Join(run.scratch, name+".log"), stderr.Bytes(), 0o644); write != nil {
+		run.t.Fatal(write)
 	}
 	if outputError != nil {
-		r.t.Fatalf("%s: %v\n%s", name, outputError, stderr.String())
+		run.t.Fatalf("%s: %v\n%s", name, outputError, stderr.String())
 	}
 	if timing {
-		r.t.Logf("%s: %s", name, strings.TrimSpace(stderr.String()))
+		run.t.Logf("%s: %s", name, strings.TrimSpace(stderr.String()))
 	} else if stderr.Len() != 0 {
-		r.t.Fatalf("%s sanitizer stderr: %s", name, stderr.String())
+		run.t.Fatalf("%s sanitizer stderr: %s", name, stderr.String())
 	}
 	return stdout
 }

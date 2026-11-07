@@ -10,19 +10,19 @@ import (
 // A binding freezes its origin only when no write in the closed program replaces it.
 // Indexed shape mutations select record storage and invalidate this allocation proof.
 // Follow imported symbols and annotated aliases, but do not infer origins for parameters or calls.
-func (l *lowering) enumerationProven(node *ast.Node, element *checker.Type, depth int) bool {
+func (lowering *lowering) enumerationProven(node *ast.Node, element *checker.Type, depth int) bool {
 	if node == nil || depth > 32 {
 		return false
 	}
 	node = ast.SkipParentheses(node)
-	if l.enumObject(node) != nil {
+	if lowering.enumObject(node) != nil {
 		return true
 	}
 	if node.Kind == ast.KindAsExpression && ast.IsConstTypeReference(node.AsAsExpression().Type) {
-		return l.enumerationProven(node.AsAsExpression().Expression, element, depth+1)
+		return lowering.enumerationProven(node.AsAsExpression().Expression, element, depth+1)
 	}
 	if node.Kind == ast.KindObjectLiteralExpression {
-		if l.entriesRecordLiteral(node) {
+		if lowering.entriesRecordLiteral(node) {
 			return false
 		}
 		for _, property := range node.AsObjectLiteralExpression().Properties.Nodes {
@@ -30,19 +30,19 @@ func (l *lowering) enumerationProven(node *ast.Node, element *checker.Type, dept
 				return false
 			}
 			if property.Kind == ast.KindPropertyAssignment &&
-				l.uninitializedInitializer(property.AsPropertyAssignment().Initializer) {
+				lowering.uninitializedInitializer(property.AsPropertyAssignment().Initializer) {
 				return false
 			}
-			name, known := l.methodName(property)
+			name, known := lowering.methodName(property)
 			if !known || name == "__proto__" {
 				return false
 			}
 		}
-		for _, field := range l.checker.GetPropertiesOfType(l.checker.GetTypeAtLocation(node)) {
-			if field.Flags&ast.SymbolFlagsOptional != 0 || (!l.enumAssignable(
-				l.checker.GetTypeOfSymbol(field),
+		for _, field := range lowering.checker.GetPropertiesOfType(lowering.checker.GetTypeAtLocation(node)) {
+			if field.Flags&ast.SymbolFlagsOptional != 0 || (!lowering.enumAssignable(
+				lowering.checker.GetTypeOfSymbol(field),
 				element,
-			) || !l.checker.IsTypeAssignableTo(l.checker.GetTypeOfSymbol(field), element)) {
+			) || !lowering.checker.IsTypeAssignableTo(lowering.checker.GetTypeOfSymbol(field), element)) {
 				return false
 			}
 		}
@@ -51,7 +51,7 @@ func (l *lowering) enumerationProven(node *ast.Node, element *checker.Type, dept
 	if !ast.IsIdentifier(node) {
 		return false
 	}
-	symbol := l.symbol(node)
+	symbol := lowering.symbol(node)
 	if symbol == nil || len(symbol.Declarations) != 1 {
 		return false
 	}
@@ -59,14 +59,14 @@ func (l *lowering) enumerationProven(node *ast.Node, element *checker.Type, dept
 	if declaration.Kind != ast.KindVariableDeclaration {
 		return false
 	}
-	if l.enumerationBindingWritten(symbol) {
+	if lowering.enumerationBindingWritten(symbol) {
 		return false
 	}
-	return l.enumerationProven(declaration.AsVariableDeclaration().Initializer, element, depth+1)
+	return lowering.enumerationProven(declaration.AsVariableDeclaration().Initializer, element, depth+1)
 }
 
-func (l *lowering) enumerationBindingWritten(symbol *ast.Symbol) bool {
-	modules, moduleOrderError := l.moduleOrder(l.program.Files()[0])
+func (lowering *lowering) enumerationBindingWritten(symbol *ast.Symbol) bool {
+	modules, moduleOrderError := lowering.moduleOrder(lowering.program.Files()[0])
 	if moduleOrderError != nil {
 		return true
 	}
@@ -90,7 +90,7 @@ func (l *lowering) enumerationBindingWritten(symbol *ast.Symbol) bool {
 		if target != nil {
 			var inspect ast.Visitor
 			inspect = func(part *ast.Node) bool {
-				if ast.IsIdentifier(part) && l.symbol(part) == symbol {
+				if ast.IsIdentifier(part) && lowering.symbol(part) == symbol {
 					written = true
 				}
 				return part.ForEachChild(inspect)
@@ -107,8 +107,8 @@ func (l *lowering) enumerationBindingWritten(symbol *ast.Symbol) bool {
 
 // Native reflection currently represents own data descriptors only. Do not let an
 // erased accessor origin become a slot read; accessor and symbol layouts are refused.
-func (l *lowering) enumerationDescriptors(where *ast.Node, checked bool) error {
-	modules, moduleOrderError := l.moduleOrder(l.program.Files()[0])
+func (lowering *lowering) enumerationDescriptors(where *ast.Node, checked bool) error {
+	modules, moduleOrderError := lowering.moduleOrder(lowering.program.Files()[0])
 	if moduleOrderError != nil {
 		return moduleOrderError
 	}
@@ -117,7 +117,7 @@ func (l *lowering) enumerationDescriptors(where *ast.Node, checked bool) error {
 	visit = func(node *ast.Node) bool {
 		if node.Kind == ast.KindGetAccessor || node.Kind == ast.KindSetAccessor {
 			failure = &Refused{
-				Where: l.program.Where(where),
+				Where: lowering.program.Where(where),
 				What:  "Object enumeration with getter or accessor descriptors",
 				Fix:   "use own data properties for this first reflection implementation",
 			}
@@ -126,22 +126,30 @@ func (l *lowering) enumerationDescriptors(where *ast.Node, checked bool) error {
 			for _, property := range node.AsObjectLiteralExpression().Properties.Nodes {
 				if property.Name() != nil &&
 					property.Name().Kind == ast.KindComputedPropertyName &&
-					l.checker.GetTypeAtLocation(
+					lowering.checker.GetTypeAtLocation(
 						property.Name().AsComputedPropertyName().Expression,
 					).Flags()&checker.TypeFlagsESSymbolLike != 0 {
 					failure = &Refused{
-						Where: l.program.Where(where),
+						Where: lowering.program.Where(where),
 						What:  "Object enumeration with symbol keys",
 						Fix:   "use string-keyed own data properties for this first reflection implementation",
 					}
 				}
-				name, known := l.methodName(property)
+				name, known := lowering.methodName(property)
 				if known && (strings.ContainsRune(name, 0) || strings.HasPrefix(name, "#") || name == iteratorSlot) {
-					failure = l.notYet(where, "Object enumeration of a literal with reserved or symbol key storage")
+					failure = lowering.notYet(
+						where,
+						"Object enumeration of a literal with reserved or symbol key storage",
+					)
 				}
 				if property.Kind == ast.KindSpreadAssignment &&
-					l.includesUndefined(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression)) {
-					failure = l.notYet(where, "Object enumeration of a nullable spread with synthetic absent slots")
+					lowering.includesUndefined(
+						lowering.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression),
+					) {
+					failure = lowering.notYet(
+						where,
+						"Object enumeration of a nullable spread with synthetic absent slots",
+					)
 				}
 			}
 		}

@@ -185,8 +185,8 @@ func TestATestReadSetsMarkerNeverWritesThroughALink(test *testing.T) {
 }
 
 // stat is a stat of name that found it.
-func (r *rig) stat(pid int, name string) {
-	r.add(pid, `newfstatat(AT_FDCWD, %q, {st_mode=S_IFREG|0644, st_size=7, ...}, 0) = 0`, r.path(name))
+func (rig *rig) stat(pid int, name string) {
+	rig.add(pid, `newfstatat(AT_FDCWD, %q, {st_mode=S_IFREG|0644, st_size=7, ...}, 0) = 0`, rig.path(name))
 }
 
 // testSet is the test read set the settlement recorded: its key and its entries, newest first.

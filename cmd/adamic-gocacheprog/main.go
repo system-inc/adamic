@@ -98,10 +98,10 @@ func newCache() (*cache, error) {
 	return c, nil
 }
 
-func (c *cache) log(format string, args ...any) {
-	c.logMu.Lock()
-	defer c.logMu.Unlock()
-	fmt.Fprintf(c.stderr, "adamic-gocacheprog: "+format+"\n", args...)
+func (cache *cache) log(format string, args ...any) {
+	cache.logMu.Lock()
+	defer cache.logMu.Unlock()
+	fmt.Fprintf(cache.stderr, "adamic-gocacheprog: "+format+"\n", args...)
 }
 
 func digest(b []byte) string { h := sha256.Sum256(b); return hex.EncodeToString(h[:]) }
@@ -129,18 +129,20 @@ func atomicFile(path string, b []byte) error {
 	return os.Rename(f.Name(), path)
 }
 
-func (c *cache) blobPath(hash string) string      { return filepath.Join(c.dir, "blobs", hash) }
-func (c *cache) refPath(ns, action string) string { return filepath.Join(c.dir, "refs", ns, action) }
-func (c *cache) check(b []byte, hash string) bool {
+func (cache *cache) blobPath(hash string) string { return filepath.Join(cache.dir, "blobs", hash) }
+func (cache *cache) refPath(ns, action string) string {
+	return filepath.Join(cache.dir, "refs", ns, action)
+}
+func (cache *cache) check(b []byte, hash string) bool {
 	if actual := digest(b); actual != hash {
-		c.log("cache poisoning: blob %s has sha256 %s", hash, actual)
+		cache.log("cache poisoning: blob %s has sha256 %s", hash, actual)
 		return false
 	}
 	return true
 }
 
-func (c *cache) readRemote(path string, limit int64) ([]byte, bool) {
-	res, getError := c.client.Get(c.store + path)
+func (cache *cache) readRemote(path string, limit int64) ([]byte, bool) {
+	res, getError := cache.client.Get(cache.store + path)
 	if getError != nil {
 		return nil, false
 	}
@@ -154,12 +156,12 @@ func (c *cache) readRemote(path string, limit int64) ([]byte, bool) {
 
 // poisoned distinguishes corruption from an ordinary miss: once corruption is
 // detected, the entire get misses instead of falling through to another ref.
-func (c *cache) blob(hash string, limit int64) (body []byte, ok, poisoned bool) {
+func (cache *cache) blob(hash string, limit int64) (body []byte, ok, poisoned bool) {
 	if !validHash(hash) {
 		return nil, false, false
 	}
-	if b, readError := os.ReadFile(c.blobPath(hash)); readError == nil {
-		if !c.check(b, hash) {
+	if b, readError := os.ReadFile(cache.blobPath(hash)); readError == nil {
+		if !cache.check(b, hash) {
 			return nil, false, true
 		}
 		if int64(len(b)) <= limit {
@@ -167,49 +169,49 @@ func (c *cache) blob(hash string, limit int64) (body []byte, ok, poisoned bool) 
 		}
 		return nil, false, false
 	}
-	if c.store == "" {
+	if cache.store == "" {
 		return nil, false, false
 	}
-	b, ok := c.readRemote("/blobs/"+hash, limit)
+	b, ok := cache.readRemote("/blobs/"+hash, limit)
 	if int64(len(b)) > limit {
-		c.log("cache poisoning: blob %s exceeds size limit %d", hash, limit)
+		cache.log("cache poisoning: blob %s exceeds size limit %d", hash, limit)
 		return nil, false, true
 	}
 	if !ok {
 		return nil, false, false
 	}
-	if !c.check(b, hash) {
+	if !cache.check(b, hash) {
 		return nil, false, true
 	}
 	return b, true, false
 }
 
-func (c *cache) get(req request) response {
+func (cache *cache) get(req request) response {
 	out := response{ID: req.ID, Miss: true}
 	if len(req.ActionID) != sha256.Size {
 		return out
 	}
 	action := hex.EncodeToString(req.ActionID)
 	namespaces := []string{"gocache"}
-	if c.namespace != "gocache" {
+	if cache.namespace != "gocache" {
 		namespaces = append(namespaces, "gocache-candidate")
 	}
 	// Check all permitted local entries before making any network request.
 	for _, remote := range []bool{false, true} {
-		if remote && c.store == "" {
+		if remote && cache.store == "" {
 			break
 		}
 		for _, ns := range namespaces {
 			var ref []byte
 			if remote {
 				var ok bool
-				ref, ok = c.readRemote("/refs/"+ns+"/"+action, 256)
+				ref, ok = cache.readRemote("/refs/"+ns+"/"+action, 256)
 				if !ok {
 					continue
 				}
 			} else {
 				var readError error
-				ref, readError = os.ReadFile(c.refPath(ns, action))
+				ref, readError = os.ReadFile(cache.refPath(ns, action))
 				if readError != nil {
 					continue
 				}
@@ -222,13 +224,13 @@ func (c *cache) get(req request) response {
 			var ok bool
 			if remote {
 				var poisoned bool
-				rb, ok, poisoned = c.blob(hash, 4096)
+				rb, ok, poisoned = cache.blob(hash, 4096)
 				if poisoned {
 					return out
 				}
 			} else {
-				rb, _ = os.ReadFile(c.blobPath(hash))
-				if rb != nil && !c.check(rb, hash) {
+				rb, _ = os.ReadFile(cache.blobPath(hash))
+				if rb != nil && !cache.check(rb, hash) {
 					return out
 				}
 				ok = rb != nil
@@ -248,13 +250,13 @@ func (c *cache) get(req request) response {
 			var body []byte
 			if remote {
 				var poisoned bool
-				body, ok, poisoned = c.blob(r.SHA256, r.Size)
+				body, ok, poisoned = cache.blob(r.SHA256, r.Size)
 				if poisoned {
 					return out
 				}
 			} else {
-				body, _ = os.ReadFile(c.blobPath(r.SHA256))
-				if body != nil && !c.check(body, r.SHA256) {
+				body, _ = os.ReadFile(cache.blobPath(r.SHA256))
+				if body != nil && !cache.check(body, r.SHA256) {
 					return out
 				}
 				ok = body != nil
@@ -263,29 +265,29 @@ func (c *cache) get(req request) response {
 				continue
 			}
 			if remote {
-				if atomicFileError := atomicFile(c.blobPath(r.SHA256), body); atomicFileError != nil {
+				if atomicFileError := atomicFile(cache.blobPath(r.SHA256), body); atomicFileError != nil {
 					continue
 				}
-				if atomicFileError := atomicFile(c.blobPath(hash), rb); atomicFileError == nil {
-					_ = atomicFile(c.refPath(ns, action), []byte(hash))
+				if atomicFileError := atomicFile(cache.blobPath(hash), rb); atomicFileError == nil {
+					_ = atomicFile(cache.refPath(ns, action), []byte(hash))
 				}
 			}
-			return response{ID: req.ID, OutputID: r.OutputID, Size: r.Size, DiskPath: c.blobPath(r.SHA256)}
+			return response{ID: req.ID, OutputID: r.OutputID, Size: r.Size, DiskPath: cache.blobPath(r.SHA256)}
 		}
 	}
 	return out
 }
 
-func (c *cache) upload(path string, b []byte) bool {
-	req, newRequestError := http.NewRequest(http.MethodPut, c.writer+path, bytes.NewReader(b))
+func (cache *cache) upload(path string, b []byte) bool {
+	req, newRequestError := http.NewRequest(http.MethodPut, cache.writer+path, bytes.NewReader(b))
 	if newRequestError != nil {
-		c.log("write: %v", newRequestError)
+		cache.log("write: %v", newRequestError)
 		return false
 	}
-	req.Header.Set("Authorization", "Bearer "+c.token)
-	res, requestError := c.client.Do(req)
+	req.Header.Set("Authorization", "Bearer "+cache.token)
+	res, requestError := cache.client.Do(req)
 	if requestError != nil {
-		c.log("write: %v", requestError)
+		cache.log("write: %v", requestError)
 		return false
 	}
 	defer res.Body.Close()
@@ -294,14 +296,14 @@ func (c *cache) upload(path string, b []byte) bool {
 		return true
 	}
 	if res.StatusCode == 409 && strings.HasPrefix(path, "/refs/") {
-		c.log("ref conflict: %s already holds a different record; keeping local entry", path)
+		cache.log("ref conflict: %s already holds a different record; keeping local entry", path)
 	} else {
-		c.log("write %s: HTTP %d", path, res.StatusCode)
+		cache.log("write %s: HTTP %d", path, res.StatusCode)
 	}
 	return false
 }
 
-func (c *cache) put(req request, body []byte) response {
+func (cache *cache) put(req request, body []byte) response {
 	out := response{ID: req.ID}
 	hash := digest(body)
 	if len(req.ActionID) != sha256.Size ||
@@ -314,18 +316,18 @@ func (c *cache) put(req request, body []byte) response {
 	rb, _ := json.Marshal(r)
 	rh := digest(rb)
 	action := hex.EncodeToString(req.ActionID)
-	if atomicFileError := atomicFile(c.blobPath(hash), body); atomicFileError != nil {
+	if atomicFileError := atomicFile(cache.blobPath(hash), body); atomicFileError != nil {
 		out.Err = atomicFileError.Error()
 		return out
 	}
-	out.DiskPath = c.blobPath(hash)
-	if atomicFileError := atomicFile(c.blobPath(rh), rb); atomicFileError != nil {
-		c.log("local record: %v", atomicFileError)
-	} else if atomicFileError = atomicFile(c.refPath(c.namespace, action), []byte(rh)); atomicFileError != nil {
-		c.log("local ref: %v", atomicFileError)
+	out.DiskPath = cache.blobPath(hash)
+	if atomicFileError := atomicFile(cache.blobPath(rh), rb); atomicFileError != nil {
+		cache.log("local record: %v", atomicFileError)
+	} else if atomicFileError = atomicFile(cache.refPath(cache.namespace, action), []byte(rh)); atomicFileError != nil {
+		cache.log("local ref: %v", atomicFileError)
 	}
-	if c.store != "" && c.token != "" && c.upload("/blobs/"+hash, body) && c.upload("/blobs/"+rh, rb) {
-		c.upload("/refs/"+c.namespace+"/"+action, []byte(rh))
+	if cache.store != "" && cache.token != "" && cache.upload("/blobs/"+hash, body) && cache.upload("/blobs/"+rh, rb) {
+		cache.upload("/refs/"+cache.namespace+"/"+action, []byte(rh))
 	}
 	return out
 }

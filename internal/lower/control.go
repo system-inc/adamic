@@ -6,23 +6,23 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-func (l *lowering) ifStatement(node *ast.Node) ([]ir.Statement, error) {
+func (lowering *lowering) ifStatement(node *ast.Node) ([]ir.Statement, error) {
 	statement := node.AsIfStatement()
-	condition, conditionError := l.condition(statement.Expression)
+	condition, conditionError := lowering.condition(statement.Expression)
 	if conditionError != nil {
 		return nil, conditionError
 	}
 	var then []ir.Statement
 	var statementError error
-	if symbol := l.hostBindingGuard(statement.Expression); symbol != nil {
+	if symbol := lowering.hostBindingGuard(statement.Expression); symbol != nil {
 		// A guard proves an Absent host binding missing, so the then-branch is dead (host_bindings.go).
-		then = []ir.Statement{l.hostBindingDeadRead(symbol)}
-	} else if then, statementError = l.statement(statement.ThenStatement); statementError != nil {
+		then = []ir.Statement{lowering.hostBindingDeadRead(symbol)}
+	} else if then, statementError = lowering.statement(statement.ThenStatement); statementError != nil {
 		return nil, statementError
 	}
 	lowered := ir.If{Condition: condition, Then: then}
 	if statement.ElseStatement != nil {
-		if lowered.Else, statementError = l.statement(statement.ElseStatement); statementError != nil {
+		if lowered.Else, statementError = lowering.statement(statement.ElseStatement); statementError != nil {
 			return nil, statementError
 		}
 	}
@@ -31,16 +31,16 @@ func (l *lowering) ifStatement(node *ast.Node) ([]ir.Statement, error) {
 
 // forStatement lowers for (initializer; condition; incrementor) to a loop inside a block, so the
 // loop's own declarations are scoped to it.
-func (l *lowering) forStatement(node *ast.Node) ([]ir.Statement, error) {
+func (lowering *lowering) forStatement(node *ast.Node) ([]ir.Statement, error) {
 	statement := node.AsForStatement()
 	block := ir.Block{}
 	if initializer := statement.Initializer; initializer != nil {
 		var err error
 		var initial []ir.Statement
 		if initializer.Kind == ast.KindVariableDeclarationList {
-			initial, err = l.variables(initializer)
+			initial, err = lowering.variables(initializer)
 		} else {
-			initial, err = l.expressionStatement(initializer)
+			initial, err = lowering.expressionStatement(initializer)
 		}
 		if err != nil {
 			return nil, err
@@ -54,20 +54,20 @@ func (l *lowering) forStatement(node *ast.Node) ([]ir.Statement, error) {
 		}
 	}
 	if statement.Condition != nil {
-		condition, conditionError := l.condition(statement.Condition)
+		condition, conditionError := lowering.condition(statement.Condition)
 		if conditionError != nil {
 			return nil, conditionError
 		}
 		loop.Condition = condition
 	}
 	if statement.Incrementor != nil {
-		update, expressionStatementError := l.expressionStatement(statement.Incrementor)
+		update, expressionStatementError := lowering.expressionStatement(statement.Incrementor)
 		if expressionStatementError != nil {
 			return nil, expressionStatementError
 		}
 		loop.Update = update
 	}
-	body, statementError := l.statement(statement.Statement)
+	body, statementError := lowering.statement(statement.Statement)
 	if statementError != nil {
 		return nil, statementError
 	}
@@ -77,7 +77,7 @@ func (l *lowering) forStatement(node *ast.Node) ([]ir.Statement, error) {
 }
 
 // whileStatement lowers while and do...while.
-func (l *lowering) whileStatement(node *ast.Node) ([]ir.Statement, error) {
+func (lowering *lowering) whileStatement(node *ast.Node) ([]ir.Statement, error) {
 	var expression, body *ast.Node
 	checkAfter := node.Kind == ast.KindDoStatement
 	if checkAfter {
@@ -85,11 +85,11 @@ func (l *lowering) whileStatement(node *ast.Node) ([]ir.Statement, error) {
 	} else {
 		expression, body = node.AsWhileStatement().Expression, node.AsWhileStatement().Statement
 	}
-	condition, conditionError := l.condition(expression)
+	condition, conditionError := lowering.condition(expression)
 	if conditionError != nil {
 		return nil, conditionError
 	}
-	loweredBody, statementError := l.statement(body)
+	loweredBody, statementError := lowering.statement(body)
 	if statementError != nil {
 		return nil, statementError
 	}
@@ -97,11 +97,11 @@ func (l *lowering) whileStatement(node *ast.Node) ([]ir.Statement, error) {
 }
 
 // condition applies JavaScript ToBoolean to one evaluation of its operand.
-func (l *lowering) condition(node *ast.Node) (ir.Expression, error) {
-	if test, handled, methodPresenceConditionError := l.methodPresenceCondition(node); handled {
+func (lowering *lowering) condition(node *ast.Node) (ir.Expression, error) {
+	if test, handled, methodPresenceConditionError := lowering.methodPresenceCondition(node); handled {
 		return test, methodPresenceConditionError
 	}
-	value, expressionError := l.expression(node)
+	value, expressionError := lowering.expression(node)
 	if expressionError != nil {
 		return nil, expressionError
 	}

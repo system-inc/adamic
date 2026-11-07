@@ -10,37 +10,37 @@ import (
 
 // Unsupported contracts are descriptors, never certificates. Their users must
 // refuse at a demanded read. Cast admission does not inspect their payloads.
-func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewContractID, error) {
-	if l.result.ViewContractTypes == nil {
-		l.result.ViewContractTypes = map[int]ir.ViewContractID{}
+func (lowering *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewContractID, error) {
+	if lowering.result.ViewContractTypes == nil {
+		lowering.result.ViewContractTypes = map[int]ir.ViewContractID{}
 	}
-	if id := l.result.ViewContractTypes[int(target.Id())]; id != 0 {
+	if id := lowering.result.ViewContractTypes[int(target.Id())]; id != 0 {
 		return id, nil
 	}
-	family := l.unsupportedViewFamily(target)
-	if of, known := l.viewRepresentation(
+	family := lowering.unsupportedViewFamily(target)
+	if of, known := lowering.viewRepresentation(
 		target,
 	); target.Flags()&checker.TypeFlagsUnion != 0 && (!interfaceScalar(target) || !known || of == ir.Union) {
 		return viewUnionContractHook(
-			l,
+			lowering,
 			node,
 			target,
-			func(child *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, child) },
+			func(child *checker.Type) (ir.ViewContractID, error) { return lowering.viewContract(node, child) },
 		)
 	}
-	if l.isArrayType(target) || checker.IsTupleType(target) {
-		return l.unionAggregateContract(node, target)
+	if lowering.isArrayType(target) || checker.IsTupleType(target) {
+		return lowering.unionAggregateContract(node, target)
 	}
-	if l.callableViewContract(target) {
+	if lowering.callableViewContract(target) {
 		family = "callable"
 	}
 	if family == "" {
 		if target.Flags()&checker.TypeFlagsIntersection != 0 {
-			l.intersectionViewDepth++
+			lowering.intersectionViewDepth++
 		}
-		id, strictViewContractError := l.strictViewContract(node, target)
+		id, strictViewContractError := lowering.strictViewContract(node, target)
 		if target.Flags()&checker.TypeFlagsIntersection != 0 {
-			l.intersectionViewDepth--
+			lowering.intersectionViewDepth--
 		}
 		if strictViewContractError == nil {
 			return id, nil
@@ -48,23 +48,27 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 		family = "representation conversion"
 	}
 	// A failing family adapter may have reserved its recursive id already.
-	id := l.result.ViewContractTypes[int(target.Id())]
-	descriptor := ir.ViewContract{Kind: ir.ViewUnknown, Name: l.checker.TypeToString(target), Unsupported: family}
+	id := lowering.result.ViewContractTypes[int(target.Id())]
+	descriptor := ir.ViewContract{
+		Kind:        ir.ViewUnknown,
+		Name:        lowering.checker.TypeToString(target),
+		Unsupported: family,
+	}
 	if id == 0 {
-		id = ir.ViewContractID(len(l.result.ViewContracts) + 1)
-		l.result.ViewContracts = append(l.result.ViewContracts, descriptor)
-		l.result.ViewContractTypes[int(target.Id())] = id
+		id = ir.ViewContractID(len(lowering.result.ViewContracts) + 1)
+		lowering.result.ViewContracts = append(lowering.result.ViewContracts, descriptor)
+		lowering.result.ViewContractTypes[int(target.Id())] = id
 	} else {
-		l.result.ViewContracts[id-1] = descriptor
+		lowering.result.ViewContracts[id-1] = descriptor
 	}
 	return id, nil
 }
 
-func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
-	if l.phantomUndefined(target) || target.Flags()&checker.TypeFlagsUndefined != 0 {
+func (lowering *lowering) unsupportedViewFamily(target *checker.Type) string {
+	if lowering.phantomUndefined(target) || target.Flags()&checker.TypeFlagsUndefined != 0 {
 		return ""
 	}
-	if base := l.phantomBase(target); base != nil && interfaceScalar(base) {
+	if base := lowering.phantomBase(target); base != nil && interfaceScalar(base) {
 		return ""
 	}
 	flags := target.Flags()
@@ -78,20 +82,20 @@ func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
 	case flags&checker.TypeFlagsTypeParameter != 0:
 		return "generic"
 	case flags&checker.TypeFlagsIntersection != 0:
-		return l.intersectionViewFamily(target)
+		return lowering.intersectionViewFamily(target)
 	case flags&checker.TypeFlagsNull != 0:
 		return ""
 	case flags&checker.TypeFlagsUndefined != 0:
 		return "nullish"
 	case isClassInstance(target):
 		return "nominal class"
-	case l.isLibraryType(target, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
+	case lowering.isLibraryType(target, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
 		return "collection"
 	case checker.IsTupleType(target):
 		return "tuple"
 	case flags&checker.TypeFlagsObject != 0 &&
-		len(l.checker.GetIndexInfosOfType(target)) != 0 &&
-		!l.isArrayType(target):
+		len(lowering.checker.GetIndexInfosOfType(target)) != 0 &&
+		!lowering.isArrayType(target):
 		return "dictionary"
 	}
 
@@ -112,11 +116,11 @@ var intersectionPastDepthBound = "intersection nested past the depth bound of " 
 // intersection unsupported: a type parameter has no layout to describe, a callable member would
 // lose its signature, and a member with a family of its own (a class instance's nominal check, an
 // index signature's dictionary, a collection, a tuple) would lose that.
-func (l *lowering) intersectionViewFamily(target *checker.Type) string {
-	if !l.plainObjectIntersection(target) {
+func (lowering *lowering) intersectionViewFamily(target *checker.Type) string {
+	if !lowering.plainObjectIntersection(target) {
 		return "intersection"
 	}
-	if l.intersectionViewDepth >= intersectionViewDepthBound {
+	if lowering.intersectionViewDepth >= intersectionViewDepthBound {
 		return intersectionPastDepthBound
 	}
 	return ""
@@ -124,15 +128,15 @@ func (l *lowering) intersectionViewFamily(target *checker.Type) string {
 
 // plainObjectIntersection is whether every member of an intersection is a plain object type, and
 // it isn't the present half of a Weak<Target>, which is kept weakly.
-func (l *lowering) plainObjectIntersection(target *checker.Type) bool {
-	if target.Flags()&checker.TypeFlagsIntersection == 0 || l.weakTarget(target) != nil {
+func (lowering *lowering) plainObjectIntersection(target *checker.Type) bool {
+	if target.Flags()&checker.TypeFlagsIntersection == 0 || lowering.weakTarget(target) != nil {
 		return false
 	}
 	for _, member := range target.Types() {
 		if member.Flags()&checker.TypeFlagsObject == 0 ||
-			l.isArrayType(member) ||
-			l.callableViewContract(member) ||
-			l.unsupportedViewFamily(member) != "" {
+			lowering.isArrayType(member) ||
+			lowering.callableViewContract(member) ||
+			lowering.unsupportedViewFamily(member) != "" {
 			return false
 		}
 	}
@@ -141,10 +145,10 @@ func (l *lowering) plainObjectIntersection(target *checker.Type) bool {
 
 // Demand uses the same allocations, joined arguments/results and projected
 // stores as shape certification. Unknown is never an empty proof of safety.
-func (l *lowering) checkLazyViewReads() error {
-	l.certifyUntaggedCallableProducers()
-	l.completeUntaggedRecursiveContracts()
-	program := l.result
+func (lowering *lowering) checkLazyViewReads() error {
+	lowering.certifyUntaggedCallableProducers()
+	lowering.completeUntaggedRecursiveContracts()
+	program := lowering.result
 	if len(program.ViewOrigins) == 0 {
 		return unemittableCheckedViewRead(program)
 	}
@@ -174,7 +178,7 @@ func (l *lowering) checkLazyViewReads() error {
 			if viewReadOf(program, read) != viewReadChecks {
 				return true
 			}
-			if callableProducerViewRefusalError := l.callableProducerViewRefusal(
+			if callableProducerViewRefusalError := lowering.callableProducerViewRefusal(
 				graph,
 				read,
 			); callableProducerViewRefusalError != nil {

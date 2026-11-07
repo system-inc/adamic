@@ -7,16 +7,16 @@ import (
 
 // nativeFirstASCII computes a necessary first-character condition from bytecode.
 // Unknown or nullable paths disable it. Non-ASCII input always uses the VM.
-func (p *Program) nativeFirstASCII() ([2]uint64, bool) {
+func (program *Program) nativeFirstASCII() ([2]uint64, bool) {
 	var visit func(int, map[int]bool) ([2]uint64, bool)
 	visit = func(pc int, path map[int]bool) ([2]uint64, bool) {
 		var bits [2]uint64
-		if pc < 0 || pc >= len(p.code) || path[pc] {
+		if pc < 0 || pc >= len(program.code) || path[pc] {
 			return bits, false
 		}
 		path[pc] = true
 		defer delete(path, pc)
-		i := p.code[pc]
+		i := program.code[pc]
 		switch i.op {
 		case opSave, opAssert, opLook, opRepeatInit:
 			return visit(pc+1, path)
@@ -65,14 +65,19 @@ func (p *Program) nativeFirstASCII() ([2]uint64, bool) {
 	}
 	return visit(0, map[int]bool{})
 }
-func (p *Program) nativePrefix() []rune {
+func (program *Program) nativePrefix() []rune {
 	var prefix []rune
-	for _, i := range p.code {
+	for _, i := range program.code {
 		switch i.op {
 		case opSave, opAssert, opLook:
 			continue
 		case opSet:
-			if i.direction != 1 || i.flags.IgnoreCase || len(i.set.strings) != 0 || len(i.set.ranges) != 1 || i.set.ranges[0].From != i.set.ranges[0].To || i.set.ranges[0].To >= 128 {
+			if i.direction != 1 ||
+				i.flags.IgnoreCase ||
+				len(i.set.strings) != 0 ||
+				len(i.set.ranges) != 1 ||
+				i.set.ranges[0].From != i.set.ranges[0].To ||
+				i.set.ranges[0].To >= 128 {
 				return prefix
 			}
 			prefix = append(prefix, i.set.ranges[0].From)
@@ -84,11 +89,11 @@ func (p *Program) nativePrefix() []rune {
 }
 
 // Small, forward ASCII programs have no choice points and need no VM state.
-func (p *Program) nativeStraightLine(name string) string {
-	if len(p.code) > 32 {
+func (program *Program) nativeStraightLine(name string) string {
+	if len(program.code) > 32 {
 		return ""
 	}
-	for _, i := range p.code {
+	for _, i := range program.code {
 		switch i.op {
 		case opAccept, opSave:
 		case opAssert:
@@ -108,8 +113,11 @@ func (p *Program) nativeStraightLine(name string) string {
 			return ""
 		}
 	}
-	out := fmt.Sprintf("static bool %s_fast(const uint16_t *input,size_t length,ptrdiff_t *position,ptrdiff_t *captures,uint64_t *steps) {ptrdiff_t at=*position;\n", name)
-	for pc, i := range p.code {
+	out := fmt.Sprintf(
+		"static bool %s_fast(const uint16_t *input,size_t length,ptrdiff_t *position,ptrdiff_t *captures,uint64_t *steps) {ptrdiff_t at=*position;\n",
+		name,
+	)
+	for pc, i := range program.code {
 		fail := fmt.Sprintf("{*steps+=%d;return false;}", pc+1)
 		switch i.op {
 		case opSave:
@@ -140,8 +148,8 @@ func (p *Program) nativeStraightLine(name string) string {
 }
 
 // A non-multiline start assertion before consumption permits only position zero.
-func (p *Program) nativeAnchored() bool {
-	for _, i := range p.code {
+func (program *Program) nativeAnchored() bool {
+	for _, i := range program.code {
 		switch i.op {
 		case opSave, opLook:
 			continue
@@ -158,9 +166,9 @@ func (p *Program) nativeAnchored() bool {
 
 // ASCII strings admit a separate straight-line runner even when Unicode folding
 // or a wide character class requires the general VM on other strings.
-func (p *Program) nativeStraightLineASCII(name string) string {
-	copyProgram := *p
-	copyProgram.code = append([]instruction(nil), p.code...)
+func (program *Program) nativeStraightLineASCII(name string) string {
+	copyProgram := *program
+	copyProgram.code = append([]instruction(nil), program.code...)
 	for pc, i := range copyProgram.code {
 		if i.op != opSet {
 			continue
@@ -185,44 +193,66 @@ func (p *Program) nativeStraightLineASCII(name string) string {
 // Boolean calls need neither capture registers nor instruction accounting in
 // unlimited mode. Emit their entire search, so flags and first sets are compile
 // time constants rather than tests in the shared runtime loop.
-func (p *Program) nativeBooleanASCII(name, first string) string {
-	if p.nativeStraightLineASCII(name) == "" {
-		return p.nativeRepeatedASCII(name)
+func (program *Program) nativeBooleanASCII(name, first string) string {
+	if program.nativeStraightLineASCII(name) == "" {
+		return program.nativeRepeatedASCII(name)
 	}
 	var out strings.Builder
-	minimum, endAnchored := p.nativeBooleanWidth()
-	bits, filter := p.nativeFirstASCII()
-	if filter && first == "NULL" && !endAnchored && !p.nativeAnchored() && !p.flags.Sticky {
-		fmt.Fprintf(&out, "static const uint64_t %s_test_first[2]={UINT64_C(%d),UINT64_C(%d)};\n", name, bits[0], bits[1])
+	minimum, endAnchored := program.nativeBooleanWidth()
+	bits, filter := program.nativeFirstASCII()
+	if filter && first == "NULL" && !endAnchored && !program.nativeAnchored() && !program.flags.Sticky {
+		fmt.Fprintf(
+			&out,
+			"static const uint64_t %s_test_first[2]={UINT64_C(%d),UINT64_C(%d)};\n",
+			name,
+			bits[0],
+			bits[1],
+		)
 	}
-	fmt.Fprintf(&out, "static bool %s_test(const unsigned char *input,size_t length,ptrdiff_t *position) {size_t start=(size_t)*position;(void)input;\n", name)
+	fmt.Fprintf(
+		&out,
+		"static bool %s_test(const unsigned char *input,size_t length,ptrdiff_t *position) {size_t start=(size_t)*position;(void)input;\n",
+		name,
+	)
 	if minimum > 0 {
 		fmt.Fprintf(&out, "if(start>length||length-start<%d)return false;size_t last=length-%d;\n", minimum, minimum)
 	} else {
 		out.WriteString("if(start>length)return false;size_t last=length;\n")
 	}
-	if p.nativeAnchored() {
+	if program.nativeAnchored() {
 		out.WriteString("if(start!=0)return false;\n")
 	}
 	if endAnchored {
 		// A trailing non-multiline end assertion and a fixed width admit only
 		// this start. Sticky calls must already be at that start.
-		if p.flags.Sticky {
+		if program.flags.Sticky {
 			out.WriteString("if(start!=last)return false;\n")
 		} else {
 			out.WriteString("if(start>last)return false;start=last;\n")
 		}
 	}
 	out.WriteString("while(start<=last){size_t at=start;\n")
-	if !endAnchored && !p.nativeAnchored() && !p.flags.Sticky && first != "NULL" {
-		fmt.Fprintf(&out, "ptrdiff_t candidate=%s(input,length,start);if(candidate<0)return false;start=(size_t)candidate;if(start>last)return false;at=start;\n", first)
-	} else if filter && !endAnchored && !p.nativeAnchored() && !p.flags.Sticky {
-		fmt.Fprintf(&out, "while(start<=last&&start<length&&!(%s_test_first[input[start]/64]&(UINT64_C(1)<<(input[start]%%64))))start++;if(start>last)return false;at=start;\n", name)
+	if !endAnchored && !program.nativeAnchored() && !program.flags.Sticky && first != "NULL" {
+		fmt.Fprintf(
+			&out,
+			"ptrdiff_t candidate=%s(input,length,start);if(candidate<0)return false;start=(size_t)candidate;if(start>last)return false;at=start;\n",
+			first,
+		)
+	} else if filter && !endAnchored && !program.nativeAnchored() && !program.flags.Sticky {
+		fmt.Fprintf(
+			&out,
+			"while(start<=last&&start<length&&!(%s_test_first[input[start]/64]&(UINT64_C(1)<<(input[start]%%64))))start++;if(start>last)return false;at=start;\n",
+			name,
+		)
 	}
 	hasFailure := false
 	firstSet := true
-	firstProven := !endAnchored && !p.nativeAnchored() && !p.flags.Sticky && filter && (first == "NULL" || p.nativeLiteralWindow(name) == "")
-	for _, i := range p.code {
+	firstProven := !endAnchored &&
+		!program.nativeAnchored() &&
+		!program.flags.Sticky &&
+		filter &&
+		(first == "NULL" || program.nativeLiteralWindow(name) == "")
+	for _, i := range program.code {
 		switch i.op {
 		case opSave:
 		case opAssert:
@@ -265,7 +295,7 @@ func (p *Program) nativeBooleanASCII(name, first string) string {
 	}
 	if hasFailure {
 		out.WriteString("failed:;")
-		if endAnchored || p.nativeAnchored() || p.flags.Sticky {
+		if endAnchored || program.nativeAnchored() || program.flags.Sticky {
 			out.WriteString("return false;")
 		} else {
 			out.WriteString("start++;")
@@ -275,9 +305,9 @@ func (p *Program) nativeBooleanASCII(name, first string) string {
 	return out.String()
 }
 
-func (p *Program) nativeBooleanWidth() (int, bool) {
+func (program *Program) nativeBooleanWidth() (int, bool) {
 	minimum, endOffset := 0, -1
-	for _, i := range p.code {
+	for _, i := range program.code {
 		if i.op == opSet {
 			minimum++
 		} else if i.op == opAssert && i.assertion == End {
@@ -290,52 +320,59 @@ func (p *Program) nativeBooleanWidth() (int, bool) {
 // An anchored scalar star followed by one scalar needs no choice points for a
 // stateless boolean result. Captures and stateful calls retain the VM, because
 // their preferred end depends on greediness. Saves do not affect existence.
-func (p *Program) nativeRepeatedASCII(name string) string {
-	if p.flags.Global || p.flags.Sticky {
+func (program *Program) nativeRepeatedASCII(name string) string {
+	if program.flags.Global || program.flags.Sticky {
 		return ""
 	}
 	pc := 0
 	skipSaves := func() {
-		for pc < len(p.code) && p.code[pc].op == opSave {
+		for pc < len(program.code) && program.code[pc].op == opSave {
 			pc++
 		}
 	}
 	skipSaves()
-	if pc >= len(p.code) || p.code[pc].op != opAssert || p.code[pc].assertion != Start || p.code[pc].flags.Multiline {
+	if pc >= len(program.code) ||
+		program.code[pc].op != opAssert ||
+		program.code[pc].assertion != Start ||
+		program.code[pc].flags.Multiline {
 		return ""
 	}
 	pc++
 	skipSaves()
-	if pc+2 >= len(p.code) || p.code[pc].op != opRepeatInit {
+	if pc+2 >= len(program.code) || program.code[pc].op != opRepeatInit {
 		return ""
 	}
-	id := p.code[pc].x
+	id := program.code[pc].x
 	pc++
 	choice := pc
-	repeat := p.code[pc]
+	repeat := program.code[pc]
 	if repeat.op != opRepeat || repeat.x != id || repeat.min == nil || repeat.min.Sign() != 0 || repeat.max != nil {
 		return ""
 	}
 	pc++
 	skipSaves()
-	if pc >= len(p.code) {
+	if pc >= len(program.code) {
 		return ""
 	}
-	body := p.code[pc]
+	body := program.code[pc]
 	pc++
 	skipSaves()
-	if pc >= len(p.code) || p.code[pc].op != opRepeatEnd || p.code[pc].x != id || p.code[pc].y != choice || repeat.y != pc+1 {
+	if pc >= len(program.code) ||
+		program.code[pc].op != opRepeatEnd ||
+		program.code[pc].x != id ||
+		program.code[pc].y != choice ||
+		repeat.y != pc+1 {
 		return ""
 	}
 	pc++
 	skipSaves()
-	if pc >= len(p.code) {
+	if pc >= len(program.code) {
 		return ""
 	}
-	tail := p.code[pc]
+	tail := program.code[pc]
 	pc++
 	skipSaves()
-	if pc != len(p.code)-1 || p.code[pc].op != opAccept {
+	if pc != len(program.code)-1 || program.code[pc].op != opAccept {
 		return ""
 	}
 	var out strings.Builder
@@ -353,9 +390,20 @@ func (p *Program) nativeRepeatedASCII(name string) string {
 		if k == 1 {
 			label = "tail"
 		}
-		fmt.Fprintf(&out, "static const uint64_t %s_%s[2]={UINT64_C(%d),UINT64_C(%d)};\n", name, label, bits[0], bits[1])
+		fmt.Fprintf(
+			&out,
+			"static const uint64_t %s_%s[2]={UINT64_C(%d),UINT64_C(%d)};\n",
+			name,
+			label,
+			bits[0],
+			bits[1],
+		)
 	}
-	fmt.Fprintf(&out, "static bool %s_test(const unsigned char *input,size_t length,ptrdiff_t *position){if(*position!=0)return false;for(size_t at=0;at<length;at++){unsigned c=input[at];\n", name)
+	fmt.Fprintf(
+		&out,
+		"static bool %s_test(const unsigned char *input,size_t length,ptrdiff_t *position){if(*position!=0)return false;for(size_t at=0;at<length;at++){unsigned c=input[at];\n",
+		name,
+	)
 	// The tail may match after zero repetitions, even outside the body set.
 	fmt.Fprintf(&out, "if(%s_tail[c/64]&(UINT64_C(1)<<(c%%64))){*position=(ptrdiff_t)at+1;return true;}\n", name)
 	fmt.Fprintf(&out, "if(!(%s_repeat[c/64]&(UINT64_C(1)<<(c%%64))))return false;}return false;}\n", name)
@@ -365,8 +413,8 @@ func (p *Program) nativeRepeatedASCII(name string) string {
 // A leading positive literal lookbehind supplies a necessary context filter.
 // The VM still evaluates the assertion, including any captures. Negative,
 // branching, folded and non-ASCII lookbehind remain completely general.
-func (p *Program) nativeLookbehindPrefix() []rune {
-	for _, i := range p.code {
+func (program *Program) nativeLookbehindPrefix() []rune {
+	for _, i := range program.code {
 		if i.op == opSave {
 			continue
 		}
@@ -378,7 +426,12 @@ func (p *Program) nativeLookbehindPrefix() []rune {
 			switch sub.op {
 			case opSave, opAccept:
 			case opSet:
-				if sub.direction != -1 || sub.flags.IgnoreCase || len(sub.set.strings) != 0 || len(sub.set.ranges) != 1 || sub.set.ranges[0].From != sub.set.ranges[0].To || sub.set.ranges[0].To >= 128 {
+				if sub.direction != -1 ||
+					sub.flags.IgnoreCase ||
+					len(sub.set.strings) != 0 ||
+					len(sub.set.ranges) != 1 ||
+					sub.set.ranges[0].From != sub.set.ranges[0].To ||
+					sub.set.ranges[0].To >= 128 {
 					return nil
 				}
 				reverse = append(reverse, sub.set.ranges[0].From)

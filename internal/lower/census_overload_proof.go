@@ -5,7 +5,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 )
 
-func (l *lowering) censusHasUndefined(proven *checker.Type) bool {
+func (lowering *lowering) censusHasUndefined(proven *checker.Type) bool {
 	if proven.Flags()&checker.TypeFlagsUndefined != 0 {
 		return true
 	}
@@ -22,13 +22,13 @@ func (l *lowering) censusHasUndefined(proven *checker.Type) bool {
 
 // Presence checks are sufficient only when all present members already satisfy
 // the promise. They must not bless a brand or a mutable representation change.
-func (l *lowering) censusNullableOverloadResult(produced, promised *checker.Type) bool {
-	produced, promised = l.concrete(produced), l.concrete(promised)
-	if !l.censusHasUndefined(produced) || l.censusHasUndefined(promised) {
+func (lowering *lowering) censusNullableOverloadResult(produced, promised *checker.Type) bool {
+	produced, promised = lowering.concrete(produced), lowering.concrete(promised)
+	if !lowering.censusHasUndefined(produced) || lowering.censusHasUndefined(promised) {
 		return false
 	}
 	for _, member := range produced.Types() {
-		if member.Flags()&checker.TypeFlagsUndefined == 0 && !l.censusRelated(member, promised) {
+		if member.Flags()&checker.TypeFlagsUndefined == 0 && !lowering.censusRelated(member, promised) {
 			return false
 		}
 	}
@@ -39,29 +39,29 @@ func (l *lowering) censusNullableOverloadResult(produced, promised *checker.Type
 // Only bare parameter tests supply flow facts. A write anywhere, including a
 // captured write in a nested function, disables the proof. Unknown control flow
 // keeps the call-site check rather than guessing that the annotation is true.
-func (l *lowering) censusProveOverloadResult(implementation, overload *ast.Node) bool {
-	return l.censusReturnProof(implementation, overload, nil, nil)
+func (lowering *lowering) censusProveOverloadResult(implementation, overload *ast.Node) bool {
+	return lowering.censusReturnProof(implementation, overload, nil, nil)
 }
 
-func (l *lowering) censusReturnProof(
+func (lowering *lowering) censusReturnProof(
 	implementation, overload *ast.Node,
 	admitted []*checker.Type,
 	target *checker.Type,
 ) bool {
-	outer := l.typeMapper
-	defer func() { l.typeMapper = outer }()
+	outer := lowering.typeMapper
+	defer func() { lowering.typeMapper = outer }()
 	sources, targets := []*checker.Type{}, []*checker.Type{}
 	for index, parameter := range implementation.TypeParameters() {
 		if index >= len(overload.TypeParameters()) {
 			return false
 		}
-		sources = append(sources, l.checker.GetTypeAtLocation(parameter.Name()))
-		targets = append(targets, l.checker.GetTypeAtLocation(overload.TypeParameters()[index].Name()))
+		sources = append(sources, lowering.checker.GetTypeAtLocation(parameter.Name()))
+		targets = append(targets, lowering.checker.GetTypeAtLocation(overload.TypeParameters()[index].Name()))
 	}
 	if len(sources) > 0 {
-		l.typeMapper = newTypeMapper(sources, targets)
+		lowering.typeMapper = newTypeMapper(sources, targets)
 	}
-	promised := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(overload))
+	promised := lowering.checker.GetReturnTypeOfSignature(lowering.checker.GetSignatureFromDeclaration(overload))
 	if target != nil {
 		promised = target
 	}
@@ -73,16 +73,16 @@ func (l *lowering) censusReturnProof(
 			parameter.AsParameterDeclaration().DotDotDotToken != nil {
 			return false
 		}
-		given, _, rest, censusOverloadParameterError := l.censusOverloadParameter(overload.Parameters(), index)
+		given, _, rest, censusOverloadParameterError := lowering.censusOverloadParameter(overload.Parameters(), index)
 		if censusOverloadParameterError != nil || rest {
 			return false
 		}
 		if given == nil {
-			given = l.checker.GetUndefinedType()
+			given = lowering.checker.GetUndefinedType()
 		}
 		initial[index] = given
 		if admitted != nil {
-			initial[index] = l.checker.GetUndefinedType()
+			initial[index] = lowering.checker.GetUndefinedType()
 			if index < len(admitted) {
 				initial[index] = admitted[index]
 			}
@@ -98,7 +98,7 @@ func (l *lowering) censusReturnProof(
 		}
 		if ast.IsIdentifier(node) && ast.IsAssignmentTarget(node) {
 			for _, parameter := range parameters {
-				if l.symbol(node) == l.symbol(parameter.Name()) {
+				if lowering.symbol(node) == lowering.symbol(parameter.Name()) {
 					unchanged = false
 				}
 			}
@@ -112,9 +112,9 @@ func (l *lowering) censusReturnProof(
 	}
 	narrowed := func(index int, flow *ast.FlowNode) *checker.Type {
 		parameter := parameters[index]
-		declared := l.checker.GetTypeAtLocation(parameter.Name())
-		return l.concrete(
-			predicateFlowType(l.checker, parameter.Name(), declared, initial[index], implementation, flow),
+		declared := lowering.checker.GetTypeAtLocation(parameter.Name())
+		return lowering.concrete(
+			predicateFlowType(lowering.checker, parameter.Name(), declared, initial[index], implementation, flow),
 		)
 	}
 	reachable := func(flow *ast.FlowNode) bool {
@@ -130,24 +130,24 @@ func (l *lowering) censusReturnProof(
 			return true
 		}
 		if expression == nil {
-			return l.censusRelated(l.checker.GetUndefinedType(), promised)
+			return lowering.censusRelated(lowering.checker.GetUndefinedType(), promised)
 		}
 		expression = ast.SkipParentheses(expression)
 		if ast.IsIdentifier(expression) {
 			for index, parameter := range parameters {
-				if l.symbol(expression) == l.symbol(parameter.Name()) {
-					return l.censusRelated(narrowed(index, flow), promised)
+				if lowering.symbol(expression) == lowering.symbol(parameter.Name()) {
+					return lowering.censusRelated(narrowed(index, flow), promised)
 				}
 			}
 			// Local aliases can be rebound by a call; they are not flow evidence.
-			if l.symbol(expression) != l.checker.GetUndefinedSymbol() {
+			if lowering.symbol(expression) != lowering.checker.GetUndefinedSymbol() {
 				return false
 			}
 		}
 		if predicateEffects(expression) {
 			return false
 		}
-		return l.censusRelated(l.checker.GetTypeAtLocation(expression), promised)
+		return lowering.censusRelated(lowering.checker.GetTypeAtLocation(expression), promised)
 	}
 	var statement func(*ast.Node, []*ast.FlowNode) ([]*ast.FlowNode, bool)
 	statement = func(node *ast.Node, flows []*ast.FlowNode) ([]*ast.FlowNode, bool) {
@@ -173,7 +173,7 @@ func (l *lowering) censusReturnProof(
 				if binary.OperatorToken.Kind == ast.KindEqualsEqualsEqualsToken ||
 					binary.OperatorToken.Kind == ast.KindExclamationEqualsEqualsToken {
 					for _, parameter := range parameters {
-						proof := predicateFlowProof{l: l, parameter: parameter}
+						proof := predicateFlowProof{l: lowering, parameter: parameter}
 						trusted = trusted ||
 							proof.reference(ast.SkipParentheses(binary.Left)) && proof.literal(binary.Right) ||
 							proof.reference(ast.SkipParentheses(binary.Right)) && proof.literal(binary.Left)
@@ -236,7 +236,7 @@ func (l *lowering) censusReturnProof(
 // The checker retains the overload's declared result even when every admitted
 // return is undefined. JSON needs no container metadata for that proven case,
 // but still evaluates the original call, including its arguments and effects.
-func (l *lowering) censusCallReturnsUndefined(node *ast.Node) bool {
+func (lowering *lowering) censusCallReturnsUndefined(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
 	if node.Kind != ast.KindCallExpression {
 		return false
@@ -245,12 +245,12 @@ func (l *lowering) censusCallReturnsUndefined(node *ast.Node) bool {
 	if !ast.IsIdentifier(ast.SkipParentheses(call.Expression)) {
 		return false
 	}
-	resolved := l.checker.GetResolvedSignature(node)
+	resolved := lowering.checker.GetResolvedSignature(node)
 	if resolved == nil || resolved.Declaration() == nil {
 		return false
 	}
 	overload := resolved.Declaration()
-	implementation := l.censusImplementation(overload)
+	implementation := lowering.censusImplementation(overload)
 	if implementation == nil {
 		return false
 	}
@@ -259,10 +259,10 @@ func (l *lowering) censusCallReturnsUndefined(node *ast.Node) bool {
 		if argument.Kind == ast.KindSpreadElement {
 			return false
 		}
-		admitted[index] = l.checker.GetTypeAtLocation(argument)
+		admitted[index] = lowering.checker.GetTypeAtLocation(argument)
 		if admitted[index].Flags()&checker.TypeFlagsUndefined == 0 {
 			return false
 		}
 	}
-	return l.censusReturnProof(implementation, overload, admitted, l.checker.GetUndefinedType())
+	return lowering.censusReturnProof(implementation, overload, admitted, lowering.checker.GetUndefinedType())
 }

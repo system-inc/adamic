@@ -234,40 +234,40 @@ func NewFunction(name string) *Function {
 }
 
 // NewBlock appends a block and returns it.
-func (f *Function) NewBlock() *BasicBlock {
-	block := &BasicBlock{Id: f.nextBlock}
-	f.nextBlock++
-	f.Blocks = append(f.Blocks, block)
-	f.blocksById[block.Id] = block
+func (function *Function) NewBlock() *BasicBlock {
+	block := &BasicBlock{Id: function.nextBlock}
+	function.nextBlock++
+	function.Blocks = append(function.Blocks, block)
+	function.blocksById[block.Id] = block
 	return block
 }
 
 // Block returns the block with the given id, and false for one that isn't there (InvalidBlock, or
 // one Finalize removed as unreachable).
-func (f *Function) Block(id BlockId) (*BasicBlock, bool) {
-	block, ok := f.blocksById[id]
+func (function *Function) Block(id BlockId) (*BasicBlock, bool) {
+	block, ok := function.blocksById[id]
 	return block, ok
 }
 
 // NewIdentifier mints a new value of a variable.
-func (f *Function) NewIdentifier(name string, declaration DeclarationId) *Identifier {
-	identifier := &Identifier{Id: IdentifierId(len(f.Identifiers)), Declaration: declaration, Name: name}
-	f.Identifiers = append(f.Identifiers, identifier)
+func (function *Function) NewIdentifier(name string, declaration DeclarationId) *Identifier {
+	identifier := &Identifier{Id: IdentifierId(len(function.Identifiers)), Declaration: declaration, Name: name}
+	function.Identifiers = append(function.Identifiers, identifier)
 	return identifier
 }
 
 // AddInstruction appends an instruction to the table and to a block.
-func (f *Function) AddInstruction(block *BasicBlock, instruction *Instruction) InstructionId {
-	id := InstructionId(len(f.Instructions))
+func (function *Function) AddInstruction(block *BasicBlock, instruction *Instruction) InstructionId {
+	id := InstructionId(len(function.Instructions))
 	instruction.Id = id
-	f.Instructions = append(f.Instructions, instruction)
+	function.Instructions = append(function.Instructions, instruction)
 	block.Instructions = append(block.Instructions, id)
 	return id
 }
 
 // PlaceString renders a place as its variable's name and its value's id.
-func (f *Function) PlaceString(place Place) string {
-	identifier := f.Identifiers[place.Identifier]
+func (function *Function) PlaceString(place Place) string {
+	identifier := function.Identifiers[place.Identifier]
 	return fmt.Sprintf("%s$%d", identifier.Name, identifier.Id)
 }
 

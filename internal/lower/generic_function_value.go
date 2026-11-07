@@ -20,21 +20,21 @@ func instantiateSignatureInContextOf(
 	compare checker.TypeComparer,
 ) *checker.Signature
 
-func (l *lowering) genericFunctionValue(node *ast.Node, declaration *ast.Node) (ir.Expression, error) {
-	resolved := l.contextualGenericSignature(node, l.checker.GetSignatureFromDeclaration(declaration))
+func (lowering *lowering) genericFunctionValue(node *ast.Node, declaration *ast.Node) (ir.Expression, error) {
+	resolved := lowering.contextualGenericSignature(node, lowering.checker.GetSignatureFromDeclaration(declaration))
 	if resolved == nil {
-		return nil, l.notYet(node, "a generic function value without a concrete contextual signature")
+		return nil, lowering.notYet(node, "a generic function value without a concrete contextual signature")
 	}
-	index, instantiateFunctionSignatureError := l.instantiateFunctionSignature(node, declaration, resolved)
+	index, instantiateFunctionSignatureError := lowering.instantiateFunctionSignature(node, declaration, resolved)
 	if instantiateFunctionSignatureError != nil {
 		return nil, instantiateFunctionSignatureError
 	}
-	return l.functionValue(node, index)
+	return lowering.functionValue(node, index)
 }
 
 // Inspect source rather than already-created forwarders: module function bodies
 // are lowered before initializers, and a comparison can live in an earlier body.
-func (l *lowering) hasGenericFunctionValues() bool {
+func (lowering *lowering) hasGenericFunctionValues() bool {
 	found := false
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
@@ -42,7 +42,7 @@ func (l *lowering) hasGenericFunctionValues() bool {
 			return false
 		}
 		if ast.IsIdentifier(node) {
-			symbol := l.symbol(node)
+			symbol := lowering.symbol(node)
 			if symbol != nil {
 				for _, declaration := range symbol.Declarations {
 					if declaration.Kind != ast.KindFunctionDeclaration ||
@@ -70,7 +70,7 @@ func (l *lowering) hasGenericFunctionValues() bool {
 		}
 		return node.ForEachChild(visit)
 	}
-	for _, file := range l.program.CompilerProgram().GetSourceFiles() {
+	for _, file := range lowering.program.CompilerProgram().GetSourceFiles() {
 		file.Node.ForEachChild(visit)
 		if found {
 			return true
@@ -81,7 +81,7 @@ func (l *lowering) hasGenericFunctionValues() bool {
 
 // Object.is and collection searches also observe function identity. Until
 // specialized closures carry a shared source identity, refuse those observations.
-func (l *lowering) genericFunctionIdentityCall(node *ast.Node) error {
+func (lowering *lowering) genericFunctionIdentityCall(node *ast.Node) error {
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
 	if callee.Kind != ast.KindPropertyAccessExpression {
@@ -89,54 +89,61 @@ func (l *lowering) genericFunctionIdentityCall(node *ast.Node) error {
 	}
 	property := callee.AsPropertyAccessExpression()
 	observes := false
-	if callee.Name().Text() == "is" && l.isLibraryGlobal(property.Expression, "Object") {
+	if callee.Name().Text() == "is" && lowering.isLibraryGlobal(property.Expression, "Object") {
 		for _, argument := range call.Arguments.Nodes {
-			observes = observes || l.functionIdentityType(l.checker.GetTypeAtLocation(argument))
+			observes = observes || lowering.functionIdentityType(lowering.checker.GetTypeAtLocation(argument))
 		}
 	} else {
 		switch callee.Name().Text() {
 		case "includes", "indexOf", "lastIndexOf", "has", "add", "delete", "get", "set":
-			receiver := l.concrete(l.checker.GetTypeAtLocation(property.Expression))
-			if l.isArrayType(receiver) || l.isLibraryType(receiver, "Set", "ReadonlySet", "Map", "ReadonlyMap") {
-				arguments := l.typeArguments(receiver)
+			receiver := lowering.concrete(lowering.checker.GetTypeAtLocation(property.Expression))
+			if lowering.isArrayType(receiver) ||
+				lowering.isLibraryType(receiver, "Set", "ReadonlySet", "Map", "ReadonlyMap") {
+				arguments := lowering.typeArguments(receiver)
 				if len(arguments) > 0 {
-					observes = l.functionIdentityType(arguments[0])
+					observes = lowering.functionIdentityType(arguments[0])
 				}
 			}
 		}
 	}
-	if observes && l.hasGenericFunctionValues() {
-		return l.notYet(node, "function identity observation in a program with specialized generic function values")
+	if observes && lowering.hasGenericFunctionValues() {
+		return lowering.notYet(
+			node,
+			"function identity observation in a program with specialized generic function values",
+		)
 	}
 	return nil
 }
 
-func (l *lowering) functionIdentityType(proven *checker.Type) bool {
-	proven = l.concrete(proven)
+func (lowering *lowering) functionIdentityType(proven *checker.Type) bool {
+	proven = lowering.concrete(proven)
 	if proven == nil {
 		return false
 	}
 	if proven.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range proven.Types() {
-			if l.functionIdentityType(member) {
+			if lowering.functionIdentityType(member) {
 				return true
 			}
 		}
 		return false
 	}
-	return len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) > 0
+	return len(lowering.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) > 0
 }
 
 // Constructing a collection already hashes and deduplicates its keys, before
 // any explicit has/get operation can be guarded.
-func (l *lowering) genericFunctionIdentityNew(node *ast.Node) error {
-	proven := l.concrete(l.checker.GetTypeAtLocation(node))
-	if !l.isLibraryType(proven, "Set", "Map") {
+func (lowering *lowering) genericFunctionIdentityNew(node *ast.Node) error {
+	proven := lowering.concrete(lowering.checker.GetTypeAtLocation(node))
+	if !lowering.isLibraryType(proven, "Set", "Map") {
 		return nil
 	}
-	arguments := l.typeArguments(proven)
-	if len(arguments) > 0 && l.functionIdentityType(arguments[0]) && l.hasGenericFunctionValues() {
-		return l.notYet(node, "function identity observation in a program with specialized generic function values")
+	arguments := lowering.typeArguments(proven)
+	if len(arguments) > 0 && lowering.functionIdentityType(arguments[0]) && lowering.hasGenericFunctionValues() {
+		return lowering.notYet(
+			node,
+			"function identity observation in a program with specialized generic function values",
+		)
 	}
 	return nil
 }
@@ -144,40 +151,40 @@ func (l *lowering) genericFunctionIdentityNew(node *ast.Node) error {
 // Context belongs to the operand itself. The checker propagates it through
 // conditional/logical expressions and parentheses; lowering need not infer it
 // by climbing the syntax tree or borrowing the other operand's signature.
-func (l *lowering) contextualGenericSignature(node *ast.Node, target *checker.Signature) *checker.Signature {
-	contextual := l.concrete(l.slotType(node))
+func (lowering *lowering) contextualGenericSignature(node *ast.Node, target *checker.Signature) *checker.Signature {
+	contextual := lowering.concrete(lowering.slotType(node))
 	if contextual == nil || target == nil {
 		return nil
 	}
-	signatures := l.checker.GetSignaturesOfType(l.withoutUndefined(contextual), checker.SignatureKindCall)
+	signatures := lowering.checker.GetSignaturesOfType(lowering.withoutUndefined(contextual), checker.SignatureKindCall)
 	if len(signatures) != 1 || len(signatures[0].TypeParameters()) != 0 {
 		return nil
 	}
-	return instantiateSignatureInContextOf(l.checker, target, signatures[0], nil, nil)
+	return instantiateSignatureInContextOf(lowering.checker, target, signatures[0], nil, nil)
 }
 
 //go:linkname typeFromSignature github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getOrCreateTypeFromSignature
 func typeFromSignature(receiver *checker.Checker, signature *checker.Signature) *checker.Type
 
-func (l *lowering) contextualGenericType(node *ast.Node, own *checker.Type) *checker.Type {
-	signatures := l.checker.GetSignaturesOfType(own, checker.SignatureKindCall)
+func (lowering *lowering) contextualGenericType(node *ast.Node, own *checker.Type) *checker.Type {
+	signatures := lowering.checker.GetSignaturesOfType(own, checker.SignatureKindCall)
 	if len(signatures) != 1 || len(signatures[0].TypeParameters()) == 0 {
 		return own
 	}
-	if resolved := l.contextualGenericSignature(node, signatures[0]); resolved != nil {
-		return typeFromSignature(l.checker, resolved)
+	if resolved := lowering.contextualGenericSignature(node, signatures[0]); resolved != nil {
+		return typeFromSignature(lowering.checker, resolved)
 	}
 	return own
 }
 
 // callableContext accepts only the single concrete function destination used by
 // generic-value specialization. Object and container views keep main's rules.
-func (l *lowering) callableContext(node *ast.Node) *checker.Type {
-	context := l.concrete(l.slotType(node))
+func (lowering *lowering) callableContext(node *ast.Node) *checker.Type {
+	context := lowering.concrete(lowering.slotType(node))
 	if context == nil {
 		return nil
 	}
-	signatures := l.checker.GetSignaturesOfType(l.withoutUndefined(context), checker.SignatureKindCall)
+	signatures := lowering.checker.GetSignaturesOfType(lowering.withoutUndefined(context), checker.SignatureKindCall)
 	if len(signatures) == 1 && len(signatures[0].TypeParameters()) == 0 {
 		return context
 	}

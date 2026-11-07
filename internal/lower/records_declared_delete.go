@@ -24,7 +24,7 @@ const declaredDeleteFix = "delete an optional property by its name, or give the 
 // isn't one literal whose receiver, or a member of its union, declares a required property under a
 // name the key can be. It runs after deleteRefusal (1300), which refuses a delete of anything but a
 // record entry, and before the delete is lowered as a record's.
-func (l *lowering) recordDeclaredDeleteRefusal(node *ast.Node) error {
+func (lowering *lowering) recordDeclaredDeleteRefusal(node *ast.Node) error {
 	if node.Kind != ast.KindDeleteExpression {
 		return nil
 	}
@@ -33,21 +33,31 @@ func (l *lowering) recordDeclaredDeleteRefusal(node *ast.Node) error {
 		return nil
 	}
 	access := operand.AsElementAccessExpression()
-	names, single := l.writtenNames(access.ArgumentExpression)
+	names, single := lowering.writtenNames(access.ArgumentExpression)
 	if single {
 		return nil
 	}
-	receiver := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression))
-	for _, member := range l.definedMembers(receiver) {
-		for _, property := range l.checker.GetPropertiesOfType(member) {
+	receiver := lowering.checker.GetNonNullableType(lowering.checker.GetTypeAtLocation(access.Expression))
+	for _, member := range lowering.definedMembers(receiver) {
+		for _, property := range lowering.checker.GetPropertiesOfType(member) {
 			if property.Flags&ast.SymbolFlagsOptional != 0 || names != nil && !names[property.Name] {
 				continue
 			}
-			what := "a delete from a record through a key that is not one literal, which can remove a required declared property (" + sourceExpression(node) + " on " + l.checker.TypeToString(member) + " by " + sourceExpression(access.ArgumentExpression) + ": " + property.Name + " is declared " + l.checker.TypeToString(l.checker.GetTypeOfSymbol(property)) + ", not optional)"
-			if !strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".a") {
-				return l.notYet(node, what)
+			what := "a delete from a record through a key that is not one literal, which can remove a required declared property (" +
+				sourceExpression(node) +
+				" on " +
+				lowering.checker.TypeToString(member) +
+				" by " +
+				sourceExpression(access.ArgumentExpression) +
+				": " +
+				property.Name +
+				" is declared " +
+				lowering.checker.TypeToString(lowering.checker.GetTypeOfSymbol(property)) +
+				", not optional)"
+			if !strings.HasSuffix(lowering.program.FileName(ast.GetSourceFileOfNode(node)), ".a") {
+				return lowering.notYet(node, what)
 			}
-			return &Refused{Where: l.program.Where(node), What: what, Fix: declaredDeleteFix}
+			return &Refused{Where: lowering.program.Where(node), What: what, Fix: declaredDeleteFix}
 		}
 	}
 	return nil

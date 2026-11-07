@@ -67,14 +67,14 @@ func printed(n ast.Node) string {
 	}
 	return b.String()
 }
-func (g *generator) copy(t ast.Expr, value string) string {
+func (generator *generator) copy(t ast.Expr, value string) string {
 	switch t := t.(type) {
 	case *ast.Ident:
-		if _, ok := g.types[t.Name].(*ast.StructType); ok {
-			g.needed[t.Name] = true
+		if _, ok := generator.types[t.Name].(*ast.StructType); ok {
+			generator.needed[t.Name] = true
 			return "latentCopy_" + t.Name + "(" + value + ", seen)"
 		}
-		if underlying, ok := g.types[t.Name]; ok {
+		if underlying, ok := generator.types[t.Name]; ok {
 			switch underlying.(type) {
 			case *ast.ArrayType, *ast.MapType:
 				panic("state copy: mutable named container " + t.Name + " requires an explicit copier")
@@ -95,8 +95,8 @@ func (g *generator) copy(t ast.Expr, value string) string {
 			return value
 		}
 		if name, ok := t.X.(*ast.Ident); ok {
-			if _, ok := g.types[name.Name].(*ast.StructType); ok {
-				g.needed[name.Name] = true
+			if _, ok := generator.types[name.Name].(*ast.StructType); ok {
+				generator.needed[name.Name] = true
 				return "latentCopyPointer_" + name.Name + "(" + value + ", seen)"
 			}
 		}
@@ -120,25 +120,25 @@ func (g *generator) copy(t ast.Expr, value string) string {
 			" {if value==nil{return nil}; result:=make(" +
 			ty +
 			",len(value)); for i,item:=range value {result[i]=" +
-			g.copy(t.Elt, "item") +
+			generator.copy(t.Elt, "item") +
 			"}; return result}(" +
 			value +
 			")"
 	case *ast.MapType:
 		ty := printed(t)
-		return g.copyMap(ty, t.Key, t.Value, value)
+		return generator.copyMap(ty, t.Key, t.Value, value)
 	case *ast.IndexListExpr:
 		selector, ok := t.X.(*ast.SelectorExpr)
 		if ok &&
 			printed(selector.X) == "ir" &&
 			selector.Sel.Name == "SortedMap" &&
 			len(t.Indices) == 2 &&
-			g.sortedMap != nil {
-			definition, ok := g.sortedMap.Type.(*ast.MapType)
+			generator.sortedMap != nil {
+			definition, ok := generator.sortedMap.Type.(*ast.MapType)
 			if !ok || printed(definition.Key) != "K" || printed(definition.Value) != "V" {
 				panic("state copy: ir.SortedMap definition is no longer map[K]V")
 			}
-			return g.copyMap(printed(t), t.Indices[0], t.Indices[1], value)
+			return generator.copyMap(printed(t), t.Indices[0], t.Indices[1], value)
 		}
 		panic("state copy: unsupported field type " + printed(t))
 	case *ast.InterfaceType:
@@ -147,15 +147,15 @@ func (g *generator) copy(t ast.Expr, value string) string {
 		panic("state copy: unsupported field type " + printed(t))
 	}
 }
-func (g *generator) copyField(owner string, id *ast.Ident, field *ast.Field) (result string) {
+func (generator *generator) copyField(owner string, id *ast.Ident, field *ast.Field) (result string) {
 	defer func() {
 		if failure := recover(); failure != nil {
-			panic(fmt.Sprintf("%s: %s.%s: %v", g.positions.Position(field.Pos()), owner, id.Name, failure))
+			panic(fmt.Sprintf("%s: %s.%s: %v", generator.positions.Position(field.Pos()), owner, id.Name, failure))
 		}
 	}()
-	return g.copy(field.Type, "value."+id.Name)
+	return generator.copy(field.Type, "value."+id.Name)
 }
-func (g *generator) copyMap(ty string, key, item ast.Expr, value string) string {
+func (generator *generator) copyMap(ty string, key, item ast.Expr, value string) string {
 	return "func(value " +
 		ty +
 		") " +
@@ -163,9 +163,9 @@ func (g *generator) copyMap(ty string, key, item ast.Expr, value string) string 
 		" {if value==nil{return nil}; result:=make(" +
 		ty +
 		",len(value)); for key,item:=range value {result[" +
-		g.copy(key, "key") +
+		generator.copy(key, "key") +
 		"]=" +
-		g.copy(item, "item") +
+		generator.copy(item, "item") +
 		"}; return result}(" +
 		value +
 		")"

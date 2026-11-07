@@ -10,8 +10,12 @@ import (
 // It is separate from syntax errors and a completed match returning nil.
 type UnavailablePropertyError struct{ Property, Version string }
 
-func (e *UnavailablePropertyError) Error() string {
-	return fmt.Sprintf("regexp: Unicode property %q unavailable in Go stand-in (%s)", e.Property, e.Version)
+func (propertyError *UnavailablePropertyError) Error() string {
+	return fmt.Sprintf(
+		"regexp: Unicode property %q unavailable in Go stand-in (%s)",
+		propertyError.Property,
+		propertyError.Version,
+	)
 }
 
 // GoProperties is a STAND-IN using Go's Unicode version, General_Category and

@@ -9,8 +9,8 @@ import (
 
 // Receiver-optional, zero-argument library methods need one saved receiver and
 // a missing result. An optional function call has a different guard and ABI.
-func (l *lowering) optionalIntrinsic(node *ast.Node) (ir.Expression, bool, error) {
-	if value, handled, optionalMapGetError := l.optionalMapGet(node); handled {
+func (lowering *lowering) optionalIntrinsic(node *ast.Node) (ir.Expression, bool, error) {
+	if value, handled, optionalMapGetError := lowering.optionalMapGet(node); handled {
 		return value, true, optionalMapGetError
 	}
 	call := node.AsCallExpression()
@@ -18,25 +18,25 @@ func (l *lowering) optionalIntrinsic(node *ast.Node) (ir.Expression, bool, error
 		return nil, false, nil
 	}
 	callee := ast.SkipParentheses(call.Expression)
-	if callee.Kind != ast.KindPropertyAccessExpression || !l.libraryMember(callee) {
+	if callee.Kind != ast.KindPropertyAccessExpression || !lowering.libraryMember(callee) {
 		return nil, false, nil
 	}
 	access := callee.AsPropertyAccessExpression()
 	if access.QuestionDotToken == nil {
 		return nil, false, nil
 	}
-	value, known, builtinError := l.builtin(node)
+	value, known, builtinError := lowering.builtin(node)
 	if !known || builtinError != nil {
 		return nil, known, builtinError
 	}
-	receiver, expressionError := l.expression(access.Expression)
+	receiver, expressionError := lowering.expression(access.Expression)
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
 	if !receiver.Type().IsReference() || value.Type() == 0 {
-		return nil, true, l.notYet(node, "an optional intrinsic without a reference receiver and a value result")
+		return nil, true, lowering.notYet(node, "an optional intrinsic without a reference receiver and a value result")
 	}
-	of, typeOfError := l.typeOf(node)
+	of, typeOfError := lowering.typeOf(node)
 	if typeOfError != nil {
 		return nil, true, typeOfError
 	}
@@ -49,13 +49,13 @@ func (l *lowering) optionalIntrinsic(node *ast.Node) (ir.Expression, bool, error
 		return true
 	})
 	if occurrences != 1 {
-		return nil, true, l.notYet(node, "an optional intrinsic without exactly one explicit receiver operand")
+		return nil, true, lowering.notYet(node, "an optional intrinsic without exactly one explicit receiver operand")
 	}
 	function := -1
-	if l.function != nil {
-		function = l.functionIndex
+	if lowering.function != nil {
+		function = lowering.functionIndex
 	}
-	local := len(l.result.Locals)
+	local := len(lowering.result.Locals)
 	read := ir.Read{Local: local, Of: receiver.Type()}
 	replaced := false
 	var replace func(reflect.Value) reflect.Value
@@ -102,9 +102,9 @@ func (l *lowering) optionalIntrinsic(node *ast.Node) (ir.Expression, bool, error
 	}
 	lowered := replace(reflect.ValueOf(value)).Interface().(ir.Expression)
 	if !replaced {
-		return nil, true, l.notYet(node, "an optional intrinsic whose receiver is not an explicit operand")
+		return nil, true, lowering.notYet(node, "an optional intrinsic whose receiver is not an explicit operand")
 	}
-	l.result.Locals = append(l.result.Locals, ir.Local{
+	lowering.result.Locals = append(lowering.result.Locals, ir.Local{
 		Name:               "optional_intrinsic_receiver",
 		Type:               receiver.Type(),
 		Function:           function,

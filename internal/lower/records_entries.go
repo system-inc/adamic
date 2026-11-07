@@ -8,9 +8,9 @@ import (
 // Main's growing literals with structural views use boxed Object storage. Keep
 // that representation for the proven literal origins it already supports; a
 // homogeneous dictionary cannot acquire those fixed-object parameter views.
-func (l *lowering) enumerationRecordStorageType(t *checker.Type) bool {
-	infos := l.checker.GetIndexInfosOfType(t)
-	properties := l.checker.GetPropertiesOfType(t)
+func (lowering *lowering) enumerationRecordStorageType(t *checker.Type) bool {
+	infos := lowering.checker.GetIndexInfosOfType(t)
+	properties := lowering.checker.GetPropertiesOfType(t)
 	if len(infos) != 1 ||
 		infos[0].IsReadonly() ||
 		infos[0].KeyType().Flags() != checker.TypeFlagsString ||
@@ -19,13 +19,13 @@ func (l *lowering) enumerationRecordStorageType(t *checker.Type) bool {
 		return false
 	}
 	for _, property := range properties {
-		if property.Flags&ast.SymbolFlagsOptional != 0 || l.checker.GetTypeOfSymbol(
+		if property.Flags&ast.SymbolFlagsOptional != 0 || lowering.checker.GetTypeOfSymbol(
 			property,
 		).Flags()&(checker.TypeFlagsNumberLike|checker.TypeFlagsStringLike|checker.TypeFlagsBooleanLike) == 0 {
 			return false
 		}
 	}
-	modules, moduleOrderError := l.moduleOrder(l.program.Files()[0])
+	modules, moduleOrderError := lowering.moduleOrder(lowering.program.Files()[0])
 	if moduleOrderError != nil {
 		return false
 	}
@@ -36,9 +36,9 @@ func (l *lowering) enumerationRecordStorageType(t *checker.Type) bool {
 			return true
 		}
 		if node.Kind == ast.KindObjectLiteralExpression &&
-			l.slotType(node) == t &&
-			l.enumerationInModule(ast.GetSourceFileOfNode(node).AsSourceFile()) &&
-			l.entriesRecordLiteral(node) {
+			lowering.slotType(node) == t &&
+			lowering.enumerationInModule(ast.GetSourceFileOfNode(node).AsSourceFile()) &&
+			lowering.entriesRecordLiteral(node) {
 			found = true
 			return true
 		}
@@ -52,17 +52,17 @@ func (l *lowering) enumerationRecordStorageType(t *checker.Type) bool {
 
 // Readonly index views admitted by main's enumeration proof keep fixed-object
 // storage. This does not admit mutable dictionary aliases or readonly writes.
-func (l *lowering) enumerationReadonlyType(t *checker.Type) bool {
-	infos := l.checker.GetIndexInfosOfType(t)
+func (lowering *lowering) enumerationReadonlyType(t *checker.Type) bool {
+	infos := lowering.checker.GetIndexInfosOfType(t)
 	if len(infos) != 1 || !infos[0].IsReadonly() || infos[0].KeyType().Flags() != checker.TypeFlagsString {
 		return false
 	}
-	modules, moduleOrderError := l.moduleOrder(l.program.Files()[0])
+	modules, moduleOrderError := lowering.moduleOrder(lowering.program.Files()[0])
 	if moduleOrderError != nil {
 		return false
 	}
 	for _, module := range modules {
-		if l.enumerationInModule(module) {
+		if lowering.enumerationInModule(module) {
 			return true
 		}
 	}
@@ -73,10 +73,10 @@ func (l *lowering) enumerationReadonlyType(t *checker.Type) bool {
 // Readonly<Record<string, V>>, held in the viewed object's own fixed storage because the program's
 // enumeration proof keeps it there (enumerationReadonlyType). Such a view is the object it views:
 // tsc's getEnumMembers reads an enum's table through one (#52zja36).
-func (l *lowering) readonlyObjectView(t *checker.Type) bool {
+func (lowering *lowering) readonlyObjectView(t *checker.Type) bool {
 	return t.Flags()&checker.TypeFlagsObject != 0 &&
-		len(l.checker.GetPropertiesOfType(t)) == 0 &&
-		len(l.checker.GetSignaturesOfType(t, checker.SignatureKindCall)) == 0 &&
-		len(l.checker.GetSignaturesOfType(t, checker.SignatureKindConstruct)) == 0 &&
-		l.enumerationReadonlyType(t)
+		len(lowering.checker.GetPropertiesOfType(t)) == 0 &&
+		len(lowering.checker.GetSignaturesOfType(t, checker.SignatureKindCall)) == 0 &&
+		len(lowering.checker.GetSignaturesOfType(t, checker.SignatureKindConstruct)) == 0 &&
+		lowering.enumerationReadonlyType(t)
 }

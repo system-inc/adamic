@@ -5,13 +5,13 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-func (l *lowering) comma(node *ast.Node) (ir.Expression, error) {
+func (lowering *lowering) comma(node *ast.Node) (ir.Expression, error) {
 	binary := node.AsBinaryExpression()
-	left, discardedValueError := l.discardedValue(binary.Left)
+	left, discardedValueError := lowering.discardedValue(binary.Left)
 	if discardedValueError != nil {
 		return nil, discardedValueError
 	}
-	right, expressionError := l.expression(binary.Right)
+	right, expressionError := lowering.expression(binary.Right)
 	if expressionError != nil {
 		return nil, expressionError
 	}
@@ -20,21 +20,21 @@ func (l *lowering) comma(node *ast.Node) (ir.Expression, error) {
 
 // discardedValue accepts the effects already lowered as statements too: writes, increments,
 // console calls and void calls. The discarded value never needs storage.
-func (l *lowering) discardedValue(node *ast.Node) (ir.Expression, error) {
-	value, expressionError := l.expression(node)
+func (lowering *lowering) discardedValue(node *ast.Node) (ir.Expression, error) {
+	value, expressionError := lowering.expression(node)
 	if expressionError == nil {
 		return value, nil
 	}
-	statements, statementError := l.expressionStatement(node)
+	statements, statementError := lowering.expressionStatement(node)
 	if statementError != nil {
 		return nil, expressionError
 	}
 	walk(statements, func(node any) bool {
 		if assign, ok := node.(ir.Assign); ok {
-			l.result.Locals[assign.Local].ExpressionAssigned = true
+			lowering.result.Locals[assign.Local].ExpressionAssigned = true
 		}
 		if declare, ok := node.(ir.Declare); ok {
-			l.result.Locals[declare.Local].ExpressionAssigned = true
+			lowering.result.Locals[declare.Local].ExpressionAssigned = true
 		}
 		return true
 	})

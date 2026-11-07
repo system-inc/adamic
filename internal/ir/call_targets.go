@@ -11,9 +11,9 @@ import (
 // lowering in MethodTargets after all classes are known. This also includes
 // structural accessor dispatch (Virtual == -1). A missing virtual target set is
 // malformed IR and must fail loudly rather than imply the call has no effects.
-func (p *Program) CallTargets(call Call) []int {
+func (program *Program) CallTargets(call Call) []int {
 	if call.Virtual != 0 {
-		targets := p.MethodTargets[call.Function]
+		targets := program.MethodTargets[call.Function]
 		if len(targets) == 0 {
 			panic("ir: virtual call has no target set")
 		}
@@ -22,9 +22,9 @@ func (p *Program) CallTargets(call Call) []int {
 	return []int{call.Function}
 }
 
-func (p *Program) CallMayThrow(call Call) bool {
-	for _, target := range p.CallTargets(call) {
-		if p.Functions[target].MayThrow {
+func (program *Program) CallMayThrow(call Call) bool {
+	for _, target := range program.CallTargets(call) {
+		if program.Functions[target].MayThrow {
 			return true
 		}
 	}
@@ -44,7 +44,7 @@ type FunctionTargets struct {
 // mutable bindings, properties, returned values and joins are Unknown. ArrayVisit
 // covers forEach, filter, find, some and every; MapForEach covers Map and Set.
 // A sort's named comparator is a direct function, rather than a function value.
-func (p *Program) ClosureTargets(call Expression) FunctionTargets {
+func (program *Program) ClosureTargets(call Expression) FunctionTargets {
 	var value Expression
 	switch call := call.(type) {
 	case CallClosure:
@@ -83,10 +83,10 @@ func (p *Program) ClosureTargets(call Expression) FunctionTargets {
 	case MakeClosure:
 		return FunctionTargets{Functions: []int{value.Function}}
 	case Read:
-		if target := p.Locals[value.Local].NestedFunction; target != 0 {
+		if target := program.Locals[value.Local].NestedFunction; target != 0 {
 			return FunctionTargets{Functions: []int{target - 1}}
 		}
-		if target := p.Locals[value.Local].ConstantClosure; target != 0 {
+		if target := program.Locals[value.Local].ConstantClosure; target != 0 {
 			return FunctionTargets{Functions: []int{target - 1}}
 		}
 	}
@@ -114,11 +114,11 @@ const (
 )
 
 // ReturnsDiscard is what a void call that can run any of functions releases of its result.
-func (p *Program) ReturnsDiscard(functions []int) Discard {
+func (program *Program) ReturnsDiscard(functions []int) Discard {
 	discard := DiscardNothing
 	for index, function := range functions {
 		returned := DiscardNothing
-		if p.Functions[function].Returns.IsReference() {
+		if program.Functions[function].Returns.IsReference() {
 			returned = DiscardReference
 		}
 		if index > 0 && returned != discard {
@@ -133,12 +133,12 @@ func (p *Program) ReturnsDiscard(functions []int) Discard {
 // releases of the closure's result: by its targets' Returns where ClosureTargets bounds them and they
 // agree, and by the closure's own flag where they're Unknown or disagree, since every closure carries
 // its own answer.
-func (p *Program) ClosureDiscard(call Expression) Discard {
-	targets := p.ClosureTargets(call)
+func (program *Program) ClosureDiscard(call Expression) Discard {
+	targets := program.ClosureTargets(call)
 	if targets.Unknown {
 		return DiscardFlagged
 	}
-	if discard := p.ReturnsDiscard(targets.Functions); discard != DiscardMixed {
+	if discard := program.ReturnsDiscard(targets.Functions); discard != DiscardMixed {
 		return discard
 	}
 	return DiscardFlagged
@@ -149,12 +149,12 @@ func (p *Program) ClosureDiscard(call Expression) Discard {
 // MethodTargets is keyed by a class's method slot, which a call through an interface doesn't have,
 // so the methods it can find are bounded by name, by every method table that holds one
 // (MethodsNamed). Any other call has no such arm.
-func (p *Program) MethodDiscard(call CallClosure) Discard {
+func (program *Program) MethodDiscard(call CallClosure) Discard {
 	property, isProperty := call.Closure.(Property)
 	if !isProperty || !property.Method {
 		return DiscardNothing
 	}
-	return p.ReturnsDiscard(p.MethodsNamed(property.Name))
+	return program.ReturnsDiscard(program.MethodsNamed(property.Name))
 }
 
 // methodTables caches MethodsNamed's walk, keyed to the program's size as argumentFacts is. Lowering
@@ -169,11 +169,11 @@ type methodTables struct {
 // MethodsNamed is every function a method table holds under the name, in function order: the
 // methods of the objects class constructors make (ObjectLiteral's Methods), a class's static side's
 // among them, which is all a call through an interface finds a method in.
-func (p *Program) MethodsNamed(name string) []int {
-	if tables := p.methodTables; tables != nil && tables.functions == len(p.Functions) {
+func (program *Program) MethodsNamed(name string) []int {
+	if tables := program.methodTables; tables != nil && tables.functions == len(program.Functions) {
 		return tables.named[name]
 	}
-	tables := &methodTables{functions: len(p.Functions), named: map[string][]int{}}
+	tables := &methodTables{functions: len(program.Functions), named: map[string][]int{}}
 	held := map[Method]bool{}
 	visit := func(node any) {
 		literal, isLiteral := node.(ObjectLiteral)
@@ -187,33 +187,33 @@ func (p *Program) MethodsNamed(name string) []int {
 			}
 		}
 	}
-	spreadStorageWalk(reflect.ValueOf(p.Main), visit)
-	for _, function := range p.Functions {
+	spreadStorageWalk(reflect.ValueOf(program.Main), visit)
+	for _, function := range program.Functions {
 		spreadStorageWalk(reflect.ValueOf(function.Body), visit)
 	}
 	for _, methods := range tables.named {
 		slices.Sort(methods)
 	}
-	p.methodTables = tables
+	program.methodTables = tables
 	return tables.named[name]
 }
 
 // ClosureMayThrow treats Unknown as anything in the program, including methods
 // callable through structural interfaces, rather than trusting a static signature.
-func (p *Program) ClosureMayThrow(call Expression) bool {
-	targets := p.ClosureTargets(call)
+func (program *Program) ClosureMayThrow(call Expression) bool {
+	targets := program.ClosureTargets(call)
 	if targets.Unknown {
-		for _, function := range p.Functions {
+		for _, function := range program.Functions {
 			if function.MayThrow {
 				return true
 			}
 		}
 		// Runtime host closures are not entries in Functions. Their lowering
 		// contributes to this flag; bounded user targets below stay precise.
-		return p.ClosuresMayThrow
+		return program.ClosuresMayThrow
 	}
 	for _, target := range targets.Functions {
-		if p.Functions[target].MayThrow {
+		if program.Functions[target].MayThrow {
 			return true
 		}
 	}
@@ -223,19 +223,19 @@ func (p *Program) ClosureMayThrow(call Expression) bool {
 // ClosureReadsArgumentsCount includes every function the program can make of the
 // call's function type. Missing type evidence uses bounded closure targets,
 // falling back to the entire program only when those targets are unknown.
-func (p *Program) ClosureReadsArgumentsCount(call CallClosure) bool {
-	return p.ClosureArgumentLayout(call).Count
+func (program *Program) ClosureReadsArgumentsCount(call CallClosure) bool {
+	return program.ClosureArgumentLayout(call).Count
 }
 
 // CallExpandsArguments means source positions do not match parameter positions.
 // Analyses must not replay a positional summary across this adapter boundary.
-func (p *Program) CallExpandsArguments(call Call) bool {
+func (program *Program) CallExpandsArguments(call Call) bool {
 	if len(call.Spread) != 0 {
 		return true
 	}
 	if !call.RestPacked {
-		for _, target := range p.CallTargets(call) {
-			if p.Functions[target].RestElement != 0 {
+		for _, target := range program.CallTargets(call) {
+			if program.Functions[target].RestElement != 0 {
 				return true
 			}
 		}

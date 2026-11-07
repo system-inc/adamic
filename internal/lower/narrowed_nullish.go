@@ -25,29 +25,32 @@ import (
 // yet. A binding only its own function writes can't change behind a call: the checker sees each of those
 // writes in flow, and a call back into that function makes a binding of its own. A property is the same,
 // proved by name (narrowedNullishPropertyReadGap).
-func (l *lowering) narrowedNullishReadGap(node *ast.Node) error {
+func (lowering *lowering) narrowedNullishReadGap(node *ast.Node) error {
 	if node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression {
-		return l.narrowedNullishPropertyReadGap(node)
+		return lowering.narrowedNullishPropertyReadGap(node)
 	}
 	shorthand := node.Parent != nil && node.Parent.Kind == ast.KindShorthandPropertyAssignment
-	if node.Kind != ast.KindIdentifier || !l.isExpression(node) || (ast.IsDeclarationName(node) && !shorthand) || (ast.IsAssignmentTarget(node) && pureWrite(node)) {
+	if node.Kind != ast.KindIdentifier ||
+		!lowering.isExpression(node) ||
+		(ast.IsDeclarationName(node) && !shorthand) ||
+		(ast.IsAssignmentTarget(node) && pureWrite(node)) {
 		return nil
 	}
-	symbol := l.bindingNamed(node)
-	if symbol == nil || symbol.Flags&ast.SymbolFlagsVariable == 0 || !l.writtenAcrossFunctions(symbol) {
+	symbol := lowering.bindingNamed(node)
+	if symbol == nil || symbol.Flags&ast.SymbolFlagsVariable == 0 || !lowering.writtenAcrossFunctions(symbol) {
 		return nil
 	}
-	absent, nullish := l.nullishUnit(l.checker.GetTypeAtLocation(node))
+	absent, nullish := lowering.nullishUnit(lowering.checker.GetTypeAtLocation(node))
 	if !nullish {
 		return nil
 	}
-	if _, declaredNullish := l.nullishUnit(l.checker.GetTypeOfSymbol(symbol)); declaredNullish {
+	if _, declaredNullish := lowering.nullishUnit(lowering.checker.GetTypeOfSymbol(symbol)); declaredNullish {
 		return nil // Declared to hold nothing else, the narrowed value is the only one it can hold.
 	}
-	if l.assignedJustBefore(node, symbol) || l.passedAtDeclaredType(node, symbol) {
+	if lowering.assignedJustBefore(node, symbol) || lowering.passedAtDeclaredType(node, symbol) {
 		return nil
 	}
-	return l.notYet(node, "a read narrowed to "+absent+" of a binding a call may write")
+	return lowering.notYet(node, "a read narrowed to "+absent+" of a binding a call may write")
 }
 
 func init() {
@@ -67,7 +70,7 @@ func init() {
 // would fold inside the callee, so it isn't let through. Nor is a library call (String(kept)), a
 // function value, a method, which an override may serve with a narrower parameter, an overload set,
 // a spread or a rest parameter.
-func (l *lowering) passedAtDeclaredType(read *ast.Node, symbol *ast.Symbol) bool {
+func (lowering *lowering) passedAtDeclaredType(read *ast.Node, symbol *ast.Symbol) bool {
 	argument := read
 	for argument.Parent != nil && argument.Parent.Kind == ast.KindParenthesizedExpression {
 		argument = argument.Parent
@@ -75,28 +78,38 @@ func (l *lowering) passedAtDeclaredType(read *ast.Node, symbol *ast.Symbol) bool
 	call := argument.Parent
 	// A slot a caller set (slotSet) is where the argument is written, not the parameter the resolved
 	// signature names, so nothing here proves the read lowers at its declared type: it stops.
-	if call == nil || call.Kind != ast.KindCallExpression || l.slotSet(argument) {
+	if call == nil || call.Kind != ast.KindCallExpression || lowering.slotSet(argument) {
 		return false
 	}
 	index := slices.Index(call.AsCallExpression().Arguments.Nodes, argument)
 	callee := ast.SkipParentheses(call.AsCallExpression().Expression)
-	signature := l.checker.GetResolvedSignature(call)
-	if index < 0 || callee.Kind != ast.KindIdentifier || signature == nil || signature.Declaration() == nil || index >= len(signature.Parameters()) || (signature.HasRestParameter() && index >= len(signature.Parameters())-1) {
+	signature := lowering.checker.GetResolvedSignature(call)
+	if index < 0 ||
+		callee.Kind != ast.KindIdentifier ||
+		signature == nil ||
+		signature.Declaration() == nil ||
+		index >= len(signature.Parameters()) ||
+		(signature.HasRestParameter() && index >= len(signature.Parameters())-1) {
 		return false
 	}
-	function := l.symbol(callee)
+	function := lowering.symbol(callee)
 	declaration := signature.Declaration()
-	if function == nil || len(function.Declarations) != 1 || function.Declarations[0] != declaration || declaration.Kind != ast.KindFunctionDeclaration || declaration.Body() == nil || l.declaredByLibrary(function) {
+	if function == nil ||
+		len(function.Declarations) != 1 ||
+		function.Declarations[0] != declaration ||
+		declaration.Kind != ast.KindFunctionDeclaration ||
+		declaration.Body() == nil ||
+		lowering.declaredByLibrary(function) {
 		return false
 	}
-	parameter := l.checker.GetTypeOfSymbol(signature.Parameters()[index])
-	declared := l.checker.GetTypeOfSymbol(symbol)
+	parameter := lowering.checker.GetTypeOfSymbol(signature.Parameters()[index])
+	declared := lowering.checker.GetTypeOfSymbol(symbol)
 	members := []*checker.Type{declared}
 	if declared.Flags()&checker.TypeFlagsUnion != 0 {
 		members = declared.Types()
 	}
 	for _, member := range members {
-		if !l.checker.IsTypeAssignableTo(member, parameter) {
+		if !lowering.checker.IsTypeAssignableTo(member, parameter) {
 			return false
 		}
 	}
@@ -112,9 +125,11 @@ func (l *lowering) passedAtDeclaredType(read *ast.Node, symbol *ast.Symbol) bool
 //	console.log(`${best === undefined}`);
 //
 // Anything else fails closed, as a call may have run between the narrowing and the read.
-func (l *lowering) assignedJustBefore(read *ast.Node, symbol *ast.Symbol) bool {
+func (lowering *lowering) assignedJustBefore(read *ast.Node, symbol *ast.Symbol) bool {
 	statement := read
-	for statement.Parent != nil && statement.Parent.Kind != ast.KindBlock && statement.Parent.Kind != ast.KindSourceFile {
+	for statement.Parent != nil &&
+		statement.Parent.Kind != ast.KindBlock &&
+		statement.Parent.Kind != ast.KindSourceFile {
 		if ast.IsIterationStatement(statement.Parent, false) {
 			return false // A loop runs what follows the read before the read again.
 		}
@@ -134,27 +149,30 @@ func (l *lowering) assignedJustBefore(read *ast.Node, symbol *ast.Symbol) bool {
 		return false
 	}
 	assignment := ast.SkipParentheses(statements[index-1].AsExpressionStatement().Expression)
-	if assignment.Kind != ast.KindBinaryExpression || assignment.AsBinaryExpression().OperatorToken.Kind != ast.KindEqualsToken {
+	if assignment.Kind != ast.KindBinaryExpression ||
+		assignment.AsBinaryExpression().OperatorToken.Kind != ast.KindEqualsToken {
 		return false
 	}
 	target := ast.SkipParentheses(assignment.AsBinaryExpression().Left)
-	return target.Kind == ast.KindIdentifier && l.symbol(target) == symbol && l.runsNothingBefore(statement, read)
+	return target.Kind == ast.KindIdentifier &&
+		lowering.symbol(target) == symbol &&
+		lowering.runsNothingBefore(statement, read)
 }
 
 // runsNothingBefore reports whether nothing node evaluates before read can run the program's own code.
 // JavaScript evaluates an expression's parts left to right, and what an expression does with them
 // (a call, a conversion, a getter) after, so what runs before read is what ends before it in the text,
 // outside the expressions around it.
-func (l *lowering) runsNothingBefore(node *ast.Node, read *ast.Node) bool {
+func (lowering *lowering) runsNothingBefore(node *ast.Node, read *ast.Node) bool {
 	switch {
 	case node == read || node.Pos() >= read.End():
 		return true
 	case node.End() <= read.Pos():
-		return l.runsNothing(node)
+		return lowering.runsNothing(node)
 	}
 	safe := true
 	node.ForEachChild(func(child *ast.Node) bool {
-		safe = l.runsNothingBefore(child, read)
+		safe = lowering.runsNothingBefore(child, read)
 		return !safe
 	})
 	return safe
@@ -164,11 +182,11 @@ func (l *lowering) runsNothingBefore(node *ast.Node, read *ast.Node) bool {
 // function made but not called, ===, !==, &&, ||, ?? and the comma, !, typeof and void over such parts, a
 // template whose substitutions are primitives, or a member the library declares of a global it declares
 // (console.log), whose getter is the library's. Anything else may call into the program.
-func (l *lowering) runsNothing(node *ast.Node) bool {
+func (lowering *lowering) runsNothing(node *ast.Node) bool {
 	every := func(node *ast.Node) bool {
 		safe := true
 		node.ForEachChild(func(child *ast.Node) bool {
-			safe = l.runsNothing(child)
+			safe = lowering.runsNothing(child)
 			return !safe
 		})
 		return safe
@@ -179,7 +197,7 @@ func (l *lowering) runsNothing(node *ast.Node) bool {
 	case ast.KindParenthesizedExpression, ast.KindTypeOfExpression, ast.KindVoidExpression, ast.KindTemplateExpression:
 		return every(node)
 	case ast.KindTemplateSpan:
-		return l.primitiveTyped(node.AsTemplateSpan().Expression) && every(node)
+		return lowering.primitiveTyped(node.AsTemplateSpan().Expression) && every(node)
 	case ast.KindPrefixUnaryExpression:
 		return node.AsPrefixUnaryExpression().Operator == ast.KindExclamationToken && every(node)
 	case ast.KindBinaryExpression:
@@ -193,15 +211,18 @@ func (l *lowering) runsNothing(node *ast.Node) bool {
 		// trap runs for a member the library declares too.
 		receiver := ast.SkipParentheses(node.AsPropertyAccessExpression().Expression)
 		if receiver.Kind == ast.KindIdentifier {
-			return l.declaredByLibrary(l.checker.GetSymbolAtLocation(node.Name())) && l.declaredByLibrary(l.checker.GetSymbolAtLocation(receiver))
+			return lowering.declaredByLibrary(lowering.checker.GetSymbolAtLocation(node.Name())) &&
+				lowering.declaredByLibrary(lowering.checker.GetSymbolAtLocation(receiver))
 		}
-		return receiver.Kind == ast.KindPropertyAccessExpression && l.declaredByLibrary(l.checker.GetSymbolAtLocation(node.Name())) && l.runsNothing(receiver)
+		return receiver.Kind == ast.KindPropertyAccessExpression &&
+			lowering.declaredByLibrary(lowering.checker.GetSymbolAtLocation(node.Name())) &&
+			lowering.runsNothing(receiver)
 	}
 	return node.Kind < ast.KindIdentifier // A literal, a template's text, or a punctuation token.
 }
 
 // declaredByLibrary reports whether every declaration of symbol is the library's or the prelude's.
-func (l *lowering) declaredByLibrary(symbol *ast.Symbol) bool {
+func (lowering *lowering) declaredByLibrary(symbol *ast.Symbol) bool {
 	if symbol == nil || len(symbol.Declarations) == 0 {
 		return false
 	}
@@ -225,8 +246,8 @@ func (l *lowering) declaredByLibrary(symbol *ast.Symbol) bool {
 // whose elements an array's own methods write behind a call, when some write could reach any name, or
 // when a write of its name could run between: one in the read's own code between the two, or one a
 // call between can run (writeMayRunBetween). A read through a key that isn't a literal is never narrowed.
-func (l *lowering) narrowedNullishPropertyReadGap(node *ast.Node) error {
-	if !l.isExpression(node) || (ast.IsAssignmentTarget(node) && pureWrite(node)) {
+func (lowering *lowering) narrowedNullishPropertyReadGap(node *ast.Node) error {
+	if !lowering.isExpression(node) || (ast.IsAssignmentTarget(node) && pureWrite(node)) {
 		return nil
 	}
 	var key *ast.Node
@@ -234,46 +255,48 @@ func (l *lowering) narrowedNullishPropertyReadGap(node *ast.Node) error {
 		key = node.Name()
 	} else {
 		key = ast.SkipParentheses(node.AsElementAccessExpression().ArgumentExpression)
-		if key.Kind != ast.KindStringLiteral && key.Kind != ast.KindNoSubstitutionTemplateLiteral && key.Kind != ast.KindNumericLiteral {
+		if key.Kind != ast.KindStringLiteral &&
+			key.Kind != ast.KindNoSubstitutionTemplateLiteral &&
+			key.Kind != ast.KindNumericLiteral {
 			return nil
 		}
 	}
-	absent, nullish := l.nullishUnit(l.checker.GetTypeAtLocation(node))
+	absent, nullish := lowering.nullishUnit(lowering.checker.GetTypeAtLocation(node))
 	if !nullish {
 		return nil
 	}
-	if property := l.checker.GetSymbolAtLocation(key); property != nil {
-		if _, declaredNullish := l.nullishUnit(l.checker.GetTypeOfSymbol(property)); declaredNullish {
+	if property := lowering.checker.GetSymbolAtLocation(key); property != nil {
+		if _, declaredNullish := lowering.nullishUnit(lowering.checker.GetTypeOfSymbol(property)); declaredNullish {
 			return nil // Declared to hold nothing else, as for a binding.
 		}
 	}
-	stop := l.notYet(node, "a read narrowed to "+absent+" of a property a call may write")
+	stop := lowering.notYet(node, "a read narrowed to "+absent+" of a property a call may write")
 	// A getter answers each read itself, so neither an assignment just before nor a missing write
 	// proves what it gives: get x() { return n > 0 ? 4 : undefined; } changes with n alone. One the
 	// program writes by name (accessorName), or one a descriptor or a prototype could install
 	// (accessors), stops the read whatever the flow says.
-	writes := l.propertyWritesOf()
-	if writes.accessors || l.accessorName(key.Text()) {
+	writes := lowering.propertyWritesOf()
+	if writes.accessors || lowering.accessorName(key.Text()) {
 		return stop
 	}
 	_, notNumeric := strconv.ParseFloat(key.Text(), 64) // A name a number spells parses, NaN and Infinity among them.
 	numeric := notNumeric == nil
-	observation := l.nullishObservationOf(node, absent)
+	observation := lowering.nullishObservationOf(node, absent)
 	if observation == nil {
 		if numeric || writes.everyName || len(writes.named[key.Text()]) > 0 {
 			return stop
 		}
 		return nil
 	}
-	if !l.codeBetween(observation.from, node, l.appendsBetween(observation, node, numeric)) {
+	if !lowering.codeBetween(observation.from, node, lowering.appendsBetween(observation, node, numeric)) {
 		return nil
 	}
 	if numeric || writes.everyName {
 		return stop
 	}
-	reach := l.reachBetween(observation.from, node)
+	reach := lowering.reachBetween(observation.from, node)
 	for _, target := range writes.named[key.Text()] {
-		if target != observation.target && l.writeMayRunBetween(target, observation.from, node, reach) {
+		if target != observation.target && lowering.writeMayRunBetween(target, observation.from, node, reach) {
 			return stop
 		}
 	}
@@ -297,40 +320,49 @@ const nullishObservationDepth = 32
 
 // nullishObservationOf walks the read's flow straight back to the place it was last seen holding the
 // narrowed value: a plain assignment of it, a delete of it, or a check that proves it holds exactly that
-// nullish unit (=== null, !== undefined on its false side, typeof x === 'undefined'). A condition that doesn't mention it, a call, which codeBetween judges, and a join
-// whose every way in reaches the same observation (an optional chain's) are walked through. A loop, a
-// label of any other kind, a write of what holds the read, another test of it or the start of a
-// function ends the walk with none, since the value there isn't the one seen.
-func (l *lowering) nullishObservationOf(read *ast.Node, absent string) *nullishObservation {
+// nullish unit (=== null, !== undefined on its false side, typeof x === 'undefined'). A condition that doesn't mention
+// it, a call, which codeBetween judges, and a join whose every way in reaches the same observation (an optional
+// chain's) are walked through. A loop, a label of any other kind, a write of what holds the read, another test of it or
+// the start of a function ends the walk with none, since the value there isn't the one seen.
+func (lowering *lowering) nullishObservationOf(read *ast.Node, absent string) *nullishObservation {
 	data := read.FlowNodeData()
 	if data == nil || data.FlowNode == nil {
 		return nil
 	}
-	return l.nullishObservationAlong(read, absent, data.FlowNode, 0, map[*ast.FlowNode]*nullishObservation{})
+	return lowering.nullishObservationAlong(read, absent, data.FlowNode, 0, map[*ast.FlowNode]*nullishObservation{})
 }
 
-func (l *lowering) nullishObservationAlong(read *ast.Node, absent string, flow *ast.FlowNode, joins int, seen map[*ast.FlowNode]*nullishObservation) *nullishObservation {
+func (lowering *lowering) nullishObservationAlong(
+	read *ast.Node,
+	absent string,
+	flow *ast.FlowNode,
+	joins int,
+	seen map[*ast.FlowNode]*nullishObservation,
+) *nullishObservation {
 	for flow != nil {
 		switch {
 		case flow.Flags&ast.FlowFlagsAssignment != 0:
-			if predicateMatchingReference(l.checker, read, flow.Node) {
+			if predicateMatchingReference(lowering.checker, read, flow.Node) {
 				parent := flow.Node.Parent
 				switch {
-				case parent != nil && parent.Kind == ast.KindBinaryExpression && parent.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken && parent.AsBinaryExpression().Left == flow.Node:
+				case parent != nil &&
+					parent.Kind == ast.KindBinaryExpression &&
+					parent.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken &&
+					parent.AsBinaryExpression().Left == flow.Node:
 					return &nullishObservation{target: flow.Node, from: parent.End(), assigned: true}
 				case parent != nil && parent.Kind == ast.KindDeleteExpression:
 					return &nullishObservation{target: flow.Node, from: parent.End()}
 				}
 				return nil
 			}
-			if enumTagContainsReference(l.checker, read, flow.Node) {
+			if enumTagContainsReference(lowering.checker, read, flow.Node) {
 				return nil
 			}
 		case flow.Flags&ast.FlowFlagsCondition != 0:
-			if checked := l.nullishCheck(read, absent, flow); checked != nil {
+			if checked := lowering.nullishCheck(read, absent, flow); checked != nil {
 				return &nullishObservation{target: checked, from: checked.End()}
 			}
-			if l.mentionsReference(read, flow.Node) {
+			if lowering.mentionsReference(read, flow.Node) {
 				return nil
 			}
 		case flow.Flags&(ast.FlowFlagsCall|ast.FlowFlagsArrayMutation) != 0:
@@ -347,7 +379,7 @@ func (l *lowering) nullishObservationAlong(read *ast.Node, absent string, flow *
 				if list.Flow.Flags&ast.FlowFlagsUnreachable != 0 {
 					continue
 				}
-				found := l.nullishObservationAlong(read, absent, list.Flow, joins+1, seen)
+				found := lowering.nullishObservationAlong(read, absent, list.Flow, joins+1, seen)
 				if found == nil || common != nil && found.target != common.target {
 					return nil
 				}
@@ -366,7 +398,7 @@ func (l *lowering) nullishObservationAlong(read *ast.Node, absent string, flow *
 // nullishCheck is the reference a condition reads when, on the side flow takes, it proves the
 // reference holds exactly absent: x === null or x === undefined when true, x !== null or x !== undefined
 // when false, and typeof x === 'undefined' the same way. Nil for any other condition (== is refused).
-func (l *lowering) nullishCheck(read *ast.Node, absent string, flow *ast.FlowNode) *ast.Node {
+func (lowering *lowering) nullishCheck(read *ast.Node, absent string, flow *ast.FlowNode) *ast.Node {
 	condition := ast.SkipParentheses(flow.Node)
 	if condition.Kind != ast.KindBinaryExpression {
 		return nil
@@ -388,16 +420,20 @@ func (l *lowering) nullishCheck(read *ast.Node, absent string, flow *ast.FlowNod
 		reference, other := ast.SkipParentheses(sides[0]), ast.SkipParentheses(sides[1])
 		var proves string
 		switch {
-		case reference.Kind == ast.KindTypeOfExpression && (other.Kind == ast.KindStringLiteral || other.Kind == ast.KindNoSubstitutionTemplateLiteral) && other.Text() == "undefined":
+		case reference.Kind == ast.KindTypeOfExpression &&
+			(other.Kind == ast.KindStringLiteral || other.Kind == ast.KindNoSubstitutionTemplateLiteral) &&
+			other.Text() == "undefined":
 			reference, proves = ast.SkipParentheses(reference.AsTypeOfExpression().Expression), "undefined"
 		case other.Kind == ast.KindNullKeyword:
 			proves = "null"
-		case other.Kind == ast.KindIdentifier && other.Text() == "undefined" && l.checker.GetTypeAtLocation(other).Flags() == checker.TypeFlagsUndefined:
+		case other.Kind == ast.KindIdentifier &&
+			other.Text() == "undefined" &&
+			lowering.checker.GetTypeAtLocation(other).Flags() == checker.TypeFlagsUndefined:
 			proves = "undefined"
 		default:
 			continue
 		}
-		if proves == absent && predicateMatchingReference(l.checker, read, reference) {
+		if proves == absent && predicateMatchingReference(lowering.checker, read, reference) {
 			return reference
 		}
 	}
@@ -405,16 +441,16 @@ func (l *lowering) nullishCheck(read *ast.Node, absent string, flow *ast.FlowNod
 }
 
 // mentionsReference is whether node reads or writes what read reads, anywhere inside it.
-func (l *lowering) mentionsReference(read *ast.Node, node *ast.Node) bool {
+func (lowering *lowering) mentionsReference(read *ast.Node, node *ast.Node) bool {
 	if node == nil {
 		return false
 	}
-	if predicateMatchingReference(l.checker, read, node) {
+	if predicateMatchingReference(lowering.checker, read, node) {
 		return true
 	}
 	found := false
 	node.ForEachChild(func(child *ast.Node) bool {
-		found = l.mentionsReference(read, child)
+		found = lowering.mentionsReference(read, child)
 		return found
 	})
 	return found
@@ -425,22 +461,31 @@ func (l *lowering) mentionsReference(read *ast.Node, node *ast.Node) bool {
 // past the array's end and its length. So it can't change a named property, nor an index that a plain
 // assignment just gave the array, which is below its end. After a delete or a check the index may be
 // the end, which push writes, so a number's name exempts none then.
-func (l *lowering) appendsBetween(observation *nullishObservation, read *ast.Node, numeric bool) map[*ast.Node]bool {
+func (lowering *lowering) appendsBetween(
+	observation *nullishObservation,
+	read *ast.Node,
+	numeric bool,
+) map[*ast.Node]bool {
 	if numeric && !observation.assigned {
 		return nil
 	}
 	var exempt map[*ast.Node]bool
-	l.visitBetween(observation.from, read, func(node *ast.Node) {
+	lowering.visitBetween(observation.from, read, func(node *ast.Node) {
 		if node.Kind != ast.KindCallExpression {
 			return
 		}
 		call := node.AsCallExpression()
 		callee := ast.SkipParentheses(call.Expression)
-		if callee.Kind != ast.KindPropertyAccessExpression || callee.Name().Text() != "push" || !l.declaredByLibrary(l.checker.GetSymbolAtLocation(callee.Name())) || !l.isArrayType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))) {
+		if callee.Kind != ast.KindPropertyAccessExpression ||
+			callee.Name().Text() != "push" ||
+			!lowering.declaredByLibrary(lowering.checker.GetSymbolAtLocation(callee.Name())) ||
+			!lowering.isArrayType(lowering.checker.GetNonNullableType(
+				lowering.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression),
+			)) {
 			return
 		}
 		for _, argument := range call.Arguments.Nodes {
-			if !l.primitiveTyped(argument) {
+			if !lowering.primitiveTyped(argument) {
 				return
 			}
 		}
@@ -454,7 +499,7 @@ func (l *lowering) appendsBetween(observation *nullishObservation, read *ast.Nod
 
 // visitBetween visits every node in the read's own code (codeBetween's walk) that completes after from
 // and before the read starts, nested functions included as nodes but not entered.
-func (l *lowering) visitBetween(from int, read *ast.Node, visit func(*ast.Node)) {
+func (lowering *lowering) visitBetween(from int, read *ast.Node, visit func(*ast.Node)) {
 	container := read.Parent
 	for container != nil && !ast.IsFunctionLike(container) && container.Kind != ast.KindSourceFile {
 		container = container.Parent
@@ -492,23 +537,23 @@ type codeReach struct {
 // A write runs nothing, since a setter anywhere makes every name written (everyName). Anything else that
 // can run code (a method call, a function value's call, new, a conversion, an iterator, a getter, an
 // element read, which a computed getter could serve) reaches everything, and so fails closed.
-func (l *lowering) reachBetween(from int, read *ast.Node) *codeReach {
+func (lowering *lowering) reachBetween(from int, read *ast.Node) *codeReach {
 	reach := &codeReach{functions: map[*ast.Node]bool{}}
-	l.visitBetween(from, read, func(node *ast.Node) {
+	lowering.visitBetween(from, read, func(node *ast.Node) {
 		if !reach.everything {
-			l.reachFrom(node, reach)
+			lowering.reachFrom(node, reach)
 		}
 	})
 	return reach
 }
 
 // reachFrom adds what evaluating node itself may run, beyond its parts, to reach.
-func (l *lowering) reachFrom(node *ast.Node, reach *codeReach) {
+func (lowering *lowering) reachFrom(node *ast.Node, reach *codeReach) {
 	if ast.IsFunctionLike(node) {
-		l.reachFunction(node, reach)
+		lowering.reachFunction(node, reach)
 		return
 	}
-	if !l.mayRunCode(node) {
+	if !lowering.mayRunCode(node) {
 		return
 	}
 	switch node.Kind {
@@ -516,31 +561,38 @@ func (l *lowering) reachFrom(node *ast.Node, reach *codeReach) {
 		call := node.AsCallExpression()
 		callee := ast.SkipParentheses(call.Expression)
 		if callee.Kind == ast.KindIdentifier {
-			if symbol := l.symbol(callee); symbol != nil && len(symbol.Declarations) == 1 && symbol.Declarations[0].Kind == ast.KindFunctionDeclaration && symbol.Declarations[0].Body() != nil && !l.declaredByLibrary(symbol) {
-				l.reachFunction(symbol.Declarations[0], reach)
+			if symbol := lowering.symbol(callee); symbol != nil &&
+				len(symbol.Declarations) == 1 &&
+				symbol.Declarations[0].Kind == ast.KindFunctionDeclaration &&
+				symbol.Declarations[0].Body() != nil &&
+				!lowering.declaredByLibrary(symbol) {
+				lowering.reachFunction(symbol.Declarations[0], reach)
 				return
 			}
 		}
-		if l.libraryCallRunsOnlyCallbacks(callee, call.Arguments.Nodes, reach) {
+		if lowering.libraryCallRunsOnlyCallbacks(callee, call.Arguments.Nodes, reach) {
 			return
 		}
 	case ast.KindBinaryExpression:
 		binary := node.AsBinaryExpression()
-		if ast.IsAssignmentOperator(binary.OperatorToken.Kind) && writesStorage(binary.Left) && (binary.OperatorToken.Kind == ast.KindEqualsToken || l.primitiveTyped(binary.Left) && l.primitiveTyped(binary.Right)) {
+		if ast.IsAssignmentOperator(binary.OperatorToken.Kind) &&
+			writesStorage(binary.Left) &&
+			(binary.OperatorToken.Kind == ast.KindEqualsToken ||
+				lowering.primitiveTyped(binary.Left) && lowering.primitiveTyped(binary.Right)) {
 			return // A write, judged by name: = converts nothing, and a compound one here only primitives.
 		}
 	case ast.KindPrefixUnaryExpression:
-		if l.primitiveTyped(node.AsPrefixUnaryExpression().Operand) {
+		if lowering.primitiveTyped(node.AsPrefixUnaryExpression().Operand) {
 			return // ++, --, +, - and ~ on a primitive convert nothing of the program's.
 		}
 	case ast.KindPostfixUnaryExpression:
-		if l.primitiveTyped(node.AsPostfixUnaryExpression().Operand) {
+		if lowering.primitiveTyped(node.AsPostfixUnaryExpression().Operand) {
 			return
 		}
 	case ast.KindDeleteExpression:
 		return // A delete writes, judged by name, and runs nothing.
 	case ast.KindElementAccessExpression:
-		if len(l.programAccessorNames()) == 0 {
+		if len(lowering.programAccessorNames()) == 0 {
 			return // With no getter anywhere and none installed, an element read runs nothing.
 		}
 	}
@@ -548,27 +600,28 @@ func (l *lowering) reachFrom(node *ast.Node, reach *codeReach) {
 }
 
 // programAccessorNames is every getter and setter name the program writes, accessorName's set.
-func (l *lowering) programAccessorNames() map[string]bool {
-	l.accessorName("")
-	return l.writtenAccessorNames
+func (lowering *lowering) programAccessorNames() map[string]bool {
+	lowering.accessorName("")
+	return lowering.writtenAccessorNames
 }
 
 // libraryCallRunsOnlyCallbacks reports whether a call is the library's, through a callee every
 // declaration of which is the library's or the prelude's, on a primitive or a library global, with
 // every argument a primitive or a callback, and adds each callback to reach: the program's own code it
 // can run. Nil when the call isn't one, and reach is left as it was.
-func (l *lowering) libraryCallRunsOnlyCallbacks(callee *ast.Node, arguments []*ast.Node, reach *codeReach) bool {
+func (lowering *lowering) libraryCallRunsOnlyCallbacks(callee *ast.Node, arguments []*ast.Node, reach *codeReach) bool {
 	switch callee.Kind {
 	case ast.KindIdentifier:
-		if !l.declaredByLibrary(l.symbol(callee)) {
+		if !lowering.declaredByLibrary(lowering.symbol(callee)) {
 			return false
 		}
 	case ast.KindPropertyAccessExpression:
 		receiver := ast.SkipParentheses(callee.AsPropertyAccessExpression().Expression)
-		if !l.declaredByLibrary(l.checker.GetSymbolAtLocation(callee.Name())) {
+		if !lowering.declaredByLibrary(lowering.checker.GetSymbolAtLocation(callee.Name())) {
 			return false
 		}
-		if !l.primitiveTyped(receiver) && !(receiver.Kind == ast.KindIdentifier && l.declaredByLibrary(l.symbol(receiver))) {
+		if !lowering.primitiveTyped(receiver) &&
+			!(receiver.Kind == ast.KindIdentifier && lowering.declaredByLibrary(lowering.symbol(receiver))) {
 			return false
 		}
 	default:
@@ -578,12 +631,15 @@ func (l *lowering) libraryCallRunsOnlyCallbacks(callee *ast.Node, arguments []*a
 	for _, argument := range arguments {
 		argument = ast.SkipParentheses(argument)
 		switch {
-		case l.primitiveTyped(argument):
+		case lowering.primitiveTyped(argument):
 		case ast.IsFunctionLike(argument):
 			callbacks = append(callbacks, argument)
 		case argument.Kind == ast.KindIdentifier:
-			symbol := l.symbol(argument)
-			if symbol == nil || len(symbol.Declarations) != 1 || symbol.Declarations[0].Kind != ast.KindFunctionDeclaration || symbol.Declarations[0].Body() == nil {
+			symbol := lowering.symbol(argument)
+			if symbol == nil ||
+				len(symbol.Declarations) != 1 ||
+				symbol.Declarations[0].Kind != ast.KindFunctionDeclaration ||
+				symbol.Declarations[0].Body() == nil {
 				return false
 			}
 			callbacks = append(callbacks, symbol.Declarations[0])
@@ -592,14 +648,14 @@ func (l *lowering) libraryCallRunsOnlyCallbacks(callee *ast.Node, arguments []*a
 		}
 	}
 	for _, callback := range callbacks {
-		l.reachFunction(callback, reach)
+		lowering.reachFunction(callback, reach)
 	}
 	return true
 }
 
 // reachFunction adds a function's body to reach, and what it may run in turn, nested functions
 // included, since its body may call or hand them out.
-func (l *lowering) reachFunction(function *ast.Node, reach *codeReach) {
+func (lowering *lowering) reachFunction(function *ast.Node, reach *codeReach) {
 	if reach.everything || reach.functions[function] {
 		return
 	}
@@ -610,10 +666,10 @@ func (l *lowering) reachFunction(function *ast.Node, reach *codeReach) {
 			return true
 		}
 		if ast.IsFunctionLike(node) {
-			l.reachFunction(node, reach)
+			lowering.reachFunction(node, reach)
 			return false
 		}
-		l.reachFrom(node, reach)
+		lowering.reachFrom(node, reach)
 		node.ForEachChild(walk)
 		return reach.everything
 	}
@@ -625,10 +681,10 @@ func (l *lowering) reachFunction(function *ast.Node, reach *codeReach) {
 // again by what runs between (reentered). One in another function, a class field's initializer or a
 // static block runs then only if what runs between reaches it. One at another module's top level runs
 // only when that module is loaded, which a dynamic import, reaching everything, can do.
-func (l *lowering) writeMayRunBetween(target *ast.Node, from int, read *ast.Node, reach *codeReach) bool {
+func (lowering *lowering) writeMayRunBetween(target *ast.Node, from int, read *ast.Node, reach *codeReach) bool {
 	boundary, own := callBoundary(target), callBoundary(read)
 	if boundary == own {
-		return target.Pos() >= from && target.End() <= read.Pos() || l.reentered(own, reach)
+		return target.Pos() >= from && target.End() <= read.Pos() || lowering.reentered(own, reach)
 	}
 	if boundary == nil || boundary.Kind == ast.KindSourceFile {
 		return reach.everything
@@ -639,12 +695,12 @@ func (l *lowering) writeMayRunBetween(target *ast.Node, from int, read *ast.Node
 // reentered reports whether the code holding a read may run again from what runs between: never a
 // module's top level, a function what runs between reaches, and, when that's everything, any function
 // but one only its module's top level calls (calledOnlyFromTopLevel).
-func (l *lowering) reentered(code *ast.Node, reach *codeReach) bool {
+func (lowering *lowering) reentered(code *ast.Node, reach *codeReach) bool {
 	if code == nil || code.Kind == ast.KindSourceFile {
 		return false
 	}
 	if reach.everything {
-		return !l.calledOnlyFromTopLevel(code)
+		return !lowering.calledOnlyFromTopLevel(code)
 	}
 	return reach.functions[code]
 }
@@ -653,27 +709,32 @@ func (l *lowering) reentered(code *ast.Node, reach *codeReach) bool {
 // as the direct callee of a call at a module's top level, which no call runs again, so nothing that
 // runs inside it can enter it again. Judged by the name's text, so an export, an alias, a value or a
 // shadowing name fails closed.
-func (l *lowering) calledOnlyFromTopLevel(function *ast.Node) bool {
+func (lowering *lowering) calledOnlyFromTopLevel(function *ast.Node) bool {
 	if function.Kind != ast.KindFunctionDeclaration || function.Name() == nil {
 		return false
 	}
-	if answer, asked := l.topLevelOnlyFunctions[function]; asked {
+	if answer, asked := lowering.topLevelOnlyFunctions[function]; asked {
 		return answer
 	}
 	name, only := function.Name().Text(), true
-	l.walkProgramModules(func(node *ast.Node) {
+	lowering.walkProgramModules(func(node *ast.Node) {
 		if !only || node.Kind != ast.KindIdentifier || node.Text() != name || node == function.Name() {
 			return
 		}
 		call := node.Parent
-		if call == nil || call.Kind != ast.KindCallExpression || call.AsCallExpression().Expression != node || callBoundary(call) == nil || callBoundary(call).Kind != ast.KindSourceFile || l.symbol(node) != l.symbol(function.Name()) {
+		if call == nil ||
+			call.Kind != ast.KindCallExpression ||
+			call.AsCallExpression().Expression != node ||
+			callBoundary(call) == nil ||
+			callBoundary(call).Kind != ast.KindSourceFile ||
+			lowering.symbol(node) != lowering.symbol(function.Name()) {
 			only = false
 		}
 	})
-	if l.topLevelOnlyFunctions == nil {
-		l.topLevelOnlyFunctions = map[*ast.Node]bool{}
+	if lowering.topLevelOnlyFunctions == nil {
+		lowering.topLevelOnlyFunctions = map[*ast.Node]bool{}
 	}
-	l.topLevelOnlyFunctions[function] = only
+	lowering.topLevelOnlyFunctions[function] = only
 	return only
 }
 
@@ -707,53 +768,60 @@ var writingLibraryMembers = map[string]map[string]bool{
 // knows, on a property access or an element access: =, a compound or logical assignment, ++ or --, a
 // destructuring target and a for-in or for-of head. A delete counts as one too: after o.x = null, a
 // delete in a callee leaves undefined where the checker still says null.
-func (l *lowering) propertyWritesOf() *propertyWrites {
-	if l.propertyWrites != nil {
-		return l.propertyWrites
+func (lowering *lowering) propertyWritesOf() *propertyWrites {
+	if lowering.propertyWrites != nil {
+		return lowering.propertyWrites
 	}
-	l.propertyWrites = &propertyWrites{named: map[string][]*ast.Node{}}
-	l.walkProgramModules(func(node *ast.Node) {
+	lowering.propertyWrites = &propertyWrites{named: map[string][]*ast.Node{}}
+	lowering.walkProgramModules(func(node *ast.Node) {
 		switch {
-		case (node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression) && ast.IsAssignmentTarget(node):
-			l.notePropertyWrite(node)
+		case (node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression) &&
+			ast.IsAssignmentTarget(node):
+			lowering.notePropertyWrite(node)
 		case node.Kind == ast.KindDeleteExpression:
-			if operand := ast.SkipParentheses(node.AsDeleteExpression().Expression); operand.Kind == ast.KindPropertyAccessExpression || operand.Kind == ast.KindElementAccessExpression {
-				l.notePropertyWrite(operand)
+			if operand := ast.SkipParentheses(
+				node.AsDeleteExpression().Expression,
+			); operand.Kind == ast.KindPropertyAccessExpression || operand.Kind == ast.KindElementAccessExpression {
+				lowering.notePropertyWrite(operand)
 			}
 		case node.Kind == ast.KindSetAccessor:
-			l.propertyWrites.everyName = true // o.f = 4 through a setter runs its body, which can write any name.
-		case node.Kind == ast.KindIdentifier && writingLibraryMembers[node.Text()] != nil && l.isExpression(node) && l.isLibraryGlobal(node, node.Text()):
+			lowering.propertyWrites.everyName = true // o.f = 4 through a setter runs its body, which can write any name.
+		case node.Kind == ast.KindIdentifier &&
+			writingLibraryMembers[node.Text()] != nil &&
+			lowering.isExpression(node) &&
+			lowering.isLibraryGlobal(node, node.Text()):
 			member := node.Parent
-			if member.Kind != ast.KindPropertyAccessExpression || member.AsPropertyAccessExpression().Expression != node {
-				l.propertyWrites.accessors = true
+			if member.Kind != ast.KindPropertyAccessExpression ||
+				member.AsPropertyAccessExpression().Expression != node {
+				lowering.propertyWrites.accessors = true
 				return
 			}
 			if installs, writes := writingLibraryMembers[node.Text()][member.Name().Text()]; writes {
-				l.propertyWrites.everyName = true
-				l.propertyWrites.accessors = l.propertyWrites.accessors || installs
+				lowering.propertyWrites.everyName = true
+				lowering.propertyWrites.accessors = lowering.propertyWrites.accessors || installs
 			}
 		}
 	})
-	return l.propertyWrites
+	return lowering.propertyWrites
 }
 
 // notePropertyWrite files one write of a property access or an element access by what it can reach. A
 // name written through a property access or a literal key is that name, whatever the receiver's type:
 // an any or a dictionary that aliases the object writes it by that name too.
-func (l *lowering) notePropertyWrite(target *ast.Node) {
+func (lowering *lowering) notePropertyWrite(target *ast.Node) {
 	if target.Kind == ast.KindPropertyAccessExpression {
 		name := target.Name().Text()
-		l.propertyWrites.accessors = l.propertyWrites.accessors || name == "__proto__"
-		l.propertyWrites.named[name] = append(l.propertyWrites.named[name], target)
+		lowering.propertyWrites.accessors = lowering.propertyWrites.accessors || name == "__proto__"
+		lowering.propertyWrites.named[name] = append(lowering.propertyWrites.named[name], target)
 		return
 	}
 	key := ast.SkipParentheses(target.AsElementAccessExpression().ArgumentExpression)
 	if key.Kind == ast.KindStringLiteral || key.Kind == ast.KindNoSubstitutionTemplateLiteral {
-		l.propertyWrites.accessors = l.propertyWrites.accessors || key.Text() == "__proto__"
-		l.propertyWrites.named[key.Text()] = append(l.propertyWrites.named[key.Text()], target)
+		lowering.propertyWrites.accessors = lowering.propertyWrites.accessors || key.Text() == "__proto__"
+		lowering.propertyWrites.named[key.Text()] = append(lowering.propertyWrites.named[key.Text()], target)
 		return
 	}
-	keyType := l.checker.GetTypeAtLocation(key)
+	keyType := lowering.checker.GetTypeAtLocation(key)
 	members := []*checker.Type{keyType}
 	if keyType.Flags()&checker.TypeFlagsUnion != 0 {
 		members = keyType.Types()
@@ -763,13 +831,13 @@ func (l *lowering) notePropertyWrite(target *ast.Node) {
 		case member.Flags()&checker.TypeFlagsStringLiteral != 0:
 			// A literal union names what it writes: drop(options, "target") deletes target alone.
 			name, _ := member.AsLiteralType().Value().(string)
-			l.propertyWrites.accessors = l.propertyWrites.accessors || name == "__proto__"
-			l.propertyWrites.named[name] = append(l.propertyWrites.named[name], target)
+			lowering.propertyWrites.accessors = lowering.propertyWrites.accessors || name == "__proto__"
+			lowering.propertyWrites.named[name] = append(lowering.propertyWrites.named[name], target)
 		case member.Flags()&(checker.TypeFlagsNumberLike|checker.TypeFlagsESSymbolLike) != 0:
 			// A number key writes only a name a number spells, and every read of one stops already. A
 			// symbol key writes no name a read spells.
 		default:
-			l.propertyWrites.everyName = true
+			lowering.propertyWrites.everyName = true
 		}
 	}
 }
@@ -793,23 +861,23 @@ func pureWrite(target *ast.Node) bool {
 
 // bindingNamed is the binding an identifier reads or writes. In { later } and ({ later } = source) the
 // name is the literal's property too, and asked for its symbol the checker gives the property.
-func (l *lowering) bindingNamed(identifier *ast.Node) *ast.Symbol {
+func (lowering *lowering) bindingNamed(identifier *ast.Node) *ast.Symbol {
 	if identifier.Parent == nil || identifier.Parent.Kind != ast.KindShorthandPropertyAssignment {
-		return l.symbol(identifier)
+		return lowering.symbol(identifier)
 	}
-	symbol := l.checker.GetShorthandAssignmentValueSymbol(identifier.Parent)
+	symbol := lowering.checker.GetShorthandAssignmentValueSymbol(identifier.Parent)
 	if symbol == nil {
 		return nil
 	}
 	if symbol.Flags&ast.SymbolFlagsAlias != 0 {
-		symbol = l.checker.GetAliasedSymbol(symbol)
+		symbol = lowering.checker.GetAliasedSymbol(symbol)
 	}
-	return l.checker.GetExportSymbolOfSymbol(symbol)
+	return lowering.checker.GetExportSymbolOfSymbol(symbol)
 }
 
 // nullishUnit reports whether every member of t is undefined or null, and names what it holds: undefined,
 // null, or undefined or null.
-func (l *lowering) nullishUnit(t *checker.Type) (string, bool) {
+func (lowering *lowering) nullishUnit(t *checker.Type) (string, bool) {
 	members := []*checker.Type{t}
 	if t.Flags()&checker.TypeFlagsUnion != 0 {
 		members = t.Types()
@@ -840,24 +908,26 @@ func (l *lowering) nullishUnit(t *checker.Type) (string, bool) {
 // them: =, a compound or logical assignment, ++ or -- either side, a destructuring target and a for-in
 // or for-of head. One walk over every module of the program collects the answer for every symbol the
 // first time it's asked; the answer is the program's alone, so nothing invalidates it.
-func (l *lowering) writtenAcrossFunctions(symbol *ast.Symbol) bool {
-	if l.crossFunctionWrites == nil {
-		l.crossFunctionWrites = map[*ast.Symbol]bool{}
-		l.walkProgramModules(func(node *ast.Node) {
+func (lowering *lowering) writtenAcrossFunctions(symbol *ast.Symbol) bool {
+	if lowering.crossFunctionWrites == nil {
+		lowering.crossFunctionWrites = map[*ast.Symbol]bool{}
+		lowering.walkProgramModules(func(node *ast.Node) {
 			if node.Kind == ast.KindIdentifier && ast.IsAssignmentTarget(node) {
-				if written := l.bindingNamed(node); written != nil && written.ValueDeclaration != nil && callBoundary(node) != callBoundary(written.ValueDeclaration) {
-					l.crossFunctionWrites[written] = true
+				if written := lowering.bindingNamed(node); written != nil &&
+					written.ValueDeclaration != nil &&
+					callBoundary(node) != callBoundary(written.ValueDeclaration) {
+					lowering.crossFunctionWrites[written] = true
 				}
 			}
 		})
 	}
-	return l.crossFunctionWrites[symbol]
+	return lowering.crossFunctionWrites[symbol]
 }
 
 // walkProgramModules visits every node of every module the program imports, each module once, and not
 // only the files it was given: a module's own function can write what another module reads
 // (ESMModuleOrder has no effects).
-func (l *lowering) walkProgramModules(visit func(*ast.Node)) {
+func (lowering *lowering) walkProgramModules(visit func(*ast.Node)) {
 	var walk ast.Visitor
 	walk = func(node *ast.Node) bool {
 		visit(node)
@@ -865,8 +935,8 @@ func (l *lowering) walkProgramModules(visit func(*ast.Node)) {
 		return false
 	}
 	seen := map[*ast.SourceFile]bool{}
-	for _, root := range l.program.Files() {
-		order, _ := ESMModuleOrder(l.checker, root)
+	for _, root := range lowering.program.Files() {
+		order, _ := ESMModuleOrder(lowering.checker, root)
 		for _, module := range order {
 			if !seen[module] {
 				seen[module] = true
@@ -881,7 +951,10 @@ func (l *lowering) walkProgramModules(visit func(*ast.Node)) {
 // static block. Its source file where there is none.
 func callBoundary(node *ast.Node) *ast.Node {
 	for at := node.Parent; at != nil; at = at.Parent {
-		if ast.IsFunctionLike(at) || at.Kind == ast.KindClassStaticBlockDeclaration || at.Kind == ast.KindPropertyDeclaration || at.Kind == ast.KindSourceFile {
+		if ast.IsFunctionLike(at) ||
+			at.Kind == ast.KindClassStaticBlockDeclaration ||
+			at.Kind == ast.KindPropertyDeclaration ||
+			at.Kind == ast.KindSourceFile {
 			return at
 		}
 	}

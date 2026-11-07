@@ -21,40 +21,40 @@ type writeSite struct {
 }
 
 // writeSite records a write into receiver's slots, and is the IR node's Site.
-func (l *lowering) writeSite(receiver *ast.Node) int {
-	holder := l.concrete(l.checker.GetTypeAtLocation(receiver))
-	if ast.SkipParentheses(receiver).Kind == ast.KindThisKeyword && l.classType != nil {
+func (lowering *lowering) writeSite(receiver *ast.Node) int {
+	holder := lowering.concrete(lowering.checker.GetTypeAtLocation(receiver))
+	if ast.SkipParentheses(receiver).Kind == ast.KindThisKeyword && lowering.classType != nil {
 		// this is the polymorphic this type, a type parameter; the instantiation being lowered is what
 		// it stands for here.
-		holder = l.classType
+		holder = lowering.classType
 	}
-	l.writeSites = append(l.writeSites, writeSite{holder: holder, node: receiver})
-	return len(l.writeSites)
+	lowering.writeSites = append(lowering.writeSites, writeSite{holder: holder, node: receiver})
+	return len(lowering.writeSites)
 }
 
 // unproven is the first write in the program that may write a slot of kind in holder (a field by
 // its name) and isn't proven not to close a cycle, or nil when every such write is.
-func (f *cycleFinder) unproven(kind fresh.WriteKind, holder *checker.Type, name string) *fresh.Write {
-	if f.writes == nil {
-		f.writes = fresh.ProveWrites(f.l.result)
+func (finder *cycleFinder) unproven(kind fresh.WriteKind, holder *checker.Type, name string) *fresh.Write {
+	if finder.writes == nil {
+		finder.writes = fresh.ProveWrites(finder.l.result)
 	}
-	for index := range f.writes {
-		write := &f.writes[index]
+	for index := range finder.writes {
+		write := &finder.writes[index]
 		if write.Proven {
 			continue
 		}
 		if write.Kind == fresh.WriteUnknown {
 			return write
 		}
-		if write.Kind != kind || (kind == fresh.WriteField && !f.l.cycleFieldMatches(holder, name, write.Name)) {
+		if write.Kind != kind || (kind == fresh.WriteField && !finder.l.cycleFieldMatches(holder, name, write.Name)) {
 			continue
 		}
 		if write.Site == 0 {
 			// A write lowering didn't record: it may be into anything of its kind.
 			return write
 		}
-		written := f.l.writeSites[write.Site-1].holder
-		if written == nil || f.template(written) || f.related(holder, written) {
+		written := finder.l.writeSites[write.Site-1].holder
+		if written == nil || finder.template(written) || finder.related(holder, written) {
 			return write
 		}
 	}
@@ -62,17 +62,17 @@ func (f *cycleFinder) unproven(kind fresh.WriteKind, holder *checker.Type, name 
 }
 
 // writtenAt names an unproven write: where it is, or, for one lowering didn't record, what it is.
-func (f *cycleFinder) writtenAt(write *fresh.Write) string {
+func (finder *cycleFinder) writtenAt(write *fresh.Write) string {
 	if write.Site == 0 {
-		return "a write in " + f.l.functionName(write.Function)
+		return "a write in " + finder.l.functionName(write.Function)
 	}
-	return "the write at " + f.l.program.Where(f.l.writeSites[write.Site-1].node)
+	return "the write at " + finder.l.program.Where(finder.l.writeSites[write.Site-1].node)
 }
 
 // functionName is an IR function's name, or the top level's.
-func (l *lowering) functionName(function int) string {
+func (lowering *lowering) functionName(function int) string {
 	if function < 0 {
 		return "the top level"
 	}
-	return l.result.Functions[function].Name
+	return lowering.result.Functions[function].Name
 }

@@ -9,19 +9,19 @@ import (
 
 // A fresh plain literal can reserve its factory's fixed scalar slots. Its asserted
 // result remains a checked view; reserving storage proves no value initialized.
-func (l *lowering) constructionCast(node *ast.Node) bool {
-	source := l.factoryConstructionSource(node)
+func (lowering *lowering) constructionCast(node *ast.Node) bool {
+	source := lowering.factoryConstructionSource(node)
 	if source == nil {
 		return false
 	}
-	target := l.concrete(l.checker.GetTypeAtLocation(node))
+	target := lowering.concrete(lowering.checker.GetTypeAtLocation(node))
 	if target.Flags()&checker.TypeFlagsObject == 0 ||
 		isClassInstance(target) ||
-		len(l.checker.GetSignaturesOfType(target, checker.SignatureKindCall)) != 0 ||
-		len(l.checker.GetSignaturesOfType(target, checker.SignatureKindConstruct)) != 0 {
+		len(lowering.checker.GetSignaturesOfType(target, checker.SignatureKindCall)) != 0 ||
+		len(lowering.checker.GetSignaturesOfType(target, checker.SignatureKindConstruct)) != 0 {
 		return false
 	}
-	fields := l.checker.GetPropertiesOfType(target)
+	fields := lowering.checker.GetPropertiesOfType(target)
 	if len(fields) == 0 {
 		return false
 	}
@@ -29,12 +29,12 @@ func (l *lowering) constructionCast(node *ast.Node) bool {
 		if strings.ContainsRune(field.Name, 0) || strings.HasPrefix(field.Name, "#") || field.Name == "__proto__" {
 			return false
 		}
-		held, known := l.representation(l.checker.GetTypeOfSymbol(field))
+		held, known := lowering.representation(lowering.checker.GetTypeOfSymbol(field))
 		if field.Flags&ast.SymbolFlagsOptional != 0 ||
 			!known ||
 			held < ir.Number ||
 			held > ir.String ||
-			!interfaceScalar(l.checker.GetTypeOfSymbol(field)) {
+			!interfaceScalar(lowering.checker.GetTypeOfSymbol(field)) {
 			return false
 		}
 	}
@@ -43,12 +43,12 @@ func (l *lowering) constructionCast(node *ast.Node) bool {
 		if property.Kind != ast.KindPropertyAssignment && property.Kind != ast.KindShorthandPropertyAssignment {
 			return false
 		}
-		name, known := l.methodName(property)
+		name, known := lowering.methodName(property)
 		if !known || name == "__proto__" {
 			return false
 		}
 		provided[name] = true
-		field := l.checker.GetPropertyOfType(target, name)
+		field := lowering.checker.GetPropertyOfType(target, name)
 		if field == nil {
 			return false
 		}
@@ -56,22 +56,22 @@ func (l *lowering) constructionCast(node *ast.Node) bool {
 		if property.Kind == ast.KindPropertyAssignment {
 			value = property.AsPropertyAssignment().Initializer
 		}
-		actual := l.checker.GetTypeAtLocation(value)
-		wanted := l.checker.GetTypeOfSymbol(field)
-		if !interfaceScalar(actual) || !l.checker.IsTypeAssignableTo(actual, wanted) {
+		actual := lowering.checker.GetTypeAtLocation(value)
+		wanted := lowering.checker.GetTypeOfSymbol(field)
+		if !interfaceScalar(actual) || !lowering.checker.IsTypeAssignableTo(actual, wanted) {
 			return false
 		}
 	}
 	return len(provided) < len(fields)
 }
 
-func (l *lowering) constructLiteral(node *ast.Node) (ir.Expression, error) {
-	target := l.concrete(l.checker.GetTypeAtLocation(node))
+func (lowering *lowering) constructLiteral(node *ast.Node) (ir.Expression, error) {
+	target := lowering.concrete(lowering.checker.GetTypeAtLocation(node))
 	source := ast.SkipParentheses(node.AsAsExpression().Expression)
 	if source.Kind == ast.KindCallExpression {
-		return l.expression(source)
+		return lowering.expression(source)
 	}
-	value, objectLiteralError := l.objectLiteral(source)
+	value, objectLiteralError := lowering.objectLiteral(source)
 	if objectLiteralError != nil {
 		return nil, objectLiteralError
 	}
@@ -80,11 +80,11 @@ func (l *lowering) constructLiteral(node *ast.Node) (ir.Expression, error) {
 	for _, field := range literal.Fields {
 		present[field.Name] = true
 	}
-	for _, field := range l.checker.GetPropertiesOfType(target) {
+	for _, field := range lowering.checker.GetPropertiesOfType(target) {
 		if present[field.Name] {
 			continue
 		}
-		held, _ := l.representation(l.checker.GetTypeOfSymbol(field))
+		held, _ := lowering.representation(lowering.checker.GetTypeOfSymbol(field))
 		zero := ir.Expression(zeroValue(held))
 		if held.IsReference() {
 			zero = ir.Undefined{Of: held}
@@ -99,7 +99,7 @@ func (l *lowering) constructLiteral(node *ast.Node) (ir.Expression, error) {
 
 // A literal string key names the same fixed slot as a dot access. It is not a
 // dynamic index-signature write and cannot add a slot the declared layout lacks.
-func (l *lowering) constructionIndexWrite(target, valueNode *ast.Node) ([]ir.Statement, bool, error) {
+func (lowering *lowering) constructionIndexWrite(target, valueNode *ast.Node) ([]ir.Statement, bool, error) {
 	access := target.AsElementAccessExpression()
 	key := ast.SkipParentheses(access.ArgumentExpression)
 	if key.Kind != ast.KindStringLiteral ||
@@ -108,39 +108,39 @@ func (l *lowering) constructionIndexWrite(target, valueNode *ast.Node) ([]ir.Sta
 		key.Text() == "__proto__" {
 		return nil, false, nil
 	}
-	receiver := l.checker.GetTypeAtLocation(access.Expression)
-	held, _ := l.representation(receiver)
+	receiver := lowering.checker.GetTypeAtLocation(access.Expression)
+	held, _ := lowering.representation(receiver)
 	if held != ir.Object || isClassInstance(receiver) {
 		return nil, false, nil
 	}
-	field := l.checker.GetPropertyOfType(receiver, key.Text())
-	if field == nil || !interfaceScalar(l.checker.GetTypeOfSymbol(field)) {
+	field := lowering.checker.GetPropertyOfType(receiver, key.Text())
+	if field == nil || !interfaceScalar(lowering.checker.GetTypeOfSymbol(field)) {
 		return nil, false, nil
 	}
-	object, expressionError := l.expression(access.Expression)
+	object, expressionError := lowering.expression(access.Expression)
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
-	value, expressionError := l.expression(valueNode)
+	value, expressionError := lowering.expression(valueNode)
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
-	declared, known := l.representation(l.checker.GetTypeOfSymbol(field))
+	declared, known := lowering.representation(lowering.checker.GetTypeOfSymbol(field))
 	if !known || value.Type() != declared {
-		return nil, true, l.notYet(target, "a string-key field write requiring representation conversion")
+		return nil, true, lowering.notYet(target, "a string-key field write requiring representation conversion")
 	}
 	return []ir.Statement{
-		ir.SetProperty{Object: object, Name: key.Text(), Value: value, Site: l.writeSite(access.Expression)},
+		ir.SetProperty{Object: object, Name: key.Text(), Value: value, Site: lowering.writeSite(access.Expression)},
 	}, true, nil
 }
 
 // A const initialized by one factory return has a closed physical layout. This
 // proves JSON's descriptor, not the values of reserved or unset fields.
-func (l *lowering) constructionJSON(node *ast.Node) (*ir.JSONSchema, bool) {
+func (lowering *lowering) constructionJSON(node *ast.Node) (*ir.JSONSchema, bool) {
 	if !ast.IsIdentifier(node) {
 		return nil, false
 	}
-	symbol := l.symbol(node)
+	symbol := lowering.symbol(node)
 	if symbol == nil || len(symbol.Declarations) != 1 || symbol.Declarations[0].Kind != ast.KindVariableDeclaration {
 		return nil, false
 	}
@@ -158,7 +158,7 @@ func (l *lowering) constructionJSON(node *ast.Node) (*ir.JSONSchema, bool) {
 		assertion = initializer
 	}
 	if initializer.Kind == ast.KindCallExpression {
-		callee := l.symbol(ast.SkipParentheses(initializer.AsCallExpression().Expression))
+		callee := lowering.symbol(ast.SkipParentheses(initializer.AsCallExpression().Expression))
 		if callee == nil ||
 			len(callee.Declarations) != 1 ||
 			callee.Declarations[0].Kind != ast.KindFunctionDeclaration {
@@ -174,31 +174,31 @@ func (l *lowering) constructionJSON(node *ast.Node) (*ir.JSONSchema, bool) {
 		}
 		assertion = statement.AsReturnStatement().Expression
 	}
-	if assertion == nil || assertion.Kind != ast.KindAsExpression || !l.constructionCast(assertion) {
+	if assertion == nil || assertion.Kind != ast.KindAsExpression || !lowering.constructionCast(assertion) {
 		return nil, false
 	}
 	names := []string{}
 	present := map[string]bool{}
-	source := l.factoryConstructionSource(assertion)
+	source := lowering.factoryConstructionSource(assertion)
 	for _, property := range source.AsObjectLiteralExpression().Properties.Nodes {
-		name, _ := l.methodName(property)
+		name, _ := lowering.methodName(property)
 		names = append(names, name)
 		present[name] = true
 	}
-	target := l.concrete(l.checker.GetTypeAtLocation(assertion))
-	for _, field := range l.checker.GetPropertiesOfType(target) {
+	target := lowering.concrete(lowering.checker.GetTypeAtLocation(assertion))
+	for _, field := range lowering.checker.GetPropertiesOfType(target) {
 		if !present[field.Name] {
 			names = append(names, field.Name)
 		}
 	}
 	schema := &ir.JSONSchema{Kind: "object"}
 	for index, name := range names {
-		field := l.checker.GetPropertyOfType(target, name)
-		held, _ := l.representation(l.checker.GetTypeOfSymbol(field))
+		field := lowering.checker.GetPropertyOfType(target, name)
+		held, _ := lowering.representation(lowering.checker.GetTypeOfSymbol(field))
 		kind := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string"}[held]
 		schema.Fields = append(
 			schema.Fields,
-			ir.JSONField{Name: l.constant(name), Slot: index, Schema: &ir.JSONSchema{Kind: kind}},
+			ir.JSONField{Name: lowering.constant(name), Slot: index, Schema: &ir.JSONSchema{Kind: kind}},
 		)
 	}
 	return schema, true
@@ -206,7 +206,7 @@ func (l *lowering) constructionJSON(node *ast.Node) (*ir.JSONSchema, bool) {
 
 // Only a single direct literal return fixes the allocation provenance. Branches,
 // indirect calls, aliases, mutations and generic helper bodies remain checked views.
-func (l *lowering) factoryConstructionSource(node *ast.Node) *ast.Node {
+func (lowering *lowering) factoryConstructionSource(node *ast.Node) *ast.Node {
 	source := ast.SkipParentheses(node.AsAsExpression().Expression)
 	if source.Kind == ast.KindObjectLiteralExpression {
 		return source
@@ -214,7 +214,7 @@ func (l *lowering) factoryConstructionSource(node *ast.Node) *ast.Node {
 	if source.Kind != ast.KindCallExpression {
 		return nil
 	}
-	callee := l.symbol(ast.SkipParentheses(source.AsCallExpression().Expression))
+	callee := lowering.symbol(ast.SkipParentheses(source.AsCallExpression().Expression))
 	if callee == nil || len(callee.Declarations) != 1 || callee.Declarations[0].Kind != ast.KindFunctionDeclaration {
 		return nil
 	}
@@ -235,7 +235,7 @@ func (l *lowering) factoryConstructionSource(node *ast.Node) *ast.Node {
 
 // Reserve each reviewed target at the original base factory allocation. These
 // slots remain absent; changing a target never fabricates an initialized field.
-func (l *lowering) reserveFactoryFields(node *ast.Node, literal ir.ObjectLiteral) (ir.ObjectLiteral, error) {
+func (lowering *lowering) reserveFactoryFields(node *ast.Node, literal ir.ObjectLiteral) (ir.ObjectLiteral, error) {
 	if literal.Record || literal.Spread != nil {
 		return literal, nil
 	}
@@ -249,12 +249,16 @@ func (l *lowering) reserveFactoryFields(node *ast.Node, literal ir.ObjectLiteral
 		if failure != nil {
 			return true
 		}
-		if n.Kind == ast.KindAsExpression && l.factoryConstructionSource(n) == node && l.constructionCast(n) {
-			for _, field := range l.checker.GetPropertiesOfType(l.concrete(l.checker.GetTypeAtLocation(n))) {
-				held, _ := l.representation(l.checker.GetTypeOfSymbol(field))
+		if n.Kind == ast.KindAsExpression &&
+			lowering.factoryConstructionSource(n) == node &&
+			lowering.constructionCast(n) {
+			for _, field := range lowering.checker.GetPropertiesOfType(
+				lowering.concrete(lowering.checker.GetTypeAtLocation(n)),
+			) {
+				held, _ := lowering.representation(lowering.checker.GetTypeOfSymbol(field))
 				if old, found := present[field.Name]; found {
 					if old != held {
-						failure = l.notYet(n, "factory target layouts with incompatible field storage")
+						failure = lowering.notYet(n, "factory target layouts with incompatible field storage")
 					}
 					continue
 				}
@@ -271,7 +275,7 @@ func (l *lowering) reserveFactoryFields(node *ast.Node, literal ir.ObjectLiteral
 		}
 		return n.ForEachChild(visit)
 	}
-	for _, file := range l.program.Files() {
+	for _, file := range lowering.program.Files() {
 		file.AsNode().ForEachChild(visit)
 	}
 	return literal, failure

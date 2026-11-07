@@ -72,16 +72,16 @@ func newSourceTree(path string, text string) *sourceTree {
 	return &sourceTree{path: path, text: text}
 }
 
-func (t *sourceTree) Source() string { return t.text }
+func (tree *sourceTree) Source() string { return tree.text }
 
 // with is the text with span replaced by replacement, as a new tree whose sites move with the text.
-func (t *sourceTree) with(at span, replacement string) *sourceTree {
-	text := t.text[:at.start] + replacement + t.text[at.end:]
-	result := &sourceTree{path: t.path, text: text}
-	if t.sites != nil {
+func (tree *sourceTree) with(at span, replacement string) *sourceTree {
+	text := tree.text[:at.start] + replacement + tree.text[at.end:]
+	result := &sourceTree{path: tree.path, text: text}
+	if tree.sites != nil {
 		var moved []site
 		shift := len(replacement) - (at.end - at.start)
-		for _, existing := range *t.sites {
+		for _, existing := range *tree.sites {
 			if relocated, kept := moveSpan(existing.at, at, shift); kept {
 				entry := site{at: relocated, literals: existing.literals}
 				for _, child := range existing.children {
@@ -99,16 +99,16 @@ func (t *sourceTree) with(at span, replacement string) *sourceTree {
 
 // withChild replaces an expression with one of its own children, whose sites move with it into the
 // parent's place.
-func (t *sourceTree) withChild(parent span, child span) *sourceTree {
-	result := t.with(parent, t.text[child.start:child.end])
-	if t.sites == nil {
+func (tree *sourceTree) withChild(parent span, child span) *sourceTree {
+	result := tree.with(parent, tree.text[child.start:child.end])
+	if tree.sites == nil {
 		return result
 	}
 	// with dropped the child's own sites, which were inside the replaced span: put them back, moved to
 	// where the child now starts.
 	shift := parent.start - child.start
 	var inside []site
-	for _, existing := range *t.sites {
+	for _, existing := range *tree.sites {
 		if existing.at.start >= child.start && existing.at.end <= child.end && existing.at != parent {
 			entry := site{at: span{existing.at.start + shift, existing.at.end + shift}, literals: existing.literals}
 			for _, grandchild := range existing.children {
@@ -151,14 +151,14 @@ func sortSites(sites []site) {
 	}
 }
 
-func (t *sourceTree) parse() *parsedSource {
-	if t.parsed != nil {
-		return t.parsed
+func (tree *sourceTree) parse() *parsedSource {
+	if tree.parsed != nil {
+		return tree.parsed
 	}
 	file := parser.ParseSourceFile(ast.SourceFileParseOptions{
-		FileName: tspath.RootedFilePathFromAbsolute(parseName(t.path)),
-		PathKey:  tspath.CaseSensitive.PathKey(tspath.RootedPathFromAbsolute(parseName(t.path))),
-	}, t.text, core.ScriptKindTS)
+		FileName: tspath.RootedFilePathFromAbsolute(parseName(tree.path)),
+		PathKey:  tspath.CaseSensitive.PathKey(tspath.RootedPathFromAbsolute(parseName(tree.path))),
+	}, tree.text, core.ScriptKindTS)
 	parsed := &parsedSource{clean: len(file.Diagnostics()) == 0}
 	comments := itemList{apart: true, trailingComma: -1}
 	commented := map[int]bool{}
@@ -175,18 +175,18 @@ func (t *sourceTree) parse() *parsedSource {
 	for len(queue) > 0 {
 		node := queue[0]
 		queue = queue[1:]
-		addComments(scanner.GetLeadingCommentRanges(nil, t.text, node.Pos()))
-		addComments(scanner.GetTrailingCommentRanges(nil, t.text, node.End()))
+		addComments(scanner.GetLeadingCommentRanges(nil, tree.text, node.Pos()))
+		addComments(scanner.GetTrailingCommentRanges(nil, tree.text, node.End()))
 		for _, list := range nodeLists(node) {
 			// An empty list is kept too, so emptying a list leaves every index after it where it was.
 			if list.list != nil {
-				parsed.lists = append(parsed.lists, t.itemList(list.list, list.commas))
+				parsed.lists = append(parsed.lists, tree.itemList(list.list, list.commas))
 			}
 		}
 		if parts := statementParts(node); parts != nil && isStatementInList(node) {
-			compound := compoundStatement{start: scanner.SkipTrivia(t.text, node.Pos()), end: node.End()}
+			compound := compoundStatement{start: scanner.SkipTrivia(tree.text, node.Pos()), end: node.End()}
 			for _, part := range parts {
-				compound.parts = append(compound.parts, t.partSpan(part))
+				compound.parts = append(compound.parts, tree.partSpan(part))
 			}
 			parsed.compounds = append(parsed.compounds, compound)
 		}
@@ -195,10 +195,10 @@ func (t *sourceTree) parse() *parsedSource {
 			return false
 		})
 	}
-	addComments(scanner.GetLeadingCommentRanges(nil, t.text, file.EndOfFileToken.Pos()))
+	addComments(scanner.GetLeadingCommentRanges(nil, tree.text, file.EndOfFileToken.Pos()))
 	sortApart(&comments)
 	parsed.lists = append(parsed.lists, comments)
-	t.parsed = parsed
+	tree.parsed = parsed
 	return parsed
 }
 
@@ -252,15 +252,15 @@ func sortApart(list *itemList) {
 	}
 }
 
-func (t *sourceTree) itemList(list *ast.NodeList, commas bool) itemList {
+func (tree *sourceTree) itemList(list *ast.NodeList, commas bool) itemList {
 	result := itemList{commas: commas, trailingComma: -1}
 	for _, item := range list.Nodes {
 		result.starts = append(result.starts, item.Pos())
 		result.ends = append(result.ends, item.End())
 	}
 	if commas && len(list.Nodes) > 0 {
-		after := scanner.SkipTrivia(t.text, list.Nodes[len(list.Nodes)-1].End())
-		if after < len(t.text) && t.text[after] == ',' {
+		after := scanner.SkipTrivia(tree.text, list.Nodes[len(list.Nodes)-1].End())
+		if after < len(tree.text) && tree.text[after] == ',' {
 			result.trailingComma = after + 1
 		}
 	}
@@ -311,23 +311,23 @@ func isStatementInList(node *ast.Node) bool {
 }
 
 // partSpan is the text a part's statements fill: inside a block's braces, or the one statement.
-func (t *sourceTree) partSpan(part *ast.Node) span {
+func (tree *sourceTree) partSpan(part *ast.Node) span {
 	if part.Kind == ast.KindBlock {
 		list := part.StatementList()
 		return span{list.Pos(), list.End()}
 	}
-	return span{scanner.SkipTrivia(t.text, part.Pos()), part.End()}
+	return span{scanner.SkipTrivia(tree.text, part.Pos()), part.End()}
 }
 
-func (t *sourceTree) Lists() int { return len(t.parse().lists) }
+func (tree *sourceTree) Lists() int { return len(tree.parse().lists) }
 
-func (t *sourceTree) Items(list int) int { return len(t.parse().lists[list].starts) }
+func (tree *sourceTree) Items(list int) int { return len(tree.parse().lists[list].starts) }
 
-func (t *sourceTree) Without(list, start, end int) Reducible {
-	items := t.parse().lists[list]
+func (tree *sourceTree) Without(list, start, end int) Reducible {
+	items := tree.parse().lists[list]
 	if items.apart {
 		// Last first, so the spans before each are still where they were.
-		result := t
+		result := tree
 		for index := end - 1; index >= start; index-- {
 			result = result.with(span{items.starts[index], items.ends[index]}, "")
 		}
@@ -339,7 +339,7 @@ func (t *sourceTree) Without(list, start, end int) Reducible {
 		switch {
 		case end < count && start == 0:
 			// Up to the next item's first token: the items, their commas, and the space after.
-			cut.end = scanner.SkipTrivia(t.text, items.starts[end])
+			cut.end = scanner.SkipTrivia(tree.text, items.starts[end])
 		case end < count:
 			// Up to the next item's start: the items and the commas after them.
 			cut.end = items.starts[end]
@@ -353,59 +353,59 @@ func (t *sourceTree) Without(list, start, end int) Reducible {
 			cut.end = items.trailingComma
 		}
 	}
-	return t.with(cut, "")
+	return tree.with(cut, "")
 }
 
-func (t *sourceTree) Compounds() int { return len(t.parse().compounds) }
+func (tree *sourceTree) Compounds() int { return len(tree.parse().compounds) }
 
-func (t *sourceTree) Inlined(index int) []Reducible {
-	compound := t.parse().compounds[index]
+func (tree *sourceTree) Inlined(index int) []Reducible {
+	compound := tree.parse().compounds[index]
 	var candidates []Reducible
 	for _, part := range compound.parts {
-		candidates = append(candidates, t.with(span{compound.start, compound.end}, t.text[part.start:part.end]))
+		candidates = append(candidates, tree.with(span{compound.start, compound.end}, tree.text[part.start:part.end]))
 	}
 	return candidates
 }
 
-func (t *sourceTree) Expressions() int { return len(t.typedSites()) }
+func (tree *sourceTree) Expressions() int { return len(tree.typedSites()) }
 
-func (t *sourceTree) Simpler(index int) []Reducible {
-	expression := t.typedSites()[index]
+func (tree *sourceTree) Simpler(index int) []Reducible {
+	expression := tree.typedSites()[index]
 	var candidates []Reducible
 	for _, literal := range expression.literals {
-		if t.text[expression.at.start:expression.at.end] != literal {
-			candidates = append(candidates, t.with(expression.at, literal))
+		if tree.text[expression.at.start:expression.at.end] != literal {
+			candidates = append(candidates, tree.with(expression.at, literal))
 		}
 	}
 	for _, child := range expression.children {
-		candidates = append(candidates, t.withChild(expression.at, child))
+		candidates = append(candidates, tree.withChild(expression.at, child))
 	}
 	return candidates
 }
 
 // typedSites asks the checker, once, which expressions have something simpler of the same type. The
 // sites then move with every replacement, so a whole round of simplifying is checked only once.
-func (t *sourceTree) typedSites() []site {
-	if t.sites != nil {
-		return *t.sites
+func (tree *sourceTree) typedSites() []site {
+	if tree.sites != nil {
+		return *tree.sites
 	}
-	found := t.findSites()
-	t.sites = &found
+	found := tree.findSites()
+	tree.sites = &found
 	return found
 }
 
-func (t *sourceTree) findSites() []site {
-	path, absolutePathError := filepath.Abs(t.path)
+func (tree *sourceTree) findSites() []site {
+	path, absolutePathError := filepath.Abs(tree.path)
 	if absolutePathError != nil {
 		return nil
 	}
-	program, loadOverlayError := load.LoadOverlay([]string{path}, map[string]string{path: t.text})
+	program, loadOverlayError := load.LoadOverlay([]string{path}, map[string]string{path: tree.text})
 	if loadOverlayError != nil || len(program.Files()) == 0 {
 		// A program this checker refuses has no types to go by; the lists and compounds still shrink it.
 		return nil
 	}
 	file := program.Files()[0]
-	if file.Text() != t.text {
+	if file.Text() != tree.text {
 		return nil
 	}
 	typeChecker, release := program.Checker(context.Background(), file)
@@ -415,7 +415,7 @@ func (t *sourceTree) findSites() []site {
 	visit = func(node *ast.Node) {
 		if replaceable(node) {
 			typeOf := typeChecker.TypeToString(typeChecker.GetTypeAtLocation(node))
-			entry := site{at: span{scanner.SkipTrivia(t.text, node.Pos()), node.End()}}
+			entry := site{at: span{scanner.SkipTrivia(tree.text, node.Pos()), node.End()}}
 			switch typeOf {
 			case "number":
 				entry.literals = []string{"0"}
@@ -427,7 +427,10 @@ func (t *sourceTree) findSites() []site {
 			node.ForEachChild(func(child *ast.Node) bool {
 				if ast.IsExpressionNode(child) &&
 					typeChecker.TypeToString(typeChecker.GetTypeAtLocation(child)) == typeOf {
-					entry.children = append(entry.children, span{scanner.SkipTrivia(t.text, child.Pos()), child.End()})
+					entry.children = append(
+						entry.children,
+						span{scanner.SkipTrivia(tree.text, child.Pos()), child.End()},
+					)
 				}
 				return false
 			})

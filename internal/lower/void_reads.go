@@ -16,21 +16,30 @@ import (
 // and .ts alike. Relating a value-returning function to a void function type stays legal, and so do
 // #se1zcgr's discards: `return f()` and a concise arrow body inside a function whose own return type is
 // exactly void, or for an async function one that resolves to exactly void.
-func (l *lowering) refuseVoidRead(node *ast.Node) error {
-	if node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) || ast.IsDeclarationName(node) || (ast.IsAssignmentTarget(node) && !logicalAssignmentTarget(node)) {
+func (lowering *lowering) refuseVoidRead(node *ast.Node) error {
+	if node.Kind == ast.KindParenthesizedExpression ||
+		!lowering.isExpression(node) ||
+		ast.IsDeclarationName(node) ||
+		(ast.IsAssignmentTarget(node) && !logicalAssignmentTarget(node)) {
 		return nil
 	}
-	if node.Parent != nil && node.Parent.Kind == ast.KindPropertyAccessExpression && node.Parent.AsPropertyAccessExpression().Name() == node {
+	if node.Parent != nil &&
+		node.Parent.Kind == ast.KindPropertyAccessExpression &&
+		node.Parent.AsPropertyAccessExpression().Name() == node {
 		return nil // The access is the read, never the name it reads.
 	}
-	if !l.voidValued(l.checker.GetTypeAtLocation(node)) || l.brandRead(node) {
+	if !lowering.voidValued(lowering.checker.GetTypeAtLocation(node)) || lowering.brandRead(node) {
 		return nil
 	}
-	read := l.voidReadRole(node)
+	read := lowering.voidReadRole(node)
 	if read == "" {
 		return nil
 	}
-	return &Refused{Where: l.program.Where(node), What: "a read of a void value, as " + read, Fix: "call it as a statement, or give the function a return type (adamic/no-void-read)"}
+	return &Refused{
+		Where: lowering.program.Where(node),
+		What:  "a read of a void value, as " + read,
+		Fix:   "call it as a statement, or give the function a return type (adamic/no-void-read)",
+	}
 }
 
 func init() { refusalRules.register(3250, "refuseVoidRead", (*lowering).refuseVoidRead) }
@@ -45,7 +54,7 @@ func init() { refusalRules.register(3250, "refuseVoidRead", (*lowering).refuseVo
 // that shape without a cast, which item 8 refuses or checks. It's the exemption brandRead gives the read
 // of a brand's member. A union holding plain void, `void | number`, isn't void-valued: only its
 // intersection members are examined, and H2's rule for void itself has always been exactly void.
-func (l *lowering) voidValued(t *checker.Type) bool {
+func (lowering *lowering) voidValued(t *checker.Type) bool {
 	if t.Flags() == checker.TypeFlagsVoid {
 		return true
 	}
@@ -61,7 +70,7 @@ func (l *lowering) voidValued(t *checker.Type) bool {
 		for _, part := range member.Types() {
 			voidPart = voidPart || part.Flags()&checker.TypeFlagsVoid != 0
 		}
-		if voidPart && !l.phantomVoidBrand(member) {
+		if voidPart && !lowering.phantomVoidBrand(member) {
 			return true
 		}
 	}
@@ -70,13 +79,13 @@ func (l *lowering) voidValued(t *checker.Type) bool {
 
 // phantomVoidBrand is whether intersection is a phantom primitive brand by phantomBase's own test, with
 // at least one brand member, so it names the brand without holding a value.
-func (l *lowering) phantomVoidBrand(intersection *checker.Type) bool {
-	if l.phantomBase(intersection) == nil {
+func (lowering *lowering) phantomVoidBrand(intersection *checker.Type) bool {
+	if lowering.phantomBase(intersection) == nil {
 		return false
 	}
-	_, objects := l.phantomParts(intersection)
+	_, objects := lowering.phantomParts(intersection)
 	for _, object := range objects {
-		if len(l.checker.GetPropertiesOfType(object)) != 0 {
+		if len(lowering.checker.GetPropertiesOfType(object)) != 0 {
 			return true
 		}
 	}
@@ -86,7 +95,7 @@ func (l *lowering) phantomVoidBrand(intersection *checker.Type) bool {
 // voidReadRole is what the place a void value stands in does with it, or "" where it's discarded. A
 // conditional's branch, the right of &&, || and ??, and the operand of await, as, satisfies and !, stand
 // where the whole expression stands.
-func (l *lowering) voidReadRole(node *ast.Node) string {
+func (lowering *lowering) voidReadRole(node *ast.Node) string {
 	site := node
 	for site.Parent != nil && site.Parent.Kind == ast.KindParenthesizedExpression {
 		site = site.Parent
@@ -106,12 +115,12 @@ func (l *lowering) voidReadRole(node *ast.Node) string {
 		return "a loop condition"
 	case ast.KindAwaitExpression, ast.KindAsExpression, ast.KindSatisfiesExpression, ast.KindNonNullExpression:
 		// Each hands on the value it wraps: it stands where the whole expression stands (#chmg7wr).
-		return l.voidReadRole(parent)
+		return lowering.voidReadRole(parent)
 	case ast.KindConditionalExpression:
 		if parent.AsConditionalExpression().Condition == site {
 			return "a condition"
 		}
-		return l.voidReadRole(parent)
+		return lowering.voidReadRole(parent)
 	case ast.KindBinaryExpression:
 		binary := parent.AsBinaryExpression()
 		if logicalAssignment(binary.OperatorToken.Kind) && binary.Left == site {
@@ -122,10 +131,10 @@ func (l *lowering) voidReadRole(node *ast.Node) string {
 			if binary.Left == site {
 				return ""
 			}
-			return l.voidReadRole(parent)
+			return lowering.voidReadRole(parent)
 		case ast.KindAmpersandAmpersandToken, ast.KindBarBarToken, ast.KindQuestionQuestionToken:
 			if binary.Right == site {
-				return l.voidReadRole(parent)
+				return lowering.voidReadRole(parent)
 			}
 			return "the left operand of " + scanner.TokenToString(binary.OperatorToken.Kind)
 		case ast.KindEqualsToken:
@@ -133,13 +142,13 @@ func (l *lowering) voidReadRole(node *ast.Node) string {
 		}
 		return "an operand of " + scanner.TokenToString(binary.OperatorToken.Kind)
 	case ast.KindReturnStatement:
-		if l.returnsExactlyVoid(ast.GetContainingFunction(parent)) {
+		if lowering.returnsExactlyVoid(ast.GetContainingFunction(parent)) {
 			return ""
 		}
 		return "a returned value"
 	case ast.KindArrowFunction:
 		if parent.Body() == site {
-			if l.returnsExactlyVoid(parent) {
+			if lowering.returnsExactlyVoid(parent) {
 				return ""
 			}
 			return "a returned value"
@@ -147,7 +156,9 @@ func (l *lowering) voidReadRole(node *ast.Node) string {
 	case ast.KindVariableDeclaration, ast.KindPropertyDeclaration, ast.KindParameter, ast.KindBindingElement:
 		// A binding that stays void keeps nothing anyone can see: a read of its name is refused there.
 		// One typed wider would hand the value on.
-		if name := parent.Name(); name != nil && name.Kind == ast.KindIdentifier && l.voidValued(l.checker.GetTypeAtLocation(name)) {
+		if name := parent.Name(); name != nil &&
+			name.Kind == ast.KindIdentifier &&
+			lowering.voidValued(lowering.checker.GetTypeAtLocation(name)) {
 			return ""
 		}
 		return "a binding's initializer"
@@ -169,22 +180,25 @@ func logicalAssignmentTarget(node *ast.Node) bool {
 	for site.Parent != nil && site.Parent.Kind == ast.KindParenthesizedExpression {
 		site = site.Parent
 	}
-	return site.Parent != nil && site.Parent.Kind == ast.KindBinaryExpression && logicalAssignment(site.Parent.AsBinaryExpression().OperatorToken.Kind) && site.Parent.AsBinaryExpression().Left == site
+	return site.Parent != nil &&
+		site.Parent.Kind == ast.KindBinaryExpression &&
+		logicalAssignment(site.Parent.AsBinaryExpression().OperatorToken.Kind) &&
+		site.Parent.AsBinaryExpression().Left == site
 }
 
 // returnsExactlyVoid is whether function's own return type is void, not void | X and not unknown, or for
 // an async function whether what it resolves to is: only there is a returned void value nobody can read.
-func (l *lowering) returnsExactlyVoid(function *ast.Node) bool {
+func (lowering *lowering) returnsExactlyVoid(function *ast.Node) bool {
 	if function == nil || !ast.IsFunctionLike(function) {
 		return false
 	}
-	signature := l.checker.GetSignatureFromDeclaration(function)
+	signature := lowering.checker.GetSignatureFromDeclaration(function)
 	if signature == nil {
 		return false
 	}
-	returns := l.checker.GetReturnTypeOfSignature(signature)
+	returns := lowering.checker.GetReturnTypeOfSignature(signature)
 	if ast.HasSyntacticModifier(function, ast.ModifierFlagsAsync) {
-		returns = checker.Checker_getAwaitedType(l.checker, returns)
+		returns = checker.Checker_getAwaitedType(lowering.checker, returns)
 	}
 	return returns != nil && returns.Flags() == checker.TypeFlagsVoid
 }
@@ -192,18 +206,19 @@ func (l *lowering) returnsExactlyVoid(function *ast.Node) bool {
 // brandRead is whether node reads a property off a value that is a primitive in every member of its
 // type, as tsc's __String brand `string & { __escapedIdentifier: void }` is. A primitive carries no own
 // property, so the read is undefined on Node as it is here: the void it names was never a value.
-func (l *lowering) brandRead(node *ast.Node) bool {
+func (lowering *lowering) brandRead(node *ast.Node) bool {
 	if node.Kind != ast.KindPropertyAccessExpression {
 		return false
 	}
 	// Not GetNonNullableType: it drops void as nullish, which would strip `void & { … }` to its object.
-	receiver := l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression)
+	receiver := lowering.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression)
 	members := []*checker.Type{receiver}
 	if receiver.Flags()&checker.TypeFlagsUnion != 0 {
 		members = receiver.Types()
 	}
 	for _, member := range members {
-		if member.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 && member.Flags()&checker.TypeFlagsIntersection == 0 {
+		if member.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 &&
+			member.Flags()&checker.TypeFlagsIntersection == 0 {
 			continue // An optional chain's missing receiver reads nothing.
 		}
 		if member.Flags()&checker.TypeFlagsIntersection == 0 {
@@ -211,7 +226,8 @@ func (l *lowering) brandRead(node *ast.Node) bool {
 		}
 		primitive := false
 		for _, part := range member.Types() {
-			primitive = primitive || part.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike|checker.TypeFlagsBigIntLike|checker.TypeFlagsESSymbolLike|checker.TypeFlagsVoid|checker.TypeFlagsUndefined) != 0
+			primitive = primitive ||
+				part.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike|checker.TypeFlagsBigIntLike|checker.TypeFlagsESSymbolLike|checker.TypeFlagsVoid|checker.TypeFlagsUndefined) != 0
 		}
 		if !primitive {
 			return false

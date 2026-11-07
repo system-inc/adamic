@@ -9,24 +9,27 @@ import (
 )
 
 // recordElement recognizes resolved mutable string dictionaries, including named keys.
-func (l *lowering) recordElement(t *checker.Type) *checker.Type {
+func (lowering *lowering) recordElement(t *checker.Type) *checker.Type {
 	if t == nil {
 		return nil
 	}
-	t = l.concrete(t)
-	if t.Flags()&checker.TypeFlagsObject == 0 || l.isArrayType(t) || checker.IsTupleType(t) || isClassInstance(t) {
+	t = lowering.concrete(t)
+	if t.Flags()&checker.TypeFlagsObject == 0 ||
+		lowering.isArrayType(t) ||
+		checker.IsTupleType(t) ||
+		isClassInstance(t) {
 		return nil
 	}
-	if element := l.finitePartialRecordElement(t); element != nil {
+	if element := lowering.finitePartialRecordElement(t); element != nil {
 		return element
 	}
-	if base := l.pickedRecordBase(t); base != nil {
-		return l.recordElement(base)
+	if base := lowering.pickedRecordBase(t); base != nil {
+		return lowering.recordElement(base)
 	}
-	if l.enumerationRecordStorageType(t) {
+	if lowering.enumerationRecordStorageType(t) {
 		return nil
 	}
-	infos := l.checker.GetIndexInfosOfType(t)
+	infos := lowering.checker.GetIndexInfosOfType(t)
 	for _, info := range infos {
 		if declaration := info.Declaration(); declaration != nil {
 			file := ast.GetSourceFileOfNode(declaration)
@@ -38,46 +41,50 @@ func (l *lowering) recordElement(t *checker.Type) *checker.Type {
 	if len(infos) != 1 ||
 		infos[0].KeyType().Flags() != checker.TypeFlagsString ||
 		infos[0].IsReadonly() ||
-		len(l.checker.GetSignaturesOfType(t, checker.SignatureKindCall)) != 0 ||
-		len(l.checker.GetSignaturesOfType(t, checker.SignatureKindConstruct)) != 0 {
+		len(lowering.checker.GetSignaturesOfType(t, checker.SignatureKindCall)) != 0 ||
+		len(lowering.checker.GetSignaturesOfType(t, checker.SignatureKindConstruct)) != 0 {
 		return nil
 	}
 	return infos[0].ValueType()
 }
-func (l *lowering) recordLiteralElement(node *ast.Node) *checker.Type {
-	if t := l.slotType(node); t != nil {
-		if e := l.recordElement(l.checker.GetNonNullableType(t)); e != nil {
+func (lowering *lowering) recordLiteralElement(node *ast.Node) *checker.Type {
+	if t := lowering.slotType(node); t != nil {
+		if e := lowering.recordElement(lowering.checker.GetNonNullableType(t)); e != nil {
 			return e
 		}
 		// A literal going into a union of records is built as the record its parameter reads.
-		if e := l.recordUnionElement(l.checker.GetNonNullableType(t), ""); e != nil {
+		if e := lowering.recordUnionElement(lowering.checker.GetNonNullableType(t), ""); e != nil {
 			return e
 		}
 	}
-	return l.recordElement(l.checker.GetTypeAtLocation(node))
+	return lowering.recordElement(lowering.checker.GetTypeAtLocation(node))
 }
-func (l *lowering) recordSlot(node *ast.Node) (ir.Type, error) {
-	t := l.recordElement(l.checker.GetTypeAtLocation(node))
+func (lowering *lowering) recordSlot(node *ast.Node) (ir.Type, error) {
+	t := lowering.recordElement(lowering.checker.GetTypeAtLocation(node))
 	if t == nil {
-		return 0, l.notYet(node, "a record without a pure mutable string index signature")
+		return 0, lowering.notYet(node, "a record without a pure mutable string index signature")
 	}
-	of, known := l.recordStorageType(t)
+	of, known := lowering.recordStorageType(t)
 	if !known {
-		return 0, l.notYet(node, "a record value of type "+l.checker.TypeToString(t))
+		return 0, lowering.notYet(node, "a record value of type "+lowering.checker.TypeToString(t))
 	}
 	return of, nil
 }
-func (l *lowering) recordTarget(node *ast.Node) bool {
+func (lowering *lowering) recordTarget(node *ast.Node) bool {
 	n := ast.SkipParentheses(node)
 	// The host owns environment entries; their reads use the host slice, not record storage.
-	if _, environment := l.nodeEnvironmentAccess(n); environment {
+	if _, environment := lowering.nodeEnvironmentAccess(n); environment {
 		return false
 	}
 	if n.Kind == ast.KindElementAccessExpression {
-		return l.recordElement(l.checker.GetTypeAtLocation(n.AsElementAccessExpression().Expression)) != nil
+		return lowering.recordElement(
+			lowering.checker.GetTypeAtLocation(n.AsElementAccessExpression().Expression),
+		) != nil
 	}
 	if n.Kind == ast.KindPropertyAccessExpression {
-		return l.recordElement(l.checker.GetTypeAtLocation(n.AsPropertyAccessExpression().Expression)) != nil
+		return lowering.recordElement(
+			lowering.checker.GetTypeAtLocation(n.AsPropertyAccessExpression().Expression),
+		) != nil
 	}
 	return false
 }
@@ -85,26 +92,26 @@ func (l *lowering) recordTarget(node *ast.Node) bool {
 // recordUnionElement is the element of a union whose defined members are each record storage of one
 // slot representation, with the named key held one way on every member. Such a value is the bare record
 // pointer, so a read off it is a record read. Only reads and literals take it, never a write or a delete.
-func (l *lowering) recordUnionElement(t *checker.Type, name string) *checker.Type {
+func (lowering *lowering) recordUnionElement(t *checker.Type, name string) *checker.Type {
 	if t == nil || t.Flags()&checker.TypeFlagsUnion == 0 {
 		return nil
 	}
 	var first *checker.Type
 	var shared, named ir.Type
-	for index, member := range l.definedMembers(t) {
-		element := l.recordElement(member)
+	for index, member := range lowering.definedMembers(t) {
+		element := lowering.recordElement(member)
 		if element == nil {
 			return nil
 		}
-		of, known := l.recordStorageType(element)
+		of, known := lowering.recordStorageType(element)
 		if !known {
 			return nil
 		}
 		// A member without the key reads it through its index signature, which is another contract.
 		contract := ir.Type(0)
 		if name != "" {
-			if property := l.checker.GetPropertyOfType(member, name); property != nil {
-				contract, known = l.representation(l.checker.GetTypeOfSymbol(property))
+			if property := lowering.checker.GetPropertyOfType(member, name); property != nil {
+				contract, known = lowering.representation(lowering.checker.GetTypeOfSymbol(property))
 				if !known {
 					return nil
 				}
@@ -120,14 +127,14 @@ func (l *lowering) recordUnionElement(t *checker.Type, name string) *checker.Typ
 }
 
 // recordReadTarget is recordTarget, widened for a read to a union of like record storage.
-func (l *lowering) recordReadTarget(node *ast.Node) bool {
-	if l.recordTarget(node) {
+func (lowering *lowering) recordReadTarget(node *ast.Node) bool {
+	if lowering.recordTarget(node) {
 		return true
 	}
 	n := ast.SkipParentheses(node)
 	if n.Kind == ast.KindPropertyAccessExpression {
-		return l.recordUnionElement(
-			l.checker.GetTypeAtLocation(n.AsPropertyAccessExpression().Expression),
+		return lowering.recordUnionElement(
+			lowering.checker.GetTypeAtLocation(n.AsPropertyAccessExpression().Expression),
 			n.Name().Text(),
 		) != nil
 	}
@@ -136,10 +143,10 @@ func (l *lowering) recordReadTarget(node *ast.Node) bool {
 
 // indexSignatureStorageGap stops an index signature that is neither an enumeration's nor a record's
 // storage.
-func (l *lowering) indexSignatureStorageGap(node *ast.Node) error {
-	if node.Kind == ast.KindIndexSignature && !l.enumerationIndexSignature(node) {
-		if l.recordElement(l.checker.GetTypeAtLocation(node.Parent)) == nil {
-			return l.notYet(
+func (lowering *lowering) indexSignatureStorageGap(node *ast.Node) error {
+	if node.Kind == ast.KindIndexSignature && !lowering.enumerationIndexSignature(node) {
+		if lowering.recordElement(lowering.checker.GetTypeAtLocation(node.Parent)) == nil {
+			return lowering.notYet(
 				node,
 				"a non-mutable unrestricted string signature, or numeric, symbol, patterned or callable dictionary storage",
 			)
@@ -153,12 +160,12 @@ func init() {
 }
 
 // deleteRefusal refuses delete on anything but a record entry.
-func (l *lowering) deleteRefusal(node *ast.Node) error {
+func (lowering *lowering) deleteRefusal(node *ast.Node) error {
 	if node.Kind == ast.KindDeleteExpression &&
-		!l.recordTarget(node.AsDeleteExpression().Expression) &&
-		!l.nodeProcessEnvironmentDelete(node) {
+		!lowering.recordTarget(node.AsDeleteExpression().Expression) &&
+		!lowering.nodeProcessEnvironmentDelete(node) {
 		return &Refused{
-			Where: l.program.Where(node),
+			Where: lowering.program.Where(node),
 			What:  "delete",
 			Fix:   "fixed objects cannot lose fields; use a record or Map",
 		}
@@ -175,18 +182,18 @@ func recordPrototypeName(name string) bool {
 	}
 	return false
 }
-func (l *lowering) recordKey(node *ast.Node, read bool) (ir.Expression, error) {
+func (lowering *lowering) recordKey(node *ast.Node, read bool) (ir.Expression, error) {
 	n := ast.SkipParentheses(node)
 	if read &&
 		(n.Kind == ast.KindStringLiteral || n.Kind == ast.KindNoSubstitutionTemplateLiteral) &&
 		recordPrototypeName(n.Text()) {
 		return nil, &Refused{
-			Where: l.program.Where(node),
+			Where: lowering.program.Where(node),
 			What:  "record key " + n.Text() + " names an Object.prototype member",
 			Fix:   "use an own-property test and a supported own-key operation; inherited values are outside the record's value type",
 		}
 	}
-	key, expressionError := l.expression(node)
+	key, expressionError := lowering.expression(node)
 	if expressionError != nil {
 		return nil, expressionError
 	}
@@ -194,65 +201,65 @@ func (l *lowering) recordKey(node *ast.Node, read bool) (ir.Expression, error) {
 		return ir.NumberToString{Value: key}, nil
 	}
 	if key.Type() != ir.String {
-		return nil, l.notYet(node, "a record key other than string or number")
+		return nil, lowering.notYet(node, "a record key other than string or number")
 	}
 	return key, nil
 }
-func (l *lowering) recordAccess(node *ast.Node, read bool) (ir.Expression, ir.Expression, ir.Type, error) {
+func (lowering *lowering) recordAccess(node *ast.Node, read bool) (ir.Expression, ir.Expression, ir.Type, error) {
 	n := ast.SkipParentheses(node)
 	var receiver, keyNode *ast.Node
 	var name string
 	if n.Kind == ast.KindElementAccessExpression {
 		a := n.AsElementAccessExpression()
 		if a.QuestionDotToken != nil {
-			return nil, nil, 0, l.notYet(node, "optional record indexing")
+			return nil, nil, 0, lowering.notYet(node, "optional record indexing")
 		}
 		receiver, keyNode = a.Expression, a.ArgumentExpression
 	} else {
 		a := n.AsPropertyAccessExpression()
 		if a.QuestionDotToken != nil {
-			return nil, nil, 0, l.notYet(node, "optional record property access")
+			return nil, nil, 0, lowering.notYet(node, "optional record property access")
 		}
 		receiver = a.Expression
 		name = a.Name().Text()
 	}
-	of, err := l.recordSlot(receiver)
-	if element := l.recordUnionElement(
-		l.checker.GetTypeAtLocation(receiver),
+	of, err := lowering.recordSlot(receiver)
+	if element := lowering.recordUnionElement(
+		lowering.checker.GetTypeAtLocation(receiver),
 		name,
 	); err != nil && element != nil && read {
 		// Only recordReadTarget's reads reach here with a union; writes and deletes ask recordTarget.
-		of, _ = l.recordStorageType(element)
+		of, _ = lowering.recordStorageType(element)
 		err = nil
 	}
 	if err != nil {
 		return nil, nil, 0, err
 	}
-	r, err := l.expression(receiver)
+	r, err := lowering.expression(receiver)
 	if err != nil {
 		return nil, nil, 0, err
 	}
 	var key ir.Expression
 	if keyNode != nil {
-		key, err = l.recordKey(keyNode, read)
+		key, err = lowering.recordKey(keyNode, read)
 	} else {
 		if read && recordPrototypeName(name) {
 			return nil, nil, 0, &Refused{
-				Where: l.program.Where(node),
+				Where: lowering.program.Where(node),
 				What:  "record key " + name + " names an Object.prototype member",
 				Fix:   "use own keys",
 			}
 		}
-		key = ir.StringConstant{Index: l.constant(name)}
+		key = ir.StringConstant{Index: lowering.constant(name)}
 	}
 	return r, key, of, err
 }
-func (l *lowering) recordExpression(node *ast.Node) (ir.Expression, bool, error) {
-	if l.recordTarget(node) ||
-		l.recordReadTarget(node) && !l.recordReadDiscarded(node) && !l.recordReadOwnGuarded(node) {
-		discarded := l.recordReadDiscarded(node)
-		guarded := l.recordReadOwnGuarded(node)
-		r, k, of, recordAccessError := l.recordAccess(node, !discarded && !guarded)
+func (lowering *lowering) recordExpression(node *ast.Node) (ir.Expression, bool, error) {
+	if lowering.recordTarget(node) ||
+		lowering.recordReadTarget(node) && !lowering.recordReadDiscarded(node) && !lowering.recordReadOwnGuarded(node) {
+		discarded := lowering.recordReadDiscarded(node)
+		guarded := lowering.recordReadOwnGuarded(node)
+		r, k, of, recordAccessError := lowering.recordAccess(node, !discarded && !guarded)
 		if recordAccessError != nil {
 			return nil, true, recordAccessError
 		}
@@ -263,18 +270,18 @@ func (l *lowering) recordExpression(node *ast.Node) (ir.Expression, bool, error)
 			Returns:   ir.Maybe(of),
 		}
 		if discarded {
-			return l.recordOwnRead(r, k, of), true, nil
+			return lowering.recordOwnRead(r, k, of), true, nil
 		}
 		if guarded {
-			read = l.recordOwnRead(r, k, of)
+			read = lowering.recordOwnRead(r, k, of)
 		}
-		here := l.checker.GetTypeAtLocation(node)
-		read, recordReadTypeError := l.recordReadType(node, read, here)
+		here := lowering.checker.GetTypeAtLocation(node)
+		read, recordReadTypeError := lowering.recordReadType(node, read, here)
 		if recordReadTypeError != nil {
 			return nil, true, recordReadTypeError
 		}
-		if !l.includesUndefined(here) && !recordTagObservation(node) {
-			if narrowed, known := l.representation(here); known && read.Type().IsMaybe() && !narrowed.IsMaybe() {
+		if !lowering.includesUndefined(here) && !recordTagObservation(node) {
+			if narrowed, known := lowering.representation(here); known && read.Type().IsMaybe() && !narrowed.IsMaybe() {
 				read = ir.Unwrap{Value: read}
 			}
 			if read.Type().IsReference() && read.Type() != ir.Union {
@@ -289,8 +296,8 @@ func (l *lowering) recordExpression(node *ast.Node) (ir.Expression, bool, error)
 		}
 		return read, true, nil
 	}
-	if node.Kind == ast.KindDeleteExpression && l.recordTarget(node.AsDeleteExpression().Expression) {
-		r, k, of, recordAccessError := l.recordAccess(node.AsDeleteExpression().Expression, false)
+	if node.Kind == ast.KindDeleteExpression && lowering.recordTarget(node.AsDeleteExpression().Expression) {
+		r, k, of, recordAccessError := lowering.recordAccess(node.AsDeleteExpression().Expression, false)
 		return ir.RecordCall{
 			Method:    "delete",
 			Arguments: []ir.Expression{r, k},
@@ -298,19 +305,20 @@ func (l *lowering) recordExpression(node *ast.Node) (ir.Expression, bool, error)
 			Returns:   ir.Boolean,
 		}, true, recordAccessError
 	}
-	if value, handled, recordScalarComparisonError := l.recordScalarComparison(node); handled {
+	if value, handled, recordScalarComparisonError := lowering.recordScalarComparison(node); handled {
 		return value, true, recordScalarComparisonError
 	}
 	if node.Kind != ast.KindBinaryExpression {
 		return nil, false, nil
 	}
 	b := node.AsBinaryExpression()
-	if b.OperatorToken.Kind == ast.KindInKeyword && l.recordElement(l.checker.GetTypeAtLocation(b.Right)) != nil {
-		k, recordKeyError := l.recordKey(b.Left, true)
+	if b.OperatorToken.Kind == ast.KindInKeyword &&
+		lowering.recordElement(lowering.checker.GetTypeAtLocation(b.Right)) != nil {
+		k, recordKeyError := lowering.recordKey(b.Left, true)
 		if recordKeyError != nil {
 			return nil, true, recordKeyError
 		}
-		r, expressionError := l.expression(b.Right)
+		r, expressionError := lowering.expression(b.Right)
 		return ir.RecordCall{
 			Method:    "has",
 			Arguments: []ir.Expression{k, r},
@@ -318,36 +326,36 @@ func (l *lowering) recordExpression(node *ast.Node) (ir.Expression, bool, error)
 		}, true, expressionError
 	}
 	if (b.OperatorToken.Kind == ast.KindEqualsToken || b.OperatorToken.Kind == ast.KindQuestionQuestionEqualsToken) &&
-		l.recordTarget(b.Left) {
-		r, k, of, recordAccessError := l.recordAccess(
+		lowering.recordTarget(b.Left) {
+		r, k, of, recordAccessError := lowering.recordAccess(
 			b.Left,
 			b.OperatorToken.Kind == ast.KindQuestionQuestionEqualsToken,
 		)
 		if recordAccessError != nil {
 			return nil, true, recordAccessError
 		}
-		v, expressionError := l.expression(b.Right)
+		v, expressionError := lowering.expression(b.Right)
 		if expressionError != nil {
 			return nil, true, expressionError
 		}
-		if recordNamedWriteError := l.recordNamedWrite(b.Left, b.Right); recordNamedWriteError != nil {
+		if recordNamedWriteError := lowering.recordNamedWrite(b.Left, b.Right); recordNamedWriteError != nil {
 			return nil, true, recordNamedWriteError
 		}
 		returns := v.Type()
 		v = fit(v, of)
 		if v.Type() != of {
-			return nil, true, l.notYet(node, "a record write with a different slot representation")
+			return nil, true, lowering.notYet(node, "a record write with a different slot representation")
 		}
 		if b.OperatorToken.Kind == ast.KindQuestionQuestionEqualsToken {
 			if of.IsMaybe() || of == ir.Union {
-				return nil, true, l.notYet(node, "record ??= with a tagged optional value")
+				return nil, true, lowering.notYet(node, "record ??= with a tagged optional value")
 			}
 			return ir.RecordCoalesce{
 				Record:  r,
 				Key:     k,
 				Value:   v,
 				Element: of,
-				Site:    l.writeSite(recordReceiver(b.Left)),
+				Site:    lowering.writeSite(recordReceiver(b.Left)),
 			}, true, nil
 		}
 		write := ir.Expression(ir.RecordCall{
@@ -355,7 +363,7 @@ func (l *lowering) recordExpression(node *ast.Node) (ir.Expression, bool, error)
 			Arguments: []ir.Expression{r, k, v},
 			Element:   of,
 			Returns:   of,
-			Site:      l.writeSite(recordReceiver(b.Left)),
+			Site:      lowering.writeSite(recordReceiver(b.Left)),
 		})
 		if of == ir.Union && returns != of {
 			write = ir.Narrow{Value: write, To: returns}
@@ -373,110 +381,110 @@ func recordReceiver(node *ast.Node) *ast.Node {
 	}
 	return n.AsPropertyAccessExpression().Expression
 }
-func (l *lowering) recordLiteral(node *ast.Node, t *checker.Type) (ir.Expression, error) {
-	of, known := l.recordStorageType(t)
+func (lowering *lowering) recordLiteral(node *ast.Node, t *checker.Type) (ir.Expression, error) {
+	of, known := lowering.recordStorageType(t)
 	if !known {
-		return nil, l.notYet(node, "record values with an unsupported slot representation")
+		return nil, lowering.notYet(node, "record values with an unsupported slot representation")
 	}
-	result := ir.RecordLiteral{Element: of, Site: l.writeSite(node)}
+	result := ir.RecordLiteral{Element: of, Site: lowering.writeSite(node)}
 	for i, p := range node.AsObjectLiteralExpression().Properties.Nodes {
 		if p.Kind == ast.KindSpreadAssignment {
 			if i != 0 {
 				return nil, &Refused{
-					Where: l.program.Where(p),
+					Where: lowering.program.Where(p),
 					What:  "a spread after the first field",
 					Fix:   "spread once, first (adamic/single-spread)",
 				}
 			}
 			source := p.AsSpreadAssignment().Expression
-			element := l.recordElement(l.checker.GetTypeAtLocation(source))
+			element := lowering.recordElement(lowering.checker.GetTypeAtLocation(source))
 			if element == nil {
-				return nil, l.notYet(p, "a spread into record storage from a fixed object")
+				return nil, lowering.notYet(p, "a spread into record storage from a fixed object")
 			}
 			if element != nil {
-				if !l.sameRecordStorage(element, t, map[[2]*checker.Type]bool{}) ||
-					!l.sameKeeping(element, t, map[[2]*checker.Type]bool{}) {
-					return nil, l.notYet(p, "record spread values seen through different storage")
+				if !lowering.sameRecordStorage(element, t, map[[2]*checker.Type]bool{}) ||
+					!lowering.sameKeeping(element, t, map[[2]*checker.Type]bool{}) {
+					return nil, lowering.notYet(p, "record spread values seen through different storage")
 				}
-				if widened := l.widened(element, t, map[[2]*checker.Type]bool{}); widened != nil {
+				if widened := lowering.widened(element, t, map[[2]*checker.Type]bool{}); widened != nil {
 					return nil, &Refused{
-						Where: l.program.Where(p),
+						Where: lowering.program.Where(p),
 						What:  "record spread shares values with an invariant-mutable slot that the target can widen",
 						Fix:   "keep the value's mutable fields invariant or copy the values too (adamic/invariant-mutable)",
 					}
 				}
 			}
-			e, recordSlotError := l.recordSlot(source)
+			e, recordSlotError := lowering.recordSlot(source)
 			if recordSlotError != nil {
 				return nil, recordSlotError
 			}
 			if e != of {
-				return nil, l.notYet(p, "record spread with a different value representation")
+				return nil, lowering.notYet(p, "record spread with a different value representation")
 			}
 			var expressionError error
-			result.Spread, expressionError = l.expression(source)
+			result.Spread, expressionError = lowering.expression(source)
 			if expressionError != nil {
 				return nil, expressionError
 			}
 			continue
 		}
 		if p.Kind != ast.KindPropertyAssignment && p.Kind != ast.KindShorthandPropertyAssignment {
-			return nil, l.notYet(p, "a record literal member other than a data entry")
+			return nil, lowering.notYet(p, "a record literal member other than a data entry")
 		}
 		name := p.Name()
 		var key ir.Expression
 		var err error
 		if name.Kind == ast.KindComputedPropertyName {
-			if recordComputedEntryError := l.recordComputedEntry(node, p, of); recordComputedEntryError != nil {
+			if recordComputedEntryError := lowering.recordComputedEntry(node, p, of); recordComputedEntryError != nil {
 				return nil, recordComputedEntryError
 			}
-			key, err = l.recordKey(name.AsComputedPropertyName().Expression, false)
+			key, err = lowering.recordKey(name.AsComputedPropertyName().Expression, false)
 		} else {
 			if p.Kind == ast.KindPropertyAssignment && name.Text() == "__proto__" {
-				return nil, l.notYet(p, "a prototype-setting record literal")
+				return nil, lowering.notYet(p, "a prototype-setting record literal")
 			}
 			// A numeric name is the key its number's canonical string is, as JavaScript's ToPropertyKey
 			// makes it: the scanner keeps a numeric literal's text as that string already (jsnum's
 			// String, so 0x1F is "31", 1e3 is "1000" and 1.50 is "1.5"). Its name never goes through
 			// l.expression, where the checker reads a property name as its property's type, not a number.
-			key = ir.StringConstant{Index: l.constant(name.Text())}
+			key = ir.StringConstant{Index: lowering.constant(name.Text())}
 		}
 		if err != nil {
 			return nil, err
 		}
 		var v ir.Expression
 		if p.Kind == ast.KindPropertyAssignment {
-			v, err = l.expression(p.AsPropertyAssignment().Initializer)
+			v, err = lowering.expression(p.AsPropertyAssignment().Initializer)
 		} else {
-			v, err = l.shorthand(p)
+			v, err = lowering.shorthand(p)
 		}
 		if err != nil {
 			return nil, err
 		}
 		v = fit(v, of)
 		if v.Type() != of {
-			return nil, l.notYet(p, "a record literal value with a different representation")
+			return nil, lowering.notYet(p, "a record literal value with a different representation")
 		}
 		result.Entries = append(result.Entries, ir.RecordEntry{Key: key, Value: v})
 	}
 	return result, nil
 }
-func (l *lowering) recordObjectCall(node *ast.Node, name string) (ir.Expression, bool, error) {
-	return l.recordObjectCallArguments(node, name, node.AsCallExpression().Arguments.Nodes)
+func (lowering *lowering) recordObjectCall(node *ast.Node, name string) (ir.Expression, bool, error) {
+	return lowering.recordObjectCallArguments(node, name, node.AsCallExpression().Arguments.Nodes)
 }
 
-func (l *lowering) recordObjectCallArguments(
+func (lowering *lowering) recordObjectCallArguments(
 	node *ast.Node,
 	name string,
 	args []*ast.Node,
 ) (ir.Expression, bool, error) {
-	if len(args) == 0 || l.recordElement(l.checker.GetTypeAtLocation(args[0])) == nil {
+	if len(args) == 0 || lowering.recordElement(lowering.checker.GetTypeAtLocation(args[0])) == nil {
 		return nil, false, nil
 	}
 	if name != "keys" && name != "values" && name != "entries" && name != "hasOwn" {
-		if _, _, admitted := l.recordDefineShape(node); admitted {
+		if _, _, admitted := lowering.recordDefineShape(node); admitted {
 			// As a statement, recordDefineStatement lowers it; its result, the object, isn't yet.
-			return nil, true, l.notYet(node, "Object.defineProperty on a record whose result is used")
+			return nil, true, lowering.notYet(node, "Object.defineProperty on a record whose result is used")
 		}
 		switch name {
 		case "defineProperty", "defineProperties", "getOwnPropertyDescriptor", "getOwnPropertyDescriptors", "getPrototypeOf", "setPrototypeOf", "create":
@@ -485,11 +493,12 @@ func (l *lowering) recordObjectCallArguments(
 			// define is admitted, above and in recordDefineStatement (Adamic's ruling on #3xq2xzc).
 			return nil, false, nil
 		}
-		return nil, true, l.notYet(node, "Object."+name+" on a record")
+		return nil, true, lowering.notYet(node, "Object."+name+" on a record")
 	}
 	// A Pick holds the whole record, so its values include fields it doesn't name, held otherwise.
-	if (name == "values" || name == "entries") && l.pickedRecordBase(l.checker.GetTypeAtLocation(args[0])) != nil {
-		return nil, true, l.notYet(
+	if (name == "values" || name == "entries") &&
+		lowering.pickedRecordBase(lowering.checker.GetTypeAtLocation(args[0])) != nil {
+		return nil, true, lowering.notYet(
 			node,
 			"Object."+name+" on a Pick of a record, which holds fields the Pick doesn't name",
 		)
@@ -499,19 +508,19 @@ func (l *lowering) recordObjectCallArguments(
 		count = 2
 	}
 	if len(args) != count {
-		return nil, true, l.notYet(node, "record Object operation argument count")
+		return nil, true, lowering.notYet(node, "record Object operation argument count")
 	}
-	of, recordSlotError := l.recordSlot(args[0])
+	of, recordSlotError := lowering.recordSlot(args[0])
 	if recordSlotError != nil {
 		return nil, true, recordSlotError
 	}
-	r, expressionError := l.expression(args[0])
+	r, expressionError := lowering.expression(args[0])
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
 	result := ir.RecordCall{Method: name, Arguments: []ir.Expression{r}, Element: of, Returns: ir.Array}
 	if name == "hasOwn" {
-		k, recordKeyError := l.recordKey(args[1], false)
+		k, recordKeyError := lowering.recordKey(args[1], false)
 		if recordKeyError != nil {
 			return nil, true, recordKeyError
 		}
@@ -522,23 +531,23 @@ func (l *lowering) recordObjectCallArguments(
 }
 
 // Aliases cannot change the native storage kind, even when tsc accepts the structural view.
-func (l *lowering) recordStorageView(node *ast.Node) error {
-	source, target := l.recordViewSite(node)
+func (lowering *lowering) recordStorageView(node *ast.Node) error {
+	source, target := lowering.recordViewSite(node)
 	if source == nil {
 		return nil
 	}
 	// A .ts view may drop a named contract its reads hold (droppedContractRead); .a refuses it at the
 	// write (#bq3fvdt), in recordDeclaredKeyRefusal before this rule.
-	l.droppedContractsRead = strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".ts")
-	defer func() { l.droppedContractsRead = false }()
-	own := l.checker.GetTypeAtLocation(source)
-	if stored, literal := l.branchesStoredAs(source, target); literal && stored {
+	lowering.droppedContractsRead = strings.HasSuffix(lowering.program.FileName(ast.GetSourceFileOfNode(node)), ".ts")
+	defer func() { lowering.droppedContractsRead = false }()
+	own := lowering.checker.GetTypeAtLocation(source)
+	if stored, literal := lowering.branchesStoredAs(source, target); literal && stored {
 		return nil
-	} else if literal || !l.sameRecordStorage(own, target, map[[2]*checker.Type]bool{}) {
-		return l.notYet(node, "a "+
-			l.checker.TypeToString(own)+
+	} else if literal || !lowering.sameRecordStorage(own, target, map[[2]*checker.Type]bool{}) {
+		return lowering.notYet(node, "a "+
+			lowering.checker.TypeToString(own)+
 			" seen as "+
-			l.checker.TypeToString(target)+
+			lowering.checker.TypeToString(target)+
 			" (fixed objects and records have different storage; copy explicitly)")
 	}
 	return nil
@@ -547,39 +556,39 @@ func (l *lowering) recordStorageView(node *ast.Node) error {
 // recordViewSite is the value a node puts into a typed slot and the slot's type, as recordStorageView
 // judges them, or nil: an initializer, an as expression, or a view site, but an object literal, which
 // is made as its slot, and an argument the library's own record operations take.
-func (l *lowering) recordViewSite(node *ast.Node) (*ast.Node, *checker.Type) {
+func (lowering *lowering) recordViewSite(node *ast.Node) (*ast.Node, *checker.Type) {
 	var source *ast.Node
 	var target *checker.Type
 	if node.Kind == ast.KindVariableDeclaration {
 		source = node.AsVariableDeclaration().Initializer
 		if source != nil {
-			target = l.checker.GetTypeAtLocation(node.Name())
+			target = lowering.checker.GetTypeAtLocation(node.Name())
 		}
 	} else if node.Kind == ast.KindAsExpression {
 		source = node.AsAsExpression().Expression
-		target = l.checker.GetTypeAtLocation(node)
-	} else if l.isExpression(node) && viewSite(node) {
+		target = lowering.checker.GetTypeAtLocation(node)
+	} else if lowering.isExpression(node) && viewSite(node) {
 		source = node
-		target = l.slotType(node)
+		target = lowering.slotType(node)
 	}
 	if source == nil || target == nil || ast.SkipParentheses(source).Kind == ast.KindObjectLiteralExpression {
 		return nil, nil
 	}
-	if l.recordLibraryArgument(source) {
+	if lowering.recordLibraryArgument(source) {
 		return nil, nil // Intrinsic adapters validate the actual storage, not their erased checker parameter.
 	}
 	if parent := source.Parent; parent != nil && parent.Kind == ast.KindCallExpression {
-		if l.detachedOwnCallReceiver(parent) != nil {
+		if lowering.detachedOwnCallReceiver(parent) != nil {
 			return nil, nil
 		}
 		callee := ast.SkipParentheses(parent.AsCallExpression().Expression)
-		if l.isLibraryGlobal(callee, "String") {
+		if lowering.isLibraryGlobal(callee, "String") {
 			return nil, nil
 		}
-		if callee.Kind == ast.KindPropertyAccessExpression && (l.isLibraryGlobal(
+		if callee.Kind == ast.KindPropertyAccessExpression && (lowering.isLibraryGlobal(
 			callee.AsPropertyAccessExpression().Expression,
 			"Object",
-		) || l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "JSON")) {
+		) || lowering.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "JSON")) {
 			return nil, nil
 		}
 	}
@@ -593,45 +602,45 @@ func init() { refusalRules.register(2000, "recordStorageView", (*lowering).recor
 // what objectLiteral builds it as (recordLiteralElement: its slot's record, else its own type), never
 // as its own type alone, so a literal built fixed meets the target as fixed. literal reports whether
 // any arm was an object literal; when none was, the source's own type is judged as before.
-func (l *lowering) branchesStoredAs(source *ast.Node, target *checker.Type) (stored, literal bool) {
+func (lowering *lowering) branchesStoredAs(source *ast.Node, target *checker.Type) (stored, literal bool) {
 	node := ast.SkipParentheses(source)
 	switch node.Kind {
 	case ast.KindObjectLiteralExpression:
-		built := l.checker.GetTypeAtLocation(node)
-		if slot := l.slotType(node); slot != nil &&
-			l.recordLiteralElement(node) != nil &&
-			l.recordElement(l.checker.GetNonNullableType(slot)) != nil {
-			built = l.checker.GetNonNullableType(slot)
+		built := lowering.checker.GetTypeAtLocation(node)
+		if slot := lowering.slotType(node); slot != nil &&
+			lowering.recordLiteralElement(node) != nil &&
+			lowering.recordElement(lowering.checker.GetNonNullableType(slot)) != nil {
+			built = lowering.checker.GetNonNullableType(slot)
 		}
-		return l.sameRecordStorage(built, target, map[[2]*checker.Type]bool{}), true
+		return lowering.sameRecordStorage(built, target, map[[2]*checker.Type]bool{}), true
 	case ast.KindConditionalExpression:
 		conditional := node.AsConditionalExpression()
-		whenTrue, trueLiteral := l.branchesStoredAs(conditional.WhenTrue, target)
-		whenFalse, falseLiteral := l.branchesStoredAs(conditional.WhenFalse, target)
+		whenTrue, trueLiteral := lowering.branchesStoredAs(conditional.WhenTrue, target)
+		whenFalse, falseLiteral := lowering.branchesStoredAs(conditional.WhenFalse, target)
 		return whenTrue && whenFalse, trueLiteral || falseLiteral
 	case ast.KindArrowFunction:
 		body := node.Body()
 		if body == nil || body.Kind == ast.KindBlock {
 			break
 		}
-		own, viewed := l.checker.GetSignaturesOfType(
-			l.checker.GetTypeAtLocation(node),
+		own, viewed := lowering.checker.GetSignaturesOfType(
+			lowering.checker.GetTypeAtLocation(node),
 			checker.SignatureKindCall,
-		), l.checker.GetSignaturesOfType(l.checker.GetNonNullableType(target), checker.SignatureKindCall)
+		), lowering.checker.GetSignaturesOfType(lowering.checker.GetNonNullableType(target), checker.SignatureKindCall)
 		if len(own) != 1 || len(viewed) != 1 {
 			break
 		}
-		returned, bodyLiteral := l.branchesStoredAs(body, l.checker.GetReturnTypeOfSignature(viewed[0]))
+		returned, bodyLiteral := lowering.branchesStoredAs(body, lowering.checker.GetReturnTypeOfSignature(viewed[0]))
 		if !bodyLiteral {
 			break
 		}
 		ownParameters, viewedParameters := own[0].Parameters(), viewed[0].Parameters()
-		parameters := l.parameterStorage(func() bool {
+		parameters := lowering.parameterStorage(func() bool {
 			for i := 0; i < len(ownParameters) && i < len(viewedParameters); i++ {
 				// A caller passes the viewed parameter's value into the arrow's own: that's the flow.
-				if !l.sameRecordStorage(
-					l.checker.GetTypeOfSymbol(viewedParameters[i]),
-					l.checker.GetTypeOfSymbol(ownParameters[i]),
+				if !lowering.sameRecordStorage(
+					lowering.checker.GetTypeOfSymbol(viewedParameters[i]),
+					lowering.checker.GetTypeOfSymbol(ownParameters[i]),
 					map[[2]*checker.Type]bool{},
 				) {
 					return false
@@ -641,18 +650,22 @@ func (l *lowering) branchesStoredAs(source *ast.Node, target *checker.Type) (sto
 		})
 		return returned && parameters, true
 	}
-	return l.sameRecordStorage(l.checker.GetTypeAtLocation(node), target, map[[2]*checker.Type]bool{}), false
+	return lowering.sameRecordStorage(
+		lowering.checker.GetTypeAtLocation(node),
+		target,
+		map[[2]*checker.Type]bool{},
+	), false
 }
 
 // Structural views must preserve dictionary storage at every depth, including callbacks.
-func (l *lowering) sameRecordStorage(from, to *checker.Type, visited map[[2]*checker.Type]bool) bool {
+func (lowering *lowering) sameRecordStorage(from, to *checker.Type, visited map[[2]*checker.Type]bool) bool {
 	if from == nil || to == nil || from == to || visited[[2]*checker.Type{from, to}] {
 		return true
 	}
 	if from.Flags()&checker.TypeFlagsUnion != 0 {
 		visited[[2]*checker.Type{from, to}] = true
-		for _, member := range l.definedMembers(from) {
-			if member.Flags()&checker.TypeFlagsNull == 0 && !l.sameRecordStorage(member, to, visited) {
+		for _, member := range lowering.definedMembers(from) {
+			if member.Flags()&checker.TypeFlagsNull == 0 && !lowering.sameRecordStorage(member, to, visited) {
 				return false
 			}
 		}
@@ -660,7 +673,7 @@ func (l *lowering) sameRecordStorage(from, to *checker.Type, visited map[[2]*che
 	}
 	if to.Flags()&checker.TypeFlagsUnion != 0 {
 		visited[[2]*checker.Type{from, to}] = true
-		members := l.definedMembers(to)
+		members := lowering.definedMembers(to)
 		// A value enters a union that names its own type as that member, whatever other members it's
 		// assignable to: CompilerOptions in CompilerOptions | PrinterOptions stays a record, and a read on
 		// the union dispatches on the value it holds.
@@ -670,57 +683,61 @@ func (l *lowering) sameRecordStorage(from, to *checker.Type, visited map[[2]*che
 			}
 		}
 		for _, member := range members {
-			if l.checker.IsTypeAssignableTo(from, member) && !l.sameRecordStorage(from, member, visited) {
+			if lowering.checker.IsTypeAssignableTo(from, member) && !lowering.sameRecordStorage(from, member, visited) {
 				return false
 			}
 		}
 		return true
 	}
-	from, to = l.present(from), l.present(to)
+	from, to = lowering.present(from), lowering.present(to)
 	// A Pick of a record is stored as the whole record, so it's compared as that record.
-	if base := l.pickedRecordBase(from); base != nil {
+	if base := lowering.pickedRecordBase(from); base != nil {
 		from = base
 	}
-	if base := l.pickedRecordBase(to); base != nil {
+	if base := lowering.pickedRecordBase(to); base != nil {
 		to = base
 	}
 	if from == nil || to == nil || from == to || visited[[2]*checker.Type{from, to}] {
 		return true
 	}
 	visited[[2]*checker.Type{from, to}] = true
-	inside, viewed := l.recordElement(from), l.recordElement(to)
+	inside, viewed := lowering.recordElement(from), lowering.recordElement(to)
 	if inside != nil || viewed != nil {
 		return inside != nil &&
 			viewed != nil &&
-			l.sameRecordNamedContracts(from, to, inside, viewed, visited) &&
-			l.sameRecordStorage(inside, viewed, visited)
+			lowering.sameRecordNamedContracts(from, to, inside, viewed, visited) &&
+			lowering.sameRecordStorage(inside, viewed, visited)
 	}
-	a, b := l.checker.GetSignaturesOfType(
+	a, b := lowering.checker.GetSignaturesOfType(
 		from,
 		checker.SignatureKindCall,
-	), l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
+	), lowering.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
 	if len(a) > 0 && len(b) > 0 {
 		ap, bp := a[0].Parameters(), b[0].Parameters()
-		parameters := l.parameterStorage(func() bool {
+		parameters := lowering.parameterStorage(func() bool {
 			for i := 0; i < len(ap) && i < len(bp); i++ {
-				if !l.sameRecordStorage(l.checker.GetTypeOfSymbol(ap[i]), l.checker.GetTypeOfSymbol(bp[i]), visited) {
+				if !lowering.sameRecordStorage(
+					lowering.checker.GetTypeOfSymbol(ap[i]),
+					lowering.checker.GetTypeOfSymbol(bp[i]),
+					visited,
+				) {
 					return false
 				}
 			}
 			return true
 		})
-		return parameters && l.sameRecordStorage(
-			l.checker.GetReturnTypeOfSignature(a[0]),
-			l.checker.GetReturnTypeOfSignature(b[0]),
+		return parameters && lowering.sameRecordStorage(
+			lowering.checker.GetReturnTypeOfSignature(a[0]),
+			lowering.checker.GetReturnTypeOfSignature(b[0]),
 			visited,
 		)
 	}
-	if l.isArrayType(from) ||
+	if lowering.isArrayType(from) ||
 		checker.IsTupleType(from) ||
-		l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
-		a, b := l.typeArguments(from), l.typeArguments(to)
+		lowering.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
+		a, b := lowering.typeArguments(from), lowering.typeArguments(to)
 		for i := 0; i < len(a) && i < len(b); i++ {
-			if !l.sameRecordStorage(a[i], b[i], visited) {
+			if !lowering.sameRecordStorage(a[i], b[i], visited) {
 				return false
 			}
 		}
@@ -734,20 +751,24 @@ func (l *lowering) sameRecordStorage(from, to *checker.Type, visited map[[2]*che
 	if from.ObjectFlags()&to.ObjectFlags()&checker.ObjectFlagsReference != 0 &&
 		from.Target() != nil &&
 		from.Target() == to.Target() {
-		a, b := l.checker.GetTypeArguments(from), l.checker.GetTypeArguments(to)
+		a, b := lowering.checker.GetTypeArguments(from), lowering.checker.GetTypeArguments(to)
 		if len(a) != len(b) {
 			return false
 		}
 		for i := range a {
-			if !l.sameRecordStorage(a[i], b[i], visited) {
+			if !lowering.sameRecordStorage(a[i], b[i], visited) {
 				return false
 			}
 		}
 		return true
 	}
-	for _, property := range l.checker.GetPropertiesOfType(to) {
-		if own := l.checker.GetPropertyOfType(from, property.Name); own != nil {
-			if !l.sameRecordStorage(l.checker.GetTypeOfSymbol(own), l.checker.GetTypeOfSymbol(property), visited) {
+	for _, property := range lowering.checker.GetPropertiesOfType(to) {
+		if own := lowering.checker.GetPropertyOfType(from, property.Name); own != nil {
+			if !lowering.sameRecordStorage(
+				lowering.checker.GetTypeOfSymbol(own),
+				lowering.checker.GetTypeOfSymbol(property),
+				visited,
+			) {
 				return false
 			}
 		}
@@ -756,8 +777,8 @@ func (l *lowering) sameRecordStorage(from, to *checker.Type, visited map[[2]*che
 }
 
 // Catch literal reads before method/builtin dispatch can bypass ordinary value lowering.
-func (l *lowering) recordLiteralRead(node *ast.Node) error {
-	if !l.recordReadTarget(node) || l.recordReadDiscarded(node) || l.recordReadOwnGuarded(node) {
+func (lowering *lowering) recordLiteralRead(node *ast.Node) error {
+	if !lowering.recordReadTarget(node) || lowering.recordReadDiscarded(node) || lowering.recordReadOwnGuarded(node) {
 		return nil
 	}
 	at := node
@@ -782,11 +803,11 @@ func (l *lowering) recordLiteralRead(node *ast.Node) error {
 		if b.Right == at {
 			other = b.Left
 		}
-		t := l.checker.GetTypeAtLocation(other)
+		t := lowering.checker.GetTypeAtLocation(other)
 		if (b.OperatorToken.Kind == ast.KindEqualsEqualsEqualsToken ||
 			b.OperatorToken.Kind == ast.KindExclamationEqualsEqualsToken) &&
 			t.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike) != 0 &&
-			!l.includesUndefined(t) {
+			!lowering.includesUndefined(t) {
 			return nil
 		}
 	}
@@ -801,7 +822,7 @@ func (l *lowering) recordLiteralRead(node *ast.Node) error {
 	}
 	if recordPrototypeName(name) {
 		return &Refused{
-			Where: l.program.Where(node),
+			Where: lowering.program.Where(node),
 			What:  "record key " + name + " names an Object.prototype member",
 			Fix:   "use own keys",
 		}

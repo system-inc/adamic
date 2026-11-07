@@ -17,7 +17,7 @@ const (
 	Refused
 )
 
-func (v Verdict) String() string { return [...]string{"Unknown", "Proven", "Refused"}[v] }
+func (verdict Verdict) String() string { return [...]string{"Unknown", "Proven", "Refused"}[verdict] }
 
 type OwnershipEdge struct {
 	From, To int
@@ -245,7 +245,10 @@ func QueryOwnership(s OwnershipSnapshot, owner string) OwnershipAnswer {
 			key = link.next
 		}
 		path := root.Name + strings.Join(labels, "")
-		out.Witnesses = append(out.Witnesses, OwnershipWitness{root.Name, path, observedWeak, root.Borrowed, root.UsedAfter, root.UseInstruction})
+		out.Witnesses = append(
+			out.Witnesses,
+			OwnershipWitness{root.Name, path, observedWeak, root.Borrowed, root.UsedAfter, root.UseInstruction},
+		)
 		switch {
 		case observedWeak:
 			refuse("weak observer via " + path)
@@ -258,7 +261,10 @@ func QueryOwnership(s OwnershipSnapshot, owner string) OwnershipAnswer {
 		}
 	}
 	if out.Verdict == Proven {
-		out.Evidence = append(out.Evidence, "complete private closure; one surviving strong owner; no weak observer or continuation use")
+		out.Evidence = append(
+			out.Evidence,
+			"complete private closure; one surviving strong owner; no weak observer or continuation use",
+		)
 	}
 	return out
 }
@@ -295,17 +301,24 @@ func OwnershipTransfers(program *ir.Program) []TransferAnswer {
 func QueryOwnershipTransfers(program *ir.Program) []TransferAnswer {
 	return prepare(program, true).queries
 }
-func (a *analysis) transferAnswer(move ir.ParallelMap, items value) TransferAnswer {
-	result := TransferAnswer{Graph: a.graph, Site: move.Site, At: a.graph.Instructions[a.instruction].At, Function: a.function, Instruction: a.instruction, Owner: -1}
+func (analysis *analysis) transferAnswer(move ir.ParallelMap, items value) TransferAnswer {
+	result := TransferAnswer{
+		Graph:       analysis.graph,
+		Site:        move.Site,
+		At:          analysis.graph.Instructions[analysis.instruction].At,
+		Function:    analysis.function,
+		Instruction: analysis.instruction,
+		Owner:       -1,
+	}
 	read, ok := move.Items.(ir.Read)
 	if !ok {
 		result.Answer = OwnershipAnswer{Verdict: Unknown, Evidence: []string{"candidate is not an owned local"}}
 		return result
 	}
 	result.Owner = read.Local
-	s := OwnershipSnapshot{Complete: !a.proof.top}
+	s := OwnershipSnapshot{Complete: !analysis.proof.top}
 	all := objects{}
-	for o, fields := range a.state.heap {
+	for o, fields := range analysis.state.heap {
 		all[o] = true
 		for _, held := range fields {
 			for target := range held.strong {
@@ -316,7 +329,7 @@ func (a *analysis) transferAnswer(move ir.ParallelMap, items value) TransferAnsw
 			}
 		}
 	}
-	for _, held := range a.state.locals {
+	for _, held := range analysis.state.locals {
 		for o := range held.strong {
 			all[o] = true
 		}
@@ -328,7 +341,7 @@ func (a *analysis) transferAnswer(move ir.ParallelMap, items value) TransferAnsw
 		all[o] = true
 	}
 	allocationInstructions := map[int]flow.InstructionId{}
-	for key, site := range a.sites {
+	for key, site := range analysis.sites {
 		allocationInstructions[site] = key.instruction
 	}
 	for o := range all {
@@ -336,10 +349,15 @@ func (a *analysis) transferAnswer(move ir.ParallelMap, items value) TransferAnsw
 		var instruction flow.InstructionId
 		if o > 0 {
 			instruction = allocationInstructions[siteOf(o)]
-			allocation = a.graph.Instructions[instruction].At
+			allocation = analysis.graph.Instructions[instruction].At
 		}
-		s.Objects = append(s.Objects, OwnershipObject{ID: int(o), AllocationInstruction: instruction, Allocation: allocation, Unknown: o <= 0 || o%2 == 0 || a.state.exposed(o)})
-		for field, held := range a.state.heap[o] {
+		s.Objects = append(s.Objects, OwnershipObject{
+			ID:                    int(o),
+			AllocationInstruction: instruction,
+			Allocation:            allocation,
+			Unknown:               o <= 0 || o%2 == 0 || analysis.state.exposed(o),
+		})
+		for field, held := range analysis.state.heap[o] {
 			label := "." + field
 			if field == elementKey {
 				label = "[]"
@@ -354,22 +372,22 @@ func (a *analysis) transferAnswer(move ir.ParallelMap, items value) TransferAnsw
 	}
 	// The existing interpreter has no dynamic region inventory. Never pretend
 	// graph type identities are runtime region identities.
-	candidateReach := a.state.reach(items)
+	candidateReach := analysis.state.reach(items)
 	for o := range candidateReach {
-		if o > 0 && (!a.classifiedSites[siteOf(o)] || a.graphSites[siteOf(o)]) {
+		if o > 0 && (!analysis.classifiedSites[siteOf(o)] || analysis.graphSites[siteOf(o)]) {
 			s.Complete = false
 		}
 	}
-	for local, held := range a.state.locals {
-		if local >= len(a.proof.program.Locals) {
+	for local, held := range analysis.state.locals {
+		if local >= len(analysis.proof.program.Locals) {
 			if !held.empty() {
 				s.Complete = false
 			}
 			continue
 		}
-		declared := a.proof.program.Locals[local]
+		declared := analysis.proof.program.Locals[local]
 		name := fmt.Sprintf("%s#%d", declared.Name, local)
-		after, use := a.continuationUse(local)
+		after, use := analysis.continuationUse(local)
 		for o := range held.strong {
 			s.Roots = append(s.Roots, OwnershipRoot{name, int(o), false, declared.Borrowed, after, use})
 		}
@@ -391,19 +409,19 @@ func (a *analysis) transferAnswer(move ir.ParallelMap, items value) TransferAnsw
 		}
 		return !x.Weak && y.Weak
 	})
-	result.Answer = QueryOwnership(s, fmt.Sprintf("%s#%d", a.proof.program.Locals[read.Local].Name, read.Local))
+	result.Answer = QueryOwnership(s, fmt.Sprintf("%s#%d", analysis.proof.program.Locals[read.Local].Name, read.Local))
 	return result
 }
 
-func (a *analysis) continuationUse(local int) (bool, flow.InstructionId) {
+func (analysis *analysis) continuationUse(local int) (bool, flow.InstructionId) {
 	type position struct {
 		block flow.BlockId
 		index int
 	}
 	var pending []position
-	for _, b := range a.graph.Blocks {
+	for _, b := range analysis.graph.Blocks {
 		for i, id := range b.Instructions {
-			if id == a.instruction {
+			if id == analysis.instruction {
 				pending = append(pending, position{b.Id, i + 1})
 			}
 		}
@@ -417,17 +435,17 @@ func (a *analysis) continuationUse(local int) (bool, flow.InstructionId) {
 			continue
 		}
 		seen[at] = true
-		b, _ := a.graph.Block(at.block)
+		b, _ := analysis.graph.Block(at.block)
 		killed := false
 		for i := at.index; i < len(b.Instructions); i++ {
-			instruction := a.graph.Instructions[b.Instructions[i]]
+			instruction := analysis.graph.Instructions[b.Instructions[i]]
 			for _, use := range instruction.Uses {
-				if a.graph.Identifiers[use.Identifier].Declaration == declaration {
+				if analysis.graph.Identifiers[use.Identifier].Declaration == declaration {
 					return true, instruction.Id
 				}
 			}
 			for _, define := range instruction.Defines {
-				if a.graph.Identifiers[define.Identifier].Declaration == declaration {
+				if analysis.graph.Identifiers[define.Identifier].Declaration == declaration {
 					killed = true
 				}
 			}
@@ -472,23 +490,23 @@ func hasMoved(node reflect.Value) bool {
 	return false
 }
 
-func (a *analysis) tagOwnershipGraph(made value, ids []int, program bool) {
-	if !a.proof.ownership {
+func (analysis *analysis) tagOwnershipGraph(made value, ids []int, program bool) {
+	if !analysis.proof.ownership {
 		return
 	}
 	for o := range made.strong {
 		if o > 0 {
-			a.classifiedSites[siteOf(o)] = true
+			analysis.classifiedSites[siteOf(o)] = true
 			if program {
-				a.graphSites[siteOf(o)] = true
+				analysis.graphSites[siteOf(o)] = true
 			}
 		}
 	}
 	for _, id := range ids {
-		if a.proof.program.GraphTypes[id] {
+		if analysis.proof.program.GraphTypes[id] {
 			for o := range made.strong {
 				if o > 0 {
-					a.graphSites[siteOf(o)] = true
+					analysis.graphSites[siteOf(o)] = true
 				}
 			}
 		}

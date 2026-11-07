@@ -11,7 +11,7 @@ import (
 // A tag chooses the interface; its fields remain checked at every read. In .a the tag must tell the
 // target from the source: a test every source value passes proves nothing, so .a takes the first test
 // a source value can fail and refuses the cast when there is none. .ts keeps the first tag, checked.
-func (l *lowering) interfaceCast(
+func (lowering *lowering) interfaceCast(
 	node *ast.Node,
 	value ir.Expression,
 	source, target *checker.Type,
@@ -23,44 +23,44 @@ func (l *lowering) interfaceCast(
 		return nil, nil
 	}
 	var vacuous *Refused
-	for _, property := range l.checker.GetPropertiesOfType(source) {
+	for _, property := range lowering.checker.GetPropertiesOfType(source) {
 		field := property.Name
-		literal := l.fieldLiteral(target, field)
+		literal := lowering.fieldLiteral(target, field)
 		if literal == nil ||
-			!l.checker.IsTypeAssignableTo(target, source) ||
-			l.widened(target, source, map[[2]*checker.Type]bool{}) != nil {
+			!lowering.checker.IsTypeAssignableTo(target, source) ||
+			lowering.widened(target, source, map[[2]*checker.Type]bool{}) != nil {
 			continue
 		}
-		allowed, fieldType, constant := l.literalConstant(literal)
+		allowed, fieldType, constant := lowering.literalConstant(literal)
 		if !constant {
 			continue
 		}
-		if !l.checkedAssertionSource(node) &&
-			l.withinLiterals(l.checker.GetTypeOfSymbol(property), []*checker.Type{literal}) {
+		if !lowering.checkedAssertionSource(node) &&
+			lowering.withinLiterals(lowering.checker.GetTypeOfSymbol(property), []*checker.Type{literal}) {
 			if vacuous == nil {
 				vacuous = &Refused{
-					Where: l.program.Where(node),
+					Where: lowering.program.Where(node),
 					What: "a downcast to " +
-						l.checker.TypeToString(target) +
+						lowering.checker.TypeToString(target) +
 						" whose tag test is vacuous: every " +
-						l.checker.TypeToString(source) +
+						lowering.checker.TypeToString(source) +
 						" has " +
 						field +
 						" " +
-						l.checker.TypeToString(literal),
+						lowering.checker.TypeToString(literal),
 					Fix: "give " +
-						l.checker.TypeToString(target) +
+						lowering.checker.TypeToString(target) +
 						" a tag of its own in a discriminated union, or build the value as a " +
-						l.checker.TypeToString(target) +
+						lowering.checker.TypeToString(target) +
 						" so the compiler can prove it",
 				}
 			}
 			continue
 		}
-		if _, viewError := l.view(node, value, source, target); viewError != nil {
+		if _, viewError := lowering.view(node, value, source, target); viewError != nil {
 			return nil, viewError
 		}
-		l.viewSources[len(l.viewSources)-1].cast = true
+		lowering.viewSources[len(lowering.viewSources)-1].cast = true
 		return ir.CheckedCast{
 			Value:         value,
 			Field:         field,
@@ -68,9 +68,9 @@ func (l *lowering) interfaceCast(
 			Allowed:       []ir.Expression{allowed},
 			CheckedFields: true,
 			Message: "cast failed: this " +
-				l.checker.TypeToString(source) +
+				lowering.checker.TypeToString(source) +
 				" is not a " +
-				l.checker.TypeToString(target),
+				lowering.checker.TypeToString(target),
 		}, nil
 	}
 	if vacuous != nil {
@@ -84,25 +84,25 @@ func (l *lowering) interfaceCast(
 // union whose members all are, a literal equal to one (two enums' members sharing a value are equal
 // here), an intersection with a member that is, or a type parameter whose constraint is. Any other
 // type (string, undefined, an object, unknown, a template) admits a value the test can fail.
-func (l *lowering) withinLiterals(declared *checker.Type, allowed []*checker.Type) bool {
+func (lowering *lowering) withinLiterals(declared *checker.Type, allowed []*checker.Type) bool {
 	switch {
 	case declared.Flags()&checker.TypeFlagsUnion != 0:
 		for _, member := range declared.Types() {
-			if !l.withinLiterals(member, allowed) {
+			if !lowering.withinLiterals(member, allowed) {
 				return false
 			}
 		}
 		return true
 	case declared.Flags()&checker.TypeFlagsIntersection != 0:
 		for _, member := range declared.Types() {
-			if l.withinLiterals(member, allowed) {
+			if lowering.withinLiterals(member, allowed) {
 				return true
 			}
 		}
 		return false
 	case declared.Flags()&checker.TypeFlagsTypeParameter != 0:
-		constraint := l.checker.GetBaseConstraintOfType(declared)
-		return constraint != nil && constraint != declared && l.withinLiterals(constraint, allowed)
+		constraint := lowering.checker.GetBaseConstraintOfType(declared)
+		return constraint != nil && constraint != declared && lowering.withinLiterals(constraint, allowed)
 	}
 	mask := checker.TypeFlagsStringLiteral | checker.TypeFlagsNumberLiteral | checker.TypeFlagsBooleanLiteral
 	if declared.Flags()&mask == 0 {
@@ -122,23 +122,27 @@ func (l *lowering) withinLiterals(declared *checker.Type, allowed []*checker.Typ
 // is the type the value had before the view, nil when there's none to name; what
 // it already guarantees is read honestly through a wider type (view_widened.go).
 // Value is where the view's value enters it, unless a CheckedCast wraps it.
-func (l *lowering) view(node *ast.Node, value ir.Expression, source, target *checker.Type) (ir.Expression, error) {
-	l.viewSources = append(l.viewSources, viewSource{source: source, target: target, entry: value})
+func (lowering *lowering) view(
+	node *ast.Node,
+	value ir.Expression,
+	source, target *checker.Type,
+) (ir.Expression, error) {
+	lowering.viewSources = append(lowering.viewSources, viewSource{source: source, target: target, entry: value})
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
-		return l.legacyView(node, value, target)
+		return lowering.legacyView(node, value, target)
 	}
-	fields, viewSchemaError := l.viewSchema(node, target)
+	fields, viewSchemaError := lowering.viewSchema(node, target)
 	if viewSchemaError != nil {
 		return nil, viewSchemaError
 	}
-	if refuseViewElementReadsError := l.refuseViewElementReads(fields); refuseViewElementReadsError != nil {
+	if refuseViewElementReadsError := lowering.refuseViewElementReads(fields); refuseViewElementReadsError != nil {
 		return nil, refuseViewElementReadsError
 	}
-	if l.result.CheckedFields == nil {
-		l.result.CheckedFields = map[string]bool{}
+	if lowering.result.CheckedFields == nil {
+		lowering.result.CheckedFields = map[string]bool{}
 	}
 
-	modules, moduleOrderError := l.moduleOrder(l.program.Files()[0])
+	modules, moduleOrderError := lowering.moduleOrder(lowering.program.Files()[0])
 	if moduleOrderError != nil {
 		return nil, moduleOrderError
 	}
@@ -151,30 +155,38 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, source, target *che
 		}
 		// An accessor slot still needs a conversion the checked read boundary can't emit. An
 		// optional slot or receiver is emission's to judge, at the read (unemittableCheckedViewRead).
-		if part.Kind == ast.KindPropertyAccessExpression && l.checkedViewReceiverField(
+		if part.Kind == ast.KindPropertyAccessExpression && lowering.checkedViewReceiverField(
 			part,
-			l.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression),
+			lowering.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression),
 			part.Name().Text(),
 		) {
 			access := part.AsPropertyAccessExpression()
-			if base, _ := l.representation(l.checker.GetTypeAtLocation(access.Expression)); base == ir.Object {
-				field := l.checker.GetSymbolAtLocation(part.Name())
+			if base, _ := lowering.representation(
+				lowering.checker.GetTypeAtLocation(access.Expression),
+			); base == ir.Object {
+				field := lowering.checker.GetSymbolAtLocation(part.Name())
 				if field != nil && len(
-					l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(field), checker.SignatureKindCall),
+					lowering.checker.GetSignaturesOfType(
+						lowering.checker.GetTypeOfSymbol(field),
+						checker.SignatureKindCall,
+					),
 				) == 0 && accessorSymbol(field) {
-					refused = l.notYet(part, checkedFieldAliasAccessor)
+					refused = lowering.notYet(part, checkedFieldAliasAccessor)
 				}
 			}
 		}
-		if part.Kind == ast.KindPropertyAccessExpression && l.checkedViewReceiverField(
+		if part.Kind == ast.KindPropertyAccessExpression && lowering.checkedViewReceiverField(
 			part,
-			l.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression),
+			lowering.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression),
 			part.Name().Text(),
 		) && ast.IsAssignmentTarget(part) {
-			if symbol := l.checker.GetSymbolAtLocation(part.Name()); symbol != nil {
-				of, _ := l.representation(l.checker.GetTypeOfSymbol(symbol))
+			if symbol := lowering.checker.GetSymbolAtLocation(part.Name()); symbol != nil {
+				of, _ := lowering.representation(lowering.checker.GetTypeOfSymbol(symbol))
 				if of == ir.Object {
-					refused = l.notYet(part, "writing a checked object field without its source-slot type certificate")
+					refused = lowering.notYet(
+						part,
+						"writing a checked object field without its source-slot type certificate",
+					)
 				}
 			}
 		}
@@ -195,10 +207,10 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, source, target *che
 		return nil, refused
 	}
 	if len(getters) != 0 {
-		l.contractGetters = append(l.contractGetters, contractGetters{origin: value, getters: getters})
+		lowering.contractGetters = append(lowering.contractGetters, contractGetters{origin: value, getters: getters})
 	}
-	l.result.ViewOrigins = append(l.result.ViewOrigins, value)
-	l.graphViewSite = node
+	lowering.result.ViewOrigins = append(lowering.result.ViewOrigins, value)
+	lowering.graphViewSite = node
 	return value, nil
 }
 
@@ -235,11 +247,11 @@ func interfaceScalar(proven *checker.Type) bool {
 }
 
 // A finite literal contract is checked as well as its primitive representation.
-func (l *lowering) viewLiterals(declared *checker.Type) []ir.Expression {
+func (lowering *lowering) viewLiterals(declared *checker.Type) []ir.Expression {
 	if declared.Flags()&checker.TypeFlagsUnion != 0 {
 		var allowed []ir.Expression
 		for _, member := range declared.Types() {
-			values := l.viewLiterals(member)
+			values := lowering.viewLiterals(member)
 			if len(values) == 0 {
 				return nil
 			}
@@ -247,28 +259,28 @@ func (l *lowering) viewLiterals(declared *checker.Type) []ir.Expression {
 		}
 		return allowed
 	}
-	value, _, known := l.literalConstant(declared)
+	value, _, known := lowering.literalConstant(declared)
 	if known {
 		return []ir.Expression{value}
 	}
 	return nil
 }
 
-func (l *lowering) callableViewContract(proven *checker.Type) bool {
+func (lowering *lowering) callableViewContract(proven *checker.Type) bool {
 	if proven.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range proven.Types() {
-			if l.callableViewContract(member) {
+			if lowering.callableViewContract(member) {
 				return true
 			}
 		}
 	}
-	return len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) != 0 ||
-		len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) != 0
+	return len(lowering.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) != 0 ||
+		len(lowering.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) != 0
 }
 
-func (l *lowering) viewSchema(node *ast.Node, target *checker.Type) (map[string]bool, error) {
-	l.graphViewSite = node
-	id, viewContractError := l.viewContract(node, target)
+func (lowering *lowering) viewSchema(node *ast.Node, target *checker.Type) (map[string]bool, error) {
+	lowering.graphViewSite = node
+	id, viewContractError := lowering.viewContract(node, target)
 	if viewContractError != nil {
 		return nil, viewContractError
 	}
@@ -276,14 +288,14 @@ func (l *lowering) viewSchema(node *ast.Node, target *checker.Type) (map[string]
 	// A failed whole-object adapter can leave an unsupported descriptor without
 	// its fields. Keep those names registered so demanded reads reach the lazy
 	// refusal instead of silently reading unchecked storage.
-	if contract := l.result.ViewContracts[id-1]; contract.Unsupported != "" {
-		if l.result.CheckedFields == nil {
-			l.result.CheckedFields = map[string]bool{}
+	if contract := lowering.result.ViewContracts[id-1]; contract.Unsupported != "" {
+		if lowering.result.CheckedFields == nil {
+			lowering.result.CheckedFields = map[string]bool{}
 		}
-		for _, property := range l.checker.GetPropertiesOfType(target) {
+		for _, property := range lowering.checker.GetPropertiesOfType(target) {
 			fields[property.Name] = true
 			// Preserve the boundary under receiver-specific registration too.
-			l.result.CheckedFields[ir.CheckedFieldKey(int(target.Id()), property.Name)] = true
+			lowering.result.CheckedFields[ir.CheckedFieldKey(int(target.Id()), property.Name)] = true
 		}
 	}
 	seen := map[ir.ViewContractID]bool{}
@@ -293,15 +305,15 @@ func (l *lowering) viewSchema(node *ast.Node, target *checker.Type) (map[string]
 			return
 		}
 		seen[id] = true
-		contract := l.result.ViewContracts[id-1]
+		contract := lowering.result.ViewContracts[id-1]
 		for _, field := range contract.Fields {
 			fields[field.Name] = true
-			for typeID, contractID := range l.result.ViewContractTypes {
+			for typeID, contractID := range lowering.result.ViewContractTypes {
 				if contractID == id {
-					if l.result.CheckedFields == nil {
-						l.result.CheckedFields = map[string]bool{}
+					if lowering.result.CheckedFields == nil {
+						lowering.result.CheckedFields = map[string]bool{}
 					}
-					l.result.CheckedFields[ir.CheckedFieldKey(typeID, field.Name)] = true
+					lowering.result.CheckedFields[ir.CheckedFieldKey(typeID, field.Name)] = true
 				}
 			}
 			visit(field.Contract)
@@ -314,46 +326,49 @@ func (l *lowering) viewSchema(node *ast.Node, target *checker.Type) (map[string]
 	return fields, nil
 }
 
-func (l *lowering) legacyView(node *ast.Node, value ir.Expression, target *checker.Type) (ir.Expression, error) {
-	if l.callableViewContract(target) {
+func (lowering *lowering) legacyView(node *ast.Node, value ir.Expression, target *checker.Type) (ir.Expression, error) {
+	if lowering.callableViewContract(target) {
 		return nil, &Refused{
-			Where: l.program.Where(node),
+			Where: lowering.program.Where(node),
 			What:  "a checked view with a callable contract",
 			Fix:   "prove the callable body rather than asserting its signature",
 		}
 	}
 	// Diagnose unreifiable contracts before temporary backend limitations.
-	for _, property := range l.checker.GetPropertiesOfType(target) {
-		declared := l.checker.GetTypeOfSymbol(property)
-		if l.callableViewContract(declared) {
+	for _, property := range lowering.checker.GetPropertiesOfType(target) {
+		declared := lowering.checker.GetTypeOfSymbol(property)
+		if lowering.callableViewContract(declared) {
 			return nil, &Refused{
-				Where: l.program.Where(node),
+				Where: lowering.program.Where(node),
 				What:  "a checked view with callable field " + property.Name,
 				Fix:   "prove the callable body rather than asserting its signature",
 			}
 		}
 	}
 	fields := map[string]bool{}
-	for _, property := range l.checker.GetPropertiesOfType(target) {
-		declared := l.checker.GetTypeOfSymbol(property)
-		if l.callableViewContract(declared) {
+	for _, property := range lowering.checker.GetPropertiesOfType(target) {
+		declared := lowering.checker.GetTypeOfSymbol(property)
+		if lowering.callableViewContract(declared) {
 			return nil, &Refused{
-				Where: l.program.Where(node),
+				Where: lowering.program.Where(node),
 				What:  "a checked view with callable field " + property.Name,
 				Fix:   "prove the callable body rather than asserting its signature",
 			}
 		}
-		of, known := l.representation(declared)
+		of, known := lowering.representation(declared)
 		if property.Flags&ast.SymbolFlagsOptional != 0 ||
 			!interfaceScalar(declared) ||
 			!known ||
 			of < ir.Number ||
 			of > ir.String {
-			return nil, l.notYet(node, "checked view field "+property.Name+" of type "+l.checker.TypeToString(declared))
+			return nil, lowering.notYet(
+				node,
+				"checked view field "+property.Name+" of type "+lowering.checker.TypeToString(declared),
+			)
 		}
 		fields[property.Name] = true
 	}
-	modules, moduleOrderError := l.moduleOrder(l.program.Files()[0])
+	modules, moduleOrderError := lowering.moduleOrder(lowering.program.Files()[0])
 	if moduleOrderError != nil {
 		return nil, moduleOrderError
 	}
@@ -375,34 +390,46 @@ func (l *lowering) legacyView(node *ast.Node, value ir.Expression, target *check
 					name = binding.AsBindingElement().PropertyName
 				}
 				if name != nil && fields[name.Text()] {
-					declared := l.checker.GetTypeAtLocation(binding.Name())
-					of, known := l.representation(declared)
+					declared := lowering.checker.GetTypeAtLocation(binding.Name())
+					of, known := lowering.representation(declared)
 					if !known || of < ir.Number || of > ir.String || !interfaceScalar(declared) {
-						found = l.notYet(binding, "a checked destructured alias requiring a representation conversion")
+						found = lowering.notYet(
+							binding,
+							"a checked destructured alias requiring a representation conversion",
+						)
 					}
 				}
 			}
 		}
-		if part.Kind == ast.KindPropertyAccessExpression && l.checkedViewReceiverField(
+		if part.Kind == ast.KindPropertyAccessExpression && lowering.checkedViewReceiverField(
 			part,
-			l.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression),
+			lowering.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression),
 			part.Name().Text(),
 		) {
 			access := part.AsPropertyAccessExpression()
-			if base, _ := l.representation(l.checker.GetTypeAtLocation(access.Expression)); base == ir.Object {
-				field := l.checker.GetSymbolAtLocation(part.Name())
+			if base, _ := lowering.representation(
+				lowering.checker.GetTypeAtLocation(access.Expression),
+			); base == ir.Object {
+				field := lowering.checker.GetSymbolAtLocation(part.Name())
 				if field != nil && len(
-					l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(field), checker.SignatureKindCall),
+					lowering.checker.GetSignaturesOfType(
+						lowering.checker.GetTypeOfSymbol(field),
+						checker.SignatureKindCall,
+					),
 				) == 0 {
-					of, known := l.representation(l.checker.GetTypeOfSymbol(field))
-					if gap := checkedFieldAliasGap(access, field, interfaceScalar(l.checker.GetTypeOfSymbol(field)) &&
-						known &&
-						of >= ir.Number &&
-						of <= ir.String); gap != "" {
+					of, known := lowering.representation(lowering.checker.GetTypeOfSymbol(field))
+					if gap := checkedFieldAliasGap(
+						access,
+						field,
+						interfaceScalar(lowering.checker.GetTypeOfSymbol(field)) &&
+							known &&
+							of >= ir.Number &&
+							of <= ir.String,
+					); gap != "" {
 						if gap == checkedFieldAliasNotScalar {
-							gap += " (" + l.checker.TypeToString(l.checker.GetTypeOfSymbol(field)) + ")"
+							gap += " (" + lowering.checker.TypeToString(lowering.checker.GetTypeOfSymbol(field)) + ")"
 						}
-						found = l.notYet(part, gap)
+						found = lowering.notYet(part, gap)
 					}
 				}
 			}
@@ -418,27 +445,27 @@ func (l *lowering) legacyView(node *ast.Node, value ir.Expression, target *check
 	if found != nil {
 		return nil, found
 	}
-	if refuseViewElementReadsError := l.refuseViewElementReads(fields); refuseViewElementReadsError != nil {
+	if refuseViewElementReadsError := lowering.refuseViewElementReads(fields); refuseViewElementReadsError != nil {
 		return nil, refuseViewElementReadsError
 	}
 	if len(getters) != 0 {
-		l.contractGetters = append(l.contractGetters, contractGetters{origin: value, getters: getters})
+		lowering.contractGetters = append(lowering.contractGetters, contractGetters{origin: value, getters: getters})
 	}
-	if l.result.CheckedFields == nil {
-		l.result.CheckedFields = map[string]bool{}
+	if lowering.result.CheckedFields == nil {
+		lowering.result.CheckedFields = map[string]bool{}
 	}
 	for field := range fields {
-		l.result.CheckedFields[ir.CheckedFieldKey(int(target.Id()), field)] = true
+		lowering.result.CheckedFields[ir.CheckedFieldKey(int(target.Id()), field)] = true
 	}
-	l.graphViewSite = node
+	lowering.graphViewSite = node
 	return value, nil
 }
 
 // Nullable receivers read the present object's contract. A generic receiver
 // uses its instantiated type, or its constraint when the binder remains rigid.
 // Neither operation relates unrelated objects merely because their names match.
-func (l *lowering) viewReceiverTypeID(receiver *checker.Type) int {
-	return l.viewTypeID(l.viewReceiver(receiver))
+func (lowering *lowering) viewReceiverTypeID(receiver *checker.Type) int {
+	return lowering.viewTypeID(lowering.viewReceiver(receiver))
 }
 
 // viewFieldReceiverTypeID is the one place the id a field read is checked under is
@@ -450,15 +477,15 @@ func (l *lowering) viewReceiverTypeID(receiver *checker.Type) int {
 // of a compound or logical assignment included. A nil node is a read with no
 // access of its own: a destructured binding, a view's source, a copied value.
 // TestViewReceiverCallersAreClassified holds every caller to a role.
-func (l *lowering) viewFieldReceiverTypeID(node *ast.Node, receiver *checker.Type) int {
+func (lowering *lowering) viewFieldReceiverTypeID(node *ast.Node, receiver *checker.Type) int {
 	var id int
 	if node != nil && ast.IsAssignmentTarget(node) {
-		id = l.viewReceiverTypeID(receiver)
+		id = lowering.viewReceiverTypeID(receiver)
 	} else {
-		id = l.viewReadReceiverTypeID(receiver)
+		id = lowering.viewReadReceiverTypeID(receiver)
 	}
 	// Whether a record's or a merged class's field name checks it (#9jnjwrw).
-	l.plainReceiver(id)
+	lowering.plainReceiver(id)
 	return id
 }
 
@@ -469,27 +496,27 @@ func (l *lowering) viewFieldReceiverTypeID(node *ast.Node, receiver *checker.Typ
 // slot S's view keys, which a value admitted as S needn't have, and stopped where
 // Node wrote (Language's y4, Optimizer's ruling, Nov 2). Only
 // viewFieldReceiverTypeID calls it.
-func (l *lowering) viewReadReceiverTypeID(receiver *checker.Type) int {
-	return l.viewTypeID(l.brandedIntersectionReceiver(l.viewReceiver(receiver)))
+func (lowering *lowering) viewReadReceiverTypeID(receiver *checker.Type) int {
+	return lowering.viewTypeID(lowering.brandedIntersectionReceiver(lowering.viewReceiver(receiver)))
 }
 
 // viewReceiver is the type a receiver's view is keyed by, before its id.
-func (l *lowering) viewReceiver(receiver *checker.Type) *checker.Type {
-	receiver = l.concrete(receiver)
+func (lowering *lowering) viewReceiver(receiver *checker.Type) *checker.Type {
+	receiver = lowering.concrete(receiver)
 	if receiver.Flags()&checker.TypeFlagsTypeParameter != 0 {
-		if constraint := l.checker.GetBaseConstraintOfType(receiver); constraint != nil {
-			receiver = l.concrete(constraint)
+		if constraint := lowering.checker.GetBaseConstraintOfType(receiver); constraint != nil {
+			receiver = lowering.concrete(constraint)
 		}
 	}
-	return l.checker.GetNonNullableType(receiver)
+	return lowering.checker.GetNonNullableType(receiver)
 }
 
 // viewTypeID is the id a read's view names a type by, kept with its type in viewTypes.
-func (l *lowering) viewTypeID(named *checker.Type) int {
-	if l.viewTypes == nil {
-		l.viewTypes = map[int]*checker.Type{}
+func (lowering *lowering) viewTypeID(named *checker.Type) int {
+	if lowering.viewTypes == nil {
+		lowering.viewTypes = map[int]*checker.Type{}
 	}
-	l.viewTypes[int(named.Id())] = named
+	lowering.viewTypes[int(named.Id())] = named
 	return int(named.Id())
 }
 
@@ -497,16 +524,16 @@ func (l *lowering) viewTypeID(named *checker.Type) int {
 // boundary for its common field without marking unrelated receiver types. Node
 // is the access asked about, or nil for a read with none, and decides the id as
 // its read is checked under (viewFieldReceiverTypeID).
-func (l *lowering) checkedViewReceiverField(node *ast.Node, receiver *checker.Type, name string) bool {
-	id := l.viewFieldReceiverTypeID(node, receiver)
-	if l.result.CheckedField(id, name) {
+func (lowering *lowering) checkedViewReceiverField(node *ast.Node, receiver *checker.Type, name string) bool {
+	id := lowering.viewFieldReceiverTypeID(node, receiver)
+	if lowering.result.CheckedField(id, name) {
 		return true
 	}
-	receiver = l.checker.GetNonNullableType(l.concrete(receiver))
+	receiver = lowering.checker.GetNonNullableType(lowering.concrete(receiver))
 	if receiver.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range receiver.Types() {
-			if l.checkedViewReceiverField(node, member, name) {
-				l.result.CheckedFields[ir.CheckedFieldKey(id, name)] = true
+			if lowering.checkedViewReceiverField(node, member, name) {
+				lowering.result.CheckedFields[ir.CheckedFieldKey(id, name)] = true
 				return true
 			}
 		}

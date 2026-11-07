@@ -23,11 +23,11 @@ import (
 // setPrototypeOf, create and defineProperty are refused in library_object.go's objectCallArguments; and
 // String.prototype.split read as a value is methodValueRefusal (refusals.go, ordinal 2900). A literal written at the
 // call is a fresh RegExp, so no write to an instance reaches it.
-func (l *lowering) captureFreeSplit(expression *ast.Node, target *checker.Type) bool {
+func (lowering *lowering) captureFreeSplit(expression *ast.Node, target *checker.Type) bool {
 	call := ast.SkipParentheses(expression)
 	if call.Kind != ast.KindCallExpression ||
-		!l.isArrayType(target) ||
-		l.elementTypeOfArray(target) != l.checker.GetStringType() {
+		!lowering.isArrayType(target) ||
+		lowering.elementTypeOfArray(target) != lowering.checker.GetStringType() {
 		return false
 	}
 	callee := ast.SkipParentheses(call.AsCallExpression().Expression)
@@ -40,8 +40,10 @@ func (l *lowering) captureFreeSplit(expression *ast.Node, target *checker.Type) 
 		return false
 	}
 	// The receiver test regexBuiltin dispatches a string's RegExp methods on.
-	if of, _ := l.representation(
-		l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression)),
+	if of, _ := lowering.representation(
+		lowering.checker.GetNonNullableType(
+			lowering.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression),
+		),
 	); of != ir.String {
 		return false
 	}

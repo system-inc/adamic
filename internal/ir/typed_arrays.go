@@ -35,8 +35,8 @@ type TypedArraySubarray struct {
 	Arguments []Expression
 }
 
-func (v TypedArrayNew) Type() Type      { return v.Of }
-func (v TypedArrayFill) Type() Type     { return v.Array.Type() }
-func (v TypedArraySort) Type() Type     { return v.Array.Type() }
-func (TypedArraySet) Type() Type        { return 0 }
-func (v TypedArraySubarray) Type() Type { return v.Array.Type() }
+func (arrayNew TypedArrayNew) Type() Type      { return arrayNew.Of }
+func (fill TypedArrayFill) Type() Type         { return fill.Array.Type() }
+func (arraySort TypedArraySort) Type() Type    { return arraySort.Array.Type() }
+func (TypedArraySet) Type() Type               { return 0 }
+func (subarray TypedArraySubarray) Type() Type { return subarray.Array.Type() }

@@ -16,25 +16,25 @@ const pendingClosures = "pending"
 
 // pushClosure pushes a closure capturing what's in scope: a variable, a loop's item, a parameter, a
 // cell the closure goes on writing after its function has returned.
-func (g *generator) pushClosure() *Statement {
-	g.inClosure++
-	defer func() { g.inClosure-- }()
-	if g.chance(1, 2) {
+func (generator *generator) pushClosure() *Statement {
+	generator.inClosure++
+	defer func() { generator.inClosure-- }()
+	if generator.chance(1, 2) {
 		return statement("if ("+pendingClosures+".length < 8) @b", &Block{Statements: []*Statement{
-			statement(pendingClosures+".push(() => @e);", g.expression(Number, 2)),
+			statement(pendingClosures+".push(() => @e);", generator.expression(Number, 2)),
 		}})
 	}
 	// A cell of its own, written by the closure each time it runs.
-	cell := g.name("cell")
-	initial := g.expression(Number, 1)
-	g.push()
-	g.declare(cell, Number, true)
+	cell := generator.name("cell")
+	initial := generator.expression(Number, 1)
+	generator.push()
+	generator.declare(cell, Number, true)
 	body := &Block{}
-	for range 1 + g.random.IntN(2) {
-		body.Statements = append(body.Statements, g.mutation())
+	for range 1 + generator.random.IntN(2) {
+		body.Statements = append(body.Statements, generator.mutation())
 	}
-	body.Statements = append(body.Statements, statement("return @e;", g.expression(Number, 2)))
-	g.pop()
+	body.Statements = append(body.Statements, statement("return @e;", generator.expression(Number, 2)))
+	generator.pop()
 	return statement("@b", &Block{Statements: []*Statement{
 		statement("let "+cell+": number = @e;", initial),
 		statement("if ("+pendingClosures+".length < 8) @b", &Block{Statements: []*Statement{
@@ -45,36 +45,36 @@ func (g *generator) pushClosure() *Statement {
 
 // runPending calls every closure pushed so far. Only from the top level, outside any closure and
 // any function: a closure that ran them would call itself.
-func (g *generator) runPending() *Expression {
-	sum, run := g.name("sum"), g.name("run")
+func (generator *generator) runPending() *Expression {
+	sum, run := generator.name("sum"), generator.name("run")
 	return text(Number, pendingClosures+".reduce(("+sum+", "+run+") => "+sum+" + "+run+"(), 0)")
 }
 
 // mapLoop iterates the table while its body may set and delete keys. JavaScript visits a key added
 // during the loop, and one deleted and added again is visited again, so a guard ends it.
-func (g *generator) mapLoop() *Statement {
-	guard := g.name("guard")
-	g.loopDepth++
-	g.push()
+func (generator *generator) mapLoop() *Statement {
+	guard := generator.name("guard")
+	generator.loopDepth++
+	generator.push()
 	var head string
-	switch g.random.IntN(3) {
+	switch generator.random.IntN(3) {
 	case 0:
-		key, value := g.name("key"), g.name("value")
-		g.declare(key, String, false)
-		g.declare(value, Number, false)
+		key, value := generator.name("key"), generator.name("value")
+		generator.declare(key, String, false)
+		generator.declare(value, Number, false)
 		head = "for (const [" + key + ", " + value + "] of table) @b"
 	case 1:
-		key := g.name("key")
-		g.declare(key, String, false)
+		key := generator.name("key")
+		generator.declare(key, String, false)
 		head = "for (const " + key + " of table.keys()) @b"
 	default:
-		value := g.name("value")
-		g.declare(value, Number, false)
+		value := generator.name("value")
+		generator.declare(value, Number, false)
 		head = "for (const " + value + " of table.values()) @b"
 	}
-	body := g.block(1 + g.random.IntN(3))
-	g.pop()
-	g.loopDepth--
+	body := generator.block(1 + generator.random.IntN(3))
+	generator.pop()
+	generator.loopDepth--
 	body.Statements = append([]*Statement{
 		statement(guard + "++;"),
 		statement("if ("+guard+" > 12) @b", &Block{Statements: []*Statement{statement("break;")}}),
@@ -86,39 +86,42 @@ func (g *generator) mapLoop() *Statement {
 }
 
 // splice removes and inserts in an array, below a length so it can't grow without end.
-func (g *generator) splice(array variable) *Statement {
+func (generator *generator) splice(array variable) *Statement {
 	element := map[Type]Type{NumberArray: Number, StringArray: String}[array.t]
 	format := array.name + ".splice(@e, @e"
-	arguments := []any{g.expression(Number, 1), g.expression(Number, 1)}
-	for range g.random.IntN(3) {
+	arguments := []any{generator.expression(Number, 1), generator.expression(Number, 1)}
+	for range generator.random.IntN(3) {
 		format += ", @e"
-		arguments = append(arguments, g.element(element))
+		arguments = append(arguments, generator.element(element))
 	}
 	format += ");"
-	return statement(fmt.Sprintf("if (%s.length < 24) @b", array.name), &Block{Statements: []*Statement{statement(format, arguments...)}})
+	return statement(
+		fmt.Sprintf("if (%s.length < 24) @b", array.name),
+		&Block{Statements: []*Statement{statement(format, arguments...)}},
+	)
 }
 
 // sortChanging sorts an array with a comparator that writes, perhaps to the array it's sorting.
 // From the top level only: a comparator calls functions, and a function that sorted with one would
 // multiply the work by every level.
-func (g *generator) sortChanging(array variable) *Statement {
+func (generator *generator) sortChanging(array variable) *Statement {
 	element := map[Type]Type{NumberArray: Number, StringArray: String}[array.t]
-	left, right := g.name("left"), g.name("right")
-	g.push()
-	g.declare(left, element, false)
-	g.declare(right, element, false)
+	left, right := generator.name("left"), generator.name("right")
+	generator.push()
+	generator.declare(left, element, false)
+	generator.declare(right, element, false)
 	body := &Block{}
-	for range 1 + g.random.IntN(2) {
-		body.Statements = append(body.Statements, g.mutation())
+	for range 1 + generator.random.IntN(2) {
+		body.Statements = append(body.Statements, generator.mutation())
 	}
 	var result *Expression
-	if element == Number && g.chance(1, 2) {
-		result = compose(Number, left+" - "+right+" + @e", g.expression(Number, 1))
+	if element == Number && generator.chance(1, 2) {
+		result = compose(Number, left+" - "+right+" + @e", generator.expression(Number, 1))
 	} else {
-		result = g.expression(Number, 2)
+		result = generator.expression(Number, 2)
 	}
 	body.Statements = append(body.Statements, statement("return @e;", result))
-	g.pop()
+	generator.pop()
 	return statement(array.name+".sort(("+left+", "+right+") => @b);", body)
 }
 
@@ -126,133 +129,170 @@ func (g *generator) sortChanging(array variable) *Statement {
 const linkDeclaration = "interface Link {\n\tvalue: number;\n\tlabel: string;\n\treadonly next: Link | undefined;\n}"
 
 // chainRead is a number or a string read through ?. at some depth, with ?? for where it ends.
-func (g *generator) chainRead(t Type) *Expression {
-	path := "head()" + strings.Repeat("?.next", g.random.IntN(3))
+func (generator *generator) chainRead(t Type) *Expression {
+	path := "head()" + strings.Repeat("?.next", generator.random.IntN(3))
 	if t == String {
-		return compose(String, "("+path+"?.label ?? @e)", g.literal(String))
+		return compose(String, "("+path+"?.label ?? @e)", generator.literal(String))
 	}
-	if g.chance(1, 3) {
+	if generator.chance(1, 3) {
 		// A ?? chain: the first that's there.
-		return compose(Number, "("+path+"?.value ?? head()?.value ?? @e)", g.literal(Number))
+		return compose(Number, "("+path+"?.value ?? head()?.value ?? @e)", generator.literal(Number))
 	}
-	return compose(Number, "("+path+"?.value ?? @e)", g.literal(Number))
+	return compose(Number, "("+path+"?.value ?? @e)", generator.literal(Number))
 }
 
 // chainWrite changes the list: a node pushed on the front, the front dropped, or a value written
 // through a narrowed reference.
-func (g *generator) chainWrite() *Statement {
-	switch g.random.IntN(3) {
+func (generator *generator) chainWrite() *Statement {
+	switch generator.random.IntN(3) {
 	case 0:
-		return statement("chain = { value: @e, label: @e, next: chain };", g.expression(Number, 1), g.short())
+		return statement(
+			"chain = { value: @e, label: @e, next: chain };",
+			generator.expression(Number, 1),
+			generator.short(),
+		)
 	case 1:
 		return statement("chain = chain?.next;")
 	}
 	return statement("if (chain !== undefined) @b", &Block{Statements: []*Statement{
-		statement("chain.value = @e;", g.expression(Number, 2)),
+		statement("chain.value = @e;", generator.expression(Number, 2)),
 	}})
 }
 
 // defaultParameter is a parameter with a default, which may read the parameters before it or call
 // a function: defaults run at the call, in order, as JavaScript runs them.
-func (g *generator) defaultParameter() (string, Type) {
-	t := []Type{Number, String, Boolean}[g.random.IntN(3)]
-	name := g.name("parameter")
-	value := g.expression(t, 1)
+func (generator *generator) defaultParameter() (string, Type) {
+	t := []Type{Number, String, Boolean}[generator.random.IntN(3)]
+	name := generator.name("parameter")
+	value := generator.expression(t, 1)
 	if t == String {
-		value = g.bounded(value)
+		value = generator.bounded(value)
 	}
-	g.declare(name, t, false)
+	generator.declare(name, t, false)
 	return name + ": " + string(t) + " = " + value.String(), t
 }
 
 // widenedStatement is a statement from this round's vocabulary, or nil when none fits here.
-func (g *generator) widenedStatement(nested bool) *Statement {
-	topLevel := g.returns == "" && g.inClosure == 0
-	arrays := append(g.visible(NumberArray, false), g.visible(StringArray, false)...)
-	switch g.random.IntN(5) {
+func (generator *generator) widenedStatement(nested bool) *Statement {
+	topLevel := generator.returns == "" && generator.inClosure == 0
+	arrays := append(generator.visible(NumberArray, false), generator.visible(StringArray, false)...)
+	switch generator.random.IntN(5) {
 	case 0:
-		if g.allowed("closures-deep") {
-			return g.pushClosure()
+		if generator.allowed("closures-deep") {
+			return generator.pushClosure()
 		}
 	case 1:
-		if g.allowed("map-mutation") && nested {
-			return g.mapLoop()
+		if generator.allowed("map-mutation") && nested {
+			return generator.mapLoop()
 		}
 	case 2:
-		if g.allowed("sort-mutating") && topLevel && len(arrays) > 0 {
-			return g.sortChanging(arrays[g.random.IntN(len(arrays))])
+		if generator.allowed("sort-mutating") && topLevel && len(arrays) > 0 {
+			return generator.sortChanging(arrays[generator.random.IntN(len(arrays))])
 		}
 	case 3:
-		if g.allowed("optional-chains") {
-			return g.chainWrite()
+		if generator.allowed("optional-chains") {
+			return generator.chainWrite()
 		}
 	case 4:
-		if g.allowed("closures-deep") && topLevel {
-			return statement("console.log(`${@e}`);", g.runPending())
+		if generator.allowed("closures-deep") && topLevel {
+			return statement("console.log(`${@e}`);", generator.runPending())
 		}
 	}
 	return nil
 }
 
 // widenedExpression is an expression of a type from this round's vocabulary, or nil when none fits.
-func (g *generator) widenedExpression(t Type, depth int) *Expression {
+func (generator *generator) widenedExpression(t Type, depth int) *Expression {
 	next := depth - 1
-	topLevel := g.returns == "" && g.inClosure == 0
+	topLevel := generator.returns == "" && generator.inClosure == 0
 	switch t {
 	case Number:
-		switch g.random.IntN(3) {
+		switch generator.random.IntN(3) {
 		case 0:
-			if g.allowed("optional-chains") {
-				return g.chainRead(Number)
+			if generator.allowed("optional-chains") {
+				return generator.chainRead(Number)
 			}
 		case 1:
-			if g.allowed("closures-deep") && topLevel {
-				return g.runPending()
+			if generator.allowed("closures-deep") && topLevel {
+				return generator.runPending()
 			}
 		case 2:
-			if g.allowed("splice") {
+			if generator.allowed("splice") {
 				// What splice removed, as a value: a call with an effect in the middle of an expression.
-				arrays := g.visible(NumberArray, false)
+				arrays := generator.visible(NumberArray, false)
 				if len(arrays) > 0 {
-					return compose(Number, "(@e.splice(@e, 1)[0] ?? @e)", text(NumberArray, arrays[g.random.IntN(len(arrays))].name), g.expression(Number, next), g.literal(Number))
+					return compose(
+						Number,
+						"(@e.splice(@e, 1)[0] ?? @e)",
+						text(NumberArray, arrays[generator.random.IntN(len(arrays))].name),
+						generator.expression(Number, next),
+						generator.literal(Number),
+					)
 				}
 			}
 		}
 	case String:
-		switch g.random.IntN(4) {
+		switch generator.random.IntN(4) {
 		case 0:
-			if g.allowed("optional-chains") {
-				return g.chainRead(String)
+			if generator.allowed("optional-chains") {
+				return generator.chainRead(String)
 			}
 		case 1:
-			if g.allowed("case-mapping") {
-				return compose(String, "@e."+g.pick("toUpperCase", "toLowerCase")+"()", g.expression(String, next))
+			if generator.allowed("case-mapping") {
+				return compose(
+					String,
+					"@e."+generator.pick("toUpperCase", "toLowerCase")+"()",
+					generator.expression(String, next),
+				)
 			}
 		case 2:
-			if g.allowed("number-formats") {
-				if g.chance(1, 2) {
-					return compose(String, "(@e).toExponential(@e)", g.expression(Number, next), text(Number, g.pick("0", "1", "3", "6")))
+			if generator.allowed("number-formats") {
+				if generator.chance(1, 2) {
+					return compose(
+						String,
+						"(@e).toExponential(@e)",
+						generator.expression(Number, next),
+						text(Number, generator.pick("0", "1", "3", "6")),
+					)
 				}
-				return compose(String, "(@e).toPrecision(@e)", g.expression(Number, next), text(Number, g.pick("1", "2", "5", "8")))
+				return compose(
+					String,
+					"(@e).toPrecision(@e)",
+					generator.expression(Number, next),
+					text(Number, generator.pick("1", "2", "5", "8")),
+				)
 			}
 		case 3:
-			if g.allowed("surrogates") {
+			if generator.allowed("surrogates") {
 				// Cut between a surrogate pair's halves, or joined back across one.
-				return compose(String, "(@e.slice(@e, @e) + @e.slice(@e))", g.expression(String, next), text(Number, g.pick("0", "1")), text(Number, g.pick("1", "2", "-1")), g.expression(String, next), text(Number, g.pick("1", "-1", "2")))
+				return compose(
+					String,
+					"(@e.slice(@e, @e) + @e.slice(@e))",
+					generator.expression(String, next),
+					text(Number, generator.pick("0", "1")),
+					text(Number, generator.pick("1", "2", "-1")),
+					generator.expression(String, next),
+					text(Number, generator.pick("1", "-1", "2")),
+				)
 			}
 		}
 	case StringArray:
-		if g.allowed("surrogates") && g.chance(1, 2) {
-			return compose(StringArray, "@e.split('')", g.expression(String, next))
+		if generator.allowed("surrogates") && generator.chance(1, 2) {
+			return compose(StringArray, "@e.split('')", generator.expression(String, next))
 		}
 	case NumberArray:
-		if g.allowed("array-from") {
-			index := g.name("index")
-			g.push()
-			g.declare(index, Number, false)
-			body := g.expression(Number, next)
-			g.pop()
-			return compose(NumberArray, "Array.from({ length: @e }, (_, "+index+") => @e)", text(Number, g.pick("0", "1", "3", "5")), body)
+		if generator.allowed("array-from") {
+			index := generator.name("index")
+			generator.push()
+			generator.declare(index, Number, false)
+			body := generator.expression(Number, next)
+			generator.pop()
+			return compose(
+				NumberArray,
+				"Array.from({ length: @e }, (_, "+index+") => @e)",
+				text(Number, generator.pick("0", "1", "3", "5")),
+				body,
+			)
 		}
 	}
 	return nil

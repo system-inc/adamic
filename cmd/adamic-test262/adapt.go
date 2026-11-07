@@ -95,7 +95,10 @@ func tokenize(source string) []token {
 		lineStart = false
 		if character == '\'' || character == '"' {
 			end := endOfString(source, index)
-			tokens = append(tokens, token{kind: "str", text: source[index:end], start: index, end: end, newlineBefore: newline})
+			tokens = append(
+				tokens,
+				token{kind: "str", text: source[index:end], start: index, end: end, newlineBefore: newline},
+			)
 			index = end
 			continue
 		}
@@ -104,7 +107,10 @@ func tokenize(source string) []token {
 			if end < 0 {
 				return nil
 			}
-			tokens = append(tokens, token{kind: "tmpl", text: source[index:end], start: index, end: end, newlineBefore: newline})
+			tokens = append(
+				tokens,
+				token{kind: "tmpl", text: source[index:end], start: index, end: end, newlineBefore: newline},
+			)
 			index = end
 			continue
 		}
@@ -113,20 +119,29 @@ func tokenize(source string) []token {
 			if end < 0 {
 				return nil
 			}
-			tokens = append(tokens, token{kind: "regexp", text: source[index:end], start: index, end: end, newlineBefore: newline})
+			tokens = append(
+				tokens,
+				token{kind: "regexp", text: source[index:end], start: index, end: end, newlineBefore: newline},
+			)
 			index = end
 			continue
 		}
 		if isDigit(character) || (character == '.' && index+1 < len(source) && isDigit(source[index+1])) {
 			end := endOfNumber(source, index)
-			tokens = append(tokens, token{kind: "num", text: source[index:end], start: index, end: end, newlineBefore: newline})
+			tokens = append(
+				tokens,
+				token{kind: "num", text: source[index:end], start: index, end: end, newlineBefore: newline},
+			)
 			index = end
 			continue
 		}
 		runeValue, size := utf8.DecodeRuneInString(source[index:])
 		if isIdentifierStart(runeValue) || (runeValue >= 0x80 && unicode.IsLetter(runeValue)) {
 			end := endOfIdent(source, index)
-			tokens = append(tokens, token{kind: "ident", text: source[index:end], start: index, end: end, newlineBefore: newline})
+			tokens = append(
+				tokens,
+				token{kind: "ident", text: source[index:end], start: index, end: end, newlineBefore: newline},
+			)
 			index = end
 			continue
 		}
@@ -146,7 +161,10 @@ func tokenize(source string) []token {
 				end = index + 2
 			}
 		}
-		tokens = append(tokens, token{kind: "punct", text: source[index:end], start: index, end: end, newlineBefore: newline})
+		tokens = append(
+			tokens,
+			token{kind: "punct", text: source[index:end], start: index, end: end, newlineBefore: newline},
+		)
 		index = end
 	}
 	return tokens
@@ -281,7 +299,11 @@ func endOfIdent(source string, index int) int {
 		if runeValue < 0x80 && !isIdentifierPart(runeValue) {
 			break
 		}
-		if runeValue >= 0x80 && !unicode.IsLetter(runeValue) && !unicode.IsDigit(runeValue) && runeValue != '_' && runeValue != '$' {
+		if runeValue >= 0x80 &&
+			!unicode.IsLetter(runeValue) &&
+			!unicode.IsDigit(runeValue) &&
+			runeValue != '_' &&
+			runeValue != '$' {
 			break
 		}
 		index += size
@@ -374,7 +396,8 @@ func sameType(left *jtype, right *jtype) bool {
 			return false
 		}
 		for index := range left.fields {
-			if left.fields[index].name != right.fields[index].name || !sameType(left.fields[index].typ, right.fields[index].typ) {
+			if left.fields[index].name != right.fields[index].name ||
+				!sameType(left.fields[index].typ, right.fields[index].typ) {
 				return false
 			}
 		}
@@ -563,171 +586,180 @@ func parseBody(source string) *parser {
 	return parsed
 }
 
-func (p *parser) peek() token {
-	if p.pos >= len(p.toks) {
+func (parser *parser) peek() token {
+	if parser.pos >= len(parser.toks) {
 		return token{kind: "eof", text: "eof"}
 	}
-	return p.toks[p.pos]
+	return parser.toks[parser.pos]
 }
 
-func (p *parser) eof() bool { return p.pos >= len(p.toks) }
+func (parser *parser) eof() bool { return parser.pos >= len(parser.toks) }
 
-func (p *parser) next() token {
-	tok := p.peek()
-	if p.pos < len(p.toks) {
-		p.pos++
+func (parser *parser) next() token {
+	tok := parser.peek()
+	if parser.pos < len(parser.toks) {
+		parser.pos++
 	}
 	return tok
 }
 
-func (p *parser) is(text string) bool { return p.peek().text == text }
+func (parser *parser) is(text string) bool { return parser.peek().text == text }
 
-func (p *parser) fail() { p.failed = true }
+func (parser *parser) fail() { parser.failed = true }
 
-func (p *parser) expect(text string) {
-	if p.failed {
+func (parser *parser) expect(text string) {
+	if parser.failed {
 		return
 	}
-	if !p.is(text) {
-		p.fail()
+	if !parser.is(text) {
+		parser.fail()
 		return
 	}
-	p.next()
+	parser.next()
 }
 
-func (p *parser) parseStatements(top bool) {
-	for !p.failed && !p.eof() {
-		if !top && p.is("}") {
+func (parser *parser) parseStatements(top bool) {
+	for !parser.failed && !parser.eof() {
+		if !top && parser.is("}") {
 			return
 		}
-		before := p.pos
-		p.parseStatement()
-		if p.pos == before {
-			p.fail()
+		before := parser.pos
+		parser.parseStatement()
+		if parser.pos == before {
+			parser.fail()
 			return
 		}
 	}
 }
 
-func (p *parser) parseStatement() {
-	if p.failed || p.eof() {
+func (parser *parser) parseStatement() {
+	if parser.failed || parser.eof() {
 		return
 	}
-	switch p.peek().text {
+	switch parser.peek().text {
 	case ";":
-		p.next()
+		parser.next()
 		return
 	case "{":
-		p.parseBlock()
+		parser.parseBlock()
 		return
 	case "var", "let", "const":
-		p.parseDeclaration(false)
-		p.semi()
+		parser.parseDeclaration(false)
+		parser.semi()
 		return
 	case "function":
-		p.parseFunction(true)
+		parser.parseFunction(true)
 		return
 	case "class":
-		p.skipBraced()
-		p.unsafeVars = true
+		parser.skipBraced()
+		parser.unsafeVars = true
 		return
 	case "if":
-		p.next()
-		p.expect("(")
-		p.parseSequence(false)
-		p.expect(")")
-		p.parseControlled()
-		if p.is("else") {
-			p.next()
-			p.parseControlled()
+		parser.next()
+		parser.expect("(")
+		parser.parseSequence(false)
+		parser.expect(")")
+		parser.parseControlled()
+		if parser.is("else") {
+			parser.next()
+			parser.parseControlled()
 		}
 		return
 	case "for":
-		p.parseFor()
+		parser.parseFor()
 		return
 	case "while":
-		p.next()
-		loop := p.push("loop")
-		p.expect("(")
-		p.parseSequence(false)
-		p.expect(")")
-		p.parseControlled()
-		p.pop(loop)
+		parser.next()
+		loop := parser.push("loop")
+		parser.expect("(")
+		parser.parseSequence(false)
+		parser.expect(")")
+		parser.parseControlled()
+		parser.pop(loop)
 		return
 	case "do":
-		p.next()
-		loop := p.push("loop")
-		p.parseControlled()
-		p.expect("while")
-		p.expect("(")
-		p.parseSequence(false)
-		p.expect(")")
-		p.semi()
-		p.pop(loop)
+		parser.next()
+		loop := parser.push("loop")
+		parser.parseControlled()
+		parser.expect("while")
+		parser.expect("(")
+		parser.parseSequence(false)
+		parser.expect(")")
+		parser.semi()
+		parser.pop(loop)
 		return
 	case "switch":
-		p.parseSwitch()
+		parser.parseSwitch()
 		return
 	case "try":
-		p.parseTry()
+		parser.parseTry()
 		return
 	case "throw":
-		p.parseThrow()
+		parser.parseThrow()
 		return
 	case "return":
-		p.next()
-		if !p.eof() && !p.is("}") && !p.is(";") && !p.peek().newlineBefore {
-			p.parseSequence(false)
+		parser.next()
+		if !parser.eof() && !parser.is("}") && !parser.is(";") && !parser.peek().newlineBefore {
+			parser.parseSequence(false)
 		}
-		p.semi()
+		parser.semi()
 		return
 	case "break", "continue", "debugger":
-		p.next()
-		if p.peek().kind == "ident" && !isKeyword(p.peek().text) && !p.peek().newlineBefore && !p.is(";") && !p.is("}") {
-			p.next()
+		parser.next()
+		if parser.peek().kind == "ident" &&
+			!isKeyword(parser.peek().text) &&
+			!parser.peek().newlineBefore &&
+			!parser.is(";") &&
+			!parser.is("}") {
+			parser.next()
 		}
-		p.semi()
+		parser.semi()
 		return
 	case "import", "export", "with":
-		p.fail()
+		parser.fail()
 		return
 	}
-	if p.peek().kind == "ident" && !isKeyword(p.peek().text) && p.pos+1 < len(p.toks) && p.toks[p.pos+1].text == ":" {
-		p.next()
-		p.next()
-		p.parseStatement()
+	if parser.peek().kind == "ident" &&
+		!isKeyword(parser.peek().text) &&
+		parser.pos+1 < len(parser.toks) &&
+		parser.toks[parser.pos+1].text == ":" {
+		parser.next()
+		parser.next()
+		parser.parseStatement()
 		return
 	}
-	if p.peek().text == "async" && p.pos+1 < len(p.toks) && p.toks[p.pos+1].text == "function" {
-		p.fail()
+	if parser.peek().text == "async" &&
+		parser.pos+1 < len(parser.toks) &&
+		parser.toks[parser.pos+1].text == "function" {
+		parser.fail()
 		return
 	}
-	p.parseSequence(false)
-	p.semi()
+	parser.parseSequence(false)
+	parser.semi()
 }
 
-func (p *parser) parseControlled() {
-	block := p.push("block")
-	p.parseStatement()
-	p.pop(block)
+func (parser *parser) parseControlled() {
+	block := parser.push("block")
+	parser.parseStatement()
+	parser.pop(block)
 }
 
-func (p *parser) parseBlock() {
-	p.expect("{")
-	block := p.push("block")
-	p.parseStatements(false)
-	p.pop(block)
-	p.expect("}")
+func (parser *parser) parseBlock() {
+	parser.expect("{")
+	block := parser.push("block")
+	parser.parseStatements(false)
+	parser.pop(block)
+	parser.expect("}")
 }
 
-func (p *parser) push(kind string) *scope {
+func (parser *parser) push(kind string) *scope {
 	child := &scope{
 		kind:   kind,
-		parent: p.scope,
+		parent: parser.scope,
 		names:  map[string]*binding{},
-		start:  p.pos,
-		fn:     p.scope.fn,
-		loop:   p.scope.loop,
+		start:  parser.pos,
+		fn:     parser.scope.fn,
+		loop:   parser.scope.loop,
 	}
 	if kind == "func" {
 		child.fn = child
@@ -736,55 +768,55 @@ func (p *parser) push(kind string) *scope {
 	if kind == "loop" {
 		child.loop = child
 	}
-	p.scope = child
+	parser.scope = child
 	return child
 }
 
-func (p *parser) pop(child *scope) {
-	child.end = p.pos
-	if p.scope == child {
-		p.scope = child.parent
+func (parser *parser) pop(child *scope) {
+	child.end = parser.pos
+	if parser.scope == child {
+		parser.scope = child.parent
 	}
 }
 
-func (p *parser) semi() {
-	if p.failed {
+func (parser *parser) semi() {
+	if parser.failed {
 		return
 	}
-	if p.is(";") {
-		p.next()
+	if parser.is(";") {
+		parser.next()
 		return
 	}
-	if p.eof() || p.is("}") || p.peek().newlineBefore {
+	if parser.eof() || parser.is("}") || parser.peek().newlineBefore {
 		return
 	}
-	p.fail()
+	parser.fail()
 }
 
-func (p *parser) parseDeclaration(forHeader bool) {
-	keyword := p.next()
+func (parser *parser) parseDeclaration(forHeader bool) {
+	keyword := parser.next()
 	stmt := &varStmt{keyword: keyword}
-	for !p.failed {
-		if p.peek().kind != "ident" || isKeyword(p.peek().text) {
-			p.fail()
+	for !parser.failed {
+		if parser.peek().kind != "ident" || isKeyword(parser.peek().text) {
+			parser.fail()
 			return
 		}
-		nameTok := p.next()
+		nameTok := parser.next()
 		binding := &binding{kind: keyword.text, name: nameTok.text}
 		decl := &varDecl{
 			name:    nameTok.text,
 			binding: binding,
-			nameAt:  p.pos - 1,
-			block:   p.scope,
-			fn:      p.scope.fn,
-			loop:    p.scope.loop,
+			nameAt:  parser.pos - 1,
+			block:   parser.scope,
+			fn:      parser.scope.fn,
+			loop:    parser.scope.loop,
 			loopVar: forHeader && keyword.text == "var",
 			stmt:    stmt,
 		}
 		if keyword.text == "var" {
-			existing := p.scope.fn.names[nameTok.text]
+			existing := parser.scope.fn.names[nameTok.text]
 			if existing == nil {
-				p.scope.fn.names[nameTok.text] = binding
+				parser.scope.fn.names[nameTok.text] = binding
 			} else if existing.kind == "var" {
 				existing.poison = true
 				decl.binding = existing
@@ -792,167 +824,170 @@ func (p *parser) parseDeclaration(forHeader bool) {
 			} else {
 				decl.unsafe = true
 			}
-		} else if _, exists := p.scope.names[nameTok.text]; exists {
+		} else if _, exists := parser.scope.names[nameTok.text]; exists {
 			binding.poison = true
-			p.scope.names[nameTok.text] = binding
+			parser.scope.names[nameTok.text] = binding
 		} else {
-			p.scope.names[nameTok.text] = binding
+			parser.scope.names[nameTok.text] = binding
 		}
-		if p.is("=") {
-			p.next()
-			saved := p.initializing
-			p.initializing = binding
-			binding.init = p.parseAssign(forHeader)
-			p.initializing = saved
+		if parser.is("=") {
+			parser.next()
+			saved := parser.initializing
+			parser.initializing = binding
+			binding.init = parser.parseAssign(forHeader)
+			parser.initializing = saved
 			if binding.init != nil && binding.init.op == "fn" && binding.fn == nil {
 				binding.fn = binding.init.fn
 			}
 		}
 		stmt.decls = append(stmt.decls, decl)
-		if p.is(",") {
-			p.next()
+		if parser.is(",") {
+			parser.next()
 			continue
 		}
 		break
 	}
 	if keyword.text == "var" {
-		p.varStmts = append(p.varStmts, stmt)
+		parser.varStmts = append(parser.varStmts, stmt)
 	}
 }
 
-func (p *parser) parseFor() {
-	p.next()
-	loop := p.push("loop")
-	p.expect("(")
+func (parser *parser) parseFor() {
+	parser.next()
+	loop := parser.push("loop")
+	parser.expect("(")
 	switch {
-	case p.is("var"), p.is("let"), p.is("const"):
-		p.parseDeclaration(true)
-		if p.is("in") || p.is("of") {
-			p.next()
-			p.parseAssign(false)
+	case parser.is("var"), parser.is("let"), parser.is("const"):
+		parser.parseDeclaration(true)
+		if parser.is("in") || parser.is("of") {
+			parser.next()
+			parser.parseAssign(false)
 		} else {
-			p.expect(";")
-			if !p.is(";") {
-				p.parseSequence(false)
+			parser.expect(";")
+			if !parser.is(";") {
+				parser.parseSequence(false)
 			}
-			p.expect(";")
-			if !p.is(")") {
-				p.parseSequence(false)
+			parser.expect(";")
+			if !parser.is(")") {
+				parser.parseSequence(false)
 			}
 		}
-	case p.is(";"):
-		p.next()
-		if !p.is(";") {
-			p.parseSequence(false)
+	case parser.is(";"):
+		parser.next()
+		if !parser.is(";") {
+			parser.parseSequence(false)
 		}
-		p.expect(";")
-		if !p.is(")") {
-			p.parseSequence(false)
+		parser.expect(";")
+		if !parser.is(")") {
+			parser.parseSequence(false)
 		}
 	default:
-		p.parseSequence(true)
-		if p.is("in") || p.is("of") {
-			p.next()
-			p.parseAssign(false)
+		parser.parseSequence(true)
+		if parser.is("in") || parser.is("of") {
+			parser.next()
+			parser.parseAssign(false)
 		} else {
-			p.expect(";")
-			if !p.is(";") {
-				p.parseSequence(false)
+			parser.expect(";")
+			if !parser.is(";") {
+				parser.parseSequence(false)
 			}
-			p.expect(";")
-			if !p.is(")") {
-				p.parseSequence(false)
+			parser.expect(";")
+			if !parser.is(")") {
+				parser.parseSequence(false)
 			}
 		}
 	}
-	p.expect(")")
-	p.parseControlled()
-	p.pop(loop)
+	parser.expect(")")
+	parser.parseControlled()
+	parser.pop(loop)
 }
 
-func (p *parser) parseSwitch() {
-	p.next()
-	p.expect("(")
-	p.parseSequence(false)
-	p.expect(")")
-	p.expect("{")
-	block := p.push("switch")
-	for !p.failed && !p.eof() && !p.is("}") {
-		if p.is("case") {
-			p.next()
-			p.parseSequence(false)
-			p.expect(":")
+func (parser *parser) parseSwitch() {
+	parser.next()
+	parser.expect("(")
+	parser.parseSequence(false)
+	parser.expect(")")
+	parser.expect("{")
+	block := parser.push("switch")
+	for !parser.failed && !parser.eof() && !parser.is("}") {
+		if parser.is("case") {
+			parser.next()
+			parser.parseSequence(false)
+			parser.expect(":")
 			continue
 		}
-		if p.is("default") {
-			p.next()
-			p.expect(":")
+		if parser.is("default") {
+			parser.next()
+			parser.expect(":")
 			continue
 		}
-		before := p.pos
-		p.parseStatement()
-		if p.pos == before {
-			p.fail()
+		before := parser.pos
+		parser.parseStatement()
+		if parser.pos == before {
+			parser.fail()
 			return
 		}
 	}
-	p.pop(block)
-	p.expect("}")
+	parser.pop(block)
+	parser.expect("}")
 }
 
-func (p *parser) parseTry() {
-	p.next()
-	p.parseBlock()
-	if p.is("catch") {
-		p.next()
-		p.expect("(")
-		catchScope := p.push("block")
-		if p.peek().kind == "ident" && !isKeyword(p.peek().text) {
-			name := p.next()
+func (parser *parser) parseTry() {
+	parser.next()
+	parser.parseBlock()
+	if parser.is("catch") {
+		parser.next()
+		parser.expect("(")
+		catchScope := parser.push("block")
+		if parser.peek().kind == "ident" && !isKeyword(parser.peek().text) {
+			name := parser.next()
 			catchScope.names[name.text] = &binding{kind: "catch", name: name.text, poison: true}
-			if p.is("if") {
-				p.fail()
+			if parser.is("if") {
+				parser.fail()
 				return
 			}
 		} else {
-			p.skipBalanced(p.peek().text, matchingClose(p.peek().text))
+			parser.skipBalanced(parser.peek().text, matchingClose(parser.peek().text))
 		}
-		p.expect(")")
-		p.parseBlock()
-		p.pop(catchScope)
+		parser.expect(")")
+		parser.parseBlock()
+		parser.pop(catchScope)
 	}
-	if p.is("finally") {
-		p.next()
-		p.parseBlock()
+	if parser.is("finally") {
+		parser.next()
+		parser.parseBlock()
 	}
 }
 
-func (p *parser) parseThrow() {
-	p.next()
-	if p.peek().newlineBefore {
-		p.fail()
+func (parser *parser) parseThrow() {
+	parser.next()
+	if parser.peek().newlineBefore {
+		parser.fail()
 		return
 	}
-	if p.is("new") && p.pos+1 < len(p.toks) && p.toks[p.pos+1].text == "Test262Error" && !p.instanceOfTest262 {
-		name := p.toks[p.pos+1]
-		p.throws = append(p.throws, throwNote{start: name.start, end: name.end})
+	if parser.is("new") &&
+		parser.pos+1 < len(parser.toks) &&
+		parser.toks[parser.pos+1].text == "Test262Error" &&
+		!parser.instanceOfTest262 {
+		name := parser.toks[parser.pos+1]
+		parser.throws = append(parser.throws, throwNote{start: name.start, end: name.end})
 	}
-	p.parseSequence(false)
-	p.semi()
+	parser.parseSequence(false)
+	parser.semi()
 }
 
-func (p *parser) parseFunction(statement bool) *fnInfo {
-	p.next()
+func (parser *parser) parseFunction(statement bool) *fnInfo {
+	parser.next()
 	var name string
 	var nameTok token
-	if p.peek().kind == "ident" && !isKeyword(p.peek().text) {
-		nameTok = p.next()
+	if parser.peek().kind == "ident" && !isKeyword(parser.peek().text) {
+		nameTok = parser.next()
 		name = nameTok.text
 	} else if statement {
-		p.fail()
+		parser.fail()
 		return nil
 	}
-	fnScope := p.push("func")
+	fnScope := parser.push("func")
 	info := &fnInfo{scope: fnScope}
 	if statement && name != "" {
 		binding := &binding{kind: "func", name: name, fn: info}
@@ -964,68 +999,68 @@ func (p *parser) parseFunction(statement bool) *fnInfo {
 			parent.names[name] = binding
 		}
 	}
-	p.parseParamList(info, fnScope)
-	if p.is(":") {
-		p.next()
-		p.skipType()
+	parser.parseParamList(info, fnScope)
+	if parser.is(":") {
+		parser.next()
+		parser.skipType()
 	}
-	p.expect("{")
+	parser.expect("{")
 	if !statement && name != "" {
 		// The expression's own name is visible inside it, and it is not the binding a call site sees.
 		fnScope.names[name] = &binding{kind: "func", name: name, poison: true}
 	}
-	p.parseStatements(false)
-	p.expect("}")
-	p.pop(fnScope)
+	parser.parseStatements(false)
+	parser.expect("}")
+	parser.pop(fnScope)
 	return info
 }
 
-func (p *parser) parseParamList(info *fnInfo, fnScope *scope) {
-	p.expect("(")
-	for !p.failed && !p.is(")") && !p.eof() {
+func (parser *parser) parseParamList(info *fnInfo, fnScope *scope) {
+	parser.expect("(")
+	for !parser.failed && !parser.is(")") && !parser.eof() {
 		param := param{}
-		if p.is("...") {
-			p.next()
+		if parser.is("...") {
+			parser.next()
 			param.rest = true
 		}
-		if p.is("{") || p.is("[") {
+		if parser.is("{") || parser.is("[") {
 			param.pattern = true
-			p.skipBalanced(p.peek().text, matchingClose(p.peek().text))
-		} else if p.peek().kind == "ident" && !isKeyword(p.peek().text) {
-			name := p.next()
+			parser.skipBalanced(parser.peek().text, matchingClose(parser.peek().text))
+		} else if parser.peek().kind == "ident" && !isKeyword(parser.peek().text) {
+			name := parser.next()
 			param.name = name.text
 			param.nameEnd = name.end
-			if p.is(":") {
+			if parser.is(":") {
 				param.typed = true
-				p.next()
-				p.skipType()
+				parser.next()
+				parser.skipType()
 			}
-			if p.is("=") {
+			if parser.is("=") {
 				param.hasDefault = true
-				p.next()
-				p.parseAssign(false)
+				parser.next()
+				parser.parseAssign(false)
 			}
 			if param.name != "" {
 				fnScope.names[param.name] = &binding{kind: "param", name: param.name}
 			}
 		} else {
-			p.fail()
+			parser.fail()
 			break
 		}
 		info.params = append(info.params, param)
-		if p.is(",") {
-			p.next()
+		if parser.is(",") {
+			parser.next()
 			continue
 		}
 		break
 	}
-	p.expect(")")
+	parser.expect(")")
 }
 
-func (p *parser) skipType() {
+func (parser *parser) skipType() {
 	depth := 0
-	for !p.failed && !p.eof() {
-		text := p.peek().text
+	for !parser.failed && !parser.eof() {
+		text := parser.peek().text
 		if depth == 0 && (text == "," || text == ")" || text == "=" || text == "{" || text == ";" || text == "=>") {
 			return
 		}
@@ -1037,7 +1072,7 @@ func (p *parser) skipType() {
 				return
 			}
 		}
-		p.next()
+		parser.next()
 	}
 }
 
@@ -1054,14 +1089,14 @@ func matchingClose(open string) string {
 	}
 }
 
-func (p *parser) skipBalanced(open string, close string) {
-	if close == "" || !p.is(open) {
-		p.fail()
+func (parser *parser) skipBalanced(open string, close string) {
+	if close == "" || !parser.is(open) {
+		parser.fail()
 		return
 	}
 	depth := 0
-	for !p.eof() {
-		text := p.next().text
+	for !parser.eof() {
+		text := parser.next().text
 		if text == open {
 			depth++
 		} else if text == close {
@@ -1071,40 +1106,40 @@ func (p *parser) skipBalanced(open string, close string) {
 			}
 		}
 	}
-	p.fail()
+	parser.fail()
 }
 
-func (p *parser) skipBraced() {
-	for !p.failed && !p.eof() && !p.is("{") {
-		switch p.peek().text {
+func (parser *parser) skipBraced() {
+	for !parser.failed && !parser.eof() && !parser.is("{") {
+		switch parser.peek().text {
 		case "(", "[":
-			open := p.peek().text
-			p.skipBalanced(open, matchingClose(open))
+			open := parser.peek().text
+			parser.skipBalanced(open, matchingClose(open))
 		default:
-			p.next()
+			parser.next()
 		}
 	}
-	p.skipBalanced("{", "}")
+	parser.skipBalanced("{", "}")
 }
 
-func (p *parser) parseSequence(noIn bool) *texpr {
-	expr := p.parseAssign(noIn)
-	for p.is(",") && !p.failed {
-		p.next()
-		expr = p.parseAssign(noIn)
+func (parser *parser) parseSequence(noIn bool) *texpr {
+	expr := parser.parseAssign(noIn)
+	for parser.is(",") && !parser.failed {
+		parser.next()
+		expr = parser.parseAssign(noIn)
 	}
 	return expr
 }
 
-func (p *parser) parseAssign(noIn bool) *texpr {
-	left := p.parseConditional(noIn)
-	if p.failed || left == nil {
+func (parser *parser) parseAssign(noIn bool) *texpr {
+	left := parser.parseConditional(noIn)
+	if parser.failed || left == nil {
 		return left
 	}
-	op := p.peek().text
+	op := parser.peek().text
 	if op == "=" || op == "+=" || op == "-=" || op == "*=" || op == "/=" || op == "%=" {
-		p.next()
-		right := p.parseAssign(noIn)
+		parser.next()
+		right := parser.parseAssign(noIn)
 		if left.op == "name" {
 			note := assignNote{rhs: right}
 			if op != "=" {
@@ -1114,7 +1149,10 @@ func (p *parser) parseAssign(noIn bool) *texpr {
 			if binding := lookup(left.scope, left.name); binding != nil {
 				binding.assigns = append(binding.assigns, note)
 			} else {
-				p.lateAssigns = append(p.lateAssigns, lateAssign{name: left.name, scope: left.scope, note: note})
+				parser.lateAssigns = append(
+					parser.lateAssigns,
+					lateAssign{name: left.name, scope: left.scope, note: note},
+				)
 			}
 		}
 		if op == "=" {
@@ -1125,30 +1163,33 @@ func (p *parser) parseAssign(noIn bool) *texpr {
 	return left
 }
 
-func (p *parser) parseConditional(noIn bool) *texpr {
-	expr := p.parseBinary(noIn, 1)
-	if !p.is("?") {
+func (parser *parser) parseConditional(noIn bool) *texpr {
+	expr := parser.parseBinary(noIn, 1)
+	if !parser.is("?") {
 		return expr
 	}
-	p.next()
-	yes := p.parseAssign(false)
-	p.expect(":")
-	no := p.parseAssign(noIn)
+	parser.next()
+	yes := parser.parseAssign(false)
+	parser.expect(":")
+	no := parser.parseAssign(noIn)
 	return &texpr{op: "ternary", left: yes, right: no, elems: []*texpr{expr}}
 }
 
-func (p *parser) parseBinary(noIn bool, min int) *texpr {
-	left := p.parseUnary()
-	for !p.failed {
-		op := p.peek()
+func (parser *parser) parseBinary(noIn bool, min int) *texpr {
+	left := parser.parseUnary()
+	for !parser.failed {
+		op := parser.peek()
 		prec := precedence(op.text, noIn)
 		if prec < min {
 			break
 		}
-		p.next()
-		right := p.parseBinary(noIn, prec+1)
+		parser.next()
+		right := parser.parseBinary(noIn, prec+1)
 		if (op.text == "==" || op.text == "!=") && left != nil && right != nil {
-			p.cmps = append(p.cmps, cmpNote{op: op.text, start: op.start, end: op.end, left: left, right: right})
+			parser.cmps = append(
+				parser.cmps,
+				cmpNote{op: op.text, start: op.start, end: op.end, left: left, right: right},
+			)
 		}
 		kind := "unknown"
 		switch op.text {
@@ -1196,16 +1237,16 @@ func precedence(op string, noIn bool) int {
 	}
 }
 
-func (p *parser) parseUnary() *texpr {
-	switch p.peek().text {
+func (parser *parser) parseUnary() *texpr {
+	switch parser.peek().text {
 	case "++", "--":
-		p.next()
-		operand := p.parseUnary()
-		p.noteInc(operand)
+		parser.next()
+		operand := parser.parseUnary()
+		parser.noteInc(operand)
 		return &texpr{op: "inc", left: operand}
 	case "+", "-", "!", "~", "typeof", "void", "delete":
-		op := p.next().text
-		operand := p.parseUnary()
+		op := parser.next().text
+		operand := parser.parseUnary()
 		switch op {
 		case "typeof":
 			return &texpr{op: "typeof", left: operand}
@@ -1224,13 +1265,13 @@ func (p *parser) parseUnary() *texpr {
 			return &texpr{op: "unknown"}
 		}
 	case "await", "yield":
-		p.fail()
+		parser.fail()
 		return nil
 	}
-	return p.parsePostfix()
+	return parser.parsePostfix()
 }
 
-func (p *parser) noteInc(operand *texpr) {
+func (parser *parser) noteInc(operand *texpr) {
 	if operand == nil || operand.op != "name" {
 		return
 	}
@@ -1238,43 +1279,46 @@ func (p *parser) noteInc(operand *texpr) {
 	if binding := lookup(operand.scope, operand.name); binding != nil {
 		binding.assigns = append(binding.assigns, note)
 	} else {
-		p.lateAssigns = append(p.lateAssigns, lateAssign{name: operand.name, scope: operand.scope, note: note})
+		parser.lateAssigns = append(
+			parser.lateAssigns,
+			lateAssign{name: operand.name, scope: operand.scope, note: note},
+		)
 	}
 }
 
-func (p *parser) parsePostfix() *texpr {
-	expr := p.parsePrimary()
-	for !p.failed && expr != nil {
+func (parser *parser) parsePostfix() *texpr {
+	expr := parser.parsePrimary()
+	for !parser.failed && expr != nil {
 		switch {
-		case p.is(".") || p.is("?."):
-			optional := p.next().text == "?."
-			if optional && p.is("(") {
-				p.parseCall(&texpr{op: "unknown"})
+		case parser.is(".") || parser.is("?."):
+			optional := parser.next().text == "?."
+			if optional && parser.is("(") {
+				parser.parseCall(&texpr{op: "unknown"})
 				expr = &texpr{op: "unknown"}
 				continue
 			}
-			name := p.peek()
+			name := parser.peek()
 			if name.kind != "ident" {
-				p.fail()
+				parser.fail()
 				return expr
 			}
-			p.next()
+			parser.next()
 			expr = &texpr{op: "member", prop: name.text, left: expr}
-		case p.is("("):
+		case parser.is("("):
 			if expr.op == "name" && expr.name == "Array" {
-				call := p.finishCall(expr)
+				call := parser.finishCall(expr)
 				expr = &texpr{op: "array", elems: call, arrayCtor: true}
 				continue
 			}
-			expr = p.parseCall(expr)
-		case p.is("["):
-			p.next()
-			p.parseSequence(false)
-			p.expect("]")
+			expr = parser.parseCall(expr)
+		case parser.is("["):
+			parser.next()
+			parser.parseSequence(false)
+			parser.expect("]")
 			expr = &texpr{op: "index", left: expr}
-		case (p.is("++") || p.is("--")) && !p.peek().newlineBefore:
-			p.noteInc(expr)
-			p.next()
+		case (parser.is("++") || parser.is("--")) && !parser.peek().newlineBefore:
+			parser.noteInc(expr)
+			parser.next()
 			expr = &texpr{op: "inc", left: expr}
 		default:
 			return expr
@@ -1283,44 +1327,47 @@ func (p *parser) parsePostfix() *texpr {
 	return expr
 }
 
-func (p *parser) parseCall(callee *texpr) *texpr {
-	args := p.finishCall(callee)
-	p.noteCall(callee, args)
+func (parser *parser) parseCall(callee *texpr) *texpr {
+	args := parser.finishCall(callee)
+	parser.noteCall(callee, args)
 	return &texpr{op: "call", left: callee, elems: args}
 }
 
-func (p *parser) finishCall(callee *texpr) []*texpr {
-	p.expect("(")
+func (parser *parser) finishCall(callee *texpr) []*texpr {
+	parser.expect("(")
 	var args []*texpr
-	for !p.failed && !p.is(")") && !p.eof() {
-		if p.is("...") {
-			p.next()
-			p.parseAssign(false)
+	for !parser.failed && !parser.is(")") && !parser.eof() {
+		if parser.is("...") {
+			parser.next()
+			parser.parseAssign(false)
 			args = append(args, &texpr{op: "unknown"})
 		} else {
-			args = append(args, p.parseAssign(false))
+			args = append(args, parser.parseAssign(false))
 		}
-		if p.is(",") {
-			p.next()
+		if parser.is(",") {
+			parser.next()
 			continue
 		}
 		break
 	}
-	p.expect(")")
+	parser.expect(")")
 	_ = callee
 	return args
 }
 
-func (p *parser) noteCall(callee *texpr, args []*texpr) {
+func (parser *parser) noteCall(callee *texpr, args []*texpr) {
 	if callee == nil || callee.op != "member" {
 		return
 	}
 	if callee.prop == "call" && callee.left != nil && callee.left.op == "member" && callbackMethod(callee.left.prop) {
-		p.calls = append(p.calls, callNote{method: callee.left.prop, recv: callee.left.left, args: args, viaCall: true})
+		parser.calls = append(
+			parser.calls,
+			callNote{method: callee.left.prop, recv: callee.left.left, args: args, viaCall: true},
+		)
 		return
 	}
 	if callbackMethod(callee.prop) {
-		p.calls = append(p.calls, callNote{method: callee.prop, recv: callee.left, args: args})
+		parser.calls = append(parser.calls, callNote{method: callee.prop, recv: callee.left, args: args})
 	}
 }
 
@@ -1334,60 +1381,60 @@ func callbackMethod(name string) bool {
 	}
 }
 
-func (p *parser) parsePrimary() *texpr {
-	tok := p.peek()
+func (parser *parser) parsePrimary() *texpr {
+	tok := parser.peek()
 	switch tok.kind {
 	case "num":
-		p.next()
+		parser.next()
 		if strings.HasSuffix(tok.text, "n") {
 			return &texpr{op: "unknown"}
 		}
 		return &texpr{op: "num"}
 	case "str":
-		p.next()
+		parser.next()
 		return &texpr{op: "str"}
 	case "regexp":
-		p.next()
+		parser.next()
 		return &texpr{op: "unknown"}
 	case "tmpl":
-		p.next()
+		parser.next()
 		if strings.Contains(tok.text, "${") {
 			// A template can close over a var. Missing that reference would make var to let a lie,
 			// so the whole file keeps its vars. The template text itself is not rewritten.
-			p.unsafeVars = true
+			parser.unsafeVars = true
 		}
 		return &texpr{op: "str"}
 	}
 	switch tok.text {
 	case "[":
-		return p.parseArray()
+		return parser.parseArray()
 	case "{":
-		return p.parseObject()
+		return parser.parseObject()
 	case "function":
-		return &texpr{op: "fn", fn: p.parseFunction(false)}
+		return &texpr{op: "fn", fn: parser.parseFunction(false)}
 	case "new":
-		return p.parseNew()
+		return parser.parseNew()
 	case "(":
-		if p.looksArrow() {
-			return p.parseArrow()
+		if parser.looksArrow() {
+			return parser.parseArrow()
 		}
-		p.next()
-		expr := p.parseSequence(false)
-		p.expect(")")
+		parser.next()
+		expr := parser.parseSequence(false)
+		parser.expect(")")
 		return expr
 	case "ident":
-		return p.parseIdent()
+		return parser.parseIdent()
 	}
 	if tok.kind == "ident" {
-		return p.parseIdent()
+		return parser.parseIdent()
 	}
-	p.fail()
+	parser.fail()
 	return nil
 }
 
-func (p *parser) parseNew() *texpr {
-	p.next()
-	expr := p.parsePostfix()
+func (parser *parser) parseNew() *texpr {
+	parser.next()
+	expr := parser.parsePostfix()
 	if expr != nil && expr.arrayCtor {
 		return expr
 	}
@@ -1397,126 +1444,136 @@ func (p *parser) parseNew() *texpr {
 	return &texpr{op: "unknown"}
 }
 
-func (p *parser) parseIdent() *texpr {
-	tok := p.next()
+func (parser *parser) parseIdent() *texpr {
+	tok := parser.next()
 	switch tok.text {
 	case "true", "false":
 		return &texpr{op: "bool"}
 	case "null":
 		return &texpr{op: "null"}
 	case "undefined":
-		if lookup(p.scope, "undefined") == nil {
+		if lookup(parser.scope, "undefined") == nil {
 			return &texpr{op: "undefined"}
 		}
 	case "NaN", "Infinity":
-		if lookup(p.scope, tok.text) == nil {
+		if lookup(parser.scope, tok.text) == nil {
 			return &texpr{op: "num"}
 		}
 	}
 	if isKeyword(tok.text) {
-		p.fail()
+		parser.fail()
 		return nil
 	}
-	if p.is("=>") {
-		fnScope := p.push("func")
+	if parser.is("=>") {
+		fnScope := parser.push("func")
 		fnScope.names[tok.text] = &binding{kind: "param", name: tok.text}
-		return p.finishArrow([]param{{name: tok.text, nameEnd: tok.end}}, fnScope)
+		return parser.finishArrow([]param{{name: tok.text, nameEnd: tok.end}}, fnScope)
 	}
-	resolved := lookup(p.scope, tok.text)
-	inInit := p.initializing
-	if resolved == nil || resolved != p.initializing {
+	resolved := lookup(parser.scope, tok.text)
+	inInit := parser.initializing
+	if resolved == nil || resolved != parser.initializing {
 		inInit = nil
 	}
-	p.refs = append(p.refs, reference{name: tok.text, scope: p.scope, at: p.pos - 1, inInit: inInit})
-	return &texpr{op: "name", name: tok.text, scope: p.scope}
+	parser.refs = append(
+		parser.refs,
+		reference{name: tok.text, scope: parser.scope, at: parser.pos - 1, inInit: inInit},
+	)
+	return &texpr{op: "name", name: tok.text, scope: parser.scope}
 }
 
-func (p *parser) parseArray() *texpr {
-	p.expect("[")
+func (parser *parser) parseArray() *texpr {
+	parser.expect("[")
 	var elems []*texpr
 	hole := false
-	for !p.failed && !p.is("]") && !p.eof() {
-		if p.is(",") {
+	for !parser.failed && !parser.is("]") && !parser.eof() {
+		if parser.is(",") {
 			hole = true
-			p.next()
+			parser.next()
 			continue
 		}
-		if p.is("...") {
-			p.next()
-			p.parseAssign(false)
+		if parser.is("...") {
+			parser.next()
+			parser.parseAssign(false)
 			hole = true
 		} else {
-			elems = append(elems, p.parseAssign(false))
+			elems = append(elems, parser.parseAssign(false))
 		}
-		if p.is(",") {
-			p.next()
+		if parser.is(",") {
+			parser.next()
 			continue
 		}
 		break
 	}
-	p.expect("]")
+	parser.expect("]")
 	if hole {
 		return &texpr{op: "unknown"}
 	}
 	return &texpr{op: "array", elems: elems}
 }
 
-func (p *parser) parseObject() *texpr {
-	p.expect("{")
+func (parser *parser) parseObject() *texpr {
+	parser.expect("{")
 	var fields []namedExpr
 	pure := true
-	for !p.failed && !p.is("}") && !p.eof() {
-		if p.is("...") {
-			p.next()
-			p.parseAssign(false)
+	for !parser.failed && !parser.is("}") && !parser.eof() {
+		if parser.is("...") {
+			parser.next()
+			parser.parseAssign(false)
 			pure = false
-		} else if p.is("[") {
-			p.skipBalanced("[", "]")
-			p.parseMethodTail(true)
+		} else if parser.is("[") {
+			parser.skipBalanced("[", "]")
+			parser.parseMethodTail(true)
 			pure = false
-		} else if p.peek().kind == "ident" || p.peek().kind == "str" || p.peek().kind == "num" {
-			key := p.next()
+		} else if parser.peek().kind == "ident" || parser.peek().kind == "str" || parser.peek().kind == "num" {
+			key := parser.next()
 			name := key.text
 			if key.kind == "str" && len(name) >= 2 {
 				name = name[1 : len(name)-1]
 			}
-			if isModifier(key.text) && (p.peek().kind == "ident" || p.peek().kind == "str" || p.is("[")) {
+			if isModifier(key.text) &&
+				(parser.peek().kind == "ident" || parser.peek().kind == "str" || parser.is("[")) {
 				pure = false
-				if p.is("[") {
-					p.skipBalanced("[", "]")
+				if parser.is("[") {
+					parser.skipBalanced("[", "]")
 				} else {
-					p.next()
+					parser.next()
 				}
-				p.parseMethodTail(true)
-			} else if p.is("(") {
-				p.parseMethodTail(false)
+				parser.parseMethodTail(true)
+			} else if parser.is("(") {
+				parser.parseMethodTail(false)
 				pure = false
-			} else if p.is(":") {
-				p.next()
-				fields = append(fields, namedExpr{name: name, expr: p.parseAssign(false)})
-			} else if (p.is(",") || p.is("}")) && key.kind == "ident" && !isKeyword(key.text) {
-				fields = append(fields, namedExpr{name: name, expr: &texpr{op: "name", name: name, scope: p.scope}})
-				resolved := lookup(p.scope, name)
-				inInit := p.initializing
-				if resolved != p.initializing {
+			} else if parser.is(":") {
+				parser.next()
+				fields = append(fields, namedExpr{name: name, expr: parser.parseAssign(false)})
+			} else if (parser.is(",") || parser.is("}")) && key.kind == "ident" && !isKeyword(key.text) {
+				fields = append(
+					fields,
+					namedExpr{name: name, expr: &texpr{op: "name", name: name, scope: parser.scope}},
+				)
+				resolved := lookup(parser.scope, name)
+				inInit := parser.initializing
+				if resolved != parser.initializing {
 					inInit = nil
 				}
-				p.refs = append(p.refs, reference{name: name, scope: p.scope, at: p.pos - 1, inInit: inInit})
+				parser.refs = append(
+					parser.refs,
+					reference{name: name, scope: parser.scope, at: parser.pos - 1, inInit: inInit},
+				)
 			} else {
-				p.fail()
+				parser.fail()
 				return nil
 			}
 		} else {
-			p.fail()
+			parser.fail()
 			return nil
 		}
-		if p.is(",") {
-			p.next()
+		if parser.is(",") {
+			parser.next()
 			continue
 		}
 		break
 	}
-	p.expect("}")
+	parser.expect("}")
 	if !pure {
 		return &texpr{op: "unknown"}
 	}
@@ -1527,98 +1584,98 @@ func isModifier(text string) bool {
 	return text == "get" || text == "set" || text == "async" || text == "static"
 }
 
-func (p *parser) parseMethodTail(alreadyNamed bool) {
-	if !alreadyNamed && !p.is("(") {
-		p.fail()
+func (parser *parser) parseMethodTail(alreadyNamed bool) {
+	if !alreadyNamed && !parser.is("(") {
+		parser.fail()
 		return
 	}
-	if !p.is("(") {
-		p.fail()
+	if !parser.is("(") {
+		parser.fail()
 		return
 	}
-	fnScope := p.push("func")
+	fnScope := parser.push("func")
 	info := &fnInfo{scope: fnScope}
-	p.parseParamList(info, fnScope)
-	p.expect("{")
-	p.parseStatements(false)
-	p.expect("}")
-	p.pop(fnScope)
+	parser.parseParamList(info, fnScope)
+	parser.expect("{")
+	parser.parseStatements(false)
+	parser.expect("}")
+	parser.pop(fnScope)
 }
 
-func (p *parser) looksArrow() bool {
-	if !p.is("(") {
+func (parser *parser) looksArrow() bool {
+	if !parser.is("(") {
 		return false
 	}
 	depth := 0
-	for index := p.pos; index < len(p.toks); index++ {
-		text := p.toks[index].text
+	for index := parser.pos; index < len(parser.toks); index++ {
+		text := parser.toks[index].text
 		if text == "(" {
 			depth++
 		} else if text == ")" {
 			depth--
 			if depth == 0 {
-				return index+1 < len(p.toks) && p.toks[index+1].text == "=>"
+				return index+1 < len(parser.toks) && parser.toks[index+1].text == "=>"
 			}
 		}
 	}
 	return false
 }
 
-func (p *parser) parseArrow() *texpr {
-	p.next()
-	fnScope := p.push("func")
+func (parser *parser) parseArrow() *texpr {
+	parser.next()
+	fnScope := parser.push("func")
 	var params []param
-	for !p.failed && !p.is(")") && !p.eof() {
+	for !parser.failed && !parser.is(")") && !parser.eof() {
 		param := param{}
-		if p.is("...") {
-			p.next()
+		if parser.is("...") {
+			parser.next()
 			param.rest = true
 		}
-		if p.is("[") || p.is("{") {
+		if parser.is("[") || parser.is("{") {
 			param.pattern = true
-			open := p.peek().text
-			p.skipBalanced(open, matchingClose(open))
-		} else if p.peek().kind == "ident" && !isKeyword(p.peek().text) {
-			name := p.next()
+			open := parser.peek().text
+			parser.skipBalanced(open, matchingClose(open))
+		} else if parser.peek().kind == "ident" && !isKeyword(parser.peek().text) {
+			name := parser.next()
 			param.name = name.text
 			param.nameEnd = name.end
-			if p.is(":") {
+			if parser.is(":") {
 				param.typed = true
-				p.next()
-				p.skipType()
+				parser.next()
+				parser.skipType()
 			}
-			if p.is("=") {
+			if parser.is("=") {
 				param.hasDefault = true
-				p.next()
-				p.parseAssign(false)
+				parser.next()
+				parser.parseAssign(false)
 			}
 			fnScope.names[param.name] = &binding{kind: "param", name: param.name}
 		} else {
-			p.fail()
+			parser.fail()
 			break
 		}
 		params = append(params, param)
-		if p.is(",") {
-			p.next()
+		if parser.is(",") {
+			parser.next()
 			continue
 		}
 		break
 	}
-	p.expect(")")
-	return p.finishArrow(params, fnScope)
+	parser.expect(")")
+	return parser.finishArrow(params, fnScope)
 }
 
-func (p *parser) finishArrow(params []param, fnScope *scope) *texpr {
+func (parser *parser) finishArrow(params []param, fnScope *scope) *texpr {
 	info := &fnInfo{params: params, scope: fnScope}
-	p.expect("=>")
-	if p.is("{") {
-		p.next()
-		p.parseStatements(false)
-		p.expect("}")
+	parser.expect("=>")
+	if parser.is("{") {
+		parser.next()
+		parser.parseStatements(false)
+		parser.expect("}")
 	} else {
-		p.parseAssign(false)
+		parser.parseAssign(false)
 	}
-	p.pop(fnScope)
+	parser.pop(fnScope)
 	return &texpr{op: "fn", fn: info}
 }
 
@@ -1645,28 +1702,28 @@ func lookup(scope *scope, name string) *binding {
 	return nil
 }
 
-func (p *parser) finish() {
-	if p.failed {
+func (parser *parser) finish() {
+	if parser.failed {
 		return
 	}
-	for _, late := range p.lateAssigns {
+	for _, late := range parser.lateAssigns {
 		if binding := lookup(late.scope, late.name); binding != nil {
 			binding.assigns = append(binding.assigns, late.note)
 		}
 	}
-	if !p.unsafeVars {
-		p.rewriteVars()
+	if !parser.unsafeVars {
+		parser.rewriteVars()
 	}
-	p.annotateCallbacks()
-	p.rewriteEquals()
-	p.rewriteThrows()
+	parser.annotateCallbacks()
+	parser.rewriteEquals()
+	parser.rewriteThrows()
 }
 
-func (p *parser) rewriteVars() {
-	for _, stmt := range p.varStmts {
+func (parser *parser) rewriteVars() {
+	for _, stmt := range parser.varStmts {
 		safe := len(stmt.decls) > 0
 		for _, decl := range stmt.decls {
-			if !p.declSafe(decl) {
+			if !parser.declSafe(decl) {
 				safe = false
 				break
 			}
@@ -1674,12 +1731,12 @@ func (p *parser) rewriteVars() {
 		if !safe {
 			continue
 		}
-		p.edits = append(p.edits, edit{start: stmt.keyword.start, end: stmt.keyword.end, text: "let"})
-		p.counts[adaptVarToLet] += len(stmt.decls)
+		parser.edits = append(parser.edits, edit{start: stmt.keyword.start, end: stmt.keyword.end, text: "let"})
+		parser.counts[adaptVarToLet] += len(stmt.decls)
 	}
 }
 
-func (p *parser) declSafe(decl *varDecl) bool {
+func (parser *parser) declSafe(decl *varDecl) bool {
 	if decl.unsafe || decl.binding == nil || decl.binding.poison {
 		return false
 	}
@@ -1688,7 +1745,7 @@ func (p *parser) declSafe(decl *varDecl) bool {
 		return false
 	}
 	decls := 0
-	for _, stmt := range p.varStmts {
+	for _, stmt := range parser.varStmts {
 		for _, other := range stmt.decls {
 			if other.binding == decl.binding {
 				decls++
@@ -1698,7 +1755,7 @@ func (p *parser) declSafe(decl *varDecl) bool {
 	if decls != 1 {
 		return false
 	}
-	for _, ref := range p.refs {
+	for _, ref := range parser.refs {
 		binding := lookup(ref.scope, ref.name)
 		if binding != decl.binding {
 			continue
@@ -1716,14 +1773,14 @@ func (p *parser) declSafe(decl *varDecl) bool {
 		if decl.block != nil && !scopeWithin(ref.scope, decl.block) {
 			return false
 		}
-		if p.capturedAcrossLoop(decl, ref) {
+		if parser.capturedAcrossLoop(decl, ref) {
 			return false
 		}
 	}
 	return true
 }
 
-func (p *parser) capturedAcrossLoop(decl *varDecl, ref reference) bool {
+func (parser *parser) capturedAcrossLoop(decl *varDecl, ref reference) bool {
 	if ref.scope == nil || ref.scope.fn == decl.fn {
 		return false
 	}
@@ -1751,14 +1808,14 @@ func scopeWithin(inner *scope, outer *scope) bool {
 	return false
 }
 
-func (p *parser) annotateCallbacks() {
+func (parser *parser) annotateCallbacks() {
 	groups := map[*fnInfo][][]*jtype{}
-	for _, call := range p.calls {
-		fn := p.callbackFn(call)
+	for _, call := range parser.calls {
+		fn := parser.callbackFn(call)
 		if fn == nil {
 			continue
 		}
-		groups[fn] = append(groups[fn], p.inferCall(call))
+		groups[fn] = append(groups[fn], parser.inferCall(call))
 	}
 	for fn, inferences := range groups {
 		if len(inferences) == 0 {
@@ -1791,8 +1848,8 @@ func (p *parser) annotateCallbacks() {
 			if rendered == "" {
 				continue
 			}
-			p.edits = append(p.edits, edit{start: param.nameEnd, end: param.nameEnd, text: ": " + rendered})
-			p.counts[adaptCallbackParam]++
+			parser.edits = append(parser.edits, edit{start: param.nameEnd, end: param.nameEnd, text: ": " + rendered})
+			parser.counts[adaptCallbackParam]++
 			if fn.scope != nil {
 				if binding := fn.scope.names[param.name]; binding != nil && binding.kind == "param" {
 					binding.typ = chosen
@@ -1802,7 +1859,7 @@ func (p *parser) annotateCallbacks() {
 	}
 }
 
-func (p *parser) callbackFn(call callNote) *fnInfo {
+func (parser *parser) callbackFn(call callNote) *fnInfo {
 	index := 0
 	if call.method == "replace" || call.method == "replaceAll" {
 		index = 1
@@ -1821,11 +1878,11 @@ func (p *parser) callbackFn(call callNote) *fnInfo {
 	return binding.fn
 }
 
-func (p *parser) inferCall(call callNote) []*jtype {
+func (parser *parser) inferCall(call callNote) []*jtype {
 	if call.method == "replace" || call.method == "replaceAll" {
 		return []*jtype{typeString}
 	}
-	elem := p.receiverElem(call)
+	elem := parser.receiverElem(call)
 	if elem == nil {
 		return nil
 	}
@@ -1839,7 +1896,7 @@ func (p *parser) inferCall(call callNote) []*jtype {
 			initIndex = 2
 		}
 		if len(call.args) > initIndex {
-			initType := p.eval(call.args[initIndex])
+			initType := parser.eval(call.args[initIndex])
 			if initType == nil {
 				return nil
 			}
@@ -1851,7 +1908,7 @@ func (p *parser) inferCall(call callNote) []*jtype {
 	}
 }
 
-func (p *parser) receiverElem(call callNote) *jtype {
+func (parser *parser) receiverElem(call callNote) *jtype {
 	var recv *texpr
 	if call.viaCall {
 		if len(call.args) == 0 {
@@ -1861,35 +1918,35 @@ func (p *parser) receiverElem(call callNote) *jtype {
 	} else {
 		recv = call.recv
 	}
-	typ := p.eval(recv)
+	typ := parser.eval(recv)
 	if typ == nil || typ.kind != "array" || typ.elem == nil {
 		return nil
 	}
 	return typ.elem
 }
 
-func (p *parser) rewriteEquals() {
-	for _, cmp := range p.cmps {
-		if !strictEqualOK(p.eval(cmp.left), p.eval(cmp.right)) {
+func (parser *parser) rewriteEquals() {
+	for _, cmp := range parser.cmps {
+		if !strictEqualOK(parser.eval(cmp.left), parser.eval(cmp.right)) {
 			continue
 		}
 		text := "==="
 		if cmp.op == "!=" {
 			text = "!=="
 		}
-		p.edits = append(p.edits, edit{start: cmp.start, end: cmp.end, text: text})
-		p.counts[adaptStrictEq]++
+		parser.edits = append(parser.edits, edit{start: cmp.start, end: cmp.end, text: text})
+		parser.counts[adaptStrictEq]++
 	}
 }
 
-func (p *parser) rewriteThrows() {
-	for _, throw := range p.throws {
-		p.edits = append(p.edits, edit{start: throw.start, end: throw.end, text: "Error"})
-		p.counts[adaptThrowError]++
+func (parser *parser) rewriteThrows() {
+	for _, throw := range parser.throws {
+		parser.edits = append(parser.edits, edit{start: throw.start, end: throw.end, text: "Error"})
+		parser.counts[adaptThrowError]++
 	}
 }
 
-func (p *parser) eval(expr *texpr) *jtype {
+func (parser *parser) eval(expr *texpr) *jtype {
 	if expr == nil {
 		return nil
 	}
@@ -1914,37 +1971,37 @@ func (p *parser) eval(expr *texpr) *jtype {
 			}
 			return nil
 		}
-		return p.bindingType(binding)
+		return parser.bindingType(binding)
 	case "array":
-		return p.evalArray(expr)
+		return parser.evalArray(expr)
 	case "object":
-		return p.evalObject(expr)
+		return parser.evalObject(expr)
 	case "member":
 		if expr.prop == "length" {
-			recv := p.eval(expr.left)
+			recv := parser.eval(expr.left)
 			if recv != nil && (recv.kind == "array" || recv.kind == "string") {
 				return typeNumber
 			}
 		}
 		return nil
 	case "add":
-		return addType(p.eval(expr.left), p.eval(expr.right))
+		return addType(parser.eval(expr.left), parser.eval(expr.right))
 	case "sub", "mul":
-		left := p.eval(expr.left)
-		right := p.eval(expr.right)
+		left := parser.eval(expr.left)
+		right := parser.eval(expr.right)
 		if left != nil && right != nil && left.kind == "number" && right.kind == "number" {
 			return typeNumber
 		}
 		return nil
 	case "inc":
-		inner := p.eval(expr.left)
+		inner := parser.eval(expr.left)
 		if inner != nil && inner.kind == "number" {
 			return typeNumber
 		}
 		return nil
 	case "ternary":
-		left := p.eval(expr.left)
-		right := p.eval(expr.right)
+		left := parser.eval(expr.left)
+		right := parser.eval(expr.right)
 		if sameType(left, right) {
 			return left
 		}
@@ -1956,7 +2013,7 @@ func (p *parser) eval(expr *texpr) *jtype {
 	}
 }
 
-func (p *parser) bindingType(binding *binding) *jtype {
+func (parser *parser) bindingType(binding *binding) *jtype {
 	if binding == nil || binding.poison {
 		return nil
 	}
@@ -1969,7 +2026,7 @@ func (p *parser) bindingType(binding *binding) *jtype {
 	binding.visiting = true
 	var typ *jtype
 	if binding.init != nil {
-		typ = p.eval(binding.init)
+		typ = parser.eval(binding.init)
 	}
 	for _, assign := range binding.assigns {
 		if assign.inc {
@@ -1980,7 +2037,7 @@ func (p *parser) bindingType(binding *binding) *jtype {
 			}
 			continue
 		}
-		rhs := p.eval(assign.rhs)
+		rhs := parser.eval(assign.rhs)
 		if typ == nil {
 			typ = rhs
 			continue
@@ -1999,9 +2056,9 @@ func (p *parser) bindingType(binding *binding) *jtype {
 	return typ
 }
 
-func (p *parser) evalArray(expr *texpr) *jtype {
+func (parser *parser) evalArray(expr *texpr) *jtype {
 	if expr.arrayCtor && len(expr.elems) == 1 {
-		only := p.eval(expr.elems[0])
+		only := parser.eval(expr.elems[0])
 		if only != nil && only.kind == "number" {
 			return nil
 		}
@@ -2011,7 +2068,7 @@ func (p *parser) evalArray(expr *texpr) *jtype {
 	}
 	var elem *jtype
 	for _, item := range expr.elems {
-		next := p.eval(item)
+		next := parser.eval(item)
 		if next == nil {
 			return nil
 		}
@@ -2046,7 +2103,7 @@ func mergeUnion(left *jtype, right *jtype) *jtype {
 	return nil
 }
 
-func (p *parser) evalObject(expr *texpr) *jtype {
+func (parser *parser) evalObject(expr *texpr) *jtype {
 	if len(expr.fields) == 0 {
 		return nil
 	}
@@ -2057,7 +2114,7 @@ func (p *parser) evalObject(expr *texpr) *jtype {
 			return nil
 		}
 		seen[field.name] = true
-		typ := p.eval(field.expr)
+		typ := parser.eval(field.expr)
 		if typ == nil || typ.string() == "" {
 			return nil
 		}

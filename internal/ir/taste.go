@@ -12,7 +12,7 @@ type Logical struct {
 	KeepTruthy  bool
 }
 
-func (l Logical) Type() Type { return l.Of }
+func (logical Logical) Type() Type { return logical.Of }
 
 // LogicalAssignment holds a reference to its target across the conditional write.
 // Write remains a statement so write and ownership analyses can see the assignment.
@@ -25,12 +25,12 @@ type LogicalAssignment struct {
 	Operator string
 }
 
-func (a LogicalAssignment) Type() Type { return a.Of }
+func (assignment LogicalAssignment) Type() Type { return assignment.Of }
 
 // Comma evaluates Left, discards its value, then evaluates and returns Right.
 type Comma struct{ Left, Right Expression }
 
-func (c Comma) Type() Type { return c.Right.Type() }
+func (comma Comma) Type() Type { return comma.Right.Type() }
 
 // Effects permits a statement's effects inside a value expression.
 type Effects struct {
@@ -38,7 +38,7 @@ type Effects struct {
 	Result Expression
 }
 
-func (e Effects) Type() Type { return e.Result.Type() }
+func (effects Effects) Type() Type { return effects.Result.Type() }
 
 // Labeled is a statement with a named break destination.
 type Labeled struct {
@@ -54,4 +54,4 @@ type Void struct {
 	Of    Type
 }
 
-func (v Void) Type() Type { return (Undefined{Of: v.Of}).Type() }
+func (void Void) Type() Type { return (Undefined{Of: void.Of}).Type() }

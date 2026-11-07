@@ -21,22 +21,22 @@ type namespaceCallNode struct {
 	reaches    map[*ast.Node]*ast.Node
 }
 
-func (g *namespaceCallGraph) reach(function *ast.Node) map[*ast.Node]*ast.Node {
-	return g.discover(function).reaches
+func (graph *namespaceCallGraph) reach(function *ast.Node) map[*ast.Node]*ast.Node {
+	return graph.discover(function).reaches
 }
 
-func (g *namespaceCallGraph) discover(function *ast.Node) *namespaceCallNode {
-	if cached := g.functions[function]; cached != nil {
+func (graph *namespaceCallGraph) discover(function *ast.Node) *namespaceCallNode {
+	if cached := graph.functions[function]; cached != nil {
 		return cached
 	}
-	g.walks++
-	entry := &namespaceCallNode{index: g.next, low: g.next, active: true, reads: map[*ast.Node]*ast.Node{}}
-	g.next++
-	g.functions[function] = entry
-	g.stack = append(g.stack, entry)
+	graph.walks++
+	entry := &namespaceCallNode{index: graph.next, low: graph.next, active: true, reads: map[*ast.Node]*ast.Node{}}
+	graph.next++
+	graph.functions[function] = entry
+	graph.stack = append(graph.stack, entry)
 	connect := func(target *ast.Node) {
-		previous := g.functions[target]
-		edge := g.discover(target)
+		previous := graph.functions[target]
+		edge := graph.discover(target)
 		entry.edges = append(entry.edges, edge)
 		if edge.active {
 			if previous == nil {
@@ -51,7 +51,7 @@ func (g *namespaceCallGraph) discover(function *ast.Node) *namespaceCallNode {
 		if node == nil || ast.IsTypeNode(node) || node != function && ast.IsFunctionLike(node) {
 			return
 		}
-		if branch := g.lowering.literalCallableBranch(node); branch != nil {
+		if branch := graph.lowering.literalCallableBranch(node); branch != nil {
 			walk(branch)
 			return
 		}
@@ -60,7 +60,9 @@ func (g *namespaceCallGraph) discover(function *ast.Node) *namespaceCallNode {
 				for _, clause := range nodesOf(node.ClassLikeData().HeritageClauses) {
 					if clause.AsHeritageClause().Token == ast.KindExtendsKeyword {
 						for _, element := range clause.AsHeritageClause().Types.Nodes {
-							if base := g.lowering.namespaceCallable(element.AsExpressionWithTypeArguments().Expression); base != nil {
+							if base := graph.lowering.namespaceCallable(
+								element.AsExpressionWithTypeArguments().Expression,
+							); base != nil {
 								connect(base)
 							}
 						}
@@ -95,18 +97,20 @@ func (g *namespaceCallGraph) discover(function *ast.Node) *namespaceCallNode {
 			}
 			return
 		}
-		if g.lowering.namespaceValueNode(node) {
-			if declaration := g.lowering.namespaceRuntimeEnum(node); declaration != nil {
+		if graph.lowering.namespaceValueNode(node) {
+			if declaration := graph.lowering.namespaceRuntimeEnum(node); declaration != nil {
 				entry.reads[declaration] = node
 			}
-			if declaration := g.lowering.namespaceDeclaration(node); declaration != nil && namespaceRuntime(declaration) {
+			if declaration := graph.lowering.namespaceDeclaration(
+				node,
+			); declaration != nil && namespaceRuntime(declaration) {
 				entry.reads[declaration] = node
 			}
 		}
 		if node.Kind == ast.KindCallExpression || node.Kind == ast.KindNewExpression {
 			callees := append([]*ast.Node{node.Expression()}, node.Arguments()...)
 			for _, callee := range callees {
-				if target := g.lowering.namespaceCallable(callee); target != nil {
+				if target := graph.lowering.namespaceCallable(callee); target != nil {
 					connect(target)
 				}
 			}
@@ -117,8 +121,8 @@ func (g *namespaceCallGraph) discover(function *ast.Node) *namespaceCallNode {
 	if entry.low == entry.index {
 		component := []*namespaceCallNode{}
 		for {
-			last := g.stack[len(g.stack)-1]
-			g.stack = g.stack[:len(g.stack)-1]
+			last := graph.stack[len(graph.stack)-1]
+			graph.stack = graph.stack[:len(graph.stack)-1]
 			last.active = false
 			component = append(component, last)
 			if last == entry {
@@ -144,8 +148,8 @@ func (g *namespaceCallGraph) discover(function *ast.Node) *namespaceCallNode {
 }
 
 // Both module and namespace enums participate in the same initialization graph.
-func (l *lowering) namespaceRuntimeEnum(node *ast.Node) *ast.Node {
-	declaration := l.enumObject(node)
+func (lowering *lowering) namespaceRuntimeEnum(node *ast.Node) *ast.Node {
+	declaration := lowering.enumObject(node)
 	if declaration == nil || ast.HasSyntacticModifier(declaration, ast.ModifierFlagsConst) {
 		return nil
 	}

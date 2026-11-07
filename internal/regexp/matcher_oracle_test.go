@@ -486,7 +486,7 @@ func TestMatcherUTF16PatternsNode(test *testing.T) {
 
 type storedPropertyProvider struct{ data PropertySet }
 
-func (p storedPropertyProvider) Lookup(string) (PropertySet, error) { return p.data, nil }
+func (provider storedPropertyProvider) Lookup(string) (PropertySet, error) { return provider.data, nil }
 func TestMatcherProviderSnapshot(test *testing.T) {
 	test.Parallel()
 	c := executionCase{

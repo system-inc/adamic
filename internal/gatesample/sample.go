@@ -21,14 +21,14 @@ type Selection struct {
 }
 
 // Log returns the landing gate's stable diagnostic. Call it once per sampled test.
-func (s Selection) Log(testName string) string {
+func (selection Selection) Log(testName string) string {
 	return fmt.Sprintf(
 		"gate-sample: %s %d/%d files, stride %d, offset %d",
 		testName,
-		len(s.Paths),
-		s.Total,
-		s.Stride,
-		s.Offset,
+		len(selection.Paths),
+		selection.Total,
+		selection.Stride,
+		selection.Offset,
 	)
 }
 
@@ -147,18 +147,18 @@ func Validate() error {
 // Generated adds a deterministic generated corpus keyed by its enumeration index.
 // controls are indices of explicit checks which run at every offset. Physical
 // changed-path inclusion has already been resolved by Select.
-func (s Selection) Generated(count int, controls ...int) Selection {
+func (selection Selection) Generated(count int, controls ...int) Selection {
 	keep := make(map[int]bool, len(controls))
 	for _, index := range controls {
 		keep[index] = true
 	}
-	s.Total += count
+	selection.Total += count
 	for index := 0; index < count; index++ {
-		if !s.Sample || index%s.Stride == s.Offset || keep[index] {
-			s.Paths = append(s.Paths, GeneratedKey(index))
+		if !selection.Sample || index%selection.Stride == selection.Offset || keep[index] {
+			selection.Paths = append(selection.Paths, GeneratedKey(index))
 		}
 	}
-	return s
+	return selection
 }
 
 // GeneratedKey identifies an input without depending on its contents or label.

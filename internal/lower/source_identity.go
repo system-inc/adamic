@@ -14,36 +14,36 @@ import (
 
 // moduleStatements is the sole orchestration hook: retain the boundary without
 // changing the statements or their execution order.
-func (l *lowering) moduleStatements(module *ast.SourceFile) ([]ir.Statement, error) {
+func (lowering *lowering) moduleStatements(module *ast.SourceFile) ([]ir.Statement, error) {
 	// A module's own calls are judged as a body's are (predicates_branded.go).
-	if judgeBrandedCallsError := l.judgeBrandedCalls(module.AsNode()); judgeBrandedCallsError != nil {
+	if judgeBrandedCallsError := lowering.judgeBrandedCalls(module.AsNode()); judgeBrandedCallsError != nil {
 		return nil, judgeBrandedCallsError
 	}
-	body, statementsError := l.statements(module.Statements.Nodes)
+	body, statementsError := lowering.statements(module.Statements.Nodes)
 	if statementsError == nil {
-		l.result.MainModules = append(
-			l.result.MainModules,
-			ir.MainModule{Module: l.modulePath(module), Statements: len(body)},
+		lowering.result.MainModules = append(
+			lowering.result.MainModules,
+			ir.MainModule{Module: lowering.modulePath(module), Statements: len(body)},
 		)
 	}
 	return body, statementsError
 }
 
-func (l *lowering) modulePath(module *ast.SourceFile) string {
+func (lowering *lowering) modulePath(module *ast.SourceFile) string {
 	if load.IsPrelude(module) {
 		return "adamic-prelude:///adamic.d.ts"
 	}
-	filename := l.program.FileName(module)
+	filename := lowering.program.FileName(module)
 	if strings.HasPrefix(filename, "bundled://") {
 		return filename
 	}
-	if l.sourceModules == nil {
-		l.indexSourceModules()
+	if lowering.sourceModules == nil {
+		lowering.indexSourceModules()
 	}
-	if l.sourceModules[module] == "" {
+	if lowering.sourceModules[module] == "" {
 		panic("lower: source module has no import-declaration route: " + filename)
 	}
-	return l.sourceModules[module]
+	return lowering.sourceModules[module]
 }
 
 // Module identities follow source import declarations, not file placement. The
@@ -52,9 +52,9 @@ func (l *lowering) modulePath(module *ast.SourceFile) string {
 // rewrite relative specifiers to absolute paths without changing its bindings.
 // Each outgoing label is unique within its source module, so distinct modules
 // never acquire the same route, even with identical basenames and contents.
-func (l *lowering) indexSourceModules() {
-	entry := l.program.Files()[0]
-	l.sourceModules = map[*ast.SourceFile]string{entry: filepath.Base(l.program.FileName(entry))}
+func (lowering *lowering) indexSourceModules() {
+	entry := lowering.program.Files()[0]
+	lowering.sourceModules = map[*ast.SourceFile]string{entry: filepath.Base(lowering.program.FileName(entry))}
 	type pending struct {
 		module *ast.SourceFile
 		route  []string
@@ -116,7 +116,7 @@ func (l *lowering) indexSourceModules() {
 				label = fmt.Sprintf("import-type:%q", parents)
 			}
 			if specifier != nil {
-				if symbol := l.checker.GetSymbolAtLocation(specifier); symbol != nil {
+				if symbol := lowering.checker.GetSymbolAtLocation(specifier); symbol != nil {
 					for _, declaration := range symbol.Declarations {
 						if declaration.Kind != ast.KindSourceFile {
 							continue
@@ -124,7 +124,7 @@ func (l *lowering) indexSourceModules() {
 						target := declaration.AsSourceFile()
 						if load.IsPrelude(target) ||
 							load.IsLibrary(target) ||
-							strings.HasPrefix(l.program.FileName(target), "bundled://") {
+							strings.HasPrefix(lowering.program.FileName(target), "bundled://") {
 							break
 						}
 						// Only indistinguishable anonymous declarations (side
@@ -142,14 +142,14 @@ func (l *lowering) indexSourceModules() {
 		current.module.AsNode().ForEachChild(visit)
 		sort.Slice(edges, func(i, j int) bool { return edges[i].label < edges[j].label })
 		for _, imported := range edges {
-			if l.sourceModules[imported.module] != "" {
+			if lowering.sourceModules[imported.module] != "" {
 				continue
 			}
 			route := append(append([]string{}, current.route...), imported.label)
-			l.sourceModules[imported.module] = fmt.Sprintf(
+			lowering.sourceModules[imported.module] = fmt.Sprintf(
 				"imported:///%q/%s",
 				route,
-				filepath.Base(l.program.FileName(imported.module)),
+				filepath.Base(lowering.program.FileName(imported.module)),
 			)
 			queue = append(queue, pending{module: imported.module, route: route})
 		}
@@ -158,11 +158,11 @@ func (l *lowering) indexSourceModules() {
 
 // sourceIdentity indexes a source tree once, before lowering order can influence
 // anonymous numbering. A nested declaration owns a separate anonymous sequence.
-func (l *lowering) sourceIdentity(node *ast.Node) ir.SourceIdentity {
-	if l.sourceIdentities == nil {
-		l.sourceIdentities = map[*ast.Node]ir.SourceIdentity{}
+func (lowering *lowering) sourceIdentity(node *ast.Node) ir.SourceIdentity {
+	if lowering.sourceIdentities == nil {
+		lowering.sourceIdentities = map[*ast.Node]ir.SourceIdentity{}
 	}
-	if identity, found := l.sourceIdentities[node]; found {
+	if identity, found := lowering.sourceIdentities[node]; found {
 		return identity
 	}
 	module := ast.GetSourceFileOfNode(node)
@@ -214,7 +214,7 @@ func (l *lowering) sourceIdentity(node *ast.Node) ir.SourceIdentity {
 				}
 			}
 		}
-		l.sourceIdentities[node] = ir.SourceIdentity{Module: l.modulePath(module), Declaration: path}
+		lowering.sourceIdentities[node] = ir.SourceIdentity{Module: lowering.modulePath(module), Declaration: path}
 		counter := anonymous
 		if own && node.Kind != ast.KindPropertyAssignment {
 			counter = new(int)
@@ -222,15 +222,15 @@ func (l *lowering) sourceIdentity(node *ast.Node) ir.SourceIdentity {
 		node.ForEachChild(func(child *ast.Node) bool { walk(child, path, counter); return false })
 	}
 	walk(module.AsNode(), nil, new(int))
-	return l.sourceIdentities[node]
+	return lowering.sourceIdentities[node]
 }
 
 // functionSource includes concrete type spellings, never checker IDs or lowering IDs.
-func (l *lowering) functionSource(node *ast.Node) ir.SourceIdentity {
-	identity := l.sourceIdentity(node)
+func (lowering *lowering) functionSource(node *ast.Node) ir.SourceIdentity {
+	identity := lowering.sourceIdentity(node)
 	parts := []string{}
-	if l.function != nil && l.function.Source.Specialization != "" {
-		parent := l.function.Source
+	if lowering.function != nil && lowering.function.Source.Specialization != "" {
+		parent := lowering.function.Source
 		nested := parent.Module == identity.Module && len(parent.Declaration) < len(identity.Declaration)
 		for i := 0; nested && i < len(parent.Declaration); i++ {
 			nested = parent.Declaration[i] == identity.Declaration[i]
@@ -239,14 +239,14 @@ func (l *lowering) functionSource(node *ast.Node) ir.SourceIdentity {
 			parts = append(parts, parent.Specialization)
 		}
 	}
-	if l.classType != nil && l.declaredInCurrentClass(node) {
-		parts = append(parts, l.sourceTypeKey(l.classType, map[*checker.Type]bool{}))
+	if lowering.classType != nil && lowering.declaredInCurrentClass(node) {
+		parts = append(parts, lowering.sourceTypeKey(lowering.classType, map[*checker.Type]bool{}))
 	}
 	for _, parameter := range node.TypeParameters() {
-		concrete := l.concrete(l.checker.GetTypeAtLocation(parameter.Name()))
+		concrete := lowering.concrete(lowering.checker.GetTypeAtLocation(parameter.Name()))
 		// The runtime representation merges distinct object layouts into ir.Object.
 		// Specializations need the concrete checker type, as generic.go does.
-		parts = append(parts, parameter.Name().Text()+"="+l.sourceTypeKey(concrete, map[*checker.Type]bool{}))
+		parts = append(parts, parameter.Name().Text()+"="+lowering.sourceTypeKey(concrete, map[*checker.Type]bool{}))
 	}
 	identity.Specialization = strings.Join(parts, ";")
 	return identity
@@ -254,13 +254,13 @@ func (l *lowering) functionSource(node *ast.Node) ir.SourceIdentity {
 
 // Class lowering remains active while it calls module generics. Only lexical
 // descendants of that class own its specialization; callers cannot name callees.
-func (l *lowering) declaredInCurrentClass(node *ast.Node) bool {
-	if l.classNode == nil {
+func (lowering *lowering) declaredInCurrentClass(node *ast.Node) bool {
+	if lowering.classNode == nil {
 		return false
 	}
 	// Instance and static class lowering store declaration.Name() in classNode.
 	// Its parent is the class declaration itself, not the containing source file.
-	declaration := l.classNode.Parent
+	declaration := lowering.classNode.Parent
 	for ancestor := node; ancestor != nil; ancestor = ancestor.Parent {
 		if ancestor == declaration {
 			return true
@@ -270,13 +270,13 @@ func (l *lowering) declaredInCurrentClass(node *ast.Node) bool {
 }
 
 // sourceTypeKey qualifies identically spelled imported types without checker IDs.
-func (l *lowering) sourceTypeKey(proven *checker.Type, visiting map[*checker.Type]bool) string {
+func (lowering *lowering) sourceTypeKey(proven *checker.Type, visiting map[*checker.Type]bool) string {
 	if proven == nil {
 		return "unread"
 	}
-	key := l.checker.TypeToString(proven)
+	key := lowering.checker.TypeToString(proven)
 	if symbol := proven.Symbol(); symbol != nil && len(symbol.Declarations) > 0 {
-		source := l.sourceIdentity(symbol.Declarations[0])
+		source := lowering.sourceIdentity(symbol.Declarations[0])
 		key += fmt.Sprintf("@%q/%q", source.Module, source.Declaration)
 	}
 	if visiting[proven] {
@@ -285,13 +285,13 @@ func (l *lowering) sourceTypeKey(proven *checker.Type, visiting map[*checker.Typ
 	visiting[proven] = true
 	defer delete(visiting, proven)
 	if proven.Flags()&checker.TypeFlagsObject != 0 && proven.ObjectFlags()&checker.ObjectFlagsReference != 0 {
-		for _, argument := range l.checker.GetTypeArguments(proven) {
-			key += "[" + l.sourceTypeKey(argument, visiting) + "]"
+		for _, argument := range lowering.checker.GetTypeArguments(proven) {
+			key += "[" + lowering.sourceTypeKey(argument, visiting) + "]"
 		}
 	}
 	if proven.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
 		for _, part := range proven.Types() {
-			key += "[" + l.sourceTypeKey(part, visiting) + "]"
+			key += "[" + lowering.sourceTypeKey(part, visiting) + "]"
 		}
 	}
 	return key

@@ -25,25 +25,25 @@ func classMembersWithParameters(declaration *ast.Node) []*ast.Node {
 	return append(members, declaration.Members()...)
 }
 
-func (l *lowering) parameterPropertyStores(declaration *ast.Node, this int) ([]ir.Statement, error) {
+func (lowering *lowering) parameterPropertyStores(declaration *ast.Node, this int) ([]ir.Statement, error) {
 	statements := []ir.Statement{}
 	for _, parameter := range classMembersWithParameters(declaration) {
 		if !parameterProperty(parameter) {
 			continue
 		}
-		local, found := l.locals[l.symbol(parameter.Name())]
+		local, found := lowering.locals[lowering.symbol(parameter.Name())]
 		if !found {
-			return nil, l.notYet(parameter, "a parameter property without a bound parameter")
+			return nil, lowering.notYet(parameter, "a parameter property without a bound parameter")
 		}
-		of, typeOfError := l.typeOf(parameter.Name())
+		of, typeOfError := lowering.typeOf(parameter.Name())
 		if typeOfError != nil {
 			return nil, typeOfError
 		}
 		statements = append(statements, ir.SetProperty{
 			Object: ir.Read{Local: this, Of: ir.Object},
 			Name:   parameter.Name().Text(),
-			Value:  fit(ir.Read{Local: local, Of: l.result.Locals[local].Type}, of),
-			Site:   l.writeSite(declaration.Name()),
+			Value:  fit(ir.Read{Local: local, Of: lowering.result.Locals[local].Type}, of),
+			Site:   lowering.writeSite(declaration.Name()),
 		})
 	}
 	return statements, nil
@@ -52,7 +52,7 @@ func (l *lowering) parameterPropertyStores(declaration *ast.Node, this int) ([]i
 // The checker permits a default to read a parameter property that has not been copied yet.
 // Node reads undefined there. A declared number slot cannot claim that value, so require an
 // already initialized written field instead. Calls and deferred captures are checked conservatively.
-func (l *lowering) parameterPropertyDefault(declaration, initializer *ast.Node) error {
+func (lowering *lowering) parameterPropertyDefault(declaration, initializer *ast.Node) error {
 	hasProperties := false
 	available := map[string]bool{}
 	for _, member := range classMembersWithParameters(declaration.Parent) {
@@ -60,23 +60,23 @@ func (l *lowering) parameterPropertyDefault(declaration, initializer *ast.Node) 
 		if member.Kind == ast.KindPropertyDeclaration &&
 			member.AsPropertyDeclaration().Initializer != nil &&
 			!ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
-			available[l.fieldName(member.Name())] = true
+			available[lowering.fieldName(member.Name())] = true
 		}
 	}
 	if !hasProperties {
 		return nil
 	}
-	return l.initializerReads(initializer, available)
+	return lowering.initializerReads(initializer, available)
 }
 
 // A derived parameter-property declaration defines its own slot after super, resetting any
 // inherited property of the same name before the written field initializers run.
-func (l *lowering) parameterPropertyResets(
+func (lowering *lowering) parameterPropertyResets(
 	declaration *ast.Node,
 	this int,
 	available map[string]bool,
 ) ([]ir.Statement, error) {
-	if l.instance.base == nil {
+	if lowering.instance.base == nil {
 		return nil, nil
 	}
 	statements := []ir.Statement{}
@@ -85,7 +85,7 @@ func (l *lowering) parameterPropertyResets(
 			continue
 		}
 		delete(available, parameter.Name().Text())
-		of, typeOfError := l.typeOf(parameter.Name())
+		of, typeOfError := lowering.typeOf(parameter.Name())
 		if typeOfError != nil {
 			return nil, typeOfError
 		}
@@ -97,7 +97,7 @@ func (l *lowering) parameterPropertyResets(
 			Object: ir.Read{Local: this, Of: ir.Object},
 			Name:   parameter.Name().Text(),
 			Value:  value,
-			Site:   l.writeSite(declaration.Name()),
+			Site:   lowering.writeSite(declaration.Name()),
 		})
 	}
 	return statements, nil

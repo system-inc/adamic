@@ -14,17 +14,23 @@ type viewOptionalWrite struct {
 // every write a view may check is seen here (TestViewWriteReceiverHoldsEveryWrite holds the producers to
 // it). A write to a field its receiver declares optional is kept for checkViewOptionalWrites: target is
 // the write, receiver its object, and names the fields it may write, one by name or a computed key's.
-func (l *lowering) viewWriteReceiverTypeID(target, receiver *ast.Node, names ...string) int {
-	id := l.viewReceiverTypeID(l.checker.GetTypeAtLocation(receiver))
-	held := l.viewTypes[id]
+func (lowering *lowering) viewWriteReceiverTypeID(target, receiver *ast.Node, names ...string) int {
+	id := lowering.viewReceiverTypeID(lowering.checker.GetTypeAtLocation(receiver))
+	held := lowering.viewTypes[id]
 	// A class instance isn't set aside: its own fields each get a slot (fieldInitializers writes every
 	// property declaration), but an optional member an interface merged into the class declares has none.
 	if held == nil {
 		return id
 	}
 	for _, name := range names {
-		if property := l.checker.GetPropertyOfType(held, name); property != nil && property.Flags&ast.SymbolFlagsOptional != 0 {
-			l.viewOptionalWrites = append(l.viewOptionalWrites, viewOptionalWrite{node: target, receiverTypeID: id, name: name})
+		if property := lowering.checker.GetPropertyOfType(
+			held,
+			name,
+		); property != nil && property.Flags&ast.SymbolFlagsOptional != 0 {
+			lowering.viewOptionalWrites = append(
+				lowering.viewOptionalWrites,
+				viewOptionalWrite{node: target, receiverTypeID: id, name: name},
+			)
 		}
 	}
 	return id
@@ -40,10 +46,13 @@ func (l *lowering) viewWriteReceiverTypeID(target, receiver *ast.Node, names ...
 // a view admits holds it. It's judged once lowering is done, since a view lowered after the write can
 // still make its field checked, and before checkViewLogicalWrites, so a logical assignment to such a
 // field is NotYet for this reason.
-func (l *lowering) checkViewOptionalWrites() error {
-	for _, write := range l.viewOptionalWrites {
-		if l.result.CheckedField(write.receiverTypeID, write.name) {
-			return l.notYet(write.node, "a write to optional field "+write.name+" through a checked view, whose slot a fixed shape can't add")
+func (lowering *lowering) checkViewOptionalWrites() error {
+	for _, write := range lowering.viewOptionalWrites {
+		if lowering.result.CheckedField(write.receiverTypeID, write.name) {
+			return lowering.notYet(
+				write.node,
+				"a write to optional field "+write.name+" through a checked view, whose slot a fixed shape can't add",
+			)
 		}
 	}
 	return nil

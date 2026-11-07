@@ -9,12 +9,12 @@ import (
 // Every call supplies a literal of scalars and capture-free closures, the
 // parameter is never replaced, and no operation can rewrite an object field.
 // This is a closed input graph proof, not freshness of arbitrary captured cells.
-func (l *lowering) closedFrameInput(local int) bool {
-	owner := l.result.Locals[local].Function
-	if owner < 0 || l.result.Functions[owner].Closure {
+func (lowering *lowering) closedFrameInput(local int) bool {
+	owner := lowering.result.Locals[local].Function
+	if owner < 0 || lowering.result.Functions[owner].Closure {
 		return false
 	}
-	position := slices.Index(l.result.Functions[owner].Parameters, local)
+	position := slices.Index(lowering.result.Functions[owner].Parameters, local)
 	if position < 0 {
 		return false
 	}
@@ -30,11 +30,13 @@ func (l *lowering) closedFrameInput(local int) bool {
 				safe = false
 			}
 		case ir.Call:
-			if !slices.Contains(l.result.CallTargets(value), owner) {
+			if !slices.Contains(lowering.result.CallTargets(value), owner) {
 				break
 			}
 			called = true
-			if value.Virtual != 0 || position >= len(value.Arguments) || !l.closedInputLiteral(value.Arguments[position]) {
+			if value.Virtual != 0 ||
+				position >= len(value.Arguments) ||
+				!lowering.closedInputLiteral(value.Arguments[position]) {
 				safe = false
 			}
 		}
@@ -59,14 +61,14 @@ func (l *lowering) closedFrameInput(local int) bool {
 		}
 		return true
 	}
-	for _, function := range l.result.Functions {
+	for _, function := range lowering.result.Functions {
 		walk(function.Body, inspect)
 	}
-	walk(l.result.Main, inspect)
+	walk(lowering.result.Main, inspect)
 	return safe && called
 }
 
-func (l *lowering) closedInputLiteral(value ir.Expression) bool {
+func (lowering *lowering) closedInputLiteral(value ir.Expression) bool {
 	literal, ok := value.(ir.ObjectLiteral)
 	if !ok || literal.Spread != nil || literal.Class != 0 {
 		return false
@@ -75,7 +77,7 @@ func (l *lowering) closedInputLiteral(value ir.Expression) bool {
 		switch value := field.Value.(type) {
 		case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Undefined:
 		case ir.MakeClosure:
-			if len(l.result.Functions[value.Function].Environment) != 0 {
+			if len(lowering.result.Functions[value.Function].Environment) != 0 {
 				return false
 			}
 		default:

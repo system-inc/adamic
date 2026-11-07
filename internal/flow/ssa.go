@@ -181,71 +181,71 @@ type ssaBuilder struct {
 	visited map[BlockId]bool
 }
 
-func (b *ssaBuilder) run() {
-	b.visited = map[BlockId]bool{}
+func (builder *ssaBuilder) run() {
+	builder.visited = map[BlockId]bool{}
 
 	// Parameters are definitions in the entry block. Renaming them is what makes a reassigned
 	// parameter behave like any other binding rather than like a global.
-	entry, ok := b.function.Block(b.function.Entry)
+	entry, ok := builder.function.Block(builder.function.Entry)
 	if !ok {
 		return
 	}
-	b.states[entry.Id] = newSSAState()
-	for index := range b.function.Params {
-		b.defineIn(entry.Id, &b.function.Params[index])
+	builder.states[entry.Id] = newSSAState()
+	for index := range builder.function.Params {
+		builder.defineIn(entry.Id, &builder.function.Params[index])
 	}
 
-	for _, block := range b.function.Blocks {
-		if _, exists := b.states[block.Id]; !exists {
-			b.states[block.Id] = newSSAState()
+	for _, block := range builder.function.Blocks {
+		if _, exists := builder.states[block.Id]; !exists {
+			builder.states[block.Id] = newSSAState()
 		}
-		b.visited[block.Id] = true
+		builder.visited[block.Id] = true
 
 		_, endsInThrow := block.Terminal.(*MayThrow)
 		for position, instructionId := range block.Instructions {
-			instruction := b.function.Instructions[instructionId]
+			instruction := builder.function.Instructions[instructionId]
 			// Uses first, then definitions. `x = x + 1` must read the OLD x before the store mints
 			// the new one; visiting in the other order would make the increment read itself.
 			EachInstructionPlacePointer(instruction, func(place *Place, role PlaceRole) {
 				if role != PlaceRoleDefine {
-					b.useIn(block.Id, place)
+					builder.useIn(block.Id, place)
 				}
 			})
 			// Adamic: the instruction that may throw ends the block, and a throw never makes its
 			// definitions, so the handler edge is owed what each binding holds now.
 			if endsInThrow && position == len(block.Instructions)-1 {
-				b.recordBeforeThrow(block.Id, instruction)
+				builder.recordBeforeThrow(block.Id, instruction)
 			}
 			// Adamic: no context store, so every definition is a fresh value.
 			EachInstructionPlacePointer(instruction, func(place *Place, role PlaceRole) {
 				if role == PlaceRoleDefine {
-					b.defineIn(block.Id, place)
+					builder.defineIn(block.Id, place)
 				}
 			})
 		}
 
 		EachTerminalPlacePointer(block.Terminal, func(place *Place, role PlaceRole) {
 			if role == PlaceRoleDefine {
-				b.defineIn(block.Id, place)
+				builder.defineIn(block.Id, place)
 				return
 			}
-			b.useIn(block.Id, place)
+			builder.useIn(block.Id, place)
 		})
 
 		// Seal each successor that this block was the last unprocessed predecessor of.
 		EachSuccessor(block.Terminal, func(successorId BlockId) {
-			successor, ok := b.function.Block(successorId)
+			successor, ok := builder.function.Block(successorId)
 			if !ok {
 				return
 			}
-			remaining, seen := b.unsealedPreds[successorId]
+			remaining, seen := builder.unsealedPreds[successorId]
 			if !seen {
 				remaining = len(successor.Predecessors)
 			}
 			remaining--
-			b.unsealedPreds[successorId] = remaining
-			if remaining == 0 && b.visited[successorId] {
-				b.fixIncompletePhis(successorId)
+			builder.unsealedPreds[successorId] = remaining
+			if remaining == 0 && builder.visited[successorId] {
+				builder.fixIncompletePhis(successorId)
 			}
 		})
 	}
@@ -260,10 +260,10 @@ func newSSAState() *ssaState {
 // Adamic: cohere's defineIn reuses a context binding's first definition for every later write
 // through a closure (upstream's `SSA/EnterSSA.ts:124`). No captured variable is in this graph, so
 // every definition here mints.
-func (b *ssaBuilder) defineIn(blockId BlockId, place *Place) {
-	binding := b.function.Identifiers[place.Identifier].Declaration
-	renamed := b.mint(place.Identifier)
-	b.states[blockId].defs[binding] = renamed
+func (builder *ssaBuilder) defineIn(blockId BlockId, place *Place) {
+	binding := builder.function.Identifiers[place.Identifier].Declaration
+	renamed := builder.mint(place.Identifier)
+	builder.states[blockId].defs[binding] = renamed
 	place.Identifier = renamed
 }
 
@@ -271,8 +271,8 @@ func (b *ssaBuilder) defineIn(blockId BlockId, place *Place) {
 // definition: the block's own answer so far, or its value on entry, which isn't looked up here. A
 // lookup here would walk off the entry for a variable this instruction declares and mark it unknown
 // for the whole function; only a handler that reads the binding needs its value from before.
-func (b *ssaBuilder) recordBeforeThrow(blockId BlockId, instruction *Instruction) {
-	state := b.states[blockId]
+func (builder *ssaBuilder) recordBeforeThrow(blockId BlockId, instruction *Instruction) {
+	state := builder.states[blockId]
 	if state.beforeThrow == nil {
 		state.beforeThrow = map[DeclarationId]beforeDefine{}
 	}
@@ -280,7 +280,7 @@ func (b *ssaBuilder) recordBeforeThrow(blockId BlockId, instruction *Instruction
 		if role != PlaceRoleDefine {
 			return
 		}
-		binding := b.function.Identifiers[place.Identifier].Declaration
+		binding := builder.function.Identifiers[place.Identifier].Declaration
 		if value, defined := state.defs[binding]; defined {
 			state.beforeThrow[binding] = beforeDefine{value: value}
 		} else {
@@ -290,8 +290,8 @@ func (b *ssaBuilder) recordBeforeThrow(blockId BlockId, instruction *Instruction
 }
 
 // useIn rewrites a use to whatever value reaches this block.
-func (b *ssaBuilder) useIn(blockId BlockId, place *Place) {
-	place.Identifier = b.valueAt(place, blockId)
+func (builder *ssaBuilder) useIn(blockId BlockId, place *Place) {
+	place.Identifier = builder.valueAt(place, blockId)
 }
 
 // mint creates a new value carrying the same source binding as the original.
@@ -299,9 +299,9 @@ func (b *ssaBuilder) useIn(blockId BlockId, place *Place) {
 // The DeclarationId is preserved, which is the whole point: after renaming, "which variable is
 // this" is answered by the declaration and "which value is this" by the identifier, and a pass can
 // ask either.
-func (b *ssaBuilder) mint(original IdentifierId) IdentifierId {
-	source := b.function.Identifiers[original]
-	created := b.function.NewIdentifier(source.Name, source.Declaration)
+func (builder *ssaBuilder) mint(original IdentifierId) IdentifierId {
+	source := builder.function.Identifiers[original]
+	created := builder.function.NewIdentifier(source.Name, source.Declaration)
 	return created.Id
 }
 
@@ -321,66 +321,71 @@ func (b *ssaBuilder) mint(original IdentifierId) IdentifierId {
 //
 // Cases 2 to 5 are lookupEntry, which valueOnEntry shares, and a predecessor is read through
 // valueOut, which is where a throw's edge differs.
-func (b *ssaBuilder) valueAt(place *Place, blockId BlockId) IdentifierId {
+func (builder *ssaBuilder) valueAt(place *Place, blockId BlockId) IdentifierId {
 	original := place.Identifier
-	binding := b.function.Identifiers[original].Declaration
-	if b.unknown[binding] {
+	binding := builder.function.Identifiers[original].Declaration
+	if builder.unknown[binding] {
 		return original
 	}
 
-	state, ok := b.states[blockId]
+	state, ok := builder.states[blockId]
 	if !ok {
 		state = newSSAState()
-		b.states[blockId] = state
+		builder.states[blockId] = state
 	}
 	if renamed, defined := state.defs[binding]; defined {
 		return renamed
 	}
-	return b.lookupEntry(place, blockId, state, state.defs)
+	return builder.lookupEntry(place, blockId, state, state.defs)
 }
 
 // valueOnEntry is what a binding holds on entry to a block the walk has already processed: what
 // valueAt would have answered before the block's own definitions, which defs no longer holds. Its
 // answers are kept in the block's entry, never its defs.
-func (b *ssaBuilder) valueOnEntry(place *Place, blockId BlockId) IdentifierId {
+func (builder *ssaBuilder) valueOnEntry(place *Place, blockId BlockId) IdentifierId {
 	original := place.Identifier
-	binding := b.function.Identifiers[original].Declaration
-	if b.unknown[binding] {
+	binding := builder.function.Identifiers[original].Declaration
+	if builder.unknown[binding] {
 		return original
 	}
-	state := b.states[blockId]
+	state := builder.states[blockId]
 	if renamed, defined := state.entry[binding]; defined {
 		return renamed
 	}
 	if state.entry == nil {
 		state.entry = map[DeclarationId]IdentifierId{}
 	}
-	return b.lookupEntry(place, blockId, state, state.entry)
+	return builder.lookupEntry(place, blockId, state, state.entry)
 }
 
 // lookupEntry is valueAt's cases 2 to 5: the binding isn't defined in the block, so its value is
 // what the predecessors hand it, and the answer is recorded in record (the block's defs, or its
 // entry for valueOnEntry) before any recursion that could come back around to it.
-func (b *ssaBuilder) lookupEntry(place *Place, blockId BlockId, state *ssaState, record map[DeclarationId]IdentifierId) IdentifierId {
+func (builder *ssaBuilder) lookupEntry(
+	place *Place,
+	blockId BlockId,
+	state *ssaState,
+	record map[DeclarationId]IdentifierId,
+) IdentifierId {
 	original := place.Identifier
-	binding := b.function.Identifiers[original].Declaration
+	binding := builder.function.Identifiers[original].Declaration
 
-	block, ok := b.function.Block(blockId)
+	block, ok := builder.function.Block(blockId)
 	if !ok {
 		return original
 	}
 
 	if len(block.Predecessors) == 0 {
-		b.unknown[binding] = true
+		builder.unknown[binding] = true
 		return original
 	}
 
-	remaining, seen := b.unsealedPreds[blockId]
+	remaining, seen := builder.unsealedPreds[blockId]
 	if !seen {
 		remaining = len(block.Predecessors)
 	}
 	if remaining > 0 {
-		renamed := b.mint(original)
+		renamed := builder.mint(original)
 		record[binding] = renamed
 		state.incompletePhis = append(state.incompletePhis, incompletePhi{
 			original: *place,
@@ -390,14 +395,14 @@ func (b *ssaBuilder) lookupEntry(place *Place, blockId BlockId, state *ssaState,
 	}
 
 	if len(block.Predecessors) == 1 {
-		renamed := b.valueOut(place, block.Predecessors[0], blockId)
+		renamed := builder.valueOut(place, block.Predecessors[0], blockId)
 		record[binding] = renamed
 		return renamed
 	}
 
-	renamed := b.mint(original)
+	renamed := builder.mint(original)
 	record[binding] = renamed
-	b.addPhi(blockId, *place, Place{
+	builder.addPhi(blockId, *place, Place{
 		Identifier: renamed,
 	})
 	return renamed
@@ -406,23 +411,23 @@ func (b *ssaBuilder) lookupEntry(place *Place, blockId BlockId, state *ssaState,
 // valueOut is what a binding holds on the edge from a block to one of its successors: the block's
 // final answer, except on a MayThrow's edge to its handler, which leaves before the last
 // instruction's definitions (the file comment's "A throw's edge").
-func (b *ssaBuilder) valueOut(place *Place, from BlockId, to BlockId) IdentifierId {
-	if block, ok := b.function.Block(from); ok && throwsTo(block, to) {
-		binding := b.function.Identifiers[place.Identifier].Declaration
+func (builder *ssaBuilder) valueOut(place *Place, from BlockId, to BlockId) IdentifierId {
+	if block, ok := builder.function.Block(from); ok && throwsTo(block, to) {
+		binding := builder.function.Identifiers[place.Identifier].Declaration
 		// A predecessor is looked through only once it is processed, so its state is there.
-		if before, defined := b.states[from].beforeThrow[binding]; defined {
+		if before, defined := builder.states[from].beforeThrow[binding]; defined {
 			if before.onEntry {
-				return b.valueOnEntry(place, from)
+				return builder.valueOnEntry(place, from)
 			}
 			return before.value
 		}
 	}
-	return b.valueAt(place, from)
+	return builder.valueAt(place, from)
 }
 
 // addPhi collects one operand per predecessor and attaches the phi to the block.
-func (b *ssaBuilder) addPhi(blockId BlockId, original Place, renamed Place) {
-	block, ok := b.function.Block(blockId)
+func (builder *ssaBuilder) addPhi(blockId BlockId, original Place, renamed Place) {
+	block, ok := builder.function.Block(blockId)
 	if !ok {
 		return
 	}
@@ -431,7 +436,7 @@ func (b *ssaBuilder) addPhi(blockId BlockId, original Place, renamed Place) {
 	for _, predecessorId := range block.Predecessors {
 		lookup := original
 		operands[predecessorId] = Place{
-			Identifier: b.valueOut(&lookup, predecessorId, blockId),
+			Identifier: builder.valueOut(&lookup, predecessorId, blockId),
 		}
 	}
 
@@ -439,15 +444,15 @@ func (b *ssaBuilder) addPhi(blockId BlockId, original Place, renamed Place) {
 }
 
 // fixIncompletePhis fills in the operands of every phi minted before this block was sealed.
-func (b *ssaBuilder) fixIncompletePhis(blockId BlockId) {
-	state, ok := b.states[blockId]
+func (builder *ssaBuilder) fixIncompletePhis(blockId BlockId) {
+	state, ok := builder.states[blockId]
 	if !ok {
 		return
 	}
 	pending := state.incompletePhis
 	state.incompletePhis = nil
 	for _, phi := range pending {
-		b.addPhi(blockId, phi.original, phi.renamed)
+		builder.addPhi(blockId, phi.original, phi.renamed)
 	}
 }
 

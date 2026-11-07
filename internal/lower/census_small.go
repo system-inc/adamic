@@ -9,31 +9,31 @@ import (
 
 // censusRestParameter admits rest only where every call passes a freshly packed array.
 // Function values and methods have a different calling convention and remain NotYet.
-func (l *lowering) censusRestParameter(declaration, parameter *ast.Node) error {
+func (lowering *lowering) censusRestParameter(declaration, parameter *ast.Node) error {
 	if declaration.Kind != ast.KindFunctionDeclaration || len(declaration.TypeParameters()) != 0 {
-		return l.notYet(parameter, "a rest parameter outside a nongeneric named function")
+		return lowering.notYet(parameter, "a rest parameter outside a nongeneric named function")
 	}
-	if l.result.Functions[l.functionIndex].Closure {
-		return l.notYet(parameter, "a rest parameter in a named closure")
+	if lowering.result.Functions[lowering.functionIndex].Closure {
+		return lowering.notYet(parameter, "a rest parameter in a named closure")
 	}
 	parameters := declaration.Parameters()
 	if parameters[len(parameters)-1] != parameter {
-		return l.notYet(parameter, "a rest parameter before another parameter")
+		return lowering.notYet(parameter, "a rest parameter before another parameter")
 	}
-	proven := l.checker.GetTypeAtLocation(parameter.Name())
-	if !l.isArrayType(proven) {
-		return l.notYet(parameter, "a rest parameter other than an array")
+	proven := lowering.checker.GetTypeAtLocation(parameter.Name())
+	if !lowering.isArrayType(proven) {
+		return lowering.notYet(parameter, "a rest parameter other than an array")
 	}
-	element, known := l.kept(l.elementTypeOfArray(proven))
+	element, known := lowering.kept(lowering.elementTypeOfArray(proven))
 	if !known || slotless(element) {
-		return l.notYet(parameter, "a rest array of "+l.checker.TypeToString(proven))
+		return lowering.notYet(parameter, "a rest array of "+lowering.checker.TypeToString(proven))
 	}
 	return nil
 }
 
 // censusRestDeclaration recovers the declaration without adding state to lower.go.
-func (l *lowering) censusRestDeclaration(function int) *ast.Node {
-	for symbol, index := range l.functions {
+func (lowering *lowering) censusRestDeclaration(function int) *ast.Node {
+	for symbol, index := range lowering.functions {
 		if index != function {
 			continue
 		}
@@ -52,15 +52,15 @@ func (l *lowering) censusRestDeclaration(function int) *ast.Node {
 
 // censusRestCall evaluates fixed arguments before rest items, and copies each spread
 // when encountered. The array is new even when the only item is a spread.
-func (l *lowering) censusRestCall(
+func (lowering *lowering) censusRestCall(
 	call *ast.CallExpression,
 	function int,
 	declaration *ast.Node,
 ) (ir.Expression, error) {
 	parameters := declaration.Parameters()
 	fixed := len(parameters) - 1
-	proven := l.checker.GetTypeAtLocation(parameters[fixed].Name())
-	element, _ := l.kept(l.elementTypeOfArray(proven))
+	proven := lowering.checker.GetTypeAtLocation(parameters[fixed].Name())
+	element, _ := lowering.kept(lowering.elementTypeOfArray(proven))
 	rest := ir.ArrayLiteral{Element: element}
 	arguments := []ir.Expression{}
 	for index, argument := range call.Arguments.Nodes {
@@ -68,11 +68,11 @@ func (l *lowering) censusRestCall(
 		valueNode := argument
 		if spread {
 			if index < fixed {
-				return nil, l.notYet(argument, "a spread filling fixed parameters before a rest parameter")
+				return nil, lowering.notYet(argument, "a spread filling fixed parameters before a rest parameter")
 			}
 			valueNode = argument.AsSpreadElement().Expression
 		}
-		value, expressionError := l.expression(valueNode)
+		value, expressionError := lowering.expression(valueNode)
 		if expressionError != nil {
 			return nil, expressionError
 		}
@@ -81,18 +81,18 @@ func (l *lowering) censusRestCall(
 			continue
 		}
 		if spread {
-			source := l.checker.GetTypeAtLocation(valueNode)
-			if !l.isArrayType(source) {
-				return nil, l.notYet(argument, "a rest spread other than an array")
+			source := lowering.checker.GetTypeAtLocation(valueNode)
+			if !lowering.isArrayType(source) {
+				return nil, lowering.notYet(argument, "a rest spread other than an array")
 			}
-			held, known := l.kept(l.elementTypeOfArray(source))
+			held, known := lowering.kept(lowering.elementTypeOfArray(source))
 			if !known || held != element {
-				return nil, l.notYet(argument, "a rest spread with differently held elements")
+				return nil, lowering.notYet(argument, "a rest spread with differently held elements")
 			}
 		} else {
 			value = fit(value, element)
 			if value.Type() != element {
-				return nil, l.notYet(argument, "a rest argument with another representation")
+				return nil, lowering.notYet(argument, "a rest argument with another representation")
 			}
 		}
 		rest.Elements = append(rest.Elements, value)
@@ -100,16 +100,16 @@ func (l *lowering) censusRestCall(
 	}
 	// Missing fixed arguments must keep their positions before the rest array.
 	for len(arguments) < fixed {
-		of := l.result.Locals[l.result.Functions[function].Parameters[len(arguments)]].Type
+		of := lowering.result.Locals[lowering.result.Functions[function].Parameters[len(arguments)]].Type
 		if !of.IsMaybe() && !of.IsReference() {
-			return nil, l.notYet(parameters[len(arguments)], "a missing fixed argument before rest")
+			return nil, lowering.notYet(parameters[len(arguments)], "a missing fixed argument before rest")
 		}
 		arguments = append(arguments, fit(ir.Undefined{}, of))
 	}
 	arguments = append(arguments, rest)
-	return l.censusOverloadResult(
+	return lowering.censusOverloadResult(
 		call,
-		ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns},
+		ir.Call{Function: function, Arguments: arguments, Returns: lowering.result.Functions[function].Returns},
 	)
 }
 
@@ -119,11 +119,11 @@ func censusFieldSlotless(of ir.Type) bool {
 }
 
 // Only the implementation of a named overload set has executable code.
-func (l *lowering) censusImplementation(declaration *ast.Node) *ast.Node {
+func (lowering *lowering) censusImplementation(declaration *ast.Node) *ast.Node {
 	if declaration.Kind != ast.KindFunctionDeclaration || declaration.Name() == nil {
 		return nil
 	}
-	symbol := l.symbol(declaration.Name())
+	symbol := lowering.symbol(declaration.Name())
 	if symbol == nil {
 		return nil
 	}
@@ -136,16 +136,16 @@ func (l *lowering) censusImplementation(declaration *ast.Node) *ast.Node {
 }
 
 // Use the same nominal, invariant and strictly contravariant relation as class overrides.
-func (l *lowering) censusRelated(from, to *checker.Type) bool {
-	from, to = l.concrete(from), l.concrete(to)
-	return l.classAssignable(from, to) && l.widened(from, to, map[[2]*checker.Type]bool{}) == nil
+func (lowering *lowering) censusRelated(from, to *checker.Type) bool {
+	from, to = lowering.concrete(from), lowering.concrete(to)
+	return lowering.classAssignable(from, to) && lowering.widened(from, to, map[[2]*checker.Type]bool{}) == nil
 }
 
-func (l *lowering) censusOverloads(implementation *ast.Node) error {
+func (lowering *lowering) censusOverloads(implementation *ast.Node) error {
 	if implementation.Kind != ast.KindFunctionDeclaration || implementation.Body() == nil {
 		return nil
 	}
-	symbol := l.symbol(implementation.Name())
+	symbol := lowering.symbol(implementation.Name())
 	if symbol == nil {
 		return nil
 	}
@@ -155,7 +155,11 @@ func (l *lowering) censusOverloads(implementation *ast.Node) error {
 			continue
 		}
 		ordinal++
-		if censusOverloadError := l.censusOverload(implementation, overload, ordinal); censusOverloadError != nil {
+		if censusOverloadError := lowering.censusOverload(
+			implementation,
+			overload,
+			ordinal,
+		); censusOverloadError != nil {
 			return censusOverloadError
 		}
 	}
@@ -164,11 +168,11 @@ func (l *lowering) censusOverloads(implementation *ast.Node) error {
 
 // Compare generic signatures under the same rigid type parameters, never under one
 // lucky runtime instantiation. Mapping the implementation's binders is alpha-renaming.
-func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal int) error {
+func (lowering *lowering) censusOverload(implementation, overload *ast.Node, ordinal int) error {
 	label := fmt.Sprintf("overload %d of %s", ordinal, implementation.Name().Text())
 	declaredTypes, servedTypes := overload.TypeParameters(), implementation.TypeParameters()
-	outerMapper := l.typeMapper
-	defer func() { l.typeMapper = outerMapper }()
+	outerMapper := lowering.typeMapper
+	defer func() { lowering.typeMapper = outerMapper }()
 	if len(servedTypes) > 0 {
 		sources, targets := []*checker.Type{}, []*checker.Type{}
 		inferred := map[*checker.Type]*checker.Type{}
@@ -177,44 +181,44 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 			// alpha-renaming: implementations may insert a binder before an old one.
 			for index, parameter := range implementation.Parameters() {
 				if index < len(overload.Parameters()) {
-					l.inferTypes(
-						l.checker.GetTypeAtLocation(parameter),
-						l.checker.GetTypeAtLocation(overload.Parameters()[index]),
+					lowering.inferTypes(
+						lowering.checker.GetTypeAtLocation(parameter),
+						lowering.checker.GetTypeAtLocation(overload.Parameters()[index]),
 						inferred,
 					)
 				}
 			}
-			l.inferTypes(
-				l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(implementation)),
-				l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(overload)),
+			lowering.inferTypes(
+				lowering.checker.GetReturnTypeOfSignature(lowering.checker.GetSignatureFromDeclaration(implementation)),
+				lowering.checker.GetReturnTypeOfSignature(lowering.checker.GetSignatureFromDeclaration(overload)),
 				inferred,
 			)
 		}
 		for index, parameter := range servedTypes {
-			source := l.checker.GetTypeAtLocation(parameter.Name())
+			source := lowering.checker.GetTypeAtLocation(parameter.Name())
 			target := inferred[source]
 			if len(servedTypes) <= len(declaredTypes) {
-				target = l.checker.GetTypeAtLocation(declaredTypes[index].Name())
+				target = lowering.checker.GetTypeAtLocation(declaredTypes[index].Name())
 			} else if target == nil {
 				// A binder with no evidence can use bottom as a candidate witness.
 				// This is not permission to erase it: every constraint, incoming
 				// parameter and outgoing result below must still hold for that witness.
-				target = l.checker.GetNonNullableType(l.checker.GetUndefinedType())
+				target = lowering.checker.GetNonNullableType(lowering.checker.GetUndefinedType())
 			}
 			sources = append(sources, source)
 			targets = append(targets, target)
 		}
-		l.typeMapper = newTypeMapper(sources, targets)
+		lowering.typeMapper = newTypeMapper(sources, targets)
 		for index, parameter := range servedTypes {
-			if constraint := l.checker.GetBaseConstraintOfType(
+			if constraint := lowering.checker.GetBaseConstraintOfType(
 				sources[index],
-			); constraint != nil && !l.censusRelated(targets[index], constraint) {
-				where, name := overload, "type "+l.checker.TypeToString(targets[index])
+			); constraint != nil && !lowering.censusRelated(targets[index], constraint) {
+				where, name := overload, "type "+lowering.checker.TypeToString(targets[index])
 				if len(servedTypes) <= len(declaredTypes) {
 					where, name = declaredTypes[index], "type parameter "+declaredTypes[index].Name().Text()
 				}
 				return &Refused{
-					Where: l.program.Where(where),
+					Where: lowering.program.Where(where),
 					What:  label + " " + name + " cannot satisfy implementation parameter " + parameter.Name().Text(),
 					Fix:   "make implementation constraints accept every type admitted by the overload",
 				}
@@ -223,13 +227,13 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 	}
 	declared, served := overload.Parameters(), implementation.Parameters()
 	for index := 0; index <= max(len(declared), len(served)); index++ {
-		given, parameter, givenRest, censusOverloadParameterError := l.censusOverloadParameter(declared, index)
+		given, parameter, givenRest, censusOverloadParameterError := lowering.censusOverloadParameter(declared, index)
 		if censusOverloadParameterError != nil {
-			return l.notYet(overload, label+" with a non-array rest parameter")
+			return lowering.notYet(overload, label+" with a non-array rest parameter")
 		}
-		takes, actual, takesRest, censusOverloadParameterError := l.censusOverloadParameter(served, index)
+		takes, actual, takesRest, censusOverloadParameterError := lowering.censusOverloadParameter(served, index)
 		if censusOverloadParameterError != nil {
-			return l.notYet(overload, label+" with a non-array implementation rest parameter")
+			return lowering.notYet(overload, label+" with a non-array implementation rest parameter")
 		}
 		if actual == nil {
 			continue
@@ -238,13 +242,13 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 			continue
 		} // Missing rest items make an empty array.
 		if parameter == nil {
-			given = l.checker.GetUndefinedType()
+			given = lowering.checker.GetUndefinedType()
 			parameter = actual
 		}
 		if givenRest && !takesRest {
-			given = l.checker.GetUnionType([]*checker.Type{given, l.checker.GetUndefinedType()})
+			given = lowering.checker.GetUnionType([]*checker.Type{given, lowering.checker.GetUndefinedType()})
 		}
-		if !l.censusRelated(given, takes) {
+		if !lowering.censusRelated(given, takes) {
 			name := func(node *ast.Node) string {
 				if ast.IsIdentifier(node.Name()) {
 					return node.Name().Text()
@@ -252,7 +256,7 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 				return fmt.Sprintf("%d", index+1)
 			}
 			return &Refused{
-				Where: l.program.Where(parameter),
+				Where: lowering.program.Where(parameter),
 				What: label +
 					" parameter " +
 					name(parameter) +
@@ -262,20 +266,20 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 			}
 		}
 	}
-	promised := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(overload))
-	produced := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(implementation))
-	if !l.censusRelated(produced, promised) {
-		from, to := l.concrete(produced), l.concrete(promised)
-		if (l.hasPhantom(from) || l.hasPhantom(to)) &&
-			l.phantomCast(from, to) &&
-			l.phantomAssignable(from, to) &&
-			l.phantomAssignable(to, from) {
+	promised := lowering.checker.GetReturnTypeOfSignature(lowering.checker.GetSignatureFromDeclaration(overload))
+	produced := lowering.checker.GetReturnTypeOfSignature(lowering.checker.GetSignatureFromDeclaration(implementation))
+	if !lowering.censusRelated(produced, promised) {
+		from, to := lowering.concrete(produced), lowering.concrete(promised)
+		if (lowering.hasPhantom(from) || lowering.hasPhantom(to)) &&
+			lowering.phantomCast(from, to) &&
+			lowering.phantomAssignable(from, to) &&
+			lowering.phantomAssignable(to, from) {
 			return nil
 		}
-		if l.censusNullableOverloadResult(produced, promised) {
+		if lowering.censusNullableOverloadResult(produced, promised) {
 			return nil // Each resolved call proves the result or checks its presence.
 		}
-		proven, failed := l.predicateOverloadResultProven(implementation, overload)
+		proven, failed := lowering.predicateOverloadResultProven(implementation, overload)
 		if proven {
 			// Every call's callback is proven where it's passed: an overload's predicate parameter whose
 			// implementation takes a plain boolean callback isn't a checked claim (checkedFunctionTypeClaim), so
@@ -284,14 +288,14 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 		}
 		what := label +
 			" result " +
-			l.checker.TypeToString(promised) +
+			lowering.checker.TypeToString(promised) +
 			" cannot be served by implementation result " +
-			l.checker.TypeToString(produced)
+			lowering.checker.TypeToString(produced)
 		if failed != nil {
-			what += " (return at " + l.program.Where(failed) + " isn't the value its predicate checked)"
+			what += " (return at " + lowering.program.Where(failed) + " isn't the value its predicate checked)"
 		}
 		return &Refused{
-			Where: l.program.Where(overload),
+			Where: lowering.program.Where(overload),
 			What:  what,
 			Fix:   "make the implementation result covariant with every overload result",
 		}
@@ -299,7 +303,10 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 	return nil
 }
 
-func (l *lowering) censusOverloadParameter(parameters []*ast.Node, index int) (*checker.Type, *ast.Node, bool, error) {
+func (lowering *lowering) censusOverloadParameter(
+	parameters []*ast.Node,
+	index int,
+) (*checker.Type, *ast.Node, bool, error) {
 	if len(parameters) == 0 {
 		return nil, nil, false, nil
 	}
@@ -308,16 +315,16 @@ func (l *lowering) censusOverloadParameter(parameters []*ast.Node, index int) (*
 	if index >= len(parameters) && !rest {
 		return nil, nil, false, nil
 	}
-	proven := l.checker.GetTypeAtLocation(parameter)
+	proven := lowering.checker.GetTypeAtLocation(parameter)
 	if ast.IsIdentifier(parameter.Name()) {
-		proven = l.censusCallableParameterType(l.symbol(parameter.Name()))
+		proven = lowering.censusCallableParameterType(lowering.symbol(parameter.Name()))
 	}
-	proven = l.concrete(proven)
+	proven = lowering.concrete(proven)
 	if rest {
-		if !l.isArrayType(proven) {
-			return nil, parameter, true, l.notYet(parameter, "an overload rest other than an array")
+		if !lowering.isArrayType(proven) {
+			return nil, parameter, true, lowering.notYet(parameter, "an overload rest other than an array")
 		}
-		proven = l.elementTypeOfArray(proven)
+		proven = lowering.elementTypeOfArray(proven)
 	}
 	return proven, parameter, rest, nil
 }
@@ -325,29 +332,29 @@ func (l *lowering) censusOverloadParameter(parameters []*ast.Node, index int) (*
 // Calls use the resolved overload's result representation, even when the
 // implementation proves a narrower result. A plain false must become a present
 // boolean | undefined, and a scalar result must be boxed when the caller sees a union.
-func (l *lowering) censusOverloadResult(call *ast.CallExpression, value ir.Expression) (ir.Expression, error) {
-	symbol := l.symbol(ast.SkipParentheses(call.Expression))
+func (lowering *lowering) censusOverloadResult(call *ast.CallExpression, value ir.Expression) (ir.Expression, error) {
+	symbol := lowering.symbol(ast.SkipParentheses(call.Expression))
 	overloaded := false
 	if symbol != nil {
 		for _, declaration := range symbol.Declarations {
 			if declaration.Kind == ast.KindFunctionDeclaration &&
 				declaration.Body() == nil &&
-				l.censusImplementation(declaration) != nil {
+				lowering.censusImplementation(declaration) != nil {
 				overloaded = true
 				break
 			}
 		}
 	}
 	if !overloaded {
-		return l.checkedPredicateResult(call, value, nil, nil)
+		return lowering.checkedPredicateResult(call, value, nil, nil)
 	}
-	resolved := l.checker.GetResolvedSignature(call.AsNode())
+	resolved := lowering.checker.GetResolvedSignature(call.AsNode())
 	if resolved != nil && resolved.Declaration() != nil {
 		overload := resolved.Declaration()
-		implementation := l.censusImplementation(overload)
+		implementation := lowering.censusImplementation(overload)
 		if implementation != nil && overload.Body() == nil {
 			if overload.Type() != nil && overload.Type().Kind == ast.KindTypePredicate {
-				return l.checkedPredicateResult(call, value, implementation, overload)
+				return lowering.checkedPredicateResult(call, value, implementation, overload)
 			}
 			ordinal := 0
 			for _, declaration := range symbol.Declarations {
@@ -358,11 +365,13 @@ func (l *lowering) censusOverloadResult(call *ast.CallExpression, value ir.Expre
 					}
 				}
 			}
-			if !l.censusProveOverloadResult(implementation, overload) {
-				promised := l.checker.GetReturnTypeOfSignature(resolved)
-				produced := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(implementation))
-				if l.censusHasUndefined(produced) && !l.censusHasUndefined(promised) {
-					of, typeOfError := l.typeOf(call.AsNode())
+			if !lowering.censusProveOverloadResult(implementation, overload) {
+				promised := lowering.checker.GetReturnTypeOfSignature(resolved)
+				produced := lowering.checker.GetReturnTypeOfSignature(
+					lowering.checker.GetSignatureFromDeclaration(implementation),
+				)
+				if lowering.censusHasUndefined(produced) && !lowering.censusHasUndefined(promised) {
+					of, typeOfError := lowering.typeOf(call.AsNode())
 					if typeOfError != nil {
 						return nil, typeOfError
 					}
@@ -370,9 +379,13 @@ func (l *lowering) censusOverloadResult(call *ast.CallExpression, value ir.Expre
 						"overload %d of %s result: expected %s, got undefined",
 						ordinal,
 						implementation.Name().Text(),
-						l.checker.TypeToString(promised),
+						lowering.checker.TypeToString(promised),
 					)
-					return ir.Coalesce{Value: value, Of: of, Panic: ir.StringConstant{Index: l.constant(message)}}, nil
+					return ir.Coalesce{
+						Value: value,
+						Of:    of,
+						Panic: ir.StringConstant{Index: lowering.constant(message)},
+					}, nil
 				}
 			}
 		}
@@ -380,13 +393,13 @@ func (l *lowering) censusOverloadResult(call *ast.CallExpression, value ir.Expre
 	if value.Type() == 0 {
 		return value, nil
 	}
-	of, typeOfError := l.typeOf(call.AsNode())
+	of, typeOfError := lowering.typeOf(call.AsNode())
 	if typeOfError != nil {
 		return nil, typeOfError
 	}
 	value = fit(value, of)
 	if value.Type() != of {
-		return nil, l.notYet(call.AsNode(), "an overload result requiring another representation")
+		return nil, lowering.notYet(call.AsNode(), "an overload result requiring another representation")
 	}
 	return value, nil
 }
@@ -397,8 +410,8 @@ func censusCallableSlotless(of ir.Type) bool {
 }
 
 // A default's body-local type excludes undefined, but its incoming argument can be undefined.
-func (l *lowering) censusCallableParameter(parameter *ast.Symbol) (ir.Type, bool) {
-	of, known := l.representation(l.checker.GetTypeOfSymbol(parameter))
+func (lowering *lowering) censusCallableParameter(parameter *ast.Symbol) (ir.Type, bool) {
+	of, known := lowering.representation(lowering.checker.GetTypeOfSymbol(parameter))
 	for _, declaration := range parameter.Declarations {
 		if declaration.Kind == ast.KindParameter && declaration.AsParameterDeclaration().Initializer != nil {
 			of = ir.Maybe(of)
@@ -409,11 +422,11 @@ func (l *lowering) censusCallableParameter(parameter *ast.Symbol) (ir.Type, bool
 
 // Signature symbols describe the body-local type of a defaulted parameter. The
 // callable contract also accepts undefined, which selects that parameter's default.
-func (l *lowering) censusCallableParameterType(parameter *ast.Symbol) *checker.Type {
-	of := l.checker.GetTypeOfSymbol(parameter)
+func (lowering *lowering) censusCallableParameterType(parameter *ast.Symbol) *checker.Type {
+	of := lowering.checker.GetTypeOfSymbol(parameter)
 	for _, declaration := range parameter.Declarations {
 		if declaration.Kind == ast.KindParameter && declaration.AsParameterDeclaration().Initializer != nil {
-			return l.checker.GetUnionType([]*checker.Type{of, l.checker.GetUndefinedType()})
+			return lowering.checker.GetUnionType([]*checker.Type{of, lowering.checker.GetUndefinedType()})
 		}
 	}
 	return of
@@ -423,12 +436,12 @@ func (l *lowering) censusCallableParameterType(parameter *ast.Symbol) *checker.T
 // parameter's (censusCallableParameterType, which adds undefined for one with an initializer), or, at or
 // past a rest parameter, the rest's element at that position (GetTypeAtPosition), never the rest's whole
 // tuple or array (#6xzs6gj).
-func (l *lowering) callableParameterTypeAt(signature *checker.Signature, position int) *checker.Type {
+func (lowering *lowering) callableParameterTypeAt(signature *checker.Signature, position int) *checker.Type {
 	parameters := signature.Parameters()
 	if position < len(parameters) && !(signature.HasRestParameter() && position == len(parameters)-1) {
-		return l.censusCallableParameterType(parameters[position])
+		return lowering.censusCallableParameterType(parameters[position])
 	}
-	return l.checker.GetTypeAtPosition(signature, position)
+	return lowering.checker.GetTypeAtPosition(signature, position)
 }
 
 // Only exactly true is truthy in boolean | undefined. Equality evaluates the value once.
@@ -439,7 +452,7 @@ func censusBooleanCondition(value ir.Expression) ir.Expression {
 	return value
 }
 
-func (l *lowering) censusBooleanLogical(
+func (lowering *lowering) censusBooleanLogical(
 	node *ast.Node,
 	operator ast.Kind,
 	left, right ir.Expression,
@@ -451,7 +464,7 @@ func (l *lowering) censusBooleanLogical(
 	if !boolean(left.Type()) || !boolean(right.Type()) {
 		return nil, false
 	}
-	of, typeOfError := l.typeOf(node)
+	of, typeOfError := lowering.typeOf(node)
 	if typeOfError != nil || !boolean(of) {
 		// Two booleans give a boolean whatever the checker narrowed the whole to: a branch it
 		// knows is dead types the expression never, and that branch must still lower.
@@ -486,7 +499,7 @@ func censusCondition(value ir.Expression) ir.Expression {
 
 // A never-rest signature is an erased callable marker. No ordinary argument can
 // inhabit its rest element; storage compares results without pairing parameters.
-func (l *lowering) censusNeverRestSignature(signature *checker.Signature) bool {
+func (lowering *lowering) censusNeverRestSignature(signature *checker.Signature) bool {
 	parameters := signature.Parameters()
 	if len(parameters) != 1 {
 		return false
@@ -500,9 +513,9 @@ func (l *lowering) censusNeverRestSignature(signature *checker.Signature) bool {
 	if !rest {
 		return false
 	}
-	parameter := l.concrete(l.checker.GetTypeOfSymbol(parameters[0]))
-	if l.isArrayType(parameter) {
-		parameter = l.elementTypeOfArray(parameter)
+	parameter := lowering.concrete(lowering.checker.GetTypeOfSymbol(parameters[0]))
+	if lowering.isArrayType(parameter) {
+		parameter = lowering.elementTypeOfArray(parameter)
 	}
 	return parameter.Flags()&checker.TypeFlagsNever != 0
 }

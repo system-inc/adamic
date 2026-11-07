@@ -37,12 +37,13 @@ var libraryFunctionValues = []libraryFunctionValue{
 }
 
 // libraryFunctionMember is the allowlisted member node reads, unless node reads none or calls it.
-func (l *lowering) libraryFunctionMember(node *ast.Node) (libraryFunctionValue, bool) {
+func (lowering *lowering) libraryFunctionMember(node *ast.Node) (libraryFunctionValue, bool) {
 	if node.Kind != ast.KindPropertyAccessExpression || called(node) || node.Flags&ast.NodeFlagsOptionalChain != 0 {
 		return libraryFunctionValue{}, false
 	}
 	for _, member := range libraryFunctionValues {
-		if node.Name().Text() == member.name && l.isLibraryGlobal(node.AsPropertyAccessExpression().Expression, member.global) {
+		if node.Name().Text() == member.name &&
+			lowering.isLibraryGlobal(node.AsPropertyAccessExpression().Expression, member.global) {
 			return member, true
 		}
 	}
@@ -51,30 +52,34 @@ func (l *lowering) libraryFunctionMember(node *ast.Node) (libraryFunctionValue, 
 
 // libraryFunctionValueRead reports whether node reads an allowlisted member into a slot that sees it
 // exactly as itself, the one read of it methodValueRefusal admits (libraryMethodReadAllowed).
-func (l *lowering) libraryFunctionValueRead(node *ast.Node) bool {
-	_, known := l.libraryFunctionMember(node)
-	return known && l.exactFunctionSlot(node)
+func (lowering *lowering) libraryFunctionValueRead(node *ast.Node) bool {
+	_, known := lowering.libraryFunctionMember(node)
+	return known && lowering.exactFunctionSlot(node)
 }
 
 // exactFunctionSlot reports whether the slot node goes into is a plain function type with node's own
 // one signature: no this, no rest, no type parameters, the same parameter types in order and the same
 // result type, by the checker's identity, and nothing else besides.
-func (l *lowering) exactFunctionSlot(node *ast.Node) bool {
-	slot := l.slotType(node)
+func (lowering *lowering) exactFunctionSlot(node *ast.Node) bool {
+	slot := lowering.slotType(node)
 	if slot == nil {
 		return false
 	}
-	slot = l.concrete(slot)
-	if slot.Flags()&checker.TypeFlagsObject == 0 || len(l.checker.GetPropertiesOfType(slot)) != 0 || len(l.checker.GetSignaturesOfType(slot, checker.SignatureKindConstruct)) != 0 {
+	slot = lowering.concrete(slot)
+	if slot.Flags()&checker.TypeFlagsObject == 0 ||
+		len(lowering.checker.GetPropertiesOfType(slot)) != 0 ||
+		len(lowering.checker.GetSignaturesOfType(slot, checker.SignatureKindConstruct)) != 0 {
 		return false
 	}
-	viewed := l.checker.GetSignaturesOfType(slot, checker.SignatureKindCall)
-	own := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node), checker.SignatureKindCall)
+	viewed := lowering.checker.GetSignaturesOfType(slot, checker.SignatureKindCall)
+	own := lowering.checker.GetSignaturesOfType(lowering.checker.GetTypeAtLocation(node), checker.SignatureKindCall)
 	if len(viewed) != 1 || len(own) != 1 {
 		return false
 	}
 	for _, signature := range []*checker.Signature{viewed[0], own[0]} {
-		if signature.ThisParameter() != nil || signature.Flags()&checker.SignatureFlagsHasRestParameter != 0 || len(signature.TypeParameters()) != 0 {
+		if signature.ThisParameter() != nil ||
+			signature.Flags()&checker.SignatureFlagsHasRestParameter != 0 ||
+			len(signature.TypeParameters()) != 0 {
 			return false
 		}
 	}
@@ -82,38 +87,57 @@ func (l *lowering) exactFunctionSlot(node *ast.Node) bool {
 		return false
 	}
 	for index, parameter := range viewed[0].Parameters() {
-		if l.concrete(l.checker.GetTypeOfSymbol(parameter)) != l.checker.GetTypeOfSymbol(own[0].Parameters()[index]) {
+		if lowering.concrete(
+			lowering.checker.GetTypeOfSymbol(parameter),
+		) != lowering.checker.GetTypeOfSymbol(own[0].Parameters()[index]) {
 			return false
 		}
 	}
-	return l.concrete(l.checker.GetReturnTypeOfSignature(viewed[0])) == l.checker.GetReturnTypeOfSignature(own[0])
+	return lowering.concrete(
+		lowering.checker.GetReturnTypeOfSignature(viewed[0]),
+	) == lowering.checker.GetReturnTypeOfSignature(own[0])
 }
 
 // libraryFunctionValueOf lowers an admitted read to the member's one function value, held by a global.
 // Any other node is not handled, and lowers as it always has.
-func (l *lowering) libraryFunctionValueOf(node *ast.Node) (ir.Expression, bool, error) {
-	member, known := l.libraryFunctionMember(node)
-	if !known || !l.exactFunctionSlot(node) {
+func (lowering *lowering) libraryFunctionValueOf(node *ast.Node) (ir.Expression, bool, error) {
+	member, known := lowering.libraryFunctionMember(node)
+	if !known || !lowering.exactFunctionSlot(node) {
 		return nil, false, nil
 	}
 	role := "library_value_" + member.global + "_" + member.name
-	for index, function := range l.result.Functions {
+	for index, function := range lowering.result.Functions {
 		if function.Source.Role == role {
-			return ir.Read{Local: l.forwarders[index], Of: ir.Closure}, true, nil
+			return ir.Read{Local: lowering.forwarders[index], Of: ir.Closure}, true, nil
 		}
 	}
 	call := member.call()
-	index := len(l.result.Functions)
-	function := ir.Function{Name: role, SourceLength: member.length, Closure: true, Returns: call.Type(), Body: []ir.Statement{ir.Return{Value: call}}}
-	function.Source.Role = role
-	l.result.Functions = append(l.result.Functions, function)
-	l.closureRecords = append(l.closureRecords, closureRecord{proven: l.concrete(l.checker.GetTypeAtLocation(node)), function: index, node: node})
-	held := len(l.result.Locals)
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: role, Type: ir.Closure, Global: true, Function: -1})
-	l.forwarderValues = append(l.forwarderValues, ir.Declare{Local: held, Value: ir.MakeClosure{Function: index}})
-	if l.forwarders == nil {
-		l.forwarders = map[int]int{}
+	index := len(lowering.result.Functions)
+	function := ir.Function{
+		Name:         role,
+		SourceLength: member.length,
+		Closure:      true,
+		Returns:      call.Type(),
+		Body:         []ir.Statement{ir.Return{Value: call}},
 	}
-	l.forwarders[index] = held
+	function.Source.Role = role
+	lowering.result.Functions = append(lowering.result.Functions, function)
+	lowering.closureRecords = append(
+		lowering.closureRecords,
+		closureRecord{proven: lowering.concrete(lowering.checker.GetTypeAtLocation(node)), function: index, node: node},
+	)
+	held := len(lowering.result.Locals)
+	lowering.result.Locals = append(
+		lowering.result.Locals,
+		ir.Local{Name: role, Type: ir.Closure, Global: true, Function: -1},
+	)
+	lowering.forwarderValues = append(
+		lowering.forwarderValues,
+		ir.Declare{Local: held, Value: ir.MakeClosure{Function: index}},
+	)
+	if lowering.forwarders == nil {
+		lowering.forwarders = map[int]int{}
+	}
+	lowering.forwarders[index] = held
 	return ir.Read{Local: held, Of: ir.Closure}, true, nil
 }

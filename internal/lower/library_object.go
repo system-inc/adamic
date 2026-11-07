@@ -8,16 +8,24 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool, error) {
-	return l.objectCallArguments(node, name, node.AsCallExpression().Arguments.Nodes)
+func (lowering *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool, error) {
+	return lowering.objectCallArguments(node, name, node.AsCallExpression().Arguments.Nodes)
 }
 
-func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
-	if value, handled, recordObjectCallArgumentsError := l.recordObjectCallArguments(node, name, written); handled {
+func (lowering *lowering) objectCallArguments(
+	node *ast.Node,
+	name string,
+	written []*ast.Node,
+) (ir.Expression, bool, error) {
+	if value, handled, recordObjectCallArgumentsError := lowering.recordObjectCallArguments(
+		node,
+		name,
+		written,
+	); handled {
 		return value, true, recordObjectCallArgumentsError
 	}
 	refused := func(reason string) (ir.Expression, bool, error) {
-		return nil, true, &Refused{Where: l.program.Where(node), What: "Object." + name, Fix: reason}
+		return nil, true, &Refused{Where: lowering.program.Where(node), What: "Object." + name, Fix: reason}
 	}
 	switch name {
 	case "defineProperty", "defineProperties", "getOwnPropertyDescriptor", "getOwnPropertyDescriptors":
@@ -33,7 +41,7 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 			"tsc returns an index-signature object with unproven keys; Adamic fixes object shapes and refuses index signatures; use Map",
 		)
 	case "groupBy":
-		return nil, true, l.notYet(
+		return nil, true, lowering.notYet(
 			node,
 			"Object.groupBy's partial record with dynamically present keys (use Map and an explicitly typed grouping loop)",
 		)
@@ -44,15 +52,15 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 	}
 	if name == "assign" {
 		if len(written) < 1 {
-			return nil, true, l.notYet(node, "Object.assign without a target")
+			return nil, true, lowering.notYet(node, "Object.assign without a target")
 		}
 	} else if len(written) != count {
-		return nil, true, l.notYet(node, "Object."+name+" with these arguments")
+		return nil, true, lowering.notYet(node, "Object."+name+" with these arguments")
 	}
 	if name == "freeze" {
-		proven := l.checker.GetTypeAtLocation(written[0])
+		proven := lowering.checker.GetTypeAtLocation(written[0])
 		if proven.Flags()&(checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike|checker.TypeFlagsStringLike|checker.TypeFlagsUndefined) != 0 {
-			value, expressionError := l.expression(written[0])
+			value, expressionError := lowering.expression(written[0])
 			return value, true, expressionError
 		}
 	}
@@ -60,22 +68,22 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 	switch name {
 	case "is":
 		for _, argument := range written {
-			value, expressionError := l.expression(argument)
+			value, expressionError := lowering.expression(argument)
 			if expressionError != nil {
 				return nil, true, expressionError
 			}
 			call.Arguments = append(call.Arguments, fit(value, ir.Union))
 		}
 	case "isFrozen":
-		value, expressionError := l.expression(written[0])
+		value, expressionError := lowering.expression(written[0])
 		if expressionError != nil {
 			return nil, true, expressionError
 		}
 		call.Arguments = []ir.Expression{fit(value, ir.Union)}
 	case "keys", "values", "entries", "freeze", "hasOwn", "assign":
-		if name == "keys" && !l.includesUndefined(l.checker.GetTypeAtLocation(written[0])) {
-			if _, _, known := l.nodeArrayLayoutOf(l.checker.GetTypeAtLocation(written[0])); known {
-				value, expressionError := l.expression(written[0])
+		if name == "keys" && !lowering.includesUndefined(lowering.checker.GetTypeAtLocation(written[0])) {
+			if _, _, known := lowering.nodeArrayLayoutOf(lowering.checker.GetTypeAtLocation(written[0])); known {
+				value, expressionError := lowering.expression(written[0])
 				if expressionError != nil {
 					return nil, true, expressionError
 				}
@@ -96,13 +104,13 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 		}
 		if name == "keys" || name == "values" || name == "entries" {
 			// As in objectKeys: Node enumerates none of an Error's own properties.
-			if !l.exactObject(shape, 0) && l.errorMayHide(written[0]) {
-				return nil, true, l.notYet(
+			if !lowering.exactObject(shape, 0) && lowering.errorMayHide(written[0]) {
+				return nil, true, lowering.notYet(
 					node,
 					"Object."+name+" of a value that may hold an Error, whose own properties Node doesn't enumerate",
 				)
 			}
-			if enumerationDescriptorsError := l.enumerationDescriptors(
+			if enumerationDescriptorsError := lowering.enumerationDescriptors(
 				node,
 				false,
 			); enumerationDescriptorsError != nil {
@@ -112,41 +120,41 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 		if name != "keys" &&
 			name != "values" &&
 			name != "entries" &&
-			!l.exactObject(shape, 0) &&
-			!(name == "hasOwn" && isClassInstance(l.checker.GetTypeAtLocation(written[0]))) {
-			return nil, true, l.notYet(
+			!lowering.exactObject(shape, 0) &&
+			!(name == "hasOwn" && isClassInstance(lowering.checker.GetTypeAtLocation(written[0]))) {
+			return nil, true, lowering.notYet(
 				written[0],
 				"Object."+name+" on a shape not proven by a plain literal or its const binding",
 			)
 		}
-		value, expressionError := l.expression(written[0])
+		value, expressionError := lowering.expression(written[0])
 		if expressionError != nil {
 			return nil, true, expressionError
 		}
 		if name == "keys" && value.Type() == ir.Array {
-			if _, _, known := l.nodeArrayLayoutOf(l.checker.GetTypeAtLocation(written[0])); known {
+			if _, _, known := lowering.nodeArrayLayoutOf(lowering.checker.GetTypeAtLocation(written[0])); known {
 				call.Arguments = []ir.Expression{value}
 				call.Returns = ir.Array
 				return call, true, nil
 			}
 		}
 		if value.Type() != ir.Object ||
-			l.includesUndefined(l.checker.GetTypeAtLocation(written[0])) ||
-			checker.IsTupleType(l.checker.GetTypeAtLocation(written[0])) {
-			return nil, true, l.notYet(written[0], "Object."+name+" on other than a present plain object")
+			lowering.includesUndefined(lowering.checker.GetTypeAtLocation(written[0])) ||
+			checker.IsTupleType(lowering.checker.GetTypeAtLocation(written[0])) {
+			return nil, true, lowering.notYet(written[0], "Object."+name+" on other than a present plain object")
 		}
 		call.Arguments = []ir.Expression{value}
 		switch name {
 		case "hasOwn":
 			key := ast.SkipParentheses(written[1])
 			if key.Kind != ast.KindStringLiteral ||
-				!l.hasProperty(written[0], key.Text()) ||
+				!lowering.hasProperty(written[0], key.Text()) ||
 				len(key.Text()) > 0 && key.Text()[0] == '#' {
 				return refused(
 					"hasOwn requires a string literal naming a declared public field or method; use Map for arbitrary keys",
 				)
 			}
-			keyValue, expressionError := l.expression(key)
+			keyValue, expressionError := lowering.expression(key)
 			if expressionError != nil {
 				return nil, true, expressionError
 			}
@@ -154,18 +162,18 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 		case "freeze":
 			call.Returns = ir.Object
 		case "keys":
-			if l.decodedResultValue(written[0]) {
+			if lowering.decodedResultValue(written[0]) {
 				return ir.ObjectKeys{Object: value}, true, nil
 			}
 			call.Returns = ir.Array
 		case "values", "entries":
-			result := l.checker.GetTypeAtLocation(node)
+			result := lowering.checker.GetTypeAtLocation(node)
 			// The interface overload may return any. Its destination supplies the
 			// contract we must prove or check, never permission to erase it.
-			if contextual := l.slotType(node); contextual != nil && l.isArrayType(contextual) {
+			if contextual := lowering.slotType(node); contextual != nil && lowering.isArrayType(contextual) {
 				result = contextual
 			}
-			arguments := l.checker.GetTypeArguments(result)
+			arguments := lowering.checker.GetTypeArguments(result)
 			if len(arguments) != 1 {
 				return refused("tsc's result must be an array with a proven element type")
 			}
@@ -178,21 +186,21 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 				var pair []*checker.Type
 				if element.Flags()&checker.TypeFlagsObject != 0 &&
 					element.ObjectFlags()&checker.ObjectFlagsReference != 0 {
-					pair = l.checker.GetTypeArguments(element)
+					pair = lowering.checker.GetTypeArguments(element)
 				}
 				if len(pair) != 2 {
 					return refused("tsc's entries must have a proven value type")
 				}
 				element = pair[1]
 			}
-			call.Element, _ = l.representation(element)
+			call.Element, _ = lowering.representation(element)
 			if call.Element != ir.Number && call.Element != ir.String && call.Element != ir.Boolean {
 				return refused(
 					"tsc's result must have one homogeneous number, string or boolean value type; any and widened field views are unsound",
 				)
 			}
-			if declaration := l.enumObject(written[0]); declaration != nil {
-				fields, enumFieldsError := l.enumFields(declaration)
+			if declaration := lowering.enumObject(written[0]); declaration != nil {
+				fields, enumFieldsError := lowering.enumFields(declaration)
 				if enumFieldsError != nil {
 					return nil, true, enumFieldsError
 				}
@@ -204,25 +212,25 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 					}
 				}
 			}
-			for _, field := range l.checker.GetPropertiesOfType(l.checker.GetTypeAtLocation(written[0])) {
-				of, known := l.representation(l.checker.GetTypeOfSymbol(field))
+			for _, field := range lowering.checker.GetPropertiesOfType(lowering.checker.GetTypeAtLocation(written[0])) {
+				of, known := lowering.representation(lowering.checker.GetTypeOfSymbol(field))
 				if !known || of != call.Element || field.Flags&ast.SymbolFlagsOptional != 0 {
 					return refused(
 						"every present field must have tsc's result element representation; optional or heterogeneous fields cannot be read soundly",
 					)
 				}
 			}
-			call.Checked = !l.enumerationProven(written[0], element, 0)
-			call.ElementName = l.checker.TypeToString(element)
-			call.Allowed = l.viewLiterals(element)
-			if l.openNumericEnumType(element) {
+			call.Checked = !lowering.enumerationProven(written[0], element, 0)
+			call.ElementName = lowering.checker.TypeToString(element)
+			call.Allowed = lowering.viewLiterals(element)
+			if lowering.openNumericEnumType(element) {
 				call.Allowed = nil
 			}
 			if call.Checked && !interfaceScalar(element) {
-				return nil, true, l.notYet(node, "checked Object enumeration of a non-primitive value contract")
+				return nil, true, lowering.notYet(node, "checked Object enumeration of a non-primitive value contract")
 			}
 			if call.Checked {
-				if enumerationDescriptorsError := l.enumerationDescriptors(
+				if enumerationDescriptorsError := lowering.enumerationDescriptors(
 					node,
 					true,
 				); enumerationDescriptorsError != nil {
@@ -231,66 +239,69 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 			}
 			call.Returns = ir.Array
 		case "assign":
-			if l.checker.GetTypeAtLocation(node).Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown) != 0 {
+			if lowering.checker.GetTypeAtLocation(node).Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown) != 0 {
 				return refused(
 					"tsc's result is any or unknown, not a proven object type; use one to three typed sources",
 				)
 			}
-			target := l.checker.GetTypeAtLocation(written[0])
+			target := lowering.checker.GetTypeAtLocation(written[0])
 			for _, argument := range written[1:] {
-				if !l.exactObject(argument, 0) {
+				if !lowering.exactObject(argument, 0) {
 					return refused(
 						"each source must have its complete shape proven by a literal or const binding; a widened source can hide overwriting fields",
 					)
 				}
-				source := l.checker.GetTypeAtLocation(argument)
-				for _, field := range l.checker.GetPropertiesOfType(source) {
-					into := l.checker.GetPropertyOfType(target, field.Name)
+				source := lowering.checker.GetTypeAtLocation(argument)
+				for _, field := range lowering.checker.GetPropertiesOfType(source) {
+					into := lowering.checker.GetPropertyOfType(target, field.Name)
 					if into == nil {
-						return nil, true, l.notYet(argument, "Object.assign adding a field to its target's fixed shape")
+						return nil, true, lowering.notYet(
+							argument,
+							"Object.assign adding a field to its target's fixed shape",
+						)
 					}
-					fromType, toType := l.checker.GetTypeOfSymbol(field), l.checker.GetTypeOfSymbol(into)
-					of, known := l.representation(fromType)
+					fromType, toType := lowering.checker.GetTypeOfSymbol(field), lowering.checker.GetTypeOfSymbol(into)
+					of, known := lowering.representation(fromType)
 					if !known ||
 						(of != ir.Number && of != ir.Boolean && of != ir.String) ||
-						!l.enumAssignable(fromType, toType) ||
-						!l.enumAssignable(toType, fromType) ||
-						!l.checker.IsTypeAssignableTo(fromType, toType) ||
-						!l.checker.IsTypeAssignableTo(toType, fromType) {
+						!lowering.enumAssignable(fromType, toType) ||
+						!lowering.enumAssignable(toType, fromType) ||
+						!lowering.checker.IsTypeAssignableTo(fromType, toType) ||
+						!lowering.checker.IsTypeAssignableTo(toType, fromType) {
 						return refused(
 							"source and target field types must agree in both directions with tsc's intersection result; widening, conflicting fields and reference cycles are refused",
 						)
 					}
 				}
-				lowered, expressionError := l.expression(argument)
+				lowered, expressionError := lowering.expression(argument)
 				if expressionError != nil {
 					return nil, true, expressionError
 				}
-				l.wholeObjectCopies = append(
-					l.wholeObjectCopies,
-					wholeObjectCopy{node: argument, source: lowered, copied: l.concrete(source)},
+				lowering.wholeObjectCopies = append(
+					lowering.wholeObjectCopies,
+					wholeObjectCopy{node: argument, source: lowered, copied: lowering.concrete(source)},
 				)
 				call.Arguments = append(call.Arguments, lowered)
 			}
 			call.Returns = ir.Object
 		}
 	default:
-		return nil, true, l.notYet(node, "Object."+name)
+		return nil, true, lowering.notYet(node, "Object."+name)
 	}
 	if call.Checked {
-		l.graphDynamicSite = node
+		lowering.graphDynamicSite = node
 	}
 	return call, true, nil
 }
 
 // exactObject proves there are no hidden fields and no synthetic absent slots. An explicit type
 // annotation, alias, spread or call would need a separate proof and is deliberately not guessed.
-func (l *lowering) exactObject(node *ast.Node, depth int) bool {
+func (lowering *lowering) exactObject(node *ast.Node, depth int) bool {
 	if depth > 16 {
 		return false
 	}
 	node = ast.SkipParentheses(node)
-	if l.enumObject(node) != nil {
+	if lowering.enumObject(node) != nil {
 		return true
 	}
 	if node.Kind == ast.KindObjectLiteralExpression {
@@ -312,7 +323,7 @@ func (l *lowering) exactObject(node *ast.Node, depth int) bool {
 	if !ast.IsIdentifier(node) {
 		return false
 	}
-	symbol := l.symbol(node)
+	symbol := lowering.symbol(node)
 	if symbol == nil || len(symbol.Declarations) != 1 {
 		return false
 	}
@@ -324,20 +335,20 @@ func (l *lowering) exactObject(node *ast.Node, depth int) bool {
 	if variable.Type != nil || variable.Initializer == nil || declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
 		return false
 	}
-	return l.exactObject(variable.Initializer, depth+1)
+	return lowering.exactObject(variable.Initializer, depth+1)
 }
 
 // objectCanFreeze is conservative across aliases and calls: any Object.freeze in the program makes
 // every object write one that can throw Node's TypeError (ir.Program's ObjectsMayFreeze).
-func (l *lowering) objectCanFreeze() bool {
+func (lowering *lowering) objectCanFreeze() bool {
 	found := false
-	walk(l.result.Main, func(node any) bool {
+	walk(lowering.result.Main, func(node any) bool {
 		if call, ok := node.(ir.ObjectCall); ok && call.Method == "freeze" {
 			found = true
 		}
 		return !found
 	})
-	for _, function := range l.result.Functions {
+	for _, function := range lowering.result.Functions {
 		walk(function.Body, func(node any) bool {
 			if call, ok := node.(ir.ObjectCall); ok && call.Method == "freeze" {
 				found = true
@@ -355,26 +366,28 @@ func (l *lowering) objectCanFreeze() bool {
 // object, array or boxed union field is held as it is in any object, and a Weak or a two-word
 // optional boolean is not (recordStorageType). A field held as a closure waits on its own ruling. A
 // field that holds the intersection itself is the object being proven.
-func (l *lowering) objectIntersection(proven *checker.Type) (ir.Type, bool) {
+func (lowering *lowering) objectIntersection(proven *checker.Type) (ir.Type, bool) {
 	for _, part := range proven.Types() {
 		if part.Flags()&checker.TypeFlagsObject == 0 ||
-			l.isArrayType(part) ||
-			len(l.checker.GetSignaturesOfType(part, checker.SignatureKindCall)) != 0 ||
-			len(l.checker.GetSignaturesOfType(part, checker.SignatureKindConstruct)) != 0 ||
-			l.unsupportedViewFamily(part) != "" {
+			lowering.isArrayType(part) ||
+			len(lowering.checker.GetSignaturesOfType(part, checker.SignatureKindCall)) != 0 ||
+			len(lowering.checker.GetSignaturesOfType(part, checker.SignatureKindConstruct)) != 0 ||
+			lowering.unsupportedViewFamily(part) != "" {
 			return 0, false
 		}
 	}
-	if l.objectIntersections[proven] {
+	if lowering.objectIntersections[proven] {
 		return ir.Object, true
 	}
-	if l.objectIntersections == nil {
-		l.objectIntersections = map[*checker.Type]bool{}
+	if lowering.objectIntersections == nil {
+		lowering.objectIntersections = map[*checker.Type]bool{}
 	}
-	l.objectIntersections[proven] = true
-	defer delete(l.objectIntersections, proven)
-	for _, field := range l.checker.GetPropertiesOfType(proven) {
-		if held, known := l.recordStorageType(l.checker.GetTypeOfSymbol(field)); !known || held == ir.Closure {
+	lowering.objectIntersections[proven] = true
+	defer delete(lowering.objectIntersections, proven)
+	for _, field := range lowering.checker.GetPropertiesOfType(proven) {
+		if held, known := lowering.recordStorageType(
+			lowering.checker.GetTypeOfSymbol(field),
+		); !known || held == ir.Closure {
 			return 0, false
 		}
 	}

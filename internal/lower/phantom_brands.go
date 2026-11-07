@@ -8,15 +8,15 @@ import (
 
 // phantomParts separates a primitive from the object views that give it a checker-only name.
 // Void is included because tsc's __String deliberately brands undefined through void.
-func (l *lowering) phantomRefusal(node *ast.Node) error {
+func (lowering *lowering) phantomRefusal(node *ast.Node) error {
 	if node.Kind != ast.KindIntersectionType {
 		return nil
 	}
 	var primitive *checker.Type
 	var objects []*checker.Type
 	for _, part := range node.AsIntersectionTypeNode().Types.Nodes {
-		proven := l.concrete(l.checker.GetTypeAtLocation(part))
-		if base, brands := l.phantomParts(proven); base != nil {
+		proven := lowering.concrete(lowering.checker.GetTypeAtLocation(part))
+		if base, brands := lowering.phantomParts(proven); base != nil {
 			primitive = base
 			objects = append(objects, brands...)
 		} else if proven.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike|checker.TypeFlagsVoid|checker.TypeFlagsUndefined) != 0 {
@@ -25,28 +25,28 @@ func (l *lowering) phantomRefusal(node *ast.Node) error {
 			objects = append(objects, proven)
 		}
 	}
-	if primitive == nil || l.phantomOverloadOnly(node) {
+	if primitive == nil || lowering.phantomOverloadOnly(node) {
 		return nil
 	}
 	for _, object := range objects {
-		for _, field := range l.checker.GetPropertiesOfType(object) {
+		for _, field := range lowering.checker.GetPropertiesOfType(object) {
 			if checker.IsKnownSymbol(field) {
 				return &Refused{
-					Where: l.program.Where(node),
+					Where: lowering.program.Where(node),
 					What:  "a primitive brand member keyed by a symbol",
 					Fix:   "key the brand member by a name the primitive does not have on its own properties or prototype chain",
 				}
 			}
 			if primitiveMember(primitive.Flags(), field.Name) {
 				return &Refused{
-					Where: l.program.Where(node),
+					Where: lowering.program.Where(node),
 					What:  "a primitive brand member " + field.Name + " that exists on the primitive",
 					Fix:   "use a member name the primitive does not have on its own properties or prototype chain",
 				}
 			}
-			if !phantomField(l.checker.GetTypeOfSymbol(field)) {
+			if !phantomField(lowering.checker.GetTypeOfSymbol(field)) {
 				return &Refused{
-					Where: l.program.Where(node),
+					Where: lowering.program.Where(node),
 					What:  "a primitive brand member " + field.Name + " whose type is not void",
 					Fix:   "make " + field.Name + " undefined (or void) so the brand is phantom",
 				}
@@ -60,10 +60,10 @@ func init() { refusalRules.register(400, "phantomRefusal", (*lowering).phantomRe
 
 // phantomAssignable compares only primitives, preserving literal constraints. It never grants an
 // object cast or a cast between different primitive kinds merely because both fit in one word.
-func (l *lowering) phantomAssignable(from, to *checker.Type) bool {
+func (lowering *lowering) phantomAssignable(from, to *checker.Type) bool {
 	if from.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, part := range from.Types() {
-			if !l.phantomAssignable(part, to) {
+			if !lowering.phantomAssignable(part, to) {
 				return false
 			}
 		}
@@ -71,41 +71,41 @@ func (l *lowering) phantomAssignable(from, to *checker.Type) bool {
 	}
 	if to.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, part := range to.Types() {
-			if l.phantomAssignable(from, part) {
+			if lowering.phantomAssignable(from, part) {
 				return true
 			}
 		}
 		return false
 	}
-	if base := l.phantomBase(from); base != nil {
+	if base := lowering.phantomBase(from); base != nil {
 		from = base
 	}
-	if base := l.phantomBase(to); base != nil {
+	if base := lowering.phantomBase(to); base != nil {
 		to = base
 	}
 	primitiveFlags := checker.TypeFlagsStringLike | checker.TypeFlagsNumberLike | checker.TypeFlagsBooleanLike | checker.TypeFlagsVoid | checker.TypeFlagsUndefined
 	if from.Flags()&primitiveFlags == 0 || to.Flags()&primitiveFlags == 0 {
 		return false
 	}
-	return l.checker.IsTypeAssignableTo(from, to)
+	return lowering.checker.IsTypeAssignableTo(from, to)
 }
 
-func (l *lowering) hasPhantom(proven *checker.Type) bool {
+func (lowering *lowering) hasPhantom(proven *checker.Type) bool {
 	if proven.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, part := range proven.Types() {
-			if l.hasPhantom(part) {
+			if lowering.hasPhantom(part) {
 				return true
 			}
 		}
 	}
-	return l.phantomBase(proven) != nil
+	return lowering.phantomBase(proven) != nil
 }
 
-func (l *lowering) phantomCast(source, target *checker.Type) bool {
-	if !l.hasPhantom(source) && !l.hasPhantom(target) {
+func (lowering *lowering) phantomCast(source, target *checker.Type) bool {
+	if !lowering.hasPhantom(source) && !lowering.hasPhantom(target) {
 		return false
 	}
-	if l.phantomAssignable(source, target) {
+	if lowering.phantomAssignable(source, target) {
 		return true
 	}
 	// __String's void arm permits the same cast out as its string arm. Its null pointer stays
@@ -113,10 +113,10 @@ func (l *lowering) phantomCast(source, target *checker.Type) bool {
 	if source.Flags()&checker.TypeFlagsUnion != 0 && target.Flags()&checker.TypeFlagsStringLike != 0 {
 		present := false
 		for _, part := range source.Types() {
-			if l.phantomUndefined(part) {
+			if lowering.phantomUndefined(part) {
 				continue
 			}
-			if !l.phantomAssignable(part, target) {
+			if !lowering.phantomAssignable(part, target) {
 				return false
 			}
 			present = true
@@ -126,28 +126,28 @@ func (l *lowering) phantomCast(source, target *checker.Type) bool {
 	return false
 }
 
-func (l *lowering) phantomMemberType(proven *checker.Type, name string) bool {
+func (lowering *lowering) phantomMemberType(proven *checker.Type, name string) bool {
 	if proven.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, part := range proven.Types() {
-			if !l.phantomMemberType(part, name) {
+			if !lowering.phantomMemberType(part, name) {
 				return false
 			}
 		}
 		return true
 	}
-	if l.phantomBase(proven) == nil {
+	if lowering.phantomBase(proven) == nil {
 		return false
 	}
-	_, objects := l.phantomParts(proven)
+	_, objects := lowering.phantomParts(proven)
 	for _, object := range objects {
-		if l.checker.GetPropertyOfType(object, name) != nil {
+		if lowering.checker.GetPropertyOfType(object, name) != nil {
 			return true
 		}
 	}
 	return false
 }
 
-func (l *lowering) phantomMember(node *ast.Node) (ir.Expression, bool, error) {
+func (lowering *lowering) phantomMember(node *ast.Node) (ir.Expression, bool, error) {
 	var receiver *ast.Node
 	var name string
 	optional := false
@@ -165,10 +165,10 @@ func (l *lowering) phantomMember(node *ast.Node) (ir.Expression, bool, error) {
 	default:
 		return nil, false, nil
 	}
-	if !l.phantomMemberType(l.concrete(l.checker.GetTypeAtLocation(receiver)), name) {
+	if !lowering.phantomMemberType(lowering.concrete(lowering.checker.GetTypeAtLocation(receiver)), name) {
 		return nil, false, nil
 	}
-	value, expressionError := l.expression(receiver)
+	value, expressionError := lowering.expression(receiver)
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
@@ -180,28 +180,30 @@ func (l *lowering) phantomMember(node *ast.Node) (ir.Expression, bool, error) {
 		value = unwrapped.Value
 	}
 	failure := ir.MakeError{
-		Message: ir.StringConstant{Index: l.constant("Cannot read properties of undefined (reading '" + name + "')")},
-		Name:    ir.StringConstant{Index: l.constant("TypeError")},
+		Message: ir.StringConstant{
+			Index: lowering.constant("Cannot read properties of undefined (reading '" + name + "')"),
+		},
+		Name: ir.StringConstant{Index: lowering.constant("TypeError")},
 	}
 	return ir.PhantomMember{Value: value, Name: name, Optional: optional, Failure: failure}, true, nil
 }
 
 // The result is always undefined if the read completes, but the receiver must still run, and may
 // throw. A conditional evaluates it once before writing the known spelling.
-func (l *lowering) phantomSpelling(value ir.Expression) ir.Expression {
-	text := ir.StringConstant{Index: l.constant("undefined")}
+func (lowering *lowering) phantomSpelling(value ir.Expression) ir.Expression {
+	text := ir.StringConstant{Index: lowering.constant("undefined")}
 	return ir.Conditional{Condition: ir.IsUndefined{Value: value}, WhenTrue: text, WhenNot: text}
 }
 
 // Main already admits brands mentioned only in erased overload signatures. They
 // never reach a runtime slot, so the new primitive representation is not needed.
 // Any reference outside a bodyless function declaration keeps the refusal.
-func (l *lowering) phantomOverloadOnly(node *ast.Node) bool {
+func (lowering *lowering) phantomOverloadOnly(node *ast.Node) bool {
 	alias := node.Parent
 	if alias == nil || alias.Kind != ast.KindTypeAliasDeclaration {
 		return false
 	}
-	symbol := l.symbol(alias.Name())
+	symbol := lowering.symbol(alias.Name())
 	if symbol == nil {
 		return false
 	}
@@ -211,7 +213,7 @@ func (l *lowering) phantomOverloadOnly(node *ast.Node) bool {
 		if !safe {
 			return false
 		}
-		if ast.IsIdentifier(use) && use != alias.Name() && l.symbol(use) == symbol {
+		if ast.IsIdentifier(use) && use != alias.Name() && lowering.symbol(use) == symbol {
 			seen = true
 			var declaration *ast.Node
 			for parent := use.Parent; parent != nil; parent = parent.Parent {
@@ -227,7 +229,7 @@ func (l *lowering) phantomOverloadOnly(node *ast.Node) bool {
 		}
 		return use.ForEachChild(visit)
 	}
-	for _, file := range l.program.CompilerProgram().GetSourceFiles() {
+	for _, file := range lowering.program.CompilerProgram().GetSourceFiles() {
 		file.Node.ForEachChild(visit)
 	}
 	return seen && safe

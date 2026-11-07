@@ -13,17 +13,17 @@ type V8DivergenceError struct {
 	Section  string
 }
 
-func (e *V8DivergenceError) Error() string {
+func (divergenceError *V8DivergenceError) Error() string {
 	return fmt.Sprintf(
 		"RegExp refused: V8 %s departs from ECMA-262 %s; native and JavaScript must agree",
-		e.Behavior,
-		e.Section,
+		divergenceError.Behavior,
+		divergenceError.Section,
 	)
 }
 
 // NativeCompatibility also gates stage 0's JavaScript backend, which lowers
 // through the same compiled program. A refused program emits neither backend.
-func (p *Program) NativeCompatibility() error { return p.v8Refusal }
+func (program *Program) NativeCompatibility() error { return program.v8Refusal }
 
 func modifiedFlags(f Flags, g *Group) Flags {
 	f.IgnoreCase = (f.IgnoreCase || g.Enable.IgnoreCase) && !g.Disable.IgnoreCase

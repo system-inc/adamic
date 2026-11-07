@@ -11,31 +11,31 @@ import (
 
 const parallelMoveFix = "make the whole reachable value readonly and bind captures with const; moving mutable values into tasks belongs to concurrency part 2 (#p286ycm)"
 
-func (l *lowering) parallelMap(node *ast.Node) (ir.Expression, error) {
-	if checkParallelMapError := l.checkParallelMap(node); checkParallelMapError != nil {
+func (lowering *lowering) parallelMap(node *ast.Node) (ir.Expression, error) {
+	if checkParallelMapError := lowering.checkParallelMap(node); checkParallelMapError != nil {
 		return nil, checkParallelMapError
 	}
 	arguments := node.AsCallExpression().Arguments.Nodes
-	moved := l.parallelMoves(node)
-	items, expressionError := l.expression(arguments[0])
+	moved := lowering.parallelMoves(node)
+	items, expressionError := lowering.expression(arguments[0])
 	if expressionError != nil {
 		return nil, expressionError
 	}
-	work, expressionError := l.expression(arguments[1])
+	work, expressionError := lowering.expression(arguments[1])
 	if expressionError != nil {
 		return nil, expressionError
 	}
 	if items.Type() != ir.Array || work.Type() != ir.Closure {
-		return nil, l.notYet(node, "parallelMap operands without array and closure representations")
+		return nil, lowering.notYet(node, "parallelMap operands without array and closure representations")
 	}
-	result, elementTypeError := l.elementType(node)
+	result, elementTypeError := lowering.elementType(node)
 	if elementTypeError != nil {
 		return nil, elementTypeError
 	}
 	// Globals are ordinarily direct loads, not closure cells. Carry every reference
 	// the task's transitive call graph reads so runtime marking reaches them too.
 	proof := &parallelProof{
-		l:                  l,
+		l:                  lowering,
 		active:             map[*ast.Node]bool{},
 		checked:            map[*ast.Node]bool{},
 		shareableFunctions: map[*ast.Node]bool{},
@@ -54,7 +54,7 @@ func (l *lowering) parallelMap(node *ast.Node) (ir.Expression, error) {
 			continue
 		}
 		seen[symbol] = true
-		value, expressionError := l.expression(global)
+		value, expressionError := lowering.expression(global)
 		if expressionError != nil {
 			return nil, expressionError
 		}
@@ -69,10 +69,10 @@ func (l *lowering) parallelMap(node *ast.Node) (ir.Expression, error) {
 		}
 		shared = append(shared, value)
 	}
-	l.hasMovedParallelMap = l.hasMovedParallelMap || moved
-	l.moveSites = append(l.moveSites, node)
+	lowering.hasMovedParallelMap = lowering.hasMovedParallelMap || moved
+	lowering.moveSites = append(lowering.moveSites, node)
 	return ir.ParallelMap{
-		Site:   len(l.moveSites),
+		Site:   len(lowering.moveSites),
 		Items:  items,
 		Work:   work,
 		Shared: shared,
@@ -83,7 +83,7 @@ func (l *lowering) parallelMap(node *ast.Node) (ir.Expression, error) {
 
 // Run before general refusals, so async work gets its concurrency diagnostic even
 // when its declaration appears before the call. No safety check is bypassed here.
-func (l *lowering) parallelPreflight(module *ast.SourceFile) error {
+func (lowering *lowering) parallelPreflight(module *ast.SourceFile) error {
 	var found error
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
@@ -91,8 +91,8 @@ func (l *lowering) parallelPreflight(module *ast.SourceFile) error {
 			return false
 		}
 		if node.Kind == ast.KindCallExpression &&
-			l.isPreludeFunction(node.AsCallExpression().Expression, "parallelMap") {
-			found = l.checkParallelMap(node)
+			lowering.isPreludeFunction(node.AsCallExpression().Expression, "parallelMap") {
+			found = lowering.checkParallelMap(node)
 			if found != nil {
 				return false
 			}
@@ -103,42 +103,42 @@ func (l *lowering) parallelPreflight(module *ast.SourceFile) error {
 	return found
 }
 
-func (l *lowering) checkParallelMap(node *ast.Node) error {
+func (lowering *lowering) checkParallelMap(node *ast.Node) error {
 	arguments := node.AsCallExpression().Arguments.Nodes
 	if len(arguments) != 2 {
-		return l.notYet(node, "parallelMap with other than items and work")
+		return lowering.notYet(node, "parallelMap with other than items and work")
 	}
-	items := l.concrete(l.checker.GetTypeAtLocation(arguments[0]))
-	if !l.isArrayType(items) {
+	items := lowering.concrete(lowering.checker.GetTypeAtLocation(arguments[0]))
+	if !lowering.isArrayType(items) {
 		return &Refused{
-			Where: l.program.Where(arguments[0]),
+			Where: lowering.program.Where(arguments[0]),
 			What:  "parallelMap items must be an array",
 			Fix:   parallelMoveFix,
 		}
 	}
-	if l.parallelMoves(node) {
-		return l.checkMove(node)
+	if lowering.parallelMoves(node) {
+		return lowering.checkMove(node)
 	}
 	// Even primitive elements need an immutable array: every task can capture the array itself.
-	if !l.isLibraryType(items, "ReadonlyArray") {
+	if !lowering.isLibraryType(items, "ReadonlyArray") {
 		return &Refused{
-			Where: l.program.Where(arguments[0]),
-			What:  "parallelMap items are not shareable: items is a mutable " + l.checker.TypeToString(items),
+			Where: lowering.program.Where(arguments[0]),
+			What:  "parallelMap items are not shareable: items is a mutable " + lowering.checker.TypeToString(items),
 			Fix:   parallelMoveFix,
 		}
 	}
-	for _, element := range l.checker.GetTypeArguments(items) {
-		path := l.checker.TypeToString(element)
-		if why := l.shareable(element, path, arguments[0]); why != "" {
+	for _, element := range lowering.checker.GetTypeArguments(items) {
+		path := lowering.checker.TypeToString(element)
+		if why := lowering.shareable(element, path, arguments[0]); why != "" {
 			return &Refused{
-				Where: l.program.Where(arguments[0]),
+				Where: lowering.program.Where(arguments[0]),
 				What:  "parallelMap items are not shareable: " + why,
 				Fix:   parallelMoveFix,
 			}
 		}
 	}
 	proof := &parallelProof{
-		l:                  l,
+		l:                  lowering,
 		active:             map[*ast.Node]bool{},
 		checked:            map[*ast.Node]bool{},
 		shareableFunctions: map[*ast.Node]bool{},
@@ -163,9 +163,9 @@ type parallelProof struct {
 	globals            []*ast.Node
 }
 
-func (p *parallelProof) effect(where *ast.Node, chain []string, what string) error {
+func (proof *parallelProof) effect(where *ast.Node, chain []string, what string) error {
 	return &Refused{
-		Where: p.l.program.Where(where),
+		Where: proof.l.program.Where(where),
 		What:  "parallelMap work writes state another task can reach: " + strings.Join(chain, " -> ") + " " + what,
 		Fix:   "keep work and everything it calls pure; write only task locals and fresh objects",
 	}
@@ -180,14 +180,14 @@ func parallelInside(declaration, function *ast.Node) bool {
 	return false
 }
 
-func (p *parallelProof) declaration(node *ast.Node) *ast.Node {
-	if symbol := p.symbol(node); symbol != nil && len(symbol.Declarations) == 1 {
+func (proof *parallelProof) declaration(node *ast.Node) *ast.Node {
+	if symbol := proof.symbol(node); symbol != nil && len(symbol.Declarations) == 1 {
 		return symbol.Declarations[0]
 	}
 	return nil
 }
 
-func (p *parallelProof) functionValue(node *ast.Node, visited map[*ast.Symbol]bool) *ast.Node {
+func (proof *parallelProof) functionValue(node *ast.Node, visited map[*ast.Symbol]bool) *ast.Node {
 	node = ast.SkipParentheses(node)
 	if ast.IsFunctionLike(node) && node.Body() != nil {
 		return node
@@ -195,21 +195,21 @@ func (p *parallelProof) functionValue(node *ast.Node, visited map[*ast.Symbol]bo
 	if !ast.IsIdentifier(node) {
 		return nil
 	}
-	symbol := p.symbol(node)
+	symbol := proof.symbol(node)
 	if symbol == nil || visited[symbol] {
 		return nil
 	}
 	visited[symbol] = true
-	declaration := p.declaration(node)
+	declaration := proof.declaration(node)
 	if declaration == nil {
 		return nil
 	}
 	if ast.IsFunctionLike(declaration) && declaration.Body() != nil {
 		return declaration
 	}
-	if declaration.Kind == ast.KindVariableDeclaration && p.immutable(declaration) {
+	if declaration.Kind == ast.KindVariableDeclaration && proof.immutable(declaration) {
 		if initializer := declaration.AsVariableDeclaration().Initializer; initializer != nil {
-			return p.functionValue(initializer, visited)
+			return proof.functionValue(initializer, visited)
 		}
 	}
 	return nil
@@ -217,7 +217,7 @@ func (p *parallelProof) functionValue(node *ast.Node, visited map[*ast.Symbol]bo
 
 // A parameter can be captured only when its entire source function never rebinds it.
 // We deliberately include writes in nested closures and after the parallel call.
-func (p *parallelProof) immutable(declaration *ast.Node) bool {
+func (proof *parallelProof) immutable(declaration *ast.Node) bool {
 	if declaration.Kind == ast.KindFunctionDeclaration {
 		return true
 	}
@@ -229,7 +229,7 @@ func (p *parallelProof) immutable(declaration *ast.Node) bool {
 		}
 		return false
 	}
-	return declaration.Kind == ast.KindParameter && !p.reassigned(declaration)
+	return declaration.Kind == ast.KindParameter && !proof.reassigned(declaration)
 }
 
 func parallelWrite(node *ast.Node) *ast.Node {
@@ -251,8 +251,8 @@ func parallelWrite(node *ast.Node) *ast.Node {
 	return nil
 }
 
-func (p *parallelProof) reassigned(declaration *ast.Node) bool {
-	symbol := p.l.symbol(declaration.Name())
+func (proof *parallelProof) reassigned(declaration *ast.Node) bool {
+	symbol := proof.l.symbol(declaration.Name())
 	found := false
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
@@ -262,7 +262,7 @@ func (p *parallelProof) reassigned(declaration *ast.Node) bool {
 		if target := parallelWrite(node); target != nil {
 			var names ast.Visitor
 			names = func(name *ast.Node) bool {
-				if ast.IsIdentifier(name) && p.l.symbol(name) == symbol {
+				if ast.IsIdentifier(name) && proof.l.symbol(name) == symbol {
 					found = true
 				}
 				// A field/element write doesn't rebind its receiver.
@@ -279,34 +279,34 @@ func (p *parallelProof) reassigned(declaration *ast.Node) bool {
 	return found
 }
 
-func (p *parallelProof) capture(node, owner *ast.Node, chain []string) error {
-	declaration := p.declaration(node)
+func (proof *parallelProof) capture(node, owner *ast.Node, chain []string) error {
+	declaration := proof.declaration(node)
 	if declaration != nil && parallelInside(declaration, owner) {
 		return nil
 	}
 	if declaration == nil {
-		return p.effect(node, chain, "reads a binding whose declaration isn't known")
+		return proof.effect(node, chain, "reads a binding whose declaration isn't known")
 	}
 	name := node.Text()
-	p.global(node)
-	if !p.immutable(declaration) {
+	proof.global(node)
+	if !proof.immutable(declaration) {
 		return &Refused{
-			Where: p.l.program.Where(node),
+			Where: proof.l.program.Where(node),
 			What:  "task capture '" + name + "' is not shareable: " + name + " is not an immutable binding",
 			Fix:   parallelMoveFix,
 		}
 	}
-	if work := p.functionValue(node, map[*ast.Symbol]bool{}); work != nil {
-		return p.function(work, chain)
+	if work := proof.functionValue(node, map[*ast.Symbol]bool{}); work != nil {
+		return proof.function(work, chain)
 	}
-	if why := p.l.shareableWith(
-		p.l.concrete(p.l.checker.GetTypeOfSymbol(p.symbol(node))),
+	if why := proof.l.shareableWith(
+		proof.l.concrete(proof.l.checker.GetTypeOfSymbol(proof.symbol(node))),
 		name,
 		node,
-		p.shareableFunctions,
+		proof.shareableFunctions,
 	); why != "" {
 		return &Refused{
-			Where: p.l.program.Where(node),
+			Where: proof.l.program.Where(node),
 			What:  "task capture '" + name + "' is not shareable: " + why,
 			Fix:   parallelMoveFix,
 		}
@@ -314,12 +314,12 @@ func (p *parallelProof) capture(node, owner *ast.Node, chain []string) error {
 	return nil
 }
 
-func (p *parallelProof) function(node *ast.Node, chain []string) error {
-	if p.active[node] || p.checked[node] {
+func (proof *parallelProof) function(node *ast.Node, chain []string) error {
+	if proof.active[node] || proof.checked[node] {
 		return nil
 	}
-	p.active[node] = true
-	defer delete(p.active, node)
+	proof.active[node] = true
+	defer delete(proof.active, node)
 	name := "work"
 	if node.Name() != nil {
 		name = node.Name().Text()
@@ -327,7 +327,7 @@ func (p *parallelProof) function(node *ast.Node, chain []string) error {
 	chain = append(append([]string{}, chain...), name)
 	if ast.HasSyntacticModifier(node, ast.ModifierFlagsAsync) {
 		return &Refused{
-			Where: p.l.program.Where(node),
+			Where: proof.l.program.Where(node),
 			What:  "async work in parallelMap is part 3 (#p286ycm)",
 			Fix:   "use synchronous work until concurrency part 3",
 		}
@@ -341,32 +341,32 @@ func (p *parallelProof) function(node *ast.Node, chain []string) error {
 		}
 		if child.Kind == ast.KindAwaitExpression {
 			found = &Refused{
-				Where: p.l.program.Where(child),
+				Where: proof.l.program.Where(child),
 				What:  "async work in parallelMap is part 3 (#p286ycm)",
 				Fix:   "use synchronous work until concurrency part 3",
 			}
 			return false
 		}
 		if target := parallelWrite(child); target != nil {
-			found = p.write(target, node, chain)
+			found = proof.write(target, node, chain)
 			if found != nil {
 				return false
 			}
 		}
 		if child.Kind == ast.KindThisKeyword {
-			found = p.effect(child, chain, "reaches this, whose task ownership isn't proven")
+			found = proof.effect(child, chain, "reaches this, whose task ownership isn't proven")
 			return false
 		}
 		if child.Kind == ast.KindCallExpression || child.Kind == ast.KindNewExpression {
-			found = p.call(child, node, chain)
+			found = proof.call(child, node, chain)
 			return false
 		}
 		if ast.IsFunctionLike(child) {
-			found = p.function(child, chain)
+			found = proof.function(child, chain)
 			return false
 		}
 		if parallelReference(child) {
-			declaration := p.declaration(child)
+			declaration := proof.declaration(child)
 			if declaration == nil || !parallelInside(declaration, node) {
 				captures = append(captures, child)
 			}
@@ -384,21 +384,21 @@ func (p *parallelProof) function(node *ast.Node, chain []string) error {
 		return found
 	}
 	for _, capture := range captures {
-		if p.l.checker.GetTypeAtLocation(capture).Flags()&checker.TypeFlagsUndefined != 0 &&
+		if proof.l.checker.GetTypeAtLocation(capture).Flags()&checker.TypeFlagsUndefined != 0 &&
 			capture.Text() == "undefined" {
 			continue
 		}
-		if captureError := p.capture(capture, node, chain); captureError != nil {
+		if captureError := proof.capture(capture, node, chain); captureError != nil {
 			return captureError
 		}
 	}
-	p.checked[node] = true
+	proof.checked[node] = true
 	return nil
 }
 
 // Only direct slots of a never-rebound local allocation qualify. Following a field
 // of a fresh object could reach an item or capture stored there, so is conservative.
-func (p *parallelProof) fresh(node, owner *ast.Node) bool {
+func (proof *parallelProof) fresh(node, owner *ast.Node) bool {
 	node = ast.SkipParentheses(node)
 	if node.Kind == ast.KindObjectLiteralExpression || node.Kind == ast.KindArrayLiteralExpression {
 		return true
@@ -406,11 +406,11 @@ func (p *parallelProof) fresh(node, owner *ast.Node) bool {
 	if !ast.IsIdentifier(node) {
 		return false
 	}
-	declaration := p.declaration(node)
+	declaration := proof.declaration(node)
 	if declaration == nil ||
 		!parallelInside(declaration, owner) ||
 		declaration.Kind != ast.KindVariableDeclaration ||
-		p.reassigned(declaration) {
+		proof.reassigned(declaration) {
 		return false
 	}
 	initializer := declaration.AsVariableDeclaration().Initializer
@@ -419,19 +419,19 @@ func (p *parallelProof) fresh(node, owner *ast.Node) bool {
 	}
 	initializer = ast.SkipParentheses(initializer)
 	return initializer.Kind == ast.KindObjectLiteralExpression || initializer.Kind == ast.KindArrayLiteralExpression ||
-		(initializer.Kind == ast.KindNewExpression && (p.l.isLibraryGlobal(
+		(initializer.Kind == ast.KindNewExpression && (proof.l.isLibraryGlobal(
 			initializer.AsNewExpression().Expression,
 			"Map",
-		) || p.l.isLibraryGlobal(initializer.AsNewExpression().Expression, "Set")))
+		) || proof.l.isLibraryGlobal(initializer.AsNewExpression().Expression, "Set")))
 }
 
-func (p *parallelProof) write(target, owner *ast.Node, chain []string) error {
+func (proof *parallelProof) write(target, owner *ast.Node, chain []string) error {
 	target = ast.SkipParentheses(target)
-	if _, environment := p.l.nodeEnvironmentAccess(target); environment {
-		return p.effect(target, chain, "writes the process environment")
+	if _, environment := proof.l.nodeEnvironmentAccess(target); environment {
+		return proof.effect(target, chain, "writes the process environment")
 	}
 	if ast.IsIdentifier(target) {
-		declaration := p.declaration(target)
+		declaration := proof.declaration(target)
 		if declaration != nil && parallelInside(declaration, owner) {
 			return nil
 		}
@@ -445,19 +445,20 @@ func (p *parallelProof) write(target, owner *ast.Node, chain []string) error {
 				}
 			}
 		}
-		return p.effect(target, chain, "writes the "+kind+" '"+target.Text()+"'")
+		return proof.effect(target, chain, "writes the "+kind+" '"+target.Text()+"'")
 	}
 	if target.Kind == ast.KindPropertyAccessExpression &&
-		p.fresh(target.AsPropertyAccessExpression().Expression, owner) {
+		proof.fresh(target.AsPropertyAccessExpression().Expression, owner) {
 		return nil
 	}
-	if target.Kind == ast.KindElementAccessExpression && p.fresh(target.AsElementAccessExpression().Expression, owner) {
+	if target.Kind == ast.KindElementAccessExpression &&
+		proof.fresh(target.AsElementAccessExpression().Expression, owner) {
 		return nil
 	}
-	return p.effect(target, chain, "writes an item, capture, or object not proven allocated by the task")
+	return proof.effect(target, chain, "writes an item, capture, or object not proven allocated by the task")
 }
 
-func (p *parallelProof) call(node, owner *ast.Node, chain []string) error {
+func (proof *parallelProof) call(node, owner *ast.Node, chain []string) error {
 	var callee *ast.Node
 	var arguments []*ast.Node
 	if node.Kind == ast.KindCallExpression {
@@ -470,66 +471,66 @@ func (p *parallelProof) call(node, owner *ast.Node, chain []string) error {
 	// Every argument's evaluation and every callback body must be proved too.
 	for _, argument := range arguments {
 		if len(
-			p.l.checker.GetSignaturesOfType(p.l.checker.GetTypeAtLocation(argument), checker.SignatureKindCall),
-		) > 0 && p.functionValue(argument, map[*ast.Symbol]bool{}) == nil {
-			return p.effect(node, chain, "calls a closure whose body isn't known")
+			proof.l.checker.GetSignaturesOfType(proof.l.checker.GetTypeAtLocation(argument), checker.SignatureKindCall),
+		) > 0 && proof.functionValue(argument, map[*ast.Symbol]bool{}) == nil {
+			return proof.effect(node, chain, "calls a closure whose body isn't known")
 		}
-		if expressionError := p.expression(argument, owner, chain); expressionError != nil {
+		if expressionError := proof.expression(argument, owner, chain); expressionError != nil {
 			return expressionError
 		}
 	}
-	if p.l.isPreludeFunction(callee, "parallelMap") {
-		return p.l.checkParallelMap(node)
+	if proof.l.isPreludeFunction(callee, "parallelMap") {
+		return proof.l.checkParallelMap(node)
 	}
 	for _, name := range []string{"readTextFile", "writeTextFile", "readDirectory", "fileStatus", "programArguments"} {
-		if p.l.isPreludeFunction(callee, name) {
-			return p.effect(node, chain, "calls effectful "+name)
+		if proof.l.isPreludeFunction(callee, name) {
+			return proof.effect(node, chain, "calls effectful "+name)
 		}
 	}
 	for _, name := range []string{"panic", "utf8At", "utf8Length"} {
-		if p.l.isPreludeFunction(callee, name) {
+		if proof.l.isPreludeFunction(callee, name) {
 			return nil
 		}
 	}
-	if p.l.isLibraryGlobal(callee, "Date") {
-		return p.effect(node, chain, "calls effectful Date")
+	if proof.l.isLibraryGlobal(callee, "Date") {
+		return proof.effect(node, chain, "calls effectful Date")
 	}
 	if callee.Kind == ast.KindPropertyAccessExpression {
 		access := callee.AsPropertyAccessExpression()
 		receiver, method := access.Expression, access.Name().Text()
-		if p.l.isLibraryGlobal(receiver, "console") || p.l.isConsole(callee) {
-			return p.effect(node, chain, "calls effectful console."+method)
+		if proof.l.isLibraryGlobal(receiver, "console") || proof.l.isConsole(callee) {
+			return proof.effect(node, chain, "calls effectful console."+method)
 		}
-		if p.l.isLibraryGlobal(receiver, "Math") && method == "random" {
-			return p.effect(node, chain, "calls effectful Math.random")
+		if proof.l.isLibraryGlobal(receiver, "Math") && method == "random" {
+			return proof.effect(node, chain, "calls effectful Math.random")
 		}
-		if p.l.isLibraryGlobal(receiver, "Date") {
-			return p.effect(node, chain, "calls effectful Date."+method)
+		if proof.l.isLibraryGlobal(receiver, "Date") {
+			return proof.effect(node, chain, "calls effectful Date."+method)
 		}
-		if p.l.isLibraryGlobal(receiver, "Math") ||
-			p.l.isLibraryGlobal(receiver, "Number") ||
-			p.l.isLibraryGlobal(receiver, "String") {
-			if p.l.libraryMember(callee) {
+		if proof.l.isLibraryGlobal(receiver, "Math") ||
+			proof.l.isLibraryGlobal(receiver, "Number") ||
+			proof.l.isLibraryGlobal(receiver, "String") {
+			if proof.l.libraryMember(callee) {
 				return nil
 			}
 		}
-		if expressionError := p.expression(receiver, owner, chain); expressionError != nil {
+		if expressionError := proof.expression(receiver, owner, chain); expressionError != nil {
 			return expressionError
 		}
-		if symbol := p.l.symbol(callee); symbol != nil &&
+		if symbol := proof.l.symbol(callee); symbol != nil &&
 			len(symbol.Declarations) > 0 &&
 			load.IsLibrary(ast.GetSourceFileOfNode(symbol.Declarations[0])) {
-			t := p.l.checker.GetNonNullableType(p.l.checker.GetTypeAtLocation(receiver))
+			t := proof.l.checker.GetNonNullableType(proof.l.checker.GetTypeAtLocation(receiver))
 			if t.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsNumberLike) != 0 {
 				return nil
 			}
-			if p.l.isArrayType(t) || p.l.isLibraryType(t, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
+			if proof.l.isArrayType(t) || proof.l.isLibraryType(t, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
 				switch method {
 				case "set", "add", "delete", "clear", "push", "pop", "shift", "unshift", "splice", "fill", "sort", "reverse", "copyWithin":
-					if p.fresh(receiver, owner) {
+					if proof.fresh(receiver, owner) {
 						return nil
 					}
-					return p.effect(
+					return proof.effect(
 						node,
 						chain,
 						"calls mutating "+method+" on an object not proven allocated by the task",
@@ -537,63 +538,64 @@ func (p *parallelProof) call(node, owner *ast.Node, chain []string) error {
 				case "get", "has", "at", "join", "slice", "concat", "includes", "indexOf", "lastIndexOf", "map", "filter", "find", "findIndex", "every", "some", "forEach", "reduce", "keys", "values", "entries":
 					// A callback argument must have a body we can inspect, not merely a Shareable type.
 					for _, argument := range arguments {
-						if len(p.l.checker.GetSignaturesOfType(
-							p.l.checker.GetTypeAtLocation(argument),
+						if len(proof.l.checker.GetSignaturesOfType(
+							proof.l.checker.GetTypeAtLocation(argument),
 							checker.SignatureKindCall,
-						)) > 0 && p.functionValue(argument, map[*ast.Symbol]bool{}) == nil {
-							return p.effect(node, chain, "calls a closure whose body isn't known")
+						)) > 0 && proof.functionValue(argument, map[*ast.Symbol]bool{}) == nil {
+							return proof.effect(node, chain, "calls a closure whose body isn't known")
 						}
 					}
 					return nil
 				}
 			}
 		}
-		return p.effect(node, chain, "calls a method whose complete dispatch hierarchy isn't proven")
+		return proof.effect(node, chain, "calls a method whose complete dispatch hierarchy isn't proven")
 	}
 	for _, name := range []string{"String", "Number", "Boolean", "Error", "Map", "Set"} {
-		if p.l.isLibraryGlobal(callee, name) {
+		if proof.l.isLibraryGlobal(callee, name) {
 			return nil
 		}
 	}
-	if work := p.functionValue(callee, map[*ast.Symbol]bool{}); work != nil {
-		p.global(callee)
+	if work := proof.functionValue(callee, map[*ast.Symbol]bool{}); work != nil {
+		proof.global(callee)
 		if ast.IsIdentifier(callee) {
-			declaration := p.declaration(callee)
-			if declaration != nil && declaration.Kind != ast.KindFunctionDeclaration && !p.immutable(declaration) {
-				return p.capture(callee, owner, chain)
+			declaration := proof.declaration(callee)
+			if declaration != nil && declaration.Kind != ast.KindFunctionDeclaration && !proof.immutable(declaration) {
+				return proof.capture(callee, owner, chain)
 			}
 		}
-		return p.function(work, chain)
+		return proof.function(work, chain)
 	}
-	return p.effect(node, chain, "calls a closure whose body isn't known")
+	return proof.effect(node, chain, "calls a closure whose body isn't known")
 }
 
 // Analyze an argument with the same rules as a body, retaining its lexical owner.
-func (p *parallelProof) expression(node, owner *ast.Node, chain []string) error {
+func (proof *parallelProof) expression(node, owner *ast.Node, chain []string) error {
 	if ast.IsPartOfTypeNode(node) {
 		return nil
 	}
 	if ast.IsFunctionLike(node) {
-		return p.function(node, chain)
+		return proof.function(node, chain)
 	}
 	if target := parallelWrite(node); target != nil {
-		if writeError := p.write(target, owner, chain); writeError != nil {
+		if writeError := proof.write(target, owner, chain); writeError != nil {
 			return writeError
 		}
 	}
 	if node.Kind == ast.KindCallExpression || node.Kind == ast.KindNewExpression {
-		return p.call(node, owner, chain)
+		return proof.call(node, owner, chain)
 	}
 	if parallelReference(node) {
-		if node.Text() == "undefined" && p.l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 {
+		if node.Text() == "undefined" &&
+			proof.l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 {
 			return nil
 		}
-		return p.capture(node, owner, chain)
+		return proof.capture(node, owner, chain)
 	}
 	var found error
 	node.ForEachChild(func(child *ast.Node) bool {
 		if found == nil {
-			found = p.expression(child, owner, chain)
+			found = proof.expression(child, owner, chain)
 		}
 		return found != nil
 	})
@@ -617,17 +619,17 @@ func parallelReference(node *ast.Node) bool {
 	return !ast.IsDeclarationName(node) && ast.IsExpressionNode(node)
 }
 
-func (p *parallelProof) symbol(node *ast.Node) *ast.Symbol {
+func (proof *parallelProof) symbol(node *ast.Node) *ast.Symbol {
 	if parent := node.Parent; parent != nil && parent.Kind == ast.KindShorthandPropertyAssignment {
-		return p.l.checker.GetShorthandAssignmentValueSymbol(parent)
+		return proof.l.checker.GetShorthandAssignmentValueSymbol(parent)
 	}
-	return p.l.symbol(node)
+	return proof.l.symbol(node)
 }
 
 // Reference-valued globals need runtime marking even though ordinary lowering
 // does not put them in a closure's environment. Their bindings are proven const.
-func (p *parallelProof) global(node *ast.Node) {
-	declaration := p.declaration(node)
+func (proof *parallelProof) global(node *ast.Node) {
+	declaration := proof.declaration(node)
 	if declaration == nil ||
 		(declaration.Kind != ast.KindVariableDeclaration && declaration.Kind != ast.KindBindingElement) {
 		return
@@ -637,5 +639,5 @@ func (p *parallelProof) global(node *ast.Node) {
 			return
 		}
 	}
-	p.globals = append(p.globals, node)
+	proof.globals = append(proof.globals, node)
 }

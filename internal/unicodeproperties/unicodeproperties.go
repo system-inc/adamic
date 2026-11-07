@@ -48,12 +48,12 @@ type Set struct {
 
 // Contains reports whether codePoint is in the set. Values outside 0..U+10FFFF
 // are not, and a negative rune is not a code point.
-func (s *Set) Contains(codePoint rune) bool {
-	if s == nil || codePoint < 0 || codePoint > 0x10FFFF {
+func (set *Set) Contains(codePoint rune) bool {
+	if set == nil || codePoint < 0 || codePoint > 0x10FFFF {
 		return false
 	}
 	cp := uint32(codePoint)
-	ranges := s.Ranges
+	ranges := set.Ranges
 	lo, hi := 0, len(ranges)
 	for lo < hi {
 		mid := (lo + hi) / 2
@@ -68,10 +68,10 @@ func (s *Set) Contains(codePoint rune) bool {
 
 // Complement is the set of code points from 0 to U+10FFFF that are not in s.
 // That is what \P matches when \p matches s.
-func (s *Set) Complement() *Set {
+func (set *Set) Complement() *Set {
 	ranges := []Range(nil)
-	if s != nil {
-		ranges = s.Ranges
+	if set != nil {
+		ranges = set.Ranges
 	}
 	var out []Range
 	next := uint32(0)
@@ -119,22 +119,22 @@ type Property struct {
 }
 
 // Contains reports whether a code point is in a code-point property.
-func (p Property) Contains(codePoint rune) bool {
-	if p.Kind != KindCodePoints {
+func (property Property) Contains(codePoint rune) bool {
+	if property.Kind != KindCodePoints {
 		return false
 	}
-	return p.Set.Contains(codePoint)
+	return property.Set.Contains(codePoint)
 }
 
 // ContainsSequence reports whether text is one of a string property's sequences.
-func (p Property) ContainsSequence(text string) bool {
-	if p.Kind != KindStrings {
+func (property Property) ContainsSequence(text string) bool {
+	if property.Kind != KindStrings {
 		return false
 	}
-	i := sort.Search(len(p.Sequences), func(i int) bool {
-		return p.Sequences[i] >= text
+	i := sort.Search(len(property.Sequences), func(i int) bool {
+		return property.Sequences[i] >= text
 	})
-	return i < len(p.Sequences) && p.Sequences[i] == text
+	return i < len(property.Sequences) && property.Sequences[i] == text
 }
 
 // Lookup resolves the text inside \p{...}. unicodeSets is true for a pattern

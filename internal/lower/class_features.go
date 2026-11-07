@@ -11,10 +11,10 @@ import (
 // memberKey is a class member's slot or method name. A private name is qualified by the class that
 // declares it (privateName), the same spelling fieldName gives every read and write of it, so a
 // definition and its uses always agree, whichever instantiation or static object holds it.
-func (l *lowering) memberKey(name *ast.Node, class int) string {
+func (lowering *lowering) memberKey(name *ast.Node, class int) string {
 	if name.Kind == ast.KindPrivateIdentifier {
-		if declaring := l.declaringClass(name); declaring != nil {
-			return l.privateName(name.Text(), declaring)
+		if declaring := lowering.declaringClass(name); declaring != nil {
+			return lowering.privateName(name.Text(), declaring)
 		}
 		return name.Text() + "@" + strconv.Itoa(class)
 	}
@@ -22,8 +22,8 @@ func (l *lowering) memberKey(name *ast.Node, class int) string {
 }
 
 // declaringClass is the class declaration a private name belongs to, or nil.
-func (l *lowering) declaringClass(name *ast.Node) *ast.Node {
-	if symbol := l.checker.GetSymbolAtLocation(name); symbol != nil && len(symbol.Declarations) > 0 {
+func (lowering *lowering) declaringClass(name *ast.Node) *ast.Node {
+	if symbol := lowering.checker.GetSymbolAtLocation(name); symbol != nil && len(symbol.Declarations) > 0 {
 		if class := symbol.Declarations[0].Parent; class != nil && class.Kind == ast.KindClassDeclaration {
 			return class
 		}
@@ -38,21 +38,21 @@ func (l *lowering) declaringClass(name *ast.Node) *ast.Node {
 // in the order classes are first met. By the declaration, not an instantiation: inside Box<number>,
 // other.#label with other a Box<string> is Box<string>'s slot, and every instantiation holds its private
 // members under the same names; a class chain holds each declaration once, so names never collide.
-func (l *lowering) privateName(spelling string, class *ast.Node) string {
-	if l.privateOwners == nil {
-		l.privateOwners = map[*ast.Node]int{}
+func (lowering *lowering) privateName(spelling string, class *ast.Node) string {
+	if lowering.privateOwners == nil {
+		lowering.privateOwners = map[*ast.Node]int{}
 	}
-	owner, isKnown := l.privateOwners[class]
+	owner, isKnown := lowering.privateOwners[class]
 	if !isKnown {
-		owner = len(l.privateOwners) + 1
-		l.privateOwners[class] = owner
+		owner = len(lowering.privateOwners) + 1
+		lowering.privateOwners[class] = owner
 	}
 	return spelling + "@" + strconv.Itoa(owner)
 }
 
-func (l *lowering) hasPrivateStorage(proven *checker.Type) bool {
-	proven = l.concrete(proven)
-	for _, property := range l.checker.GetPropertiesOfType(proven) {
+func (lowering *lowering) hasPrivateStorage(proven *checker.Type) bool {
+	proven = lowering.concrete(proven)
+	for _, property := range lowering.checker.GetPropertiesOfType(proven) {
 		for _, declaration := range property.Declarations {
 			if declaration.Kind == ast.KindPropertyDeclaration && declaration.Name().Kind == ast.KindPrivateIdentifier {
 				return true
@@ -62,36 +62,36 @@ func (l *lowering) hasPrivateStorage(proven *checker.Type) bool {
 	return false
 }
 
-func (l *lowering) objectKeys(node *ast.Node) (ir.Expression, bool, error) {
+func (lowering *lowering) objectKeys(node *ast.Node) (ir.Expression, bool, error) {
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
 	if callee.Kind != ast.KindPropertyAccessExpression ||
 		callee.Name().Text() != "keys" ||
-		!l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Object") {
+		!lowering.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Object") {
 		return nil, false, nil
 	}
 	arguments := nodesOf(node.AsCallExpression().Arguments)
 	if len(arguments) != 1 {
-		return nil, true, l.notYet(node, "Object.keys without exactly one argument")
+		return nil, true, lowering.notYet(node, "Object.keys without exactly one argument")
 	}
 	// Node enumerates none of an Error's own properties, and natively they're fields like any other's
 	// (errorMayHide). A literal, or a const bound to one, is never an Error.
-	if !l.exactObject(arguments[0], 0) && l.errorMayHide(arguments[0]) {
-		return nil, true, l.notYet(
+	if !lowering.exactObject(arguments[0], 0) && lowering.errorMayHide(arguments[0]) {
+		return nil, true, lowering.notYet(
 			node,
 			"Object.keys of a value that may hold an Error, whose own properties Node doesn't enumerate",
 		)
 	}
-	if value, handled, recordObjectCallError := l.recordObjectCall(node, "keys"); handled {
+	if value, handled, recordObjectCallError := lowering.recordObjectCall(node, "keys"); handled {
 		return value, true, recordObjectCallError
 	}
 	// A spread of a possibly absent plain object has synthetic optional slots, not real keys.
 	// Class and accessor descriptors provide the public shape for their stored fields.
-	proven := l.checker.GetTypeAtLocation(arguments[0])
-	if _, _, known := l.nodeArrayLayoutOf(proven); known {
-		return l.objectCall(node, "keys")
+	proven := lowering.checker.GetTypeAtLocation(arguments[0])
+	if _, _, known := lowering.nodeArrayLayoutOf(proven); known {
+		return lowering.objectCall(node, "keys")
 	}
-	if !isClassInstance(proven) && l.iteratorMember(proven) != nil {
-		return nil, true, l.notYet(node, "Object.keys on a literal with symbol-key storage")
+	if !isClassInstance(proven) && lowering.iteratorMember(proven) != nil {
+		return nil, true, lowering.notYet(node, "Object.keys on a literal with symbol-key storage")
 	}
 	// A structural view does not remove the iterable literal's hidden symbol slot.
 	// Fresh explicit string-keyed literals cannot carry storage erased by a view.
@@ -102,8 +102,8 @@ func (l *lowering) objectKeys(node *ast.Node) (ir.Expression, bool, error) {
 			fresh = fresh && property.Kind != ast.KindSpreadAssignment
 		}
 	}
-	if !fresh && !isClassInstance(proven) && !l.isStaticType(proven) && l.iteratorMember(proven) == nil {
-		modules, moduleOrderError := l.moduleOrder(l.program.Files()[0])
+	if !fresh && !isClassInstance(proven) && !lowering.isStaticType(proven) && lowering.iteratorMember(proven) == nil {
+		modules, moduleOrderError := lowering.moduleOrder(lowering.program.Files()[0])
 		if moduleOrderError != nil {
 			return nil, true, moduleOrderError
 		}
@@ -111,10 +111,10 @@ func (l *lowering) objectKeys(node *ast.Node) (ir.Expression, bool, error) {
 		var visit ast.Visitor
 		visit = func(candidate *ast.Node) bool {
 			if candidate.Kind == ast.KindObjectLiteralExpression {
-				shape := l.checker.GetTypeAtLocation(candidate)
-				if l.iteratorMember(shape) != nil && l.iterationShapeFits(shape, proven) {
+				shape := lowering.checker.GetTypeAtLocation(candidate)
+				if lowering.iteratorMember(shape) != nil && lowering.iterationShapeFits(shape, proven) {
 					hazard = &Refused{
-						Where: l.program.Where(node),
+						Where: lowering.program.Where(node),
 						What:  "a structural Object.keys view that can hide an iterable literal's symbol-key storage (adamic/symbol-key-view)",
 						Fix:   "pass a new plain object containing only the desired string-keyed fields to Object.keys",
 					}
@@ -130,22 +130,22 @@ func (l *lowering) objectKeys(node *ast.Node) (ir.Expression, bool, error) {
 			return nil, true, hazard
 		}
 	}
-	if !isClassInstance(proven) && !l.isStaticType(proven) && !l.hasAccessorStorage(proven) {
-		if l.isLibraryType(proven, "RegExp") || l.includesUndefined(proven) {
-			return l.objectCall(node, "keys")
+	if !isClassInstance(proven) && !lowering.isStaticType(proven) && !lowering.hasAccessorStorage(proven) {
+		if lowering.isLibraryType(proven, "RegExp") || lowering.includesUndefined(proven) {
+			return lowering.objectCall(node, "keys")
 		}
-		for _, property := range l.checker.GetPropertiesOfType(proven) {
+		for _, property := range lowering.checker.GetPropertiesOfType(proven) {
 			if property.Flags&ast.SymbolFlagsOptional != 0 {
-				return l.objectCall(node, "keys")
+				return lowering.objectCall(node, "keys")
 			}
 		}
 	}
-	value, expressionError := l.expression(arguments[0])
+	value, expressionError := lowering.expression(arguments[0])
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
 	if value.Type() != ir.Object {
-		return nil, true, l.notYet(node, "Object.keys on a non-object")
+		return nil, true, lowering.notYet(node, "Object.keys on a non-object")
 	}
 	return ir.ObjectKeys{Object: value}, true, nil
 }

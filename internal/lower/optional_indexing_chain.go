@@ -7,18 +7,18 @@ import (
 
 // This continuation owns only a?.field[index]. The receiver guard must skip
 // the index, while a missing element still reaches a following optional read.
-func (l *lowering) optionalIndexContinuation(node *ast.Node) (ir.Expression, error) {
+func (lowering *lowering) optionalIndexContinuation(node *ast.Node) (ir.Expression, error) {
 	access := node.AsElementAccessExpression()
 	receiver := access.Expression
 	// Parentheses terminate a continuous chain; do not skip them here.
 	if receiver.Kind != ast.KindPropertyAccessExpression {
-		return nil, l.notYet(node, "an optional chain longer than one step")
+		return nil, lowering.notYet(node, "an optional chain longer than one step")
 	}
 	field := receiver.AsPropertyAccessExpression()
 	if field.QuestionDotToken == nil {
-		return nil, l.notYet(node, "an optional chain longer than one step")
+		return nil, lowering.notYet(node, "an optional chain longer than one step")
 	}
-	value, propertyError := l.property(receiver)
+	value, propertyError := lowering.property(receiver)
 	if propertyError != nil {
 		return nil, propertyError
 	}
@@ -28,21 +28,21 @@ func (l *lowering) optionalIndexContinuation(node *ast.Node) (ir.Expression, err
 		property.Method ||
 		property.Of == ir.Weak ||
 		!(property.Of == ir.Array || property.Of == ir.String || property.Of.IsTypedArray()) {
-		return nil, l.notYet(node, "an indexing continuation without a required array or string field")
+		return nil, lowering.notYet(node, "an indexing continuation without a required array or string field")
 	}
 	function := -1
-	if l.function != nil {
-		function = l.functionIndex
+	if lowering.function != nil {
+		function = lowering.functionIndex
 	}
-	local := len(l.result.Locals)
+	local := len(lowering.result.Locals)
 	base := property.Object
-	l.result.Locals = append(
-		l.result.Locals,
+	lowering.result.Locals = append(
+		lowering.result.Locals,
 		ir.Local{Name: "optional_index_chain_base", Type: base.Type(), Function: function, ExpressionAssigned: true},
 	)
 	read := ir.Read{Local: local, Of: base.Type()}
 	property.Object, property.Optional = read, false
-	indexed, optionalIndexValueError := l.optionalIndexValue(node, property)
+	indexed, optionalIndexValueError := lowering.optionalIndexValue(node, property)
 	if optionalIndexValueError != nil {
 		return nil, optionalIndexValueError
 	}

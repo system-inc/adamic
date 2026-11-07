@@ -141,41 +141,46 @@ func forgetHeldForLife() {
 	readProducts.Clear()
 }
 
-func (r *rig) add(pid int, format string, arguments ...any) {
-	r.lines = append(r.lines, fmt.Sprintf("%d ", pid)+fmt.Sprintf(format, arguments...))
+func (rig *rig) add(pid int, format string, arguments ...any) {
+	rig.lines = append(rig.lines, fmt.Sprintf("%d ", pid)+fmt.Sprintf(format, arguments...))
 }
 
-func (r *rig) path(name string) string {
+func (rig *rig) path(name string) string {
 	if filepath.IsAbs(name) {
 		return name
 	}
-	return filepath.Join(r.root, name)
+	return filepath.Join(rig.root, name)
 }
 
-func (r *rig) open(pid int, name string) {
-	r.add(pid, `openat(AT_FDCWD, %q, O_RDONLY|O_CLOEXEC) = 3<%s>`, r.path(name), r.path(name))
+func (rig *rig) open(pid int, name string) {
+	rig.add(pid, `openat(AT_FDCWD, %q, O_RDONLY|O_CLOEXEC) = 3<%s>`, rig.path(name), rig.path(name))
 }
 
-func (r *rig) write(pid int, name string) {
-	r.add(pid, `openat(AT_FDCWD, %q, O_WRONLY|O_CREAT|O_TRUNC|O_CLOEXEC, 0644) = 3<%s>`, r.path(name), r.path(name))
+func (rig *rig) write(pid int, name string) {
+	rig.add(
+		pid,
+		`openat(AT_FDCWD, %q, O_WRONLY|O_CREAT|O_TRUNC|O_CLOEXEC, 0644) = 3<%s>`,
+		rig.path(name),
+		rig.path(name),
+	)
 }
 
-func (r *rig) missing(pid int, name string) {
-	r.add(pid, `newfstatat(AT_FDCWD, %q, 0x7ffd5e1c, 0) = -1 ENOENT (No such file or directory)`, r.path(name))
+func (rig *rig) missing(pid int, name string) {
+	rig.add(pid, `newfstatat(AT_FDCWD, %q, 0x7ffd5e1c, 0) = -1 ENOENT (No such file or directory)`, rig.path(name))
 }
 
-func (r *rig) list(pid int, name string) {
-	r.add(pid, `getdents64(3<%s>, 0x55d0 /* 4 entries */, 32768) = 112`, r.path(name))
+func (rig *rig) list(pid int, name string) {
+	rig.add(pid, `getdents64(3<%s>, 0x55d0 /* 4 entries */, 32768) = 112`, rig.path(name))
 }
 
-func (r *rig) marker(pid int, event, id string) {
-	r.add(pid, `access("/adamic-trace/%s/%s", F_OK) = -1 ENOENT (No such file or directory)`, event, id)
+func (rig *rig) marker(pid int, event, id string) {
+	rig.add(pid, `access("/adamic-trace/%s/%s", F_OK) = -1 ENOENT (No such file or directory)`, event, id)
 }
 
 // built is every build the run journaled, by product name.
-func (r *rig) built(test *testing.T) map[string]journalEntry {
+func (rig *rig) built(test *testing.T) map[string]journalEntry {
 	test.Helper()
-	entries, readJournalError := readJournal(r.trace)
+	entries, readJournalError := readJournal(rig.trace)
 	if readJournalError != nil {
 		test.Fatal(readJournalError)
 	}
@@ -189,27 +194,27 @@ func (r *rig) built(test *testing.T) map[string]journalEntry {
 }
 
 // window wraps reads in a build's markers.
-func (r *rig) window(id string, reads func()) {
-	r.marker(r.pid, "build-begin", id)
+func (rig *rig) window(id string, reads func()) {
+	rig.marker(rig.pid, "build-begin", id)
 	reads()
-	r.marker(r.pid, "build-end", id)
+	rig.marker(rig.pid, "build-end", id)
 }
 
-func (r *rig) settle(test *testing.T) Settlement {
+func (rig *rig) settle(test *testing.T) Settlement {
 	test.Helper()
-	test.Chdir(r.root)
-	before := r.before
+	test.Chdir(rig.root)
+	before := rig.before
 	if before == "" {
 		var treeStateError error
 		if before, treeStateError = TreeState(); treeStateError != nil {
 			test.Fatal(treeStateError)
 		}
 	}
-	settlement, settleError := Settle(r.trace, strings.NewReader(strings.Join(r.lines, "\n")+"\n"), before)
+	settlement, settleError := Settle(rig.trace, strings.NewReader(strings.Join(rig.lines, "\n")+"\n"), before)
 	if settleError != nil {
 		test.Fatal(settleError)
 	}
-	r.lines = nil
+	rig.lines = nil
 	return settlement
 }
 
@@ -944,19 +949,19 @@ func TestTheRecipeIsTheSameWhereverGosBuildCacheSits(test *testing.T) {
 }
 
 // retrace starts another traced run in the same rig: a new trace directory, as cmd/traced makes for each run.
-func (r *rig) retrace(test *testing.T, name string) {
+func (rig *rig) retrace(test *testing.T, name string) {
 	test.Helper()
-	r.trace = filepath.Join(filepath.Dir(r.trace), filepath.Base(r.trace)+"-"+name)
-	if createDirectoryError := os.MkdirAll(r.trace, 0o755); createDirectoryError != nil {
+	rig.trace = filepath.Join(filepath.Dir(rig.trace), filepath.Base(rig.trace)+"-"+name)
+	if createDirectoryError := os.MkdirAll(rig.trace, 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
-	test.Setenv("ADAMIC_BUILD_TRACE", r.trace)
+	test.Setenv("ADAMIC_BUILD_TRACE", rig.trace)
 	test.Setenv("ADAMIC_BUILD_CACHE", "")
 }
 
-func (r *rig) entries(test *testing.T, nameKey string) []string {
+func (rig *rig) entries(test *testing.T, nameKey string) []string {
 	test.Helper()
-	file, loadReadsError := loadReads(r.cache, nameKey)
+	file, loadReadsError := loadReads(rig.cache, nameKey)
 	if loadReadsError != nil || len(file.Sets) == 0 {
 		test.Fatalf("no read set for %s: %v", nameKey[:12], loadReadsError)
 	}

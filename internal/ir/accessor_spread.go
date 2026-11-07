@@ -6,14 +6,14 @@ import "reflect"
 // exceptional because an unrelated getter exists. Unknown producers conservatively
 // include the program's enumerable literal accessors. Class prototype getters are
 // not own enumerable properties.
-func (p *Program) ObjectSpreadMayThrow(literal ObjectLiteral) bool {
+func (program *Program) ObjectSpreadMayThrow(literal ObjectLiteral) bool {
 	if literal.Spread == nil {
 		return false
 	}
 	throwing := false
-	for _, class := range p.Classes {
+	for _, class := range program.Classes {
 		for _, accessor := range class.Accessors {
-			throwing = throwing || class.Literal && accessor.Getter >= 0 && p.Functions[accessor.Getter].MayThrow
+			throwing = throwing || class.Literal && accessor.Getter >= 0 && program.Functions[accessor.Getter].MayThrow
 		}
 	}
 	if !throwing {
@@ -33,10 +33,10 @@ func (p *Program) ObjectSpreadMayThrow(literal ObjectLiteral) bool {
 		case Conditional:
 			return data(value.WhenTrue, seen) && data(value.WhenNot, seen)
 		case Read:
-			if p.Locals[value.Local].ExpressionAssigned {
+			if program.Locals[value.Local].ExpressionAssigned {
 				return false
 			}
-			for _, function := range p.Functions {
+			for _, function := range program.Functions {
 				for _, parameter := range function.Parameters {
 					if parameter == value.Local {
 						return false
@@ -66,8 +66,8 @@ func (p *Program) ObjectSpreadMayThrow(literal ObjectLiteral) bool {
 					safe = safe && data(stored, seen)
 				}
 			}
-			spreadStorageWalk(reflect.ValueOf(p.Main), visit)
-			for _, function := range p.Functions {
+			spreadStorageWalk(reflect.ValueOf(program.Main), visit)
+			for _, function := range program.Functions {
 				spreadStorageWalk(reflect.ValueOf(function.Body), visit)
 			}
 			return found && safe

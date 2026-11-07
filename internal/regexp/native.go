@@ -9,8 +9,8 @@ import (
 
 // NativeDeclarations serializes this already compiled program for the C VM.
 // Bounds beyond the C counter width are refused before emitting any C.
-func (p *Program) NativeDeclarations(name string) (string, error) {
-	if nativeCompatibilityError := p.NativeCompatibility(); nativeCompatibilityError != nil {
+func (program *Program) NativeDeclarations(name string) (string, error) {
+	if nativeCompatibilityError := program.NativeCompatibility(); nativeCompatibilityError != nil {
 		return "", nativeCompatibilityError
 	}
 	var out strings.Builder
@@ -230,7 +230,7 @@ func (p *Program) NativeDeclarations(name string) (string, error) {
 		)
 		return nil
 	}
-	if emitError := emit(p, name); emitError != nil {
+	if emitError := emit(program, name); emitError != nil {
 		return "", emitError
 	}
 	return out.String(), nil

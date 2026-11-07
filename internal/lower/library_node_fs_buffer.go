@@ -9,13 +9,19 @@ import (
 // The merged Buffer unit implements these members. Register them with the shared
 // declaration guard so byte reads can be consumed by sys.ts's actual BOM decoder.
 func init() {
-	RegisterNodeLibraryMembers("node:buffer.Buffer", "node:buffer.BufferConstructor.from", "node:buffer.Buffer.toString",
-		"node:crypto.createHash", "node:crypto.Hash.update", "node:crypto.Hash.digest")
+	RegisterNodeLibraryMembers(
+		"node:buffer.Buffer",
+		"node:buffer.BufferConstructor.from",
+		"node:buffer.Buffer.toString",
+		"node:crypto.createHash",
+		"node:crypto.Hash.update",
+		"node:crypto.Hash.digest",
+	)
 }
 
 // The readSync generic constraint is ArrayBufferView. Its proven Buffer argument
 // is synchronously borrowed as bytes, never exposed as a different object view.
-func (l *lowering) nodeFSFileBufferArgument(node *ast.Node) bool {
+func (lowering *lowering) nodeFSFileBufferArgument(node *ast.Node) bool {
 	outer := node
 	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
 		outer = outer.Parent
@@ -24,10 +30,12 @@ func (l *lowering) nodeFSFileBufferArgument(node *ast.Node) bool {
 		return false
 	}
 	call := outer.Parent.AsCallExpression()
-	if len(call.Arguments.Nodes) < 2 || call.Arguments.Nodes[1] != outer || !l.nodeBufferType(l.checker.GetTypeAtLocation(node), "Buffer") {
+	if len(call.Arguments.Nodes) < 2 ||
+		call.Arguments.Nodes[1] != outer ||
+		!lowering.nodeBufferType(lowering.checker.GetTypeAtLocation(node), "Buffer") {
 		return false
 	}
-	symbol := l.symbol(ast.SkipParentheses(call.Expression))
+	symbol := lowering.symbol(ast.SkipParentheses(call.Expression))
 	if symbol == nil || (symbol.Name != "readSync" && symbol.Name != "writeFileSync") {
 		return false
 	}

@@ -21,18 +21,18 @@ func constantStringKey(node *ast.Node) (string, bool) {
 	return "", false
 }
 
-func (l *lowering) enumerationInModule(module *ast.SourceFile) bool {
-	return l.enumerationMethodsInModule(module, false)
+func (lowering *lowering) enumerationInModule(module *ast.SourceFile) bool {
+	return lowering.enumerationMethodsInModule(module, false)
 }
 
-func (l *lowering) enumerationMethodsInModule(module *ast.SourceFile, valuesOnly bool) bool {
+func (lowering *lowering) enumerationMethodsInModule(module *ast.SourceFile, valuesOnly bool) bool {
 	found := false
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
 		if node.Kind == ast.KindCallExpression {
 			callee := ast.SkipParentheses(node.AsCallExpression().Expression)
 			if callee.Kind == ast.KindPropertyAccessExpression &&
-				l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Object") {
+				lowering.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Object") {
 				name := callee.Name().Text()
 				found = found || name == "entries" || name == "values" || !valuesOnly && name == "keys"
 			}
@@ -45,8 +45,8 @@ func (l *lowering) enumerationMethodsInModule(module *ast.SourceFile, valuesOnly
 
 // The declaration alone does not promise a runtime dictionary. Ordinary closed
 // literal origins stay fixed; indexed writes below explicitly select record storage.
-func (l *lowering) enumerationIndexSignature(node *ast.Node) bool {
-	if !l.enumerationInModule(ast.GetSourceFileOfNode(node).AsSourceFile()) {
+func (lowering *lowering) enumerationIndexSignature(node *ast.Node) bool {
+	if !lowering.enumerationInModule(ast.GetSourceFileOfNode(node).AsSourceFile()) {
 		return false
 	}
 	signature := node.AsIndexSignatureDeclaration()
@@ -57,7 +57,7 @@ func (l *lowering) enumerationIndexSignature(node *ast.Node) bool {
 
 // Reassigned origins are never guessed. Const aliases can still mutate their
 // object: those writes select record storage and invalidate unchecked enumeration.
-func (l *lowering) entriesLiteralOrigin(node *ast.Node, depth int) *ast.Node {
+func (lowering *lowering) entriesLiteralOrigin(node *ast.Node, depth int) *ast.Node {
 	if node == nil || depth > 32 {
 		return nil
 	}
@@ -66,12 +66,12 @@ func (l *lowering) entriesLiteralOrigin(node *ast.Node, depth int) *ast.Node {
 		return node
 	}
 	if node.Kind == ast.KindAsExpression && ast.IsConstTypeReference(node.AsAsExpression().Type) {
-		return l.entriesLiteralOrigin(node.AsAsExpression().Expression, depth+1)
+		return lowering.entriesLiteralOrigin(node.AsAsExpression().Expression, depth+1)
 	}
 	if !ast.IsIdentifier(node) {
 		return nil
 	}
-	symbol := l.symbol(node)
+	symbol := lowering.symbol(node)
 	if symbol == nil || len(symbol.Declarations) != 1 {
 		return nil
 	}
@@ -79,7 +79,7 @@ func (l *lowering) entriesLiteralOrigin(node *ast.Node, depth int) *ast.Node {
 	if declaration.Kind != ast.KindVariableDeclaration || declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
 		return nil
 	}
-	return l.entriesLiteralOrigin(declaration.AsVariableDeclaration().Initializer, depth+1)
+	return lowering.entriesLiteralOrigin(declaration.AsVariableDeclaration().Initializer, depth+1)
 }
 
 // entriesRecordLiteral says whether literal is a record: a const's initializer that the program writes through by a
@@ -87,19 +87,19 @@ func (l *lowering) entriesLiteralOrigin(node *ast.Node, depth int) *ast.Node {
 // ask reads that: object.go asks it for every object literal it lowers, and each walk read the whole program
 // (#pv935yw). The walk's moduleOrder of the program's first file sets cyclicModules and provenModuleReads, the same
 // state every ask set before, so an ask that reads the memo leaves standing what it would have set again.
-func (l *lowering) entriesRecordLiteral(literal *ast.Node) bool {
-	if answer, ok := l.entriesRecords[literal]; ok {
+func (lowering *lowering) entriesRecordLiteral(literal *ast.Node) bool {
+	if answer, ok := lowering.entriesRecords[literal]; ok {
 		return answer
 	}
-	answer := l.entriesRecordLiteralWalk(literal)
-	if l.entriesRecords == nil {
-		l.entriesRecords = map[*ast.Node]bool{}
+	answer := lowering.entriesRecordLiteralWalk(literal)
+	if lowering.entriesRecords == nil {
+		lowering.entriesRecords = map[*ast.Node]bool{}
 	}
-	l.entriesRecords[literal] = answer
+	lowering.entriesRecords[literal] = answer
 	return answer
 }
 
-func (l *lowering) entriesRecordLiteralWalk(literal *ast.Node) bool {
+func (lowering *lowering) entriesRecordLiteralWalk(literal *ast.Node) bool {
 	parent := literal.Parent
 	for parent != nil && (parent.Kind == ast.KindAsExpression || parent.Kind == ast.KindParenthesizedExpression) {
 		parent = parent.Parent
@@ -107,9 +107,9 @@ func (l *lowering) entriesRecordLiteralWalk(literal *ast.Node) bool {
 	if parent == nil || parent.Kind != ast.KindVariableDeclaration || parent.Parent.Flags&ast.NodeFlagsConst == 0 {
 		return false
 	}
-	contextual := l.slotType(literal)
-	indexed := contextual != nil && len(l.checker.GetIndexInfosOfType(contextual)) != 0
-	modules, moduleOrderError := l.moduleOrder(l.program.Files()[0])
+	contextual := lowering.slotType(literal)
+	indexed := contextual != nil && len(lowering.checker.GetIndexInfosOfType(contextual)) != 0
+	modules, moduleOrderError := lowering.moduleOrder(lowering.program.Files()[0])
 	if moduleOrderError != nil {
 		return false
 	}
@@ -127,8 +127,8 @@ func (l *lowering) entriesRecordLiteralWalk(literal *ast.Node) bool {
 				receiver = target.AsPropertyAccessExpression().Expression
 			}
 			if receiver != nil &&
-				l.entriesLiteralOrigin(receiver, 0) == literal &&
-				(indexed || l.entriesStringIndexed(receiver)) {
+				lowering.entriesLiteralOrigin(receiver, 0) == literal &&
+				(indexed || lowering.entriesStringIndexed(receiver)) {
 				written = true
 			}
 		}
@@ -140,7 +140,7 @@ func (l *lowering) entriesRecordLiteralWalk(literal *ast.Node) bool {
 	return written
 }
 
-func (l *lowering) entriesRecordWrite(target, valueNode *ast.Node) ([]ir.Statement, bool, error) {
+func (lowering *lowering) entriesRecordWrite(target, valueNode *ast.Node) ([]ir.Statement, bool, error) {
 	var receiver, keyNode *ast.Node
 	key, known := "", false
 	if target.Kind == ast.KindElementAccessExpression {
@@ -151,8 +151,8 @@ func (l *lowering) entriesRecordWrite(target, valueNode *ast.Node) ([]ir.Stateme
 		receiver = target.AsPropertyAccessExpression().Expression
 		key, known = target.Name().Text(), true
 	}
-	origin := l.entriesLiteralOrigin(receiver, 0)
-	if origin == nil || !l.entriesRecordLiteral(origin) {
+	origin := lowering.entriesLiteralOrigin(receiver, 0)
+	if origin == nil || !lowering.entriesRecordLiteral(origin) {
 		return nil, false, nil
 	}
 	if !known ||
@@ -160,13 +160,13 @@ func (l *lowering) entriesRecordWrite(target, valueNode *ast.Node) ([]ir.Stateme
 		strings.ContainsRune(key, 0) ||
 		strings.HasPrefix(key, "#") ||
 		key == iteratorSlot {
-		return nil, true, l.notYet(target, "an indexed record write without a plain constant data key")
+		return nil, true, lowering.notYet(target, "an indexed record write without a plain constant data key")
 	}
-	object, expressionError := l.expression(receiver)
+	object, expressionError := lowering.expression(receiver)
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
-	value, expressionError := l.expression(valueNode)
+	value, expressionError := lowering.expression(valueNode)
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
@@ -174,7 +174,7 @@ func (l *lowering) entriesRecordWrite(target, valueNode *ast.Node) ([]ir.Stateme
 		value.Type() != ir.String &&
 		value.Type() != ir.Boolean &&
 		value.Type() != ir.Union {
-		return nil, true, l.notYet(target, "a record write outside scalar storage")
+		return nil, true, lowering.notYet(target, "a record write outside scalar storage")
 	}
 	return []ir.Statement{ir.SetProperty{
 		Object: object,
@@ -182,33 +182,33 @@ func (l *lowering) entriesRecordWrite(target, valueNode *ast.Node) ([]ir.Stateme
 		Value:  fit(value, ir.Union),
 		Define: true,
 		Record: true,
-		Site:   l.writeSite(receiver),
+		Site:   lowering.writeSite(receiver),
 	}}, true, nil
 }
 
-func (l *lowering) enumerationDescriptorRefusal(node *ast.Node) error {
+func (lowering *lowering) enumerationDescriptorRefusal(node *ast.Node) error {
 	if node.Kind != ast.KindGetAccessor &&
 		node.Kind != ast.KindSetAccessor &&
 		node.Kind != ast.KindComputedPropertyName {
 		return nil
 	}
-	if !l.enumerationMethodsInModule(ast.GetSourceFileOfNode(node).AsSourceFile(), true) {
+	if !lowering.enumerationMethodsInModule(ast.GetSourceFileOfNode(node).AsSourceFile(), true) {
 		return nil
 	}
 	if node.Kind == ast.KindComputedPropertyName {
-		if l.checker.GetTypeAtLocation(
+		if lowering.checker.GetTypeAtLocation(
 			node.AsComputedPropertyName().Expression,
 		).Flags()&checker.TypeFlagsESSymbolLike == 0 {
 			return nil
 		}
 		return &Refused{
-			Where: l.program.Where(node),
+			Where: lowering.program.Where(node),
 			What:  "Object enumeration with symbol keys",
 			Fix:   "use own string-keyed data properties",
 		}
 	}
 	return &Refused{
-		Where: l.program.Where(node),
+		Where: lowering.program.Where(node),
 		What:  "Object enumeration with a getter or accessor",
 		Fix:   "use own data properties",
 	}
@@ -220,22 +220,22 @@ func init() {
 
 // entriesProgramHasRecords says whether any object literal in the program is a record. It's one answer per program,
 // kept on the lowering after its first ask (#pv935yw).
-func (l *lowering) entriesProgramHasRecords() bool {
-	if !l.entriesProgramRecordsKnown {
-		l.entriesProgramRecords, l.entriesProgramRecordsKnown = l.entriesProgramRecordsWalk(), true
+func (lowering *lowering) entriesProgramHasRecords() bool {
+	if !lowering.entriesProgramRecordsKnown {
+		lowering.entriesProgramRecords, lowering.entriesProgramRecordsKnown = lowering.entriesProgramRecordsWalk(), true
 	}
-	return l.entriesProgramRecords
+	return lowering.entriesProgramRecords
 }
 
-func (l *lowering) entriesProgramRecordsWalk() bool {
-	modules, moduleOrderError := l.moduleOrder(l.program.Files()[0])
+func (lowering *lowering) entriesProgramRecordsWalk() bool {
+	modules, moduleOrderError := lowering.moduleOrder(lowering.program.Files()[0])
 	if moduleOrderError != nil {
 		return true
 	}
 	found := false
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
-		if node.Kind == ast.KindObjectLiteralExpression && l.entriesRecordLiteral(node) {
+		if node.Kind == ast.KindObjectLiteralExpression && lowering.entriesRecordLiteral(node) {
 			found = true
 		}
 		return node.ForEachChild(visit)
@@ -246,8 +246,8 @@ func (l *lowering) entriesProgramRecordsWalk() bool {
 	return found
 }
 
-func (l *lowering) entriesStringIndexed(receiver *ast.Node) bool {
-	for _, info := range l.checker.GetIndexInfosOfType(l.checker.GetTypeAtLocation(receiver)) {
+func (lowering *lowering) entriesStringIndexed(receiver *ast.Node) bool {
+	for _, info := range lowering.checker.GetIndexInfosOfType(lowering.checker.GetTypeAtLocation(receiver)) {
 		if info.KeyType().Flags()&checker.TypeFlagsStringLike != 0 {
 			return true
 		}
@@ -257,7 +257,7 @@ func (l *lowering) entriesStringIndexed(receiver *ast.Node) bool {
 
 // A parameter or replaced binding cannot establish which allocation must grow.
 // Keep those writes outside this first record-origin implementation.
-func (l *lowering) enumerationIndexedWriteRefusal(node *ast.Node) error {
+func (lowering *lowering) enumerationIndexedWriteRefusal(node *ast.Node) error {
 	if node.Kind != ast.KindBinaryExpression ||
 		!ast.IsAssignmentOperator(node.AsBinaryExpression().OperatorToken.Kind) {
 		return nil
@@ -270,13 +270,15 @@ func (l *lowering) enumerationIndexedWriteRefusal(node *ast.Node) error {
 	if target.Kind == ast.KindElementAccessExpression {
 		receiver = target.AsElementAccessExpression().Expression
 	}
-	if receiver != nil && l.recordElement(l.checker.GetTypeAtLocation(receiver)) != nil {
+	if receiver != nil && lowering.recordElement(lowering.checker.GetTypeAtLocation(receiver)) != nil {
 		return nil // Dictionary writes carry their own named-slot and cycle proofs.
 	}
-	if receiver == nil || !l.entriesStringIndexed(receiver) || l.entriesLiteralOrigin(receiver, 0) != nil {
+	if receiver == nil ||
+		!lowering.entriesStringIndexed(receiver) ||
+		lowering.entriesLiteralOrigin(receiver, 0) != nil {
 		return nil
 	}
-	return l.notYet(node, "an indexed mutation without a closed const literal origin")
+	return lowering.notYet(node, "an indexed mutation without a closed const literal origin")
 }
 
 func init() {
@@ -299,21 +301,21 @@ type recordGuardedRead struct {
 
 // entriesRecordStorageTypes are the types the program's record literals are made as: the literal's own,
 // its contextual type and its variable's declared type.
-func (l *lowering) entriesRecordStorageTypes() []*checker.Type {
-	if l.entriesRecordTypesKnown {
-		return l.entriesRecordTypes
+func (lowering *lowering) entriesRecordStorageTypes() []*checker.Type {
+	if lowering.entriesRecordTypesKnown {
+		return lowering.entriesRecordTypes
 	}
-	l.entriesRecordTypesKnown = true
-	modules, moduleOrderError := l.moduleOrder(l.program.Files()[0])
+	lowering.entriesRecordTypesKnown = true
+	modules, moduleOrderError := lowering.moduleOrder(lowering.program.Files()[0])
 	if moduleOrderError != nil {
 		return nil
 	}
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
-		if node.Kind == ast.KindObjectLiteralExpression && l.entriesRecordLiteral(node) {
-			l.entriesRecordTypes = append(l.entriesRecordTypes, l.checker.GetTypeAtLocation(node))
-			if contextual := l.slotType(node); contextual != nil {
-				l.entriesRecordTypes = append(l.entriesRecordTypes, contextual)
+		if node.Kind == ast.KindObjectLiteralExpression && lowering.entriesRecordLiteral(node) {
+			lowering.entriesRecordTypes = append(lowering.entriesRecordTypes, lowering.checker.GetTypeAtLocation(node))
+			if contextual := lowering.slotType(node); contextual != nil {
+				lowering.entriesRecordTypes = append(lowering.entriesRecordTypes, contextual)
 			}
 			parent := node.Parent
 			for parent != nil &&
@@ -321,7 +323,10 @@ func (l *lowering) entriesRecordStorageTypes() []*checker.Type {
 				parent = parent.Parent
 			}
 			if parent != nil && parent.Kind == ast.KindVariableDeclaration {
-				l.entriesRecordTypes = append(l.entriesRecordTypes, l.checker.GetTypeAtLocation(parent.Name()))
+				lowering.entriesRecordTypes = append(
+					lowering.entriesRecordTypes,
+					lowering.checker.GetTypeAtLocation(parent.Name()),
+				)
 			}
 		}
 		return node.ForEachChild(visit)
@@ -329,19 +334,19 @@ func (l *lowering) entriesRecordStorageTypes() []*checker.Type {
 	for _, module := range modules {
 		module.AsNode().ForEachChild(visit)
 	}
-	return l.entriesRecordTypes
+	return lowering.entriesRecordTypes
 }
 
 // recordMayReach says whether a record could be the receiver of a field read whose receiver has
 // this type. Unknown fails closed: an unconstrained type parameter, any and unknown may be a record.
-func (l *lowering) recordMayReach(receiver *checker.Type) bool {
-	return l.typesMayReach(receiver, l.entriesRecordStorageTypes(), true, 0)
+func (lowering *lowering) recordMayReach(receiver *checker.Type) bool {
+	return lowering.typesMayReach(receiver, lowering.entriesRecordStorageTypes(), true, 0)
 }
 
 // typesMayReach says whether a value made as one of sources could be the receiver of a field read
 // whose receiver has this type, records saying the sources are records' (an enumeration's own storage
 // type is one too). Unknown fails closed, as recordMayReach says.
-func (l *lowering) typesMayReach(receiver *checker.Type, sources []*checker.Type, records bool, depth int) bool {
+func (lowering *lowering) typesMayReach(receiver *checker.Type, sources []*checker.Type, records bool, depth int) bool {
 	if receiver == nil || depth > 8 {
 		return true
 	}
@@ -350,7 +355,8 @@ func (l *lowering) typesMayReach(receiver *checker.Type, sources []*checker.Type
 	}
 	if receiver.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range receiver.Types() {
-			if member.Flags()&checker.TypeFlagsNullable == 0 && l.typesMayReach(member, sources, records, depth+1) {
+			if member.Flags()&checker.TypeFlagsNullable == 0 &&
+				lowering.typesMayReach(member, sources, records, depth+1) {
 				return true
 			}
 		}
@@ -358,26 +364,26 @@ func (l *lowering) typesMayReach(receiver *checker.Type, sources []*checker.Type
 	}
 	if receiver.Flags()&checker.TypeFlagsIntersection != 0 {
 		for _, member := range receiver.Types() {
-			if l.typesMayReach(member, sources, records, depth+1) {
+			if lowering.typesMayReach(member, sources, records, depth+1) {
 				return true
 			}
 		}
 	}
 	if receiver.Flags()&checker.TypeFlagsInstantiable != 0 {
-		if concrete := l.concrete(receiver); concrete != nil && concrete != receiver {
-			return l.typesMayReach(concrete, sources, records, depth+1)
+		if concrete := lowering.concrete(receiver); concrete != nil && concrete != receiver {
+			return lowering.typesMayReach(concrete, sources, records, depth+1)
 		}
-		return l.typesMayReach(l.checker.GetBaseConstraintOfType(receiver), sources, records, depth+1)
+		return lowering.typesMayReach(lowering.checker.GetBaseConstraintOfType(receiver), sources, records, depth+1)
 	}
-	if records && l.enumerationRecordStorageType(receiver) {
+	if records && lowering.enumerationRecordStorageType(receiver) {
 		return true
 	}
 	// Both ways: a record seen as a wider type, and a record narrowed to a narrower one (a predicate,
 	// a discriminant), arrive alike.
 	for _, source := range sources {
 		if source == receiver ||
-			l.checker.IsTypeAssignableTo(source, receiver) ||
-			l.checker.IsTypeAssignableTo(receiver, source) {
+			lowering.checker.IsTypeAssignableTo(source, receiver) ||
+			lowering.checker.IsTypeAssignableTo(receiver, source) {
 			return true
 		}
 	}
@@ -393,59 +399,62 @@ func (l *lowering) typesMayReach(receiver *checker.Type, sources []*checker.Type
 // literal can stand where a class is declared, and a class type is plain only when no record and no
 // merged class can be one. ir.Program.CheckedField then leaves such a receiver's reads unchecked by a
 // bare name; a view member's own key still checks it.
-func (l *lowering) plainReceiver(id int) {
-	if l.plainAsked[id] {
+func (lowering *lowering) plainReceiver(id int) {
+	if lowering.plainAsked[id] {
 		return
 	}
-	if l.plainAsked == nil {
-		l.plainAsked = map[int]bool{}
+	if lowering.plainAsked == nil {
+		lowering.plainAsked = map[int]bool{}
 	}
-	l.plainAsked[id] = true
-	if _, moduleOrderError := l.moduleOrder(l.program.Files()[0]); moduleOrderError != nil {
+	lowering.plainAsked[id] = true
+	if _, moduleOrderError := lowering.moduleOrder(lowering.program.Files()[0]); moduleOrderError != nil {
 		return // Unknown fails closed: the record and merged class types are the modules'.
 	}
-	receiver := l.viewTypes[id]
+	receiver := lowering.viewTypes[id]
 	if receiver == nil ||
-		l.recordMayReach(receiver) ||
-		l.typesMayReach(receiver, l.mergedClassInstanceTypes(), false, 0) {
+		lowering.recordMayReach(receiver) ||
+		lowering.typesMayReach(receiver, lowering.mergedClassInstanceTypes(), false, 0) {
 		return
 	}
-	if l.result.PlainReceivers == nil {
-		l.result.PlainReceivers = ir.SortedMap[int, bool]{}
+	if lowering.result.PlainReceivers == nil {
+		lowering.result.PlainReceivers = ir.SortedMap[int, bool]{}
 	}
-	l.result.PlainReceivers[id] = true
+	lowering.result.PlainReceivers[id] = true
 }
 
 // mergedClassInstanceTypes are the instance types of the program's classes merged with an interface.
-func (l *lowering) mergedClassInstanceTypes() []*checker.Type {
-	if l.mergedClassTypesKnown {
-		return l.mergedClassTypes
+func (lowering *lowering) mergedClassInstanceTypes() []*checker.Type {
+	if lowering.mergedClassTypesKnown {
+		return lowering.mergedClassTypes
 	}
-	l.mergedClassTypesKnown = true
-	modules, moduleOrderError := l.moduleOrder(l.program.Files()[0])
+	lowering.mergedClassTypesKnown = true
+	modules, moduleOrderError := lowering.moduleOrder(lowering.program.Files()[0])
 	if moduleOrderError != nil {
 		return nil // plainReceiver proves nothing without the modules.
 	}
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
-		if node.Kind == ast.KindClassDeclaration && l.mergedClass(node) == node {
-			l.mergedClassTypes = append(l.mergedClassTypes, l.checker.GetTypeAtLocation(node.Name()))
+		if node.Kind == ast.KindClassDeclaration && lowering.mergedClass(node) == node {
+			lowering.mergedClassTypes = append(
+				lowering.mergedClassTypes,
+				lowering.checker.GetTypeAtLocation(node.Name()),
+			)
 		}
 		return node.ForEachChild(visit)
 	}
 	for _, module := range modules {
 		module.AsNode().ForEachChild(visit)
 	}
-	return l.mergedClassTypes
+	return lowering.mergedClassTypes
 }
 
 // checkRecordGuardedReads runs once lowering has registered every checked view: a read admitted
 // beside records stays NotYet when a view registered its field, since that's how a record reaches
 // a fixed type the checker can't otherwise see.
-func (l *lowering) checkRecordGuardedReads() error {
-	for _, read := range l.recordGuardedReads {
-		if l.result.CheckedField(read.receiverTypeID, read.name) {
-			return l.notYet(read.node, "a union or optional field read in a program with record storage")
+func (lowering *lowering) checkRecordGuardedReads() error {
+	for _, read := range lowering.recordGuardedReads {
+		if lowering.result.CheckedField(read.receiverTypeID, read.name) {
+			return lowering.notYet(read.node, "a union or optional field read in a program with record storage")
 		}
 	}
 	return nil
@@ -463,19 +472,19 @@ func (l *lowering) checkRecordGuardedReads() error {
 // reads undefined, as the slot read does. Where the check can't hold the field's type (an object or
 // an array member) or makes none (a field held as a Union), the read stays NotYet. The storage test and the value check
 // are each a checked site in the report --explain-checks prints.
-func (l *lowering) weakFieldRead(
+func (lowering *lowering) weakFieldRead(
 	node *ast.Node,
 	object ir.Expression,
 	name string,
 	of ir.Type,
 	optional bool,
 ) (ir.Expression, error) {
-	b := l.libraryArrayBuilder([]ir.Expression{object})
+	b := lowering.libraryArrayBuilder([]ir.Expression{object})
 	// The helper's index is reserved now, so a helper the record's check makes takes the next one, as
 	// expression.go's prefix_update reserves its own.
-	l.result.Functions = append(l.result.Functions, ir.Function{Name: "weak_field_read", Returns: of})
+	lowering.result.Functions = append(lowering.result.Functions, ir.Function{Name: "weak_field_read", Returns: of})
 	receiver := b.read(b.parameters[0])
-	slot, fixedFieldReadError := l.fixedFieldRead(node, receiver, name, of, optional)
+	slot, fixedFieldReadError := lowering.fixedFieldRead(node, receiver, name, of, optional)
 	if fixedFieldReadError != nil {
 		return nil, fixedFieldReadError
 	}
@@ -489,21 +498,25 @@ func (l *lowering) weakFieldRead(
 	case ir.Unwrap:
 		property, isProperty := read.Value.(ir.Property)
 		if !isProperty {
-			return nil, l.notYet(node, "a union or optional field read in a program with record storage")
+			return nil, lowering.notYet(node, "a union or optional field read in a program with record storage")
 		}
 		property.NotRecord = true
 		read.Value = property
 		slot = read
 	default:
-		return nil, l.notYet(node, "a union or optional field read in a program with record storage")
+		return nil, lowering.notYet(node, "a union or optional field read in a program with record storage")
 	}
 	stored := ir.RecordCall{
 		Method:    "get",
-		Arguments: []ir.Expression{receiver, ir.StringConstant{Index: l.constant(name)}},
+		Arguments: []ir.Expression{receiver, ir.StringConstant{Index: lowering.constant(name)}},
 		Element:   ir.Union,
 		Returns:   ir.Union,
 	}
-	record, recordReadDeclaredError := l.recordReadDeclared(node, stored, l.checker.GetTypeAtLocation(node))
+	record, recordReadDeclaredError := lowering.recordReadDeclared(
+		node,
+		stored,
+		lowering.checker.GetTypeAtLocation(node),
+	)
 	if recordReadDeclaredError != nil {
 		return nil, recordReadDeclaredError
 	}
@@ -512,11 +525,11 @@ func (l *lowering) weakFieldRead(
 	// read as object | string; that read waits for a value check of its own, as tsc's two
 	// packageJsonContent.exports reads (exports?: object) do.
 	if _, unchecked := record.(ir.RecordCall); unchecked || record.Type() != slot.Type() {
-		return nil, l.notYet(node, "a union or optional field read in a program with record storage")
+		return nil, lowering.notYet(node, "a union or optional field read in a program with record storage")
 	}
 	// What the receiver turned out to be, named, for the stop.
 	kind := b.local("kind", ir.Number)
-	found := ir.Expression(ir.StringConstant{Index: l.constant("another value")})
+	found := ir.Expression(ir.StringConstant{Index: lowering.constant("another value")})
 	for _, other := range []struct {
 		kind int
 		name string
@@ -538,13 +551,15 @@ func (l *lowering) weakFieldRead(
 			Operator: ir.Equal,
 			Left:     b.read(kind),
 			Right:    ir.NumberConstant{Value: float64(other.kind)},
-		}, WhenTrue: ir.StringConstant{Index: l.constant(other.name)}, WhenNot: found, Of: ir.String}
+		}, WhenTrue: ir.StringConstant{Index: lowering.constant(other.name)}, WhenNot: found, Of: ir.String}
 	}
-	seen := l.checker.TypeToString(
-		l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression)),
+	seen := lowering.checker.TypeToString(
+		lowering.checker.GetNonNullableType(
+			lowering.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression),
+		),
 	)
 	message := ir.Concat{Parts: []ir.Expression{
-		ir.StringConstant{Index: l.constant("field read failed: " +
+		ir.StringConstant{Index: lowering.constant("field read failed: " +
 			recordReadExpression(node) +
 			" reads " +
 			seen +
@@ -568,24 +583,24 @@ func (l *lowering) weakFieldRead(
 	}
 	b.body = append(b.body, storage...)
 	b.body = append(b.body, ir.Return{Value: slot})
-	l.result.Functions[b.function] = ir.Function{
+	lowering.result.Functions[b.function] = ir.Function{
 		Name:       "weak_field_read",
 		Parameters: b.parameters,
 		Returns:    slot.Type(),
 		Body:       b.body,
 	}
-	l.result.PlaceholderChecks = append(l.result.PlaceholderChecks, ir.PlaceholderCheck{
+	lowering.result.PlaceholderChecks = append(lowering.result.PlaceholderChecks, ir.PlaceholderCheck{
 		Origin: "record storage",
 		Use:    "weak field read storage",
 		Path:   sourceExpression(node),
-		Where:  l.program.Where(node),
+		Where:  lowering.program.Where(node),
 		Status: "checked",
 	})
-	l.result.PlaceholderChecks = append(l.result.PlaceholderChecks, ir.PlaceholderCheck{
+	lowering.result.PlaceholderChecks = append(lowering.result.PlaceholderChecks, ir.PlaceholderCheck{
 		Origin: "record storage",
 		Use:    "weak field read record value",
 		Path:   sourceExpression(node),
-		Where:  l.program.Where(node),
+		Where:  lowering.program.Where(node),
 		Status: "checked",
 	})
 	return ir.Call{Function: b.function, Arguments: b.arguments, Returns: slot.Type()}, nil

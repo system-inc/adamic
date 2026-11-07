@@ -24,13 +24,13 @@ type printerProductsOnce struct {
 	products printerProducts
 }
 
-func (p *printerProductsOnce) get(test *testing.T, prepare func() printerProducts) printerProducts {
+func (once *printerProductsOnce) get(test *testing.T, prepare func() printerProducts) printerProducts {
 	test.Helper()
-	p.once.Do(func() { p.products = prepare() })
-	if p.products.sanitized == "" {
+	once.once.Do(func() { once.products = prepare() })
+	if once.products.sanitized == "" {
 		test.Fatal("shared GraphQL product preparation failed earlier in this process (see that test's log)")
 	}
-	return p.products
+	return once.products
 }
 
 var inTreeProducts, copyProducts printerProductsOnce

@@ -6,7 +6,7 @@ import (
 
 // Object's call/apply adapters inspect the actual argument shape and storage.
 // The checker's generic dictionary overload is not a representation conversion.
-func (l *lowering) recordLibraryArgument(node *ast.Node) bool {
+func (lowering *lowering) recordLibraryArgument(node *ast.Node) bool {
 	at := node
 	for at.Parent != nil && at.Parent.Kind == ast.KindParenthesizedExpression {
 		at = at.Parent
@@ -19,9 +19,10 @@ func (l *lowering) recordLibraryArgument(node *ast.Node) bool {
 		return false
 	}
 	callee := ast.SkipParentheses(parent.AsCallExpression().Expression)
-	if callee.Kind == ast.KindPropertyAccessExpression && (callee.Name().Text() == "call" || callee.Name().Text() == "apply") {
+	if callee.Kind == ast.KindPropertyAccessExpression &&
+		(callee.Name().Text() == "call" || callee.Name().Text() == "apply") {
 		callee = callee.AsPropertyAccessExpression().Expression
 	}
-	method, known := l.libraryMethod(callee, map[*ast.Symbol]bool{})
+	method, known := lowering.libraryMethod(callee, map[*ast.Symbol]bool{})
 	return known && method.family == "Object"
 }

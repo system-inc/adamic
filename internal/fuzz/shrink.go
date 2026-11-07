@@ -93,31 +93,32 @@ type shrinker struct {
 
 // first tries candidates in order, workers at a time, and makes the first one kept current. It
 // says which, or -1 when none was.
-func (s *shrinker) first(candidates []Reducible) int {
-	for start := 0; start < len(candidates) && s.budget > 0; start += s.workers {
+func (shrinker *shrinker) first(candidates []Reducible) int {
+	for start := 0; start < len(candidates) && shrinker.budget > 0; start += shrinker.workers {
 		var batch []int
-		for index := start; index < min(start+s.workers, len(candidates)) && len(batch) < s.budget; index++ {
+		for index := start; index < min(start+shrinker.workers, len(candidates)) &&
+			len(batch) < shrinker.budget; index++ {
 			source := candidates[index].Source()
-			if s.seen[source] {
+			if shrinker.seen[source] {
 				continue
 			}
-			s.seen[source] = true
+			shrinker.seen[source] = true
 			batch = append(batch, index)
 		}
-		s.budget -= len(batch)
+		shrinker.budget -= len(batch)
 		kept := make([]bool, len(batch))
 		var group sync.WaitGroup
 		for slot, index := range batch {
 			group.Add(1)
 			go func() {
 				defer group.Done()
-				kept[slot] = s.keep(candidates[index])
+				kept[slot] = shrinker.keep(candidates[index])
 			}()
 		}
 		group.Wait()
 		for slot, index := range batch {
 			if kept[slot] {
-				s.current = candidates[index]
+				shrinker.current = candidates[index]
 				return index
 			}
 		}
@@ -127,17 +128,17 @@ func (s *shrinker) first(candidates []Reducible) int {
 
 // items removes as many of a list's items as it can, by ddmin: the list split in n chunks, each
 // chunk's removal tried, n doubled when none can go.
-func (s *shrinker) items(list int) {
+func (shrinker *shrinker) items(list int) {
 	chunks := 2
-	for list < s.current.Lists() && s.current.Items(list) > 0 && s.budget > 0 {
-		count := s.current.Items(list)
+	for list < shrinker.current.Lists() && shrinker.current.Items(list) > 0 && shrinker.budget > 0 {
+		count := shrinker.current.Items(list)
 		size := (count + chunks - 1) / chunks
 		var candidates []Reducible
 		for start := 0; start < count; start += size {
-			candidates = append(candidates, s.current.Without(list, start, min(start+size, count)))
+			candidates = append(candidates, shrinker.current.Without(list, start, min(start+size, count)))
 		}
 		switch {
-		case s.first(candidates) >= 0:
+		case shrinker.first(candidates) >= 0:
 			chunks = max(chunks-1, 2)
 		case size == 1:
 			return
@@ -149,18 +150,18 @@ func (s *shrinker) items(list int) {
 
 // each tries the candidates for every index counted, in order, workers at a time across indexes, and
 // goes on after the one kept: what it replaced is gone, and the indexes after it are counted again.
-func (s *shrinker) each(count func() int, candidates func(int) []Reducible) {
-	for index := 0; index < count() && s.budget > 0; {
+func (shrinker *shrinker) each(count func() int, candidates func(int) []Reducible) {
+	for index := 0; index < count() && shrinker.budget > 0; {
 		var batch []Reducible
 		var owners []int
 		next := index
-		for ; next < count() && len(batch) < s.workers; next++ {
+		for ; next < count() && len(batch) < shrinker.workers; next++ {
 			for _, candidate := range candidates(next) {
 				batch = append(batch, candidate)
 				owners = append(owners, next)
 			}
 		}
-		kept := s.first(batch)
+		kept := shrinker.first(batch)
 		if kept < 0 {
 			index = next
 			continue
@@ -176,14 +177,14 @@ type programTree struct {
 	program *Program
 }
 
-func (t *programTree) Source() string { return t.program.Source() }
+func (tree *programTree) Source() string { return tree.program.Source() }
 
-func (t *programTree) Lists() int { return len(blocksOf(t.program)) }
+func (tree *programTree) Lists() int { return len(blocksOf(tree.program)) }
 
-func (t *programTree) Items(list int) int { return len(blocksOf(t.program)[list].Statements) }
+func (tree *programTree) Items(list int) int { return len(blocksOf(tree.program)[list].Statements) }
 
-func (t *programTree) Without(list, start, end int) Reducible {
-	copied := t.program.Clone()
+func (tree *programTree) Without(list, start, end int) Reducible {
+	copied := tree.program.Clone()
 	block := blocksOf(copied)[list]
 	block.Statements = append(append([]*Statement{}, block.Statements[:start]...), block.Statements[end:]...)
 	return &programTree{program: copied}
@@ -210,13 +211,13 @@ func compoundsOf(program *Program) []compound {
 	return found
 }
 
-func (t *programTree) Compounds() int { return len(compoundsOf(t.program)) }
+func (tree *programTree) Compounds() int { return len(compoundsOf(tree.program)) }
 
-func (t *programTree) Inlined(index int) []Reducible {
-	where := compoundsOf(t.program)[index]
+func (tree *programTree) Inlined(index int) []Reducible {
+	where := compoundsOf(tree.program)[index]
 	var candidates []Reducible
-	for part := range blocksOf(t.program)[where.block].Statements[where.statement].Parts {
-		copied := t.program.Clone()
+	for part := range blocksOf(tree.program)[where.block].Statements[where.statement].Parts {
+		copied := tree.program.Clone()
 		block := blocksOf(copied)[where.block]
 		statement := block.Statements[where.statement]
 		if statement.Parts[part].Block == nil {
@@ -231,10 +232,10 @@ func (t *programTree) Inlined(index int) []Reducible {
 	return candidates
 }
 
-func (t *programTree) Expressions() int { return len(slotsOf(t.program)) }
+func (tree *programTree) Expressions() int { return len(slotsOf(tree.program)) }
 
-func (t *programTree) Simpler(index int) []Reducible {
-	original := *slotsOf(t.program)[index]
+func (tree *programTree) Simpler(index int) []Reducible {
+	original := *slotsOf(tree.program)[index]
 	if original.Type == Other || isLiteral(original) {
 		return nil
 	}
@@ -249,7 +250,7 @@ func (t *programTree) Simpler(index int) []Reducible {
 		if replacement == nil {
 			continue
 		}
-		copied := t.program.Clone()
+		copied := tree.program.Clone()
 		slot := slotsOf(copied)[index]
 		if which == 0 {
 			*slot = replacement

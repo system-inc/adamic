@@ -12,7 +12,7 @@ import (
 // direct synchronous return transfers that obligation to the caller. Aliases
 // remain the same obligation; a fulfilled library promise needs no rejection
 // observer. This deliberately does not infer an observer in another closure.
-func (l *lowering) checkPromiseConsumption() error {
+func (lowering *lowering) checkPromiseConsumption() error {
 	initializers := map[int]ir.Expression{}
 	mutable := map[int]bool{}
 	collect := func(statements []ir.Statement) {
@@ -30,8 +30,8 @@ func (l *lowering) checkPromiseConsumption() error {
 			return true
 		})
 	}
-	collect(l.result.Main)
-	for _, function := range l.result.Functions {
+	collect(lowering.result.Main)
+	for _, function := range lowering.result.Functions {
 		collect(function.Body)
 	}
 	var origin func(int, map[int]bool) int
@@ -48,12 +48,12 @@ func (l *lowering) checkPromiseConsumption() error {
 	// A graph with no escaping Throw has handled every rejection and synchronous
 	// exception. Unknown targets and ordinary Promise forwarders remain unproved.
 	safeFunctions := map[int]bool{}
-	for index, function := range l.result.Functions {
+	for index, function := range lowering.result.Functions {
 		if !function.Async {
 			continue
 		}
 		safe := true
-		for _, block := range flow.Build(l.result, index).Blocks {
+		for _, block := range flow.Build(lowering.result, index).Blocks {
 			if _, throws := block.Terminal.(*flow.Throw); throws {
 				safe = false
 			}
@@ -72,7 +72,7 @@ func (l *lowering) checkPromiseConsumption() error {
 			seen[value.Local] = true
 			return fulfilled(initializers[value.Local], seen)
 		case ir.Call:
-			targets := l.result.CallTargets(value)
+			targets := lowering.result.CallTargets(value)
 			if len(targets) == 0 {
 				return false
 			}
@@ -130,7 +130,7 @@ func (l *lowering) checkPromiseConsumption() error {
 				return !barrier
 			})
 			at := statement
-			if barrier || flow.CanThrow(l.result, &flow.Instruction{At: &at, Expression: expression}) {
+			if barrier || flow.CanThrow(lowering.result, &flow.Instruction{At: &at, Expression: expression}) {
 				return false
 			}
 		}
@@ -143,13 +143,16 @@ func (l *lowering) checkPromiseConsumption() error {
 				declared.Value != nil &&
 				declared.Value.Type() == ir.Promise {
 				node := where
-				if original := l.localNodes[declared.Local]; original != nil {
+				if original := lowering.localNodes[declared.Local]; original != nil {
 					node = original
 				}
 				if !fulfilled(declared.Value, map[int]bool{}) && (mutable[declared.Local] ||
-					l.result.Locals[declared.Local].Captured ||
+					lowering.result.Locals[declared.Local].Captured ||
 					!consumedAfter(statements[index+1:], declared.Local)) {
-					return l.notYet(node, "a promise not awaited in the same function before an escaping completion")
+					return lowering.notYet(
+						node,
+						"a promise not awaited in the same function before an escaping completion",
+					)
 				}
 			}
 			var failure error
@@ -166,7 +169,7 @@ func (l *lowering) checkPromiseConsumption() error {
 					if expression, ok := value.Interface().(ir.Expression); ok {
 						if expression.Type() == ir.Promise && !consumed && !fulfilled(expression, map[int]bool{}) {
 							if _, read := expression.(ir.Read); !read {
-								failure = l.notYet(
+								failure = lowering.notYet(
 									where,
 									"a promise not awaited in the same function before an escaping completion",
 								)
@@ -209,13 +212,13 @@ func (l *lowering) checkPromiseConsumption() error {
 		}
 		return nil
 	}
-	if checkScopeError := checkScope(l.result.Main, l.entry.AsNode()); checkScopeError != nil {
+	if checkScopeError := checkScope(lowering.result.Main, lowering.entry.AsNode()); checkScopeError != nil {
 		return checkScopeError
 	}
-	for _, function := range l.result.Functions {
-		where := l.entry.AsNode()
+	for _, function := range lowering.result.Functions {
+		where := lowering.entry.AsNode()
 		if function.AsyncSite > 0 {
-			where = l.asyncSites[function.AsyncSite-1]
+			where = lowering.asyncSites[function.AsyncSite-1]
 		}
 		if checkScopeError := checkScope(function.Body, where); checkScopeError != nil {
 			return checkScopeError

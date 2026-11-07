@@ -3,16 +3,16 @@ package fuzz
 // Each block is part of the shrinker's tree. The cadence covers the Cartesian product of
 // effects and argument shapes in 50 seeds; random labels and suffixes vary the actual values.
 // Both implementations and a super call run, so a static signature cannot hide an escape.
-func (g *generator) overridesProgram() []*Statement {
-	fresh := func(mark string) string { return g.ownFreshBox(mark) }
+func (generator *generator) overridesProgram() []*Statement {
+	fresh := func(mark string) string { return generator.ownFreshBox(mark) }
 	parameters := "(box: OverrideBox, items: OverrideBox[], callback: () => void): OverrideBox "
 	read := blockOf(statement("return { v: `${box.v}:${items.length}` };"))
 	body := &Block{}
 	add := func(s string) { body.Statements = append(body.Statements, statement(s)) }
-	switch g.seed % 10 {
+	switch generator.seed % 10 {
 	case 0:
 		add("items[0] = " + fresh("write") + ";")
-		add("box.v = `${box.v}" + g.pick("!", "?", "+") + "`;")
+		add("box.v = `${box.v}" + generator.pick("!", "?", "+") + "`;")
 	case 1:
 		add("this.saved = box;")
 	case 2:
@@ -35,12 +35,12 @@ func (g *generator) overridesProgram() []*Statement {
 		add("const mapped = items.map((item) => ({ v: `${item.v}!` }));")
 		add("return mapped[0] ?? " + fresh("empty") + ";")
 	}
-	if g.seed%10 != 5 && g.seed%10 != 8 && g.seed%10 != 9 {
+	if generator.seed%10 != 5 && generator.seed%10 != 8 && generator.seed%10 != 9 {
 		add("return { v: `${box.v}:${items.length}` };")
 	}
 	call := "worker.run(@e, items, callback)"
 	argument := text(Other, "borrowed")
-	switch (g.seed / 10) % 5 {
+	switch (generator.seed / 10) % 5 {
 	case 1:
 		argument = text(Other, "items[0] ?? "+fresh("missing"))
 	case 2:
@@ -51,7 +51,7 @@ func (g *generator) overridesProgram() []*Statement {
 		argument = text(Other, "{ ...borrowed, v: `${borrowed.v}+` }")
 	}
 	callbackBody := &Block{}
-	if g.seed%10 == 7 {
+	if generator.seed%10 == 7 {
 		callbackBody.Statements = append(callbackBody.Statements, statement("items[0] = "+fresh("callback")+";"))
 	}
 	exercise := blockOf(
@@ -87,7 +87,10 @@ func (g *generator) overridesProgram() []*Statement {
 				statement("console.log(borrowed.v);"),
 			)),
 		)),
-		statement("class OverrideReader implements OverrideWorker @b", blockOf(statement("run"+parameters+"@b", read.clone()))),
+		statement(
+			"class OverrideReader implements OverrideWorker @b",
+			blockOf(statement("run"+parameters+"@b", read.clone())),
+		),
 		statement("function overrideViaBase(worker: OverrideBase): void @b", exercise),
 		statement("function overrideViaInterface(worker: OverrideWorker): void @b", exercise.clone()),
 		statement("const overrideChild = new OverrideChild();"),

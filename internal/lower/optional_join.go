@@ -7,7 +7,7 @@ import (
 
 // Only receiver-optional intrinsic join is supported here. Its arguments belong
 // inside the present branch, and the receiver must be held before that branch.
-func (l *lowering) isOptionalJoin(node *ast.Node) bool {
+func (lowering *lowering) isOptionalJoin(node *ast.Node) bool {
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
 	if call.QuestionDotToken != nil || callee.Kind != ast.KindPropertyAccessExpression {
@@ -17,24 +17,24 @@ func (l *lowering) isOptionalJoin(node *ast.Node) bool {
 	if access.QuestionDotToken == nil || access.Name().Text() != "join" {
 		return false
 	}
-	of, known := l.representation(l.checker.GetTypeAtLocation(access.Expression))
-	return known && of == ir.Array && l.libraryMember(callee)
+	of, known := lowering.representation(lowering.checker.GetTypeAtLocation(access.Expression))
+	return known && of == ir.Array && lowering.libraryMember(callee)
 }
 
-func (l *lowering) optionalJoin(node *ast.Node) (ir.Expression, error) {
+func (lowering *lowering) optionalJoin(node *ast.Node) (ir.Expression, error) {
 	receiver := ast.SkipParentheses(node.AsCallExpression().Expression).AsPropertyAccessExpression().Expression
-	value, _, arrayMethodError := l.arrayMethod(node, receiver, "join")
+	value, _, arrayMethodError := lowering.arrayMethod(node, receiver, "join")
 	if arrayMethodError != nil {
 		return nil, arrayMethodError
 	}
 	join := value.(ir.ArrayJoin)
 	function := -1
-	if l.function != nil {
-		function = l.functionIndex
+	if lowering.function != nil {
+		function = lowering.functionIndex
 	}
-	local := len(l.result.Locals)
-	l.result.Locals = append(
-		l.result.Locals,
+	local := len(lowering.result.Locals)
+	lowering.result.Locals = append(
+		lowering.result.Locals,
 		ir.Local{Name: "optional_join_receiver", Type: ir.Array, Function: function, ExpressionAssigned: true},
 	)
 	read := ir.Read{Local: local, Of: ir.Array}

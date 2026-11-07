@@ -43,33 +43,37 @@ const declaredKeysFix = "give the record no declared keys, or write the declared
 // to its constraint included. It runs before recordStorageView (2000), whose not yet would otherwise
 // name the same view a storage gap, and refuses only these views: every other view keeps the stop it
 // had.
-func (l *lowering) recordDeclaredKeyRefusal(node *ast.Node) error {
-	if !strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".a") {
+func (lowering *lowering) recordDeclaredKeyRefusal(node *ast.Node) error {
+	if !strings.HasSuffix(lowering.program.FileName(ast.GetSourceFileOfNode(node)), ".a") {
 		return nil
 	}
-	if declaredKeyWriteError := l.declaredKeyWrite(node); declaredKeyWriteError != nil {
+	if declaredKeyWriteError := lowering.declaredKeyWrite(node); declaredKeyWriteError != nil {
 		return declaredKeyWriteError
 	}
-	l.declaredKeys = true
-	defer func() { l.declaredKeys = false }()
-	if typeArgumentBindingsError := l.typeArgumentBindings(
+	lowering.declaredKeys = true
+	defer func() { lowering.declaredKeys = false }()
+	if typeArgumentBindingsError := lowering.typeArgumentBindings(
 		node,
-		l.declaredKeyBinding,
+		lowering.declaredKeyBinding,
 	); typeArgumentBindingsError != nil {
 		return typeArgumentBindingsError
 	}
-	if source, target := l.recordViewSite(node); source != nil {
+	if source, target := lowering.recordViewSite(node); source != nil {
 		// recordStorageView's own site and its own relation: the whole value seen as the slot, a
 		// fresh array's elements and all, so the view is named where that rule would name it.
-		own := l.checker.GetTypeAtLocation(source)
-		if found := l.widened(own, target, map[[2]*checker.Type]bool{}); found != nil && found.declaredKey != "" {
-			return l.wideningRefusal(node, own, target, found)
+		own := lowering.checker.GetTypeAtLocation(source)
+		if found := lowering.widened(
+			own,
+			target,
+			map[[2]*checker.Type]bool{},
+		); found != nil && found.declaredKey != "" {
+			return lowering.wideningRefusal(node, own, target, found)
 		}
 	}
 	// Every other view site refuseWidening judges: a shorthand property, a spread, a branch's implied
 	// target. Only its declared-key refusals are this rule's; the rest it makes again at 3100.
 	var refused *Refused
-	if stringWideningRefusalError := l.stringWideningRefusal(
+	if stringWideningRefusalError := lowering.stringWideningRefusal(
 		node,
 	); errors.As(stringWideningRefusalError, &refused) && refused.Fix == declaredKeysFix {
 		return stringWideningRefusalError
@@ -93,7 +97,7 @@ func init() {
 // each declared property's type itself (writtenWholly): a compound assignment's or an increment's is
 // what the operator makes, and a destructuring target's or a loop head's whatever the index
 // signature holds.
-func (l *lowering) declaredKeyWrite(node *ast.Node) error {
+func (lowering *lowering) declaredKeyWrite(node *ast.Node) error {
 	var key *ast.Node
 	var receivers []*checker.Type
 	var value *ast.Node
@@ -105,8 +109,8 @@ func (l *lowering) declaredKeyWrite(node *ast.Node) error {
 		}
 		access := node.AsElementAccessExpression()
 		key = access.ArgumentExpression
-		receivers = []*checker.Type{l.checker.GetTypeAtLocation(access.Expression)}
-		value, written = l.writtenValue(node)
+		receivers = []*checker.Type{lowering.checker.GetTypeAtLocation(access.Expression)}
+		value, written = lowering.writtenValue(node)
 	case ast.KindComputedPropertyName:
 		member := node.Parent
 		if member == nil ||
@@ -117,24 +121,24 @@ func (l *lowering) declaredKeyWrite(node *ast.Node) error {
 		}
 		// { outFile: 'a', [name]: 3 } is itself a record declaring outFile, whatever it's written into.
 		key = node.AsComputedPropertyName().Expression
-		receivers = []*checker.Type{l.checker.GetTypeAtLocation(member.Parent)}
-		if contextual := l.slotType(member.Parent); contextual != nil {
+		receivers = []*checker.Type{lowering.checker.GetTypeAtLocation(member.Parent)}
+		if contextual := lowering.slotType(member.Parent); contextual != nil {
 			receivers = append(receivers, contextual)
 		}
 		if member.Kind == ast.KindPropertyAssignment {
 			value = member.AsPropertyAssignment().Initializer
-			written = l.checker.GetTypeAtLocation(value)
+			written = lowering.checker.GetTypeAtLocation(value)
 		}
 	default:
 		return nil
 	}
-	names, single := l.writtenNames(key)
+	names, single := lowering.writtenNames(key)
 	if single {
 		return nil
 	}
 	for _, receiver := range receivers {
-		for _, member := range l.definedMembers(l.checker.GetNonNullableType(receiver)) {
-			for _, info := range l.checker.GetIndexInfosOfType(member) {
+		for _, member := range lowering.definedMembers(lowering.checker.GetNonNullableType(receiver)) {
+			for _, info := range lowering.checker.GetIndexInfosOfType(member) {
 				if info.KeyType().Flags() != checker.TypeFlagsString || info.IsReadonly() {
 					continue
 				}
@@ -142,28 +146,28 @@ func (l *lowering) declaredKeyWrite(node *ast.Node) error {
 				if stored == nil {
 					stored = info.ValueType()
 				}
-				if property := l.declaredKeyMisfit(member, stored, names); property != nil {
+				if property := lowering.declaredKeyMisfit(member, stored, names); property != nil {
 					return &Refused{
-						Where: l.program.Where(
+						Where: lowering.program.Where(
 							node,
 						),
 						What: "a write into a record with declared properties through a key that is not one literal, of a value a declared property it can land under cannot take (" +
-							l.checker.TypeToString(stored) +
+							lowering.checker.TypeToString(stored) +
 							" written into " +
-							l.checker.TypeToString(member) +
+							lowering.checker.TypeToString(member) +
 							" by " +
 							sourceExpression(key) +
 							": " +
 							property.Name +
 							" is declared " +
-							l.checker.TypeToString(l.checker.GetTypeOfSymbol(property)) +
+							lowering.checker.TypeToString(lowering.checker.GetTypeOfSymbol(property)) +
 							")",
 						Fix: declaredKeysFix,
 					}
 				}
 				if value == nil {
-					if property := l.writtenWholly(member, stored, names); property != nil {
-						return l.notYet(
+					if property := lowering.writtenWholly(member, stored, names); property != nil {
+						return lowering.notYet(
 							node,
 							"a write into a record with declared properties through a key that is not one literal, of no one expression's value, whose type isn't declared property "+
 								property.Name+
@@ -172,7 +176,12 @@ func (l *lowering) declaredKeyWrite(node *ast.Node) error {
 					}
 					continue
 				}
-				if namedWriteStopError := l.namedWriteStop(node, member, value, names); namedWriteStopError != nil {
+				if namedWriteStopError := lowering.namedWriteStop(
+					node,
+					member,
+					value,
+					names,
+				); namedWriteStopError != nil {
 					return namedWriteStopError
 				}
 			}
@@ -186,14 +195,14 @@ func (l *lowering) declaredKeyWrite(node *ast.Node) error {
 // under a name no declared property takes. Otherwise it's each name a union of literals can be, or
 // the name strings joined by + fold to (constantStringKey), which tsc types as string and doesn't
 // check, so ["" + "constructor"] is judged as constructor is; or nil, when it can be any name.
-func (l *lowering) writtenNames(key *ast.Node) (map[string]bool, bool) {
+func (lowering *lowering) writtenNames(key *ast.Node) (map[string]bool, bool) {
 	key = ast.SkipParentheses(key)
 	if key.Kind == ast.KindStringLiteral ||
 		key.Kind == ast.KindNoSubstitutionTemplateLiteral ||
 		key.Kind == ast.KindNumericLiteral {
 		return nil, true
 	}
-	proven := l.checker.GetTypeAtLocation(key)
+	proven := lowering.checker.GetTypeAtLocation(key)
 	if proven.Flags()&(checker.TypeFlagsStringLiteral|checker.TypeFlagsNumberLiteral|checker.TypeFlagsUniqueESSymbol) != 0 {
 		return nil, true
 	}
@@ -223,14 +232,18 @@ func (l *lowering) writtenNames(key *ast.Node) (map[string]bool, bool) {
 // readonly one. These are namedWriteStop's own checks, the ones no rule at a direct write judges, but
 // for the optional undefined: undefined under an optional property, which may hold it, is left to
 // namedWriteStop, not yet as in .ts.
-func (l *lowering) declaredKeyMisfit(receiver, written *checker.Type, names map[string]bool) *ast.Symbol {
-	for _, property := range l.checker.GetPropertiesOfType(receiver) {
+func (lowering *lowering) declaredKeyMisfit(receiver, written *checker.Type, names map[string]bool) *ast.Symbol {
+	for _, property := range lowering.checker.GetPropertiesOfType(receiver) {
 		if names != nil && !names[property.Name] {
 			continue
 		}
-		if l.checker.IsReadonlySymbol(property) ||
-			!l.checker.IsTypeAssignableTo(written, l.checker.GetTypeOfSymbol(property)) ||
-			!l.sameRecordStorage(written, l.checker.GetNonMissingTypeOfSymbol(property), map[[2]*checker.Type]bool{}) {
+		if lowering.checker.IsReadonlySymbol(property) ||
+			!lowering.checker.IsTypeAssignableTo(written, lowering.checker.GetTypeOfSymbol(property)) ||
+			!lowering.sameRecordStorage(
+				written,
+				lowering.checker.GetNonMissingTypeOfSymbol(property),
+				map[[2]*checker.Type]bool{},
+			) {
 			return property
 		}
 	}
@@ -240,15 +253,15 @@ func (l *lowering) declaredKeyMisfit(receiver, written *checker.Type, names map[
 // writtenWholly is the first declared property of receiver, of those names holds when it's given, whose
 // type a value of type written, its literals at their base type, isn't itself, or nil. It judges a write
 // whose value is no one expression, which the registry has nothing to run over.
-func (l *lowering) writtenWholly(receiver, written *checker.Type, names map[string]bool) *ast.Symbol {
-	widened := checker.Checker_getBaseTypeOfLiteralType(l.checker, l.checker.GetWidenedType(written))
-	for _, property := range l.checker.GetPropertiesOfType(receiver) {
+func (lowering *lowering) writtenWholly(receiver, written *checker.Type, names map[string]bool) *ast.Symbol {
+	widened := checker.Checker_getBaseTypeOfLiteralType(lowering.checker, lowering.checker.GetWidenedType(written))
+	for _, property := range lowering.checker.GetPropertiesOfType(receiver) {
 		if names != nil && !names[property.Name] {
 			continue
 		}
-		if to := l.checker.GetNonMissingTypeOfSymbol(
+		if to := lowering.checker.GetNonMissingTypeOfSymbol(
 			property,
-		); widened != to || !l.sameKeeping(widened, to, map[[2]*checker.Type]bool{}) {
+		); widened != to || !lowering.sameKeeping(widened, to, map[[2]*checker.Type]bool{}) {
 			return property
 		}
 	}
@@ -258,7 +271,7 @@ func (l *lowering) writtenWholly(receiver, written *checker.Type, names map[stri
 // writtenValue is what an assignment or an increment writes into its target: the right side of =, or
 // of ??=, ||= or &&=, which write it if they write, and its type; or no node and the type of what an
 // arithmetic compound assignment or ++ makes; or neither, when the target isn't one's.
-func (l *lowering) writtenValue(target *ast.Node) (*ast.Node, *checker.Type) {
+func (lowering *lowering) writtenValue(target *ast.Node) (*ast.Node, *checker.Type) {
 	for target.Parent != nil && target.Parent.Kind == ast.KindParenthesizedExpression {
 		target = target.Parent
 	}
@@ -271,24 +284,26 @@ func (l *lowering) writtenValue(target *ast.Node) (*ast.Node, *checker.Type) {
 		ast.IsAssignmentOperator(parent.AsBinaryExpression().OperatorToken.Kind):
 		switch parent.AsBinaryExpression().OperatorToken.Kind {
 		case ast.KindEqualsToken, ast.KindQuestionQuestionEqualsToken, ast.KindBarBarEqualsToken, ast.KindAmpersandAmpersandEqualsToken:
-			return parent.AsBinaryExpression().Right, l.checker.GetTypeAtLocation(parent.AsBinaryExpression().Right)
+			return parent.AsBinaryExpression().Right, lowering.checker.GetTypeAtLocation(
+				parent.AsBinaryExpression().Right,
+			)
 		}
-		return nil, l.checker.GetTypeAtLocation(parent)
+		return nil, lowering.checker.GetTypeAtLocation(parent)
 	case parent.Kind == ast.KindPrefixUnaryExpression || parent.Kind == ast.KindPostfixUnaryExpression:
-		return nil, l.checker.GetTypeAtLocation(parent)
+		return nil, lowering.checker.GetTypeAtLocation(parent)
 	}
 	return nil, nil
 }
 
 // declaredNarrower is the first property declares has, but those skip names, that can't hold a value
 // of type value: written under its name through an index signature, value would break it.
-func (l *lowering) declaredNarrower(declares, value *checker.Type, skip func(name string) bool) *ast.Symbol {
-	for _, property := range l.checker.GetPropertiesOfType(declares) {
+func (lowering *lowering) declaredNarrower(declares, value *checker.Type, skip func(name string) bool) *ast.Symbol {
+	for _, property := range lowering.checker.GetPropertiesOfType(declares) {
 		if skip != nil && skip(property.Name) {
 			continue
 		}
-		declared := l.checker.GetTypeOfSymbol(property)
-		if !l.checker.IsTypeAssignableTo(value, declared) || !l.enumAssignable(value, declared) {
+		declared := lowering.checker.GetTypeOfSymbol(property)
+		if !lowering.checker.IsTypeAssignableTo(value, declared) || !lowering.enumAssignable(value, declared) {
 			return property
 		}
 	}
@@ -301,34 +316,38 @@ func (l *lowering) declaredNarrower(declares, value *checker.Type, skip func(nam
 //     hold. A copy (fresh) only reads from's properties, and isn't judged this way.
 //   - to declares it, from's index signature (readonly too, since this direction only reads) holds
 //     what it can't hold, and from doesn't declare it, or skip names it as written after a spread.
-func (l *lowering) declaredKeyWidened(from, to *checker.Type, skip map[string]bool, fresh bool) *widening {
+func (lowering *lowering) declaredKeyWidened(from, to *checker.Type, skip map[string]bool, fresh bool) *widening {
 	// The view's own writable string index signature, never its storage: a Pick of a record is stored as
 	// the record (#6c4swvt G1), but its type has no index signature to write through.
-	for _, info := range l.checker.GetIndexInfosOfType(to) {
+	for _, info := range lowering.checker.GetIndexInfosOfType(to) {
 		if fresh ||
 			info.KeyType().Flags() != checker.TypeFlagsString ||
 			info.IsReadonly() ||
-			l.libraryIndexSignature(to) {
+			lowering.libraryIndexSignature(to) {
 			continue
 		}
-		viewDeclares := func(name string) bool { return l.checker.GetPropertyOfType(to, name) != nil }
-		if property := l.declaredNarrower(from, info.ValueType(), viewDeclares); property != nil {
+		viewDeclares := func(name string) bool { return lowering.checker.GetPropertyOfType(to, name) != nil }
+		if property := lowering.declaredNarrower(from, info.ValueType(), viewDeclares); property != nil {
 			return &widening{
-				source:      l.checker.GetTypeOfSymbol(property),
+				source:      lowering.checker.GetTypeOfSymbol(property),
 				target:      info.ValueType(),
 				declaredKey: property.Name,
 			}
 		}
 	}
-	for _, info := range l.checker.GetIndexInfosOfType(from) {
+	for _, info := range lowering.checker.GetIndexInfosOfType(from) {
 		if info.KeyType().Flags() != checker.TypeFlagsString {
 			continue
 		}
-		sourceDeclares := func(name string) bool { return skip[name] || l.checker.GetPropertyOfType(from, name) != nil }
-		if property := l.declaredNarrower(to, info.ValueType(), sourceDeclares); property != nil {
+		sourceDeclares := func(
+			name string,
+		) bool {
+			return skip[name] || lowering.checker.GetPropertyOfType(from, name) != nil
+		}
+		if property := lowering.declaredNarrower(to, info.ValueType(), sourceDeclares); property != nil {
 			return &widening{
 				source:      info.ValueType(),
-				target:      l.checker.GetTypeOfSymbol(property),
+				target:      lowering.checker.GetTypeOfSymbol(property),
 				declaredKey: property.Name,
 				dictionary:  true,
 			}
@@ -339,8 +358,8 @@ func (l *lowering) declaredKeyWidened(from, to *checker.Type, skip map[string]bo
 
 // libraryIndexSignature reports whether a type's index signature is the library's own, a parameter
 // of Object.values or Object.entries, which reads the record it's handed.
-func (l *lowering) libraryIndexSignature(proven *checker.Type) bool {
-	for _, info := range l.checker.GetIndexInfosOfType(l.concrete(proven)) {
+func (lowering *lowering) libraryIndexSignature(proven *checker.Type) bool {
+	for _, info := range lowering.checker.GetIndexInfosOfType(lowering.concrete(proven)) {
 		if declaration := info.Declaration(); declaration != nil &&
 			load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
 			return true
@@ -356,29 +375,29 @@ func (l *lowering) libraryIndexSignature(proven *checker.Type) bool {
 // n26, n27 and n28). A binding that can't be read is not yet under a constraint with a writable string
 // index signature, since what it binds could be a record with declared properties seen through it.
 // Any other finding is no declared-key one, and is left to the rules that judge it.
-func (l *lowering) declaredKeyBinding(binding typeArgumentBinding) error {
+func (lowering *lowering) declaredKeyBinding(binding typeArgumentBinding) error {
 	if binding.argument == nil {
-		if l.recordElement(l.checker.GetBaseConstraintOfType(binding.constraint)) != nil {
-			return l.notYet(binding.site, "a generic instantiation whose type argument for "+
-				l.checker.TypeToString(binding.parameter)+
+		if lowering.recordElement(lowering.checker.GetBaseConstraintOfType(binding.constraint)) != nil {
+			return lowering.notYet(binding.site, "a generic instantiation whose type argument for "+
+				lowering.checker.TypeToString(binding.parameter)+
 				", constrained to "+
-				l.checker.TypeToString(binding.constraint)+
+				lowering.checker.TypeToString(binding.constraint)+
 				", can't be read")
 		}
 		return nil
 	}
-	found := l.widened(binding.argument, binding.constraint, map[[2]*checker.Type]bool{})
+	found := lowering.widened(binding.argument, binding.constraint, map[[2]*checker.Type]bool{})
 	if found == nil || found.declaredKey == "" {
 		return nil
 	}
-	bound := l.checker.TypeToString(binding.argument) +
+	bound := lowering.checker.TypeToString(binding.argument) +
 		" as " +
-		l.checker.TypeToString(binding.parameter) +
+		lowering.checker.TypeToString(binding.parameter) +
 		", constrained to " +
-		l.checker.TypeToString(binding.constraint)
+		lowering.checker.TypeToString(binding.constraint)
 	if found.dictionary {
 		return &Refused{
-			Where: l.program.Where(
+			Where: lowering.program.Where(
 				binding.site,
 			),
 			What: "a dictionary bound as a type argument whose constraint reads it through a declared property narrower than its values (" +
@@ -386,15 +405,15 @@ func (l *lowering) declaredKeyBinding(binding typeArgumentBinding) error {
 				": " +
 				found.declaredKey +
 				" is declared " +
-				l.checker.TypeToString(found.target) +
+				lowering.checker.TypeToString(found.target) +
 				", and the index signature holds " +
-				l.checker.TypeToString(found.source) +
+				lowering.checker.TypeToString(found.source) +
 				")",
 			Fix: declaredKeysFix,
 		}
 	}
 	return &Refused{
-		Where: l.program.Where(
+		Where: lowering.program.Where(
 			binding.site,
 		),
 		What: "a type argument with declared properties bound to a type parameter constrained to a wider index signature, which can write under a declared property what it does not hold (" +
@@ -402,9 +421,9 @@ func (l *lowering) declaredKeyBinding(binding typeArgumentBinding) error {
 			": " +
 			found.declaredKey +
 			" is declared " +
-			l.checker.TypeToString(found.source) +
+			lowering.checker.TypeToString(found.source) +
 			", and the index signature holds " +
-			l.checker.TypeToString(found.target) +
+			lowering.checker.TypeToString(found.target) +
 			")",
 		Fix: declaredKeysFix,
 	}
@@ -413,41 +432,41 @@ func (l *lowering) declaredKeyBinding(binding typeArgumentBinding) error {
 // declaredKeyRefusal is a declared-key widening's refusal: one reason for each direction. A view found
 // in one branch of a conditional names that branch's type (viewed), not the conditional's own, which
 // tsc reduced to the wider side (Language's n24).
-func (l *lowering) declaredKeyRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {
+func (lowering *lowering) declaredKeyRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {
 	if found.viewed != nil {
 		own = found.viewed
 	}
 	if found.dictionary {
 		return &Refused{
-			Where: l.program.Where(node),
+			Where: lowering.program.Where(node),
 			What: "a dictionary read through a declared property narrower than its values (" +
-				l.checker.TypeToString(own) +
+				lowering.checker.TypeToString(own) +
 				" seen as " +
-				l.checker.TypeToString(contextual) +
+				lowering.checker.TypeToString(contextual) +
 				": " +
 				found.declaredKey +
 				" is declared " +
-				l.checker.TypeToString(found.target) +
+				lowering.checker.TypeToString(found.target) +
 				", and the index signature holds " +
-				l.checker.TypeToString(found.source) +
+				lowering.checker.TypeToString(found.source) +
 				")",
 			Fix: declaredKeysFix,
 		}
 	}
 	return &Refused{
-		Where: l.program.Where(
+		Where: lowering.program.Where(
 			node,
 		),
 		What: "a value with declared properties seen through a wider index signature, which can write under a declared property what it does not hold (" +
-			l.checker.TypeToString(own) +
+			lowering.checker.TypeToString(own) +
 			" seen as " +
-			l.checker.TypeToString(contextual) +
+			lowering.checker.TypeToString(contextual) +
 			": " +
 			found.declaredKey +
 			" is declared " +
-			l.checker.TypeToString(found.source) +
+			lowering.checker.TypeToString(found.source) +
 			", and the index signature holds " +
-			l.checker.TypeToString(found.target) +
+			lowering.checker.TypeToString(found.target) +
 			")",
 		Fix: declaredKeysFix,
 	}

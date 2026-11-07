@@ -9,20 +9,23 @@ import (
 
 // graphAllocation preserves both the allocation's concrete type and its contextual
 // view. Ownership is selected only after the whole program's cycle proof runs.
-func (l *lowering) graphAllocation(value ir.Expression, node *ast.Node) ir.Expression {
-	ids := []int{l.cycleTypeID(l.concrete(l.checker.GetTypeAtLocation(node)))}
+func (lowering *lowering) graphAllocation(value ir.Expression, node *ast.Node) ir.Expression {
+	ids := []int{lowering.cycleTypeID(lowering.concrete(lowering.checker.GetTypeAtLocation(node)))}
 	// Fresh literal identities may change across checker queries. The variable's
 	// widened allocation view is stable and is the type the cycle finder visits.
 	if node.Parent != nil && node.Parent.Kind == ast.KindVariableDeclaration && node.Parent.Name() != nil {
-		ids = append(ids, l.cycleTypeID(l.concrete(l.checker.GetTypeAtLocation(node.Parent.Name()))))
+		ids = append(
+			ids,
+			lowering.cycleTypeID(lowering.concrete(lowering.checker.GetTypeAtLocation(node.Parent.Name()))),
+		)
 	}
-	if contextual := l.slotType(node); contextual != nil {
-		ids = append(ids, l.cycleTypeID(l.concrete(contextual)))
+	if contextual := lowering.slotType(node); contextual != nil {
+		ids = append(ids, lowering.cycleTypeID(lowering.concrete(contextual)))
 	}
 	switch value := value.(type) {
 	case ir.ObjectLiteral:
 		if value.Record {
-			l.graphDynamicSite = node
+			lowering.graphDynamicSite = node
 		}
 		value.GraphTypes = ids
 		return value
@@ -83,18 +86,18 @@ func graphSeed(sourceError error) (bool, error) {
 
 // The old refusal sites still determine the seeds. The ownership SCC includes
 // all strong connecting paths, including readonly and proven-fresh slots.
-func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
+func (finder *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 	// Graph regions don't follow record values, so a cycle through a record stays refused rather than seeded.
-	for _, proven := range f.seen {
-		if f.l.recordElement(proven) != nil {
-			if slotsOfError := f.slotsOf(proven); slotsOfError != nil {
+	for _, proven := range finder.seen {
+		if finder.l.recordElement(proven) != nil {
+			if slotsOfError := finder.slotsOf(proven); slotsOfError != nil {
 				return slotsOfError
 			}
 		}
 	}
 	seeds := map[cycleNode]bool{}
-	for _, proven := range f.seen {
-		seed, graphSeedError := graphSeed(f.slotsOf(proven))
+	for _, proven := range finder.seen {
+		seed, graphSeedError := graphSeed(finder.slotsOf(proven))
 		if graphSeedError != nil {
 			return graphSeedError
 		}
@@ -102,21 +105,21 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 			seeds[cycleNode{proven: proven}] = true
 		}
 	}
-	for local, declared := range f.l.result.Locals {
-		proven := f.l.localTypes[local]
+	for local, declared := range finder.l.result.Locals {
+		proven := finder.l.localTypes[local]
 		// A closed frame input (closed_frame_inputs.go) is proven not to close a cycle, so its cell
 		// stays counted rather than seeding a graph region.
 		if declared.Captured &&
 			!declared.Global &&
 			proven != nil &&
-			!f.weak(proven) &&
-			f.reaches(proven, cycleNode{cell: local + 1}) &&
-			!f.l.closedFrameInput(local) {
+			!finder.weak(proven) &&
+			finder.reaches(proven, cycleNode{cell: local + 1}) &&
+			!finder.l.closedFrameInput(local) {
 			// An async frame owns its captured cells and is never a graph member, so a cycle through
 			// one stays refused, as it was before graph regions.
-			if declared.Function >= 0 && f.l.result.Functions[declared.Function].Suspends() {
+			if declared.Function >= 0 && finder.l.result.Functions[declared.Function].Suspends() {
 				return &Refused{
-					Where: f.l.program.Where(f.l.localNodes[local]),
+					Where: finder.l.program.Where(finder.l.localNodes[local]),
 					What: "async frame capture cycle: '" +
 						declared.Name +
 						"', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free",
@@ -138,26 +141,26 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 				return false
 			}
 			if ast.IsExpressionNode(node) {
-				f.use(f.l.checker.GetTypeAtLocation(node), node)
-				if contextual := f.l.slotType(node); contextual != nil {
-					f.use(contextual, node)
+				finder.use(finder.l.checker.GetTypeAtLocation(node), node)
+				if contextual := finder.l.slotType(node); contextual != nil {
+					finder.use(contextual, node)
 				}
 			}
 			return node.ForEachChild(visit)
 		}
 		module.AsNode().ForEachChild(visit)
 	}
-	for _, closure := range f.l.closureRecords {
-		f.use(closure.proven, closure.node)
+	for _, closure := range finder.l.closureRecords {
+		finder.use(closure.proven, closure.node)
 	}
 	candidates := []cycleNode{}
-	for proven := range f.where {
+	for proven := range finder.where {
 		candidates = append(candidates, cycleNode{proven: proven})
 	}
-	for _, shape := range f.shapes {
+	for _, shape := range finder.shapes {
 		candidates = append(candidates, cycleNode{proven: shape})
 	}
-	for local, declared := range f.l.result.Locals {
+	for local, declared := range finder.l.result.Locals {
 		if declared.Captured && !declared.Global {
 			candidates = append(candidates, cycleNode{cell: local + 1})
 		}
@@ -170,20 +173,20 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 		if _, seen := edges[node]; seen {
 			continue
 		}
-		links := f.graphLinks(node)
+		links := finder.graphLinks(node)
 		// The finder's related relation treats compatible structural views as the
 		// same possible allocation. Weak views never become strong edges.
 		if node.proven != nil &&
 			node.proven.Flags()&checker.TypeFlagsObject != 0 &&
-			!f.weak(node.proven) &&
-			!f.template(node.proven) &&
-			!f.isFunction(node.proven) {
+			!finder.weak(node.proven) &&
+			!finder.template(node.proven) &&
+			!finder.isFunction(node.proven) {
 			for _, view := range candidates {
 				if view.proven != nil &&
 					view.proven.Flags()&checker.TypeFlagsObject != 0 &&
-					!f.weak(view.proven) &&
-					!f.template(view.proven) &&
-					f.related(node.proven, view.proven) {
+					!finder.weak(view.proven) &&
+					!finder.template(view.proven) &&
+					finder.related(node.proven, view.proven) {
 					links = append(links, view)
 				}
 			}
@@ -232,7 +235,7 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 		if selected {
 			for _, each := range component {
 				graph[each] = true
-				if each.proven != nil && f.l.isLibraryType(each.proven, "Promise") && throughPromise == nil {
+				if each.proven != nil && finder.l.isLibraryType(each.proven, "Promise") && throughPromise == nil {
 					throughPromise = component
 				}
 			}
@@ -249,8 +252,8 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 	if throughPromise != nil {
 		var where *ast.Node
 		for _, each := range throughPromise {
-			if each.proven != nil && f.where[each.proven] != nil {
-				where = f.where[each.proven]
+			if each.proven != nil && finder.where[each.proven] != nil {
+				where = finder.where[each.proven]
 				break
 			}
 		}
@@ -258,7 +261,7 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 			where = modules[0].AsNode()
 		}
 		return &Refused{
-			Where: f.l.program.Where(where),
+			Where: finder.l.program.Where(where),
 			What:  "a Promise whose payload can reach back to what holds it: a cycle reference counting can't free, and a Promise can't join a graph region",
 			Fix:   "don't keep a Promise in a value its result can reach, or declare the field Weak<...> (adamic/cycle-capable)",
 		}
@@ -267,14 +270,14 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 	for changed := true; changed; {
 		changed = false
 		for node := range edges {
-			if graph[node] || node.proven == nil || f.weak(node.proven) {
+			if graph[node] || node.proven == nil || finder.weak(node.proven) {
 				continue
 			}
 			proven := node.proven
-			if f.l.isArrayType(proven) ||
+			if finder.l.isArrayType(proven) ||
 				checker.IsTupleType(proven) ||
-				f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
-				for _, argument := range f.graphArguments(proven) {
+				finder.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
+				for _, argument := range finder.graphArguments(proven) {
 					if graph[cycleNode{proven: argument}] {
 						graph[node] = true
 						changed = true
@@ -291,47 +294,47 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 			}
 		}
 	}
-	f.l.result.GraphTypes = map[int]bool{}
+	finder.l.result.GraphTypes = map[int]bool{}
 	for node := range graph {
-		if node.proven != nil && !f.weak(node.proven) {
-			f.l.result.GraphTypes[f.l.cycleTypeID(node.proven)] = true
+		if node.proven != nil && !finder.weak(node.proven) {
+			finder.l.result.GraphTypes[finder.l.cycleTypeID(node.proven)] = true
 		}
 		if node.cell != 0 {
-			f.l.result.Locals[node.cell-1].GraphCell = true
+			finder.l.result.Locals[node.cell-1].GraphCell = true
 		}
 	}
-	for _, closure := range f.l.closureRecords {
-		if f.l.result.GraphTypes[int(closure.proven.Id())] {
-			f.l.result.Functions[closure.function].GraphClosure = true
+	for _, closure := range finder.l.closureRecords {
+		if finder.l.result.GraphTypes[int(closure.proven.Id())] {
+			finder.l.result.Functions[closure.function].GraphClosure = true
 		}
 	}
 	// One frame allocation is indivisible, even if siblings capture disjoint slots.
 	for changed := true; changed; {
 		changed = false
-		for index := range f.l.result.Functions {
-			function := &f.l.result.Functions[index]
+		for index := range finder.l.result.Functions {
+			function := &finder.l.result.Functions[index]
 			for _, local := range function.Environment {
-				if f.l.result.Locals[local].GraphCell && !function.GraphClosure {
+				if finder.l.result.Locals[local].GraphCell && !function.GraphClosure {
 					function.GraphClosure = true
 					changed = true
 				}
 			}
 			if function.GraphClosure {
 				for _, local := range function.Environment {
-					if !f.l.result.Locals[local].GraphCell {
-						f.l.result.Locals[local].GraphCell = true
+					if !finder.l.result.Locals[local].GraphCell {
+						finder.l.result.Locals[local].GraphCell = true
 						changed = true
 					}
 				}
 			}
 			frame := false
 			for _, local := range function.FrameEnvironment {
-				frame = frame || f.l.result.Locals[local].GraphCell
+				frame = frame || finder.l.result.Locals[local].GraphCell
 			}
 			if frame {
 				for _, local := range function.FrameEnvironment {
-					if !f.l.result.Locals[local].GraphCell {
-						f.l.result.Locals[local].GraphCell = true
+					if !finder.l.result.Locals[local].GraphCell {
+						finder.l.result.Locals[local].GraphCell = true
 						changed = true
 					}
 				}
@@ -340,49 +343,49 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 	}
 	// Forwarded nested callbacks retain their parent frame through a path outside
 	// the direct environment ownership proof. Keep that capture cycle refused.
-	for _, closure := range f.l.closureRecords {
-		function := f.l.result.Functions[closure.function]
+	for _, closure := range finder.l.closureRecords {
+		function := finder.l.result.Functions[closure.function]
 		if function.GraphClosure && function.ForwardedNestedParent != 0 {
 			return &Refused{
-				Where: f.l.program.Where(closure.node),
+				Where: finder.l.program.Where(closure.node),
 				What:  "a nested callback retains a cyclic parent environment through a forwarded frame",
 				Fix:   "remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> (adamic/cycle-capable)",
 			}
 		}
 	}
-	for _, instance := range f.l.instances {
+	for _, instance := range finder.l.instances {
 		for _, local := range instance.thisLocals {
-			types := append([]*checker.Type{f.l.localTypes[local]}, f.l.localAlso[local]...)
+			types := append([]*checker.Type{finder.l.localTypes[local]}, finder.l.localAlso[local]...)
 			for _, proven := range types {
-				if proven != nil && f.l.result.GraphTypes[int(proven.Id())] {
-					f.l.result.Classes[instance.class-1].Graph = true
+				if proven != nil && finder.l.result.GraphTypes[int(proven.Id())] {
+					finder.l.result.Classes[instance.class-1].Graph = true
 				}
 			}
 		}
 	}
-	for symbol, instance := range f.l.statics {
-		if f.l.result.GraphTypes[int(f.l.checker.GetTypeOfSymbol(symbol).Id())] {
-			f.l.result.Classes[instance.class-1].Graph = true
+	for symbol, instance := range finder.l.statics {
+		if finder.l.result.GraphTypes[int(finder.l.checker.GetTypeOfSymbol(symbol).Id())] {
+			finder.l.result.Classes[instance.class-1].Graph = true
 		}
 	}
-	f.graphFlows()
-	return f.graphAdoptionBoundary()
+	finder.graphFlows()
+	return finder.graphAdoptionBoundary()
 }
 
-func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {
+func (finder *cycleFinder) graphLinks(node cycleNode) []cycleNode {
 	if node.cell != 0 {
 		links := []cycleNode{}
-		if proven := f.l.localTypes[node.cell-1]; proven != nil {
+		if proven := finder.l.localTypes[node.cell-1]; proven != nil {
 			links = append(links, cycleNode{proven: proven})
 		}
-		for _, proven := range f.l.localAlso[node.cell-1] {
+		for _, proven := range finder.l.localAlso[node.cell-1] {
 			links = append(links, cycleNode{proven: proven})
 		}
-		if f.l.result.Locals[node.cell-1].IterationCell {
+		if finder.l.result.Locals[node.cell-1].IterationCell {
 			return links
 		}
 		// A capture into one interior slot owns the entire environment allocation.
-		for _, function := range f.l.result.Functions {
+		for _, function := range finder.l.result.Functions {
 			found := false
 			for _, local := range function.FrameEnvironment {
 				found = found || local == node.cell-1
@@ -398,7 +401,7 @@ func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {
 		return links
 	}
 	proven := node.proven
-	if proven == nil || f.weak(proven) || f.template(proven) {
+	if proven == nil || finder.weak(proven) || finder.template(proven) {
 		return nil
 	}
 	links := []cycleNode{}
@@ -412,47 +415,50 @@ func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {
 		return nil
 	}
 	switch {
-	case f.l.isLibraryType(proven, "MapIterator", "SetIterator"):
-		links = append(links, f.libraryIteratorCaptures(proven)...)
-	case f.isFunction(proven):
-		if len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 {
-			for symbol := range f.l.statics {
-				actual := f.l.checker.GetTypeOfSymbol(symbol)
-				if f.l.checker.IsTypeAssignableTo(actual, proven) {
+	case finder.l.isLibraryType(proven, "MapIterator", "SetIterator"):
+		links = append(links, finder.libraryIteratorCaptures(proven)...)
+	case finder.isFunction(proven):
+		if len(finder.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 {
+			for symbol := range finder.l.statics {
+				actual := finder.l.checker.GetTypeOfSymbol(symbol)
+				if finder.l.checker.IsTypeAssignableTo(actual, proven) {
 					links = append(links, cycleNode{proven: actual})
 				}
 			}
 		}
-		for _, closure := range f.l.closureRecords {
-			if f.l.checker.IsTypeAssignableTo(closure.proven, proven) {
-				for _, local := range f.l.result.Functions[closure.function].Environment {
+		for _, closure := range finder.l.closureRecords {
+			if finder.l.checker.IsTypeAssignableTo(closure.proven, proven) {
+				for _, local := range finder.l.result.Functions[closure.function].Environment {
 					links = append(links, cycleNode{cell: local + 1})
 				}
 			}
 		}
-	case f.l.isArrayType(proven) ||
+	case finder.l.isArrayType(proven) ||
 		checker.IsTupleType(proven) ||
-		f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
-		for _, argument := range f.graphArguments(proven) {
+		finder.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
+		for _, argument := range finder.graphArguments(proven) {
 			links = append(links, cycleNode{proven: argument})
 		}
 	default:
-		if f.l.isStaticType(proven) {
-			if parent := f.l.staticBase(f.l.staticClass(proven, nil)); parent != nil {
-				links = append(links, cycleNode{proven: f.l.checker.GetTypeOfSymbol(f.l.symbol(parent.Name()))})
+		if finder.l.isStaticType(proven) {
+			if parent := finder.l.staticBase(finder.l.staticClass(proven, nil)); parent != nil {
+				links = append(
+					links,
+					cycleNode{proven: finder.l.checker.GetTypeOfSymbol(finder.l.symbol(parent.Name()))},
+				)
 			}
 		}
-		for _, field := range f.fields(proven) {
-			links = append(links, cycleNode{proven: f.l.checker.GetTypeOfSymbol(field)})
+		for _, field := range finder.fields(proven) {
+			links = append(links, cycleNode{proven: finder.l.checker.GetTypeOfSymbol(field)})
 		}
-		for _, shape := range f.shapes {
-			if shape != proven && f.l.checker.IsTypeAssignableTo(shape, proven) {
+		for _, shape := range finder.shapes {
+			if shape != proven && finder.l.checker.IsTypeAssignableTo(shape, proven) {
 				links = append(links, cycleNode{proven: shape})
 			}
 		}
-		for _, accessor := range f.l.accessorCaptures {
-			if f.l.checker.IsTypeAssignableTo(accessor.holder, proven) {
-				for _, local := range f.l.result.Functions[accessor.function].Environment {
+		for _, accessor := range finder.l.accessorCaptures {
+			if finder.l.checker.IsTypeAssignableTo(accessor.holder, proven) {
+				for _, local := range finder.l.result.Functions[accessor.function].Environment {
 					links = append(links, cycleNode{cell: local + 1})
 				}
 			}
@@ -463,51 +469,51 @@ func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {
 
 // graphArguments only queries the checker on reference objects. A contextual
 // union may describe an array initializer without itself being a TypeReference.
-func (f *cycleFinder) graphArguments(proven *checker.Type) []*checker.Type {
+func (finder *cycleFinder) graphArguments(proven *checker.Type) []*checker.Type {
 	if proven == nil ||
 		proven.Flags()&checker.TypeFlagsObject == 0 ||
 		proven.ObjectFlags()&checker.ObjectFlagsReference == 0 {
 		return nil
 	}
-	return f.l.checker.GetTypeArguments(proven)
+	return finder.l.checker.GetTypeArguments(proven)
 }
 
 // Graph adoption moves a fixed allocation. Checked-view adapters and dynamic
 // shapes have additional owners outside that proof. Until their provenance is
 // tracked separately, keep mixed programs outside graph ownership.
-func (f *cycleFinder) graphAdoptionBoundary() error {
+func (finder *cycleFinder) graphAdoptionBoundary() error {
 	reason := ""
 	var site *ast.Node
 	// Legacy tagged-union views record checked fields without a ViewOrigin.
-	if len(f.l.result.ViewOrigins) != 0 || len(f.l.result.CheckedFields) != 0 {
+	if len(finder.l.result.ViewOrigins) != 0 || len(finder.l.result.CheckedFields) != 0 {
 		reason = "a checked-view adapter in a graph program"
-		site = f.l.graphViewSite
+		site = finder.l.graphViewSite
 	}
 	inspect := func(node any) bool {
 		switch value := node.(type) {
 		case ir.ObjectLiteral:
 			if value.Record {
 				reason = "a dynamic-shape object in a graph program"
-				site = f.l.graphDynamicSite
+				site = finder.l.graphDynamicSite
 			}
 		case ir.DynamicProperty, ir.DynamicKeyedProperty:
 			reason = "a dynamic-shape object in a graph program"
-			site = f.l.graphDynamicSite
+			site = finder.l.graphDynamicSite
 		case ir.ObjectCall:
 			if value.Checked {
 				reason = "a dynamic-shape object in a graph program"
-				site = f.l.graphDynamicSite
+				site = finder.l.graphDynamicSite
 			}
 		}
 		return true
 	}
-	walk(f.l.result.Main, inspect)
-	for _, function := range f.l.result.Functions {
+	walk(finder.l.result.Main, inspect)
+	for _, function := range finder.l.result.Functions {
 		walk(function.Body, inspect)
 	}
 	if reason != "" {
 		return &Refused{
-			Where: f.l.program.Where(site),
+			Where: finder.l.program.Where(site),
 			What:  reason,
 			Fix:   "keep checked views and dynamic shapes outside graph adoption (adamic/cycle-capable)",
 		}
@@ -517,10 +523,10 @@ func (f *cycleFinder) graphAdoptionBoundary() error {
 
 // cycleTypeID keeps the checker's allocation identity unchanged. The optional
 // capture lets differential tests resolve even transient allocation types.
-func (l *lowering) cycleTypeID(proven *checker.Type) int {
+func (lowering *lowering) cycleTypeID(proven *checker.Type) int {
 	id := int(proven.Id())
-	if l.cycleTypes != nil {
-		l.cycleTypes[id] = proven
+	if lowering.cycleTypes != nil {
+		lowering.cycleTypes[id] = proven
 	}
 	return id
 }

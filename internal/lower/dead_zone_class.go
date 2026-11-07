@@ -18,26 +18,32 @@ import (
 // class's inner binding is initialized before its static parts run, and nothing outside can make an
 // instance or reach a static before then. A reference from another module is judged where the modules
 // are ordered (import cycles' own checks). Readiness for classes lifts this.
-func (l *lowering) classDeadZoneGap(node *ast.Node) error {
+func (lowering *lowering) classDeadZoneGap(node *ast.Node) error {
 	if node.Kind != ast.KindIdentifier || ast.IsPartOfTypeNode(node) {
 		return nil
 	}
-	symbol := l.checker.GetSymbolAtLocation(node)
+	symbol := lowering.checker.GetSymbolAtLocation(node)
 	if symbol == nil || symbol.Flags&ast.SymbolFlagsClass == 0 {
 		return nil
 	}
 	declaration := symbol.ValueDeclaration
-	if declaration == nil || declaration.Kind != ast.KindClassDeclaration || declaration.Parent == nil || declaration.Parent.Kind != ast.KindSourceFile {
+	if declaration == nil ||
+		declaration.Kind != ast.KindClassDeclaration ||
+		declaration.Parent == nil ||
+		declaration.Parent.Kind != ast.KindSourceFile {
 		return nil
 	}
 	if node == declaration.Name() || ast.GetSourceFileOfNode(node) != ast.GetSourceFileOfNode(declaration) {
 		return nil
 	}
 	top, inFunction := holdingStatement(node)
-	if !inFunction || top == nil || top == declaration || !l.mayRunBefore(declaration, top) {
+	if !inFunction || top == nil || top == declaration || !lowering.mayRunBefore(declaration, top) {
 		return nil
 	}
-	return l.notYet(node, "a class used from a function that may run before the class's declaration (its temporal dead zone)")
+	return lowering.notYet(
+		node,
+		"a class used from a function that may run before the class's declaration (its temporal dead zone)",
+	)
 }
 
 func init() { refusalRules.register(2050, "classDeadZoneGap", (*lowering).classDeadZoneGap) }
@@ -53,7 +59,9 @@ func holdingStatement(node *ast.Node) (*ast.Node, bool) {
 		if ast.IsFunctionLike(at) {
 			inFunction = true
 		}
-		if at.Parent.Kind == ast.KindPropertyDeclaration && at.Parent.AsPropertyDeclaration().Initializer == at && !ast.HasStaticModifier(at.Parent) {
+		if at.Parent.Kind == ast.KindPropertyDeclaration &&
+			at.Parent.AsPropertyDeclaration().Initializer == at &&
+			!ast.HasStaticModifier(at.Parent) {
 			inFunction = true
 		}
 		if at.Parent.Kind == ast.KindSourceFile {
@@ -75,7 +83,7 @@ func holdingStatement(node *ast.Node) (*ast.Node, bool) {
 // of its names (reachedBefore). An exported one, by its modifier or by an export list or export
 // assignment naming it (exportedNames), can also be reached through another module, so it may whenever
 // that code makes a call that may reach program code (anyProgramCall).
-func (l *lowering) mayRunBefore(declaration, top *ast.Node) bool {
+func (lowering *lowering) mayRunBefore(declaration, top *ast.Node) bool {
 	statements := declaration.Parent.AsSourceFile().Statements.Nodes
 	position, at := -1, -1
 	for index, statement := range statements {
@@ -112,7 +120,7 @@ func (l *lowering) mayRunBefore(declaration, top *ast.Node) bool {
 		running = append(running, runningParts(statement)...)
 	}
 	running = append(running, runningParts(declaration)...)
-	if l.anyProgramCall(running) {
+	if lowering.anyProgramCall(running) {
 		exported := ast.HasSyntacticModifier(top, ast.ModifierFlagsExport)
 		listed := exportedNames(statements)
 		for _, name := range names {
@@ -140,7 +148,9 @@ func exportedNames(statements []*ast.Node) map[string]bool {
 		switch statement.Kind {
 		case ast.KindExportDeclaration:
 			exported := statement.AsExportDeclaration()
-			if exported.ModuleSpecifier != nil || exported.ExportClause == nil || exported.ExportClause.Kind != ast.KindNamedExports {
+			if exported.ModuleSpecifier != nil ||
+				exported.ExportClause == nil ||
+				exported.ExportClause.Kind != ast.KindNamedExports {
 				continue
 			}
 			for _, specifier := range exported.ExportClause.AsNamedExports().Elements.Nodes {
@@ -206,7 +216,9 @@ func runningParts(statement *ast.Node) []*ast.Node {
 			if member.Kind == ast.KindClassStaticBlockDeclaration {
 				parts = append(parts, member)
 			}
-			if member.Kind == ast.KindPropertyDeclaration && ast.HasStaticModifier(member) && member.AsPropertyDeclaration().Initializer != nil {
+			if member.Kind == ast.KindPropertyDeclaration &&
+				ast.HasStaticModifier(member) &&
+				member.AsPropertyDeclaration().Initializer != nil {
 				parts = append(parts, member.AsPropertyDeclaration().Initializer)
 			}
 		}
@@ -261,13 +273,13 @@ func mentionedNames(node *ast.Node, into map[string]bool) {
 // value to call back and no object whose toString or valueOf could run (print.ts's
 // `const knownUnits = '...'.split(' ')`). Its arguments are still searched for calls of their own. Any
 // other call counts, a tagged template always does, and what can't be resolved counts.
-func (l *lowering) anyProgramCall(parts []*ast.Node) bool {
+func (lowering *lowering) anyProgramCall(parts []*ast.Node) bool {
 	found := false
 	var visit ast.Visitor
 	visit = func(inner *ast.Node) bool {
 		switch inner.Kind {
 		case ast.KindCallExpression, ast.KindNewExpression:
-			if !l.libraryCallOnPrimitives(inner) {
+			if !lowering.libraryCallOnPrimitives(inner) {
 				found = true
 				return true
 			}
@@ -287,8 +299,8 @@ func (l *lowering) anyProgramCall(parts []*ast.Node) bool {
 
 // libraryCallOnPrimitives is whether call, a call or a new, resolves to a library or prelude signature
 // and takes only primitive-typed values: its receiver, when its callee is a member, and every argument.
-func (l *lowering) libraryCallOnPrimitives(call *ast.Node) bool {
-	signature := l.checker.GetResolvedSignature(call)
+func (lowering *lowering) libraryCallOnPrimitives(call *ast.Node) bool {
+	signature := lowering.checker.GetResolvedSignature(call)
 	if signature == nil || !librarySignature(signature) {
 		return false
 	}
@@ -306,12 +318,16 @@ func (l *lowering) libraryCallOnPrimitives(call *ast.Node) bool {
 	case ast.KindPropertyAccessExpression:
 		values = append(values, callee.AsPropertyAccessExpression().Expression)
 	case ast.KindElementAccessExpression:
-		values = append(values, callee.AsElementAccessExpression().Expression, callee.AsElementAccessExpression().ArgumentExpression)
+		values = append(
+			values,
+			callee.AsElementAccessExpression().Expression,
+			callee.AsElementAccessExpression().ArgumentExpression,
+		)
 	default:
 		return false
 	}
 	for _, value := range values {
-		if value.Kind == ast.KindSpreadElement || !primitiveTyped(l.checker.GetTypeAtLocation(value)) {
+		if value.Kind == ast.KindSpreadElement || !primitiveTyped(lowering.checker.GetTypeAtLocation(value)) {
 			return false
 		}
 	}

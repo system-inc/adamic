@@ -35,13 +35,13 @@ type printerAsGoOnce struct {
 	path string
 }
 
-func (p *printerAsGoOnce) get(test *testing.T, build func() string) string {
+func (once *printerAsGoOnce) get(test *testing.T, build func() string) string {
 	test.Helper()
-	p.once.Do(func() { p.path = build() })
-	if p.path == "" {
+	once.once.Do(func() { once.path = build() })
+	if once.path == "" {
 		test.Fatal("GraphQL product preparation failed")
 	}
-	return p.path
+	return once.path
 }
 
 var asGoSource, asGoLowered, asGoSanitized, asGoRelease printerAsGoOnce

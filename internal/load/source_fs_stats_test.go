@@ -19,11 +19,11 @@ type countingFS struct {
 	counts map[string]int
 }
 
-func (c *countingFS) FileExists(path tspath.RootedFilePath) bool {
-	c.mutex.Lock()
-	c.counts[path.AsString()]++
-	c.mutex.Unlock()
-	return c.FS.FileExists(path)
+func (fileSystem *countingFS) FileExists(path tspath.RootedFilePath) bool {
+	fileSystem.mutex.Lock()
+	fileSystem.counts[path.AsString()]++
+	fileSystem.mutex.Unlock()
+	return fileSystem.FS.FileExists(path)
 }
 
 // A load stats an .a file and its .a.ts twin once each, however often it names the file: Program.Where asks

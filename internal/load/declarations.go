@@ -40,15 +40,15 @@ const typeFormat = checker.TypeFormatFlagsNoTruncation | checker.TypeFormatFlags
 //
 // A destructured variable reports each name it binds rather than the pattern, and a type alias
 // reports what it stands for rather than its own name.
-func (p *Program) Declarations(callerContext context.Context) []Declaration {
+func (program *Program) Declarations(callerContext context.Context) []Declaration {
 	declarations := []Declaration{}
-	for _, sourceFile := range p.files {
-		typeChecker, release := p.compiler.GetTypeCheckerForFile(callerContext, sourceFile)
+	for _, sourceFile := range program.files {
+		typeChecker, release := program.compiler.GetTypeCheckerForFile(callerContext, sourceFile)
 		var visit ast.Visitor
 		visit = func(node *ast.Node) bool {
 			if kind, isReported := declarationKinds[node.Kind]; isReported {
 				if name := node.Name(); name != nil && ast.IsIdentifier(name) {
-					declarations = append(declarations, p.declaration(typeChecker, sourceFile, node, kind, name))
+					declarations = append(declarations, program.declaration(typeChecker, sourceFile, node, kind, name))
 				}
 			}
 			node.ForEachChild(visit)
@@ -60,7 +60,7 @@ func (p *Program) Declarations(callerContext context.Context) []Declaration {
 	return declarations
 }
 
-func (p *Program) declaration(
+func (program *Program) declaration(
 	typeChecker *checker.Checker,
 	sourceFile *ast.SourceFile,
 	node *ast.Node,
@@ -71,9 +71,9 @@ func (p *Program) declaration(
 	if node.Kind == ast.KindTypeAliasDeclaration {
 		flags |= checker.TypeFormatFlagsInTypeAlias
 	}
-	line, column := p.lineAndColumn(sourceFile, scanner.GetTokenPosOfNode(name, sourceFile, false))
+	line, column := program.lineAndColumn(sourceFile, scanner.GetTokenPosOfNode(name, sourceFile, false))
 	return Declaration{
-		File:   p.fs.displayName(sourceFile.FileName()),
+		File:   program.fs.displayName(sourceFile.FileName()),
 		Line:   line,
 		Column: column,
 		Kind:   kind,

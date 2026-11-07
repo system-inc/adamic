@@ -257,23 +257,23 @@ type runOutcome struct {
 
 // run runs one package's product units in this mode, every store address and credential pointed at this command's
 // own server, so nothing reaches a real store whatever the environment held.
-func (m *modeResult) run(
+func (result *modeResult) run(
 	root, scratch, address, tokenPath string,
 	unit productUnit,
 	parallel int,
 	timeout time.Duration,
 ) (runOutcome, error) {
-	return m.runWith(root, scratch, address, tokenPath, unit, parallel, timeout, m.cache, m.log)
+	return result.runWith(root, scratch, address, tokenPath, unit, parallel, timeout, result.cache, result.log)
 }
 
-func (m *modeResult) runWith(
+func (result *modeResult) runWith(
 	root, scratch, address, tokenPath string,
 	unit productUnit,
 	parallel int,
 	timeout time.Duration,
 	cache, census string,
 ) (runOutcome, error) {
-	temporary := filepath.Join(scratch, m.label, "tmp")
+	temporary := filepath.Join(scratch, result.label, "tmp")
 	for _, directory := range []string{cache, temporary} {
 		if createDirectoryError := os.MkdirAll(directory, 0o755); createDirectoryError != nil {
 			return runOutcome{}, createDirectoryError
@@ -292,30 +292,30 @@ func (m *modeResult) runWith(
 		// The off mode never deletes what it built, so it builds under the scratch directory.
 		"TMPDIR": temporary,
 	}
-	switch m.mode {
+	switch result.mode {
 	case "fresh":
 		environment["ADAMIC_BUILD_CACHE"] = "off"
 		environment["ADAMIC_BUILD_STORE_TRUST"] = "main"
 		environment["ADAMIC_BUILD_STORE_TOKEN"] = tokenPath
-		environment["ADAMIC_BUILD_STORE"] = address + "/" + m.store
-		environment["ADAMIC_BUILD_STORE_WRITE"] = address + "/" + m.store + "/write"
+		environment["ADAMIC_BUILD_STORE"] = address + "/" + result.store
+		environment["ADAMIC_BUILD_STORE_WRITE"] = address + "/" + result.store + "/write"
 	case "cold":
 		environment["ADAMIC_BUILD_STORE_TOKEN"] = tokenPath
-		environment["ADAMIC_BUILD_STORE"] = address + "/" + m.store
-		environment["ADAMIC_BUILD_STORE_WRITE"] = address + "/" + m.store + "/write"
+		environment["ADAMIC_BUILD_STORE"] = address + "/" + result.store
+		environment["ADAMIC_BUILD_STORE_WRITE"] = address + "/" + result.store + "/write"
 	case "warm", "warm-main":
-		environment["ADAMIC_BUILD_STORE"] = address + "/" + m.store
-		environment["ADAMIC_BUILD_STORE_WRITE"] = address + "/" + m.store + "/write"
+		environment["ADAMIC_BUILD_STORE"] = address + "/" + result.store
+		environment["ADAMIC_BUILD_STORE_WRITE"] = address + "/" + result.store + "/write"
 	}
-	for name, value := range m.extra {
+	for name, value := range result.extra {
 		environment[name] = value
 	}
 	log := filepath.Join(
 		scratch,
-		m.label,
+		result.label,
 		strings.ReplaceAll(strings.TrimPrefix(unit.directory, "./"), "/", "_")+".jsonl",
 	)
-	if cache != m.cache {
+	if cache != result.cache {
 		log = strings.TrimSuffix(log, ".jsonl") + "-flipped.jsonl"
 	}
 	arguments := []string{
@@ -414,9 +414,9 @@ type productFile struct {
 	mode         uint32
 }
 
-func (p product) digest() string {
+func (product product) digest() string {
 	hash := sha256.New()
-	for _, file := range p.files {
+	for _, file := range product.files {
 		fmt.Fprintf(hash, "%s %s %o\n", file.path, file.sha256, file.mode)
 	}
 	return hex.EncodeToString(hash.Sum(nil))
@@ -919,9 +919,9 @@ type store struct {
 	conflicts []string
 }
 
-func (s *store) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
-	s.mutex.Lock()
-	defer s.mutex.Unlock()
+func (store *store) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
+	store.mutex.Lock()
+	defer store.mutex.Unlock()
 	parts := strings.SplitN(strings.TrimPrefix(request.URL.Path, "/"), "/", 2)
 	if len(parts) != 2 || !storeName.MatchString(parts[0]) || strings.Contains(request.URL.Path, "..") {
 		http.NotFound(writer, request)
@@ -929,10 +929,10 @@ func (s *store) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
 	}
 	name, object := parts[0], parts[1]
 	if request.Method == http.MethodPut {
-		s.write(writer, request, name, strings.TrimPrefix(object, "write/"))
+		store.write(writer, request, name, strings.TrimPrefix(object, "write/"))
 		return
 	}
-	content, readError := os.ReadFile(filepath.Join(s.directory, name, filepath.FromSlash(object)))
+	content, readError := os.ReadFile(filepath.Join(store.directory, name, filepath.FromSlash(object)))
 	if readError != nil {
 		http.NotFound(writer, request)
 		return
@@ -940,7 +940,7 @@ func (s *store) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
 	writer.Write(content)
 }
 
-func (s *store) write(writer http.ResponseWriter, request *http.Request, name, object string) {
+func (store *store) write(writer http.ResponseWriter, request *http.Request, name, object string) {
 	if request.Header.Get("Authorization") != "Bearer "+token {
 		http.Error(writer, "forbidden", http.StatusForbidden)
 		return
@@ -950,7 +950,7 @@ func (s *store) write(writer http.ResponseWriter, request *http.Request, name, o
 		http.Error(writer, readError.Error(), http.StatusBadRequest)
 		return
 	}
-	path := filepath.Join(s.directory, name, filepath.FromSlash(object))
+	path := filepath.Join(store.directory, name, filepath.FromSlash(object))
 	switch {
 	case strings.HasPrefix(object, "blobs/"):
 		if sum := sha256.Sum256(content); "blobs/"+hex.EncodeToString(sum[:]) != object {
@@ -958,14 +958,14 @@ func (s *store) write(writer http.ResponseWriter, request *http.Request, name, o
 			return
 		}
 	case strings.HasPrefix(object, "refs/"):
-		if _, statError := os.Stat(filepath.Join(s.directory, name, "blobs", string(content))); statError != nil {
+		if _, statError := os.Stat(filepath.Join(store.directory, name, "blobs", string(content))); statError != nil {
 			http.Error(writer, "a ref must name a held blob", http.StatusConflict)
 			return
 		}
 		if held, readError := os.ReadFile(path); readError == nil {
 			if !bytes.Equal(held, content) {
-				s.conflicts = append(
-					s.conflicts,
+				store.conflicts = append(
+					store.conflicts,
 					fmt.Sprintf("%s %s was published as manifest %s, then as %s", name, object, held, content),
 				)
 				http.Error(writer, "a ref never changes", http.StatusConflict)
@@ -990,17 +990,17 @@ func (s *store) write(writer http.ResponseWriter, request *http.Request, name, o
 }
 
 // products reads every product a store's namespace refers to, from its manifest.
-func (s *store) products(name, namespace string) (map[string]product, error) {
+func (store *store) products(name, namespace string) (map[string]product, error) {
 	products := map[string]product{}
-	references, readDirectoryError := os.ReadDir(filepath.Join(s.directory, name, "refs", namespace))
+	references, readDirectoryError := os.ReadDir(filepath.Join(store.directory, name, "refs", namespace))
 	if errors.Is(readDirectoryError, fs.ErrNotExist) {
 		return products, nil
 	} else if readDirectoryError != nil {
 		return nil, readDirectoryError
 	}
-	blobs := filepath.Join(s.directory, name, "blobs")
+	blobs := filepath.Join(store.directory, name, "blobs")
 	for _, reference := range references {
-		sum, readError := os.ReadFile(filepath.Join(s.directory, name, "refs", namespace, reference.Name()))
+		sum, readError := os.ReadFile(filepath.Join(store.directory, name, "refs", namespace, reference.Name()))
 		if readError != nil {
 			return nil, readError
 		}

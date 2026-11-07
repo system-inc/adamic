@@ -7,8 +7,8 @@ import (
 
 // initializeLocal runs a lexical declaration. Switch bindings already have storage: writing the
 // value initializes them only after the initializer has finished, including any calls it makes.
-func (l *lowering) initializeLocal(local int, value ir.Expression) []ir.Statement {
-	ready := l.result.Locals[local].Ready
+func (lowering *lowering) initializeLocal(local int, value ir.Expression) []ir.Statement {
+	ready := lowering.result.Locals[local].Ready
 	if ready == 0 {
 		return []ir.Statement{ir.Declare{Local: local, Value: value}}
 	}
@@ -25,7 +25,7 @@ func (l *lowering) initializeLocal(local int, value ir.Expression) []ir.Statemen
 // switchBindings creates the one lexical environment shared by every case. Every variable's
 // storage and readiness cell exists before a function can capture it. Functions are hoisted and
 // initialized at entry; let and const remain unready until execution reaches their declarations.
-func (l *lowering) switchBindings(block *ast.Node) ([]ir.Statement, error) {
+func (lowering *lowering) switchBindings(block *ast.Node) ([]ir.Statement, error) {
 	var storage []ir.Statement
 	var functions []*ast.Node
 	var bind func(*ast.Node) error
@@ -40,16 +40,16 @@ func (l *lowering) switchBindings(block *ast.Node) ([]ir.Statement, error) {
 			}
 			return nil
 		}
-		local, declareLocalError := l.declareLocal(name)
+		local, declareLocalError := lowering.declareLocal(name)
 		if declareLocalError != nil {
 			return declareLocalError
 		}
-		ready := len(l.result.Locals)
-		l.result.Locals = append(
-			l.result.Locals,
-			ir.Local{Name: name.Text() + "_ready", Type: ir.Boolean, Function: l.functionIndex},
+		ready := len(lowering.result.Locals)
+		lowering.result.Locals = append(
+			lowering.result.Locals,
+			ir.Local{Name: name.Text() + "_ready", Type: ir.Boolean, Function: lowering.functionIndex},
 		)
-		l.result.Locals[local].Ready = ready + 1
+		lowering.result.Locals[local].Ready = ready + 1
 		storage = append(
 			storage,
 			ir.Declare{Local: ready, Value: ir.BooleanConstant{Value: false}},
@@ -75,12 +75,12 @@ func (l *lowering) switchBindings(block *ast.Node) ([]ir.Statement, error) {
 		}
 	}
 	for _, declaration := range functions {
-		value, functionExpressionError := l.functionExpression(declaration)
+		value, functionExpressionError := lowering.functionExpression(declaration)
 		if functionExpressionError != nil {
 			return nil, functionExpressionError
 		}
-		local := l.locals[l.symbol(declaration.Name())]
-		storage = append(storage, l.initializeLocal(local, value)...)
+		local := lowering.locals[lowering.symbol(declaration.Name())]
+		storage = append(storage, lowering.initializeLocal(local, value)...)
 	}
 	return storage, nil
 }

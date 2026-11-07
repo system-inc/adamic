@@ -216,7 +216,7 @@ func currentTestShard(test *testing.T) testShard {
 	}
 	return shard
 }
-func (s testShard) owns(piece int) bool { return piece%s.count == s.index }
+func (shard testShard) owns(piece int) bool { return piece%shard.count == shard.index }
 
 func TestShardSelection(test *testing.T) {
 	test.Parallel()

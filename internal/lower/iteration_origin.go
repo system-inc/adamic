@@ -27,9 +27,9 @@ var arrowMethodConvention = &ast.Node{}
 
 // Fresh literal assignability performs excess-property checking. Runtime values do not lose
 // their extra fields when viewed structurally, so compare required members individually instead.
-func (l *lowering) iterationShapeFits(shape, view *checker.Type) bool {
-	for _, expected := range l.checker.GetPropertiesOfType(view) {
-		actual := l.checker.GetPropertyOfType(shape, expected.Name)
+func (lowering *lowering) iterationShapeFits(shape, view *checker.Type) bool {
+	for _, expected := range lowering.checker.GetPropertiesOfType(view) {
+		actual := lowering.checker.GetPropertyOfType(shape, expected.Name)
 		if actual == nil {
 			if expected.Flags&ast.SymbolFlagsOptional != 0 {
 				continue
@@ -39,7 +39,10 @@ func (l *lowering) iterationShapeFits(shape, view *checker.Type) bool {
 		if actual.Flags&ast.SymbolFlagsOptional != 0 && expected.Flags&ast.SymbolFlagsOptional == 0 {
 			return false
 		}
-		if !l.checker.IsTypeAssignableTo(l.checker.GetTypeOfSymbol(actual), l.checker.GetTypeOfSymbol(expected)) {
+		if !lowering.checker.IsTypeAssignableTo(
+			lowering.checker.GetTypeOfSymbol(actual),
+			lowering.checker.GetTypeOfSymbol(expected),
+		) {
 			return false
 		}
 	}
@@ -48,21 +51,21 @@ func (l *lowering) iterationShapeFits(shape, view *checker.Type) bool {
 
 // A property typed as an ordinary callback can hide a literal method. Its closure needs a
 // receiver argument. Do not read it using the callback convention until that origin is retained.
-func (l *lowering) erasedLiteralMethod(node *ast.Node) error {
+func (lowering *lowering) erasedLiteralMethod(node *ast.Node) error {
 	access := node.AsPropertyAccessExpression()
-	of, known := l.representation(l.checker.GetTypeAtLocation(node))
+	of, known := lowering.representation(lowering.checker.GetTypeAtLocation(node))
 	if !known || of != ir.Closure {
 		return nil
 	}
-	member := l.checker.GetSymbolAtLocation(node)
+	member := lowering.checker.GetSymbolAtLocation(node)
 	if member != nil && literalMethod(member) {
 		return nil
 	}
-	return l.erasedMethodField(node, l.checker.GetTypeAtLocation(access.Expression), access.Name().Text())
+	return lowering.erasedMethodField(node, lowering.checker.GetTypeAtLocation(access.Expression), access.Name().Text())
 }
 
-func (l *lowering) erasedMethodField(where *ast.Node, view *checker.Type, name string) error {
-	modules, moduleOrderError := l.moduleOrder(l.program.Files()[0])
+func (lowering *lowering) erasedMethodField(where *ast.Node, view *checker.Type, name string) error {
+	modules, moduleOrderError := lowering.moduleOrder(lowering.program.Files()[0])
 	if moduleOrderError != nil {
 		return moduleOrderError
 	}
@@ -73,28 +76,34 @@ func (l *lowering) erasedMethodField(where *ast.Node, view *checker.Type, name s
 			return true
 		}
 		if candidate.Kind == ast.KindObjectLiteralExpression || candidate.Kind == ast.KindNewExpression {
-			shape := l.checker.GetTypeAtLocation(candidate)
-			field := l.checker.GetPropertyOfType(shape, name)
-			if field != nil && l.iterationShapeFits(shape, view) {
+			shape := lowering.checker.GetTypeAtLocation(candidate)
+			field := lowering.checker.GetPropertyOfType(shape, name)
+			if field != nil && lowering.iterationShapeFits(shape, view) {
 				if literalMethod(field) {
 					if isCallee(where) { // Calls carry the runtime closure's receiver convention.
 						return candidate.ForEachChild(visit)
 					}
-					found = l.notYet(where, "a literal method through a view that erases its receiver")
+					found = lowering.notYet(where, "a literal method through a view that erases its receiver")
 					return true
 				}
-				for _, root := range l.checker.GetRootSymbols(field) {
+				for _, root := range lowering.checker.GetRootSymbols(field) {
 					for _, declaration := range root.Declarations {
 						if declaration.Kind == ast.KindMethodDeclaration &&
 							declaration.Parent.Kind == ast.KindClassDeclaration {
 							// Method calls preserve the existing class prototype dispatch. Arrow-field
 							// views and destructuring still erase the represented method origin.
-							member := l.checker.GetPropertyOfType(l.checker.GetNonNullableType(view), name)
-							if isCallee(where) && (isClassInstance(l.checker.GetNonNullableType(view)) ||
+							member := lowering.checker.GetPropertyOfType(
+								lowering.checker.GetNonNullableType(view),
+								name,
+							)
+							if isCallee(where) && (isClassInstance(lowering.checker.GetNonNullableType(view)) ||
 								(member != nil && member.Flags&ast.SymbolFlagsMethod != 0)) {
 								continue
 							}
-							found = l.notYet(where, "a class method through a view that erases its prototype origin")
+							found = lowering.notYet(
+								where,
+								"a class method through a view that erases its prototype origin",
+							)
 							return true
 						}
 					}
@@ -111,7 +120,7 @@ func (l *lowering) erasedMethodField(where *ast.Node, view *checker.Type, name s
 
 // Known factories pin the actual method origins. Comparing every structurally compatible shape
 // would otherwise refuse ordinary Range/Iterator class pairs with overlapping public fields.
-func (l *lowering) iterationOrigin(node *ast.Node, members []*ast.Symbol, closePresence *bool, depth int) bool {
+func (lowering *lowering) iterationOrigin(node *ast.Node, members []*ast.Symbol, closePresence *bool, depth int) bool {
 	if node == nil || depth > 16 {
 		return false
 	}
@@ -126,7 +135,7 @@ func (l *lowering) iterationOrigin(node *ast.Node, members []*ast.Symbol, closeP
 			}
 		}
 		if node.Kind == ast.KindNewExpression {
-			class := l.classes[l.symbol(node.AsNewExpression().Expression)]
+			class := lowering.classes[lowering.symbol(node.AsNewExpression().Expression)]
 			if class == nil {
 				return false
 			}
@@ -136,19 +145,19 @@ func (l *lowering) iterationOrigin(node *ast.Node, members []*ast.Symbol, closeP
 				}
 			}
 		}
-		shape := l.checker.GetTypeAtLocation(node)
+		shape := lowering.checker.GetTypeAtLocation(node)
 		for _, expected := range members {
-			actual := l.checker.GetPropertyOfType(shape, expected.Name)
-			if actual == nil || !l.sameMemberOrigin(actual, expected) {
+			actual := lowering.checker.GetPropertyOfType(shape, expected.Name)
+			if actual == nil || !lowering.sameMemberOrigin(actual, expected) {
 				return false
 			}
 		}
-		if closePresence != nil && (l.checker.GetPropertyOfType(shape, "return") != nil) != *closePresence {
+		if closePresence != nil && (lowering.checker.GetPropertyOfType(shape, "return") != nil) != *closePresence {
 			return false
 		}
 		return true
 	case ast.KindIdentifier:
-		symbol := l.symbol(node)
+		symbol := lowering.symbol(node)
 		if symbol == nil || len(symbol.Declarations) != 1 {
 			return false
 		}
@@ -158,35 +167,40 @@ func (l *lowering) iterationOrigin(node *ast.Node, members []*ast.Symbol, closeP
 			declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
 			return false
 		}
-		return l.iterationOrigin(declaration.AsVariableDeclaration().Initializer, members, closePresence, depth+1)
+		return lowering.iterationOrigin(
+			declaration.AsVariableDeclaration().Initializer,
+			members,
+			closePresence,
+			depth+1,
+		)
 	case ast.KindCallExpression:
 		callee := ast.SkipParentheses(node.AsCallExpression().Expression)
 		if !ast.IsIdentifier(callee) {
 			return false
 		}
-		symbol := l.symbol(callee)
+		symbol := lowering.symbol(callee)
 		if symbol == nil || len(symbol.Declarations) != 1 {
 			return false
 		}
-		body := l.iterationCallableBody(symbol, depth+1)
-		return l.iterationReturns(body, members, closePresence, depth+1)
+		body := lowering.iterationCallableBody(symbol, depth+1)
+		return lowering.iterationReturns(body, members, closePresence, depth+1)
 	case ast.KindConditionalExpression:
 		expression := node.AsConditionalExpression()
-		return l.iterationOrigin(expression.WhenTrue, members, closePresence, depth+1) &&
-			l.iterationOrigin(expression.WhenFalse, members, closePresence, depth+1)
+		return lowering.iterationOrigin(expression.WhenTrue, members, closePresence, depth+1) &&
+			lowering.iterationOrigin(expression.WhenFalse, members, closePresence, depth+1)
 	}
 	return false
 }
 
-func (l *lowering) sameMemberOrigin(actual, expected *ast.Symbol) bool {
+func (lowering *lowering) sameMemberOrigin(actual, expected *ast.Symbol) bool {
 	wanted := map[*ast.Node]bool{}
-	for _, root := range l.checker.GetRootSymbols(expected) {
+	for _, root := range lowering.checker.GetRootSymbols(expected) {
 		for _, declaration := range root.Declarations {
 			wanted[declaration] = true
 		}
 	}
 	count := 0
-	for _, root := range l.checker.GetRootSymbols(actual) {
+	for _, root := range lowering.checker.GetRootSymbols(actual) {
 		for _, declaration := range root.Declarations {
 			if !wanted[declaration] {
 				return false
@@ -197,12 +211,12 @@ func (l *lowering) sameMemberOrigin(actual, expected *ast.Symbol) bool {
 	return count > 0
 }
 
-func (l *lowering) iterationReturns(body *ast.Node, members []*ast.Symbol, closePresence *bool, depth int) bool {
+func (lowering *lowering) iterationReturns(body *ast.Node, members []*ast.Symbol, closePresence *bool, depth int) bool {
 	if body == nil {
 		return false
 	}
 	if body.Kind != ast.KindBlock {
-		return l.iterationOrigin(body, members, closePresence, depth+1)
+		return lowering.iterationOrigin(body, members, closePresence, depth+1)
 	}
 	found, sound := false, true
 	var visit ast.Visitor
@@ -212,7 +226,8 @@ func (l *lowering) iterationReturns(body *ast.Node, members []*ast.Symbol, close
 		}
 		if node.Kind == ast.KindReturnStatement {
 			found = true
-			sound = sound && l.iterationOrigin(node.AsReturnStatement().Expression, members, closePresence, depth+1)
+			sound = sound &&
+				lowering.iterationOrigin(node.AsReturnStatement().Expression, members, closePresence, depth+1)
 			return false
 		}
 		return node.ForEachChild(visit)
@@ -221,8 +236,8 @@ func (l *lowering) iterationReturns(body *ast.Node, members []*ast.Symbol, close
 	return found && sound
 }
 
-func (l *lowering) iterationFactoryKnown(member *ast.Symbol, next, close *ast.Symbol) bool {
-	roots := l.checker.GetRootSymbols(member)
+func (lowering *lowering) iterationFactoryKnown(member *ast.Symbol, next, close *ast.Symbol) bool {
+	roots := lowering.checker.GetRootSymbols(member)
 	if len(roots) != 1 || len(roots[0].Declarations) != 1 {
 		return false
 	}
@@ -242,7 +257,7 @@ func (l *lowering) iterationFactoryKnown(member *ast.Symbol, next, close *ast.Sy
 		members = append(members, close)
 	}
 	presence := close != nil
-	return l.iterationReturns(body, members, &presence, 0)
+	return lowering.iterationReturns(body, members, &presence, 0)
 }
 
 func hasConstructorReturn(body *ast.Node) bool {
@@ -265,7 +280,7 @@ func hasConstructorReturn(body *ast.Node) bool {
 	return found
 }
 
-func (l *lowering) iterationCallableBody(symbol *ast.Symbol, depth int) *ast.Node {
+func (lowering *lowering) iterationCallableBody(symbol *ast.Symbol, depth int) *ast.Node {
 	if symbol == nil || len(symbol.Declarations) != 1 || depth > 16 {
 		return nil
 	}
@@ -287,25 +302,25 @@ func (l *lowering) iterationCallableBody(symbol *ast.Symbol, depth int) *ast.Nod
 		return initializer.Body()
 	}
 	if ast.IsIdentifier(initializer) {
-		return l.iterationCallableBody(l.symbol(initializer), depth+1)
+		return lowering.iterationCallableBody(lowering.symbol(initializer), depth+1)
 	}
 	return nil
 }
 
 // Generic classes are monomorphized. A readonly structural view can change their arguments
 // without changing method declarations, so declaration identity alone is not a sufficient proof.
-func (l *lowering) sameIterationClass(actual, expected *checker.Type) bool {
-	actual, expected = l.concrete(actual), l.concrete(expected)
+func (lowering *lowering) sameIterationClass(actual, expected *checker.Type) bool {
+	actual, expected = lowering.concrete(actual), lowering.concrete(expected)
 	if !isClassInstance(actual) || !isClassInstance(expected) || actual.Symbol() != expected.Symbol() {
 		return false
 	}
-	left, right := l.checker.GetTypeArguments(actual), l.checker.GetTypeArguments(expected)
+	left, right := lowering.checker.GetTypeArguments(actual), lowering.checker.GetTypeArguments(expected)
 	if len(left) != len(right) {
 		return false
 	}
 	for index, arg := range left {
 		other := right[index]
-		if !l.checker.IsTypeAssignableTo(arg, other) || !l.checker.IsTypeAssignableTo(other, arg) {
+		if !lowering.checker.IsTypeAssignableTo(arg, other) || !lowering.checker.IsTypeAssignableTo(other, arg) {
 			return false
 		}
 		if (isClassInstance(arg) || isClassInstance(other)) && arg.Symbol() != other.Symbol() {
@@ -315,16 +330,16 @@ func (l *lowering) sameIterationClass(actual, expected *checker.Type) bool {
 	return true
 }
 
-func (l *lowering) knownIterationClass(node *ast.Node, expected *checker.Type, depth int) bool {
+func (lowering *lowering) knownIterationClass(node *ast.Node, expected *checker.Type, depth int) bool {
 	if node == nil || depth > 16 {
 		return false
 	}
 	node = ast.SkipParentheses(node)
 	switch node.Kind {
 	case ast.KindNewExpression:
-		return l.sameIterationClass(l.checker.GetTypeAtLocation(node), expected)
+		return lowering.sameIterationClass(lowering.checker.GetTypeAtLocation(node), expected)
 	case ast.KindIdentifier:
-		symbol := l.symbol(node)
+		symbol := lowering.symbol(node)
 		if symbol == nil || len(symbol.Declarations) != 1 {
 			return false
 		}
@@ -334,30 +349,35 @@ func (l *lowering) knownIterationClass(node *ast.Node, expected *checker.Type, d
 			declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
 			return false
 		}
-		return l.knownIterationClass(declaration.AsVariableDeclaration().Initializer, expected, depth+1)
+		return lowering.knownIterationClass(declaration.AsVariableDeclaration().Initializer, expected, depth+1)
 	case ast.KindCallExpression:
 		callee := ast.SkipParentheses(node.AsCallExpression().Expression)
 		if !ast.IsIdentifier(callee) {
 			return false
 		}
-		return l.iterationReturnsClass(l.iterationCallableBody(l.symbol(callee), depth+1), expected, nil, depth+1)
+		return lowering.iterationReturnsClass(
+			lowering.iterationCallableBody(lowering.symbol(callee), depth+1),
+			expected,
+			nil,
+			depth+1,
+		)
 	case ast.KindConditionalExpression:
 		expression := node.AsConditionalExpression()
-		return l.knownIterationClass(expression.WhenTrue, expected, depth+1) &&
-			l.knownIterationClass(expression.WhenFalse, expected, depth+1)
+		return lowering.knownIterationClass(expression.WhenTrue, expected, depth+1) &&
+			lowering.knownIterationClass(expression.WhenFalse, expected, depth+1)
 	}
 	return false
 }
 
-func (l *lowering) iterationReturnsClass(body *ast.Node, expected, receiver *checker.Type, depth int) bool {
+func (lowering *lowering) iterationReturnsClass(body *ast.Node, expected, receiver *checker.Type, depth int) bool {
 	if body == nil {
 		return false
 	}
 	matches := func(node *ast.Node) bool {
 		if node != nil && ast.SkipParentheses(node).Kind == ast.KindThisKeyword {
-			return receiver != nil && l.sameIterationClass(receiver, expected)
+			return receiver != nil && lowering.sameIterationClass(receiver, expected)
 		}
-		return l.knownIterationClass(node, expected, depth+1)
+		return lowering.knownIterationClass(node, expected, depth+1)
 	}
 	if body.Kind != ast.KindBlock {
 		return matches(body)
@@ -379,8 +399,8 @@ func (l *lowering) iterationReturnsClass(body *ast.Node, expected, receiver *che
 	return found && sound
 }
 
-func (l *lowering) genericIteratorFactoryKnown(member *ast.Symbol, source, iterator *checker.Type) bool {
-	roots := l.checker.GetRootSymbols(member)
+func (lowering *lowering) genericIteratorFactoryKnown(member *ast.Symbol, source, iterator *checker.Type) bool {
+	roots := lowering.checker.GetRootSymbols(member)
 	if len(roots) != 1 || len(roots[0].Declarations) != 1 {
 		return false
 	}
@@ -389,12 +409,12 @@ func (l *lowering) genericIteratorFactoryKnown(member *ast.Symbol, source, itera
 	if declaration.Kind == ast.KindMethodDeclaration {
 		body = declaration.Body()
 	}
-	return l.iterationReturnsClass(body, iterator, source, 0)
+	return lowering.iterationReturnsClass(body, iterator, source, 0)
 }
 
 // A returned receiver keeps its dynamic subclass, even when the result annotation names
 // the base. Follow local aliases too; they do not make this an exact base instance.
-func (l *lowering) iterationFactoryReturnsThis(member *ast.Symbol) bool {
+func (lowering *lowering) iterationFactoryReturnsThis(member *ast.Symbol) bool {
 	var receiver func(*ast.Node, int) bool
 	receiver = func(node *ast.Node, depth int) bool {
 		if node == nil || depth > 16 {
@@ -405,7 +425,7 @@ func (l *lowering) iterationFactoryReturnsThis(member *ast.Symbol) bool {
 			return true
 		}
 		if ast.IsIdentifier(node) {
-			symbol := l.symbol(node)
+			symbol := lowering.symbol(node)
 			if symbol != nil &&
 				len(symbol.Declarations) == 1 &&
 				symbol.Declarations[0].Kind == ast.KindVariableDeclaration {
@@ -414,7 +434,7 @@ func (l *lowering) iterationFactoryReturnsThis(member *ast.Symbol) bool {
 		}
 		return false
 	}
-	for _, root := range l.checker.GetRootSymbols(member) {
+	for _, root := range lowering.checker.GetRootSymbols(member) {
 		for _, declaration := range root.Declarations {
 			if declaration.Kind != ast.KindMethodDeclaration || declaration.Body() == nil {
 				continue
@@ -442,12 +462,12 @@ func (l *lowering) iterationFactoryReturnsThis(member *ast.Symbol) bool {
 
 // Unknown receiver origins matter only when a declared descendant can change the
 // protocol. A factory returning a base receiver remains sound in a closed class tree.
-func (l *lowering) iteratorReceiverOverrides(
+func (lowering *lowering) iteratorReceiverOverrides(
 	modules []*ast.SourceFile,
 	iterator *checker.Type,
 	next, close *ast.Symbol,
 ) bool {
-	class := l.classNodeFor(iterator)
+	class := lowering.classNodeFor(iterator)
 	if class == nil {
 		return false
 	}
@@ -455,14 +475,14 @@ func (l *lowering) iteratorReceiverOverrides(
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
 		if node.Kind == ast.KindClassDeclaration && node.Name() != nil && node != class {
-			shape := l.checker.GetTypeAtLocation(node.Name())
-			if l.classView(shape, class) != nil {
-				actualNext := l.checker.GetPropertyOfType(shape, "next")
-				actualClose := l.checker.GetPropertyOfType(shape, "return")
+			shape := lowering.checker.GetTypeAtLocation(node.Name())
+			if lowering.classView(shape, class) != nil {
+				actualNext := lowering.checker.GetPropertyOfType(shape, "next")
+				actualClose := lowering.checker.GetPropertyOfType(shape, "return")
 				if actualNext == nil ||
-					!l.sameMemberOrigin(actualNext, next) ||
+					!lowering.sameMemberOrigin(actualNext, next) ||
 					(actualClose != nil) != (close != nil) ||
-					(close != nil && !l.sameMemberOrigin(actualClose, close)) {
+					(close != nil && !lowering.sameMemberOrigin(actualClose, close)) {
 					changed = true
 					return true
 				}

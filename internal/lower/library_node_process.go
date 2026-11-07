@@ -52,12 +52,12 @@ func init() {
 }
 
 // Ambient declarations are recognized by their module and declaration, never by a user's spelling.
-func (l *lowering) nodeProcessPath(node *ast.Node) string {
+func (lowering *lowering) nodeProcessPath(node *ast.Node) string {
 	node = ast.SkipParentheses(node)
 	if ast.IsIdentifier(node) {
-		symbol := l.symbol(node)
+		symbol := lowering.symbol(node)
 		if node.Parent != nil && node.Parent.Kind == ast.KindShorthandPropertyAssignment {
-			symbol = l.checker.GetShorthandAssignmentValueSymbol(node.Parent)
+			symbol = lowering.checker.GetShorthandAssignmentValueSymbol(node.Parent)
 		}
 		if symbol == nil || len(symbol.Declarations) == 0 {
 			return ""
@@ -103,7 +103,7 @@ func (l *lowering) nodeProcessPath(node *ast.Node) string {
 	if node.Kind == ast.KindPropertyAccessExpression {
 		access := node.AsPropertyAccessExpression()
 		if access.QuestionDotToken == nil {
-			if path := l.nodeProcessPath(access.Expression); path != "" {
+			if path := lowering.nodeProcessPath(access.Expression); path != "" {
 				if path == "performanceModule" && node.Name().Text() == "performance" {
 					return "performance"
 				}
@@ -115,7 +115,7 @@ func (l *lowering) nodeProcessPath(node *ast.Node) string {
 }
 
 // Mutations share main's declaration recognition, refusal order and key conversion.
-func (l *lowering) nodeProcessEnvironmentMutation(node *ast.Node) (ir.Expression, bool, error) {
+func (lowering *lowering) nodeProcessEnvironmentMutation(node *ast.Node) (ir.Expression, bool, error) {
 	node = ast.SkipParentheses(node)
 	var target, assigned *ast.Node
 	operation := "host_env_delete"
@@ -127,19 +127,21 @@ func (l *lowering) nodeProcessEnvironmentMutation(node *ast.Node) (ir.Expression
 		return nil, false, nil
 	}
 	target = ast.SkipParentheses(target)
-	if _, known := l.nodeEnvironmentAccess(target); !known {
+	if _, known := lowering.nodeEnvironmentAccess(target); !known {
 		return nil, false, nil
 	}
-	if nodeEnvironmentReadRefusalError := l.nodeEnvironmentReadRefusal(target); nodeEnvironmentReadRefusalError != nil {
+	if nodeEnvironmentReadRefusalError := lowering.nodeEnvironmentReadRefusal(
+		target,
+	); nodeEnvironmentReadRefusalError != nil {
 		return nil, true, nodeEnvironmentReadRefusalError
 	}
-	key, nodeEnvironmentKeyError := l.nodeEnvironmentKey(target)
+	key, nodeEnvironmentKeyError := lowering.nodeEnvironmentKey(target)
 	if nodeEnvironmentKeyError != nil {
 		return nil, true, nodeEnvironmentKeyError
 	}
 	call := ir.NodeFSFile{Operation: operation, Arguments: []ir.Expression{key}, Of: ir.Boolean}
 	if assigned != nil {
-		value, expressionError := l.expression(assigned)
+		value, expressionError := lowering.expression(assigned)
 		if expressionError != nil {
 			return nil, true, expressionError
 		}
@@ -156,15 +158,15 @@ const nodeStackTraceLimitMember = "node:globals.ErrorConstructor.stackTraceLimit
 
 // nodeStackTraceLimitRefusal names every use of Error.stackTraceLimit but a plain read, or a plain =
 // write of a number, through the global Error identifier.
-func (l *lowering) nodeStackTraceLimitRefusal(node *ast.Node) error {
+func (lowering *lowering) nodeStackTraceLimitRefusal(node *ast.Node) error {
 	if node.Kind != ast.KindPropertyAccessExpression {
-		return l.notYet(
+		return lowering.notYet(
 			node,
 			nodeStackTraceLimitMember+" outside a property access (fix: read or write Error.stackTraceLimit)",
 		)
 	}
-	if !l.isLibraryGlobal(node.AsPropertyAccessExpression().Expression, "Error") {
-		return l.notYet(node, nodeStackTraceLimitMember+
+	if !lowering.isLibraryGlobal(node.AsPropertyAccessExpression().Expression, "Error") {
+		return lowering.notYet(node, nodeStackTraceLimitMember+
 			" through a receiver other than the global Error (fix: read or write Error.stackTraceLimit)")
 	}
 	outer := node
@@ -173,27 +175,27 @@ func (l *lowering) nodeStackTraceLimitRefusal(node *ast.Node) error {
 	}
 	switch {
 	case node.Flags&ast.NodeFlagsOptionalChain != 0:
-		return l.notYet(
+		return lowering.notYet(
 			node,
 			nodeStackTraceLimitMember+" read through an optional chain (fix: read Error.stackTraceLimit directly)",
 		)
 	case outer.Parent != nil && outer.Parent.Kind == ast.KindDeleteExpression:
-		return l.notYet(node, nodeStackTraceLimitMember+" deleted (fix: assign it a number)")
+		return lowering.notYet(node, nodeStackTraceLimitMember+" deleted (fix: assign it a number)")
 	case ast.IsAssignmentTarget(outer):
 		parent := outer.Parent
 		if parent == nil ||
 			parent.Kind != ast.KindBinaryExpression ||
 			parent.AsBinaryExpression().OperatorToken.Kind != ast.KindEqualsToken ||
 			parent.AsBinaryExpression().Left != outer {
-			return l.notYet(
+			return lowering.notYet(
 				node,
 				nodeStackTraceLimitMember+" written other than by a plain = (fix: assign the computed number with =)",
 			)
 		}
-		if of, known := l.representation(
-			l.checker.GetTypeAtLocation(parent.AsBinaryExpression().Right),
+		if of, known := lowering.representation(
+			lowering.checker.GetTypeAtLocation(parent.AsBinaryExpression().Right),
 		); !known || of != ir.Number {
-			return l.notYet(
+			return lowering.notYet(
 				parent.AsBinaryExpression().Right,
 				nodeStackTraceLimitMember+" written with a value not typed number",
 			)
@@ -205,38 +207,39 @@ func (l *lowering) nodeStackTraceLimitRefusal(node *ast.Node) error {
 // nodeStackTraceLimitUseRefusal is the refusal visitor's view of Error.stackTraceLimit: its property
 // name is part of the access, the access is judged by nodeStackTraceLimitRefusal, and the member
 // anywhere else is NotYet.
-func (l *lowering) nodeStackTraceLimitUseRefusal(node *ast.Node) (bool, error) {
+func (lowering *lowering) nodeStackTraceLimitUseRefusal(node *ast.Node) (bool, error) {
 	if node.Parent != nil &&
 		node.Parent.Kind == ast.KindPropertyAccessExpression &&
 		node.Parent.Name() == node &&
-		l.nodeLibraryMember(node.Parent) == nodeStackTraceLimitMember {
-		return true, l.nodeStackTraceLimitRefusal(node.Parent)
+		lowering.nodeLibraryMember(node.Parent) == nodeStackTraceLimitMember {
+		return true, lowering.nodeStackTraceLimitRefusal(node.Parent)
 	}
-	if l.nodeLibraryMember(node) != nodeStackTraceLimitMember {
+	if lowering.nodeLibraryMember(node) != nodeStackTraceLimitMember {
 		return false, nil
 	}
-	return true, l.nodeStackTraceLimitRefusal(node)
+	return true, lowering.nodeStackTraceLimitRefusal(node)
 }
 
 // nodeStackTraceLimit lowers a read of Error.stackTraceLimit to the runtime's stored count, and a
 // plain = write of a number to a store that yields the number, as the assignment does in JavaScript.
-func (l *lowering) nodeStackTraceLimit(node *ast.Node) (ir.Expression, bool, error) {
+func (lowering *lowering) nodeStackTraceLimit(node *ast.Node) (ir.Expression, bool, error) {
 	if node.Kind == ast.KindBinaryExpression && node.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken {
 		target := ast.SkipParentheses(node.AsBinaryExpression().Left)
-		if target.Kind != ast.KindPropertyAccessExpression || l.nodeLibraryMember(target) != nodeStackTraceLimitMember {
+		if target.Kind != ast.KindPropertyAccessExpression ||
+			lowering.nodeLibraryMember(target) != nodeStackTraceLimitMember {
 			return nil, false, nil
 		}
-		if nodeStackTraceLimitRefusalError := l.nodeStackTraceLimitRefusal(
+		if nodeStackTraceLimitRefusalError := lowering.nodeStackTraceLimitRefusal(
 			target,
 		); nodeStackTraceLimitRefusalError != nil {
 			return nil, true, nodeStackTraceLimitRefusalError
 		}
-		value, expressionError := l.expression(node.AsBinaryExpression().Right)
+		value, expressionError := lowering.expression(node.AsBinaryExpression().Right)
 		if expressionError != nil {
 			return nil, true, expressionError
 		}
 		if value.Type() != ir.Number {
-			return nil, true, l.notYet(
+			return nil, true, lowering.notYet(
 				node.AsBinaryExpression().Right,
 				nodeStackTraceLimitMember+" written with a value not typed number",
 			)
@@ -248,27 +251,29 @@ func (l *lowering) nodeStackTraceLimit(node *ast.Node) (ir.Expression, bool, err
 		}, true, nil
 	}
 	if (node.Kind != ast.KindPropertyAccessExpression && node.Kind != ast.KindElementAccessExpression) ||
-		l.nodeLibraryMember(node) != nodeStackTraceLimitMember {
+		lowering.nodeLibraryMember(node) != nodeStackTraceLimitMember {
 		return nil, false, nil
 	}
-	if nodeStackTraceLimitRefusalError := l.nodeStackTraceLimitRefusal(node); nodeStackTraceLimitRefusalError != nil {
+	if nodeStackTraceLimitRefusalError := lowering.nodeStackTraceLimitRefusal(
+		node,
+	); nodeStackTraceLimitRefusalError != nil {
 		return nil, true, nodeStackTraceLimitRefusalError
 	}
 	return ir.ProcessCall{Operation: "stackTraceLimit", Of: ir.Number}, true, nil
 }
 
-func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error) {
+func (lowering *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error) {
 
-	if value, known, nodeProcessEnvironmentMutationError := l.nodeProcessEnvironmentMutation(node); known {
+	if value, known, nodeProcessEnvironmentMutationError := lowering.nodeProcessEnvironmentMutation(node); known {
 		return value, known, nodeProcessEnvironmentMutationError
 	}
-	if value, known, nodeStackTraceLimitError := l.nodeStackTraceLimit(node); known {
+	if value, known, nodeStackTraceLimitError := lowering.nodeStackTraceLimit(node); known {
 		return value, known, nodeStackTraceLimitError
 	}
-	if value, known, nodeGlobalsValueError := l.nodeGlobalsValue(node); known {
+	if value, known, nodeGlobalsValueError := lowering.nodeGlobalsValue(node); known {
 		return value, known, nodeGlobalsValueError
 	}
-	if value, known, nodeCommonJsRequireValueError := l.nodeCommonJSRequireValue(node); known {
+	if value, known, nodeCommonJsRequireValueError := lowering.nodeCommonJSRequireValue(node); known {
 		return value, known, nodeCommonJsRequireValueError
 	}
 	if node.Kind == ast.KindPrefixUnaryExpression {
@@ -277,7 +282,7 @@ func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error)
 		if outer.Operator == ast.KindExclamationToken && inner.Kind == ast.KindPrefixUnaryExpression {
 			innerPrefix := inner.AsPrefixUnaryExpression()
 			if innerPrefix.Operator == ast.KindExclamationToken &&
-				l.processPath(innerPrefix.Operand) == "process.nextTick" {
+				lowering.processPath(innerPrefix.Operand) == "process.nextTick" {
 				return ir.ProcessCall{Operation: "nextTickFeature", Of: ir.Boolean}, true, nil
 			}
 		}
@@ -285,28 +290,28 @@ func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error)
 
 	if node.Kind == ast.KindTypeOfExpression {
 		operand := node.AsTypeOfExpression().Expression
-		if l.nodeProcessHostBinding(operand) {
-			return ir.StringConstant{Index: l.constant("object")}, true, nil
+		if lowering.nodeProcessHostBinding(operand) {
+			return ir.StringConstant{Index: lowering.constant("object")}, true, nil
 		}
-		path := l.processPath(operand)
+		path := lowering.processPath(operand)
 		if path == "" {
-			path = l.nodeProcessPath(operand)
+			path = lowering.nodeProcessPath(operand)
 		}
 		switch path {
 		case "process.nextTick", "performance.now", "performance.mark", "performance.measure", "performance.clearMarks", "performance.clearMeasures", "process.cwd", "process.memoryUsage":
-			return ir.StringConstant{Index: l.constant("function")}, true, nil
+			return ir.StringConstant{Index: lowering.constant("function")}, true, nil
 		}
 	}
-	path := l.processPath(node)
+	path := lowering.processPath(node)
 	if path == "" {
-		path = l.nodeProcessPath(node)
+		path = lowering.nodeProcessPath(node)
 	}
 	call := ir.ProcessCall{}
 	if node.Kind == ast.KindCallExpression {
 		written := node.AsCallExpression()
-		path = l.processPath(written.Expression)
+		path = lowering.processPath(written.Expression)
 		if path == "" {
-			path = l.nodeProcessPath(written.Expression)
+			path = lowering.nodeProcessPath(written.Expression)
 		}
 		count, minimum := 0, 0
 		switch path {
@@ -323,7 +328,7 @@ func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error)
 			call.Operation, call.Of = "memoryUsage", ir.Object
 		case "process.stdout.write":
 			if node.Parent == nil || node.Parent.Kind != ast.KindExpressionStatement {
-				return nil, true, l.notYet(node, "observing the backpressure return of process.stdout.write")
+				return nil, true, lowering.notYet(node, "observing the backpressure return of process.stdout.write")
 			}
 			call.Operation, call.Of, count, minimum = "stdoutWrite", ir.Object, 1, 1
 		case "performance.now":
@@ -338,20 +343,20 @@ func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error)
 			call.Operation, call.Of, count = "clearMeasures", ir.Object, 1
 		default:
 			if strings.HasPrefix(path, "os.") || strings.HasPrefix(path, "performance.") {
-				return nil, true, l.notYet(node, path)
+				return nil, true, lowering.notYet(node, path)
 			}
 			return nil, false, nil
 		}
 		if len(written.Arguments.Nodes) < minimum || len(written.Arguments.Nodes) > count {
-			return nil, true, l.notYet(node, path+" with arguments outside the census contract")
+			return nil, true, lowering.notYet(node, path+" with arguments outside the census contract")
 		}
 		for _, argument := range written.Arguments.Nodes {
-			value, expressionError := l.expression(argument)
+			value, expressionError := lowering.expression(argument)
 			if expressionError != nil {
 				return nil, true, expressionError
 			}
 			if _, absent := value.(ir.Undefined); !absent && value.Type() != ir.String {
-				return nil, true, l.notYet(argument, path+" with a non-string argument")
+				return nil, true, lowering.notYet(argument, path+" with a non-string argument")
 			}
 			if _, absent := value.(ir.Undefined); absent {
 				value = ir.Undefined{Of: ir.String}
@@ -365,13 +370,16 @@ func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error)
 	}
 	switch path {
 	case "os":
-		return nil, true, l.notYet(node, "node:os namespace as a first-class value")
+		return nil, true, lowering.notYet(node, "node:os namespace as a first-class value")
 	case "performanceModule":
 		parent := node.Parent
 		if parent == nil ||
 			parent.Kind != ast.KindVariableDeclaration ||
 			parent.Name().Kind != ast.KindObjectBindingPattern {
-			return nil, true, l.notYet(node, "node:perf_hooks namespace as a value outside performance destructuring")
+			return nil, true, lowering.notYet(
+				node,
+				"node:perf_hooks namespace as a value outside performance destructuring",
+			)
 		}
 		for _, binding := range parent.Name().AsBindingPattern().Elements.Nodes {
 			name := binding.Name().Text()
@@ -379,15 +387,15 @@ func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error)
 				name = binding.AsBindingElement().PropertyName.Text()
 			}
 			if name != "performance" {
-				return nil, true, l.notYet(node, "node:perf_hooks."+name)
+				return nil, true, lowering.notYet(node, "node:perf_hooks."+name)
 			}
 		}
-		l.result.ClosuresMayThrow = true
+		lowering.result.ClosuresMayThrow = true
 		return ir.ObjectLiteral{
 			Fields: []ir.Field{{Name: "performance", Value: ir.ProcessCall{Operation: "performance", Of: ir.Object}}},
 		}, true, nil
 	case "performance":
-		l.result.ClosuresMayThrow = true
+		lowering.result.ClosuresMayThrow = true
 		call.Operation, call.Of = "performance", ir.Object
 	case "process.platform":
 		call.Operation, call.Of = "platform", ir.String
@@ -405,21 +413,21 @@ func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error)
 		call.Operation, call.Of = "timeOrigin", ir.Number
 	default:
 		if strings.HasPrefix(path, "os.") || strings.HasPrefix(path, "performance.") {
-			return nil, true, l.notYet(node, path)
+			return nil, true, lowering.notYet(node, path)
 		}
 		return nil, false, nil
 	}
-	if to, known := l.representation(l.checker.GetTypeAtLocation(node)); known {
+	if to, known := lowering.representation(lowering.checker.GetTypeAtLocation(node)); known {
 		return fit(call, to), true, nil
 	}
 	return call, true, nil
 }
 
-func (l *lowering) nodeProcessMethodObservation(node *ast.Node) bool {
-	if l.nodeCaptureStackTraceRead(node) {
+func (lowering *lowering) nodeProcessMethodObservation(node *ast.Node) bool {
+	if lowering.nodeCaptureStackTraceRead(node) {
 		return true
 	}
-	path := l.processPath(node)
+	path := lowering.processPath(node)
 	if path == "process.nextTick" && node.Parent != nil && node.Parent.Kind == ast.KindPrefixUnaryExpression {
 		inner := node.Parent.AsPrefixUnaryExpression()
 		outer := node.Parent.Parent
@@ -440,23 +448,25 @@ func (l *lowering) nodeProcessMethodObservation(node *ast.Node) bool {
 	if node.Kind == ast.KindPropertyAccessExpression && node.Name().Text() == "setBlocking" {
 		receiver := ast.SkipParentheses(node.AsPropertyAccessExpression().Expression)
 		if ast.IsIdentifier(receiver) {
-			symbol := l.symbol(receiver)
+			symbol := lowering.symbol(receiver)
 			if symbol != nil {
 				for _, declaration := range symbol.Declarations {
 					if declaration.Kind == ast.KindVariableDeclaration &&
 						declaration.AsVariableDeclaration().Initializer != nil &&
-						l.processPath(declaration.AsVariableDeclaration().Initializer) == "process.stdout._handle" {
+						lowering.processPath(
+							declaration.AsVariableDeclaration().Initializer,
+						) == "process.stdout._handle" {
 						return true
 					}
 				}
 			}
 		}
 	}
-	path = l.nodeProcessPath(node)
+	path = lowering.nodeProcessPath(node)
 	if path == "" {
-		path = l.processPath(node)
+		path = lowering.processPath(node)
 	}
-	if name := l.nodeLibraryMember(node); strings.HasPrefix(name, "node:perf_hooks.Performance.") {
+	if name := lowering.nodeLibraryMember(node); strings.HasPrefix(name, "node:perf_hooks.Performance.") {
 		path = "performance." + node.Name().Text()
 	}
 	switch path {
@@ -467,32 +477,32 @@ func (l *lowering) nodeProcessMethodObservation(node *ast.Node) bool {
 }
 
 // Only the external environment has deletable keys; ordinary object shapes remain fixed.
-func (l *lowering) nodeProcessEnvironmentDelete(node *ast.Node) bool {
+func (lowering *lowering) nodeProcessEnvironmentDelete(node *ast.Node) bool {
 	if node.Kind != ast.KindDeleteExpression {
 		return false
 	}
-	_, known := l.nodeEnvironmentAccess(node.AsDeleteExpression().Expression)
+	_, known := lowering.nodeEnvironmentAccess(node.AsDeleteExpression().Expression)
 	return known
 }
 
 // A presence descriptor is narrower than a callable method implementation.
 // These static host receivers have no evaluation effects; arbitrary typed objects
 // still use the compiler's receiver evaluation and runtime method lookup.
-func (l *lowering) nodeProcessMethodPresence(node *ast.Node) (ir.Expression, bool) {
-	if l.nodeFSRealpathPresence(node) {
+func (lowering *lowering) nodeProcessMethodPresence(node *ast.Node) (ir.Expression, bool) {
+	if lowering.nodeFSRealpathPresence(node) {
 		return ir.BooleanConstant{Value: true}, true
 	}
-	path := l.processPath(node)
+	path := lowering.processPath(node)
 	if path == "" {
-		path = l.nodeProcessPath(node)
+		path = lowering.nodeProcessPath(node)
 	}
 	// tsc's probe redeclares the global process with its official NodeJS type.
 	// An ambient global of another name, or a user method merely named nextTick,
 	// is not evidence of this host's process object.
 	if path == "" &&
 		node.Kind == ast.KindPropertyAccessExpression &&
-		l.nodeProcessHostBinding(node.AsPropertyAccessExpression().Expression) {
-		switch l.nodeLibraryMember(node) {
+		lowering.nodeProcessHostBinding(node.AsPropertyAccessExpression().Expression) {
+		switch lowering.nodeLibraryMember(node) {
 		case "node:process.Process.nextTick", "node:process.Process.cwd", "node:process.Process.memoryUsage":
 			path = "process." + node.Name().Text()
 		}
@@ -509,19 +519,19 @@ func (l *lowering) nodeProcessMethodPresence(node *ast.Node) (ir.Expression, boo
 
 // An ambient declaration of the official process global names the host binding,
 // not a null-initialized user object. A different name or user type proves nothing.
-func (l *lowering) nodeProcessHostBinding(node *ast.Node) bool {
+func (lowering *lowering) nodeProcessHostBinding(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
-	if l.processPath(node) == "process" {
+	if lowering.processPath(node) == "process" {
 		return true
 	}
 	if !ast.IsIdentifier(node) || node.Text() != "process" {
 		return false
 	}
-	binding := l.symbol(node)
+	binding := lowering.symbol(node)
 	if binding == nil {
 		return false
 	}
-	host := l.checker.GetTypeAtLocation(node).Symbol()
+	host := lowering.checker.GetTypeAtLocation(node).Symbol()
 	if host == nil || host.Name != "Process" {
 		return false
 	}
@@ -544,18 +554,18 @@ func (l *lowering) nodeProcessHostBinding(node *ast.Node) bool {
 
 // sys.ts reads the native variant from its static fs module. Never erase an
 // arbitrary receiver expression merely because it has realpathSync's type.
-func (l *lowering) nodeFSRealpathPresence(node *ast.Node) bool {
+func (lowering *lowering) nodeFSRealpathPresence(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
 	if node.Kind != ast.KindPropertyAccessExpression || node.Name().Text() != "native" {
 		return false
 	}
 	function := ast.SkipParentheses(node.AsPropertyAccessExpression().Expression)
-	module, member := l.nodeHostMember(function)
+	module, member := lowering.nodeHostMember(function)
 	if module != "node:fs" || member != "realpathSync" {
 		return false
 	}
 	if ast.IsIdentifier(function) {
-		symbol := l.symbol(function)
+		symbol := lowering.symbol(function)
 		return symbol != nil &&
 			symbol.Name == "realpathSync" &&
 			len(symbol.Declarations) > 0 &&
@@ -568,7 +578,7 @@ func (l *lowering) nodeFSRealpathPresence(node *ast.Node) bool {
 	if !ast.IsIdentifier(receiver) {
 		return false
 	}
-	symbol := l.symbol(receiver)
+	symbol := lowering.symbol(receiver)
 	if symbol == nil {
 		return false
 	}
@@ -585,11 +595,11 @@ func (l *lowering) nodeFSRealpathPresence(node *ast.Node) bool {
 
 // Const aliases keep the full overloaded Node declaration. Its options overload
 // must not reach the string-only native closure ABI through a generic method call.
-func (l *lowering) nodeProcessSignature(node *ast.Node) error {
+func (lowering *lowering) nodeProcessSignature(node *ast.Node) error {
 	if node.Kind != ast.KindCallExpression {
 		return nil
 	}
-	name := l.nodeLibraryMember(node)
+	name := lowering.nodeLibraryMember(node)
 	prefix := "node:perf_hooks.Performance."
 	if !strings.HasPrefix(name, prefix) {
 		return nil
@@ -605,11 +615,11 @@ func (l *lowering) nodeProcessSignature(node *ast.Node) error {
 	case "clearMarks", "clearMeasures":
 		maximum = 1
 	default:
-		return l.notYet(node, "performance."+member)
+		return lowering.notYet(node, "performance."+member)
 	}
 	arguments := node.AsCallExpression().Arguments.Nodes
 	if len(arguments) < minimum || len(arguments) > maximum {
-		return l.notYet(node, "performance."+member+" outside the string host contract")
+		return lowering.notYet(node, "performance."+member+" outside the string host contract")
 	}
 	var stringArgument func(*checker.Type, bool) bool
 	stringArgument = func(proven *checker.Type, optional bool) bool {
@@ -626,8 +636,8 @@ func (l *lowering) nodeProcessSignature(node *ast.Node) error {
 	}
 	for index, argument := range arguments {
 		if argument.Kind == ast.KindSpreadElement ||
-			!stringArgument(l.checker.GetTypeAtLocation(argument), index >= minimum) {
-			return l.notYet(argument, "performance."+member+" with an argument outside the string host ABI")
+			!stringArgument(lowering.checker.GetTypeAtLocation(argument), index >= minimum) {
+			return lowering.notYet(argument, "performance."+member+" with an argument outside the string host ABI")
 		}
 	}
 	return nil
@@ -636,7 +646,7 @@ func (l *lowering) nodeProcessSignature(node *ast.Node) error {
 // Structural interfaces can hide the overloaded declaration. Once a program
 // holds performance, unresolved calls and writes to its slot names must retain
 // the runtime's string/number ABI; otherwise refuse before C emission.
-func (l *lowering) nodeProcessStorageABI(modules []*ast.SourceFile) error {
+func (lowering *lowering) nodeProcessStorageABI(modules []*ast.SourceFile) error {
 	host := false
 	var failure string
 	check := func(statements []ir.Statement) {
@@ -690,19 +700,19 @@ func (l *lowering) nodeProcessStorageABI(modules []*ast.SourceFile) error {
 			return true
 		})
 	}
-	check(l.result.Main)
-	for _, function := range l.result.Functions {
+	check(lowering.result.Main)
+	for _, function := range lowering.result.Functions {
 		check(function.Body)
 	}
 	if host && failure != "" {
-		return l.notYet(modules[0].AsNode(), failure)
+		return lowering.notYet(modules[0].AsNode(), failure)
 	}
 	return nil
 }
 
 // The narrow process adapter owns only the optional stdout handle.
 // Keep the raw stdout scanner's refusals for all other stream observations.
-func (l *lowering) nodeProcessGuardedStdoutUse(node *ast.Node) bool {
+func (lowering *lowering) nodeProcessGuardedStdoutUse(node *ast.Node) bool {
 	outer := node
 	if outer.Parent != nil && outer.Parent.Kind == ast.KindPropertyAccessExpression && outer.Parent.Name() == outer {
 		outer = outer.Parent
@@ -717,5 +727,5 @@ func (l *lowering) nodeProcessGuardedStdoutUse(node *ast.Node) bool {
 		}
 		break
 	}
-	return l.processPath(outer) == "process.stdout._handle"
+	return lowering.processPath(outer) == "process.stdout._handle"
 }

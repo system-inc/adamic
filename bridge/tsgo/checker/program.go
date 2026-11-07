@@ -133,12 +133,12 @@ func diagnosticText(diagnostics []*ast.Diagnostic) string {
 // Query selects the deepest AST child containing a zero-based UTF-8 byte offset.
 // Ranges are half open; leading trivia belongs to the following node. EOF is refused.
 // Type errors in the queried TypeScript are allowed, as they are in a lint checker.
-func (p *Program) Query(file string, position uint64) (Result, error) {
+func (program *Program) Query(file string, position uint64) (Result, error) {
 	file, pathError := Path(file)
 	if pathError != nil {
 		return Result{}, pathError
 	}
-	source := p.Compiler.GetSourceFile(tspath.RootedFilePathFromAbsolute(file))
+	source := program.Compiler.GetSourceFile(tspath.RootedFilePathFromAbsolute(file))
 	if source == nil {
 		return Result{}, fmt.Errorf("file is not in this program: %s", file)
 	}
@@ -146,7 +146,7 @@ func (p *Program) Query(file string, position uint64) (Result, error) {
 		return Result{}, fmt.Errorf("position %d is outside %s", position, file)
 	}
 	node := ast.GetNodeAtPosition(source, int(position), false)
-	typeChecker, release := p.Compiler.GetTypeCheckerForFile(context.Background(), source)
+	typeChecker, release := program.Compiler.GetTypeCheckerForFile(context.Background(), source)
 	defer release()
 	result := Result{Kind: uint32(node.Kind), Type: typeChecker.TypeToString(typeChecker.GetTypeAtLocation(node))}
 	if symbol := typeChecker.GetSymbolAtLocation(node); symbol != nil {
@@ -158,12 +158,12 @@ func (p *Program) Query(file string, position uint64) (Result, error) {
 // TypeParts identifies an exact AST node, rather than the deepest token at a
 // position. A mismatch between parsers is refused instead of querying a neighbor.
 // Frames are flags LF UTF-16-length LF TypeToString, with no trailing separator.
-func (p *Program) TypeParts(file string, start, end uint64, kind string) (string, error) {
+func (program *Program) TypeParts(file string, start, end uint64, kind string) (string, error) {
 	file, pathError := Path(file)
 	if pathError != nil {
 		return "", pathError
 	}
-	source := p.Compiler.GetSourceFile(tspath.RootedFilePathFromAbsolute(file))
+	source := program.Compiler.GetSourceFile(tspath.RootedFilePathFromAbsolute(file))
 	if source == nil {
 		return "", fmt.Errorf("file is not in this program: %s", file)
 	}
@@ -190,7 +190,7 @@ func (p *Program) TypeParts(file string, start, end uint64, kind string) (string
 	if node == nil {
 		return "", fmt.Errorf("no exact %s node at %d:%d in %s", kind, start, end, file)
 	}
-	typeChecker, release := p.Compiler.GetTypeCheckerForFile(context.Background(), source)
+	typeChecker, release := program.Compiler.GetTypeCheckerForFile(context.Background(), source)
 	defer release()
 	actual := typeChecker.GetTypeAtLocation(node)
 	if constraint := checker.Checker_getBaseConstraintOfType(typeChecker, actual); constraint != nil {

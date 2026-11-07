@@ -68,4 +68,4 @@ func TestTSGoBuildSeesTheProgramsFeatures(test *testing.T) {
 
 type compileError struct{ output []byte }
 
-func (e *compileError) Error() string { return string(e.output) }
+func (compileError *compileError) Error() string { return string(compileError.output) }

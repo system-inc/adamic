@@ -55,26 +55,26 @@ func buildUnionReadContract(
 
 // Union members need an element/position graph even before array consumers
 // land. No standalone array consumer or dictionary adapter is registered here.
-func (l *lowering) unionAggregateContract(node *ast.Node, target *checker.Type) (ir.ViewContractID, error) {
-	if id := l.result.ViewContractTypes[int(target.Id())]; id != 0 {
+func (lowering *lowering) unionAggregateContract(node *ast.Node, target *checker.Type) (ir.ViewContractID, error) {
+	if id := lowering.result.ViewContractTypes[int(target.Id())]; id != 0 {
 		return id, nil
 	}
-	id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
-	contract := ir.ViewContract{Name: l.checker.TypeToString(target)}
-	l.result.ViewContractTypes[int(target.Id())] = id
-	l.result.ViewContracts = append(l.result.ViewContracts, contract)
+	id := ir.ViewContractID(len(lowering.result.ViewContracts) + 1)
+	contract := ir.ViewContract{Name: lowering.checker.TypeToString(target)}
+	lowering.result.ViewContractTypes[int(target.Id())] = id
+	lowering.result.ViewContracts = append(lowering.result.ViewContracts, contract)
 	if checker.IsTupleType(target) {
 		contract.Kind = ir.ViewObject
 		contract.Of = ir.Object
 		contract.FixedTuple = true
-		for position, element := range l.checker.GetTypeArguments(target) {
-			child, viewContractError := l.viewContract(node, element)
+		for position, element := range lowering.checker.GetTypeArguments(target) {
+			child, viewContractError := lowering.viewContract(node, element)
 			if viewContractError != nil {
 				return 0, viewContractError
 			}
 			flags := target.TargetTupleType().ElementFlags()
 			if flags[position] != checker.ElementFlagsRequired {
-				return 0, l.notYet(node, "a variable tuple checked-view contract")
+				return 0, lowering.notYet(node, "a variable tuple checked-view contract")
 			}
 			contract.Tuple = append(contract.Tuple, child)
 			contract.Fields = append(contract.Fields, ir.ViewFieldContract{
@@ -87,34 +87,34 @@ func (l *lowering) unionAggregateContract(node *ast.Node, target *checker.Type) 
 		contract.Kind = ir.ViewArray
 		contract.Unsupported = "views-v3: array element kind"
 		contract.Of = ir.Array
-		element := l.viewArrayElementType(target)
+		element := lowering.viewArrayElementType(target)
 		if element == nil {
-			return 0, l.notYet(node, "an unavailable array union element")
+			return 0, lowering.notYet(node, "an unavailable array union element")
 		}
-		child, viewContractError := l.viewContract(node, element)
+		child, viewContractError := lowering.viewContract(node, element)
 		if viewContractError != nil {
 			return 0, viewContractError
 		}
 		contract.Element = child
 	}
-	l.result.ViewContracts[id-1] = contract
+	lowering.result.ViewContracts[id-1] = contract
 	return id, nil
 }
 
 // Only registered, complete union reads bypass the pre-existing slot refusal.
 // The backend must run that certificate before returning the read value.
-func (l *lowering) unionReadCertificate(node *ast.Node, of ir.Type) bool {
+func (lowering *lowering) unionReadCertificate(node *ast.Node, of ir.Type) bool {
 	if of != ir.Union {
 		return false
 	}
-	symbol := l.checker.GetSymbolAtLocation(node.Name())
+	symbol := lowering.checker.GetSymbolAtLocation(node.Name())
 	if symbol == nil {
 		return false
 	}
-	id := l.result.ViewContractTypes[int(l.checker.GetTypeOfSymbol(symbol).Id())]
-	if id <= 0 || int(id) > len(l.result.ViewContracts) {
+	id := lowering.result.ViewContractTypes[int(lowering.checker.GetTypeOfSymbol(symbol).Id())]
+	if id <= 0 || int(id) > len(lowering.result.ViewContracts) {
 		return false
 	}
-	contract := l.result.ViewContracts[id-1]
+	contract := lowering.result.ViewContracts[id-1]
 	return contract.Kind == ir.ViewUnion && contract.Unsupported == "" && len(contract.Members) != 0
 }

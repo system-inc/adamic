@@ -11,4 +11,4 @@ type NodeHostCall struct {
 	Throws         bool
 }
 
-func (n NodeHostCall) Type() Type { return n.Returns }
+func (call NodeHostCall) Type() Type { return call.Returns }

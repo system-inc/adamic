@@ -8,15 +8,15 @@ import (
 // nonObjectOwnProperty spells the descriptors of the values whose shape is fixed by the language.
 // A generated function keeps the receiver and key in parameters, so each is evaluated once, in
 // JavaScript's order, even when the answer is constant. No native representation is read as an object.
-func (l *lowering) nonObjectOwnProperty(
+func (lowering *lowering) nonObjectOwnProperty(
 	node, receiver *ast.Node,
 	name string,
 	of ir.Type,
 ) (ir.Expression, bool, error) {
-	return l.nonObjectOwnPropertyArguments(node, receiver, name, of, node.AsCallExpression().Arguments.Nodes)
+	return lowering.nonObjectOwnPropertyArguments(node, receiver, name, of, node.AsCallExpression().Arguments.Nodes)
 }
 
-func (l *lowering) nonObjectOwnPropertyArguments(
+func (lowering *lowering) nonObjectOwnPropertyArguments(
 	node, receiver *ast.Node,
 	name string,
 	of ir.Type,
@@ -24,37 +24,40 @@ func (l *lowering) nonObjectOwnPropertyArguments(
 ) (ir.Expression, bool, error) {
 	functionPrototype := -1
 	if of == ir.Closure {
-		functionPrototype = l.functionPrototype(receiver, 0)
+		functionPrototype = lowering.functionPrototype(receiver, 0)
 	}
 	switch of {
 	case ir.Number, ir.Boolean, ir.String, ir.Array, ir.Map:
 	case ir.Closure:
 		if name == "hasOwnProperty" && functionPrototype < 0 {
-			return nil, true, l.notYet(
+			return nil, true, lowering.notYet(
 				node,
 				"hasOwnProperty on a function (its prototype property depends on whether it was declared or made as an arrow)",
 			)
 		}
 	default:
-		return nil, true, l.notYet(node, name+" on a "+typeName(of)+" (mixed value descriptors are not represented)")
+		return nil, true, lowering.notYet(
+			node,
+			name+" on a "+typeName(of)+" (mixed value descriptors are not represented)",
+		)
 	}
 	if len(arguments) != 1 {
-		return nil, true, l.notYet(node, name+" with other than one key")
+		return nil, true, lowering.notYet(node, name+" with other than one key")
 	}
-	if keyType, _ := l.representation(l.checker.GetTypeAtLocation(arguments[0])); keyType != ir.String {
-		return nil, true, l.notYet(node, name+" with a key that isn't a string")
+	if keyType, _ := lowering.representation(lowering.checker.GetTypeAtLocation(arguments[0])); keyType != ir.String {
+		return nil, true, lowering.notYet(node, name+" with a key that isn't a string")
 	}
-	value, expressionError := l.expression(receiver)
+	value, expressionError := lowering.expression(receiver)
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
-	key, expressionError := l.expression(arguments[0])
+	key, expressionError := lowering.expression(arguments[0])
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
-	function := len(l.result.Functions)
-	held := len(l.result.Locals)
-	l.result.Locals = append(l.result.Locals,
+	function := len(lowering.result.Functions)
+	held := len(lowering.result.Locals)
+	lowering.result.Locals = append(lowering.result.Locals,
 		ir.Local{Name: "receiver", Type: of, Function: function},
 		ir.Local{Name: "key", Type: ir.String, Function: function},
 	)
@@ -63,20 +66,31 @@ func (l *lowering) nonObjectOwnPropertyArguments(
 	if of == ir.Closure && name == "hasOwnProperty" {
 		readKey := ir.Read{Local: held + 1, Of: ir.String}
 		result = ir.Binary{Operator: ir.Or,
-			Left:  ir.Binary{Operator: ir.Equal, Left: readKey, Right: ir.StringConstant{Index: l.constant("length")}},
-			Right: ir.Binary{Operator: ir.Equal, Left: readKey, Right: ir.StringConstant{Index: l.constant("name")}},
+			Left: ir.Binary{
+				Operator: ir.Equal,
+				Left:     readKey,
+				Right:    ir.StringConstant{Index: lowering.constant("length")},
+			},
+			Right: ir.Binary{
+				Operator: ir.Equal,
+				Left:     readKey,
+				Right:    ir.StringConstant{Index: lowering.constant("name")},
+			},
 		}
 		if functionPrototype == 1 {
 			result = ir.Binary{Operator: ir.Or, Left: result, Right: ir.Binary{
 				Operator: ir.Equal,
 				Left:     readKey,
-				Right:    ir.StringConstant{Index: l.constant("prototype")},
+				Right:    ir.StringConstant{Index: lowering.constant("prototype")},
 			}}
 		}
 	}
 	if of == ir.Array || of == ir.String {
-		index := len(l.result.Locals)
-		l.result.Locals = append(l.result.Locals, ir.Local{Name: "index", Type: ir.Number, Function: function})
+		index := len(lowering.result.Locals)
+		lowering.result.Locals = append(
+			lowering.result.Locals,
+			ir.Local{Name: "index", Type: ir.Number, Function: function},
+		)
 		readKey := ir.Read{Local: held + 1, Of: ir.String}
 		parsed := ir.Read{Local: index, Of: ir.Number}
 		readReceiver := ir.Read{Local: held, Of: of}
@@ -102,13 +116,13 @@ func (l *lowering) nonObjectOwnPropertyArguments(
 			Condition: ir.Binary{
 				Operator: ir.Equal,
 				Left:     readKey,
-				Right:    ir.StringConstant{Index: l.constant("length")},
+				Right:    ir.StringConstant{Index: lowering.constant("length")},
 			},
 			WhenTrue: ir.BooleanConstant{Value: name == "hasOwnProperty"}, WhenNot: result,
 		}
 	}
 	body = append(body, ir.Return{Value: result})
-	l.result.Functions = append(l.result.Functions, ir.Function{
+	lowering.result.Functions = append(lowering.result.Functions, ir.Function{
 		Name:       name + "_" + typeName(of),
 		Parameters: []int{held, held + 1},
 		Returns:    ir.Boolean,
@@ -119,7 +133,7 @@ func (l *lowering) nonObjectOwnPropertyArguments(
 
 // A module function has an own, non-enumerable prototype; an arrow has none. A parameter or field
 // can hold either, so it needs a runtime origin tag before hasOwnProperty can answer soundly.
-func (l *lowering) functionPrototype(node *ast.Node, depth int) int {
+func (lowering *lowering) functionPrototype(node *ast.Node, depth int) int {
 	if depth > 16 {
 		return -1
 	}
@@ -130,11 +144,11 @@ func (l *lowering) functionPrototype(node *ast.Node, depth int) int {
 	if !ast.IsIdentifier(node) {
 		return -1
 	}
-	symbol := l.symbol(node)
-	if _, found := l.functions[symbol]; found {
+	symbol := lowering.symbol(node)
+	if _, found := lowering.functions[symbol]; found {
 		return 1
 	}
-	if _, found := l.generics[symbol]; found {
+	if _, found := lowering.generics[symbol]; found {
 		return 1
 	}
 	if symbol == nil || len(symbol.Declarations) != 1 {
@@ -150,5 +164,5 @@ func (l *lowering) functionPrototype(node *ast.Node, depth int) int {
 	if initializer == nil {
 		return -1
 	}
-	return l.functionPrototype(initializer, depth+1)
+	return lowering.functionPrototype(initializer, depth+1)
 }

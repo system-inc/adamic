@@ -141,17 +141,17 @@ func (source inlineSource) buildNode(dir string) error {
 
 type inlineMutation struct{ name, file, from, to string }
 
-func (m inlineMutation) buildLowered(dir string) error {
+func (mutation inlineMutation) buildLowered(dir string) error {
 	for _, name := range []string{"main.ts", "inline.ts", "classes.ts"} {
 		data, readError := os.ReadFile(name)
 		if readError != nil {
 			return readError
 		}
-		if name == m.file {
-			if strings.Count(string(data), m.from) != 1 {
-				return fmt.Errorf("%s must change one site", m.name)
+		if name == mutation.file {
+			if strings.Count(string(data), mutation.from) != 1 {
+				return fmt.Errorf("%s must change one site", mutation.name)
 			}
-			data = []byte(strings.Replace(string(data), m.from, m.to, 1))
+			data = []byte(strings.Replace(string(data), mutation.from, mutation.to, 1))
 		}
 		if inlineWriteError := inlineWrite(dir, name, data); inlineWriteError != nil {
 			return inlineWriteError

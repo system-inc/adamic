@@ -5,9 +5,9 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-func (l *lowering) labeled(node *ast.Node) ([]ir.Statement, error) {
+func (lowering *lowering) labeled(node *ast.Node) ([]ir.Statement, error) {
 	statement := node.AsLabeledStatement()
-	body, statementError := l.statement(statement.Statement)
+	body, statementError := lowering.statement(statement.Statement)
 	if statementError != nil {
 		return nil, statementError
 	}

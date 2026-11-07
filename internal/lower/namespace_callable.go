@@ -2,9 +2,9 @@ package lower
 
 import "github.com/microsoft/TypeScript/tsc/shim/ast"
 
-func (l *lowering) namespaceMergedFunction(node *ast.Node) bool {
-	symbol := l.symbol(node)
-	if symbol == nil || l.namespaceDeclaration(node) == nil {
+func (lowering *lowering) namespaceMergedFunction(node *ast.Node) bool {
+	symbol := lowering.symbol(node)
+	if symbol == nil || lowering.namespaceDeclaration(node) == nil {
 		return false
 	}
 	for _, declaration := range symbol.Declarations {
@@ -17,12 +17,12 @@ func (l *lowering) namespaceMergedFunction(node *ast.Node) bool {
 
 // A closure represents the callable identity, but has no attached object storage.
 // Only uses that cannot observe that omitted container are admitted.
-func (l *lowering) callableNamespaceUse(node *ast.Node) bool {
-	if l.nodeLibraryMember(node) == "node:fs.realpathSync" {
-		if node.Parent != nil && l.nodeRealpathNative(node.Parent) {
+func (lowering *lowering) callableNamespaceUse(node *ast.Node) bool {
+	if lowering.nodeLibraryMember(node) == "node:fs.realpathSync" {
+		if node.Parent != nil && lowering.nodeRealpathNative(node.Parent) {
 			return true
 		}
-		return l.nodeRealpathReferenceRefusal(node) == nil
+		return lowering.nodeRealpathReferenceRefusal(node) == nil
 	}
 	if called(node) {
 		return true
@@ -38,29 +38,33 @@ func (l *lowering) callableNamespaceUse(node *ast.Node) bool {
 	if parent.Kind == ast.KindTypeOfExpression {
 		return true
 	}
-	if parent.Kind == ast.KindPropertyAccessExpression && parent.Expression() == use && l.namespaceMember(parent) {
+	if parent.Kind == ast.KindPropertyAccessExpression &&
+		parent.Expression() == use &&
+		lowering.namespaceMember(parent) {
 		return true
 	}
 	if parent.Kind == ast.KindBinaryExpression {
 		binary := parent.AsBinaryExpression()
-		if binary.OperatorToken.Kind == ast.KindEqualsEqualsEqualsToken || binary.OperatorToken.Kind == ast.KindExclamationEqualsEqualsToken {
-			return l.namespaceFixedFunction(binary.Left) && l.namespaceFixedFunction(binary.Right)
+		if binary.OperatorToken.Kind == ast.KindEqualsEqualsEqualsToken ||
+			binary.OperatorToken.Kind == ast.KindExclamationEqualsEqualsToken {
+			return lowering.namespaceFixedFunction(binary.Left) && lowering.namespaceFixedFunction(binary.Right)
 		}
 	}
 	return false
 }
 
-func (l *lowering) namespaceFixedFunction(node *ast.Node) bool {
+func (lowering *lowering) namespaceFixedFunction(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
 	if node.Kind != ast.KindIdentifier && node.Kind != ast.KindPropertyAccessExpression {
 		return false
 	}
-	symbol := l.symbol(node)
+	symbol := lowering.symbol(node)
 	if symbol == nil {
 		return false
 	}
 	for _, declaration := range symbol.Declarations {
-		if declaration.Kind == ast.KindFunctionDeclaration && (declaration.Parent.Kind == ast.KindModuleBlock || l.namespaceMergedFunction(node)) {
+		if declaration.Kind == ast.KindFunctionDeclaration &&
+			(declaration.Parent.Kind == ast.KindModuleBlock || lowering.namespaceMergedFunction(node)) {
 			return true
 		}
 	}

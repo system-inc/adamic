@@ -354,19 +354,19 @@ type lockedBuffer struct {
 	buffer bytes.Buffer
 }
 
-func (b *lockedBuffer) Write(data []byte) (int, error) {
-	b.lock.Lock()
-	defer b.lock.Unlock()
-	return b.buffer.Write(data)
+func (buffer *lockedBuffer) Write(data []byte) (int, error) {
+	buffer.lock.Lock()
+	defer buffer.lock.Unlock()
+	return buffer.buffer.Write(data)
 }
 
-func (b *lockedBuffer) Bytes() []byte {
-	b.lock.Lock()
-	defer b.lock.Unlock()
-	return bytes.Clone(b.buffer.Bytes())
+func (buffer *lockedBuffer) Bytes() []byte {
+	buffer.lock.Lock()
+	defer buffer.lock.Unlock()
+	return bytes.Clone(buffer.buffer.Bytes())
 }
 
-func (b *lockedBuffer) String() string { return string(b.Bytes()) }
+func (buffer *lockedBuffer) String() string { return string(buffer.Bytes()) }
 
 // asleep reports whether a running process is blocked, every thread waiting (state S on Linux; S or
 // I, idle, from ps on macOS), rather than running or waiting to run.

@@ -125,9 +125,9 @@ type compilerAgreementCheckerGroup struct {
 // A comma at each end distinguishes a set even when it has only one rule.
 // The port and Go manifest driver filter their existing registry in place, so
 // selecting a group cannot reorder listeners or give each rule a separate tree.
-func (g compilerAgreementCheckerGroup) selection() string {
-	names := make([]string, len(g.rules))
-	for i, d := range g.rules {
+func (group compilerAgreementCheckerGroup) selection() string {
+	names := make([]string, len(group.rules))
+	for i, d := range group.rules {
 		names[i] = d.Name
 	}
 	return "," + strings.Join(names, ",") + ","

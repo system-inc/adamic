@@ -15,7 +15,7 @@ type RecordCall struct {
 	OwnOnly bool
 }
 
-func (c RecordCall) Type() Type { return c.Returns }
+func (call RecordCall) Type() Type { return call.Returns }
 
 type RecordEntry struct{ Key, Value Expression }
 type RecordLiteral struct {
@@ -35,7 +35,7 @@ type RecordCoalesce struct {
 	Site               int
 }
 
-func (r RecordCoalesce) Type() Type { return r.Element }
+func (coalesce RecordCoalesce) Type() Type { return coalesce.Element }
 
 // RecordStorage is whether Value, an object (an UnknownObject, so neither a class's nor an Error),
 // must be read by its keys rather than its slots: natively, whether it's record storage, a
@@ -51,26 +51,26 @@ func (RecordStorage) Type() Type { return Boolean }
 // a hidden key (HiddenRecordKeys): a record write, ??= or delete whose key is known only as it runs,
 // or is a literal some define hides, and an object write under such a name, which native's
 // writeProperty stores through a record when one arrives there.
-func (p *Program) RecordWriteMayThrow(node any) bool {
-	if len(p.HiddenRecordKeys) == 0 {
+func (program *Program) RecordWriteMayThrow(node any) bool {
+	if len(program.HiddenRecordKeys) == 0 {
 		return false
 	}
 	switch node := node.(type) {
 	case RecordCall:
-		return (node.Method == "set" || node.Method == "delete") && p.mayBeHiddenKey(node.Arguments[1])
+		return (node.Method == "set" || node.Method == "delete") && program.mayBeHiddenKey(node.Arguments[1])
 	case RecordCoalesce:
-		return p.mayBeHiddenKey(node.Key)
+		return program.mayBeHiddenKey(node.Key)
 	case SetProperty:
-		return p.HiddenRecordKeys[node.Name]
+		return program.HiddenRecordKeys[node.Name]
 	}
 	return false
 }
 
 // mayBeHiddenKey says a record key may be one some define hides: a literal one is exactly when a
 // define names it, and any other may be.
-func (p *Program) mayBeHiddenKey(key Expression) bool {
+func (program *Program) mayBeHiddenKey(key Expression) bool {
 	if constant, literal := key.(StringConstant); literal {
-		return p.HiddenRecordKeys[p.Strings[constant.Index]]
+		return program.HiddenRecordKeys[program.Strings[constant.Index]]
 	}
 	return true
 }

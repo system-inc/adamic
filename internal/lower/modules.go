@@ -22,12 +22,12 @@ import (
 // program's syntax and the checker's symbols. Its side effects, cyclicModules and provenModuleReads,
 // are made by the first answer and written nowhere else, so a held answer leaves them as they were.
 // A different entry is answered afresh and replaces the held one.
-func (l *lowering) moduleOrder(entry *ast.SourceFile) ([]*ast.SourceFile, error) {
-	if held := l.moduleOrdered; held != nil && held.entry == entry {
+func (lowering *lowering) moduleOrder(entry *ast.SourceFile) ([]*ast.SourceFile, error) {
+	if held := lowering.moduleOrdered; held != nil && held.entry == entry {
 		return slices.Clone(held.order), held.err
 	}
-	order, orderModulesError := l.orderModules(entry)
-	l.moduleOrdered = &moduleOrdering{entry: entry, order: order, err: orderModulesError}
+	order, orderModulesError := lowering.orderModules(entry)
+	lowering.moduleOrdered = &moduleOrdering{entry: entry, order: order, err: orderModulesError}
 	return slices.Clone(order), orderModulesError
 }
 
@@ -39,19 +39,19 @@ type moduleOrdering struct {
 }
 
 // orderModules computes moduleOrder's answer and makes its side effects; moduleOrder holds it.
-func (l *lowering) orderModules(entry *ast.SourceFile) ([]*ast.SourceFile, error) {
-	l.moduleOrders++
-	order, cyclic := ESMModuleOrder(l.checker, entry)
+func (lowering *lowering) orderModules(entry *ast.SourceFile) ([]*ast.SourceFile, error) {
+	lowering.moduleOrders++
+	order, cyclic := ESMModuleOrder(lowering.checker, entry)
 	// Dynamic imports are not lowered. Refuse them before imported types can
 	// request source identities during declaration or initializer lowering.
 	for _, module := range order {
-		if dynamicImportGapError := l.dynamicImportGap(module); dynamicImportGapError != nil {
+		if dynamicImportGapError := lowering.dynamicImportGap(module); dynamicImportGapError != nil {
 			return nil, dynamicImportGapError
 		}
 	}
-	l.cyclicModules = cyclic
+	lowering.cyclicModules = cyclic
 	if cyclic {
-		l.proveModuleReads(order)
+		lowering.proveModuleReads(order)
 	}
 	return order, nil
 }
@@ -106,13 +106,13 @@ func ESMModuleOrder(typeChecker *checker.Checker, entry *ast.SourceFile) ([]*ast
 // allows. Every function's signature is written, from the checker, before any body is lowered, so a
 // call knows what the function it calls returns wherever that function is declared, and two
 // functions can call each other. Then each body is lowered.
-func (l *lowering) declareModule(statements []*ast.Node) error {
+func (lowering *lowering) declareModule(statements []*ast.Node) error {
 	statements = namespaceDeclarations(statements)
 	declarations := []*ast.Node{}
 	for _, statement := range statements {
 		switch statement.Kind {
 		case ast.KindVariableStatement:
-			if l.hostBindingDeclared(statement) {
+			if lowering.hostBindingDeclared(statement) {
 				continue // the host's names are the host's (host_bindings.go)
 			}
 			list := statement.AsVariableStatement().DeclarationList
@@ -128,30 +128,30 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 						if skipped(binding) || !ast.IsIdentifier(binding.Name()) {
 							continue
 						}
-						local, declareLocalError := l.declareLocal(binding.Name())
+						local, declareLocalError := lowering.declareLocal(binding.Name())
 						if declareLocalError != nil {
 							return declareLocalError
 						}
-						l.result.Locals[local].Global = true
-						l.result.Locals[local].Hoisted = list.Flags&ast.NodeFlagsBlockScoped == 0
+						lowering.result.Locals[local].Global = true
+						lowering.result.Locals[local].Hoisted = list.Flags&ast.NodeFlagsBlockScoped == 0
 						if namespaceVariable(list) && list.Flags&ast.NodeFlagsBlockScoped == 0 {
-							l.result.Locals[local].NamespaceVar = true
-							l.result.Locals[local].NamespaceState = true
+							lowering.result.Locals[local].NamespaceVar = true
+							lowering.result.Locals[local].NamespaceState = true
 						}
 					}
 					continue
 				}
 				if ast.IsIdentifier(declaration.Name()) {
-					local, declareLocalError := l.declareLocal(declaration.Name())
+					local, declareLocalError := lowering.declareLocal(declaration.Name())
 					if declareLocalError != nil {
 						return declareLocalError
 					}
-					l.result.Locals[local].Global = true
-					l.result.Locals[local].Hoisted = list.Flags&ast.NodeFlagsBlockScoped == 0
+					lowering.result.Locals[local].Global = true
+					lowering.result.Locals[local].Hoisted = list.Flags&ast.NodeFlagsBlockScoped == 0
 					if namespaceVariable(list) {
-						l.result.Locals[local].NamespaceVar = list.Flags&ast.NodeFlagsBlockScoped == 0
-						l.result.Locals[local].NamespaceState = declaration.Initializer() == nil ||
-							l.result.Locals[local].NamespaceVar
+						lowering.result.Locals[local].NamespaceVar = list.Flags&ast.NodeFlagsBlockScoped == 0
+						lowering.result.Locals[local].NamespaceState = declaration.Initializer() == nil ||
+							lowering.result.Locals[local].NamespaceVar
 					}
 				}
 			}
@@ -159,64 +159,64 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 			// Every enum with an object is declared here, before any function body lowers: a const enum
 			// a namespace cast reaches inside a function, as each of debug.ts's formatters does, reads
 			// its binding before the declaring module's statements are lowered (#52zja36).
-			built, enumObjectBuiltError := l.enumObjectBuilt(statement)
+			built, enumObjectBuiltError := lowering.enumObjectBuilt(statement)
 			if enumObjectBuiltError != nil {
 				return enumObjectBuiltError
 			}
 			if built {
-				local, enumLocalError := l.enumLocal(statement)
+				local, enumLocalError := lowering.enumLocal(statement)
 				if enumLocalError != nil {
 					return enumLocalError
 				}
-				l.result.Locals[local].Global = true
+				lowering.result.Locals[local].Global = true
 			}
 		case ast.KindClassDeclaration:
-			if l.classes == nil {
-				l.classes = map[*ast.Symbol]*ast.Node{}
+			if lowering.classes == nil {
+				lowering.classes = map[*ast.Symbol]*ast.Node{}
 			}
-			l.classes[l.symbol(statement.Name())] = statement
-			if l.needsStatics(statement) {
-				if l.staticGlobals == nil {
-					l.staticGlobals = map[*ast.Symbol]int{}
+			lowering.classes[lowering.symbol(statement.Name())] = statement
+			if lowering.needsStatics(statement) {
+				if lowering.staticGlobals == nil {
+					lowering.staticGlobals = map[*ast.Symbol]int{}
 				}
-				local, declareLocalError := l.declareLocal(statement.Name())
+				local, declareLocalError := lowering.declareLocal(statement.Name())
 				if declareLocalError != nil {
 					return declareLocalError
 				}
-				l.result.Locals[local].Global = true
-				l.staticStorage(statement)
+				lowering.result.Locals[local].Global = true
+				lowering.staticStorage(statement)
 			}
 		case ast.KindFunctionDeclaration:
 			if generatorDeclaration(statement) && !loweredGenerator(statement) {
 				// export default function* () has no name to declare it by (#qk8rztp).
-				return l.generatorNotYet(statement, generatorForm(statement))
+				return lowering.generatorNotYet(statement, generatorForm(statement))
 			}
-			if statement.Body() == nil && l.censusImplementation(statement) != nil {
+			if statement.Body() == nil && lowering.censusImplementation(statement) != nil {
 				continue
 			}
-			if censusOverloadsError := l.censusOverloads(statement); censusOverloadsError != nil {
+			if censusOverloadsError := lowering.censusOverloads(statement); censusOverloadsError != nil {
 				return censusOverloadsError
 			}
-			symbol := l.symbol(statement.Name())
+			symbol := lowering.symbol(statement.Name())
 			if len(statement.TypeParameters()) > 0 {
 				// A generic function is lowered once per instantiation, where it's called (generic.go).
-				if l.generics == nil {
-					l.generics = map[*ast.Symbol]*ast.Node{}
+				if lowering.generics == nil {
+					lowering.generics = map[*ast.Symbol]*ast.Node{}
 				}
-				l.generics[symbol] = statement
+				lowering.generics[symbol] = statement
 				continue
 			}
-			if l.functions == nil {
-				l.functions = map[*ast.Symbol]int{}
+			if lowering.functions == nil {
+				lowering.functions = map[*ast.Symbol]int{}
 			}
-			l.functions[symbol] = len(l.result.Functions)
-			l.result.Functions = append(l.result.Functions, ir.Function{Name: statement.Name().Text()})
+			lowering.functions[symbol] = len(lowering.result.Functions)
+			lowering.result.Functions = append(lowering.result.Functions, ir.Function{Name: statement.Name().Text()})
 			declarations = append(declarations, statement)
 		}
 	}
 	for _, declaration := range declarations {
-		if signatureError := l.signature(
-			l.functions[l.symbol(declaration.Name())],
+		if signatureError := lowering.signature(
+			lowering.functions[lowering.symbol(declaration.Name())],
 			declaration,
 			-1,
 		); signatureError != nil {
@@ -224,14 +224,14 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 		}
 	}
 	for _, statement := range statements {
-		if statement.Kind == ast.KindClassDeclaration && l.needsStatics(statement) {
-			if _, staticInstanceError := l.staticInstance(statement); staticInstanceError != nil {
+		if statement.Kind == ast.KindClassDeclaration && lowering.needsStatics(statement) {
+			if _, staticInstanceError := lowering.staticInstance(statement); staticInstanceError != nil {
 				return staticInstanceError
 			}
 		}
 	}
 	for _, declaration := range declarations {
-		if functionBodyError := l.functionBody(declaration); functionBodyError != nil {
+		if functionBodyError := lowering.functionBody(declaration); functionBodyError != nil {
 			return functionBodyError
 		}
 	}
@@ -240,22 +240,28 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 
 // recordExports preserves the entry's public names after module flattening. Aliases and
 // reexports resolve through the checker, never by matching a function's spelling.
-func (l *lowering) recordExports(entry *ast.SourceFile) {
-	exports := l.checker.GetExportsOfModule(entry.AsNode().Symbol())
+func (lowering *lowering) recordExports(entry *ast.SourceFile) {
+	exports := lowering.checker.GetExportsOfModule(entry.AsNode().Symbol())
 	sort.Slice(exports, func(left, right int) bool { return exports[left].Name < exports[right].Name })
 	for _, exported := range exports {
-		if l.checker.GetTypeOnlyAliasDeclaration(exported) != nil {
+		if lowering.checker.GetTypeOnlyAliasDeclaration(exported) != nil {
 			continue
 		}
 		target := exported
 		if target.Flags&ast.SymbolFlagsAlias != 0 {
-			target = l.checker.GetAliasedSymbol(target)
+			target = lowering.checker.GetAliasedSymbol(target)
 		}
-		target = l.checker.GetExportSymbolOfSymbol(target)
-		if function, ok := l.functions[target]; ok {
-			l.result.Exports = append(l.result.Exports, ir.Export{Name: exported.Name, Function: function})
-		} else if local, ok := l.locals[target]; ok && l.result.Locals[local].Type == ir.Closure {
-			l.result.Exports = append(l.result.Exports, ir.Export{Name: exported.Name, Function: -1, Local: local})
+		target = lowering.checker.GetExportSymbolOfSymbol(target)
+		if function, ok := lowering.functions[target]; ok {
+			lowering.result.Exports = append(
+				lowering.result.Exports,
+				ir.Export{Name: exported.Name, Function: function},
+			)
+		} else if local, ok := lowering.locals[target]; ok && lowering.result.Locals[local].Type == ir.Closure {
+			lowering.result.Exports = append(
+				lowering.result.Exports,
+				ir.Export{Name: exported.Name, Function: -1, Local: local},
+			)
 		}
 	}
 }

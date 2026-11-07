@@ -128,17 +128,17 @@ func statement(format string, children ...any) *Statement {
 }
 
 // Source prints the program as Adamic source.
-func (p *Program) Source() string {
+func (program *Program) Source() string {
 	var builder strings.Builder
-	for _, statement := range p.Block.Statements {
+	for _, statement := range program.Block.Statements {
 		statement.write(&builder, 0)
 	}
 	return builder.String()
 }
 
-func (s *Statement) write(builder *strings.Builder, depth int) {
+func (statement *Statement) write(builder *strings.Builder, depth int) {
 	builder.WriteString(strings.Repeat("\t", depth))
-	for _, part := range s.Parts {
+	for _, part := range statement.Parts {
 		switch {
 		case part.Expression != nil:
 			part.Expression.write(builder)
@@ -156,8 +156,8 @@ func (s *Statement) write(builder *strings.Builder, depth int) {
 	builder.WriteString("\n")
 }
 
-func (e *Expression) write(builder *strings.Builder) {
-	for _, part := range e.Parts {
+func (expression *Expression) write(builder *strings.Builder) {
+	for _, part := range expression.Parts {
 		if part.Expression != nil {
 			part.Expression.write(builder)
 		} else {
@@ -167,28 +167,33 @@ func (e *Expression) write(builder *strings.Builder) {
 }
 
 // String prints one expression.
-func (e *Expression) String() string {
+func (expression *Expression) String() string {
 	var builder strings.Builder
-	e.write(&builder)
+	expression.write(&builder)
 	return builder.String()
 }
 
 // Clone copies a program deeply, so the shrinker can change a candidate without touching the original.
-func (p *Program) Clone() *Program {
-	return &Program{Block: *p.Block.clone(), Refusal: p.Refusal, RefusalFix: p.RefusalFix, Feature: p.Feature}
+func (program *Program) Clone() *Program {
+	return &Program{
+		Block:      *program.Block.clone(),
+		Refusal:    program.Refusal,
+		RefusalFix: program.RefusalFix,
+		Feature:    program.Feature,
+	}
 }
 
-func (b *Block) clone() *Block {
-	result := &Block{Statements: make([]*Statement, len(b.Statements))}
-	for index, statement := range b.Statements {
+func (block *Block) clone() *Block {
+	result := &Block{Statements: make([]*Statement, len(block.Statements))}
+	for index, statement := range block.Statements {
 		result.Statements[index] = statement.clone()
 	}
 	return result
 }
 
-func (s *Statement) clone() *Statement {
-	result := &Statement{Parts: make([]StatementPart, len(s.Parts))}
-	for index, part := range s.Parts {
+func (statement *Statement) clone() *Statement {
+	result := &Statement{Parts: make([]StatementPart, len(statement.Parts))}
+	for index, part := range statement.Parts {
 		result.Parts[index] = StatementPart{Text: part.Text}
 		if part.Expression != nil {
 			result.Parts[index].Expression = part.Expression.clone()
@@ -200,9 +205,9 @@ func (s *Statement) clone() *Statement {
 	return result
 }
 
-func (e *Expression) clone() *Expression {
-	result := &Expression{Type: e.Type, Parts: make([]Part, len(e.Parts))}
-	for index, part := range e.Parts {
+func (expression *Expression) clone() *Expression {
+	result := &Expression{Type: expression.Type, Parts: make([]Part, len(expression.Parts))}
+	for index, part := range expression.Parts {
 		result.Parts[index] = Part{Text: part.Text}
 		if part.Expression != nil {
 			result.Parts[index].Expression = part.Expression.clone()

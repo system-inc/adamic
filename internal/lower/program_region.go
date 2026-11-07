@@ -17,7 +17,7 @@ type programMembership struct {
 	refusal                   error
 }
 
-func (l *lowering) selectProgramMembership(f *cycleFinder, modules []*ast.SourceFile) *programMembership {
+func (lowering *lowering) selectProgramMembership(f *cycleFinder, modules []*ast.SourceFile) *programMembership {
 	// Observe allocation and contextual identities even where all writes passed the
 	// fresh proof and the ordinary graph-region pass had no seeds (e.g. Weak trees).
 	for _, module := range modules {
@@ -39,15 +39,15 @@ func (l *lowering) selectProgramMembership(f *cycleFinder, modules []*ast.Source
 	for _, closure := range f.l.closureRecords {
 		f.use(closure.proven, closure.node)
 	}
-	candidates := slices.Collect(maps.Keys(l.programCandidates))
+	candidates := slices.Collect(maps.Keys(lowering.programCandidates))
 	slices.SortFunc(candidates, func(a, b *checker.Type) int { return int(a.Id()) - int(b.Id()) })
 	for _, proven := range candidates {
-		f.use(proven, l.programCandidates[proven])
+		f.use(proven, lowering.programCandidates[proven])
 	}
-	for _, local := range slices.Sorted(maps.Keys(l.localTypes)) {
-		proven := l.localTypes[local]
+	for _, local := range slices.Sorted(maps.Keys(lowering.localTypes)) {
+		proven := lowering.localTypes[local]
 		if proven != nil {
-			f.use(proven, l.localNodes[local])
+			f.use(proven, lowering.localNodes[local])
 		}
 	}
 	selected := f.programRegionSelection()
@@ -130,10 +130,20 @@ func (l *lowering) selectProgramMembership(f *cycleFinder, modules []*ast.Source
 			break
 		}
 	}
-	plan := &programMembership{types: program.ProgramTypes, cells: map[int]bool{}, functions: map[int]bool{}, classes: map[int]bool{}, identities: programAllocationIdentities(program)}
+	plan := &programMembership{
+		types:      program.ProgramTypes,
+		cells:      map[int]bool{},
+		functions:  map[int]bool{},
+		classes:    map[int]bool{},
+		identities: programAllocationIdentities(program),
+	}
 	for node := range selected {
 		if node.proven != nil && f.l.isLibraryType(node.proven, "Promise") {
-			plan.refusal = &Refused{Where: l.result.Source, What: "a Promise whose payload reaches a Program member", Fix: "remove the captured strong back-reference or use Weak (adamic/cycle-capable)"}
+			plan.refusal = &Refused{
+				Where: lowering.result.Source,
+				What:  "a Promise whose payload reaches a Program member",
+				Fix:   "remove the captured strong back-reference or use Weak (adamic/cycle-capable)",
+			}
 		}
 	}
 	if len(plan.types) != 0 && plan.refusal == nil {
@@ -165,25 +175,29 @@ func programAllocationIdentities(p *ir.Program) []string {
 	}
 	return result
 }
-func (l *lowering) applyProgramMetadata(plan *programMembership) error {
+func (lowering *lowering) applyProgramMetadata(plan *programMembership) error {
 	if plan.refusal != nil {
 		return plan.refusal
 	}
-	if fmt.Sprint(programAllocationIdentities(l.result)) != fmt.Sprint(plan.identities) {
+	if fmt.Sprint(programAllocationIdentities(lowering.result)) != fmt.Sprint(plan.identities) {
 		return fmt.Errorf("lower: Program discovery changed allocation identities")
 	}
 	// Keep the ordinary graph proof as a fallback if an allocation is not a Program member.
-	for i := range l.result.Locals {
-		l.result.Locals[i].ProgramRegion = plan.cells[i]
+	for i := range lowering.result.Locals {
+		lowering.result.Locals[i].ProgramRegion = plan.cells[i]
 	}
-	for i := range l.result.Functions {
-		l.result.Functions[i].ProgramRegion = plan.functions[i]
-		if plan.functions[i] && l.result.Functions[i].NestedParent > 0 {
-			return &Refused{Where: l.result.Source, What: "Program canonical closure before canonical-cache adoption", Fix: "await runtime's 06c canonical closure adoption; use an anonymous closure or a module function"}
+	for i := range lowering.result.Functions {
+		lowering.result.Functions[i].ProgramRegion = plan.functions[i]
+		if plan.functions[i] && lowering.result.Functions[i].NestedParent > 0 {
+			return &Refused{
+				Where: lowering.result.Source,
+				What:  "Program canonical closure before canonical-cache adoption",
+				Fix:   "await runtime's 06c canonical closure adoption; use an anonymous closure or a module function",
+			}
 		}
 	}
-	for i := range l.result.Classes {
-		l.result.Classes[i].ProgramRegion = plan.classes[i+1]
+	for i := range lowering.result.Classes {
+		lowering.result.Classes[i].ProgramRegion = plan.classes[i+1]
 	}
 	parallel, entryPairs := false, false
 	check := func(node any) bool {
@@ -195,49 +209,67 @@ func (l *lowering) applyProgramMetadata(plan *programMembership) error {
 		}
 		return true
 	}
-	walk(l.result.Main, check)
-	for _, f := range l.result.Functions {
+	walk(lowering.result.Main, check)
+	for _, f := range lowering.result.Functions {
 		walk(f.Body, check)
 	}
 	if entryPairs && len(plan.types) != 0 {
-		return &Refused{Where: l.result.Source, What: "Map entry pair allocation in a Program-region program", Fix: "iterate keys and get values until entry pairs can adopt before publication"}
+		return &Refused{
+			Where: lowering.result.Source,
+			What:  "Map entry pair allocation in a Program-region program",
+			Fix:   "iterate keys and get values until entry pairs can adopt before publication",
+		}
 	}
 	if parallel && len(plan.types) != 0 {
-		return &Refused{Where: l.result.Source, What: "parallelMap in a program with Program-region members", Fix: "keep Program members in the one-shot CLI thread"}
+		return &Refused{
+			Where: lowering.result.Source,
+			What:  "parallelMap in a program with Program-region members",
+			Fix:   "keep Program members in the one-shot CLI thread",
+		}
 	}
 	return nil
 }
-func (l *lowering) programClass(class int) bool {
-	return l.programPlan != nil && l.programPlan.classes[class]
+func (lowering *lowering) programClass(class int) bool {
+	return lowering.programPlan != nil && lowering.programPlan.classes[class]
 }
-func (l *lowering) programAllocation(node *ast.Node, value ir.Expression) (ir.Expression, error) {
-	if !l.programDiscovery && l.programPlan == nil {
+func (lowering *lowering) programAllocation(node *ast.Node, value ir.Expression) (ir.Expression, error) {
+	if !lowering.programDiscovery && lowering.programPlan == nil {
 		return value, nil
 	}
-	if l.programPlan != nil && len(l.programPlan.types) != 0 && node.Kind == ast.KindCallExpression {
+	if lowering.programPlan != nil && len(lowering.programPlan.types) != 0 && node.Kind == ast.KindCallExpression {
 		callee := ast.SkipParentheses(node.AsCallExpression().Expression)
 		if callee.Kind == ast.KindPropertyAccessExpression && callee.Name().Text() == "entries" {
 			receiver := callee.AsPropertyAccessExpression().Expression
-			if l.isLibraryType(l.checker.GetTypeAtLocation(receiver), "Map", "ReadonlyMap", "Set", "ReadonlySet") {
-				return nil, &Refused{Where: l.result.Source, What: "Map entry pair allocation in a Program-region program", Fix: "iterate keys and get values until entry pairs can adopt before publication"}
+			if lowering.isLibraryType(
+				lowering.checker.GetTypeAtLocation(receiver),
+				"Map",
+				"ReadonlyMap",
+				"Set",
+				"ReadonlySet",
+			) {
+				return nil, &Refused{
+					Where: lowering.result.Source,
+					What:  "Map entry pair allocation in a Program-region program",
+					Fix:   "iterate keys and get values until entry pairs can adopt before publication",
+				}
 			}
 		}
 	}
 	member := false
-	types := []*checker.Type{l.checker.GetTypeAtLocation(node), l.slotType(node)}
-	if target := l.impliedTarget(node); target != nil {
+	types := []*checker.Type{lowering.checker.GetTypeAtLocation(node), lowering.slotType(node)}
+	if target := lowering.impliedTarget(node); target != nil {
 		types = append(types, target)
 	}
 	for _, proven := range types {
 		if proven == nil {
 			continue
 		}
-		proven = l.concrete(proven)
-		if l.programCandidates == nil {
-			l.programCandidates = map[*checker.Type]*ast.Node{}
+		proven = lowering.concrete(proven)
+		if lowering.programCandidates == nil {
+			lowering.programCandidates = map[*checker.Type]*ast.Node{}
 		}
-		l.programCandidates[proven] = node
-		if l.programPlan != nil && l.programPlan.types[int(proven.Id())] {
+		lowering.programCandidates[proven] = node
+		if lowering.programPlan != nil && lowering.programPlan.types[int(proven.Id())] {
 			member = true
 		}
 	}

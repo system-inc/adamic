@@ -60,15 +60,20 @@ func irImmutable(t ast.Expr, types map[string]ast.Expr, visiting map[string]bool
 	return false
 }
 
-func (g *generator) checkIRFields(positions *token.FileSet, policies map[string]irFieldPolicy) {
-	for owner, expression := range g.irTypes {
+func (generator *generator) checkIRFields(positions *token.FileSet, policies map[string]irFieldPolicy) {
+	for owner, expression := range generator.irTypes {
 		structure, ok := expression.(*ast.StructType)
 		if !ok || !ast.IsExported(owner) {
 			continue
 		}
 		for _, field := range structure.Fields.List {
 			if len(field.Names) == 0 {
-				panic(fmt.Sprintf("%s: state copy: IR %s embedded field %s needs an explicit policy", positions.Position(field.Pos()), owner, printed(field.Type)))
+				panic(fmt.Sprintf(
+					"%s: state copy: IR %s embedded field %s needs an explicit policy",
+					positions.Position(field.Pos()),
+					owner,
+					printed(field.Type),
+				))
 			}
 			for _, id := range field.Names {
 				if !id.IsExported() {
@@ -88,7 +93,7 @@ func (g *generator) checkIRFields(positions *token.FileSet, policies map[string]
 				if policy.Why == "" {
 					fail("copy policy has no reason")
 				}
-				immutable := irImmutable(field.Type, g.irTypes, map[string]bool{})
+				immutable := irImmutable(field.Type, generator.irTypes, map[string]bool{})
 				switch policy.Copy {
 				case copiedIR:
 					if !immutable {
@@ -99,7 +104,8 @@ func (g *generator) checkIRFields(positions *token.FileSet, policies map[string]
 						fail("deep policy names an immutable value; review its copy policy")
 					}
 				case sharedIR:
-					if printed(field.Type) != "*GeneratedType" || irPrivateFields["GeneratedType.identity"] != privateShared {
+					if printed(field.Type) != "*GeneratedType" ||
+						irPrivateFields["GeneratedType.identity"] != privateShared {
 						fail("shared policy lacks an audited immutable pointer identity")
 					}
 				default:
@@ -112,12 +118,14 @@ func (g *generator) checkIRFields(positions *token.FileSet, policies map[string]
 
 // Generate the fast path from the same checked inventory used for every IR
 // struct. No runtime field-name list can lag behind this copier.
-func (g *generator) specFunctionCopy(body *strings.Builder) {
-	structure, ok := g.irTypes["Function"].(*ast.StructType)
+func (generator *generator) specFunctionCopy(body *strings.Builder) {
+	structure, ok := generator.irTypes["Function"].(*ast.StructType)
 	if !ok {
 		return
 	} // Small generator fixtures need not declare Function.
-	body.WriteString("func latentSpecCopyFunction(value ir.Function, seen map[any]any) ir.Function { var result ir.Function;")
+	body.WriteString(
+		"func latentSpecCopyFunction(value ir.Function, seen map[any]any) ir.Function { var result ir.Function;",
+	)
 	for _, field := range structure.Fields.List {
 		for _, id := range field.Names {
 			if !id.IsExported() {
@@ -135,9 +143,9 @@ func (g *generator) specFunctionCopy(body *strings.Builder) {
 
 // General speculative reflection uses generated field indexes too. Only non-IR
 // census-local values fall back to runtime structural classification.
-func (g *generator) specMutableFields(body *strings.Builder) {
+func (generator *generator) specMutableFields(body *strings.Builder) {
 	names := []string{}
-	for name, expression := range g.irTypes {
+	for name, expression := range generator.irTypes {
 		if _, ok := expression.(*ast.StructType); ok && ast.IsExported(name) {
 			names = append(names, name)
 		}
@@ -147,7 +155,7 @@ func (g *generator) specMutableFields(body *strings.Builder) {
 	for _, name := range names {
 		fmt.Fprintf(body, "case reflect.TypeFor[ir.%s]():return []int{", name)
 		index := 0
-		for _, field := range g.irTypes[name].(*ast.StructType).Fields.List {
+		for _, field := range generator.irTypes[name].(*ast.StructType).Fields.List {
 			for _, id := range field.Names {
 				if !id.IsExported() || irSpecFields[name+"."+id.Name].Copy == deepIR {
 					fmt.Fprintf(body, "%d,", index)

@@ -9,10 +9,10 @@ import (
 // provider finished: a module function declaration, which is hoisted, or a value whose module runs before the reader's.
 // Every other global read keeps its runtime dead-zone check, so the program is accepted whatever a cycle reads at load.
 // Cohere's nexus/correctness-no-import-cycle-load-time-read inventories those reads lint-side; lowering never runs it,
-// so the compiler links none of cohere's lint (#321063n). The ledger in cycleledger holds the rule's findings beside these
-// decisions.
-func (l *lowering) proveModuleReads(files []*ast.SourceFile) {
-	l.provenModuleReads = map[*ast.Node]bool{}
+// so the compiler links none of cohere's lint (#321063n). The ledger in cycleledger holds the rule's findings beside
+// these decisions.
+func (lowering *lowering) proveModuleReads(files []*ast.SourceFile) {
+	lowering.provenModuleReads = map[*ast.Node]bool{}
 	positions := map[*ast.SourceFile]int{}
 	for index, file := range files {
 		positions[file] = index
@@ -45,18 +45,21 @@ func (l *lowering) proveModuleReads(files []*ast.SourceFile) {
 				return false
 			}
 			if ast.IsIdentifier(node) || ast.IsPropertyAccessExpression(node) {
-				symbol := l.checker.GetSymbolAtLocation(node)
+				symbol := lowering.checker.GetSymbolAtLocation(node)
 				if ast.IsIdentifier(node) && node.Parent != nil && ast.IsShorthandPropertyAssignment(node.Parent) {
-					symbol = l.checker.GetShorthandAssignmentValueSymbol(node.Parent)
+					symbol = lowering.checker.GetShorthandAssignmentValueSymbol(node.Parent)
 				}
 				if symbol != nil {
-					symbol = l.checker.SkipAlias(symbol)
+					symbol = lowering.checker.SkipAlias(symbol)
 					if symbol != nil && symbol.ValueDeclaration != nil {
 						declaration := symbol.ValueDeclaration
 						provider := ast.GetSourceFileOfNode(declaration)
 						index, present := positions[provider]
-						if (declaration.Kind == ast.KindFunctionDeclaration && declaration.Parent != nil && declaration.Parent.Kind == ast.KindSourceFile) || (present && provider != file && index < positions[file]) {
-							l.provenModuleReads[node] = true
+						if (declaration.Kind == ast.KindFunctionDeclaration &&
+							declaration.Parent != nil &&
+							declaration.Parent.Kind == ast.KindSourceFile) ||
+							(present && provider != file && index < positions[file]) {
+							lowering.provenModuleReads[node] = true
 						}
 					}
 				}
@@ -68,13 +71,14 @@ func (l *lowering) proveModuleReads(files []*ast.SourceFile) {
 	}
 }
 
-// ProvenModuleReads is proveModuleReads for the ledger in cycleledger, which links cohere's rule so lowering never has to.
+// ProvenModuleReads is proveModuleReads for the ledger in cycleledger, which links cohere's rule so lowering never has
+// to.
 func ProvenModuleReads(typeChecker *checker.Checker, files []*ast.SourceFile) map[*ast.Node]bool {
 	analysis := &lowering{checker: typeChecker}
 	analysis.proveModuleReads(files)
 	return analysis.provenModuleReads
 }
 
-func (l *lowering) checkedModuleRead(node *ast.Node, local int) bool {
-	return !l.provenModuleReads[node] && l.checked(local)
+func (lowering *lowering) checkedModuleRead(node *ast.Node, local int) bool {
+	return !lowering.provenModuleReads[node] && lowering.checked(local)
 }

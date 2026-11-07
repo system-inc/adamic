@@ -22,12 +22,21 @@ type programShapeIndex struct {
 	cache  map[string][]cycleNode
 }
 
-func (f *cycleFinder) programShapes(candidates []cycleNode) *programShapeIndex {
-	index := &programShapeIndex{finder: f, types: map[*checker.Type]*programShape{}, cache: map[string][]cycleNode{}}
+func (finder *cycleFinder) programShapes(candidates []cycleNode) *programShapeIndex {
+	index := &programShapeIndex{
+		finder: finder,
+		types:  map[*checker.Type]*programShape{},
+		cache:  map[string][]cycleNode{},
+	}
 	groups := map[string]*programShape{}
 	for _, candidate := range candidates {
 		t := candidate.proven
-		if t == nil || t.Flags()&checker.TypeFlagsObject == 0 || f.weak(t) || f.template(t) || f.isFunction(t) || f.programScalarStorage(t) {
+		if t == nil ||
+			t.Flags()&checker.TypeFlagsObject == 0 ||
+			finder.weak(t) ||
+			finder.template(t) ||
+			finder.isFunction(t) ||
+			finder.programScalarStorage(t) {
 			continue
 		}
 		shape := index.shape(t)

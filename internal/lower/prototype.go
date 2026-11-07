@@ -10,33 +10,36 @@ import (
 
 // libraryMember follows the declaration, not the spelling: an own callback named toString is
 // still an own field. Every declaration must be from the library to specialize a call.
-func (l *lowering) memberSymbol(node *ast.Node) *ast.Symbol {
-	symbol := l.checker.GetSymbolAtLocation(node)
+func (lowering *lowering) memberSymbol(node *ast.Node) *ast.Symbol {
+	symbol := lowering.checker.GetSymbolAtLocation(node)
 	if node.Kind == ast.KindElementAccessExpression {
 		access := node.AsElementAccessExpression()
 		key := ast.SkipParentheses(access.ArgumentExpression)
 		if key.Kind == ast.KindStringLiteral {
-			symbol = l.checker.GetPropertyOfType(l.checker.GetTypeAtLocation(access.Expression), key.Text())
+			symbol = lowering.checker.GetPropertyOfType(
+				lowering.checker.GetTypeAtLocation(access.Expression),
+				key.Text(),
+			)
 		}
 	}
 	return symbol
 }
 
-func (l *lowering) libraryMember(node *ast.Node) bool {
-	return l.librarySymbol(l.memberSymbol(node))
+func (lowering *lowering) libraryMember(node *ast.Node) bool {
+	return lowering.librarySymbol(lowering.memberSymbol(node))
 }
 
 // A union can combine an own callback with an inherited method. That still cannot be an
 // unconditional own-field load: any library root is enough to refuse the read.
-func (l *lowering) inheritedLibraryMember(node *ast.Node) bool {
-	return l.inheritedLibrarySymbol(l.memberSymbol(node))
+func (lowering *lowering) inheritedLibraryMember(node *ast.Node) bool {
+	return lowering.inheritedLibrarySymbol(lowering.memberSymbol(node))
 }
 
-func (l *lowering) inheritedLibrarySymbol(symbol *ast.Symbol) bool {
+func (lowering *lowering) inheritedLibrarySymbol(symbol *ast.Symbol) bool {
 	if symbol == nil {
 		return false
 	}
-	for _, root := range l.checker.GetRootSymbols(symbol) {
+	for _, root := range lowering.checker.GetRootSymbols(symbol) {
 		for _, declaration := range root.Declarations {
 			if load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
 				return true
@@ -56,23 +59,23 @@ func (l *lowering) inheritedLibrarySymbol(symbol *ast.Symbol) bool {
 //   - for a read off receiver (nil for a destructuring, which keeps the first arm alone, as before this
 //     move), every member of the receiver's type is the library's IteratorYieldResult or
 //     IteratorReturnResult, the result a hand-driven next() gives (#qk8rztp S2c-2a).
-func (l *lowering) iteratorResultField(receiver *ast.Node, symbol *ast.Symbol) bool {
+func (lowering *lowering) iteratorResultField(receiver *ast.Node, symbol *ast.Symbol) bool {
 	if symbol == nil || (symbol.Name != "done" && symbol.Name != "value") {
 		return false
 	}
-	if l.iteratorReturnResultRoots(symbol) {
+	if lowering.iteratorReturnResultRoots(symbol) {
 		return true
 	}
 	if receiver == nil {
 		return false
 	}
-	proven := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver))
+	proven := lowering.checker.GetNonNullableType(lowering.checker.GetTypeAtLocation(receiver))
 	members := []*checker.Type{proven}
 	if proven.Flags()&checker.TypeFlagsUnion != 0 {
 		members = proven.Types()
 	}
 	for _, member := range members {
-		if !l.isLibraryType(member, "IteratorYieldResult", "IteratorReturnResult") {
+		if !lowering.isLibraryType(member, "IteratorYieldResult", "IteratorReturnResult") {
 			return false
 		}
 	}
@@ -81,8 +84,8 @@ func (l *lowering) iteratorResultField(receiver *ast.Node, symbol *ast.Symbol) b
 
 // iteratorReturnResultRoots reports whether every library root of symbol is declared in
 // IteratorReturnResult.
-func (l *lowering) iteratorReturnResultRoots(symbol *ast.Symbol) bool {
-	for _, root := range l.checker.GetRootSymbols(symbol) {
+func (lowering *lowering) iteratorReturnResultRoots(symbol *ast.Symbol) bool {
+	for _, root := range lowering.checker.GetRootSymbols(symbol) {
 		for _, declaration := range root.Declarations {
 			if !load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
 				continue
@@ -98,11 +101,11 @@ func (l *lowering) iteratorReturnResultRoots(symbol *ast.Symbol) bool {
 	return true
 }
 
-func (l *lowering) librarySymbol(symbol *ast.Symbol) bool {
+func (lowering *lowering) librarySymbol(symbol *ast.Symbol) bool {
 	if symbol == nil {
 		return false
 	}
-	roots := l.checker.GetRootSymbols(symbol)
+	roots := lowering.checker.GetRootSymbols(symbol)
 	if len(roots) == 0 {
 		return false
 	}
@@ -119,32 +122,32 @@ func (l *lowering) librarySymbol(symbol *ast.Symbol) bool {
 	return true
 }
 
-func (l *lowering) prototypeRead(node *ast.Node, name string) error {
+func (lowering *lowering) prototypeRead(node *ast.Node, name string) error {
 	if name == "isPrototypeOf" {
 		return &Refused{
-			Where: l.program.Where(node),
+			Where: lowering.program.Where(node),
 			What:  "isPrototypeOf",
 			Fix:   "Adamic has no observable prototype chain; use instanceof for class identity or an explicit discriminant",
 		}
 	}
 	return &Refused{
-		Where: l.program.Where(node),
+		Where: lowering.program.Where(node),
 		What:  "inherited library member " + name + " read as an own field",
 		Fix:   "prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)",
 	}
 }
 
-func (l *lowering) objectPrototypeCall(node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
-	return l.objectPrototypeCallArguments(node, receiver, name, node.AsCallExpression().Arguments.Nodes)
+func (lowering *lowering) objectPrototypeCall(node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
+	return lowering.objectPrototypeCallArguments(node, receiver, name, node.AsCallExpression().Arguments.Nodes)
 }
 
-func (l *lowering) objectPrototypeCallArguments(
+func (lowering *lowering) objectPrototypeCallArguments(
 	node, receiver *ast.Node,
 	name string,
 	written []*ast.Node,
 ) (ir.Expression, bool, error) {
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
-	if !l.libraryMember(callee) {
+	if !lowering.libraryMember(callee) {
 		return nil, false, nil
 	}
 	switch name {
@@ -154,24 +157,24 @@ func (l *lowering) objectPrototypeCallArguments(
 	}
 	if name == "isPrototypeOf" {
 		return nil, true, &Refused{
-			Where: l.program.Where(node),
+			Where: lowering.program.Where(node),
 			What:  "isPrototypeOf",
 			Fix:   "Adamic has no observable prototype chain; use instanceof for class identity or an explicit discriminant",
 		}
 	}
-	if name != "valueOf" && l.isLibraryType(l.checker.GetTypeAtLocation(receiver), errorClasses...) {
-		return nil, true, l.notYet(
+	if name != "valueOf" && lowering.isLibraryType(lowering.checker.GetTypeAtLocation(receiver), errorClasses...) {
+		return nil, true, lowering.notYet(
 			node,
 			name+" on Error (its prototype and non-enumerable own descriptors differ from plain objects)",
 		)
 	}
-	of, _ := l.representation(l.checker.GetTypeAtLocation(receiver))
-	if l.exactPlainObject(receiver) {
+	of, _ := lowering.representation(lowering.checker.GetTypeAtLocation(receiver))
+	if lowering.exactPlainObject(receiver) {
 		of = ir.Object
 	}
 	if of == ir.Object || of == ir.Union {
-		if reason := l.prototypeHazard(receiver, name); reason != "" {
-			return nil, true, l.notYet(node, name+" through an object view ("+reason+")")
+		if reason := lowering.prototypeHazard(receiver, name); reason != "" {
+			return nil, true, lowering.notYet(node, name+" through an object view ("+reason+")")
 		}
 	}
 	if name == "toString" && of == ir.Number {
@@ -179,19 +182,19 @@ func (l *lowering) objectPrototypeCallArguments(
 	} // Number's radix overload.
 	if name == "toLocaleString" && of == ir.Number {
 		return nil, true, &Refused{
-			Where: l.program.Where(node),
+			Where: lowering.program.Where(node),
 			What:  name + " on a number",
 			Fix:   "JavaScript uses locale-sensitive number formatting; use toString for deterministic formatting",
 		}
 	}
 	if name == "toLocaleString" && of == ir.Array {
-		element, elementTypeError := l.elementType(receiver)
+		element, elementTypeError := lowering.elementType(receiver)
 		if elementTypeError != nil {
 			return nil, true, elementTypeError
 		}
 		if element != ir.String && element != ir.Boolean {
 			return nil, true, &Refused{
-				Where: l.program.Where(node),
+				Where: lowering.program.Where(node),
 				What:  name + " on this array",
 				Fix:   "JavaScript formats each element with its own toLocaleString, which may be locale-sensitive or user-defined; use toString for deterministic formatting",
 			}
@@ -199,44 +202,46 @@ func (l *lowering) objectPrototypeCallArguments(
 	}
 	if name == "hasOwnProperty" || name == "propertyIsEnumerable" {
 		if of == ir.Record && name == "hasOwnProperty" {
-			return l.recordObjectCallArguments(node, "hasOwn", append([]*ast.Node{receiver}, written...))
+			return lowering.recordObjectCallArguments(node, "hasOwn", append([]*ast.Node{receiver}, written...))
 		}
 		if of != ir.Object {
-			return l.nonObjectOwnPropertyArguments(node, receiver, name, of, written)
+			return lowering.nonObjectOwnPropertyArguments(node, receiver, name, of, written)
 		}
-		if checker.IsTupleType(l.checker.GetTypeAtLocation(receiver)) {
-			return nil, true, l.notYet(
+		if checker.IsTupleType(lowering.checker.GetTypeAtLocation(receiver)) {
+			return nil, true, lowering.notYet(
 				node,
 				name+" on a tuple (its representation includes absent optional slots and no length descriptor)",
 			)
 		}
 		// Every own field of a plain object or a class instance is enumerable. Methods are on its
 		// prototype, absent from its shape, and defineProperty is refused.
-		return l.hasOwnPropertyArguments(node, receiver, written)
+		return lowering.hasOwnPropertyArguments(node, receiver, written)
 	}
 	if len(written) != 0 {
-		return nil, true, l.notYet(node, name+" with arguments")
+		return nil, true, lowering.notYet(node, name+" with arguments")
 	}
-	if checker.IsTupleType(l.checker.GetTypeAtLocation(receiver)) {
-		return nil, true, l.notYet(node, name+" on a tuple (its native representation is not an array)")
+	if checker.IsTupleType(lowering.checker.GetTypeAtLocation(receiver)) {
+		return nil, true, lowering.notYet(node, name+" on a tuple (its native representation is not an array)")
 	}
 	if name == "toLocaleString" {
-		toString := l.checker.GetPropertyOfType(l.checker.GetTypeAtLocation(receiver), "toString")
+		toString := lowering.checker.GetPropertyOfType(lowering.checker.GetTypeAtLocation(receiver), "toString")
 		if toString == nil ||
 			len(toString.Declarations) == 0 ||
 			!load.IsLibrary(ast.GetSourceFileOfNode(toString.Declarations[0])) {
-			return nil, true, l.notYet(node, "toLocaleString delegating to a user-defined toString")
+			return nil, true, lowering.notYet(node, "toLocaleString delegating to a user-defined toString")
 		}
 	}
-	value, expressionError := l.expression(receiver)
+	value, expressionError := lowering.expression(receiver)
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
 	if name == "valueOf" {
-		if result, _ := l.representation(l.checker.GetTypeAtLocation(node)); result == ir.Union && of == ir.Object {
+		if result, _ := lowering.representation(
+			lowering.checker.GetTypeAtLocation(node),
+		); result == ir.Union && of == ir.Object {
 			return fit(value, result), true, nil
 		} else if result != of {
-			return nil, true, l.notYet(node, "valueOf whose library result type erases the "+
+			return nil, true, lowering.notYet(node, "valueOf whose library result type erases the "+
 				typeName(of)+
 				" representation to Object (keeping or returning that result needs a tagged object view)")
 		}
@@ -251,21 +256,21 @@ func (l *lowering) objectPrototypeCallArguments(
 	case ir.Boolean:
 		return ir.BooleanToString{Value: value}, true, nil
 	case ir.Array:
-		return l.arrayMethodArguments(node, receiver, "join", written)
+		return lowering.arrayMethodArguments(node, receiver, "join", written)
 	case ir.Object, ir.Map:
 		tag := "[object Object]"
 		if of == ir.Map {
 			tag = "[object Map]"
-			if l.isSet(receiver) {
+			if lowering.isSet(receiver) {
 				tag = "[object Set]"
 			}
 		}
-		text := ir.StringConstant{Index: l.constant(tag)}
+		text := ir.StringConstant{Index: lowering.constant(tag)}
 		// Both arms are the same, but the test evaluates the receiver exactly once, preserving its
 		// side effects and any narrowed-read check. No field is read to produce the constant tag.
 		return ir.Conditional{Condition: ir.IsUndefined{Value: value}, WhenTrue: text, WhenNot: text}, true, nil
 	}
-	return nil, true, l.notYet(
+	return nil, true, lowering.notYet(
 		node,
 		name+" on a "+typeName(of)+" (function source text and mixed value dispatch are not represented)",
 	)
@@ -275,13 +280,13 @@ func (l *lowering) objectPrototypeCallArguments(
 // Until prototype dispatch and presence descriptors exist, refuse any compatible runtime shape
 // in the whole program with one of those hazards. This deliberately errs toward refusal.
 // An empty name tests own descriptors without dispatching an overridable receiver method.
-func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
-	view := l.concrete(l.checker.GetTypeAtLocation(receiver))
-	modules, moduleOrderError := l.moduleOrder(l.program.Files()[0])
+func (lowering *lowering) prototypeHazard(receiver *ast.Node, name string) string {
+	view := lowering.concrete(lowering.checker.GetTypeAtLocation(receiver))
+	modules, moduleOrderError := lowering.moduleOrder(lowering.program.Files()[0])
 	if moduleOrderError != nil {
 		return "the program's runtime shapes are not known"
 	}
-	if name != "valueOf" && l.errorMayHide(receiver) {
+	if name != "valueOf" && lowering.errorMayHide(receiver) {
 		return "an Error may be hidden by the view"
 	}
 	reason := ""
@@ -293,7 +298,7 @@ func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
 		if node.Kind == ast.KindObjectLiteralExpression ||
 			node.Kind == ast.KindRegularExpressionLiteral ||
 			(node.Kind == ast.KindCallExpression &&
-				l.isLibraryType(l.checker.GetTypeAtLocation(node), "RegExp", "RegExpStringIterator")) ||
+				lowering.isLibraryType(lowering.checker.GetTypeAtLocation(node), "RegExp", "RegExpStringIterator")) ||
 			node.Kind == ast.KindNewExpression ||
 			node.Kind == ast.KindArrayLiteralExpression ||
 			node.Kind == ast.KindArrowFunction ||
@@ -301,34 +306,35 @@ func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
 			node.Kind == ast.KindStringLiteral ||
 			node.Kind == ast.KindTrueKeyword ||
 			node.Kind == ast.KindFalseKeyword {
-			shape := l.checker.GetTypeAtLocation(node)
-			if l.checker.IsTypeAssignableTo(shape, view) {
-				if l.isLibraryType(shape, "RegExp", "RegExpStringIterator") && !l.exactPlainObject(receiver) {
+			shape := lowering.checker.GetTypeAtLocation(node)
+			if lowering.checker.IsTypeAssignableTo(shape, view) {
+				if lowering.isLibraryType(shape, "RegExp", "RegExpStringIterator") &&
+					!lowering.exactPlainObject(receiver) {
 					// Regex objects have intrinsic prototype behavior and metadata slots. A structural
 					// view cannot make those plain-object methods or own-property descriptors.
 					reason = "a RegExp or its iterator may be hidden by the view"
 					return true
 				}
-				if representation, known := l.representation(
+				if representation, known := lowering.representation(
 					shape,
-				); known && representation != ir.Object && !l.exactPlainObject(receiver) {
+				); known && representation != ir.Object && !lowering.exactPlainObject(receiver) {
 					reason = "a value with a different native representation may be hidden by the view"
 					return true
 				}
-				member := l.checker.GetPropertyOfType(shape, name)
-				if name != "" && member != nil && !l.librarySymbol(member) {
+				member := lowering.checker.GetPropertyOfType(shape, name)
+				if name != "" && member != nil && !lowering.librarySymbol(member) {
 					reason = "a user-defined " + name + " may be hidden by the view"
 					return true
 				}
 				if name == "toLocaleString" {
-					member = l.checker.GetPropertyOfType(shape, "toString")
-					if member != nil && !l.librarySymbol(member) {
+					member = lowering.checker.GetPropertyOfType(shape, "toString")
+					if member != nil && !lowering.librarySymbol(member) {
 						reason = "a user-defined toString may be hidden by the view"
 						return true
 					}
 				}
 				if name == "" || name == "hasOwnProperty" || name == "propertyIsEnumerable" {
-					for _, field := range l.checker.GetPropertiesOfType(shape) {
+					for _, field := range lowering.checker.GetPropertiesOfType(shape) {
 						if strings.ContainsRune(field.Name, 0) {
 							reason = "a field name contains NUL, which native shape names cannot represent"
 							return true
@@ -336,8 +342,8 @@ func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
 					}
 					if node.Kind == ast.KindObjectLiteralExpression {
 						for _, property := range node.AsObjectLiteralExpression().Properties.Nodes {
-							if property.Kind == ast.KindSpreadAssignment && l.includesUndefined(
-								l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression),
+							if property.Kind == ast.KindSpreadAssignment && lowering.includesUndefined(
+								lowering.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression),
 							) {
 								reason = "a possibly absent spread has slots without own-property presence descriptors"
 								return true
@@ -345,7 +351,7 @@ func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
 						}
 					}
 					if node.Kind == ast.KindNewExpression {
-						if declaration := l.classes[l.symbol(
+						if declaration := lowering.classes[lowering.symbol(
 							ast.SkipParentheses(node.AsNewExpression().Expression),
 						)]; declaration != nil {
 							for _, member := range declaration.Members() {
@@ -379,9 +385,9 @@ func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
 // failing host call or a brand check, has no such node, so it may hide whenever the library's Error fits receiver's
 // type and the program can take one: a catch that binds what it caught, or a Promise's rejection handler.
 // prototypeHazard decides its own Error case here, so the two can't drift. This deliberately errs toward refusal.
-func (l *lowering) errorMayHide(receiver *ast.Node) bool {
-	view := l.concrete(l.checker.GetTypeAtLocation(receiver))
-	modules, moduleOrderError := l.moduleOrder(l.program.Files()[0])
+func (lowering *lowering) errorMayHide(receiver *ast.Node) bool {
+	view := lowering.concrete(lowering.checker.GetTypeAtLocation(receiver))
+	modules, moduleOrderError := lowering.moduleOrder(lowering.program.Files()[0])
 	if moduleOrderError != nil {
 		return true
 	}
@@ -392,8 +398,8 @@ func (l *lowering) errorMayHide(receiver *ast.Node) bool {
 			return true
 		}
 		if node.Kind == ast.KindNewExpression || node.Kind == ast.KindCallExpression {
-			shape := l.checker.GetTypeAtLocation(node)
-			if l.isLibraryType(shape, errorClasses...) && l.checker.IsTypeAssignableTo(shape, view) {
+			shape := lowering.checker.GetTypeAtLocation(node)
+			if lowering.isLibraryType(shape, errorClasses...) && lowering.checker.IsTypeAssignableTo(shape, view) {
 				made = true
 				return true
 			}
@@ -411,8 +417,8 @@ func (l *lowering) errorMayHide(receiver *ast.Node) bool {
 	if !takes {
 		return false
 	}
-	errorType := l.libraryErrorType()
-	return errorType == nil || l.checker.IsTypeAssignableTo(errorType, view)
+	errorType := lowering.libraryErrorType()
+	return errorType == nil || lowering.checker.IsTypeAssignableTo(errorType, view)
 }
 
 // takesRejection reports whether node hands the program a thrown value it didn't make: a catch that binds
@@ -441,15 +447,15 @@ func takesRejection(node *ast.Node) bool {
 
 // libraryErrorType is the library's Error interface, the type a caught Error the runtime made has, or nil
 // if the library doesn't declare one.
-func (l *lowering) libraryErrorType() *checker.Type {
-	for _, file := range l.program.CompilerProgram().GetSourceFiles() {
+func (lowering *lowering) libraryErrorType() *checker.Type {
+	for _, file := range lowering.program.CompilerProgram().GetSourceFiles() {
 		if !load.IsLibrary(file) {
 			continue
 		}
 		for _, statement := range file.Statements.Nodes {
 			if statement.Kind == ast.KindInterfaceDeclaration && statement.Name().Text() == "Error" {
-				if symbol := l.checker.GetSymbolOfDeclaration(statement); symbol != nil {
-					return l.checker.GetDeclaredTypeOfSymbol(symbol)
+				if symbol := lowering.checker.GetSymbolOfDeclaration(statement); symbol != nil {
+					return lowering.checker.GetDeclaredTypeOfSymbol(symbol)
 				}
 			}
 		}
@@ -459,10 +465,10 @@ func (l *lowering) libraryErrorType() *checker.Type {
 
 // An unannotated const made directly from a plain literal has no boxed primitive hidden by a
 // structural view. Its shape is fixed; spreads and annotated/widened names need the whole scan.
-func (l *lowering) exactPlainObject(node *ast.Node) bool {
+func (lowering *lowering) exactPlainObject(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
 	if ast.IsIdentifier(node) {
-		symbol := l.checker.GetSymbolAtLocation(node)
+		symbol := lowering.checker.GetSymbolAtLocation(node)
 		if symbol == nil || len(symbol.Declarations) != 1 {
 			return false
 		}

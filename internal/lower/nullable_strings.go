@@ -29,7 +29,7 @@ func nullableStringUnion(proven *checker.Type) bool {
 
 // Read the stored tag once before narrowing; alias writes can invalidate the
 // checker's field fact just as captured writes can invalidate a local fact.
-func (l *lowering) checkedNullableString(node *ast.Node, read ir.Expression) ir.Expression {
+func (lowering *lowering) checkedNullableString(node *ast.Node, read ir.Expression) ir.Expression {
 	parent := node.Parent
 	for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
 		node, parent = parent, parent.Parent
@@ -43,15 +43,22 @@ func (l *lowering) checkedNullableString(node *ast.Node, read ir.Expression) ir.
 			return read
 		}
 	}
-	b := l.libraryArrayBuilder([]ir.Expression{read})
+	b := lowering.libraryArrayBuilder([]ir.Expression{read})
 	held := b.read(b.parameters[0])
-	matches := ir.Expression(ir.Binary{Operator: ir.Equal, Left: ir.TypeOf{Value: held}, Right: ir.StringConstant{Index: l.constant("string")}})
-	if l.includesUndefined(l.checker.GetTypeAtLocation(node)) {
+	matches := ir.Expression(ir.Binary{
+		Operator: ir.Equal,
+		Left:     ir.TypeOf{Value: held},
+		Right:    ir.StringConstant{Index: lowering.constant("string")},
+	})
+	if lowering.includesUndefined(lowering.checker.GetTypeAtLocation(node)) {
 		matches = ir.Binary{Operator: ir.Or, Left: matches, Right: ir.IsUndefined{Value: held}}
 	}
 	message := "union member where the checker narrowed it away: a call since the narrowing put it back"
-	b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: matches}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
+	b.body = append(b.body, ir.If{
+		Condition: ir.Unary{Operator: ir.Not, Operand: matches},
+		Then:      []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: lowering.constant(message)}}},
+	})
 	result := b.finish("narrowed_union_member", ir.Narrow{Value: held, To: ir.String})
-	l.result.Functions[b.function].CheckedUnionNarrow = true
+	lowering.result.Functions[b.function].CheckedUnionNarrow = true
 	return result
 }

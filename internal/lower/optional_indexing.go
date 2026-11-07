@@ -7,18 +7,18 @@ import (
 
 // Save the base before the guard. The index belongs only to the present arm,
 // and the ordinary lookup retains its missing-element representation.
-func (l *lowering) optionalIndex(node *ast.Node, base ir.Expression) (ir.Expression, error) {
+func (lowering *lowering) optionalIndex(node *ast.Node, base ir.Expression) (ir.Expression, error) {
 	function := -1
-	if l.function != nil {
-		function = l.functionIndex
+	if lowering.function != nil {
+		function = lowering.functionIndex
 	}
-	local := len(l.result.Locals)
-	l.result.Locals = append(
-		l.result.Locals,
+	local := len(lowering.result.Locals)
+	lowering.result.Locals = append(
+		lowering.result.Locals,
 		ir.Local{Name: "optional_index_base", Type: base.Type(), Function: function, ExpressionAssigned: true},
 	)
 	read := ir.Read{Local: local, Of: base.Type()}
-	value, optionalIndexValueError := l.optionalIndexValue(node, read)
+	value, optionalIndexValueError := lowering.optionalIndexValue(node, read)
 	if optionalIndexValueError != nil {
 		return nil, optionalIndexValueError
 	}
@@ -32,14 +32,14 @@ func (l *lowering) optionalIndex(node *ast.Node, base ir.Expression) (ir.Express
 	}}, nil
 }
 
-func (l *lowering) optionalIndexValue(node *ast.Node, base ir.Expression) (ir.Expression, error) {
+func (lowering *lowering) optionalIndexValue(node *ast.Node, base ir.Expression) (ir.Expression, error) {
 	access := node.AsElementAccessExpression()
-	index, expressionError := l.expression(access.ArgumentExpression)
+	index, expressionError := lowering.expression(access.ArgumentExpression)
 	if expressionError != nil {
 		return nil, expressionError
 	}
 	if index.Type() != ir.Number {
-		return nil, l.notYet(node, "an optional index that isn't a number")
+		return nil, lowering.notYet(node, "an optional index that isn't a number")
 	}
 	var value ir.Expression
 	if base.Type() == ir.String {
@@ -48,7 +48,7 @@ func (l *lowering) optionalIndexValue(node *ast.Node, base ir.Expression) (ir.Ex
 		element := ir.Number
 		if !base.Type().IsTypedArray() {
 			var elementTypeError error
-			element, elementTypeError = l.elementType(access.Expression)
+			element, elementTypeError = lowering.elementType(access.Expression)
 			if elementTypeError != nil {
 				return nil, elementTypeError
 			}

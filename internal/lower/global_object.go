@@ -38,9 +38,10 @@ const globalObjectValueStop = "the global object as a value (only a property rea
 // (globalObjectType): a union or intersection holding the global object, and a type parameter whose
 // constraint is it, may be the global object too, though the type itself has no such symbol (Compiler's
 // read of b5a2f3f3).
-func (l *lowering) globalObject(node *ast.Node) bool {
-	global := l.checker.GetGlobalSymbol("globalThis", ast.SymbolFlagsModule, nil)
-	return global != nil && l.globalObjectType(l.checker.GetTypeAtLocation(node), global, map[*checker.Type]bool{})
+func (lowering *lowering) globalObject(node *ast.Node) bool {
+	global := lowering.checker.GetGlobalSymbol("globalThis", ast.SymbolFlagsModule, nil)
+	return global != nil &&
+		lowering.globalObjectType(lowering.checker.GetTypeAtLocation(node), global, map[*checker.Type]bool{})
 }
 
 // globalObjectOperand reports whether an expression may evaluate to an operand of it that is the global
@@ -48,7 +49,7 @@ func (l *lowering) globalObject(node *ast.Node) bool {
 // type alone when other's is a supertype of typeof globalThis (both carry process), since a conditional's
 // union is reduced by subtype. So the arms of ?:, the operands of ||, && and ??, the right of a comma or an
 // assignment, and what a cast or a non-null assertion holds are each judged as the global object too.
-func (l *lowering) globalObjectOperand(node *ast.Node) bool {
+func (lowering *lowering) globalObjectOperand(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
 	var operands []*ast.Node
 	switch node.Kind {
@@ -66,7 +67,7 @@ func (l *lowering) globalObjectOperand(node *ast.Node) bool {
 		operands = []*ast.Node{node.Expression()}
 	}
 	for _, operand := range operands {
-		if l.globalObject(operand) || l.globalObjectOperand(operand) {
+		if lowering.globalObject(operand) || lowering.globalObjectOperand(operand) {
 			return true
 		}
 	}
@@ -76,7 +77,7 @@ func (l *lowering) globalObjectOperand(node *ast.Node) bool {
 // globalObjectType reports whether a type is the global object's, a union or intersection any member
 // of which is, or an instantiable type (a type parameter, an indexed access, a conditional) whose base
 // constraint is.
-func (l *lowering) globalObjectType(proven *checker.Type, global *ast.Symbol, seen map[*checker.Type]bool) bool {
+func (lowering *lowering) globalObjectType(proven *checker.Type, global *ast.Symbol, seen map[*checker.Type]bool) bool {
 	if proven == nil || seen[proven] {
 		return false
 	}
@@ -86,47 +87,52 @@ func (l *lowering) globalObjectType(proven *checker.Type, global *ast.Symbol, se
 	}
 	if proven.Flags()&checker.TypeFlagsUnionOrIntersection != 0 {
 		for _, member := range proven.Types() {
-			if l.globalObjectType(member, global, seen) {
+			if lowering.globalObjectType(member, global, seen) {
 				return true
 			}
 		}
 	}
 	if proven.Flags()&checker.TypeFlagsInstantiable != 0 {
-		return l.globalObjectType(l.checker.GetBaseConstraintOfType(proven), global, seen)
+		return lowering.globalObjectType(lowering.checker.GetBaseConstraintOfType(proven), global, seen)
 	}
 	return false
 }
 
 // globalObjectValueRefusal stops the first use of the global object as a value among node's children,
 // then node itself, which a walk that starts at node (refuseNode) reaches with no parent's visit first.
-func (l *lowering) globalObjectValueRefusal(node *ast.Node) error {
+func (lowering *lowering) globalObjectValueRefusal(node *ast.Node) error {
 	var stop error
 	node.ForEachChild(func(child *ast.Node) bool {
-		stop = l.globalObjectValueUse(child)
+		stop = lowering.globalObjectValueUse(child)
 		return stop != nil
 	})
 	if stop != nil {
 		return stop
 	}
-	return l.globalObjectValueUse(node)
+	return lowering.globalObjectValueUse(node)
 }
 
 // globalObjectValueUse is the stop for a node that is the global object used as a value, or nil.
-func (l *lowering) globalObjectValueUse(node *ast.Node) error {
+func (lowering *lowering) globalObjectValueUse(node *ast.Node) error {
 	parent := node.Parent
 	if parent == nil || globalObjectAdmitted(node) {
 		return nil
 	}
 	if parent.Kind == ast.KindShorthandPropertyAssignment && parent.Name() == node {
 		// { globalThis } puts the value in an object; the name is no expression of its own to the checker.
-		global := l.checker.GetGlobalSymbol("globalThis", ast.SymbolFlagsModule, nil)
-		value := l.checker.GetShorthandAssignmentValueSymbol(parent)
-		if global != nil && value != nil && (value == global || l.checker.GetTypeOfSymbolAtLocation(value, node).Symbol() == global) {
-			return l.notYet(node, globalObjectValueStop)
+		global := lowering.checker.GetGlobalSymbol("globalThis", ast.SymbolFlagsModule, nil)
+		value := lowering.checker.GetShorthandAssignmentValueSymbol(parent)
+		if global != nil &&
+			value != nil &&
+			(value == global || lowering.checker.GetTypeOfSymbolAtLocation(value, node).Symbol() == global) {
+			return lowering.notYet(node, globalObjectValueStop)
 		}
 		return nil
 	}
-	if !ast.IsExpressionNode(node) || ast.IsPartOfTypeNode(node) || inTypeQuery(node) || parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Name() == node {
+	if !ast.IsExpressionNode(node) ||
+		ast.IsPartOfTypeNode(node) ||
+		inTypeQuery(node) ||
+		parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Name() == node {
 		return nil
 	}
 	switch node.Kind {
@@ -138,10 +144,10 @@ func (l *lowering) globalObjectValueUse(node *ast.Node) error {
 		// ThisKeyword is deliberately not among them: a this parameter may be typeof globalThis.
 		return nil
 	}
-	if !l.globalObject(node) && !l.globalObjectResult(node) {
+	if !lowering.globalObject(node) && !lowering.globalObjectResult(node) {
 		return nil
 	}
-	return l.notYet(node, globalObjectValueStop)
+	return lowering.notYet(node, globalObjectValueStop)
 }
 
 // globalObjectResult reports whether node reads or calls a member of the global object whose result may
@@ -152,7 +158,7 @@ func (l *lowering) globalObjectValueUse(node *ast.Node) error {
 // global object reaches counts whenever typeof globalThis is assignable to its result's type (Object,
 // object, {}, unknown, any, a union holding one). A void or primitive result (global.gc(), toString()) or
 // a member typed as something the global object isn't (console, process, Object) is untouched.
-func (l *lowering) globalObjectResult(node *ast.Node) bool {
+func (lowering *lowering) globalObjectResult(node *ast.Node) bool {
 	member := node
 	if node.Kind == ast.KindCallExpression {
 		member = ast.SkipParentheses(node.AsCallExpression().Expression)
@@ -167,11 +173,14 @@ func (l *lowering) globalObjectResult(node *ast.Node) bool {
 		return false
 	}
 	receiver = ast.SkipParentheses(receiver)
-	if !l.globalObject(receiver) && !l.globalObjectResult(receiver) {
+	if !lowering.globalObject(receiver) && !lowering.globalObjectResult(receiver) {
 		return false
 	}
-	global := l.checker.GetGlobalSymbol("globalThis", ast.SymbolFlagsModule, nil)
-	return global != nil && l.checker.IsTypeAssignableTo(l.checker.GetTypeOfSymbol(global), l.checker.GetTypeAtLocation(node))
+	global := lowering.checker.GetGlobalSymbol("globalThis", ast.SymbolFlagsModule, nil)
+	return global != nil && lowering.checker.IsTypeAssignableTo(
+		lowering.checker.GetTypeOfSymbol(global),
+		lowering.checker.GetTypeAtLocation(node),
+	)
 }
 
 // inTypeQuery reports whether node names a value only for a type: `typeof globalThis` written as a type,

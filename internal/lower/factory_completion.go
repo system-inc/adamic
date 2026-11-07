@@ -23,8 +23,8 @@ type FactoryEscape struct {
 	Missing []string
 }
 
-func (s FactoryCompletion) Proven(field string) bool {
-	return !s.Unknown && len(s.Escapes) > 0 && s.BeforeEscape[field]
+func (completion FactoryCompletion) Proven(field string) bool {
+	return !completion.Unknown && len(completion.Escapes) > 0 && completion.BeforeEscape[field]
 }
 
 // FactoryRead preserves the state at the read, independently of a later completed return.
@@ -52,7 +52,11 @@ type factoryAnalysis struct {
 // aliases even without an explicit argument. Helpers, loops, multiple allocations,
 // closures and computed writes remain Unknown. No asserted type proves a write.
 func AnalyzeFactory(factory *ast.Node, target *checker.Type, typeChecker *checker.Checker) FactoryCompletion {
-	a := factoryAnalysis{checker: typeChecker, fields: map[string]*checker.Type{}, result: FactoryCompletion{BeforeEscape: map[string]bool{}}}
+	a := factoryAnalysis{
+		checker: typeChecker,
+		fields:  map[string]*checker.Type{},
+		result:  FactoryCompletion{BeforeEscape: map[string]bool{}},
+	}
 	for _, field := range typeChecker.GetPropertiesOfType(target) {
 		if field.Flags&ast.SymbolFlagsOptional == 0 {
 			a.fields[field.Name] = typeChecker.GetTypeOfSymbol(field)
@@ -73,7 +77,7 @@ func AnalyzeFactory(factory *ast.Node, target *checker.Type, typeChecker *checke
 	return a.result
 }
 
-func (a *factoryAnalysis) alias(node *ast.Node, state *factoryState) bool {
+func (analysis *factoryAnalysis) alias(node *ast.Node, state *factoryState) bool {
 	if node == nil {
 		return false
 	}
@@ -81,26 +85,26 @@ func (a *factoryAnalysis) alias(node *ast.Node, state *factoryState) bool {
 	for node.Kind == ast.KindAsExpression {
 		node = ast.SkipParentheses(node.AsAsExpression().Expression)
 	}
-	return ast.IsIdentifier(node) && state.aliases[a.checker.GetSymbolAtLocation(node)]
+	return ast.IsIdentifier(node) && state.aliases[analysis.checker.GetSymbolAtLocation(node)]
 }
 
-func (a *factoryAnalysis) escape(node *ast.Node, state *factoryState) {
+func (analysis *factoryAnalysis) escape(node *ast.Node, state *factoryState) {
 	if !state.allocated {
 		return
 	}
 	missing := []string{}
-	for _, field := range a.result.Required {
+	for _, field := range analysis.result.Required {
 		if !state.written[field] {
 			missing = append(missing, field)
-			a.result.BeforeEscape[field] = false
+			analysis.result.BeforeEscape[field] = false
 		}
 	}
-	a.result.Escapes = append(a.result.Escapes, FactoryEscape{Node: node, Missing: missing})
+	analysis.result.Escapes = append(analysis.result.Escapes, FactoryEscape{Node: node, Missing: missing})
 	state.escaped = true
 }
 
-func (a *factoryAnalysis) typed(value *ast.Node, field string) bool {
-	wanted := a.fields[field]
+func (analysis *factoryAnalysis) typed(value *ast.Node, field string) bool {
+	wanted := analysis.fields[field]
 	if wanted == nil {
 		return false
 	}
@@ -122,82 +126,100 @@ func (a *factoryAnalysis) typed(value *ast.Node, field string) bool {
 		return forged
 	}
 	visit(value)
-	actual := a.checker.GetTypeAtLocation(value)
-	return !forged && interfaceScalar(actual) && interfaceScalar(wanted) && actual.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsTypeParameter) == 0 && a.checker.IsTypeAssignableTo(actual, wanted)
+	actual := analysis.checker.GetTypeAtLocation(value)
+	return !forged &&
+		interfaceScalar(actual) &&
+		interfaceScalar(wanted) &&
+		actual.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsTypeParameter) == 0 &&
+		analysis.checker.IsTypeAssignableTo(actual, wanted)
 }
 
-func (a *factoryAnalysis) expression(node *ast.Node, state *factoryState) {
+func (analysis *factoryAnalysis) expression(node *ast.Node, state *factoryState) {
 	if node == nil {
 		return
 	}
 	node = ast.SkipParentheses(node)
 	switch node.Kind {
 	case ast.KindPropertyAccessExpression:
-		if a.alias(node.AsPropertyAccessExpression().Expression, state) && a.fields[node.Name().Text()] != nil {
-			a.result.Reads = append(a.result.Reads, FactoryRead{Node: node, Field: node.Name().Text(), Checked: !state.written[node.Name().Text()] || state.escaped})
+		if analysis.alias(node.AsPropertyAccessExpression().Expression, state) &&
+			analysis.fields[node.Name().Text()] != nil {
+			analysis.result.Reads = append(analysis.result.Reads, FactoryRead{
+				Node:    node,
+				Field:   node.Name().Text(),
+				Checked: !state.written[node.Name().Text()] || state.escaped,
+			})
 		}
 	case ast.KindConditionalExpression:
-		a.result.Unknown = true
-		a.escape(node, state)
+		analysis.result.Unknown = true
+		analysis.escape(node, state)
 		state.written = map[string]bool{}
 		return
 	case ast.KindCallExpression, ast.KindNewExpression:
-		a.result.Unknown = true
+		analysis.result.Unknown = true
 		// Evaluate nested effects before this call's escape. With no effect summary,
 		// a call could reach the object through a captured or previously exposed alias.
-		node.ForEachChild(func(n *ast.Node) bool { a.expression(n, state); return false })
-		a.escape(node, state)
+		node.ForEachChild(func(n *ast.Node) bool { analysis.expression(n, state); return false })
+		analysis.escape(node, state)
 		state.written = map[string]bool{}
 		return
 	case ast.KindArrowFunction, ast.KindFunctionExpression:
-		a.result.Unknown = true
-		a.escape(node, state)
+		analysis.result.Unknown = true
+		analysis.escape(node, state)
 		return
 	case ast.KindBinaryExpression:
 		b := node.AsBinaryExpression()
-		if b.OperatorToken.Kind == ast.KindAmpersandAmpersandToken || b.OperatorToken.Kind == ast.KindBarBarToken || b.OperatorToken.Kind == ast.KindQuestionQuestionToken {
-			a.result.Unknown = true
-			a.escape(node, state)
+		if b.OperatorToken.Kind == ast.KindAmpersandAmpersandToken ||
+			b.OperatorToken.Kind == ast.KindBarBarToken ||
+			b.OperatorToken.Kind == ast.KindQuestionQuestionToken {
+			analysis.result.Unknown = true
+			analysis.escape(node, state)
 			state.written = map[string]bool{}
 			return
 		}
 		if ast.IsAssignmentOperator(b.OperatorToken.Kind) {
 			if b.OperatorToken.Kind != ast.KindEqualsToken {
-				a.result.Unknown = true
-				a.escape(node, state)
+				analysis.result.Unknown = true
+				analysis.escape(node, state)
 				return
 			}
 			left := ast.SkipParentheses(b.Left)
-			if left.Kind == ast.KindPropertyAccessExpression && a.alias(left.AsPropertyAccessExpression().Expression, state) {
-				a.expression(b.Right, state)
+			if left.Kind == ast.KindPropertyAccessExpression &&
+				analysis.alias(left.AsPropertyAccessExpression().Expression, state) {
+				analysis.expression(b.Right, state)
 				field := left.Name().Text()
-				state.written[field] = a.typed(b.Right, field)
+				state.written[field] = analysis.typed(b.Right, field)
 				return
 			}
-			a.expression(b.Right, state)
+			analysis.expression(b.Right, state)
 			if ast.IsIdentifier(left) {
-				symbol := a.checker.GetSymbolAtLocation(left)
+				symbol := analysis.checker.GetSymbolAtLocation(left)
 				if symbol == nil {
-					a.result.Unknown = true
+					analysis.result.Unknown = true
 					return
 				}
-				if a.alias(b.Right, state) {
-					a.result.Unknown = true
-					a.escape(node, state)
+				if analysis.alias(b.Right, state) {
+					analysis.result.Unknown = true
+					analysis.escape(node, state)
 				}
 				delete(state.aliases, symbol)
 				return
 			}
-			a.escape(node, state)
-			a.result.Unknown = true
+			analysis.escape(node, state)
+			analysis.result.Unknown = true
 			return
 		}
 	}
-	node.ForEachChild(func(n *ast.Node) bool { a.expression(n, state); return false })
+	node.ForEachChild(func(n *ast.Node) bool { analysis.expression(n, state); return false })
 }
 
 func cloneFactoryState(s factoryState) factoryState {
-	c := factoryState{aliases: map[*ast.Symbol]bool{}, written: map[string]bool{}, allocated: s.allocated, active: s.active, escaped: s.escaped}
+	c := factoryState{
+		aliases:   map[*ast.Symbol]bool{},
+		written:   map[string]bool{},
+		allocated: s.allocated,
+		active:    s.active,
+		escaped:   s.escaped,
+	}
 	for k, v := range s.aliases {
 		c.aliases[k] = v
 	}
@@ -227,28 +249,28 @@ func interfaceLiteralFields(node *ast.Node) (map[string]*ast.Node, bool) {
 	return fields, true
 }
 
-func (a *factoryAnalysis) statement(node *ast.Node, state *factoryState) {
+func (analysis *factoryAnalysis) statement(node *ast.Node, state *factoryState) {
 	if node == nil || !state.active {
 		return
 	}
 	switch node.Kind {
 	case ast.KindBlock:
 		for _, n := range node.AsBlock().Statements.Nodes {
-			a.statement(n, state)
+			analysis.statement(n, state)
 		}
 	case ast.KindVariableStatement:
 		for _, declaration := range node.AsVariableStatement().DeclarationList.AsVariableDeclarationList().Declarations.Nodes {
 			d := declaration.AsVariableDeclaration()
 			if !ast.IsIdentifier(d.Name()) || d.Initializer == nil {
-				a.result.Unknown = true
+				analysis.result.Unknown = true
 				continue
 			}
-			symbol := a.checker.GetSymbolAtLocation(d.Name())
+			symbol := analysis.checker.GetSymbolAtLocation(d.Name())
 			if symbol == nil {
-				a.result.Unknown = true
+				analysis.result.Unknown = true
 				continue
 			}
-			if a.alias(d.Initializer, state) {
+			if analysis.alias(d.Initializer, state) {
 				state.aliases[symbol] = true
 				continue
 			}
@@ -258,40 +280,40 @@ func (a *factoryAnalysis) statement(node *ast.Node, state *factoryState) {
 			}
 			if init.Kind == ast.KindObjectLiteralExpression {
 				if state.allocated {
-					a.result.Unknown = true
+					analysis.result.Unknown = true
 					continue
 				}
-				a.expression(init, state)
+				analysis.expression(init, state)
 				state.allocated = true
 				state.aliases[symbol] = true
 				fields, known := interfaceLiteralFields(init)
 				if !known {
-					a.result.Unknown = true
+					analysis.result.Unknown = true
 					continue
 				}
 				for field, value := range fields {
-					state.written[field] = a.typed(value, field)
+					state.written[field] = analysis.typed(value, field)
 				}
 			} else {
-				a.expression(d.Initializer, state)
+				analysis.expression(d.Initializer, state)
 			}
 		}
 	case ast.KindExpressionStatement:
-		a.expression(node.AsExpressionStatement().Expression, state)
+		analysis.expression(node.AsExpressionStatement().Expression, state)
 	case ast.KindReturnStatement:
 		value := node.AsReturnStatement().Expression
-		a.expression(value, state)
-		if !a.alias(value, state) {
-			a.result.Unknown = true
+		analysis.expression(value, state)
+		if !analysis.alias(value, state) {
+			analysis.result.Unknown = true
 		}
-		a.escape(node, state)
+		analysis.escape(node, state)
 		state.active = false
 	case ast.KindIfStatement:
 		branch := node.AsIfStatement()
-		a.expression(branch.Expression, state)
+		analysis.expression(branch.Expression, state)
 		yes, no := cloneFactoryState(*state), cloneFactoryState(*state)
-		a.statement(branch.ThenStatement, &yes)
-		a.statement(branch.ElseStatement, &no)
+		analysis.statement(branch.ThenStatement, &yes)
+		analysis.statement(branch.ElseStatement, &no)
 		if !yes.active {
 			*state = no
 			return
@@ -310,12 +332,12 @@ func (a *factoryAnalysis) statement(node *ast.Node, state *factoryState) {
 		}
 		yes.escaped = yes.escaped || no.escaped
 		if yes.allocated != no.allocated {
-			a.result.Unknown = true
+			analysis.result.Unknown = true
 		}
 		*state = yes
 	default:
-		a.result.Unknown = true
-		a.escape(node, state)
+		analysis.result.Unknown = true
+		analysis.escape(node, state)
 		state.written = map[string]bool{}
 	}
 }

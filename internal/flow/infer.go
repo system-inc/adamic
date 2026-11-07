@@ -30,7 +30,12 @@ import (
 // Strings, numbers and booleans can't be mutated (Adamic's strings are immutable values), so a
 // value of those types is created primitive and takes part in nothing.
 func InferAliasingEffects(function *Function) *AliasingEffects {
-	inference := &inference{function: function, escaped: map[IdentifierId]bool{}, iterated: map[*ir.Statement][]Place{}, parts: map[[2]uint32]IdentifierId{}}
+	inference := &inference{
+		function: function,
+		escaped:  map[IdentifierId]bool{},
+		iterated: map[*ir.Statement][]Place{},
+		parts:    map[[2]uint32]IdentifierId{},
+	}
 	// Escape grows as effects are made (a value handed to a call escapes), and every call has to
 	// mutate every value escaped by then, wherever in the function it escaped. So the effects are
 	// made again until the escaped set stops growing; it only grows, and it's bounded by the
@@ -75,51 +80,51 @@ type shape struct {
 	unknown bool    // from somewhere this function can't see: an untracked variable, a call
 }
 
-func (s shape) roots() []Place {
-	return append(append(append([]Place{}, s.same...), s.part...), s.holds...)
+func (shape shape) roots() []Place {
+	return append(append(append([]Place{}, shape.same...), shape.part...), shape.holds...)
 }
 
-func (s *shape) merge(other shape) {
-	s.same = append(s.same, other.same...)
-	s.part = append(s.part, other.part...)
-	s.holds = append(s.holds, other.holds...)
-	s.fresh = s.fresh || other.fresh
-	s.unknown = s.unknown || other.unknown
+func (shape *shape) merge(other shape) {
+	shape.same = append(shape.same, other.same...)
+	shape.part = append(shape.part, other.part...)
+	shape.holds = append(shape.holds, other.holds...)
+	shape.fresh = shape.fresh || other.fresh
+	shape.unknown = shape.unknown || other.unknown
 }
 
 // run makes every instruction's effects, walking the blocks in reverse postorder with the value
 // each variable holds.
-func (n *inference) run() {
+func (inference *inference) run() {
 	exits := map[BlockId]map[DeclarationId]IdentifierId{}
 	// thrown is what a block ending in MayThrow hands its handler: the values from before its last
 	// instruction, whose definitions a throw never made.
 	thrown := map[BlockId]map[DeclarationId]IdentifierId{}
-	for _, parameter := range n.function.Params {
-		n.escaped[parameter.Identifier] = true
+	for _, parameter := range inference.function.Params {
+		inference.escaped[parameter.Identifier] = true
 	}
-	for _, block := range n.function.Blocks {
-		n.current = map[DeclarationId]IdentifierId{}
-		if block.Id == n.function.Entry {
-			for _, parameter := range n.function.Params {
-				n.current[n.declaration(parameter)] = parameter.Identifier
+	for _, block := range inference.function.Blocks {
+		inference.current = map[DeclarationId]IdentifierId{}
+		if block.Id == inference.function.Entry {
+			for _, parameter := range inference.function.Params {
+				inference.current[inference.declaration(parameter)] = parameter.Identifier
 			}
 		}
 		// A variable's value on entry is the same from every predecessor already walked, or there'd
 		// be a phi; a predecessor not yet walked is a back edge, whose value a phi carries.
 		for _, predecessor := range block.Predecessors {
 			from := exits[predecessor]
-			if walked, ok := n.function.Block(predecessor); ok && throwsTo(walked, block.Id) {
+			if walked, ok := inference.function.Block(predecessor); ok && throwsTo(walked, block.Id) {
 				from = thrown[predecessor]
 			}
 			for variable, value := range from {
-				n.current[variable] = value
+				inference.current[variable] = value
 			}
 		}
 		for _, phi := range block.Phis {
-			n.current[n.declaration(phi.Place)] = phi.Place.Identifier
+			inference.current[inference.declaration(phi.Place)] = phi.Place.Identifier
 			for _, operand := range phi.Operands {
-				if n.escaped[operand.Identifier] {
-					n.escaped[phi.Place.Identifier] = true
+				if inference.escaped[operand.Identifier] {
+					inference.escaped[phi.Place.Identifier] = true
 				}
 			}
 		}
@@ -128,48 +133,48 @@ func (n *inference) run() {
 			// run1 changes current only by the instruction's definitions, last, so what it holds now
 			// is what a throw out of this instruction leaves.
 			if endsInThrow && position == len(block.Instructions)-1 {
-				thrown[block.Id] = maps.Clone(n.current)
+				thrown[block.Id] = maps.Clone(inference.current)
 			}
-			n.list = nil
-			n.instruction = id
-			n.run1(n.function.Instructions[id])
+			inference.list = nil
+			inference.instruction = id
+			inference.run1(inference.function.Instructions[id])
 			if Suspends(block.Terminal) && position == len(block.Instructions)-1 {
 				// Other queued tasks may mutate anything reachable outside this activation.
-				n.mutateEscaped()
+				inference.mutateEscaped()
 			}
-			if len(n.list) > 0 {
-				n.effects.byInstruction[id] = n.list
+			if len(inference.list) > 0 {
+				inference.effects.byInstruction[id] = inference.list
 			}
 		}
-		exits[block.Id] = n.current
+		exits[block.Id] = inference.current
 	}
 }
 
-func (n *inference) declaration(place Place) DeclarationId {
-	return n.function.Identifiers[place.Identifier].Declaration
+func (inference *inference) declaration(place Place) DeclarationId {
+	return inference.function.Identifiers[place.Identifier].Declaration
 }
 
 // run1 makes one instruction's effects: what evaluating it does, then what it defines.
-func (n *inference) run1(instruction *Instruction) {
+func (inference *inference) run1(instruction *Instruction) {
 	switch statement := (*instruction.At).(type) {
 	case ir.SetProperty:
-		object := n.value(statement.Object)
-		value := n.value(statement.Value)
-		n.store(object, value)
+		object := inference.value(statement.Object)
+		value := inference.value(statement.Value)
+		inference.store(object, value)
 	case ir.SetIndex:
-		array := n.value(statement.Array)
-		n.value(statement.Index)
-		value := n.value(statement.Value)
-		n.store(array, value)
+		array := inference.value(statement.Array)
+		inference.value(statement.Index)
+		value := inference.value(statement.Value)
+		inference.store(array, value)
 	case ir.ForOf:
 		if instruction.Part == 0 {
-			n.iterated[instruction.At] = n.value(statement.Iterable).roots()
+			inference.iterated[instruction.At] = inference.value(statement.Iterable).roots()
 			break
 		}
 		// Each element is read out of what the loop iterates, as its first part found it (reverse
 		// postorder walks that part first): a mutation through the element is one of that too.
 		for _, define := range instruction.Defines {
-			n.define(define, shape{part: n.iterated[instruction.At]})
+			inference.define(define, shape{part: inference.iterated[instruction.At]})
 		}
 	default:
 		var defined shape
@@ -179,10 +184,10 @@ func (n *inference) run1(instruction *Instruction) {
 			}
 		}
 		if instruction.Expression != nil {
-			defined = n.value(instruction.Expression)
+			defined = inference.value(instruction.Expression)
 		}
 		for _, define := range instruction.Defines {
-			n.define(define, defined)
+			inference.define(define, defined)
 		}
 		// A declaration or assignment that defines nothing writes a local the graph doesn't track (a
 		// global, a captured variable, one assigned inside an expression), and any call may reach the
@@ -190,86 +195,86 @@ func (n *inference) run1(instruction *Instruction) {
 		switch (*instruction.At).(type) {
 		case ir.Declare, ir.Assign:
 			if len(instruction.Defines) == 0 {
-				n.escape(defined)
+				inference.escape(defined)
 			}
 		}
 	}
 	// What an instruction defines, it defines last: a read of a variable in the same instruction is
 	// of its old value, and the new one holds from here on.
 	for _, define := range instruction.Defines {
-		n.current[n.declaration(define)] = define.Identifier
+		inference.current[inference.declaration(define)] = define.Identifier
 	}
 }
 
 // define gives a defined value its effects: created, and related to what its expression's value is.
-func (n *inference) define(into Place, value shape) {
-	local := n.function.Identifiers[into.Identifier].Declaration - 1
-	if !mutable(n.function.Program.Locals[local].Type) {
-		n.list = append(n.list, create(into, EffectValuePrimitive))
+func (inference *inference) define(into Place, value shape) {
+	local := inference.function.Identifiers[into.Identifier].Declaration - 1
+	if !mutable(inference.function.Program.Locals[local].Type) {
+		inference.list = append(inference.list, create(into, EffectValuePrimitive))
 		return
 	}
 	if len(value.part) == 1 && len(value.same) == 0 && len(value.holds) == 0 && !value.fresh && !value.unknown {
-		n.list = append(n.list, flow(AliasingEffectCreateFrom, value.part[0], into))
+		inference.list = append(inference.list, flow(AliasingEffectCreateFrom, value.part[0], into))
 	} else {
-		n.list = append(n.list, create(into, EffectValueMutable))
+		inference.list = append(inference.list, create(into, EffectValueMutable))
 		for _, from := range value.same {
-			n.list = append(n.list, flow(AliasingEffectAssign, from, into))
+			inference.list = append(inference.list, flow(AliasingEffectAssign, from, into))
 		}
 		// A value read out of a container, mixed with others (a ?? b, c ? d : e), goes through a
 		// temporary created from the container, which is what React's graph has for every read:
 		// only CreateFrom carries a mutation back to the container transitively, on to whatever the
 		// container holds, and an Alias straight from the container wouldn't.
 		for _, from := range value.part {
-			key := [2]uint32{uint32(n.instruction), uint32(from.Identifier)}
-			part, ok := n.parts[key]
+			key := [2]uint32{uint32(inference.instruction), uint32(from.Identifier)}
+			part, ok := inference.parts[key]
 			if !ok {
-				part = n.function.NewIdentifier("", 0).Id
-				n.parts[key] = part
+				part = inference.function.NewIdentifier("", 0).Id
+				inference.parts[key] = part
 			}
-			n.list = append(n.list, flow(AliasingEffectCreateFrom, from, Place{Identifier: part}))
-			n.list = append(n.list, flow(AliasingEffectAssign, Place{Identifier: part}, into))
-			if n.escaped[from.Identifier] {
-				n.escaped[part] = true
+			inference.list = append(inference.list, flow(AliasingEffectCreateFrom, from, Place{Identifier: part}))
+			inference.list = append(inference.list, flow(AliasingEffectAssign, Place{Identifier: part}, into))
+			if inference.escaped[from.Identifier] {
+				inference.escaped[part] = true
 			}
 		}
 		for _, from := range value.holds {
-			n.list = append(n.list, flow(AliasingEffectCapture, from, into))
+			inference.list = append(inference.list, flow(AliasingEffectCapture, from, into))
 		}
 	}
 	if value.unknown {
-		n.escaped[into.Identifier] = true
+		inference.escaped[into.Identifier] = true
 	}
 	for _, root := range value.roots() {
-		if n.escaped[root.Identifier] {
-			n.escaped[into.Identifier] = true
+		if inference.escaped[root.Identifier] {
+			inference.escaped[into.Identifier] = true
 		}
 	}
 }
 
 // store is a write into a container: the container is mutated, and holds what was written.
-func (n *inference) store(container shape, value shape) {
+func (inference *inference) store(container shape, value shape) {
 	for _, root := range container.roots() {
-		n.list = append(n.list, mutate(AliasingEffectMutate, root))
+		inference.list = append(inference.list, mutate(AliasingEffectMutate, root))
 		for _, from := range value.roots() {
-			n.list = append(n.list, flow(AliasingEffectCapture, from, root))
+			inference.list = append(inference.list, flow(AliasingEffectCapture, from, root))
 		}
 	}
-	if container.unknown || anyEscaped(n.escaped, container.roots()) {
-		n.escape(value)
+	if container.unknown || anyEscaped(inference.escaped, container.roots()) {
+		inference.escape(value)
 		// An escaped container may be reachable from any other escaped value (two parameters may
 		// be the same object, or one may hold the other), so writing into it may change them all.
-		n.mutateEscaped()
+		inference.mutateEscaped()
 	}
 }
 
 // call is what a call does to what it's handed and to every escaped value: mutates them,
 // conditionally and transitively. Its result is unknown, and may be any of them.
-func (n *inference) call(operands []shape) shape {
+func (inference *inference) call(operands []shape) shape {
 	result := shape{unknown: true}
 	for _, operand := range operands {
-		n.escape(operand)
+		inference.escape(operand)
 	}
-	n.mutateEscaped()
+	inference.mutateEscaped()
 	for _, operand := range operands {
 		result.same = append(result.same, operand.roots()...)
 	}
@@ -278,29 +283,32 @@ func (n *inference) call(operands []shape) shape {
 
 // mutateEscaped mutates, conditionally and transitively, every escaped value that reaches here: what
 // a call can reach, or what a write into an escaped value may change.
-func (n *inference) mutateEscaped() {
+func (inference *inference) mutateEscaped() {
 	// In a fixed order, since an effect's position is the alias graph's time.
-	variables := make([]DeclarationId, 0, len(n.current))
-	for variable := range n.current {
+	variables := make([]DeclarationId, 0, len(inference.current))
+	for variable := range inference.current {
 		variables = append(variables, variable)
 	}
 	slices.Sort(variables)
 	for _, variable := range variables {
-		value := n.current[variable]
-		if n.escaped[value] && mutable(n.typeOf(value)) {
-			n.list = append(n.list, mutate(AliasingEffectMutateTransitiveConditionally, Place{Identifier: value}))
+		value := inference.current[variable]
+		if inference.escaped[value] && mutable(inference.typeOf(value)) {
+			inference.list = append(
+				inference.list,
+				mutate(AliasingEffectMutateTransitiveConditionally, Place{Identifier: value}),
+			)
 		}
 	}
 }
 
-func (n *inference) escape(value shape) {
+func (inference *inference) escape(value shape) {
 	for _, root := range value.roots() {
-		n.escaped[root.Identifier] = true
+		inference.escaped[root.Identifier] = true
 	}
 }
 
-func (n *inference) typeOf(value IdentifierId) ir.Type {
-	return n.function.Program.Locals[n.function.Identifiers[value].Declaration-1].Type
+func (inference *inference) typeOf(value IdentifierId) ir.Type {
+	return inference.function.Program.Locals[inference.function.Identifiers[value].Declaration-1].Type
 }
 
 func anyEscaped(escaped map[IdentifierId]bool, places []Place) bool {
@@ -319,41 +327,41 @@ func mutable(valueType ir.Type) bool {
 }
 
 // value is the shape of an expression's value, and makes the effects of evaluating it.
-func (n *inference) value(expression ir.Expression) shape {
+func (inference *inference) value(expression ir.Expression) shape {
 	if expression == nil {
 		return shape{}
 	}
 	switch expression := expression.(type) {
 	case ir.TypedArrayNew:
-		n.value(expression.Source)
+		inference.value(expression.Source)
 		return shape{fresh: true}
 	case ir.TypedArraySubarray:
 		// Views share storage. Conservatively alias the parent for every mutation.
-		array := n.value(expression.Array)
+		array := inference.value(expression.Array)
 		for _, argument := range expression.Arguments {
-			n.value(argument)
+			inference.value(argument)
 		}
 		return array
 	case ir.TypedArraySort:
-		array := n.value(expression.Array)
-		n.store(array, shape{})
+		array := inference.value(expression.Array)
+		inference.store(array, shape{})
 		return array
 	case ir.TypedArrayFill:
-		array := n.value(expression.Array)
+		array := inference.value(expression.Array)
 		for _, argument := range expression.Arguments {
-			n.value(argument)
+			inference.value(argument)
 		}
-		n.store(array, shape{})
+		inference.store(array, shape{})
 		return array
 	case ir.TypedArraySet:
-		array := n.value(expression.Array)
+		array := inference.value(expression.Array)
 		for _, argument := range expression.Arguments {
-			n.value(argument)
+			inference.value(argument)
 		}
-		n.store(array, shape{})
+		inference.store(array, shape{})
 		return shape{}
 	case ir.Read:
-		declared := n.function.Program.Locals[expression.Local]
+		declared := inference.function.Program.Locals[expression.Local]
 		if !mutable(expression.Of) {
 			return shape{}
 		}
@@ -362,64 +370,64 @@ func (n *inference) value(expression ir.Expression) shape {
 		if declared.Global || declared.Captured || declared.ExpressionAssigned {
 			return shape{unknown: true}
 		}
-		value, ok := n.current[DeclarationId(expression.Local+1)]
+		value, ok := inference.current[DeclarationId(expression.Local+1)]
 		if !ok {
 			return shape{}
 		}
 		return shape{same: []Place{{Identifier: value}}}
 	case ir.Void:
-		n.value(expression.Value)
+		inference.value(expression.Value)
 		return shape{}
 	case ir.Comma:
-		n.value(expression.Left)
-		return n.value(expression.Right)
+		inference.value(expression.Left)
+		return inference.value(expression.Right)
 	case ir.Logical:
-		result := n.value(expression.Left)
-		result.merge(n.value(expression.Right))
+		result := inference.value(expression.Left)
+		result.merge(inference.value(expression.Right))
 		return result
 	case ir.Conditional:
-		n.value(expression.Condition)
-		result := n.value(expression.WhenTrue)
-		result.merge(n.value(expression.WhenNot))
+		inference.value(expression.Condition)
+		result := inference.value(expression.WhenTrue)
+		result.merge(inference.value(expression.WhenNot))
 		return result
 	case ir.Coalesce:
-		result := n.value(expression.Value)
-		result.merge(n.value(expression.Fallback))
-		n.value(expression.Panic)
+		result := inference.value(expression.Value)
+		result.merge(inference.value(expression.Fallback))
+		inference.value(expression.Panic)
 		return result
 	case ir.Box:
-		return n.value(expression.Value)
+		return inference.value(expression.Value)
 	case ir.Narrow:
-		return n.value(expression.Value)
+		return inference.value(expression.Value)
 	case ir.PlaceholderUse:
 		// A checked use forwards the value; it cannot create a reference or a write.
-		return n.value(expression.Value)
+		return inference.value(expression.Value)
 	case ir.Unwrap:
-		return n.value(expression.Value)
+		return inference.value(expression.Value)
 	case ir.CheckedCast:
-		result := n.value(expression.Value)
+		result := inference.value(expression.Value)
 		for _, allowed := range expression.Allowed {
-			n.value(allowed)
+			inference.value(allowed)
 		}
 		return result
 	case ir.RecordCoalesce:
-		holder := n.value(expression.Record)
-		n.value(expression.Key)
-		result := n.value(expression.Value)
-		n.store(holder, result)
+		holder := inference.value(expression.Record)
+		inference.value(expression.Key)
+		result := inference.value(expression.Value)
+		inference.store(holder, result)
 		result.part = append(result.part, holder.roots()...)
 		return result
 	case ir.RecordCall:
-		operands := n.operands(expression)
+		operands := inference.operands(expression)
 		switch expression.Method {
 		case "set":
-			n.store(operands[0], operands[2])
+			inference.store(operands[0], operands[2])
 			return operands[2]
 		case "defineHidden":
-			n.store(operands[0], operands[2])
+			inference.store(operands[0], operands[2])
 			return shape{}
 		case "delete":
-			n.store(operands[0], shape{})
+			inference.store(operands[0], shape{})
 			return shape{}
 		case "get":
 			return shape{part: operands[0].roots()}
@@ -431,51 +439,51 @@ func (n *inference) value(expression ir.Expression) shape {
 			return shape{}
 		}
 		// A method this doesn't know yet is the most it could be, as a node is below.
-		return n.call(operands)
+		return inference.call(operands)
 	case ir.RecordLiteral:
 		result := shape{fresh: true}
 		if expression.Spread != nil {
-			result.holds = append(result.holds, n.value(expression.Spread).roots()...)
+			result.holds = append(result.holds, inference.value(expression.Spread).roots()...)
 		}
 		for _, entry := range expression.Entries {
-			n.value(entry.Key)
-			result.holds = append(result.holds, n.value(entry.Value).roots()...)
+			inference.value(entry.Key)
+			result.holds = append(result.holds, inference.value(entry.Value).roots()...)
 		}
 		return result
 	case ir.ObjectLiteral:
 		result := shape{fresh: true}
 		if expression.Spread != nil {
 			// A copy of the spread's object: its fields are the same values the spread holds.
-			result.holds = append(result.holds, n.value(expression.Spread).roots()...)
+			result.holds = append(result.holds, inference.value(expression.Spread).roots()...)
 		}
 		for _, field := range expression.Fields {
-			result.holds = append(result.holds, n.value(field.Value).roots()...)
+			result.holds = append(result.holds, inference.value(field.Value).roots()...)
 		}
 		return result
 	case ir.ArrayLiteral:
 		result := shape{fresh: true}
 		for _, element := range expression.Elements {
-			result.holds = append(result.holds, n.value(element).roots()...)
+			result.holds = append(result.holds, inference.value(element).roots()...)
 		}
 		return result
 	case ir.Property:
-		return shape{part: n.value(expression.Object).roots()}
+		return shape{part: inference.value(expression.Object).roots()}
 	case ir.ArrayIndex:
-		array := n.value(expression.Array)
-		n.value(expression.Index)
+		array := inference.value(expression.Array)
+		inference.value(expression.Index)
 		return shape{part: array.roots()}
 	case ir.ArrayPush:
-		array := n.value(expression.Array)
-		value := n.value(expression.Value)
-		n.store(array, value)
+		array := inference.value(expression.Array)
+		value := inference.value(expression.Value)
+		inference.store(array, value)
 		return shape{}
 	case ir.ArrayPop:
-		array := n.value(expression.Array)
-		n.store(array, shape{})
+		array := inference.value(expression.Array)
+		inference.store(array, shape{})
 		return shape{part: array.roots()}
 	case ir.ArrayReverse:
-		array := n.value(expression.Array)
-		n.store(array, shape{})
+		array := inference.value(expression.Array)
+		inference.store(array, shape{})
 		return array
 	case ir.MakeClosure:
 		// Its cells hold captured variables, which this graph doesn't track.
@@ -483,51 +491,51 @@ func (n *inference) value(expression ir.Expression) shape {
 	case ir.Call:
 		operands := []shape{}
 		for _, argument := range expression.Arguments {
-			operands = append(operands, n.value(argument))
+			operands = append(operands, inference.value(argument))
 		}
-		return n.call(operands)
+		return inference.call(operands)
 	case ir.CallClosure:
 		// Every target, bounded or Unknown, has the same conservative effect here:
 		// anything it can reach may change. Evaluate the callee as an operand too.
-		return n.call(n.operands(expression))
+		return inference.call(inference.operands(expression))
 	}
 	// Everything else: the effects of what it evaluates, field by field, and then, as cohere assumes
 	// of a call it has no signature for, that it mutates and may return any of them. That covers
-	// the methods that call a callback (map, forEach, a Map's or Set's forEach, reduce, sort, Array.from), the ones that write
-	// (splice, fill, set, delete, clear), and every node whose value can be mutated. Only a node
+	// the methods that call a callback (map, forEach, a Map's or Set's forEach, reduce, sort, Array.from), the ones
+	// that write (splice, fill, set, delete, clear), and every node whose value can be mutated. Only a node
 	// that does none of these gives nothing, and writes_test.go fails on a node added to the IR
 	// until it's named as one of them, so a new write can't be taken for nothing by its type.
-	operands := n.operands(expression)
+	operands := inference.operands(expression)
 	if !mutable(expression.Type()) && !writes(expression) && !callsBack(expression) {
 		return shape{}
 	}
-	return n.call(operands)
+	return inference.call(operands)
 }
 
 // statement makes the effects of a statement an expression holds (an Effects' body, a logical
 // assignment's write) as run1 makes a statement's, a write into a field or an element being a
 // store, and is the shapes of the expressions it holds, as operands is.
-func (n *inference) statement(statement ir.Statement) []shape {
+func (inference *inference) statement(statement ir.Statement) []shape {
 	switch statement := statement.(type) {
 	case ir.SetProperty:
-		object := n.value(statement.Object)
-		value := n.value(statement.Value)
-		n.store(object, value)
+		object := inference.value(statement.Object)
+		value := inference.value(statement.Value)
+		inference.store(object, value)
 		return []shape{object, value}
 	case ir.SetIndex:
-		array := n.value(statement.Array)
-		index := n.value(statement.Index)
-		value := n.value(statement.Value)
-		n.store(array, value)
+		array := inference.value(statement.Array)
+		index := inference.value(statement.Index)
+		value := inference.value(statement.Value)
+		inference.store(array, value)
 		return []shape{array, index, value}
 	}
-	return n.operands(statement)
+	return inference.operands(statement)
 }
 
 // operands evaluates every expression an IR node holds, in the order its fields are declared. A
 // statement it holds is made by statement, so a write among an Effects' statements, or a logical
 // assignment's, is a store.
-func (n *inference) operands(node any) []shape {
+func (inference *inference) operands(node any) []shape {
 	var operands []shape
 	var walk func(value reflect.Value)
 	walk = func(value reflect.Value) {
@@ -537,11 +545,11 @@ func (n *inference) operands(node any) []shape {
 				return
 			}
 			if inner, ok := value.Interface().(ir.Expression); ok {
-				operands = append(operands, n.value(inner))
+				operands = append(operands, inference.value(inner))
 				return
 			}
 			if inner, ok := value.Interface().(ir.Statement); ok {
-				operands = append(operands, n.statement(inner)...)
+				operands = append(operands, inference.statement(inner)...)
 				return
 			}
 			walk(value.Elem())

@@ -15,13 +15,13 @@ type capturePrefix struct {
 	failure error
 }
 
-func (w *capturePrefix) Write(p []byte) (int, error) {
-	w.total += len(p)
-	if w.failure != nil {
-		return 0, w.failure
+func (prefix *capturePrefix) Write(p []byte) (int, error) {
+	prefix.total += len(p)
+	if prefix.failure != nil {
+		return 0, prefix.failure
 	}
-	remaining := w.limit - len(w.kept)
-	w.kept = append(w.kept, p[:min(remaining, len(p))]...)
+	remaining := prefix.limit - len(prefix.kept)
+	prefix.kept = append(prefix.kept, p[:min(remaining, len(p))]...)
 	return len(p), nil
 }
 

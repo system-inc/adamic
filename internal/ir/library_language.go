@@ -16,8 +16,8 @@ func (ClosureSelf) Type() Type { return Closure }
 // observations until that built-in's value interface has been implemented.
 type LibraryGlobal struct{ Name string }
 
-func (g LibraryGlobal) Type() Type {
-	if g.Name == "JSON" {
+func (global LibraryGlobal) Type() Type {
+	if global.Name == "JSON" {
 		return Object
 	}
 	return Closure

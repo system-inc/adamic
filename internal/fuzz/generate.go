@@ -73,7 +73,12 @@ func GenerateWithout(seed uint64, without []string) *Program {
 // GenerateFeatures makes the program a seed names with some features left out and some of OptIn
 // put in. The same seed and the same features always make the same program.
 func GenerateFeatures(seed uint64, without []string, with []string) *Program {
-	generator := &generator{random: rand.New(rand.NewPCG(seed, 0x61646d6963)), without: map[string]bool{}, with: map[string]bool{}, seed: seed}
+	generator := &generator{
+		random:  rand.New(rand.NewPCG(seed, 0x61646d6963)),
+		without: map[string]bool{},
+		with:    map[string]bool{},
+		seed:    seed,
+	}
 	for _, feature := range without {
 		generator.without[feature] = true
 	}
@@ -82,15 +87,17 @@ func GenerateFeatures(seed uint64, without []string, with []string) *Program {
 	}
 	// Select the family on a separate stream: adding moves must not perturb
 	// established ordinary seeds into unrelated invalid programs.
-	if generator.allowed("parallel") && generator.allowed("moves") && rand.New(rand.NewPCG(seed, 0x6d6f766573)).IntN(2) == 0 {
+	if generator.allowed("parallel") &&
+		generator.allowed("moves") &&
+		rand.New(rand.NewPCG(seed, 0x6d6f766573)).IntN(2) == 0 {
 		return generator.movesProgram()
 	}
 	return generator.program()
 }
 
 // allowed says whether a feature may be used.
-func (g *generator) allowed(feature string) bool {
-	return !g.without[feature]
+func (generator *generator) allowed(feature string) bool {
+	return !generator.without[feature]
 }
 
 type generator struct {
@@ -145,22 +152,22 @@ type scope struct {
 	parent    *scope
 }
 
-func (g *generator) push() {
-	g.scope = &scope{parent: g.scope}
+func (generator *generator) push() {
+	generator.scope = &scope{parent: generator.scope}
 }
 
-func (g *generator) pop() {
-	g.scope = g.scope.parent
+func (generator *generator) pop() {
+	generator.scope = generator.scope.parent
 }
 
-func (g *generator) declare(name string, t Type, writable bool) {
-	g.scope.variables = append(g.scope.variables, variable{name: name, t: t, writable: writable})
+func (generator *generator) declare(name string, t Type, writable bool) {
+	generator.scope.variables = append(generator.scope.variables, variable{name: name, t: t, writable: writable})
 }
 
 // visible is every variable in scope of a type, innermost last.
-func (g *generator) visible(t Type, writableOnly bool) []variable {
+func (generator *generator) visible(t Type, writableOnly bool) []variable {
 	var found []variable
-	for current := g.scope; current != nil; current = current.parent {
+	for current := generator.scope; current != nil; current = current.parent {
 		for _, candidate := range current.variables {
 			if candidate.t == t && (candidate.writable || !writableOnly) {
 				found = append(found, candidate)
@@ -170,77 +177,87 @@ func (g *generator) visible(t Type, writableOnly bool) []variable {
 	return found
 }
 
-func (g *generator) name(prefix string) string {
-	g.names++
-	return fmt.Sprintf("%s%d", prefix, g.names)
+func (generator *generator) name(prefix string) string {
+	generator.names++
+	return fmt.Sprintf("%s%d", prefix, generator.names)
 }
 
-func (g *generator) chance(numerator, denominator int) bool {
-	return g.random.IntN(denominator) < numerator
+func (generator *generator) chance(numerator, denominator int) bool {
+	return generator.random.IntN(denominator) < numerator
 }
 
-func (g *generator) pick(options ...string) string {
-	return options[g.random.IntN(len(options))]
+func (generator *generator) pick(options ...string) string {
+	return options[generator.random.IntN(len(options))]
 }
 
 // The program's fixed shape: a holder object and a class instance with fields to write, global
 // variables of every type, a closure over a captured let, and a closure factory. Functions with side
 // effects follow, then the main statements, then every global printed.
-func (g *generator) program() *Program {
+func (generator *generator) program() *Program {
 	program := &Program{}
 	add := func(statement *Statement) {
 		program.Block.Statements = append(program.Block.Statements, statement)
 	}
-	g.push()
+	generator.push()
 	add(statement("interface Holder {\n\tvalue: number;\n\tname: string;\n\tlist: number[];\n}"))
-	g.declare("holder.value", Number, true)
-	g.declare("holder.name", String, true)
-	g.declare("holder.list", NumberArray, false)
+	generator.declare("holder.value", Number, true)
+	generator.declare("holder.name", String, true)
+	generator.declare("holder.list", NumberArray, false)
 
 	// The class's method writes to its own fields, read and written through this.
 	// With inheritance, a child overrides bump and describe and calls super, and a base-typed
 	// binding calls them virtually.
-	for _, classStatement := range g.classStatements() {
+	for _, classStatement := range generator.classStatements() {
 		add(classStatement)
 	}
 
 	// Globals, each initialized without calls: a function may read a global, so none runs before
 	// every global exists.
 	add(statement("const holder: Holder = { value: @e, name: @e, list: [@e, @e] };",
-		g.literal(Number), g.literal(String), g.literal(Number), g.literal(Number)))
-	g.addCounters(add)
-	for range 2 + g.random.IntN(3) {
-		t := []Type{Number, Number, String, String, Boolean, NumberArray, StringArray}[g.random.IntN(7)]
-		add(g.declaration(t, true))
+		generator.literal(Number), generator.literal(String), generator.literal(Number), generator.literal(Number)))
+	generator.addCounters(add)
+	for range 2 + generator.random.IntN(3) {
+		t := []Type{Number, Number, String, String, Boolean, NumberArray, StringArray}[generator.random.IntN(7)]
+		add(generator.declaration(t, true))
 	}
 	add(statement("const table = new Map<string, number>();"))
-	g.declare("table", NumberMap, false)
-	if g.allowed("map-keys") {
+	generator.declare("table", NumberMap, false)
+	if generator.allowed("map-keys") {
 		add(statement("const numbers = new Map<number, number>();"))
 		add(statement("const flags = new Set<number>();"))
-		g.declare("numbers", NumberKeyMap, false)
-		g.declare("flags", NumberSet, false)
+		generator.declare("numbers", NumberKeyMap, false)
+		generator.declare("flags", NumberSet, false)
 	}
-	if g.allowed("regex") {
+	if generator.allowed("regex") {
 		add(statement("const finder = /a/g;"))
 	}
-	if g.allowed("closures-deep") {
+	if generator.allowed("closures-deep") {
 		add(statement("const " + pendingClosures + ": (() => number)[] = [];"))
 	}
-	if g.allowed("optional-chains") {
+	if generator.allowed("optional-chains") {
 		add(statement(linkDeclaration))
-		add(statement("let chain: Link | undefined = { value: @e, label: @e, next: undefined };", g.literal(Number), g.literal(String)))
+		add(statement(
+			"let chain: Link | undefined = { value: @e, label: @e, next: undefined };",
+			generator.literal(Number),
+			generator.literal(String),
+		))
 		// Read through a call, the chain is Link | undefined wherever it's read: the checker narrows a
 		// variable it can see assigned, and stage 0 lowers ?. only where undefined is really possible.
-		add(statement("function head(): Link | undefined @b", &Block{Statements: []*Statement{statement("return chain;")}}))
+		add(statement(
+			"function head(): Link | undefined @b",
+			&Block{Statements: []*Statement{statement("return chain;")}},
+		))
 	}
-	add(statement("let captured = @e;", g.literal(Number)))
-	g.declare("captured", Number, true)
+	add(statement("let captured = @e;", generator.literal(Number)))
+	generator.declare("captured", Number, true)
 	add(statement("const capture = (step: number): number => @b;", &Block{Statements: []*Statement{
 		statement("captured += step;"),
 		statement("return captured;"),
 	}}))
-	g.functions = append(g.functions, function{name: "capture", parameters: []Type{Number}, returns: Number, required: 1})
+	generator.functions = append(
+		generator.functions,
+		function{name: "capture", parameters: []Type{Number}, returns: Number, required: 1},
+	)
 	add(statement("function makeTally(start: number): (step: number) => number @b", &Block{Statements: []*Statement{
 		statement("let total = start;"),
 		statement("return (step) => @b;", &Block{Statements: []*Statement{
@@ -248,15 +265,18 @@ func (g *generator) program() *Program {
 			statement("return total;"),
 		}}),
 	}}))
-	tally := g.name("tally")
-	add(statement("const "+tally+" = makeTally(@e);", g.literal(Number)))
-	g.functions = append(g.functions, function{name: tally, parameters: []Type{Number}, returns: Number, required: 1})
+	tally := generator.name("tally")
+	add(statement("const "+tally+" = makeTally(@e);", generator.literal(Number)))
+	generator.functions = append(
+		generator.functions,
+		function{name: tally, parameters: []Type{Number}, returns: Number, required: 1},
+	)
 
-	for range 2 + g.random.IntN(4) {
-		add(g.function())
+	for range 2 + generator.random.IntN(4) {
+		add(generator.function())
 	}
-	if g.allowed("undefined-numbers") {
-		for _, part := range g.undefinedNumbersProgram() {
+	if generator.allowed("undefined-numbers") {
+		for _, part := range generator.undefinedNumbersProgram() {
 			add(part)
 		}
 	}
@@ -265,16 +285,16 @@ func (g *generator) program() *Program {
 	// but run the scenes first: a share probe that overflows would otherwise be the crash the run
 	// reports, and the scene past it would never be what shrinks.
 	var shareDeclaration, shareCall *Statement
-	if g.allowed("shared-slices") {
-		shareDeclaration, shareCall = g.sharedSliceProbe()
+	if generator.allowed("shared-slices") {
+		shareDeclaration, shareCall = generator.sharedSliceProbe()
 	}
-	if g.allowed("overrides") {
-		for _, part := range g.overridesProgram() {
+	if generator.allowed("overrides") {
+		for _, part := range generator.overridesProgram() {
 			add(part)
 		}
 	}
-	if g.allowed("ownership") {
-		for _, part := range g.ownershipProgram() {
+	if generator.allowed("ownership") {
+		for _, part := range generator.ownershipProgram() {
 			add(part)
 		}
 	}
@@ -285,7 +305,7 @@ func (g *generator) program() *Program {
 
 	// Parallel work runs before the random statements, so a later timeout still executed it, and a
 	// refusal is the only parallelMap in the file (preflight reports that one).
-	if section, refusal := g.parallelSection(); len(section) > 0 {
+	if section, refusal := generator.parallelSection(); len(section) > 0 {
 		program.Refusal = refusal
 		if refusal != "" {
 			add(statement("// parallel-refuse: " + refusal))
@@ -293,27 +313,30 @@ func (g *generator) program() *Program {
 		for _, part := range section {
 			add(part)
 		}
-		program.Block.Statements = append([]*Statement{statement("import { parallelMap } from 'adamic';")}, program.Block.Statements...)
+		program.Block.Statements = append(
+			[]*Statement{statement("import { parallelMap } from 'adamic';")},
+			program.Block.Statements...,
+		)
 	}
 
-	for range 6 + g.random.IntN(14) {
-		add(g.statement())
+	for range 6 + generator.random.IntN(14) {
+		add(generator.statement())
 	}
 
 	// Every global, printed last, so a write that went wrong shows even if nothing printed it.
 	var everything []*Expression
-	for current := g.scope; current != nil; current = current.parent {
+	for current := generator.scope; current != nil; current = current.parent {
 		for _, global := range current.variables {
-			everything = append(everything, g.show(text(global.t, global.name)))
+			everything = append(everything, generator.show(text(global.t, global.name)))
 		}
 	}
 	for _, shown := range everything {
 		add(statement("console.log(@e);", shown))
 	}
-	if g.allowed("closures-deep") {
-		add(statement("console.log(`${"+pendingClosures+".length} ${@e}`);", g.runPending()))
+	if generator.allowed("closures-deep") {
+		add(statement("console.log(`${"+pendingClosures+".length} ${@e}`);", generator.runPending()))
 	}
-	if g.allowed("optional-chains") {
+	if generator.allowed("optional-chains") {
 		add(statement("@b", &Block{Statements: []*Statement{
 			statement("let walk: Link | undefined = chain;"),
 			statement("let steps = 0;"),
@@ -324,19 +347,23 @@ func (g *generator) program() *Program {
 			}}),
 		}}))
 	}
-	if g.allowed("inheritance") {
-		add(statement("console.log(`${asBase.bump(1)} ${counter.bump(1)} ${plainCounter.bump(1)} ${counter.describe()} ${asBase.describe()} ${counter instanceof BaseCounter} ${counter instanceof ChildCounter} ${plainCounter instanceof ChildCounter}`);"))
+	if generator.allowed("inheritance") {
+		add(statement(
+			"console.log(`${asBase.bump(1)} ${counter.bump(1)} ${plainCounter.bump(1)} ${counter.describe()} ${asBase.describe()} ${counter instanceof BaseCounter} ${counter instanceof ChildCounter} ${plainCounter instanceof ChildCounter}`);",
+		))
 	}
-	if g.allowed("map-keys") {
+	if generator.allowed("map-keys") {
 		add(statement("for (const [key, value] of numbers) @b", &Block{Statements: []*Statement{
 			statement("console.log(`${key !== key} ${1 / key}=${value}`);"),
 		}}))
 		add(statement("for (const key of flags) @b", &Block{Statements: []*Statement{
 			statement("console.log(`${key !== key} ${1 / key}`);"),
 		}}))
-		add(statement("console.log(`${numbers.has(NaN)} ${numbers.get(NaN) ?? -1} ${numbers.get(-0) ?? -1} ${numbers.get(0) ?? -1} ${flags.has(NaN)} ${flags.has(-0)} ${flags.has(0)} ${flags.size}`);"))
+		add(statement(
+			"console.log(`${numbers.has(NaN)} ${numbers.get(NaN) ?? -1} ${numbers.get(-0) ?? -1} ${numbers.get(0) ?? -1} ${flags.has(NaN)} ${flags.has(-0)} ${flags.has(0)} ${flags.size}`);",
+		))
 	}
-	if g.allowed("map-iteration") {
+	if generator.allowed("map-iteration") {
 		add(statement("for (const [key, value] of table) @b", &Block{Statements: []*Statement{
 			statement("console.log(`${key}=${value}`);"),
 		}}))
@@ -350,7 +377,7 @@ func (g *generator) program() *Program {
 }
 
 // show makes a string of any value, for console.log.
-func (g *generator) show(value *Expression) *Expression {
+func (generator *generator) show(value *Expression) *Expression {
 	switch value.Type {
 	case String:
 		return value
@@ -363,230 +390,258 @@ func (g *generator) show(value *Expression) *Expression {
 }
 
 // declaration declares a variable of a type, initialized without calls when it's a global.
-func (g *generator) declaration(t Type, global bool) *Statement {
-	name := g.name(map[Type]string{Number: "number", String: "text", Boolean: "flag", NumberArray: "numbers", StringArray: "texts"}[t])
+func (generator *generator) declaration(t Type, global bool) *Statement {
+	name := generator.name(map[Type]string{
+		Number:      "number",
+		String:      "text",
+		Boolean:     "flag",
+		NumberArray: "numbers",
+		StringArray: "texts",
+	}[t])
 	var initial *Expression
 	if global {
-		initial = g.pure(t)
+		initial = generator.pure(t)
 	} else {
-		initial = g.expression(t, 2)
+		initial = generator.expression(t, 2)
 	}
 	if t == String {
-		initial = g.bounded(initial)
+		initial = generator.bounded(initial)
 	}
 	keyword := "let"
 	if t == NumberArray || t == StringArray {
 		keyword = "const"
 	}
 	declared := statement(keyword+" "+name+": "+string(t)+" = @e;", initial)
-	g.declare(name, t, keyword == "let")
+	generator.declare(name, t, keyword == "let")
 	return declared
 }
 
 // pure is an expression without calls, for a global's initializer.
-func (g *generator) pure(t Type) *Expression {
+func (generator *generator) pure(t Type) *Expression {
 	switch t {
 	case NumberArray:
-		return compose(NumberArray, "[@e, @e, @e]", g.literal(Number), g.literal(Number), g.literal(Number))
+		return compose(
+			NumberArray,
+			"[@e, @e, @e]",
+			generator.literal(Number),
+			generator.literal(Number),
+			generator.literal(Number),
+		)
 	case StringArray:
-		return compose(StringArray, "[@e, @e]", g.literal(String), g.literal(String))
+		return compose(StringArray, "[@e, @e]", generator.literal(String), generator.literal(String))
 	}
-	return g.literal(t)
+	return generator.literal(t)
 }
 
 // function declares a function with side effects: it writes to globals and fields, then returns a
 // value built from its parameters and what it wrote.
-func (g *generator) function() *Statement {
-	name := g.name("effect")
-	returns := []Type{Number, Number, String, Boolean}[g.random.IntN(4)]
+func (generator *generator) function() *Statement {
+	name := generator.name("effect")
+	returns := []Type{Number, Number, String, Boolean}[generator.random.IntN(4)]
 	var parameters []Type
 	var declared []string
-	g.push()
-	g.returns = returns
-	for range g.random.IntN(3) {
-		t := []Type{Number, String, NumberArray}[g.random.IntN(3)]
-		parameter := g.name("parameter")
+	generator.push()
+	generator.returns = returns
+	for range generator.random.IntN(3) {
+		t := []Type{Number, String, NumberArray}[generator.random.IntN(3)]
+		parameter := generator.name("parameter")
 		parameters = append(parameters, t)
 		declared = append(declared, parameter+": "+string(t))
-		g.declare(parameter, t, false)
+		generator.declare(parameter, t, false)
 	}
 	required := len(parameters)
-	if g.allowed("defaults") {
-		for range g.random.IntN(3) {
-			written, t := g.defaultParameter()
+	if generator.allowed("defaults") {
+		for range generator.random.IntN(3) {
+			written, t := generator.defaultParameter()
 			parameters = append(parameters, t)
 			declared = append(declared, written)
 		}
 	}
 	// A function's body nests one loop less than the top level: functions call each other from inside
 	// loops, and the work multiplies.
-	g.loopDepth++
+	generator.loopDepth++
 	body := &Block{}
-	for range 1 + g.random.IntN(4) {
-		body.Statements = append(body.Statements, g.statement())
+	for range 1 + generator.random.IntN(4) {
+		body.Statements = append(body.Statements, generator.statement())
 	}
-	body.Statements = append(body.Statements, g.returnStatement())
-	g.loopDepth--
-	g.returns = ""
-	g.pop()
-	g.functions = append(g.functions, function{name: name, parameters: parameters, returns: returns, required: required})
+	body.Statements = append(body.Statements, generator.returnStatement())
+	generator.loopDepth--
+	generator.returns = ""
+	generator.pop()
+	generator.functions = append(
+		generator.functions,
+		function{name: name, parameters: parameters, returns: returns, required: required},
+	)
 	return statement("function "+name+"("+strings.Join(declared, ", ")+"): "+string(returns)+" @b", body)
 }
 
 // statement is one random statement.
-func (g *generator) statement() *Statement {
-	g.statements++
-	nested := g.loopDepth < 2 && g.statements < 60
-	if g.chance(1, 4) {
-		if widened := g.widenedStatement(nested); widened != nil {
+func (generator *generator) statement() *Statement {
+	generator.statements++
+	nested := generator.loopDepth < 2 && generator.statements < 60
+	if generator.chance(1, 4) {
+		if widened := generator.widenedStatement(nested); widened != nil {
 			return widened
 		}
 	}
-	if g.allowed("regex") && g.chance(1, 8) {
-		return g.regexStatement()
+	if generator.allowed("regex") && generator.chance(1, 8) {
+		return generator.regexStatement()
 	}
-	switch roll := g.random.IntN(20); {
+	switch roll := generator.random.IntN(20); {
 	case roll < 6:
-		return g.mutation()
+		return generator.mutation()
 	case roll < 9:
-		return statement("console.log(@e);", g.expression(String, 3))
+		return statement("console.log(@e);", generator.expression(String, 3))
 	case roll < 11:
-		return g.declaration([]Type{Number, String, Boolean, NumberArray}[g.random.IntN(4)], false)
+		return generator.declaration([]Type{Number, String, Boolean, NumberArray}[generator.random.IntN(4)], false)
 	case roll < 13 && nested:
-		return statement("if (@e) @b else @b", g.condition(), g.block(1+g.random.IntN(2)), g.block(g.random.IntN(2)))
+		return statement(
+			"if (@e) @b else @b",
+			generator.condition(),
+			generator.block(1+generator.random.IntN(2)),
+			generator.block(generator.random.IntN(2)),
+		)
 	case roll < 15 && nested:
-		index := g.name("index")
-		g.loopDepth++
-		g.push()
-		g.declare(index, Number, false)
-		body := g.block(1 + g.random.IntN(3))
-		g.pop()
-		g.loopDepth--
-		return statement(fmt.Sprintf("for (let %s = 0; %s < %d; %s++) @b", index, index, 1+g.random.IntN(4), index), body)
+		index := generator.name("index")
+		generator.loopDepth++
+		generator.push()
+		generator.declare(index, Number, false)
+		body := generator.block(1 + generator.random.IntN(3))
+		generator.pop()
+		generator.loopDepth--
+		return statement(
+			fmt.Sprintf("for (let %s = 0; %s < %d; %s++) @b", index, index, 1+generator.random.IntN(4), index),
+			body,
+		)
 	case roll < 17 && nested:
 		// A for...of over an array the body may push to: it ends, since every push stops at a length.
-		arrays := append(g.visible(NumberArray, false), g.visible(StringArray, false)...)
+		arrays := append(generator.visible(NumberArray, false), generator.visible(StringArray, false)...)
 		if len(arrays) == 0 {
-			return g.mutation()
+			return generator.mutation()
 		}
-		array := arrays[g.random.IntN(len(arrays))]
-		item := g.name("item")
-		g.loopDepth++
-		g.push()
-		g.declare(item, map[Type]Type{NumberArray: Number, StringArray: String}[array.t], false)
-		body := g.block(1 + g.random.IntN(3))
-		g.pop()
-		g.loopDepth--
+		array := arrays[generator.random.IntN(len(arrays))]
+		item := generator.name("item")
+		generator.loopDepth++
+		generator.push()
+		generator.declare(item, map[Type]Type{NumberArray: Number, StringArray: String}[array.t], false)
+		body := generator.block(1 + generator.random.IntN(3))
+		generator.pop()
+		generator.loopDepth--
 		return statement("for (const "+item+" of "+array.name+") @b", body)
 	case roll < 18 && nested:
 		// A while loop on a counter of its own, in a block of its own so the counter's scope ends with
 		// the loop.
-		counter := g.name("round")
-		g.loopDepth++
-		g.push()
-		g.declare(counter, Number, false)
-		body := g.block(1 + g.random.IntN(2))
-		g.pop()
-		g.loopDepth--
+		counter := generator.name("round")
+		generator.loopDepth++
+		generator.push()
+		generator.declare(counter, Number, false)
+		body := generator.block(1 + generator.random.IntN(2))
+		generator.pop()
+		generator.loopDepth--
 		body.Statements = append([]*Statement{statement(counter + "++;")}, body.Statements...)
 		return statement("@b", &Block{Statements: []*Statement{
 			statement("let " + counter + " = 0;"),
-			statement(fmt.Sprintf("while (%s < %d) @b", counter, 1+g.random.IntN(3)), body),
+			statement(fmt.Sprintf("while (%s < %d) @b", counter, 1+generator.random.IntN(3)), body),
 		}})
-	case roll < 19 && g.returns != "":
+	case roll < 19 && generator.returns != "":
 		// An early return, behind a condition so what follows can still run; from inside a loop too,
 		// which has to let go of what the loop held.
-		return statement("if (@e) @b", g.condition(), &Block{Statements: []*Statement{g.returnStatement()}})
+		return statement(
+			"if (@e) @b",
+			generator.condition(),
+			&Block{Statements: []*Statement{generator.returnStatement()}},
+		)
 	}
-	if call := g.call(Other); call != nil {
+	if call := generator.call(Other); call != nil {
 		return statement("@e;", call)
 	}
-	return g.mutation()
+	return generator.mutation()
 }
 
 // condition is an if's condition, never a literal: the checker treats the branch a literal rules out
 // as unreachable, and narrows strangely inside it.
-func (g *generator) condition() *Expression {
+func (generator *generator) condition() *Expression {
 	for range 4 {
-		if condition := g.expression(Boolean, 2); !isLiteral(condition) {
+		if condition := generator.expression(Boolean, 2); !isLiteral(condition) {
 			return condition
 		}
 	}
-	return compose(Boolean, "(holder.value < @e)", g.literal(Number))
+	return compose(Boolean, "(holder.value < @e)", generator.literal(Number))
 }
 
 // returnStatement returns a value of the type the function being generated returns.
-func (g *generator) returnStatement() *Statement {
-	result := g.expression(g.returns, 2)
-	if g.returns == String {
-		result = g.bounded(result)
+func (generator *generator) returnStatement() *Statement {
+	result := generator.expression(generator.returns, 2)
+	if generator.returns == String {
+		result = generator.bounded(result)
 	}
 	return statement("return @e;", result)
 }
 
-func (g *generator) block(count int) *Block {
-	g.push()
-	defer g.pop()
+func (generator *generator) block(count int) *Block {
+	generator.push()
+	defer generator.pop()
 	block := &Block{}
 	for range count {
-		block.Statements = append(block.Statements, g.statement())
+		block.Statements = append(block.Statements, generator.statement())
 	}
 	return block
 }
 
 // mutation writes something: a variable, a field, an array, the map.
-func (g *generator) mutation() *Statement {
+func (generator *generator) mutation() *Statement {
 	for range 8 {
-		switch g.random.IntN(9) {
+		switch generator.random.IntN(9) {
 		case 0, 1:
-			if targets := g.visible(Number, true); len(targets) > 0 {
-				target := targets[g.random.IntN(len(targets))]
-				operator := g.pick("=", "+=", "-=", "*=", "/=", "%=", "**=", "++", "--")
-				if strings.Contains(target.name, ".") && !g.allowed("field-updates") {
+			if targets := generator.visible(Number, true); len(targets) > 0 {
+				target := targets[generator.random.IntN(len(targets))]
+				operator := generator.pick("=", "+=", "-=", "*=", "/=", "%=", "**=", "++", "--")
+				if strings.Contains(target.name, ".") && !generator.allowed("field-updates") {
 					operator = "="
 				}
 				switch operator {
 				case "++", "--":
-					if g.chance(1, 2) {
+					if generator.chance(1, 2) {
 						return statement(operator + target.name + ";")
 					}
 					return statement(target.name + operator + ";")
 				case "**=":
-					return statement(target.name+" **= @e;", text(Number, g.pick("2", "0.5", "3", "-1")))
+					return statement(target.name+" **= @e;", text(Number, generator.pick("2", "0.5", "3", "-1")))
 				}
-				return statement(target.name+" "+operator+" @e;", g.expression(Number, 2))
+				return statement(target.name+" "+operator+" @e;", generator.expression(Number, 2))
 			}
 		case 2, 3:
-			if targets := g.visible(String, true); len(targets) > 0 {
-				target := targets[g.random.IntN(len(targets))]
-				if g.chance(1, 2) && (!strings.Contains(target.name, ".") || g.allowed("field-updates")) {
+			if targets := generator.visible(String, true); len(targets) > 0 {
+				target := targets[generator.random.IntN(len(targets))]
+				if generator.chance(1, 2) &&
+					(!strings.Contains(target.name, ".") || generator.allowed("field-updates")) {
 					// += with something short, so it grows by little each time.
-					return statement(target.name+" += @e;", g.short())
+					return statement(target.name+" += @e;", generator.short())
 				}
-				return statement(target.name+" = @e;", g.bounded(g.expression(String, 2)))
+				return statement(target.name+" = @e;", generator.bounded(generator.expression(String, 2)))
 			}
 		case 4:
-			if targets := g.visible(Boolean, true); len(targets) > 0 {
-				target := targets[g.random.IntN(len(targets))]
-				return statement(target.name+" = @e;", g.expression(Boolean, 2))
+			if targets := generator.visible(Boolean, true); len(targets) > 0 {
+				target := targets[generator.random.IntN(len(targets))]
+				return statement(target.name+" = @e;", generator.expression(Boolean, 2))
 			}
 		case 5, 6:
-			arrays := append(g.visible(NumberArray, false), g.visible(StringArray, false)...)
+			arrays := append(generator.visible(NumberArray, false), generator.visible(StringArray, false)...)
 			if len(arrays) > 0 {
-				array := arrays[g.random.IntN(len(arrays))]
+				array := arrays[generator.random.IntN(len(arrays))]
 				element := map[Type]Type{NumberArray: Number, StringArray: String}[array.t]
-				if g.allowed("splice") && g.chance(1, 6) {
-					return g.splice(array)
+				if generator.allowed("splice") && generator.chance(1, 6) {
+					return generator.splice(array)
 				}
-				switch g.random.IntN(6) {
+				switch generator.random.IntN(6) {
 				case 0:
 					return statement(array.name + ".pop();")
 				case 1:
-					if g.allowed("array-methods") {
+					if generator.allowed("array-methods") {
 						return statement(array.name + ".reverse();")
 					}
 				case 2:
-					if !g.allowed("sort-callback") {
+					if !generator.allowed("sort-callback") {
 						break
 					}
 					if element == Number {
@@ -594,97 +649,147 @@ func (g *generator) mutation() *Statement {
 					}
 					return statement(array.name + ".sort((left, right) => (left < right ? -1 : left > right ? 1 : 0));")
 				case 3:
-					if !g.allowed("array-write") {
+					if !generator.allowed("array-write") {
 						break
 					}
 					// A write at an index that exists; past the end is an inserted check, not a finding.
-					index := g.expression(Number, 1)
+					index := generator.expression(Number, 1)
 					return statement(fmt.Sprintf("if (%s.length > 0) @b", array.name), &Block{Statements: []*Statement{
-						statement(array.name+"[Math.abs(Math.trunc(@e)) % "+array.name+".length] = @e;", index, g.element(element)),
+						statement(
+							array.name+"[Math.abs(Math.trunc(@e)) % "+array.name+".length] = @e;",
+							index,
+							generator.element(element),
+						),
 					}})
 				}
 				return statement(fmt.Sprintf("if (%s.length < 24) @b", array.name), &Block{Statements: []*Statement{
-					statement(array.name+".push(@e);", g.element(element)),
+					statement(array.name+".push(@e);", generator.element(element)),
 				}})
 			}
 		case 7:
-			if g.allowed("map-keys") && g.chance(1, 2) {
-				return g.numberKeyMutation()
+			if generator.allowed("map-keys") && generator.chance(1, 2) {
+				return generator.numberKeyMutation()
 			}
-			if g.allowed("optional-chains") && g.chance(1, 3) {
-				return g.chainWrite()
+			if generator.allowed("optional-chains") && generator.chance(1, 3) {
+				return generator.chainWrite()
 			}
-			if g.chance(1, 3) {
-				return statement("table.delete(@e);", g.key())
+			if generator.chance(1, 3) {
+				return statement("table.delete(@e);", generator.key())
 			}
-			return statement("table.set(@e, @e);", g.key(), g.expression(Number, 2))
+			return statement("table.set(@e, @e);", generator.key(), generator.expression(Number, 2))
 		case 8:
-			if !g.silent {
-				return statement("console.log(@e);", g.expression(String, 2))
+			if !generator.silent {
+				return statement("console.log(@e);", generator.expression(String, 2))
 			}
 		}
 	}
-	return statement("holder.value += @e;", g.expression(Number, 2))
+	return statement("holder.value += @e;", generator.expression(Number, 2))
 }
 
 // element is a value to put in an array: strings are kept short so an array of them stays small.
-func (g *generator) element(t Type) *Expression {
+func (generator *generator) element(t Type) *Expression {
 	if t == String {
-		return g.short()
+		return generator.short()
 	}
-	return g.expression(Number, 2)
+	return generator.expression(Number, 2)
 }
 
 // key is a map key from a small set, built at runtime, so keys collide and get replaced.
-func (g *generator) key() *Expression {
-	if g.chance(1, 2) {
-		return text(String, g.pick("'a'", "'b'", "'c'"))
+func (generator *generator) key() *Expression {
+	if generator.chance(1, 2) {
+		return text(String, generator.pick("'a'", "'b'", "'c'"))
 	}
-	return compose(String, "`k${@e}`", compose(Number, "Math.abs(Math.trunc(@e)) % 4", g.expression(Number, 1)))
+	return compose(String, "`k${@e}`", compose(Number, "Math.abs(Math.trunc(@e)) % 4", generator.expression(Number, 1)))
 }
 
 // bounded cuts a string to a length, so writing a string back to where it came from can't double it
 // without end.
-func (g *generator) bounded(value *Expression) *Expression {
+func (generator *generator) bounded(value *Expression) *Expression {
 	return compose(String, "(@e).slice(0, 40)", value)
 }
 
 // short is a short string: a literal, or a number in a template. Appends use it so a loop that
 // writes a string back grows by a little each time, not by another copy of a long string.
-func (g *generator) short() *Expression {
-	if g.chance(1, 2) {
-		return g.briefString()
+func (generator *generator) short() *Expression {
+	if generator.chance(1, 2) {
+		return generator.briefString()
 	}
-	return compose(String, "`${@e}`", g.expression(Number, 1))
+	return compose(String, "`${@e}`", generator.expression(Number, 1))
 }
 
 // briefString is a string literal of a few characters, the ones comparisons and array elements use.
-func (g *generator) briefString() *Expression {
-	if g.allowed("surrogates") && g.chance(1, 4) {
-		return text(String, g.pick("'\\uD83C'", "'\\uDF0D'", "'a\\uD83C'", "'\\uDF0Db'", "'🌍b'", "'ß'", "'İ'", "'ǅ'", "'ﬀ'"))
+func (generator *generator) briefString() *Expression {
+	if generator.allowed("surrogates") && generator.chance(1, 4) {
+		return text(
+			String,
+			generator.pick("'\\uD83C'", "'\\uDF0D'", "'a\\uD83C'", "'\\uDF0Db'", "'🌍b'", "'ß'", "'İ'", "'ǅ'", "'ﬀ'"),
+		)
 	}
-	return text(String, g.pick("''", "'a'", "'b'", "'xy'", "'hello'", "'a,b'", "' pad '", "'é'", "'世界'", "'🌍'", "'10'", "'3.5'"))
+	return text(String, generator.pick(
+		"''",
+		"'a'",
+		"'b'",
+		"'xy'",
+		"'hello'",
+		"'a,b'",
+		"' pad '",
+		"'é'",
+		"'世界'",
+		"'🌍'",
+		"'10'",
+		"'3.5'",
+	))
 }
 
 // literal is a constant of a type.
-func (g *generator) literal(t Type) *Expression {
+func (generator *generator) literal(t Type) *Expression {
 	switch t {
 	case Number:
-		return text(Number, g.pick("0", "1", "2", "3", "5", "7", "10", "100", "-1", "-3", "0.5", "0.1", "1.5", "2.25", "255", "4294967295", "1e21", "-0.0001", "123.456"))
+		return text(Number, generator.pick(
+			"0",
+			"1",
+			"2",
+			"3",
+			"5",
+			"7",
+			"10",
+			"100",
+			"-1",
+			"-3",
+			"0.5",
+			"0.1",
+			"1.5",
+			"2.25",
+			"255",
+			"4294967295",
+			"1e21",
+			"-0.0001",
+			"123.456",
+		))
 	case String:
-		if g.allowed("surrogates") && g.chance(1, 4) {
-			return text(String, g.pick("'\\uD83C'", "'\\uDF0D'", "'a\\uD83C'", "'\\uDF0Db'", "'🌍b'", "'ß'", "'İ'", "'ǅ'", "'ﬀ'"))
+		if generator.allowed("surrogates") && generator.chance(1, 4) {
+			return text(String, generator.pick(
+				"'\\uD83C'",
+				"'\\uDF0D'",
+				"'a\\uD83C'",
+				"'\\uDF0Db'",
+				"'🌍b'",
+				"'ß'",
+				"'İ'",
+				"'ǅ'",
+				"'ﬀ'",
+			))
 		}
-		if g.allowed("shared-slices") && g.chance(1, 5) {
-			return g.longConstant()
+		if generator.allowed("shared-slices") && generator.chance(1, 5) {
+			return generator.longConstant()
 		}
-		return g.briefString()
+		return generator.briefString()
 	case Boolean:
-		return text(Boolean, g.pick("true", "false"))
+		return text(Boolean, generator.pick("true", "false"))
 	case NumberArray:
-		return compose(NumberArray, "[@e, @e]", g.literal(Number), g.literal(Number))
+		return compose(NumberArray, "[@e, @e]", generator.literal(Number), generator.literal(Number))
 	case StringArray:
-		return compose(StringArray, "[@e]", g.literal(String))
+		return compose(StringArray, "[@e]", generator.literal(String))
 	}
 	panic("fuzz: no literal of type " + string(t))
 }
@@ -699,13 +804,17 @@ func isLiteral(e *Expression) bool {
 	if value == "" {
 		return false
 	}
-	return strings.HasPrefix(value, "'") || strings.HasPrefix(value, "-") || (value[0] >= '0' && value[0] <= '9') || value == "true" || value == "false"
+	return strings.HasPrefix(value, "'") ||
+		strings.HasPrefix(value, "-") ||
+		(value[0] >= '0' && value[0] <= '9') ||
+		value == "true" ||
+		value == "false"
 }
 
 // call calls a function with side effects that returns t, or any function when t is Other.
-func (g *generator) call(t Type) *Expression {
+func (generator *generator) call(t Type) *Expression {
 	var candidates []function
-	for _, candidate := range g.functions {
+	for _, candidate := range generator.functions {
 		if t == Other || candidate.returns == t {
 			candidates = append(candidates, candidate)
 		}
@@ -713,315 +822,498 @@ func (g *generator) call(t Type) *Expression {
 	if len(candidates) == 0 {
 		return nil
 	}
-	chosen := candidates[g.random.IntN(len(candidates))]
+	chosen := candidates[generator.random.IntN(len(candidates))]
 	format := chosen.name + "("
 	var arguments []*Expression
 	passed := chosen.parameters
 	if chosen.required < len(passed) {
-		passed = passed[:chosen.required+g.random.IntN(len(passed)-chosen.required+1)]
+		passed = passed[:chosen.required+generator.random.IntN(len(passed)-chosen.required+1)]
 	}
 	for index, parameter := range passed {
 		if index > 0 {
 			format += ", "
 		}
 		format += "@e"
-		arguments = append(arguments, g.expression(parameter, 1))
+		arguments = append(arguments, generator.expression(parameter, 1))
 	}
 	format += ")"
 	return compose(chosen.returns, format, arguments...)
 }
 
 // expression is a random expression of a type, at most depth deep.
-func (g *generator) expression(t Type, depth int) *Expression {
-	if depth <= 0 || g.chance(1, 5) {
-		return g.leaf(t)
+func (generator *generator) expression(t Type, depth int) *Expression {
+	if depth <= 0 || generator.chance(1, 5) {
+		return generator.leaf(t)
 	}
 	// A call with side effects, in the middle of whatever is being built.
-	if g.chance(1, 4) {
-		if call := g.call(t); call != nil {
+	if generator.chance(1, 4) {
+		if call := generator.call(t); call != nil {
 			return call
 		}
 	}
-	if g.chance(1, 6) {
-		if widened := g.widenedExpression(t, depth); widened != nil {
+	if generator.chance(1, 6) {
+		if widened := generator.widenedExpression(t, depth); widened != nil {
 			return widened
 		}
 	}
 	switch t {
 	case Number:
-		return g.number(depth)
+		return generator.number(depth)
 	case String:
-		return g.string(depth)
+		return generator.string(depth)
 	case Boolean:
-		return g.boolean(depth)
+		return generator.boolean(depth)
 	case NumberArray:
-		return g.numberArray(depth)
+		return generator.numberArray(depth)
 	case StringArray:
-		return g.stringArray(depth)
+		return generator.stringArray(depth)
 	}
 	panic("fuzz: no expression of type " + string(t))
 }
 
 // leaf is a variable or a field of a type when one is in scope, and a literal otherwise.
-func (g *generator) leaf(t Type) *Expression {
-	if candidates := g.visible(t, false); len(candidates) > 0 && g.chance(3, 4) {
-		return text(t, candidates[g.random.IntN(len(candidates))].name)
+func (generator *generator) leaf(t Type) *Expression {
+	if candidates := generator.visible(t, false); len(candidates) > 0 && generator.chance(3, 4) {
+		return text(t, candidates[generator.random.IntN(len(candidates))].name)
 	}
-	return g.literal(t)
+	return generator.literal(t)
 }
 
-func (g *generator) number(depth int) *Expression {
+func (generator *generator) number(depth int) *Expression {
 	next := depth - 1
-	switch g.random.IntN(30) {
+	switch generator.random.IntN(30) {
 	case 0, 1, 2, 3:
-		operator := g.pick("+", "-", "*", "/", "%")
-		return compose(Number, "(@e "+operator+" @e)", g.expression(Number, next), g.expression(Number, next))
+		operator := generator.pick("+", "-", "*", "/", "%")
+		return compose(
+			Number,
+			"(@e "+operator+" @e)",
+			generator.expression(Number, next),
+			generator.expression(Number, next),
+		)
 	case 4:
-		return compose(Number, "(-(@e))", g.expression(Number, next))
+		return compose(Number, "(-(@e))", generator.expression(Number, next))
 	case 5:
-		return compose(Number, "Math.pow(@e, @e)", g.expression(Number, next), g.expression(Number, next))
+		return compose(
+			Number,
+			"Math.pow(@e, @e)",
+			generator.expression(Number, next),
+			generator.expression(Number, next),
+		)
 	case 6:
-		return compose(Number, "@e.length", g.expression(String, next))
+		return compose(Number, "@e.length", generator.expression(String, next))
 	case 7:
-		return compose(Number, "@e.length", g.expression(NumberArray, next))
+		return compose(Number, "@e.length", generator.expression(NumberArray, next))
 	case 8:
-		if !g.allowed("array-index") {
-			return g.leaf(Number)
+		if !generator.allowed("array-index") {
+			return generator.leaf(Number)
 		}
-		return compose(Number, "(@e[@e] ?? @e)", g.expression(NumberArray, next), g.expression(Number, next), g.literal(Number))
+		return compose(
+			Number,
+			"(@e[@e] ?? @e)",
+			generator.expression(NumberArray, next),
+			generator.expression(Number, next),
+			generator.literal(Number),
+		)
 	case 9:
-		return compose(Number, "(table.get(@e) ?? @e)", g.key(), g.literal(Number))
+		return compose(Number, "(table.get(@e) ?? @e)", generator.key(), generator.literal(Number))
 	case 10:
 		return text(Number, "table.size")
 	case 11:
-		return compose(Number, "@e.indexOf(@e)", g.expression(String, next), g.expression(String, next))
+		return compose(Number, "@e.indexOf(@e)", generator.expression(String, next), generator.expression(String, next))
 	case 12:
-		return compose(Number, "@e.charCodeAt(@e)", g.expression(String, next), g.expression(Number, next))
+		return compose(
+			Number,
+			"@e.charCodeAt(@e)",
+			generator.expression(String, next),
+			generator.expression(Number, next),
+		)
 	case 13:
-		function := g.pick("Math.floor", "Math.ceil", "Math.round", "Math.trunc", "Math.abs", "Math.sign", "Math.sqrt")
-		return compose(Number, function+"(@e)", g.expression(Number, next))
+		function := generator.pick(
+			"Math.floor",
+			"Math.ceil",
+			"Math.round",
+			"Math.trunc",
+			"Math.abs",
+			"Math.sign",
+			"Math.sqrt",
+		)
+		return compose(Number, function+"(@e)", generator.expression(Number, next))
 	case 14:
-		return compose(Number, g.pick("Math.max", "Math.min")+"(@e, @e)", g.expression(Number, next), g.expression(Number, next))
+		return compose(
+			Number,
+			generator.pick("Math.max", "Math.min")+"(@e, @e)",
+			generator.expression(Number, next),
+			generator.expression(Number, next),
+		)
 	case 15:
-		return compose(Number, "(@e ? @e : @e)", g.expression(Boolean, next), g.expression(Number, next), g.expression(Number, next))
+		return compose(
+			Number,
+			"(@e ? @e : @e)",
+			generator.expression(Boolean, next),
+			generator.expression(Number, next),
+			generator.expression(Number, next),
+		)
 	case 16:
-		if !g.allowed("array-methods") {
-			return g.leaf(Number)
+		if !generator.allowed("array-methods") {
+			return generator.leaf(Number)
 		}
-		parameter := g.name("sum")
-		item := g.name("item")
-		g.push()
-		g.declare(parameter, Number, false)
-		g.declare(item, Number, false)
-		body := g.expression(Number, next)
-		g.pop()
-		return compose(Number, "@e.reduce(("+parameter+", "+item+") => @e, @e)", g.expression(NumberArray, next), body, g.literal(Number))
+		parameter := generator.name("sum")
+		item := generator.name("item")
+		generator.push()
+		generator.declare(parameter, Number, false)
+		generator.declare(item, Number, false)
+		body := generator.expression(Number, next)
+		generator.pop()
+		return compose(
+			Number,
+			"@e.reduce(("+parameter+", "+item+") => @e, @e)",
+			generator.expression(NumberArray, next),
+			body,
+			generator.literal(Number),
+		)
 	case 17:
-		if !g.allowed("array-search") {
-			return g.leaf(Number)
+		if !generator.allowed("array-search") {
+			return generator.leaf(Number)
 		}
-		return compose(Number, "@e.indexOf(@e)", g.expression(NumberArray, next), g.expression(Number, next))
+		return compose(
+			Number,
+			"@e.indexOf(@e)",
+			generator.expression(NumberArray, next),
+			generator.expression(Number, next),
+		)
 	case 18:
-		if !g.allowed("array-methods") {
-			return g.leaf(Number)
+		if !generator.allowed("array-methods") {
+			return generator.leaf(Number)
 		}
 		// The test says it returns boolean: inside if (flag), a flag the checker knows is false is never,
 		// and an arrow returning it would return never, which stage 0 doesn't lower.
-		item := g.name("item")
-		g.push()
-		g.declare(item, Number, false)
-		test := g.expression(Boolean, next)
-		g.pop()
-		if g.chance(1, 2) {
-			return compose(Number, "@e.findIndex(("+item+"): boolean => @e)", g.expression(NumberArray, next), test)
+		item := generator.name("item")
+		generator.push()
+		generator.declare(item, Number, false)
+		test := generator.expression(Boolean, next)
+		generator.pop()
+		if generator.chance(1, 2) {
+			return compose(
+				Number,
+				"@e.findIndex(("+item+"): boolean => @e)",
+				generator.expression(NumberArray, next),
+				test,
+			)
 		}
-		return compose(Number, "(@e.find(("+item+"): boolean => @e) ?? @e)", g.expression(NumberArray, next), test, g.literal(Number))
+		return compose(
+			Number,
+			"(@e.find(("+item+"): boolean => @e) ?? @e)",
+			generator.expression(NumberArray, next),
+			test,
+			generator.literal(Number),
+		)
 	case 19:
-		if !g.allowed("array-index") {
-			return g.leaf(Number)
+		if !generator.allowed("array-index") {
+			return generator.leaf(Number)
 		}
-		return compose(Number, "(@e.at(@e) ?? @e)", g.expression(NumberArray, next), g.expression(Number, next), g.literal(Number))
+		return compose(
+			Number,
+			"(@e.at(@e) ?? @e)",
+			generator.expression(NumberArray, next),
+			generator.expression(Number, next),
+			generator.literal(Number),
+		)
 	case 20:
-		if !g.allowed("number-functions") {
-			return g.leaf(Number)
+		if !generator.allowed("number-functions") {
+			return generator.leaf(Number)
 		}
-		return compose(Number, "Number.parseInt(@e, 10)", g.expression(String, next))
+		return compose(Number, "Number.parseInt(@e, 10)", generator.expression(String, next))
 	case 21:
-		if !g.allowed("number-functions") {
-			return g.leaf(Number)
+		if !generator.allowed("number-functions") {
+			return generator.leaf(Number)
 		}
-		return compose(Number, "Number.parseFloat(@e)", g.expression(String, next))
+		return compose(Number, "Number.parseFloat(@e)", generator.expression(String, next))
 	case 22:
-		return compose(Number, "((@e) ** @e)", g.expression(Number, next), text(Number, g.pick("2", "3", "0.5", "-1")))
+		return compose(
+			Number,
+			"((@e) ** @e)",
+			generator.expression(Number, next),
+			text(Number, generator.pick("2", "3", "0.5", "-1")),
+		)
 	case 23:
-		return compose(Number, "(@e.codePointAt(@e) ?? @e)", g.expression(String, next), g.expression(Number, next), g.literal(Number))
+		return compose(
+			Number,
+			"(@e.codePointAt(@e) ?? @e)",
+			generator.expression(String, next),
+			generator.expression(Number, next),
+			generator.literal(Number),
+		)
 	case 24:
-		if !g.allowed("string-search") {
-			return g.leaf(Number)
+		if !generator.allowed("string-search") {
+			return generator.leaf(Number)
 		}
-		return compose(Number, "@e.lastIndexOf(@e)", g.expression(String, next), g.expression(String, next))
+		return compose(
+			Number,
+			"@e.lastIndexOf(@e)",
+			generator.expression(String, next),
+			generator.expression(String, next),
+		)
 	case 25, 26:
-		if !g.allowed("bitwise") {
-			return g.leaf(Number)
+		if !generator.allowed("bitwise") {
+			return generator.leaf(Number)
 		}
-		return compose(Number, "(@e "+g.pick("&", "|", "^", "<<", ">>", ">>>")+" @e)", g.expression(Number, next), g.expression(Number, next))
+		return compose(
+			Number,
+			"(@e "+generator.pick("&", "|", "^", "<<", ">>", ">>>")+" @e)",
+			generator.expression(Number, next),
+			generator.expression(Number, next),
+		)
 	case 27:
-		if !g.allowed("bitwise") {
-			return g.leaf(Number)
+		if !generator.allowed("bitwise") {
+			return generator.leaf(Number)
 		}
-		return compose(Number, "(~(@e))", g.expression(Number, next))
+		return compose(Number, "(~(@e))", generator.expression(Number, next))
 	case 28:
-		if !g.allowed("map-keys") {
-			return g.leaf(Number)
+		if !generator.allowed("map-keys") {
+			return generator.leaf(Number)
 		}
-		return compose(Number, "(numbers.get(@e) ?? @e)", g.numberKey(), g.literal(Number))
+		return compose(Number, "(numbers.get(@e) ?? @e)", generator.numberKey(), generator.literal(Number))
 	case 29:
-		if !g.allowed("regex") {
-			return g.leaf(Number)
+		if !generator.allowed("regex") {
+			return generator.leaf(Number)
 		}
-		return compose(Number, "@e.search("+g.pick("/a/", "/a/i", "/\\d/")+")", g.expression(String, next))
+		return compose(
+			Number,
+			"@e.search("+generator.pick("/a/", "/a/i", "/\\d/")+")",
+			generator.expression(String, next),
+		)
 	}
-	return g.leaf(Number)
+	return generator.leaf(Number)
 }
 
-func (g *generator) string(depth int) *Expression {
+func (generator *generator) string(depth int) *Expression {
 	// Often a long string, or a slice long enough to share the bytes it was cut from. Built from
 	// literals and fixed repeats, not from another long string, so the length stays a few hundred.
-	if g.allowed("shared-slices") && g.chance(2, 5) {
-		if g.chance(1, 3) {
-			return g.sharingSlice()
+	if generator.allowed("shared-slices") && generator.chance(2, 5) {
+		if generator.chance(1, 3) {
+			return generator.sharingSlice()
 		}
-		return g.longString()
+		return generator.longString()
 	}
 	next := depth - 1
-	switch g.random.IntN(22) {
+	switch generator.random.IntN(22) {
 	case 0, 1, 2:
-		return compose(String, "(@e + @e)", g.expression(String, next), g.expression(String, next))
+		return compose(String, "(@e + @e)", generator.expression(String, next), generator.expression(String, next))
 	case 3, 4, 5:
-		return compose(String, "`"+g.pick("", "<", "n=")+"${@e}"+g.pick("", ">", " ")+"`", g.expression(Number, next))
+		return compose(
+			String,
+			"`"+generator.pick("", "<", "n=")+"${@e}"+generator.pick("", ">", " ")+"`",
+			generator.expression(Number, next),
+		)
 	case 6:
-		return compose(String, "`${@e}|${@e}`", g.expression(String, next), g.expression(Boolean, next))
+		return compose(String, "`${@e}|${@e}`", generator.expression(String, next), generator.expression(Boolean, next))
 	case 7:
-		return compose(String, "@e.slice(@e, @e)", g.expression(String, next), g.expression(Number, next), g.expression(Number, next))
+		return compose(
+			String,
+			"@e.slice(@e, @e)",
+			generator.expression(String, next),
+			generator.expression(Number, next),
+			generator.expression(Number, next),
+		)
 	case 8:
-		return compose(String, "@e.slice(@e)", g.expression(String, next), g.expression(Number, next))
+		return compose(String, "@e.slice(@e)", generator.expression(String, next), generator.expression(Number, next))
 	case 9:
-		return compose(String, "@e.join(@e)", g.expression(NumberArray, next), text(String, g.pick("','", "''", "' - '")))
+		return compose(
+			String,
+			"@e.join(@e)",
+			generator.expression(NumberArray, next),
+			text(String, generator.pick("','", "''", "' - '")),
+		)
 	case 10:
-		return compose(String, "@e.join(@e)", g.expression(StringArray, next), text(String, g.pick("','", "''", "'|'")))
+		return compose(
+			String,
+			"@e.join(@e)",
+			generator.expression(StringArray, next),
+			text(String, generator.pick("','", "''", "'|'")),
+		)
 	case 11:
-		return compose(String, "@e.toFixed(@e)", g.parenthesized(g.expression(Number, next)), text(Number, g.pick("0", "1", "2", "4")))
+		return compose(
+			String,
+			"@e.toFixed(@e)",
+			generator.parenthesized(generator.expression(Number, next)),
+			text(Number, generator.pick("0", "1", "2", "4")),
+		)
 	case 12:
-		return compose(String, "@e.repeat(@e)", g.expression(String, next), text(Number, g.pick("0", "1", "2")))
+		return compose(
+			String,
+			"@e.repeat(@e)",
+			generator.expression(String, next),
+			text(Number, generator.pick("0", "1", "2")),
+		)
 	case 13:
-		return compose(String, "@e."+g.pick("padStart", "padEnd")+"(@e, @e)", g.expression(String, next), text(Number, g.pick("0", "3", "8")), text(String, g.pick("'-'", "'ab'", "'🌍'")))
+		return compose(
+			String,
+			"@e."+generator.pick("padStart", "padEnd")+"(@e, @e)",
+			generator.expression(String, next),
+			text(Number, generator.pick("0", "3", "8")),
+			text(String, generator.pick("'-'", "'ab'", "'🌍'")),
+		)
 	case 14:
-		trim := g.pick("trim", "trimStart", "trimEnd")
-		if !g.allowed("string-search") {
+		trim := generator.pick("trim", "trimStart", "trimEnd")
+		if !generator.allowed("string-search") {
 			trim = "trim"
 		}
-		return compose(String, "@e."+trim+"()", g.expression(String, next))
+		return compose(String, "@e."+trim+"()", generator.expression(String, next))
 	case 15:
-		if !g.allowed("string-index") {
-			return g.leaf(String)
+		if !generator.allowed("string-index") {
+			return generator.leaf(String)
 		}
-		return compose(String, "(@e.at(@e) ?? @e)", g.expression(String, next), g.expression(Number, next), g.literal(String))
+		return compose(
+			String,
+			"(@e.at(@e) ?? @e)",
+			generator.expression(String, next),
+			generator.expression(Number, next),
+			generator.literal(String),
+		)
 	case 16:
-		if !g.allowed("string-index") {
-			return g.leaf(String)
+		if !generator.allowed("string-index") {
+			return generator.leaf(String)
 		}
-		return compose(String, "(@e[@e] ?? @e)", g.expression(String, next), g.expression(Number, next), g.literal(String))
+		return compose(
+			String,
+			"(@e[@e] ?? @e)",
+			generator.expression(String, next),
+			generator.expression(Number, next),
+			generator.literal(String),
+		)
 	case 17:
-		return compose(String, "(@e ? @e : @e)", g.expression(Boolean, next), g.expression(String, next), g.expression(String, next))
+		return compose(
+			String,
+			"(@e ? @e : @e)",
+			generator.expression(Boolean, next),
+			generator.expression(String, next),
+			generator.expression(String, next),
+		)
 	case 18:
-		if !g.allowed("number-tostring") {
-			return g.leaf(String)
+		if !generator.allowed("number-tostring") {
+			return generator.leaf(String)
 		}
-		return compose(String, "@e.toString()", g.parenthesized(g.expression(Number, next)))
+		return compose(String, "@e.toString()", generator.parenthesized(generator.expression(Number, next)))
 	case 19:
-		if !g.allowed("string-search") {
-			return g.leaf(String)
+		if !generator.allowed("string-search") {
+			return generator.leaf(String)
 		}
-		return compose(String, "@e.replaceAll(@e, @e)", g.expression(String, next), text(String, g.pick("'a'", "','", "''")), g.short())
+		return compose(
+			String,
+			"@e.replaceAll(@e, @e)",
+			generator.expression(String, next),
+			text(String, generator.pick("'a'", "','", "''")),
+			generator.short(),
+		)
 	case 20:
-		if !g.allowed("array-index") {
-			return g.leaf(String)
+		if !generator.allowed("array-index") {
+			return generator.leaf(String)
 		}
-		return compose(String, "(@e[@e] ?? @e)", g.expression(StringArray, next), g.expression(Number, next), g.literal(String))
+		return compose(
+			String,
+			"(@e[@e] ?? @e)",
+			generator.expression(StringArray, next),
+			generator.expression(Number, next),
+			generator.literal(String),
+		)
 	}
-	return g.leaf(String)
+	return generator.leaf(String)
 }
 
 // parenthesized wraps a number so a method call on it reads as one: (1).toFixed(2), not 1.toFixed(2).
-func (g *generator) parenthesized(value *Expression) *Expression {
+func (generator *generator) parenthesized(value *Expression) *Expression {
 	return compose(value.Type, "(@e)", value)
 }
 
-func (g *generator) boolean(depth int) *Expression {
+func (generator *generator) boolean(depth int) *Expression {
 	next := depth - 1
-	switch g.random.IntN(16) {
+	switch generator.random.IntN(16) {
 	case 0, 1, 2:
-		left, right := g.expression(Number, next), g.expression(Number, next)
+		left, right := generator.expression(Number, next), generator.expression(Number, next)
 		if isLiteral(left) && isLiteral(right) {
-			left = g.leafVariable(Number, left)
+			left = generator.leafVariable(Number, left)
 		}
-		return compose(Boolean, "(@e "+g.pick("<", "<=", ">", ">=", "===", "!==")+" @e)", left, right)
+		return compose(Boolean, "(@e "+generator.pick("<", "<=", ">", ">=", "===", "!==")+" @e)", left, right)
 	case 3, 4:
-		left, right := g.expression(String, next), g.expression(String, next)
+		left, right := generator.expression(String, next), generator.expression(String, next)
 		if constantString(left) && constantString(right) {
-			left = g.leafVariable(String, left)
+			left = generator.leafVariable(String, left)
 		}
-		return compose(Boolean, "(@e "+g.pick("<", ">=", "===", "!==")+" @e)", left, right)
+		return compose(Boolean, "(@e "+generator.pick("<", ">=", "===", "!==")+" @e)", left, right)
 	case 5:
-		return compose(Boolean, "(@e "+g.pick("&&", "||")+" @e)", g.operand(next), g.operand(next))
+		return compose(
+			Boolean,
+			"(@e "+generator.pick("&&", "||")+" @e)",
+			generator.operand(next),
+			generator.operand(next),
+		)
 	case 6:
-		return compose(Boolean, "!@e", g.operand(next))
+		return compose(Boolean, "!@e", generator.operand(next))
 	case 7:
-		if !g.allowed("array-search") {
-			return g.leaf(Boolean)
+		if !generator.allowed("array-search") {
+			return generator.leaf(Boolean)
 		}
-		return compose(Boolean, "@e.includes(@e)", g.expression(NumberArray, next), g.expression(Number, next))
+		return compose(
+			Boolean,
+			"@e.includes(@e)",
+			generator.expression(NumberArray, next),
+			generator.expression(Number, next),
+		)
 	case 8:
-		return compose(Boolean, "table.has(@e)", g.key())
+		return compose(Boolean, "table.has(@e)", generator.key())
 	case 9:
-		return compose(Boolean, "@e."+g.pick("startsWith", "endsWith", "includes")+"(@e)", g.expression(String, next), g.expression(String, next))
+		return compose(
+			Boolean,
+			"@e."+generator.pick("startsWith", "endsWith", "includes")+"(@e)",
+			generator.expression(String, next),
+			generator.expression(String, next),
+		)
 	case 10:
-		if !g.allowed("number-functions") {
-			return g.leaf(Boolean)
+		if !generator.allowed("number-functions") {
+			return generator.leaf(Boolean)
 		}
-		return compose(Boolean, g.pick("Number.isInteger", "Number.isNaN", "Number.isFinite")+"(@e)", g.expression(Number, next))
+		return compose(
+			Boolean,
+			generator.pick("Number.isInteger", "Number.isNaN", "Number.isFinite")+"(@e)",
+			generator.expression(Number, next),
+		)
 	case 11:
-		if !g.allowed("array-methods") {
-			return g.leaf(Boolean)
+		if !generator.allowed("array-methods") {
+			return generator.leaf(Boolean)
 		}
-		item := g.name("item")
-		g.push()
-		g.declare(item, Number, false)
-		test := g.expression(Boolean, next)
-		g.pop()
-		return compose(Boolean, "@e."+g.pick("some", "every")+"(("+item+"): boolean => @e)", g.expression(NumberArray, next), test)
+		item := generator.name("item")
+		generator.push()
+		generator.declare(item, Number, false)
+		test := generator.expression(Boolean, next)
+		generator.pop()
+		return compose(
+			Boolean,
+			"@e."+generator.pick("some", "every")+"(("+item+"): boolean => @e)",
+			generator.expression(NumberArray, next),
+			test,
+		)
 	case 12:
-		if !g.allowed("map-keys") {
-			return g.leaf(Boolean)
+		if !generator.allowed("map-keys") {
+			return generator.leaf(Boolean)
 		}
-		return compose(Boolean, g.pick("numbers.has(@e)", "flags.has(@e)"), g.numberKey())
+		return compose(Boolean, generator.pick("numbers.has(@e)", "flags.has(@e)"), generator.numberKey())
 	case 13:
-		if !g.allowed("regex") {
-			return g.leaf(Boolean)
+		if !generator.allowed("regex") {
+			return generator.leaf(Boolean)
 		}
-		return compose(Boolean, g.pick("/a/i", "/a/", "/\\d/")+".test(@e)", g.expression(String, next))
+		return compose(Boolean, generator.pick("/a/i", "/a/", "/\\d/")+".test(@e)", generator.expression(String, next))
 	}
-	return g.leaf(Boolean)
+	return generator.leaf(Boolean)
 }
 
 // operand is a side of && or ||, or what ! negates, never true or false written out. The checker
 // reads those through the operators when the expression is a condition, so (false || true) as an
 // if's condition makes its else unreachable, and the statement after if (!true && flag) return too.
 // In unreachable code a narrowing does nothing: chain !== undefined leaves chain possibly undefined.
-func (g *generator) operand(depth int) *Expression {
-	operand := g.expression(Boolean, depth)
+func (generator *generator) operand(depth int) *Expression {
+	operand := generator.expression(Boolean, depth)
 	if isLiteral(operand) {
-		return compose(Boolean, "(holder.value "+g.pick("<", ">=")+" @e)", g.literal(Number))
+		return compose(Boolean, "(holder.value "+generator.pick("<", ">=")+" @e)", generator.literal(Number))
 	}
 	return operand
 }
@@ -1046,9 +1338,9 @@ func constantString(e *Expression) bool {
 
 // leafVariable is a variable of a type in place of a literal, or the literal parenthesized into an
 // expression the checker can't see through when there's no variable.
-func (g *generator) leafVariable(t Type, fallback *Expression) *Expression {
-	if candidates := g.visible(t, false); len(candidates) > 0 {
-		return text(t, candidates[g.random.IntN(len(candidates))].name)
+func (generator *generator) leafVariable(t Type, fallback *Expression) *Expression {
+	if candidates := generator.visible(t, false); len(candidates) > 0 {
+		return text(t, candidates[generator.random.IntN(len(candidates))].name)
 	}
 	if t == Number {
 		return compose(Number, "Math.abs(@e)", fallback)
@@ -1056,139 +1348,176 @@ func (g *generator) leafVariable(t Type, fallback *Expression) *Expression {
 	return compose(String, "@e.trim()", fallback)
 }
 
-func (g *generator) numberArray(depth int) *Expression {
+func (generator *generator) numberArray(depth int) *Expression {
 	next := depth - 1
-	switch g.random.IntN(8) {
+	switch generator.random.IntN(8) {
 	case 0:
-		return compose(NumberArray, "[@e, @e]", g.expression(Number, next), g.expression(Number, next))
+		return compose(NumberArray, "[@e, @e]", generator.expression(Number, next), generator.expression(Number, next))
 	case 1:
-		return compose(NumberArray, "@e.slice(@e, @e)", g.expression(NumberArray, next), g.expression(Number, next), g.expression(Number, next))
+		return compose(
+			NumberArray,
+			"@e.slice(@e, @e)",
+			generator.expression(NumberArray, next),
+			generator.expression(Number, next),
+			generator.expression(Number, next),
+		)
 	case 2:
-		item := g.name("item")
-		g.push()
-		g.declare(item, Number, false)
-		body := g.expression(Number, next)
-		g.pop()
-		return compose(NumberArray, "@e.map(("+item+") => @e)", g.expression(NumberArray, next), body)
+		item := generator.name("item")
+		generator.push()
+		generator.declare(item, Number, false)
+		body := generator.expression(Number, next)
+		generator.pop()
+		return compose(NumberArray, "@e.map(("+item+") => @e)", generator.expression(NumberArray, next), body)
 	case 3:
-		if !g.allowed("array-methods") {
-			return g.leaf(NumberArray)
+		if !generator.allowed("array-methods") {
+			return generator.leaf(NumberArray)
 		}
 		// Annotated for the reason find's test is.
-		item := g.name("item")
-		g.push()
-		g.declare(item, Number, false)
-		test := g.expression(Boolean, next)
-		g.pop()
-		return compose(NumberArray, "@e.filter(("+item+"): boolean => @e)", g.expression(NumberArray, next), test)
+		item := generator.name("item")
+		generator.push()
+		generator.declare(item, Number, false)
+		test := generator.expression(Boolean, next)
+		generator.pop()
+		return compose(
+			NumberArray,
+			"@e.filter(("+item+"): boolean => @e)",
+			generator.expression(NumberArray, next),
+			test,
+		)
 	case 4:
-		if !g.allowed("array-spread") {
-			return g.leaf(NumberArray)
+		if !generator.allowed("array-spread") {
+			return generator.leaf(NumberArray)
 		}
-		return compose(NumberArray, "[...@e, @e]", g.expression(NumberArray, next), g.expression(Number, next))
+		return compose(
+			NumberArray,
+			"[...@e, @e]",
+			generator.expression(NumberArray, next),
+			generator.expression(Number, next),
+		)
 	case 5:
-		if !g.allowed("array-methods") {
-			return g.leaf(NumberArray)
+		if !generator.allowed("array-methods") {
+			return generator.leaf(NumberArray)
 		}
-		return compose(NumberArray, "@e.concat(@e)", g.expression(NumberArray, next), g.expression(NumberArray, next))
+		return compose(
+			NumberArray,
+			"@e.concat(@e)",
+			generator.expression(NumberArray, next),
+			generator.expression(NumberArray, next),
+		)
 	case 6:
-		return compose(NumberArray, "@e.map((item) => item.length)", g.expression(StringArray, next))
+		return compose(NumberArray, "@e.map((item) => item.length)", generator.expression(StringArray, next))
 	}
-	return g.leaf(NumberArray)
+	return generator.leaf(NumberArray)
 }
 
-func (g *generator) stringArray(depth int) *Expression {
+func (generator *generator) stringArray(depth int) *Expression {
 	next := depth - 1
-	switch g.random.IntN(5) {
+	switch generator.random.IntN(5) {
 	case 0:
-		return compose(StringArray, "@e.split(@e)", g.expression(String, next), text(String, g.pick("','", "''", "'a'")))
+		return compose(
+			StringArray,
+			"@e.split(@e)",
+			generator.expression(String, next),
+			text(String, generator.pick("','", "''", "'a'")),
+		)
 	case 1:
-		return compose(StringArray, "@e.slice(@e)", g.expression(StringArray, next), g.expression(Number, next))
+		return compose(
+			StringArray,
+			"@e.slice(@e)",
+			generator.expression(StringArray, next),
+			generator.expression(Number, next),
+		)
 	case 2:
-		item := g.name("item")
-		g.push()
-		g.declare(item, Number, false)
-		body := g.short()
-		g.pop()
-		return compose(StringArray, "@e.map(("+item+") => @e)", g.expression(NumberArray, next), body)
+		item := generator.name("item")
+		generator.push()
+		generator.declare(item, Number, false)
+		body := generator.short()
+		generator.pop()
+		return compose(StringArray, "@e.map(("+item+") => @e)", generator.expression(NumberArray, next), body)
 	case 3:
-		return compose(StringArray, "[@e, @e]", g.short(), g.short())
+		return compose(StringArray, "[@e, @e]", generator.short(), generator.short())
 	}
-	return g.leaf(StringArray)
+	return generator.leaf(StringArray)
 }
 
 // classStatements is the program's class: one class, or a child that overrides and calls super.
-func (g *generator) classStatements() []*Statement {
-	if !g.allowed("inheritance") {
+func (generator *generator) classStatements() []*Statement {
+	if !generator.allowed("inheritance") {
 		return []*Statement{statement("class Counter @b", &Block{Statements: []*Statement{
 			statement("count = 0;"),
 			statement("label = 'c';"),
-			statement("bump(amount: number): number @b", g.counterMethod(false)),
+			statement("bump(amount: number): number @b", generator.counterMethod(false)),
 		}})}
 	}
 	return []*Statement{
 		statement("class BaseCounter @b", &Block{Statements: []*Statement{
 			statement("count = 0;"),
 			statement("label = 'b';"),
-			statement("bump(amount: number): number @b", g.counterMethod(false)),
+			statement("bump(amount: number): number @b", generator.counterMethod(false)),
 			statement("describe(): string @b", &Block{Statements: []*Statement{statement("return this.label;")}}),
 		}}),
 		statement("class ChildCounter extends BaseCounter @b", &Block{Statements: []*Statement{
 			statement("extra = 1;"),
-			statement("override bump(amount: number): number @b", g.counterMethod(true)),
-			statement("override describe(): string @b", &Block{Statements: []*Statement{statement("return super.describe() + '!';")}}),
+			statement("override bump(amount: number): number @b", generator.counterMethod(true)),
+			statement(
+				"override describe(): string @b",
+				&Block{Statements: []*Statement{statement("return super.describe() + '!';")}},
+			),
 		}}),
 	}
 }
 
 // counterMethod writes the fields a counter's bump can see, then returns. A child calls super first.
-func (g *generator) counterMethod(child bool) *Block {
-	g.push()
-	g.returns = Number
-	g.declare("this.count", Number, true)
-	g.declare("this.label", String, true)
-	g.declare("amount", Number, false)
+func (generator *generator) counterMethod(child bool) *Block {
+	generator.push()
+	generator.returns = Number
+	generator.declare("this.count", Number, true)
+	generator.declare("this.label", String, true)
+	generator.declare("amount", Number, false)
 	if child {
-		g.declare("this.extra", Number, true)
-		g.declare("carried", Number, false)
+		generator.declare("this.extra", Number, true)
+		generator.declare("carried", Number, false)
 	}
-	g.silent = true
+	generator.silent = true
 	method := &Block{}
 	if child {
 		method.Statements = append(method.Statements, statement("const carried = super.bump(amount);"))
 	}
-	for range 1 + g.random.IntN(3) {
-		method.Statements = append(method.Statements, g.mutation())
+	for range 1 + generator.random.IntN(3) {
+		method.Statements = append(method.Statements, generator.mutation())
 	}
 	if child {
 		method.Statements = append(method.Statements, statement("return carried + this.extra;"))
 	} else {
 		method.Statements = append(method.Statements, statement("return this.count + amount;"))
 	}
-	g.silent = false
-	g.returns = ""
-	g.pop()
+	generator.silent = false
+	generator.returns = ""
+	generator.pop()
 	return method
 }
 
 // addCounters constructs the instance the rest of the program writes, and the functions that call it.
-func (g *generator) addCounters(add func(*Statement)) {
-	if !g.allowed("inheritance") {
+func (generator *generator) addCounters(add func(*Statement)) {
+	if !generator.allowed("inheritance") {
 		add(statement("const counter = new Counter();"))
-		g.declare("counter.count", Number, true)
-		g.declare("counter.label", String, true)
-		g.functions = append(g.functions, function{name: "counter.bump", parameters: []Type{Number}, returns: Number, required: 1})
+		generator.declare("counter.count", Number, true)
+		generator.declare("counter.label", String, true)
+		generator.functions = append(
+			generator.functions,
+			function{name: "counter.bump", parameters: []Type{Number}, returns: Number, required: 1},
+		)
 		return
 	}
 	add(statement("const counter = new ChildCounter();"))
 	add(statement("const plainCounter = new BaseCounter();"))
 	add(statement("const asBase: BaseCounter = counter;"))
-	g.declare("counter.count", Number, true)
-	g.declare("counter.label", String, true)
-	g.declare("counter.extra", Number, true)
-	g.declare("plainCounter.count", Number, true)
-	g.declare("plainCounter.label", String, true)
-	g.functions = append(g.functions,
+	generator.declare("counter.count", Number, true)
+	generator.declare("counter.label", String, true)
+	generator.declare("counter.extra", Number, true)
+	generator.declare("plainCounter.count", Number, true)
+	generator.declare("plainCounter.label", String, true)
+	generator.functions = append(generator.functions,
 		function{name: "counter.bump", parameters: []Type{Number}, returns: Number, required: 1},
 		function{name: "plainCounter.bump", parameters: []Type{Number}, returns: Number, required: 1},
 		function{name: "asBase.bump", parameters: []Type{Number}, returns: Number, required: 1},
@@ -1198,52 +1527,67 @@ func (g *generator) addCounters(add func(*Statement)) {
 }
 
 // numberKey is a Map or Set key, biased toward NaN and the two zeros SameValueZero collapses.
-func (g *generator) numberKey() *Expression {
-	if g.chance(2, 3) {
-		return text(Number, g.pick("NaN", "-0", "0", "1"))
+func (generator *generator) numberKey() *Expression {
+	if generator.chance(2, 3) {
+		return text(Number, generator.pick("NaN", "-0", "0", "1"))
 	}
-	return g.expression(Number, 1)
+	return generator.expression(Number, 1)
 }
 
 // numberKeyMutation writes the number Map and the number Set. NaN and -0 replace 0 rather than grow.
-func (g *generator) numberKeyMutation() *Statement {
-	switch g.random.IntN(6) {
+func (generator *generator) numberKeyMutation() *Statement {
+	switch generator.random.IntN(6) {
 	case 0:
-		return statement("numbers.set(NaN, @e);", g.expression(Number, 1))
+		return statement("numbers.set(NaN, @e);", generator.expression(Number, 1))
 	case 1:
-		return statement("numbers.set(-0, @e);", g.expression(Number, 1))
+		return statement("numbers.set(-0, @e);", generator.expression(Number, 1))
 	case 2:
-		return statement("numbers.set(0, @e);", g.expression(Number, 1))
+		return statement("numbers.set(0, @e);", generator.expression(Number, 1))
 	case 3:
 		return statement("if (numbers.size < 8) @b", &Block{Statements: []*Statement{
-			statement("numbers.set(@e, @e);", g.numberKey(), g.expression(Number, 1)),
+			statement("numbers.set(@e, @e);", generator.numberKey(), generator.expression(Number, 1)),
 		}})
 	case 4:
-		return statement("numbers.delete(@e);", g.numberKey())
+		return statement("numbers.delete(@e);", generator.numberKey())
 	}
-	if g.chance(1, 2) {
-		return statement("flags.add(@e);", g.numberKey())
+	if generator.chance(1, 2) {
+		return statement("flags.add(@e);", generator.numberKey())
 	}
-	return statement("flags.delete(@e);", g.numberKey())
+	return statement("flags.delete(@e);", generator.numberKey())
 }
 
 // regexStatement runs a literal regular expression: replace, replaceAll, split, or exec.
-func (g *generator) regexStatement() *Statement {
-	switch g.random.IntN(5) {
+func (generator *generator) regexStatement() *Statement {
+	switch generator.random.IntN(5) {
 	case 0:
-		return statement("console.log(@e);", compose(String, "@e.replace("+g.pick("/a/g", "/(a)/g", "/a/i")+", "+g.pick("'[$&]'", "'$1'", "'$$'", "'-'")+")", g.bounded(g.expression(String, 2))))
+		return statement("console.log(@e);", compose(String, "@e.replace("+
+			generator.pick("/a/g", "/(a)/g", "/a/i")+
+			", "+
+			generator.pick("'[$&]'", "'$1'", "'$$'", "'-'")+
+			")", generator.bounded(generator.expression(String, 2))))
 	case 1:
 		// The overrides scene's try reaches every function and closure, and stage 0 doesn't lower a try
 		// that can reach replaceAll with a regular expression, so with that scene it's top-level only.
-		if topLevel := g.returns == "" && g.inClosure == 0; topLevel || !g.allowed("overrides") {
-			return statement("console.log(@e);", compose(String, "@e.replaceAll(/a/g, '$&$`')", g.bounded(g.expression(String, 2))))
+		if topLevel := generator.returns == "" &&
+			generator.inClosure == 0; topLevel || !generator.allowed("overrides") {
+			return statement(
+				"console.log(@e);",
+				compose(String, "@e.replaceAll(/a/g, '$&$`')", generator.bounded(generator.expression(String, 2))),
+			)
 		}
-		return statement("console.log(@e);", compose(String, "@e.replace(/a/g, '$&$`')", g.bounded(g.expression(String, 2))))
+		return statement(
+			"console.log(@e);",
+			compose(String, "@e.replace(/a/g, '$&$`')", generator.bounded(generator.expression(String, 2))),
+		)
 	case 2:
-		return statement("console.log(@e);", compose(String, "@e.split("+g.pick("/a/", "/(?:)/", "/,/")+").join('|')", g.bounded(g.expression(String, 2))))
+		return statement("console.log(@e);", compose(
+			String,
+			"@e.split("+generator.pick("/a/", "/(?:)/", "/,/")+").join('|')",
+			generator.bounded(generator.expression(String, 2)),
+		))
 	case 3:
 		return statement("@b", &Block{Statements: []*Statement{
-			statement("const found = /a/g.exec(@e);", g.bounded(g.expression(String, 2))),
+			statement("const found = /a/g.exec(@e);", generator.bounded(generator.expression(String, 2))),
 			statement("if (found !== null) @b else @b",
 				&Block{Statements: []*Statement{statement("console.log(`${found.index}:${found[0] ?? ''}`);")}},
 				&Block{Statements: []*Statement{statement("console.log('none');")}},
@@ -1251,8 +1595,8 @@ func (g *generator) regexStatement() *Statement {
 		}})
 	}
 	return statement("@b", &Block{Statements: []*Statement{
-		statement("finder.lastIndex = Math.abs(Math.trunc(@e)) % 4;", g.expression(Number, 1)),
-		statement("const found = finder.exec(@e);", g.bounded(g.expression(String, 1))),
+		statement("finder.lastIndex = Math.abs(Math.trunc(@e)) % 4;", generator.expression(Number, 1)),
+		statement("const found = finder.exec(@e);", generator.bounded(generator.expression(String, 1))),
 		statement("console.log(`${finder.lastIndex} ${found === null ? -1 : found.index}`);"),
 	}})
 }
@@ -1292,31 +1636,38 @@ type shareCut struct {
 	needle   string
 }
 
-func (c shareCut) check() {
-	if c.align < 1 || c.ownerUnits < 1 || c.owner == nil {
+func (cut shareCut) check() {
+	if cut.align < 1 || cut.ownerUnits < 1 || cut.owner == nil {
 		panic("fuzz: shared slice has no owner")
 	}
-	for _, bound := range []int{c.keptStart, c.keptEnd, c.pieceStart, c.pieceEnd} {
-		if bound%c.align != 0 {
-			panic(fmt.Sprintf("fuzz: slice bound %d is not on a code point boundary of %d", bound, c.align))
+	for _, bound := range []int{cut.keptStart, cut.keptEnd, cut.pieceStart, cut.pieceEnd} {
+		if bound%cut.align != 0 {
+			panic(fmt.Sprintf("fuzz: slice bound %d is not on a code point boundary of %d", bound, cut.align))
 		}
 	}
-	if c.keptStart < 0 || c.pieceStart < 0 || c.keptStart >= c.keptEnd || c.pieceStart >= c.pieceEnd || c.keptEnd > c.ownerUnits || c.pieceEnd > c.ownerUnits {
+	if cut.keptStart < 0 ||
+		cut.pieceStart < 0 ||
+		cut.keptStart >= cut.keptEnd ||
+		cut.pieceStart >= cut.pieceEnd ||
+		cut.keptEnd > cut.ownerUnits ||
+		cut.pieceEnd > cut.ownerUnits {
 		panic("fuzz: shared slice bounds fall outside their owner")
 	}
-	mustShare(c.keptBytes, c.ownerBytes)
-	if c.nested {
-		if c.pieceStart < c.keptStart || c.pieceEnd > c.keptEnd || (c.pieceStart == c.keptStart && c.pieceEnd == c.keptEnd) {
+	mustShare(cut.keptBytes, cut.ownerBytes)
+	if cut.nested {
+		if cut.pieceStart < cut.keptStart ||
+			cut.pieceEnd > cut.keptEnd ||
+			(cut.pieceStart == cut.keptStart && cut.pieceEnd == cut.keptEnd) {
 			panic("fuzz: inner slice is not a proper slice of the outer one")
 		}
-		if c.constant {
-			mustShare(c.pieceBytes, c.keptBytes)
+		if cut.constant {
+			mustShare(cut.pieceBytes, cut.keptBytes)
 		} else {
-			mustShare(c.pieceBytes, c.ownerBytes)
+			mustShare(cut.pieceBytes, cut.ownerBytes)
 		}
 		return
 	}
-	mustShare(c.pieceBytes, c.ownerBytes)
+	mustShare(cut.pieceBytes, cut.ownerBytes)
 }
 
 // uniformLength is count copies of a group, and how many bytes and units that is. align is the
@@ -1333,15 +1684,22 @@ func measureGroup(groupUnits, groupBytes, count int) uniformLength {
 	return uniformLength{units: count * groupUnits, bytes: count * groupBytes, align: groupUnits}
 }
 
-func (m uniformLength) sliceBytes(start, end int) int {
-	return (end - start) * m.bytes / m.units
+func (length uniformLength) sliceBytes(start, end int) int {
+	return (end - start) * length.bytes / length.units
 }
 
 func repeatedFixed(unit string, count int) *Expression {
 	return compose(String, "@e.repeat(@e)", text(String, "'"+unit+"'"), text(Number, strconv.Itoa(count)))
 }
 
-func uniformCut(unit string, count int, constant, nested bool, keptStart, keptEnd, pieceStart, pieceEnd int, needle string, groupUnits, groupBytes int) shareCut {
+func uniformCut(
+	unit string,
+	count int,
+	constant, nested bool,
+	keptStart, keptEnd, pieceStart, pieceEnd int,
+	needle string,
+	groupUnits, groupBytes int,
+) shareCut {
 	measured := measureGroup(groupUnits, groupBytes, count)
 	owner := repeatedFixed(unit, count)
 	if constant {
@@ -1401,7 +1759,13 @@ func templateShareCut() shareCut {
 // joinShareCut joins 80 a's, 40 é and 48 b's. [72, 160) is 8 a's, the é and 40 b's: 128 bytes.
 func joinShareCut() shareCut {
 	cut := shareCut{
-		owner:      compose(String, "[@e, @e, @e].join('')", repeatedFixed("a", 80), repeatedFixed("é", 40), repeatedFixed("b", 48)),
+		owner: compose(
+			String,
+			"[@e, @e, @e].join('')",
+			repeatedFixed("a", 80),
+			repeatedFixed("é", 40),
+			repeatedFixed("b", 48),
+		),
 		ownerUnits: 168, ownerBytes: 208, align: 1,
 		keptStart: 0, keptEnd: 80, keptBytes: 80,
 		pieceStart: 72, pieceEnd: 160, pieceBytes: 128,
@@ -1412,9 +1776,9 @@ func joinShareCut() shareCut {
 }
 
 // shareCut picks an owner and two slices that share its bytes.
-func (g *generator) shareCut() shareCut {
+func (generator *generator) shareCut() shareCut {
 	cuts := allShareCuts()
-	return cuts[g.random.IntN(len(cuts))]
+	return cuts[generator.random.IntN(len(cuts))]
 }
 
 func sliceCall(name string, start, end, length int) *Expression {
@@ -1461,43 +1825,75 @@ func shareFrom(units, align int) int {
 }
 
 func cacheLog(name string, index, from int, needle string) *Statement {
-	return statement("console.log(`${" + name + ".length} ${" + name + ".charCodeAt(" + strconv.Itoa(index) + ")} ${" + name + ".indexOf(" + needle + ", " + strconv.Itoa(from) + ")}`);")
+	return statement("console.log(`${" +
+		name +
+		".length} ${" +
+		name +
+		".charCodeAt(" +
+		strconv.Itoa(index) +
+		")} ${" +
+		name +
+		".indexOf(" +
+		needle +
+		", " +
+		strconv.Itoa(from) +
+		")}`);")
 }
 
-func (g *generator) appendLoop(piece string) *Statement {
-	round := g.name("round")
-	bound := 4 + g.random.IntN(5)
-	return statement(fmt.Sprintf("for (let %s = 0; %s < %d; %s++) @b", round, round, bound, round), &Block{Statements: []*Statement{
-		statement(piece + " += `${" + round + " % 10}`;"),
-	}})
+func (generator *generator) appendLoop(piece string) *Statement {
+	round := generator.name("round")
+	bound := 4 + generator.random.IntN(5)
+	return statement(
+		fmt.Sprintf("for (let %s = 0; %s < %d; %s++) @b", round, round, bound, round),
+		&Block{Statements: []*Statement{
+			statement(piece + " += `${" + round + " % 10}`;"),
+		}},
+	)
 }
 
 // probeBody is the function that appends to a shared slice. The reads happen before the append, so
 // the slice's unit count and position index are cached, and the owner and the other slice are
 // printed after, still in scope, so a write into the owner's bytes is visible.
-func (g *generator) probeBody(cut shareCut, mode int) *Block {
-	source, kept, piece := g.name("source"), g.name("kept"), g.name("piece")
+func (generator *generator) probeBody(cut shareCut, mode int) *Block {
+	source, kept, piece := generator.name("source"), generator.name("kept"), generator.name("piece")
 	body := &Block{}
 	add := func(written *Statement) { body.Statements = append(body.Statements, written) }
 	add(statement("const "+source+": string = @e;", cut.owner))
 	add(statement("const "+kept+": string = @e;", sliceCall(source, cut.keptStart, cut.keptEnd, cut.ownerUnits)))
 	pieceSlice := sliceCall(source, cut.pieceStart, cut.pieceEnd, cut.ownerUnits)
 	if cut.nested {
-		pieceSlice = sliceCall(kept, cut.pieceStart-cut.keptStart, cut.pieceEnd-cut.keptStart, cut.keptEnd-cut.keptStart)
+		pieceSlice = sliceCall(
+			kept,
+			cut.pieceStart-cut.keptStart,
+			cut.pieceEnd-cut.keptStart,
+			cut.keptEnd-cut.keptStart,
+		)
 	}
 	add(statement("let "+piece+": string = @e;", pieceSlice))
 	units := cut.pieceEnd - cut.pieceStart
 	index, from := shareIndex(units, cut.align), shareFrom(units, cut.align)
 	add(cacheLog(piece, index, from, cut.needle))
 	add(cacheLog(kept, 0, 0, cut.needle))
-	add(statement("console.log(`${" + source + ".length} ${" + source + ".charCodeAt(" + strconv.Itoa(index) + ")} ${" + source + ".indexOf(" + cut.needle + ", " + strconv.Itoa(from) + ")}`);"))
+	add(statement("console.log(`${" +
+		source +
+		".length} ${" +
+		source +
+		".charCodeAt(" +
+		strconv.Itoa(index) +
+		")} ${" +
+		source +
+		".indexOf(" +
+		cut.needle +
+		", " +
+		strconv.Itoa(from) +
+		")}`);"))
 	// mode 0 appends once, mode 1 only in a loop, mode 2 both. The loop's first append is the one
 	// that meets a shared slice; the ones after it append to the copy.
 	if mode != 1 {
-		add(statement(piece+" += @e;", text(String, g.pick("'x'", "'Q'", "'ü'"))))
+		add(statement(piece+" += @e;", text(String, generator.pick("'x'", "'Q'", "'ü'"))))
 	}
 	if mode != 0 {
-		add(g.appendLoop(piece))
+		add(generator.appendLoop(piece))
 	}
 	add(cacheLog(piece, index, from, cut.needle))
 	add(statement("console.log(`${" + piece + ".length} ${" + piece + ".charCodeAt(" + piece + ".length - 1)}`);"))
@@ -1510,65 +1906,97 @@ func (g *generator) probeBody(cut shareCut, mode int) *Block {
 // sharedSliceProbe is a function that holds a shared slice and appends to it, and the call that runs
 // that function. The slice is a local, so the append is in place when the runtime believes the
 // bytes have room.
-func (g *generator) sharedSliceProbe() (*Statement, *Statement) {
-	name := g.name("share")
-	cut := g.shareCut()
-	mode := g.random.IntN(3)
-	body := g.probeBody(cut, mode)
+func (generator *generator) sharedSliceProbe() (*Statement, *Statement) {
+	name := generator.name("share")
+	cut := generator.shareCut()
+	mode := generator.random.IntN(3)
+	body := generator.probeBody(cut, mode)
 	return statement("function "+name+"(): void @b", body), statement(name + "();")
 }
 
 // repeated is a short literal repeated into the 64 to a few hundred byte range.
-func (g *generator) repeated() *Expression {
-	switch g.random.IntN(5) {
+func (generator *generator) repeated() *Expression {
+	switch generator.random.IntN(5) {
 	case 0:
-		return compose(String, "@e.repeat(@e)", text(String, g.pick("'a'", "'b'", "'e'")), text(Number, g.pick("64", "96", "128", "160", "192", "256")))
+		return compose(
+			String,
+			"@e.repeat(@e)",
+			text(String, generator.pick("'a'", "'b'", "'e'")),
+			text(Number, generator.pick("64", "96", "128", "160", "192", "256")),
+		)
 	case 1:
-		return compose(String, "@e.repeat(@e)", text(String, "'xy'"), text(Number, g.pick("40", "64", "80", "96")))
+		return compose(
+			String,
+			"@e.repeat(@e)",
+			text(String, "'xy'"),
+			text(Number, generator.pick("40", "64", "80", "96")),
+		)
 	case 2:
-		return compose(String, "@e.repeat(@e)", text(String, "'é'"), text(Number, g.pick("40", "64", "80", "96", "120")))
+		return compose(
+			String,
+			"@e.repeat(@e)",
+			text(String, "'é'"),
+			text(Number, generator.pick("40", "64", "80", "96", "120")),
+		)
 	case 3:
-		return compose(String, "@e.repeat(@e)", text(String, "'🌍'"), text(Number, g.pick("20", "32", "40", "48")))
+		return compose(
+			String,
+			"@e.repeat(@e)",
+			text(String, "'🌍'"),
+			text(Number, generator.pick("20", "32", "40", "48")),
+		)
 	default:
-		return compose(String, "@e.repeat(@e)", text(String, "'é🌍'"), text(Number, g.pick("16", "24", "32", "40")))
+		return compose(
+			String,
+			"@e.repeat(@e)",
+			text(String, "'é🌍'"),
+			text(Number, generator.pick("16", "24", "32", "40")),
+		)
 	}
 }
 
 // longConstant is a string literal of 64 to a few hundred bytes, ASCII or not.
-func (g *generator) longConstant() *Expression {
-	switch g.random.IntN(4) {
+func (generator *generator) longConstant() *Expression {
+	switch generator.random.IntN(4) {
 	case 0:
-		return text(String, "'"+strings.Repeat("a", []int{72, 96, 128, 160, 192, 240}[g.random.IntN(6)])+"'")
+		return text(String, "'"+strings.Repeat("a", []int{72, 96, 128, 160, 192, 240}[generator.random.IntN(6)])+"'")
 	case 1:
-		return text(String, "'"+strings.Repeat("é", []int{40, 56, 72, 96}[g.random.IntN(4)])+"'")
+		return text(String, "'"+strings.Repeat("é", []int{40, 56, 72, 96}[generator.random.IntN(4)])+"'")
 	case 2:
-		return text(String, "'"+strings.Repeat("🌍", []int{18, 24, 32, 48}[g.random.IntN(4)])+"'")
+		return text(String, "'"+strings.Repeat("🌍", []int{18, 24, 32, 48}[generator.random.IntN(4)])+"'")
 	default:
-		return text(String, "'"+strings.Repeat("é🌍", []int{12, 20, 28, 36}[g.random.IntN(4)])+"'")
+		return text(String, "'"+strings.Repeat("é🌍", []int{12, 20, 28, 36}[generator.random.IntN(4)])+"'")
 	}
 }
 
 // longString is a string expression in the range where a slice of it can share. It does not call
 // back into string expressions, so repeats don't multiply.
-func (g *generator) longString() *Expression {
-	switch g.random.IntN(5) {
+func (generator *generator) longString() *Expression {
+	switch generator.random.IntN(5) {
 	case 0:
-		return g.repeated()
+		return generator.repeated()
 	case 1:
-		return g.longConstant()
+		return generator.longConstant()
 	case 2:
-		return compose(String, "`${@e}${@e}`", g.repeated(), g.repeated())
+		return compose(String, "`${@e}${@e}`", generator.repeated(), generator.repeated())
 	case 3:
-		return compose(String, "[@e, @e, @e].join(@e)", g.repeated(), g.repeated(), g.repeated(), text(String, g.pick("''", "','", "'-'")))
+		return compose(
+			String,
+			"[@e, @e, @e].join(@e)",
+			generator.repeated(),
+			generator.repeated(),
+			generator.repeated(),
+			text(String, generator.pick("''", "','", "'-'")),
+		)
 	default:
-		return compose(String, "(@e + @e)", g.repeated(), g.longConstant())
+		return compose(String, "(@e + @e)", generator.repeated(), generator.longConstant())
 	}
 }
 
 // sharingSlice is a slice whose bounds meet string_share.c, including a slice of a slice. The owner
 // here is a temporary; the probe is what appends to a slice whose owner is still live.
-func (g *generator) sharingSlice() *Expression {
-	switch g.random.IntN(5) {
+func (generator *generator) sharingSlice() *Expression {
+	switch generator.random.IntN(5) {
 	case 0:
 		mustShare(96, 128)
 		return compose(String, "(@e).slice(@e, @e)", repeatedFixed("a", 128), text(Number, "16"), text(Number, "112"))
@@ -1580,7 +2008,13 @@ func (g *generator) sharingSlice() *Expression {
 		return compose(String, "(@e).slice(@e, @e)", repeatedFixed("🌍", 40), text(Number, "8"), text(Number, "72"))
 	case 3:
 		mustShare(144, 192)
-		return compose(String, "(@e).slice(@e, @e)", text(String, "'"+strings.Repeat("é", 96)+"'"), text(Number, "12"), text(Number, "84"))
+		return compose(
+			String,
+			"(@e).slice(@e, @e)",
+			text(String, "'"+strings.Repeat("é", 96)+"'"),
+			text(Number, "12"),
+			text(Number, "84"),
+		)
 	default:
 		mustShare(192, 256)
 		mustShare(160, 256)

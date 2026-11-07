@@ -8,22 +8,34 @@ import (
 // Refuse the witnessed divergent shapes before either backend inserts a stop.
 // Follow literal keys through const aliases and direct call arguments, but do not
 // reject unrelated index operations or the lane's own-key observation paths.
-func (l *lowering) recordDivergenceRefusal(node *ast.Node) error {
+func (lowering *lowering) recordDivergenceRefusal(node *ast.Node) error {
 	if node.Kind == ast.KindBinaryExpression {
 		b := node.AsBinaryExpression()
-		if b.OperatorToken.Kind == ast.KindInKeyword && l.recordElement(l.checker.GetTypeAtLocation(b.Right)) != nil {
-			if key := l.recordPrototypeKey(b.Left, 0); key != "" && ast.IsIdentifier(ast.SkipParentheses(b.Left)) && !l.recordExplicitOwn(b.Right, key) {
-				return &Refused{Where: l.program.Where(node), What: "record membership for " + key + ": the record's prototype chain isn't modeled", Fix: "use Object.hasOwn(record, key) for own membership, or a Map"}
+		if b.OperatorToken.Kind == ast.KindInKeyword &&
+			lowering.recordElement(lowering.checker.GetTypeAtLocation(b.Right)) != nil {
+			if key := lowering.recordPrototypeKey(
+				b.Left,
+				0,
+			); key != "" && ast.IsIdentifier(ast.SkipParentheses(b.Left)) && !lowering.recordExplicitOwn(b.Right, key) {
+				return &Refused{
+					Where: lowering.program.Where(node),
+					What:  "record membership for " + key + ": the record's prototype chain isn't modeled",
+					Fix:   "use Object.hasOwn(record, key) for own membership, or a Map",
+				}
 			}
 		}
-		if b.OperatorToken.Kind == ast.KindEqualsToken && l.recordTarget(b.Left) {
-			key := l.recordAccessPrototypeKey(b.Left)
-			if key == "__proto__" && !l.recordExplicitOwn(recordReceiver(b.Left), key) {
-				return &Refused{Where: l.program.Where(b.Left), What: "record assignment to __proto__: its inherited setter isn't modeled", Fix: "define an explicit computed own __proto__ data entry before assigning, or use a Map"}
+		if b.OperatorToken.Kind == ast.KindEqualsToken && lowering.recordTarget(b.Left) {
+			key := lowering.recordAccessPrototypeKey(b.Left)
+			if key == "__proto__" && !lowering.recordExplicitOwn(recordReceiver(b.Left), key) {
+				return &Refused{
+					Where: lowering.program.Where(b.Left),
+					What:  "record assignment to __proto__: its inherited setter isn't modeled",
+					Fix:   "define an explicit computed own __proto__ data entry before assigning, or use a Map",
+				}
 			}
 		}
 	}
-	if !l.recordReadTarget(node) || l.recordReadDiscarded(node) || l.recordReadOwnGuarded(node) {
+	if !lowering.recordReadTarget(node) || lowering.recordReadDiscarded(node) || lowering.recordReadOwnGuarded(node) {
 		return nil
 	}
 	at := node
@@ -43,20 +55,34 @@ func (l *lowering) recordDivergenceRefusal(node *ast.Node) error {
 			if other == at {
 				other = b.Left
 			}
-			t := l.checker.GetTypeAtLocation(other)
-			if (b.OperatorToken.Kind == ast.KindEqualsEqualsEqualsToken || b.OperatorToken.Kind == ast.KindExclamationEqualsEqualsToken) && t.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike) != 0 && !l.includesUndefined(t) {
+			t := lowering.checker.GetTypeAtLocation(other)
+			if (b.OperatorToken.Kind == ast.KindEqualsEqualsEqualsToken ||
+				b.OperatorToken.Kind == ast.KindExclamationEqualsEqualsToken) &&
+				t.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike) != 0 &&
+				!lowering.includesUndefined(t) {
 				return nil
 			}
 		}
 	}
-	if key := l.recordAccessPrototypeKey(node); key != "" && node.Kind == ast.KindElementAccessExpression && ast.IsIdentifier(ast.SkipParentheses(node.AsElementAccessExpression().ArgumentExpression)) && !l.recordExplicitOwn(recordReceiver(node), key) {
-		return &Refused{Where: l.program.Where(node), What: "record read of " + key + ": the record's prototype chain isn't modeled", Fix: "check Object.hasOwn(record, key) immediately before reading its own value, or use a Map"}
+	if key := lowering.recordAccessPrototypeKey(node); key != "" &&
+		node.Kind == ast.KindElementAccessExpression &&
+		ast.IsIdentifier(ast.SkipParentheses(node.AsElementAccessExpression().ArgumentExpression)) &&
+		!lowering.recordExplicitOwn(recordReceiver(node), key) {
+		return &Refused{
+			Where: lowering.program.Where(node),
+			What:  "record read of " + key + ": the record's prototype chain isn't modeled",
+			Fix:   "check Object.hasOwn(record, key) immediately before reading its own value, or use a Map",
+		}
 	}
 	// Only scalar reads whose narrowed slot has a visible intervening mutation
 	// are refused. Runtime typeof/presence observations and reference errors keep
 	// their existing semantics; unrelated calls do not invalidate this proof.
-	if !recordTagObservation(node) && l.recordScalarNarrowed(node) && l.recordInterveningMutation(node) {
-		return &Refused{Where: l.program.Where(node), What: "a narrowed record scalar read after a call mutates that record: its current slot type cannot be proven", Fix: "snapshot the value before the call, or read and recheck its type after the call"}
+	if !recordTagObservation(node) && lowering.recordScalarNarrowed(node) && lowering.recordInterveningMutation(node) {
+		return &Refused{
+			Where: lowering.program.Where(node),
+			What:  "a narrowed record scalar read after a call mutates that record: its current slot type cannot be proven",
+			Fix:   "snapshot the value before the call, or read and recheck its type after the call",
+		}
 	}
 	return nil
 }
@@ -65,7 +91,7 @@ func init() {
 	refusalRules.register(1000, "recordDivergenceRefusal", (*lowering).recordDivergenceRefusal)
 }
 
-func (l *lowering) recordAccessPrototypeKey(node *ast.Node) string {
+func (lowering *lowering) recordAccessPrototypeKey(node *ast.Node) string {
 	node = ast.SkipParentheses(node)
 	if node.Kind == ast.KindPropertyAccessExpression {
 		name := node.Name().Text()
@@ -74,9 +100,9 @@ func (l *lowering) recordAccessPrototypeKey(node *ast.Node) string {
 		}
 		return ""
 	}
-	return l.recordPrototypeKey(node.AsElementAccessExpression().ArgumentExpression, 0)
+	return lowering.recordPrototypeKey(node.AsElementAccessExpression().ArgumentExpression, 0)
 }
-func (l *lowering) recordPrototypeKey(node *ast.Node, depth int) string {
+func (lowering *lowering) recordPrototypeKey(node *ast.Node, depth int) string {
 	if node == nil || depth > 12 {
 		return ""
 	}
@@ -90,13 +116,13 @@ func (l *lowering) recordPrototypeKey(node *ast.Node, depth int) string {
 	if !ast.IsIdentifier(node) {
 		return ""
 	}
-	symbol := l.symbol(node)
+	symbol := lowering.symbol(node)
 	if symbol == nil || len(symbol.Declarations) != 1 {
 		return ""
 	}
 	d := symbol.Declarations[0]
 	if d.Kind == ast.KindVariableDeclaration && d.Parent.Flags&ast.NodeFlagsConst != 0 {
-		return l.recordPrototypeKey(d.AsVariableDeclaration().Initializer, depth+1)
+		return lowering.recordPrototypeKey(d.AsVariableDeclaration().Initializer, depth+1)
 	}
 	if d.Kind != ast.KindParameter || d.Parent == nil {
 		return ""
@@ -115,10 +141,10 @@ func (l *lowering) recordPrototypeKey(node *ast.Node, depth int) string {
 	var visit ast.Visitor
 	visit = func(n *ast.Node) bool {
 		if n.Kind == ast.KindCallExpression {
-			signature := l.checker.GetResolvedSignature(n)
+			signature := lowering.checker.GetResolvedSignature(n)
 			args := n.AsCallExpression().Arguments.Nodes
 			if signature != nil && signature.Declaration() == owner && index < len(args) {
-				if key := l.recordPrototypeKey(args[index], depth+1); key != "" {
+				if key := lowering.recordPrototypeKey(args[index], depth+1); key != "" {
 					result = key
 					return true
 				}
@@ -126,7 +152,7 @@ func (l *lowering) recordPrototypeKey(node *ast.Node, depth int) string {
 		}
 		return n.ForEachChild(visit)
 	}
-	for _, file := range l.program.CompilerProgram().GetSourceFiles() {
+	for _, file := range lowering.program.CompilerProgram().GetSourceFiles() {
 		if result != "" {
 			break
 		}
@@ -136,10 +162,10 @@ func (l *lowering) recordPrototypeKey(node *ast.Node, depth int) string {
 	}
 	return result
 }
-func (l *lowering) recordExplicitOwn(receiver *ast.Node, key string) bool {
+func (lowering *lowering) recordExplicitOwn(receiver *ast.Node, key string) bool {
 	receiver = ast.SkipParentheses(receiver)
 	if ast.IsIdentifier(receiver) {
-		s := l.symbol(receiver)
+		s := lowering.symbol(receiver)
 		if s == nil || len(s.Declarations) != 1 || s.Declarations[0].Kind != ast.KindVariableDeclaration {
 			return false
 		}
@@ -158,7 +184,7 @@ func (l *lowering) recordExplicitOwn(receiver *ast.Node, key string) bool {
 		}
 		name := p.Name()
 		if name.Kind == ast.KindComputedPropertyName {
-			if l.recordPrototypeKey(name.AsComputedPropertyName().Expression, 0) == key {
+			if lowering.recordPrototypeKey(name.AsComputedPropertyName().Expression, 0) == key {
 				return true
 			}
 		} else if name.Text() == key && key != "__proto__" {
@@ -167,20 +193,20 @@ func (l *lowering) recordExplicitOwn(receiver *ast.Node, key string) bool {
 	}
 	return false
 }
-func (l *lowering) recordScalarNarrowed(node *ast.Node) bool {
-	here := l.checker.GetTypeAtLocation(node)
+func (lowering *lowering) recordScalarNarrowed(node *ast.Node) bool {
+	here := lowering.checker.GetTypeAtLocation(node)
 	if here.Flags()&(checker.TypeFlagsNumberLike|checker.TypeFlagsStringLike|checker.TypeFlagsBooleanLike) == 0 {
 		return false
 	}
-	element := l.recordElement(l.checker.GetTypeAtLocation(recordReceiver(node)))
-	return element != nil && (element.Flags()&checker.TypeFlagsUnion != 0 || !l.includesUndefined(here))
+	element := lowering.recordElement(lowering.checker.GetTypeAtLocation(recordReceiver(node)))
+	return element != nil && (element.Flags()&checker.TypeFlagsUnion != 0 || !lowering.includesUndefined(here))
 }
-func (l *lowering) recordInterveningMutation(node *ast.Node) bool {
+func (lowering *lowering) recordInterveningMutation(node *ast.Node) bool {
 	receiver := ast.SkipParentheses(recordReceiver(node))
 	if !ast.IsIdentifier(receiver) {
 		return false
 	}
-	symbol := l.symbol(receiver)
+	symbol := lowering.symbol(receiver)
 	var statement *ast.Node
 	for at := node; at.Parent != nil; at = at.Parent {
 		if at.Parent.Kind == ast.KindBlock {
@@ -200,13 +226,17 @@ func (l *lowering) recordInterveningMutation(node *ast.Node) bool {
 		if ast.IsFunctionLike(n) {
 			return false
 		}
-		if n.Kind == ast.KindDeleteExpression && l.recordTarget(n.AsDeleteExpression().Expression) {
-			if l.symbol(ast.SkipParentheses(recordReceiver(n.AsDeleteExpression().Expression))) == symbol && l.recordSameSlot(n.AsDeleteExpression().Expression, node) {
+		if n.Kind == ast.KindDeleteExpression && lowering.recordTarget(n.AsDeleteExpression().Expression) {
+			if lowering.symbol(ast.SkipParentheses(recordReceiver(n.AsDeleteExpression().Expression))) == symbol &&
+				lowering.recordSameSlot(n.AsDeleteExpression().Expression, node) {
 				found = true
 			}
 		}
-		if n.Kind == ast.KindBinaryExpression && n.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken && l.recordTarget(n.AsBinaryExpression().Left) {
-			if l.symbol(ast.SkipParentheses(recordReceiver(n.AsBinaryExpression().Left))) == symbol && l.recordSameSlot(n.AsBinaryExpression().Left, node) {
+		if n.Kind == ast.KindBinaryExpression &&
+			n.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken &&
+			lowering.recordTarget(n.AsBinaryExpression().Left) {
+			if lowering.symbol(ast.SkipParentheses(recordReceiver(n.AsBinaryExpression().Left))) == symbol &&
+				lowering.recordSameSlot(n.AsBinaryExpression().Left, node) {
 				found = true
 			}
 		}
@@ -218,7 +248,7 @@ func (l *lowering) recordInterveningMutation(node *ast.Node) bool {
 			return false
 		}
 		if n.Kind == ast.KindCallExpression {
-			s := l.checker.GetResolvedSignature(n)
+			s := lowering.checker.GetResolvedSignature(n)
 			if s != nil && s.Declaration() != nil && s.Declaration().Body() != nil {
 				s.Declaration().Body().ForEachChild(mutation)
 			}
@@ -236,7 +266,7 @@ func (l *lowering) recordInterveningMutation(node *ast.Node) bool {
 
 // Restrict invalidation to the same literal slot, rather than every mutation of
 // its container. Unrelated record writes preserve a scalar narrowing.
-func (l *lowering) recordSameSlot(a, b *ast.Node) bool {
+func (lowering *lowering) recordSameSlot(a, b *ast.Node) bool {
 	key := func(n *ast.Node) string {
 		n = ast.SkipParentheses(n)
 		if n.Kind == ast.KindPropertyAccessExpression {

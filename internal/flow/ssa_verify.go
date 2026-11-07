@@ -49,7 +49,7 @@ type SSAViolation struct {
 	Detail string
 }
 
-func (v SSAViolation) String() string { return v.Detail }
+func (violation SSAViolation) String() string { return violation.Detail }
 
 // SSAViolationKind is which of the two invariants a violation breaks.
 type SSAViolationKind uint8
@@ -312,12 +312,12 @@ func computeDominance(function *Function) *dominanceTree {
 // dominates reports whether every path from the entry to block passes through dominator.
 //
 // A block dominates itself, the standard convention.
-func (t *dominanceTree) dominates(dominator, block BlockId) bool {
-	target, ok := t.position[dominator]
+func (tree *dominanceTree) dominates(dominator, block BlockId) bool {
+	target, ok := tree.position[dominator]
 	if !ok {
 		return false
 	}
-	index, ok := t.position[block]
+	index, ok := tree.position[block]
 	if !ok {
 		return false
 	}
@@ -325,9 +325,9 @@ func (t *dominanceTree) dominates(dominator, block BlockId) bool {
 		if index == target {
 			return true
 		}
-		if index == 0 || t.immediate[index] == -1 {
+		if index == 0 || tree.immediate[index] == -1 {
 			return false
 		}
-		index = t.immediate[index]
+		index = tree.immediate[index]
 	}
 }

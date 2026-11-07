@@ -27,21 +27,24 @@ import (
 //     where the base has [T, T]. A brand whose arguments are its base's reads the same there as its base.
 //   - A brand with a member typed void: such a program fails closed under the void-container rule
 //     (rulings.md, Oct 29), so it doesn't gain its base's layout here. The cast is erased all the same.
-func (l *lowering) unbranded(t *checker.Type) *checker.Type {
+func (lowering *lowering) unbranded(t *checker.Type) *checker.Type {
 	base := t
 	for {
-		next, members := l.phantomExtension(base)
+		next, members := lowering.phantomExtension(base)
 		if next == nil {
 			break
 		}
 		for _, member := range members {
-			if l.voidBrandMember(base, member) {
+			if lowering.voidBrandMember(base, member) {
 				return t
 			}
 		}
 		base = next
 	}
-	if base == t || !l.checker.IsArrayType(base) || t.ObjectFlags()&checker.ObjectFlagsReference == 0 || !slices.Equal(l.checker.GetTypeArguments(t), l.checker.GetTypeArguments(base)) {
+	if base == t ||
+		!lowering.checker.IsArrayType(base) ||
+		t.ObjectFlags()&checker.ObjectFlagsReference == 0 ||
+		!slices.Equal(lowering.checker.GetTypeArguments(t), lowering.checker.GetTypeArguments(base)) {
 		return t
 	}
 	return base
@@ -49,24 +52,27 @@ func (l *lowering) unbranded(t *checker.Type) *checker.Type {
 
 // voidBrandMember is whether brand's member name is typed void, or a union holding void, as
 // phantomBrandMember reads a member's type.
-func (l *lowering) voidBrandMember(brand *checker.Type, name string) bool {
-	property := l.checker.GetPropertyOfType(brand, name)
+func (lowering *lowering) voidBrandMember(brand *checker.Type, name string) bool {
+	property := lowering.checker.GetPropertyOfType(brand, name)
 	if property == nil {
 		return false
 	}
-	proven := l.checker.GetTypeOfSymbol(property)
+	proven := lowering.checker.GetTypeOfSymbol(property)
 	if proven.Flags()&checker.TypeFlagsUnion != 0 {
-		return slices.ContainsFunc(proven.Types(), func(part *checker.Type) bool { return part.Flags()&checker.TypeFlagsVoid != 0 })
+		return slices.ContainsFunc(
+			proven.Types(),
+			func(part *checker.Type) bool { return part.Flags()&checker.TypeFlagsVoid != 0 },
+		)
 	}
 	return proven.Flags()&checker.TypeFlagsVoid != 0
 }
 
 // isArrayType is the checker's array test (Array or ReadonlyArray) of t held as its base.
-func (l *lowering) isArrayType(t *checker.Type) bool {
-	return l.checker.IsArrayType(l.unbranded(t))
+func (lowering *lowering) isArrayType(t *checker.Type) bool {
+	return lowering.checker.IsArrayType(lowering.unbranded(t))
 }
 
 // elementTypeOfArray is the checker's element type of t held as its base.
-func (l *lowering) elementTypeOfArray(t *checker.Type) *checker.Type {
-	return l.checker.GetElementTypeOfArrayType(l.unbranded(t))
+func (lowering *lowering) elementTypeOfArray(t *checker.Type) *checker.Type {
+	return lowering.checker.GetElementTypeOfArrayType(lowering.unbranded(t))
 }

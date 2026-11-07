@@ -17,9 +17,9 @@ func FunctionRestArguments(function Function) RestArguments {
 
 // PrepareArgumentSlots assigns stable offsets. Merely preparing a layout emits
 // no instructions; the caller selects only its function type's needed slots.
-func (p *Program) PrepareArgumentSlots() {
+func (program *Program) PrepareArgumentSlots() {
 	fixed := 0
-	for _, function := range p.Functions {
+	for _, function := range program.Functions {
 		n := len(function.Parameters)
 		if function.RestElement != 0 {
 			n--
@@ -29,16 +29,16 @@ func (p *Program) PrepareArgumentSlots() {
 		}
 		fixed = max(fixed, n)
 	}
-	p.RestArgumentSlots = map[RestArguments]int{}
-	for _, function := range p.Functions {
+	program.RestArgumentSlots = map[RestArguments]int{}
+	for _, function := range program.Functions {
 		if function.RestElement != 0 {
 			key := FunctionRestArguments(function)
-			if _, exists := p.RestArgumentSlots[key]; !exists {
-				p.RestArgumentSlots[key] = fixed + len(p.RestArgumentSlots)
+			if _, exists := program.RestArgumentSlots[key]; !exists {
+				program.RestArgumentSlots[key] = fixed + len(program.RestArgumentSlots)
 			}
 		}
 	}
-	p.FixedArgumentSlots = fixed
+	program.FixedArgumentSlots = fixed
 }
 
 type ArgumentLayout struct {
@@ -49,13 +49,13 @@ type ArgumentLayout struct {
 
 // ClosureArgumentLayout pads optional slots and collects rest tails at the
 // caller. A hidden count is selected only by an actual reader candidate.
-func (p *Program) ClosureArgumentLayout(call CallClosure) ArgumentLayout {
-	targets, resolved := p.FunctionTypeTargets[call.FunctionType]
+func (program *Program) ClosureArgumentLayout(call CallClosure) ArgumentLayout {
+	targets, resolved := program.FunctionTypeTargets[call.FunctionType]
 	if !resolved {
-		bounded := p.ClosureTargets(call)
+		bounded := program.ClosureTargets(call)
 		targets = bounded.Functions
 		if bounded.Unknown {
-			for index := range p.Functions {
+			for index := range program.Functions {
 				targets = append(targets, index)
 			}
 		}
@@ -65,8 +65,8 @@ func (p *Program) ClosureArgumentLayout(call CallClosure) ArgumentLayout {
 	}
 	layout := ArgumentLayout{}
 	for _, target := range targets {
-		function := p.Functions[target]
-		layout.Count = layout.Count || p.PackedCountNeeded(target)
+		function := program.Functions[target]
+		layout.Count = layout.Count || program.PackedCountNeeded(target)
 		// Ordinary named functions bind their direct arguments elsewhere. Their
 		// value adapters, when the program makes one, are separate closure records.
 		if !function.Closure && !function.Receiver {
@@ -94,7 +94,7 @@ func (p *Program) ClosureArgumentLayout(call CallClosure) ArgumentLayout {
 			parameters = parameters[:len(parameters)-1]
 		}
 		for index, parameter := range parameters {
-			of := p.Locals[parameter].Type
+			of := program.Locals[parameter].Type
 			if index == len(layout.Fixed) {
 				layout.Fixed = append(layout.Fixed, of)
 			} else if of.IsMaybe() {
@@ -116,13 +116,15 @@ type argumentFacts struct {
 	convention      bool
 }
 
-func (p *Program) argumentFactsOf() *argumentFacts {
-	if facts := p.argumentFacts; facts != nil && facts.functions == len(p.Functions) && facts.sets == len(p.FunctionTypeTargets) {
+func (program *Program) argumentFactsOf() *argumentFacts {
+	if facts := program.argumentFacts; facts != nil &&
+		facts.functions == len(program.Functions) &&
+		facts.sets == len(program.FunctionTypeTargets) {
 		return facts
 	}
 	// Each function's containing sets, found in one pass over every set.
-	containing := make([][][]int, len(p.Functions))
-	for _, targets := range p.FunctionTypeTargets {
+	containing := make([][][]int, len(program.Functions))
+	for _, targets := range program.FunctionTypeTargets {
 		seen := map[int]bool{}
 		for _, target := range targets {
 			if !seen[target] {
@@ -131,22 +133,26 @@ func (p *Program) argumentFactsOf() *argumentFacts {
 			}
 		}
 	}
-	facts := &argumentFacts{functions: len(p.Functions), sets: len(p.FunctionTypeTargets), packed: make([]bool, len(p.Functions))}
-	for function := range p.Functions {
-		facts.packed[function] = p.packedCountNeeded(function, containing[function])
+	facts := &argumentFacts{
+		functions: len(program.Functions),
+		sets:      len(program.FunctionTypeTargets),
+		packed:    make([]bool, len(program.Functions)),
+	}
+	for function := range program.Functions {
+		facts.packed[function] = program.packedCountNeeded(function, containing[function])
 		facts.convention = facts.convention || facts.packed[function]
 	}
-	p.argumentFacts = facts
+	program.argumentFacts = facts
 	return facts
 }
 
 // PackedCountNeeded is a callee observation, not a property of all function values.
-func (p *Program) PackedCountNeeded(function int) bool {
-	return p.argumentFactsOf().packed[function]
+func (program *Program) PackedCountNeeded(function int) bool {
+	return program.argumentFactsOf().packed[function]
 }
 
-func (p *Program) packedCountNeeded(function int, containing [][]int) bool {
-	f := p.Functions[function]
+func (program *Program) packedCountNeeded(function int, containing [][]int) bool {
+	f := program.Functions[function]
 	if f.ReadsArguments || f.RestElement != 0 && (f.Closure || f.Receiver) {
 		return true
 	}
@@ -160,7 +166,7 @@ func (p *Program) packedCountNeeded(function int, containing [][]int) bool {
 			parameters = parameters[1:]
 		}
 		for _, target := range targets {
-			other := p.Functions[target]
+			other := program.Functions[target]
 			if !other.Closure && !other.Receiver {
 				continue
 			}
@@ -174,10 +180,12 @@ func (p *Program) packedCountNeeded(function int, containing [][]int) bool {
 				compared = compared[1:]
 			}
 			for index, parameter := range parameters {
-				if index >= len(compared) || f.RestElement != 0 && index == len(parameters)-1 || other.RestElement != 0 && index == len(compared)-1 {
+				if index >= len(compared) ||
+					f.RestElement != 0 && index == len(parameters)-1 ||
+					other.RestElement != 0 && index == len(compared)-1 {
 					continue
 				}
-				of, against := p.Locals[parameter].Type, p.Locals[compared[index]].Type
+				of, against := program.Locals[parameter].Type, program.Locals[compared[index]].Type
 				if (of.IsMaybe() || of.IsReference()) && absentRepresentation(of) != absentRepresentation(against) {
 					return true
 				}
@@ -197,16 +205,16 @@ func absentRepresentation(of Type) int {
 	return 0
 }
 
-func (p *Program) ClosureConventionNeeded() bool {
-	return p.argumentFactsOf().convention
+func (program *Program) ClosureConventionNeeded() bool {
+	return program.argumentFactsOf().convention
 }
 
-func (p *Program) PackedCountNeededFromCall(call CallClosure) bool {
-	return p.ClosureArgumentLayout(call).Count
+func (program *Program) PackedCountNeededFromCall(call CallClosure) bool {
+	return program.ClosureArgumentLayout(call).Count
 }
 
-func (p *Program) CanonicalClosuresNeeded() bool {
-	for _, f := range p.Functions {
+func (program *Program) CanonicalClosuresNeeded() bool {
+	for _, f := range program.Functions {
 		if f.FrameIdentity != 0 || f.NestedFrame {
 			return true
 		}
@@ -214,8 +222,8 @@ func (p *Program) CanonicalClosuresNeeded() bool {
 	return false
 }
 
-func (p *Program) ClosureReceiversNeeded() bool {
-	for _, f := range p.Functions {
+func (program *Program) ClosureReceiversNeeded() bool {
+	for _, f := range program.Functions {
 		if f.Closure && f.Receiver {
 			return true
 		}

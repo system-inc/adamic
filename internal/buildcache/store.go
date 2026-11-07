@@ -186,8 +186,10 @@ func blob(store, sum string) ([]byte, error) {
 // poisonedError is a stored product that isn't what its key or hashes say: it fails the caller, never quietly rebuilt.
 type poisonedError struct{ err error }
 
-func (e poisonedError) Error() string { return "cache poisoning: " + e.err.Error() }
-func (e poisonedError) Unwrap() error { return e.err }
+func (poisonedError poisonedError) Error() string {
+	return "cache poisoning: " + poisonedError.err.Error()
+}
+func (poisonedError poisonedError) Unwrap() error { return poisonedError.err }
 
 func poisoned(sourceError error) error { return poisonedError{sourceError} }
 

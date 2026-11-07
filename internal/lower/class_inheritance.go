@@ -11,7 +11,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 )
 
-func (l *lowering) baseInstance(declaration *ast.Node, classType *checker.Type) (*instance, error) {
+func (lowering *lowering) baseInstance(declaration *ast.Node, classType *checker.Type) (*instance, error) {
 	for _, clause := range nodesOf(declaration.ClassLikeData().HeritageClauses) {
 		if clause.AsHeritageClause().Token != ast.KindExtendsKeyword {
 			continue
@@ -19,29 +19,29 @@ func (l *lowering) baseInstance(declaration *ast.Node, classType *checker.Type) 
 		types := clause.AsHeritageClause().Types.Nodes
 		if len(types) != 1 ||
 			!ast.IsIdentifier(ast.SkipParentheses(types[0].AsExpressionWithTypeArguments().Expression)) {
-			return nil, l.notYet(clause, "a computed class base; name the base class directly")
+			return nil, lowering.notYet(clause, "a computed class base; name the base class directly")
 		}
-		bases := l.classBases(classType)
+		bases := lowering.classBases(classType)
 		if len(bases) != 1 {
-			return nil, l.notYet(clause, "a class base whose type isn't known")
+			return nil, lowering.notYet(clause, "a class base whose type isn't known")
 		}
 		baseType := bases[0]
 		symbol := baseType.Symbol()
 		if symbol == nil || len(symbol.Declarations) != 1 || symbol.Declarations[0].Kind != ast.KindClassDeclaration {
-			return nil, l.notYet(clause, "a base that isn't a declared class")
+			return nil, lowering.notYet(clause, "a base that isn't a declared class")
 		}
 		base := symbol.Declarations[0]
-		return l.instantiate(base, baseType, clause)
+		return lowering.instantiate(base, baseType, clause)
 	}
 	return nil, nil
 }
 
 // classOverrideRefusal checks a class declaration's overrides against its bases.
-func (l *lowering) classOverrideRefusal(node *ast.Node) error {
+func (lowering *lowering) classOverrideRefusal(node *ast.Node) error {
 	if node.Kind == ast.KindClassDeclaration {
-		if checkOverridesError := l.checkOverrides(
+		if checkOverridesError := lowering.checkOverrides(
 			node,
-			l.checker.GetTypeAtLocation(node.Name()),
+			lowering.checker.GetTypeAtLocation(node.Name()),
 		); checkOverridesError != nil {
 			return checkOverridesError
 		}
@@ -53,39 +53,45 @@ func init() { refusalRules.register(3000, "classOverrideRefusal", (*lowering).cl
 
 // TypeScript compares methods bivariantly and mutable properties covariantly. Neither is safe
 // through a base reference: arguments flow into the override, and fields can be written through it.
-func (l *lowering) checkOverrides(declaration *ast.Node, classType *checker.Type) error {
-	bases := l.classBases(classType)
+func (lowering *lowering) checkOverrides(declaration *ast.Node, classType *checker.Type) error {
+	bases := lowering.classBases(classType)
 	if len(bases) == 0 {
 		return nil
 	}
-	return l.checkMemberOverrides(declaration, classType, bases[0], false)
+	return lowering.checkMemberOverrides(declaration, classType, bases[0], false)
 }
 
-func (l *lowering) checkMemberOverrides(declaration *ast.Node, classType, base *checker.Type, static bool) error {
+func (lowering *lowering) checkMemberOverrides(
+	declaration *ast.Node,
+	classType, base *checker.Type,
+	static bool,
+) error {
 	checkABI := static ||
 		len(declaration.TypeParameters()) == 0 ||
-		classType != l.checker.GetTypeAtLocation(declaration.Name())
+		classType != lowering.checker.GetTypeAtLocation(declaration.Name())
 	for _, member := range classMembersWithParameters(declaration) {
 		if member.Name() == nil || ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) != static {
 			continue
 		}
 		// Computed names are checker property identities, not textual AST names.
 		// In particular Symbol.iterator must use its unique-symbol key.
-		symbol := l.checker.GetSymbolOfDeclaration(member)
+		symbol := lowering.checker.GetSymbolOfDeclaration(member)
 		if symbol == nil {
-			return l.notYet(member, "a class member without a resolved property identity")
+			return lowering.notYet(member, "a class member without a resolved property identity")
 		}
 		key := symbol.Name
-		inherited := l.checker.GetPropertyOfType(base, key)
+		inherited := lowering.checker.GetPropertyOfType(base, key)
 		if inherited == nil {
 			continue
 		}
-		own := l.checker.GetTypeAtLocation(member.Name())
-		if property := l.checker.GetPropertyOfType(classType, key); property != nil {
-			own = l.checker.GetTypeOfSymbol(property)
+		own := lowering.checker.GetTypeAtLocation(member.Name())
+		if property := lowering.checker.GetPropertyOfType(classType, key); property != nil {
+			own = lowering.checker.GetTypeOfSymbol(property)
 		}
-		previous := l.checker.GetTypeOfSymbol(inherited)
-		refuse := func(what, fix string) error { return &Refused{Where: l.program.Where(member), What: what, Fix: fix} }
+		previous := lowering.checker.GetTypeOfSymbol(inherited)
+		refuse := func(what, fix string) error {
+			return &Refused{Where: lowering.program.Where(member), What: what, Fix: fix}
+		}
 		if (member.Kind == ast.KindMethodDeclaration) != (inherited.Flags&ast.SymbolFlagsMethod != 0) {
 			return refuse(
 				"an inherited method replaced by a field, or a field replaced by a method",
@@ -102,8 +108,8 @@ func (l *lowering) checkMemberOverrides(declaration *ast.Node, classType, base *
 			ownGet, ownSet, baseGet, baseSet := false, false, false, false
 			for _, candidate := range declaration.Members() {
 				if candidate.Name() != nil &&
-					l.checker.GetSymbolOfDeclaration(candidate) != nil &&
-					l.checker.GetSymbolOfDeclaration(candidate).Name == key &&
+					lowering.checker.GetSymbolOfDeclaration(candidate) != nil &&
+					lowering.checker.GetSymbolOfDeclaration(candidate).Name == key &&
 					ast.HasSyntacticModifier(candidate, ast.ModifierFlagsStatic) == static {
 					ownGet = ownGet || candidate.Kind == ast.KindGetAccessor
 					ownSet = ownSet || candidate.Kind == ast.KindSetAccessor
@@ -124,16 +130,24 @@ func (l *lowering) checkMemberOverrides(declaration *ast.Node, classType, base *
 					if candidate.Kind != ast.KindSetAccessor {
 						continue
 					}
-					old := l.checker.GetSignatureFromDeclaration(candidate)
-					next := l.checker.GetSignatureFromDeclaration(member)
-					accepts := l.checker.GetTypeOfSymbol(old.Parameters()[0])
-					override := l.checker.GetTypeOfSymbol(next.Parameters()[0])
+					old := lowering.checker.GetSignatureFromDeclaration(candidate)
+					next := lowering.checker.GetSignatureFromDeclaration(member)
+					accepts := lowering.checker.GetTypeOfSymbol(old.Parameters()[0])
+					override := lowering.checker.GetTypeOfSymbol(next.Parameters()[0])
 					if !static {
-						accepts = instantiateType(l.checker, accepts, l.typeMapperOf(candidate.Parent, base))
-						override = instantiateType(l.checker, override, l.typeMapperOf(declaration, classType))
+						accepts = instantiateType(
+							lowering.checker,
+							accepts,
+							lowering.typeMapperOf(candidate.Parent, base),
+						)
+						override = instantiateType(
+							lowering.checker,
+							override,
+							lowering.typeMapperOf(declaration, classType),
+						)
 					}
-					if !l.classAssignable(accepts, override) ||
-						l.widened(accepts, override, map[[2]*checker.Type]bool{}) != nil {
+					if !lowering.classAssignable(accepts, override) ||
+						lowering.widened(accepts, override, map[[2]*checker.Type]bool{}) != nil {
 						return refuse(
 							"an accessor override that narrows a setter parameter (adamic/contravariant-override)",
 							"accept the base setter's parameter type or a wider type; narrow it inside the setter",
@@ -142,7 +156,8 @@ func (l *lowering) checkMemberOverrides(declaration *ast.Node, classType, base *
 				}
 			}
 			if ownGet &&
-				(!l.classAssignable(own, previous) || l.widened(own, previous, map[[2]*checker.Type]bool{}) != nil) {
+				(!lowering.classAssignable(own, previous) ||
+					lowering.widened(own, previous, map[[2]*checker.Type]bool{}) != nil) {
 				return refuse(
 					"an accessor override with an unsafe read or write type (adamic/invariant-mutable)",
 					"keep the inherited accessor type; narrow values inside the accessor",
@@ -150,76 +165,78 @@ func (l *lowering) checkMemberOverrides(declaration *ast.Node, classType, base *
 			}
 		}
 		if member.Kind == ast.KindPropertyDeclaration || parameterProperty(member) {
-			if !l.checker.IsReadonlySymbol(inherited) && (!l.classAssignable(previous, own) ||
-				!l.classAssignable(own, previous) ||
-				l.widened(previous, own, map[[2]*checker.Type]bool{}) != nil ||
-				l.widened(own, previous, map[[2]*checker.Type]bool{}) != nil) {
+			if !lowering.checker.IsReadonlySymbol(inherited) && (!lowering.classAssignable(previous, own) ||
+				!lowering.classAssignable(own, previous) ||
+				lowering.widened(previous, own, map[[2]*checker.Type]bool{}) != nil ||
+				lowering.widened(own, previous, map[[2]*checker.Type]bool{}) != nil) {
 				return refuse(
 					"a mutable inherited field redeclared with a different type (adamic/invariant-mutable)",
 					"keep the base field's type; narrow a local after reading it, or make the field readonly in the base",
 				)
 			}
-			if l.checker.IsReadonlySymbol(inherited) &&
-				(l.widened(own, previous, map[[2]*checker.Type]bool{}) != nil || !l.classAssignable(own, previous)) {
+			if lowering.checker.IsReadonlySymbol(inherited) &&
+				(lowering.widened(own, previous, map[[2]*checker.Type]bool{}) != nil ||
+					!lowering.classAssignable(own, previous)) {
 				return refuse(
 					"an inherited readonly field whose mutable contents are narrowed (adamic/invariant-mutable)",
 					"keep mutable contents at the base type, or make the contents readonly in the base too",
 				)
 			}
-			if l.checker.IsReadonlySymbol(inherited) && !ast.HasSyntacticModifier(member, ast.ModifierFlagsReadonly) {
+			if lowering.checker.IsReadonlySymbol(inherited) &&
+				!ast.HasSyntacticModifier(member, ast.ModifierFlagsReadonly) {
 				return refuse("a readonly inherited field redeclared mutable", "keep the inherited field readonly")
 			}
-			from, okFrom := l.representation(previous)
-			to, okTo := l.representation(own)
+			from, okFrom := lowering.representation(previous)
+			to, okTo := lowering.representation(own)
 			if checkABI && (!okFrom || !okTo || from != to) {
-				return l.notYet(member, "an inherited field override with a different native representation")
+				return lowering.notYet(member, "an inherited field override with a different native representation")
 			}
 		}
 		if member.Kind != ast.KindMethodDeclaration {
 			continue
 		}
-		oldSignatures := l.checker.GetSignaturesOfType(previous, checker.SignatureKindCall)
-		newSignatures := l.checker.GetSignaturesOfType(own, checker.SignatureKindCall)
+		oldSignatures := lowering.checker.GetSignaturesOfType(previous, checker.SignatureKindCall)
+		newSignatures := lowering.checker.GetSignaturesOfType(own, checker.SignatureKindCall)
 		if len(oldSignatures) != 1 || len(newSignatures) != 1 {
-			return l.notYet(member, "an overloaded override")
+			return lowering.notYet(member, "an overloaded override")
 		}
 		old, next := oldSignatures[0], newSignatures[0]
 		if len(old.Parameters()) != len(next.Parameters()) {
-			return l.notYet(
+			return lowering.notYet(
 				member,
 				"an override with a different parameter count; keep the base method's parameter count",
 			)
 		}
 		for index, parameter := range old.Parameters() {
-			accepts := l.checker.GetTypeOfSymbol(parameter)
-			override := l.checker.GetTypeOfSymbol(next.Parameters()[index])
-			a, knownA := l.overrideParameterRepresentation(parameter)
-			b, knownB := l.overrideParameterRepresentation(next.Parameters()[index])
+			accepts := lowering.checker.GetTypeOfSymbol(parameter)
+			override := lowering.checker.GetTypeOfSymbol(next.Parameters()[index])
+			a, knownA := lowering.overrideParameterRepresentation(parameter)
+			b, knownB := lowering.overrideParameterRepresentation(next.Parameters()[index])
 			if checkABI && (!knownA || !knownB || a != b) {
-				return l.notYet(member, "an override with a different native representation for parameter "+
+				return lowering.notYet(member, "an override with a different native representation for parameter "+
 					strconv.Quote(next.Parameters()[index].Name)+
 					"; keep the base method's parameter form")
 			}
-			if !l.classAssignable(accepts, override) ||
-				l.widened(accepts, override, map[[2]*checker.Type]bool{}) != nil {
+			if !lowering.classAssignable(accepts, override) ||
+				lowering.widened(accepts, override, map[[2]*checker.Type]bool{}) != nil {
 				return refuse(
 					"an override that narrows a method parameter (adamic/contravariant-override)",
 					"accept the base method's parameter type or a wider type; narrow it inside the method",
 				)
 			}
 		}
-		oldResult := l.checker.GetReturnTypeOfSignature(old)
-		newResult := l.checker.GetReturnTypeOfSignature(next)
-		a, knownA := l.overrideResultRepresentation(oldResult)
-		b, knownB := l.overrideResultRepresentation(newResult)
+		oldResult := lowering.checker.GetReturnTypeOfSignature(old)
+		newResult := lowering.checker.GetReturnTypeOfSignature(next)
+		a, knownA := lowering.overrideResultRepresentation(oldResult)
+		b, knownB := lowering.overrideResultRepresentation(newResult)
 		if checkABI && (!knownA || !knownB || a != b) {
-			return l.notYet(
+			return lowering.notYet(
 				member,
 				"an override with a different native result representation; keep the base method's result form",
 			)
 		}
-		if !l.classAssignable(newResult, oldResult) ||
-			l.widened(newResult, oldResult, map[[2]*checker.Type]bool{}) != nil {
+		if !lowering.classAssignable(newResult, oldResult) ||
+			lowering.widened(newResult, oldResult, map[[2]*checker.Type]bool{}) != nil {
 			return refuse(
 				"an override that widens its return type",
 				"return the base method's result type or a subtype",
@@ -231,7 +248,7 @@ func (l *lowering) checkMemberOverrides(declaration *ast.Node, classType, base *
 
 // Match signature lowering, including the incoming optional form of a defaulted parameter.
 // The signature's symbol carries the instantiated type; its declaration carries the default.
-func (l *lowering) overrideParameterRepresentation(parameter *ast.Symbol) (ir.Type, bool) {
+func (lowering *lowering) overrideParameterRepresentation(parameter *ast.Symbol) (ir.Type, bool) {
 	if len(parameter.Declarations) != 1 || parameter.Declarations[0].Kind != ast.KindParameter {
 		return 0, false
 	}
@@ -244,7 +261,7 @@ func (l *lowering) overrideParameterRepresentation(parameter *ast.Symbol) (ir.Ty
 	if name.Kind == ast.KindArrayBindingPattern || name.Kind == ast.KindObjectBindingPattern {
 		return ir.Object, declared.Initializer == nil && declared.QuestionToken == nil
 	}
-	representation, known := l.representation(l.checker.GetTypeOfSymbol(parameter))
+	representation, known := lowering.representation(lowering.checker.GetTypeOfSymbol(parameter))
 	if declared.Initializer != nil || declared.QuestionToken != nil {
 		representation = ir.Maybe(representation)
 	}
@@ -252,90 +269,98 @@ func (l *lowering) overrideParameterRepresentation(parameter *ast.Symbol) (ir.Ty
 }
 
 // Named methods returning void or never have no C result, as signature lowering does.
-func (l *lowering) overrideResultRepresentation(result *checker.Type) (ir.Type, bool) {
+func (lowering *lowering) overrideResultRepresentation(result *checker.Type) (ir.Type, bool) {
 	if result.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) != 0 {
 		return 0, true
 	}
-	return l.representation(result)
+	return lowering.representation(result)
 }
 
 // Constructors initialize an already allocated object. A separate allocator fixes its dynamic
 // identity before even the base constructor runs, so base method calls can dispatch dynamically.
-func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) error {
+func (lowering *lowering) inheritanceConstructor(index int, declaration *ast.Node) error {
 	// Class initializers have their own receiver frame, even when instantiation
 	// is discovered while lowering an unrelated closure. Only arrows created
 	// inside this constructor may capture its locals.
-	outerClosures := l.closures
-	l.closures = nil
-	defer func() { l.closures = outerClosures }()
-	instance := l.instance
+	outerClosures := lowering.closures
+	lowering.closures = nil
+	defer func() { lowering.closures = outerClosures }()
+	instance := lowering.instance
 	var constructor *ast.Node
 	for _, member := range declaration.Members() {
 		if member.Kind == ast.KindConstructor {
 			constructor = member
 		}
 	}
-	instance.initializer = len(l.result.Functions)
+	instance.initializer = len(lowering.result.Functions)
 	initializer := instance.initializer
-	source := l.functionSource(declaration)
+	source := lowering.functionSource(declaration)
 	source.Role = "initialize"
 	source.Declaration = append(append([]string{}, source.Declaration...), "initialize")
-	l.result.Functions = append(
-		l.result.Functions,
-		ir.Function{Name: l.result.Functions[index].Name + "_initialize", Source: source},
+	lowering.result.Functions = append(
+		lowering.result.Functions,
+		ir.Function{Name: lowering.result.Functions[index].Name + "_initialize", Source: source},
 	)
-	this := l.thisLocal(initializer)
-	outerThis, outerIndex, outerFunction := l.this, l.functionIndex, l.function
-	context := l.result.Functions[initializer]
-	l.this, l.functionIndex, l.function = this, initializer, &context
-	defer func() { l.this, l.functionIndex, l.function = outerThis, outerIndex, outerFunction }()
+	this := lowering.thisLocal(initializer)
+	outerThis, outerIndex, outerFunction := lowering.this, lowering.functionIndex, lowering.function
+	context := lowering.result.Functions[initializer]
+	lowering.this, lowering.functionIndex, lowering.function = this, initializer, &context
+	defer func() {
+		lowering.this, lowering.functionIndex, lowering.function = outerThis, outerIndex, outerFunction
+	}()
 	if constructor != nil {
-		if signatureError := l.signature(initializer, constructor, this); signatureError != nil {
+		if signatureError := lowering.signature(initializer, constructor, this); signatureError != nil {
 			return signatureError
 		}
-		l.result.Functions[initializer].Parameters = append([]int{this}, l.result.Functions[initializer].Parameters...)
-		l.result.Functions[initializer].Boundary.Parameters = append(
+		lowering.result.Functions[initializer].Parameters = append(
+			[]int{this},
+			lowering.result.Functions[initializer].Parameters...,
+		)
+		lowering.result.Functions[initializer].Boundary.Parameters = append(
 			[]ir.BoundaryParameter{{}},
-			l.result.Functions[initializer].Boundary.Parameters...,
+			lowering.result.Functions[initializer].Boundary.Parameters...,
 		)
 	} else {
-		l.result.Functions[initializer].Parameters = []int{this}
-		l.result.Functions[initializer].Boundary.Parameters = []ir.BoundaryParameter{{}}
+		lowering.result.Functions[initializer].Parameters = []int{this}
+		lowering.result.Functions[initializer].Boundary.Parameters = []ir.BoundaryParameter{{}}
 		if instance.base != nil {
-			for _, parameter := range l.result.Functions[instance.base.initializer].Parameters[1:] {
-				local := len(l.result.Locals)
-				incoming := l.result.Locals[parameter]
+			for _, parameter := range lowering.result.Functions[instance.base.initializer].Parameters[1:] {
+				local := len(lowering.result.Locals)
+				incoming := lowering.result.Locals[parameter]
 				incoming.Function, incoming.Captured, incoming.Borrowed = initializer, false, false
-				l.result.Locals = append(l.result.Locals, incoming)
-				l.result.Functions[initializer].Parameters = append(l.result.Functions[initializer].Parameters, local)
-				l.result.Functions[initializer].Boundary.Parameters = append(
-					l.result.Functions[initializer].Boundary.Parameters,
+				lowering.result.Locals = append(lowering.result.Locals, incoming)
+				lowering.result.Functions[initializer].Parameters = append(
+					lowering.result.Functions[initializer].Parameters,
+					local,
+				)
+				lowering.result.Functions[initializer].Boundary.Parameters = append(
+					lowering.result.Functions[initializer].Boundary.Parameters,
 					ir.BoundaryParameter{},
 				)
 			}
 		}
 	}
-	l.result.Functions[initializer].Receiver = true
+	lowering.result.Functions[initializer].Receiver = true
 	if constructor == nil && instance.base != nil {
-		l.result.Functions[initializer].RestElement = l.result.Functions[instance.base.initializer].RestElement
-		l.result.Functions[initializer].ForwardsArguments = instance.base.initializer + 1
+		lowering.result.Functions[initializer].RestElement = lowering.result.Functions[instance.base.initializer].RestElement
+		lowering.result.Functions[initializer].ForwardsArguments = instance.base.initializer + 1
 	}
 	// The layout contains inherited fields first, but only this class's initializers run here.
-	fields := append([]ir.Field{}, l.result.Classes[instance.class-1].Fields...)
+	fields := append([]ir.Field{}, lowering.result.Classes[instance.class-1].Fields...)
 	for _, member := range classMembersWithParameters(declaration) {
 		if member.Kind != ast.KindPropertyDeclaration && !parameterProperty(member) {
 			continue
 		}
 		if ast.HasSyntacticModifier(member, ast.ModifierFlagsAmbient|ast.ModifierFlagsAbstract) {
-			return l.notYet(member, "a declare or abstract class field")
+			return lowering.notYet(member, "a declare or abstract class field")
 		}
 		if ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 			continue
 		}
 		if !ast.IsIdentifier(member.Name()) && member.Name().Kind != ast.KindPrivateIdentifier {
-			return l.notYet(member, "a field with a computed name")
+			return lowering.notYet(member, "a field with a computed name")
 		}
-		of, typeOfError := l.typeOf(member.Name())
+		of, typeOfError := lowering.typeOf(member.Name())
 		if typeOfError != nil {
 			return typeOfError
 		}
@@ -343,18 +368,18 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 		// Optional presence and boxed union class layouts remain separate work.
 		if slotless(of) &&
 			(of != ir.MaybeBoolean || member.PostfixToken() != nil) &&
-			l.placeholderOrigin(member.Name()) == "" {
-			return l.notYet(
+			lowering.placeholderOrigin(member.Name()) == "" {
+			return lowering.notYet(
 				member,
-				"a field of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(member.Name())),
+				"a field of type "+lowering.checker.TypeToString(lowering.checker.GetTypeAtLocation(member.Name())),
 			)
 		}
 		field := ir.Field{
-			Name:          l.fieldName(member.Name()),
+			Name:          lowering.fieldName(member.Name()),
 			Value:         zeroValue(of),
 			Private:       member.Name().Kind == ast.KindPrivateIdentifier,
-			Uninitialized: l.uninitializedDeclaration(member),
-			Unset:         l.placeholderOrigin(member.Name()) != "",
+			Uninitialized: lowering.uninitializedDeclaration(member),
+			Unset:         lowering.placeholderOrigin(member.Name()) != "",
 		}
 		// An uninitialized reference still has its declared representation for the shape bitmap.
 		if of.IsReference() {
@@ -372,13 +397,13 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 			fields = append(fields, field)
 		}
 	}
-	l.result.Classes[instance.class-1].Fields = fields
+	lowering.result.Classes[instance.class-1].Fields = fields
 	if instance.base == nil {
-		initialized, fieldInitializersError := l.fieldInitializers(declaration, this)
+		initialized, fieldInitializersError := lowering.fieldInitializers(declaration, this)
 		if fieldInitializersError != nil {
 			return fieldInitializersError
 		}
-		l.result.Functions[initializer].Body = initialized
+		lowering.result.Functions[initializer].Body = initialized
 	}
 	if constructor != nil {
 		instance.constructing = true
@@ -397,89 +422,95 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 		}
 		constructor.Body().ForEachChild(returns)
 		if returnValue != nil {
-			return l.notYet(returnValue, "a constructor returning a replacement value")
+			return lowering.notYet(returnValue, "a constructor returning a replacement value")
 		}
 		state := uint8(0)
 		if instance.base != nil {
 			var prepareSuperError error
-			state, prepareSuperError = l.prepareSuper(constructor, initializer)
+			state, prepareSuperError = lowering.prepareSuper(constructor, initializer)
 			if prepareSuperError != nil {
 				return prepareSuperError
 			}
 		}
 
-		outerUnset := l.unsetUntil
-		l.unsetUntil = lastFieldAssignment(declaration, constructor)
-		lowerFunctionError := l.lowerFunction(initializer, constructor, this)
-		l.unsetUntil = outerUnset
+		outerUnset := lowering.unsetUntil
+		lowering.unsetUntil = lastFieldAssignment(declaration, constructor)
+		lowerFunctionError := lowering.lowerFunction(initializer, constructor, this)
+		lowering.unsetUntil = outerUnset
 		if lowerFunctionError != nil {
 			return lowerFunctionError
 		}
 		if state&superUninitialized != 0 {
-			l.result.Functions[initializer].Body = append(l.result.Functions[initializer].Body, l.superEnd())
+			lowering.result.Functions[initializer].Body = append(
+				lowering.result.Functions[initializer].Body,
+				lowering.superEnd(),
+			)
 		}
 	} else if instance.base != nil {
 		arguments := []ir.Expression{}
-		for _, parameter := range l.result.Functions[initializer].Parameters {
-			arguments = append(arguments, ir.Read{Local: parameter, Of: l.result.Locals[parameter].Type})
+		for _, parameter := range lowering.result.Functions[initializer].Parameters {
+			arguments = append(arguments, ir.Read{Local: parameter, Of: lowering.result.Locals[parameter].Type})
 		}
-		l.result.Functions[initializer].Body = []ir.Statement{ir.Evaluate{Value: ir.Call{
+		lowering.result.Functions[initializer].Body = []ir.Statement{ir.Evaluate{Value: ir.Call{
 			Function:     instance.base.initializer,
 			Arguments:    arguments,
 			ForwardCount: true,
 			RestPacked:   true,
 		}}}
-		initialized, fieldInitializersError := l.fieldInitializers(declaration, this)
+		initialized, fieldInitializersError := lowering.fieldInitializers(declaration, this)
 		if fieldInitializersError != nil {
 			return fieldInitializersError
 		}
-		l.result.Functions[initializer].Body = append(l.result.Functions[initializer].Body, initialized...)
+		lowering.result.Functions[initializer].Body = append(
+			lowering.result.Functions[initializer].Body,
+			initialized...,
+		)
 	}
 	if instance.base == nil && !instance.hasDescendants {
 		// Keep creation and writes in one function when no derived constructor needs this
 		// initializer. Freshness then knows this is new at each write, not just at return.
-		body := l.result.Functions[initializer]
-		for local := range l.result.Locals {
-			if l.result.Locals[local].Function == initializer {
-				l.result.Locals[local].Function = index
+		body := lowering.result.Functions[initializer]
+		for local := range lowering.result.Locals {
+			if lowering.result.Locals[local].Function == initializer {
+				lowering.result.Locals[local].Function = index
 			}
 		}
-		wrapper := l.result.Functions[index]
+		wrapper := lowering.result.Functions[index]
 		wrapper.Parameters = append([]int{}, body.Parameters[1:]...)
 		wrapper.ArgumentsCount = body.ArgumentsCount
 		wrapper.ForwardsArguments = body.ForwardsArguments
 		wrapper.RestElement = body.RestElement
 		wrapper.Body = append([]ir.Statement{ir.Declare{Local: this, Value: ir.ObjectLiteral{
-			ProgramRegion: l.programClass(instance.class),
+			ProgramRegion: lowering.programClass(instance.class),
 			Fields:        fields,
 			Class:         instance.class,
 			Methods:       instance.methodList(),
 		}}}, body.Body...)
 		wrapper.Body = append(wrapper.Body, ir.Return{Value: ir.Read{Local: this, Of: ir.Object}})
-		l.result.Functions[index] = wrapper
-		l.result.Functions[initializer] = ir.Function{Name: body.Name, Source: body.Source}
+		lowering.result.Functions[index] = wrapper
+		lowering.result.Functions[initializer] = ir.Function{Name: body.Name, Source: body.Source}
 		return nil
 	}
 	// The public constructor owns its object, including when an initializer throws.
-	wrapper := l.result.Functions[index]
+	wrapper := lowering.result.Functions[index]
 	wrapper.ForwardsArguments = initializer + 1
-	wrapper.RestElement = l.result.Functions[initializer].RestElement
+	wrapper.RestElement = lowering.result.Functions[initializer].RestElement
 	arguments := []ir.Expression{}
-	object := len(l.result.Locals)
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: "this", Type: ir.Object, Function: index})
-	l.noteLocal(object, l.classType, declaration.Name())
+	object := len(lowering.result.Locals)
+	lowering.result.Locals = append(lowering.result.Locals, ir.Local{Name: "this", Type: ir.Object, Function: index})
+	lowering.noteLocal(object, lowering.classType, declaration.Name())
 	arguments = append(arguments, ir.Read{Local: object, Of: ir.Object})
-	for _, parameter := range l.result.Functions[initializer].Parameters[1:] {
-		incoming := l.result.Locals[parameter]
+	for _, parameter := range lowering.result.Functions[initializer].Parameters[1:] {
+		incoming := lowering.result.Locals[parameter]
 		incoming.Function, incoming.Captured, incoming.Borrowed = index, false, false
-		local := len(l.result.Locals)
-		l.result.Locals = append(l.result.Locals, incoming)
+		local := len(lowering.result.Locals)
+		lowering.result.Locals = append(lowering.result.Locals, incoming)
 		wrapper.Parameters = append(wrapper.Parameters, local)
 		arguments = append(arguments, ir.Read{Local: local, Of: incoming.Type})
 	}
 	wrapper.Body = []ir.Statement{
 		ir.Declare{Local: object, Value: ir.ObjectLiteral{
-			ProgramRegion: l.programClass(instance.class),
+			ProgramRegion: lowering.programClass(instance.class),
 			Fields:        fields,
 			Class:         instance.class,
 			Methods:       instance.methodList(),
@@ -487,19 +518,19 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 		ir.Evaluate{Value: ir.Call{Function: initializer, Arguments: arguments, ForwardCount: true, RestPacked: true}},
 		ir.Return{Value: ir.Read{Local: object, Of: ir.Object}},
 	}
-	l.result.Functions[index] = wrapper
+	lowering.result.Functions[index] = wrapper
 	return nil
 }
 
-func (l *lowering) fieldInitializers(declaration *ast.Node, this int) ([]ir.Statement, error) {
+func (lowering *lowering) fieldInitializers(declaration *ast.Node, this int) ([]ir.Statement, error) {
 	statements := []ir.Statement{}
 	available := map[string]bool{}
-	if l.instance.base != nil {
-		for _, field := range l.result.Classes[l.instance.base.class-1].Fields {
+	if lowering.instance.base != nil {
+		for _, field := range lowering.result.Classes[lowering.instance.base.class-1].Fields {
 			available[field.Name] = true
 		}
 	}
-	resets, parameterPropertyResetsError := l.parameterPropertyResets(declaration, this, available)
+	resets, parameterPropertyResetsError := lowering.parameterPropertyResets(declaration, this, available)
 	if parameterPropertyResetsError != nil {
 		return nil, parameterPropertyResetsError
 	}
@@ -508,40 +539,40 @@ func (l *lowering) fieldInitializers(declaration *ast.Node, this int) ([]ir.Stat
 		if member.Kind != ast.KindPropertyDeclaration || ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 			continue
 		}
-		of, typeOfError := l.typeOf(member.Name())
+		of, typeOfError := lowering.typeOf(member.Name())
 		if typeOfError != nil {
 			return nil, typeOfError
 		}
-		if l.uninitializedDeclaration(member) {
+		if lowering.uninitializedDeclaration(member) {
 			value := zeroValue(of)
 			if of.IsReference() {
 				value = ir.Undefined{Of: of}
 			}
-			if l.placeholderOrigin(member.Name()) != "" {
-				value = l.placeholderInitialValue(member.AsPropertyDeclaration().Initializer, of)
+			if lowering.placeholderOrigin(member.Name()) != "" {
+				value = lowering.placeholderInitialValue(member.AsPropertyDeclaration().Initializer, of)
 			}
 			statements = append(statements, ir.SetProperty{
 				Object:        ir.Read{Local: this, Of: ir.Object},
-				Name:          l.fieldName(member.Name()),
+				Name:          lowering.fieldName(member.Name()),
 				Value:         value,
 				Uninitialized: true,
-				Unset:         l.placeholderOrigin(member.Name()) != "",
-				Site:          l.writeSite(declaration.Name()),
+				Unset:         lowering.placeholderOrigin(member.Name()) != "",
+				Site:          lowering.writeSite(declaration.Name()),
 			})
-			available[l.fieldName(member.Name())] = true
+			available[lowering.fieldName(member.Name())] = true
 			continue
 		}
 
 		value := zeroValue(of)
 		if member.AsPropertyDeclaration().Initializer != nil {
-			if initializerReadsError := l.initializerReads(
+			if initializerReadsError := lowering.initializerReads(
 				member.AsPropertyDeclaration().Initializer,
 				available,
 			); initializerReadsError != nil {
 				return nil, initializerReadsError
 			}
 			var expressionError error
-			value, expressionError = l.expression(member.AsPropertyDeclaration().Initializer)
+			value, expressionError = lowering.expression(member.AsPropertyDeclaration().Initializer)
 			if expressionError != nil {
 				return nil, expressionError
 			}
@@ -551,83 +582,91 @@ func (l *lowering) fieldInitializers(declaration *ast.Node, this int) ([]ir.Stat
 		}
 		statements = append(statements, ir.SetProperty{
 			Object: ir.Read{Local: this, Of: ir.Object},
-			Name:   l.fieldName(member.Name()),
+			Name:   lowering.fieldName(member.Name()),
 			Value:  value,
-			Site:   l.writeSite(declaration.Name()),
+			Site:   lowering.writeSite(declaration.Name()),
 		})
-		available[l.fieldName(member.Name())] = true
+		available[lowering.fieldName(member.Name())] = true
 	}
 	return statements, nil
 }
 
-func (l *lowering) superCall(node *ast.Node) (ir.Expression, error) {
-	if l.instance == nil || l.instance.base == nil || l.this < 0 {
-		return nil, l.notYet(node, "super outside a derived constructor")
+func (lowering *lowering) superCall(node *ast.Node) (ir.Expression, error) {
+	if lowering.instance == nil || lowering.instance.base == nil || lowering.this < 0 {
+		return nil, lowering.notYet(node, "super outside a derived constructor")
 	}
-	arguments := []ir.Expression{ir.Read{Local: l.this, Of: ir.Object}}
+	arguments := []ir.Expression{ir.Read{Local: lowering.this, Of: ir.Object}}
 	for _, argument := range nodesOf(node.AsCallExpression().Arguments) {
-		value, expressionError := l.expression(argument)
+		value, expressionError := lowering.expression(argument)
 		if expressionError != nil {
 			return nil, expressionError
 		}
 		arguments = append(arguments, value)
 	}
-	return ir.Call{Function: l.instance.base.initializer, Arguments: arguments}, nil
+	return ir.Call{Function: lowering.instance.base.initializer, Arguments: arguments}, nil
 }
 
-func (l *lowering) superStatement(node *ast.Node) ([]ir.Statement, error) {
-	call, superCallError := l.superCall(node)
+func (lowering *lowering) superStatement(node *ast.Node) ([]ir.Statement, error) {
+	call, superCallError := lowering.superCall(node)
 	if superCallError != nil {
 		return nil, superCallError
 	}
 	statements := []ir.Statement{}
-	if l.instance.superStates[node]&superInitialized != 0 {
+	if lowering.instance.superStates[node]&superInitialized != 0 {
 		// JavaScript constructs another base object before rejecting a second binding.
 		// Do not overwrite the already initialized object's fields on this path.
 		base := call.(ir.Call)
-		second := ir.Call{Function: l.instance.base.constructor, Arguments: base.Arguments[1:], Returns: ir.Object}
+		second := ir.Call{
+			Function:  lowering.instance.base.constructor,
+			Arguments: base.Arguments[1:],
+			Returns:   ir.Object,
+		}
 		statements = append(statements, ir.If{
-			Condition: ir.Read{Local: l.instance.superReady, Of: ir.Boolean},
+			Condition: ir.Read{Local: lowering.instance.superReady, Of: ir.Boolean},
 			Then: []ir.Statement{
 				ir.Evaluate{Value: second},
-				l.superError("Super constructor may only be called once"),
+				lowering.superError("Super constructor may only be called once"),
 			},
 		})
 	}
 	statements = append(
 		statements,
 		ir.Evaluate{Value: call},
-		ir.Assign{Local: l.instance.superReady, Value: ir.BooleanConstant{Value: true}},
+		ir.Assign{Local: lowering.instance.superReady, Value: ir.BooleanConstant{Value: true}},
 	)
 	// Fields run only once super has returned, and before the next derived-body statement.
-	declaration := l.classNode.Parent
-	initialized, fieldInitializersError := l.fieldInitializers(declaration, l.this)
+	declaration := lowering.classNode.Parent
+	initialized, fieldInitializersError := lowering.fieldInitializers(declaration, lowering.this)
 	if fieldInitializersError != nil {
 		return nil, fieldInitializersError
 	}
 	statements = append(statements, initialized...)
-	assigned, parameterPropertyStoresError := l.parameterPropertyStores(declaration, l.this)
+	assigned, parameterPropertyStoresError := lowering.parameterPropertyStores(declaration, lowering.this)
 	return append(statements, assigned...), parameterPropertyStoresError
 }
 
-func (l *lowering) classInstanceOf(node *ast.Node) (ir.Expression, error) {
+func (lowering *lowering) classInstanceOf(node *ast.Node) (ir.Expression, error) {
 	binary := node.AsBinaryExpression()
-	declaration := l.classes[l.symbol(ast.SkipParentheses(binary.Right))]
+	declaration := lowering.classes[lowering.symbol(ast.SkipParentheses(binary.Right))]
 	if declaration == nil {
-		return nil, l.notYet(node, "instanceof against a value that isn't a declared class")
+		return nil, lowering.notYet(node, "instanceof against a value that isn't a declared class")
 	}
 	identity := 0
 	if len(declaration.TypeParameters()) > 0 {
 		// JavaScript erases type arguments for instanceof, even when native layouts differ.
-		identity = l.classIdentity(declaration)
+		identity = lowering.classIdentity(declaration)
 	} else {
-		instance, instantiateError := l.instantiate(declaration, l.checker.GetTypeAtLocation(declaration.Name()), node)
+		instance, instantiateError := lowering.instantiate(
+			declaration,
+			lowering.checker.GetTypeAtLocation(declaration.Name()),
+			node,
+		)
 		if instantiateError != nil {
 			return nil, instantiateError
 		}
 		identity = instance.class
 	}
-	value, expressionError := l.expression(binary.Left)
+	value, expressionError := lowering.expression(binary.Left)
 	if expressionError != nil {
 		return nil, expressionError
 	}
@@ -636,35 +675,38 @@ func (l *lowering) classInstanceOf(node *ast.Node) (ir.Expression, error) {
 
 // Finish calls after lowering discovers every instantiated descendant. The analyses see all
 // implementations; code generation still uses the receiver's single dynamic method table.
-func (l *lowering) finishClassCalls() {
-	l.result.MethodTargets = map[int][]int{}
-	for _, class := range l.result.Classes {
+func (lowering *lowering) finishClassCalls() {
+	lowering.result.MethodTargets = map[int][]int{}
+	for _, class := range lowering.result.Classes {
 		for slot, implementation := range class.Methods {
 			for parent := &class; parent != nil; {
 				if slot < len(parent.Methods) {
 					function := parent.Methods[slot]
-					if !slices.Contains(l.result.MethodTargets[function], implementation) {
-						l.result.MethodTargets[function] = append(l.result.MethodTargets[function], implementation)
+					if !slices.Contains(lowering.result.MethodTargets[function], implementation) {
+						lowering.result.MethodTargets[function] = append(
+							lowering.result.MethodTargets[function],
+							implementation,
+						)
 					}
 				}
 				if parent.Base == 0 {
 					break
 				}
-				parent = &l.result.Classes[parent.Base-1]
+				parent = &lowering.result.Classes[parent.Base-1]
 			}
 		}
 	}
 }
 
-func (l *lowering) noteInheritance(modules []*ast.SourceFile) {
-	l.derivedAncestors = map[*ast.Symbol]bool{}
+func (lowering *lowering) noteInheritance(modules []*ast.SourceFile) {
+	lowering.derivedAncestors = map[*ast.Symbol]bool{}
 	for _, module := range modules {
 		var visit ast.Visitor
 		visit = func(node *ast.Node) bool {
 			if node.Kind == ast.KindClassDeclaration && node.Name() != nil {
-				typ := l.checker.GetTypeAtLocation(node.Name())
-				for _, base := range l.checker.GetBaseTypes(typ) {
-					l.derivedAncestors[base.Symbol()] = true
+				typ := lowering.checker.GetTypeAtLocation(node.Name())
+				for _, base := range lowering.checker.GetBaseTypes(typ) {
+					lowering.derivedAncestors[base.Symbol()] = true
 				}
 			}
 			return node.ForEachChild(visit)
@@ -675,16 +717,16 @@ func (l *lowering) noteInheritance(modules []*ast.SourceFile) {
 
 // A class view needs nominal ancestry, even when TypeScript's structural relation accepts two
 // unrelated classes or a plain object. Otherwise a virtual call would trust a table that isn't there.
-func (l *lowering) classViewRefusal(node *ast.Node) error {
+func (lowering *lowering) classViewRefusal(node *ast.Node) error {
 	if !viewSite(node) || node.Kind == ast.KindParenthesizedExpression {
 		return nil
 	}
 	if parent := node.Parent; parent != nil &&
 		parent.Kind == ast.KindVariableDeclaration &&
 		parent.Name().Kind == ast.KindArrayBindingPattern {
-		return l.classDestructuredView(node, parent.Name())
+		return lowering.classDestructuredView(node, parent.Name())
 	}
-	target := l.slotType(node)
+	target := lowering.slotType(node)
 	if target == nil {
 		return nil
 	}
@@ -697,59 +739,59 @@ func (l *lowering) classViewRefusal(node *ast.Node) error {
 				spread = true
 			}
 		}
-		if !spread && !l.nominalLiteralTarget(target) {
+		if !spread && !lowering.nominalLiteralTarget(target) {
 			return nil
 		}
 	}
-	source := l.checker.GetTypeAtLocation(node)
-	mismatch := l.nominalMismatch(source, target, map[[2]*checker.Type]bool{})
+	source := lowering.checker.GetTypeAtLocation(node)
+	mismatch := lowering.nominalMismatch(source, target, map[[2]*checker.Type]bool{})
 	if mismatch == nil {
 		return nil
 	}
-	return l.nominalViewRefusal(node, mismatch)
+	return lowering.nominalViewRefusal(node, mismatch)
 }
 
 // nominalViewRefusal is classViewRefusal's refusal of a value seen as target, a class it has no
 // nominal ancestry in.
-func (l *lowering) nominalViewRefusal(node *ast.Node, target *checker.Type) error {
+func (lowering *lowering) nominalViewRefusal(node *ast.Node, target *checker.Type) error {
 	return &Refused{
-		Where: l.program.Where(node),
-		What:  "a value without nominal ancestry seen as " + l.checker.TypeToString(target),
+		Where: lowering.program.Where(node),
+		What:  "a value without nominal ancestry seen as " + lowering.checker.TypeToString(target),
 		Fix:   "construct that class or a subclass; use an interface for structural values (adamic/nominal-class)",
 	}
 }
 
 func init() { refusalRules.register(3400, "classViewRefusal", (*lowering).classViewRefusal) }
 
-func (l *lowering) nominalAncestor(source, target *checker.Type, seen map[[2]*checker.Type]bool) bool {
+func (lowering *lowering) nominalAncestor(source, target *checker.Type, seen map[[2]*checker.Type]bool) bool {
 	if source.Flags()&checker.TypeFlagsTypeParameter != 0 {
-		if constraint := l.checker.GetBaseConstraintOfType(source); constraint != nil {
+		if constraint := lowering.checker.GetBaseConstraintOfType(source); constraint != nil {
 			source = constraint
 		}
 	}
-	if weak := l.weakTarget(source); weak != nil {
+	if weak := lowering.weakTarget(source); weak != nil {
 		source = weak
 	}
 	if !isClassInstance(source) {
 		return false
 	}
 	if source.Symbol() == target.Symbol() {
-		from, to := l.checker.GetTypeArguments(source), l.checker.GetTypeArguments(target)
-		if !l.sameClassArguments(from, to) {
+		from, to := lowering.checker.GetTypeArguments(source), lowering.checker.GetTypeArguments(target)
+		if !lowering.sameClassArguments(from, to) {
 			return false
 		}
 		for index := range from {
-			if !l.enumAssignable(from[index], to[index]) ||
-				!l.enumAssignable(to[index], from[index]) ||
-				l.nominalMismatch(from[index], to[index], seen) != nil ||
-				l.nominalMismatch(to[index], from[index], seen) != nil {
+			if !lowering.enumAssignable(from[index], to[index]) ||
+				!lowering.enumAssignable(to[index], from[index]) ||
+				lowering.nominalMismatch(from[index], to[index], seen) != nil ||
+				lowering.nominalMismatch(to[index], from[index], seen) != nil {
 				return false
 			}
 		}
 		return true
 	}
-	for _, base := range l.classBases(source) {
-		if l.nominalAncestor(base, target, seen) {
+	for _, base := range lowering.classBases(source) {
+		if lowering.nominalAncestor(base, target, seen) {
 			return true
 		}
 	}
@@ -758,7 +800,7 @@ func (l *lowering) nominalAncestor(source, target *checker.Type, seen map[[2]*ch
 
 // Initializers may read fields already initialized, including the base's after super. A future
 // field would hold undefined despite its declared type; a method may read future derived fields.
-func (l *lowering) initializerReads(node *ast.Node, available map[string]bool) error {
+func (lowering *lowering) initializerReads(node *ast.Node, available map[string]bool) error {
 	seen := map[*ast.Node]bool{}
 	var examine func(*ast.Node, []string) error
 	examine = func(body *ast.Node, path []string) error {
@@ -778,9 +820,9 @@ func (l *lowering) initializerReads(node *ast.Node, available map[string]bool) e
 			if child.Kind == ast.KindPropertyAccessExpression {
 				object := ast.SkipParentheses(child.AsPropertyAccessExpression().Expression)
 				if object.Kind == ast.KindThisKeyword || object.Kind == ast.KindSuperKeyword {
-					symbol := l.checker.GetSymbolAtLocation(child.Name())
+					symbol := lowering.checker.GetSymbolAtLocation(child.Name())
 					if object.Kind == ast.KindThisKeyword && child.Name().Kind != ast.KindPrivateIdentifier {
-						symbol = l.checker.GetPropertyOfType(l.classType, child.Name().Text())
+						symbol = lowering.checker.GetPropertyOfType(lowering.classType, child.Name().Text())
 					}
 					if symbol != nil {
 						for _, member := range symbol.Declarations {
@@ -792,9 +834,9 @@ func (l *lowering) initializerReads(node *ast.Node, available map[string]bool) e
 							if member.Kind == ast.KindMethodDeclaration || member.Kind == ast.KindGetAccessor {
 								refused = examine(member.Body(), next)
 							} else if (member.Kind == ast.KindPropertyDeclaration || parameterProperty(member)) &&
-								!available[l.fieldName(child.Name())] {
+								!available[lowering.fieldName(child.Name())] {
 								refused = &Refused{
-									Where: l.program.Where(child),
+									Where: lowering.program.Where(child),
 									What: "a field initializer reading an uninitialized field through " +
 										strings.Join(next, " -> "),
 									Fix: "declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set",
@@ -810,7 +852,7 @@ func (l *lowering) initializerReads(node *ast.Node, available map[string]bool) e
 			}
 			if child.Kind == ast.KindThisKeyword || child.Kind == ast.KindSuperKeyword {
 				refused = &Refused{
-					Where: l.program.Where(child),
+					Where: lowering.program.Where(child),
 					What:  "this in a field initializer before the fields it reads are initialized",
 					Fix:   "declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set",
 				}
@@ -827,25 +869,26 @@ func (l *lowering) initializerReads(node *ast.Node, available map[string]bool) e
 // Private names with the same spelling in a base and a derived class are separate JavaScript slots,
 // so each is qualified by the class that declares it (privateName), the same spelling memberKey gives
 // its definition, for fields, methods, accessors and statics alike.
-func (l *lowering) fieldName(name *ast.Node) string {
+func (lowering *lowering) fieldName(name *ast.Node) string {
 	if name.Kind != ast.KindPrivateIdentifier {
 		return name.Text()
 	}
-	if declaring := l.declaringClass(name); declaring != nil {
-		return l.privateName(name.Text(), declaring)
+	if declaring := lowering.declaringClass(name); declaring != nil {
+		return lowering.privateName(name.Text(), declaring)
 	}
 	return name.Text()
 }
 
 // Assignment to a nominal class also requires ancestry; structural compatibility alone cannot
 // provide the dynamic table an override's caller expects.
-func (l *lowering) classAssignable(from, to *checker.Type) bool {
-	return l.checker.IsTypeAssignableTo(from, to) && l.nominalMismatch(from, to, map[[2]*checker.Type]bool{}) == nil
+func (lowering *lowering) classAssignable(from, to *checker.Type) bool {
+	return lowering.checker.IsTypeAssignableTo(from, to) &&
+		lowering.nominalMismatch(from, to, map[[2]*checker.Type]bool{}) == nil
 }
 
 // Follow nominal class slots inside structural containers too. A plain object inside A[] lacks
 // the same method table as a plain object assigned directly to A. Mutable slots need both views.
-func (l *lowering) nominalMismatch(from, to *checker.Type, seen map[[2]*checker.Type]bool) *checker.Type {
+func (lowering *lowering) nominalMismatch(from, to *checker.Type, seen map[[2]*checker.Type]bool) *checker.Type {
 	if from == nil ||
 		to == nil ||
 		from == to ||
@@ -856,7 +899,7 @@ func (l *lowering) nominalMismatch(from, to *checker.Type, seen map[[2]*checker.
 	seen[[2]*checker.Type{from, to}] = true
 	if from.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range from.Types() {
-			if found := l.nominalMismatch(member, to, seen); found != nil {
+			if found := lowering.nominalMismatch(member, to, seen); found != nil {
 				return found
 			}
 		}
@@ -865,10 +908,10 @@ func (l *lowering) nominalMismatch(from, to *checker.Type, seen map[[2]*checker.
 	if to.Flags()&checker.TypeFlagsUnion != 0 {
 		var failure *checker.Type
 		for _, member := range to.Types() {
-			if !l.checker.IsTypeAssignableTo(from, member) {
+			if !lowering.checker.IsTypeAssignableTo(from, member) {
 				continue
 			}
-			if found := l.nominalMismatch(from, member, seen); found != nil {
+			if found := lowering.nominalMismatch(from, member, seen); found != nil {
 				failure = found
 			} else {
 				return nil
@@ -876,26 +919,26 @@ func (l *lowering) nominalMismatch(from, to *checker.Type, seen map[[2]*checker.
 		}
 		return failure
 	}
-	if weak := l.weakTarget(from); weak != nil {
+	if weak := lowering.weakTarget(from); weak != nil {
 		from = weak
 	}
-	if weak := l.weakTarget(to); weak != nil {
+	if weak := lowering.weakTarget(to); weak != nil {
 		to = weak
 	}
 	if from.Flags()&checker.TypeFlagsTypeParameter != 0 {
-		if constraint := l.checker.GetBaseConstraintOfType(from); constraint != nil {
-			return l.nominalMismatch(constraint, to, seen)
+		if constraint := lowering.checker.GetBaseConstraintOfType(from); constraint != nil {
+			return lowering.nominalMismatch(constraint, to, seen)
 		}
 		return nil
 	}
-	if l.isStaticType(to) {
-		wanted := l.staticClass(to, nil)
-		actual := l.staticClass(from, nil)
+	if lowering.isStaticType(to) {
+		wanted := lowering.staticClass(to, nil)
+		actual := lowering.staticClass(from, nil)
 		for actual != nil {
 			if actual == wanted {
 				return nil
 			}
-			actual = l.staticBase(actual)
+			actual = lowering.staticBase(actual)
 		}
 		return to
 	}
@@ -905,76 +948,78 @@ func (l *lowering) nominalMismatch(from, to *checker.Type, seen map[[2]*checker.
 			load.IsPrelude(ast.GetSourceFileOfNode(symbol.Declarations[0])) {
 			return nil
 		}
-		if !l.nominalAncestor(from, to, seen) {
+		if !lowering.nominalAncestor(from, to, seen) {
 			return to
 		}
 		return nil
 	}
-	if !l.structured(from) || !l.structured(to) {
+	if !lowering.structured(from) || !lowering.structured(to) {
 		return nil
 	}
-	fromSignatures := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
-	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
+	fromSignatures := lowering.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
+	toSignatures := lowering.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
 	if len(fromSignatures) > 0 && len(toSignatures) > 0 {
 		parameters := toSignatures[0].Parameters()
-		if l.censusNeverRestSignature(toSignatures[0]) {
+		if lowering.censusNeverRestSignature(toSignatures[0]) {
 			parameters = nil
 		}
 		for index, parameter := range parameters {
 			if index >= len(fromSignatures[0].Parameters()) {
 				break
 			}
-			if found := l.nominalMismatch(
-				l.checker.GetTypeOfSymbol(parameter),
-				l.checker.GetTypeOfSymbol(fromSignatures[0].Parameters()[index]),
+			if found := lowering.nominalMismatch(
+				lowering.checker.GetTypeOfSymbol(parameter),
+				lowering.checker.GetTypeOfSymbol(fromSignatures[0].Parameters()[index]),
 				seen,
 			); found != nil {
 				return found
 			}
 		}
-		return l.nominalMismatch(
-			l.checker.GetReturnTypeOfSignature(fromSignatures[0]),
-			l.checker.GetReturnTypeOfSignature(toSignatures[0]),
+		return lowering.nominalMismatch(
+			lowering.checker.GetReturnTypeOfSignature(fromSignatures[0]),
+			lowering.checker.GetReturnTypeOfSignature(toSignatures[0]),
 			seen,
 		)
 	}
-	for _, target := range l.containers(to) {
-		for _, source := range l.containers(from) {
-			if !l.sameContainer(source, target) {
+	for _, target := range lowering.containers(to) {
+		for _, source := range lowering.containers(from) {
+			if !lowering.sameContainer(source, target) {
 				continue
 			}
-			fromArguments, toArguments := l.checker.GetTypeArguments(source), l.checker.GetTypeArguments(target)
-			mutable := !l.isLibraryType(target, "ReadonlyArray", "ReadonlyMap", "ReadonlySet") &&
+			fromArguments, toArguments := lowering.checker.GetTypeArguments(
+				source,
+			), lowering.checker.GetTypeArguments(target)
+			mutable := !lowering.isLibraryType(target, "ReadonlyArray", "ReadonlyMap", "ReadonlySet") &&
 				!(checker.IsTupleType(target) && target.TargetTupleType().IsReadonly())
 			for index := 0; index < len(fromArguments) && index < len(toArguments); index++ {
-				if found := l.nominalMismatch(fromArguments[index], toArguments[index], seen); found != nil {
+				if found := lowering.nominalMismatch(fromArguments[index], toArguments[index], seen); found != nil {
 					return found
 				}
 				if mutable {
-					if found := l.nominalMismatch(toArguments[index], fromArguments[index], seen); found != nil {
+					if found := lowering.nominalMismatch(toArguments[index], fromArguments[index], seen); found != nil {
 						return found
 					}
 				}
 			}
 		}
 	}
-	if len(l.containers(to)) > 0 {
+	if len(lowering.containers(to)) > 0 {
 		return nil
 	}
-	for _, property := range l.checker.GetPropertiesOfType(to) {
+	for _, property := range lowering.checker.GetPropertiesOfType(to) {
 		if property.Flags&ast.SymbolFlagsMethod != 0 {
 			continue
 		}
-		inside := l.checker.GetPropertyOfType(from, property.Name)
+		inside := lowering.checker.GetPropertyOfType(from, property.Name)
 		if inside == nil {
 			continue
 		}
-		source, target := l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(property)
-		if found := l.nominalMismatch(source, target, seen); found != nil {
+		source, target := lowering.checker.GetTypeOfSymbol(inside), lowering.checker.GetTypeOfSymbol(property)
+		if found := lowering.nominalMismatch(source, target, seen); found != nil {
 			return found
 		}
-		if !l.checker.IsReadonlySymbol(property) {
-			if found := l.nominalMismatch(target, source, seen); found != nil {
+		if !lowering.checker.IsReadonlySymbol(property) {
+			if found := lowering.nominalMismatch(target, source, seen); found != nil {
 				return found
 			}
 		}
@@ -990,8 +1035,8 @@ func (l *lowering) nominalMismatch(from, to *checker.Type, seen map[[2]*checker.
 // A string's elements are strings, which no class view can be, so a primitive member has nothing to
 // judge. Any other member that isn't a reference (an intersection, an iterable interface, a type
 // parameter) has elements this can't read, so it's NotYet, never passed unjudged.
-func (l *lowering) classDestructuredView(node, pattern *ast.Node) error {
-	own := l.checker.GetTypeAtLocation(node)
+func (lowering *lowering) classDestructuredView(node, pattern *ast.Node) error {
+	own := lowering.checker.GetTypeAtLocation(node)
 	members := []*checker.Type{own}
 	if own.Flags()&checker.TypeFlagsUnion != 0 {
 		members = own.Types()
@@ -1001,11 +1046,11 @@ func (l *lowering) classDestructuredView(node, pattern *ast.Node) error {
 			continue
 		}
 		if member.Flags()&checker.TypeFlagsObject == 0 || member.ObjectFlags()&checker.ObjectFlagsReference == 0 {
-			return l.notYet(pattern, "a destructured "+
-				l.checker.TypeToString(member)+
+			return lowering.notYet(pattern, "a destructured "+
+				lowering.checker.TypeToString(member)+
 				", whose elements can't be judged for nominal ancestry")
 		}
-		elements := l.checker.GetTypeArguments(member)
+		elements := lowering.checker.GetTypeArguments(member)
 		tuple := checker.IsTupleType(member)
 		for index, binding := range pattern.AsBindingPattern().Elements.Nodes {
 			if binding.Kind == ast.KindOmittedExpression || binding.Name() == nil {
@@ -1017,12 +1062,17 @@ func (l *lowering) classDestructuredView(node, pattern *ast.Node) error {
 			if index >= len(elements) {
 				continue
 			}
-			target := l.checker.GetTypeAtLocation(binding.Name())
-			if mismatch := l.nominalMismatch(elements[index], target, map[[2]*checker.Type]bool{}); mismatch != nil {
+			target := lowering.checker.GetTypeAtLocation(binding.Name())
+			if mismatch := lowering.nominalMismatch(
+				elements[index],
+				target,
+				map[[2]*checker.Type]bool{},
+			); mismatch != nil {
 				return &Refused{
-					Where: l.program.Where(binding),
-					What:  "a destructured value without nominal ancestry seen as " + l.checker.TypeToString(mismatch),
-					Fix:   "construct that class or a subclass; use an interface for structural values (adamic/nominal-class)",
+					Where: lowering.program.Where(binding),
+					What: "a destructured value without nominal ancestry seen as " +
+						lowering.checker.TypeToString(mismatch),
+					Fix: "construct that class or a subclass; use an interface for structural values (adamic/nominal-class)",
 				}
 			}
 		}
@@ -1032,11 +1082,11 @@ func (l *lowering) classDestructuredView(node, pattern *ast.Node) error {
 
 // The checker mangles private symbol names; the IR qualifies them by class ID. Cycle proofs
 // must match the same declaration in both names, including inherited and generic private slots.
-func (l *lowering) cycleFieldMatches(holder *checker.Type, field, written string) bool {
+func (lowering *lowering) cycleFieldMatches(holder *checker.Type, field, written string) bool {
 	if field == written {
 		return true
 	}
-	property := l.checker.GetPropertyOfType(holder, field)
+	property := lowering.checker.GetPropertyOfType(holder, field)
 	if property == nil || len(property.Declarations) != 1 {
 		return false
 	}
@@ -1045,12 +1095,12 @@ func (l *lowering) cycleFieldMatches(holder *checker.Type, field, written string
 		return false
 	}
 	if class := property.Declarations[0].Parent; class != nil && class.Kind == ast.KindClassDeclaration {
-		return written == l.privateName(name.Text(), class)
+		return written == lowering.privateName(name.Text(), class)
 	}
 	return written == name.Text()
 }
 
-func (l *lowering) cycleFieldName(field *ast.Symbol) string {
+func (lowering *lowering) cycleFieldName(field *ast.Symbol) string {
 	if len(field.Declarations) == 1 {
 		if name := field.Declarations[0].Name(); name != nil && name.Kind == ast.KindPrivateIdentifier {
 			return name.Text()
@@ -1061,53 +1111,53 @@ func (l *lowering) cycleFieldName(field *ast.Symbol) string {
 
 // All monomorphizations of a source class have one erased identity. An identity-only
 // descriptor lets instanceof name a generic class before any concrete instance is made.
-func (l *lowering) classDefinition(declaration *ast.Node) int {
-	for key, instance := range l.instances {
-		if l.classKeyMatches(key, declaration) {
-			return l.result.Classes[instance.class-1].Definition
+func (lowering *lowering) classDefinition(declaration *ast.Node) int {
+	for key, instance := range lowering.instances {
+		if lowering.classKeyMatches(key, declaration) {
+			return lowering.result.Classes[instance.class-1].Definition
 		}
 	}
-	return len(l.result.Classes) + 1
+	return len(lowering.result.Classes) + 1
 }
 
-func (l *lowering) classIdentity(declaration *ast.Node) int {
-	definition := l.classDefinition(declaration)
-	for index, class := range l.result.Classes {
+func (lowering *lowering) classIdentity(declaration *ast.Node) int {
+	definition := lowering.classDefinition(declaration)
+	for index, class := range lowering.result.Classes {
 		if class.Definition == definition {
 			return index + 1
 		}
 	}
-	identity := len(l.result.Classes) + 1
-	l.result.Classes = append(l.result.Classes, ir.Class{
-		Source:      l.functionSource(declaration),
+	identity := len(lowering.result.Classes) + 1
+	lowering.result.Classes = append(lowering.result.Classes, ir.Class{
+		Source:      lowering.functionSource(declaration),
 		Name:        declaration.Name().Text() + "_identity",
 		Definition:  definition,
 		Constructor: -1,
 	})
-	if l.instances == nil {
-		l.instances = map[string]*instance{}
+	if lowering.instances == nil {
+		lowering.instances = map[string]*instance{}
 	}
-	key := l.classKeyPrefix(declaration) + ",identity"
-	l.instances[key] = &instance{class: identity, constructor: -1, initializer: -1}
+	key := lowering.classKeyPrefix(declaration) + ",identity"
+	lowering.instances[key] = &instance{class: identity, constructor: -1, initializer: -1}
 	return identity
 }
 
 // An inherited method's receiver can be a descendant with different type arguments.
 // Find the declaration's actual instantiated view instead of substituting by position.
-func (l *lowering) classView(proven *checker.Type, declaration *ast.Node) *checker.Type {
+func (lowering *lowering) classView(proven *checker.Type, declaration *ast.Node) *checker.Type {
 	if proven.Flags()&checker.TypeFlagsTypeParameter != 0 {
-		if constraint := l.checker.GetBaseConstraintOfType(proven); constraint != nil {
+		if constraint := lowering.checker.GetBaseConstraintOfType(proven); constraint != nil {
 			proven = constraint
 		}
 	}
-	if weak := l.weakTarget(proven); weak != nil {
+	if weak := lowering.weakTarget(proven); weak != nil {
 		proven = weak
 	}
-	if proven.Symbol() == l.symbol(declaration.Name()) {
+	if proven.Symbol() == lowering.symbol(declaration.Name()) {
 		return proven
 	}
-	for _, base := range l.classBases(proven) {
-		if found := l.classView(base, declaration); found != nil {
+	for _, base := range lowering.classBases(proven) {
+		if found := lowering.classView(base, declaration); found != nil {
 			return found
 		}
 	}
@@ -1116,23 +1166,23 @@ func (l *lowering) classView(proven *checker.Type, declaration *ast.Node) *check
 
 // The checker exposes generic bases on the declaration. Substitute the receiver's
 // actual arguments before choosing a native base layout or proving nominal ancestry.
-func (l *lowering) classBases(proven *checker.Type) []*checker.Type {
+func (lowering *lowering) classBases(proven *checker.Type) []*checker.Type {
 	target := proven
 	if proven.ObjectFlags()&checker.ObjectFlagsReference != 0 && proven.Target() != nil {
 		target = proven.Target()
 	}
-	bases := l.checker.GetBaseTypes(target)
-	declaration := l.classNodeFor(proven)
+	bases := lowering.checker.GetBaseTypes(target)
+	declaration := lowering.classNodeFor(proven)
 	if declaration == nil || declaration.Kind != ast.KindClassDeclaration {
 		return bases
 	}
-	mapper := l.typeMapperOf(declaration, proven)
+	mapper := lowering.typeMapperOf(declaration, proven)
 	if mapper == nil {
 		return bases
 	}
 	concrete := make([]*checker.Type, len(bases))
 	for index, base := range bases {
-		concrete[index] = instantiateType(l.checker, base, mapper)
+		concrete[index] = instantiateType(lowering.checker, base, mapper)
 	}
 	return concrete
 }
@@ -1144,8 +1194,8 @@ func literalParts(node *ast.Node) []*ast.Node {
 	return node.AsArrayLiteralExpression().Elements.Nodes
 }
 
-func (l *lowering) nominalLiteralTarget(proven *checker.Type) bool {
-	if weak := l.weakTarget(proven); weak != nil {
+func (lowering *lowering) nominalLiteralTarget(proven *checker.Type) bool {
+	if weak := lowering.weakTarget(proven); weak != nil {
 		proven = weak
 	}
 	if isClassInstance(proven) {
@@ -1153,7 +1203,7 @@ func (l *lowering) nominalLiteralTarget(proven *checker.Type) bool {
 	}
 	if proven.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range proven.Types() {
-			if l.nominalLiteralTarget(member) {
+			if lowering.nominalLiteralTarget(member) {
 				return true
 			}
 		}

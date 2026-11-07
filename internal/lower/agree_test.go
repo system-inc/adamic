@@ -475,12 +475,12 @@ type agreementRecorder struct {
 
 type agreementRecordedFailure struct{}
 
-func (r *agreementRecorder) Fatal(values ...any) {
-	r.message = fmt.Sprint(values...)
+func (recorder *agreementRecorder) Fatal(values ...any) {
+	recorder.message = fmt.Sprint(values...)
 	panic(agreementRecordedFailure{})
 }
-func (r *agreementRecorder) Fatalf(format string, values ...any) {
-	r.Fatal(fmt.Sprintf(format, values...))
+func (recorder *agreementRecorder) Fatalf(format string, values ...any) {
+	recorder.Fatal(fmt.Sprintf(format, values...))
 }
 func recordAgreementFailure(test *testing.T, source string, mutate func(*ir.Program)) string {
 	test.Helper()

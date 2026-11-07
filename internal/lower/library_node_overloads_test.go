@@ -109,35 +109,35 @@ func TestNodeRegisteredOverloadsFindASplit(test *testing.T) {
 }
 
 // nodeOverloadCount is how many call and construct signatures a member's type has.
-func (l *lowering) nodeOverloadCount(member *ast.Symbol) int {
-	proven := l.checker.GetTypeOfSymbol(member)
-	return len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) +
-		len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct))
+func (lowering *lowering) nodeOverloadCount(member *ast.Symbol) int {
+	proven := lowering.checker.GetTypeOfSymbol(member)
+	return len(lowering.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) +
+		len(lowering.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct))
 }
 
 // nodeOverloadHostSplit looks at each two overloads of a member, of one kind, that one argument list
 // fits (nodeParametersAcceptEachOther) and whose results differ in the host
 // object they may hold. It names the first such pair as wider when the earlier overload's result fits
 // the later one's, and as split otherwise; each is "" when there's none.
-func (l *lowering) nodeOverloadHostSplit(member *ast.Symbol) (split, wider string) {
-	proven := l.checker.GetTypeOfSymbol(member)
+func (lowering *lowering) nodeOverloadHostSplit(member *ast.Symbol) (split, wider string) {
+	proven := lowering.checker.GetTypeOfSymbol(member)
 	for _, kind := range []checker.SignatureKind{checker.SignatureKindCall, checker.SignatureKindConstruct} {
-		signatures := l.checker.GetSignaturesOfType(proven, kind)
+		signatures := lowering.checker.GetSignaturesOfType(proven, kind)
 		for first := range signatures {
 			for second := first + 1; second < len(signatures); second++ {
-				if !l.nodeParametersAcceptEachOther(signatures[first], signatures[second]) {
+				if !lowering.nodeParametersAcceptEachOther(signatures[first], signatures[second]) {
 					continue
 				}
-				one, other := l.checker.GetReturnTypeOfSignature(
+				one, other := lowering.checker.GetReturnTypeOfSignature(
 					signatures[first],
-				), l.checker.GetReturnTypeOfSignature(signatures[second])
-				if l.nodeHeldHostObject(one, 0) == l.nodeHeldHostObject(other, 0) {
+				), lowering.checker.GetReturnTypeOfSignature(signatures[second])
+				if lowering.nodeHeldHostObject(one, 0) == lowering.nodeHeldHostObject(other, 0) {
 					continue
 				}
-				pair := l.checker.TypeToString(one) + " and " + l.checker.TypeToString(other)
+				pair := lowering.checker.TypeToString(one) + " and " + lowering.checker.TypeToString(other)
 				// The first overload is the one the checker resolves the arguments to, so only a first
 				// whose result fits the later one's is the safe widening.
-				if l.checker.IsTypeAssignableTo(one, other) {
+				if lowering.checker.IsTypeAssignableTo(one, other) {
 					if wider == "" {
 						wider = pair
 					}
@@ -155,9 +155,9 @@ func (l *lowering) nodeOverloadHostSplit(member *ast.Symbol) (split, wider strin
 // toward yes, so the check above fails closed. The fewest arguments both admit is the list with the
 // fewest positions to agree on, so only those are compared; a rest parameter admits any count past
 // its place, and GetTypeAtPosition reads its element there.
-func (l *lowering) nodeParametersAcceptEachOther(one, other *checker.Signature) bool {
+func (lowering *lowering) nodeParametersAcceptEachOther(one, other *checker.Signature) bool {
 	most := func(signature *checker.Signature) int {
-		if l.checker.HasEffectiveRestParameter(signature) {
+		if lowering.checker.HasEffectiveRestParameter(signature) {
 			return math.MaxInt
 		}
 		return len(signature.Parameters())
@@ -167,9 +167,9 @@ func (l *lowering) nodeParametersAcceptEachOther(one, other *checker.Signature) 
 		return false
 	}
 	for position := range fewest {
-		if !l.nodeTypesOverlap(
-			l.checker.GetTypeAtPosition(one, position),
-			l.checker.GetTypeAtPosition(other, position),
+		if !lowering.nodeTypesOverlap(
+			lowering.checker.GetTypeAtPosition(one, position),
+			lowering.checker.GetTypeAtPosition(other, position),
 		) {
 			return false
 		}
@@ -180,8 +180,8 @@ func (l *lowering) nodeParametersAcceptEachOther(one, other *checker.Signature) 
 // nodeTypesOverlap says whether two parameter types may share a value: one assignable to the other,
 // or, for a union, any member overlapping the other type. A union's members are read one level
 // down, which is where Node's declarations put their alternatives.
-func (l *lowering) nodeTypesOverlap(one, other *checker.Type) bool {
-	if l.checker.IsTypeAssignableTo(one, other) || l.checker.IsTypeAssignableTo(other, one) {
+func (lowering *lowering) nodeTypesOverlap(one, other *checker.Type) bool {
+	if lowering.checker.IsTypeAssignableTo(one, other) || lowering.checker.IsTypeAssignableTo(other, one) {
 		return true
 	}
 	for _, pair := range [][2]*checker.Type{{one, other}, {other, one}} {
@@ -189,7 +189,8 @@ func (l *lowering) nodeTypesOverlap(one, other *checker.Type) bool {
 			continue
 		}
 		for _, member := range pair[0].Types() {
-			if l.checker.IsTypeAssignableTo(member, pair[1]) || l.checker.IsTypeAssignableTo(pair[1], member) {
+			if lowering.checker.IsTypeAssignableTo(member, pair[1]) ||
+				lowering.checker.IsTypeAssignableTo(pair[1], member) {
 				return true
 			}
 		}

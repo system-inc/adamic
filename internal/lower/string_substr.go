@@ -7,13 +7,17 @@ import (
 
 // substr counts UTF-16 units from a relative start, with a length rather than an end.
 // A helper receives each operand once in source order before normalization reads it again.
-func (l *lowering) stringSubstr(node *ast.Node, value ir.Expression, written []*ast.Node) (ir.Expression, error) {
+func (lowering *lowering) stringSubstr(
+	node *ast.Node,
+	value ir.Expression,
+	written []*ast.Node,
+) (ir.Expression, error) {
 	if len(written) > 2 {
-		return nil, l.notYet(node, "substr with extra arguments")
+		return nil, lowering.notYet(node, "substr with extra arguments")
 	}
 	values := []ir.Expression{value}
 	for _, argument := range written {
-		lowered, expressionError := l.expression(argument)
+		lowered, expressionError := lowering.expression(argument)
 		if expressionError != nil {
 			return nil, expressionError
 		}
@@ -21,11 +25,11 @@ func (l *lowering) stringSubstr(node *ast.Node, value ir.Expression, written []*
 			lowered = fit(lowered, ir.MaybeNumber)
 		}
 		if lowered.Type() != ir.Number && lowered.Type() != ir.MaybeNumber {
-			return nil, l.notYet(argument, "substr with a nonnumeric argument")
+			return nil, lowering.notYet(argument, "substr with a nonnumeric argument")
 		}
 		values = append(values, lowered)
 	}
-	function, reads := l.stringHelper("substr", values)
+	function, reads := lowering.stringHelper("substr", values)
 	length := ir.StringLength{Value: reads[0]}
 	zero := ir.NumberConstant{Value: 0}
 	argument := func(index int, fallback ir.Expression) ir.Expression {
@@ -56,6 +60,6 @@ func (l *lowering) stringSubstr(node *ast.Node, value ir.Expression, written []*
 		Value:     reads[0],
 		Arguments: []ir.Expression{start, ir.Binary{Operator: ir.Add, Left: start, Right: count}},
 	}
-	l.result.Functions[function].Body = []ir.Statement{ir.Return{Value: result}}
+	lowering.result.Functions[function].Body = []ir.Statement{ir.Return{Value: result}}
 	return ir.Call{Function: function, Arguments: values, Returns: ir.String}, nil
 }

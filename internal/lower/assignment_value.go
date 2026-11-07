@@ -7,35 +7,39 @@ import (
 
 // assignmentValue keeps the assignment visible to write analysis and reads its
 // stored value immediately. A local has no setter that could replace that value.
-func (l *lowering) assignmentValue(node *ast.Node) (ir.Expression, error) {
-	if l.uninitializedInitializer(node.AsBinaryExpression().Right) {
-		return nil, l.notYet(node, "using the result of a placeholder reset")
+func (lowering *lowering) assignmentValue(node *ast.Node) (ir.Expression, error) {
+	if lowering.uninitializedInitializer(node.AsBinaryExpression().Right) {
+		return nil, lowering.notYet(node, "using the result of a placeholder reset")
 	}
 	target := ast.SkipParentheses(node.AsBinaryExpression().Left)
 	if !ast.IsIdentifier(target) {
-		return nil, l.notYet(target, "an assignment value to a member")
+		return nil, lowering.notYet(target, "an assignment value to a member")
 	}
-	body, assignmentError := l.assignment(node)
+	body, assignmentError := lowering.assignment(node)
 	if assignmentError != nil {
 		return nil, assignmentError
 	}
-	local, known := l.local(target)
+	local, known := lowering.local(target)
 	if !known {
-		return nil, l.notYet(target, "an assignment value to this binding")
+		return nil, lowering.notYet(target, "an assignment value to this binding")
 	}
-	l.result.Locals[local].ExpressionAssigned = true
-	result, typeOfError := l.typeOf(node)
+	lowering.result.Locals[local].ExpressionAssigned = true
+	result, typeOfError := lowering.typeOf(node)
 	if typeOfError != nil {
 		return nil, typeOfError
 	}
-	var value ir.Expression = ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checked(local)}
-	if origin := l.result.Locals[local].Placeholder; origin != "" && !l.placeholderAllowsUnset(node) {
+	var value ir.Expression = ir.Read{
+		Local:   local,
+		Of:      lowering.result.Locals[local].Type,
+		Checked: lowering.checked(local),
+	}
+	if origin := lowering.result.Locals[local].Placeholder; origin != "" && !lowering.placeholderAllowsUnset(node) {
 		value = ir.PlaceholderUse{
 			Value:  value,
 			Origin: origin,
 			Use:    "assignment result",
 			Path:   sourceExpression(node),
-			Where:  l.program.Where(node),
+			Where:  lowering.program.Where(node),
 			Of:     result,
 		}
 	}
@@ -45,7 +49,7 @@ func (l *lowering) assignmentValue(node *ast.Node) (ir.Expression, error) {
 		value = fit(value, result)
 	}
 	if value.Type() != result {
-		return nil, l.notYet(node, "an assignment result with different storage")
+		return nil, lowering.notYet(node, "an assignment result with different storage")
 	}
 	return ir.Effects{Body: body, Result: value}, nil
 }

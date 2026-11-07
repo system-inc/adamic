@@ -40,27 +40,47 @@ func judgeMoveRefusal(what, fix string, lowered Run) Outcome {
 	expected := what + "; " + fix
 	_, actual, present := strings.Cut(strings.TrimSpace(string(lowered.Stderr)), "Adamic 0.1 refuses ")
 	if !present || actual != expected {
-		return Outcome{Verdict: Finding, Key: "move refusal differs", Detail: "expected " + expected + "\n" + firstLines(string(lowered.Stderr), 8)}
+		return Outcome{
+			Verdict: Finding,
+			Key:     "move refusal differs",
+			Detail:  "expected " + expected + "\n" + firstLines(string(lowered.Stderr), 8),
+		}
 	}
 	return Outcome{Verdict: Refused, Key: expected, Detail: firstLines(string(lowered.Stderr), 4)}
 }
 
-func (g *generator) movesProgram() *Program {
-	kind := g.pick("accepted", "accepted", "accepted", "accepted", "after", "alias", "global", "closure", "nested-object", "nested-array", "nested-map")
-	items, results, run := g.name("items"), g.name("results"), g.name("runMoves")
-	value, flag, child := g.name("value"), g.name("done"), g.name("child")
-	element, observer := g.name("element"), g.name("observer")
-	count := 256 + g.random.IntN(65) // Several runtime grains, even for refused race witnesses.
-	multiplier, rounds := 3+g.random.IntN(15), 1000+g.random.IntN(1001)
+func (generator *generator) movesProgram() *Program {
+	kind := generator.pick(
+		"accepted",
+		"accepted",
+		"accepted",
+		"accepted",
+		"after",
+		"alias",
+		"global",
+		"closure",
+		"nested-object",
+		"nested-array",
+		"nested-map",
+	)
+	items, results, run := generator.name("items"), generator.name("results"), generator.name("runMoves")
+	value, flag, child := generator.name("value"), generator.name("done"), generator.name("child")
+	element, observer := generator.name("element"), generator.name("observer")
+	count := 256 + generator.random.IntN(65) // Several runtime grains, even for refused race witnesses.
+	multiplier, rounds := 3+generator.random.IntN(15), 1000+generator.random.IntN(1001)
 	program := &Program{Feature: "moves"}
 	add := func(s *Statement) { program.Block.Statements = append(program.Block.Statements, s) }
 	add(statement("import { parallelMap } from 'adamic';"))
 	add(statement("// moves-shape: " + kind))
 	body := &Block{}
 	if kind == "global" {
-		add(statement(fmt.Sprintf("const %s = { %s: %d, %s: false };", element, value, g.random.IntN(100), flag)))
+		add(statement(
+			fmt.Sprintf("const %s = { %s: %d, %s: false };", element, value, generator.random.IntN(100), flag),
+		))
 	} else if kind == "alias" || kind == "closure" || kind == "nested-object" {
-		body.Statements = append(body.Statements, statement(fmt.Sprintf("const %s = { %s: %d, %s: false };", element, value, g.random.IntN(100), flag)))
+		body.Statements = append(body.Statements, statement(
+			fmt.Sprintf("const %s = { %s: %d, %s: false };", element, value, generator.random.IntN(100), flag),
+		))
 	}
 	if kind == "alias" {
 		body.Statements = append(body.Statements, statement("const "+observer+" = "+element+";"))
@@ -70,7 +90,13 @@ func (g *generator) movesProgram() *Program {
 	}
 	entries := make([]string, count)
 	for index := range entries {
-		record := fmt.Sprintf("{ %s: %d, %s: %s }", value, g.random.IntN(1000), flag, g.pick("true", "false"))
+		record := fmt.Sprintf(
+			"{ %s: %d, %s: %s }",
+			value,
+			generator.random.IntN(1000),
+			flag,
+			generator.pick("true", "false"),
+		)
 		switch kind {
 		case "alias", "global", "closure":
 			entries[index] = element
@@ -79,35 +105,52 @@ func (g *generator) movesProgram() *Program {
 		case "nested-array":
 			entries[index] = "[" + record + "]"
 		case "nested-map":
-			entries[index] = fmt.Sprintf("new Map<number, { %s: number; %s: boolean }>([[%d, %s]])", value, flag, index, record)
+			entries[index] = fmt.Sprintf(
+				"new Map<number, { %s: number; %s: boolean }>([[%d, %s]])",
+				value,
+				flag,
+				index,
+				record,
+			)
 		default:
 			entries[index] = record
 		}
 	}
-	body.Statements = append(body.Statements, statement("const "+items+" = [\n\t\t"+strings.Join(entries, ",\n\t\t")+"\n\t];"))
-	item, index, step := g.name("item"), g.name("index"), g.name("step")
+	body.Statements = append(
+		body.Statements,
+		statement("const "+items+" = [\n\t\t"+strings.Join(entries, ",\n\t\t")+"\n\t];"),
+	)
+	item, index, step := generator.name("item"), generator.name("index"), generator.name("step")
 	work := &Block{}
 	path := item + "." + value
 	if kind == "nested-object" {
 		path = item + "." + child + "." + value
 	}
 	if kind != "nested-array" && kind != "nested-map" {
-		work.Statements = append(work.Statements, statement(fmt.Sprintf("for (let %s = 0; %s < %d; %s++) @b", step, step, rounds, step), &Block{Statements: []*Statement{
-			statement(fmt.Sprintf("%s = (%s * %d + %s + %s) %% 65521;", path, path, multiplier, step, index)),
-		}}))
+		work.Statements = append(work.Statements, statement(
+			fmt.Sprintf("for (let %s = 0; %s < %d; %s++) @b", step, step, rounds, step),
+			&Block{Statements: []*Statement{
+				statement(fmt.Sprintf("%s = (%s * %d + %s + %s) %% 65521;", path, path, multiplier, step, index)),
+			}},
+		))
 		if kind != "nested-object" {
 			work.Statements = append(work.Statements, statement(item+"."+flag+" = !"+item+"."+flag+";"))
 		}
 	}
 	work.Statements = append(work.Statements, statement("return "+item+";"))
-	body.Statements = append(body.Statements, statement("const "+results+" = parallelMap("+items+", ("+item+", "+index+") => @b);", work))
+	body.Statements = append(
+		body.Statements,
+		statement("const "+results+" = parallelMap("+items+", ("+item+", "+index+") => @b);", work),
+	)
 	switch kind {
 	case "after":
 		program.Refusal = "use after move: " + items + ".length; " + items + " was moved into parallelMap"
 		program.RefusalFix = "don't use it after the parallelMap"
 		body.Statements = append(body.Statements, statement("console.log(`${"+items+".length}`);"))
 	case "alias", "global", "closure":
-		program.Refusal = "cannot move " + items + "[0]: element is not a fresh object literal with only scalar literal fields"
+		program.Refusal = "cannot move " +
+			items +
+			"[0]: element is not a fresh object literal with only scalar literal fields"
 	case "nested-object":
 		program.Refusal = "cannot move " + items + "[0]." + child + ": nested reachable ownership is not proven"
 	case "nested-array":
@@ -132,13 +175,43 @@ func (g *generator) movesProgram() *Program {
 			body.Statements = append(body.Statements, statement("console.log(`${"+element+"."+value+"}`);"))
 		}
 	} else {
-		digest, at, row := g.name("digest"), g.name("at"), g.name("row")
-		body.Statements = append(body.Statements, statement("let "+digest+" = 0;"), statement("for (let "+at+" = 0; "+at+" < "+results+".length; "+at+"++) @b", &Block{Statements: []*Statement{
-			statement("const " + row + " = " + results + "[" + at + "];"),
-			statement("if ("+row+" !== undefined) @b", &Block{Statements: []*Statement{
-				statement(digest + " = (" + digest + " * 31 + " + row + "." + value + " + (" + row + "." + flag + " ? 1 : 0)) % 1000000007;"),
+		digest, at, row := generator.name("digest"), generator.name("at"), generator.name("row")
+		body.Statements = append(
+			body.Statements,
+			statement("let "+digest+" = 0;"),
+			statement("for (let "+at+" = 0; "+at+" < "+results+".length; "+at+"++) @b", &Block{Statements: []*Statement{
+				statement("const " + row + " = " + results + "[" + at + "];"),
+				statement("if ("+row+" !== undefined) @b", &Block{Statements: []*Statement{
+					statement(digest +
+						" = (" +
+						digest +
+						" * 31 + " +
+						row +
+						"." +
+						value +
+						" + (" +
+						row +
+						"." +
+						flag +
+						" ? 1 : 0)) % 1000000007;"),
+				}}),
 			}}),
-		}}), statement("console.log(`${"+results+".length}:${"+digest+"}:${"+results+"[0]?."+value+"}:${"+results+"["+results+".length - 1]?."+value+"}`);"))
+			statement("console.log(`${"+
+				results+
+				".length}:${"+
+				digest+
+				"}:${"+
+				results+
+				"[0]?."+
+				value+
+				"}:${"+
+				results+
+				"["+
+				results+
+				".length - 1]?."+
+				value+
+				"}`);"),
+		)
 	}
 	add(statement("function "+run+"(): void @b", body))
 	add(statement(run + "();"))

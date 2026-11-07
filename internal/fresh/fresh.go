@@ -56,7 +56,14 @@ func ProveWrites(program *ir.Program) []Write {
 }
 
 func prepare(program *ir.Program, ownership bool) *freshness {
-	proof := &freshness{program: program, summaries: map[int]*summary{}, origins: map[originKey]int{}, direct: directlyCalled(program), top: program.HasAsync(), ownership: ownership}
+	proof := &freshness{
+		program:   program,
+		summaries: map[int]*summary{},
+		origins:   map[originKey]int{},
+		direct:    directlyCalled(program),
+		top:       program.HasAsync(),
+		ownership: ownership,
+	}
 	functions := []int{}
 	for index := range program.Functions {
 		functions = append(functions, index)
@@ -221,17 +228,17 @@ func siteOf(o object) int    { return int(o-1) / 2 }
 // objects is a set of abstract objects.
 type objects map[object]bool
 
-func (s objects) add(o object) bool {
-	if s[o] {
+func (objects objects) add(o object) bool {
+	if objects[o] {
 		return false
 	}
-	s[o] = true
+	objects[o] = true
 	return true
 }
 
-func (s objects) sorted() []object {
-	list := make([]object, 0, len(s))
-	for o := range s {
+func (objects objects) sorted() []object {
+	list := make([]object, 0, len(objects))
+	for o := range objects {
 		list = append(list, o)
 	}
 	slices.Sort(list)
@@ -313,66 +320,66 @@ func newState() *state {
 	return &state{locals: map[int]value{}, heap: map[object]map[string]value{}, escaped: objects{}, leaked: objects{}}
 }
 
-func (s *state) copy() *state {
+func (state *state) copy() *state {
 	made := newState()
-	for local, held := range s.locals {
+	for local, held := range state.locals {
 		made.locals[local] = held.copy()
 	}
-	for o, fields := range s.heap {
+	for o, fields := range state.heap {
 		copied := map[string]value{}
 		for field, held := range fields {
 			copied[field] = held.copy()
 		}
 		made.heap[o] = copied
 	}
-	for o := range s.escaped {
+	for o := range state.escaped {
 		made.escaped[o] = true
 	}
-	for o := range s.leaked {
+	for o := range state.leaked {
 		made.leaked[o] = true
 	}
-	made.clobbered = s.clobbered
+	made.clobbered = state.clobbered
 	return made
 }
 
 // join adds other's facts to s, and says whether anything was new.
-func (s *state) join(other *state) bool {
+func (state *state) join(other *state) bool {
 	changed := false
 	for local, held := range other.locals {
-		mine := s.locals[local]
+		mine := state.locals[local]
 		if mine.merge(held) {
 			changed = true
 		}
-		s.locals[local] = mine
+		state.locals[local] = mine
 	}
 	for o, fields := range other.heap {
 		for field, held := range fields {
-			if s.store(o, field, held) {
+			if state.store(o, field, held) {
 				changed = true
 			}
 		}
 	}
 	for o := range other.escaped {
-		changed = s.escaped.add(o) || changed
+		changed = state.escaped.add(o) || changed
 	}
 	for o := range other.leaked {
-		changed = s.leaked.add(o) || changed
+		changed = state.leaked.add(o) || changed
 	}
-	if other.clobbered && !s.clobbered {
-		s.clobbered, changed = true, true
+	if other.clobbered && !state.clobbered {
+		state.clobbered, changed = true, true
 	}
 	if changed {
-		s.closeEscapes()
+		state.closeEscapes()
 	}
 	return changed
 }
 
 // store adds held to what o's field may hold, and says whether anything was new.
-func (s *state) store(o object, field string, held value) bool {
-	fields := s.heap[o]
+func (state *state) store(o object, field string, held value) bool {
+	fields := state.heap[o]
 	if fields == nil {
 		fields = map[string]value{}
-		s.heap[o] = fields
+		state.heap[o] = fields
 	}
 	mine := fields[field]
 	changed := mine.merge(held)
@@ -382,27 +389,27 @@ func (s *state) store(o object, field string, held value) bool {
 
 // escape marks every object a value holds, strongly or weakly, as escaped and leaked, and
 // everything they hold: this function let it go where it can't see.
-func (s *state) escape(held value) {
+func (state *state) escape(held value) {
 	for o := range held.strong {
-		s.escapeObject(o, true)
+		state.escapeObject(o, true)
 	}
 	for o := range held.weak {
-		s.escapeObject(o, true)
+		state.escapeObject(o, true)
 	}
 }
 
 // expose marks a value as escaped but not leaked: stored into what a parameter reaches, which the
 // caller holds, and its summary says where.
-func (s *state) expose(held value) {
+func (state *state) expose(held value) {
 	for o := range held.strong {
-		s.escapeObject(o, false)
+		state.escapeObject(o, false)
 	}
 	for o := range held.weak {
-		s.escapeObject(o, false)
+		state.escapeObject(o, false)
 	}
 }
 
-func (s *state) escapeObject(o object, leak bool) {
+func (state *state) escapeObject(o object, leak bool) {
 	queue := []object{o}
 	for len(queue) > 0 {
 		next := queue[len(queue)-1]
@@ -410,14 +417,14 @@ func (s *state) escapeObject(o object, leak bool) {
 		if next == outside {
 			continue
 		}
-		added := s.escaped.add(next)
-		if leak && s.leaked.add(next) {
+		added := state.escaped.add(next)
+		if leak && state.leaked.add(next) {
 			added = true
 		}
 		if !added {
 			continue
 		}
-		for _, held := range s.heap[next] {
+		for _, held := range state.heap[next] {
 			queue = append(queue, held.strong.sorted()...)
 			queue = append(queue, held.weak.sorted()...)
 		}
@@ -426,48 +433,48 @@ func (s *state) escapeObject(o object, leak bool) {
 
 // closeEscapes keeps what escaped and leaked objects hold escaped and leaked: a join or a merge by
 // recency can give one something that hadn't been yet.
-func (s *state) closeEscapes() {
-	exposed := s.escaped.sorted()
-	for o := range s.heap {
-		if o < 0 && !s.escaped[o] {
+func (state *state) closeEscapes() {
+	exposed := state.escaped.sorted()
+	for o := range state.heap {
+		if o < 0 && !state.escaped[o] {
 			exposed = append(exposed, o)
 		}
 	}
 	for _, o := range exposed {
-		for _, held := range s.heap[o] {
-			if s.leaked[o] {
-				s.escape(held)
+		for _, held := range state.heap[o] {
+			if state.leaked[o] {
+				state.escape(held)
 			} else {
-				s.expose(held)
+				state.expose(held)
 			}
 		}
 	}
 }
 
 // exposed reports whether whoever is outside may hold o.
-func (s *state) exposed(o object) bool {
-	return o == outside || o < 0 || s.escaped[o]
+func (state *state) exposed(o object) bool {
+	return o == outside || o < 0 || state.escaped[o]
 }
 
 // storeInto is a store into o that lets what's stored escape as o has: leaked into what's leaked,
 // exposed into what a caller holds.
-func (s *state) storeInto(o object, field string, held value) bool {
+func (state *state) storeInto(o object, field string, held value) bool {
 	if o == outside {
-		s.escape(held)
+		state.escape(held)
 		return false
 	}
-	changed := s.store(o, field, held)
+	changed := state.store(o, field, held)
 	switch {
-	case s.leaked[o]:
-		s.escape(held)
-	case s.exposed(o):
-		s.expose(held)
+	case state.leaked[o]:
+		state.escape(held)
+	case state.exposed(o):
+		state.expose(held)
 	}
 	return changed
 }
 
 // reach is every object a value reaches through strong references alone.
-func (s *state) reach(from value) objects {
+func (state *state) reach(from value) objects {
 	reached := objects{}
 	queue := from.strong.sorted()
 	for len(queue) > 0 {
@@ -476,7 +483,7 @@ func (s *state) reach(from value) objects {
 		if !reached.add(o) {
 			continue
 		}
-		for _, held := range s.heap[o] {
+		for _, held := range state.heap[o] {
 			queue = append(queue, held.strong.sorted()...)
 		}
 	}
@@ -485,14 +492,14 @@ func (s *state) reach(from value) objects {
 
 // closes reports whether writing held into holder may close a cycle: whether the value may reach,
 // strongly, an object the holder may be. Why says what was found when it may.
-func (s *state) closes(holder value, held value) (bool, string) {
-	return s.closesWith(holder, held, s.exposed)
+func (state *state) closes(holder value, held value) (bool, string) {
+	return state.closesWith(holder, held, state.exposed)
 }
 
 // closesWith is closes, with what the value may reach outside judged by exposed: a write a call
 // replays is judged after it, and what the write itself let escape doesn't count against it.
-func (s *state) closesWith(holder value, held value, exposed func(object) bool) (bool, string) {
-	reached := s.reach(held)
+func (state *state) closesWith(holder value, held value, exposed func(object) bool) (bool, string) {
+	reached := state.reach(held)
 	reachesOutside := false
 	for o := range reached {
 		if exposed(o) {
@@ -500,7 +507,7 @@ func (s *state) closesWith(holder value, held value, exposed func(object) bool) 
 		}
 	}
 	for _, o := range holder.strong.sorted() {
-		if reachesOutside && s.exposed(o) {
+		if reachesOutside && state.exposed(o) {
 			if o == outside {
 				return true, "the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here"
 			}
@@ -514,7 +521,7 @@ func (s *state) closesWith(holder value, held value, exposed func(object) bool) 
 }
 
 // recent makes a site's newest instance one of its older ones, before the site makes another.
-func (s *state) recent(site int) {
+func (state *state) recent(site int) {
 	from, to := newest(site), older(site)
 	rename := func(held *value) {
 		if held.strong[from] {
@@ -526,31 +533,31 @@ func (s *state) recent(site int) {
 			held.addWeak(to)
 		}
 	}
-	for local, held := range s.locals {
+	for local, held := range state.locals {
 		rename(&held)
-		s.locals[local] = held
+		state.locals[local] = held
 	}
-	for _, fields := range s.heap {
+	for _, fields := range state.heap {
 		for field, held := range fields {
 			rename(&held)
 			fields[field] = held
 		}
 	}
-	if fields, ok := s.heap[from]; ok {
-		delete(s.heap, from)
+	if fields, ok := state.heap[from]; ok {
+		delete(state.heap, from)
 		for field, held := range fields {
-			s.store(to, field, held)
+			state.store(to, field, held)
 		}
 	}
-	if s.escaped[from] {
-		delete(s.escaped, from)
-		s.escaped.add(to)
+	if state.escaped[from] {
+		delete(state.escaped, from)
+		state.escaped.add(to)
 	}
-	if s.leaked[from] {
-		delete(s.leaked, from)
-		s.leaked.add(to)
+	if state.leaked[from] {
+		delete(state.leaked, from)
+		state.leaked.add(to)
 	}
-	s.closeEscapes()
+	state.closeEscapes()
 }
 
 // freshness is the whole program's proof.
@@ -647,51 +654,51 @@ type deferral struct {
 }
 
 // placeholder is the object for a term, made the first time it's met.
-func (a *analysis) placeholder(t term) object {
-	if o, ok := a.termObjects[t]; ok {
+func (analysis *analysis) placeholder(t term) object {
+	if o, ok := analysis.termObjects[t]; ok {
 		return o
 	}
-	a.terms = append(a.terms, t)
-	o := object(-len(a.terms))
-	a.termObjects[t] = o
+	analysis.terms = append(analysis.terms, t)
+	o := object(-len(analysis.terms))
+	analysis.termObjects[t] = o
 	return o
 }
 
 // below is the placeholder for what a placeholder holds in a field: a parameter's field, then
 // everything below that.
-func (a *analysis) below(o object, field string) object {
-	t := a.termOf(o)
+func (analysis *analysis) below(o object, field string) object {
+	t := analysis.termOf(o)
 	switch t.level {
 	case 0:
-		return a.placeholder(term{param: t.param, field: field, level: 1})
+		return analysis.placeholder(term{param: t.param, field: field, level: 1})
 	case 1:
-		return a.placeholder(term{param: t.param, field: t.field, level: 2})
+		return analysis.placeholder(term{param: t.param, field: t.field, level: 2})
 	}
 	return o
 }
 
 // termOf is a placeholder's term.
-func (a *analysis) termOf(o object) term {
-	return a.terms[-int(o)-1]
+func (analysis *analysis) termOf(o object) term {
+	return analysis.terms[-int(o)-1]
 }
 
 // load is what a field of the objects a value holds strongly may hold.
-func (a *analysis) load(from value, field string) value {
+func (analysis *analysis) load(from value, field string) value {
 	var loaded value
 	for o := range from.strong {
-		fields := a.state.heap[o]
+		fields := analysis.state.heap[o]
 		loaded.merge(fields[field])
 		loaded.merge(fields[anyField])
 		switch {
 		case o < 0:
 			// What the argument holds there, or anything below it.
-			reached := a.below(o, field)
+			reached := analysis.below(o, field)
 			loaded.addStrong(reached)
 			loaded.addWeak(reached)
-			if a.state.clobbered {
+			if analysis.state.clobbered {
 				loaded.merge(outsideValue())
 			}
-		case a.state.exposed(o):
+		case analysis.state.exposed(o):
 			// Whoever is outside may have written anything outside there.
 			loaded.merge(outsideValue())
 		}
@@ -700,21 +707,21 @@ func (a *analysis) load(from value, field string) value {
 }
 
 // everything is what any field, element or entry of the objects a value holds strongly may hold.
-func (a *analysis) everything(from value) value {
+func (analysis *analysis) everything(from value) value {
 	var loaded value
 	for o := range from.strong {
-		for _, held := range a.state.heap[o] {
+		for _, held := range analysis.state.heap[o] {
 			loaded.merge(held)
 		}
 		switch {
 		case o < 0:
-			reached := a.below(o, anyField)
+			reached := analysis.below(o, anyField)
 			loaded.addStrong(reached)
 			loaded.addWeak(reached)
-			if a.state.clobbered {
+			if analysis.state.clobbered {
 				loaded.merge(outsideValue())
 			}
-		case a.state.exposed(o):
+		case analysis.state.exposed(o):
 			loaded.merge(outsideValue())
 		}
 	}
@@ -723,7 +730,16 @@ func (a *analysis) everything(from value) value {
 
 // analyze interprets a function to its fixed point, judges its writes, and returns its summary.
 func (proof *freshness) analyze(function int, graph *flow.Function) *summary {
-	a := &analysis{proof: proof, function: function, graph: graph, sites: map[siteKey]int{}, sitesOf: map[flow.InstructionId][]int{}, iterables: map[*ir.Statement]int{}, termObjects: map[term]object{}, deferred: map[writeKey]*deferral{}}
+	a := &analysis{
+		proof:       proof,
+		function:    function,
+		graph:       graph,
+		sites:       map[siteKey]int{},
+		sitesOf:     map[flow.InstructionId][]int{},
+		iterables:   map[*ir.Statement]int{},
+		termObjects: map[term]object{},
+		deferred:    map[writeKey]*deferral{},
+	}
 	if proof.ownership {
 		a.graphSites = map[int]bool{}
 		a.classifiedSites = map[int]bool{}
@@ -800,7 +816,12 @@ func (proof *freshness) analyze(function int, graph *flow.Function) *summary {
 
 // flowOut hands a block's state to each block after it: a handler takes either the state before
 // the instruction that threw or after it, since a call that throws never gives its variable a value.
-func (a *analysis) flowOut(block *flow.BasicBlock, before *state, after *state, visit func(flow.BlockId, *state)) {
+func (analysis *analysis) flowOut(
+	block *flow.BasicBlock,
+	before *state,
+	after *state,
+	visit func(flow.BlockId, *state),
+) {
 	if throws, ok := block.Terminal.(*flow.MayThrow); ok {
 		visit(throws.Next, after)
 		handler := before.copy()
@@ -812,145 +833,152 @@ func (a *analysis) flowOut(block *flow.BasicBlock, before *state, after *state, 
 }
 
 // block interprets a block from its state on entry: the state before its last instruction, and after.
-func (a *analysis) block(block *flow.BasicBlock, entry *state) (*state, *state) {
-	a.state = entry.copy()
-	before := a.state
+func (analysis *analysis) block(block *flow.BasicBlock, entry *state) (*state, *state) {
+	analysis.state = entry.copy()
+	before := analysis.state
 	for index, id := range block.Instructions {
 		if index == len(block.Instructions)-1 {
-			before = a.state.copy()
+			before = analysis.state.copy()
 		}
-		a.run(id)
+		analysis.run(id)
 	}
 	if flow.Suspends(block.Terminal) {
 		// The environment owns these values, but confinement across queued work is unproved.
-		for _, held := range a.state.locals {
-			a.state.escape(held)
+		for _, held := range analysis.state.locals {
+			analysis.state.escape(held)
 		}
-		a.state.clobbered = true
+		analysis.state.clobbered = true
 	}
-	return before, a.state
+	return before, analysis.state
 }
 
 // run interprets one instruction.
-func (a *analysis) run(id flow.InstructionId) {
-	instruction := a.graph.Instructions[id]
-	a.instruction, a.allocations, a.writeCount = id, 0, 0
-	for _, site := range a.sitesOf[id] {
-		a.state.recent(site)
+func (analysis *analysis) run(id flow.InstructionId) {
+	instruction := analysis.graph.Instructions[id]
+	analysis.instruction, analysis.allocations, analysis.writeCount = id, 0, 0
+	for _, site := range analysis.sitesOf[id] {
+		analysis.state.recent(site)
 	}
 	switch statement := (*instruction.At).(type) {
 	case ir.SetProperty:
-		holder := a.value(statement.Object)
-		held := a.value(statement.Value)
-		a.write(WriteField, statement.Site, statement.Name, holder, held, statement.Name)
+		holder := analysis.value(statement.Object)
+		held := analysis.value(statement.Value)
+		analysis.write(WriteField, statement.Site, statement.Name, holder, held, statement.Name)
 	case ir.SetIndex:
-		holder := a.value(statement.Array)
-		a.value(statement.Index)
-		held := a.value(statement.Value)
-		a.write(WriteElement, statement.Site, "", holder, held, elementKey)
+		holder := analysis.value(statement.Array)
+		analysis.value(statement.Index)
+		held := analysis.value(statement.Value)
+		analysis.write(WriteElement, statement.Site, "", holder, held, elementKey)
 	case ir.AllocateEnvironment:
 		// Empty captured storage allocates no user value and changes no existing slot.
 	case ir.Declare:
-		a.define(statement.Local, a.value(statement.Value))
+		analysis.define(statement.Local, analysis.value(statement.Value))
 	case ir.Assign:
-		a.define(statement.Local, a.value(statement.Value))
+		analysis.define(statement.Local, analysis.value(statement.Value))
 	case ir.Return:
-		returned := a.value(statement.Value)
-		held := a.state.locals[a.returnedLocal]
+		returned := analysis.value(statement.Value)
+		held := analysis.state.locals[analysis.returnedLocal]
 		held.merge(returned)
-		a.state.locals[a.returnedLocal] = held
+		analysis.state.locals[analysis.returnedLocal] = held
 	case ir.Throw:
-		a.state.escape(a.value(statement.Value))
+		analysis.state.escape(analysis.value(statement.Value))
 	case ir.ForOf:
-		iterable := a.iterable(instruction.At)
+		iterable := analysis.iterable(instruction.At)
 		if instruction.Part == 0 {
-			a.state.locals[iterable] = a.value(statement.Iterable)
+			analysis.state.locals[iterable] = analysis.value(statement.Iterable)
 			break
 		}
-		elements := a.load(a.state.locals[iterable], elementKey)
+		elements := analysis.load(analysis.state.locals[iterable], elementKey)
 		if statement.Pattern == nil {
-			a.define(statement.Local, elements)
+			analysis.define(statement.Local, elements)
 			break
 		}
 		for _, binding := range statement.Pattern {
 			// A pair a map gives, or a tuple of the array's: what the element holds there.
 			bound := elements.copy()
-			bound.merge(a.load(elements, binding.Field))
-			a.define(binding.Local, bound)
+			bound.merge(analysis.load(elements, binding.Field))
+			analysis.define(binding.Local, bound)
 		}
 	case ir.Try:
 		// The catch begins by taking the error, which came from wherever it was thrown.
 		if statement.CatchLocal >= 0 {
-			a.define(statement.CatchLocal, outsideValue())
+			analysis.define(statement.CatchLocal, outsideValue())
 		}
 	case ir.WriteLine, ir.Evaluate, ir.Panic, ir.If, ir.Loop, ir.Switch:
 		// What they evaluate: a value written or discarded, a panic's message, a condition, a switch's
 		// value or a case's test.
-		a.value(instruction.Expression)
+		analysis.value(instruction.Expression)
 	default:
 		// A statement added to the IR after this was written: it may write anything anywhere.
-		a.unknown(statement)
-		a.value(instruction.Expression)
+		analysis.unknown(statement)
+		analysis.value(instruction.Expression)
 	}
 }
 
 // iterable is the pseudo-local holding what a for...of iterates, from its first part to its second.
-func (a *analysis) iterable(at *ir.Statement) int {
-	local, ok := a.iterables[at]
+func (analysis *analysis) iterable(at *ir.Statement) int {
+	local, ok := analysis.iterables[at]
 	if !ok {
-		local = a.returnedLocal + 1 + len(a.iterables)
-		a.iterables[at] = local
+		local = analysis.returnedLocal + 1 + len(analysis.iterables)
+		analysis.iterables[at] = local
 	}
 	return local
 }
 
 // define gives a variable a value: a tracked one holds it from here on, and one a call can reach (a
 // global, a captured variable) lets it escape.
-func (a *analysis) define(local int, held value) {
-	declared := a.proof.program.Locals[local]
+func (analysis *analysis) define(local int, held value) {
+	declared := analysis.proof.program.Locals[local]
 	if !mutable(declared.Type) {
 		return
 	}
 	if declared.Global || declared.Captured {
-		a.state.escape(held)
+		analysis.state.escape(held)
 		return
 	}
-	a.state.locals[local] = held
+	analysis.state.locals[local] = held
 }
 
 // write judges a write of held into the field (or elements) of holder, and makes it.
-func (a *analysis) write(kind WriteKind, site int, name string, holder value, held value, field string) {
-	key := writeKey{function: a.function, instruction: a.instruction, ordinal: a.writeCount}
-	a.writeCount++
-	if a.judging {
-		write := Write{Kind: kind, Site: site, Name: name, Function: a.function, Proven: true}
-		a.proof.record(key, write)
-		a.judge(key, write, holder, held, "", a.state.exposed)
+func (analysis *analysis) write(kind WriteKind, site int, name string, holder value, held value, field string) {
+	key := writeKey{function: analysis.function, instruction: analysis.instruction, ordinal: analysis.writeCount}
+	analysis.writeCount++
+	if analysis.judging {
+		write := Write{Kind: kind, Site: site, Name: name, Function: analysis.function, Proven: true}
+		analysis.proof.record(key, write)
+		analysis.judge(key, write, holder, held, "", analysis.state.exposed)
 	}
 	for o := range holder.strong {
-		a.state.storeInto(o, field, held)
+		analysis.state.storeInto(o, field, held)
 	}
 }
 
 // judge decides a write here, or defers it to this function's callers: one this function can't
 // prove alone may be proven where it's called, with what the caller knows of its arguments.
-func (a *analysis) judge(key writeKey, write Write, holder value, held value, where string, exposed func(object) bool) {
-	closes, why := a.state.closesWith(holder, held, exposed)
+func (analysis *analysis) judge(
+	key writeKey,
+	write Write,
+	holder value,
+	held value,
+	where string,
+	exposed func(object) bool,
+) {
+	closes, why := analysis.state.closesWith(holder, held, exposed)
 	if !closes {
 		return
 	}
-	if a.placeholders {
-		deferred := a.deferred[key]
+	if analysis.placeholders {
+		deferred := analysis.deferred[key]
 		if deferred == nil {
 			write.Why = why + where
 			deferred = &deferral{write: write}
-			a.deferred[key] = deferred
+			analysis.deferred[key] = deferred
 		}
 		deferred.holder.merge(holder)
 		deferred.stored.merge(held)
 		return
 	}
-	a.proof.unproven(key, write, why+where)
+	analysis.proof.unproven(key, write, why+where)
 }
 
 // record notes a write the first time it's met in a round, proven until something says otherwise.
@@ -973,30 +1001,36 @@ func (proof *freshness) unproven(key writeKey, write Write, why string) {
 }
 
 // unknown records a write this pass can't judge: an IR node it doesn't know.
-func (a *analysis) unknown(node any) {
-	key := writeKey{function: a.function, instruction: a.instruction, ordinal: a.writeCount}
-	a.writeCount++
-	if a.judging {
-		a.proof.writes[key] = &Write{Kind: WriteUnknown, Function: a.function, Why: fmt.Sprintf("%T is a node the cycle finder doesn't know", node)}
+func (analysis *analysis) unknown(node any) {
+	key := writeKey{function: analysis.function, instruction: analysis.instruction, ordinal: analysis.writeCount}
+	analysis.writeCount++
+	if analysis.judging {
+		analysis.proof.writes[key] = &Write{
+			Kind:     WriteUnknown,
+			Function: analysis.function,
+			Why:      fmt.Sprintf("%T is a node the cycle finder doesn't know", node),
+		}
 	}
 }
 
 // allocate is a new object made by this instruction: its next allocation's site, newest instance.
-func (a *analysis) allocate() object {
-	origin := a.proof.origin(originKey{function: a.function, instruction: a.instruction, ordinal: a.allocations})
-	a.allocations++
-	return newest(a.site(origin))
+func (analysis *analysis) allocate() object {
+	origin := analysis.proof.origin(
+		originKey{function: analysis.function, instruction: analysis.instruction, ordinal: analysis.allocations},
+	)
+	analysis.allocations++
+	return newest(analysis.site(origin))
 }
 
 // site is this instruction's site for an origin, made the first time it's met.
-func (a *analysis) site(origin int) int {
-	key := siteKey{instruction: a.instruction, origin: origin}
-	site, ok := a.sites[key]
+func (analysis *analysis) site(origin int) int {
+	key := siteKey{instruction: analysis.instruction, origin: origin}
+	site, ok := analysis.sites[key]
 	if !ok {
-		site = len(a.siteOrigin)
-		a.sites[key] = site
-		a.siteOrigin = append(a.siteOrigin, origin)
-		a.sitesOf[a.instruction] = append(a.sitesOf[a.instruction], site)
+		site = len(analysis.siteOrigin)
+		analysis.sites[key] = site
+		analysis.siteOrigin = append(analysis.siteOrigin, origin)
+		analysis.sitesOf[analysis.instruction] = append(analysis.sitesOf[analysis.instruction], site)
 	}
 	return site
 }
@@ -1011,21 +1045,21 @@ func (proof *freshness) origin(key originKey) int {
 }
 
 // fresh is a new object holding contents under field.
-func (a *analysis) fresh(field string, contents value) value {
-	made := a.allocate()
+func (analysis *analysis) fresh(field string, contents value) value {
+	made := analysis.allocate()
 	if !contents.empty() {
-		a.state.store(made, field, contents)
+		analysis.state.store(made, field, contents)
 	}
 	return value{strong: objects{made: true}}
 }
 
 // call is what a call does to what it's handed: everything escapes, and its result is outside.
-func (a *analysis) call(operands []value, returns ir.Type) value {
+func (analysis *analysis) call(operands []value, returns ir.Type) value {
 	for _, operand := range operands {
-		a.state.escape(operand)
+		analysis.state.escape(operand)
 	}
 	// It may write anything it can reach into the parameters.
-	a.state.clobbered = true
+	analysis.state.clobbered = true
 	if !mutable(returns) {
 		return value{}
 	}
@@ -1033,48 +1067,48 @@ func (a *analysis) call(operands []value, returns ir.Type) value {
 }
 
 // value interprets an expression: its effects, and what its value may hold.
-func (a *analysis) value(expression ir.Expression) value {
+func (analysis *analysis) value(expression ir.Expression) value {
 	if expression == nil {
 		return value{}
 	}
-	if held, known := a.libraryLanguage(expression); known {
+	if held, known := analysis.libraryLanguage(expression); known {
 		return held
 	}
 	switch expression := expression.(type) {
 	case ir.Await:
-		return a.call([]value{a.value(expression.Value)}, expression.Of)
+		return analysis.call([]value{analysis.value(expression.Value)}, expression.Of)
 	case ir.Yield:
 		// The consumer runs before the body goes on, and may do anything with what was handed over.
-		return a.call([]value{a.value(expression.Value)}, 0)
+		return analysis.call([]value{analysis.value(expression.Value)}, 0)
 	case ir.GeneratorNext:
 		// The body runs, holding whatever the frame holds, and may hand back any of it.
-		return a.call([]value{a.value(expression.Generator)}, expression.Of)
+		return analysis.call([]value{analysis.value(expression.Generator)}, expression.Of)
 	case ir.GeneratorDone:
-		a.value(expression.Generator)
+		analysis.value(expression.Generator)
 		return value{}
 	case ir.IterableOf:
 		// The generator itself, never a fresh object: no reuse or region plan may take its storage
 		// as an object's (Memory, on #qk8rztp S2c-1).
-		return a.value(expression.Value)
+		return analysis.value(expression.Value)
 	case ir.IsGenerator:
-		a.value(expression.Value)
+		analysis.value(expression.Value)
 		return value{}
 	case ir.IsCollectionIterator:
-		a.value(expression.Value)
+		analysis.value(expression.Value)
 		return value{}
 	case ir.PromiseValue:
-		return a.call([]value{a.value(expression.Value)}, ir.Promise)
+		return analysis.call([]value{analysis.value(expression.Value)}, ir.Promise)
 	case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Undefined, ir.JSONNull, ir.Null:
 		return value{}
 	case ir.Read:
-		declared := a.proof.program.Locals[expression.Local]
+		declared := analysis.proof.program.Locals[expression.Local]
 		if !mutable(declared.Type) {
 			return value{}
 		}
 		if declared.Global || declared.Captured {
 			return outsideValue()
 		}
-		held, ok := a.state.locals[expression.Local]
+		held, ok := analysis.state.locals[expression.Local]
 		if !ok {
 			// Never given a value on any path here: a read the checker let through that this pass can't
 			// place, so it's taken as the most it could be.
@@ -1082,134 +1116,134 @@ func (a *analysis) value(expression ir.Expression) value {
 		}
 		return held.copy()
 	case ir.Void:
-		a.value(expression.Value)
+		analysis.value(expression.Value)
 		return value{}
 	case ir.Comma:
-		a.value(expression.Left)
-		return a.value(expression.Right)
+		analysis.value(expression.Left)
+		return analysis.value(expression.Right)
 	case ir.Effects:
 		for _, statement := range expression.Body {
-			a.expressionEffect(statement)
+			analysis.expressionEffect(statement)
 		}
-		return a.value(expression.Result)
+		return analysis.value(expression.Result)
 	case ir.LogicalAssignment:
-		result := a.value(expression.Read)
-		a.value(expression.Key)
-		before := a.state.copy()
+		result := analysis.value(expression.Read)
+		analysis.value(expression.Key)
+		before := analysis.state.copy()
 		switch write := expression.Write.(type) {
 		case ir.Assign:
-			held := a.value(write.Value)
+			held := analysis.value(write.Value)
 			result.merge(held)
-			a.define(write.Local, held)
+			analysis.define(write.Local, held)
 		case ir.SetProperty:
-			holder := a.value(write.Object)
-			held := a.value(write.Value)
+			holder := analysis.value(write.Object)
+			held := analysis.value(write.Value)
 			result.merge(held)
 			if expression.Key != nil {
 				for _, name := range expression.KeyNames {
-					a.write(WriteField, write.Site, name, holder, held, name)
+					analysis.write(WriteField, write.Site, name, holder, held, name)
 				}
 			} else {
-				a.write(WriteField, write.Site, write.Name, holder, held, write.Name)
+				analysis.write(WriteField, write.Site, write.Name, holder, held, write.Name)
 			}
 		case ir.SetIndex:
-			holder := a.value(write.Array)
-			a.value(write.Index)
-			held := a.value(write.Value)
+			holder := analysis.value(write.Array)
+			analysis.value(write.Index)
+			held := analysis.value(write.Value)
 			result.merge(held)
-			a.write(WriteElement, write.Site, "", holder, held, elementKey)
+			analysis.write(WriteElement, write.Site, "", holder, held, elementKey)
 		}
-		a.state.join(before)
+		analysis.state.join(before)
 		return result
 	case ir.Truthy:
-		a.value(expression.Value)
+		analysis.value(expression.Value)
 		return value{}
 	case ir.Logical:
-		result := a.value(expression.Left)
-		result.merge(a.value(expression.Right))
+		result := analysis.value(expression.Left)
+		result.merge(analysis.value(expression.Right))
 		return result
 	case ir.Unary:
-		a.value(expression.Operand)
+		analysis.value(expression.Operand)
 		return value{}
 	case ir.Binary:
-		a.value(expression.Left)
-		a.value(expression.Right)
+		analysis.value(expression.Left)
+		analysis.value(expression.Right)
 		return value{}
 	case ir.IsNull:
-		a.value(expression.Value)
+		analysis.value(expression.Value)
 		return value{}
 	case ir.RegExpNew:
 		for _, argument := range expression.Arguments {
-			a.value(argument)
+			analysis.value(argument)
 		}
 		// Patterns are compiled constants; the runtime object holds only immutable strings.
-		return a.fresh(anyField, value{})
+		return analysis.fresh(anyField, value{})
 	case ir.RegExpCall:
-		return a.regexCall(expression)
+		return analysis.regexCall(expression)
 	case ir.RegExpProperty:
-		a.value(expression.Array)
+		analysis.value(expression.Array)
 		if mutable(expression.Type()) {
 			return outsideValue()
 		}
 		return value{}
 	case ir.RegExpGroup:
-		a.value(expression.Object)
+		analysis.value(expression.Object)
 		if mutable(expression.Type()) {
 			return outsideValue()
 		}
 		return value{}
 	case ir.JSONEncode:
-		a.value(expression.Value)
+		analysis.value(expression.Value)
 		return value{}
 	case ir.JSONStringify:
 		// Lowering excludes toJSON and replacer callbacks; serialization only reads values.
-		a.value(expression.Value)
-		a.value(expression.Replacer)
-		a.value(expression.Space)
+		analysis.value(expression.Value)
+		analysis.value(expression.Replacer)
+		analysis.value(expression.Space)
 		return value{}
 	case ir.NumberToString:
-		a.value(expression.Value)
+		analysis.value(expression.Value)
 		return value{}
 	case ir.BooleanToString:
-		a.value(expression.Value)
+		analysis.value(expression.Value)
 		return value{}
 	case ir.Concat:
 		for _, part := range expression.Parts {
-			a.value(part)
+			analysis.value(part)
 		}
 		return value{}
 	case ir.Conditional:
-		a.value(expression.Condition)
-		result := a.value(expression.WhenTrue)
-		result.merge(a.value(expression.WhenNot))
+		analysis.value(expression.Condition)
+		result := analysis.value(expression.WhenTrue)
+		result.merge(analysis.value(expression.WhenNot))
 		return result
 	case ir.Coalesce:
-		result := a.value(expression.Value)
-		result.merge(a.value(expression.Fallback))
-		a.value(expression.Panic)
+		result := analysis.value(expression.Value)
+		result.merge(analysis.value(expression.Fallback))
+		analysis.value(expression.Panic)
 		return result
 	case ir.Box:
-		return a.value(expression.Value)
+		return analysis.value(expression.Value)
 	case ir.Narrow:
-		return a.value(expression.Value)
+		return analysis.value(expression.Value)
 	case ir.PlaceholderUse:
 		// A checked use forwards the value; it cannot create a reference or a write.
-		return a.value(expression.Value)
+		return analysis.value(expression.Value)
 	case ir.Unwrap:
-		return a.value(expression.Value)
+		return analysis.value(expression.Value)
 	case ir.Defined:
-		return a.value(expression.Value)
+		return analysis.value(expression.Value)
 	case ir.MaybeOf:
-		return a.value(expression.Value)
+		return analysis.value(expression.Value)
 	case ir.CheckedCast:
-		result := a.value(expression.Value)
+		result := analysis.value(expression.Value)
 		for _, allowed := range expression.Allowed {
-			a.value(allowed)
+			analysis.value(allowed)
 		}
 		return result
 	case ir.WeakOf:
 		// A Weak keeps nothing: what it points at is held weakly.
-		held := a.value(expression.Value)
+		held := analysis.value(expression.Value)
 		var weak value
 		for o := range held.strong {
 			weak.addWeak(o)
@@ -1219,7 +1253,7 @@ func (a *analysis) value(expression ir.Expression) value {
 		}
 		return weak
 	case ir.WeakTarget:
-		held := a.value(expression.Value)
+		held := analysis.value(expression.Value)
 		var target value
 		for o := range held.weak {
 			target.addStrong(o)
@@ -1229,360 +1263,362 @@ func (a *analysis) value(expression ir.Expression) value {
 		}
 		return target
 	case ir.Length:
-		a.value(expression.Array)
+		analysis.value(expression.Array)
 		return value{}
 	case ir.MathCall:
 		for _, argument := range expression.Arguments {
-			a.value(argument)
+			analysis.value(argument)
 		}
 		return value{}
 	case ir.RecordCoalesce:
-		holder := a.value(expression.Record)
-		a.value(expression.Key)
-		result := a.value(expression.Value)
-		a.write(WriteMapEntry, expression.Site, "", holder, result, elementKey)
-		result.merge(a.load(holder, elementKey))
+		holder := analysis.value(expression.Record)
+		analysis.value(expression.Key)
+		result := analysis.value(expression.Value)
+		analysis.write(WriteMapEntry, expression.Site, "", holder, result, elementKey)
+		result.merge(analysis.load(holder, elementKey))
 		return result
 	case ir.RecordCall:
-		return a.recordCall(expression)
+		return analysis.recordCall(expression)
 	case ir.RecordLiteral:
 		var entries value
 		if expression.Spread != nil {
-			entries.merge(a.load(a.value(expression.Spread), elementKey))
+			entries.merge(analysis.load(analysis.value(expression.Spread), elementKey))
 		}
 		for _, entry := range expression.Entries {
-			a.value(entry.Key)
-			entries.merge(a.value(entry.Value))
+			analysis.value(entry.Key)
+			entries.merge(analysis.value(entry.Value))
 		}
-		return a.fresh(elementKey, entries)
+		return analysis.fresh(elementKey, entries)
 	case ir.ObjectCall:
-		return a.objectCall(expression)
+		return analysis.objectCall(expression)
 	case ir.NumberCall:
 		for _, argument := range expression.Arguments {
-			a.value(argument)
+			analysis.value(argument)
 		}
 		return value{}
 	case ir.ToFixed:
-		a.value(expression.Value)
-		a.value(expression.Digits)
+		analysis.value(expression.Value)
+		analysis.value(expression.Digits)
 		return value{}
 	case ir.NumberFormat:
-		a.value(expression.Value)
-		a.value(expression.Argument)
+		analysis.value(expression.Value)
+		analysis.value(expression.Argument)
 		return value{}
 	case ir.IsUndefined:
-		a.value(expression.Value)
+		analysis.value(expression.Value)
 		return value{}
 	case ir.MaybeToString:
-		a.value(expression.Value)
+		analysis.value(expression.Value)
 		return value{}
 	case ir.ArrayIsArray:
-		a.value(expression.Value)
+		analysis.value(expression.Value)
 		return value{}
 	case ir.RecordStorage:
-		a.value(expression.Value)
+		analysis.value(expression.Value)
 		return value{}
 	case ir.TypeOf:
-		a.value(expression.Value)
+		analysis.value(expression.Value)
 		return value{}
 	case ir.UnionToString:
-		a.value(expression.Value)
+		analysis.value(expression.Value)
 		return value{}
 	case ir.UnknownKind:
-		a.value(expression.Value)
+		analysis.value(expression.Value)
 		return value{}
 	case ir.OwnFunction:
-		a.value(expression.Object)
+		analysis.value(expression.Object)
 		return value{}
 	case ir.ErrorToString:
-		a.value(expression.Value)
+		analysis.value(expression.Value)
 		return value{}
 	case ir.ArrayOfScalars:
-		a.value(expression.Array)
+		analysis.value(expression.Array)
 		return value{}
 	case ir.JoinEnter:
-		a.value(expression.Array)
+		analysis.value(expression.Array)
 		return value{}
 	case ir.JoinLeave:
 		return value{}
 	case ir.StringLength:
-		a.value(expression.Value)
+		analysis.value(expression.Value)
 		return value{}
 	case ir.CharCodeAt:
-		a.value(expression.Value)
-		a.value(expression.Index)
+		analysis.value(expression.Value)
+		analysis.value(expression.Index)
 		return value{}
 	case ir.Utf8Length:
-		a.value(expression.Text)
+		analysis.value(expression.Text)
 		return value{}
 	case ir.Utf8At:
-		a.value(expression.Text)
-		a.value(expression.Index)
+		analysis.value(expression.Text)
+		analysis.value(expression.Index)
 		return value{}
 	case ir.StringFromCodes:
 		// A new string, from numbers: nothing it reaches can hold a holder.
 		for _, code := range expression.Codes {
-			a.value(code)
+			analysis.value(code)
 		}
 		if expression.Spread != nil {
-			a.value(expression.Spread)
+			analysis.value(expression.Spread)
 		}
 		return value{}
 	case ir.Trim:
-		a.value(expression.Value)
+		analysis.value(expression.Value)
 		return value{}
 	case ir.StringIndex:
-		a.value(expression.Value)
-		a.value(expression.Index)
+		analysis.value(expression.Value)
+		analysis.value(expression.Index)
 		return value{}
 	case ir.StringCall:
-		a.value(expression.Value)
+		analysis.value(expression.Value)
 		for _, argument := range expression.Arguments {
-			a.value(argument)
+			analysis.value(argument)
 		}
 		if expression.Type() == ir.Array {
 			// split: a new array of strings.
-			return a.fresh(elementKey, value{})
+			return analysis.fresh(elementKey, value{})
 		}
 		return value{}
 	case ir.CodePoints:
-		a.value(expression.Value)
-		return a.fresh(elementKey, value{})
+		analysis.value(expression.Value)
+		return analysis.fresh(elementKey, value{})
 	case ir.ProgramArguments:
-		return a.fresh(elementKey, value{})
+		return analysis.fresh(elementKey, value{})
 	case ir.JSONDecode:
-		a.value(expression.Text)
+		analysis.value(expression.Text)
 		// The decoded graph is fresh, but nesting is conservatively treated as outside.
 		return outsideValue()
 	case ir.ReadTextFile:
-		a.value(expression.Path)
-		return a.fresh(anyField, value{})
+		analysis.value(expression.Path)
+		return analysis.fresh(anyField, value{})
 	case ir.WriteTextFile:
-		a.value(expression.Path)
-		a.value(expression.Text)
-		return a.fresh(anyField, value{})
+		analysis.value(expression.Path)
+		analysis.value(expression.Text)
+		return analysis.fresh(anyField, value{})
 	case ir.MakeError:
-		a.value(expression.Message)
+		analysis.value(expression.Message)
 		if expression.Name != nil {
-			a.value(expression.Name)
+			analysis.value(expression.Name)
 		}
-		return a.fresh(anyField, value{})
+		return analysis.fresh(anyField, value{})
 	case ir.ObjectLiteral:
 		var copied value
 		if expression.Spread != nil {
-			source := a.value(expression.Spread)
+			source := analysis.value(expression.Spread)
 			if expression.NoReuse {
-				a.state.escape(source)
+				analysis.state.escape(source)
 			}
-			copied = a.everything(source)
+			copied = analysis.everything(source)
 		}
 		all := append(append([]ir.Field{}, expression.Fields...), expression.Empty...)
 		fields := make([]value, len(all))
 		for index, field := range all {
-			fields[index] = a.value(field.Value)
+			fields[index] = analysis.value(field.Value)
 		}
-		made := a.fresh(anyField, copied)
-		a.tagOwnershipGraph(made, expression.GraphTypes, expression.ProgramRegion)
+		made := analysis.fresh(anyField, copied)
+		analysis.tagOwnershipGraph(made, expression.GraphTypes, expression.ProgramRegion)
 		for index, field := range all {
 			if !fields[index].empty() {
-				a.state.store(newestOf(made), field.Name, fields[index])
+				analysis.state.store(newestOf(made), field.Name, fields[index])
 			}
 		}
 		return made
 	case ir.ArrayLiteral:
 		var elements value
 		for index, element := range expression.Elements {
-			held := a.value(element)
+			held := analysis.value(element)
 			if index < len(expression.Spread) && expression.Spread[index] {
-				held = a.load(held, elementKey)
+				held = analysis.load(held, elementKey)
 			}
 			elements.merge(held)
 		}
-		made := a.fresh(elementKey, elements)
-		a.tagOwnershipGraph(made, expression.GraphTypes, expression.ProgramRegion)
+		made := analysis.fresh(elementKey, elements)
+		analysis.tagOwnershipGraph(made, expression.GraphTypes, expression.ProgramRegion)
 		return made
 	case ir.StringIterator:
-		return a.fresh(anyField, a.value(expression.Value))
+		return analysis.fresh(anyField, analysis.value(expression.Value))
 	case ir.CollectionIterator:
-		return a.fresh(anyField, a.value(expression.Collection))
+		return analysis.fresh(anyField, analysis.value(expression.Collection))
 	case ir.MapNew:
 		var entries value
 		for _, entry := range expression.Entries {
-			entries.merge(a.value(entry[0]))
-			entries.merge(a.value(entry[1]))
+			entries.merge(analysis.value(entry[0]))
+			entries.merge(analysis.value(entry[1]))
 		}
 		if expression.Pairs != nil {
 			// Each pair's key and value: a tuple's fields, or another map's entries.
-			pairs := a.load(a.value(expression.Pairs), elementKey)
+			pairs := analysis.load(analysis.value(expression.Pairs), elementKey)
 			entries.merge(pairs)
-			entries.merge(a.everything(pairs))
+			entries.merge(analysis.everything(pairs))
 		}
-		return a.fresh(elementKey, entries)
+		return analysis.fresh(elementKey, entries)
 	case ir.MapKeys:
-		return a.fresh(elementKey, a.load(a.value(expression.Map), elementKey))
+		return analysis.fresh(elementKey, analysis.load(analysis.value(expression.Map), elementKey))
 	case ir.MapValues:
-		return a.fresh(elementKey, a.load(a.value(expression.Map), elementKey))
+		return analysis.fresh(elementKey, analysis.load(analysis.value(expression.Map), elementKey))
 	case ir.MapClear:
-		a.value(expression.Map)
+		analysis.value(expression.Map)
 		return value{}
 	case ir.MapForEach:
-		return a.call([]value{a.value(expression.Map), a.value(expression.Callback)}, 0)
+		return analysis.call([]value{analysis.value(expression.Map), analysis.value(expression.Callback)}, 0)
 	case ir.ReadDirectory:
-		a.value(expression.Path)
-		return a.fresh(anyField, a.fresh(elementKey, value{}))
+		analysis.value(expression.Path)
+		return analysis.fresh(anyField, analysis.fresh(elementKey, value{}))
 	case ir.ProcessCall:
-		return a.call(a.operands(expression), expression.Type())
+		return analysis.call(analysis.operands(expression), expression.Type())
 	case ir.NodeHostCall:
-		return a.call(a.operands(expression), expression.Type())
+		return analysis.call(analysis.operands(expression), expression.Type())
 	case ir.NodeFSFile:
-		return a.nodeFSFile(expression)
+		return analysis.nodeFSFile(expression)
 	case ir.FileStatus:
-		a.value(expression.Path)
-		return a.fresh(anyField, value{})
+		analysis.value(expression.Path)
+		return analysis.fresh(anyField, value{})
 	case ir.SetNew:
-		return a.fresh(elementKey, a.load(a.value(expression.Values), elementKey))
+		return analysis.fresh(elementKey, analysis.load(analysis.value(expression.Values), elementKey))
 	case ir.SetValues:
-		return a.fresh(elementKey, a.load(a.value(expression.Set), elementKey))
+		return analysis.fresh(elementKey, analysis.load(analysis.value(expression.Set), elementKey))
 	case ir.MapEntries:
-		contents := a.load(a.value(expression.Map), elementKey)
-		pairs := a.fresh(anyField, contents)
-		return a.fresh(elementKey, pairs)
+		contents := analysis.load(analysis.value(expression.Map), elementKey)
+		pairs := analysis.fresh(anyField, contents)
+		return analysis.fresh(elementKey, pairs)
 	case ir.ArraySlice:
-		elements := a.load(a.value(expression.Array), elementKey)
+		elements := analysis.load(analysis.value(expression.Array), elementKey)
 		for _, argument := range expression.Arguments {
-			a.value(argument)
+			analysis.value(argument)
 		}
-		return a.fresh(elementKey, elements)
+		return analysis.fresh(elementKey, elements)
 	case ir.ArrayConcat:
-		elements := a.load(a.value(expression.Array), elementKey)
+		elements := analysis.load(analysis.value(expression.Array), elementKey)
 		for _, other := range expression.Others {
-			elements.merge(a.load(a.value(other), elementKey))
+			elements.merge(analysis.load(analysis.value(other), elementKey))
 		}
-		return a.fresh(elementKey, elements)
+		return analysis.fresh(elementKey, elements)
 	case ir.HasProperty:
-		a.value(expression.Object)
+		analysis.value(expression.Object)
 		return value{}
 	case ir.DynamicProperty:
-		return a.load(a.value(expression.Object), expression.Name)
+		return analysis.load(analysis.value(expression.Object), expression.Name)
 	case ir.DynamicKeyedProperty:
 		// It may call a class getter by whatever name the key holds, so it's taken as a call, which
 		// lets its operands escape and its result be anything outside.
-		return a.call(a.operands(expression), expression.Type())
+		return analysis.call(analysis.operands(expression), expression.Type())
 	case ir.HasAccessor:
-		a.value(expression.Object)
+		analysis.value(expression.Object)
 		return value{}
 	case ir.Property:
-		return a.load(a.value(expression.Object), expression.Name)
+		return analysis.load(analysis.value(expression.Object), expression.Name)
 	case ir.ArrayIndex:
-		array := a.value(expression.Array)
-		a.value(expression.Index)
-		return a.load(array, elementKey)
+		array := analysis.value(expression.Array)
+		analysis.value(expression.Index)
+		return analysis.load(array, elementKey)
 	case ir.ArrayPop:
-		return a.load(a.value(expression.Array), elementKey)
+		return analysis.load(analysis.value(expression.Array), elementKey)
 	case ir.ArraySearch:
-		a.value(expression.Array)
-		a.value(expression.Value)
+		analysis.value(expression.Array)
+		analysis.value(expression.Value)
 		if expression.From != nil {
-			a.value(expression.From)
+			analysis.value(expression.From)
 		}
 		return value{}
 	case ir.ArrayJoin:
-		a.value(expression.Array)
-		a.value(expression.Separator)
+		analysis.value(expression.Array)
+		analysis.value(expression.Separator)
 		return value{}
 	case ir.ArrayReverse:
-		return a.value(expression.Array)
+		return analysis.value(expression.Array)
 	case ir.ArrayPush:
-		holder := a.value(expression.Array)
-		held := a.value(expression.Value)
-		a.write(WriteElement, expression.Site, "", holder, held, elementKey)
+		holder := analysis.value(expression.Array)
+		held := analysis.value(expression.Value)
+		analysis.write(WriteElement, expression.Site, "", holder, held, elementKey)
 		return value{}
 	case ir.ArrayFill:
 		if expression.Array == nil {
-			a.value(expression.Length)
-			held := a.value(expression.Value)
-			a.value(expression.Start)
-			a.value(expression.End)
-			return a.fresh(elementKey, held)
+			analysis.value(expression.Length)
+			held := analysis.value(expression.Value)
+			analysis.value(expression.Start)
+			analysis.value(expression.End)
+			return analysis.fresh(elementKey, held)
 		}
-		holder := a.value(expression.Array)
-		held := a.value(expression.Value)
-		a.value(expression.Start)
-		a.value(expression.End)
-		a.write(WriteElement, expression.Site, "", holder, held, elementKey)
+		holder := analysis.value(expression.Array)
+		held := analysis.value(expression.Value)
+		analysis.value(expression.Start)
+		analysis.value(expression.End)
+		analysis.write(WriteElement, expression.Site, "", holder, held, elementKey)
 		return holder
 	case ir.ArraySplice:
-		holder := a.value(expression.Array)
-		a.value(expression.Start)
-		a.value(expression.Count)
+		holder := analysis.value(expression.Array)
+		analysis.value(expression.Start)
+		analysis.value(expression.Count)
 		var items value
 		for _, item := range expression.Items {
-			items.merge(a.value(item))
+			items.merge(analysis.value(item))
 		}
-		removed := a.load(holder, elementKey)
+		removed := analysis.load(holder, elementKey)
 		if len(expression.Items) > 0 {
-			a.write(WriteElement, expression.Site, "", holder, items, elementKey)
+			analysis.write(WriteElement, expression.Site, "", holder, items, elementKey)
 		}
-		return a.fresh(elementKey, removed)
+		return analysis.fresh(elementKey, removed)
 	case ir.MapGet:
-		object := a.value(expression.Map)
-		a.value(expression.Key)
-		return a.load(object, elementKey)
+		object := analysis.value(expression.Map)
+		analysis.value(expression.Key)
+		return analysis.load(object, elementKey)
 	case ir.MapSet:
-		holder := a.value(expression.Map)
-		held := a.value(expression.Key)
-		held.merge(a.value(expression.Value))
-		a.write(WriteMapEntry, expression.Site, "", holder, held, elementKey)
+		holder := analysis.value(expression.Map)
+		held := analysis.value(expression.Key)
+		held.merge(analysis.value(expression.Value))
+		analysis.write(WriteMapEntry, expression.Site, "", holder, held, elementKey)
 		return holder
 	case ir.MapHas:
-		a.value(expression.Map)
-		a.value(expression.Key)
+		analysis.value(expression.Map)
+		analysis.value(expression.Key)
 		return value{}
 	case ir.MapDelete:
-		a.value(expression.Map)
-		a.value(expression.Key)
+		analysis.value(expression.Map)
+		analysis.value(expression.Key)
 		return value{}
 	case ir.MapSize:
-		a.value(expression.Map)
+		analysis.value(expression.Map)
 		return value{}
 	case ir.HasOwn:
-		a.value(expression.Object)
-		a.value(expression.Key)
+		analysis.value(expression.Object)
+		analysis.value(expression.Key)
 		return value{}
 	case ir.SetAdd:
-		holder := a.value(expression.Set)
-		held := a.value(expression.Value)
-		a.write(WriteSetElement, expression.Site, "", holder, held, elementKey)
+		holder := analysis.value(expression.Set)
+		held := analysis.value(expression.Value)
+		analysis.write(WriteSetElement, expression.Site, "", holder, held, elementKey)
 		return holder
 	case ir.MakeClosure:
 		// What a function value holds is its cells, and what's in a cell has escaped.
 		return outsideValue()
 	case ir.InstanceOf:
-		a.value(expression.Value)
+		analysis.value(expression.Value)
 		return value{}
 	case ir.Call:
 		operands := []value{}
 		for _, argument := range expression.Arguments {
-			operands = append(operands, a.value(argument))
+			operands = append(operands, analysis.value(argument))
 		}
-		if a.proof.top || a.proof.program.CallExpandsArguments(expression) || expression.Returns == ir.Generator {
+		if analysis.proof.top ||
+			analysis.proof.program.CallExpandsArguments(expression) ||
+			expression.Returns == ir.Generator {
 			// A generator's call keeps every argument in its frame for steps to come, which its
 			// summary, made for a call that returns, can't say.
-			return a.call(operands, expression.Returns)
+			return analysis.call(operands, expression.Returns)
 		}
-		before := a.state.copy()
+		before := analysis.state.copy()
 		joined := before.copy()
 		var result value
-		for _, target := range a.proof.program.CallTargets(expression) {
-			a.state = before.copy()
-			if !a.proof.direct[target] {
+		for _, target := range analysis.proof.program.CallTargets(expression) {
+			analysis.state = before.copy()
+			if !analysis.proof.direct[target] {
 				// Its parameters are outside to it, so it may keep them anywhere.
-				a.call(operands, 0)
+				analysis.call(operands, 0)
 			}
-			result.merge(a.made(target, a.proof.summaries[target], operands))
-			joined.join(a.state)
+			result.merge(analysis.made(target, analysis.proof.summaries[target], operands))
+			joined.join(analysis.state)
 		}
-		a.state = joined
+		analysis.state = joined
 		if !mutable(expression.Returns) {
 			return value{}
 		}
@@ -1590,40 +1626,47 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.CallClosure:
 		// Cells and structural receivers are outside this summary's model. The
 		// union for any bounded target set, and for Unknown, is an arbitrary call.
-		return a.call(a.operands(expression), expression.Returns)
+		return analysis.call(analysis.operands(expression), expression.Returns)
 	case ir.ParallelMap:
-		items := a.value(expression.Items)
-		work := a.value(expression.Work)
-		if a.judging && a.proof.ownership && expression.Moved {
-			a.proof.queries = append(a.proof.queries, a.transferAnswer(expression, items))
+		items := analysis.value(expression.Items)
+		work := analysis.value(expression.Work)
+		if analysis.judging && analysis.proof.ownership && expression.Moved {
+			analysis.proof.queries = append(analysis.proof.queries, analysis.transferAnswer(expression, items))
 		}
 		// Tasks have a separate effect proof; results may alias shared inputs.
-		return a.call([]value{items, work}, ir.Array)
+		return analysis.call([]value{items, work}, ir.Array)
 	case ir.ArrayMap:
-		return a.call([]value{a.value(expression.Array), a.value(expression.Callback)}, ir.Array)
+		return analysis.call([]value{analysis.value(expression.Array), analysis.value(expression.Callback)}, ir.Array)
 	case ir.ArrayVisit:
-		return a.call([]value{a.value(expression.Array), a.value(expression.Callback)}, expression.Type())
+		return analysis.call(
+			[]value{analysis.value(expression.Array), analysis.value(expression.Callback)},
+			expression.Type(),
+		)
 	case ir.ArrayReduce:
-		return a.call([]value{a.value(expression.Array), a.value(expression.Callback), a.value(expression.Initial)}, expression.Result)
+		return analysis.call([]value{
+			analysis.value(expression.Array),
+			analysis.value(expression.Callback),
+			analysis.value(expression.Initial),
+		}, expression.Result)
 	case ir.ArrayFrom:
-		return a.call([]value{a.value(expression.Length), a.value(expression.Callback)}, ir.Array)
+		return analysis.call([]value{analysis.value(expression.Length), analysis.value(expression.Callback)}, ir.Array)
 	case ir.ArraySort:
 		// The comparator, a function or a function value, is handed the elements.
-		array := a.value(expression.Array)
-		a.call([]value{array, a.value(expression.Callback)}, 0)
+		array := analysis.value(expression.Array)
+		analysis.call([]value{array, analysis.value(expression.Callback)}, 0)
 		return array
 	}
 	// A node added to the IR after this was written: it may write anything anywhere, so it keeps every
 	// slot refused, and it's taken as a call.
-	a.unknown(expression)
-	return a.call(a.operands(expression), expression.Type())
+	analysis.unknown(expression)
+	return analysis.call(analysis.operands(expression), expression.Type())
 }
 
 // operands interprets every expression an IR node holds.
-func (a *analysis) operands(expression ir.Expression) []value {
+func (analysis *analysis) operands(expression ir.Expression) []value {
 	var operands []value
 	for _, operand := range expressionsIn(expression) {
-		operands = append(operands, a.value(operand))
+		operands = append(operands, analysis.value(operand))
 	}
 	return operands
 }
@@ -1668,19 +1711,19 @@ func newestOf(made value) object {
 // this instruction's site for where it was first made; what it stored into its parameters stored
 // into the arguments; what it let escape of them let escape; and the writes it left to its callers
 // judged with what's known here. Its result is what it returns.
-func (a *analysis) made(function int, callee *summary, arguments []value) value {
+func (analysis *analysis) made(function int, callee *summary, arguments []value) value {
 	if callee == nil {
 		// Returns nothing yet, on the way to the fixed point.
 		return value{}
 	}
 	instances := map[int]object{}
 	for _, origin := range callee.origins() {
-		instances[origin] = newest(a.site(origin))
+		instances[origin] = newest(analysis.site(origin))
 	}
 	// What had escaped before the call: while the callee runs, only code it can't see into could
 	// tie what it was given to what had, and then anything escaped counts.
 	before := objects{}
-	for o := range a.state.escaped {
+	for o := range analysis.state.escaped {
 		before.add(o)
 	}
 	translate := func(held summaryValue) value {
@@ -1700,11 +1743,11 @@ func (a *analysis) made(function int, callee *summary, arguments []value) value 
 			}
 		}
 		for _, t := range held.strongTerms {
-			argument := a.argument(t, arguments)
+			argument := analysis.argument(t, arguments)
 			made.merge(argument)
 		}
 		for _, t := range held.weakTerms {
-			argument := a.argument(t, arguments)
+			argument := analysis.argument(t, arguments)
 			for o := range argument.strong {
 				made.addWeak(o)
 			}
@@ -1717,11 +1760,11 @@ func (a *analysis) made(function int, callee *summary, arguments []value) value 
 	// Until nothing more is added: a store through one argument can change what another reaches,
 	// when the caller passed the same object for both.
 	for {
-		escaped, leaked := len(a.state.escaped), len(a.state.leaked)
+		escaped, leaked := len(analysis.state.escaped), len(analysis.state.leaked)
 		changed := false
 		for _, origin := range callee.origins() {
 			for field, held := range callee.fields[origin] {
-				changed = a.state.storeInto(instances[origin], field, translate(held)) || changed
+				changed = analysis.state.storeInto(instances[origin], field, translate(held)) || changed
 			}
 		}
 		for _, t := range callee.edgeTerms() {
@@ -1729,28 +1772,31 @@ func (a *analysis) made(function int, callee *summary, arguments []value) value 
 			for field, held := range callee.edges[t] {
 				stored := translate(held)
 				for _, o := range holders.strong.sorted() {
-					changed = a.state.storeInto(o, field, stored) || changed
+					changed = analysis.state.storeInto(o, field, stored) || changed
 				}
 			}
 		}
 		for _, t := range callee.leaks {
-			a.state.escape(translate(summaryValue{strongTerms: []term{t}}))
+			analysis.state.escape(translate(summaryValue{strongTerms: []term{t}}))
 		}
-		if !changed && escaped == len(a.state.escaped) && leaked == len(a.state.leaked) {
+		if !changed && escaped == len(analysis.state.escaped) && leaked == len(analysis.state.leaked) {
 			break
 		}
 	}
 	if callee.clobbers {
-		a.state.clobbered = true
+		analysis.state.clobbered = true
 	}
-	if a.judging {
-		where := ", where " + a.proof.functionName(function) + " is called from " + a.proof.functionName(a.function)
+	if analysis.judging {
+		where := ", where " +
+			analysis.proof.functionName(function) +
+			" is called from " +
+			analysis.proof.functionName(analysis.function)
 		for _, key := range callee.deferredKeys() {
 			deferred := callee.deferred[key]
 			exposed := func(o object) bool {
-				return o == outside || o < 0 || before[o] || (callee.clobbers && a.state.exposed(o))
+				return o == outside || o < 0 || before[o] || (callee.clobbers && analysis.state.exposed(o))
 			}
-			a.judge(key, deferred.write, translate(deferred.holder), translate(deferred.stored), where, exposed)
+			analysis.judge(key, deferred.write, translate(deferred.holder), translate(deferred.stored), where, exposed)
 		}
 	}
 	return translate(callee.result)
@@ -1758,7 +1804,7 @@ func (a *analysis) made(function int, callee *summary, arguments []value) value 
 
 // argument is what a placeholder of a callee's stands for here: the argument, or everything the
 // argument reaches through the field, strongly or weakly.
-func (a *analysis) argument(t term, arguments []value) value {
+func (analysis *analysis) argument(t term, arguments []value) value {
 	if t.param >= len(arguments) {
 		return outsideValue()
 	}
@@ -1767,14 +1813,14 @@ func (a *analysis) argument(t term, arguments []value) value {
 	}
 	var start value
 	if t.field == anyField {
-		start = a.everything(arguments[t.param])
+		start = analysis.everything(arguments[t.param])
 	} else {
-		start = a.load(arguments[t.param], t.field)
+		start = analysis.load(arguments[t.param], t.field)
 	}
 	if t.level == 1 {
 		return start
 	}
-	start = a.everything(start)
+	start = analysis.everything(start)
 	var reached value
 	queue := append(start.strong.sorted(), start.weak.sorted()...)
 	visited := objects{}
@@ -1789,11 +1835,11 @@ func (a *analysis) argument(t term, arguments []value) value {
 		switch {
 		case o < 0:
 			// One of this function's own placeholders: everything below it too.
-			queue = append(queue, a.below(a.below(o, anyField), anyField))
-		case a.state.exposed(o):
+			queue = append(queue, analysis.below(analysis.below(o, anyField), anyField))
+		case analysis.state.exposed(o):
 			queue = append(queue, outside)
 		}
-		for _, held := range a.state.heap[o] {
+		for _, held := range analysis.state.heap[o] {
 			queue = append(queue, held.strong.sorted()...)
 			queue = append(queue, held.weak.sorted()...)
 		}
@@ -1831,7 +1877,7 @@ type summaryDeferral struct {
 	holder, stored summaryValue
 }
 
-func (s *summary) origins() []int {
+func (summary *summary) origins() []int {
 	seen := map[int]bool{}
 	note := func(held summaryValue) {
 		for _, origin := range append(append([]int{}, held.strong...), held.weak...) {
@@ -1840,19 +1886,19 @@ func (s *summary) origins() []int {
 			}
 		}
 	}
-	note(s.result)
-	for origin, fields := range s.fields {
+	note(summary.result)
+	for origin, fields := range summary.fields {
 		seen[origin] = true
 		for _, held := range fields {
 			note(held)
 		}
 	}
-	for _, fields := range s.edges {
+	for _, fields := range summary.edges {
 		for _, held := range fields {
 			note(held)
 		}
 	}
-	for _, deferred := range s.deferred {
+	for _, deferred := range summary.deferred {
 		note(deferred.holder)
 		note(deferred.stored)
 	}
@@ -1864,18 +1910,18 @@ func (s *summary) origins() []int {
 	return list
 }
 
-func (s *summary) edgeTerms() []term {
+func (summary *summary) edgeTerms() []term {
 	list := []term{}
-	for t := range s.edges {
+	for t := range summary.edges {
 		list = append(list, t)
 	}
 	sortTerms(list)
 	return list
 }
 
-func (s *summary) deferredKeys() []writeKey {
+func (summary *summary) deferredKeys() []writeKey {
 	list := []writeKey{}
-	for key := range s.deferred {
+	for key := range summary.deferred {
 		list = append(list, key)
 	}
 	sortWriteKeys(list)
@@ -1906,12 +1952,12 @@ func sortWriteKeys(keys []writeKey) {
 	})
 }
 
-func (s *summary) String() string {
-	if s == nil {
+func (summary *summary) String() string {
+	if summary == nil {
 		return "nothing"
 	}
 	var text strings.Builder
-	fmt.Fprintf(&text, "%v clobbers=%v leaks=%v", s.result, s.clobbers, s.leaks)
+	fmt.Fprintf(&text, "%v clobbers=%v leaks=%v", summary.result, summary.clobbers, summary.leaks)
 	fieldsOf := func(prefix string, fields map[string]summaryValue) {
 		names := []string{}
 		for name := range fields {
@@ -1922,28 +1968,28 @@ func (s *summary) String() string {
 			fmt.Fprintf(&text, " %s.%q=%v", prefix, name, fields[name])
 		}
 	}
-	for _, origin := range s.origins() {
-		fieldsOf(fmt.Sprint(origin), s.fields[origin])
+	for _, origin := range summary.origins() {
+		fieldsOf(fmt.Sprint(origin), summary.fields[origin])
 	}
-	for _, t := range s.edgeTerms() {
-		fieldsOf(fmt.Sprintf("%v", t), s.edges[t])
+	for _, t := range summary.edgeTerms() {
+		fieldsOf(fmt.Sprintf("%v", t), summary.edges[t])
 	}
-	for _, key := range s.deferredKeys() {
-		fmt.Fprintf(&text, " deferred %v=%v,%v", key, s.deferred[key].holder, s.deferred[key].stored)
+	for _, key := range summary.deferredKeys() {
+		fmt.Fprintf(&text, " deferred %v=%v,%v", key, summary.deferred[key].holder, summary.deferred[key].stored)
 	}
 	return text.String()
 }
 
-func (s *summary) equal(other *summary) bool {
-	if (s == nil) != (other == nil) {
+func (summary *summary) equal(other *summary) bool {
+	if (summary == nil) != (other == nil) {
 		return false
 	}
-	return s.String() == other.String()
+	return summary.String() == other.String()
 }
 
 // summarize is the function's summary from the state it leaves in: each site's instances taken
 // together by where they were first made, leaked if either has, and each placeholder as its term.
-func (a *analysis) summarize(exit *state) *summary {
+func (analysis *analysis) summarize(exit *state) *summary {
 	leaked := func(o object) bool {
 		if o == outside {
 			return true
@@ -1960,21 +2006,21 @@ func (a *analysis) summarize(exit *state) *summary {
 		for o := range held.strong {
 			switch {
 			case o < 0:
-				made.strongTerms = append(made.strongTerms, a.termOf(o))
+				made.strongTerms = append(made.strongTerms, analysis.termOf(o))
 			case leaked(o):
 				strong[-1] = true
 			default:
-				strong[a.siteOrigin[siteOf(o)]] = true
+				strong[analysis.siteOrigin[siteOf(o)]] = true
 			}
 		}
 		for o := range held.weak {
 			switch {
 			case o < 0:
-				made.weakTerms = append(made.weakTerms, a.termOf(o))
+				made.weakTerms = append(made.weakTerms, analysis.termOf(o))
 			case leaked(o):
 				weak[-1] = true
 			default:
-				weak[a.siteOrigin[siteOf(o)]] = true
+				weak[analysis.siteOrigin[siteOf(o)]] = true
 			}
 		}
 		made.strong, made.weak = sortedKeys(strong), sortedKeys(weak)
@@ -1982,15 +2028,20 @@ func (a *analysis) summarize(exit *state) *summary {
 		sortTerms(made.weakTerms)
 		return made
 	}
-	made := &summary{fields: map[int]map[string]summaryValue{}, edges: map[term]map[string]summaryValue{}, deferred: map[writeKey]summaryDeferral{}, clobbers: exit.clobbered}
-	returned := exit.locals[a.returnedLocal]
+	made := &summary{
+		fields:   map[int]map[string]summaryValue{},
+		edges:    map[term]map[string]summaryValue{},
+		deferred: map[writeKey]summaryDeferral{},
+		clobbers: exit.clobbered,
+	}
+	returned := exit.locals[analysis.returnedLocal]
 	made.result = collapse(returned)
 	roots := []value{returned}
 	for o, fields := range exit.heap {
 		if o >= 0 {
 			continue
 		}
-		t := a.termOf(o)
+		t := analysis.termOf(o)
 		made.edges[t] = map[string]summaryValue{}
 		for field, held := range fields {
 			made.edges[t][field] = collapse(held)
@@ -1999,12 +2050,16 @@ func (a *analysis) summarize(exit *state) *summary {
 	}
 	for o := range exit.leaked {
 		if o < 0 {
-			made.leaks = append(made.leaks, a.termOf(o))
+			made.leaks = append(made.leaks, analysis.termOf(o))
 		}
 	}
 	sortTerms(made.leaks)
-	for key, deferred := range a.deferred {
-		made.deferred[key] = summaryDeferral{write: deferred.write, holder: collapse(deferred.holder), stored: collapse(deferred.stored)}
+	for key, deferred := range analysis.deferred {
+		made.deferred[key] = summaryDeferral{
+			write:  deferred.write,
+			holder: collapse(deferred.holder),
+			stored: collapse(deferred.stored),
+		}
 		roots = append(roots, deferred.holder, deferred.stored)
 	}
 	// The fresh objects any of that reaches, and what each holds.
@@ -2021,7 +2076,7 @@ func (a *analysis) summarize(exit *state) *summary {
 		if o < 0 || leaked(o) || !visited.add(o) {
 			continue
 		}
-		origin := a.siteOrigin[siteOf(o)]
+		origin := analysis.siteOrigin[siteOf(o)]
 		if gathered[origin] == nil {
 			gathered[origin] = map[string]value{}
 		}
@@ -2058,32 +2113,32 @@ func mutable(valueType ir.Type) bool {
 }
 
 // expressionEffect interprets only effects that lowering admits inside expressions.
-func (a *analysis) expressionEffect(statement ir.Statement) {
+func (analysis *analysis) expressionEffect(statement ir.Statement) {
 	switch statement := statement.(type) {
 	case ir.Assign:
-		a.define(statement.Local, a.value(statement.Value))
+		analysis.define(statement.Local, analysis.value(statement.Value))
 	case ir.Declare:
-		a.define(statement.Local, a.value(statement.Value))
+		analysis.define(statement.Local, analysis.value(statement.Value))
 	case ir.Evaluate:
-		a.value(statement.Value)
+		analysis.value(statement.Value)
 	case ir.WriteLine:
-		a.value(statement.Value)
+		analysis.value(statement.Value)
 	case ir.Panic:
-		a.value(statement.Message)
+		analysis.value(statement.Message)
 	case ir.SetProperty:
-		holder := a.value(statement.Object)
-		held := a.value(statement.Value)
-		a.write(WriteField, statement.Site, statement.Name, holder, held, statement.Name)
+		holder := analysis.value(statement.Object)
+		held := analysis.value(statement.Value)
+		analysis.write(WriteField, statement.Site, statement.Name, holder, held, statement.Name)
 	case ir.SetIndex:
-		holder := a.value(statement.Array)
-		a.value(statement.Index)
-		held := a.value(statement.Value)
-		a.write(WriteElement, statement.Site, "", holder, held, elementKey)
+		holder := analysis.value(statement.Array)
+		analysis.value(statement.Index)
+		held := analysis.value(statement.Value)
+		analysis.write(WriteElement, statement.Site, "", holder, held, elementKey)
 	case ir.Block:
 		for _, inner := range statement.Body {
-			a.expressionEffect(inner)
+			analysis.expressionEffect(inner)
 		}
 	default:
-		a.unknown(statement)
+		analysis.unknown(statement)
 	}
 }

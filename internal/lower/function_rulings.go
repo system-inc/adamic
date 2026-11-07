@@ -7,8 +7,8 @@ import (
 )
 
 // An annotation is a promise, including in code no runtime branch visits.
-func (l *lowering) functionAnnotations(module *ast.SourceFile) error {
-	if !strings.HasSuffix(l.program.FileName(module), ".a") {
+func (lowering *lowering) functionAnnotations(module *ast.SourceFile) error {
+	if !strings.HasSuffix(lowering.program.FileName(module), ".a") {
 		return nil
 	}
 	var found error
@@ -17,9 +17,10 @@ func (l *lowering) functionAnnotations(module *ast.SourceFile) error {
 		if found != nil {
 			return true
 		}
-		if node.Kind == ast.KindTypeReference && l.isLibraryType(l.checker.GetTypeAtLocation(node), "Function") {
+		if node.Kind == ast.KindTypeReference &&
+			lowering.isLibraryType(lowering.checker.GetTypeAtLocation(node), "Function") {
 			found = &Refused{
-				Where: l.program.Where(node),
+				Where: lowering.program.Where(node),
 				What:  "the Function annotation in .a",
 				Fix:   "write a call signature with its parameters and result, like (value: number) => number",
 			}
@@ -31,7 +32,7 @@ func (l *lowering) functionAnnotations(module *ast.SourceFile) error {
 	return found
 }
 
-func (l *lowering) functionCallRefusal(node *ast.Node) error {
+func (lowering *lowering) functionCallRefusal(node *ast.Node) error {
 	if node.Kind != ast.KindCallExpression && node.Kind != ast.KindNewExpression {
 		return nil
 	}
@@ -42,11 +43,14 @@ func (l *lowering) functionCallRefusal(node *ast.Node) error {
 		callee = node.AsNewExpression().Expression
 	}
 	callee = ast.SkipParentheses(callee)
-	opaque := l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(callee)), "Function")
+	opaque := lowering.isLibraryType(
+		lowering.checker.GetNonNullableType(lowering.checker.GetTypeAtLocation(callee)),
+		"Function",
+	)
 	if callee.Kind == ast.KindPropertyAccessExpression {
 		access := callee.AsPropertyAccessExpression()
-		opaque = opaque || l.isLibraryType(
-			l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression)),
+		opaque = opaque || lowering.isLibraryType(
+			lowering.checker.GetNonNullableType(lowering.checker.GetTypeAtLocation(access.Expression)),
 			"Function",
 		) && (access.Name().Text() == "call" || access.Name().Text() == "apply" || access.Name().Text() == "bind")
 	}
@@ -54,15 +58,15 @@ func (l *lowering) functionCallRefusal(node *ast.Node) error {
 		access := callee.AsElementAccessExpression()
 		key := ast.SkipParentheses(access.ArgumentExpression)
 		if key.Kind == ast.KindStringLiteral {
-			opaque = opaque || l.isLibraryType(
-				l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression)),
+			opaque = opaque || lowering.isLibraryType(
+				lowering.checker.GetNonNullableType(lowering.checker.GetTypeAtLocation(access.Expression)),
 				"Function",
 			) && (key.Text() == "call" || key.Text() == "apply" || key.Text() == "bind")
 		}
 	}
 	if opaque {
 		return &Refused{
-			Where: l.program.Where(node),
+			Where: lowering.program.Where(node),
 			What:  "calling through the unchecked Function type",
 			Fix:   "write a call signature with the actual parameters and result before calling",
 		}
@@ -88,7 +92,7 @@ func sourceFunctionLength(node *ast.Node) int {
 }
 
 // Only observations with a defined backend representation are admitted.
-func (l *lowering) functionObservation(node *ast.Node) (ir.Expression, bool, error) {
+func (lowering *lowering) functionObservation(node *ast.Node) (ir.Expression, bool, error) {
 	var receiver *ast.Node
 	name := ""
 	if node.Kind == ast.KindPropertyAccessExpression {
@@ -109,13 +113,19 @@ func (l *lowering) functionObservation(node *ast.Node) (ir.Expression, bool, err
 	} else {
 		return nil, false, nil
 	}
-	if !l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver)), "Function") {
+	if !lowering.isLibraryType(
+		lowering.checker.GetNonNullableType(lowering.checker.GetTypeAtLocation(receiver)),
+		"Function",
+	) {
 		return nil, false, nil
 	}
 	if name != "length" {
-		return nil, true, l.notYet(node, "observing Function."+name+"; use a call signature and explicit metadata")
+		return nil, true, lowering.notYet(
+			node,
+			"observing Function."+name+"; use a call signature and explicit metadata",
+		)
 	}
-	value, expressionError := l.expression(receiver)
+	value, expressionError := lowering.expression(receiver)
 	if expressionError != nil {
 		return nil, true, expressionError
 	}

@@ -10,40 +10,40 @@ import (
 
 // Set operations become ordinary typed functions in the IR. Both backends and the ownership
 // analyses then see every read and write, with no opaque runtime callback or hidden allocation.
-func (l *lowering) librarySetMethod(node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
+func (lowering *lowering) librarySetMethod(node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
 	switch name {
 	case "union", "intersection", "difference", "symmetricDifference", "isSubsetOf", "isSupersetOf", "isDisjointFrom":
 	default:
 		return nil, false, nil
 	}
 	arguments := node.AsCallExpression().Arguments.Nodes
-	if len(arguments) != 1 || !l.isSet(arguments[0]) {
-		return nil, true, l.notYet(node, name+" with anything but a concrete library Set")
+	if len(arguments) != 1 || !lowering.isSet(arguments[0]) {
+		return nil, true, lowering.notYet(node, name+" with anything but a concrete library Set")
 	}
-	element, setElementError := l.setElement(receiver)
+	element, setElementError := lowering.setElement(receiver)
 	if setElementError != nil {
 		return nil, true, setElementError
 	}
-	otherElement, setElementError := l.setElement(arguments[0])
+	otherElement, setElementError := lowering.setElement(arguments[0])
 	if setElementError != nil {
 		return nil, true, setElementError
 	}
 	if element != otherElement {
-		return nil, true, l.notYet(node, name+" between Sets whose elements have different representations")
+		return nil, true, lowering.notYet(node, name+" between Sets whose elements have different representations")
 	}
-	left, expressionError := l.expression(receiver)
+	left, expressionError := lowering.expression(receiver)
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
-	right, expressionError := l.expression(arguments[0])
+	right, expressionError := lowering.expression(arguments[0])
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
-	index := len(l.result.Functions)
+	index := len(lowering.result.Functions)
 	function := ir.Function{Name: "set_" + name, Returns: ir.Map}
 	local := func(name string, of ir.Type) ir.Read {
-		id := len(l.result.Locals)
-		l.result.Locals = append(l.result.Locals, ir.Local{Name: name, Type: of, Function: index})
+		id := len(lowering.result.Locals)
+		lowering.result.Locals = append(lowering.result.Locals, ir.Local{Name: name, Type: of, Function: index})
 		return ir.Read{Local: id, Of: of}
 	}
 	a, b := local("left", ir.Map), local("right", ir.Map)
@@ -84,11 +84,11 @@ func (l *lowering) librarySetMethod(node, receiver *ast.Node, name string) (ir.E
 	default:
 		result := local("result", ir.Map)
 		// The result is a fresh Set of the call's result type. Record its writes for the cycle proof.
-		l.writeSites = append(
-			l.writeSites,
-			writeSite{holder: l.concrete(l.checker.GetTypeAtLocation(node)), node: node},
+		lowering.writeSites = append(
+			lowering.writeSites,
+			writeSite{holder: lowering.concrete(lowering.checker.GetTypeAtLocation(node)), node: node},
 		)
-		site := len(l.writeSites)
+		site := len(lowering.writeSites)
 		add := ir.Evaluate{Value: ir.SetAdd{Set: result, Value: item, Element: element, Site: site}}
 		copy := func(source ir.Expression) ir.Statement { return walk(source, add) }
 		selected := func(source, other ir.Expression, present bool) ir.Statement {
@@ -116,108 +116,114 @@ func (l *lowering) librarySetMethod(node, receiver *ast.Node, name string) (ir.E
 		}
 		function.Body = append(function.Body, ir.Return{Value: result})
 	}
-	l.result.Functions = append(l.result.Functions, function)
+	lowering.result.Functions = append(lowering.result.Functions, function)
 	return ir.Call{Function: index, Arguments: []ir.Expression{left, right}, Returns: function.Returns}, true, nil
 }
 
-func (l *lowering) libraryCollectionIterator(node, receiver *ast.Node, part string) (ir.Expression, bool, error) {
+func (lowering *lowering) libraryCollectionIterator(
+	node, receiver *ast.Node,
+	part string,
+) (ir.Expression, bool, error) {
 	if len(node.AsCallExpression().Arguments.Nodes) != 0 {
-		return nil, true, l.notYet(node, part+" with arguments")
+		return nil, true, lowering.notYet(node, part+" with arguments")
 	}
-	set := l.isSet(receiver)
+	set := lowering.isSet(receiver)
 	var key, value ir.Type
 	var err error
 	if set {
-		key, err = l.setElement(receiver)
+		key, err = lowering.setElement(receiver)
 		value = key
 	} else {
-		key, value, err = l.mapTypes(receiver)
+		key, value, err = lowering.mapTypes(receiver)
 	}
 	if err != nil {
 		return nil, true, err
 	}
-	collection, expressionError := l.expression(receiver)
+	collection, expressionError := lowering.expression(receiver)
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
 	return ir.CollectionIterator{Collection: collection, Part: part, Key: key, Value: value, Set: set}, true, nil
 }
 
-func (l *lowering) librarySetLiteral(node *ast.Node, element ir.Type) (ir.Expression, bool, error) {
+func (lowering *lowering) librarySetLiteral(node *ast.Node, element ir.Type) (ir.Expression, bool, error) {
 	array := ir.ArrayLiteral{Element: element}
 	for _, item := range ast.SkipParentheses(node).AsArrayLiteralExpression().Elements.Nodes {
 		if item.Kind == ast.KindSpreadElement || item.Kind == ast.KindOmittedExpression {
 			return nil, false, nil
 		}
-		value, expressionError := l.expression(item)
+		value, expressionError := lowering.expression(item)
 		if expressionError != nil {
 			return nil, true, expressionError
 		}
 		value = fit(value, element)
 		if value.Type() != element {
-			return nil, true, l.notYet(item, "a Set literal element held otherwise than the Set's")
+			return nil, true, lowering.notYet(item, "a Set literal element held otherwise than the Set's")
 		}
 		array.Elements = append(array.Elements, value)
 	}
 	return array, true, nil
 }
 
-func (l *lowering) libraryEmptyCollectionArgument(node *ast.Node) bool {
+func (lowering *lowering) libraryEmptyCollectionArgument(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
 	if node.Kind == ast.KindNullKeyword {
 		return true
 	}
-	_, local := l.local(node)
+	_, local := lowering.local(node)
 	return ast.IsIdentifier(node) && node.Text() == "undefined" && !local
 }
 
 // An arrow's this is lexical: thisArg is still evaluated in call order, but cannot bind it.
 // Other callbacks stay refused until stage 0 can represent and check their dynamic this parameter.
-func (l *lowering) libraryForEachThisArg(node, receiver *ast.Node, set bool) (ir.Expression, bool, error) {
+func (lowering *lowering) libraryForEachThisArg(node, receiver *ast.Node, set bool) (ir.Expression, bool, error) {
 	arguments := node.AsCallExpression().Arguments.Nodes
 	if ast.SkipParentheses(arguments[0]).Kind != ast.KindArrowFunction {
-		return nil, true, l.notYet(node, "forEach thisArg with a callback other than an arrow")
+		return nil, true, lowering.notYet(node, "forEach thisArg with a callback other than an arrow")
 	}
 	var key, value ir.Type
 	var err error
 	if set {
-		key, err = l.setElement(receiver)
+		key, err = lowering.setElement(receiver)
 		value = key
 	} else {
-		key, value, err = l.mapTypes(receiver)
+		key, value, err = lowering.mapTypes(receiver)
 	}
 	if err != nil {
 		return nil, true, err
 	}
-	collection, expressionError := l.expression(receiver)
+	collection, expressionError := lowering.expression(receiver)
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
-	callback, expressionError := l.expression(arguments[0])
+	callback, expressionError := lowering.expression(arguments[0])
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
-	context, expressionError := l.expression(arguments[1])
+	context, expressionError := lowering.expression(arguments[1])
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
 	// Pass the context to an unused parameter, preserving evaluation order, side effects,
 	// exceptions and its lifetime across the visit.
 	if context.Type() == 0 {
-		return nil, true, l.notYet(arguments[1], "forEach thisArg without a value representation")
+		return nil, true, lowering.notYet(arguments[1], "forEach thisArg without a value representation")
 	}
 	values := []ir.Expression{collection, callback, context}
-	index := len(l.result.Functions)
+	index := len(lowering.result.Functions)
 	function := ir.Function{Name: "collection_forEach_thisArg"}
 	for _, argument := range values {
-		id := len(l.result.Locals)
-		l.result.Locals = append(l.result.Locals, ir.Local{Name: "argument", Type: argument.Type(), Function: index})
+		id := len(lowering.result.Locals)
+		lowering.result.Locals = append(
+			lowering.result.Locals,
+			ir.Local{Name: "argument", Type: argument.Type(), Function: index},
+		)
 		function.Parameters = append(function.Parameters, id)
 	}
 	// Read the actual arrow's return representation, including an owned result discarded by forEach.
-	returns := l.result.Functions[callback.(ir.MakeClosure).Function].Returns
+	returns := lowering.result.Functions[callback.(ir.MakeClosure).Function].Returns
 	if slotless(returns) {
-		return nil, true, l.notYet(node, "forEach with a callback result held in more than one word")
+		return nil, true, lowering.notYet(node, "forEach with a callback result held in more than one word")
 	}
 	function.Body = []ir.Statement{ir.Evaluate{Value: ir.MapForEach{
 		Map:          ir.Read{Local: function.Parameters[0], Of: ir.Map},
@@ -226,41 +232,41 @@ func (l *lowering) libraryForEachThisArg(node, receiver *ast.Node, set bool) (ir
 		Value:        value,
 		Set:          set,
 		Returns:      returns,
-		CallbackType: int(l.concrete(l.checker.GetTypeAtLocation(arguments[0])).Id()),
+		CallbackType: int(lowering.concrete(lowering.checker.GetTypeAtLocation(arguments[0])).Id()),
 	}}}
-	l.result.Functions = append(l.result.Functions, function)
+	lowering.result.Functions = append(lowering.result.Functions, function)
 	return ir.Call{Function: index, Arguments: values}, true, nil
 }
 
-func (l *lowering) libraryLocal(function int, name string, of ir.Type) ir.Read {
-	id := len(l.result.Locals)
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: name, Type: of, Function: function})
+func (lowering *lowering) libraryLocal(function int, name string, of ir.Type) ir.Read {
+	id := len(lowering.result.Locals)
+	lowering.result.Locals = append(lowering.result.Locals, ir.Local{Name: name, Type: of, Function: function})
 	return ir.Read{Local: id, Of: of}
 }
 
 // A stored iterator is consumed by calls to next, rather than by snapshotting its collection.
-func (l *lowering) libraryIteratorElement(node *ast.Node) (ir.Type, bool) {
-	proven := l.checker.GetTypeAtLocation(node)
-	if !l.isLibraryType(proven, "MapIterator", "SetIterator") {
+func (lowering *lowering) libraryIteratorElement(node *ast.Node) (ir.Type, bool) {
+	proven := lowering.checker.GetTypeAtLocation(node)
+	if !lowering.isLibraryType(proven, "MapIterator", "SetIterator") {
 		return 0, false
 	}
-	arguments := l.typeArguments(proven)
+	arguments := lowering.typeArguments(proven)
 	if len(arguments) != 1 {
 		return 0, false
 	}
-	element, known := l.representation(arguments[0])
+	element, known := lowering.representation(arguments[0])
 	// Boxed unions already occupy one tagged reference slot in the iterator.
 	return element, known && boxedSlot(element)
 }
 
-func (l *lowering) libraryIteratorLoop(
+func (lowering *lowering) libraryIteratorLoop(
 	function int,
 	iterator ir.Expression,
 	item ir.Read,
 	body []ir.Statement,
 ) []ir.Statement {
-	held := l.libraryLocal(function, "iterator", ir.Object)
-	step := l.libraryLocal(function, "step", ir.Object)
+	held := lowering.libraryLocal(function, "iterator", ir.Object)
+	step := lowering.libraryLocal(function, "step", ir.Object)
 	loop, value := libraryIteratorStep(held, step, item.Of)
 	loop = append(loop, ir.Declare{Local: item.Local, Value: value})
 	loop = append(loop, body...)
@@ -284,44 +290,44 @@ func libraryIteratorStep(held, step ir.Read, of ir.Type) ([]ir.Statement, ir.Exp
 	}, ir.Property{Object: step, Name: "value", Of: of}
 }
 
-func (l *lowering) libraryIteratorArray(node *ast.Node, iterator ir.Expression, element ir.Type) ir.Expression {
-	index := len(l.result.Functions)
+func (lowering *lowering) libraryIteratorArray(node *ast.Node, iterator ir.Expression, element ir.Type) ir.Expression {
+	index := len(lowering.result.Functions)
 	function := ir.Function{Name: "collection_iterator_array", Returns: ir.Array}
-	parameter := l.libraryLocal(index, "input", ir.Object)
-	array := l.libraryLocal(index, "values", ir.Array)
-	item := l.libraryLocal(index, "element", element)
+	parameter := lowering.libraryLocal(index, "input", ir.Object)
+	array := lowering.libraryLocal(index, "values", ir.Array)
+	item := lowering.libraryLocal(index, "element", element)
 	function.Parameters = []int{parameter.Local}
 	function.Body = []ir.Statement{ir.Declare{Local: array.Local, Value: ir.ArrayLiteral{Element: element}}}
-	l.writeSites = append(l.writeSites, writeSite{node: node})
-	site := len(l.writeSites)
-	function.Body = append(function.Body, l.libraryIteratorLoop(
+	lowering.writeSites = append(lowering.writeSites, writeSite{node: node})
+	site := len(lowering.writeSites)
+	function.Body = append(function.Body, lowering.libraryIteratorLoop(
 		index,
 		parameter,
 		item,
 		[]ir.Statement{ir.Evaluate{Value: ir.ArrayPush{Array: array, Value: item, Element: element, Site: site}}},
 	)...)
 	function.Body = append(function.Body, ir.Return{Value: array})
-	l.result.Functions = append(l.result.Functions, function)
+	lowering.result.Functions = append(lowering.result.Functions, function)
 	return ir.Call{Function: index, Arguments: []ir.Expression{iterator}, Returns: ir.Array}
 }
 
-func (l *lowering) libraryForOfIterator(
+func (lowering *lowering) libraryForOfIterator(
 	node *ast.Node,
 	iterator ir.Expression,
 	element ir.Type,
 	name *ast.Node,
 ) ([]ir.Statement, error) {
-	item := l.libraryLocal(l.functionIndex, "element", element)
+	item := lowering.libraryLocal(lowering.functionIndex, "element", element)
 	var bindings []ir.Statement
 	if ast.IsIdentifier(name) {
-		local, declareLocalError := l.declareLocal(name)
+		local, declareLocalError := lowering.declareLocal(name)
 		if declareLocalError != nil {
 			return nil, declareLocalError
 		}
 		bindings = append(bindings, ir.Declare{Local: local, Value: item})
 	} else {
 		if element != ir.Object {
-			return nil, l.notYet(name, "destructuring a scalar iterator element")
+			return nil, lowering.notYet(name, "destructuring a scalar iterator element")
 		}
 		for index, binding := range name.AsBindingPattern().Elements.Nodes {
 			if skipped(binding) {
@@ -329,15 +335,15 @@ func (l *lowering) libraryForOfIterator(
 			}
 			declared := binding.AsBindingElement()
 			if !ast.IsIdentifier(binding.Name()) || declared.Initializer != nil || declared.DotDotDotToken != nil {
-				return nil, l.notYet(binding, "an iterator binding that isn't plain")
+				return nil, lowering.notYet(binding, "an iterator binding that isn't plain")
 			}
-			local, declareLocalError := l.declareLocal(binding.Name())
+			local, declareLocalError := lowering.declareLocal(binding.Name())
 			if declareLocalError != nil {
 				return nil, declareLocalError
 			}
-			of := l.result.Locals[local].Type
+			of := lowering.result.Locals[local].Type
 			if !boxedSlot(of) {
-				return nil, l.notYet(binding, "an iterator binding held in more than one word")
+				return nil, lowering.notYet(binding, "an iterator binding held in more than one word")
 			}
 			bindings = append(
 				bindings,
@@ -345,28 +351,28 @@ func (l *lowering) libraryForOfIterator(
 			)
 		}
 	}
-	body, statementError := l.statement(node.AsForInOrOfStatement().Statement)
+	body, statementError := lowering.statement(node.AsForInOrOfStatement().Statement)
 	if statementError != nil {
 		return nil, statementError
 	}
 	return []ir.Statement{
-		ir.Block{Body: l.libraryIteratorLoop(l.functionIndex, iterator, item, append(bindings, body...))},
+		ir.Block{Body: lowering.libraryIteratorLoop(lowering.functionIndex, iterator, item, append(bindings, body...))},
 	}, nil
 }
 
 // groupBy copies elements into fresh bucket arrays while walking the original input live. Callback
 // mutation therefore sees the same array/collection iterator that Node walks, not a snapshot.
-func (l *lowering) libraryMapGroupBy(node *ast.Node) (ir.Expression, bool, error) {
+func (lowering *lowering) libraryMapGroupBy(node *ast.Node) (ir.Expression, bool, error) {
 	arguments := node.AsCallExpression().Arguments.Nodes
 	if len(arguments) != 2 {
-		return nil, true, l.notYet(node, "Map.groupBy with other than an iterable and callback")
+		return nil, true, lowering.notYet(node, "Map.groupBy with other than an iterable and callback")
 	}
-	key, _, err := l.mapTypes(node)
+	key, _, err := lowering.mapTypes(node)
 	if err != nil {
 		return nil, true, err
 	}
 	sourceNode := arguments[0]
-	source, err := l.expression(sourceNode)
+	source, err := lowering.expression(sourceNode)
 	if err != nil {
 		return nil, true, err
 	}
@@ -374,109 +380,121 @@ func (l *lowering) libraryMapGroupBy(node *ast.Node) (ir.Expression, bool, error
 	iterator := false
 	switch source.Type() {
 	case ir.Array:
-		element, err = l.elementType(sourceNode)
+		element, err = lowering.elementType(sourceNode)
 	case ir.String:
 		element = ir.String
 	case ir.Map:
 		var k, v ir.Type
-		if l.isSet(sourceNode) {
-			k, err = l.setElement(sourceNode)
+		if lowering.isSet(sourceNode) {
+			k, err = lowering.setElement(sourceNode)
 			v = k
 			element = k
 		} else {
-			k, v, err = l.mapTypes(sourceNode)
+			k, v, err = lowering.mapTypes(sourceNode)
 			element = ir.Object
 		}
 		part := "entries"
-		if l.isSet(sourceNode) {
+		if lowering.isSet(sourceNode) {
 			part = "keys"
 		}
-		source = ir.CollectionIterator{Collection: source, Part: part, Key: k, Value: v, Set: l.isSet(sourceNode)}
+		source = ir.CollectionIterator{
+			Collection: source,
+			Part:       part,
+			Key:        k,
+			Value:      v,
+			Set:        lowering.isSet(sourceNode),
+		}
 		iterator = true
 	case ir.Object:
 		var known bool
-		element, known = l.libraryIteratorElement(sourceNode)
+		element, known = lowering.libraryIteratorElement(sourceNode)
 		if !known {
-			return nil, true, l.notYet(sourceNode, "Map.groupBy over an unsupported iterable")
+			return nil, true, lowering.notYet(sourceNode, "Map.groupBy over an unsupported iterable")
 		}
 		iterator = true
 	default:
-		return nil, true, l.notYet(sourceNode, "Map.groupBy over an unsupported iterable")
+		return nil, true, lowering.notYet(sourceNode, "Map.groupBy over an unsupported iterable")
 	}
 	if err != nil {
 		return nil, true, err
 	}
 	if slotless(element) {
-		return nil, true, l.notYet(sourceNode, "Map.groupBy elements held in more than one word")
+		return nil, true, lowering.notYet(sourceNode, "Map.groupBy elements held in more than one word")
 	}
 	// The checker must retain the source element's exact type in each bucket; widening a mutable
 	// element would expose an alias through the returned arrays. Refuse such inferred widening.
 	var sourceType *checker.Type
-	proven := l.checker.GetTypeAtLocation(sourceNode)
-	if l.isArrayType(proven) {
-		sourceType = l.elementTypeOfArray(proven)
+	proven := lowering.checker.GetTypeAtLocation(sourceNode)
+	if lowering.isArrayType(proven) {
+		sourceType = lowering.elementTypeOfArray(proven)
 	}
-	if l.isSet(sourceNode) || l.isLibraryType(proven, "MapIterator", "SetIterator") {
-		sourceType = l.typeArguments(proven)[0]
+	if lowering.isSet(sourceNode) || lowering.isLibraryType(proven, "MapIterator", "SetIterator") {
+		sourceType = lowering.typeArguments(proven)[0]
 	}
-	grouped := l.typeArguments(l.checker.GetTypeAtLocation(node))
+	grouped := lowering.typeArguments(lowering.checker.GetTypeAtLocation(node))
 	if len(grouped) != 2 {
-		return nil, true, l.notYet(node, "Map.groupBy without known grouped elements")
+		return nil, true, lowering.notYet(node, "Map.groupBy without known grouped elements")
 	}
-	groupedElement := l.elementTypeOfArray(grouped[1])
-	if held, known := l.representation(groupedElement); !known || held != element {
-		return nil, true, l.notYet(node, "Map.groupBy grouped elements held otherwise than the input's")
+	groupedElement := lowering.elementTypeOfArray(grouped[1])
+	if held, known := lowering.representation(groupedElement); !known || held != element {
+		return nil, true, lowering.notYet(node, "Map.groupBy grouped elements held otherwise than the input's")
 	}
-	if l.isLibraryType(proven, "Map", "ReadonlyMap") {
+	if lowering.isLibraryType(proven, "Map", "ReadonlyMap") {
 		if !checker.IsTupleType(groupedElement) {
-			return nil, true, l.notYet(node, "Map.groupBy widening its Map entries")
+			return nil, true, lowering.notYet(node, "Map.groupBy widening its Map entries")
 		}
-		components := l.typeArguments(groupedElement)
-		original := l.typeArguments(proven)
+		components := lowering.typeArguments(groupedElement)
+		original := lowering.typeArguments(proven)
 		if len(components) != 2 ||
-			l.checker.TypeToString(components[0]) != l.checker.TypeToString(original[0]) ||
-			l.checker.TypeToString(components[1]) != l.checker.TypeToString(original[1]) {
-			return nil, true, l.notYet(node, "Map.groupBy widening its Map entry components")
+			lowering.checker.TypeToString(components[0]) != lowering.checker.TypeToString(original[0]) ||
+			lowering.checker.TypeToString(components[1]) != lowering.checker.TypeToString(original[1]) {
+			return nil, true, lowering.notYet(node, "Map.groupBy widening its Map entry components")
 		}
 	}
-	if sourceType != nil && l.checker.TypeToString(sourceType) != l.checker.TypeToString(groupedElement) {
-		return nil, true, l.notYet(node, "Map.groupBy widening its mutable elements")
+	if sourceType != nil && lowering.checker.TypeToString(sourceType) != lowering.checker.TypeToString(groupedElement) {
+		return nil, true, lowering.notYet(node, "Map.groupBy widening its mutable elements")
 	}
-	callback, err := l.expression(arguments[1])
+	callback, err := lowering.expression(arguments[1])
 	if err != nil {
 		return nil, true, err
 	}
 	if callback.Type() != ir.Closure {
-		return nil, true, l.notYet(node, "Map.groupBy without a function callback")
+		return nil, true, lowering.notYet(node, "Map.groupBy without a function callback")
 	}
-	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(arguments[1]), checker.SignatureKindCall)
+	signatures := lowering.checker.GetSignaturesOfType(
+		lowering.checker.GetTypeAtLocation(arguments[1]),
+		checker.SignatureKindCall,
+	)
 	if len(signatures) != 1 {
-		return nil, true, l.notYet(node, "Map.groupBy with an overloaded callback")
+		return nil, true, lowering.notYet(node, "Map.groupBy with an overloaded callback")
 	}
 	if parameters := signatures[0].Parameters(); len(parameters) > 0 {
-		received, known := l.representation(l.checker.GetTypeOfSymbol(parameters[0]))
+		received, known := lowering.representation(lowering.checker.GetTypeOfSymbol(parameters[0]))
 		if !known || received != element {
-			return nil, true, l.notYet(node, "Map.groupBy callback elements held otherwise than the input's")
+			return nil, true, lowering.notYet(node, "Map.groupBy callback elements held otherwise than the input's")
 		}
 	}
-	returns, known := l.representation(l.checker.GetReturnTypeOfSignature(signatures[0]))
+	returns, known := lowering.representation(lowering.checker.GetReturnTypeOfSignature(signatures[0]))
 	if !known || returns != key {
-		return nil, true, l.notYet(node, "Map.groupBy callback keys held otherwise than the result's")
+		return nil, true, lowering.notYet(node, "Map.groupBy callback keys held otherwise than the result's")
 	}
-	index := len(l.result.Functions)
+	index := len(lowering.result.Functions)
 	function := ir.Function{Name: "map_groupBy", Returns: ir.Map}
-	input := l.libraryLocal(index, "input", source.Type())
-	fn := l.libraryLocal(index, "callback", ir.Closure)
-	result := l.libraryLocal(index, "groups", ir.Map)
-	position := l.libraryLocal(index, "index", ir.Number)
-	item := l.libraryLocal(index, "element", element)
-	groupKey := l.libraryLocal(index, "key", key)
-	bucket := l.libraryLocal(index, "bucket", ir.Array)
+	input := lowering.libraryLocal(index, "input", source.Type())
+	fn := lowering.libraryLocal(index, "callback", ir.Closure)
+	result := lowering.libraryLocal(index, "groups", ir.Map)
+	position := lowering.libraryLocal(index, "index", ir.Number)
+	item := lowering.libraryLocal(index, "element", element)
+	groupKey := lowering.libraryLocal(index, "key", key)
+	bucket := lowering.libraryLocal(index, "bucket", ir.Array)
 	function.Parameters = []int{input.Local, fn.Local}
-	l.writeSites = append(l.writeSites, writeSite{holder: l.concrete(l.checker.GetTypeAtLocation(node)), node: node})
-	mapSite := len(l.writeSites)
-	l.writeSites = append(l.writeSites, writeSite{holder: grouped[1], node: node})
-	arraySite := len(l.writeSites)
+	lowering.writeSites = append(
+		lowering.writeSites,
+		writeSite{holder: lowering.concrete(lowering.checker.GetTypeAtLocation(node)), node: node},
+	)
+	mapSite := len(lowering.writeSites)
+	lowering.writeSites = append(lowering.writeSites, writeSite{holder: grouped[1], node: node})
+	arraySite := len(lowering.writeSites)
 	body := []ir.Statement{
 		ir.Declare{
 			Local: groupKey.Local,
@@ -506,7 +524,7 @@ func (l *lowering) libraryMapGroupBy(node *ast.Node) (ir.Expression, bool, error
 		ir.Declare{Local: position.Local, Value: ir.NumberConstant{}},
 	}
 	if iterator {
-		function.Body = append(function.Body, l.libraryIteratorLoop(index, input, item, body)...)
+		function.Body = append(function.Body, lowering.libraryIteratorLoop(index, input, item, body)...)
 	} else {
 		function.Body = append(
 			function.Body,
@@ -514,21 +532,21 @@ func (l *lowering) libraryMapGroupBy(node *ast.Node) (ir.Expression, bool, error
 		)
 	}
 	function.Body = append(function.Body, ir.Return{Value: result})
-	l.result.Functions = append(l.result.Functions, function)
+	lowering.result.Functions = append(lowering.result.Functions, function)
 	return ir.Call{Function: index, Arguments: []ir.Expression{source, callback}, Returns: ir.Map}, true, nil
 }
 
 // Copy present numeric elements into packed slots when the Set's inferred or explicit type also
 // admits undefined. Reusing the input array would change how its existing aliases read its NaNs.
-func (l *lowering) libraryOptionalNumbers(node *ast.Node, source ir.Expression) ir.Expression {
-	index := len(l.result.Functions)
+func (lowering *lowering) libraryOptionalNumbers(node *ast.Node, source ir.Expression) ir.Expression {
+	index := len(lowering.result.Functions)
 	function := ir.Function{Name: "collection_optional_numbers", Returns: ir.Array}
-	input := l.libraryLocal(index, "input", ir.Array)
-	array := l.libraryLocal(index, "values", ir.Array)
-	item := l.libraryLocal(index, "number", ir.Number)
+	input := lowering.libraryLocal(index, "input", ir.Array)
+	array := lowering.libraryLocal(index, "values", ir.Array)
+	item := lowering.libraryLocal(index, "number", ir.Number)
 	function.Parameters = []int{input.Local}
-	l.writeSites = append(l.writeSites, writeSite{node: node})
-	site := len(l.writeSites)
+	lowering.writeSites = append(lowering.writeSites, writeSite{node: node})
+	site := len(lowering.writeSites)
 	function.Body = []ir.Statement{
 		ir.Declare{Local: array.Local, Value: ir.ArrayLiteral{Element: ir.MaybeNumber}},
 		ir.ForOf{Iterable: input, Element: ir.Number, Local: item.Local, Body: []ir.Statement{ir.Evaluate{
@@ -536,7 +554,7 @@ func (l *lowering) libraryOptionalNumbers(node *ast.Node, source ir.Expression) 
 		}}},
 		ir.Return{Value: array},
 	}
-	l.result.Functions = append(l.result.Functions, function)
+	lowering.result.Functions = append(lowering.result.Functions, function)
 	return ir.Call{Function: index, Arguments: []ir.Expression{source}, Returns: ir.Array}
 }
 
@@ -546,7 +564,7 @@ type libraryIteratorCapture struct {
 	iterator, collection *checker.Type
 }
 
-func (f *cycleFinder) libraryIteratorMade(node *ast.Node) {
+func (finder *cycleFinder) libraryIteratorMade(node *ast.Node) {
 	if node.Kind != ast.KindCallExpression {
 		return
 	}
@@ -555,18 +573,18 @@ func (f *cycleFinder) libraryIteratorMade(node *ast.Node) {
 		return
 	}
 	access := callee.AsPropertyAccessExpression()
-	iterator := f.l.checker.GetTypeAtLocation(node)
-	collection := f.l.checker.GetTypeAtLocation(access.Expression)
-	if f.l.isLibraryType(iterator, "MapIterator", "SetIterator") &&
-		f.l.isLibraryType(collection, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
-		f.libraryIterators = append(f.libraryIterators, libraryIteratorCapture{iterator, collection})
+	iterator := finder.l.checker.GetTypeAtLocation(node)
+	collection := finder.l.checker.GetTypeAtLocation(access.Expression)
+	if finder.l.isLibraryType(iterator, "MapIterator", "SetIterator") &&
+		finder.l.isLibraryType(collection, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
+		finder.libraryIterators = append(finder.libraryIterators, libraryIteratorCapture{iterator, collection})
 	}
 }
 
-func (f *cycleFinder) libraryIteratorCaptures(proven *checker.Type) []cycleNode {
+func (finder *cycleFinder) libraryIteratorCaptures(proven *checker.Type) []cycleNode {
 	var held []cycleNode
-	for _, capture := range f.libraryIterators {
-		if f.l.checker.IsTypeAssignableTo(capture.iterator, proven) {
+	for _, capture := range finder.libraryIterators {
+		if finder.l.checker.IsTypeAssignableTo(capture.iterator, proven) {
 			held = append(held, cycleNode{proven: capture.collection})
 		}
 	}
@@ -575,14 +593,14 @@ func (f *cycleFinder) libraryIteratorCaptures(proven *checker.Type) []cycleNode 
 
 // Iterator next is inherited in JavaScript. Copying our internal closure slot as an own
 // enumerable field would let a copy drive the original iterator, unlike Node.
-func (l *lowering) libraryIteratorUnsupportedUse(node *ast.Node) error {
+func (lowering *lowering) libraryIteratorUnsupportedUse(node *ast.Node) error {
 	isIterator := func(source *ast.Node) bool {
-		return l.libraryIteratorType(l.checker.GetTypeAtLocation(source))
+		return lowering.libraryIteratorType(lowering.checker.GetTypeAtLocation(source))
 	}
 	if node.Kind == ast.KindObjectLiteralExpression {
 		for _, property := range node.AsObjectLiteralExpression().Properties.Nodes {
 			if property.Kind == ast.KindSpreadAssignment && isIterator(property.AsSpreadAssignment().Expression) {
-				return l.notYet(
+				return lowering.notYet(
 					property,
 					"spreading a Map or Set iterator: next is inherited, not an own enumerable field; use the original iterator or collect its elements into an array",
 				)
@@ -594,13 +612,13 @@ func (l *lowering) libraryIteratorUnsupportedUse(node *ast.Node) error {
 		callee := ast.SkipParentheses(call.Expression)
 		if callee.Kind == ast.KindPropertyAccessExpression &&
 			callee.Name().Text() == "assign" &&
-			l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Object") {
+			lowering.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Object") {
 			for index, source := range call.Arguments.Nodes {
 				if index == 0 {
 					continue
 				}
 				if isIterator(source) {
-					return l.notYet(
+					return lowering.notYet(
 						source,
 						"Object.assign copying a Map or Set iterator: next is inherited, not an own enumerable field; use the original iterator",
 					)
@@ -611,13 +629,13 @@ func (l *lowering) libraryIteratorUnsupportedUse(node *ast.Node) error {
 	return nil
 }
 
-func (l *lowering) libraryIteratorType(proven *checker.Type) bool {
+func (lowering *lowering) libraryIteratorType(proven *checker.Type) bool {
 	if proven.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
 		for _, member := range proven.Types() {
-			if l.libraryIteratorType(member) {
+			if lowering.libraryIteratorType(member) {
 				return true
 			}
 		}
 	}
-	return l.isLibraryType(proven, "MapIterator", "SetIterator")
+	return lowering.isLibraryType(proven, "MapIterator", "SetIterator")
 }

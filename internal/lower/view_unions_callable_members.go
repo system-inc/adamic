@@ -8,9 +8,9 @@ import (
 
 // Union membership admits only fixed scalar signatures until the callable
 // adapter supplies stronger proofs. A physical object tag is never that proof.
-func (l *lowering) untaggedCallableShape(target *checker.Type) bool {
-	signatures := l.checker.GetSignaturesOfType(target, checker.SignatureKindCall)
-	if len(signatures) != 1 || len(l.checker.GetSignaturesOfType(target, checker.SignatureKindConstruct)) != 0 {
+func (lowering *lowering) untaggedCallableShape(target *checker.Type) bool {
+	signatures := lowering.checker.GetSignaturesOfType(target, checker.SignatureKindCall)
+	if len(signatures) != 1 || len(lowering.checker.GetSignaturesOfType(target, checker.SignatureKindConstruct)) != 0 {
 		return false
 	}
 	signature := signatures[0]
@@ -18,10 +18,10 @@ func (l *lowering) untaggedCallableShape(target *checker.Type) bool {
 		return false
 	}
 	for _, parameter := range signature.Parameters() {
-		of, known := l.representation(l.checker.GetTypeOfSymbol(parameter))
+		of, known := lowering.representation(lowering.checker.GetTypeOfSymbol(parameter))
 		if of == ir.Union && known {
 			primitive := true
-			for _, member := range l.checker.GetTypeOfSymbol(parameter).Types() {
+			for _, member := range lowering.checker.GetTypeOfSymbol(parameter).Types() {
 				primitive = primitive && interfaceScalar(member)
 			}
 			if primitive {
@@ -33,59 +33,62 @@ func (l *lowering) untaggedCallableShape(target *checker.Type) bool {
 			return false
 		}
 	}
-	result := l.checker.GetReturnTypeOfSignature(signature)
+	result := lowering.checker.GetReturnTypeOfSignature(signature)
 	return interfaceScalar(result) || result.Flags()&checker.TypeFlagsVoid != 0
 }
 
-func (l *lowering) prepareUntaggedCallableMember(node *ast.Node, target *checker.Type) (ir.ViewContractID, error) {
-	if !l.untaggedCallableShape(target) {
-		return 0, l.notYet(node, "an untagged callable member without a fixed scalar signature")
+func (lowering *lowering) prepareUntaggedCallableMember(
+	node *ast.Node,
+	target *checker.Type,
+) (ir.ViewContractID, error) {
+	if !lowering.untaggedCallableShape(target) {
+		return 0, lowering.notYet(node, "an untagged callable member without a fixed scalar signature")
 	}
-	if l.result.ViewContractTypes == nil {
-		l.result.ViewContractTypes = map[int]ir.ViewContractID{}
+	if lowering.result.ViewContractTypes == nil {
+		lowering.result.ViewContractTypes = map[int]ir.ViewContractID{}
 	}
-	id := l.result.ViewContractTypes[int(target.Id())]
+	id := lowering.result.ViewContractTypes[int(target.Id())]
 	if id == 0 {
-		id = ir.ViewContractID(len(l.result.ViewContracts) + 1)
-		l.result.ViewContracts = append(l.result.ViewContracts, ir.ViewContract{})
-		l.result.ViewContractTypes[int(target.Id())] = id
+		id = ir.ViewContractID(len(lowering.result.ViewContracts) + 1)
+		lowering.result.ViewContracts = append(lowering.result.ViewContracts, ir.ViewContract{})
+		lowering.result.ViewContractTypes[int(target.Id())] = id
 	}
-	signature := l.checker.GetSignaturesOfType(target, checker.SignatureKindCall)[0]
-	contract := ir.ViewContract{Kind: ir.ViewCallable, Of: ir.Closure, Name: l.checker.TypeToString(target)}
+	signature := lowering.checker.GetSignaturesOfType(target, checker.SignatureKindCall)[0]
+	contract := ir.ViewContract{Kind: ir.ViewCallable, Of: ir.Closure, Name: lowering.checker.TypeToString(target)}
 	for _, parameter := range signature.Parameters() {
-		child, viewContractError := l.viewContract(node, l.checker.GetTypeOfSymbol(parameter))
+		child, viewContractError := lowering.viewContract(node, lowering.checker.GetTypeOfSymbol(parameter))
 		if viewContractError != nil {
 			return 0, viewContractError
 		}
-		if members, ok := ir.PrimitiveViewMembers(l.result, child); ok {
+		if members, ok := ir.PrimitiveViewMembers(lowering.result, child); ok {
 			for _, member := range members {
-				l.result.ViewContracts[child-1].RepresentationMask |= 1 << member.Of
+				lowering.result.ViewContracts[child-1].RepresentationMask |= 1 << member.Of
 			}
 		}
 		contract.Parameters = append(contract.Parameters, child)
 	}
-	result := l.checker.GetReturnTypeOfSignature(signature)
+	result := lowering.checker.GetReturnTypeOfSignature(signature)
 	if result.Flags()&checker.TypeFlagsVoid != 0 {
 		contract.DiscardResult = true
 	} else {
-		child, viewContractError := l.viewContract(node, result)
+		child, viewContractError := lowering.viewContract(node, result)
 		if viewContractError != nil {
 			return 0, viewContractError
 		}
 		contract.Result = child
 	}
-	l.result.ViewContracts[id-1] = contract
-	if l.untaggedCallableTargets == nil {
-		l.untaggedCallableTargets = map[ir.ViewContractID]*checker.Type{}
+	lowering.result.ViewContracts[id-1] = contract
+	if lowering.untaggedCallableTargets == nil {
+		lowering.untaggedCallableTargets = map[ir.ViewContractID]*checker.Type{}
 	}
-	l.untaggedCallableTargets[id] = target
+	lowering.untaggedCallableTargets[id] = target
 	return id, nil
 }
 
 // This is descriptor construction, not an array consumer admission.
-func (l *lowering) viewArrayElementType(target *checker.Type) *checker.Type {
-	if !l.isArrayType(target) {
+func (lowering *lowering) viewArrayElementType(target *checker.Type) *checker.Type {
+	if !lowering.isArrayType(target) {
 		return nil
 	}
-	return l.elementTypeOfArray(target)
+	return lowering.elementTypeOfArray(target)
 }

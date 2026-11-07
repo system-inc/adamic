@@ -34,7 +34,7 @@ type unit struct {
 	Seconds float64
 }
 
-func (u unit) key() string { return u.Package + "::" + u.Test }
+func (unit unit) key() string { return unit.Package + "::" + unit.Test }
 
 type plan struct {
 	Version int
@@ -55,7 +55,7 @@ type result struct {
 	Seconds                       float64
 }
 
-func (r result) key() string { return r.Package + "::" + r.Test }
+func (result result) key() string { return result.Package + "::" + result.Test }
 
 type invocation struct {
 	Package  string

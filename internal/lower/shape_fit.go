@@ -48,19 +48,25 @@ var shapeFitProtocols = []string{"Iterable", "ReadonlySetLike"}
 // walk goes on into. A union-held slot declaring no members ({}) reads nothing of the value and isn't
 // judged; an object-held one is handed the container as an object all the same. libraryArgument says the
 // value is a library call's own argument, where a shapeFitProtocols slot is that call's.
-func (l *lowering) shapeFit(value *checker.Type, target *checker.Type, libraryArgument bool) (stop string, judged bool) {
-	held, valueKnown := l.representation(value)
-	slot, slotKnown := l.representation(target)
+func (lowering *lowering) shapeFit(
+	value *checker.Type,
+	target *checker.Type,
+	libraryArgument bool,
+) (stop string, judged bool) {
+	held, valueKnown := lowering.representation(value)
+	slot, slotKnown := lowering.representation(target)
 	if !valueKnown || !slotKnown || (held != ir.Map && held != ir.Array) || (slot != ir.Object && slot != ir.Union) {
 		return "", false
 	}
-	if target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 || l.isArrayType(target) || checker.IsTupleType(target) {
+	if target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 ||
+		lowering.isArrayType(target) ||
+		checker.IsTupleType(target) {
 		return "", false
 	}
-	if libraryArgument && l.shapeFitProtocol(target) {
+	if libraryArgument && lowering.shapeFitProtocol(target) {
 		return "", true
 	}
-	members := l.checker.GetPropertiesOfType(target)
+	members := lowering.checker.GetPropertiesOfType(target)
 	if slot == ir.Union && len(members) == 0 {
 		return "", true
 	}
@@ -84,16 +90,16 @@ func (l *lowering) shapeFit(value *checker.Type, target *checker.Type, libraryAr
 // to a structural slot a value of type target can hold anywhere that it can't go to (shapeFit), or ""
 // when none is. A mention past containerMentionDepth stops, so it fails closed. It's asked both ways
 // round, since a function's parameters carry the other way.
-func (l *lowering) shapeFitReached(value *checker.Type, target *checker.Type) string {
+func (lowering *lowering) shapeFitReached(value *checker.Type, target *checker.Type) string {
 	var containers, shapes []*checker.Type
-	exhausted := l.eachReached(value, 0, map[*checker.Type]bool{}, func(reached *checker.Type) bool {
-		if held, known := l.representation(reached); known && (held == ir.Map || held == ir.Array) {
+	exhausted := lowering.eachReached(value, 0, map[*checker.Type]bool{}, func(reached *checker.Type) bool {
+		if held, known := lowering.representation(reached); known && (held == ir.Map || held == ir.Array) {
 			containers = append(containers, reached)
 		}
 		return false
 	})
-	exhausted = l.eachReached(target, 0, map[*checker.Type]bool{}, func(reached *checker.Type) bool {
-		if slot, known := l.representation(reached); known && (slot == ir.Object || slot == ir.Union) {
+	exhausted = lowering.eachReached(target, 0, map[*checker.Type]bool{}, func(reached *checker.Type) bool {
+		if slot, known := lowering.representation(reached); known && (slot == ir.Object || slot == ir.Union) {
 			shapes = append(shapes, reached)
 		}
 		return false
@@ -101,7 +107,7 @@ func (l *lowering) shapeFitReached(value *checker.Type, target *checker.Type) st
 	if exhausted {
 		// What lies past the bound is unread, so it may hold a container and a shape that meet.
 		for _, container := range containers {
-			if held, _ := l.representation(container); held == ir.Map {
+			if held, _ := lowering.representation(container); held == ir.Map {
 				return shapeFitMapStop
 			}
 		}
@@ -109,10 +115,10 @@ func (l *lowering) shapeFitReached(value *checker.Type, target *checker.Type) st
 	}
 	for _, container := range containers {
 		for _, shape := range shapes {
-			if !l.checker.IsTypeAssignableTo(container, shape) {
+			if !lowering.checker.IsTypeAssignableTo(container, shape) {
 				continue
 			}
-			if stop, judged := l.shapeFit(container, shape, false); judged && stop != "" {
+			if stop, judged := lowering.shapeFit(container, shape, false); judged && stop != "" {
 				return stop
 			}
 		}
@@ -122,9 +128,13 @@ func (l *lowering) shapeFitReached(value *checker.Type, target *checker.Type) st
 
 // shapeFitProtocol is whether a type is an instantiation of one of shapeFitProtocols as the library or
 // the prelude declares it, never a program's own interface of the same name.
-func (l *lowering) shapeFitProtocol(proven *checker.Type) bool {
+func (lowering *lowering) shapeFitProtocol(proven *checker.Type) bool {
 	symbol := proven.Symbol()
-	if proven.Flags()&checker.TypeFlagsObject == 0 || proven.ObjectFlags()&checker.ObjectFlagsReference == 0 || symbol == nil || len(symbol.Declarations) == 0 || !slices.Contains(shapeFitProtocols, symbol.Name) {
+	if proven.Flags()&checker.TypeFlagsObject == 0 ||
+		proven.ObjectFlags()&checker.ObjectFlagsReference == 0 ||
+		symbol == nil ||
+		len(symbol.Declarations) == 0 ||
+		!slices.Contains(shapeFitProtocols, symbol.Name) {
 		return false
 	}
 	file := ast.GetSourceFileOfNode(symbol.Declarations[0])

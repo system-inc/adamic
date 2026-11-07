@@ -20,13 +20,13 @@ type printerMutantProductOnce struct {
 	path string
 }
 
-func (p *printerMutantProductOnce) get(test *testing.T, build func() string) string {
+func (once *printerMutantProductOnce) get(test *testing.T, build func() string) string {
 	test.Helper()
-	p.once.Do(func() { p.path = build() })
-	if p.path == "" {
+	once.once.Do(func() { once.path = build() })
+	if once.path == "" {
 		test.Fatal("shared GraphQL product preparation failed")
 	}
-	return p.path
+	return once.path
 }
 
 var mutantSources, mutantLowered, mutantSanitized [3]printerMutantProductOnce

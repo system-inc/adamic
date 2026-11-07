@@ -55,8 +55,8 @@ const (
 	AliasingEffectApply
 )
 
-func (k AliasingEffectKind) String() string {
-	switch k {
+func (kind AliasingEffectKind) String() string {
+	switch kind {
 	case AliasingEffectCreate:
 		return "create"
 	case AliasingEffectCreateFrom:
@@ -94,8 +94,8 @@ func (k AliasingEffectKind) String() string {
 // `infer_mutation_aliasing_ranges.rs` where `mutations` is populated from effects matching
 // `Mutate | MutateConditionally | MutateTransitive | MutateTransitiveConditionally`. Exposed here
 // rather than restated there so the two passes cannot drift.
-func (k AliasingEffectKind) IsMutation() bool {
-	switch k {
+func (kind AliasingEffectKind) IsMutation() bool {
+	switch kind {
 	case AliasingEffectMutate, AliasingEffectMutateConditionally,
 		AliasingEffectMutateTransitive, AliasingEffectMutateTransitiveConditionally:
 		return true
@@ -109,8 +109,8 @@ func (k AliasingEffectKind) IsMutation() bool {
 // These are the five variants the ranges pass treats identically when projecting to a scalar
 // `Effect`: all five give From either Capture or Read depending on whether Into is still mutable,
 // and give Into Store. See `ProjectEffects`.
-func (k AliasingEffectKind) IsAliasing() bool {
-	switch k {
+func (kind AliasingEffectKind) IsAliasing() bool {
+	switch kind {
 	case AliasingEffectAssign, AliasingEffectAlias, AliasingEffectCapture,
 		AliasingEffectCreateFrom, AliasingEffectMaybeAlias:
 		return true
@@ -161,8 +161,8 @@ const (
 	EffectValueGlobal
 )
 
-func (k EffectValueKind) String() string {
-	switch k {
+func (kind EffectValueKind) String() string {
+	switch kind {
 	case EffectValuePrimitive:
 		return "primitive"
 	case EffectValueFrozen:
@@ -187,19 +187,19 @@ type AliasingEffects struct {
 }
 
 // Get returns one instruction's effects, or nil when it has none.
-func (e *AliasingEffects) Get(id InstructionId) []AliasingEffect {
-	if e == nil {
+func (effects *AliasingEffects) Get(id InstructionId) []AliasingEffect {
+	if effects == nil {
 		return nil
 	}
-	return e.byInstruction[id]
+	return effects.byInstruction[id]
 }
 
 // Len is how many instructions carry at least one effect.
-func (e *AliasingEffects) Len() int {
-	if e == nil {
+func (effects *AliasingEffects) Len() int {
+	if effects == nil {
 		return 0
 	}
-	return len(e.byInstruction)
+	return len(effects.byInstruction)
 }
 
 // create is the Create effect, which every instruction producing a value emits first.

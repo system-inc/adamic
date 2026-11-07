@@ -10,12 +10,12 @@ import (
 
 // Discover contracts before function bodies or global save locals are lowered.
 // This retains the existing conservative field-name view propagation.
-func (l *lowering) factoryFieldOrigin(name string) string {
-	if l.result.FactoryFields == nil {
-		l.result.FactoryFields = map[string]string{}
+func (lowering *lowering) factoryFieldOrigin(name string) string {
+	if lowering.result.FactoryFields == nil {
+		lowering.result.FactoryFields = map[string]string{}
 		var visit ast.Visitor
 		visit = func(node *ast.Node) bool {
-			if node.Kind == ast.KindAsExpression && l.constructionCast(node) {
+			if node.Kind == ast.KindAsExpression && lowering.constructionCast(node) {
 				factory := "literal factory"
 				for parent := node.Parent; parent != nil; parent = parent.Parent {
 					if parent.Kind == ast.KindFunctionDeclaration ||
@@ -27,42 +27,46 @@ func (l *lowering) factoryFieldOrigin(name string) string {
 						break
 					}
 				}
-				for _, field := range l.checker.GetPropertiesOfType(l.concrete(l.checker.GetTypeAtLocation(node))) {
-					if old := l.result.FactoryFields[field.Name]; old == "" {
-						l.result.FactoryFields[field.Name] = factory
+				for _, field := range lowering.checker.GetPropertiesOfType(
+					lowering.concrete(lowering.checker.GetTypeAtLocation(node)),
+				) {
+					if old := lowering.result.FactoryFields[field.Name]; old == "" {
+						lowering.result.FactoryFields[field.Name] = factory
 					} else if old != factory && !strings.Contains(old, factory) {
-						l.result.FactoryFields[field.Name] = old + ", " + factory
+						lowering.result.FactoryFields[field.Name] = old + ", " + factory
 					}
 				}
 			}
 			return node.ForEachChild(visit)
 		}
-		for _, file := range l.program.Files() {
+		for _, file := range lowering.program.Files() {
 			file.AsNode().ForEachChild(visit)
 		}
 
 	}
-	return l.result.FactoryFields[name]
+	return lowering.result.FactoryFields[name]
 }
 
-func (l *lowering) savedFactoryOrigin(node *ast.Node, seen map[*ast.Symbol]bool) string {
+func (lowering *lowering) savedFactoryOrigin(node *ast.Node, seen map[*ast.Symbol]bool) string {
 	node = ast.SkipParentheses(node)
 	if node.Kind == ast.KindPropertyAccessExpression {
-		if layout, _, known := l.nodeArrayLayoutOf(
-			l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression)),
+		if layout, _, known := lowering.nodeArrayLayoutOf(
+			lowering.checker.GetNonNullableType(
+				lowering.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression),
+			),
 		); known {
 			if _, readError := layout.Read(node.Name().Text()); readError == nil {
 				return "field '" + node.Name().Text() + "', factory 'NodeArray allocation'"
 			}
 		}
-		if origin := l.factoryFieldOrigin(node.Name().Text()); origin != "" {
+		if origin := lowering.factoryFieldOrigin(node.Name().Text()); origin != "" {
 			return "field '" + node.Name().Text() + "', factory '" + origin + "'"
 		}
 	}
 	if !ast.IsIdentifier(node) {
 		return ""
 	}
-	symbol := l.symbol(node)
+	symbol := lowering.symbol(node)
 	if symbol == nil || seen[symbol] || len(symbol.Declarations) != 1 {
 		return ""
 	}
@@ -74,7 +78,7 @@ func (l *lowering) savedFactoryOrigin(node *ast.Node, seen map[*ast.Symbol]bool)
 		declaration.Initializer() == nil {
 		return ""
 	}
-	return l.savedFactoryOrigin(declaration.Initializer(), seen)
+	return lowering.savedFactoryOrigin(declaration.Initializer(), seen)
 }
 
 func untypedSave(node *ast.Node) bool {
@@ -90,7 +94,7 @@ func untypedSave(node *ast.Node) bool {
 
 // Observation and a bounded save carry an existing tagged union. A receiving
 // optional slot still checks T, permitting its real nullish members explicitly.
-func (l *lowering) unsetObserved(node *ast.Node) bool {
+func (lowering *lowering) unsetObserved(node *ast.Node) bool {
 	if comparedWithUndefined(node) || untypedSave(node) {
 		return true
 	}
@@ -104,32 +108,33 @@ func (l *lowering) unsetObserved(node *ast.Node) bool {
 	if parent.Kind == ast.KindTypeOfExpression || parent.Kind == ast.KindTemplateSpan {
 		return true
 	}
-	return parent.Kind == ast.KindCallExpression && l.isLibraryGlobal(parent.AsCallExpression().Expression, "String")
+	return parent.Kind == ast.KindCallExpression &&
+		lowering.isLibraryGlobal(parent.AsCallExpression().Expression, "String")
 }
 
-func (l *lowering) unsetSpecialization(
+func (lowering *lowering) unsetSpecialization(
 	node *ast.Node,
 	value ir.Expression,
 	declared *checker.Type,
 	origin string,
 ) (ir.Expression, error) {
-	if l.unsetObserved(node) {
+	if lowering.unsetObserved(node) {
 		return value, nil
 	}
-	present := l.checker.GetNonNullableType(declared)
-	held, known := l.representation(present)
+	present := lowering.checker.GetNonNullableType(declared)
+	held, known := lowering.representation(present)
 	if !known || held < ir.Number || held > ir.String {
-		return nil, l.notYet(node, "an unset field use requiring a non-scalar result specialization")
+		return nil, lowering.notYet(node, "an unset field use requiring a non-scalar result specialization")
 	}
-	b := l.libraryArrayBuilder([]ir.Expression{value})
+	b := lowering.libraryArrayBuilder([]ir.Expression{value})
 	observed := b.read(b.parameters[0])
 	name := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string"}[held]
 	matches := ir.Expression(ir.Binary{
 		Operator: ir.Equal,
 		Left:     ir.TypeOf{Value: observed},
-		Right:    ir.StringConstant{Index: l.constant(name)},
+		Right:    ir.StringConstant{Index: lowering.constant(name)},
 	})
-	if allowed := l.viewLiterals(declared); len(allowed) != 0 {
+	if allowed := lowering.viewLiterals(declared); len(allowed) != 0 {
 		var fits ir.Expression
 		for _, allowedValue := range allowed {
 			test := ir.Expression(
@@ -143,8 +148,8 @@ func (l *lowering) unsetSpecialization(
 		}
 		matches = ir.Binary{Operator: ir.And, Left: matches, Right: fits}
 	}
-	optional := l.includesUndefined(l.checker.GetTypeAtLocation(node))
-	if contextual := l.slotType(node); contextual != nil && l.includesUndefined(contextual) {
+	optional := lowering.includesUndefined(lowering.checker.GetTypeAtLocation(node))
+	if contextual := lowering.slotType(node); contextual != nil && lowering.includesUndefined(contextual) {
 		optional = true
 	}
 	if optional {
@@ -155,12 +160,12 @@ func (l *lowering) unsetSpecialization(
 		", use '" +
 		sourceExpression(node) +
 		"' at " +
-		l.program.Where(node) +
+		lowering.program.Where(node) +
 		"; expected " +
-		l.checker.TypeToString(declared)
+		lowering.checker.TypeToString(declared)
 	b.body = append(b.body, ir.If{
 		Condition: ir.Unary{Operator: ir.Not, Operand: matches},
-		Then:      []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}},
+		Then:      []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: lowering.constant(message)}}},
 	})
 	result := ir.Expression(ir.Narrow{Value: observed, To: held})
 	if optional && (held == ir.Number || held == ir.Boolean) {
@@ -173,23 +178,27 @@ func (l *lowering) unsetSpecialization(
 	return b.finish("factory_unset_specialization", result), nil
 }
 
-func (l *lowering) factoryFieldRead(node *ast.Node, object ir.Expression, name string) (ir.Expression, bool, error) {
-	origin := l.factoryFieldOrigin(name)
+func (lowering *lowering) factoryFieldRead(
+	node *ast.Node,
+	object ir.Expression,
+	name string,
+) (ir.Expression, bool, error) {
+	origin := lowering.factoryFieldOrigin(name)
 	if origin == "" {
 		return nil, false, nil
 	}
 
-	field := l.checker.GetSymbolAtLocation(node.Name())
+	field := lowering.checker.GetSymbolAtLocation(node.Name())
 	if field == nil || accessorSymbol(field) || field.Flags&ast.SymbolFlagsMethod != 0 {
 		return nil, false, nil
 	}
-	declared := l.checker.GetTypeOfSymbol(field)
-	present := l.checker.GetNonNullableType(declared)
+	declared := lowering.checker.GetTypeOfSymbol(field)
+	present := lowering.checker.GetNonNullableType(declared)
 	if !interfaceScalar(present) {
 		return nil, false, nil
 	}
 	value := ir.DynamicProperty{Object: fit(object, ir.Union), Name: name}
-	checked, unsetSpecializationError := l.unsetSpecialization(
+	checked, unsetSpecializationError := lowering.unsetSpecialization(
 		node,
 		value,
 		declared,

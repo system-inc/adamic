@@ -7,7 +7,7 @@ import (
 
 // A field keeps its declared union even when flow analysis narrows a read to a
 // primitive. Evaluate that stored value once and verify its tag before unboxing.
-func (l *lowering) checkedBoxedScalarField(node *ast.Node, read ir.Expression, narrowed ir.Type) ir.Expression {
+func (lowering *lowering) checkedBoxedScalarField(node *ast.Node, read ir.Expression, narrowed ir.Type) ir.Expression {
 	parent := node.Parent
 	for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
 		node, parent = parent, parent.Parent
@@ -29,16 +29,23 @@ func (l *lowering) checkedBoxedScalarField(node *ast.Node, read ir.Expression, n
 	} else if narrowed == ir.String {
 		name = "string"
 	}
-	b := l.libraryArrayBuilder([]ir.Expression{read})
+	b := lowering.libraryArrayBuilder([]ir.Expression{read})
 	held := b.read(b.parameters[0])
-	matches := ir.Expression(ir.Binary{Operator: ir.Equal, Left: ir.TypeOf{Value: held}, Right: ir.StringConstant{Index: l.constant(name)}})
+	matches := ir.Expression(ir.Binary{
+		Operator: ir.Equal,
+		Left:     ir.TypeOf{Value: held},
+		Right:    ir.StringConstant{Index: lowering.constant(name)},
+	})
 	if narrowed.IsMaybe() {
 		matches = ir.Binary{Operator: ir.Or, Left: matches, Right: ir.IsUndefined{Value: held}}
 	}
 	message := "union member where the checker narrowed it away: a call since the narrowing put it back"
-	b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: matches}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
+	b.body = append(b.body, ir.If{
+		Condition: ir.Unary{Operator: ir.Not, Operand: matches},
+		Then:      []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: lowering.constant(message)}}},
+	})
 	result := b.finish("narrowed_boxed_scalar_field", ir.Narrow{Value: held, To: narrowed})
-	l.result.Functions[b.function].CheckedUnionNarrow = true
+	lowering.result.Functions[b.function].CheckedUnionNarrow = true
 	return result
 }
 

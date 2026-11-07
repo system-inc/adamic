@@ -162,13 +162,13 @@ var DynamicKeyedErrorNames = []string{"stack", "cause", "errno", "syscall", "pat
 // DynamicKeyedMethodNames are the names a class's method table holds, the inherited ones included, as
 // both backends judge a run-time key against them: Methods by MethodName, less a getter's or a
 // setter's own entry, which the class's accessors answer.
-func (p *Program) DynamicKeyedMethodNames(class int) []string {
+func (program *Program) DynamicKeyedMethodNames(class int) []string {
 	names := []string{}
-	for _, method := range p.Classes[class-1].Methods {
+	for _, method := range program.Classes[class-1].Methods {
 		if method < 0 {
 			continue
 		}
-		name := p.Functions[method].MethodName
+		name := program.Functions[method].MethodName
 		if strings.HasPrefix(name, "$get:") || strings.HasPrefix(name, "$set:") {
 			continue
 		}

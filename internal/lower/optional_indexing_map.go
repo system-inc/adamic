@@ -7,58 +7,58 @@ import (
 
 // A Map lookup guards the receiver, not the library method. The key is
 // evaluated only after that guard and the ordinary lookup keeps undefined.
-func (l *lowering) optionalMapGet(node *ast.Node) (ir.Expression, bool, error) {
+func (lowering *lowering) optionalMapGet(node *ast.Node) (ir.Expression, bool, error) {
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
 	if call.QuestionDotToken != nil || callee.Kind != ast.KindPropertyAccessExpression {
 		return nil, false, nil
 	}
 	access := callee.AsPropertyAccessExpression()
-	if access.QuestionDotToken == nil || access.Name().Text() != "get" || !l.libraryMember(callee) {
+	if access.QuestionDotToken == nil || access.Name().Text() != "get" || !lowering.libraryMember(callee) {
 		return nil, false, nil
 	}
-	proven := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression))
-	if !l.isLibraryType(proven, "Map", "ReadonlyMap") {
+	proven := lowering.checker.GetNonNullableType(lowering.checker.GetTypeAtLocation(access.Expression))
+	if !lowering.isLibraryType(proven, "Map", "ReadonlyMap") {
 		return nil, false, nil
 	}
 	if len(call.Arguments.Nodes) != 1 || hasSpread(node) {
-		return nil, true, l.notYet(node, "an optional Map get with other than one key")
+		return nil, true, lowering.notYet(node, "an optional Map get with other than one key")
 	}
-	if l.optionalMapStructuralReceiver(access.Expression) {
-		return nil, true, l.notYet(node, "an optional Map get through a structural receiver")
+	if lowering.optionalMapStructuralReceiver(access.Expression) {
+		return nil, true, lowering.notYet(node, "an optional Map get through a structural receiver")
 	}
 
-	types := l.typeArguments(proven)
+	types := lowering.typeArguments(proven)
 	if len(types) != 2 {
-		return nil, true, l.notYet(node, "an optional Map get without key and value types")
+		return nil, true, lowering.notYet(node, "an optional Map get without key and value types")
 	}
-	keyType, keyKnown := l.representation(types[0])
-	valueType, valueKnown := l.kept(types[1])
+	keyType, keyKnown := lowering.representation(types[0])
+	valueType, valueKnown := lowering.kept(types[1])
 	if !keyKnown ||
 		!keyable(keyType) ||
 		!valueKnown ||
-		(slotless(valueType) && !(valueType == ir.Union && l.writable(types[1]))) {
-		return nil, true, l.notYet(node, "an optional Map get with unsupported key or value storage")
+		(slotless(valueType) && !(valueType == ir.Union && lowering.writable(types[1]))) {
+		return nil, true, lowering.notYet(node, "an optional Map get with unsupported key or value storage")
 	}
-	base, expressionError := l.expression(access.Expression)
+	base, expressionError := lowering.expression(access.Expression)
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
-	key, expressionError := l.expression(call.Arguments.Nodes[0])
+	key, expressionError := lowering.expression(call.Arguments.Nodes[0])
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
 	key = fit(key, keyType)
 	if base.Type() != ir.Map || key.Type() != keyType {
-		return nil, true, l.notYet(node, "an optional Map get with incompatible receiver or key storage")
+		return nil, true, lowering.notYet(node, "an optional Map get with incompatible receiver or key storage")
 	}
 	function := -1
-	if l.function != nil {
-		function = l.functionIndex
+	if lowering.function != nil {
+		function = lowering.functionIndex
 	}
-	local := len(l.result.Locals)
-	l.result.Locals = append(
-		l.result.Locals,
+	local := len(lowering.result.Locals)
+	lowering.result.Locals = append(
+		lowering.result.Locals,
 		ir.Local{Name: "optional_map_base", Type: ir.Map, Function: function, ExpressionAssigned: true},
 	)
 	read := ir.Read{Local: local, Of: ir.Map}
@@ -76,9 +76,9 @@ func (l *lowering) optionalMapGet(node *ast.Node) (ir.Expression, bool, error) {
 // A library interface alone does not prove the receiver uses native Map storage.
 // Keep compatible object literals and constructed custom receivers out of the
 // intrinsic path, including ones hidden behind a ReadonlyMap annotation.
-func (l *lowering) optionalMapStructuralReceiver(receiver *ast.Node) bool {
-	view := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver))
-	modules, moduleOrderError := l.moduleOrder(l.program.Files()[0])
+func (lowering *lowering) optionalMapStructuralReceiver(receiver *ast.Node) bool {
+	view := lowering.checker.GetNonNullableType(lowering.checker.GetTypeAtLocation(receiver))
+	modules, moduleOrderError := lowering.moduleOrder(lowering.program.Files()[0])
 	if moduleOrderError != nil {
 		return true
 	}
@@ -89,11 +89,11 @@ func (l *lowering) optionalMapStructuralReceiver(receiver *ast.Node) bool {
 			return true
 		}
 		if node.Kind == ast.KindObjectLiteralExpression || node.Kind == ast.KindNewExpression {
-			shape := l.checker.GetTypeAtLocation(node)
-			if l.checker.IsTypeAssignableTo(shape, view) {
-				representation, known := l.representation(shape)
-				member := l.checker.GetPropertyOfType(shape, "get")
-				if !known || representation != ir.Map || member == nil || !l.librarySymbol(member) {
+			shape := lowering.checker.GetTypeAtLocation(node)
+			if lowering.checker.IsTypeAssignableTo(shape, view) {
+				representation, known := lowering.representation(shape)
+				member := lowering.checker.GetPropertyOfType(shape, "get")
+				if !known || representation != ir.Map || member == nil || !lowering.librarySymbol(member) {
 					hazard = true
 					return true
 				}

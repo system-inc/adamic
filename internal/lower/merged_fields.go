@@ -7,11 +7,11 @@ import (
 )
 
 // The merged symbol exposes interface promises, not evidence of runtime storage.
-func (l *lowering) mergedClass(node *ast.Node) *ast.Node {
+func (lowering *lowering) mergedClass(node *ast.Node) *ast.Node {
 	if node == nil || node.Name() == nil {
 		return nil
 	}
-	symbol := l.checker.GetSymbolAtLocation(node.Name())
+	symbol := lowering.checker.GetSymbolAtLocation(node.Name())
 	if symbol == nil {
 		return nil
 	}
@@ -68,20 +68,20 @@ func initializedClassMember(field *ast.Symbol) bool {
 	return false
 }
 
-func (l *lowering) mergedDeclarationRefusal(node *ast.Node) error {
+func (lowering *lowering) mergedDeclarationRefusal(node *ast.Node) error {
 	if node.Kind != ast.KindClassDeclaration && node.Kind != ast.KindInterfaceDeclaration {
 		return nil
 	}
-	class := l.mergedClass(node)
+	class := lowering.mergedClass(node)
 	if class == nil {
 		return nil
 	}
-	for _, field := range l.checker.GetPropertiesOfType(l.checker.GetTypeAtLocation(class.Name())) {
+	for _, field := range lowering.checker.GetPropertiesOfType(lowering.checker.GetTypeAtLocation(class.Name())) {
 		if field.Flags&ast.SymbolFlagsOptional != 0 || initializedClassMember(field) {
 			continue
 		}
 		return &Refused{
-			Where: l.program.Where(node),
+			Where: lowering.program.Where(node),
 			What: "class " +
 				class.Name().Text() +
 				" merged with an interface promises field " +
@@ -97,8 +97,8 @@ func (l *lowering) mergedDeclarationRefusal(node *ast.Node) error {
 	return nil
 }
 
-func (l *lowering) mergedFieldRulings(module *ast.SourceFile) error {
-	adamic := strings.HasSuffix(l.program.FileName(module), ".a")
+func (lowering *lowering) mergedFieldRulings(module *ast.SourceFile) error {
+	adamic := strings.HasSuffix(lowering.program.FileName(module), ".a")
 	var found error
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
@@ -106,9 +106,9 @@ func (l *lowering) mergedFieldRulings(module *ast.SourceFile) error {
 			return true
 		}
 		if adamic {
-			found = l.mergedDeclarationRefusal(node)
+			found = lowering.mergedDeclarationRefusal(node)
 		} else {
-			found = l.mergedFieldRead(node)
+			found = lowering.mergedFieldRead(node)
 		}
 		if found != nil {
 			return true
@@ -121,16 +121,16 @@ func (l *lowering) mergedFieldRulings(module *ast.SourceFile) error {
 
 // Reuse the checked-view presence, readiness and runtime type contract at each
 // actual read. Holding or declaring the merged type needs no runtime promise.
-func (l *lowering) mergedFieldRead(node *ast.Node) error {
+func (lowering *lowering) mergedFieldRead(node *ast.Node) error {
 	var field *ast.Symbol
 	if node.Kind == ast.KindPropertyAccessExpression {
-		field = l.checker.GetSymbolAtLocation(node.Name())
+		field = lowering.checker.GetSymbolAtLocation(node.Name())
 	} else if node.Kind == ast.KindElementAccessExpression {
 		access := node.AsElementAccessExpression()
 		key := ast.SkipParentheses(access.ArgumentExpression)
 		if key.Kind == ast.KindStringLiteral {
-			field = l.checker.GetPropertyOfType(
-				l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression)),
+			field = lowering.checker.GetPropertyOfType(
+				lowering.checker.GetNonNullableType(lowering.checker.GetTypeAtLocation(access.Expression)),
 				key.Text(),
 			)
 		}
@@ -142,39 +142,39 @@ func (l *lowering) mergedFieldRead(node *ast.Node) error {
 	for _, declaration := range field.Declarations {
 		if declaration.Parent != nil &&
 			declaration.Parent.Kind == ast.KindInterfaceDeclaration &&
-			l.mergedClass(declaration.Parent) != nil {
+			lowering.mergedClass(declaration.Parent) != nil {
 			merged = true
 		}
 	}
 	if !merged {
 		return nil
 	}
-	if _, strictViewContractError := l.strictViewContract(
+	if _, strictViewContractError := lowering.strictViewContract(
 		node,
-		l.checker.GetTypeOfSymbol(field),
+		lowering.checker.GetTypeOfSymbol(field),
 	); strictViewContractError != nil {
 		return strictViewContractError
 	}
-	if l.result.CheckedFields == nil {
-		l.result.CheckedFields = map[string]bool{}
+	if lowering.result.CheckedFields == nil {
+		lowering.result.CheckedFields = map[string]bool{}
 	}
-	l.result.CheckedFields[field.Name] = true
+	lowering.result.CheckedFields[field.Name] = true
 	return nil
 }
 
 // Constant bracket reads need the same contract as dotted reads. The ordinary
 // finite-key path has no declaration-name node from which to recover that contract.
-func (l *lowering) mergedComputedRead(node *ast.Node) (ir.Expression, bool, error) {
+func (lowering *lowering) mergedComputedRead(node *ast.Node) (ir.Expression, bool, error) {
 	if node.Kind != ast.KindElementAccessExpression {
 		return nil, false, nil
 	}
 	access := node.AsElementAccessExpression()
 	key := ast.SkipParentheses(access.ArgumentExpression)
-	if key.Kind != ast.KindStringLiteral || !l.result.CheckedFields[key.Text()] {
+	if key.Kind != ast.KindStringLiteral || !lowering.result.CheckedFields[key.Text()] {
 		return nil, false, nil
 	}
-	field := l.checker.GetPropertyOfType(
-		l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression)),
+	field := lowering.checker.GetPropertyOfType(
+		lowering.checker.GetNonNullableType(lowering.checker.GetTypeAtLocation(access.Expression)),
 		key.Text(),
 	)
 	if field == nil || initializedClassMember(field) {
@@ -184,24 +184,32 @@ func (l *lowering) mergedComputedRead(node *ast.Node) (ir.Expression, bool, erro
 	for _, declaration := range field.Declarations {
 		if declaration.Parent != nil &&
 			declaration.Parent.Kind == ast.KindInterfaceDeclaration &&
-			l.mergedClass(declaration.Parent) != nil {
+			lowering.mergedClass(declaration.Parent) != nil {
 			merged = true
 		}
 	}
 	if !merged {
 		return nil, false, nil
 	}
-	object, expressionError := l.expression(access.Expression)
+	object, expressionError := lowering.expression(access.Expression)
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
-	declared := l.checker.GetTypeOfSymbol(field)
-	of, known := l.representation(declared)
+	declared := lowering.checker.GetTypeOfSymbol(field)
+	of, known := lowering.representation(declared)
 	if !known {
-		return nil, true, l.notYet(node, "a merged field without runtime storage")
+		return nil, true, lowering.notYet(node, "a merged field without runtime storage")
 	}
-	return ir.Property{Object: object, Name: field.Name, Of: of, Optional: access.QuestionDotToken != nil,
-		View: sourceExpression(node), ViewType: l.checker.TypeToString(declared), ViewWhere: l.program.Where(node),
-		ViewTypeID: int(declared.Id()), ViewContract: l.result.ViewContractTypes[int(declared.Id())],
-		ViewReceiverTypeID: int(l.checker.GetTypeAtLocation(access.Expression).Id())}, true, nil
+	return ir.Property{
+		Object:             object,
+		Name:               field.Name,
+		Of:                 of,
+		Optional:           access.QuestionDotToken != nil,
+		View:               sourceExpression(node),
+		ViewType:           lowering.checker.TypeToString(declared),
+		ViewWhere:          lowering.program.Where(node),
+		ViewTypeID:         int(declared.Id()),
+		ViewContract:       lowering.result.ViewContractTypes[int(declared.Id())],
+		ViewReceiverTypeID: int(lowering.checker.GetTypeAtLocation(access.Expression).Id()),
+	}, true, nil
 }

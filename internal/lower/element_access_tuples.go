@@ -10,9 +10,9 @@ import (
 
 // A fixed tuple is already held as named slots. Numeric dispatch preserves that
 // layout, and a shorter member of a tuple union has no slot past its own end.
-func (l *lowering) indexedTupleRead(node *ast.Node, object ir.Expression) (ir.Expression, bool, error) {
+func (lowering *lowering) indexedTupleRead(node *ast.Node, object ir.Expression) (ir.Expression, bool, error) {
 	access := node.AsElementAccessExpression()
-	receiver := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression))
+	receiver := lowering.checker.GetNonNullableType(lowering.checker.GetTypeAtLocation(access.Expression))
 	members := []*checker.Type{receiver}
 	if receiver.Flags()&checker.TypeFlagsUnion != 0 {
 		members = receiver.Types()
@@ -31,22 +31,22 @@ func (l *lowering) indexedTupleRead(node *ast.Node, object ir.Expression) (ir.Ex
 	stored := []ir.Type{}
 	for _, member := range members {
 		if checker.TupleType_combinedFlags(member.TargetTupleType())&checker.ElementFlagsVariable != 0 {
-			return nil, true, l.notYet(node, "numeric indexing of a tuple with variable elements")
+			return nil, true, lowering.notYet(node, "numeric indexing of a tuple with variable elements")
 		}
-		elements := l.checker.GetTypeArguments(member)
+		elements := lowering.checker.GetTypeArguments(member)
 		for index, element := range elements {
-			of, known := l.representation(element)
-			if !known || censusFieldSlotless(of) || of == ir.Weak || l.includesNull(element) {
-				return nil, true, l.notYet(node, "numeric indexing of an unrepresented tuple element")
+			of, known := lowering.representation(element)
+			if !known || censusFieldSlotless(of) || of == ir.Weak || lowering.includesNull(element) {
+				return nil, true, lowering.notYet(node, "numeric indexing of an unrepresented tuple element")
 			}
 			if index == len(stored) {
 				stored = append(stored, of)
 			} else if stored[index] != of {
-				return nil, true, l.notYet(node, "a tuple union storing an index in different representations")
+				return nil, true, lowering.notYet(node, "a tuple union storing an index in different representations")
 			}
 		}
 	}
-	result, typeOfError := l.typeOf(node)
+	result, typeOfError := lowering.typeOf(node)
 	if typeOfError != nil {
 		return nil, true, typeOfError
 	}
@@ -54,21 +54,21 @@ func (l *lowering) indexedTupleRead(node *ast.Node, object ir.Expression) (ir.Ex
 	// undefined. Do not manufacture a value when the result cannot hold it.
 	missing := fit(ir.Undefined{}, result)
 	if missing.Type() != result || (!result.IsReference() && !result.IsMaybe()) {
-		return nil, true, l.notYet(node, "a dynamic tuple read without an undefined representation")
+		return nil, true, lowering.notYet(node, "a dynamic tuple read without an undefined representation")
 	}
-	key, expressionError := l.expression(access.ArgumentExpression)
+	key, expressionError := lowering.expression(access.ArgumentExpression)
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
 	if key.Type() != ir.Number {
-		return nil, true, l.notYet(node, "a tuple index that is not a number")
+		return nil, true, lowering.notYet(node, "a tuple index that is not a number")
 	}
-	b := l.libraryArrayBuilder([]ir.Expression{object, key})
+	b := lowering.libraryArrayBuilder([]ir.Expression{object, key})
 	heldObject, heldKey := b.read(b.parameters[0]), b.read(b.parameters[1])
 	for index, of := range stored {
 		absent := false
 		for _, member := range members {
-			if index >= len(l.checker.GetTypeArguments(member)) {
+			if index >= len(lowering.checker.GetTypeArguments(member)) {
 				absent = true
 			}
 		}
@@ -77,7 +77,10 @@ func (l *lowering) indexedTupleRead(node *ast.Node, object ir.Expression) (ir.Ex
 		}
 		read := fit(ir.Property{Object: heldObject, Name: strconv.Itoa(index), Of: of, Absent: absent}, result)
 		if read.Type() != result {
-			return nil, true, l.notYet(node, "a dynamic tuple result with an incompatible element representation")
+			return nil, true, lowering.notYet(
+				node,
+				"a dynamic tuple result with an incompatible element representation",
+			)
 		}
 		b.body = append(b.body, ir.If{
 			Condition: ir.Binary{Operator: ir.Equal, Left: heldKey, Right: ir.NumberConstant{Value: float64(index)}},

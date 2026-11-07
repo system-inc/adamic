@@ -9,8 +9,8 @@ import (
 )
 
 // functionBody lowers a module function declaration's parameters and body.
-func (l *lowering) functionBody(declaration *ast.Node) error {
-	return l.lowerFunction(l.functions[l.symbol(declaration.Name())], declaration, -1)
+func (lowering *lowering) functionBody(declaration *ast.Node) error {
+	return lowering.lowerFunction(lowering.functions[lowering.symbol(declaration.Name())], declaration, -1)
 }
 
 // defaulted is a parameter with a default: the local the body declares, the one the argument arrives
@@ -42,30 +42,30 @@ type patterned struct {
 //
 // It works on a copy and writes it back by index: lowering a body can instantiate a class, which
 // appends functions, and a pointer into the slice would be left pointing at the old one.
-func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) error {
-	if implementation := l.censusImplementation(declaration); implementation != nil {
+func (lowering *lowering) lowerFunction(index int, declaration *ast.Node, this int) error {
+	if implementation := lowering.censusImplementation(declaration); implementation != nil {
 		declaration = implementation
 	}
-	if _, isSigned := l.signed[index]; !isSigned {
-		if signatureError := l.signature(index, declaration, this); signatureError != nil {
+	if _, isSigned := lowering.signed[index]; !isSigned {
+		if signatureError := lowering.signature(index, declaration, this); signatureError != nil {
 			return signatureError
 		}
 	}
-	pending := l.signed[index]
-	delete(l.signed, index)
-	return l.lowerBody(index, declaration, pending.this, pending.defaults, pending.patterns)
+	pending := lowering.signed[index]
+	delete(lowering.signed, index)
+	return lowering.lowerBody(index, declaration, pending.this, pending.defaults, pending.patterns)
 }
 
 // signature writes the function at index's parameters and result, from the checker, without lowering
 // its body, so a call to it lowers whether or not its body has been. this is as for lowerFunction.
-func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
-	if implementation := l.censusImplementation(declaration); implementation != nil {
+func (lowering *lowering) signature(index int, declaration *ast.Node, this int) error {
+	if implementation := lowering.censusImplementation(declaration); implementation != nil {
 		declaration = implementation
 	}
-	if censusOverloadsError := l.censusOverloads(declaration); censusOverloadsError != nil {
+	if censusOverloadsError := lowering.censusOverloads(declaration); censusOverloadsError != nil {
 		return censusOverloadsError
 	}
-	function := l.result.Functions[index]
+	function := lowering.result.Functions[index]
 	function.SourceLength = sourceFunctionLength(declaration)
 	name := declaration.Name()
 	if name == nil {
@@ -73,7 +73,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 	}
 	source := ast.GetSourceFileOfNode(name)
 	line, column := scanner.GetLineAndCharacterOfPosition(source, scanner.GetTokenPosOfNode(name, source, false))
-	function.Position = ir.SourcePosition{File: l.program.FileName(source), Line: line + 1, Column: column + 1}
+	function.Position = ir.SourcePosition{File: lowering.program.FileName(source), Line: line + 1, Column: column + 1}
 	if this >= 0 && declaration.Kind != ast.KindConstructor {
 		// A method receives this; a constructor makes it.
 		function.Parameters = append(function.Parameters, this)
@@ -84,22 +84,25 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		// A class writes each overload's signature into its implementation's function before the
 		// implementation's own (class.go), so the gate reads the implementation from the first one,
 		// before an overload could write it as an ordinary function's.
-		return l.generatorNotYet(implementation, generatorForm(implementation))
+		return lowering.generatorNotYet(implementation, generatorForm(implementation))
 	}
 	if generatorDeclaration(declaration) {
 		// Every function body is lowered after its signature is written, here, so this is where a
 		// generator of a form this slice doesn't lower stops, before its body could be lowered as an
 		// ordinary function's (a function* that only returns would return undefined, not a generator).
 		if !loweredGenerator(declaration) {
-			return l.generatorNotYet(declaration, generatorForm(declaration))
+			return lowering.generatorNotYet(declaration, generatorForm(declaration))
 		}
-		if generatorSignatureError := l.generatorSignature(&function, declaration); generatorSignatureError != nil {
+		if generatorSignatureError := lowering.generatorSignature(
+			&function,
+			declaration,
+		); generatorSignatureError != nil {
 			return generatorSignatureError
 		}
 	} else if declaration.Kind != ast.KindConstructor {
-		signature := l.checker.GetSignatureFromDeclaration(declaration)
-		returns := l.concrete(l.checker.GetReturnTypeOfSignature(signature))
-		function.Boundary.Return = l.boundarySchema(declaration, returns)
+		signature := lowering.checker.GetSignatureFromDeclaration(declaration)
+		returns := lowering.concrete(lowering.checker.GetReturnTypeOfSignature(signature))
+		function.Boundary.Return = lowering.boundarySchema(declaration, returns)
 		// A function that never returns (it panics on every path, as (why) => panic(why) does) has no
 		// result to hold, as one returning void hasn't. An arrow whose expression is never for another
 		// reason, a variable the checker narrowed to nothing, isn't one.
@@ -107,13 +110,13 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 			declaration.Body() != nil &&
 			declaration.Body().Kind != ast.KindBlock &&
 			declaration.Body().Kind != ast.KindCallExpression &&
-			!l.isPanicCall(declaration.Body())
+			!lowering.isPanicCall(declaration.Body())
 		if returns.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 || neverArrow {
-			valueType, isKnown := l.representation(returns)
+			valueType, isKnown := lowering.representation(returns)
 			if returns.Flags()&checker.TypeFlagsUndefined != 0 {
 				valueType, isKnown = ir.Object, true
 			}
-			if function.Closure && l.regexReplacementArgument(declaration) {
+			if function.Closure && lowering.regexReplacementArgument(declaration) {
 				if returns.Flags()&checker.TypeFlagsUndefined != 0 {
 					valueType, isKnown = ir.String, true
 				}
@@ -122,7 +125,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 				}
 			}
 			if !isKnown {
-				valueType, isKnown = l.clockGenericReturnsT01(returns)
+				valueType, isKnown = lowering.clockGenericReturnsT01(returns)
 			}
 			if !isKnown {
 				// An arrow function has no name to point at, so it's pointed at whole.
@@ -130,34 +133,34 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 				if where == nil {
 					where = declaration
 				}
-				return l.notYet(where, "a function returning "+l.checker.TypeToString(returns))
+				return lowering.notYet(where, "a function returning "+lowering.checker.TypeToString(returns))
 			}
 			function.Returns = valueType
 		}
 	}
 	if ast.HasSyntacticModifier(declaration, ast.ModifierFlagsAsync) {
-		returns := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(declaration))
-		if !l.isLibraryType(returns, "Promise") {
-			return l.notYet(declaration, "an async result other than the library Promise")
+		returns := lowering.checker.GetReturnTypeOfSignature(lowering.checker.GetSignatureFromDeclaration(declaration))
+		if !lowering.isLibraryType(returns, "Promise") {
+			return lowering.notYet(declaration, "an async result other than the library Promise")
 		}
-		arguments := l.checker.GetTypeArguments(returns)
+		arguments := lowering.checker.GetTypeArguments(returns)
 		if len(arguments) != 1 {
-			return l.notYet(declaration, "full Promise compatibility")
+			return lowering.notYet(declaration, "full Promise compatibility")
 		}
 		function.Async = true
-		function.AsyncSite = l.asyncSite(declaration)
+		function.AsyncSite = lowering.asyncSite(declaration)
 		function.Returns = ir.Promise
 		if arguments[0].Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsUndefined|checker.TypeFlagsNever) == 0 {
 			var known bool
-			function.AsyncReturns, known = l.representation(arguments[0])
+			function.AsyncReturns, known = lowering.representation(arguments[0])
 			if !known {
-				return l.notYet(declaration, "an async payload of "+l.checker.TypeToString(arguments[0]))
+				return lowering.notYet(declaration, "an async payload of "+lowering.checker.TypeToString(arguments[0]))
 			}
 		}
 	}
-	outerIndexForParameters := l.functionIndex
-	l.functionIndex = index
-	defer func() { l.functionIndex = outerIndexForParameters }()
+	outerIndexForParameters := lowering.functionIndex
+	lowering.functionIndex = index
+	defer func() { lowering.functionIndex = outerIndexForParameters }()
 	// A parameter with a default arrives as what may be missing, and the body begins by declaring the
 	// parameter itself: the argument, or the default when it's undefined, as JavaScript decides.
 	defaults := []defaulted{}
@@ -168,25 +171,32 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		declared := parameter.AsParameterDeclaration()
 		function.Boundary.Parameters = append(
 			function.Boundary.Parameters,
-			ir.BoundaryParameter{Schema: l.boundarySchema(parameter, l.checker.GetTypeAtLocation(parameter))},
+			ir.BoundaryParameter{
+				Schema: lowering.boundarySchema(parameter, lowering.checker.GetTypeAtLocation(parameter)),
+			},
 		)
 		if name := parameter.Name(); (name.Kind == ast.KindArrayBindingPattern ||
 			name.Kind == ast.KindObjectBindingPattern) &&
 			declared.DotDotDotToken == nil &&
 			declared.Initializer == nil &&
 			declared.QuestionToken == nil {
-			incoming := len(l.result.Locals)
+			incoming := len(lowering.result.Locals)
 			heldAs := ir.Object
-			if represented, _ := l.representation(l.checker.GetTypeAtLocation(parameter)); represented == ir.String {
+			if represented, _ := lowering.representation(
+				lowering.checker.GetTypeAtLocation(parameter),
+			); represented == ir.String {
 				heldAs = ir.String
 			}
-			l.result.Locals = append(l.result.Locals, ir.Local{Name: "destructured", Type: heldAs, Function: index})
+			lowering.result.Locals = append(
+				lowering.result.Locals,
+				ir.Local{Name: "destructured", Type: heldAs, Function: index},
+			)
 			function.Parameters = append(function.Parameters, incoming)
 			patterns = append(patterns, patterned{pattern: name, parameter: parameter, incoming: incoming})
 			continue
 		}
 		if !ast.IsIdentifier(parameter.Name()) {
-			return l.notYet(parameter, "a parameter that isn't a plain name")
+			return lowering.notYet(parameter, "a parameter that isn't a plain name")
 		}
 		// A this parameter names the receiver's type and takes no argument: f(this: void, n) is called
 		// as f(1). Declared here as a local it shifts every argument after it by one, so a function
@@ -198,59 +208,60 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		// (namespace_method_receiver.a). A function expression, a nested declaration, a namespace
 		// function and a function used as a value stop sooner, in their own words.
 		if parameter.Name().Text() == "this" && position < len(declaration.Parameters())-1 {
-			return l.notYet(
+			return lowering.notYet(
 				parameter,
 				"a function or method with a this parameter followed by another parameter (dynamic receivers are not implemented)",
 			)
 		}
-		local, declareLocalError := l.declareLocal(parameter.Name())
+		local, declareLocalError := lowering.declareLocal(parameter.Name())
 		if declareLocalError != nil {
 			return declareLocalError
 		}
 		if parameterProperty(parameter) {
 			// The binder gives a parameter property both a field symbol and a lexical parameter
 			// symbol. Reads and assignments in the body refer to the latter.
-			parameters := l.checker.GetSignatureFromDeclaration(declaration).Parameters()
-			l.locals[parameters[position]] = local
+			parameters := lowering.checker.GetSignatureFromDeclaration(declaration).Parameters()
+			lowering.locals[parameters[position]] = local
 		}
 		if declared.DotDotDotToken != nil {
-			proven := l.concrete(l.checker.GetTypeAtLocation(parameter.Name()))
+			proven := lowering.concrete(lowering.checker.GetTypeAtLocation(parameter.Name()))
 			// Only an array reference has type arguments to read. The checker dereferences nil for
 			// anything else, such as the union of tuples tsc's createConstructorTypeNode takes as
 			// Parameters<typeof createConstructorTypeNode1 | typeof createConstructorTypeNode2> (#egxccg8).
-			if !l.isArrayType(proven) {
-				return l.notYet(parameter, "a rest parameter that isn't an array")
+			if !lowering.isArrayType(proven) {
+				return lowering.notYet(parameter, "a rest parameter that isn't an array")
 			}
-			elements := l.checker.GetTypeArguments(proven)
+			elements := lowering.checker.GetTypeArguments(proven)
 			if len(elements) != 1 {
-				return l.notYet(parameter, "a rest parameter that isn't an array")
+				return lowering.notYet(parameter, "a rest parameter that isn't an array")
 			}
-			element, known := l.representation(elements[0])
+			element, known := lowering.representation(elements[0])
 			if !known || slotless(element) && element != ir.Union {
-				return l.notYet(parameter, "a rest parameter whose elements cannot be packed")
+				return lowering.notYet(parameter, "a rest parameter whose elements cannot be packed")
 			}
 			function.RestElement = element
 		}
 		if function.Closure &&
-			censusCallableSlotless(l.result.Locals[local].Type) &&
-			!(l.result.Locals[local].Type == ir.Union && l.regexReplacementArgument(declaration)) {
+			censusCallableSlotless(lowering.result.Locals[local].Type) &&
+			!(lowering.result.Locals[local].Type == ir.Union && lowering.regexReplacementArgument(declaration)) {
 			// Its arguments are each one adamic_value.
-			return l.notYet(
+			return lowering.notYet(
 				parameter,
-				"a function value taking "+l.checker.TypeToString(l.checker.GetTypeAtLocation(parameter.Name())),
+				"a function value taking "+
+					lowering.checker.TypeToString(lowering.checker.GetTypeAtLocation(parameter.Name())),
 			)
 		}
 		if declared.Initializer == nil {
 			function.Parameters = append(function.Parameters, local)
 			continue
 		}
-		missing := ir.Maybe(l.result.Locals[local].Type)
+		missing := ir.Maybe(lowering.result.Locals[local].Type)
 		if !missing.IsMaybe() && !missing.IsReference() {
-			return l.notYet(parameter, "a default for a "+typeName(missing)+" parameter")
+			return lowering.notYet(parameter, "a default for a "+typeName(missing)+" parameter")
 		}
-		incoming := len(l.result.Locals)
-		l.result.Locals = append(
-			l.result.Locals,
+		incoming := len(lowering.result.Locals)
+		lowering.result.Locals = append(
+			lowering.result.Locals,
 			ir.Local{Name: parameter.Name().Text(), Type: missing, Function: index},
 		)
 		function.Parameters = append(function.Parameters, incoming)
@@ -258,12 +269,12 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 	}
 	if function.Closure &&
 		censusCallableSlotless(function.Returns) &&
-		!(function.Returns == ir.Union && l.regexReplacementArgument(declaration)) {
+		!(function.Returns == ir.Union && lowering.regexReplacementArgument(declaration)) {
 		// A function value's arguments and result must each fit one adamic_value.
-		return l.notYet(declaration, "a function value returning "+typeName(function.Returns))
+		return lowering.notYet(declaration, "a function value returning "+typeName(function.Returns))
 	}
 	if declaration.Body() == nil && !ast.HasSyntacticModifier(declaration, ast.ModifierFlagsAbstract) {
-		return l.notYet(declaration, "a function without a body")
+		return lowering.notYet(declaration, "a function without a body")
 	}
 	function.OptionalParameters = map[int]bool{}
 	offset := 0
@@ -277,32 +288,32 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		}
 	}
 	if function.Source.Module == "" {
-		function.Source = l.functionSource(declaration)
+		function.Source = lowering.functionSource(declaration)
 	}
-	l.result.Functions[index] = function
+	lowering.result.Functions[index] = function
 	if !function.Closure && declaration.Kind != ast.KindConstructor && declaration.Name() != nil {
-		l.closureRecords = append(l.closureRecords, closureRecord{
-			proven:   l.concrete(l.checker.GetTypeAtLocation(declaration.Name())),
+		lowering.closureRecords = append(lowering.closureRecords, closureRecord{
+			proven:   lowering.concrete(lowering.checker.GetTypeAtLocation(declaration.Name())),
 			function: index,
 			node:     declaration,
 		})
 	}
 	// A declared constructor also supplies the public allocator's signature.
 	// The initializer's receiver is internal and the class result is not data.
-	if declaration.Kind == ast.KindConstructor && l.instance != nil && l.instance.constructor >= 0 {
-		allocator := &l.result.Functions[l.instance.constructor]
+	if declaration.Kind == ast.KindConstructor && lowering.instance != nil && lowering.instance.constructor >= 0 {
+		allocator := &lowering.result.Functions[lowering.instance.constructor]
 		allocator.Position = function.Position
 		allocator.Boundary.Parameters = append([]ir.BoundaryParameter(nil), function.Boundary.Parameters...)
 	}
-	if l.signed == nil {
-		l.signed = map[int]signed{}
+	if lowering.signed == nil {
+		lowering.signed = map[int]signed{}
 	}
-	l.signed[index] = signed{this: this, defaults: defaults, patterns: patterns}
+	lowering.signed[index] = signed{this: this, defaults: defaults, patterns: patterns}
 	return nil
 }
 
 // lowerBody lowers the body of the function at index, whose signature is written.
-func (l *lowering) lowerBody(
+func (lowering *lowering) lowerBody(
 	index int,
 	declaration *ast.Node,
 	this int,
@@ -310,31 +321,31 @@ func (l *lowering) lowerBody(
 	patterns []patterned,
 ) error {
 	if declaration.Body() == nil {
-		return l.notYet(declaration, "a function without a body")
+		return lowering.notYet(declaration, "a function without a body")
 	}
-	if l.functionNodes == nil {
-		l.functionNodes = map[int]*ast.Node{}
+	if lowering.functionNodes == nil {
+		lowering.functionNodes = map[int]*ast.Node{}
 	}
-	l.functionNodes[index] = declaration
+	lowering.functionNodes[index] = declaration
 	// Every call in a body is judged when the body is lowered, under its own mapper (predicates_branded.go).
-	if judgeBrandedCallsError := l.judgeBrandedCalls(declaration); judgeBrandedCallsError != nil {
+	if judgeBrandedCallsError := lowering.judgeBrandedCalls(declaration); judgeBrandedCallsError != nil {
 		return judgeBrandedCallsError
 	}
-	function := l.result.Functions[index]
+	function := lowering.result.Functions[index]
 	if !function.Closure {
 		// A function declaration, a method or a constructor has its body lowered where a use of it is first met,
 		// a closure's body included, but it's declared at the top level and captures nothing from
 		// the closures being lowered there: a local of its own read in a closure of its own must not
 		// land in their environments.
-		outerClosures := l.closures
-		l.closures = nil
-		defer func() { l.closures = outerClosures }()
+		outerClosures := lowering.closures
+		lowering.closures = nil
+		defer func() { lowering.closures = outerClosures }()
 	}
 	body := declaration.Body()
-	outer, outerThis, outerIndex := l.function, l.this, l.functionIndex
-	l.function, l.functionIndex = &function, index
+	outer, outerThis, outerIndex := lowering.function, lowering.this, lowering.functionIndex
+	lowering.function, lowering.functionIndex = &function, index
 	if this >= 0 {
-		l.this = this
+		lowering.this = this
 	}
 	// Defaults run before the body, in order, after a constructor's fields, as JavaScript runs them.
 	var prologue, lowered []ir.Statement
@@ -350,86 +361,92 @@ func (l *lowering) lowerBody(
 			(defaultIndex == len(defaults) || patterns[patternIndex].incoming < defaults[defaultIndex].incoming) {
 			parameter := patterns[patternIndex]
 			patternIndex++
-			patternType := l.checker.GetTypeAtLocation(parameter.parameter)
-			heldAs, _ := l.representation(patternType)
+			patternType := lowering.checker.GetTypeAtLocation(parameter.parameter)
+			heldAs, _ := lowering.representation(patternType)
 			var destructured []ir.Statement
-			destructured, err = l.destructureFrom(parameter.pattern, patternType, heldAs, parameter.incoming)
+			destructured, err = lowering.destructureFrom(parameter.pattern, patternType, heldAs, parameter.incoming)
 			prologue = append(prologue, destructured...)
 			continue
 		}
 		parameter := defaults[defaultIndex]
 		defaultIndex++
 		if declaration.Kind == ast.KindConstructor {
-			if err = l.parameterPropertyDefault(declaration, parameter.initializer); err != nil {
+			if err = lowering.parameterPropertyDefault(declaration, parameter.initializer); err != nil {
 				break
 			}
 		}
-		if l.uninitializedInitializer(parameter.initializer) {
-			l.result.Locals[parameter.local].Uninitialized = true
-			incoming := ir.Read{Local: parameter.incoming, Of: l.result.Locals[parameter.incoming].Type}
+		if lowering.uninitializedInitializer(parameter.initializer) {
+			lowering.result.Locals[parameter.local].Uninitialized = true
+			incoming := ir.Read{Local: parameter.incoming, Of: lowering.result.Locals[parameter.incoming].Type}
 			prologue = append(prologue, ir.Declare{
-				Local:         parameter.local,
-				Value:         l.placeholderInitialValue(parameter.initializer, l.result.Locals[parameter.local].Type),
+				Local: parameter.local,
+				Value: lowering.placeholderInitialValue(
+					parameter.initializer,
+					lowering.result.Locals[parameter.local].Type,
+				),
 				Uninitialized: true,
 			}, ir.If{
 				Condition: ir.Unary{Operator: ir.Not, Operand: ir.IsUndefined{Value: incoming}},
 				Then: []ir.Statement{
-					ir.Assign{Local: parameter.local, Value: fit(incoming, l.result.Locals[parameter.local].Type)},
+					ir.Assign{
+						Local: parameter.local,
+						Value: fit(incoming, lowering.result.Locals[parameter.local].Type),
+					},
 				},
 			})
 			continue
 		}
 
 		var fallback ir.Expression
-		if fallback, err = l.expression(parameter.initializer); err != nil {
+		if fallback, err = lowering.expression(parameter.initializer); err != nil {
 			break
 		}
-		of := l.result.Locals[parameter.local].Type
+		of := lowering.result.Locals[parameter.local].Type
 		if fallback = fit(fallback, of); fallback.Type() != of {
-			err = l.notYet(parameter.initializer, "a default of another type than its parameter")
+			err = lowering.notYet(parameter.initializer, "a default of another type than its parameter")
 			break
 		}
-		incoming := ir.Read{Local: parameter.incoming, Of: l.result.Locals[parameter.incoming].Type}
+		incoming := ir.Read{Local: parameter.incoming, Of: lowering.result.Locals[parameter.incoming].Type}
 		prologue = append(
 			prologue,
 			ir.Declare{Local: parameter.local, Value: ir.Coalesce{Value: incoming, Fallback: fallback, Of: of}},
 		)
 	}
 	if err != nil {
-		l.function, l.this, l.functionIndex = outer, outerThis, outerIndex
+		lowering.function, lowering.this, lowering.functionIndex = outer, outerThis, outerIndex
 		return err
 	}
-	if declaration.Kind == ast.KindConstructor && l.instance.base == nil {
-		assigned, assignError := l.parameterPropertyStores(declaration.Parent, this)
+	if declaration.Kind == ast.KindConstructor && lowering.instance.base == nil {
+		assigned, assignError := lowering.parameterPropertyStores(declaration.Parent, this)
 		if assignError != nil {
-			l.function, l.this, l.functionIndex = outer, outerThis, outerIndex
+			lowering.function, lowering.this, lowering.functionIndex = outer, outerThis, outerIndex
 			return assignError
 		}
 		prologue = append(prologue, assigned...)
 	}
 	if body.Kind == ast.KindBlock {
-		lowered, err = l.statements(body.AsBlock().Statements.Nodes)
-	} else if function.BodyReturns() == 0 || l.isPanicCall(body) {
+		lowered, err = lowering.statements(body.AsBlock().Statements.Nodes)
+	} else if function.BodyReturns() == 0 || lowering.isPanicCall(body) {
 		// An arrow function's expression body, when it returns nothing or never returns (() =>
 		// panic('why')), is a statement.
-		lowered, err = l.expressionStatement(body)
+		lowered, err = lowering.expressionStatement(body)
 	} else {
 		// Otherwise its value is what it returns.
 		var value ir.Expression
-		if value, err = l.expression(body); err == nil {
-			if err = l.checkAsyncReturn(body, value); err == nil {
-				lowered, err = l.checkedPredicateReturn(declaration, body, fit(value, function.BodyReturns()))
+		if value, err = lowering.expression(body); err == nil {
+			if err = lowering.checkAsyncReturn(body, value); err == nil {
+				lowered, err = lowering.checkedPredicateReturn(declaration, body, fit(value, function.BodyReturns()))
 			}
 		}
 	}
-	l.function, l.this, l.functionIndex = outer, outerThis, outerIndex
+	lowering.function, lowering.this, lowering.functionIndex = outer, outerThis, outerIndex
 	if err != nil {
 		return err
 	}
 	if body.Kind == ast.KindBlock &&
 		declaration.Kind != ast.KindConstructor &&
 		declaration.Flags&ast.NodeFlagsHasImplicitReturn != 0 &&
-		l.permitsImplicitReturn(declaration) {
+		lowering.permitsImplicitReturn(declaration) {
 		// The checker permits an end that is reachable only when the result can be undefined
 		// (or void). Put that exit in the IR so every backend and ownership pass sees it.
 		returned := ir.Return{}
@@ -440,24 +457,24 @@ func (l *lowering) lowerBody(
 	}
 	// The environment may have grown while the body was lowered (captures are found as they're
 	// read), so it's taken from what's recorded, not from this copy.
-	function.Environment = l.result.Functions[index].Environment
-	function.ForwardedNestedParent = l.result.Functions[index].ForwardedNestedParent
-	function.ReferenceParents = l.result.Functions[index].ReferenceParents
+	function.Environment = lowering.result.Functions[index].Environment
+	function.ForwardedNestedParent = lowering.result.Functions[index].ForwardedNestedParent
+	function.ReferenceParents = lowering.result.Functions[index].ReferenceParents
 	function.Body = append(function.Body, prologue...)
 	function.Body = append(function.Body, lowered...)
-	l.finishNestedEnvironment(&function, index)
-	l.result.Functions[index] = function
-	return l.checkGeneratorBody(index, declaration)
+	lowering.finishNestedEnvironment(&function, index)
+	lowering.result.Functions[index] = function
+	return lowering.checkGeneratorBody(index, declaration)
 }
 
 // Descriptor construction must not intern boundary-only literals into codegen's
 // string table. The same builder runs against a private table and reports no errors.
-func (l *lowering) boundarySchema(node *ast.Node, proven *checker.Type) *ir.JSONDecodeSchema {
-	schema, jsonDecodeSchemaError := l.jsonDecodeSchema(
+func (lowering *lowering) boundarySchema(node *ast.Node, proven *checker.Type) *ir.JSONDecodeSchema {
+	schema, jsonDecodeSchemaError := lowering.jsonDecodeSchema(
 		node,
 		proven,
 		jsonSchemaBoundary,
-		l.result.BoundaryStrings.Intern,
+		lowering.result.BoundaryStrings.Intern,
 	)
 	if jsonDecodeSchemaError != nil {
 		return nil
@@ -467,10 +484,10 @@ func (l *lowering) boundarySchema(node *ast.Node, proven *checker.Type) *ir.JSON
 
 // The binder marks a syntactic end even for a switch the checker proved exhaustive. Only the
 // checker's result type can authorize returning undefined at that end.
-func (l *lowering) permitsImplicitReturn(declaration *ast.Node) bool {
-	result := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(declaration))
-	if l.isLibraryType(result, "Promise") {
-		arguments := l.checker.GetTypeArguments(result)
+func (lowering *lowering) permitsImplicitReturn(declaration *ast.Node) bool {
+	result := lowering.checker.GetReturnTypeOfSignature(lowering.checker.GetSignatureFromDeclaration(declaration))
+	if lowering.isLibraryType(result, "Promise") {
+		arguments := lowering.checker.GetTypeArguments(result)
 		if len(arguments) == 1 {
 			result = arguments[0]
 		}
@@ -482,5 +499,5 @@ func (l *lowering) permitsImplicitReturn(declaration *ast.Node) bool {
 			}
 		}
 	}
-	return result.Flags()&checker.TypeFlagsVoid != 0 || l.includesUndefined(result)
+	return result.Flags()&checker.TypeFlagsVoid != 0 || lowering.includesUndefined(result)
 }

@@ -496,11 +496,11 @@ type latentProbeSourceImporter struct {
 	root string
 }
 
-func (i latentProbeSourceImporter) Import(name string) (*types.Package, error) {
+func (sourceImporter latentProbeSourceImporter) Import(name string) (*types.Package, error) {
 	if name == "github.com/system-inc/adamic/internal/ir" {
-		return i.Importer.(types.ImporterFrom).ImportFrom("./internal/ir", i.root, 0)
+		return sourceImporter.Importer.(types.ImporterFrom).ImportFrom("./internal/ir", sourceImporter.root, 0)
 	}
-	return i.Importer.Import(name)
+	return sourceImporter.Importer.Import(name)
 }
 
 func latentProbeFunction(file *ast.File, name string) *ast.FuncDecl {

@@ -19,92 +19,96 @@ var viewArrayContractHook viewContractHook
 // Current callable obligations are recorded lazily before strict construction.
 var viewCallableContractHook viewContractHook
 
-func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.ViewContractID, error) {
-	if l.result.ViewContractTypes == nil {
-		l.result.ViewContractTypes = map[int]ir.ViewContractID{}
+func (lowering *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.ViewContractID, error) {
+	if lowering.result.ViewContractTypes == nil {
+		lowering.result.ViewContractTypes = map[int]ir.ViewContractID{}
 	}
-	if id := l.result.ViewContractTypes[int(target.Id())]; id != 0 {
+	if id := lowering.result.ViewContractTypes[int(target.Id())]; id != 0 {
 		return id, nil
 	}
-	if target.Flags()&checker.TypeFlagsUndefined != 0 || l.phantomUndefined(target) {
-		id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
-		l.result.ViewContracts = append(
-			l.result.ViewContracts,
+	if target.Flags()&checker.TypeFlagsUndefined != 0 || lowering.phantomUndefined(target) {
+		id := ir.ViewContractID(len(lowering.result.ViewContracts) + 1)
+		lowering.result.ViewContracts = append(
+			lowering.result.ViewContracts,
 			ir.ViewContract{Kind: ir.ViewUndefined, Name: "undefined", Undefined: true, Of: ir.Object},
 		)
-		l.result.ViewContractTypes[int(target.Id())] = id
+		lowering.result.ViewContractTypes[int(target.Id())] = id
 		return id, nil
 	}
 	if target.Flags()&checker.TypeFlagsNull != 0 {
-		id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
-		l.result.ViewContracts = append(
-			l.result.ViewContracts,
+		id := ir.ViewContractID(len(lowering.result.ViewContracts) + 1)
+		lowering.result.ViewContracts = append(
+			lowering.result.ViewContracts,
 			ir.ViewContract{Kind: ir.ViewNull, Name: "null", Null: true, Of: ir.Object},
 		)
-		l.result.ViewContractTypes[int(target.Id())] = id
+		lowering.result.ViewContractTypes[int(target.Id())] = id
 		return id, nil
 	}
-	build := func(child *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, child) }
+	build := func(child *checker.Type) (ir.ViewContractID, error) { return lowering.viewContract(node, child) }
 	// Retain the strict adapter boundary for the array lane on compiler/views-v4.
-	if target.Flags()&checker.TypeFlagsObject != 0 && (l.isArrayType(target) || checker.IsTupleType(target)) {
+	if target.Flags()&checker.TypeFlagsObject != 0 && (lowering.isArrayType(target) || checker.IsTupleType(target)) {
 		if viewArrayContractHook == nil {
-			return 0, l.notYet(node, "an array checked-view contract")
+			return 0, lowering.notYet(node, "an array checked-view contract")
 		}
-		return viewArrayContractHook(l, node, target, build)
+		return viewArrayContractHook(lowering, node, target, build)
 	}
-	if l.callableViewContract(target) {
+	if lowering.callableViewContract(target) {
 		if viewCallableContractHook == nil {
 			return 0, &Refused{
-				Where: l.program.Where(node),
+				Where: lowering.program.Where(node),
 				What:  "a checked view with a callable contract",
 				Fix:   "prove the callable body rather than asserting its signature",
 			}
 		}
-		return viewCallableContractHook(l, node, target, build)
+		return viewCallableContractHook(lowering, node, target, build)
 	}
 
 	represented := target
-	if base := l.phantomBase(target); base != nil {
+	if base := lowering.phantomBase(target); base != nil {
 		represented = base
 	}
-	of, known := l.representation(represented)
+	of, known := lowering.representation(represented)
 	// representation() knows an object intersection only when every field is a scalar
 	// (objectIntersection). A plain one is an object whatever its fields hold, so its contract takes
 	// that from its members, each held as an object, and its fields from its refined properties.
-	if !known && represented == target && l.plainObjectIntersection(target) {
+	if !known && represented == target && lowering.plainObjectIntersection(target) {
 		of, known = ir.Object, true
 		for _, member := range target.Types() {
-			if held, isKnown := l.representation(member); !isKnown || held != ir.Object {
+			if held, isKnown := lowering.representation(member); !isKnown || held != ir.Object {
 				known = false
 			}
 		}
 	}
 	if !known {
-		return 0, l.notYet(node, "checked-view representation for "+l.checker.TypeToString(target))
+		return 0, lowering.notYet(node, "checked-view representation for "+lowering.checker.TypeToString(target))
 	}
-	contract := ir.ViewContract{Undefined: l.includesUndefined(target), Name: l.checker.TypeToString(target), Of: of}
+	contract := ir.ViewContract{
+		Undefined: lowering.includesUndefined(target),
+		Name:      lowering.checker.TypeToString(target),
+		Of:        of,
+	}
 	if isClassInstance(target) {
-		if declaration := l.classNodeFor(target); declaration != nil {
-			contract.Nominal = l.program.Where(declaration) + ":" + contract.Name
-			contract.NominalBases = l.viewNominalBases(target, map[*checker.Type]bool{})
+		if declaration := lowering.classNodeFor(target); declaration != nil {
+			contract.Nominal = lowering.program.Where(declaration) + ":" + contract.Name
+			contract.NominalBases = lowering.viewNominalBases(target, map[*checker.Type]bool{})
 		}
 	}
-	if target.Flags()&checker.TypeFlagsUndefined != 0 || l.phantomUndefined(target) {
+	if target.Flags()&checker.TypeFlagsUndefined != 0 || lowering.phantomUndefined(target) {
 		contract.Kind = ir.ViewUndefined
 	} else if interfaceScalar(represented) && of != ir.Union {
 		contract.Kind = ir.ViewScalar
-		contract.Allowed = l.viewContractLiterals(represented)
+		contract.Allowed = lowering.viewContractLiterals(represented)
 	} else {
 		contract.Kind = ir.ViewObject
 	}
 
-	id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
-	l.result.ViewContracts = append(l.result.ViewContracts, contract)
-	l.result.ViewContractTypes[int(target.Id())] = id
+	id := ir.ViewContractID(len(lowering.result.ViewContracts) + 1)
+	lowering.result.ViewContracts = append(lowering.result.ViewContracts, contract)
+	lowering.result.ViewContractTypes[int(target.Id())] = id
 
 	if contract.Kind == ir.ViewObject || (contract.Kind == ir.ViewUnion && of == ir.Object) {
-		for _, property := range l.checker.GetPropertiesOfType(target) {
-			child, buildError := build(l.checker.GetTypeOfSymbol(property))
+		for _, property := range lowering.checker.GetPropertiesOfType(target) {
+			child, buildError := build(lowering.checker.GetTypeOfSymbol(property))
 			if buildError != nil {
 				return 0, buildError
 			}
@@ -113,18 +117,18 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 				Name:     property.Name,
 				Contract: child,
 				Optional: property.Flags&ast.SymbolFlagsOptional != 0,
-				Readonly: l.checker.IsReadonlySymbol(property),
+				Readonly: lowering.checker.IsReadonlySymbol(property),
 			})
 		}
 	}
 
-	l.result.ViewContracts[int(id)-1] = contract
+	lowering.result.ViewContracts[int(id)-1] = contract
 	return id, nil
 }
 
-func (l *lowering) viewContractLiterals(target *checker.Type) []ir.ViewLiteral {
+func (lowering *lowering) viewContractLiterals(target *checker.Type) []ir.ViewLiteral {
 	// A whole numeric enum admits numbers outside its declared members.
-	if l.openNumericEnumType(target) {
+	if lowering.openNumericEnumType(target) {
 		return nil
 	}
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
@@ -133,7 +137,7 @@ func (l *lowering) viewContractLiterals(target *checker.Type) []ir.ViewLiteral {
 			if member.Flags()&checker.TypeFlagsUndefined != 0 {
 				continue
 			}
-			values := l.viewContractLiterals(member)
+			values := lowering.viewContractLiterals(member)
 			if len(values) == 0 {
 				return nil
 			}
@@ -154,21 +158,21 @@ func (l *lowering) viewContractLiterals(target *checker.Type) []ir.ViewLiteral {
 			return []ir.ViewLiteral{{Of: ir.Number, Number: value.Float()}}
 		}
 	case flags&checker.TypeFlagsBooleanLiteral != 0:
-		return []ir.ViewLiteral{{Of: ir.Boolean, Boolean: l.checker.TypeToString(target) == "true"}}
+		return []ir.ViewLiteral{{Of: ir.Boolean, Boolean: lowering.checker.TypeToString(target) == "true"}}
 	}
 	return nil
 }
 
-func (l *lowering) viewNominalBases(target *checker.Type, seen map[*checker.Type]bool) []string {
+func (lowering *lowering) viewNominalBases(target *checker.Type, seen map[*checker.Type]bool) []string {
 	if seen[target] {
 		return nil
 	}
 	seen[target] = true
 	var names []string
-	for _, base := range l.classBases(target) {
-		if declaration := l.classNodeFor(base); declaration != nil {
-			names = append(names, l.program.Where(declaration)+":"+l.checker.TypeToString(base))
-			names = append(names, l.viewNominalBases(base, seen)...)
+	for _, base := range lowering.classBases(target) {
+		if declaration := lowering.classNodeFor(base); declaration != nil {
+			names = append(names, lowering.program.Where(declaration)+":"+lowering.checker.TypeToString(base))
+			names = append(names, lowering.viewNominalBases(base, seen)...)
 		}
 	}
 	return names

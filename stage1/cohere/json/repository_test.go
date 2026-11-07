@@ -231,9 +231,9 @@ func newRepositoryFixture(test *testing.T) repositoryFixture {
 	return fixture
 }
 
-func (f repositoryFixture) cases(test *testing.T) []textCase {
+func (fixture repositoryFixture) cases(test *testing.T) []textCase {
 	test.Helper()
-	cases, fileCorpusError := fileCorpus(f.root)
+	cases, fileCorpusError := fileCorpus(fixture.root)
 	if fileCorpusError != nil {
 		test.Fatal(fileCorpusError)
 	}

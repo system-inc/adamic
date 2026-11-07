@@ -9,8 +9,8 @@ import (
 
 // An ESM namespace qualification denotes the export's live binding, even through
 // re-export barrels. A structural object with the same type is not that binding.
-func (l *lowering) moduleNamespace(node *ast.Node) bool {
-	symbol := l.symbol(ast.SkipParentheses(node))
+func (lowering *lowering) moduleNamespace(node *ast.Node) bool {
+	symbol := lowering.symbol(ast.SkipParentheses(node))
 	if symbol == nil {
 		return false
 	}
@@ -24,28 +24,28 @@ func (l *lowering) moduleNamespace(node *ast.Node) bool {
 	return false
 }
 
-func (l *lowering) moduleNamespaceRefusal(node *ast.Node) error {
-	if l.namespaceValueNode(node) && l.moduleNamespace(node) {
-		view, namespaceEnumViewOfError := l.namespaceEnumViewOf(node)
+func (lowering *lowering) moduleNamespaceRefusal(node *ast.Node) error {
+	if lowering.namespaceValueNode(node) && lowering.moduleNamespace(node) {
+		view, namespaceEnumViewOfError := lowering.namespaceEnumViewOf(node)
 		if namespaceEnumViewOfError != nil {
 			return namespaceEnumViewOfError
 		}
 		parent := node.Parent
 		if view == nil &&
 			(parent == nil || parent.Kind != ast.KindPropertyAccessExpression || parent.Expression() != node) {
-			return l.notYet(node, "an ESM namespace object used as a value; use qualified live bindings")
+			return lowering.notYet(node, "an ESM namespace object used as a value; use qualified live bindings")
 		}
 	}
-	if node.Kind != ast.KindPropertyAccessExpression || !l.moduleNamespace(node.Expression()) {
+	if node.Kind != ast.KindPropertyAccessExpression || !lowering.moduleNamespace(node.Expression()) {
 		return nil
 	}
-	symbol := l.symbol(node)
+	symbol := lowering.symbol(node)
 	if symbol == nil {
 		return nil
 	}
 	for _, declaration := range symbol.Declarations {
 		if ast.IsFunctionLike(declaration) && namespaceOwnThis(declaration) {
-			return l.notYet(
+			return lowering.notYet(
 				node,
 				"an ESM namespace function observing its receiver; the module object is not represented",
 			)
@@ -65,7 +65,7 @@ func (l *lowering) moduleNamespaceRefusal(node *ast.Node) error {
 //
 // Such a read is the enum's live binding, the same one ns.K reads. Every other use of the namespace
 // object stays as it was.
-func (l *lowering) namespaceEnumView(node *ast.Node) (*ast.Node, error) {
+func (lowering *lowering) namespaceEnumView(node *ast.Node) (*ast.Node, error) {
 	if node.Kind != ast.KindPropertyAccessExpression ||
 		node.AsPropertyAccessExpression().QuestionDotToken != nil ||
 		node.Flags&ast.NodeFlagsOptionalChain != 0 {
@@ -76,19 +76,19 @@ func (l *lowering) namespaceEnumView(node *ast.Node) (*ast.Node, error) {
 		return nil, nil
 	}
 	namespace := ast.SkipParentheses(cast.AsAsExpression().Expression)
-	if !ast.IsIdentifier(namespace) || !l.moduleNamespace(namespace) {
+	if !ast.IsIdentifier(namespace) || !lowering.moduleNamespace(namespace) {
 		return nil, nil
 	}
 	name := node.Name().Text()
-	viewed := l.checker.GetTypeAtLocation(cast)
-	properties := l.checker.GetPropertiesOfType(viewed)
+	viewed := lowering.checker.GetTypeAtLocation(cast)
+	properties := lowering.checker.GetPropertiesOfType(viewed)
 	if len(properties) != 1 ||
 		properties[0].Name != name ||
-		!l.checker.IsReadonlySymbol(properties[0]) ||
-		len(l.checker.GetIndexInfosOfType(viewed)) != 0 {
+		!lowering.checker.IsReadonlySymbol(properties[0]) ||
+		len(lowering.checker.GetIndexInfosOfType(viewed)) != 0 {
 		return nil, nil
 	}
-	target := l.namespaceExport(namespace, name)
+	target := lowering.namespaceExport(namespace, name)
 	if target == nil ||
 		target.Flags&ast.SymbolFlagsEnum == 0 ||
 		target.ValueDeclaration == nil ||
@@ -97,28 +97,28 @@ func (l *lowering) namespaceEnumView(node *ast.Node) (*ast.Node, error) {
 		return nil, nil
 	}
 	declaration := target.ValueDeclaration
-	if built, enumObjectBuiltError := l.enumObjectBuilt(declaration); enumObjectBuiltError != nil || !built {
+	if built, enumObjectBuiltError := lowering.enumObjectBuilt(declaration); enumObjectBuiltError != nil || !built {
 		return nil, enumObjectBuiltError
 	}
-	view := l.checker.GetTypeOfSymbol(properties[0])
-	infos := l.checker.GetIndexInfosOfType(view)
+	view := lowering.checker.GetTypeOfSymbol(properties[0])
+	infos := lowering.checker.GetIndexInfosOfType(view)
 	if len(infos) != 1 ||
 		infos[0].KeyType().Flags() != checker.TypeFlagsString ||
 		!infos[0].IsReadonly() ||
-		len(l.checker.GetPropertiesOfType(view)) != 0 {
+		len(lowering.checker.GetPropertiesOfType(view)) != 0 {
 		return nil, nil
 	}
 	// An enum whose fields don't lower stops at its declaration, so the cast stays as it was.
-	fields, enumFieldsError := l.enumFields(declaration)
+	fields, enumFieldsError := lowering.enumFields(declaration)
 	if enumFieldsError != nil {
 		return nil, nil
 	}
 	for _, field := range fields {
-		held := l.checker.GetStringType()
+		held := lowering.checker.GetStringType()
 		if field.Value.Type() == ir.Number {
-			held = l.checker.GetNumberType()
+			held = lowering.checker.GetNumberType()
 		}
-		if !l.checker.IsTypeAssignableTo(held, infos[0].ValueType()) {
+		if !lowering.checker.IsTypeAssignableTo(held, infos[0].ValueType()) {
 			return nil, nil
 		}
 	}
@@ -126,17 +126,17 @@ func (l *lowering) namespaceEnumView(node *ast.Node) (*ast.Node, error) {
 }
 
 // namespaceEnumViewOf is the enum namespaceEnumView admits where node is the namespace it casts, or nil.
-func (l *lowering) namespaceEnumViewOf(node *ast.Node) (*ast.Node, error) {
-	access := l.namespaceCastAccess(node)
+func (lowering *lowering) namespaceEnumViewOf(node *ast.Node) (*ast.Node, error) {
+	access := lowering.namespaceCastAccess(node)
 	if access == nil {
 		return nil, nil
 	}
-	return l.namespaceEnumView(access)
+	return lowering.namespaceEnumView(access)
 }
 
 // namespaceCastAccess is (node as T).K, the property read of a cast whose operand is node, or nil. The
 // operand may be parenthesized, ((ts) as T).K, and node either the name or its parentheses.
-func (l *lowering) namespaceCastAccess(node *ast.Node) *ast.Node {
+func (lowering *lowering) namespaceCastAccess(node *ast.Node) *ast.Node {
 	cast := node.Parent
 	for cast != nil && cast.Kind == ast.KindParenthesizedExpression {
 		cast = cast.Parent
@@ -159,36 +159,36 @@ func (l *lowering) namespaceCastAccess(node *ast.Node) *ast.Node {
 }
 
 // qualifiedNamespaceRead reports whether node, a namespace, is read only for one export: ns.K.
-func (l *lowering) qualifiedNamespaceRead(node *ast.Node) bool {
+func (lowering *lowering) qualifiedNamespaceRead(node *ast.Node) bool {
 	parent := node.Parent
 	return parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.Expression() == node
 }
 
 // namespaceExport is the value a namespace's export name resolves to, through export * and aliases,
 // as recordExports resolves them, or nil. A type-only export has no value.
-func (l *lowering) namespaceExport(namespace *ast.Node, name string) *ast.Symbol {
-	for _, exported := range l.namespaceExportSymbols(namespace) {
+func (lowering *lowering) namespaceExport(namespace *ast.Node, name string) *ast.Symbol {
+	for _, exported := range lowering.namespaceExportSymbols(namespace) {
 		if exported.Name == name {
-			return l.resolvedExport(exported)
+			return lowering.resolvedExport(exported)
 		}
 	}
 	return nil
 }
 
-func (l *lowering) namespaceExportSymbols(namespace *ast.Node) []*ast.Symbol {
-	module := l.symbol(namespace)
+func (lowering *lowering) namespaceExportSymbols(namespace *ast.Node) []*ast.Symbol {
+	module := lowering.symbol(namespace)
 	if module == nil {
 		return nil
 	}
-	return l.checker.GetExportsOfModule(module)
+	return lowering.checker.GetExportsOfModule(module)
 }
 
-func (l *lowering) resolvedExport(exported *ast.Symbol) *ast.Symbol {
-	if l.checker.GetTypeOnlyAliasDeclaration(exported) != nil {
+func (lowering *lowering) resolvedExport(exported *ast.Symbol) *ast.Symbol {
+	if lowering.checker.GetTypeOnlyAliasDeclaration(exported) != nil {
 		return nil
 	}
 	if exported.Flags&ast.SymbolFlagsAlias != 0 {
-		exported = l.checker.GetAliasedSymbol(exported)
+		exported = lowering.checker.GetAliasedSymbol(exported)
 	}
-	return l.checker.GetExportSymbolOfSymbol(exported)
+	return lowering.checker.GetExportSymbolOfSymbol(exported)
 }

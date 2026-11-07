@@ -25,20 +25,20 @@ type fakeStore struct {
 	broken  string
 }
 
-func (s *fakeStore) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
-	s.mutex.Lock()
-	defer s.mutex.Unlock()
+func (store *fakeStore) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
+	store.mutex.Lock()
+	defer store.mutex.Unlock()
 	if request.Method != http.MethodGet {
-		s.writes = append(s.writes, request.Method+" "+request.URL.Path)
+		store.writes = append(store.writes, request.Method+" "+request.URL.Path)
 		http.Error(writer, "read only", http.StatusMethodNotAllowed)
 		return
 	}
-	s.reads = append(s.reads, request.URL.Path)
-	if request.URL.Path == s.broken {
+	store.reads = append(store.reads, request.URL.Path)
+	if request.URL.Path == store.broken {
 		http.Error(writer, "upstream timeout", http.StatusBadGateway)
 		return
 	}
-	content, ok := s.objects[request.URL.Path]
+	content, ok := store.objects[request.URL.Path]
 	if !ok {
 		http.NotFound(writer, request)
 		return
@@ -46,34 +46,34 @@ func (s *fakeStore) ServeHTTP(writer http.ResponseWriter, request *http.Request)
 	writer.Write(content)
 }
 
-func (s *fakeStore) blob(content []byte) string {
+func (store *fakeStore) blob(content []byte) string {
 	sum := sha256.Sum256(content)
 	hash := hex.EncodeToString(sum[:])
-	s.objects["/blobs/"+hash] = content
+	store.objects["/blobs/"+hash] = content
 	return hash
 }
 
 // put stores a product for key as Loom's store holds one, and returns its manifest.
-func (s *fakeStore) put(test *testing.T, key string, files map[string]string) manifest {
+func (store *fakeStore) put(test *testing.T, key string, files map[string]string) manifest {
 	test.Helper()
 	product := manifest{Version: 1, Key: key, Name: "buildcache test"}
 	for name, content := range files {
 		product.Files = append(
 			product.Files,
-			manifestFile{Path: name, SHA256: s.blob([]byte(content)), Size: int64(len(content)), Mode: 0o644},
+			manifestFile{Path: name, SHA256: store.blob([]byte(content)), Size: int64(len(content)), Mode: 0o644},
 		)
 	}
-	s.ref(test, key, product)
+	store.ref(test, key, product)
 	return product
 }
 
-func (s *fakeStore) ref(test *testing.T, key string, product manifest) {
+func (store *fakeStore) ref(test *testing.T, key string, product manifest) {
 	test.Helper()
 	encoded, encodeError := json.Marshal(product)
 	if encodeError != nil {
 		test.Fatal(encodeError)
 	}
-	s.objects["/refs/build/"+key] = []byte(s.blob(encoded) + "\n")
+	store.objects["/refs/build/"+key] = []byte(store.blob(encoded) + "\n")
 }
 
 func shared(test *testing.T) (*fakeStore, string) {

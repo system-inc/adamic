@@ -8,13 +8,15 @@ import (
 
 // Admit one concrete object representation plus both nullish tags. Collections,
 // closures, weak handles and erased structural primitives need their own proofs.
-func (l *lowering) nullableObjectUnion(proven *checker.Type) bool {
-	proven = l.concrete(proven)
-	if proven.Flags()&checker.TypeFlagsUnion == 0 || !l.includesNull(proven) || !l.includesUndefined(proven) {
+func (lowering *lowering) nullableObjectUnion(proven *checker.Type) bool {
+	proven = lowering.concrete(proven)
+	if proven.Flags()&checker.TypeFlagsUnion == 0 ||
+		!lowering.includesNull(proven) ||
+		!lowering.includesUndefined(proven) {
 		return false
 	}
-	present := l.checker.GetNonNullableType(proven)
-	held, known := l.representation(present)
+	present := lowering.checker.GetNonNullableType(proven)
+	held, known := lowering.representation(present)
 	return known && held == ir.Object && present.Flags()&checker.TypeFlagsObject != 0
 }
 
@@ -38,104 +40,126 @@ func unionObservation(node *ast.Node) bool {
 	return false
 }
 
-func (l *lowering) checkedNullableObject(node *ast.Node, read ir.Expression) ir.Expression {
-	observed := l.concrete(l.checker.GetTypeAtLocation(node))
-	narrowed, known := l.representation(observed)
-	contextual := l.slotType(node)
-	if contextual != nil && l.nullableObjectUnion(contextual) {
+func (lowering *lowering) checkedNullableObject(node *ast.Node, read ir.Expression) ir.Expression {
+	observed := lowering.concrete(lowering.checker.GetTypeAtLocation(node))
+	narrowed, known := lowering.representation(observed)
+	contextual := lowering.slotType(node)
+	if contextual != nil && lowering.nullableObjectUnion(contextual) {
 		return read
 	}
 	if !known || narrowed == ir.Union || unionObservation(node) {
 		return read
 	}
-	b := l.libraryArrayBuilder([]ir.Expression{read})
+	b := lowering.libraryArrayBuilder([]ir.Expression{read})
 	held := b.read(b.parameters[0])
 	null := ir.Expression(ir.IsNull{Value: held})
 	matches := ir.Expression(ir.Binary{Operator: ir.And,
-		Left:  ir.Binary{Operator: ir.Equal, Left: ir.TypeOf{Value: held}, Right: ir.StringConstant{Index: l.constant("object")}},
+		Left: ir.Binary{
+			Operator: ir.Equal,
+			Left:     ir.TypeOf{Value: held},
+			Right:    ir.StringConstant{Index: lowering.constant("object")},
+		},
 		Right: ir.Unary{Operator: ir.Not, Operand: null}})
-	if l.includesNull(observed) {
+	if lowering.includesNull(observed) {
 		matches = ir.Binary{Operator: ir.Or, Left: matches, Right: null}
 	}
-	if l.includesUndefined(observed) {
+	if lowering.includesUndefined(observed) {
 		matches = ir.Binary{Operator: ir.Or, Left: matches, Right: ir.IsUndefined{Value: held}}
 	}
 	message := "union member where the checker narrowed it away: a call since the narrowing put it back"
-	b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: matches}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
+	b.body = append(b.body, ir.If{
+		Condition: ir.Unary{Operator: ir.Not, Operand: matches},
+		Then:      []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: lowering.constant(message)}}},
+	})
 	result := ir.Expression(ir.Narrow{Value: held, To: ir.Object})
-	if l.includesNull(observed) {
+	if lowering.includesNull(observed) {
 		result = ir.Conditional{Condition: null, WhenTrue: ir.Null{Of: ir.Object}, WhenNot: result, Of: ir.Object}
 	}
 	call := b.finish("narrowed_nullable_object", result)
-	l.result.Functions[b.function].CheckedUnionNarrow = true
+	lowering.result.Functions[b.function].CheckedUnionNarrow = true
 	return call
 }
 
 // A legacy object-or-null pointer uses NULL for null. Normalize it when a
 // contextual tagged slot receives it, evaluating the source only once.
-func (l *lowering) nullableObjectBoundary(node *ast.Node, value ir.Expression) ir.Expression {
+func (lowering *lowering) nullableObjectBoundary(node *ast.Node, value ir.Expression) ir.Expression {
 	if value == nil || value.Type() != ir.Object {
 		return value
 	}
-	own := l.concrete(l.checker.GetTypeAtLocation(node))
-	if !l.includesNull(own) || l.includesUndefined(own) {
+	own := lowering.concrete(lowering.checker.GetTypeAtLocation(node))
+	if !lowering.includesNull(own) || lowering.includesUndefined(own) {
 		return value
 	}
-	contextual := l.slotType(node)
+	contextual := lowering.slotType(node)
 	if contextual == nil {
 		return value
 	}
-	target, known := l.representation(contextual)
+	target, known := lowering.representation(contextual)
 	if !known || target != ir.Union {
 		return value
 	}
 	if _, literal := value.(ir.Null); literal {
 		return value
 	}
-	b := l.libraryArrayBuilder([]ir.Expression{value})
+	b := lowering.libraryArrayBuilder([]ir.Expression{value})
 	held := b.read(b.parameters[0])
-	return b.finish("nullable_object_to_union", ir.Conditional{Condition: ir.IsNull{Value: held}, WhenTrue: ir.Box{Value: ir.Null{}}, WhenNot: ir.Box{Value: held}, Of: ir.Union})
+	return b.finish("nullable_object_to_union", ir.Conditional{
+		Condition: ir.IsNull{Value: held},
+		WhenTrue:  ir.Box{Value: ir.Null{}},
+		WhenNot:   ir.Box{Value: held},
+		Of:        ir.Union,
+	})
 }
 
 // Optional access skips both nullish tags; only an actual object reaches the read.
-func (l *lowering) optionalNullableObject(read ir.Expression) ir.Expression {
-	b := l.libraryArrayBuilder([]ir.Expression{read})
+func (lowering *lowering) optionalNullableObject(read ir.Expression) ir.Expression {
+	b := lowering.libraryArrayBuilder([]ir.Expression{read})
 	held := b.read(b.parameters[0])
 	absent := ir.Binary{Operator: ir.Or, Left: ir.IsNull{Value: held}, Right: ir.IsUndefined{Value: held}}
-	return b.finish("optional_nullable_object", ir.Conditional{Condition: absent, WhenTrue: ir.Undefined{Of: ir.Object}, WhenNot: ir.Narrow{Value: held, To: ir.Object}, Of: ir.Object})
+	return b.finish("optional_nullable_object", ir.Conditional{
+		Condition: absent,
+		WhenTrue:  ir.Undefined{Of: ir.Object},
+		WhenNot:   ir.Narrow{Value: held, To: ir.Object},
+		Of:        ir.Object,
+	})
 }
 
 // A value boundary can normalize a pointer. Shared fields, elements and callable
 // signatures cannot change their storage convention without a copy or adapter.
-func (l *lowering) nullableObjectSharedView(from, to *checker.Type, visited map[[2]*checker.Type]bool) bool {
-	from, to = l.present(l.concrete(from)), l.present(l.concrete(to))
+func (lowering *lowering) nullableObjectSharedView(from, to *checker.Type, visited map[[2]*checker.Type]bool) bool {
+	from, to = lowering.present(lowering.concrete(from)), lowering.present(lowering.concrete(to))
 	if from == nil || to == nil || from == to || visited[[2]*checker.Type{from, to}] {
 		return false
 	}
 	visited[[2]*checker.Type{from, to}] = true
 	shared := func(inside, viewed *checker.Type) bool {
-		inside, viewed = l.concrete(inside), l.concrete(viewed)
-		before, knownBefore := l.representation(inside)
-		after, knownAfter := l.representation(viewed)
+		inside, viewed = lowering.concrete(inside), lowering.concrete(viewed)
+		before, knownBefore := lowering.representation(inside)
+		after, knownAfter := lowering.representation(viewed)
 		if knownBefore && knownAfter && before != after &&
-			(before == ir.Object && l.includesNull(inside) && after == ir.Union ||
-				after == ir.Object && l.includesNull(viewed) && before == ir.Union) {
+			(before == ir.Object && lowering.includesNull(inside) && after == ir.Union ||
+				after == ir.Object && lowering.includesNull(viewed) && before == ir.Union) {
 			return true
 		}
-		return l.nullableObjectSharedView(inside, viewed, visited)
+		return lowering.nullableObjectSharedView(inside, viewed, visited)
 	}
-	a := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
-	b := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
+	a := lowering.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
+	b := lowering.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
 	if len(a) > 0 && len(b) > 0 {
 		for i, parameter := range a[0].Parameters() {
-			if i < len(b[0].Parameters()) && shared(l.checker.GetTypeOfSymbol(parameter), l.checker.GetTypeOfSymbol(b[0].Parameters()[i])) {
+			if i < len(b[0].Parameters()) && shared(
+				lowering.checker.GetTypeOfSymbol(parameter),
+				lowering.checker.GetTypeOfSymbol(b[0].Parameters()[i]),
+			) {
 				return true
 			}
 		}
-		return shared(l.checker.GetReturnTypeOfSignature(a[0]), l.checker.GetReturnTypeOfSignature(b[0]))
+		return shared(lowering.checker.GetReturnTypeOfSignature(a[0]), lowering.checker.GetReturnTypeOfSignature(b[0]))
 	}
-	if l.isArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
-		a, b := l.typeArguments(from), l.typeArguments(to)
+	if lowering.isArrayType(from) ||
+		checker.IsTupleType(from) ||
+		lowering.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
+		a, b := lowering.typeArguments(from), lowering.typeArguments(to)
 		for i := range a {
 			if i < len(b) && shared(a[i], b[i]) {
 				return true
@@ -143,11 +167,12 @@ func (l *lowering) nullableObjectSharedView(from, to *checker.Type, visited map[
 		}
 		return false
 	}
-	for _, field := range l.checker.GetPropertiesOfType(to) {
+	for _, field := range lowering.checker.GetPropertiesOfType(to) {
 		if field.Flags&ast.SymbolFlagsMethod != 0 {
 			continue
 		}
-		if previous := l.checker.GetPropertyOfType(from, field.Name); previous != nil && shared(l.checker.GetTypeOfSymbol(previous), l.checker.GetTypeOfSymbol(field)) {
+		if previous := lowering.checker.GetPropertyOfType(from, field.Name); previous != nil &&
+			shared(lowering.checker.GetTypeOfSymbol(previous), lowering.checker.GetTypeOfSymbol(field)) {
 			return true
 		}
 	}
@@ -167,13 +192,19 @@ func freshNullableObjectStorage(node *ast.Node) bool {
 	return true
 }
 
-func (l *lowering) nullableObjectViewHazard(node *ast.Node, contextual *checker.Type) bool {
+func (lowering *lowering) nullableObjectViewHazard(node *ast.Node, contextual *checker.Type) bool {
 	// RegExp replacement adapts the closure's actual signature instead of sharing
 	// lib.d.ts's callable ABI, including its declared return conversion.
-	if l.regexReplacementArgument(node) || l.nullableObjectAdaptedMapCallback(node, contextual) || l.nullableObjectAdaptedSearchCallback(node, contextual) {
+	if lowering.regexReplacementArgument(node) ||
+		lowering.nullableObjectAdaptedMapCallback(node, contextual) ||
+		lowering.nullableObjectAdaptedSearchCallback(node, contextual) {
 		return false
 	}
-	return !freshNullableObjectStorage(node) && l.nullableObjectSharedView(l.checker.GetTypeAtLocation(node), contextual, map[[2]*checker.Type]bool{})
+	return !freshNullableObjectStorage(node) && lowering.nullableObjectSharedView(
+		lowering.checker.GetTypeAtLocation(node),
+		contextual,
+		map[[2]*checker.Type]bool{},
+	)
 }
 
 // These existing typeof paths retain the lookup slot's presence until it is
@@ -195,8 +226,8 @@ func nullableObjectLookupTypeOf(node *ast.Node, value ir.Expression) bool {
 
 // Map adapts each supplied value to the callback's actual signature. It does not
 // adapt storage reachable through a parameter, or change the result protocol.
-func (l *lowering) nullableObjectAdaptedMapCallback(node *ast.Node, contextual *checker.Type) bool {
-	if !l.libraryMapArgument(node) {
+func (lowering *lowering) nullableObjectAdaptedMapCallback(node *ast.Node, contextual *checker.Type) bool {
+	if !lowering.libraryMapArgument(node) {
 		return false
 	}
 	outer := node
@@ -204,23 +235,30 @@ func (l *lowering) nullableObjectAdaptedMapCallback(node *ast.Node, contextual *
 		outer = outer.Parent
 	}
 	callee := ast.SkipParentheses(outer.Parent.AsCallExpression().Expression)
-	receiver := l.concrete(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))
-	if !l.isArrayType(receiver) && !checker.IsTupleType(receiver) {
+	receiver := lowering.concrete(lowering.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))
+	if !lowering.isArrayType(receiver) && !checker.IsTupleType(receiver) {
 		return false
 	}
-	actual := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node), checker.SignatureKindCall)
-	expected := l.checker.GetSignaturesOfType(contextual, checker.SignatureKindCall)
+	actual := lowering.checker.GetSignaturesOfType(lowering.checker.GetTypeAtLocation(node), checker.SignatureKindCall)
+	expected := lowering.checker.GetSignaturesOfType(contextual, checker.SignatureKindCall)
 	if len(actual) != 1 || len(expected) != 1 || len(actual[0].Parameters()) > len(expected[0].Parameters()) {
 		return false
 	}
-	if l.concrete(l.checker.GetReturnTypeOfSignature(actual[0])) != l.concrete(l.checker.GetReturnTypeOfSignature(expected[0])) {
+	if lowering.concrete(
+		lowering.checker.GetReturnTypeOfSignature(actual[0]),
+	) != lowering.concrete(lowering.checker.GetReturnTypeOfSignature(expected[0])) {
 		return false
 	}
 	for index, parameter := range actual[0].Parameters() {
-		if len(parameter.Declarations) > 0 && parameter.Declarations[0].Kind == ast.KindParameter && parameter.Declarations[0].AsParameterDeclaration().DotDotDotToken != nil {
+		if len(parameter.Declarations) > 0 &&
+			parameter.Declarations[0].Kind == ast.KindParameter &&
+			parameter.Declarations[0].AsParameterDeclaration().DotDotDotToken != nil {
 			return false
 		}
-		if !l.nullableObjectCallbackStorageMatches(l.checker.GetTypeOfSymbol(parameter), l.checker.GetTypeOfSymbol(expected[0].Parameters()[index])) {
+		if !lowering.nullableObjectCallbackStorageMatches(
+			lowering.checker.GetTypeOfSymbol(parameter),
+			lowering.checker.GetTypeOfSymbol(expected[0].Parameters()[index]),
+		) {
 			return false
 		}
 	}
@@ -232,7 +270,7 @@ func (l *lowering) nullableObjectAdaptedMapCallback(node *ast.Node, contextual *
 // array_search_contract.go). That adapts the value parameter only, so the index
 // and array parameters must keep the receiver's storage, as map's do. Unlike map,
 // the result needs no identical type: a search reads it only as a boolean.
-func (l *lowering) nullableObjectAdaptedSearchCallback(node *ast.Node, contextual *checker.Type) bool {
+func (lowering *lowering) nullableObjectAdaptedSearchCallback(node *ast.Node, contextual *checker.Type) bool {
 	outer := node
 	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
 		outer = outer.Parent
@@ -245,7 +283,7 @@ func (l *lowering) nullableObjectAdaptedSearchCallback(node *ast.Node, contextua
 		return false
 	}
 	callee := ast.SkipParentheses(call.Expression)
-	if callee.Kind != ast.KindPropertyAccessExpression || !l.libraryMember(callee) {
+	if callee.Kind != ast.KindPropertyAccessExpression || !lowering.libraryMember(callee) {
 		return false
 	}
 	switch callee.Name().Text() {
@@ -253,20 +291,25 @@ func (l *lowering) nullableObjectAdaptedSearchCallback(node *ast.Node, contextua
 	default:
 		return false
 	}
-	receiver := l.concrete(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))
-	if !l.isArrayType(receiver) && !checker.IsTupleType(receiver) {
+	receiver := lowering.concrete(lowering.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))
+	if !lowering.isArrayType(receiver) && !checker.IsTupleType(receiver) {
 		return false
 	}
-	actual := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node), checker.SignatureKindCall)
-	expected := l.checker.GetSignaturesOfType(contextual, checker.SignatureKindCall)
+	actual := lowering.checker.GetSignaturesOfType(lowering.checker.GetTypeAtLocation(node), checker.SignatureKindCall)
+	expected := lowering.checker.GetSignaturesOfType(contextual, checker.SignatureKindCall)
 	if len(actual) != 1 || len(expected) != 1 || len(actual[0].Parameters()) > len(expected[0].Parameters()) {
 		return false
 	}
 	for index, parameter := range actual[0].Parameters() {
-		if len(parameter.Declarations) > 0 && parameter.Declarations[0].Kind == ast.KindParameter && parameter.Declarations[0].AsParameterDeclaration().DotDotDotToken != nil {
+		if len(parameter.Declarations) > 0 &&
+			parameter.Declarations[0].Kind == ast.KindParameter &&
+			parameter.Declarations[0].AsParameterDeclaration().DotDotDotToken != nil {
 			return false
 		}
-		if index > 0 && !l.nullableObjectCallbackStorageMatches(l.checker.GetTypeOfSymbol(parameter), l.checker.GetTypeOfSymbol(expected[0].Parameters()[index])) {
+		if index > 0 && !lowering.nullableObjectCallbackStorageMatches(
+			lowering.checker.GetTypeOfSymbol(parameter),
+			lowering.checker.GetTypeOfSymbol(expected[0].Parameters()[index]),
+		) {
 			return false
 		}
 	}
@@ -275,12 +318,12 @@ func (l *lowering) nullableObjectAdaptedSearchCallback(node *ast.Node, contextua
 
 // Only primitive alternatives may change at a value boundary. Keep every
 // nonprimitive member identical, including an array's element-storage type.
-func (l *lowering) nullableObjectCallbackStorageMatches(from, to *checker.Type) bool {
+func (lowering *lowering) nullableObjectCallbackStorageMatches(from, to *checker.Type) bool {
 	members := func(proven *checker.Type) []*checker.Type {
 		var held []*checker.Type
 		var visit func(*checker.Type)
 		visit = func(each *checker.Type) {
-			each = l.concrete(each)
+			each = lowering.concrete(each)
 			if each.Flags()&checker.TypeFlagsUnion != 0 {
 				for _, part := range each.Types() {
 					visit(part)

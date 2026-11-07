@@ -354,28 +354,28 @@ func definitionSites(graph *Function) definitions {
 	return definitions{definedBy: definedBy, phis: phis}
 }
 
-func (s definitions) isPhi(value IdentifierId) bool {
-	_, ok := s.phis[value]
+func (definitions definitions) isPhi(value IdentifierId) bool {
+	_, ok := definitions.phis[value]
 	return ok
 }
 
 // of is every site a value comes to.
-func (s definitions) of(value IdentifierId) []site {
-	return s.walk(value, map[IdentifierId]bool{})
+func (definitions definitions) of(value IdentifierId) []site {
+	return definitions.walk(value, map[IdentifierId]bool{})
 }
 
-func (s definitions) walk(value IdentifierId, seen map[IdentifierId]bool) []site {
-	if each, ok := s.definedBy[value]; ok {
+func (definitions definitions) walk(value IdentifierId, seen map[IdentifierId]bool) []site {
+	if each, ok := definitions.definedBy[value]; ok {
 		return []site{each}
 	}
-	phi, ok := s.phis[value]
+	phi, ok := definitions.phis[value]
 	if !ok || seen[value] {
 		return nil
 	}
 	seen[value] = true
 	var found []site
 	for _, predecessor := range PhiOperandsInOrder(phi) {
-		for _, each := range s.walk(phi.Operands[predecessor].Identifier, seen) {
+		for _, each := range definitions.walk(phi.Operands[predecessor].Identifier, seen) {
 			if !slices.Contains(found, each) {
 				found = append(found, each)
 			}

@@ -131,28 +131,31 @@ func containsAwait(value reflect.Value) bool {
 	return false
 }
 
-func (n *asyncNormalizer) temporary(of ir.Type) int {
-	local := len(n.program.Locals)
-	n.program.Locals = append(n.program.Locals, ir.Local{Name: "suspension", Type: of, Function: n.function})
+func (normalizer *asyncNormalizer) temporary(of ir.Type) int {
+	local := len(normalizer.program.Locals)
+	normalizer.program.Locals = append(
+		normalizer.program.Locals,
+		ir.Local{Name: "suspension", Type: of, Function: normalizer.function},
+	)
 	return local
 }
-func (n *asyncNormalizer) snapshot(value ir.Expression, out *[]ir.Statement) ir.Expression {
+func (normalizer *asyncNormalizer) snapshot(value ir.Expression, out *[]ir.Statement) ir.Expression {
 	if value.Type() == 0 {
 		*out = append(*out, ir.Evaluate{Value: value})
 		return ir.Undefined{}
 	}
-	local := n.temporary(value.Type())
+	local := normalizer.temporary(value.Type())
 	*out = append(*out, ir.Declare{Local: local, Value: value})
 	return ir.Read{Local: local, Of: value.Type()}
 }
-func (n *asyncNormalizer) expression(value ir.Expression, out *[]ir.Statement, snapshot bool) ir.Expression {
+func (normalizer *asyncNormalizer) expression(value ir.Expression, out *[]ir.Statement, snapshot bool) ir.Expression {
 	if value == nil {
 		return nil
 	}
 	suspends := containsAwait(reflect.ValueOf(value))
 	if !suspends {
 		if snapshot {
-			return n.snapshot(value, out)
+			return normalizer.snapshot(value, out)
 		}
 		return value
 	}
@@ -165,19 +168,22 @@ func (n *asyncNormalizer) expression(value ir.Expression, out *[]ir.Statement, s
 		}
 	})
 	if methodOperand {
-		n.failure = n.errorAt(value, "await among structural method operands is not yet proven")
+		normalizer.failure = normalizer.errorAt(value, "await among structural method operands is not yet proven")
 	}
 	switch value := value.(type) {
 	case ir.Effects:
-		body, statementsError := n.statements(value.Body)
+		body, statementsError := normalizer.statements(value.Body)
 		if statementsError != nil {
-			n.failure = statementsError
+			normalizer.failure = statementsError
 			return value
 		}
 		*out = append(*out, body...)
-		return n.expression(value.Result, out, snapshot)
+		return normalizer.expression(value.Result, out, snapshot)
 	case ir.Logical, ir.LogicalAssignment:
-		n.failure = n.errorAt(value, "await inside value-preserving logical operands is not yet proven")
+		normalizer.failure = normalizer.errorAt(
+			value,
+			"await inside value-preserving logical operands is not yet proven",
+		)
 		return value
 	case ir.ArrayLiteral:
 		for index, spread := range value.Spread {
@@ -185,9 +191,9 @@ func (n *asyncNormalizer) expression(value ir.Expression, out *[]ir.Statement, s
 				value.Elements[index] = ir.ArraySlice{Array: value.Elements[index], Element: value.Element}
 			}
 		}
-		changed := n.operands(reflect.ValueOf(value), out).Interface().(ir.Expression)
+		changed := normalizer.operands(reflect.ValueOf(value), out).Interface().(ir.Expression)
 		if snapshot {
-			return n.snapshot(changed, out)
+			return normalizer.snapshot(changed, out)
 		}
 		return changed
 	case ir.ObjectLiteral:
@@ -199,34 +205,34 @@ func (n *asyncNormalizer) expression(value ir.Expression, out *[]ir.Statement, s
 				Empty:                value.Empty,
 			}
 		}
-		changed := n.operands(reflect.ValueOf(value), out).Interface().(ir.Expression)
+		changed := normalizer.operands(reflect.ValueOf(value), out).Interface().(ir.Expression)
 		if snapshot {
-			return n.snapshot(changed, out)
+			return normalizer.snapshot(changed, out)
 		}
 		return changed
 	case ir.Await:
-		operand := n.expression(value.Value, out, true)
-		return n.snapshot(ir.Await{Value: operand, Of: value.Of, Site: value.Site}, out)
+		operand := normalizer.expression(value.Value, out, true)
+		return normalizer.snapshot(ir.Await{Value: operand, Of: value.Of, Site: value.Site}, out)
 	case ir.Conditional:
-		condition := n.expression(value.Condition, out, true)
-		local := n.temporary(value.Type())
+		condition := normalizer.expression(value.Condition, out, true)
+		local := normalizer.temporary(value.Type())
 		*out = append(*out, ir.Declare{Local: local})
 		var consequent, alternate []ir.Statement
-		yes := n.expression(value.WhenTrue, &consequent, false)
-		no := n.expression(value.WhenNot, &alternate, false)
+		yes := normalizer.expression(value.WhenTrue, &consequent, false)
+		no := normalizer.expression(value.WhenNot, &alternate, false)
 		consequent = append(consequent, ir.Assign{Local: local, Value: yes})
 		alternate = append(alternate, ir.Assign{Local: local, Value: no})
 		*out = append(*out, ir.If{Condition: condition, Then: consequent, Else: alternate})
 		return ir.Read{Local: local, Of: value.Type()}
 	case ir.Coalesce:
-		held := n.expression(value.Value, out, true)
-		local := n.temporary(value.Of)
+		held := normalizer.expression(value.Value, out, true)
+		local := normalizer.temporary(value.Of)
 		result := ir.Read{Local: local, Of: value.Of}
 		*out = append(*out, ir.Declare{Local: local})
 		var missing []ir.Statement
-		fallback := n.expression(value.Fallback, &missing, false)
+		fallback := normalizer.expression(value.Fallback, &missing, false)
 		if value.Panic != nil {
-			message := n.expression(value.Panic, &missing, false)
+			message := normalizer.expression(value.Panic, &missing, false)
 			missing = append(missing, ir.Panic{Message: message})
 		} else {
 			missing = append(missing, ir.Assign{Local: local, Value: fallback})
@@ -239,14 +245,17 @@ func (n *asyncNormalizer) expression(value ir.Expression, out *[]ir.Statement, s
 	case ir.Binary:
 		if value.Operator == ir.And || value.Operator == ir.Or {
 			if value.Left.Type() == ir.MaybeBoolean || value.Right.Type() == ir.MaybeBoolean {
-				n.failure = n.errorAt(value, "await inside maybe-boolean logical operands is not yet proven")
+				normalizer.failure = normalizer.errorAt(
+					value,
+					"await inside maybe-boolean logical operands is not yet proven",
+				)
 				return value
 			}
-			condition := n.expression(value.Left, out, false)
-			local := n.temporary(ir.Boolean)
+			condition := normalizer.expression(value.Left, out, false)
+			local := normalizer.temporary(ir.Boolean)
 			*out = append(*out, ir.Declare{Local: local, Value: condition})
 			var body []ir.Statement
-			right := n.expression(value.Right, &body, false)
+			right := normalizer.expression(value.Right, &body, false)
 			body = append(body, ir.Assign{Local: local, Value: right})
 			condition = ir.Read{Local: local, Of: ir.Boolean}
 			if value.Operator == ir.Or {
@@ -256,21 +265,21 @@ func (n *asyncNormalizer) expression(value ir.Expression, out *[]ir.Statement, s
 			return ir.Read{Local: local, Of: ir.Boolean}
 		}
 	}
-	changed := n.operands(reflect.ValueOf(value), out).Interface().(ir.Expression)
+	changed := normalizer.operands(reflect.ValueOf(value), out).Interface().(ir.Expression)
 	if snapshot {
-		return n.snapshot(changed, out)
+		return normalizer.snapshot(changed, out)
 	}
 	return changed
 }
 
 // operands walks the IR's evaluation-ordered fields. It copies IR, never lowers source.
-func (n *asyncNormalizer) operands(value reflect.Value, out *[]ir.Statement) reflect.Value {
+func (normalizer *asyncNormalizer) operands(value reflect.Value, out *[]ir.Statement) reflect.Value {
 	if value.Kind() == reflect.Interface {
 		if value.IsNil() {
 			return value
 		}
 		if expression, ok := value.Interface().(ir.Expression); ok {
-			changed := n.expression(expression, out, true)
+			changed := normalizer.expression(expression, out, true)
 			result := reflect.New(value.Type()).Elem()
 			if changed != nil {
 				result.Set(reflect.ValueOf(changed))
@@ -278,14 +287,14 @@ func (n *asyncNormalizer) operands(value reflect.Value, out *[]ir.Statement) ref
 			return result
 		}
 		result := reflect.New(value.Type()).Elem()
-		result.Set(n.operands(value.Elem(), out))
+		result.Set(normalizer.operands(value.Elem(), out))
 		return result
 	}
 	switch value.Kind() {
 	case reflect.Struct:
 		result := reflect.New(value.Type()).Elem()
 		for index := 0; index < value.NumField(); index++ {
-			result.Field(index).Set(n.operands(value.Field(index), out))
+			result.Field(index).Set(normalizer.operands(value.Field(index), out))
 		}
 		return result
 	case reflect.Slice:
@@ -294,41 +303,41 @@ func (n *asyncNormalizer) operands(value reflect.Value, out *[]ir.Statement) ref
 		}
 		result := reflect.MakeSlice(value.Type(), value.Len(), value.Len())
 		for index := 0; index < value.Len(); index++ {
-			result.Index(index).Set(n.operands(value.Index(index), out))
+			result.Index(index).Set(normalizer.operands(value.Index(index), out))
 		}
 		return result
 	case reflect.Array:
 		result := reflect.New(value.Type()).Elem()
 		for index := 0; index < value.Len(); index++ {
-			result.Index(index).Set(n.operands(value.Index(index), out))
+			result.Index(index).Set(normalizer.operands(value.Index(index), out))
 		}
 		return result
 	}
 	return value
 }
-func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement, error) {
+func (normalizer *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement, error) {
 	var out []ir.Statement
 	for _, statement := range statements {
 		var before []ir.Statement
 		var statementsError error
 		switch value := statement.(type) {
 		case ir.Return:
-			value.Value = n.expression(value.Value, &before, true)
+			value.Value = normalizer.expression(value.Value, &before, true)
 			statement = value
 		case ir.If:
-			value.Condition = n.expression(value.Condition, &before, true)
-			value.Then, statementsError = n.statements(value.Then)
+			value.Condition = normalizer.expression(value.Condition, &before, true)
+			value.Then, statementsError = normalizer.statements(value.Then)
 			if statementsError == nil {
-				value.Else, statementsError = n.statements(value.Else)
+				value.Else, statementsError = normalizer.statements(value.Else)
 			}
 			statement = value
 		case ir.Loop:
 			// Body declarations (including nested blocks and catch bindings) are
 			// new bindings on each execution, just like for-header bindings.
 			mark := func(local int) {
-				if n.program.Locals[local].Captured {
-					n.program.Locals[local].IterationCell = true
-					n.program.Locals[local].EnvironmentCell = false
+				if normalizer.program.Locals[local].Captured {
+					normalizer.program.Locals[local].IterationCell = true
+					normalizer.program.Locals[local].EnvironmentCell = false
 				}
 			}
 			inspectAsyncIR(reflect.ValueOf([][]ir.Statement{value.Test, value.Body, value.Update}), func(node any) {
@@ -344,59 +353,59 @@ func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement,
 			var copies []ir.Statement
 			for _, local := range value.PerIteration {
 				mark(local)
-				if n.program.Locals[local].Captured {
+				if normalizer.program.Locals[local].Captured {
 					copies = append(copies, ir.Declare{
 						Local:    local,
 						CopyCell: true,
-						Value:    ir.Read{Local: local, Of: n.program.Locals[local].Type},
+						Value:    ir.Read{Local: local, Of: normalizer.program.Locals[local].Type},
 					})
 				}
 			}
 			value.Update = append(copies, value.Update...)
 			value.PerIteration = nil
-			value.Condition = n.expression(value.Condition, &value.Test, true)
-			value.Body, statementsError = n.statements(value.Body)
+			value.Condition = normalizer.expression(value.Condition, &value.Test, true)
+			value.Body, statementsError = normalizer.statements(value.Body)
 			if statementsError == nil {
-				value.Update, statementsError = n.statements(value.Update)
+				value.Update, statementsError = normalizer.statements(value.Update)
 			}
 			statement = value
 		case ir.Block:
-			value.Body, statementsError = n.statements(value.Body)
+			value.Body, statementsError = normalizer.statements(value.Body)
 			statement = value
 		case ir.Try:
 			if value.HasFinally {
-				return nil, n.errorAt(value, "async finally escaped completion normalization")
+				return nil, normalizer.errorAt(value, "async finally escaped completion normalization")
 			}
-			value.Body, statementsError = n.statements(value.Body)
+			value.Body, statementsError = normalizer.statements(value.Body)
 			if statementsError == nil {
-				value.Catch, statementsError = n.statements(value.Catch)
+				value.Catch, statementsError = normalizer.statements(value.Catch)
 			}
 			statement = value
 		case ir.Labeled:
-			value.Body, statementsError = n.statements(value.Body)
+			value.Body, statementsError = normalizer.statements(value.Body)
 			statement = value
 		case ir.Evaluate:
 			if yield, ok := value.Value.(ir.Yield); ok {
 				// The yielded value is a snapshot, so the yield's own instruction is a read that can't
 				// throw (flow.Build's yield) and the value is held by a cell until it is handed over.
-				yield.Value = n.expression(yield.Value, &before, true)
+				yield.Value = normalizer.expression(yield.Value, &before, true)
 				statement = ir.Evaluate{Value: yield}
 				break
 			}
 			if containsAwait(reflect.ValueOf(statement)) {
-				statement = n.operands(reflect.ValueOf(statement), &before).Interface().(ir.Statement)
+				statement = normalizer.operands(reflect.ValueOf(statement), &before).Interface().(ir.Statement)
 			}
 		case ir.ForOf:
 			if value.RegexIterator || (value.Iterable.Type() != ir.Array &&
 				value.Iterable.Type() != ir.String &&
 				value.Iterable.Type() != ir.Map) || (value.Pattern != nil && value.MapPart == "") {
-				return nil, n.errorAt(value, suspending(
-					n.program.Functions[n.function],
+				return nil, normalizer.errorAt(value, suspending(
+					normalizer.program.Functions[normalizer.function],
 					"for-of over this iterable or pattern is not yet proven",
 				))
 			}
 			if value.Iterable.Type() != ir.Array {
-				iterable := n.expression(value.Iterable, &before, true)
+				iterable := normalizer.expression(value.Iterable, &before, true)
 				var iterator ir.Expression = ir.StringIterator{Value: iterable}
 				element := value.Element
 				if value.MapPart != "" {
@@ -415,8 +424,8 @@ func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement,
 						element = ir.Object
 					}
 				}
-				held := n.snapshot(iterator, &before)
-				stepLocal := n.temporary(ir.Object)
+				held := normalizer.snapshot(iterator, &before)
+				stepLocal := normalizer.temporary(ir.Object)
 				step := ir.Read{Local: stepLocal, Of: ir.Object}
 				body := []ir.Statement{
 					ir.Declare{Local: stepLocal, Value: ir.CallClosure{
@@ -439,12 +448,12 @@ func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement,
 						body = append(body, ir.Declare{Local: binding.Local, Value: ir.Property{
 							Object: item,
 							Name:   binding.Field,
-							Of:     n.program.Locals[binding.Local].Type,
+							Of:     normalizer.program.Locals[binding.Local].Type,
 						}})
 					}
 				}
 				body = append(body, value.Body...)
-				normalized, failure := n.statements([]ir.Statement{
+				normalized, failure := normalizer.statements([]ir.Statement{
 					ir.Loop{Labels: value.Labels, Condition: ir.BooleanConstant{Value: true}, Body: body},
 				})
 				if failure != nil {
@@ -456,8 +465,8 @@ func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement,
 			}
 			// Hold the array itself, not a copy or its current length. The next pass
 			// observes mutations made while suspended, like an array iterator on Node.
-			array := n.expression(value.Iterable, &before, true)
-			index := n.temporary(ir.Number)
+			array := normalizer.expression(value.Iterable, &before, true)
+			index := normalizer.temporary(ir.Number)
 			position := ir.Read{Local: index, Of: ir.Number}
 			before = append(before, ir.Declare{Local: index, Value: ir.NumberConstant{Value: 0}})
 			var element ir.Expression = ir.ArrayIndex{Array: array, Index: position, Element: value.Element}
@@ -478,35 +487,35 @@ func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement,
 			// Loop normalization marks the element declaration as a fresh iteration
 			// cell when captured, so closures keep their binding across suspension.
 			var normalized []ir.Statement
-			normalized, statementsError = n.statements([]ir.Statement{loop})
+			normalized, statementsError = normalizer.statements([]ir.Statement{loop})
 			if statementsError == nil {
 				statement = normalized[0]
 			}
 		case ir.Switch:
-			value.Value = n.expression(value.Value, &before, true)
+			value.Value = normalizer.expression(value.Value, &before, true)
 			for index := range value.Cases {
 				if containsAwait(reflect.ValueOf(value.Cases[index].Tests)) {
-					return nil, n.errorAt(value, "await in switch case tests is not yet proven")
+					return nil, normalizer.errorAt(value, "await in switch case tests is not yet proven")
 				}
-				value.Cases[index].Body, statementsError = n.statements(value.Cases[index].Body)
+				value.Cases[index].Body, statementsError = normalizer.statements(value.Cases[index].Body)
 				if statementsError != nil {
 					break
 				}
 			}
 			if statementsError == nil {
-				value.Default, statementsError = n.statements(value.Default)
+				value.Default, statementsError = normalizer.statements(value.Default)
 			}
 			statement = value
 		default:
 			if containsAwait(reflect.ValueOf(statement)) {
-				statement = n.operands(reflect.ValueOf(statement), &before).Interface().(ir.Statement)
+				statement = normalizer.operands(reflect.ValueOf(statement), &before).Interface().(ir.Statement)
 			}
 		}
 		if statementsError != nil {
 			return nil, statementsError
 		}
-		if n.failure != nil {
-			return nil, n.failure
+		if normalizer.failure != nil {
+			return nil, normalizer.failure
 		}
 		out = append(out, before...)
 		// A void await used for its effects was already emitted by snapshot.
@@ -545,7 +554,7 @@ type AsyncError struct {
 	What string
 }
 
-func (e *AsyncError) Error() string { return e.What }
+func (asyncError *AsyncError) Error() string { return asyncError.What }
 func asyncSourceSite(value any) int {
 	site := 0
 	inspectAsyncIR(reflect.ValueOf(value), func(node any) {
@@ -558,10 +567,10 @@ func asyncSourceSite(value any) int {
 	})
 	return site
 }
-func (n *asyncNormalizer) errorAt(value any, what string) error {
+func (normalizer *asyncNormalizer) errorAt(value any, what string) error {
 	site := asyncSourceSite(value)
 	if site == 0 {
-		site = n.program.Functions[n.function].AsyncSite
+		site = normalizer.program.Functions[normalizer.function].AsyncSite
 	}
 	return &AsyncError{Site: site, What: what}
 }

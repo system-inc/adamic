@@ -19,8 +19,8 @@ type regularProgram struct {
 	representatives []byte
 }
 
-func (p *Program) compileRegular() *regularProgram {
-	for _, i := range p.code {
+func (program *Program) compileRegular() *regularProgram {
+	for _, i := range program.code {
 		// Unicode boundary assertions can match a pair interior in V8; retain its VM walk.
 		if i.op == opAssert && i.assertion >= WordBoundary && unicodeMode(i.flags) {
 			return nil
@@ -31,7 +31,8 @@ func (p *Program) compileRegular() *regularProgram {
 		if i.op == opSet && (i.direction != 1 || len(i.set.strings) != 0) {
 			return nil
 		}
-		if i.op == opRepeat && (!i.min.IsUint64() || i.min.Uint64() > 32 || i.max != nil && (!i.max.IsUint64() || i.max.Uint64() > 32)) {
+		if i.op == opRepeat &&
+			(!i.min.IsUint64() || i.min.Uint64() > 32 || i.max != nil && (!i.max.IsUint64() || i.max.Uint64() > 32)) {
 			return nil
 		}
 	}
@@ -55,11 +56,11 @@ func (p *Program) compileRegular() *regularProgram {
 		}
 		mapped := map[int]int{hi: next}
 		for pc := hi - 1; pc >= lo; pc-- {
-			i := p.code[pc]
+			i := program.code[pc]
 			switch i.op {
 			case opRepeatEnd:
 				choice := i.y
-				q := p.code[choice]
+				q := program.code[choice]
 				if q.max == nil {
 					loop := add(regularInstruction{op: opSplit, y: next})
 					if loop < 0 {
@@ -119,7 +120,7 @@ func (p *Program) compileRegular() *regularProgram {
 		}
 		return next
 	}
-	r.start = segment(0, len(p.code), accept)
+	r.start = segment(0, len(program.code), accept)
 	if r.start < 0 {
 		return nil
 	}
@@ -130,7 +131,7 @@ func (p *Program) compileRegular() *regularProgram {
 		key := make([]byte, (len(r.code)+7)/8+2)
 		for pc, n := range r.code {
 			if n.op == opSet {
-				i := p.code[n.source]
+				i := program.code[n.source]
 				if i.set.contains(canonicalize(rune(c), i.flags)) {
 					key[pc/8] |= 1 << uint(pc%8)
 				}
@@ -170,8 +171,8 @@ func regularAssertion(i instruction, input []uint16, at int) bool {
 // Merging threads keeps the earliest start at each state. With no references or
 // lookaround their future languages are identical. Once a candidate accepts,
 // only threads from earlier starts need finish before capture recovery.
-func (p *Program) regularFind(input []uint16, start int, sticky bool) int {
-	r := p.regular
+func (program *Program) regularFind(input []uint16, start int, sticky bool) int {
+	r := program.regular
 	current := make([]int, len(r.code))
 	next := make([]int, len(r.code))
 	for k := range current {
@@ -187,7 +188,7 @@ func (p *Program) regularFind(input []uint16, start int, sticky bool) int {
 				pending[pc/64] |= uint64(1) << uint(pc%64)
 			}
 		}
-		if best < 0 && (at == start || !sticky && !p.anchored) {
+		if best < 0 && (at == start || !sticky && !program.anchored) {
 			put(r.start, at)
 		}
 		for pc, origin := range current {
@@ -219,7 +220,7 @@ func (p *Program) regularFind(input []uint16, start int, sticky bool) int {
 				put(n.x, origin)
 				put(n.y, origin)
 			case opAssert:
-				if regularAssertion(p.code[n.source], input, at) {
+				if regularAssertion(program.code[n.source], input, at) {
 					put(n.x, origin)
 				}
 			}
@@ -227,7 +228,7 @@ func (p *Program) regularFind(input []uint16, start int, sticky bool) int {
 		if at == len(input) {
 			return best
 		}
-		c, to, readable := readCharacter(input, at, 1, unicodeMode(p.flags))
+		c, to, readable := readCharacter(input, at, 1, unicodeMode(program.flags))
 		if !readable {
 			to = at + 1
 		}
@@ -238,14 +239,14 @@ func (p *Program) regularFind(input []uint16, start int, sticky bool) int {
 			}
 			n := r.code[pc]
 			if n.op == opSet && readable {
-				i := p.code[n.source]
+				i := program.code[n.source]
 				if i.set.contains(canonicalize(c, i.flags)) && (next[n.x] < 0 || origin < next[n.x]) {
 					next[n.x] = origin
 					alive = true
 				}
 			}
 		}
-		if !alive && (best >= 0 || sticky || p.anchored) {
+		if !alive && (best >= 0 || sticky || program.anchored) {
 			return best
 		}
 		current, next = next, current

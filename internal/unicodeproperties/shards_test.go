@@ -206,9 +206,9 @@ type unicodeScanShard struct {
 	input      string
 }
 
-func (s unicodeScanShard) name() string {
-	hash := sha256.Sum256([]byte(s.input))
-	return fmt.Sprintf("%04d-%04d-%x", s.start, s.end, hash[:6])
+func (shard unicodeScanShard) name() string {
+	hash := sha256.Sum256([]byte(shard.input))
+	return fmt.Sprintf("%04d-%04d-%x", shard.start, shard.end, hash[:6])
 }
 
 func unicodeCanonicalizeShards(lines []string) []unicodeScanShard {

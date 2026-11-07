@@ -323,17 +323,17 @@ type RegExp struct {
 	DisableRegular bool
 }
 
-func (p *Program) New() *RegExp { return &RegExp{Program: p} }
+func (program *Program) New() *RegExp { return &RegExp{Program: program} }
 
 // Exec accepts exact UTF-16, including lone surrogates. A zero StepLimit is unlimited.
-func (r *RegExp) Exec(input []uint16) (*Match, error) {
-	p := r.Program
+func (exp *RegExp) Exec(input []uint16) (*Match, error) {
+	p := exp.Program
 	start := uint64(0)
 	stateful := p.flags.Global || p.flags.Sticky
 	if stateful {
-		start = r.LastIndex
+		start = exp.LastIndex
 	}
-	budget := executionBudget{limit: r.StepLimit}
+	budget := executionBudget{limit: exp.StepLimit}
 	// V8 first rewinds a lastIndex inside a pair, but its assertion-only
 	// paths can subsequently try the low-half position. ECMA-262 22.2.2.2
 	// and 22.2.7.2 describe a code-point Input list with no such position.
@@ -341,7 +341,11 @@ func (r *RegExp) Exec(input []uint16) (*Match, error) {
 		start--
 	}
 	stickyEnd := start
-	if stateful && r.LastIndex == start+1 && start+1 < uint64(len(input)) && high(input[start]) && low(input[start+1]) {
+	if stateful &&
+		exp.LastIndex == start+1 &&
+		start+1 < uint64(len(input)) &&
+		high(input[start]) &&
+		low(input[start+1]) {
 		stickyEnd++
 	}
 	for start <= uint64(len(input)) {
@@ -349,7 +353,7 @@ func (r *RegExp) Exec(input []uint16) (*Match, error) {
 		if p.anchored && position != 0 {
 			break
 		}
-		if p.regular != nil && r.StepLimit == 0 && !r.DisableRegular {
+		if p.regular != nil && exp.StepLimit == 0 && !exp.DisableRegular {
 			position = p.regularFind(input, position, p.flags.Sticky)
 			if position < 0 {
 				break
@@ -404,7 +408,7 @@ func (r *RegExp) Exec(input []uint16) (*Match, error) {
 				match.Groups[name] = capture
 			}
 			if stateful {
-				r.LastIndex = uint64(state.pos)
+				exp.LastIndex = uint64(state.pos)
 			}
 			return match, nil
 		}
@@ -417,13 +421,15 @@ func (r *RegExp) Exec(input []uint16) (*Match, error) {
 		start = uint64(position + 1)
 	}
 	if stateful {
-		r.LastIndex = 0
+		exp.LastIndex = 0
 	}
 	return nil, nil
 }
 
 // ExecString is a convenience for well-formed UTF-8; use Exec for lone surrogates.
-func (r *RegExp) ExecString(input string) (*Match, error) { return r.Exec(utf16.Encode([]rune(input))) }
+func (exp *RegExp) ExecString(input string) (*Match, error) {
+	return exp.Exec(utf16.Encode([]rune(input)))
+}
 
 type repeatRegister struct {
 	count *big.Int
@@ -435,30 +441,30 @@ type machineState struct {
 	repeats []repeatRegister
 }
 
-func (s machineState) clone() machineState {
-	s.caps = slices.Clone(s.caps)
-	s.repeats = slices.Clone(s.repeats)
-	return s
+func (state machineState) clone() machineState {
+	state.caps = slices.Clone(state.caps)
+	state.repeats = slices.Clone(state.repeats)
+	return state
 }
 
 type executionBudget struct{ limit, steps uint64 }
 
-func (b *executionBudget) step() error {
-	if b.limit != 0 && b.steps >= b.limit {
+func (budget *executionBudget) step() error {
+	if budget.limit != 0 && budget.steps >= budget.limit {
 		return ErrStepLimit
 	}
-	b.steps++
+	budget.steps++
 	return nil
 }
-func (p *Program) run(input []uint16, pos int, caps []int, budget *executionBudget) (machineState, bool, error) {
-	s := machineState{pos: pos, caps: slices.Clone(caps), repeats: make([]repeatRegister, p.repeats)}
+func (program *Program) run(input []uint16, pos int, caps []int, budget *executionBudget) (machineState, bool, error) {
+	s := machineState{pos: pos, caps: slices.Clone(caps), repeats: make([]repeatRegister, program.repeats)}
 	var stack []machineState
 	one := big.NewInt(1)
 	for {
 		if stepError := budget.step(); stepError != nil {
 			return s, false, stepError
 		}
-		i := p.code[s.pc]
+		i := program.code[s.pc]
 		failed := false
 		switch i.op {
 		case opAccept:

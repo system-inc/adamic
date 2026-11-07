@@ -9,7 +9,7 @@ import (
 
 // Offset and input follow every capture. Prove zero captures from immutable producers,
 // rather than assuming the callback's declared parameter types describe the regex.
-func (l *lowering) regexCallbackNoCaptures(node *ast.Node, depth int) bool {
+func (lowering *lowering) regexCallbackNoCaptures(node *ast.Node, depth int) bool {
 	if depth > 32 {
 		return false
 	}
@@ -24,7 +24,7 @@ func (l *lowering) regexCallbackNoCaptures(node *ast.Node, depth int) bool {
 		}
 		pattern, flags = text[1:end], text[end+1:]
 	case ast.KindIdentifier:
-		symbol := l.symbol(node)
+		symbol := lowering.symbol(node)
 		if symbol == nil || len(symbol.Declarations) != 1 {
 			return false
 		}
@@ -34,11 +34,11 @@ func (l *lowering) regexCallbackNoCaptures(node *ast.Node, depth int) bool {
 			declaration.AsVariableDeclaration().Initializer == nil {
 			return false
 		}
-		return l.regexCallbackNoCaptures(declaration.AsVariableDeclaration().Initializer, depth+1)
+		return lowering.regexCallbackNoCaptures(declaration.AsVariableDeclaration().Initializer, depth+1)
 	case ast.KindConditionalExpression:
 		conditional := node.AsConditionalExpression()
-		return l.regexCallbackNoCaptures(conditional.WhenTrue, depth+1) &&
-			l.regexCallbackNoCaptures(conditional.WhenFalse, depth+1)
+		return lowering.regexCallbackNoCaptures(conditional.WhenTrue, depth+1) &&
+			lowering.regexCallbackNoCaptures(conditional.WhenFalse, depth+1)
 	default:
 		return false
 	}
@@ -69,7 +69,7 @@ func (l *lowering) regexCallbackNoCaptures(node *ast.Node, depth int) bool {
 
 // The intrinsic supplies a proven argument sequence, rather than lib.d.ts's any[] rest.
 // This exemption applies only at the replacement argument, never to a stored function view.
-func (l *lowering) regexCallbackIntrinsicView(node *ast.Node) bool {
+func (lowering *lowering) regexCallbackIntrinsicView(node *ast.Node) bool {
 	child := node
 	for child.Parent != nil && child.Parent.Kind == ast.KindParenthesizedExpression {
 		child = child.Parent
@@ -89,23 +89,26 @@ func (l *lowering) regexCallbackIntrinsicView(node *ast.Node) bool {
 	if access.Name().Text() != "replace" && access.Name().Text() != "replaceAll" {
 		return false
 	}
-	if l.checker.GetTypeAtLocation(access.Expression).Flags()&checker.TypeFlagsStringLike == 0 ||
-		!l.libraryMember(callee) {
+	if lowering.checker.GetTypeAtLocation(access.Expression).Flags()&checker.TypeFlagsStringLike == 0 ||
+		!lowering.libraryMember(callee) {
 		return false
 	}
-	if !l.isLibraryType(l.checker.GetTypeAtLocation(call.Arguments.Nodes[0]), "RegExp") ||
-		!l.regexCallbackNoCaptures(call.Arguments.Nodes[0], 0) {
+	if !lowering.isLibraryType(lowering.checker.GetTypeAtLocation(call.Arguments.Nodes[0]), "RegExp") ||
+		!lowering.regexCallbackNoCaptures(call.Arguments.Nodes[0], 0) {
 		return false
 	}
-	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node), checker.SignatureKindCall)
+	signatures := lowering.checker.GetSignaturesOfType(
+		lowering.checker.GetTypeAtLocation(node),
+		checker.SignatureKindCall,
+	)
 	if len(signatures) != 1 || len(signatures[0].Parameters()) < 2 || len(signatures[0].Parameters()) > 3 {
 		return false
 	}
 	expected := []checker.TypeFlags{checker.TypeFlagsString, checker.TypeFlagsNumber, checker.TypeFlagsString}
 	for i, parameter := range signatures[0].Parameters() {
-		if l.checker.GetTypeOfSymbol(parameter).Flags() != expected[i] {
+		if lowering.checker.GetTypeOfSymbol(parameter).Flags() != expected[i] {
 			return false
 		}
 	}
-	return l.checker.GetReturnTypeOfSignature(signatures[0]).Flags() == checker.TypeFlagsString
+	return lowering.checker.GetReturnTypeOfSignature(signatures[0]).Flags() == checker.TypeFlagsString
 }

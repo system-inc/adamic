@@ -14,23 +14,27 @@ type optionalWidening struct {
 	source, target *checker.Type
 }
 
-func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string]bool, visited map[[2]*checker.Type]bool) *optionalWidening {
+func (lowering *lowering) optionalWidened(
+	source, target *checker.Type,
+	skip map[string]bool,
+	visited map[[2]*checker.Type]bool,
+) *optionalWidening {
 	if source == nil || target == nil {
 		return nil
 	}
-	if weak := l.weakTarget(source); weak != nil {
+	if weak := lowering.weakTarget(source); weak != nil {
 		source = weak
 	}
-	if weak := l.weakTarget(target); weak != nil {
+	if weak := lowering.weakTarget(target); weak != nil {
 		target = weak
 	}
 	// A Pick of a record holds the whole record (records_partial.go), so none of its fields is hidden.
-	if base := l.pickedRecordBase(source); base != nil {
+	if base := lowering.pickedRecordBase(source); base != nil {
 		source = base
 	}
 	// Only an accepted assignment is a widening. Function rest parameters and checked
 	// downcasts can pair unrelated types; those belong to their own relation rules.
-	if skip == nil && !l.checker.IsTypeAssignableTo(source, target) {
+	if skip == nil && !lowering.checker.IsTypeAssignableTo(source, target) {
 		return nil
 	}
 	if source == target || visited[[2]*checker.Type{source, target}] {
@@ -39,7 +43,7 @@ func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string
 	visited[[2]*checker.Type{source, target}] = true
 	if source.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range source.Types() {
-			if found := l.optionalWidened(member, target, skip, visited); found != nil {
+			if found := lowering.optionalWidened(member, target, skip, visited); found != nil {
 				return found
 			}
 		}
@@ -54,8 +58,8 @@ func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string
 			}
 		}
 		for _, member := range target.Types() {
-			if l.checker.IsTypeAssignableTo(source, member) {
-				if found := l.optionalWidened(source, member, skip, visited); found != nil {
+			if lowering.checker.IsTypeAssignableTo(source, member) {
+				if found := lowering.optionalWidened(source, member, skip, visited); found != nil {
 					return found
 				}
 			}
@@ -63,55 +67,75 @@ func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string
 		return nil
 	}
 	if source.Flags()&checker.TypeFlagsTypeParameter != 0 {
-		return l.optionalWidened(l.checker.GetBaseConstraintOfType(source), target, skip, visited)
+		return lowering.optionalWidened(lowering.checker.GetBaseConstraintOfType(source), target, skip, visited)
 	}
 	if target.Flags()&checker.TypeFlagsTypeParameter != 0 {
-		return l.optionalWidened(source, l.checker.GetBaseConstraintOfType(target), skip, visited)
+		return lowering.optionalWidened(source, lowering.checker.GetBaseConstraintOfType(target), skip, visited)
 	}
-	if source.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 || target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 {
+	if source.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 ||
+		target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 {
 		return nil
 	}
 	// Container elements are views too. Avoid walking library methods, whose generic signatures
 	// describe operations rather than value fields.
-	if (l.isArrayType(source) || checker.IsTupleType(source)) && (l.isArrayType(target) || checker.IsTupleType(target)) {
-		sources, targets := l.checker.GetTypeArguments(source), l.checker.GetTypeArguments(target)
+	if (lowering.isArrayType(source) || checker.IsTupleType(source)) &&
+		(lowering.isArrayType(target) || checker.IsTupleType(target)) {
+		sources, targets := lowering.checker.GetTypeArguments(source), lowering.checker.GetTypeArguments(target)
 		for index, inside := range sources {
 			at := index
 			if !checker.IsTupleType(target) {
 				at = 0
 			}
 			if at < len(targets) {
-				if found := l.optionalWidened(inside, targets[at], nil, visited); found != nil {
+				if found := lowering.optionalWidened(inside, targets[at], nil, visited); found != nil {
 					return found
 				}
 			}
 		}
 		return nil
 	}
-	for _, property := range l.checker.GetPropertiesOfType(target) {
+	for _, property := range lowering.checker.GetPropertiesOfType(target) {
 		if skip[property.Name] {
 			continue
 		}
-		declared := l.checker.GetPropertyOfType(source, property.Name)
+		declared := lowering.checker.GetPropertyOfType(source, property.Name)
 		if declared == nil {
 			if property.Flags&ast.SymbolFlagsOptional != 0 && !isClassInstance(source) {
 				return &optionalWidening{property: property.Name, source: source, target: target}
 			}
 			continue
 		}
-		if found := l.optionalWidened(l.checker.GetTypeOfSymbol(declared), l.checker.GetTypeOfSymbol(property), nil, visited); found != nil {
+		if found := lowering.optionalWidened(
+			lowering.checker.GetTypeOfSymbol(declared),
+			lowering.checker.GetTypeOfSymbol(property),
+			nil,
+			visited,
+		); found != nil {
 			return found
 		}
 	}
-	sources := l.checker.GetSignaturesOfType(source, checker.SignatureKindCall)
-	targets := l.checker.GetSignaturesOfType(target, checker.SignatureKindCall)
-	if len(sources) == 1 && len(targets) == 1 && len(sources[0].TypeParameters()) == 0 && len(targets[0].TypeParameters()) == 0 {
-		if found := l.optionalWidened(l.checker.GetReturnTypeOfSignature(sources[0]), l.checker.GetReturnTypeOfSignature(targets[0]), nil, visited); found != nil {
+	sources := lowering.checker.GetSignaturesOfType(source, checker.SignatureKindCall)
+	targets := lowering.checker.GetSignaturesOfType(target, checker.SignatureKindCall)
+	if len(sources) == 1 &&
+		len(targets) == 1 &&
+		len(sources[0].TypeParameters()) == 0 &&
+		len(targets[0].TypeParameters()) == 0 {
+		if found := lowering.optionalWidened(
+			lowering.checker.GetReturnTypeOfSignature(sources[0]),
+			lowering.checker.GetReturnTypeOfSignature(targets[0]),
+			nil,
+			visited,
+		); found != nil {
 			return found
 		}
 		takes, gives := sources[0].Parameters(), targets[0].Parameters()
 		for index := 0; index < len(takes) && index < len(gives); index++ {
-			if found := l.optionalWidened(l.checker.GetTypeOfSymbol(gives[index]), l.checker.GetTypeOfSymbol(takes[index]), nil, visited); found != nil {
+			if found := lowering.optionalWidened(
+				lowering.checker.GetTypeOfSymbol(gives[index]),
+				lowering.checker.GetTypeOfSymbol(takes[index]),
+				nil,
+				visited,
+			); found != nil {
 				return found
 			}
 		}
@@ -119,7 +143,7 @@ func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string
 	return nil
 }
 
-func (l *lowering) optionalValue(node *ast.Node, target *checker.Type) *optionalWidening {
+func (lowering *lowering) optionalValue(node *ast.Node, target *checker.Type) *optionalWidening {
 	node = ast.SkipParentheses(node)
 	switch node.Kind {
 	case ast.KindObjectLiteralExpression, ast.KindArrayLiteralExpression:
@@ -128,7 +152,7 @@ func (l *lowering) optionalValue(node *ast.Node, target *checker.Type) *optional
 	case ast.KindConditionalExpression:
 		conditional := node.AsConditionalExpression()
 		for _, branch := range []*ast.Node{conditional.WhenTrue, conditional.WhenFalse} {
-			if found := l.optionalValue(branch, target); found != nil {
+			if found := lowering.optionalValue(branch, target); found != nil {
 				return found
 			}
 		}
@@ -137,28 +161,41 @@ func (l *lowering) optionalValue(node *ast.Node, target *checker.Type) *optional
 		// An arrow's expression body is the value it returns, judged as the return's value, so a fresh
 		// literal there is a fresh literal. Its parameters are judged as any function's are.
 		body := node.Body()
-		sources, targets := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node), checker.SignatureKindCall), l.checker.GetSignaturesOfType(target, checker.SignatureKindCall)
-		if body == nil || body.Kind == ast.KindBlock || len(sources) != 1 || len(targets) != 1 || len(sources[0].TypeParameters()) != 0 || len(targets[0].TypeParameters()) != 0 {
+		sources, targets := lowering.checker.GetSignaturesOfType(
+			lowering.checker.GetTypeAtLocation(node),
+			checker.SignatureKindCall,
+		), lowering.checker.GetSignaturesOfType(target, checker.SignatureKindCall)
+		if body == nil ||
+			body.Kind == ast.KindBlock ||
+			len(sources) != 1 ||
+			len(targets) != 1 ||
+			len(sources[0].TypeParameters()) != 0 ||
+			len(targets[0].TypeParameters()) != 0 {
 			break
 		}
-		if found := l.optionalValue(body, l.checker.GetReturnTypeOfSignature(targets[0])); found != nil {
+		if found := lowering.optionalValue(body, lowering.checker.GetReturnTypeOfSignature(targets[0])); found != nil {
 			return found
 		}
 		takes, gives := sources[0].Parameters(), targets[0].Parameters()
 		for index := 0; index < len(takes) && index < len(gives); index++ {
-			if found := l.optionalWidened(l.checker.GetTypeOfSymbol(gives[index]), l.checker.GetTypeOfSymbol(takes[index]), nil, map[[2]*checker.Type]bool{}); found != nil {
+			if found := lowering.optionalWidened(
+				lowering.checker.GetTypeOfSymbol(gives[index]),
+				lowering.checker.GetTypeOfSymbol(takes[index]),
+				nil,
+				map[[2]*checker.Type]bool{},
+			); found != nil {
 				return found
 			}
 		}
 		return nil
 	}
-	return l.optionalWidened(l.checker.GetTypeAtLocation(node), target, nil, map[[2]*checker.Type]bool{})
+	return lowering.optionalWidened(lowering.checker.GetTypeAtLocation(node), target, nil, map[[2]*checker.Type]bool{})
 }
 
 // optionalAtSite uses the same relation sites as the other view rules, before lowering.
 // A leading spread is not proof of absence: it copies fields hidden by the source's type too.
-func (l *lowering) optionalAtSite(node *ast.Node) *optionalWidening {
-	if l.nodeFSFileReadOnlyArgument(node) {
+func (lowering *lowering) optionalAtSite(node *ast.Node) *optionalWidening {
+	if lowering.nodeFSFileReadOnlyArgument(node) {
 		return nil
 	}
 	// Only argument positions of a directly imported node:* call can use the host exemption.
@@ -166,9 +203,11 @@ func (l *lowering) optionalAtSite(node *ast.Node) *optionalWidening {
 	for argumentSite.Parent != nil && argumentSite.Parent.Kind == ast.KindParenthesizedExpression {
 		argumentSite = argumentSite.Parent
 	}
-	if parent := argumentSite.Parent; parent != nil && parent.Kind == ast.KindCallExpression && l.optionalNodeHostCall(parent) {
+	if parent := argumentSite.Parent; parent != nil &&
+		parent.Kind == ast.KindCallExpression &&
+		lowering.optionalNodeHostCall(parent) {
 		for index, argument := range parent.AsCallExpression().Arguments.Nodes {
-			if ast.SkipParentheses(argument) == node && l.nodeHostConsumesArgument(parent, index) {
+			if ast.SkipParentheses(argument) == node && lowering.nodeHostConsumesArgument(parent, index) {
 				return nil
 			}
 		}
@@ -181,17 +220,22 @@ func (l *lowering) optionalAtSite(node *ast.Node) *optionalWidening {
 		// f(node) does (#8v8112n). x as const is its operand's own literal type, and its operand is judged
 		// as itself.
 		as := node.AsAsExpression()
-		found = l.optionalValue(as.Expression, l.checker.GetTypeAtLocation(node))
-		if found == nil && !(as.Type.Kind == ast.KindTypeReference && ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) && as.Type.AsTypeReferenceNode().TypeName.Text() == "const") {
-			found = l.optionalInSlot(node)
+		found = lowering.optionalValue(as.Expression, lowering.checker.GetTypeAtLocation(node))
+		if found == nil && !(as.Type.Kind == ast.KindTypeReference &&
+			ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) &&
+			as.Type.AsTypeReferenceNode().TypeName.Text() == "const") {
+			found = lowering.optionalInSlot(node)
 		}
 	case ast.KindShorthandPropertyAssignment:
-		target := l.slotType(node.Parent)
+		target := lowering.slotType(node.Parent)
 		if target != nil {
-			found = l.optionalValue(node.Name(), l.checker.GetTypeOfPropertyOfType(target, node.Name().Text()))
+			found = lowering.optionalValue(
+				node.Name(),
+				lowering.checker.GetTypeOfPropertyOfType(target, node.Name().Text()),
+			)
 		}
 	case ast.KindSpreadAssignment:
-		target := l.slotType(node.Parent)
+		target := lowering.slotType(node.Parent)
 		if target == nil {
 			return nil
 		}
@@ -206,49 +250,62 @@ func (l *lowering) optionalAtSite(node *ast.Node) *optionalWidening {
 		}
 		expression := ast.SkipParentheses(node.AsSpreadAssignment().Expression)
 		if expression.Kind != ast.KindObjectLiteralExpression {
-			found = l.optionalWidened(l.checker.GetTypeAtLocation(expression), target, skip, map[[2]*checker.Type]bool{})
+			found = lowering.optionalWidened(
+				lowering.checker.GetTypeAtLocation(expression),
+				target,
+				skip,
+				map[[2]*checker.Type]bool{},
+			)
 		}
 	default:
-		if node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) {
+		if node.Kind == ast.KindParenthesizedExpression || !lowering.isExpression(node) {
 			return nil
 		}
-		found = l.optionalInSlot(node)
+		found = lowering.optionalInSlot(node)
 	}
 	return found
 }
 
 // optionalInSlot judges a value against the slot it goes into: the one written for it, or the one tsc
 // implied (impliedTarget). A generic function is instantiated to its slot rather than seen through it.
-func (l *lowering) optionalInSlot(node *ast.Node) *optionalWidening {
-	if l.genericFunction(node) {
+func (lowering *lowering) optionalInSlot(node *ast.Node) *optionalWidening {
+	if lowering.genericFunction(node) {
 		return nil
 	}
 	var target *checker.Type
 	if viewSite(node) {
-		target = l.slotType(node)
+		target = lowering.slotType(node)
 	}
 	if target == nil {
-		target = l.impliedTarget(node)
+		target = lowering.impliedTarget(node)
 	}
 	if target == nil {
 		return nil
 	}
-	return l.optionalValue(node, target)
+	return lowering.optionalValue(node, target)
 }
 
-func (l *lowering) refuseOptionalWidening(node *ast.Node) error {
-	found := l.optionalAtSite(node)
+func (lowering *lowering) refuseOptionalWidening(node *ast.Node) error {
+	found := lowering.optionalAtSite(node)
 	if found == nil {
 		return nil
 	}
-	return l.optionalWideningRefusal(node, found)
+	return lowering.optionalWideningRefusal(node, found)
 }
 
 // optionalWideningRefusal is the hiding rule's refusal of found at node.
-func (l *lowering) optionalWideningRefusal(node *ast.Node, found *optionalWidening) error {
-	return &Refused{Where: l.program.Where(node),
-		What: "optional property " + found.property + " in " + l.checker.TypeToString(found.target) + " absent from structural source " + l.checker.TypeToString(found.source) + ", which can hide fields",
-		Fix:  "declare " + found.property + " on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"}
+func (lowering *lowering) optionalWideningRefusal(node *ast.Node, found *optionalWidening) error {
+	return &Refused{Where: lowering.program.Where(node),
+		What: "optional property " +
+			found.property +
+			" in " +
+			lowering.checker.TypeToString(found.target) +
+			" absent from structural source " +
+			lowering.checker.TypeToString(found.source) +
+			", which can hide fields",
+		Fix: "declare " +
+			found.property +
+			" on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"}
 }
 
 func init() {
@@ -256,12 +313,12 @@ func init() {
 }
 
 // Resolve the import binding rather than trusting the callee's spelling.
-func (l *lowering) optionalNodeHostCall(call *ast.Node) bool {
+func (lowering *lowering) optionalNodeHostCall(call *ast.Node) bool {
 	callee := ast.SkipParentheses(call.AsCallExpression().Expression)
 	if callee.Kind == ast.KindPropertyAccessExpression {
 		callee = ast.SkipParentheses(callee.AsPropertyAccessExpression().Expression)
 	}
-	symbol := l.checker.GetSymbolAtLocation(callee)
+	symbol := lowering.checker.GetSymbolAtLocation(callee)
 	if symbol == nil {
 		return false
 	}

@@ -21,20 +21,20 @@ var inputFunctions = []string{
 // input lowers the program's doors in from outside, opened in 0.2: readTextFile(path) and
 // programArguments() from 'adamic', the door out, writeTextFile(path, text), and what a walk of the
 // file system needs, readDirectory(path) and fileStatus(path). isInput is false for any other call.
-func (l *lowering) input(node *ast.Node) (ir.Expression, bool, error) {
-	if value, found, nodeHostError := l.nodeHost(node); found {
+func (lowering *lowering) input(node *ast.Node) (ir.Expression, bool, error) {
+	if value, found, nodeHostError := lowering.nodeHost(node); found {
 		return value, true, nodeHostError
 	}
-	if value, found, nodeFsFileError := l.nodeFSFile(node); found {
+	if value, found, nodeFsFileError := lowering.nodeFSFile(node); found {
 		return value, true, nodeFsFileError
 	}
-	if value, found, encodeJsonError := l.encodeJson(node); found {
+	if value, found, encodeJsonError := lowering.encodeJson(node); found {
 		return value, true, encodeJsonError
 	}
-	if value, found, decodeJsonError := l.decodeJson(node); found {
+	if value, found, decodeJsonError := lowering.decodeJson(node); found {
 		return value, true, decodeJsonError
 	}
-	if value, found, tsgoError := l.tsgo(node); found {
+	if value, found, tsgoError := lowering.tsgo(node); found {
 		return value, true, tsgoError
 	}
 	callee := node.AsCallExpression().Expression
@@ -42,98 +42,98 @@ func (l *lowering) input(node *ast.Node) (ir.Expression, bool, error) {
 	// A spread of a tuple is a count the checker accepts and the cases below can't see, so it is
 	// refused here, before any of them reads it as a checker bug.
 	for _, name := range inputFunctions {
-		if !l.isPreludeFunction(callee, name) {
+		if !lowering.isPreludeFunction(callee, name) {
 			continue
 		}
 		for _, argument := range arguments {
 			if argument.Kind == ast.KindSpreadElement {
-				return nil, true, l.notYet(argument, "a spread argument to "+name)
+				return nil, true, lowering.notYet(argument, "a spread argument to "+name)
 			}
 		}
 	}
 	switch {
-	case l.isPreludeFunction(callee, "parallelMap"):
-		value, parallelMapError := l.parallelMap(node)
+	case lowering.isPreludeFunction(callee, "parallelMap"):
+		value, parallelMapError := lowering.parallelMap(node)
 		return value, true, parallelMapError
-	case l.isPreludeFunction(callee, "readTextFile"):
+	case lowering.isPreludeFunction(callee, "readTextFile"):
 		if len(arguments) != 1 {
 			return nil, true, errors.New("lower: " +
-				l.program.Where(node) +
+				lowering.program.Where(node) +
 				": readTextFile takes one path, and the checker let another count through")
 		}
-		path, expressionError := l.expression(arguments[0])
+		path, expressionError := lowering.expression(arguments[0])
 		if expressionError != nil {
 			return nil, true, expressionError
 		}
 		if path.Type() != ir.String {
 			return nil, true, errors.New("lower: " +
-				l.program.Where(arguments[0]) +
+				lowering.program.Where(arguments[0]) +
 				": readTextFile's path isn't a string, and the checker let it through")
 		}
 		return ir.ReadTextFile{Path: path}, true, nil
-	case l.isPreludeFunction(callee, "writeTextFile"):
+	case lowering.isPreludeFunction(callee, "writeTextFile"):
 		if len(arguments) != 2 {
 			return nil, true, errors.New("lower: " +
-				l.program.Where(node) +
+				lowering.program.Where(node) +
 				": writeTextFile takes a path and a text, and the checker let another count through")
 		}
-		path, expressionError := l.expression(arguments[0])
+		path, expressionError := lowering.expression(arguments[0])
 		if expressionError != nil {
 			return nil, true, expressionError
 		}
-		text, expressionError := l.expression(arguments[1])
+		text, expressionError := lowering.expression(arguments[1])
 		if expressionError != nil {
 			return nil, true, expressionError
 		}
 		if path.Type() != ir.String || text.Type() != ir.String {
 			return nil, true, errors.New("lower: " +
-				l.program.Where(node) +
+				lowering.program.Where(node) +
 				": writeTextFile's path or text isn't a string, and the checker let it through")
 		}
 		return ir.WriteTextFile{Path: path, Text: text}, true, nil
-	case l.isPreludeFunction(callee, "utf8Length") || l.isPreludeFunction(callee, "utf8At"):
+	case lowering.isPreludeFunction(callee, "utf8Length") || lowering.isPreludeFunction(callee, "utf8At"):
 		lowered := []ir.Expression{}
 		for _, argument := range arguments {
-			value, expressionError := l.expression(argument)
+			value, expressionError := lowering.expression(argument)
 			if expressionError != nil {
 				return nil, true, expressionError
 			}
 			lowered = append(lowered, value)
 		}
-		if l.isPreludeFunction(callee, "utf8Length") {
+		if lowering.isPreludeFunction(callee, "utf8Length") {
 			if len(lowered) != 1 || lowered[0].Type() != ir.String {
 				return nil, true, errors.New("lower: " +
-					l.program.Where(node) +
+					lowering.program.Where(node) +
 					": utf8Length takes one string, and the checker let something else through")
 			}
 			return ir.Utf8Length{Text: lowered[0]}, true, nil
 		}
 		if len(lowered) != 2 || lowered[0].Type() != ir.String || lowered[1].Type() != ir.Number {
 			return nil, true, errors.New("lower: " +
-				l.program.Where(node) +
+				lowering.program.Where(node) +
 				": utf8At takes a string and a number, and the checker let something else through")
 		}
 		return ir.Utf8At{Text: lowered[0], Index: lowered[1]}, true, nil
-	case l.isPreludeFunction(callee, "readDirectory"), l.isPreludeFunction(callee, "fileStatus"):
+	case lowering.isPreludeFunction(callee, "readDirectory"), lowering.isPreludeFunction(callee, "fileStatus"):
 		// By what it is, not what it's called here: an import may name it anything.
 		name := "fileStatus"
-		if l.isPreludeFunction(callee, "readDirectory") {
+		if lowering.isPreludeFunction(callee, "readDirectory") {
 			name = "readDirectory"
 		}
 		if len(arguments) != 1 {
 			return nil, true, errors.New("lower: " +
-				l.program.Where(node) +
+				lowering.program.Where(node) +
 				": " +
 				name +
 				" takes one path, and the checker let another count through")
 		}
-		path, expressionError := l.expression(arguments[0])
+		path, expressionError := lowering.expression(arguments[0])
 		if expressionError != nil {
 			return nil, true, expressionError
 		}
 		if path.Type() != ir.String {
 			return nil, true, errors.New("lower: " +
-				l.program.Where(arguments[0]) +
+				lowering.program.Where(arguments[0]) +
 				": " +
 				name +
 				"'s path isn't a string, and the checker let it through")
@@ -142,10 +142,10 @@ func (l *lowering) input(node *ast.Node) (ir.Expression, bool, error) {
 			return ir.ReadDirectory{Path: path}, true, nil
 		}
 		return ir.FileStatus{Path: path}, true, nil
-	case l.isPreludeFunction(callee, "programArguments"):
+	case lowering.isPreludeFunction(callee, "programArguments"):
 		if len(arguments) != 0 {
 			return nil, true, errors.New("lower: " +
-				l.program.Where(node) +
+				lowering.program.Where(node) +
 				": programArguments takes nothing, and the checker let arguments through")
 		}
 		return ir.ProgramArguments{}, true, nil

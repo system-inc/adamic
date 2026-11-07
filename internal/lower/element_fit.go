@@ -50,12 +50,12 @@ type elementMismatch struct {
 // elementsHeldOtherwise is the stop for the value made at node going into slot when a container in it
 // stores its elements otherwise than a container slot reads them, or "". It's the one judgment, made where
 // expression hands every lowered value to its slot (TestElementsHeldOtherwiseIsJudgedOnce).
-func (l *lowering) elementsHeldOtherwise(node *ast.Node, slot *checker.Type) string {
+func (lowering *lowering) elementsHeldOtherwise(node *ast.Node, slot *checker.Type) string {
 	node = ast.SkipParentheses(node)
 	var built ir.Type
 	switch {
 	case node.Kind == ast.KindArrayLiteralExpression:
-		if len(node.AsArrayLiteralExpression().Elements.Nodes) == 0 || l.tupleType(node) != nil {
+		if len(node.AsArrayLiteralExpression().Elements.Nodes) == 0 || lowering.tupleType(node) != nil {
 			// [] stores nothing to be read otherwise, and a tuple is stored as its own type's slots
 			// (tupleLiteral), which the reads of it follow (#fsb6n82).
 			return ""
@@ -63,14 +63,14 @@ func (l *lowering) elementsHeldOtherwise(node *ast.Node, slot *checker.Type) str
 		// A literal's elements are stored as elementType builds them: the slot's, where that's an array
 		// whose elements are boxed, or the literal's own. Each element is a value at its own slot, so
 		// only the literal's own elements are judged here.
-		element, elementTypeError := l.elementType(node)
+		element, elementTypeError := lowering.elementType(node)
 		if elementTypeError != nil {
 			// The literal lowered (expression judges a value only once it has), so elementType can't
 			// restate how its elements were stored, and nothing shows they're read as they're held.
 			return "a " +
-				l.checker.TypeToString(l.checker.GetTypeAtLocation(node)) +
+				lowering.checker.TypeToString(lowering.checker.GetTypeAtLocation(node)) +
 				" where " +
-				l.checker.TypeToString(slot) +
+				lowering.checker.TypeToString(slot) +
 				" goes, its elements stored in a way Adamic can't name here"
 		}
 		built = element
@@ -78,23 +78,23 @@ func (l *lowering) elementsHeldOtherwise(node *ast.Node, slot *checker.Type) str
 		// An object literal's fields are values at their own slots, each judged there.
 		return ""
 	}
-	if !l.slotSet(node) && patternInitializer(node) {
+	if !lowering.slotSet(node) && patternInitializer(node) {
 		return ""
 	}
-	own := l.checker.GetTypeAtLocation(node)
+	own := lowering.checker.GetTypeAtLocation(node)
 	key := elementFitKey{own: own, slot: slot, built: built, shallow: node.Kind == ast.KindArrayLiteralExpression}
-	found, answered := l.elementFits[key]
+	found, answered := lowering.elementFits[key]
 	if !answered {
-		found = l.elementsSeenAs(own, slot, built, key.shallow, 0, map[[2]*checker.Type]bool{})
-		if l.elementFits == nil {
-			l.elementFits = map[elementFitKey]*elementMismatch{}
+		found = lowering.elementsSeenAs(own, slot, built, key.shallow, 0, map[[2]*checker.Type]bool{})
+		if lowering.elementFits == nil {
+			lowering.elementFits = map[elementFitKey]*elementMismatch{}
 		}
-		l.elementFits[key] = found
+		lowering.elementFits[key] = found
 	}
 	if found == nil {
 		return ""
 	}
-	where := "a " + l.checker.TypeToString(own) + " where " + l.checker.TypeToString(slot) + " goes"
+	where := "a " + lowering.checker.TypeToString(own) + " where " + lowering.checker.TypeToString(slot) + " goes"
 	switch {
 	case found.stored == nil:
 		return where + ", its containers nested deeper than their elements are judged"
@@ -103,18 +103,18 @@ func (l *lowering) elementsHeldOtherwise(node *ast.Node, slot *checker.Type) str
 			", with no representation Adamic can name for the " +
 			found.unnamed +
 			" elements (" +
-			l.checker.TypeToString(found.stored) +
+			lowering.checker.TypeToString(found.stored) +
 			" stored, read as " +
-			l.checker.TypeToString(found.read) +
+			lowering.checker.TypeToString(found.read) +
 			")"
 	}
 	return where +
 		": its " +
-		l.checker.TypeToString(found.stored) +
+		lowering.checker.TypeToString(found.stored) +
 		" elements are stored as " +
 		heldName(found.held) +
 		" and read there as " +
-		l.checker.TypeToString(found.read) +
+		lowering.checker.TypeToString(found.read) +
 		", held as " +
 		heldName(found.as) +
 		" (build it as the slot's type where it's made, or copy its elements into one)"
@@ -164,7 +164,7 @@ func patternInitializer(node *ast.Node) bool {
 // takes it reads them: at the top, or inside an element, a field or a dictionary's value, all the way
 // down. built, when it's set, is how the top array stores its elements, and shallow leaves what's inside
 // them to their own sites.
-func (l *lowering) elementsSeenAs(
+func (lowering *lowering) elementsSeenAs(
 	stored *checker.Type,
 	viewed *checker.Type,
 	built ir.Type,
@@ -176,34 +176,34 @@ func (l *lowering) elementsSeenAs(
 		return nil
 	}
 	if depth > elementFitDepth {
-		if l.mentionsHeld(stored, []ir.Type{ir.Array, ir.Map}, 0, map[*checker.Type]bool{}) {
+		if lowering.mentionsHeld(stored, []ir.Type{ir.Array, ir.Map}, 0, map[*checker.Type]bool{}) {
 			return &elementMismatch{}
 		}
 		return nil
 	}
 	visited[[2]*checker.Type{stored, viewed}] = true
-	for _, storedMember := range l.heldMembers(stored) {
-		for _, viewedMember := range l.heldMembers(viewed) {
-			if !l.checker.IsTypeAssignableTo(storedMember, viewedMember) {
+	for _, storedMember := range lowering.heldMembers(stored) {
+		for _, viewedMember := range lowering.heldMembers(viewed) {
+			if !lowering.checker.IsTypeAssignableTo(storedMember, viewedMember) {
 				continue
 			}
-			inside, seen := l.containers(storedMember), l.containers(viewedMember)
+			inside, seen := lowering.containers(storedMember), lowering.containers(viewedMember)
 			if len(inside) == 0 && len(seen) == 0 {
-				if found := l.fieldsSeenAs(storedMember, viewedMember, depth, visited); found != nil {
+				if found := lowering.fieldsSeenAs(storedMember, viewedMember, depth, visited); found != nil {
 					return found
 				}
 				continue
 			}
 			for _, container := range inside {
 				for _, slot := range seen {
-					if !l.sameContainer(container, slot) ||
+					if !lowering.sameContainer(container, slot) ||
 						checker.IsTupleType(container) != checker.IsTupleType(slot) {
 						// A tuple seen as an array has its own stop (tupleSeenAsArray).
 						continue
 					}
-					storedArguments, viewedArguments := l.typeArguments(container), l.typeArguments(slot)
+					storedArguments, viewedArguments := lowering.typeArguments(container), lowering.typeArguments(slot)
 					for index := 0; index < len(storedArguments) && index < len(viewedArguments); index++ {
-						literal := built != 0 && index == 0 && l.isArrayType(container)
+						literal := built != 0 && index == 0 && lowering.isArrayType(container)
 						if storedArguments[index] == viewedArguments[index] && !literal {
 							// One type is held one way, whatever it is.
 							continue
@@ -215,11 +215,11 @@ func (l *lowering) elementsSeenAs(
 							// where any meets a typed slot (any_relations.go), not here.
 							continue
 						}
-						held, heldKnown := l.kept(storedArguments[index])
+						held, heldKnown := lowering.kept(storedArguments[index])
 						if literal {
 							held, heldKnown = built, true
 						}
-						as, asKnown := l.kept(viewedArguments[index])
+						as, asKnown := lowering.kept(viewedArguments[index])
 						mismatch := &elementMismatch{
 							stored: storedArguments[index],
 							read:   viewedArguments[index],
@@ -240,7 +240,7 @@ func (l *lowering) elementsSeenAs(
 						if shallow {
 							continue
 						}
-						if found := l.elementsSeenAs(
+						if found := lowering.elementsSeenAs(
 							storedArguments[index],
 							viewedArguments[index],
 							0,
@@ -261,28 +261,28 @@ func (l *lowering) elementsSeenAs(
 // fieldsSeenAs is elementsSeenAs through an object's fields and a dictionary's values, where a container
 // held in one is read through the other's. A library type holds only what its type arguments say, and a
 // function's slots are sameKeeping's to judge.
-func (l *lowering) fieldsSeenAs(
+func (lowering *lowering) fieldsSeenAs(
 	stored *checker.Type,
 	viewed *checker.Type,
 	depth int,
 	visited map[[2]*checker.Type]bool,
 ) *elementMismatch {
-	if !l.structured(stored) ||
-		!l.structured(viewed) ||
-		len(l.checker.GetSignaturesOfType(viewed, checker.SignatureKindCall)) > 0 {
+	if !lowering.structured(stored) ||
+		!lowering.structured(viewed) ||
+		len(lowering.checker.GetSignaturesOfType(viewed, checker.SignatureKindCall)) > 0 {
 		return nil
 	}
-	if l.librarySymbol(viewed.Symbol()) && viewed.ObjectFlags()&checker.ObjectFlagsAnonymous == 0 {
+	if lowering.librarySymbol(viewed.Symbol()) && viewed.ObjectFlags()&checker.ObjectFlagsAnonymous == 0 {
 		return nil
 	}
-	for _, field := range l.checker.GetPropertiesOfType(viewed) {
+	for _, field := range lowering.checker.GetPropertiesOfType(viewed) {
 		if field.Flags&ast.SymbolFlagsMethod != 0 {
 			continue
 		}
-		if inside := l.checker.GetPropertyOfType(stored, field.Name); inside != nil {
-			if found := l.elementsSeenAs(
-				l.checker.GetTypeOfSymbol(inside),
-				l.checker.GetTypeOfSymbol(field),
+		if inside := lowering.checker.GetPropertyOfType(stored, field.Name); inside != nil {
+			if found := lowering.elementsSeenAs(
+				lowering.checker.GetTypeOfSymbol(inside),
+				lowering.checker.GetTypeOfSymbol(field),
 				0,
 				false,
 				depth+1,
@@ -292,10 +292,10 @@ func (l *lowering) fieldsSeenAs(
 			}
 		}
 	}
-	for _, info := range l.checker.GetIndexInfosOfType(viewed) {
-		for _, own := range l.checker.GetIndexInfosOfType(stored) {
+	for _, info := range lowering.checker.GetIndexInfosOfType(viewed) {
+		for _, own := range lowering.checker.GetIndexInfosOfType(stored) {
 			if own.KeyType() == info.KeyType() {
-				if found := l.elementsSeenAs(
+				if found := lowering.elementsSeenAs(
 					own.ValueType(),
 					info.ValueType(),
 					0,
@@ -312,7 +312,7 @@ func (l *lowering) fieldsSeenAs(
 }
 
 // heldMembers is a type's members that can hold a value, a union's but null and undefined, or the type.
-func (l *lowering) heldMembers(proven *checker.Type) []*checker.Type {
+func (lowering *lowering) heldMembers(proven *checker.Type) []*checker.Type {
 	if proven.Flags()&checker.TypeFlagsUnion == 0 {
 		return []*checker.Type{proven}
 	}

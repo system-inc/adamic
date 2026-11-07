@@ -10,11 +10,11 @@ import (
 
 // forIn takes a snapshot of a fixed plain object's actual keys. Shapes cannot gain or lose fields,
 // and prototypes cannot be mutated, so this is JavaScript's enumeration throughout the loop.
-func (l *lowering) forIn(node *ast.Node) ([]ir.Statement, error) {
+func (lowering *lowering) forIn(node *ast.Node) ([]ir.Statement, error) {
 	statement := node.AsForInOrOfStatement()
-	proven := l.checker.GetTypeAtLocation(statement.Expression)
-	if l.isArrayType(proven) || checker.IsTupleType(proven) {
-		return nil, l.notYet(
+	proven := lowering.checker.GetTypeAtLocation(statement.Expression)
+	if lowering.isArrayType(proven) || checker.IsTupleType(proven) {
+		return nil, lowering.notYet(
 			statement.Expression,
 			"for...in over an array (holes and own enumerable properties are not represented; use for...of for elements)",
 		)
@@ -22,30 +22,36 @@ func (l *lowering) forIn(node *ast.Node) ([]ir.Statement, error) {
 	// Structural types can hide an array, and synthetic undefined spread fields are not real keys.
 	// Require a plain literal origin, including aliases. This deliberately refuses parameters and
 	// calls until their possible shapes and property presence can be proved.
-	isRecord := l.recordElement(proven) != nil
-	_, construction := l.constructionJSON(ast.SkipParentheses(statement.Expression))
+	isRecord := lowering.recordElement(proven) != nil
+	_, construction := lowering.constructionJSON(ast.SkipParentheses(statement.Expression))
 	// A readonly view held as the object it views enumerates what Object.keys over it does: the
 	// object's own keys, array indexes first, absent slots and # names left out (adamic_object_keys).
 	// No prototype carries an enumerable name in a closed program, and an array is never held as one.
-	view := l.readonlyObjectView(proven)
-	if !isRecord && !construction && !view && !l.plainEnumerableObject(statement.Expression, map[*ast.Symbol]bool{}) {
-		return nil, l.notYet(
+	view := lowering.readonlyObjectView(proven)
+	if !isRecord &&
+		!construction &&
+		!view &&
+		!lowering.plainEnumerableObject(statement.Expression, map[*ast.Symbol]bool{}) {
+		return nil, lowering.notYet(
 			statement.Expression,
 			"for...in without a proven fixed plain-object origin (arrays, prototypes and absent synthetic fields cannot be enumerated soundly)",
 		)
 	}
-	object, err := l.expression(statement.Expression)
+	object, err := lowering.expression(statement.Expression)
 	if err != nil {
 		return nil, err
 	}
 	if object.Type() != ir.Object && object.Type() != ir.Record {
-		return nil, l.notYet(statement.Expression, "for...in over a value that is not a plain object")
+		return nil, lowering.notYet(statement.Expression, "for...in over a value that is not a plain object")
 	}
 	loop := ir.ForOf{Iterable: ir.ObjectKeys{Object: object}, Element: ir.String}
 	var recordLocal int
 	if isRecord {
-		recordLocal = len(l.result.Locals)
-		l.result.Locals = append(l.result.Locals, ir.Local{Name: "record", Type: ir.Record, Function: l.functionIndex})
+		recordLocal = len(lowering.result.Locals)
+		lowering.result.Locals = append(
+			lowering.result.Locals,
+			ir.Local{Name: "record", Type: ir.Record, Function: lowering.functionIndex},
+		)
 		loop.Iterable = ir.RecordCall{
 			Method:    "keys",
 			Arguments: []ir.Expression{ir.Read{Local: recordLocal, Of: ir.Record}},
@@ -56,31 +62,34 @@ func (l *lowering) forIn(node *ast.Node) ([]ir.Statement, error) {
 	var assignment ir.Statement
 	if initializer.Kind == ast.KindVariableDeclarationList {
 		if initializer.Flags&ast.NodeFlagsBlockScoped == 0 {
-			return nil, &Refused{Where: l.program.Where(initializer), What: "var", Fix: "use const or let"}
+			return nil, &Refused{Where: lowering.program.Where(initializer), What: "var", Fix: "use const or let"}
 		}
 		declarations := initializer.AsVariableDeclarationList().Declarations.Nodes
 		if len(declarations) != 1 || !ast.IsIdentifier(declarations[0].Name()) {
-			return nil, l.notYet(initializer, "a for...in binding that is not one plain name")
+			return nil, lowering.notYet(initializer, "a for...in binding that is not one plain name")
 		}
-		loop.Local, err = l.declareLocal(declarations[0].Name())
+		loop.Local, err = lowering.declareLocal(declarations[0].Name())
 	} else {
 		target := ast.SkipParentheses(initializer)
-		local, found := l.local(target)
-		if !ast.IsIdentifier(target) || !found || l.result.Locals[local].Type != ir.String {
-			return nil, l.notYet(initializer, "a for...in assignment that is not a string variable")
+		local, found := lowering.local(target)
+		if !ast.IsIdentifier(target) || !found || lowering.result.Locals[local].Type != ir.String {
+			return nil, lowering.notYet(initializer, "a for...in assignment that is not a string variable")
 		}
-		loop.Local = len(l.result.Locals)
-		l.result.Locals = append(l.result.Locals, ir.Local{Name: "key", Type: ir.String, Function: l.functionIndex})
+		loop.Local = len(lowering.result.Locals)
+		lowering.result.Locals = append(
+			lowering.result.Locals,
+			ir.Local{Name: "key", Type: ir.String, Function: lowering.functionIndex},
+		)
 		assignment = ir.Assign{
 			Local:   local,
 			Value:   ir.Read{Local: loop.Local, Of: ir.String},
-			Checked: l.checked(local),
+			Checked: lowering.checked(local),
 		}
 	}
 	if err != nil {
 		return nil, err
 	}
-	body, statementError := l.statement(statement.Statement)
+	body, statementError := lowering.statement(statement.Statement)
 	if statementError != nil {
 		return nil, statementError
 	}
@@ -98,30 +107,31 @@ func (l *lowering) forIn(node *ast.Node) ([]ir.Statement, error) {
 	return []ir.Statement{loop}, nil
 }
 
-func (l *lowering) plainEnumerableObject(node *ast.Node, visiting map[*ast.Symbol]bool) bool {
+func (lowering *lowering) plainEnumerableObject(node *ast.Node, visiting map[*ast.Symbol]bool) bool {
 	node = ast.SkipParentheses(node)
 	// Enum objects have a complete fixed shape, including numeric reverse keys.
-	if l.enumObject(node) != nil {
+	if lowering.enumObject(node) != nil {
 		return true
 	}
 	if node.Kind == ast.KindAsExpression {
-		return l.plainEnumerableObject(node.AsAsExpression().Expression, visiting)
+		return lowering.plainEnumerableObject(node.AsAsExpression().Expression, visiting)
 	}
 	if node.Kind == ast.KindConditionalExpression {
 		branch := node.AsConditionalExpression()
-		return l.plainEnumerableObject(branch.WhenTrue, visiting) && l.plainEnumerableObject(branch.WhenFalse, visiting)
+		return lowering.plainEnumerableObject(branch.WhenTrue, visiting) &&
+			lowering.plainEnumerableObject(branch.WhenFalse, visiting)
 	}
 	if node.Kind == ast.KindObjectLiteralExpression {
 		for _, property := range node.AsObjectLiteralExpression().Properties.Nodes {
 			switch property.Kind {
 			case ast.KindSpreadAssignment:
 				source := property.AsSpreadAssignment().Expression
-				for _, field := range l.checker.GetPropertiesOfType(l.checker.GetTypeAtLocation(source)) {
+				for _, field := range lowering.checker.GetPropertiesOfType(lowering.checker.GetTypeAtLocation(source)) {
 					if field.Flags&ast.SymbolFlagsOptional != 0 {
 						return false
 					}
 				}
-				if !l.plainEnumerableObject(source, visiting) {
+				if !lowering.plainEnumerableObject(source, visiting) {
 					return false
 				}
 			case ast.KindPropertyAssignment, ast.KindShorthandPropertyAssignment:
@@ -141,12 +151,12 @@ func (l *lowering) plainEnumerableObject(node *ast.Node, visiting map[*ast.Symbo
 		return false
 	}
 	// Optional structural fields can be absent in the runtime shape; writing them would add keys.
-	for _, field := range l.checker.GetPropertiesOfType(l.checker.GetTypeAtLocation(node)) {
+	for _, field := range lowering.checker.GetPropertiesOfType(lowering.checker.GetTypeAtLocation(node)) {
 		if field.Flags&ast.SymbolFlagsOptional != 0 {
 			return false
 		}
 	}
-	symbol := l.symbol(node)
+	symbol := lowering.symbol(node)
 	if symbol == nil || visiting[symbol] || len(symbol.Declarations) != 1 {
 		return false
 	}
@@ -156,7 +166,7 @@ func (l *lowering) plainEnumerableObject(node *ast.Node, visiting map[*ast.Symbo
 	}
 	visiting[symbol] = true
 	defer delete(visiting, symbol)
-	if !l.plainEnumerableObject(declaration.AsVariableDeclaration().Initializer, visiting) {
+	if !lowering.plainEnumerableObject(declaration.AsVariableDeclaration().Initializer, visiting) {
 		return false
 	}
 	// Every assignment must have another proved plain-object origin. An alias may be assigned in
@@ -170,14 +180,14 @@ func (l *lowering) plainEnumerableObject(node *ast.Node, visiting map[*ast.Symbo
 		if inner.Kind == ast.KindBinaryExpression {
 			binary := inner.AsBinaryExpression()
 			if ast.IsIdentifier(ast.SkipParentheses(binary.Left)) &&
-				l.symbol(ast.SkipParentheses(binary.Left)) == symbol &&
+				lowering.symbol(ast.SkipParentheses(binary.Left)) == symbol &&
 				binary.OperatorToken.Kind == ast.KindEqualsToken {
-				safe = l.plainEnumerableObject(binary.Right, visiting)
+				safe = lowering.plainEnumerableObject(binary.Right, visiting)
 			}
 			if binary.OperatorToken.Kind == ast.KindEqualsToken && !ast.IsIdentifier(ast.SkipParentheses(binary.Left)) {
 				var target ast.Visitor
 				target = func(part *ast.Node) bool {
-					if ast.IsIdentifier(part) && l.symbol(part) == symbol {
+					if ast.IsIdentifier(part) && lowering.symbol(part) == symbol {
 						safe = false
 					}
 					return part.ForEachChild(target)

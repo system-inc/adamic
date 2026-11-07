@@ -123,7 +123,7 @@ type PlaceholderUse struct {
 	Of                       Type
 }
 
-func (p PlaceholderUse) Type() Type { return p.Of }
+func (use PlaceholderUse) Type() Type { return use.Of }
 
 // PredicateCheckCounts counts emitted overload-result directions. Unobservable
 // directions are proven and are also counted separately so erasure is visible.
@@ -346,7 +346,17 @@ func (t Type) Present() Type {
 
 // IsReference reports whether a value of the type lives on the heap and is counted.
 func (t Type) IsReference() bool {
-	return t == String || t == Object || t == Array || t == Map || t == Record || t == Closure || t == Union || t == Weak || t == Promise || t == Generator || t.IsTypedArray()
+	return t == String ||
+		t == Object ||
+		t == Array ||
+		t == Map ||
+		t == Record ||
+		t == Closure ||
+		t == Union ||
+		t == Weak ||
+		t == Promise ||
+		t == Generator ||
+		t.IsTypedArray()
 }
 
 // Local is a variable: its name as written, for reading the output, and its type.
@@ -740,7 +750,8 @@ type (
 	// StringCall is one of a string's methods with JavaScript's meaning: slice, codePointAt,
 	// padStart, padEnd, repeat, indexOf, lastIndexOf, includes, startsWith, endsWith, split,
 	// trimStart, trimEnd, at (a string, or undefined: a null reference), replace and replaceAll
-	// with a string pattern, toUpperCase and toLowerCase, and normalize (its form filled in). Arguments are as written; lowering filled in any default.
+	// with a string pattern, toUpperCase and toLowerCase, and normalize (its form filled in). Arguments are as written;
+	// lowering filled in any default.
 	StringCall struct {
 		Method    string
 		Value     Expression
@@ -1121,22 +1132,22 @@ func (StringConstant) Type() Type  { return String }
 func (NumberToString) Type() Type  { return String }
 func (BooleanToString) Type() Type { return String }
 func (Concat) Type() Type          { return String }
-func (c Conditional) Type() Type {
-	if c.Of != 0 {
-		return c.Of
+func (conditional Conditional) Type() Type {
+	if conditional.Of != 0 {
+		return conditional.Of
 	}
-	return c.WhenTrue.Type()
+	return conditional.WhenTrue.Type()
 }
 func (ObjectLiteral) Type() Type { return Object }
-func (p Property) Type() Type {
-	if p.Optional {
-		return Maybe(p.Of)
+func (property Property) Type() Type {
+	if property.Optional {
+		return Maybe(property.Of)
 	}
-	return p.Of
+	return property.Of
 }
 func (ArrayLiteral) Type() Type { return Array }
-func (l Length) Type() Type {
-	if l.Optional {
+func (length Length) Type() Type {
+	if length.Optional {
 		return MaybeNumber
 	}
 	return Number
@@ -1144,53 +1155,53 @@ func (l Length) Type() Type {
 func (MathCall) Type() Type        { return Number }
 func (StringFromCodes) Type() Type { return String }
 
-func (c NumberCall) Type() Type {
-	if c.Function == "parseInt" || c.Function == "parseFloat" || c.Function == "convert" {
+func (call NumberCall) Type() Type {
+	if call.Function == "parseInt" || call.Function == "parseFloat" || call.Function == "convert" {
 		return Number
 	}
 	return Boolean
 }
 func (ToFixed) Type() Type      { return String }
 func (NumberFormat) Type() Type { return String }
-func (u Undefined) Type() Type {
-	if u.Of != 0 {
-		return u.Of
+func (undefined Undefined) Type() Type {
+	if undefined.Of != 0 {
+		return undefined.Of
 	}
 	return Object
 }
-func (IsUndefined) Type() Type   { return Boolean }
-func (ArrayPush) Type() Type     { return Number }
-func (ArrayJoin) Type() Type     { return String }
-func (u Unwrap) Type() Type      { return u.Value.Type().Present() }
-func (d Defined) Type() Type     { return d.Value.Type() }
-func (m MaybeOf) Type() Type     { return m.Of }
-func (MaybeToString) Type() Type { return String }
-func (Box) Type() Type           { return Union }
-func (n Narrow) Type() Type      { return n.To }
-func (TypeOf) Type() Type        { return String }
-func (UnionToString) Type() Type { return String }
-func (WeakOf) Type() Type        { return Weak }
-func (MakeError) Type() Type     { return Object }
-func (w WeakTarget) Type() Type  { return w.To }
-func (c Coalesce) Type() Type    { return c.Of }
-func (l StringLength) Type() Type {
-	if l.Optional {
+func (IsUndefined) Type() Type       { return Boolean }
+func (ArrayPush) Type() Type         { return Number }
+func (ArrayJoin) Type() Type         { return String }
+func (unwrap Unwrap) Type() Type     { return unwrap.Value.Type().Present() }
+func (defined Defined) Type() Type   { return defined.Value.Type() }
+func (maybeOf MaybeOf) Type() Type   { return maybeOf.Of }
+func (MaybeToString) Type() Type     { return String }
+func (Box) Type() Type               { return Union }
+func (narrow Narrow) Type() Type     { return narrow.To }
+func (TypeOf) Type() Type            { return String }
+func (UnionToString) Type() Type     { return String }
+func (WeakOf) Type() Type            { return Weak }
+func (MakeError) Type() Type         { return Object }
+func (target WeakTarget) Type() Type { return target.To }
+func (coalesce Coalesce) Type() Type { return coalesce.Of }
+func (length StringLength) Type() Type {
+	if length.Optional {
 		return MaybeNumber
 	}
 	return Number
 }
-func (CharCodeAt) Type() Type    { return Number }
-func (Trim) Type() Type          { return String }
-func (CodePoints) Type() Type    { return Array }
-func (StringIndex) Type() Type   { return String }
-func (MapEntries) Type() Type    { return Array }
-func (MakeClosure) Type() Type   { return Closure }
-func (CheckedCast) Type() Type   { return Object }
-func (c CallClosure) Type() Type { return c.Returns }
-func (ArrayMap) Type() Type      { return Array }
+func (CharCodeAt) Type() Type          { return Number }
+func (Trim) Type() Type                { return String }
+func (CodePoints) Type() Type          { return Array }
+func (StringIndex) Type() Type         { return String }
+func (MapEntries) Type() Type          { return Array }
+func (MakeClosure) Type() Type         { return Closure }
+func (CheckedCast) Type() Type         { return Object }
+func (closure CallClosure) Type() Type { return closure.Returns }
+func (ArrayMap) Type() Type            { return Array }
 
-func (v ArrayVisit) Type() Type {
-	switch v.Method {
+func (visit ArrayVisit) Type() Type {
+	switch visit.Method {
 	case "filter":
 		return Array
 	case "some", "every":
@@ -1198,31 +1209,31 @@ func (v ArrayVisit) Type() Type {
 	case "findIndex", "findLastIndex":
 		return Number
 	case "find", "findLast":
-		return Maybe(v.Element)
+		return Maybe(visit.Element)
 	}
 	return 0
 }
 
-func (i ArrayIndex) Type() Type { return Maybe(i.Element) }
-func (p ArrayPop) Type() Type   { return Maybe(p.Element) }
-func (ArraySlice) Type() Type   { return Array }
+func (index ArrayIndex) Type() Type { return Maybe(index.Element) }
+func (pop ArrayPop) Type() Type     { return Maybe(pop.Element) }
+func (ArraySlice) Type() Type       { return Array }
 
-func (s ArraySearch) Type() Type {
-	if s.Includes {
+func (search ArraySearch) Type() Type {
+	if search.Includes {
 		return Boolean
 	}
 	return Number
 }
-func (ArrayReverse) Type() Type  { return Array }
-func (ArraySplice) Type() Type   { return Array }
-func (ArrayFill) Type() Type     { return Array }
-func (ArrayFrom) Type() Type     { return Array }
-func (ArrayConcat) Type() Type   { return Array }
-func (r ArrayReduce) Type() Type { return r.Result }
-func (ArraySort) Type() Type     { return Array }
+func (ArrayReverse) Type() Type       { return Array }
+func (ArraySplice) Type() Type        { return Array }
+func (ArrayFill) Type() Type          { return Array }
+func (ArrayFrom) Type() Type          { return Array }
+func (ArrayConcat) Type() Type        { return Array }
+func (reduce ArrayReduce) Type() Type { return reduce.Result }
+func (ArraySort) Type() Type          { return Array }
 
-func (c StringCall) Type() Type {
-	switch c.Method {
+func (call StringCall) Type() Type {
+	switch call.Method {
 	case "codePointAt":
 		return MaybeNumber
 	case "indexOf", "lastIndexOf":
@@ -1256,30 +1267,32 @@ func (MapDelete) Type() Type  { return Boolean }
 func (MapSize) Type() Type    { return Number }
 func (HasOwn) Type() Type     { return Boolean }
 
-func (g MapGet) Type() Type { return Maybe(g.ValueType) }
+func (get MapGet) Type() Type { return Maybe(get.ValueType) }
 
-func (r Read) Type() Type { return r.Of }
-func (c Call) Type() Type { return c.Returns }
+func (read Read) Type() Type { return read.Of }
+func (call Call) Type() Type { return call.Returns }
 
-func (u Unary) Type() Type {
-	if u.Operator == Not {
+func (unary Unary) Type() Type {
+	if unary.Operator == Not {
 		return Boolean
 	}
 	return Number
 }
 
-func (b Binary) Type() Type {
-	if (b.Operator == And || b.Operator == Or) && b.Left.Type() == MaybeBoolean && b.Right.Type() == MaybeBoolean {
+func (binary Binary) Type() Type {
+	if (binary.Operator == And || binary.Operator == Or) &&
+		binary.Left.Type() == MaybeBoolean &&
+		binary.Right.Type() == MaybeBoolean {
 		return MaybeBoolean
 	}
-	switch b.Operator {
+	switch binary.Operator {
 	case Add, Subtract, Multiply, Divide, Remainder, Power, BitAnd, BitOr, BitXor, ShiftLeft, ShiftRight, ShiftRightUnsigned:
 		return Number
 	case Less, LessOrEqual, Greater, GreaterOrEqual, Equal, NotEqual, And, Or:
 		return Boolean
 	}
 	// An operator neither list names would be typed by a guess, and a wrong guess compiles wrong.
-	panic(fmt.Sprintf("ir: a binary operator %d with no type", b.Operator))
+	panic(fmt.Sprintf("ir: a binary operator %d with no type", binary.Operator))
 }
 
 // Operator is an arithmetic, comparison, equality or logical operator.
@@ -1520,8 +1533,8 @@ func (Continue) statement()            {}
 func (Throw) statement()               {}
 func (Try) statement()                 {}
 
-func (p *Program) HasInheritance() bool {
-	for _, class := range p.Classes {
+func (program *Program) HasInheritance() bool {
+	for _, class := range program.Classes {
 		if class.Base != 0 {
 			return true
 		}

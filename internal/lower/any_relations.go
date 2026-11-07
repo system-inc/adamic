@@ -24,23 +24,38 @@ import (
 // counts too. Exempt until Language's axiom audit lands, and then replaced by its modelled list: a library
 // call's direct result (Object.entries over a record, a method value's call) and a program callback
 // passed as a library signature's argument, whose parameters the library fills (replace's callback).
-func (l *lowering) refuseAnyRelation(node *ast.Node) error {
-	name, source, target := l.relationSite(node)
-	if target == nil || source == nil || source.Flags()&checker.TypeFlagsAny != 0 || l.libraryCallResult(node) {
+func (lowering *lowering) refuseAnyRelation(node *ast.Node) error {
+	name, source, target := lowering.relationSite(node)
+	if target == nil || source == nil || source.Flags()&checker.TypeFlagsAny != 0 || lowering.libraryCallResult(node) {
 		return nil
 	}
-	found := l.anyRelated(source, target, name == "argument" && l.libraryCallArgument(node), 0, map[[2]*checker.Type]bool{})
+	found := lowering.anyRelated(
+		source,
+		target,
+		name == "argument" && lowering.libraryCallArgument(node),
+		0,
+		map[[2]*checker.Type]bool{},
+	)
 	if found == nil {
 		return nil
 	}
 	// The lowest-priority stop: another rule's refusal anywhere in the module is the stronger reason, as
 	// Array.prototype.fill's method value and Object.entries over a graph record already are, so this one
 	// is kept for refuse to return only when nothing else refused.
-	if l.refusal.deferred == nil {
+	if lowering.refusal.deferred == nil {
 		if found.depthLimit {
-			l.refusal.deferred = l.notYet(node, "a structural relation deeper than 64 type pairs while checking members typed any")
+			lowering.refusal.deferred = lowering.notYet(
+				node,
+				"a structural relation deeper than 64 type pairs while checking members typed any",
+			)
 		} else {
-			l.refusal.deferred = l.notYet(node, "a member typed any ("+found.path+") related to "+l.checker.TypeToString(found.target)+" at the "+name+" site")
+			lowering.refusal.deferred = lowering.notYet(node, "a member typed any ("+
+				found.path+
+				") related to "+
+				lowering.checker.TypeToString(found.target)+
+				" at the "+
+				name+
+				" site")
 		}
 	}
 	return nil
@@ -61,7 +76,12 @@ type anyRelation struct {
 // on 99634edf): an element, a property, a type argument, a return. Array.isArray's `any[]` seen as a
 // `string[]` holds whatever the value held. Only a parameter position is exempt, and only between two
 // signatures the library declares (anyRelatedSignatures).
-func (l *lowering) anyRelated(source, target *checker.Type, callback bool, depth int, seen map[[2]*checker.Type]bool) *anyRelation {
+func (lowering *lowering) anyRelated(
+	source, target *checker.Type,
+	callback bool,
+	depth int,
+	seen map[[2]*checker.Type]bool,
+) *anyRelation {
 	if source == nil || target == nil || source == target {
 		return nil
 	}
@@ -75,7 +95,7 @@ func (l *lowering) anyRelated(source, target *checker.Type, callback bool, depth
 	}
 	if source.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range source.Types() {
-			if found := l.anyRelated(member, target, callback, depth+1, seen); found != nil {
+			if found := lowering.anyRelated(member, target, callback, depth+1, seen); found != nil {
 				return found
 			}
 		}
@@ -83,27 +103,29 @@ func (l *lowering) anyRelated(source, target *checker.Type, callback bool, depth
 	}
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range target.Types() {
-			if found := l.anyRelated(source, member, callback, depth+1, seen); found != nil {
+			if found := lowering.anyRelated(source, member, callback, depth+1, seen); found != nil {
 				return found
 			}
 		}
 		return nil
 	}
 	if source.Flags()&checker.TypeFlagsTypeParameter != 0 {
-		return l.anyRelated(l.checker.GetBaseConstraintOfType(source), target, callback, depth+1, seen)
+		return lowering.anyRelated(lowering.checker.GetBaseConstraintOfType(source), target, callback, depth+1, seen)
 	}
 	if target.Flags()&checker.TypeFlagsTypeParameter != 0 {
-		return l.anyRelated(source, l.checker.GetBaseConstraintOfType(target), callback, depth+1, seen)
+		return lowering.anyRelated(source, lowering.checker.GetBaseConstraintOfType(target), callback, depth+1, seen)
 	}
-	if source.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 || target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 {
+	if source.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 ||
+		target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 {
 		return nil
 	}
-	if (l.isArrayType(source) || checker.IsTupleType(source)) && (l.isArrayType(target) || checker.IsTupleType(target)) {
+	if (lowering.isArrayType(source) || checker.IsTupleType(source)) &&
+		(lowering.isArrayType(target) || checker.IsTupleType(target)) {
 		if checker.IsTupleType(source) && checker.IsTupleType(target) {
-			sources, targets := l.checker.GetTypeArguments(source), l.checker.GetTypeArguments(target)
+			sources, targets := lowering.checker.GetTypeArguments(source), lowering.checker.GetTypeArguments(target)
 			for index, inside := range sources {
 				if index < len(targets) {
-					if found := l.anyContained(inside, targets[index], depth, seen); found != nil {
+					if found := lowering.anyContained(inside, targets[index], depth, seen); found != nil {
 						found.path = "[" + strconv.Itoa(index) + "]" + found.path
 						return found
 					}
@@ -111,38 +133,49 @@ func (l *lowering) anyRelated(source, target *checker.Type, callback bool, depth
 			}
 			return nil
 		}
-		if found := l.anyContained(l.checker.GetNumberIndexType(source), l.checker.GetNumberIndexType(target), depth, seen); found != nil {
+		if found := lowering.anyContained(
+			lowering.checker.GetNumberIndexType(source),
+			lowering.checker.GetNumberIndexType(target),
+			depth,
+			seen,
+		); found != nil {
 			found.path = "[]" + found.path
 			return found
 		}
 		return nil
 	}
 	for _, kind := range []checker.SignatureKind{checker.SignatureKindCall, checker.SignatureKindConstruct} {
-		if found := l.anyRelatedSignatures(source, target, kind, callback, depth, seen); found != nil {
+		if found := lowering.anyRelatedSignatures(source, target, kind, callback, depth, seen); found != nil {
 			return found
 		}
 	}
-	if source.ObjectFlags()&checker.ObjectFlagsReference != 0 && target.ObjectFlags()&checker.ObjectFlagsReference != 0 && source.Target() != nil && source.Target() == target.Target() {
-		sources, targets := l.checker.GetTypeArguments(source), l.checker.GetTypeArguments(target)
+	if source.ObjectFlags()&checker.ObjectFlagsReference != 0 &&
+		target.ObjectFlags()&checker.ObjectFlagsReference != 0 &&
+		source.Target() != nil &&
+		source.Target() == target.Target() {
+		sources, targets := lowering.checker.GetTypeArguments(source), lowering.checker.GetTypeArguments(target)
 		for index, inside := range sources {
 			if index < len(targets) {
-				if found := l.anyContained(inside, targets[index], depth, seen); found != nil {
+				if found := lowering.anyContained(inside, targets[index], depth, seen); found != nil {
 					found.path = "<" + strconv.Itoa(index+1) + ">" + found.path
 					return found
 				}
 			}
 		}
 	}
-	for _, property := range l.checker.GetPropertiesOfType(target) {
-		from := l.checker.GetTypeOfPropertyOfType(source, property.Name)
-		to := l.checker.GetTypeOfPropertyOfType(target, property.Name)
-		if found := l.anyContained(from, to, depth, seen); found != nil {
+	for _, property := range lowering.checker.GetPropertiesOfType(target) {
+		from := lowering.checker.GetTypeOfPropertyOfType(source, property.Name)
+		to := lowering.checker.GetTypeOfPropertyOfType(target, property.Name)
+		if found := lowering.anyContained(from, to, depth, seen); found != nil {
 			step := property.Name
 			if strings.HasPrefix(property.Name, ast.InternalSymbolNamePrefix) {
 				// A well-known symbol's key is internal; name it as the source spells it.
-				step = l.checker.SymbolToString(property)
+				step = lowering.checker.SymbolToString(property)
 			}
-			if found.path != "" && !strings.HasPrefix(found.path, "[") && !strings.HasPrefix(found.path, "<") && !strings.HasPrefix(found.path, "(") {
+			if found.path != "" &&
+				!strings.HasPrefix(found.path, "[") &&
+				!strings.HasPrefix(found.path, "<") &&
+				!strings.HasPrefix(found.path, "(") {
 				step += "."
 			}
 			found.path = step + found.path
@@ -159,16 +192,30 @@ func (l *lowering) anyRelated(source, target *checker.Type, callback bool, depth
 // the library's own modelling of what flows in, and no value the program holds passes through it. So are
 // a callback's own parameters when it's passed as a library call's argument (callback): the library fills
 // them, until the axiom audit says how.
-func (l *lowering) anyRelatedSignatures(source, target *checker.Type, kind checker.SignatureKind, callback bool, depth int, seen map[[2]*checker.Type]bool) *anyRelation {
-	sources := l.checker.GetSignaturesOfType(source, kind)
-	targets := l.checker.GetSignaturesOfType(target, kind)
+func (lowering *lowering) anyRelatedSignatures(
+	source, target *checker.Type,
+	kind checker.SignatureKind,
+	callback bool,
+	depth int,
+	seen map[[2]*checker.Type]bool,
+) *anyRelation {
+	sources := lowering.checker.GetSignaturesOfType(source, kind)
+	targets := lowering.checker.GetSignaturesOfType(target, kind)
 	if len(sources) == 0 || len(targets) == 0 {
 		return nil
 	}
 	for _, to := range targets {
 		for _, from := range sources {
-			to, from := checker.Checker_getCanonicalSignature(l.checker, to), checker.Checker_getCanonicalSignature(l.checker, from)
-			if found := l.anyContained(l.checker.GetReturnTypeOfSignature(from), l.checker.GetReturnTypeOfSignature(to), depth, seen); found != nil {
+			to, from := checker.Checker_getCanonicalSignature(
+				lowering.checker,
+				to,
+			), checker.Checker_getCanonicalSignature(lowering.checker, from)
+			if found := lowering.anyContained(
+				lowering.checker.GetReturnTypeOfSignature(from),
+				lowering.checker.GetReturnTypeOfSignature(to),
+				depth,
+				seen,
+			); found != nil {
 				found.path = "()" + found.path
 				return found
 			}
@@ -176,7 +223,12 @@ func (l *lowering) anyRelatedSignatures(source, target *checker.Type, kind check
 				continue
 			}
 			for position := range anyRelatedPositions(from, to) {
-				if found := l.anyContained(l.checker.GetTypeAtPosition(to, position), l.checker.GetTypeAtPosition(from, position), depth, seen); found != nil {
+				if found := lowering.anyContained(
+					lowering.checker.GetTypeAtPosition(to, position),
+					lowering.checker.GetTypeAtPosition(from, position),
+					depth,
+					seen,
+				); found != nil {
 					found.path = "(" + strconv.Itoa(position) + ")" + found.path
 					return found
 				}
@@ -199,20 +251,20 @@ func anyRelatedPositions(from, to *checker.Signature) int {
 
 // libraryCallResult is whether node, past parentheses, is a call or new expression whose resolved signature
 // the library declares: its result is the library's, until the axiom audit lands.
-func (l *lowering) libraryCallResult(node *ast.Node) bool {
+func (lowering *lowering) libraryCallResult(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
 	if node.Kind != ast.KindCallExpression && node.Kind != ast.KindNewExpression {
 		return false
 	}
-	signature := l.checker.GetResolvedSignature(node)
+	signature := lowering.checker.GetResolvedSignature(node)
 	return signature != nil && librarySignature(signature)
 }
 
 // libraryCallArgument is whether node is an argument of a call or new expression whose resolved signature
 // the library declares. A value given a slot by a caller (slotSet) is written into that slot, not handed
 // to the library, so it isn't one.
-func (l *lowering) libraryCallArgument(node *ast.Node) bool {
-	if l.slotSet(node) {
+func (lowering *lowering) libraryCallArgument(node *ast.Node) bool {
+	if lowering.slotSet(node) {
 		return false
 	}
 	site := node
@@ -222,7 +274,7 @@ func (l *lowering) libraryCallArgument(node *ast.Node) bool {
 	if site.Parent == nil || site.Parent.Kind != ast.KindCallExpression && site.Parent.Kind != ast.KindNewExpression {
 		return false
 	}
-	signature := l.checker.GetResolvedSignature(site.Parent)
+	signature := lowering.checker.GetResolvedSignature(site.Parent)
 	return signature != nil && librarySignature(signature)
 }
 
@@ -240,9 +292,16 @@ func librarySignature(signature *checker.Signature) bool {
 
 // anyContained relates one position inside a container: a member typed any seen as anything but any
 // or unknown is the hazard, and anything else is walked in turn.
-func (l *lowering) anyContained(inside, wider *checker.Type, depth int, seen map[[2]*checker.Type]bool) *anyRelation {
-	if inside != nil && wider != nil && inside.Flags()&checker.TypeFlagsAny != 0 && wider.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown) == 0 {
+func (lowering *lowering) anyContained(
+	inside, wider *checker.Type,
+	depth int,
+	seen map[[2]*checker.Type]bool,
+) *anyRelation {
+	if inside != nil &&
+		wider != nil &&
+		inside.Flags()&checker.TypeFlagsAny != 0 &&
+		wider.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown) == 0 {
 		return &anyRelation{target: wider}
 	}
-	return l.anyRelated(inside, wider, false, depth+1, seen)
+	return lowering.anyRelated(inside, wider, false, depth+1, seen)
 }

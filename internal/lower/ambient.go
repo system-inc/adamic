@@ -9,7 +9,7 @@ import (
 
 // Only program modules reach refuse. The compiler's library, prelude and generated
 // platform bindings remain the trusted declarations of values supplied by the runtime.
-func (l *lowering) referenceRefusal(module *ast.SourceFile) error {
+func (lowering *lowering) referenceRefusal(module *ast.SourceFile) error {
 	var first *ast.FileReference
 	var kind string
 	for _, group := range []struct {
@@ -31,7 +31,7 @@ func (l *lowering) referenceRefusal(module *ast.SourceFile) error {
 	}
 	line, column := scanner.GetLineAndCharacterOfPosition(module, first.Pos())
 	return &Refused{
-		Where: fmt.Sprintf("%s:%d:%d", l.program.FileName(module), line+1, column+1),
+		Where: fmt.Sprintf("%s:%d:%d", lowering.program.FileName(module), line+1, column+1),
 		What:  "a triple-slash reference " + kind + " directive",
 		Fix:   "remove the directive and import a module that defines its values; use Adamic's library or generated platform bindings for host values",
 	}
@@ -58,7 +58,7 @@ func ambientNamespaceValues(node *ast.Node) bool {
 	return false
 }
 
-func (l *lowering) ambientRefusal(node *ast.Node) error {
+func (lowering *lowering) ambientRefusal(node *ast.Node) error {
 	what := ""
 	if node.Kind == ast.KindModuleDeclaration {
 		switch {
@@ -73,7 +73,7 @@ func (l *lowering) ambientRefusal(node *ast.Node) error {
 		switch node.Kind {
 		case ast.KindVariableStatement:
 			// A .ts file's declaration a host-binding row names lowers by its row (host_bindings.go).
-			if matched, hostBindingStatementError := l.hostBindingStatement(node); matched {
+			if matched, hostBindingStatementError := lowering.hostBindingStatement(node); matched {
 				return hostBindingStatementError
 			}
 			what = "an ambient value declaration"
@@ -89,7 +89,7 @@ func (l *lowering) ambientRefusal(node *ast.Node) error {
 		return nil
 	}
 	return &Refused{
-		Where: l.program.Where(node),
+		Where: lowering.program.Where(node),
 		What:  what,
 		Fix:   "define the values in a module and import them; use Adamic-generated platform bindings for host values",
 	}

@@ -11,7 +11,7 @@ import (
 // arrays and strings are length-prefixed. It excludes optional search/compiled
 // fast paths, which are derived optimizations rather than bytecode. This is a
 // test seam, not a persistent bytecode file format.
-func (p *Program) NativeBytecodeSnapshot() ([]byte, error) {
+func (program *Program) NativeBytecodeSnapshot() ([]byte, error) {
 	var out []byte
 	number := func(value uint64) { out = binary.LittleEndian.AppendUint64(out, value) }
 	boolean := func(value bool) {
@@ -93,7 +93,7 @@ func (p *Program) NativeBytecodeSnapshot() ([]byte, error) {
 		}
 		return nil
 	}
-	if emitError := emit(p); emitError != nil {
+	if emitError := emit(program); emitError != nil {
 		return nil, emitError
 	}
 	return out, nil

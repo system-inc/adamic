@@ -27,13 +27,13 @@ type wholeObjectCopy struct {
 // casts lower, so this is decided once lowering is done: a copy lowered before its view's cast is
 // judged by the same registry. A copy through another type that names a checked field is NotYet
 // too when the value may be a viewed allocation, as checkLazyViewReads' field-name fallback is.
-func (l *lowering) checkViewCopies() error {
-	if len(l.wholeObjectCopies) == 0 {
+func (lowering *lowering) checkViewCopies() error {
+	if len(lowering.wholeObjectCopies) == 0 {
 		return nil
 	}
 	receivers := map[int]bool{}
 	names := map[string]bool{}
-	for key := range l.result.CheckedFields {
+	for key := range lowering.result.CheckedFields {
 		// A record's field is checked under its bare name, and is no view's.
 		receiver, name, keyed := strings.Cut(key, ":")
 		id, parseError := strconv.Atoi(receiver)
@@ -48,19 +48,21 @@ func (l *lowering) checkViewCopies() error {
 	}
 	var graph *allocationFlowGraph
 	var viewed map[int]bool
-	unknown := len(l.result.ViewOrigins) == 0
-	for _, copied := range l.wholeObjectCopies {
+	unknown := len(lowering.result.ViewOrigins) == 0
+	for _, copied := range lowering.wholeObjectCopies {
 		if copied.reader != "" {
 			continue
 		}
-		if view := l.checkedViewType(copied.copied, receivers); view != nil {
-			return l.notYet(
+		if view := lowering.checkedViewType(copied.copied, receivers); view != nil {
+			return lowering.notYet(
 				copied.node,
-				"a whole-object copy of a value of checked view type "+l.checker.TypeToString(view),
+				"a whole-object copy of a value of checked view type "+lowering.checker.TypeToString(view),
 			)
 		}
 		named := false
-		for _, property := range l.checker.GetPropertiesOfType(l.checker.GetNonNullableType(copied.copied)) {
+		for _, property := range lowering.checker.GetPropertiesOfType(
+			lowering.checker.GetNonNullableType(copied.copied),
+		) {
 			named = named || names[property.Name]
 		}
 		if !named {
@@ -68,7 +70,7 @@ func (l *lowering) checkViewCopies() error {
 		}
 		if graph == nil {
 			var reachUnknown bool
-			graph, viewed, reachUnknown = viewedAllocations(l.result, false)
+			graph, viewed, reachUnknown = viewedAllocations(lowering.result, false)
 			unknown = unknown || reachUnknown
 		}
 		reaches := graph.ReachingAllocations(copied.source)
@@ -77,8 +79,8 @@ func (l *lowering) checkViewCopies() error {
 			demanded = demanded || viewed[site]
 		}
 		if demanded {
-			return l.notYet(copied.node, "a whole-object copy of a value of type "+
-				l.checker.TypeToString(copied.copied)+
+			return lowering.notYet(copied.node, "a whole-object copy of a value of type "+
+				lowering.checker.TypeToString(copied.copied)+
 				" that may hold a checked view's value")
 		}
 	}
@@ -87,14 +89,14 @@ func (l *lowering) checkViewCopies() error {
 
 // checkedViewType is the view receiver type a copied value's type is, or holds as a union or
 // intersection member, or nil.
-func (l *lowering) checkedViewType(copied *checker.Type, receivers map[int]bool) *checker.Type {
-	if receivers[l.viewFieldReceiverTypeID(nil, copied)] {
+func (lowering *lowering) checkedViewType(copied *checker.Type, receivers map[int]bool) *checker.Type {
+	if receivers[lowering.viewFieldReceiverTypeID(nil, copied)] {
 		return copied
 	}
-	copied = l.checker.GetNonNullableType(l.concrete(copied))
+	copied = lowering.checker.GetNonNullableType(lowering.concrete(copied))
 	if copied.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
 		for _, member := range copied.Types() {
-			if view := l.checkedViewType(member, receivers); view != nil {
+			if view := lowering.checkedViewType(member, receivers); view != nil {
 				return view
 			}
 		}

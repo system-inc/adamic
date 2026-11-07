@@ -17,7 +17,7 @@ func sourceExpression(node *ast.Node) string {
 
 // Literal placeholder initializers reserve the existing uninitialized slot.
 // An outer type annotation, as in scanner.ts Script_Extensions, carries no value.
-func (l *lowering) uninitializedInitializer(node *ast.Node) bool {
+func (lowering *lowering) uninitializedInitializer(node *ast.Node) bool {
 	if node == nil {
 		return false
 	}
@@ -35,21 +35,21 @@ func (l *lowering) uninitializedInitializer(node *ast.Node) bool {
 	if operand.Kind != ast.KindIdentifier || operand.Text() != "undefined" {
 		return false
 	}
-	symbol := l.symbol(operand)
+	symbol := lowering.symbol(operand)
 	if symbol == nil || len(symbol.Declarations) == 0 {
 		return true
 	}
 	return load.IsLibrary(ast.GetSourceFileOfNode(symbol.Declarations[0]))
 }
 
-func (l *lowering) uninitializedDeclaration(node *ast.Node) bool {
+func (lowering *lowering) uninitializedDeclaration(node *ast.Node) bool {
 	switch node.Kind {
 	case ast.KindVariableDeclaration:
 		return node.AsVariableDeclaration().ExclamationToken != nil ||
-			l.uninitializedInitializer(node.AsVariableDeclaration().Initializer)
+			lowering.uninitializedInitializer(node.AsVariableDeclaration().Initializer)
 	case ast.KindPropertyDeclaration:
 		return node.PostfixToken() != nil && node.PostfixToken().Kind == ast.KindExclamationToken ||
-			l.uninitializedInitializer(node.AsPropertyDeclaration().Initializer)
+			lowering.uninitializedInitializer(node.AsPropertyDeclaration().Initializer)
 	}
 	return false
 }
@@ -458,8 +458,8 @@ func assertionInitializer(node *ast.Node) bool {
 }
 
 // TypeScript assertions are eager checks, including in storage initializers.
-func (l *lowering) lazyAssertionInitializer(node *ast.Node) bool {
-	return assertionInitializer(node) && !l.checkedAssertionSource(node)
+func (lowering *lowering) lazyAssertionInitializer(node *ast.Node) bool {
+	return assertionInitializer(node) && !lowering.checkedAssertionSource(node)
 }
 
 func assertionVarList(list *ast.Node) bool {
@@ -473,9 +473,12 @@ func assertionVarList(list *ast.Node) bool {
 }
 
 // lazyAssertion holds the original representation once and assigns only when present.
-func (l *lowering) lazyAssertion(node *ast.Node, to ir.Type) ([]ir.Statement, ir.Expression, ir.Expression, error) {
+func (lowering *lowering) lazyAssertion(
+	node *ast.Node,
+	to ir.Type,
+) ([]ir.Statement, ir.Expression, ir.Expression, error) {
 	operand := ast.SkipParentheses(node).AsNonNullExpression().Expression
-	value, expressionError := l.expression(operand)
+	value, expressionError := lowering.expression(operand)
 	if expressionError != nil {
 		return nil, nil, nil, expressionError
 	}
@@ -499,10 +502,10 @@ stored:
 	if !value.Type().IsMaybe() && !value.Type().IsReference() {
 		return nil, ir.BooleanConstant{Value: true}, fit(value, to), nil
 	}
-	local := len(l.result.Locals)
-	l.result.Locals = append(
-		l.result.Locals,
-		ir.Local{Name: "assertion_initializer", Type: value.Type(), Function: l.functionIndex},
+	local := len(lowering.result.Locals)
+	lowering.result.Locals = append(
+		lowering.result.Locals,
+		ir.Local{Name: "assertion_initializer", Type: value.Type(), Function: lowering.functionIndex},
 	)
 	read := ir.Read{Local: local, Of: value.Type()}
 	present := ir.Expression(ir.BooleanConstant{Value: true})

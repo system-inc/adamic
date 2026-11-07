@@ -11,23 +11,23 @@ type SuspensionGraph interface {
 
 type suspensionGraph struct{ function *Function }
 
-func (g suspensionGraph) EntryBlock() BlockId { return g.function.Entry }
-func (g suspensionGraph) BlockOrder() []BlockId {
-	result := make([]BlockId, 0, len(g.function.Blocks))
-	for _, block := range g.function.Blocks {
+func (graph suspensionGraph) EntryBlock() BlockId { return graph.function.Entry }
+func (graph suspensionGraph) BlockOrder() []BlockId {
+	result := make([]BlockId, 0, len(graph.function.Blocks))
+	for _, block := range graph.function.Blocks {
 		result = append(result, block.Id)
 	}
 	return result
 }
-func (g suspensionGraph) Successors(id BlockId, visit func(BlockId)) {
-	block, ok := g.function.Block(id)
+func (graph suspensionGraph) Successors(id BlockId, visit func(BlockId)) {
+	block, ok := graph.function.Block(id)
 	if !ok {
 		panic("flow: state cutting reached a missing block")
 	}
 	EachSuccessor(block.Terminal, visit)
 }
-func (g suspensionGraph) Suspension(id BlockId) (BlockId, BlockId, bool) {
-	block, _ := g.function.Block(id)
+func (graph suspensionGraph) Suspension(id BlockId) (BlockId, BlockId, bool) {
+	block, _ := graph.function.Block(id)
 	switch terminal := block.Terminal.(type) {
 	case *Suspend:
 		return terminal.Fulfilled, terminal.Rejected, true

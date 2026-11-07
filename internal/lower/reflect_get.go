@@ -15,12 +15,12 @@ import (
 // a string. So the node never sees a nullish v, Object(v) is v, and the receiver is moot: what's read
 // is ir.DynamicKeyedProperty{v, key}. Every other Reflect.get is NotYet here, as is Reflect or
 // Object(x) as a value anywhere else (namespaceExpression, libraryGlobalValue), exactly as before.
-func (l *lowering) reflectGet(node *ast.Node) (ir.Expression, bool, error) {
+func (lowering *lowering) reflectGet(node *ast.Node) (ir.Expression, bool, error) {
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
 	if callee.Kind != ast.KindPropertyAccessExpression ||
 		callee.Name().Text() != "get" ||
-		!l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Reflect") {
+		!lowering.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Reflect") {
 		return nil, false, nil
 	}
 	const shape = "Reflect.get other than Reflect.get(Object(value), key, value) with one identifier as value"
@@ -28,77 +28,77 @@ func (l *lowering) reflectGet(node *ast.Node) (ir.Expression, bool, error) {
 		callee.AsPropertyAccessExpression().QuestionDotToken != nil ||
 		len(call.Arguments.Nodes) != 3 ||
 		hasSpread(node) {
-		return nil, true, l.notYet(node, shape)
+		return nil, true, lowering.notYet(node, shape)
 	}
 	arguments := call.Arguments.Nodes
 	wrapped := ast.SkipParentheses(arguments[0])
 	if wrapped.Kind != ast.KindCallExpression {
-		return nil, true, l.notYet(node, shape)
+		return nil, true, lowering.notYet(node, shape)
 	}
 	wrapper := wrapped.AsCallExpression()
 	if wrapper.QuestionDotToken != nil ||
-		!l.isLibraryGlobal(wrapper.Expression, "Object") ||
+		!lowering.isLibraryGlobal(wrapper.Expression, "Object") ||
 		len(wrapper.Arguments.Nodes) != 1 ||
 		hasSpread(wrapped) {
-		return nil, true, l.notYet(node, shape)
+		return nil, true, lowering.notYet(node, shape)
 	}
 	value := ast.SkipParentheses(wrapper.Arguments.Nodes[0])
 	receiver := ast.SkipParentheses(arguments[2])
 	if !ast.IsIdentifier(value) ||
 		!ast.IsIdentifier(receiver) ||
-		l.symbol(value) == nil ||
-		l.symbol(value) != l.symbol(receiver) {
-		return nil, true, l.notYet(node, shape)
+		lowering.symbol(value) == nil ||
+		lowering.symbol(value) != lowering.symbol(receiver) {
+		return nil, true, lowering.notYet(node, shape)
 	}
 	// Object(null) and Object(undefined) are a new empty object, which no backend's read sees: the
 	// node is only ever made for a value the checker proved is neither.
-	proven := l.checker.GetTypeAtLocation(value)
+	proven := lowering.checker.GetTypeAtLocation(value)
 	if proven.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsNull|checker.TypeFlagsUndefined|checker.TypeFlagsVoid) != 0 ||
-		l.includesNull(proven) ||
-		l.includesUndefined(proven) {
-		return nil, true, l.notYet(
+		lowering.includesNull(proven) ||
+		lowering.includesUndefined(proven) {
+		return nil, true, lowering.notYet(
 			value,
 			"Reflect.get of a value that may be null or undefined (Object(value) is then a new object)",
 		)
 	}
-	keyType := l.checker.GetTypeAtLocation(arguments[1])
-	if held, known := l.representation(
+	keyType := lowering.checker.GetTypeAtLocation(arguments[1])
+	if held, known := lowering.representation(
 		keyType,
-	); !known || held != ir.String || l.includesNull(keyType) || l.includesUndefined(keyType) {
-		return nil, true, l.notYet(
+	); !known || held != ir.String || lowering.includesNull(keyType) || lowering.includesUndefined(keyType) {
+		return nil, true, lowering.notYet(
 			arguments[1],
 			"Reflect.get by a key that isn't a string (symbol keys and key coercion)",
 		)
 	}
-	object, expressionError := l.expression(value)
+	object, expressionError := lowering.expression(value)
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
 	if object.Type() != ir.Union {
-		return nil, true, l.notYet(
+		return nil, true, lowering.notYet(
 			value,
 			"Reflect.get of a value not held as unknown (a read by its runtime shape needs the union's tag)",
 		)
 	}
-	key, expressionError := l.expression(arguments[1])
+	key, expressionError := lowering.expression(arguments[1])
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
 	if key.Type() != ir.String {
-		return nil, true, l.notYet(
+		return nil, true, lowering.notYet(
 			arguments[1],
 			"Reflect.get by a key that isn't a string (symbol keys and key coercion)",
 		)
 	}
-	if checkDynamicKeyedGetterSyntaxError := l.checkDynamicKeyedGetterSyntax(
+	if checkDynamicKeyedGetterSyntaxError := lowering.checkDynamicKeyedGetterSyntax(
 		node,
 	); checkDynamicKeyedGetterSyntaxError != nil {
 		return nil, true, checkDynamicKeyedGetterSyntaxError
 	}
-	if l.dynamicKeyedSite == nil {
-		l.dynamicKeyedSite = node
+	if lowering.dynamicKeyedSite == nil {
+		lowering.dynamicKeyedSite = node
 	}
-	l.graphDynamicSite = node
+	lowering.graphDynamicSite = node
 	return ir.DynamicKeyedProperty{Object: object, Key: key}, true, nil
 }
 
@@ -140,14 +140,14 @@ func dynamicKeyedRead(site *ast.Node) string {
 
 // checkDynamicKeyedGetterSyntax judges every module class's getters at the read itself, by their
 // syntax, before any of their bodies need lowering.
-func (l *lowering) checkDynamicKeyedGetterSyntax(node *ast.Node) error {
-	for _, declaration := range l.classes {
+func (lowering *lowering) checkDynamicKeyedGetterSyntax(node *ast.Node) error {
+	for _, declaration := range lowering.classes {
 		for _, member := range declaration.Members() {
 			if member.Kind != ast.KindGetAccessor || ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 				continue
 			}
-			if reason := l.dynamicKeyedGetterBody(member); reason != "" {
-				return l.notYet(node, dynamicKeyedRead(node)+" "+reason)
+			if reason := lowering.dynamicKeyedGetterBody(member); reason != "" {
+				return lowering.notYet(node, dynamicKeyedRead(node)+" "+reason)
 			}
 		}
 	}
@@ -158,11 +158,11 @@ func (l *lowering) checkDynamicKeyedGetterSyntax(node *ast.Node) error {
 // classes hold, those checkDynamicKeyedGetterSyntax couldn't reach among them. Each getter's result
 // must be one the runtime boxes, and null only as a union, since a reference held bare says null and
 // undefined alike as NULL.
-func (l *lowering) checkDynamicKeyedGetters() error {
-	if l.dynamicKeyedSite == nil {
+func (lowering *lowering) checkDynamicKeyedGetters() error {
+	if lowering.dynamicKeyedSite == nil {
 		return nil
 	}
-	for _, class := range l.result.Classes {
+	for _, class := range lowering.result.Classes {
 		if class.Literal || class.Static {
 			continue
 		}
@@ -170,20 +170,28 @@ func (l *lowering) checkDynamicKeyedGetters() error {
 			if accessor.Getter < 0 {
 				continue
 			}
-			if !slices.Contains(dynamicKeyedGetterReturns, l.result.Functions[accessor.Getter].Returns) {
-				return l.notYet(l.dynamicKeyedSite, dynamicKeyedRead(l.dynamicKeyedSite)+
+			if !slices.Contains(dynamicKeyedGetterReturns, lowering.result.Functions[accessor.Getter].Returns) {
+				return lowering.notYet(lowering.dynamicKeyedSite, dynamicKeyedRead(lowering.dynamicKeyedSite)+
 					" in a program with a class getter whose result has no union form yet")
 			}
-			declaration := l.getterDeclarations[accessor.Getter]
+			declaration := lowering.getterDeclarations[accessor.Getter]
 			if declaration == nil {
-				return l.notYet(l.dynamicKeyedSite, dynamicKeyedRead(l.dynamicKeyedSite)+" "+dynamicKeyedGetterSyntax)
+				return lowering.notYet(
+					lowering.dynamicKeyedSite,
+					dynamicKeyedRead(lowering.dynamicKeyedSite)+" "+dynamicKeyedGetterSyntax,
+				)
 			}
-			if reason := l.dynamicKeyedGetterBody(declaration); reason != "" {
-				return l.notYet(l.dynamicKeyedSite, dynamicKeyedRead(l.dynamicKeyedSite)+" "+reason)
+			if reason := lowering.dynamicKeyedGetterBody(declaration); reason != "" {
+				return lowering.notYet(
+					lowering.dynamicKeyedSite,
+					dynamicKeyedRead(lowering.dynamicKeyedSite)+" "+reason,
+				)
 			}
-			result := l.checker.GetTypeAtLocation(declaration.Name())
-			if held, known := l.representation(result); l.includesNull(result) && (!known || held != ir.Union) {
-				return l.notYet(l.dynamicKeyedSite, dynamicKeyedRead(l.dynamicKeyedSite)+
+			result := lowering.checker.GetTypeAtLocation(declaration.Name())
+			if held, known := lowering.representation(
+				result,
+			); lowering.includesNull(result) && (!known || held != ir.Union) {
+				return lowering.notYet(lowering.dynamicKeyedSite, dynamicKeyedRead(lowering.dynamicKeyedSite)+
 					" in a program with a class getter that may give null held bare (null and undefined slot tags)")
 			}
 		}
@@ -193,7 +201,7 @@ func (l *lowering) checkDynamicKeyedGetters() error {
 
 // dynamicKeyedGetterBody says why a getter's body isn't one return statement of an expression
 // dynamicKeyedGetterExpression admits, or "".
-func (l *lowering) dynamicKeyedGetterBody(declaration *ast.Node) string {
+func (lowering *lowering) dynamicKeyedGetterBody(declaration *ast.Node) string {
 	body := declaration.Body()
 	if body == nil || body.Kind != ast.KindBlock || len(body.AsBlock().Statements.Nodes) != 1 {
 		return dynamicKeyedGetterSyntax
@@ -202,7 +210,7 @@ func (l *lowering) dynamicKeyedGetterBody(declaration *ast.Node) string {
 	if statement.Kind != ast.KindReturnStatement || statement.AsReturnStatement().Expression == nil {
 		return dynamicKeyedGetterSyntax
 	}
-	return l.dynamicKeyedGetterExpression(statement.AsReturnStatement().Expression, true)
+	return lowering.dynamicKeyedGetterExpression(statement.AsReturnStatement().Expression, true)
 }
 
 // dynamicKeyedGetterConverting are the binary operators a getter may join its fields and literals with
@@ -241,22 +249,22 @@ var dynamicKeyedGetterPassing = []ast.Kind{
 // operators, a template, typeof or ?:, or "". bare is whether the expression's value is given as it
 // is, the whole returned expression, a ?: operand there, or typeof's operand: only there may a field
 // whose declared type isn't a primitive stand, since anywhere else it's converted.
-func (l *lowering) dynamicKeyedGetterExpression(node *ast.Node, bare bool) string {
+func (lowering *lowering) dynamicKeyedGetterExpression(node *ast.Node, bare bool) string {
 	switch node.Kind {
 	case ast.KindStringLiteral, ast.KindNumericLiteral, ast.KindNoSubstitutionTemplateLiteral, ast.KindTrueKeyword, ast.KindFalseKeyword, ast.KindNullKeyword:
 		return ""
 	case ast.KindParenthesizedExpression:
-		return l.dynamicKeyedGetterExpression(node.AsParenthesizedExpression().Expression, bare)
+		return lowering.dynamicKeyedGetterExpression(node.AsParenthesizedExpression().Expression, bare)
 	case ast.KindPropertyAccessExpression:
 		access := node.AsPropertyAccessExpression()
 		if access.QuestionDotToken != nil || ast.SkipParentheses(access.Expression).Kind != ast.KindThisKeyword {
 			return dynamicKeyedGetterSyntax
 		}
-		field := l.checker.GetSymbolAtLocation(node.Name())
+		field := lowering.checker.GetSymbolAtLocation(node.Name())
 		if field == nil || field.Flags&ast.SymbolFlagsProperty == 0 || accessorSymbol(field) {
 			return dynamicKeyedGetterSyntax
 		}
-		if !bare && !dynamicKeyedPrimitive(l.checker.GetTypeOfSymbol(field)) {
+		if !bare && !dynamicKeyedPrimitive(lowering.checker.GetTypeOfSymbol(field)) {
 			return dynamicKeyedGetterPrimitive
 		}
 		return ""
@@ -269,36 +277,36 @@ func (l *lowering) dynamicKeyedGetterExpression(node *ast.Node, bare bool) strin
 		case !slices.Contains(dynamicKeyedGetterConverting, binary.OperatorToken.Kind):
 			return dynamicKeyedGetterSyntax
 		}
-		if reason := l.dynamicKeyedGetterExpression(binary.Left, operand); reason != "" {
+		if reason := lowering.dynamicKeyedGetterExpression(binary.Left, operand); reason != "" {
 			return reason
 		}
-		return l.dynamicKeyedGetterExpression(binary.Right, operand)
+		return lowering.dynamicKeyedGetterExpression(binary.Right, operand)
 	case ast.KindPrefixUnaryExpression:
 		unary := node.AsPrefixUnaryExpression()
 		switch unary.Operator {
 		case ast.KindExclamationToken:
 			// Truthiness calls nothing.
-			return l.dynamicKeyedGetterExpression(unary.Operand, true)
+			return lowering.dynamicKeyedGetterExpression(unary.Operand, true)
 		case ast.KindMinusToken, ast.KindPlusToken, ast.KindTildeToken:
-			return l.dynamicKeyedGetterExpression(unary.Operand, false)
+			return lowering.dynamicKeyedGetterExpression(unary.Operand, false)
 		}
 		return dynamicKeyedGetterSyntax
 	case ast.KindTypeOfExpression:
-		return l.dynamicKeyedGetterExpression(node.AsTypeOfExpression().Expression, true)
+		return lowering.dynamicKeyedGetterExpression(node.AsTypeOfExpression().Expression, true)
 	case ast.KindConditionalExpression:
 		conditional := node.AsConditionalExpression()
 		// The condition is tested for truthiness, which calls nothing; the branches stand where the
 		// conditional does.
-		if reason := l.dynamicKeyedGetterExpression(conditional.Condition, true); reason != "" {
+		if reason := lowering.dynamicKeyedGetterExpression(conditional.Condition, true); reason != "" {
 			return reason
 		}
-		if reason := l.dynamicKeyedGetterExpression(conditional.WhenTrue, bare); reason != "" {
+		if reason := lowering.dynamicKeyedGetterExpression(conditional.WhenTrue, bare); reason != "" {
 			return reason
 		}
-		return l.dynamicKeyedGetterExpression(conditional.WhenFalse, bare)
+		return lowering.dynamicKeyedGetterExpression(conditional.WhenFalse, bare)
 	case ast.KindTemplateExpression:
 		for _, span := range node.AsTemplateExpression().TemplateSpans.Nodes {
-			if reason := l.dynamicKeyedGetterExpression(span.AsTemplateSpan().Expression, false); reason != "" {
+			if reason := lowering.dynamicKeyedGetterExpression(span.AsTemplateSpan().Expression, false); reason != "" {
 				return reason
 			}
 		}

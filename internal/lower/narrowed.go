@@ -20,31 +20,38 @@ import (
 
 // narrowedAway reports whether node, a variable or a field, reads a value whose declared type has
 // undefined in it while its type here doesn't. Array reads may also be past the current end.
-func (l *lowering) narrowedAway(node *ast.Node) bool {
+func (lowering *lowering) narrowedAway(node *ast.Node) bool {
 	if node.Kind == ast.KindElementAccessExpression {
-		receiver := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node.AsElementAccessExpression().Expression))
-		if l.isArrayType(receiver) {
+		receiver := lowering.checker.GetNonNullableType(
+			lowering.checker.GetTypeAtLocation(node.AsElementAccessExpression().Expression),
+		)
+		if lowering.isArrayType(receiver) {
 			// Even T[] can read undefined after pop, or at an index past its end.
-			return !l.includesUndefined(l.checker.GetTypeAtLocation(node))
+			return !lowering.includesUndefined(lowering.checker.GetTypeAtLocation(node))
 		}
 	}
 	at := node
 	if node.Kind == ast.KindPropertyAccessExpression {
 		at = node.Name()
 	}
-	symbol := l.checker.GetSymbolAtLocation(at)
+	symbol := lowering.checker.GetSymbolAtLocation(at)
 	if symbol == nil {
 		return false
 	}
-	declared, here := l.checker.GetTypeOfSymbol(symbol), l.checker.GetTypeAtLocation(node)
-	return (l.includesUndefined(declared) && !l.includesUndefined(here)) || (l.includesNull(declared) && !l.includesNull(here))
+	declared, here := lowering.checker.GetTypeOfSymbol(symbol), lowering.checker.GetTypeAtLocation(node)
+	return (lowering.includesUndefined(declared) && !lowering.includesUndefined(here)) ||
+		(lowering.includesNull(declared) && !lowering.includesNull(here))
 }
 
 // defined checks a reference the checker narrowed undefined out of. Read through a property next,
 // it throws the TypeError JavaScript throws there, word for word; anywhere else, panics with Adamic's
 // own words, since JavaScript would go on with undefined in a place typed not to hold it.
-func (l *lowering) defined(node *ast.Node, value ir.Expression) ir.Expression {
-	if !value.Type().IsReference() || value.Type() == ir.Union || !l.narrowedAway(node) || l.acceptsUndefined(node) || optionalReceiver(node) {
+func (lowering *lowering) defined(node *ast.Node, value ir.Expression) ir.Expression {
+	if !value.Type().IsReference() ||
+		value.Type() == ir.Union ||
+		!lowering.narrowedAway(node) ||
+		lowering.acceptsUndefined(node) ||
+		optionalReceiver(node) {
 		return value
 	}
 	null := false
@@ -52,8 +59,8 @@ func (l *lowering) defined(node *ast.Node, value ir.Expression) ir.Expression {
 	if node.Kind == ast.KindPropertyAccessExpression {
 		at = node.Name()
 	}
-	if symbol := l.checker.GetSymbolAtLocation(at); symbol != nil {
-		null = l.includesNull(l.checker.GetTypeOfSymbol(symbol))
+	if symbol := lowering.checker.GetSymbolAtLocation(at); symbol != nil {
+		null = lowering.includesNull(lowering.checker.GetTypeOfSymbol(symbol))
 	}
 	absent := "undefined"
 	if null {
@@ -64,15 +71,22 @@ func (l *lowering) defined(node *ast.Node, value ir.Expression) ir.Expression {
 	for at.Parent != nil && at.Parent.Kind == ast.KindParenthesizedExpression {
 		at = at.Parent
 	}
-	if parent := at.Parent; parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Expression == at {
-		if written := parent.Parent; written != nil && written.Kind == ast.KindBinaryExpression && written.AsBinaryExpression().Left == parent && written.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken {
+	if parent := at.Parent; parent != nil &&
+		parent.Kind == ast.KindPropertyAccessExpression &&
+		parent.AsPropertyAccessExpression().Expression == at {
+		if written := parent.Parent; written != nil &&
+			written.Kind == ast.KindBinaryExpression &&
+			written.AsBinaryExpression().Left == parent &&
+			written.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken {
 			// object.name = value: JavaScript evaluates the value first and throws at the write, so
 			// the check is the write's own (native checks the object there; JavaScript throws).
 			return value
 		}
 		message = "TypeError: Cannot read properties of " + absent + " (reading '" + parent.Name().Text() + "')"
 	}
-	if parent := at.Parent; parent != nil && parent.Kind == ast.KindElementAccessExpression && parent.AsElementAccessExpression().Expression == at {
+	if parent := at.Parent; parent != nil &&
+		parent.Kind == ast.KindElementAccessExpression &&
+		parent.AsElementAccessExpression().Expression == at {
 		key := ast.SkipParentheses(parent.AsElementAccessExpression().ArgumentExpression)
 		if key.Kind == ast.KindNumericLiteral || key.Kind == ast.KindStringLiteral {
 			message = "TypeError: Cannot read properties of " + absent + " (reading '" + key.Text() + "')"
@@ -92,7 +106,8 @@ func comparedWithUndefined(node *ast.Node) bool {
 		return false
 	}
 	binary := parent.AsBinaryExpression()
-	if operator := binary.OperatorToken.Kind; operator != ast.KindEqualsEqualsEqualsToken && operator != ast.KindExclamationEqualsEqualsToken {
+	if operator := binary.OperatorToken.Kind; operator != ast.KindEqualsEqualsEqualsToken &&
+		operator != ast.KindExclamationEqualsEqualsToken {
 		return false
 	}
 	other := binary.Right
@@ -106,7 +121,7 @@ func comparedWithUndefined(node *ast.Node) bool {
 // acceptsUndefined reports when a read is observed as it is, rather than relied on as present.
 // Parentheses don't change its use. The contextual type describes the receiving slot, including
 // a parameter, return, initializer or assignment that can keep undefined.
-func (l *lowering) acceptsUndefined(node *ast.Node) bool {
+func (lowering *lowering) acceptsUndefined(node *ast.Node) bool {
 	if comparedWithUndefined(node) {
 		return true
 	}
@@ -125,7 +140,7 @@ func (l *lowering) acceptsUndefined(node *ast.Node) bool {
 		case ast.KindConditionalExpression:
 			conditional := parent.AsConditionalExpression()
 			if conditional.WhenTrue == node || conditional.WhenFalse == node {
-				return l.acceptsUndefined(parent)
+				return lowering.acceptsUndefined(parent)
 			}
 		case ast.KindPropertyAccessExpression:
 			access := parent.AsPropertyAccessExpression()
@@ -139,8 +154,8 @@ func (l *lowering) acceptsUndefined(node *ast.Node) bool {
 			}
 		}
 	}
-	contextual := l.slotType(node)
-	return contextual != nil && l.includesUndefined(contextual)
+	contextual := lowering.slotType(node)
+	return contextual != nil && lowering.includesUndefined(contextual)
 }
 
 // optionalReceiver recognizes the operand tested by ?. before a property, element or call.

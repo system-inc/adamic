@@ -5,16 +5,16 @@ import "github.com/system-inc/adamic/internal/ir"
 // These language nodes do not write into an existing slot. Keep the previous opaque-call model
 // for their reachability until the cycle finder has a more precise model of reflected keys and
 // the current closure: operands escape, results are outside, and parameters are clobbered.
-func (a *analysis) libraryLanguage(expression ir.Expression) (value, bool) {
-	if value, known := a.typedArray(expression); known {
+func (analysis *analysis) libraryLanguage(expression ir.Expression) (value, bool) {
+	if value, known := analysis.typedArray(expression); known {
 		return value, true
 	}
 	switch expression := expression.(type) {
 	case ir.NodeBufferCall:
-		return a.nodeBufferCall(expression), true
+		return analysis.nodeBufferCall(expression), true
 	// Phantom reads also keep this conservative model, including every receiver effect.
 	case ir.ObjectKeys, ir.ClosureSelf, ir.LibraryGlobal, ir.PhantomMember:
-		return a.call(a.operands(expression), expression.Type()), true
+		return analysis.call(analysis.operands(expression), expression.Type()), true
 	}
 	return value{}, false
 }

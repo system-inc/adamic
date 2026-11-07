@@ -49,19 +49,19 @@ func ParseSignature(written string) (Signature, error) {
 	return Signature{}, fmt.Errorf("no signature kind %q; the kinds are %s", kind, strings.Join(SignatureKinds, ", "))
 }
 
-func (s Signature) String() string {
-	return s.Kind + ":" + s.Text
+func (signature Signature) String() string {
+	return signature.Kind + ":" + signature.Text
 }
 
 // matches says whether an observed line is this signature's.
-func (s Signature) matches(line string) bool {
+func (signature Signature) matches(line string) bool {
 	if line == "" {
 		return false
 	}
-	if s.Exact {
-		return line == s.Text
+	if signature.Exact {
+		return line == signature.Text
 	}
-	return strings.Contains(line, s.Text)
+	return strings.Contains(line, signature.Text)
 }
 
 // Observation is what one program came to, read for every kind of signature at once.
@@ -75,24 +75,24 @@ type Observation struct {
 }
 
 // Has says whether the observation shows signature, with the verdict it was first seen with.
-func (o Observation) Has(signature Signature) bool {
-	return signature.matches(o.Lines[signature.Kind])
+func (observation Observation) Has(signature Signature) bool {
+	return signature.matches(observation.Lines[signature.Kind])
 }
 
 // Observe runs a program in directory as the kind of signature needs: the compiler alone for a
 // refusal or a crash, all three ways for a panic or a mismatch. kind "" runs it all three ways.
-func (c *Checkout) Observe(source string, name string, directory string, kind string) Observation {
+func (checkout *Checkout) Observe(source string, name string, directory string, kind string) Observation {
 	var observation Observation
 	outcome := confirm(func() Outcome {
 		var result Outcome
-		observation, result = c.observe(source, name, directory, kind)
+		observation, result = checkout.observe(source, name, directory, kind)
 		return result
 	})
 	observation.Verdict = outcome.Verdict
 	return observation
 }
 
-func (c *Checkout) observe(source string, name string, directory string, kind string) (Observation, Outcome) {
+func (checkout *Checkout) observe(source string, name string, directory string, kind string) (Observation, Outcome) {
 	if createDirectoryError := os.MkdirAll(directory, 0o755); createDirectoryError != nil {
 		return Observation{Verdict: Finding, Lines: map[string]string{}}, Outcome{Verdict: Finding}
 	}
@@ -100,7 +100,7 @@ func (c *Checkout) observe(source string, name string, directory string, kind st
 	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
 		return Observation{Verdict: Finding, Lines: map[string]string{}}, Outcome{Verdict: Finding}
 	}
-	lowered := execute(directory, nil, 30*time.Second, c.adamic, "c", path)
+	lowered := execute(directory, nil, 30*time.Second, checkout.adamic, "c", path)
 	observation := Observation{Lines: map[string]string{}, Checker: checkerCodes(string(lowered.Stderr))}
 	if lowered.ExitCode != 0 || lowered.TimedOut {
 		outcome := compilerRefusal(lowered)
@@ -114,7 +114,7 @@ func (c *Checkout) observe(source string, name string, directory string, kind st
 		observation.Verdict = Agreed
 		return observation, Outcome{Verdict: Agreed}
 	}
-	outcome := c.tryFile(path, directory)
+	outcome := checkout.tryFile(path, directory)
 	observation.Verdict = outcome.Verdict
 	observation.Lines["panic"] = panicLine(outcome)
 	observation.Lines["mismatch"] = mismatchLine(outcome)

@@ -41,10 +41,10 @@ const (
 // NotYet would, at the same positions, so a site counts as it did: a call's node and its callee's
 // carry one reason at one place. A require that lowers (nodeCommonJSRequireThrows) is found with no
 // refusal. Any other require gives found false and keeps node:module.require.
-func (l *lowering) nodeCommonJSUseRefusal(node *ast.Node) (bool, error) {
-	switch l.nodeLibraryMember(node) {
+func (lowering *lowering) nodeCommonJSUseRefusal(node *ast.Node) (bool, error) {
+	switch lowering.nodeLibraryMember(node) {
 	case nodeFilenameMember, nodeDirnameMember:
-		return true, l.notYet(node, nodeCommonJSModuleValues)
+		return true, lowering.notYet(node, nodeCommonJSModuleValues)
 	case nodeRequireMember:
 	default:
 		return false, nil
@@ -61,13 +61,13 @@ func (l *lowering) nodeCommonJSUseRefusal(node *ast.Node) (bool, error) {
 	}
 	argument := nodeCommonJSRequireArgument(call)
 	if argument.Kind != ast.KindStringLiteral && argument.Kind != ast.KindNoSubstitutionTemplateLiteral {
-		return true, l.notYet(node, nodeRequireMember+
+		return true, lowering.notYet(node, nodeRequireMember+
 			" of a computed module path called with a spread or a second argument"+
 			nodeCommonJSLoading+
 			" (fix: pass the module path as its one argument)")
 	}
 	if argument.Text() == "crypto" {
-		return true, l.notYet(node, nodeRequireMember+
+		return true, lowering.notYet(node, nodeRequireMember+
 			`("`+
 			argument.Text()+
 			`")`+
@@ -106,12 +106,12 @@ func nodeCommonJSRequireThrows(call *ast.Node) bool {
 // lowers: node itself, or the receiver its member accesses and calls are made on, through
 // parentheses, assertions and a non-null. The require throws before anything after it in the chain
 // is evaluated, so the whole chain lowers as its throw. Nil for any other node.
-func (l *lowering) nodeCommonJSRequireRoot(node *ast.Node) *ast.Node {
+func (lowering *lowering) nodeCommonJSRequireRoot(node *ast.Node) *ast.Node {
 	original := node
 	for {
 		switch node.Kind {
 		case ast.KindCallExpression:
-			if l.nodeLibraryMember(node) == nodeRequireMember {
+			if lowering.nodeLibraryMember(node) == nodeRequireMember {
 				if !nodeCommonJSRequireThrows(node) && !(node == original && nodeInspectorRequireThrows(node)) {
 					return nil
 				}
@@ -131,14 +131,14 @@ func (l *lowering) nodeCommonJSRequireRoot(node *ast.Node) *ast.Node {
 // throws an Error naming the path. Either way the value is never had: as a statement it's
 // undefined, as gc's call is, and anywhere else a placeholder of the value's type that the throw
 // keeps from being read.
-func (l *lowering) nodeCommonJSRequireValue(node *ast.Node) (ir.Expression, bool, error) {
-	call := l.nodeCommonJSRequireRoot(node)
+func (lowering *lowering) nodeCommonJSRequireValue(node *ast.Node) (ir.Expression, bool, error) {
+	call := lowering.nodeCommonJSRequireRoot(node)
 	if call == nil {
 		return nil, false, nil
 	}
 	effects := ir.Effects{Result: ir.Undefined{}}
 	if outer := nodeGlobalsOuter(node); outer.Parent == nil || outer.Parent.Kind != ast.KindExpressionStatement {
-		of, typeOfError := l.typeOf(node)
+		of, typeOfError := lowering.typeOf(node)
 		if typeOfError != nil {
 			return nil, true, typeOfError
 		}
@@ -156,7 +156,7 @@ func (l *lowering) nodeCommonJSRequireValue(node *ast.Node) (ir.Expression, bool
 	); argument.Kind == ast.KindStringLiteral || argument.Kind == ast.KindNoSubstitutionTemplateLiteral {
 		missing := ir.NodeFSFile{
 			Operation: "host_require_missing",
-			Arguments: []ir.Expression{ir.StringConstant{Index: l.constant(argument.Text())}},
+			Arguments: []ir.Expression{ir.StringConstant{Index: lowering.constant(argument.Text())}},
 			Of:        ir.Number,
 		}
 		effects.Body = append(effects.Body, ir.Evaluate{Value: missing})
@@ -164,25 +164,28 @@ func (l *lowering) nodeCommonJSRequireValue(node *ast.Node) (ir.Expression, bool
 	}
 	// The path is evaluated as written, wrappers and all: a non-null assertion may carry a check.
 	argument := call.AsCallExpression().Arguments.Nodes[0]
-	path, expressionError := l.expression(argument)
+	path, expressionError := lowering.expression(argument)
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
 	if path.Type() != ir.String {
-		return nil, true, l.notYet(argument, nodeRequireMember+
+		return nil, true, lowering.notYet(argument, nodeRequireMember+
 			" of a computed module path that isn't a string"+
 			nodeCommonJSLoading+
 			" (fix: pass the module path as a string)")
 	}
-	index := len(l.result.Functions)
-	parameter := len(l.result.Locals)
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: "modulePath", Type: ir.String, Function: index})
+	index := len(lowering.result.Functions)
+	parameter := len(lowering.result.Locals)
+	lowering.result.Locals = append(
+		lowering.result.Locals,
+		ir.Local{Name: "modulePath", Type: ir.String, Function: index},
+	)
 	failure := ir.MakeError{Message: ir.Concat{Parts: []ir.Expression{
-		ir.StringConstant{Index: l.constant(nodeJavaScriptModuleOpening)},
+		ir.StringConstant{Index: lowering.constant(nodeJavaScriptModuleOpening)},
 		ir.Read{Local: parameter, Of: ir.String},
-		ir.StringConstant{Index: l.constant(nodeJavaScriptModuleClosing)},
+		ir.StringConstant{Index: lowering.constant(nodeJavaScriptModuleClosing)},
 	}}}
-	l.result.Functions = append(l.result.Functions, ir.Function{
+	lowering.result.Functions = append(lowering.result.Functions, ir.Function{
 		Name:       "require_javascript",
 		Parameters: []int{parameter},
 		Body:       []ir.Statement{ir.Throw{Value: failure}},

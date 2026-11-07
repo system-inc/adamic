@@ -76,14 +76,14 @@ func UntaggedViewMembers(contracts []ir.ViewContract, union ir.ViewContractID) (
 // Contract construction and completion use this to mark supported union reads. Tagged
 // members defer unread descendants. Field-only membership needs a complete,
 // recursive plain-data contract; unavailable adapters remain named obligations.
-func (l *lowering) supportsUntaggedRead(root ir.ViewContract) bool {
+func (lowering *lowering) supportsUntaggedRead(root ir.ViewContract) bool {
 	seen := map[ir.ViewContractID]bool{}
 	var supported func(ir.ViewContractID) bool
 	supported = func(id ir.ViewContractID) bool {
-		if id <= 0 || int(id) > len(l.result.ViewContracts) {
+		if id <= 0 || int(id) > len(lowering.result.ViewContracts) {
 			return false
 		}
-		contract := l.result.ViewContracts[id-1]
+		contract := lowering.result.ViewContracts[id-1]
 		if (contract.Unsupported != "" && contract.Unsupported != "untagged object union") || contract.Nominal != "" {
 			return false
 		}
@@ -124,10 +124,10 @@ func (l *lowering) supportsUntaggedRead(root ir.ViewContract) bool {
 		}
 		tagged := false
 		for _, field := range contract.Fields {
-			if field.Optional || field.Contract <= 0 || int(field.Contract) > len(l.result.ViewContracts) {
+			if field.Optional || field.Contract <= 0 || int(field.Contract) > len(lowering.result.ViewContracts) {
 				continue
 			}
-			child := l.result.ViewContracts[field.Contract-1]
+			child := lowering.result.ViewContracts[field.Contract-1]
 			tagged = tagged || child.Kind == ir.ViewScalar && (len(child.Allowed) != 0 ||
 				field.Name == "kind" && (child.Of == ir.Number || child.Of == ir.String || child.Of == ir.Boolean))
 		}
@@ -154,8 +154,8 @@ func (l *lowering) supportsUntaggedRead(root ir.ViewContract) bool {
 
 // untaggedArrayElement joins only array members' logical element contracts.
 // It never chooses an arbitrary member's physical representation.
-func (l *lowering) untaggedArrayElement(target *checker.Type) *checker.Type {
-	if element := l.viewArrayElementType(target); element != nil {
+func (lowering *lowering) untaggedArrayElement(target *checker.Type) *checker.Type {
+	if element := lowering.viewArrayElementType(target); element != nil {
 		return element
 	}
 	if target.Flags()&checker.TypeFlagsUnion == 0 {
@@ -163,7 +163,7 @@ func (l *lowering) untaggedArrayElement(target *checker.Type) *checker.Type {
 	}
 	var elements []*checker.Type
 	for _, member := range target.Types() {
-		element := l.viewArrayElementType(member)
+		element := lowering.viewArrayElementType(member)
 		if element == nil {
 			return nil
 		}
@@ -172,110 +172,117 @@ func (l *lowering) untaggedArrayElement(target *checker.Type) *checker.Type {
 	if len(elements) == 0 {
 		return nil
 	}
-	return l.checker.GetUnionType(elements)
+	return lowering.checker.GetUnionType(elements)
 }
 
-func (l *lowering) completeUntaggedRecursiveContracts() {
+func (lowering *lowering) completeUntaggedRecursiveContracts() {
 	// Optional array descriptors may be copied while their element is reserved.
 	// Only a completed canonical descriptor can supply the missing element.
-	for index, contract := range l.result.ViewContracts {
+	for index, contract := range lowering.result.ViewContracts {
 		if contract.Kind == ir.ViewArray && contract.Element == 0 && contract.ObjectPresent > 0 {
-			canonical := l.result.ViewContracts[contract.ObjectPresent-1]
+			canonical := lowering.result.ViewContracts[contract.ObjectPresent-1]
 			if canonical.Kind == ir.ViewArray && canonical.Element > 0 {
-				l.result.ViewContracts[index].Element = canonical.Element
+				lowering.result.ViewContracts[index].Element = canonical.Element
 			}
 		}
 	}
 
-	for index, contract := range l.result.ViewContracts {
-		if contract.Unsupported == "untagged object union" && l.supportsUntaggedRead(contract) {
-			l.result.ViewContracts[index].Unsupported = ""
+	for index, contract := range lowering.result.ViewContracts {
+		if contract.Unsupported == "untagged object union" && lowering.supportsUntaggedRead(contract) {
+			lowering.result.ViewContracts[index].Unsupported = ""
 		}
 	}
 }
 
 // Callable union membership uses each producer-certified member signature;
 // the checker's synthesized union signature is not an implementation contract.
-func (l *lowering) prepareUntaggedCallableUnionRead(node *ast.Node, target *checker.Type) (ir.ViewContractID, error) {
-	id := l.result.ViewContractTypes[int(target.Id())]
+func (lowering *lowering) prepareUntaggedCallableUnionRead(
+	node *ast.Node,
+	target *checker.Type,
+) (ir.ViewContractID, error) {
+	id := lowering.result.ViewContractTypes[int(target.Id())]
 	if id == 0 {
-		id = ir.ViewContractID(len(l.result.ViewContracts) + 1)
-		l.result.ViewContracts = append(l.result.ViewContracts, ir.ViewContract{})
-		l.result.ViewContractTypes[int(target.Id())] = id
+		id = ir.ViewContractID(len(lowering.result.ViewContracts) + 1)
+		lowering.result.ViewContracts = append(lowering.result.ViewContracts, ir.ViewContract{})
+		lowering.result.ViewContractTypes[int(target.Id())] = id
 	}
-	contract := ir.ViewContract{Kind: ir.ViewUnion, Of: ir.Closure, Name: l.checker.TypeToString(target)}
+	contract := ir.ViewContract{Kind: ir.ViewUnion, Of: ir.Closure, Name: lowering.checker.TypeToString(target)}
 	for _, member := range target.Types() {
-		if !l.callableViewContract(member) {
-			return 0, l.notYet(node, "a callable union member without a producer signature")
+		if !lowering.callableViewContract(member) {
+			return 0, lowering.notYet(node, "a callable union member without a producer signature")
 		}
-		child, prepareUntaggedCallableMemberError := l.prepareUntaggedCallableMember(node, member)
+		child, prepareUntaggedCallableMemberError := lowering.prepareUntaggedCallableMember(node, member)
 		if prepareUntaggedCallableMemberError != nil {
 			return 0, prepareUntaggedCallableMemberError
 		}
-		if l.untaggedCallableTargets == nil {
-			l.untaggedCallableTargets = map[ir.ViewContractID]*checker.Type{}
+		if lowering.untaggedCallableTargets == nil {
+			lowering.untaggedCallableTargets = map[ir.ViewContractID]*checker.Type{}
 		}
-		l.untaggedCallableTargets[child] = member
-		l.result.ViewContracts[child-1].Unsupported = ""
+		lowering.untaggedCallableTargets[child] = member
+		lowering.result.ViewContracts[child-1].Unsupported = ""
 		contract.Members = append(contract.Members, child)
 	}
-	l.result.ViewContracts[id-1] = contract
+	lowering.result.ViewContracts[id-1] = contract
 	return id, nil
 }
 
 // Prepare nested callable obligations using lane 5's existing descriptor builder.
 // Only represented fixed scalar signatures are certified; errors stay lazy.
-func (l *lowering) prepareUntaggedStructuralRead(node *ast.Node, target *checker.Type, seen map[*checker.Type]bool) {
+func (lowering *lowering) prepareUntaggedStructuralRead(
+	node *ast.Node,
+	target *checker.Type,
+	seen map[*checker.Type]bool,
+) {
 	if target == nil || seen[target] {
 		return
 	}
 	seen[target] = true
-	if l.callableViewContract(target) {
-		if l.untaggedCallableShape(target) {
-			if id, prepareUntaggedCallableMemberError := l.prepareUntaggedCallableMember(
+	if lowering.callableViewContract(target) {
+		if lowering.untaggedCallableShape(target) {
+			if id, prepareUntaggedCallableMemberError := lowering.prepareUntaggedCallableMember(
 				node,
 				target,
 			); prepareUntaggedCallableMemberError == nil {
-				l.result.ViewContracts[id-1].Unsupported = ""
+				lowering.result.ViewContracts[id-1].Unsupported = ""
 			}
 		}
 		return
 	}
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range target.Types() {
-			l.prepareUntaggedStructuralRead(node, member, seen)
+			lowering.prepareUntaggedStructuralRead(node, member, seen)
 		}
 		return
 	}
-	if element := l.untaggedArrayElement(target); element != nil {
-		l.prepareUntaggedStructuralRead(node, element, seen)
+	if element := lowering.untaggedArrayElement(target); element != nil {
+		lowering.prepareUntaggedStructuralRead(node, element, seen)
 		return
 	}
 	if target.Flags()&checker.TypeFlagsObject == 0 {
 		return
 	}
-	for _, field := range l.checker.GetPropertiesOfType(target) {
-		l.prepareUntaggedStructuralRead(node, l.checker.GetTypeOfSymbol(field), seen)
+	for _, field := range lowering.checker.GetPropertiesOfType(target) {
+		lowering.prepareUntaggedStructuralRead(node, lowering.checker.GetTypeOfSymbol(field), seen)
 	}
 }
 
 // Reuse closureRecords' checker proof and the code-identity registry.
 // Assignability is sufficient only when the scalar calling convention agrees.
-func (l *lowering) certifyUntaggedCallableProducers() {
-	for id, target := range l.untaggedCallableTargets {
-		contract := &l.result.ViewContracts[id-1]
+func (lowering *lowering) certifyUntaggedCallableProducers() {
+	for id, target := range lowering.untaggedCallableTargets {
+		contract := &lowering.result.ViewContracts[id-1]
 		contract.ProducerCertified = true
 		contract.Functions = nil
-		for _, producer := range l.closureRecords {
-			function := l.result.Functions[producer.function]
+		for _, producer := range lowering.closureRecords {
+			function := lowering.result.Functions[producer.function]
 			// Named functions also have a direct-call record. Only their closure
 			// thunk has the code convention registered by the callable adapter.
 			if !function.Closure || function.Receiver {
 				continue
 			}
-			if l.checker.IsTypeAssignableTo(producer.proven, target) &&
-				l.untaggedCallableABI(producer.function, *contract) &&
-				l.uniquelyAssignableCallable(producer.proven, id) {
+			if lowering.checker.IsTypeAssignableTo(producer.proven, target) &&
+				lowering.untaggedCallableABI(producer.function, *contract) &&
+				lowering.uniquelyAssignableCallable(producer.proven, id) {
 				contract.Functions = append(contract.Functions, producer.function)
 			}
 		}

@@ -26,29 +26,40 @@ type predicateOverloadCallback struct {
 // never assigns, so a call through that name in the body calls the callback the caller passed. A
 // default would replace a missing callback with one no caller's road checked, and a rest would move
 // the callback's position, so neither counts.
-func (l *lowering) predicateOverloadCallbacks(implementation, overload *ast.Node, promised *checker.Type) []predicateOverloadCallback {
+func (lowering *lowering) predicateOverloadCallbacks(
+	implementation, overload *ast.Node,
+	promised *checker.Type,
+) []predicateOverloadCallback {
 	callbacks := []predicateOverloadCallback{}
 	served := implementation.Parameters()
 	for index, parameter := range overload.Parameters() {
 		if index >= len(served) || parameter.AsParameterDeclaration().DotDotDotToken != nil {
 			break
 		}
-		signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(parameter), checker.SignatureKindCall)
+		signatures := lowering.checker.GetSignaturesOfType(
+			lowering.checker.GetTypeAtLocation(parameter),
+			checker.SignatureKindCall,
+		)
 		if len(signatures) != 1 {
 			continue
 		}
-		claim := predicateOfSignature(l.checker, signatures[0])
-		if claim == nil || claim.Kind() != checker.TypePredicateKindIdentifier || claim.Type() == nil || claim.ParameterIndex() < 0 {
+		claim := predicateOfSignature(lowering.checker, signatures[0])
+		if claim == nil ||
+			claim.Kind() != checker.TypePredicateKindIdentifier ||
+			claim.Type() == nil ||
+			claim.ParameterIndex() < 0 {
 			continue
 		}
-		if !l.censusRelated(claim.Type(), promised) {
+		if !lowering.censusRelated(claim.Type(), promised) {
 			continue
 		}
 		actual := served[index]
-		if !ast.IsIdentifier(actual.Name()) || actual.AsParameterDeclaration().Initializer != nil || actual.AsParameterDeclaration().DotDotDotToken != nil {
+		if !ast.IsIdentifier(actual.Name()) ||
+			actual.AsParameterDeclaration().Initializer != nil ||
+			actual.AsParameterDeclaration().DotDotDotToken != nil {
 			continue
 		}
-		if l.predicateOverloadAssigned(implementation, l.symbol(actual.Name())) {
+		if lowering.predicateOverloadAssigned(implementation, lowering.symbol(actual.Name())) {
 			continue
 		}
 		callbacks = append(callbacks, predicateOverloadCallback{parameter: index, claimed: int(claim.ParameterIndex())})
@@ -58,11 +69,11 @@ func (l *lowering) predicateOverloadCallbacks(implementation, overload *ast.Node
 
 // predicateOverloadAssigned is whether anything in implementation's body, nested functions
 // included, assigns symbol: a closure that rebinds the callback rebinds it for the body too.
-func (l *lowering) predicateOverloadAssigned(implementation *ast.Node, symbol *ast.Symbol) bool {
+func (lowering *lowering) predicateOverloadAssigned(implementation *ast.Node, symbol *ast.Symbol) bool {
 	assigned := false
 	var writes ast.Visitor
 	writes = func(node *ast.Node) bool {
-		if node.Kind == ast.KindIdentifier && ast.IsAssignmentTarget(node) && l.symbol(node) == symbol {
+		if node.Kind == ast.KindIdentifier && ast.IsAssignmentTarget(node) && lowering.symbol(node) == symbol {
 			assigned = true
 		}
 		return assigned || node.ForEachChild(writes)
@@ -81,8 +92,8 @@ func (l *lowering) predicateOverloadAssigned(implementation *ast.Node, symbol *a
 // claim's U serves the promise. A body whose end can be reached returns undefined there, so undefined
 // must serve the promise unless the body ends in a return or a throw. It also gives the first return
 // that fails, for the refusal to name, or nil when what failed isn't a return.
-func (l *lowering) predicateOverloadResultProven(implementation, overload *ast.Node) (bool, *ast.Node) {
-	if !l.checkedAssertionSource(implementation) || implementation.Body() == nil {
+func (lowering *lowering) predicateOverloadResultProven(implementation, overload *ast.Node) (bool, *ast.Node) {
+	if !lowering.checkedAssertionSource(implementation) || implementation.Body() == nil {
 		return false, nil
 	}
 	// An async or generator body's return statements don't produce the call's result.
@@ -91,8 +102,8 @@ func (l *lowering) predicateOverloadResultProven(implementation, overload *ast.N
 	if ast.HasSyntacticModifier(implementation, ast.ModifierFlagsAsync) || generatorDeclaration(implementation) {
 		return false, nil
 	}
-	promised := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(overload))
-	callbacks := l.predicateOverloadCallbacks(implementation, overload, promised)
+	promised := lowering.checker.GetReturnTypeOfSignature(lowering.checker.GetSignatureFromDeclaration(overload))
+	callbacks := lowering.predicateOverloadCallbacks(implementation, overload, promised)
 	if len(callbacks) == 0 {
 		return false, nil
 	}
@@ -102,7 +113,8 @@ func (l *lowering) predicateOverloadResultProven(implementation, overload *ast.N
 		if ast.IsFunctionLike(node) {
 			return false // A nested function's return is its own result, not this call's.
 		}
-		if node.Kind == ast.KindReturnStatement && !l.predicateOverloadReturn(implementation, node, callbacks, promised) {
+		if node.Kind == ast.KindReturnStatement &&
+			!lowering.predicateOverloadReturn(implementation, node, callbacks, promised) {
 			failed = node
 			return true
 		}
@@ -111,7 +123,7 @@ func (l *lowering) predicateOverloadResultProven(implementation, overload *ast.N
 	if implementation.Body().ForEachChild(returns) {
 		return false, failed
 	}
-	if !l.censusRelated(l.checker.GetUndefinedType(), promised) {
+	if !lowering.censusRelated(lowering.checker.GetUndefinedType(), promised) {
 		statements := implementation.Body().AsBlock().Statements.Nodes
 		if len(statements) == 0 {
 			return false, nil
@@ -127,35 +139,45 @@ func (l *lowering) predicateOverloadResultProven(implementation, overload *ast.N
 // predicateOverloadReturn is whether statement, a return in implementation's body, returns what
 // serves promised: a value whose type already does, or the const its callback's claim just said yes
 // to (predicateOverloadResultProven).
-func (l *lowering) predicateOverloadReturn(implementation, statement *ast.Node, callbacks []predicateOverloadCallback, promised *checker.Type) bool {
+func (lowering *lowering) predicateOverloadReturn(
+	implementation, statement *ast.Node,
+	callbacks []predicateOverloadCallback,
+	promised *checker.Type,
+) bool {
 	expression := statement.AsReturnStatement().Expression
 	if expression == nil {
 		return false
 	}
-	if l.censusRelated(l.checker.GetTypeAtLocation(expression), promised) {
+	if lowering.censusRelated(lowering.checker.GetTypeAtLocation(expression), promised) {
 		return true
 	}
 	returned := ast.SkipParentheses(expression)
 	if !ast.IsIdentifier(returned) {
 		return false
 	}
-	local := l.symbol(returned)
+	local := lowering.symbol(returned)
 	if local == nil || len(local.Declarations) != 1 {
 		return false
 	}
 	declaration := local.Declarations[0]
-	if declaration.Kind != ast.KindVariableDeclaration || declaration.Parent == nil || declaration.Parent.Flags&ast.NodeFlagsConst == 0 || ast.GetContainingFunction(declaration) != implementation {
+	if declaration.Kind != ast.KindVariableDeclaration ||
+		declaration.Parent == nil ||
+		declaration.Parent.Flags&ast.NodeFlagsConst == 0 ||
+		ast.GetContainingFunction(declaration) != implementation {
 		return false
 	}
 	// The return is the then-branch itself, or the first statement of the block that is.
 	then := statement
 	if statement.Parent.Kind == ast.KindBlock {
-		if block := statement.Parent.AsBlock(); len(block.Statements.Nodes) == 0 || block.Statements.Nodes[0] != statement {
+		if block := statement.Parent.AsBlock(); len(block.Statements.Nodes) == 0 ||
+			block.Statements.Nodes[0] != statement {
 			return false
 		}
 		then = statement.Parent
 	}
-	if then.Parent == nil || then.Parent.Kind != ast.KindIfStatement || then.Parent.AsIfStatement().ThenStatement != then {
+	if then.Parent == nil ||
+		then.Parent.Kind != ast.KindIfStatement ||
+		then.Parent.AsIfStatement().ThenStatement != then {
 		return false
 	}
 	condition := ast.SkipParentheses(then.Parent.AsIfStatement().Expression)
@@ -169,7 +191,8 @@ func (l *lowering) predicateOverloadReturn(implementation, statement *ast.Node, 
 	}
 	served := implementation.Parameters()
 	for _, callback := range callbacks {
-		if l.symbol(callee) != l.symbol(served[callback.parameter].Name()) || callback.claimed >= len(test.Arguments.Nodes) {
+		if lowering.symbol(callee) != lowering.symbol(served[callback.parameter].Name()) ||
+			callback.claimed >= len(test.Arguments.Nodes) {
 			continue
 		}
 		// A spread before the claimed argument moves which value the claim names.
@@ -178,7 +201,7 @@ func (l *lowering) predicateOverloadReturn(implementation, statement *ast.Node, 
 			shifted = shifted || argument.Kind == ast.KindSpreadElement
 		}
 		argument := ast.SkipParentheses(test.Arguments.Nodes[callback.claimed])
-		if !shifted && ast.IsIdentifier(argument) && l.symbol(argument) == local {
+		if !shifted && ast.IsIdentifier(argument) && lowering.symbol(argument) == local {
 			return true
 		}
 	}

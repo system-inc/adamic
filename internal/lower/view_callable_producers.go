@@ -7,8 +7,8 @@ import (
 
 // Checker assignability does not adapt packed native arguments. Membership
 // certification is sound only if the implementation and view use the same ABI.
-func (l *lowering) untaggedCallableABI(index int, contract ir.ViewContract) bool {
-	function := l.result.Functions[index]
+func (lowering *lowering) untaggedCallableABI(index int, contract ir.ViewContract) bool {
+	function := lowering.result.Functions[index]
 	if !function.Closure ||
 		function.Receiver ||
 		function.RestElement != 0 ||
@@ -24,13 +24,13 @@ func (l *lowering) untaggedCallableABI(index int, contract ir.ViewContract) bool
 		return false
 	}
 	for i, local := range function.Parameters {
-		of := l.result.ViewContracts[contract.Parameters[i]-1].Of
-		if of == 0 || l.result.Locals[local].Type != of {
+		of := lowering.result.ViewContracts[contract.Parameters[i]-1].Of
+		if of == 0 || lowering.result.Locals[local].Type != of {
 			return false
 		}
 	}
 	return contract.DiscardResult ||
-		contract.Result != 0 && function.Returns == l.result.ViewContracts[contract.Result-1].Of
+		contract.Result != 0 && function.Returns == lowering.result.ViewContracts[contract.Result-1].Of
 }
 
 // Use the allocation graph's joins and projections to find known implementations.
@@ -92,12 +92,12 @@ func reachingCallableProducers(graph *allocationFlowGraph, expression ir.Express
 
 // A known assignable producer with an incompatible ABI is valid TypeScript but
 // cannot satisfy this adapter. Diagnose that at the demanded read, before C or JS.
-func (l *lowering) callableProducerViewRefusal(graph *allocationFlowGraph, read ir.Property) error {
-	root := l.result.ViewContractTypes[read.ViewTypeID]
+func (lowering *lowering) callableProducerViewRefusal(graph *allocationFlowGraph, read ir.Property) error {
+	root := lowering.result.ViewContractTypes[read.ViewTypeID]
 	if root == 0 {
 		return nil
 	}
-	contract := l.result.ViewContracts[root-1]
+	contract := lowering.result.ViewContracts[root-1]
 	if contract.Kind != ir.ViewCallable && contract.Kind != ir.ViewUnion {
 		return nil
 	}
@@ -109,7 +109,7 @@ func (l *lowering) callableProducerViewRefusal(graph *allocationFlowGraph, read 
 		}
 		active[id] = true
 		defer delete(active, id)
-		contract := l.result.ViewContracts[id-1]
+		contract := lowering.result.ViewContracts[id-1]
 		if contract.Kind == ir.ViewCallable || contract.Kind == ir.ViewUnion && contract.Of == ir.Closure {
 			members := contract.Members
 			if contract.Kind == ir.ViewCallable {
@@ -117,26 +117,27 @@ func (l *lowering) callableProducerViewRefusal(graph *allocationFlowGraph, read 
 			}
 			for _, function := range reachingCallableProducers(graph, value) {
 				assignableMembers, exactMembers, compatible, known := map[ir.ViewContractID]bool{}, map[ir.ViewContractID]bool{}, false, false
-				for _, producer := range l.closureRecords {
+				for _, producer := range lowering.closureRecords {
 					if producer.function != function {
 						continue
 					}
 					known = true
 					for _, member := range members {
-						target := l.untaggedCallableTargets[member]
-						if target != nil && l.checker.IsTypeAssignableTo(producer.proven, target) {
+						target := lowering.untaggedCallableTargets[member]
+						if target != nil && lowering.checker.IsTypeAssignableTo(producer.proven, target) {
 							assignableMembers[member] = true
-							if checker.Checker_isTypeIdenticalTo(l.checker, producer.proven, target) {
+							if checker.Checker_isTypeIdenticalTo(lowering.checker, producer.proven, target) {
 								exactMembers[member] = true
 							}
-							compatible = compatible || l.untaggedCallableABI(function, l.result.ViewContracts[member-1])
+							compatible = compatible ||
+								lowering.untaggedCallableABI(function, lowering.result.ViewContracts[member-1])
 						}
 					}
 				}
 				// A known producer that fits no member is a cast the checker was told to believe. Base refused the read
 				// as an unsupported representation conversion, and so does this, rather than compile a read that only
 				// fails at run time where Node succeeds (bad_callable.a, ruling (b) on #aecx10a).
-				if known && len(assignableMembers) == 0 && l.allCallableTargets(members) {
+				if known && len(assignableMembers) == 0 && lowering.allCallableTargets(members) {
 					return &Refused{
 						Where: read.ViewWhere,
 						What: "checked view read of field " +
@@ -156,7 +157,7 @@ func (l *lowering) callableProducerViewRefusal(graph *allocationFlowGraph, read 
 						}
 					}
 					for member := range exactMembers {
-						compatible = l.untaggedCallableABI(function, l.result.ViewContracts[member-1])
+						compatible = lowering.untaggedCallableABI(function, lowering.result.ViewContracts[member-1])
 					}
 				}
 				if len(assignableMembers) != 0 && !compatible {
@@ -172,7 +173,7 @@ func (l *lowering) callableProducerViewRefusal(graph *allocationFlowGraph, read 
 		// descendants remain deferred until their own checked field read.
 		if contract.Kind == ir.ViewObject {
 			for _, field := range contract.Fields {
-				child := l.result.ViewContracts[field.Contract-1]
+				child := lowering.result.ViewContracts[field.Contract-1]
 				if !field.Optional && child.Kind == ir.ViewScalar && (len(child.Allowed) != 0 || field.Name == "kind" &&
 					(child.Of == ir.Number || child.Of == ir.Boolean || child.Of == ir.String)) {
 					return nil
@@ -186,7 +187,7 @@ func (l *lowering) callableProducerViewRefusal(graph *allocationFlowGraph, read 
 			}
 		}
 		for _, field := range contract.Fields {
-			child := l.result.ViewContracts[field.Contract-1]
+			child := lowering.result.ViewContracts[field.Contract-1]
 			projected := ir.Property{Object: value, Name: field.Name, Of: child.Of}
 			if inspectError := inspect(field.Contract, projected); inspectError != nil {
 				return inspectError
@@ -200,8 +201,8 @@ func (l *lowering) callableProducerViewRefusal(graph *allocationFlowGraph, read 
 // A certificate cannot choose between multiple logically assignable union arms,
 // unless the producer's type is identical to exactly one of them, which carries it.
 // Shared member contracts stay conservative if any containing union is ambiguous.
-func (l *lowering) uniquelyAssignableCallable(producer *checker.Type, member ir.ViewContractID) bool {
-	for _, union := range l.result.ViewContracts {
+func (lowering *lowering) uniquelyAssignableCallable(producer *checker.Type, member ir.ViewContractID) bool {
+	for _, union := range lowering.result.ViewContracts {
 		if union.Kind != ir.ViewUnion || union.Of != ir.Closure {
 			continue
 		}
@@ -214,10 +215,10 @@ func (l *lowering) uniquelyAssignableCallable(producer *checker.Type, member ir.
 		}
 		matches, exacts, exact := 0, 0, ir.ViewContractID(0)
 		for _, child := range union.Members {
-			if target := l.untaggedCallableTargets[child]; target != nil &&
-				l.checker.IsTypeAssignableTo(producer, target) {
+			if target := lowering.untaggedCallableTargets[child]; target != nil &&
+				lowering.checker.IsTypeAssignableTo(producer, target) {
 				matches++
-				if checker.Checker_isTypeIdenticalTo(l.checker, producer, target) {
+				if checker.Checker_isTypeIdenticalTo(lowering.checker, producer, target) {
 					exacts, exact = exacts+1, child
 				}
 			}
@@ -237,9 +238,9 @@ func (l *lowering) uniquelyAssignableCallable(producer *checker.Type, member ir.
 
 // allCallableTargets says whether every member names its checker callable target, so assignability to none of them
 // is a proof that the producer fits none and not a member the lowering never recorded.
-func (l *lowering) allCallableTargets(members []ir.ViewContractID) bool {
+func (lowering *lowering) allCallableTargets(members []ir.ViewContractID) bool {
 	for _, member := range members {
-		if l.untaggedCallableTargets[member] == nil {
+		if lowering.untaggedCallableTargets[member] == nil {
 			return false
 		}
 	}

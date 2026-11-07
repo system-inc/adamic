@@ -185,10 +185,10 @@ func hostAnyLibraryFile(file *ast.SourceFile) bool {
 	return load.IsNodeLibrary(file) || strings.HasPrefix(name, "bundled:///node/node_modules/undici-types/")
 }
 
-func (a *hostAnyAudit) run(test *testing.T, allowed map[string]bool) {
+func (audit *hostAnyAudit) run(test *testing.T, allowed map[string]bool) {
 	test.Helper()
 	names := []string{}
-	for name := range a.roots {
+	for name := range audit.roots {
 		names = append(names, name)
 	}
 	sort.Strings(names)
@@ -204,7 +204,7 @@ func (a *hostAnyAudit) run(test *testing.T, allowed map[string]bool) {
 			if typ == nil {
 				return
 			}
-			a.types[typ] = true
+			audit.types[typ] = true
 			if typ.Flags()&checker.TypeFlagsAny != 0 {
 				if !out || site == nil || !hostAnyLibraryFile(ast.GetSourceFileOfNode(site)) {
 					return
@@ -212,10 +212,10 @@ func (a *hostAnyAudit) run(test *testing.T, allowed map[string]bool) {
 				file := ast.GetSourceFileOfNode(site).FileName().AsString()
 				file = strings.TrimPrefix(file, "bundled:///node/node_modules/@types/node/")
 				file = strings.TrimPrefix(file, "bundled:///node/node_modules/")
-				location := fmt.Sprintf("%s:%d", file, a.program.Line(site))
+				location := fmt.Sprintf("%s:%d", file, audit.program.Line(site))
 				if !allowed[location] && !findingSeen[location] {
 					findingSeen[location] = true
-					a.findings = append(a.findings, hostAnyFinding{name, path, a.program.Where(site)})
+					audit.findings = append(audit.findings, hostAnyFinding{name, path, audit.program.Where(site)})
 				}
 				return
 			}
@@ -234,7 +234,7 @@ func (a *hostAnyAudit) run(test *testing.T, allowed map[string]bool) {
 				return
 			}
 			if typ.ObjectFlags()&checker.ObjectFlagsReference != 0 {
-				for i, arg := range a.checker.GetTypeArguments(typ) {
+				for i, arg := range audit.checker.GetTypeArguments(typ) {
 					walk(arg, out, site, fmt.Sprintf("%s.type-argument[%d]", path, i))
 				}
 			}
@@ -261,15 +261,15 @@ func (a *hostAnyAudit) run(test *testing.T, allowed map[string]bool) {
 				return
 			}
 			seen[key] = true
-			a.states++
+			audit.states++
 			for _, kind := range []checker.SignatureKind{checker.SignatureKindCall, checker.SignatureKindConstruct} {
-				for i, signature := range a.checker.GetSignaturesOfType(typ, kind) {
+				for i, signature := range audit.checker.GetSignaturesOfType(typ, kind) {
 					declaration := signature.Declaration()
 					if declaration == nil {
 						declaration = site
 					}
 					walk(
-						a.checker.GetReturnTypeOfSignature(signature),
+						audit.checker.GetReturnTypeOfSignature(signature),
 						out,
 						declaration,
 						fmt.Sprintf("%s.signature[%d:%d].return", path, kind, i),
@@ -277,7 +277,7 @@ func (a *hostAnyAudit) run(test *testing.T, allowed map[string]bool) {
 					for _, parameter := range signature.Parameters() {
 						for _, pd := range parameter.Declarations {
 							walk(
-								a.checker.GetTypeOfSymbolAtLocation(parameter, pd),
+								audit.checker.GetTypeOfSymbolAtLocation(parameter, pd),
 								!out,
 								pd,
 								fmt.Sprintf("%s.signature[%d:%d].parameter(%s)", path, kind, i, parameter.Name),
@@ -286,15 +286,15 @@ func (a *hostAnyAudit) run(test *testing.T, allowed map[string]bool) {
 					}
 				}
 			}
-			properties := slices.Clone(a.checker.GetPropertiesOfType(typ))
+			properties := slices.Clone(audit.checker.GetPropertiesOfType(typ))
 			sort.Slice(properties, func(i, j int) bool { return properties[i].Name < properties[j].Name })
 			for _, property := range properties {
-				if !a.admitted(property) {
+				if !audit.admitted(property) {
 					continue
 				} // Gated by rule 800 and host-object coverage.
 				for _, declaration := range property.Declarations {
 					walk(
-						a.checker.GetTypeOfSymbolAtLocation(property, declaration),
+						audit.checker.GetTypeOfSymbolAtLocation(property, declaration),
 						out,
 						declaration,
 						path+"."+property.Name,
@@ -302,25 +302,25 @@ func (a *hostAnyAudit) run(test *testing.T, allowed map[string]bool) {
 				}
 			}
 		}
-		for _, root := range a.roots[name] {
-			walk(a.checker.GetTypeOfSymbolAtLocation(root.symbol, root.declaration), true, root.declaration, name)
+		for _, root := range audit.roots[name] {
+			walk(audit.checker.GetTypeOfSymbolAtLocation(root.symbol, root.declaration), true, root.declaration, name)
 		}
 	}
-	for _, finding := range a.findings {
+	for _, finding := range audit.findings {
 		test.Errorf("%s: value-carrying any at %s (%s)", finding.Root, finding.Path, finding.Where)
 	}
 	test.Logf(
 		"audited %d registered/bound names; %d types; %d type/polarity states; %d reachable host anys",
 		len(names),
-		len(a.types),
-		a.states,
-		len(a.findings),
+		len(audit.types),
+		audit.states,
+		len(audit.findings),
 	)
 }
 
 // Bound stdout reads remain audit roots; registered hops use the production
 // declaration check, including namespace-scoped structural members.
-func (a *hostAnyAudit) admitted(symbol *ast.Symbol) bool {
+func (audit *hostAnyAudit) admitted(symbol *ast.Symbol) bool {
 	name := nodeLibraryName(symbol)
-	return a.members[name] && (!implementedNodeMembers[name] || nodeLibraryMemberImplemented(symbol))
+	return audit.members[name] && (!implementedNodeMembers[name] || nodeLibraryMemberImplemented(symbol))
 }

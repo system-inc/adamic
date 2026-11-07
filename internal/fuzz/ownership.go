@@ -11,27 +11,27 @@ import "strconv"
 // every name it knows, and a template can't interpolate an object.
 
 // ownershipProgram is the ownership scene for this seed followed by the family.
-func (g *generator) ownershipProgram() []*Statement {
+func (generator *generator) ownershipProgram() []*Statement {
 	var scene []*Statement
-	switch g.seed % 8 {
+	switch generator.seed % 8 {
 	case 0:
-		scene = g.ownNarrowedGlobal()
+		scene = generator.ownNarrowedGlobal()
 	case 1:
-		scene = g.ownNarrowedField()
+		scene = generator.ownNarrowedField()
 	case 2:
-		scene = g.ownNarrowedCaptured()
+		scene = generator.ownNarrowedCaptured()
 	case 3:
-		scene = g.ownVirtualMap()
+		scene = generator.ownVirtualMap()
 	case 4:
-		scene = g.ownSuperMap()
+		scene = generator.ownSuperMap()
 	case 5:
-		scene = g.ownSpreadAlias()
+		scene = generator.ownSpreadAlias()
 	case 6:
-		scene = g.ownSpreadRead()
+		scene = generator.ownSpreadRead()
 	default:
-		scene = g.ownConstructorCapture()
+		scene = generator.ownConstructorCapture()
 	}
-	return append(scene, g.ownFamily()...)
+	return append(scene, generator.ownFamily()...)
 }
 
 func blockOf(statements ...*Statement) *Block {
@@ -40,8 +40,8 @@ func blockOf(statements ...*Statement) *Block {
 
 // ownFreshBox is an object literal whose string is built at runtime, so freeing the object frees a
 // real allocation.
-func (g *generator) ownFreshBox(mark string) string {
-	return "{ v: `" + mark + "${" + strconv.Itoa(g.random.IntN(9)) + "}` }"
+func (generator *generator) ownFreshBox(mark string) string {
+	return "{ v: `" + mark + "${" + strconv.Itoa(generator.random.IntN(9)) + "}` }"
 }
 
 func ownBoxInterface() *Statement {
@@ -50,8 +50,8 @@ func ownBoxInterface() *Statement {
 
 // ownShow reads the object in the callee. The lend, if there is one, has to survive until this read,
 // which is after the other argument has run.
-func (g *generator) ownShow() *Statement {
-	gap := g.pick("", ":", "/")
+func (generator *generator) ownShow() *Statement {
+	gap := generator.pick("", ":", "/")
 	return statement("function ownShow(box: OwnBox, n: number): string @b", blockOf(
 		statement("return `${box.v}"+gap+"${n}`;"),
 	))
@@ -59,15 +59,15 @@ func (g *generator) ownShow() *Statement {
 
 // ownNarrowedGlobal passes a narrowed global into a call whose later argument assigns that global.
 // ir.Defined is pure, so the lend goes through it and the uncounted pointer is the argument.
-func (g *generator) ownNarrowedGlobal() []*Statement {
-	box := g.ownFreshBox("a")
+func (generator *generator) ownNarrowedGlobal() []*Statement {
+	box := generator.ownFreshBox("a")
 	return []*Statement{
 		ownBoxInterface(),
 		statement("let ownGlobal: OwnBox | undefined = " + box + ";"),
-		g.ownShow(),
+		generator.ownShow(),
 		statement("function ownResetGlobal(): number @b", blockOf(
-			statement("ownGlobal = "+g.ownFreshBox("b")+";"),
-			statement("return "+strconv.Itoa(g.random.IntN(3))+";"),
+			statement("ownGlobal = "+generator.ownFreshBox("b")+";"),
+			statement("return "+strconv.Itoa(generator.random.IntN(3))+";"),
 		)),
 		statement("if (ownGlobal !== undefined) @b", blockOf(
 			statement("console.log(ownShow(ownGlobal, ownResetGlobal()));"),
@@ -77,15 +77,15 @@ func (g *generator) ownNarrowedGlobal() []*Statement {
 
 // ownNarrowedField is the field form: the place assigned is a field, and the narrowed read is of that
 // field. The holder itself stays put.
-func (g *generator) ownNarrowedField() []*Statement {
+func (generator *generator) ownNarrowedField() []*Statement {
 	return []*Statement{
 		ownBoxInterface(),
 		statement("interface OwnSlot {\n\tbox: OwnBox | undefined;\n}"),
-		statement("const ownSlot: OwnSlot = { box: " + g.ownFreshBox("a") + " };"),
-		g.ownShow(),
+		statement("const ownSlot: OwnSlot = { box: " + generator.ownFreshBox("a") + " };"),
+		generator.ownShow(),
 		statement("function ownReplaceSlot(): number @b", blockOf(
-			statement("ownSlot.box = "+g.ownFreshBox("b")+";"),
-			statement("return "+strconv.Itoa(g.random.IntN(3))+";"),
+			statement("ownSlot.box = "+generator.ownFreshBox("b")+";"),
+			statement("return "+strconv.Itoa(generator.random.IntN(3))+";"),
 		)),
 		statement("if (ownSlot.box !== undefined) @b", blockOf(
 			statement("console.log(ownShow(ownSlot.box, ownReplaceSlot()));"),
@@ -95,14 +95,14 @@ func (g *generator) ownNarrowedField() []*Statement {
 
 // ownNarrowedCaptured is the captured form. The variable lives in a cell, the arrow assigns it, and
 // the narrowed read is an argument of the call that runs the arrow.
-func (g *generator) ownNarrowedCaptured() []*Statement {
+func (generator *generator) ownNarrowedCaptured() []*Statement {
 	return []*Statement{
 		ownBoxInterface(),
-		g.ownShow(),
+		generator.ownShow(),
 		statement("function ownCaptured(): string @b", blockOf(
-			statement("let ownLocal: OwnBox | undefined = "+g.ownFreshBox("c")+";"),
+			statement("let ownLocal: OwnBox | undefined = "+generator.ownFreshBox("c")+";"),
 			statement("const ownDrop = (): number => @b;", blockOf(
-				statement("ownLocal = "+g.ownFreshBox("d")+";"),
+				statement("ownLocal = "+generator.ownFreshBox("d")+";"),
 				statement("return 1;"),
 			)),
 			statement("if (ownLocal !== undefined) @b", blockOf(
@@ -116,11 +116,11 @@ func (g *generator) ownNarrowedCaptured() []*Statement {
 
 // ownItemsText is a non-empty array literal of fresh boxes. Index 0 is in range, so `items[0] ??`
 // borrows the element rather than the fallback.
-func (g *generator) ownItemsText() string {
-	count := 2 + g.random.IntN(2)
+func (generator *generator) ownItemsText() string {
+	count := 2 + generator.random.IntN(2)
 	parts := make([]string, count)
 	for index := range parts {
-		parts[index] = g.ownFreshBox(string(rune('a' + index)))
+		parts[index] = generator.ownFreshBox(string(rune('a' + index)))
 	}
 	return "[" + joinComma(parts) + "]"
 }
@@ -138,39 +138,39 @@ func joinComma(parts []string) string {
 
 // ownWorkerBody only reads the array. An override that maps is what makes the parameter consumed;
 // this body must not, or the element borrow sees the map and retains.
-func (g *generator) ownWorkerBody() *Block {
-	if g.chance(1, 2) {
+func (generator *generator) ownWorkerBody() *Block {
+	if generator.chance(1, 2) {
 		return blockOf(statement("return items.length;"))
 	}
-	return blockOf(statement("return (items[0] ?? " + g.ownFreshBox("q") + ").v.length;"))
+	return blockOf(statement("return (items[0] ?? " + generator.ownFreshBox("q") + ").v.length;"))
 }
 
 // ownMapperRun maps the array in place: one parameter, a callback that can't throw, same slot type
 // in and out. That is what marks the parameter consumed for every implementation.
-func (g *generator) ownMapperRun() *Statement {
-	suffix := g.pick("!", "?", "x")
+func (generator *generator) ownMapperRun() *Statement {
+	suffix := generator.pick("!", "?", "x")
 	return statement("run(items: OwnBox[]): number @b", blockOf(
 		statement("const out = items.map((box) => ({ v: `${box.v}"+suffix+"` }));"),
 		statement("return out.length;"),
 	))
 }
 
-func (g *generator) ownWorkerClass() *Statement {
+func (generator *generator) ownWorkerClass() *Statement {
 	return statement("class OwnWorker @b", blockOf(
-		statement("run(items: OwnBox[]): number @b", g.ownWorkerBody()),
+		statement("run(items: OwnBox[]): number @b", generator.ownWorkerBody()),
 	))
 }
 
 // ownVirtualMap borrows an element, then passes the array to a virtual call. The signature only
 // reads; an override maps, so the array is moved and the element dangles.
-func (g *generator) ownVirtualMap() []*Statement {
+func (generator *generator) ownVirtualMap() []*Statement {
 	return []*Statement{
 		ownBoxInterface(),
-		g.ownWorkerClass(),
-		statement("class OwnMapper extends OwnWorker @b", blockOf(g.ownMapperRun())),
+		generator.ownWorkerClass(),
+		statement("class OwnMapper extends OwnWorker @b", blockOf(generator.ownMapperRun())),
 		statement("function ownGo(ownWorker: OwnWorker): string @b", blockOf(
-			statement("const items: OwnBox[] = "+g.ownItemsText()+";"),
-			statement("const first = items[0] ?? "+g.ownFreshBox("z")+";"),
+			statement("const items: OwnBox[] = "+generator.ownItemsText()+";"),
+			statement("const first = items[0] ?? "+generator.ownFreshBox("z")+";"),
 			statement("const count = ownWorker.run(items);"),
 			statement("return `${first.v} ${count}`;"),
 		)),
@@ -181,15 +181,15 @@ func (g *generator) ownVirtualMap() []*Statement {
 
 // ownSuperMap is the direct call. super.run names the base, whose body only reads, but the parameter
 // is still consumed because the override maps. The borrowed element is read after the call.
-func (g *generator) ownSuperMap() []*Statement {
+func (generator *generator) ownSuperMap() []*Statement {
 	return []*Statement{
 		ownBoxInterface(),
-		g.ownWorkerClass(),
+		generator.ownWorkerClass(),
 		statement("class OwnMapper extends OwnWorker @b", blockOf(
-			g.ownMapperRun(),
+			generator.ownMapperRun(),
 			statement("ownTwice(): string @b", blockOf(
-				statement("const items: OwnBox[] = "+g.ownItemsText()+";"),
-				statement("const first = items[0] ?? "+g.ownFreshBox("z")+";"),
+				statement("const items: OwnBox[] = "+generator.ownItemsText()+";"),
+				statement("const first = items[0] ?? "+generator.ownFreshBox("z")+";"),
 				statement("const count = super.run(items);"),
 				statement("return `${first.v} ${count}`;"),
 			)),
@@ -198,35 +198,35 @@ func (g *generator) ownSuperMap() []*Statement {
 	}
 }
 
-func (g *generator) ownRealAliasClass() *Statement {
+func (generator *generator) ownRealAliasClass() *Statement {
 	return statement("class OwnReal implements OwnTree @b", blockOf(
 		statement("tag: string;"),
 		statement("constructor() @b", blockOf(
-			statement("this.tag = "+g.ownTag("t")+";"),
+			statement("this.tag = "+generator.ownTag("t")+";"),
 		)),
 		statement("keep(): string @b", blockOf(
 			statement("ownKept.push(this);"),
-			statement("return "+g.ownTag("kept")+";"),
+			statement("return "+generator.ownTag("kept")+";"),
 		)),
 	))
 }
 
 // ownTag is a fresh string, the kind a reused object's field write can be seen in.
-func (g *generator) ownTag(mark string) string {
-	return "`" + mark + "${" + strconv.Itoa(g.random.IntN(9)) + "}`"
+func (generator *generator) ownTag(mark string) string {
+	return "`" + mark + "${" + strconv.Itoa(generator.random.IntN(9)) + "}`"
 }
 
 // ownSpreadAlias spreads a uniquely held object while the literal calls a method that keeps this.
 // The method call is on the source, through the interface, inside the literal: that is the read the
 // reuse plan was counting as a field read.
-func (g *generator) ownSpreadAlias() []*Statement {
+func (generator *generator) ownSpreadAlias() []*Statement {
 	declarations := []*Statement{
 		statement("interface OwnTree {\n\ttag: string;\n\tkeep(): string;\n}"),
 		statement("interface OwnPlain {\n\ttag: string;\n}"),
 		statement("const ownKept: OwnTree[] = [];"),
-		g.ownRealAliasClass(),
+		generator.ownRealAliasClass(),
 	}
-	if g.chance(1, 2) {
+	if generator.chance(1, 2) {
 		// A local that dies at the return is owned and unique, the same as a borrowed parameter.
 		declarations = append(declarations,
 			statement("function ownRebuildLocal(): OwnPlain @b", blockOf(
@@ -251,7 +251,7 @@ func (g *generator) ownSpreadAlias() []*Statement {
 
 // ownSpreadRead spreads a unique object and, while the literal runs, reads a field the literal
 // replaces and then calls a method that reads that field again through this.
-func (g *generator) ownSpreadRead() []*Statement {
+func (generator *generator) ownSpreadRead() []*Statement {
 	return []*Statement{
 		statement("interface OwnLeaf {\n\tv: string;\n}"),
 		statement("interface OwnTree {\n\tleft: OwnLeaf;\n\ttag: string;\n\tpeek(): string;\n}"),
@@ -260,8 +260,8 @@ func (g *generator) ownSpreadRead() []*Statement {
 			statement("left: OwnLeaf;"),
 			statement("tag: string;"),
 			statement("constructor() @b", blockOf(
-				statement("this.left = "+g.ownFreshBox("a")+";"),
-				statement("this.tag = "+g.ownTag("t")+";"),
+				statement("this.left = "+generator.ownFreshBox("a")+";"),
+				statement("this.tag = "+generator.ownTag("t")+";"),
 			)),
 			statement("peek(): string @b", blockOf(
 				statement("return this.left.v;"),
@@ -280,13 +280,13 @@ func (g *generator) ownSpreadRead() []*Statement {
 
 // ownConstructorCapture constructs straight into a call argument. The constructor stores a closure
 // that captures this, which the region pass can't see, so the object has to outlive the statement.
-func (g *generator) ownConstructorCapture() []*Statement {
+func (generator *generator) ownConstructorCapture() []*Statement {
 	closure := "() => this.label"
-	if g.chance(1, 2) {
+	if generator.chance(1, 2) {
 		closure = "() => `${this.label}`"
 	}
-	first := 1 + g.random.IntN(9)
-	second := 10 + g.random.IntN(20)
+	first := 1 + generator.random.IntN(9)
+	second := 10 + generator.random.IntN(20)
 	return []*Statement{
 		statement("let ownLater: () => string = () => '-';"),
 		statement("class OwnMarked @b", blockOf(
@@ -309,21 +309,21 @@ func (g *generator) ownConstructorCapture() []*Statement {
 // ownFamily is the surrounding shapes: a direct global read beside a write, a write that finishes
 // before the narrowed read, an element held across a map the same function can see, a spread of an
 // object something else already holds, and an object built in a call argument that the callee keeps.
-func (g *generator) ownFamily() []*Statement {
+func (generator *generator) ownFamily() []*Statement {
 	return []*Statement{
 		statement("interface OwnFamilyBox {\n\tv: string;\n}"),
-		statement("let ownFamilyText = " + g.ownTag("t") + ";"),
+		statement("let ownFamilyText = " + generator.ownTag("t") + ";"),
 		statement("function ownFamilySet(): number @b", blockOf(
-			statement("ownFamilyText = "+g.ownTag("u")+";"),
+			statement("ownFamilyText = "+generator.ownTag("u")+";"),
 			statement("return ownFamilyText.length;"),
 		)),
 		statement("function ownFamilyMix(text: string, n: number): string @b", blockOf(
 			statement("return `${text}${n}`;"),
 		)),
 		statement("console.log(ownFamilyMix(ownFamilyText, ownFamilySet()));"),
-		statement("let ownFamilyOptional: OwnFamilyBox | undefined = " + g.ownFreshBox("f") + ";"),
+		statement("let ownFamilyOptional: OwnFamilyBox | undefined = " + generator.ownFreshBox("f") + ";"),
 		statement("function ownFamilyReset(): number @b", blockOf(
-			statement("ownFamilyOptional = "+g.ownFreshBox("g")+";"),
+			statement("ownFamilyOptional = "+generator.ownFreshBox("g")+";"),
 			statement("return 0;"),
 		)),
 		statement("ownFamilyReset();"),
@@ -331,8 +331,8 @@ func (g *generator) ownFamily() []*Statement {
 			statement("console.log(ownFamilyOptional.v);"),
 		)),
 		statement("function ownFamilyMap(): string @b", blockOf(
-			statement("const items: OwnFamilyBox[] = "+g.ownItemsText()+";"),
-			statement("const first = items[0] ?? "+g.ownFreshBox("z")+";"),
+			statement("const items: OwnFamilyBox[] = "+generator.ownItemsText()+";"),
+			statement("const first = items[0] ?? "+generator.ownFreshBox("z")+";"),
 			statement("const out = items.map((box) => ({ v: `${box.v}!` }));"),
 			statement("return `${first.v} ${out.length}`;"),
 		)),
@@ -343,11 +343,11 @@ func (g *generator) ownFamily() []*Statement {
 		statement("class OwnFamilyReal implements OwnFamilyTree @b", blockOf(
 			statement("tag: string;"),
 			statement("constructor() @b", blockOf(
-				statement("this.tag = "+g.ownTag("f")+";"),
+				statement("this.tag = "+generator.ownTag("f")+";"),
 			)),
 			statement("keep(): string @b", blockOf(
 				statement("ownFamilyKept.push(this);"),
-				statement("return "+g.ownTag("k")+";"),
+				statement("return "+generator.ownTag("k")+";"),
 			)),
 		)),
 		// Pushed first, so the spread's source is not the only reference and must be copied.
@@ -355,7 +355,9 @@ func (g *generator) ownFamily() []*Statement {
 		statement("ownFamilyKept.push(ownFamilyTree);"),
 		statement("const ownFamilyMade: OwnFamilyPlain = { ...ownFamilyTree, tag: ownFamilyTree.keep() };"),
 		statement("const ownFamilyEach = ownFamilyKept[0] ?? new OwnFamilyReal();"),
-		statement("console.log(`${ownFamilyEach.tag} ${ownFamilyEach instanceof OwnFamilyReal} ${ownFamilyMade.tag}`);"),
+		statement(
+			"console.log(`${ownFamilyEach.tag} ${ownFamilyEach instanceof OwnFamilyReal} ${ownFamilyMade.tag}`);",
+		),
 		statement("class OwnFamilyHeld @b", blockOf(
 			statement("label: string;"),
 			statement("constructor(count: number) @b", blockOf(
@@ -367,7 +369,9 @@ func (g *generator) ownFamily() []*Statement {
 			statement("ownFamilySaved = counter;"),
 			statement("return counter.label.length;"),
 		)),
-		statement("console.log(`${ownFamilyKeep(new OwnFamilyHeld(" + strconv.Itoa(1+g.random.IntN(8)) + "))}`);"),
+		statement(
+			"console.log(`${ownFamilyKeep(new OwnFamilyHeld(" + strconv.Itoa(1+generator.random.IntN(8)) + "))}`);",
+		),
 		statement("console.log(ownFamilySaved.label);"),
 	}
 }

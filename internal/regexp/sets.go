@@ -299,13 +299,13 @@ func combineSets(a, b characterSet, intersection bool) characterSet {
 	}
 	return result
 }
-func (s characterSet) contains(c rune) bool {
-	i := sort.Search(len(s.ranges), func(i int) bool { return s.ranges[i].To >= c })
-	return i < len(s.ranges) && s.ranges[i].From <= c
+func (set characterSet) contains(c rune) bool {
+	i := sort.Search(len(set.ranges), func(i int) bool { return set.ranges[i].To >= c })
+	return i < len(set.ranges) && set.ranges[i].From <= c
 }
-func (s characterSet) match(input []uint16, pos, dir int, f Flags) []int {
+func (set characterSet) match(input []uint16, pos, dir int, f Flags) []int {
 	var positions []int
-	for _, str := range s.strings {
+	for _, str := range set.strings {
 		at := pos
 		ok := true
 		for j := 0; j < len(str); j++ {
@@ -325,7 +325,7 @@ func (s characterSet) match(input []uint16, pos, dir int, f Flags) []int {
 		}
 	}
 	c, next, exists := readCharacter(input, pos, dir, unicodeMode(f))
-	if exists && s.contains(canonicalize(c, f)) {
+	if exists && set.contains(canonicalize(c, f)) {
 		positions = append(positions, next)
 	}
 	sort.SliceStable(positions, func(i, j int) bool { return abs(positions[i]-pos) > abs(positions[j]-pos) })

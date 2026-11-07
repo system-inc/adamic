@@ -21,19 +21,22 @@ type librarySpread struct {
 // The closed world includes library values returned by calls and read from
 // fields, not just explicit constructors. Declaration identity also covers new
 // library shapes without maintaining a list of built-in class names here.
-func (l *lowering) checkLibrarySpreads(modules []*ast.SourceFile) error {
-	if len(l.librarySpreads) == 0 {
+func (lowering *lowering) checkLibrarySpreads(modules []*ast.SourceFile) error {
+	if len(lowering.librarySpreads) == 0 {
 		return nil
 	}
-	candidates := l.librarySpreadCandidates(modules)
-	graph := newAllocationFlowGraph(l.result)
-	for _, spread := range l.librarySpreads {
+	candidates := lowering.librarySpreadCandidates(modules)
+	graph := newAllocationFlowGraph(lowering.result)
+	for _, spread := range lowering.librarySpreads {
 		// A complete producer proof preserves ordinary record and Adamic class
 		// spreads even when an unrelated compatible library object exists elsewhere.
 		if graph.plainSpreadSources(spread.source, map[int]bool{}) {
 			continue
 		}
-		if librarySpreadRefusalError := l.librarySpreadRefusal(spread, candidates); librarySpreadRefusalError != nil {
+		if librarySpreadRefusalError := lowering.librarySpreadRefusal(
+			spread,
+			candidates,
+		); librarySpreadRefusalError != nil {
 			return librarySpreadRefusalError
 		}
 	}
@@ -104,7 +107,7 @@ func (graph *allocationFlowGraph) plainSpreadSources(expression ir.Expression, a
 	return false
 }
 
-func (l *lowering) librarySpreadCandidates(modules []*ast.SourceFile) map[*checker.Type]string {
+func (lowering *lowering) librarySpreadCandidates(modules []*ast.SourceFile) map[*checker.Type]string {
 	candidates := map[*checker.Type]string{}
 	var note func(*checker.Type)
 	note = func(proven *checker.Type) {
@@ -122,7 +125,7 @@ func (l *lowering) librarySpreadCandidates(modules []*ast.SourceFile) map[*check
 			return
 		}
 		// Constructor functions have no instance storage. Their uses have separate guards.
-		if len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) != 0 {
+		if len(lowering.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) != 0 {
 			return
 		}
 		for _, declaration := range symbol.Declarations {
@@ -137,7 +140,7 @@ func (l *lowering) librarySpreadCandidates(modules []*ast.SourceFile) map[*check
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
 		if ast.IsExpression(node) {
-			note(l.checker.GetTypeAtLocation(node))
+			note(lowering.checker.GetTypeAtLocation(node))
 		}
 		return node.ForEachChild(visit)
 	}
@@ -147,17 +150,17 @@ func (l *lowering) librarySpreadCandidates(modules []*ast.SourceFile) map[*check
 	return candidates
 }
 
-func (l *lowering) librarySpreadRefusal(spread librarySpread, candidates map[*checker.Type]string) error {
+func (lowering *lowering) librarySpreadRefusal(spread librarySpread, candidates map[*checker.Type]string) error {
 	names := []string{}
 	for candidate, name := range candidates {
-		if l.checker.IsTypeAssignableTo(candidate, spread.view) {
+		if lowering.checker.IsTypeAssignableTo(candidate, spread.view) {
 			names = append(names, name)
 		}
 	}
 	if len(names) != 0 {
 		sort.Strings(names)
 		return &Refused{
-			Where: l.program.Where(spread.node),
+			Where: lowering.program.Where(spread.node),
 			What: "an object spread through a view that may hold library class " +
 				names[0] +
 				" (its internal fields are not own enumerable properties)",

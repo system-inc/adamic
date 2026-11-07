@@ -31,57 +31,62 @@ type phaseProfile struct {
 	Hit   bool    `json:"hit,omitempty"`
 }
 
-func newRunProfile() *runProfile      { return &runProfile{origin: time.Now()} }
-func (p *runProfile) offset() float64 { return time.Since(p.origin).Seconds() }
-func (p *runProfile) preparing(stage string) func() {
-	if p == nil {
+func newRunProfile() *runProfile            { return &runProfile{origin: time.Now()} }
+func (profile *runProfile) offset() float64 { return time.Since(profile.origin).Seconds() }
+func (profile *runProfile) preparing(stage string) func() {
+	if profile == nil {
 		return func() {}
 	}
-	start := p.offset()
-	return func() { p.Prepare = append(p.Prepare, phaseProfile{Stage: stage, Start: start, End: p.offset()}) }
+	start := profile.offset()
+	return func() {
+		profile.Prepare = append(profile.Prepare, phaseProfile{Stage: stage, Start: start, End: profile.offset()})
+	}
 }
-func (p *runProfile) begin(path string, worker int) *testProfile {
-	if p == nil {
+func (profile *runProfile) begin(path string, worker int) *testProfile {
+	if profile == nil {
 		return nil
 	}
-	return &testProfile{Path: path, Worker: worker, Start: p.offset(), owner: p}
+	return &testProfile{Path: path, Worker: worker, Start: profile.offset(), owner: profile}
 }
-func (p *testProfile) finish() {
-	if p == nil {
+func (profile *testProfile) finish() {
+	if profile == nil {
 		return
 	}
-	p.End = p.owner.offset()
-	p.owner.mutex.Lock()
-	p.owner.Tests = append(p.owner.Tests, p)
-	p.owner.mutex.Unlock()
+	profile.End = profile.owner.offset()
+	profile.owner.mutex.Lock()
+	profile.owner.Tests = append(profile.owner.Tests, profile)
+	profile.owner.mutex.Unlock()
 }
-func (p *testProfile) command(stage string, execute func() execution) execution {
-	if p == nil {
+func (profile *testProfile) command(stage string, execute func() execution) execution {
+	if profile == nil {
 		return execute()
 	}
-	start := p.owner.offset()
+	start := profile.owner.offset()
 	result := execute()
-	p.Phases = append(p.Phases, phaseProfile{Stage: stage, Start: start, End: p.owner.offset()})
+	profile.Phases = append(profile.Phases, phaseProfile{Stage: stage, Start: start, End: profile.owner.offset()})
 	return result
 }
-func (p *testProfile) observation(
+func (profile *testProfile) observation(
 	stage string,
 	cache *resultCache,
 	key string,
 	execute func() (execution, bool),
 ) execution {
-	if p == nil {
+	if profile == nil {
 		return cache.observe(key, execute)
 	}
-	start := p.owner.offset()
+	start := profile.owner.offset()
 	hit := true
 	result := cache.observe(key, func() (execution, bool) { hit = false; return execute() })
-	p.Phases = append(p.Phases, phaseProfile{Stage: stage, Start: start, End: p.owner.offset(), Hit: hit})
+	profile.Phases = append(
+		profile.Phases,
+		phaseProfile{Stage: stage, Start: start, End: profile.owner.offset(), Hit: hit},
+	)
 	return result
 }
-func (p *runProfile) write(path string) error {
-	sort.Slice(p.Tests, func(i, j int) bool { return p.Tests[i].Path < p.Tests[j].Path })
-	data, encodeError := json.MarshalIndent(p, "", "  ")
+func (profile *runProfile) write(path string) error {
+	sort.Slice(profile.Tests, func(i, j int) bool { return profile.Tests[i].Path < profile.Tests[j].Path })
+	data, encodeError := json.MarshalIndent(profile, "", "  ")
 	if encodeError != nil {
 		return encodeError
 	}

@@ -6,14 +6,14 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-func (l *lowering) isNever(node *ast.Node) bool {
-	return l.concrete(l.checker.GetTypeAtLocation(node)).Flags()&checker.TypeFlagsNever != 0
+func (lowering *lowering) isNever(node *ast.Node) bool {
+	return lowering.concrete(lowering.checker.GetTypeAtLocation(node)).Flags()&checker.TypeFlagsNever != 0
 }
 
 // A never arm has effects but no value. The typed placeholder exists only to
 // satisfy the backend's branch ABI; the proven non-returning arm precedes it.
-func (l *lowering) neverValue(node *ast.Node, of ir.Type) (ir.Expression, error) {
-	effect, discardedValueError := l.discardedValue(node)
+func (lowering *lowering) neverValue(node *ast.Node, of ir.Type) (ir.Expression, error) {
+	effect, discardedValueError := lowering.discardedValue(node)
 	if discardedValueError != nil {
 		return nil, discardedValueError
 	}
@@ -32,17 +32,17 @@ func unreachablePlaceholder(of ir.Type) ir.Expression {
 	return fit(ir.Undefined{}, of)
 }
 
-func (l *lowering) logicalNever(node *ast.Node) (ir.Expression, error) {
+func (lowering *lowering) logicalNever(node *ast.Node) (ir.Expression, error) {
 	binary := node.AsBinaryExpression()
-	left, expressionError := l.expression(binary.Left)
+	left, expressionError := lowering.expression(binary.Left)
 	if expressionError != nil {
 		return nil, expressionError
 	}
-	of, typeOfError := l.typeOf(node)
+	of, typeOfError := lowering.typeOf(node)
 	if typeOfError != nil {
 		return nil, typeOfError
 	}
-	right, neverValueError := l.neverValue(binary.Right, of)
+	right, neverValueError := lowering.neverValue(binary.Right, of)
 	if neverValueError != nil {
 		return nil, neverValueError
 	}
@@ -54,17 +54,17 @@ func (l *lowering) logicalNever(node *ast.Node) (ir.Expression, error) {
 	}, nil
 }
 
-func (l *lowering) conditionalNever(node *ast.Node, condition ir.Expression) (ir.Expression, error) {
+func (lowering *lowering) conditionalNever(node *ast.Node, condition ir.Expression) (ir.Expression, error) {
 	conditional := node.AsConditionalExpression()
-	of, typeOfError := l.typeOf(node)
+	of, typeOfError := lowering.typeOf(node)
 	if typeOfError != nil {
 		return nil, typeOfError
 	}
 	branch := func(arm *ast.Node) (ir.Expression, error) {
-		if l.isNever(arm) {
-			return l.neverValue(arm, of)
+		if lowering.isNever(arm) {
+			return lowering.neverValue(arm, of)
 		}
-		value, expressionError := l.expression(arm)
+		value, expressionError := lowering.expression(arm)
 		if expressionError != nil {
 			return nil, expressionError
 		}

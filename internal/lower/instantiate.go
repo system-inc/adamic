@@ -24,22 +24,22 @@ func instantiateType(receiver *checker.Checker, proven *checker.Type, mapper *ty
 
 // typeMapperOf is what a class's type parameters stand for in a type of it, as a mapper the checker
 // instantiates with, or the one in force when the class has none.
-func (l *lowering) typeMapperOf(declaration *ast.Node, classType *checker.Type) *typeMapper {
+func (lowering *lowering) typeMapperOf(declaration *ast.Node, classType *checker.Type) *typeMapper {
 	parameters := declaration.TypeParameters()
-	arguments := l.checker.GetTypeArguments(classType)
+	arguments := lowering.checker.GetTypeArguments(classType)
 	if len(parameters) == 0 || len(parameters) != len(arguments) {
-		return l.typeMapper
+		return lowering.typeMapper
 	}
 	sources := []*checker.Type{}
 	for _, parameter := range parameters {
-		sources = append(sources, l.checker.GetTypeAtLocation(parameter.Name()))
+		sources = append(sources, lowering.checker.GetTypeAtLocation(parameter.Name()))
 	}
 	return newTypeMapper(sources, arguments)
 }
 
 // closureNodeOf is where a function value is written.
-func (l *lowering) closureNodeOf(function int) *ast.Node {
-	for _, closure := range l.closureRecords {
+func (lowering *lowering) closureNodeOf(function int) *ast.Node {
+	for _, closure := range lowering.closureRecords {
 		if closure.function == function {
 			return closure.node
 		}
@@ -49,15 +49,15 @@ func (l *lowering) closureNodeOf(function int) *ast.Node {
 
 // concrete is a type as the instantiation being lowered makes it: its type parameters, and those of
 // every instantiation it's inside, replaced by what they stand for.
-func (l *lowering) concrete(proven *checker.Type) *checker.Type {
-	if l.typeMapper == nil || proven == nil {
+func (lowering *lowering) concrete(proven *checker.Type) *checker.Type {
+	if lowering.typeMapper == nil || proven == nil {
 		return proven
 	}
-	return instantiateType(l.checker, proven, l.typeMapper)
+	return instantiateType(lowering.checker, proven, lowering.typeMapper)
 }
 
 // classNodeFor is where a class type's class is declared, to point at.
-func (l *lowering) classNodeFor(proven *checker.Type) *ast.Node {
+func (lowering *lowering) classNodeFor(proven *checker.Type) *ast.Node {
 	if symbol := proven.Symbol(); symbol != nil && len(symbol.Declarations) > 0 {
 		return symbol.Declarations[0]
 	}

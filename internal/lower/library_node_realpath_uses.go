@@ -41,19 +41,19 @@ func realpathTruthiness(node *ast.Node) bool {
 	return false
 }
 
-func (l *lowering) realpathInitializer(node *ast.Node) bool {
+func (lowering *lowering) realpathInitializer(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
-	if l.nodeRealpathNative(node) || l.nodeLibraryMember(node) == "node:fs.realpathSync" {
+	if lowering.nodeRealpathNative(node) || lowering.nodeLibraryMember(node) == "node:fs.realpathSync" {
 		return true
 	}
 	if node.Kind == ast.KindConditionalExpression {
 		conditional := node.AsConditionalExpression()
-		return l.realpathInitializer(conditional.WhenTrue) || l.realpathInitializer(conditional.WhenFalse)
+		return lowering.realpathInitializer(conditional.WhenTrue) || lowering.realpathInitializer(conditional.WhenFalse)
 	}
 	return false
 }
 
-func (l *lowering) realpathIdentity(node *ast.Node) bool {
+func (lowering *lowering) realpathIdentity(node *ast.Node) bool {
 	node = realpathParent(node)
 	if node.Parent == nil || node.Parent.Kind != ast.KindBinaryExpression {
 		return false
@@ -68,13 +68,13 @@ func (l *lowering) realpathIdentity(node *ast.Node) bool {
 		other = binary.Right
 	}
 	other = ast.SkipParentheses(other)
-	if l.nodeRealpathNative(other) || l.nodeLibraryMember(other) == "node:fs.realpathSync" {
+	if lowering.nodeRealpathNative(other) || lowering.nodeLibraryMember(other) == "node:fs.realpathSync" {
 		return true
 	}
 	if !ast.IsIdentifier(other) {
 		return false
 	}
-	symbol := l.symbol(other)
+	symbol := lowering.symbol(other)
 	if symbol == nil || len(symbol.Declarations) != 1 {
 		return false
 	}
@@ -82,11 +82,11 @@ func (l *lowering) realpathIdentity(node *ast.Node) bool {
 	return declaration.Kind == ast.KindVariableDeclaration &&
 		declaration.Parent.Flags&ast.NodeFlagsConst != 0 &&
 		declaration.AsVariableDeclaration().Initializer != nil &&
-		l.realpathInitializer(declaration.AsVariableDeclaration().Initializer)
+		lowering.realpathInitializer(declaration.AsVariableDeclaration().Initializer)
 }
 
-func (l *lowering) realpathUseError(node *ast.Node, use string) error {
-	return l.notYet(
+func (lowering *lowering) realpathUseError(node *ast.Node, use string) error {
+	return lowering.notYet(
 		node,
 		"node:fs.realpathSync.native as a value is admitted only as a const called with one path; this use "+
 			use+
@@ -124,14 +124,14 @@ func realpathUseName(node *ast.Node) string {
 // Inspect the complete lexical scope, including nested functions so a capture
 // cannot hide a callback escape. Symbols distinguish shadowed names; no shared
 // lowering state or whole-program pass is needed.
-func (l *lowering) nodeRealpathReferenceRefusal(node *ast.Node) error {
+func (lowering *lowering) nodeRealpathReferenceRefusal(node *ast.Node) error {
 	use := realpathParent(node)
 	if parent := use.Parent; parent != nil &&
 		parent.Kind == ast.KindCallExpression &&
 		parent.AsCallExpression().Expression == use {
 		return nil
 	}
-	if realpathTruthiness(use) || l.realpathIdentity(use) {
+	if realpathTruthiness(use) || lowering.realpathIdentity(use) {
 		return nil
 	}
 	for use.Parent != nil && use.Parent.Kind == ast.KindConditionalExpression {
@@ -145,29 +145,29 @@ func (l *lowering) nodeRealpathReferenceRefusal(node *ast.Node) error {
 	if declaration == nil ||
 		declaration.Kind != ast.KindVariableDeclaration ||
 		declaration.AsVariableDeclaration().Initializer != use {
-		return l.realpathUseError(node, realpathUseName(use))
+		return lowering.realpathUseError(node, realpathUseName(use))
 	}
 	binding := declaration.AsVariableDeclaration()
 	if declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
-		return l.realpathUseError(node, "is declared with let or var")
+		return lowering.realpathUseError(node, "is declared with let or var")
 	}
 	if !ast.IsIdentifier(binding.Name()) {
-		return l.realpathUseError(node, "is stored in a binding pattern")
+		return lowering.realpathUseError(node, "is stored in a binding pattern")
 	}
 	if ast.HasSyntacticModifier(declaration.Parent.Parent, ast.ModifierFlagsExport) {
-		return l.realpathUseError(node, "is exported")
+		return lowering.realpathUseError(node, "is exported")
 	}
 	scope := ast.GetContainingFunction(declaration)
 	if ast.GetContainingFunction(node) != scope {
-		return l.realpathUseError(node, "crosses a function scope")
+		return lowering.realpathUseError(node, "crosses a function scope")
 	}
 	root := scope
 	if root == nil {
 		root = ast.GetSourceFileOfNode(declaration).AsNode()
 	}
-	symbol := l.symbol(binding.Name())
+	symbol := lowering.symbol(binding.Name())
 	if symbol == nil {
-		return l.realpathUseError(node, "has no provable binding symbol")
+		return lowering.realpathUseError(node, "has no provable binding symbol")
 	}
 	var found error
 	var visit ast.Visitor
@@ -176,12 +176,12 @@ func (l *lowering) nodeRealpathReferenceRefusal(node *ast.Node) error {
 			return true
 		}
 		if ast.IsIdentifier(reference) && reference != binding.Name() && !ast.IsPartOfTypeNode(reference) {
-			target := l.symbol(reference)
+			target := lowering.symbol(reference)
 			if reference.Parent != nil && ast.IsShorthandPropertyAssignment(reference.Parent) {
-				target = l.checker.GetShorthandAssignmentValueSymbol(reference.Parent)
+				target = lowering.checker.GetShorthandAssignmentValueSymbol(reference.Parent)
 			}
 			if target == symbol {
-				if realpathConstUseError := l.realpathConstUse(reference); realpathConstUseError != nil {
+				if realpathConstUseError := lowering.realpathConstUse(reference); realpathConstUseError != nil {
 					found = realpathConstUseError
 					return true
 				}
@@ -196,31 +196,31 @@ func (l *lowering) nodeRealpathReferenceRefusal(node *ast.Node) error {
 
 // Only these use kinds consume the value without erasing its one-path calling
 // convention. Every other syntax kind, including future kinds, fails closed.
-func (l *lowering) realpathConstUse(reference *ast.Node) error {
+func (lowering *lowering) realpathConstUse(reference *ast.Node) error {
 	outer := realpathParent(reference)
 	parent := outer.Parent
 	if parent == nil {
-		return l.realpathUseError(reference, "escapes its binding")
+		return lowering.realpathUseError(reference, "escapes its binding")
 	}
 	switch parent.Kind {
 	case ast.KindCallExpression:
 		call := parent.AsCallExpression()
 		if call.Expression != outer {
-			return l.realpathUseError(reference, "is passed as an argument")
+			return lowering.realpathUseError(reference, "is passed as an argument")
 		}
 		arguments := call.Arguments.Nodes
 		if len(arguments) != 1 {
-			return l.realpathUseError(reference, "is called with zero or multiple arguments")
+			return lowering.realpathUseError(reference, "is called with zero or multiple arguments")
 		}
 		if arguments[0].Kind == ast.KindSpreadElement {
-			return l.realpathUseError(reference, "is called with spread arguments")
+			return lowering.realpathUseError(reference, "is called with spread arguments")
 		}
-		if l.checker.GetTypeAtLocation(arguments[0]).Flags()&checker.TypeFlagsStringLike == 0 {
-			return l.realpathUseError(reference, "is called with a non-string path")
+		if lowering.checker.GetTypeAtLocation(arguments[0]).Flags()&checker.TypeFlagsStringLike == 0 {
+			return lowering.realpathUseError(reference, "is called with a non-string path")
 		}
 		return nil
 	case ast.KindBinaryExpression:
-		if l.realpathIdentity(outer) || realpathTruthiness(outer) {
+		if lowering.realpathIdentity(outer) || realpathTruthiness(outer) {
 			return nil
 		}
 	case ast.KindPrefixUnaryExpression, ast.KindIfStatement, ast.KindWhileStatement, ast.KindDoStatement, ast.KindForStatement, ast.KindConditionalExpression:
@@ -228,5 +228,5 @@ func (l *lowering) realpathConstUse(reference *ast.Node) error {
 			return nil
 		}
 	}
-	return l.realpathUseError(reference, realpathUseName(outer))
+	return lowering.realpathUseError(reference, realpathUseName(outer))
 }

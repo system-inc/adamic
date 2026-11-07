@@ -34,9 +34,16 @@ func switchBodyLeaves(body []ir.Statement) bool {
 // fallthroughSwitch first chooses the entry group in source test order, with default only as a
 // fallback. The entered body and every later body then run in one breakable switch, until an abrupt
 // exit leaves it. Bodies are emitted once, so their locals, ownership and flow points are not cloned.
-func (l *lowering) fallthroughSwitch(value ir.Expression, groups []switchGroup, unmatchedCheck ir.Statement) []ir.Statement {
-	entry := len(l.result.Locals)
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: "switch_entry", Type: ir.Number, Function: l.functionIndex})
+func (lowering *lowering) fallthroughSwitch(
+	value ir.Expression,
+	groups []switchGroup,
+	unmatchedCheck ir.Statement,
+) []ir.Statement {
+	entry := len(lowering.result.Locals)
+	lowering.result.Locals = append(
+		lowering.result.Locals,
+		ir.Local{Name: "switch_entry", Type: ir.Number, Function: lowering.functionIndex},
+	)
 	dispatch := ir.Switch{Value: value}
 	if unmatchedCheck != nil {
 		// An open enum can reach a checker-never default only when no case matched.
@@ -56,8 +63,12 @@ func (l *lowering) fallthroughSwitch(value ir.Expression, groups []switchGroup, 
 		}
 		if len(group.body) > 0 {
 			bodies = append(bodies, ir.If{
-				Condition: ir.Binary{Operator: ir.LessOrEqual, Left: ir.Read{Local: entry, Of: ir.Number}, Right: position},
-				Then:      group.body,
+				Condition: ir.Binary{
+					Operator: ir.LessOrEqual,
+					Left:     ir.Read{Local: entry, Of: ir.Number},
+					Right:    position,
+				},
+				Then: group.body,
 			})
 		}
 	}
@@ -70,7 +81,7 @@ func (l *lowering) fallthroughSwitch(value ir.Expression, groups []switchGroup, 
 
 // labeledBreak resolves the source label to a breakable depth. Dispatch switches introduced by
 // fallthrough lowering finish before any source body, so they never change this depth.
-func (l *lowering) labeledBreak(node *ast.Node) ([]ir.Statement, error) {
+func (lowering *lowering) labeledBreak(node *ast.Node) ([]ir.Statement, error) {
 	depth := 0
 	for parent := node.Parent; parent != nil; parent = parent.Parent {
 		if parent.Kind != ast.KindSwitchStatement && !ast.IsIterationStatement(parent, false) {
@@ -83,5 +94,5 @@ func (l *lowering) labeledBreak(node *ast.Node) ([]ir.Statement, error) {
 		}
 		depth++
 	}
-	return nil, l.notYet(node, "a break to a label that is not a loop or switch")
+	return nil, lowering.notYet(node, "a break to a label that is not a loop or switch")
 }

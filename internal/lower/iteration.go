@@ -10,14 +10,14 @@ import (
 // The symbol slot has a reserved spelling only in IR. Source string fields may not use it.
 const iteratorSlot = "__adamic_symbol_iterator"
 
-func (l *lowering) symbolIterator(node *ast.Node) bool {
+func (lowering *lowering) symbolIterator(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
 	return node.Kind == ast.KindPropertyAccessExpression &&
 		node.Name().Text() == "iterator" &&
-		l.isLibraryGlobal(node.AsPropertyAccessExpression().Expression, "Symbol")
+		lowering.isLibraryGlobal(node.AsPropertyAccessExpression().Expression, "Symbol")
 }
 
-func (l *lowering) methodName(node *ast.Node) (string, bool) {
+func (lowering *lowering) methodName(node *ast.Node) (string, bool) {
 	name := node.Name()
 	if name == nil {
 		return "", false
@@ -30,17 +30,17 @@ func (l *lowering) methodName(node *ast.Node) (string, bool) {
 			return text, text != iteratorSlot
 		}
 	}
-	if name.Kind == ast.KindComputedPropertyName && l.symbolIterator(name.AsComputedPropertyName().Expression) {
+	if name.Kind == ast.KindComputedPropertyName && lowering.symbolIterator(name.AsComputedPropertyName().Expression) {
 		return iteratorSlot, true
 	}
 	return "", false
 }
 
-func (l *lowering) iteratorMember(proven *checker.Type) *ast.Symbol {
-	for _, member := range l.checker.GetPropertiesOfType(l.concrete(proven)) {
-		for _, root := range l.checker.GetRootSymbols(member) {
+func (lowering *lowering) iteratorMember(proven *checker.Type) *ast.Symbol {
+	for _, member := range lowering.checker.GetPropertiesOfType(lowering.concrete(proven)) {
+		for _, root := range lowering.checker.GetRootSymbols(member) {
 			for _, declaration := range root.Declarations {
-				if name, known := l.methodName(
+				if name, known := lowering.methodName(
 					declaration,
 				); known && name == iteratorSlot && !load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
 					return member
@@ -53,38 +53,41 @@ func (l *lowering) iteratorMember(proven *checker.Type) *ast.Symbol {
 
 // Literal methods receive this as an argument, rather than capturing their owner. Their ordinary
 // lexical captures still use the existing cycle analysis and reference-counted closure environment.
-func (l *lowering) objectMethod(node *ast.Node) (ir.Expression, error) {
-	index := len(l.result.Functions)
-	l.result.Functions = append(l.result.Functions, ir.Function{Name: "object_method", Closure: true, Receiver: true})
-	this := l.iterationLocal("this", ir.Object, index)
-	l.noteLocal(this, l.checker.GetTypeAtLocation(node.Parent), node)
-	l.closureRecords = append(
-		l.closureRecords,
-		closureRecord{proven: l.checker.GetTypeAtLocation(node), function: index, node: node},
+func (lowering *lowering) objectMethod(node *ast.Node) (ir.Expression, error) {
+	index := len(lowering.result.Functions)
+	lowering.result.Functions = append(
+		lowering.result.Functions,
+		ir.Function{Name: "object_method", Closure: true, Receiver: true},
 	)
-	l.closures = append(l.closures, index)
-	lowerFunctionError := l.lowerFunction(index, node, this)
-	l.closures = l.closures[:len(l.closures)-1]
+	this := lowering.iterationLocal("this", ir.Object, index)
+	lowering.noteLocal(this, lowering.checker.GetTypeAtLocation(node.Parent), node)
+	lowering.closureRecords = append(
+		lowering.closureRecords,
+		closureRecord{proven: lowering.checker.GetTypeAtLocation(node), function: index, node: node},
+	)
+	lowering.closures = append(lowering.closures, index)
+	lowerFunctionError := lowering.lowerFunction(index, node, this)
+	lowering.closures = lowering.closures[:len(lowering.closures)-1]
 	if lowerFunctionError != nil {
 		return nil, lowerFunctionError
 	}
 	return ir.MakeClosure{Function: index}, nil
 }
 
-func (l *lowering) iterationLocal(name string, of ir.Type, function int) int {
-	local := len(l.result.Locals)
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: name, Type: of, Function: function})
+func (lowering *lowering) iterationLocal(name string, of ir.Type, function int) int {
+	local := len(lowering.result.Locals)
+	lowering.result.Locals = append(lowering.result.Locals, ir.Local{Name: name, Type: of, Function: function})
 	return local
 }
 
 // memberReceiver rejects erased method origins: a class method, a literal method and an arrow
 // field have different calling conventions, which a bare structural interface does not preserve.
-func (l *lowering) memberReceiver(where *ast.Node, member *ast.Symbol) (bool, error) {
+func (lowering *lowering) memberReceiver(where *ast.Node, member *ast.Symbol) (bool, error) {
 	if member == nil || member.Flags&ast.SymbolFlagsOptional != 0 {
-		return false, l.notYet(where, "an optional iterator method (runtime method presence is not represented)")
+		return false, lowering.notYet(where, "an optional iterator method (runtime method presence is not represented)")
 	}
 	convention := -1
-	for _, root := range l.checker.GetRootSymbols(member) {
+	for _, root := range lowering.checker.GetRootSymbols(member) {
 		for _, declaration := range root.Declarations {
 			current := 0
 			switch declaration.Kind {
@@ -92,58 +95,61 @@ func (l *lowering) memberReceiver(where *ast.Node, member *ast.Symbol) (bool, er
 				current = 1
 			case ast.KindPropertyAssignment, ast.KindShorthandPropertyAssignment, ast.KindPropertyDeclaration:
 				if ast.HasSyntacticModifier(declaration, ast.ModifierFlagsAmbient) {
-					return false, l.notYet(where, "a declared iterator method with no runtime field")
+					return false, lowering.notYet(where, "a declared iterator method with no runtime field")
 				}
 			default:
-				return false, l.notYet(
+				return false, lowering.notYet(
 					where,
 					"an iterator method whose concrete origin is erased by a structural signature",
 				)
 			}
 			if convention >= 0 && convention != current {
-				return false, l.notYet(where, "iterator methods with mixed receiver conventions")
+				return false, lowering.notYet(where, "iterator methods with mixed receiver conventions")
 			}
 			convention = current
 		}
 	}
 	if convention < 0 {
-		return false, l.notYet(where, "an iterator method without a concrete declaration")
+		return false, lowering.notYet(where, "an iterator method without a concrete declaration")
 	}
 	return convention == 1, nil
 }
 
-func (l *lowering) memberFunction(
+func (lowering *lowering) memberFunction(
 	where *ast.Node,
 	proven *checker.Type,
 	value ir.Expression,
 	member *ast.Symbol,
 ) (ir.Expression, bool, int, error) {
-	receiver, memberReceiverError := l.memberReceiver(where, member)
+	receiver, memberReceiverError := lowering.memberReceiver(where, member)
 	if memberReceiverError != nil {
 		return nil, false, -1, memberReceiverError
 	}
-	for _, root := range l.checker.GetRootSymbols(member) {
+	for _, root := range lowering.checker.GetRootSymbols(member) {
 		for _, declaration := range root.Declarations {
 			if declaration.Kind == ast.KindMethodDeclaration && declaration.Parent.Kind == ast.KindClassDeclaration {
-				if !isClassInstance(l.concrete(proven)) {
-					return nil, false, -1, l.notYet(where, "a class iterator method through a structural object view")
+				if !isClassInstance(lowering.concrete(proven)) {
+					return nil, false, -1, lowering.notYet(
+						where,
+						"a class iterator method through a structural object view",
+					)
 				}
-				class := l.classes[l.symbol(declaration.Parent.Name())]
+				class := lowering.classes[lowering.symbol(declaration.Parent.Name())]
 				if class == nil {
-					return nil, false, -1, l.notYet(where, "an iterator class not declared in this program")
+					return nil, false, -1, lowering.notYet(where, "an iterator class not declared in this program")
 				}
-				instance, instantiateError := l.instantiate(class, proven, where)
+				instance, instantiateError := lowering.instantiate(class, proven, where)
 				if instantiateError != nil {
 					return nil, false, -1, instantiateError
 				}
-				return nil, true, instance.methods[l.methodKey(declaration, instance.class)], nil
+				return nil, true, instance.methods[lowering.methodKey(declaration, instance.class)], nil
 			}
 		}
 	}
 	name := member.Name
-	for _, root := range l.checker.GetRootSymbols(member) {
+	for _, root := range lowering.checker.GetRootSymbols(member) {
 		for _, declaration := range root.Declarations {
-			if key, known := l.methodName(declaration); known {
+			if key, known := lowering.methodName(declaration); known {
 				name = key
 			}
 		}
@@ -168,14 +174,17 @@ func invokeMember(
 	return ir.CallClosure{Closure: function, Arguments: arguments, Returns: returns}
 }
 
-func (l *lowering) memberResult(where *ast.Node, member *ast.Symbol) (*checker.Type, error) {
-	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(member), checker.SignatureKindCall)
+func (lowering *lowering) memberResult(where *ast.Node, member *ast.Symbol) (*checker.Type, error) {
+	signatures := lowering.checker.GetSignaturesOfType(
+		lowering.checker.GetTypeOfSymbol(member),
+		checker.SignatureKindCall,
+	)
 	if len(signatures) != 1 || len(signatures[0].Parameters()) != 0 {
-		return nil, l.notYet(where, "an iterator protocol method with arguments or overloads")
+		return nil, lowering.notYet(where, "an iterator protocol method with arguments or overloads")
 	}
-	result := l.concrete(l.checker.GetReturnTypeOfSignature(signatures[0]))
-	if of, known := l.representation(result); !known || of != ir.Object || l.includesUndefined(result) {
-		return nil, l.notYet(where, "an iterator protocol method that does not return a represented object")
+	result := lowering.concrete(lowering.checker.GetReturnTypeOfSignature(signatures[0]))
+	if of, known := lowering.representation(result); !known || of != ir.Object || lowering.includesUndefined(result) {
+		return nil, lowering.notYet(where, "an iterator protocol method that does not return a represented object")
 	}
 	return result, nil
 }
@@ -186,94 +195,95 @@ type iterationPlan struct {
 	element                ir.Type
 }
 
-func (l *lowering) planIteration(where *ast.Node) (*iterationPlan, error) {
-	if _, isGenerator, generatorCalleeError := l.generatorCallee(where); generatorCalleeError != nil {
+func (lowering *lowering) planIteration(where *ast.Node) (*iterationPlan, error) {
+	if _, isGenerator, generatorCalleeError := lowering.generatorCallee(where); generatorCalleeError != nil {
 		return nil, generatorCalleeError
 	} else if isGenerator {
 		// Destructuring a generator's call isn't built; a for-of, a spread and Array.from route one by
 		// origin before they plan (forOf, iterated, arrayFrom), so only destructuring reaches here.
-		return nil, l.generatorNotYet(where, "consumed by destructuring")
+		return nil, lowering.generatorNotYet(where, "consumed by destructuring")
 	}
-	source := l.concrete(l.checker.GetTypeAtLocation(where))
-	entry := l.iteratorMember(source)
+	source := lowering.concrete(lowering.checker.GetTypeAtLocation(where))
+	entry := lowering.iteratorMember(source)
 	if entry == nil {
 		return nil, nil
 	}
-	if of, known := l.representation(source); !known || of != ir.Object || l.includesUndefined(source) {
-		return nil, l.notYet(where, "a custom iterable without a present object representation")
+	if of, known := lowering.representation(source); !known || of != ir.Object || lowering.includesUndefined(source) {
+		return nil, lowering.notYet(where, "a custom iterable without a present object representation")
 	}
-	if _, memberReceiverError := l.memberReceiver(where, entry); memberReceiverError != nil {
+	if _, memberReceiverError := lowering.memberReceiver(where, entry); memberReceiverError != nil {
 		return nil, memberReceiverError
 	}
-	iterator, memberResultError := l.memberResult(where, entry)
+	iterator, memberResultError := lowering.memberResult(where, entry)
 	if memberResultError != nil {
 		return nil, memberResultError
 	}
-	next := l.checker.GetPropertyOfType(iterator, "next")
-	if _, memberReceiverError := l.memberReceiver(where, next); memberReceiverError != nil {
+	next := lowering.checker.GetPropertyOfType(iterator, "next")
+	if _, memberReceiverError := lowering.memberReceiver(where, next); memberReceiverError != nil {
 		return nil, memberReceiverError
 	}
-	step, memberResultError := l.memberResult(where, next)
+	step, memberResultError := lowering.memberResult(where, next)
 	if memberResultError != nil {
 		return nil, memberResultError
 	}
-	done := l.checker.GetPropertyOfType(step, "done")
+	done := lowering.checker.GetPropertyOfType(step, "done")
 	if done == nil || done.Flags&ast.SymbolFlagsOptional != 0 {
-		return nil, l.notYet(where, "an iterator result without a required boolean done field")
+		return nil, lowering.notYet(where, "an iterator result without a required boolean done field")
 	}
-	if of, known := l.representation(l.checker.GetTypeOfSymbol(done)); !known || of != ir.Boolean {
-		return nil, l.notYet(where, "an iterator result whose done is not a boolean")
+	if of, known := lowering.representation(lowering.checker.GetTypeOfSymbol(done)); !known || of != ir.Boolean {
+		return nil, lowering.notYet(where, "an iterator result whose done is not a boolean")
 	}
-	value := l.checker.GetPropertyOfType(step, "value")
+	value := lowering.checker.GetPropertyOfType(step, "value")
 	if value == nil || value.Flags&ast.SymbolFlagsOptional != 0 {
-		return nil, l.notYet(where, "an iterator result without a represented value field")
+		return nil, lowering.notYet(where, "an iterator result without a represented value field")
 	}
-	element, known := l.representation(l.checker.GetTypeOfSymbol(value))
+	element, known := lowering.representation(lowering.checker.GetTypeOfSymbol(value))
 	if !known || slotless(element) || element == ir.Weak {
-		return nil, l.notYet(where, "an iterator result whose value has no single-slot representation")
+		return nil, lowering.notYet(where, "an iterator result whose value has no single-slot representation")
 	}
-	close := l.checker.GetPropertyOfType(iterator, "return")
+	close := lowering.checker.GetPropertyOfType(iterator, "return")
 	if close != nil {
-		if _, memberReceiverError := l.memberReceiver(where, close); memberReceiverError != nil {
+		if _, memberReceiverError := lowering.memberReceiver(where, close); memberReceiverError != nil {
 			return nil, memberReceiverError
 		}
-		if _, memberResultError := l.memberResult(where, close); memberResultError != nil {
+		if _, memberResultError := lowering.memberResult(where, close); memberResultError != nil {
 			return nil, memberResultError
 		}
 	}
 	// A view which omits return must not hide a runtime close method. Method signatures themselves
 	// are refused above, but a concrete literal can also be viewed as another concrete literal type.
-	modules, moduleOrderError := l.moduleOrder(l.program.Files()[0])
+	modules, moduleOrderError := lowering.moduleOrder(lowering.program.Files()[0])
 	if moduleOrderError != nil {
 		return nil, moduleOrderError
 	}
 	// Until protocol calls dispatch virtually, prove that a returned receiver cannot
 	// override next/return or introduce a close method hidden by the return annotation.
-	if l.iterationFactoryReturnsThis(entry) && l.iteratorReceiverOverrides(modules, iterator, next, close) {
+	if lowering.iterationFactoryReturnsThis(entry) &&
+		lowering.iteratorReceiverOverrides(modules, iterator, next, close) {
 		members := []*ast.Symbol{next}
 		if close != nil {
 			members = append(members, close)
 		}
 		presence := close != nil
-		if !l.iterationOrigin(where, members, &presence, 0) {
+		if !lowering.iterationOrigin(where, members, &presence, 0) {
 			return nil, &Refused{
-				Where: l.program.Where(where),
+				Where: lowering.program.Where(where),
 				What:  "an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin)",
 				Fix:   "return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type",
 			}
 		}
 	}
-	sourceKnown := l.iterationOrigin(where, []*ast.Symbol{entry}, nil, 0)
-	iteratorKnown := sourceKnown && l.iterationFactoryKnown(entry, next, close)
+	sourceKnown := lowering.iterationOrigin(where, []*ast.Symbol{entry}, nil, 0)
+	iteratorKnown := sourceKnown && lowering.iterationFactoryKnown(entry, next, close)
 	if isClassInstance(source) &&
-		len(l.checker.GetTypeArguments(source)) > 0 &&
-		!l.knownIterationClass(where, source, 0) {
-		return nil, l.notYet(where, "a generic iterable view without proven native type arguments")
+		len(lowering.checker.GetTypeArguments(source)) > 0 &&
+		!lowering.knownIterationClass(where, source, 0) {
+		return nil, lowering.notYet(where, "a generic iterable view without proven native type arguments")
 	}
 	if isClassInstance(iterator) &&
-		len(l.checker.GetTypeArguments(iterator)) > 0 &&
-		(!sourceKnown || !l.genericIteratorFactoryKnown(entry, source, iterator)) {
-		return nil, l.notYet(where, "a generic iterator view without proven native type arguments")
+		len(lowering.checker.GetTypeArguments(iterator)) > 0 &&
+		(!sourceKnown || !lowering.genericIteratorFactoryKnown(entry, source, iterator)) {
+		return nil, lowering.notYet(where, "a generic iterator view without proven native type arguments")
 	}
 
 	var hazard error
@@ -283,43 +293,46 @@ func (l *lowering) planIteration(where *ast.Node) (*iterationPlan, error) {
 			return true
 		}
 		if node.Kind == ast.KindObjectLiteralExpression || node.Kind == ast.KindNewExpression {
-			shape := l.checker.GetTypeAtLocation(node)
-			if l.iterationShapeFits(shape, step) {
+			shape := lowering.checker.GetTypeAtLocation(node)
+			if lowering.iterationShapeFits(shape, step) {
 				for _, key := range []string{"done", "value"} {
-					if field := l.checker.GetPropertyOfType(shape, key); field != nil {
+					if field := lowering.checker.GetPropertyOfType(shape, key); field != nil {
 						for _, declaration := range field.Declarations {
 							if ast.HasSyntacticModifier(declaration, ast.ModifierFlagsAmbient) {
-								hazard = l.notYet(where, "an iterator result with declared fields absent at runtime")
+								hazard = lowering.notYet(
+									where,
+									"an iterator result with declared fields absent at runtime",
+								)
 								return true
 							}
 						}
 					}
 				}
 			}
-			if !sourceKnown && l.iterationShapeFits(shape, source) {
-				actual := l.iteratorMember(shape)
+			if !sourceKnown && lowering.iterationShapeFits(shape, source) {
+				actual := lowering.iteratorMember(shape)
 				if actual == nil || memberConvention(actual) != memberConvention(entry) {
-					hazard = l.notYet(where, "an iterable view that erases its method receiver convention")
+					hazard = lowering.notYet(where, "an iterable view that erases its method receiver convention")
 					return true
 				}
 			}
-			if !iteratorKnown && l.iterationShapeFits(shape, iterator) {
-				actual := l.checker.GetPropertyOfType(shape, "next")
+			if !iteratorKnown && lowering.iterationShapeFits(shape, iterator) {
+				actual := lowering.checker.GetPropertyOfType(shape, "next")
 				if memberConvention(actual) != memberConvention(next) {
-					hazard = l.notYet(where, "an iterator view that erases its method receiver convention")
+					hazard = lowering.notYet(where, "an iterator view that erases its method receiver convention")
 					return true
 				}
-				actualClose := l.checker.GetPropertyOfType(shape, "return")
+				actualClose := lowering.checker.GetPropertyOfType(shape, "return")
 				if close != nil && memberConvention(actualClose) != memberConvention(close) {
-					hazard = l.notYet(where, "an iterator view that erases its return receiver convention")
+					hazard = lowering.notYet(where, "an iterator view that erases its return receiver convention")
 					return true
 				}
 			}
 			if node.Kind == ast.KindObjectLiteralExpression {
 				for _, property := range node.AsObjectLiteralExpression().Properties.Nodes {
 					if property.Kind == ast.KindSpreadAssignment &&
-						(l.iterationShapeFits(shape, iterator) || l.iterationShapeFits(shape, source)) {
-						hazard = l.notYet(
+						(lowering.iterationShapeFits(shape, iterator) || lowering.iterationShapeFits(shape, source)) {
+						hazard = lowering.notYet(
 							where,
 							"an iterator built by object spread (own method presence is not proved)",
 						)
@@ -328,9 +341,9 @@ func (l *lowering) planIteration(where *ast.Node) (*iterationPlan, error) {
 				}
 			}
 			if !iteratorKnown &&
-				l.iterationShapeFits(shape, iterator) &&
-				(l.checker.GetPropertyOfType(shape, "return") != nil) != (close != nil) {
-				hazard = l.notYet(where, "an iterator view that can hide a return method")
+				lowering.iterationShapeFits(shape, iterator) &&
+				(lowering.checker.GetPropertyOfType(shape, "return") != nil) != (close != nil) {
+				hazard = lowering.notYet(where, "an iterator view that can hide a return method")
 				return true
 			}
 		}
@@ -340,10 +353,10 @@ func (l *lowering) planIteration(where *ast.Node) (*iterationPlan, error) {
 			if target.Kind == ast.KindPropertyAccessExpression {
 				access := target.AsPropertyAccessExpression()
 				key := access.Name().Text()
-				targetType := l.checker.GetTypeAtLocation(access.Expression)
-				if (key == "next" || key == "return") && (l.checker.IsTypeAssignableTo(iterator, targetType) ||
-					l.checker.IsTypeAssignableTo(targetType, iterator)) {
-					hazard = l.notYet(where, "replacing an iterator protocol method at runtime")
+				targetType := lowering.checker.GetTypeAtLocation(access.Expression)
+				if (key == "next" || key == "return") && (lowering.checker.IsTypeAssignableTo(iterator, targetType) ||
+					lowering.checker.IsTypeAssignableTo(targetType, iterator)) {
+					hazard = lowering.notYet(where, "replacing an iterator protocol method at runtime")
 					return true
 				}
 			}
@@ -376,28 +389,28 @@ type iterationState struct {
 	active   int
 }
 
-func (l *lowering) startIteration(
+func (lowering *lowering) startIteration(
 	where *ast.Node,
 	plan *iterationPlan,
 	source ir.Expression,
 ) ([]ir.Statement, *iterationState, error) {
-	function, receiver, direct, memberFunctionError := l.memberFunction(where, plan.source, source, plan.entry)
+	function, receiver, direct, memberFunctionError := lowering.memberFunction(where, plan.source, source, plan.entry)
 	if memberFunctionError != nil {
 		return nil, nil, memberFunctionError
 	}
-	iterator := l.iterationLocal("iterator", ir.Object, l.functionIndex)
-	active := l.iterationLocal("iterator_close_needed", ir.Boolean, l.functionIndex)
+	iterator := lowering.iterationLocal("iterator", ir.Object, lowering.functionIndex)
+	active := lowering.iterationLocal("iterator_close_needed", ir.Boolean, lowering.functionIndex)
 	read := ir.Read{Local: iterator, Of: ir.Object}
 	statements := []ir.Statement{
 		ir.Declare{Local: iterator, Value: invokeMember(function, receiver, direct, source, nil, ir.Object)},
 		ir.Declare{Local: active, Value: ir.BooleanConstant{Value: false}},
 	}
-	next, receiver, direct, memberFunctionError := l.memberFunction(where, plan.iterator, read, plan.next)
+	next, receiver, direct, memberFunctionError := lowering.memberFunction(where, plan.iterator, read, plan.next)
 	if memberFunctionError != nil {
 		return nil, nil, memberFunctionError
 	}
 	if direct < 0 {
-		cached := l.iterationLocal("iterator_next", ir.Closure, l.functionIndex)
+		cached := lowering.iterationLocal("iterator_next", ir.Closure, lowering.functionIndex)
 		statements = append(statements, ir.Declare{Local: cached, Value: next})
 		next = ir.Read{Local: cached, Of: ir.Closure}
 	}
@@ -411,8 +424,8 @@ func (l *lowering) startIteration(
 	}, nil
 }
 
-func (l *lowering) iterationStep(state *iterationState) ([]ir.Statement, ir.Expression) {
-	step := l.iterationLocal("iterator_result", ir.Object, l.functionIndex)
+func (lowering *lowering) iterationStep(state *iterationState) ([]ir.Statement, ir.Expression) {
+	step := lowering.iterationLocal("iterator_result", ir.Object, lowering.functionIndex)
 	read := ir.Read{Local: step, Of: ir.Object}
 	statements := []ir.Statement{
 		ir.Assign{Local: state.active, Value: ir.BooleanConstant{Value: false}},
@@ -428,11 +441,15 @@ func (l *lowering) iterationStep(state *iterationState) ([]ir.Statement, ir.Expr
 
 // IteratorClose preserves an incoming throw even if return throws. Break and return instead let
 // that close failure replace their completion. The active flag excludes exhaustion and next errors.
-func (l *lowering) closeIteration(where *ast.Node, state *iterationState, body []ir.Statement) ([]ir.Statement, error) {
+func (lowering *lowering) closeIteration(
+	where *ast.Node,
+	state *iterationState,
+	body []ir.Statement,
+) ([]ir.Statement, error) {
 	if state.plan.close == nil {
 		return body, nil
 	}
-	function, receiver, direct, memberFunctionError := l.memberFunction(
+	function, receiver, direct, memberFunctionError := lowering.memberFunction(
 		where,
 		state.plan.iterator,
 		state.iterator,
@@ -444,8 +461,8 @@ func (l *lowering) closeIteration(where *ast.Node, state *iterationState, body [
 	close := []ir.Statement{
 		ir.Evaluate{Value: invokeMember(function, receiver, direct, state.iterator, nil, ir.Object)},
 	}
-	thrown := l.iterationLocal("iterator_pending_throw", ir.Boolean, l.functionIndex)
-	caught := l.iterationLocal("iterator_error", ir.Object, l.functionIndex)
+	thrown := lowering.iterationLocal("iterator_pending_throw", ir.Boolean, lowering.functionIndex)
+	caught := lowering.iterationLocal("iterator_error", ir.Object, lowering.functionIndex)
 	// Distinct branches need distinct statement identities for flow analysis and tracing.
 	cleanup := ir.If{Condition: ir.Read{Local: state.active, Of: ir.Boolean}, Then: []ir.Statement{
 		ir.If{
@@ -458,11 +475,11 @@ func (l *lowering) closeIteration(where *ast.Node, state *iterationState, body [
 		ir.Assign{Local: thrown, Value: ir.BooleanConstant{Value: true}},
 		ir.Throw{Value: ir.Read{Local: caught, Of: ir.Object}},
 	}, HasFinally: true, Finally: []ir.Statement{cleanup}}
-	l.tries = append(l.tries, tryRecord{node: where, body: body})
+	lowering.tries = append(lowering.tries, tryRecord{node: where, body: body})
 	return []ir.Statement{ir.Declare{Local: thrown, Value: ir.BooleanConstant{Value: false}}, guarded}, nil
 }
 
-func (l *lowering) forOfUser(node *ast.Node, plan *iterationPlan, name *ast.Node) ([]ir.Statement, error) {
+func (lowering *lowering) forOfUser(node *ast.Node, plan *iterationPlan, name *ast.Node) ([]ir.Statement, error) {
 	var suspends ast.Visitor
 	suspends = func(child *ast.Node) bool {
 		if ast.IsFunctionLike(child) {
@@ -470,40 +487,40 @@ func (l *lowering) forOfUser(node *ast.Node, plan *iterationPlan, name *ast.Node
 		}
 		return child.Kind == ast.KindAwaitExpression || child.ForEachChild(suspends)
 	}
-	if (l.function != nil && l.function.Suspends()) || suspends(node) {
-		return nil, l.notYet(node, "async for-of over a user iterator")
+	if (lowering.function != nil && lowering.function.Suspends()) || suspends(node) {
+		return nil, lowering.notYet(node, "async for-of over a user iterator")
 	}
-	source, expressionError := l.expression(node.AsForInOrOfStatement().Expression)
+	source, expressionError := lowering.expression(node.AsForInOrOfStatement().Expression)
 	if expressionError != nil {
 		return nil, expressionError
 	}
-	held := l.iterationLocal("iterable", ir.Object, l.functionIndex)
+	held := lowering.iterationLocal("iterable", ir.Object, lowering.functionIndex)
 	read := ir.Read{Local: held, Of: ir.Object}
-	setup, state, startIterationError := l.startIteration(node, plan, read)
+	setup, state, startIterationError := lowering.startIteration(node, plan, read)
 	if startIterationError != nil {
 		return nil, startIterationError
 	}
-	step, value := l.iterationStep(state)
+	step, value := lowering.iterationStep(state)
 	if ast.IsIdentifier(name) {
-		local, declareLocalError := l.declareLocal(name)
+		local, declareLocalError := lowering.declareLocal(name)
 		if declareLocalError != nil {
 			return nil, declareLocalError
 		}
-		if l.result.Locals[local].Type != plan.element {
-			return nil, l.notYet(name, "an iteration variable with a different value representation")
+		if lowering.result.Locals[local].Type != plan.element {
+			return nil, lowering.notYet(name, "an iteration variable with a different value representation")
 		}
 		step = append(step, ir.Declare{Local: local, Value: value})
 	} else {
-		valueType := l.checker.GetTypeOfSymbol(l.checker.GetPropertyOfType(plan.step, "value"))
-		heldValue := l.iterationLocal("iteration_value", plan.element, l.functionIndex)
-		bound, destructureFromError := l.destructureFrom(name, valueType, plan.element, heldValue)
+		valueType := lowering.checker.GetTypeOfSymbol(lowering.checker.GetPropertyOfType(plan.step, "value"))
+		heldValue := lowering.iterationLocal("iteration_value", plan.element, lowering.functionIndex)
+		bound, destructureFromError := lowering.destructureFrom(name, valueType, plan.element, heldValue)
 		if destructureFromError != nil {
 			return nil, destructureFromError
 		}
 		step = append(step, ir.Declare{Local: heldValue, Value: value})
 		step = append(step, bound...)
 	}
-	body, statementError := l.statement(node.AsForInOrOfStatement().Statement)
+	body, statementError := lowering.statement(node.AsForInOrOfStatement().Statement)
 	if statementError != nil {
 		return nil, statementError
 	}
@@ -514,7 +531,7 @@ func (l *lowering) forOfUser(node *ast.Node, plan *iterationPlan, name *ast.Node
 		Body:      step,
 		Update:    []ir.Statement{ir.Assign{Local: state.active, Value: ir.BooleanConstant{Value: false}}},
 	}
-	guarded, closeIterationError := l.closeIteration(node, state, []ir.Statement{loop})
+	guarded, closeIterationError := lowering.closeIteration(node, state, []ir.Statement{loop})
 	if closeIterationError != nil {
 		return nil, closeIterationError
 	}
@@ -522,62 +539,62 @@ func (l *lowering) forOfUser(node *ast.Node, plan *iterationPlan, name *ast.Node
 	return []ir.Statement{ir.Block{Body: append(statements, guarded...)}}, nil
 }
 
-func (l *lowering) userMethodCall(node *ast.Node) (ir.Expression, bool, error) {
+func (lowering *lowering) userMethodCall(node *ast.Node) (ir.Expression, bool, error) {
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
 	var receiverNode *ast.Node
 	var member *ast.Symbol
 	switch callee.Kind {
 	case ast.KindElementAccessExpression:
 		access := callee.AsElementAccessExpression()
-		if !l.symbolIterator(access.ArgumentExpression) {
+		if !lowering.symbolIterator(access.ArgumentExpression) {
 			return nil, false, nil
 		}
 		receiverNode = access.Expression
-		member = l.iteratorMember(l.checker.GetTypeAtLocation(receiverNode))
+		member = lowering.iteratorMember(lowering.checker.GetTypeAtLocation(receiverNode))
 		if member == nil {
-			return nil, true, l.notYet(node, "an explicit Symbol.iterator call on a built-in value")
+			return nil, true, lowering.notYet(node, "an explicit Symbol.iterator call on a built-in value")
 		}
 	case ast.KindPropertyAccessExpression:
-		member = l.checker.GetSymbolAtLocation(callee)
+		member = lowering.checker.GetSymbolAtLocation(callee)
 		if member == nil || !literalMethod(member) {
 			return nil, false, nil
 		}
-		value, callClosureError := l.callClosure(node)
+		value, callClosureError := lowering.callClosure(node)
 		return value, true, callClosureError
 	default:
 		return nil, false, nil
 	}
-	value, expressionError := l.expression(receiverNode)
+	value, expressionError := lowering.expression(receiverNode)
 	if expressionError != nil {
 		return nil, true, expressionError
 	}
 	arguments := []ir.Expression{value}
 	for _, argument := range node.AsCallExpression().Arguments.Nodes {
-		lowered, expressionError := l.expression(argument)
+		lowered, expressionError := lowering.expression(argument)
 		if expressionError != nil {
 			return nil, true, expressionError
 		}
 		arguments = append(arguments, lowered)
 	}
-	proven := l.checker.GetTypeAtLocation(node)
-	result, known := l.representation(proven)
+	proven := lowering.checker.GetTypeAtLocation(node)
+	result, known := lowering.representation(proven)
 	void := proven.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) != 0
 	if void {
 		result = 0
 	}
 	if (!known && !void) || slotless(result) {
-		return nil, true, l.notYet(node, "a literal method call with an unrepresented result")
+		return nil, true, lowering.notYet(node, "a literal method call with an unrepresented result")
 	}
-	function := len(l.result.Functions)
-	l.result.Functions = append(l.result.Functions, ir.Function{Name: "invoke_method", Returns: result})
+	function := len(lowering.result.Functions)
+	lowering.result.Functions = append(lowering.result.Functions, ir.Function{Name: "invoke_method", Returns: result})
 	parameters := []int{}
 	for _, argument := range arguments {
-		parameters = append(parameters, l.iterationLocal("argument", argument.Type(), function))
+		parameters = append(parameters, lowering.iterationLocal("argument", argument.Type(), function))
 	}
 	object := ir.Read{Local: parameters[0], Of: ir.Object}
-	method, hasReceiver, direct, memberFunctionError := l.memberFunction(
+	method, hasReceiver, direct, memberFunctionError := lowering.memberFunction(
 		node,
-		l.checker.GetTypeAtLocation(receiverNode),
+		lowering.checker.GetTypeAtLocation(receiverNode),
 		object,
 		member,
 	)
@@ -594,7 +611,7 @@ func (l *lowering) userMethodCall(node *ast.Node) (ir.Expression, bool, error) {
 		// A void method still runs with its receiver and arguments, but has no value to return.
 		body = []ir.Statement{ir.Evaluate{Value: call}}
 	}
-	l.result.Functions[function] = ir.Function{
+	lowering.result.Functions[function] = ir.Function{
 		Name:       "invoke_method",
 		Returns:    result,
 		Parameters: parameters,

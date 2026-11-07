@@ -9,12 +9,12 @@ package ir
 // (lower's throwsOut, flow's CanThrow) counts the same nodes, and no throw goes untested by a
 // caller or unlanded by a try (#bxmdk73). A Read's Readiness check, "read before assignment", is
 // Adamic's own stop and never throws.
-func (p *Program) DeadZoneMayThrow(node any) bool {
+func (program *Program) DeadZoneMayThrow(node any) bool {
 	switch node := node.(type) {
 	case Read:
-		return node.Checked || node.Unset && p.Locals[node.Local].Global && !p.Locals[node.Local].Hoisted
+		return node.Checked || node.Unset && program.Locals[node.Local].Global && !program.Locals[node.Local].Hoisted
 	case Assign:
-		local := p.Locals[node.Local]
+		local := program.Locals[node.Local]
 		return node.Checked || local.Uninitialized && local.Global && !local.Hoisted
 	}
 	return false

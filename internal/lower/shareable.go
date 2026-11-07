@@ -8,19 +8,19 @@ import (
 // shareable uses the cycle finder's type graph, including its visited-type guard.
 // Checking each node's own slots is enough: every reachable node must pass. Readonly
 // describes a slot, never the contents of that slot. In particular it cannot bless a Map.
-func (l *lowering) shareable(proven *checker.Type, path string, where *ast.Node) string {
-	return l.shareableWith(proven, path, where, map[*ast.Node]bool{})
+func (lowering *lowering) shareable(proven *checker.Type, path string, where *ast.Node) string {
+	return lowering.shareableWith(proven, path, where, map[*ast.Node]bool{})
 }
 
-func (l *lowering) shareableWith(
+func (lowering *lowering) shareableWith(
 	proven *checker.Type,
 	path string,
 	where *ast.Node,
 	functions map[*ast.Node]bool,
 ) string {
-	finder := &cycleFinder{l: l, where: map[*checker.Type]*ast.Node{}}
+	finder := &cycleFinder{l: lowering, where: map[*checker.Type]*ast.Node{}}
 	finder.use(proven, where)
-	shapes := l.parallelShapes()
+	shapes := lowering.parallelShapes()
 	types := append([]*checker.Type{proven}, finder.seen...)
 	types = append(types, finder.shapes...)
 	paths := map[*checker.Type]string{proven: path}
@@ -31,7 +31,7 @@ func (l *lowering) shareableWith(
 		}
 		name := paths[current]
 		if name == "" {
-			name = path + " (" + l.checker.TypeToString(current) + ")"
+			name = path + " (" + lowering.checker.TypeToString(current) + ")"
 		}
 		child := func(of *checker.Type, suffix string) {
 			if _, known := paths[of]; !known {
@@ -40,7 +40,7 @@ func (l *lowering) shareableWith(
 		}
 		flags := current.Flags()
 		switch {
-		case finder.weak(current) || l.weakTarget(current) != nil:
+		case finder.weak(current) || lowering.weakTarget(current) != nil:
 			return name + " is a Weak"
 		case flags&checker.TypeFlagsUnion != 0:
 			for _, member := range current.Types() {
@@ -49,22 +49,22 @@ func (l *lowering) shareableWith(
 		case flags&(checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike|checker.TypeFlagsStringLike|checker.TypeFlagsUndefined|checker.TypeFlagsNull|checker.TypeFlagsNever|checker.TypeFlagsVoid) != 0:
 		case flags&checker.TypeFlagsObject == 0 || finder.template(current):
 			return name + " has a type the compiler cannot see the whole of"
-		case l.isLibraryType(current, "Map", "Set"):
+		case lowering.isLibraryType(current, "Map", "Set"):
 			kind := "Map"
-			if l.isLibraryType(current, "Set") {
+			if lowering.isLibraryType(current, "Set") {
 				kind = "Set"
 			}
 			return name + " is a mutable " + kind
-		case l.isArrayType(current) || checker.IsTupleType(current):
-			if !l.isLibraryType(current, "ReadonlyArray") &&
+		case lowering.isArrayType(current) || checker.IsTupleType(current):
+			if !lowering.isLibraryType(current, "ReadonlyArray") &&
 				!(checker.IsTupleType(current) && current.TargetTupleType().IsReadonly()) {
-				return name + " is a mutable " + l.checker.TypeToString(current)
+				return name + " is a mutable " + lowering.checker.TypeToString(current)
 			}
-			for _, element := range l.checker.GetTypeArguments(current) {
+			for _, element := range lowering.checker.GetTypeArguments(current) {
 				child(element, "[]")
 			}
-		case l.isLibraryType(current, "ReadonlyMap", "ReadonlySet"):
-			for index, element := range l.checker.GetTypeArguments(current) {
+		case lowering.isLibraryType(current, "ReadonlyMap", "ReadonlySet"):
+			for index, element := range lowering.checker.GetTypeArguments(current) {
 				suffix := ".key"
 				if index > 0 {
 					suffix = ".value"
@@ -72,13 +72,13 @@ func (l *lowering) shareableWith(
 				child(element, suffix)
 			}
 		case finder.isFunction(current):
-			if why := l.shareableFunctionType(current, name, where, functions); why != "" {
+			if why := lowering.shareableFunctionType(current, name, where, functions); why != "" {
 				return why
 			}
 		default:
 			// Mapped collection APIs can still expose mutable Map/Set methods. They
 			// must not turn into empty immutable records when methods are omitted.
-			for _, property := range l.checker.GetPropertiesOfType(current) {
+			for _, property := range lowering.checker.GetPropertiesOfType(current) {
 				for _, declaration := range property.Declarations {
 					parent := declaration.Parent
 					if parent == nil ||
@@ -103,10 +103,10 @@ func (l *lowering) shareableWith(
 				}
 			}
 			for _, field := range finder.fields(current) {
-				if !l.checker.IsReadonlySymbol(field) {
+				if !lowering.checker.IsReadonlySymbol(field) {
 					return name + "." + field.Name + " is a mutable field"
 				}
-				child(l.checker.GetTypeOfSymbol(field), "."+field.Name)
+				child(lowering.checker.GetTypeOfSymbol(field), "."+field.Name)
 			}
 
 			// A readonly interface or base class may hide a subtype's extra fields.
@@ -116,7 +116,7 @@ func (l *lowering) shareableWith(
 				visible[field.Name] = true
 			}
 			for _, shape := range shapes {
-				if shape == current || !l.checker.IsTypeAssignableTo(shape, current) {
+				if shape == current || !lowering.checker.IsTypeAssignableTo(shape, current) {
 					continue
 				}
 				class := shape.Symbol() != nil && shape.Symbol().Flags&ast.SymbolFlagsClass != 0
@@ -125,10 +125,10 @@ func (l *lowering) shareableWith(
 						continue
 					}
 					fieldPath := name + "." + field.Name
-					if !l.checker.IsReadonlySymbol(field) {
-						return fieldPath + " is a mutable field hidden by " + l.checker.TypeToString(current)
+					if !lowering.checker.IsReadonlySymbol(field) {
+						return fieldPath + " is a mutable field hidden by " + lowering.checker.TypeToString(current)
 					}
-					held := l.checker.GetTypeOfSymbol(field)
+					held := lowering.checker.GetTypeOfSymbol(field)
 					child(held, "."+field.Name)
 					beforeTypes, beforeShapes := len(finder.seen), len(finder.shapes)
 					finder.use(held, where)
@@ -145,17 +145,22 @@ func (l *lowering) shareableWith(
 // Use the existing module order, and judge every source body assignable to this
 // function type. A type with no visible producer cannot prove its captures.
 // The shared visited set makes mutually recursive closure/type graphs finite.
-func (l *lowering) shareableFunctionType(
+func (lowering *lowering) shareableFunctionType(
 	proven *checker.Type,
 	path string,
 	where *ast.Node,
 	functions map[*ast.Node]bool,
 ) string {
-	modules, moduleOrderError := l.moduleOrder(l.program.Files()[0])
+	modules, moduleOrderError := lowering.moduleOrder(lowering.program.Files()[0])
 	if moduleOrderError != nil {
 		return path + " is a function whose captures are not known"
 	}
-	proof := &parallelProof{l: l, active: functions, checked: map[*ast.Node]bool{}, shareableFunctions: functions}
+	proof := &parallelProof{
+		l:                  lowering,
+		active:             functions,
+		checked:            map[*ast.Node]bool{},
+		shareableFunctions: functions,
+	}
 	found := false
 	why := ""
 	var visit ast.Visitor
@@ -165,7 +170,7 @@ func (l *lowering) shareableFunctionType(
 		}
 		if ast.IsFunctionLike(node) &&
 			node.Body() != nil &&
-			l.checker.IsTypeAssignableTo(l.checker.GetTypeAtLocation(node), proven) {
+			lowering.checker.IsTypeAssignableTo(lowering.checker.GetTypeAtLocation(node), proven) {
 			found = true
 			if functionError := proof.function(node, nil); functionError != nil {
 				if refused, ok := functionError.(*Refused); ok {
@@ -193,9 +198,9 @@ func (l *lowering) shareableFunctionType(
 // The same shape discovery the cycle finder uses, restricted to source values.
 // Contextually readonly literal slots are judged by the declared view above;
 // extra slots and complete class layouts must also be immutable.
-func (l *lowering) parallelShapes() []*checker.Type {
-	finder := &cycleFinder{l: l, where: map[*checker.Type]*ast.Node{}}
-	modules, moduleOrderError := l.moduleOrder(l.program.Files()[0])
+func (lowering *lowering) parallelShapes() []*checker.Type {
+	finder := &cycleFinder{l: lowering, where: map[*checker.Type]*ast.Node{}}
+	modules, moduleOrderError := lowering.moduleOrder(lowering.program.Files()[0])
 	if moduleOrderError != nil {
 		return nil
 	}
@@ -205,7 +210,7 @@ func (l *lowering) parallelShapes() []*checker.Type {
 			return false
 		}
 		if node.Kind == ast.KindObjectLiteralExpression || node.Kind == ast.KindNewExpression {
-			proven := l.checker.GetTypeAtLocation(node)
+			proven := lowering.checker.GetTypeAtLocation(node)
 			if proven.Flags()&checker.TypeFlagsObject != 0 && !finder.template(proven) {
 				finder.made(proven, node)
 			}

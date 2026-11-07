@@ -9,11 +9,12 @@ import (
 
 // placeholderDeclaration admits only literal slot initializers. A shadowed
 // undefined binding is an ordinary assertion, as are calls and standalone values.
-func (l *lowering) placeholderDeclaration(node *ast.Node) bool {
-	if !l.uninitializedInitializer(node) {
+func (lowering *lowering) placeholderDeclaration(node *ast.Node) bool {
+	if !lowering.uninitializedInitializer(node) {
 		return false
 	}
-	for node.Parent != nil && (node.Parent.Kind == ast.KindParenthesizedExpression || node.Parent.Kind == ast.KindAsExpression) {
+	for node.Parent != nil &&
+		(node.Parent.Kind == ast.KindParenthesizedExpression || node.Parent.Kind == ast.KindAsExpression) {
 		node = node.Parent
 	}
 	if node.Parent == nil {
@@ -55,8 +56,8 @@ func placeholderStorage(of ir.Type) ir.Type {
 	return ir.Union
 }
 
-func (l *lowering) placeholderInitialValue(node *ast.Node, of ir.Type) ir.Expression {
-	if node != nil && l.uninitializedInitializer(node) {
+func (lowering *lowering) placeholderInitialValue(node *ast.Node, of ir.Type) ir.Expression {
+	if node != nil && lowering.uninitializedInitializer(node) {
 		node = ast.SkipParentheses(node)
 		for node.Kind == ast.KindAsExpression {
 			node = ast.SkipParentheses(node.AsAsExpression().Expression)
@@ -76,10 +77,10 @@ func (l *lowering) placeholderInitialValue(node *ast.Node, of ir.Type) ir.Expres
 // await is in another. Each such reset wrote an undeclared flag: C that does not compile,
 // JavaScript that throws a ReferenceError. A defaulted or destructured parameter is declared from
 // its incoming value, so it has its flag.
-func (l *lowering) placeholderResetRefusal(target *ast.Node, local int) error {
+func (lowering *lowering) placeholderResetRefusal(target *ast.Node, local int) error {
 	what, fix := "", ""
 	var declaration *ast.Node
-	if symbol := l.symbol(target); symbol != nil {
+	if symbol := lowering.symbol(target); symbol != nil {
 		declaration = symbol.ValueDeclaration
 	}
 	root := declaration
@@ -87,25 +88,36 @@ func (l *lowering) placeholderResetRefusal(target *ast.Node, local int) error {
 		root = root.Parent.Parent
 	}
 	switch {
-	case l.result.Locals[local].Global:
+	case lowering.result.Locals[local].Global:
 		// A global's flag is static, declared once for the whole program.
-	case !l.result.Locals[local].Captured && declaration != nil && declaration.Kind == ast.KindParameter && declaration.AsParameterDeclaration().Initializer == nil:
+	case !lowering.result.Locals[local].Captured &&
+		declaration != nil &&
+		declaration.Kind == ast.KindParameter &&
+		declaration.AsParameterDeclaration().Initializer == nil:
 		what, fix = "a parameter", "declare a local with let and assign the placeholder to it, or give the parameter a value of its type"
-	case !l.result.Locals[local].Captured && root != nil && root.Kind == ast.KindVariableDeclaration && root.Parent.Parent.Kind == ast.KindForOfStatement:
+	case !lowering.result.Locals[local].Captured &&
+		root != nil &&
+		root.Kind == ast.KindVariableDeclaration &&
+		root.Parent.Parent.Kind == ast.KindForOfStatement:
 		what, fix = "a for-of loop variable", "declare a local with let in the loop body and assign the placeholder to it, or give the loop variable a value of its type"
-	case !l.result.Locals[local].Captured && root != nil && root.Kind == ast.KindVariableDeclaration && root.Parent.Parent.Kind == ast.KindForInStatement:
+	case !lowering.result.Locals[local].Captured &&
+		root != nil &&
+		root.Kind == ast.KindVariableDeclaration &&
+		root.Parent.Parent.Kind == ast.KindForInStatement:
 		what, fix = "a for-in loop variable", "declare a local with let in the loop body and assign the placeholder to it, or give the loop variable a value of its type"
-	case l.result.Locals[local].Function >= 0 && l.result.Functions[l.result.Locals[local].Function].Generator:
+	case lowering.result.Locals[local].Function >= 0 &&
+		lowering.result.Functions[lowering.result.Locals[local].Function].Generator:
 		what, fix = "a local of a generator function", "give the local a value of its type, or hold the placeholder in a local of a function that isn't a generator"
-	case l.result.Locals[local].Function >= 0 && l.result.Functions[l.result.Locals[local].Function].Async:
+	case lowering.result.Locals[local].Function >= 0 &&
+		lowering.result.Functions[lowering.result.Locals[local].Function].Async:
 		what, fix = "a local of an async function", "give the local a value of its type, or hold the placeholder in a local of a synchronous function"
-	case l.result.Locals[local].Function < 0 && moduleAwaits(ast.GetSourceFileOfNode(target).AsNode()):
+	case lowering.result.Locals[local].Function < 0 && moduleAwaits(ast.GetSourceFileOfNode(target).AsNode()):
 		what, fix = "a block local of a module that awaits at its top level", "give the local a value of its type, or hold the placeholder in a top-level let"
 	}
 	if what == "" {
 		return nil
 	}
-	return &Refused{Where: l.program.Where(target), What: "a placeholder reset of " + what, Fix: fix}
+	return &Refused{Where: lowering.program.Where(target), What: "a placeholder reset of " + what, Fix: fix}
 }
 
 // moduleAwaits is whether a file awaits outside every function, which makes its top level an
@@ -116,7 +128,8 @@ func moduleAwaits(file *ast.Node) bool {
 		if ast.IsFunctionLike(node) {
 			return false
 		}
-		if node.Kind == ast.KindAwaitExpression || node.Kind == ast.KindForOfStatement && node.AsForInOrOfStatement().AwaitModifier != nil {
+		if node.Kind == ast.KindAwaitExpression ||
+			node.Kind == ast.KindForOfStatement && node.AsForInOrOfStatement().AwaitModifier != nil {
 			return true
 		}
 		return node.ForEachChild(awaits)
@@ -124,13 +137,13 @@ func moduleAwaits(file *ast.Node) bool {
 	return file.ForEachChild(awaits)
 }
 
-func (l *lowering) placeholderOptional(of *checker.Type) bool {
-	return l.includesUndefined(of) || l.includesNull(of)
+func (lowering *lowering) placeholderOptional(of *checker.Type) bool {
+	return lowering.includesUndefined(of) || lowering.includesNull(of)
 }
 
 // Only a placeholder compared with literal null gets the ruling's loose
 // nullish comparison. General coercing equality retains its refusal.
-func (l *lowering) placeholderNullishTest(node *ast.Node) bool {
+func (lowering *lowering) placeholderNullishTest(node *ast.Node) bool {
 	if node == nil {
 		return false
 	}
@@ -141,45 +154,47 @@ func (l *lowering) placeholderNullishTest(node *ast.Node) bool {
 		return false
 	}
 	binary := node.AsBinaryExpression()
-	if binary.OperatorToken.Kind != ast.KindEqualsEqualsToken && binary.OperatorToken.Kind != ast.KindExclamationEqualsToken {
+	if binary.OperatorToken.Kind != ast.KindEqualsEqualsToken &&
+		binary.OperatorToken.Kind != ast.KindExclamationEqualsToken {
 		return false
 	}
 	left, right := ast.SkipParentheses(binary.Left), ast.SkipParentheses(binary.Right)
-	return left.Kind == ast.KindNullKeyword && l.placeholderReadOrigin(right) != "" || right.Kind == ast.KindNullKeyword && l.placeholderReadOrigin(left) != ""
+	return left.Kind == ast.KindNullKeyword && lowering.placeholderReadOrigin(right) != "" ||
+		right.Kind == ast.KindNullKeyword && lowering.placeholderReadOrigin(left) != ""
 }
 
-func (l *lowering) placeholderKey(symbol *ast.Symbol) string {
+func (lowering *lowering) placeholderKey(symbol *ast.Symbol) string {
 	if symbol == nil || len(symbol.Declarations) == 0 {
 		return ""
 	}
 	declaration := symbol.Declarations[0]
-	return l.program.Where(declaration) + ":" + symbol.Name
+	return lowering.program.Where(declaration) + ":" + symbol.Name
 }
 
-func (l *lowering) placeholderSymbolOrigin(symbol *ast.Symbol) string {
-	return l.result.PlaceholderSources[l.placeholderKey(symbol)]
+func (lowering *lowering) placeholderSymbolOrigin(symbol *ast.Symbol) string {
+	return lowering.result.PlaceholderSources[lowering.placeholderKey(symbol)]
 }
 
-func (l *lowering) placeholderOrigin(node *ast.Node) string {
+func (lowering *lowering) placeholderOrigin(node *ast.Node) string {
 	if node == nil {
 		return ""
 	}
-	return l.placeholderSymbolOrigin(l.symbol(ast.SkipParentheses(node)))
+	return lowering.placeholderSymbolOrigin(lowering.symbol(ast.SkipParentheses(node)))
 }
 
 // The transfer graph is conservative across branches and loops. A copied local
 // never loses its origin when another path writes it. Readiness still proves
 // individual writes using the existing CFG; every remaining use as T is checked.
-func (l *lowering) notePlaceholderSlots() {
+func (lowering *lowering) notePlaceholderSlots() {
 	// The refusal pass is also used independently of IR construction.
-	if l.result == nil {
-		l.result = &ir.Program{}
+	if lowering.result == nil {
+		lowering.result = &ir.Program{}
 	}
-	if l.result.PlaceholderSources != nil {
+	if lowering.result.PlaceholderSources != nil {
 		return
 	}
-	l.result.PlaceholderSources = map[string]string{}
-	l.result.PlaceholderViews = map[string]string{}
+	lowering.result.PlaceholderSources = map[string]string{}
+	lowering.result.PlaceholderViews = map[string]string{}
 	type transfer struct {
 		to   string
 		from *ast.Node
@@ -197,27 +212,29 @@ func (l *lowering) notePlaceholderSlots() {
 		case ast.KindVariableDeclaration:
 			target, value = node.Name(), node.AsVariableDeclaration().Initializer
 			if ast.IsIdentifier(target) {
-				key := l.placeholderKey(l.symbol(target))
-				inferred[key] = node.AsVariableDeclaration().Type == nil || l.placeholderOptional(l.checker.GetTypeOfSymbol(l.symbol(target)))
+				key := lowering.placeholderKey(lowering.symbol(target))
+				inferred[key] = node.AsVariableDeclaration().Type == nil ||
+					lowering.placeholderOptional(lowering.checker.GetTypeOfSymbol(lowering.symbol(target)))
 				if value != nil {
 					transfers = append(transfers, transfer{key, value})
 				}
 			}
 		case ast.KindPropertyDeclaration:
 			target, value = node.Name(), node.AsPropertyDeclaration().Initializer
-			key := l.placeholderKey(l.symbol(target))
-			inferred[key] = l.placeholderOptional(l.checker.GetTypeOfSymbol(l.symbol(target)))
+			key := lowering.placeholderKey(lowering.symbol(target))
+			inferred[key] = lowering.placeholderOptional(lowering.checker.GetTypeOfSymbol(lowering.symbol(target)))
 			if value != nil {
 				transfers = append(transfers, transfer{key, value})
 			}
 		case ast.KindParameter:
 			target, value = node.Name(), node.AsParameterDeclaration().Initializer
 		case ast.KindCallExpression:
-			if signature := l.checker.GetResolvedSignature(node); signature != nil {
+			if signature := lowering.checker.GetResolvedSignature(node); signature != nil {
 				parameters := signature.Parameters()
 				for index, argument := range nodesOf(node.AsCallExpression().Arguments) {
-					if index < len(parameters) && l.placeholderOptional(l.checker.GetTypeOfSymbol(parameters[index])) {
-						key := l.placeholderKey(parameters[index])
+					if index < len(parameters) &&
+						lowering.placeholderOptional(lowering.checker.GetTypeOfSymbol(parameters[index])) {
+						key := lowering.placeholderKey(parameters[index])
 						inferred[key] = true
 						transfers = append(transfers, transfer{key, argument})
 					}
@@ -225,8 +242,8 @@ func (l *lowering) notePlaceholderSlots() {
 			}
 		case ast.KindPropertyAssignment:
 			target, value = node.Name(), node.AsPropertyAssignment().Initializer
-			key := l.placeholderKey(l.symbol(target))
-			inferred[key] = l.placeholderOptional(l.checker.GetTypeOfSymbol(l.symbol(target)))
+			key := lowering.placeholderKey(lowering.symbol(target))
+			inferred[key] = lowering.placeholderOptional(lowering.checker.GetTypeOfSymbol(lowering.symbol(target)))
 			transfers = append(transfers, transfer{key, value})
 		case ast.KindBinaryExpression:
 			binary := node.AsBinaryExpression()
@@ -235,48 +252,59 @@ func (l *lowering) notePlaceholderSlots() {
 				if ast.IsIdentifier(target) || target.Kind == ast.KindPropertyAccessExpression {
 					if target.Kind == ast.KindPropertyAccessExpression {
 						// An any-valued receiver has no declared property symbol. It cannot carry a placeholder slot.
-						if symbol := l.symbol(target); symbol != nil {
-							key := l.placeholderKey(symbol)
-							inferred[key] = l.placeholderOptional(l.checker.GetTypeOfSymbol(symbol))
+						if symbol := lowering.symbol(target); symbol != nil {
+							key := lowering.placeholderKey(symbol)
+							inferred[key] = lowering.placeholderOptional(lowering.checker.GetTypeOfSymbol(symbol))
 						}
 					}
-					transfers = append(transfers, transfer{l.placeholderKey(l.symbol(target)), value})
+					transfers = append(transfers, transfer{lowering.placeholderKey(lowering.symbol(target)), value})
 				}
 			}
 		}
 		if node.Kind == ast.KindObjectLiteralExpression {
 			properties := node.AsObjectLiteralExpression().Properties.Nodes
 			if len(properties) > 0 && properties[0].Kind == ast.KindSpreadAssignment {
-				source := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(properties[0].AsSpreadAssignment().Expression))
-				target := l.checker.GetTypeAtLocation(node)
-				for _, field := range l.checker.GetPropertiesOfType(target) {
-					if from := l.checker.GetPropertyOfType(source, field.Name); from != nil && len(from.Declarations) > 0 {
-						views = append(views, transfer{l.placeholderKey(field), from.Declarations[0].Name()})
+				source := lowering.checker.GetNonNullableType(
+					lowering.checker.GetTypeAtLocation(properties[0].AsSpreadAssignment().Expression),
+				)
+				target := lowering.checker.GetTypeAtLocation(node)
+				for _, field := range lowering.checker.GetPropertiesOfType(target) {
+					if from := lowering.checker.GetPropertyOfType(
+						source,
+						field.Name,
+					); from != nil && len(from.Declarations) > 0 {
+						views = append(views, transfer{lowering.placeholderKey(field), from.Declarations[0].Name()})
 					}
 				}
 			}
 		}
 		if node.Parent != nil && ast.IsExpression(node) && !ast.IsDeclarationName(node) && !ast.IsPartOfTypeNode(node) {
-			if targetType := l.slotType(node); targetType != nil {
-				sourceType := l.checker.GetTypeAtLocation(node)
+			if targetType := lowering.slotType(node); targetType != nil {
+				sourceType := lowering.checker.GetTypeAtLocation(node)
 				if sourceType.Flags()&checker.TypeFlagsObject != 0 && targetType.Flags()&checker.TypeFlagsObject != 0 {
-					for _, field := range l.checker.GetPropertiesOfType(targetType) {
-						if source := l.checker.GetPropertyOfType(sourceType, field.Name); source != nil && len(source.Declarations) > 0 {
-							views = append(views, transfer{l.placeholderKey(field), source.Declarations[0].Name()})
+					for _, field := range lowering.checker.GetPropertiesOfType(targetType) {
+						if source := lowering.checker.GetPropertyOfType(
+							sourceType,
+							field.Name,
+						); source != nil && len(source.Declarations) > 0 {
+							views = append(
+								views,
+								transfer{lowering.placeholderKey(field), source.Declarations[0].Name()},
+							)
 						}
 					}
 				}
 			}
 		}
-		if target != nil && l.uninitializedInitializer(value) {
-			key := l.placeholderKey(l.symbol(target))
-			if key != "" && l.result.PlaceholderSources[key] == "" {
-				l.result.PlaceholderSources[key] = sourceExpression(target)
+		if target != nil && lowering.uninitializedInitializer(value) {
+			key := lowering.placeholderKey(lowering.symbol(target))
+			if key != "" && lowering.result.PlaceholderSources[key] == "" {
+				lowering.result.PlaceholderSources[key] = sourceExpression(target)
 			}
 		}
 		return node.ForEachChild(visit)
 	}
-	for _, file := range l.program.CompilerProgram().GetSourceFiles() {
+	for _, file := range lowering.program.CompilerProgram().GetSourceFiles() {
 		if !load.IsLibrary(file) && !load.IsPrelude(file) {
 			visit(file.AsNode())
 		}
@@ -298,27 +326,29 @@ func (l *lowering) notePlaceholderSlots() {
 			return origins(node.AsAsExpression().Expression)
 		}
 		if ast.IsIdentifier(node) || node.Kind == ast.KindPropertyAccessExpression {
-			return l.placeholderReadOrigin(node)
+			return lowering.placeholderReadOrigin(node)
 		}
 		return ""
 	}
 	for changed := true; changed; {
 		changed = false
 		for _, edge := range views {
-			if edge.to == "" || l.result.PlaceholderSources[edge.to] != "" || l.result.PlaceholderViews[edge.to] != "" {
+			if edge.to == "" ||
+				lowering.result.PlaceholderSources[edge.to] != "" ||
+				lowering.result.PlaceholderViews[edge.to] != "" {
 				continue
 			}
 			if origin := origins(edge.from); origin != "" {
-				l.result.PlaceholderViews[edge.to] = origin
+				lowering.result.PlaceholderViews[edge.to] = origin
 				changed = true
 			}
 		}
 		for _, edge := range transfers {
-			if edge.to == "" || l.result.PlaceholderSources[edge.to] != "" || !inferred[edge.to] {
+			if edge.to == "" || lowering.result.PlaceholderSources[edge.to] != "" || !inferred[edge.to] {
 				continue
 			}
 			if origin := origins(edge.from); origin != "" {
-				l.result.PlaceholderSources[edge.to] = origin
+				lowering.result.PlaceholderSources[edge.to] = origin
 				changed = true
 			}
 		}
@@ -327,11 +357,12 @@ func (l *lowering) notePlaceholderSlots() {
 
 // placeholderAllowsUnset is deliberately narrower than acceptsUndefined: a
 // template or a container element is a use as T, even when Node tolerates it.
-func (l *lowering) placeholderAllowsUnset(node *ast.Node) bool {
-	if comparedWithUndefined(node) || l.placeholderNullishTest(node.Parent) {
+func (lowering *lowering) placeholderAllowsUnset(node *ast.Node) bool {
+	if comparedWithUndefined(node) || lowering.placeholderNullishTest(node.Parent) {
 		return true
 	}
-	for node.Parent != nil && (node.Parent.Kind == ast.KindParenthesizedExpression || node.Parent.Kind == ast.KindAsExpression) {
+	for node.Parent != nil &&
+		(node.Parent.Kind == ast.KindParenthesizedExpression || node.Parent.Kind == ast.KindAsExpression) {
 		node = node.Parent
 	}
 	parent := node.Parent
@@ -353,30 +384,39 @@ func (l *lowering) placeholderAllowsUnset(node *ast.Node) bool {
 		if parent.AsConditionalExpression().Condition == node {
 			return true
 		}
-		return l.placeholderAllowsUnset(parent)
+		return lowering.placeholderAllowsUnset(parent)
 	case ast.KindBinaryExpression:
 		binary := parent.AsBinaryExpression()
-		if binary.OperatorToken.Kind == ast.KindEqualsToken && binary.Right == node && ast.SkipParentheses(binary.Left).Kind == ast.KindElementAccessExpression {
+		if binary.OperatorToken.Kind == ast.KindEqualsToken &&
+			binary.Right == node &&
+			ast.SkipParentheses(binary.Left).Kind == ast.KindElementAccessExpression {
 			return false
 		}
-		if binary.Left == node && (binary.OperatorToken.Kind == ast.KindQuestionQuestionToken || binary.OperatorToken.Kind == ast.KindAmpersandAmpersandToken || binary.OperatorToken.Kind == ast.KindBarBarToken) {
+		if binary.Left == node && (binary.OperatorToken.Kind == ast.KindQuestionQuestionToken ||
+			binary.OperatorToken.Kind == ast.KindAmpersandAmpersandToken ||
+			binary.OperatorToken.Kind == ast.KindBarBarToken) {
 			return true
 		}
-		if binary.OperatorToken.Kind == ast.KindEqualsToken && binary.Right == node && l.placeholderOrigin(binary.Left) != "" {
+		if binary.OperatorToken.Kind == ast.KindEqualsToken &&
+			binary.Right == node &&
+			lowering.placeholderOrigin(binary.Left) != "" {
 			return true
 		}
-		if binary.OperatorToken.Kind == ast.KindAmpersandAmpersandToken || binary.OperatorToken.Kind == ast.KindBarBarToken {
-			return l.placeholderAllowsUnset(parent)
+		if binary.OperatorToken.Kind == ast.KindAmpersandAmpersandToken ||
+			binary.OperatorToken.Kind == ast.KindBarBarToken {
+			return lowering.placeholderAllowsUnset(parent)
 		}
 	case ast.KindVariableDeclaration:
-		return parent.AsVariableDeclaration().Initializer == node && l.placeholderOrigin(parent.Name()) != ""
+		return parent.AsVariableDeclaration().Initializer == node && lowering.placeholderOrigin(parent.Name()) != ""
 	case ast.KindPropertyAssignment:
-		return parent.AsPropertyAssignment().Initializer == node && l.placeholderOrigin(parent.Name()) != ""
+		return parent.AsPropertyAssignment().Initializer == node && lowering.placeholderOrigin(parent.Name()) != ""
 	case ast.KindCallExpression:
 		callee := ast.SkipParentheses(parent.AsCallExpression().Expression)
 		if callee.Kind == ast.KindPropertyAccessExpression {
-			receiver := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))
-			if l.isArrayType(receiver) || l.isLibraryType(receiver, "Map", "Set") {
+			receiver := lowering.checker.GetNonNullableType(
+				lowering.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression),
+			)
+			if lowering.isArrayType(receiver) || lowering.isLibraryType(receiver, "Map", "Set") {
 				switch callee.Name().Text() {
 				case "set", "add", "push", "unshift", "splice", "fill":
 					return false
@@ -386,12 +426,12 @@ func (l *lowering) placeholderAllowsUnset(node *ast.Node) bool {
 	case ast.KindArrayLiteralExpression, ast.KindSpreadElement:
 		return false
 	}
-	contextual := l.slotType(node)
-	return contextual != nil && l.placeholderOptional(contextual)
+	contextual := lowering.slotType(node)
+	return contextual != nil && lowering.placeholderOptional(contextual)
 }
 
-func (l *lowering) placeholderRead(node *ast.Node, value ir.Expression, origin string) ir.Expression {
-	if l.placeholderAllowsUnset(node) {
+func (lowering *lowering) placeholderRead(node *ast.Node, value ir.Expression, origin string) ir.Expression {
+	if lowering.placeholderAllowsUnset(node) {
 		return value
 	}
 	use := "use as T"
@@ -416,19 +456,29 @@ func (l *lowering) placeholderRead(node *ast.Node, value ir.Expression, origin s
 			use = "container element"
 		}
 	}
-	of, known := l.representation(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node)))
+	of, known := lowering.representation(lowering.checker.GetNonNullableType(lowering.checker.GetTypeAtLocation(node)))
 	if !known {
 		of = ir.Union
 	}
 	checkArm := false
-	if symbol := l.symbol(node); symbol != nil {
-		declared, _ := l.representation(l.checker.GetNonNullableType(l.checker.GetTypeOfSymbol(symbol)))
+	if symbol := lowering.symbol(node); symbol != nil {
+		declared, _ := lowering.representation(
+			lowering.checker.GetNonNullableType(lowering.checker.GetTypeOfSymbol(symbol)),
+		)
 		checkArm = declared == ir.Union && of != ir.Union
-		if checkArm && (of == ir.Weak || of.IsTypedArray()) && l.unlowerable == nil {
-			l.unlowerable = l.notYet(node, "a placeholder narrowing without a present-arm storage check")
+		if checkArm && (of == ir.Weak || of.IsTypedArray()) && lowering.unlowerable == nil {
+			lowering.unlowerable = lowering.notYet(node, "a placeholder narrowing without a present-arm storage check")
 		}
 	}
-	return ir.PlaceholderUse{Value: value, Origin: origin, Use: use, Path: sourceExpression(node), Where: l.program.Where(node), CheckArm: checkArm, Of: of}
+	return ir.PlaceholderUse{
+		Value:    value,
+		Origin:   origin,
+		Use:      use,
+		Path:     sourceExpression(node),
+		Where:    lowering.program.Where(node),
+		CheckArm: checkArm,
+		Of:       of,
+	}
 }
 
 func placeholderProven(value ir.Expression, program *ir.Program, ready []bool, fields map[fieldReadiness]int) bool {
@@ -454,23 +504,38 @@ func placeholderProven(value ir.Expression, program *ir.Program, ready []bool, f
 	case ir.PlaceholderUse:
 		return true // Its checked boundary produces T or stops.
 	case ir.Conditional:
-		return placeholderProven(value.WhenTrue, program, ready, fields) && placeholderProven(value.WhenNot, program, ready, fields)
+		return placeholderProven(value.WhenTrue, program, ready, fields) &&
+			placeholderProven(value.WhenNot, program, ready, fields)
 	case ir.Coalesce:
 		return value.Panic != nil || placeholderProven(value.Fallback, program, ready, fields)
 	}
 	return !value.Type().IsMaybe() && value.Type() != ir.Union
 }
 
-func placeholderUseValue(use ir.PlaceholderUse, program *ir.Program, ready []bool, fields map[fieldReadiness]int) ir.Expression {
+func placeholderUseValue(
+	use ir.PlaceholderUse,
+	program *ir.Program,
+	ready []bool,
+	fields map[fieldReadiness]int,
+) ir.Expression {
 	proven := placeholderProven(use.Value, program, ready, fields)
 	status := "checked"
 	if proven {
 		status = "proven"
 	}
-	program.PlaceholderChecks = append(program.PlaceholderChecks, ir.PlaceholderCheck{Origin: use.Origin, Use: use.Use, Path: use.Path, Where: use.Where, Status: status})
+	program.PlaceholderChecks = append(
+		program.PlaceholderChecks,
+		ir.PlaceholderCheck{Origin: use.Origin, Use: use.Use, Path: use.Path, Where: use.Where, Status: status},
+	)
 	armMessage := "placeholder '" + use.Origin + "' has the wrong present arm at " + use.Use + " via " + use.Path
 	if use.CheckArm {
-		program.PlaceholderChecks = append(program.PlaceholderChecks, ir.PlaceholderCheck{Origin: use.Origin, Use: "present arm at " + use.Use, Path: use.Path, Where: use.Where, Status: "checked"})
+		program.PlaceholderChecks = append(program.PlaceholderChecks, ir.PlaceholderCheck{
+			Origin: use.Origin,
+			Use:    "present arm at " + use.Use,
+			Path:   use.Path,
+			Where:  use.Where,
+			Status: "checked",
+		})
 	}
 	presentValue := func(value ir.Expression) ir.Expression {
 		if value.Type() == ir.Union && use.Of != ir.Union {
@@ -487,14 +552,16 @@ func placeholderUseValue(use ir.PlaceholderUse, program *ir.Program, ready []boo
 	message := "placeholder '" + use.Origin + "' is unset at " + use.Use + " via " + use.Path
 	index := len(program.Strings)
 	program.Strings = append(program.Strings, message)
-	return presentValue(ir.Coalesce{Value: use.Value, Panic: ir.StringConstant{Index: index}, Of: use.Value.Type().Present()})
+	return presentValue(
+		ir.Coalesce{Value: use.Value, Panic: ir.StringConstant{Index: index}, Of: use.Value.Type().Present()},
+	)
 }
 
 // Structural views preserve the source slot's optional storage but do not make
 // the target's ordinary T fields legal destinations for an unset write.
-func (l *lowering) placeholderReadOrigin(node *ast.Node) string {
-	if origin := l.placeholderOrigin(node); origin != "" {
+func (lowering *lowering) placeholderReadOrigin(node *ast.Node) string {
+	if origin := lowering.placeholderOrigin(node); origin != "" {
 		return origin
 	}
-	return l.result.PlaceholderViews[l.placeholderKey(l.symbol(node))]
+	return lowering.result.PlaceholderViews[lowering.placeholderKey(lowering.symbol(node))]
 }

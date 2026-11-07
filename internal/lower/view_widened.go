@@ -75,9 +75,9 @@ const (
 // Which reads it weighs is viewReadOf's (view_reads.go): a field read of the NotYet class, and a
 // whole-value reader (encodeJson), which reads every field of its value and of what that holds raw,
 // so it's NotYet when anything in it may come from a view's entry, vouched for or not.
-func (l *lowering) checkViewWidenedReads() error {
+func (lowering *lowering) checkViewWidenedReads() error {
 	names := map[string]bool{}
-	for key := range l.result.CheckedFields {
+	for key := range lowering.result.CheckedFields {
 		// A record's field is checked under its bare name, and is no view's.
 		receiver, name, keyed := strings.Cut(key, ":")
 		if _, parseError := strconv.Atoi(receiver); !keyed || parseError != nil {
@@ -88,16 +88,16 @@ func (l *lowering) checkViewWidenedReads() error {
 	if len(names) == 0 {
 		return nil
 	}
-	lies := make([]viewLie, len(l.viewSources))
+	lies := make([]viewLie, len(lowering.viewSources))
 	entryLocals := map[int]bool{}
 	var unentered []viewLie
-	for i, view := range l.viewSources {
-		lies[i] = l.viewLie(view)
+	for i, view := range lowering.viewSources {
+		lies[i] = lowering.viewLie(view)
 		read, isRead := view.entry.(ir.Read)
 		switch {
 		case view.cast:
 		case view.narrows:
-			if !l.narrowedEntries(view.target, entryLocals) {
+			if !lowering.narrowedEntries(view.target, entryLocals) {
 				unentered = append(unentered, lies[i])
 			}
 		case isRead:
@@ -106,8 +106,8 @@ func (l *lowering) checkViewWidenedReads() error {
 			unentered = append(unentered, lies[i])
 		}
 	}
-	assignAllocationSites(l.result)
-	entered := newAllocationFlowGraph(l.result)
+	assignAllocationSites(lowering.result)
+	entered := newAllocationFlowGraph(lowering.result)
 	entered.entry = func(value ir.Expression) int {
 		switch value := value.(type) {
 		case ir.CheckedCast:
@@ -119,7 +119,7 @@ func (l *lowering) checkViewWidenedReads() error {
 				return viewedValueSite
 			}
 		case ir.Property:
-			if l.result.CheckedFields[ir.CheckedFieldKey(value.ViewReceiverTypeID, value.Name)] &&
+			if lowering.result.CheckedFields[ir.CheckedFieldKey(value.ViewReceiverTypeID, value.Name)] &&
 				viewAggregate(value) {
 				return viewedFieldSite
 			}
@@ -128,7 +128,7 @@ func (l *lowering) checkViewWidenedReads() error {
 	}
 	var graph *allocationFlowGraph
 	var viewed map[int]bool
-	unknown := len(l.result.ViewOrigins) == 0
+	unknown := len(lowering.result.ViewOrigins) == 0
 	var refused error
 	inspect := func(node any) bool {
 		if refused != nil {
@@ -137,18 +137,22 @@ func (l *lowering) checkViewWidenedReads() error {
 		read, isProperty := node.(ir.Property)
 		// A read with no place in the source is lowering's own, a predicate's tag test, and no read
 		// through a type. A method read counts: a callable field is read raw too.
-		if !isProperty || read.ViewWhere == "" || !names[read.Name] || viewReadOf(l.result, read) != viewReadNotYet {
+		if !isProperty ||
+			read.ViewWhere == "" ||
+			!names[read.Name] ||
+			viewReadOf(lowering.result, read) != viewReadNotYet {
 			return true
 		}
-		field := l.viewTypes[read.ViewTypeID]
+		field := lowering.viewTypes[read.ViewTypeID]
 		reaches := entered.ReachingAllocations(read.Object)
 		inside := reaches.Unknown || slices.Contains(reaches.Sites, viewedFieldSite)
-		demanded := inside && !viewVouched(lies, read.Name, field, true, l.checker) ||
-			slices.Contains(reaches.Sites, viewedValueSite) && !viewVouched(lies, read.Name, field, false, l.checker)
-		if !demanded && len(unentered) != 0 && !viewVouched(unentered, read.Name, field, true, l.checker) {
+		demanded := inside && !viewVouched(lies, read.Name, field, true, lowering.checker) ||
+			slices.Contains(reaches.Sites, viewedValueSite) &&
+				!viewVouched(lies, read.Name, field, false, lowering.checker)
+		if !demanded && len(unentered) != 0 && !viewVouched(unentered, read.Name, field, true, lowering.checker) {
 			if graph == nil {
 				var reachUnknown bool
-				graph, viewed, reachUnknown = viewedAllocations(l.result, false)
+				graph, viewed, reachUnknown = viewedAllocations(lowering.result, false)
 				unknown = unknown || reachUnknown
 			}
 			allocations := graph.ReachingAllocations(read.Object)
@@ -159,8 +163,8 @@ func (l *lowering) checkViewWidenedReads() error {
 		}
 		if demanded {
 			through := "an unnamed type"
-			if receiver := l.viewTypes[read.ViewReceiverTypeID]; receiver != nil {
-				through = "type " + l.checker.TypeToString(receiver)
+			if receiver := lowering.viewTypes[read.ViewReceiverTypeID]; receiver != nil {
+				through = "type " + lowering.checker.TypeToString(receiver)
 			}
 			refused = &NotYet{Where: read.ViewWhere, What: "a read of field " +
 				read.Name +
@@ -171,8 +175,8 @@ func (l *lowering) checkViewWidenedReads() error {
 		}
 		return true
 	}
-	walk(l.result.Main, inspect)
-	for _, function := range l.result.Functions {
+	walk(lowering.result.Main, inspect)
+	for _, function := range lowering.result.Functions {
 		walk(function.Body, inspect)
 	}
 	if refused != nil {
@@ -180,7 +184,7 @@ func (l *lowering) checkViewWidenedReads() error {
 	}
 	// A whole-value reader reads every field of the value and of what it holds, through no view and
 	// no type the source vouched for, so nothing a view claimed may be anywhere in it.
-	for _, whole := range l.wholeObjectCopies {
+	for _, whole := range lowering.wholeObjectCopies {
 		if whole.reader == "" {
 			continue
 		}
@@ -192,14 +196,14 @@ func (l *lowering) checkViewWidenedReads() error {
 		if !demanded && len(unentered) != 0 {
 			if graph == nil {
 				var reachUnknown bool
-				graph, viewed, reachUnknown = viewedAllocations(l.result, false)
+				graph, viewed, reachUnknown = viewedAllocations(lowering.result, false)
 				unknown = unknown || reachUnknown
 			}
 			demanded = unknown || deepReach(graph, whole.source, func(site int) bool { return viewed[site] })
 		}
 		if demanded {
-			return l.notYet(whole.node, "a read of every field of a value of type "+
-				l.checker.TypeToString(whole.copied)+
+			return lowering.notYet(whole.node, "a read of every field of a value of type "+
+				lowering.checker.TypeToString(whole.copied)+
 				" by "+
 				whole.reader+
 				", which may hold a checked view's value")
@@ -261,15 +265,15 @@ func deepReach(graph *allocationFlowGraph, value ir.Expression, hit func(int) bo
 // narrowedEntries adds to locals each local a read of was narrowed to a type holding target, the
 // value a predicate's true result admits at its caller. It says false when a field read was
 // narrowed to one too, a value with no local to name.
-func (l *lowering) narrowedEntries(target *checker.Type, locals map[int]bool) bool {
-	for _, narrowed := range l.narrowedFields {
-		if l.typeHolds(narrowed, target) {
+func (lowering *lowering) narrowedEntries(target *checker.Type, locals map[int]bool) bool {
+	for _, narrowed := range lowering.narrowedFields {
+		if lowering.typeHolds(narrowed, target) {
 			return false
 		}
 	}
-	for local, types := range l.narrowedReads {
+	for local, types := range lowering.narrowedReads {
 		for _, narrowed := range types {
-			locals[local] = locals[local] || l.typeHolds(narrowed, target)
+			locals[local] = locals[local] || lowering.typeHolds(narrowed, target)
 		}
 	}
 	return true
@@ -277,12 +281,12 @@ func (l *lowering) narrowedEntries(target *checker.Type, locals map[int]bool) bo
 
 // typeHolds says whether a type is target, or a union or intersection holding it. A member is
 // taken as it is: GetNonNullableType of a type parameter is an intersection holding it again.
-func (l *lowering) typeHolds(held, target *checker.Type) bool {
-	held = l.checker.GetNonNullableType(l.concrete(held))
-	return held.Id() == target.Id() || l.membersHold(held, target, map[*checker.Type]bool{})
+func (lowering *lowering) typeHolds(held, target *checker.Type) bool {
+	held = lowering.checker.GetNonNullableType(lowering.concrete(held))
+	return held.Id() == target.Id() || lowering.membersHold(held, target, map[*checker.Type]bool{})
 }
 
-func (l *lowering) membersHold(held, target *checker.Type, seen map[*checker.Type]bool) bool {
+func (lowering *lowering) membersHold(held, target *checker.Type, seen map[*checker.Type]bool) bool {
 	if held.Id() == target.Id() {
 		return true
 	}
@@ -291,7 +295,7 @@ func (l *lowering) membersHold(held, target *checker.Type, seen map[*checker.Typ
 	}
 	seen[held] = true
 	for _, member := range held.Types() {
-		if l.membersHold(member, target, seen) {
+		if lowering.membersHold(member, target, seen) {
 			return true
 		}
 	}
@@ -300,27 +304,27 @@ func (l *lowering) membersHold(held, target *checker.Type, seen map[*checker.Typ
 
 // narrowedRead keeps the type the checker narrowed a read of a local to, when it isn't the
 // local's own (narrowedEntries).
-func (l *lowering) narrowedRead(node *ast.Node, local int) {
-	symbol := l.symbol(node)
+func (lowering *lowering) narrowedRead(node *ast.Node, local int) {
+	symbol := lowering.symbol(node)
 	if symbol == nil {
 		return
 	}
-	narrowed := l.checker.GetTypeAtLocation(node)
-	if narrowed.Id() == l.checker.GetTypeOfSymbol(symbol).Id() {
+	narrowed := lowering.checker.GetTypeAtLocation(node)
+	if narrowed.Id() == lowering.checker.GetTypeOfSymbol(symbol).Id() {
 		return
 	}
-	if l.narrowedReads == nil {
-		l.narrowedReads = map[int]map[int]*checker.Type{}
+	if lowering.narrowedReads == nil {
+		lowering.narrowedReads = map[int]map[int]*checker.Type{}
 	}
-	if l.narrowedReads[local] == nil {
-		l.narrowedReads[local] = map[int]*checker.Type{}
+	if lowering.narrowedReads[local] == nil {
+		lowering.narrowedReads[local] = map[int]*checker.Type{}
 	}
-	l.narrowedReads[local][int(narrowed.Id())] = narrowed
+	lowering.narrowedReads[local][int(narrowed.Id())] = narrowed
 }
 
 // viewLie is what a view checks that its source doesn't guarantee: its target's own fields, and
 // the fields of the contracts inside them.
-func (l *lowering) viewLie(view viewSource) viewLie {
+func (lowering *lowering) viewLie(view viewSource) viewLie {
 	lie := viewLie{
 		liedTop:    map[string]bool{},
 		liedInside: map[string]bool{},
@@ -329,47 +333,55 @@ func (l *lowering) viewLie(view viewSource) viewLie {
 	}
 	var source *checker.Type
 	if view.source != nil {
-		source = l.checker.GetNonNullableType(l.concrete(view.source))
+		source = lowering.checker.GetNonNullableType(lowering.concrete(view.source))
 	}
 	contracts := map[string]ir.ViewContractID{}
-	if id := l.result.ViewContractTypes[int(view.target.Id())]; id != 0 {
-		for _, field := range l.result.ViewContracts[id-1].Fields {
+	if id := lowering.result.ViewContractTypes[int(view.target.Id())]; id != 0 {
+		for _, field := range lowering.result.ViewContracts[id-1].Fields {
 			contracts[field.Name] = field.Contract
 		}
 	}
-	for _, property := range l.checker.GetPropertiesOfType(view.target) {
+	for _, property := range lowering.checker.GetPropertiesOfType(view.target) {
 		var held *ast.Symbol
-		if source != nil && !l.result.CheckedField(l.viewFieldReceiverTypeID(nil, source), property.Name) {
-			held = l.checker.GetPropertyOfType(source, property.Name)
+		if source != nil &&
+			!lowering.result.CheckedField(lowering.viewFieldReceiverTypeID(nil, source), property.Name) {
+			held = lowering.checker.GetPropertyOfType(source, property.Name)
 		}
 		if held == nil {
 			lie.liedTop[property.Name] = true
 		} else {
-			lie.held[property.Name] = l.checker.GetTypeOfSymbol(held)
+			lie.held[property.Name] = lowering.checker.GetTypeOfSymbol(held)
 		}
 		if held == nil ||
-			!l.checker.IsTypeAssignableTo(l.checker.GetTypeOfSymbol(held), l.checker.GetTypeOfSymbol(property)) {
-			l.viewContractNames(contracts[property.Name], lie.liedInside, map[ir.ViewContractID]bool{})
+			!lowering.checker.IsTypeAssignableTo(
+				lowering.checker.GetTypeOfSymbol(held),
+				lowering.checker.GetTypeOfSymbol(property),
+			) {
+			lowering.viewContractNames(contracts[property.Name], lie.liedInside, map[ir.ViewContractID]bool{})
 		} else {
-			l.viewContractNames(contracts[property.Name], lie.honest, map[ir.ViewContractID]bool{})
+			lowering.viewContractNames(contracts[property.Name], lie.honest, map[ir.ViewContractID]bool{})
 		}
 	}
 	return lie
 }
 
 // viewContractNames adds every field name a contract checks, through its fields and members.
-func (l *lowering) viewContractNames(id ir.ViewContractID, names map[string]bool, seen map[ir.ViewContractID]bool) {
-	if id == 0 || int(id) > len(l.result.ViewContracts) || seen[id] {
+func (lowering *lowering) viewContractNames(
+	id ir.ViewContractID,
+	names map[string]bool,
+	seen map[ir.ViewContractID]bool,
+) {
+	if id == 0 || int(id) > len(lowering.result.ViewContracts) || seen[id] {
 		return
 	}
 	seen[id] = true
-	contract := l.result.ViewContracts[id-1]
+	contract := lowering.result.ViewContracts[id-1]
 	for _, field := range contract.Fields {
 		names[field.Name] = true
-		l.viewContractNames(field.Contract, names, seen)
+		lowering.viewContractNames(field.Contract, names, seen)
 	}
 	for _, member := range contract.Members {
-		l.viewContractNames(member, names, seen)
+		lowering.viewContractNames(member, names, seen)
 	}
 }
 

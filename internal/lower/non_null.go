@@ -11,17 +11,17 @@ import (
 // nonNull uses the same nullish test and terminal panic as ?? panic(...).
 // Recover presence checks from nullable loads, but keep a checked union narrowing
 // in its result representation. Calls may invalidate the original narrowing.
-func (l *lowering) nonNull(node *ast.Node) (ir.Expression, error) {
+func (lowering *lowering) nonNull(node *ast.Node) (ir.Expression, error) {
 	operand := node.AsNonNullExpression().Expression
-	value, expressionError := l.expression(operand)
+	value, expressionError := lowering.expression(operand)
 	if expressionError != nil {
 		return nil, expressionError
 	}
-	return l.nonNullValue(node, value)
+	return lowering.nonNullValue(node, value)
 }
 
 // nonNullValue also checks an already-held assignment target read.
-func (l *lowering) nonNullValue(node *ast.Node, value ir.Expression) (ir.Expression, error) {
+func (lowering *lowering) nonNullValue(node *ast.Node, value ir.Expression) (ir.Expression, error) {
 	operand := node.AsNonNullExpression().Expression
 	var typeOfError error
 	for {
@@ -45,19 +45,19 @@ stored:
 	}
 	if property, ok := value.(ir.Property); ok &&
 		ast.SkipParentheses(operand).Kind == ast.KindPropertyAccessExpression {
-		if symbol := l.checker.GetSymbolAtLocation(ast.SkipParentheses(operand).Name()); symbol != nil {
-			if declared, known := l.representation(l.checker.GetTypeOfSymbol(symbol)); known {
+		if symbol := lowering.checker.GetSymbolAtLocation(ast.SkipParentheses(operand).Name()); symbol != nil {
+			if declared, known := lowering.representation(lowering.checker.GetTypeOfSymbol(symbol)); known {
 				property.Of = declared
 				value = property
 			}
 		}
 	}
-	of, typeOfError := l.typeOf(node)
-	flags := l.checker.GetTypeAtLocation(operand).Flags()
+	of, typeOfError := lowering.typeOf(node)
+	flags := lowering.checker.GetTypeAtLocation(operand).Flags()
 	if typeOfError != nil && (flags == checker.TypeFlagsUndefined || flags == checker.TypeFlagsNull) {
 		of = ir.Object
-		if contextual := l.slotType(node); contextual != nil {
-			if representation, known := l.representation(contextual); known {
+		if contextual := lowering.slotType(node); contextual != nil {
+			if representation, known := lowering.representation(contextual); known {
 				of = representation
 			}
 		}
@@ -80,41 +80,41 @@ stored:
 	// A checked narrowing helper can already return a plain scalar. Its result
 	// has no nullish representation and must never receive a pointer test.
 	if value.Type() == ir.Number || value.Type() == ir.Boolean {
-		l.recordNonNullCheck(node, true)
+		lowering.recordNonNullCheck(node, true)
 		return value, nil
 	}
-	proven := l.checker.GetTypeAtLocation(operand)
+	proven := lowering.checker.GetTypeAtLocation(operand)
 	if !weakOperand &&
-		!l.includesUndefined(proven) &&
-		!l.includesNull(proven) &&
-		!l.narrowedAway(ast.SkipParentheses(operand)) &&
+		!lowering.includesUndefined(proven) &&
+		!lowering.includesNull(proven) &&
+		!lowering.narrowedAway(ast.SkipParentheses(operand)) &&
 		!value.Type().IsMaybe() {
 		if value.Type() == ir.Union && of != ir.Union {
-			l.recordNonNullCheck(node, true)
+			lowering.recordNonNullCheck(node, true)
 			return ir.Narrow{Value: value, To: of}, nil
 		}
-		l.recordNonNullCheck(node, true)
+		lowering.recordNonNullCheck(node, true)
 		return value, nil
 	}
 	file := ast.GetSourceFileOfNode(node)
 	text := file.Text()[scanner.GetTokenPosOfNode(node, file, false):node.End()]
-	message := ir.StringConstant{Index: l.constant(
-		"non-null assertion failed at " + l.program.Where(node) + ": " + text + " is null or undefined",
+	message := ir.StringConstant{Index: lowering.constant(
+		"non-null assertion failed at " + lowering.program.Where(node) + ": " + text + " is null or undefined",
 	)}
 	result := ir.Expression(ir.Coalesce{Value: value, Panic: message, Of: value.Type().Present()})
 	if result.Type() == ir.Union && of != ir.Union {
 		result = ir.Narrow{Value: result, To: of}
 	}
-	l.recordNonNullCheck(node, false)
+	lowering.recordNonNullCheck(node, false)
 	return result, nil
 }
 
-func (l *lowering) checkedAssertionSource(node *ast.Node) bool {
-	return strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".ts")
+func (lowering *lowering) checkedAssertionSource(node *ast.Node) bool {
+	return strings.HasSuffix(lowering.program.FileName(ast.GetSourceFileOfNode(node)), ".ts")
 }
 
-func (l *lowering) recordNonNullCheck(node *ast.Node, proven bool) {
-	counts := &l.result.NonNullChecks
+func (lowering *lowering) recordNonNullCheck(node *ast.Node, proven bool) {
+	counts := &lowering.result.NonNullChecks
 	if proven {
 		counts.Proven++
 	} else {
@@ -122,6 +122,6 @@ func (l *lowering) recordNonNullCheck(node *ast.Node, proven bool) {
 	}
 	counts.Sites = append(
 		counts.Sites,
-		ir.NonNullCheck{Where: l.program.Where(node), Expression: sourceExpression(node), Proven: proven},
+		ir.NonNullCheck{Where: lowering.program.Where(node), Expression: sourceExpression(node), Proven: proven},
 	)
 }

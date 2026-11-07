@@ -65,18 +65,18 @@ type watched struct {
 	activity *activity
 }
 
-func (w *watched) Write(p []byte) (int, error) {
+func (watched *watched) Write(p []byte) (int, error) {
 	if len(p) > 0 {
-		w.activity.Lock()
-		w.activity.last = time.Now()
-		w.activity.seen = true
-		w.activity.Unlock()
+		watched.activity.Lock()
+		watched.activity.last = time.Now()
+		watched.activity.seen = true
+		watched.activity.Unlock()
 		select {
-		case w.activity.progress <- struct{}{}:
+		case watched.activity.progress <- struct{}{}:
 		default:
 		}
 	}
-	return w.dst.Write(p)
+	return watched.dst.Write(p)
 }
 
 // Run starts an unstarted command in its own process group and waits for it.

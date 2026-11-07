@@ -22,21 +22,21 @@ var optionalStrings = map[string]map[int]string{
 // parameter's default. A string that may be undefined is held as a null reference, which the runtime
 // would read as a string, so it's given the default here, where undefined is still visible: undefined
 // written out becomes the default itself, and a string | undefined becomes value ?? default.
-func (l *lowering) orDefault(node *ast.Node, value ir.Expression, fallback string) ir.Expression {
+func (lowering *lowering) orDefault(node *ast.Node, value ir.Expression, fallback string) ir.Expression {
 	if _, isUndefined := value.(ir.Undefined); isUndefined {
-		return ir.StringConstant{Index: l.constant(fallback)}
+		return ir.StringConstant{Index: lowering.constant(fallback)}
 	}
-	if value.Type() != ir.String || !l.mayBeUndefined(node) {
+	if value.Type() != ir.String || !lowering.mayBeUndefined(node) {
 		return value
 	}
-	return ir.Coalesce{Value: value, Fallback: ir.StringConstant{Index: l.constant(fallback)}, Of: ir.String}
+	return ir.Coalesce{Value: value, Fallback: ir.StringConstant{Index: lowering.constant(fallback)}, Of: ir.String}
 }
 
 // mayBeUndefined reports whether the checker's type for a node includes undefined.
-func (l *lowering) mayBeUndefined(node *ast.Node) bool {
-	proven := l.checker.GetTypeAtLocation(node)
+func (lowering *lowering) mayBeUndefined(node *ast.Node) bool {
+	proven := lowering.checker.GetTypeAtLocation(node)
 	if proven.Flags()&checker.TypeFlagsUndefined != 0 {
 		return true
 	}
-	return proven.Flags()&checker.TypeFlagsUnion != 0 && l.includesUndefined(proven)
+	return proven.Flags()&checker.TypeFlagsUnion != 0 && lowering.includesUndefined(proven)
 }

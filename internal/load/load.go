@@ -50,8 +50,8 @@ type CheckError struct {
 	Diagnostics []string
 }
 
-func (e *CheckError) Error() string {
-	return strings.Join(e.Diagnostics, "\n")
+func (checkError *CheckError) Error() string {
+	return strings.Join(checkError.Diagnostics, "\n")
 }
 
 // compilerOptions is the one configuration every Adamic 0.1 program is checked under, set here
@@ -190,32 +190,32 @@ func load(paths []string, overlay map[string]string, display func(string) string
 }
 
 // Files is the program's own source files, in the order Load was given them: no prelude, no lib.
-func (p *Program) Files() []*ast.SourceFile {
-	return p.files
+func (program *Program) Files() []*ast.SourceFile {
+	return program.files
 }
 
 // Checker returns the checker that owns a file, and the function that releases it.
-func (p *Program) Checker(callerContext context.Context, sourceFile *ast.SourceFile) (*checker.Checker, func()) {
-	return p.compiler.GetTypeCheckerForFile(callerContext, sourceFile)
+func (program *Program) Checker(callerContext context.Context, sourceFile *ast.SourceFile) (*checker.Checker, func()) {
+	return program.compiler.GetTypeCheckerForFile(callerContext, sourceFile)
 }
 
 // FileName is a source file's name as written: a .a file is named .a, never by the .a.ts the checker
 // knows it as.
-func (p *Program) FileName(sourceFile *ast.SourceFile) string {
-	return p.fs.displayName(sourceFile.FileName())
+func (program *Program) FileName(sourceFile *ast.SourceFile) string {
+	return program.fs.displayName(sourceFile.FileName())
 }
 
 // Where is a node's position as people write it: file:line:column, the file named as written.
-func (p *Program) Where(node *ast.Node) string {
+func (program *Program) Where(node *ast.Node) string {
 	sourceFile := ast.GetSourceFileOfNode(node)
-	line, column := p.lineAndColumn(sourceFile, scanner.GetTokenPosOfNode(node, sourceFile, false))
-	return fmt.Sprintf("%s:%d:%d", p.fs.displayName(sourceFile.FileName()), line, column)
+	line, column := program.lineAndColumn(sourceFile, scanner.GetTokenPosOfNode(node, sourceFile, false))
+	return fmt.Sprintf("%s:%d:%d", program.fs.displayName(sourceFile.FileName()), line, column)
 }
 
 // Line is the one-based line where a node's first token starts.
-func (p *Program) Line(node *ast.Node) int {
+func (program *Program) Line(node *ast.Node) int {
 	file := ast.GetSourceFileOfNode(node)
-	line, _ := p.lineAndColumn(file, scanner.GetTokenPosOfNode(node, file, false))
+	line, _ := program.lineAndColumn(file, scanner.GetTokenPosOfNode(node, file, false))
 	return line
 }
 
@@ -265,18 +265,18 @@ func rootFileName(
 //
 // Syntax first, and only syntax when there is any: a file that doesn't parse produces cascades from
 // the later phases that bury the real error.
-func (p *Program) diagnostics(callerContext context.Context) []string {
-	all := p.compiler.GetSyntacticDiagnostics(callerContext, nil)
+func (program *Program) diagnostics(callerContext context.Context) []string {
+	all := program.compiler.GetSyntacticDiagnostics(callerContext, nil)
 	if len(all) == 0 {
-		all = append(all, p.compiler.GetConfigFileParsingDiagnostics()...)
-		all = append(all, p.compiler.GetProgramDiagnostics()...)
-		all = append(all, p.compiler.GetGlobalDiagnostics(callerContext)...)
-		all = append(all, p.compiler.GetBindDiagnostics(callerContext, nil)...)
-		all = append(all, p.compiler.GetSemanticDiagnostics(callerContext, nil)...)
+		all = append(all, program.compiler.GetConfigFileParsingDiagnostics()...)
+		all = append(all, program.compiler.GetProgramDiagnostics()...)
+		all = append(all, program.compiler.GetGlobalDiagnostics(callerContext)...)
+		all = append(all, program.compiler.GetBindDiagnostics(callerContext, nil)...)
+		all = append(all, program.compiler.GetSemanticDiagnostics(callerContext, nil)...)
 	}
 	formatted := make([]string, 0, len(all))
 	for _, diagnostic := range all {
-		formatted = append(formatted, p.formatDiagnostic(diagnostic))
+		formatted = append(formatted, program.formatDiagnostic(diagnostic))
 	}
 	sort.Strings(formatted)
 	return formatted
@@ -284,11 +284,11 @@ func (p *Program) diagnostics(callerContext context.Context) []string {
 
 // formatDiagnostic writes one diagnostic as file:line:column: error TS<code>: message, with the
 // checker's elaboration indented beneath it.
-func (p *Program) formatDiagnostic(diagnostic *ast.Diagnostic) string {
+func (program *Program) formatDiagnostic(diagnostic *ast.Diagnostic) string {
 	var builder strings.Builder
 	if diagnostic.File() != nil {
-		line, column := p.lineAndColumn(diagnostic.File(), diagnostic.Pos())
-		fmt.Fprintf(&builder, "%s:%d:%d: ", p.fs.displayName(diagnostic.File().FileName()), line, column)
+		line, column := program.lineAndColumn(diagnostic.File(), diagnostic.Pos())
+		fmt.Fprintf(&builder, "%s:%d:%d: ", program.fs.displayName(diagnostic.File().FileName()), line, column)
 	}
 	message := starCollision(diagnostic)
 	if message == "" {
@@ -312,7 +312,7 @@ func writeChain(builder *strings.Builder, chain []*ast.Diagnostic, depth int) {
 
 // lineAndColumn is a position as people count it: lines from 1, and columns from 1 in UTF-16 code
 // units, the way tsc and every editor report them.
-func (p *Program) lineAndColumn(sourceFile *ast.SourceFile, position int) (int, int) {
+func (program *Program) lineAndColumn(sourceFile *ast.SourceFile, position int) (int, int) {
 	lineStarts := scanner.GetECMALineStarts(sourceFile)
 	line := sort.Search(len(lineStarts), func(index int) bool { return int(lineStarts[index]) > position }) - 1
 	line = max(line, 0)
@@ -321,4 +321,4 @@ func (p *Program) lineAndColumn(sourceFile *ast.SourceFile, position int) (int, 
 }
 
 // CompilerProgram exposes the checked program to public checker and lint adapters.
-func (p *Program) CompilerProgram() *compiler.Program { return p.compiler }
+func (program *Program) CompilerProgram() *compiler.Program { return program.compiler }

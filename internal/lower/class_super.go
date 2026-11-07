@@ -155,11 +155,11 @@ func (flow *constructorSuperFlow) statement(node *ast.Node, state uint8) (uint8,
 	return state, flow.reads(node, state)
 }
 
-func (l *lowering) prepareSuper(constructor *ast.Node, initializer int) (uint8, error) {
-	instance := l.instance
+func (lowering *lowering) prepareSuper(constructor *ast.Node, initializer int) (uint8, error) {
+	instance := lowering.instance
 	instance.unreadyThis = map[*ast.Node]bool{}
 	instance.superStates = map[*ast.Node]uint8{}
-	flow := constructorSuperFlow{l: l, instance: instance}
+	flow := constructorSuperFlow{l: lowering, instance: instance}
 	for _, parameter := range constructor.Parameters() {
 		if readsError := flow.reads(parameter, superUninitialized); readsError != nil {
 			return 0, readsError
@@ -169,27 +169,30 @@ func (l *lowering) prepareSuper(constructor *ast.Node, initializer int) (uint8, 
 	if statementError != nil {
 		return 0, statementError
 	}
-	instance.superReady = len(l.result.Locals)
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: "superReady", Type: ir.Boolean, Function: initializer})
-	l.result.Functions[initializer].Body = append(
-		l.result.Functions[initializer].Body,
+	instance.superReady = len(lowering.result.Locals)
+	lowering.result.Locals = append(
+		lowering.result.Locals,
+		ir.Local{Name: "superReady", Type: ir.Boolean, Function: initializer},
+	)
+	lowering.result.Functions[initializer].Body = append(
+		lowering.result.Functions[initializer].Body,
 		ir.Declare{Local: instance.superReady, Value: ir.BooleanConstant{}},
 	)
 	return state, nil
 }
 
-func (l *lowering) superError(message string) ir.Statement {
+func (lowering *lowering) superError(message string) ir.Statement {
 	return ir.Throw{Value: ir.MakeError{
-		Message: ir.StringConstant{Index: l.constant(message)},
-		Name:    ir.StringConstant{Index: l.constant("ReferenceError")},
+		Message: ir.StringConstant{Index: lowering.constant(message)},
+		Name:    ir.StringConstant{Index: lowering.constant("ReferenceError")},
 	}}
 }
 
-func (l *lowering) superEnd() ir.Statement {
+func (lowering *lowering) superEnd() ir.Statement {
 	return ir.If{
-		Condition: ir.Unary{Operator: ir.Not, Operand: ir.Read{Local: l.instance.superReady, Of: ir.Boolean}},
+		Condition: ir.Unary{Operator: ir.Not, Operand: ir.Read{Local: lowering.instance.superReady, Of: ir.Boolean}},
 		Then: []ir.Statement{
-			l.superError(
+			lowering.superError(
 				"Must call super constructor in derived class before accessing 'this' or returning from derived constructor",
 			),
 		},
@@ -197,8 +200,8 @@ func (l *lowering) superEnd() ir.Statement {
 }
 
 // Conditional super used for effects has the same branch and field-initializer order as if.
-func (l *lowering) conditionalSuper(node *ast.Node) ([]ir.Statement, bool, error) {
-	if l.instance == nil || l.instance.base == nil || node.Kind != ast.KindConditionalExpression {
+func (lowering *lowering) conditionalSuper(node *ast.Node) ([]ir.Statement, bool, error) {
+	if lowering.instance == nil || lowering.instance.base == nil || node.Kind != ast.KindConditionalExpression {
 		return nil, false, nil
 	}
 	conditional := node.AsConditionalExpression()
@@ -219,15 +222,15 @@ func (l *lowering) conditionalSuper(node *ast.Node) ([]ir.Statement, bool, error
 	if !hasSuper {
 		return nil, false, nil
 	}
-	condition, conditionError := l.condition(conditional.Condition)
+	condition, conditionError := lowering.condition(conditional.Condition)
 	if conditionError != nil {
 		return nil, true, conditionError
 	}
-	yes, expressionStatementError := l.expressionStatement(conditional.WhenTrue)
+	yes, expressionStatementError := lowering.expressionStatement(conditional.WhenTrue)
 	if expressionStatementError != nil {
 		return nil, true, expressionStatementError
 	}
-	no, expressionStatementError := l.expressionStatement(conditional.WhenFalse)
+	no, expressionStatementError := lowering.expressionStatement(conditional.WhenFalse)
 	if expressionStatementError != nil {
 		return nil, true, expressionStatementError
 	}

@@ -13,22 +13,30 @@ import (
 // program's, so it's left to the relation rule (refuseAnyRelation) and the axiom audit. A member whose
 // any is nested (items: any[]) is a relation's to judge where it's read as a typed member, which
 // refuseAnyRelation does.
-func (l *lowering) refuseAnyMember(node *ast.Node) error {
+func (lowering *lowering) refuseAnyMember(node *ast.Node) error {
 	if node.Kind != ast.KindPropertySignature && node.Kind != ast.KindPropertyDeclaration {
 		return nil
 	}
-	symbol := l.checker.GetSymbolAtLocation(node.Name())
+	symbol := lowering.checker.GetSymbolAtLocation(node.Name())
 	if symbol == nil {
 		return nil
 	}
-	if l.checker.GetTypeOfSymbol(symbol).Flags()&checker.TypeFlagsAny == 0 {
+	if lowering.checker.GetTypeOfSymbol(symbol).Flags()&checker.TypeFlagsAny == 0 {
 		return nil
 	}
 	written := "declared"
 	if node.Type() == nil {
 		written = "inferred from its initializer"
 	}
-	return &Refused{Where: l.program.Where(node), What: "a member typed any (" + scannedMemberName(node) + ", " + written + "): any has no proven type, so every read of it through a typed view is unchecked", Fix: "type it unknown and narrow it where it's read, or give it its real type"}
+	return &Refused{
+		Where: lowering.program.Where(node),
+		What: "a member typed any (" +
+			scannedMemberName(node) +
+			", " +
+			written +
+			"): any has no proven type, so every read of it through a typed view is unchecked",
+		Fix: "type it unknown and narrow it where it's read, or give it its real type",
+	}
 }
 
 // scannedMemberName is a member's name as written.

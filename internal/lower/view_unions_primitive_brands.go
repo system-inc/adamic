@@ -12,8 +12,8 @@ import (
 
 // phantomParts separates a primitive from the object views that give it a checker-only name.
 // Void is included because tsc's __String deliberately brands undefined through void.
-func (l *lowering) phantomParts(proven *checker.Type) (*checker.Type, []*checker.Type) {
-	proven = l.concrete(proven)
+func (lowering *lowering) phantomParts(proven *checker.Type) (*checker.Type, []*checker.Type) {
+	proven = lowering.concrete(proven)
 	if proven.Flags()&checker.TypeFlagsIntersection == 0 {
 		return nil, nil
 	}
@@ -38,19 +38,19 @@ func (l *lowering) phantomParts(proven *checker.Type) (*checker.Type, []*checker
 	return primitive, objects
 }
 
-func (l *lowering) phantomBase(proven *checker.Type) *checker.Type {
-	primitive, objects := l.phantomParts(proven)
+func (lowering *lowering) phantomBase(proven *checker.Type) *checker.Type {
+	primitive, objects := lowering.phantomParts(proven)
 	if primitive == nil {
 		return nil
 	}
 	for _, object := range objects {
-		if len(l.checker.GetSignaturesOfType(object, checker.SignatureKindCall)) != 0 ||
-			len(l.checker.GetSignaturesOfType(object, checker.SignatureKindConstruct)) != 0 ||
-			len(l.checker.GetIndexInfosOfType(object)) != 0 {
+		if len(lowering.checker.GetSignaturesOfType(object, checker.SignatureKindCall)) != 0 ||
+			len(lowering.checker.GetSignaturesOfType(object, checker.SignatureKindConstruct)) != 0 ||
+			len(lowering.checker.GetIndexInfosOfType(object)) != 0 {
 			return nil
 		}
-		for _, field := range l.checker.GetPropertiesOfType(object) {
-			if !l.phantomBrandMember(field) || primitiveMember(primitive.Flags(), field.Name) {
+		for _, field := range lowering.checker.GetPropertiesOfType(object) {
+			if !lowering.phantomBrandMember(field) || primitiveMember(primitive.Flags(), field.Name) {
 				return nil
 			}
 		}
@@ -61,8 +61,8 @@ func (l *lowering) phantomBase(proven *checker.Type) *checker.Type {
 // phantomBrandMember is the one test of a phantom brand member, for a primitive's brand (phantomBase) and
 // an object's (brandMintOf, a brand mint's cast) alike (#yth65gz, one proof): keyed by a name, never a
 // symbol (Nov 1), and typed so a read finds nothing there (phantomField).
-func (l *lowering) phantomBrandMember(field *ast.Symbol) bool {
-	return !checker.IsKnownSymbol(field) && phantomField(l.checker.GetTypeOfSymbol(field))
+func (lowering *lowering) phantomBrandMember(field *ast.Symbol) bool {
+	return !checker.IsKnownSymbol(field) && phantomField(lowering.checker.GetTypeOfSymbol(field))
 }
 
 // On a primitive the brand member is never present, so a read gives undefined on Node and natively.
@@ -113,8 +113,8 @@ func primitiveMember(flags checker.TypeFlags, name string) bool {
 	return flags&checker.TypeFlagsNumberLike != 0 && slices.Contains(phantomNumberNames, name)
 }
 
-func (l *lowering) phantomUndefined(proven *checker.Type) bool {
-	if base := l.phantomBase(proven); base != nil {
+func (lowering *lowering) phantomUndefined(proven *checker.Type) bool {
+	if base := lowering.phantomBase(proven); base != nil {
 		return base.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsUndefined) != 0
 	}
 	return false
@@ -122,19 +122,19 @@ func (l *lowering) phantomUndefined(proven *checker.Type) bool {
 
 // Branding may normalize a read contract without authorizing ordinary branded
 // function results or erasure. Those retain the base's separate representation proof.
-func (l *lowering) viewRepresentation(target *checker.Type) (ir.Type, bool) {
-	if base := l.phantomBase(target); base != nil {
-		return l.representation(base)
+func (lowering *lowering) viewRepresentation(target *checker.Type) (ir.Type, bool) {
+	if base := lowering.phantomBase(target); base != nil {
+		return lowering.representation(base)
 	}
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
 		members := make([]*checker.Type, 0, len(target.Types()))
 		for _, member := range target.Types() {
-			if base := l.phantomBase(member); base != nil {
+			if base := lowering.phantomBase(member); base != nil {
 				member = base
 			}
 			members = append(members, member)
 		}
-		return l.representation(l.checker.GetUnionType(members))
+		return lowering.representation(lowering.checker.GetUnionType(members))
 	}
-	return l.representation(target)
+	return lowering.representation(target)
 }

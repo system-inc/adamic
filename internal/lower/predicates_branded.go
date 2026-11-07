@@ -24,16 +24,16 @@ import (
 // symbol-keyed, phantom as phantomField judges a primitive brand's (void or undefined), so the two rules
 // can't drift when a brand is retyped: tsc's 36 are undefined since #ptd2v1r. A member typed any is never
 // a brand, since #bw3xg7c refuses any (Adamic's correction, #tmdhz1d).
-func (l *lowering) brandedSupertype(target *checker.Type) bool {
-	kind := l.checker.GetPropertyOfType(target, "kind")
-	if kind == nil || l.fieldLiteral(target, "kind") != nil {
+func (lowering *lowering) brandedSupertype(target *checker.Type) bool {
+	kind := lowering.checker.GetPropertyOfType(target, "kind")
+	if kind == nil || lowering.fieldLiteral(target, "kind") != nil {
 		return false
 	}
-	for _, property := range l.checker.GetPropertiesOfType(target) {
+	for _, property := range lowering.checker.GetPropertiesOfType(target) {
 		if property.Flags&ast.SymbolFlagsOptional != 0 || checker.IsKnownSymbol(property) {
 			continue
 		}
-		if phantomField(l.checker.GetTypeOfSymbol(property)) {
+		if phantomField(lowering.checker.GetTypeOfSymbol(property)) {
 			return true
 		}
 	}
@@ -48,13 +48,13 @@ type brandedViewKey struct{ source, target *checker.Type }
 // brandedSupertypeViews registers S's view once for each source the claim is made from, keeping the
 // error that stopped it: what a view vouches for through a wider type is what its source already held
 // (view_widened.go), so a source is part of the registration.
-func (l *lowering) brandedSupertypeViews(node *ast.Node, source, target *checker.Type) error {
-	proofs := l.proofs()
+func (lowering *lowering) brandedSupertypeViews(node *ast.Node, source, target *checker.Type) error {
+	proofs := lowering.proofs()
 	key := brandedViewKey{source, target}
 	if err, done := proofs.brandedViews[key]; done {
 		return predicateFailureCopy(err)
 	}
-	registerBrandedSupertypeViewsError := l.registerBrandedSupertypeViews(node, source, target)
+	registerBrandedSupertypeViewsError := lowering.registerBrandedSupertypeViews(node, source, target)
 	proofs.brandedViews[key] = registerBrandedSupertypeViewsError
 	return predicateFailureCopy(registerBrandedSupertypeViewsError)
 }
@@ -62,55 +62,55 @@ func (l *lowering) brandedSupertypeViews(node *ast.Node, source, target *checker
 // brandedMembership is whether target's membership check, as predicateMembership builds it, holds a
 // branded supertype's: through a union's members or an array's elements, it can't be negated. visited
 // ends a recursive alias, such as `type Nodes = Identifier | Nodes[]`, on its second visit.
-func (l *lowering) brandedMembership(target *checker.Type, visited map[*checker.Type]bool) bool {
-	target = l.concrete(target)
+func (lowering *lowering) brandedMembership(target *checker.Type, visited map[*checker.Type]bool) bool {
+	target = lowering.concrete(target)
 	if visited[target] {
 		return false
 	}
 	visited[target] = true
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range target.Types() {
-			if l.brandedMembership(member, visited) {
+			if lowering.brandedMembership(member, visited) {
 				return true
 			}
 		}
 		return false
 	}
-	if l.isArrayType(target) {
-		return l.brandedMembership(l.elementTypeOfArray(target), visited)
+	if lowering.isArrayType(target) {
+		return lowering.brandedMembership(lowering.elementTypeOfArray(target), visited)
 	}
 	return target.Flags()&checker.TypeFlagsObject != 0 &&
 		!isClassInstance(target) &&
-		l.fieldLiteral(target, "kind") == nil &&
-		l.brandedSupertype(target)
+		lowering.fieldLiteral(target, "kind") == nil &&
+		lowering.brandedSupertype(target)
 }
 
-func (l *lowering) registerBrandedSupertypeViews(node *ast.Node, source, target *checker.Type) error {
-	if classes := l.brandedClasses(target); len(classes) != 0 {
-		return l.notYet(node, "a checked predicate target "+
-			l.checker.TypeToString(target)+
+func (lowering *lowering) registerBrandedSupertypeViews(node *ast.Node, source, target *checker.Type) error {
+	if classes := lowering.brandedClasses(target); len(classes) != 0 {
+		return lowering.notYet(node, "a checked predicate target "+
+			lowering.checker.TypeToString(target)+
 			" that class "+
-			l.checker.TypeToString(classes[0])+
+			lowering.checker.TypeToString(classes[0])+
 			" is assignable to")
 	}
 	// The claim's source is what the view vouches for through a wider type, and the value enters the view
 	// wherever a read is narrowed to S, as a tag-proven predicate's view does (view_widened.go).
-	if _, viewError := l.view(node, nil, source, target); viewError != nil {
+	if _, viewError := lowering.view(node, nil, source, target); viewError != nil {
 		return viewError
 	}
-	l.viewSources[len(l.viewSources)-1].narrows = true
+	lowering.viewSources[len(lowering.viewSources)-1].narrows = true
 	return nil
 }
 
 // brandedClasses is every class the program declares whose instances are assignable to target, found once.
-func (l *lowering) brandedClasses(target *checker.Type) []*checker.Type {
-	proofs := l.proofs()
+func (lowering *lowering) brandedClasses(target *checker.Type) []*checker.Type {
+	proofs := lowering.proofs()
 	if classes, found := proofs.brandedClasses[target]; found {
 		return classes
 	}
 	classes := []*checker.Type{}
-	for _, class := range l.declaredClasses() {
-		if l.checker.IsTypeAssignableTo(class, target) {
+	for _, class := range lowering.declaredClasses() {
+		if lowering.checker.IsTypeAssignableTo(class, target) {
 			classes = append(classes, class)
 		}
 	}
@@ -128,7 +128,7 @@ func (l *lowering) brandedClasses(target *checker.Type) []*checker.Type {
 // generic arrow, method or function expression: those are lowered with scope, and a generic one's own
 // type parameters have no instance door, so they stay unmapped and its claims over them are NotYet
 // (Lower, Nov 1).
-func (l *lowering) judgeBrandedCalls(scope *ast.Node) error {
+func (lowering *lowering) judgeBrandedCalls(scope *ast.Node) error {
 	var found error
 	var visit ast.Visitor
 	visit = func(n *ast.Node) bool {
@@ -141,7 +141,7 @@ func (l *lowering) judgeBrandedCalls(scope *ast.Node) error {
 			return false
 		}
 		if n.Kind == ast.KindCallExpression {
-			if brandedCallError := l.brandedCall(n); brandedCallError != nil {
+			if brandedCallError := lowering.brandedCall(n); brandedCallError != nil {
 				found = brandedCallError
 				return true
 			}
@@ -157,15 +157,15 @@ func (l *lowering) judgeBrandedCalls(scope *ast.Node) error {
 // key are one instance, whose body is lowered once, so judging the request is judging that body, and a
 // body shared by requests that differ, an unread parameter's, is judged with that parameter unmapped.
 // TestBrandedRequestHoldsEveryInstanceDoor holds every write to the instance tables to a call of this.
-func (l *lowering) brandedRequest(key string, declaration *ast.Node, mapper *typeMapper) error {
-	proofs := l.proofs()
+func (lowering *lowering) brandedRequest(key string, declaration *ast.Node, mapper *typeMapper) error {
+	proofs := lowering.proofs()
 	if verdict, judged := proofs.brandedRequests[key]; judged {
 		return predicateFailureCopy(verdict)
 	}
-	outer := l.typeMapper
-	l.typeMapper = mapper
-	verdict := l.judgeBrandedCalls(declaration)
-	l.typeMapper = outer
+	outer := lowering.typeMapper
+	lowering.typeMapper = mapper
+	verdict := lowering.judgeBrandedCalls(declaration)
+	lowering.typeMapper = outer
 	proofs.brandedRequests[key] = verdict
 	return predicateFailureCopy(verdict)
 }
@@ -178,41 +178,41 @@ func (l *lowering) brandedRequest(key string, declaration *ast.Node, mapper *typ
 // is spread or missing, is NotYet, since no argument node says what the checker narrowed. So is a claim
 // over a type parameter the body is lowered without knowing, an unread one or a generic arrow's own: the
 // instance a call claims is then unknown, and every instance shares the one body (Adamic's ruling, Nov 1).
-func (l *lowering) brandedCall(call *ast.Node) error {
-	signature := l.checker.GetResolvedSignature(call)
+func (lowering *lowering) brandedCall(call *ast.Node) error {
+	signature := lowering.checker.GetResolvedSignature(call)
 	if signature == nil {
 		return nil
 	}
-	claim := predicateOfSignature(l.checker, signature)
+	claim := predicateOfSignature(lowering.checker, signature)
 	if claim == nil || claim.Type() == nil {
 		return nil
 	}
-	if parameter := l.unknownInstance(l.concrete(claim.Type())); parameter != nil {
-		return l.notYet(call, "a checked predicate claim of "+
-			l.checker.TypeToString(l.concrete(claim.Type()))+
+	if parameter := lowering.unknownInstance(lowering.concrete(claim.Type())); parameter != nil {
+		return lowering.notYet(call, "a checked predicate claim of "+
+			lowering.checker.TypeToString(lowering.concrete(claim.Type()))+
 			", over "+
-			l.checker.TypeToString(parameter)+
+			lowering.checker.TypeToString(parameter)+
 			", which this body is lowered without knowing")
 	}
-	if !l.brandedMembership(claim.Type(), map[*checker.Type]bool{}) {
+	if !lowering.brandedMembership(claim.Type(), map[*checker.Type]bool{}) {
 		return nil
 	}
-	target := l.checker.TypeToString(l.concrete(claim.Type()))
+	target := lowering.checker.TypeToString(lowering.concrete(claim.Type()))
 	if claim.Kind() != checker.TypePredicateKindIdentifier &&
 		claim.Kind() != checker.TypePredicateKindAssertsIdentifier {
-		return l.notYet(call, "a checked predicate target "+target+" claimed of this")
+		return lowering.notYet(call, "a checked predicate target "+target+" claimed of this")
 	}
 	index := int(claim.ParameterIndex())
 	arguments := call.AsCallExpression().Arguments.Nodes
 	if index < 0 || index >= len(arguments) {
-		return l.notYet(call, "a checked predicate target "+target+" claimed of a missing argument")
+		return lowering.notYet(call, "a checked predicate target "+target+" claimed of a missing argument")
 	}
 	for _, argument := range arguments[:index+1] {
 		if argument.Kind == ast.KindSpreadElement {
-			return l.notYet(call, "a checked predicate target "+target+" claimed of a spread argument")
+			return lowering.notYet(call, "a checked predicate target "+target+" claimed of a spread argument")
 		}
 	}
-	return l.brandedNarrowing(call, arguments[index], claim.Type())
+	return lowering.brandedNarrowing(call, arguments[index], claim.Type())
 }
 
 // unknownInstance is a type parameter claim still holds once concreted, which the body it's judged in
@@ -220,8 +220,8 @@ func (l *lowering) brandedCall(call *ast.Node) error {
 // holds only primitives can never be a branded supertype, an object, so it isn't one. A type parameter
 // anywhere else, inside a reference or an alias, counts whatever its constraint, since Tagged<U> with
 // U extends number is S when S is Tagged<number> (Compiler's must on 810ce7d9).
-func (l *lowering) unknownInstance(claim *checker.Type) *checker.Type {
-	if !l.mentionsTypeParameter(claim, map[*checker.Type]bool{}) {
+func (lowering *lowering) unknownInstance(claim *checker.Type) *checker.Type {
+	if !lowering.mentionsTypeParameter(claim, map[*checker.Type]bool{}) {
 		return nil
 	}
 	members := []*checker.Type{claim}
@@ -232,7 +232,7 @@ func (l *lowering) unknownInstance(claim *checker.Type) *checker.Type {
 		if member.Flags()&checker.TypeFlagsTypeParameter == 0 {
 			return claim
 		}
-		constraint := l.checker.GetBaseConstraintOfType(member)
+		constraint := lowering.checker.GetBaseConstraintOfType(member)
 		if constraint == nil || !predicatePrimitiveTarget(constraint) {
 			return member
 		}
@@ -246,7 +246,7 @@ func (l *lowering) unknownInstance(claim *checker.Type) *checker.Type {
 // no read of the argument, which brandedNarrowing takes as unknown: the narrowing can reach past the
 // region, after an if whose else returns, or after the block an assertion ends, so a region with no read
 // says nothing about the reads the narrowing gives.
-func (l *lowering) brandedNarrowedRead(call, argument *ast.Node) *checker.Type {
+func (lowering *lowering) brandedNarrowedRead(call, argument *ast.Node) *checker.Type {
 	var regions []*ast.Node
 	negated := false
 	node := call
@@ -306,8 +306,8 @@ func (l *lowering) brandedNarrowedRead(call, argument *ast.Node) *checker.Type {
 		}
 		if (n.Kind == ast.KindIdentifier ||
 			n.Kind == ast.KindPropertyAccessExpression ||
-			n.Kind == ast.KindThisKeyword) && predicateMatchingReference(l.checker, argument, n) {
-			found = l.checker.GetTypeAtLocation(n)
+			n.Kind == ast.KindThisKeyword) && predicateMatchingReference(lowering.checker, argument, n) {
+			found = lowering.checker.GetTypeAtLocation(n)
 			return true
 		}
 		return n.ForEachChild(visit)
@@ -328,12 +328,12 @@ func (l *lowering) brandedNarrowedRead(call, argument *ast.Node) *checker.Type {
 // view is registered for otherwise, so judging either by assignability would admit a lie read raw. A
 // branded supertype inside an array target is NotYet, since its elements narrow by the same rule with no
 // call to judge at.
-func (l *lowering) brandedNarrowing(node, argument *ast.Node, claim *checker.Type) error {
+func (lowering *lowering) brandedNarrowing(node, argument *ast.Node, claim *checker.Type) error {
 	// An argument already of the claim's own type narrows to itself, as tsc's `some(array)` claiming
 	// `readonly T[]` of a `readonly T[]` does, whatever T is instantiated at: the result adds no member or
 	// layout the argument didn't give, so there's nothing for a view to check, and it lowers as main does
 	// (Adamic's ruling on 9e4f2184's census, core.ts:1203).
-	if l.checker.GetTypeAtLocation(argument).Id() == claim.Id() {
+	if lowering.checker.GetTypeAtLocation(argument).Id() == claim.Id() {
 		return nil
 	}
 	targets := []*checker.Type{claim}
@@ -352,50 +352,50 @@ func (l *lowering) brandedNarrowing(node, argument *ast.Node, claim *checker.Typ
 	// tryCast and cast read their value, stands too (brandedIntersection). An instance that's a union or an
 	// array narrows its members or elements by rules this read doesn't see, and no read found says nothing,
 	// so both are NotYet.
-	if declared := l.checker.GetTypeAtLocation(
+	if declared := lowering.checker.GetTypeAtLocation(
 		argument,
-	); l.concrete(declared) != declared || l.mentionsTypeParameter(declared, map[*checker.Type]bool{}) {
-		instance := l.concrete(claim)
-		narrowed := l.brandedNarrowedRead(node, argument)
+	); lowering.concrete(declared) != declared || lowering.mentionsTypeParameter(declared, map[*checker.Type]bool{}) {
+		instance := lowering.concrete(claim)
+		narrowed := lowering.brandedNarrowedRead(node, argument)
 		if narrowed == nil {
-			return l.notYet(node, "a checked predicate target "+
-				l.checker.TypeToString(instance)+
+			return lowering.notYet(node, "a checked predicate target "+
+				lowering.checker.TypeToString(instance)+
 				" over a generic argument "+
-				l.checker.TypeToString(declared)+
+				lowering.checker.TypeToString(declared)+
 				", with no read of it on the true side")
 		}
-		read := l.concrete(narrowed)
-		if (read.Id() == instance.Id() || l.brandedIntersection(read, instance)) &&
+		read := lowering.concrete(narrowed)
+		if (read.Id() == instance.Id() || lowering.brandedIntersection(read, instance)) &&
 			instance.Flags()&checker.TypeFlagsUnion == 0 &&
-			!l.isArrayType(instance) {
+			!lowering.isArrayType(instance) {
 			return nil
 		}
-		return l.notYet(node, "a checked predicate target "+
-			l.checker.TypeToString(instance)+
+		return lowering.notYet(node, "a checked predicate target "+
+			lowering.checker.TypeToString(instance)+
 			" over a generic argument "+
-			l.checker.TypeToString(declared)+
+			lowering.checker.TypeToString(declared)+
 			", read on the true side as "+
-			l.checker.TypeToString(read))
+			lowering.checker.TypeToString(read))
 	}
-	claim = l.concrete(claim)
-	source := l.concrete(l.checker.GetTypeAtLocation(argument))
+	claim = lowering.concrete(claim)
+	source := lowering.concrete(lowering.checker.GetTypeAtLocation(argument))
 	members := []*checker.Type{source}
 	if source.Flags()&checker.TypeFlagsUnion != 0 {
 		members = source.Types()
 	}
 	for _, target := range targets {
-		if !l.brandedMembership(target, map[*checker.Type]bool{}) {
+		if !lowering.brandedMembership(target, map[*checker.Type]bool{}) {
 			continue
 		}
-		if l.isArrayType(target) || target.Flags()&checker.TypeFlagsUnion != 0 {
-			return l.notYet(node, "a branded supertype inside a checked predicate's array target")
+		if lowering.isArrayType(target) || target.Flags()&checker.TypeFlagsUnion != 0 {
+			return lowering.notYet(node, "a branded supertype inside a checked predicate's array target")
 		}
 		for _, member := range members {
-			if !l.checker.IsTypeAssignableTo(target, member) {
-				return l.notYet(node, "a checked predicate target "+
-					l.checker.TypeToString(target)+
+			if !lowering.checker.IsTypeAssignableTo(target, member) {
+				return lowering.notYet(node, "a checked predicate target "+
+					lowering.checker.TypeToString(target)+
 					" that narrows "+
-					l.checker.TypeToString(member)+
+					lowering.checker.TypeToString(member)+
 					", which isn't its supertype")
 			}
 		}
@@ -413,7 +413,7 @@ func (l *lowering) brandedNarrowing(node, argument *ast.Node, claim *checker.Typ
 // A member typed any or unknown adds nothing. A member that's still a type parameter, one the body is
 // lowered without mapping, or anything else, is no supertype, so the read stays NotYet. And a member
 // must hold only target's fields (brandedSupertypeMember), or the premise fails.
-func (l *lowering) brandedIntersection(read, target *checker.Type) bool {
+func (lowering *lowering) brandedIntersection(read, target *checker.Type) bool {
 	if read.Flags()&checker.TypeFlagsIntersection == 0 {
 		return false
 	}
@@ -423,7 +423,8 @@ func (l *lowering) brandedIntersection(read, target *checker.Type) bool {
 		case member.Id() == target.Id():
 			found = true
 		case member.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown) != 0:
-		case l.mentionsTypeParameter(member, map[*checker.Type]bool{}) || !l.brandedSupertypeMember(member, target):
+		case lowering.mentionsTypeParameter(member, map[*checker.Type]bool{}) ||
+			!lowering.brandedSupertypeMember(member, target):
 			return false
 		}
 	}
@@ -438,17 +439,20 @@ func (l *lowering) brandedIntersection(read, target *checker.Type) bool {
 // read raw, unchecked, where 021e43f3 lowered it (Lower's must, ruled (a) by Compiler, Lower and
 // Language, Nov 2). A member with an index signature, or a call or construct signature, never counts:
 // neither is a property, and either could route a read through target's id raw (Compiler, Nov 2).
-func (l *lowering) brandedSupertypeMember(member, target *checker.Type) bool {
-	if !l.checker.IsTypeAssignableTo(target, member) ||
-		len(l.checker.GetIndexInfosOfType(member)) != 0 ||
-		len(l.checker.GetSignaturesOfType(member, checker.SignatureKindCall)) != 0 ||
-		len(l.checker.GetSignaturesOfType(member, checker.SignatureKindConstruct)) != 0 {
+func (lowering *lowering) brandedSupertypeMember(member, target *checker.Type) bool {
+	if !lowering.checker.IsTypeAssignableTo(target, member) ||
+		len(lowering.checker.GetIndexInfosOfType(member)) != 0 ||
+		len(lowering.checker.GetSignaturesOfType(member, checker.SignatureKindCall)) != 0 ||
+		len(lowering.checker.GetSignaturesOfType(member, checker.SignatureKindConstruct)) != 0 {
 		return false
 	}
-	for _, property := range l.checker.GetPropertiesOfType(member) {
-		own := l.checker.GetPropertyOfType(target, property.Name)
+	for _, property := range lowering.checker.GetPropertiesOfType(member) {
+		own := lowering.checker.GetPropertyOfType(target, property.Name)
 		if own == nil ||
-			!l.checker.IsTypeAssignableTo(l.checker.GetTypeOfSymbol(own), l.checker.GetTypeOfSymbol(property)) {
+			!lowering.checker.IsTypeAssignableTo(
+				lowering.checker.GetTypeOfSymbol(own),
+				lowering.checker.GetTypeOfSymbol(property),
+			) {
 			return false
 		}
 	}
@@ -462,16 +466,16 @@ func (l *lowering) brandedSupertypeMember(member, target *checker.Type) bool {
 // that may hold a checked view's value (view_widened.go, probed on Golem, Nov 1). brandedIntersection is
 // what makes it S's (Adamic's ruling, Nov 1). Only reads take it (viewReadReceiverTypeID); a write keeps
 // the intersection's own id.
-func (l *lowering) brandedIntersectionReceiver(receiver *checker.Type) *checker.Type {
+func (lowering *lowering) brandedIntersectionReceiver(receiver *checker.Type) *checker.Type {
 	if receiver.Flags()&checker.TypeFlagsIntersection == 0 {
 		return receiver
 	}
 	for _, member := range receiver.Types() {
 		if member.Flags()&checker.TypeFlagsObject != 0 &&
 			!isClassInstance(member) &&
-			l.fieldLiteral(member, "kind") == nil &&
-			l.brandedSupertype(member) &&
-			l.brandedIntersection(receiver, member) {
+			lowering.fieldLiteral(member, "kind") == nil &&
+			lowering.brandedSupertype(member) &&
+			lowering.brandedIntersection(receiver, member) {
 			return member
 		}
 	}
@@ -481,7 +485,7 @@ func (l *lowering) brandedIntersectionReceiver(receiver *checker.Type) *checker.
 // mentionsTypeParameter is whether t is instantiable, or names an instantiable type through a union's or
 // intersection's members, its alias's type arguments, or a reference's type arguments, as Readonly<T>
 // and Holder<K> do. visited ends a recursive type on its second visit.
-func (l *lowering) mentionsTypeParameter(t *checker.Type, visited map[*checker.Type]bool) bool {
+func (lowering *lowering) mentionsTypeParameter(t *checker.Type, visited map[*checker.Type]bool) bool {
 	if visited[t] {
 		return false
 	}
@@ -497,10 +501,10 @@ func (l *lowering) mentionsTypeParameter(t *checker.Type, visited map[*checker.T
 		parts = append(parts, alias.TypeArguments()...)
 	}
 	if t.Flags()&checker.TypeFlagsObject != 0 && t.ObjectFlags()&checker.ObjectFlagsReference != 0 {
-		parts = append(parts, l.checker.GetTypeArguments(t)...)
+		parts = append(parts, lowering.checker.GetTypeArguments(t)...)
 	}
 	for _, part := range parts {
-		if l.mentionsTypeParameter(part, visited) {
+		if lowering.mentionsTypeParameter(part, visited) {
 			return true
 		}
 	}
@@ -511,8 +515,8 @@ func (l *lowering) mentionsTypeParameter(t *checker.Type, visited map[*checker.T
 // function's local ones included, as its instance type, found once. A class expression has no pin: on
 // main every one panics in the namespace walks (namespaces.go:271, namespaces_call_graph.go:84) before
 // this runs, which is Lower's #nkxtfkq, so it's here to fail closed once that's fixed.
-func (l *lowering) declaredClasses() []*checker.Type {
-	proofs := l.proofs()
+func (lowering *lowering) declaredClasses() []*checker.Type {
+	proofs := lowering.proofs()
 	if proofs.classes != nil {
 		return proofs.classes
 	}
@@ -521,8 +525,8 @@ func (l *lowering) declaredClasses() []*checker.Type {
 	var visit ast.Visitor
 	visit = func(n *ast.Node) bool {
 		if n.Kind == ast.KindClassDeclaration || n.Kind == ast.KindClassExpression {
-			if symbol := l.checker.GetSymbolOfDeclaration(n); symbol != nil {
-				if declared := l.checker.GetDeclaredTypeOfSymbol(symbol); declared != nil && !seen[declared] {
+			if symbol := lowering.checker.GetSymbolOfDeclaration(n); symbol != nil {
+				if declared := lowering.checker.GetDeclaredTypeOfSymbol(symbol); declared != nil && !seen[declared] {
 					seen[declared] = true
 					proofs.classes = append(proofs.classes, declared)
 				}
@@ -531,7 +535,7 @@ func (l *lowering) declaredClasses() []*checker.Type {
 		n.ForEachChild(visit)
 		return false
 	}
-	for _, file := range l.programFiles() {
+	for _, file := range lowering.programFiles() {
 		file.AsNode().ForEachChild(visit)
 	}
 	return proofs.classes
@@ -540,8 +544,8 @@ func (l *lowering) declaredClasses() []*checker.Type {
 // programFiles is the program's files, its roots and every file they import or export from, found once.
 // It follows type-only imports too, which fails closed: a class declared only there makes no instance.
 // The library and the prelude declare no class a branded supertype's view would read.
-func (l *lowering) programFiles() []*ast.SourceFile {
-	proofs := l.proofs()
+func (lowering *lowering) programFiles() []*ast.SourceFile {
+	proofs := lowering.proofs()
 	if proofs.files != nil {
 		return proofs.files
 	}
@@ -567,14 +571,14 @@ func (l *lowering) programFiles() []*ast.SourceFile {
 			if specifier == nil {
 				continue
 			}
-			if target := l.checker.GetSymbolAtLocation(
+			if target := lowering.checker.GetSymbolAtLocation(
 				specifier,
 			); target != nil && len(target.Declarations) > 0 && target.Declarations[0].Kind == ast.KindSourceFile {
 				visit(target.Declarations[0].AsSourceFile())
 			}
 		}
 	}
-	for _, file := range l.program.Files() {
+	for _, file := range lowering.program.Files() {
 		visit(file)
 	}
 	return proofs.files

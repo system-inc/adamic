@@ -9,12 +9,16 @@ import (
 // Intrinsic callers provide element, index and array slots in their own storage.
 // Capture the callback once and adapt those slots before invoking its signature.
 // The adapter is ordinary IR, including every box and its ownership.
-func (l *lowering) adaptArrayCallback(node *ast.Node, callback ir.Expression, supplied []ir.Type) (ir.Expression, int, error) {
+func (lowering *lowering) adaptArrayCallback(
+	node *ast.Node,
+	callback ir.Expression,
+	supplied []ir.Type,
+) (ir.Expression, int, error) {
 	// Generic function values use the signature inferred for this operand's
 	// concrete callback slot, the same signature used to lower their closure.
-	proven := l.contextualGenericType(node, l.checker.GetTypeAtLocation(node))
-	kind := int(l.concrete(proven).Id())
-	signatures := l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)
+	proven := lowering.contextualGenericType(node, lowering.checker.GetTypeAtLocation(node))
+	kind := int(lowering.concrete(proven).Id())
+	signatures := lowering.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)
 	if len(signatures) != 1 {
 		return callback, kind, nil
 	}
@@ -22,8 +26,11 @@ func (l *lowering) adaptArrayCallback(node *ast.Node, callback ir.Expression, su
 	// A nullable reference uses NULL in its source storage. A boxed union
 	// instead distinguishes the immortal null token from undefined (NULL).
 	var incoming []*ast.Symbol
-	if contextual := l.slotType(node); contextual != nil {
-		if source := l.checker.GetSignaturesOfType(l.concrete(contextual), checker.SignatureKindCall); len(source) == 1 {
+	if contextual := lowering.slotType(node); contextual != nil {
+		if source := lowering.checker.GetSignaturesOfType(
+			lowering.concrete(contextual),
+			checker.SignatureKindCall,
+		); len(source) == 1 {
 			incoming = source[0].Parameters()
 		}
 	}
@@ -35,34 +42,54 @@ func (l *lowering) adaptArrayCallback(node *ast.Node, callback ir.Expression, su
 			break
 		}
 		parameter := parameters[min(index, len(parameters)-1)]
-		rest := len(parameter.Declarations) > 0 && parameter.Declarations[0].Kind == ast.KindParameter && parameter.Declarations[0].AsParameterDeclaration().DotDotDotToken != nil
+		rest := len(parameter.Declarations) > 0 &&
+			parameter.Declarations[0].Kind == ast.KindParameter &&
+			parameter.Declarations[0].AsParameterDeclaration().DotDotDotToken != nil
 		if !rest && index >= len(parameters) {
 			break
 		}
-		target := l.concrete(l.checker.GetTypeOfSymbol(parameter))
+		target := lowering.concrete(lowering.checker.GetTypeOfSymbol(parameter))
 		if rest {
-			target = l.elementTypeOfArray(target)
+			target = lowering.elementTypeOfArray(target)
 		}
 		if target == nil {
-			return nil, 0, l.notYet(node, "an intrinsic callback with an unknown rest element representation")
+			return nil, 0, lowering.notYet(node, "an intrinsic callback with an unknown rest element representation")
 		}
-		of, known := l.representation(target)
+		of, known := lowering.representation(target)
 		if !known {
-			return nil, 0, l.notYet(node, "an intrinsic callback parameter "+parameter.Name+" with an unknown representation")
+			return nil, 0, lowering.notYet(
+				node,
+				"an intrinsic callback parameter "+parameter.Name+" with an unknown representation",
+			)
 		}
-		if !rest && len(parameter.Declarations) > 0 && parameter.Declarations[0].Kind == ast.KindParameter && parameter.Declarations[0].AsParameterDeclaration().Initializer != nil {
+		if !rest &&
+			len(parameter.Declarations) > 0 &&
+			parameter.Declarations[0].Kind == ast.KindParameter &&
+			parameter.Declarations[0].AsParameterDeclaration().Initializer != nil {
 			of = ir.Maybe(of)
 		}
 		if fit(ir.Read{Of: given}, of).Type() != of {
 			source := typeName(given)
 			if index < len(incoming) {
-				source = l.checker.TypeToString(l.concrete(l.checker.GetTypeOfSymbol(incoming[index])))
+				source = lowering.checker.TypeToString(
+					lowering.concrete(lowering.checker.GetTypeOfSymbol(incoming[index])),
+				)
 			}
-			return nil, 0, &Refused{Where: l.program.Where(node), What: "an intrinsic callback parameter " + parameter.Name + " of type " + l.checker.TypeToString(target) + " receiving array element type " + source + " without a representation adapter", Fix: "annotate parameter " + parameter.Name + " as the element type " + source}
+			return nil, 0, &Refused{
+				Where: lowering.program.Where(node),
+				What: "an intrinsic callback parameter " +
+					parameter.Name +
+					" of type " +
+					lowering.checker.TypeToString(target) +
+					" receiving array element type " +
+					source +
+					" without a representation adapter",
+				Fix: "annotate parameter " + parameter.Name + " as the element type " + source,
+			}
 		}
 		if given.IsReference() && given != ir.Union && of == ir.Union && index < len(incoming) {
-			source := l.concrete(l.checker.GetTypeOfSymbol(incoming[index]))
-			nullable[index] = l.includesNull(source) && !l.includesUndefined(source)
+			source := lowering.concrete(lowering.checker.GetTypeOfSymbol(incoming[index]))
+			nullable[index] = lowering.includesNull(source) && !lowering.includesUndefined(source)
 		}
 		takes[index] = of
 		changed = changed || given != of
@@ -74,31 +101,52 @@ func (l *lowering) adaptArrayCallback(node *ast.Node, callback ir.Expression, su
 	// function returning a reference or a number, which the adapter's own Returns couldn't say, so
 	// the call inside lets go of what comes back by the closure's own discard (ir.Discard).
 	var returns ir.Type
-	if result := l.concrete(l.checker.GetReturnTypeOfSignature(signatures[0])); result.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 {
+	if result := lowering.concrete(
+		lowering.checker.GetReturnTypeOfSignature(signatures[0]),
+	); result.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 {
 		var known bool
-		if returns, known = l.representation(result); !known {
-			return nil, 0, l.notYet(node, "an intrinsic callback with an unknown result representation")
+		if returns, known = lowering.representation(result); !known {
+			return nil, 0, lowering.notYet(node, "an intrinsic callback with an unknown result representation")
 		}
 	}
-	captured := len(l.result.Locals)
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: "intrinsic_callback", Type: ir.Closure, Function: l.functionIndex, Captured: true})
-	index := len(l.result.Functions)
-	function := ir.Function{Name: "array_callback_adapter", Closure: true, Environment: []int{captured}, Returns: returns}
+	captured := len(lowering.result.Locals)
+	lowering.result.Locals = append(
+		lowering.result.Locals,
+		ir.Local{Name: "intrinsic_callback", Type: ir.Closure, Function: lowering.functionIndex, Captured: true},
+	)
+	index := len(lowering.result.Functions)
+	function := ir.Function{
+		Name:        "array_callback_adapter",
+		Closure:     true,
+		Environment: []int{captured},
+		Returns:     returns,
+	}
 	arguments := []ir.Expression{}
 	for position, of := range supplied {
-		local := len(l.result.Locals)
-		l.result.Locals = append(l.result.Locals, ir.Local{Name: "argument", Type: of, Function: index})
+		local := len(lowering.result.Locals)
+		lowering.result.Locals = append(lowering.result.Locals, ir.Local{Name: "argument", Type: of, Function: index})
 		function.Parameters = append(function.Parameters, local)
-		arguments = append(arguments, fitCallbackArgument(ir.Read{Local: local, Of: of}, takes[position], nullable[position]))
+		arguments = append(
+			arguments,
+			fitCallbackArgument(ir.Read{Local: local, Of: of}, takes[position], nullable[position]),
+		)
 	}
-	call := ir.CallClosure{Closure: ir.Read{Local: captured, Of: ir.Closure}, Arguments: arguments, FunctionType: kind, Returns: returns}
+	call := ir.CallClosure{
+		Closure:      ir.Read{Local: captured, Of: ir.Closure},
+		Arguments:    arguments,
+		FunctionType: kind,
+		Returns:      returns,
+	}
 	if returns == 0 {
 		function.Body = []ir.Statement{ir.Evaluate{Value: call}, ir.Return{}}
 	} else {
 		function.Body = []ir.Statement{ir.Return{Value: call}}
 	}
-	l.result.Functions = append(l.result.Functions, function)
-	return ir.Effects{Body: []ir.Statement{ir.Declare{Local: captured, Value: callback}}, Result: ir.MakeClosure{Function: index}}, 0, nil
+	lowering.result.Functions = append(lowering.result.Functions, function)
+	return ir.Effects{
+		Body:   []ir.Statement{ir.Declare{Local: captured, Value: callback}},
+		Result: ir.MakeClosure{Function: index},
+	}, 0, nil
 }
 
 // Preserve a source nullable-reference protocol when fitting a boxed parameter.
@@ -106,7 +154,12 @@ func (l *lowering) adaptArrayCallback(node *ast.Node, callback ir.Expression, su
 func fitCallbackArgument(value ir.Expression, to ir.Type, nullPointer bool) ir.Expression {
 	fitted := fit(value, to)
 	if nullPointer {
-		return ir.Conditional{Condition: ir.Truthy{Value: value}, WhenTrue: fitted, WhenNot: ir.Box{Value: ir.Null{Of: value.Type()}}, Of: ir.Union}
+		return ir.Conditional{
+			Condition: ir.Truthy{Value: value},
+			WhenTrue:  fitted,
+			WhenNot:   ir.Box{Value: ir.Null{Of: value.Type()}},
+			Of:        ir.Union,
+		}
 	}
 	return fitted
 }

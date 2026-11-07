@@ -14,7 +14,7 @@ type ObjectCall struct {
 	ElementName string
 }
 
-func (c ObjectCall) Type() Type { return c.Returns }
+func (call ObjectCall) Type() Type { return call.Returns }
 
 // FrozenWriteMayThrow says a node can throw Node's TypeError because it writes an object that may be
 // frozen (runtime/library_object.c's adamic_object_check_write sets it on the pending word): in a
@@ -22,8 +22,8 @@ func (c ObjectCall) Type() Type { return c.Returns }
 // private, and Object.assign. Which objects a freeze reaches isn't known across aliases and calls, so
 // in such a program every write can; in one without, none does. Lowering counts the nodes that can,
 // the flow graph gives them an exception edge, and the emitter tests the word after each check.
-func (p *Program) FrozenWriteMayThrow(node any) bool {
-	if !p.ObjectsMayFreeze {
+func (program *Program) FrozenWriteMayThrow(node any) bool {
+	if !program.ObjectsMayFreeze {
 		return false
 	}
 	switch node := node.(type) {

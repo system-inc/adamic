@@ -13,8 +13,8 @@ type NotYet struct {
 	What  string
 }
 
-func (n *NotYet) Error() string {
-	return fmt.Sprintf("%s: stage 0 can't lower %s yet", n.Where, n.What)
+func (notYet *NotYet) Error() string {
+	return fmt.Sprintf("%s: stage 0 can't lower %s yet", notYet.Where, notYet.What)
 }
 
 // Refused is something Adamic 0.1 doesn't allow at all (docs/0.1.md), as opposed to something stage 0
@@ -30,12 +30,12 @@ type Refused struct {
 	Fix      string
 }
 
-func (r *Refused) Error() string {
-	return fmt.Sprintf("%s: Adamic 0.1 refuses %s; %s", r.Where, r.What, r.Fix)
+func (refused *Refused) Error() string {
+	return fmt.Sprintf("%s: Adamic 0.1 refuses %s; %s", refused.Where, refused.What, refused.Fix)
 }
 
-func (l *lowering) notYet(node *ast.Node, what string) error {
-	return &NotYet{Where: l.program.Where(node), What: what}
+func (lowering *lowering) notYet(node *ast.Node, what string) error {
+	return &NotYet{Where: lowering.program.Where(node), What: what}
 }
 
 // describe names a node's kind for a person: "a VariableStatement", "an ImportDeclaration".
