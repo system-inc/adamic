@@ -1,0 +1,708 @@
+{
+  "typescript": "6.0.3",
+  "storage": [
+    {
+      "line": 258,
+      "text": "pollScheduled: boolean;",
+      "owner": "createDynamicPriorityPollingWatchFile",
+      "ownerStart": 251,
+      "ownerEnd": 386
+    },
+    {
+      "line": 470,
+      "text": "pollScheduled: any",
+      "owner": "createFixedChunkSizePollingWatchFile",
+      "ownerStart": 464,
+      "ownerEnd": 499
+    }
+  ],
+  "staticCjsLiteralMatches": [],
+  "staticImportedJsonFiles": [
+    "stage3/adapt/30-indexed-reads/sites.json",
+    "stage3/adapt/40-explicit-any/class-rules.json",
+    "stage3/adapt/30-indexed-reads/getownvalues-owners.json",
+    "stage3/adapt/30-indexed-reads/whole-sites.json",
+    "stage3/adapt/31-indexed-reads-checker/sites.json",
+    "stage3/adapt/32-indexed-reads-program/sites.json",
+    "stage3/adapt/32-indexed-reads-program/closure-sites.json",
+    "stage3/adapt/32-indexed-reads-program/public-host-sites.json",
+    "stage3/adapt/32-indexed-reads-program/handoff-guards.json",
+    "stage3/adapt/32-indexed-reads-program/public-host-guards.json",
+    "stage3/adapt/32-indexed-reads-program/handoff-sites.json",
+    "stage3/adapt/32-indexed-reads-program/maybebind-sites.json",
+    "stage3/adapt/32-indexed-reads-program/nonempty-endings.json",
+    "stage3/adapt/32-indexed-reads-program/record-tables-owners.json",
+    "stage3/adapt/32-indexed-reads-program/watch-protocol.json",
+    "stage3/adapt/33-indexed-reads-emit/sites.json",
+    "stage3/adapt/33-indexed-reads-emit/required-values.json",
+    "stage3/adapt/33-indexed-reads-emit/files.json",
+    "stage3/adapt/33-indexed-reads-emit/type-edits.json",
+    "stage3/adapt/40-explicit-any/diagnostic-declarations.json",
+    "stage3/adapt/40-explicit-any/hasproperty-owner.json",
+    "stage3/adapt/41-explicit-any-remaining/rules.json",
+    "stage3/adapt/43-any-returns/rules.json",
+    "stage3/adapt/44-config-generics/rules.json",
+    "stage3/adapt/44-config-generics/predicate.json",
+    "stage3/adapt/52-json-values/rules.json",
+    "stage3/adapt/52-json-values/api-sanctions.json",
+    "stage3/adapt/71-writable-views/parameters.json",
+    "stage3/adapt/71-writable-views/diagnostics.json",
+    "stage3/adapt/71-writable-views/tuples.json",
+    "stage3/adapt/71-writable-views/empty-arrays.json",
+    "stage3/adapt/90-void-widening/targets.json",
+    "stage3/adapt/91-patcher-discard/proofs/targets.json",
+    "stage3/adapt/92-tty-host-results/proofs/targets.json",
+    "stage3/adapt/93-builtin-imports/proofs/targets.json",
+    "stage3/adapt/94-correctness-multimap/pin.json",
+    "stage3/adapt/95-checker-axolotl-a/sites.json",
+    "stage3/adapt/95-checker-axolotl-b/sites.json",
+    "stage3/adapt/95-checker-axolotl-c/sites.json",
+    "stage3/adapt/95-checker-axolotl-e/sites.json",
+    "stage3/adapt/95-checker-axolotl-f/sites.json",
+    "stage3/adapt/95-checker-axolotl-g/sites.json",
+    "stage3/adapt/95-checker-axolotl-h/sites.json",
+    "stage3/adapt/95-checker-axolotl-h/multimap.json",
+    "stage3/adapt/98-axolotl-a/sites.json",
+    "stage3/adapt/98-axolotl-b/sites.json",
+    "internal/hostconfiguration/configurations.json",
+    "stage3/adapt/99-correctness-axolotl-k/owners.json",
+    "stage3/adapt/99-correctness-axolotl-n/pins.json",
+    "stage3/adapt/99-correctness-axolotl-r/owners.json",
+    "stage3/adapt/99-correctness-axolotl-t/pins.json",
+    "stage3/adapt/99-correctness-axolotl-u/pins.json",
+    "stage3/adapt/99-correctness-axolotl-u/imports.json",
+    "stage3/adapt/99-correctness-axolotl-x/owners.json",
+    "stage3/adapt/99-correctness-axolotl-x/inventory.json",
+    "stage3/adapt/99-correctness-axolotl-x/ownership.json",
+    "stage3/adapt/99-correctness-axolotl-z/owners.json",
+    "stage3/adapt/99-correctness-core-arrayof/owners.json",
+    "stage3/adapt/99-correctness-core-clone/owners.json",
+    "stage3/adapt/99-correctness-core-compare/owners.json",
+    "stage3/adapt/99-correctness-core-extend/owners.json",
+    "stage3/adapt/99-correctness-core-getallkeys/owners.json",
+    "stage3/adapt/99-correctness-core-groupby/owners.json",
+    "stage3/adapt/99-correctness-core-levenshtein/owners.json",
+    "stage3/adapt/99-correctness-core-multimap/owners.json",
+    "stage3/adapt/99-correctness-core-multimap/sites.json",
+    "stage3/adapt/99-correctness-core-takewhile/owners.json",
+    "stage3/adapt/99-wasm-crypto-import/proofs/targets.json"
+  ],
+  "sysManifestRows": [
+    {
+      "manifest": "stage3/adapt/40-explicit-any/class-rules.json",
+      "path": "$.filesystem.0",
+      "record": {
+        "id": 138,
+        "file": "src/compiler/sys.ts",
+        "line": 1853,
+        "column": 31,
+        "originalLine": "                    let stat: any;",
+        "replacement": "import(\"fs\").Stats | import(\"fs\").Dirent | undefined",
+        "parentKind": "VariableDeclaration"
+      }
+    },
+    {
+      "manifest": "stage3/adapt/32-indexed-reads-program/sites.json",
+      "path": "$.194",
+      "record": {
+        "file": "sys.ts",
+        "line": 155,
+        "column": 17,
+        "function": "",
+        "expression": "(customLevels || (customLevels = {}))[level]",
+        "occurrence": 1,
+        "total": 1,
+        "action": "decline",
+        "class": "U-position",
+        "invariant": "The indexed target is a pure store, not an indexed read."
+      }
+    },
+    {
+      "manifest": "stage3/adapt/32-indexed-reads-program/sites.json",
+      "path": "$.195",
+      "record": {
+        "file": "sys.ts",
+        "line": 171,
+        "column": 13,
+        "function": "",
+        "expression": "levels[level]",
+        "occurrence": 1,
+        "total": 2,
+        "action": "decline",
+        "class": "U-position",
+        "invariant": "The indexed target is a pure store, not an indexed read."
+      }
+    },
+    {
+      "manifest": "stage3/adapt/32-indexed-reads-program/sites.json",
+      "path": "$.196",
+      "record": {
+        "file": "sys.ts",
+        "line": 171,
+        "column": 29,
+        "function": "",
+        "expression": "customLevels[level]",
+        "occurrence": 1,
+        "total": 1,
+        "action": "decline",
+        "class": "U-table",
+        "invariant": "The partial custom level may be absent; the existing || falls back to the default level."
+      }
+    },
+    {
+      "manifest": "stage3/adapt/32-indexed-reads-program/sites.json",
+      "path": "$.197",
+      "record": {
+        "file": "sys.ts",
+        "line": 171,
+        "column": 53,
+        "function": "",
+        "expression": "levels[level]",
+        "occurrence": 2,
+        "total": 2,
+        "action": "decline",
+        "class": "U-table",
+        "invariant": "The level key is keyof Levels and addresses an already required declared property; no indexed-absence finding exists."
+      }
+    },
+    {
+      "manifest": "stage3/adapt/32-indexed-reads-program/sites.json",
+      "path": "$.198",
+      "record": {
+        "file": "sys.ts",
+        "line": 195,
+        "column": 29,
+        "function": "",
+        "expression": "queue[pollIndex]",
+        "occurrence": 1,
+        "total": 8,
+        "action": "decline",
+        "class": "U-position",
+        "invariant": "Polling queues intentionally contain holes, and the nearby presence check handles them."
+      }
+    },
+    {
+      "manifest": "stage3/adapt/32-indexed-reads-program/sites.json",
+      "path": "$.199",
+      "record": {
+        "file": "sys.ts",
+        "line": 200,
+        "column": 13,
+        "function": "",
+        "expression": "queue[pollIndex]",
+        "occurrence": 2,
+        "total": 8,
+        "action": "decline",
+        "class": "U-position",
+        "invariant": "The indexed target is a pure store, not an indexed read."
+      }
+    },
+    {
+      "manifest": "stage3/adapt/32-indexed-reads-program/sites.json",
+      "path": "$.200",
+      "record": {
+        "file": "sys.ts",
+        "line": 209,
+        "column": 13,
+        "function": "",
+        "expression": "queue[pollIndex]",
+        "occurrence": 3,
+        "total": 8,
+        "action": "decline",
+        "class": "U-position",
+        "invariant": "The indexed target is a pure store, not an indexed read."
+      }
+    },
+    {
+      "manifest": "stage3/adapt/32-indexed-reads-program/sites.json",
+      "path": "$.201",
+      "record": {
+        "file": "sys.ts",
+        "line": 215,
+        "column": 13,
+        "function": "",
+        "expression": "queue[pollIndex]",
+        "occurrence": 4,
+        "total": 8,
+        "action": "decline",
+        "class": "U-position",
+        "invariant": "Polling queues intentionally contain holes, and the nearby presence check handles them."
+      }
+    },
+    {
+      "manifest": "stage3/adapt/32-indexed-reads-program/sites.json",
+      "path": "$.202",
+      "record": {
+        "file": "sys.ts",
+        "line": 218,
+        "column": 17,
+        "function": "",
+        "expression": "queue[definedValueCopyToIndex]",
+        "occurrence": 1,
+        "total": 1,
+        "action": "decline",
+        "class": "U-position",
+        "invariant": "The indexed target is a pure store, not an indexed read."
+      }
+    },
+    {
+      "manifest": "stage3/adapt/32-indexed-reads-program/sites.json",
+      "path": "$.203",
+      "record": {
+        "file": "sys.ts",
+        "line": 219,
+        "column": 17,
+        "function": "",
+        "expression": "queue[pollIndex]",
+        "occurrence": 5,
+        "total": 8,
+        "action": "decline",
+        "class": "U-position",
+        "invariant": "The indexed target is a pure store, not an indexed read."
+      }
+    },
+    {
+      "manifest": "stage3/adapt/32-indexed-reads-program/sites.json",
+      "path": "$.204",
+      "record": {
+        "file": "sys.ts",
+        "line": 290,
+        "column": 84,
+        "function": "",
+        "expression": "pollingChunkSize[queue.pollingInterval]",
+        "occurrence": 1,
+        "total": 1,
+        "action": "decline",
+        "class": "U-table",
+        "invariant": "The mapped polling-interval table declares every PollingInterval key as required; this read already has a required number type."
+      }
+    },
+    {
+      "manifest": "stage3/adapt/32-indexed-reads-program/sites.json",
+      "path": "$.205",
+      "record": {
+        "file": "sys.ts",
+        "line": 328,
+        "column": 21,
+        "function": "",
+        "expression": "queue[pollIndex]",
+        "occurrence": 6,
+        "total": 8,
+        "action": "decline",
+        "class": "U-position",
+        "invariant": "The indexed target is a pure store, not an indexed read."
+      }
+    },
+    {
+      "manifest": "stage3/adapt/32-indexed-reads-program/sites.json",
+      "path": "$.206",
+      "record": {
+        "file": "sys.ts",
+        "line": 332,
+        "column": 53,
+        "function": "",
+        "expression": "unchangedPollThresholds[pollingInterval]",
+        "occurrence": 1,
+        "total": 1,
+        "action": "decline",
+        "class": "U-table",
+        "invariant": "The mapped polling-interval table declares every PollingInterval key as required; this read already has a required number type."
+      }
+    },
+    {
+      "manifest": "stage3/adapt/32-indexed-reads-program/sites.json",
+      "path": "$.207",
+      "record": {
+        "file": "sys.ts",
+        "line": 338,
+        "column": 17,
+        "function": "",
+        "expression": "queue[pollIndex]",
+        "occurrence": 7,
+        "total": 8,
+        "action": "decline",
+        "class": "U-position",
+        "invariant": "The indexed target is a pure store, not an indexed read."
+      }
+    },
+    {
+      "manifest": "stage3/adapt/32-indexed-reads-program/sites.json",
+      "path": "$.208",
+      "record": {
+        "file": "sys.ts",
+        "line": 343,
+        "column": 17,
+        "function": "",
+        "expression": "queue[pollIndex]",
+        "occurrence": 8,
+        "total": 8,
+        "action": "decline",
+        "class": "U-position",
+        "invariant": "The indexed target is a pure store, not an indexed read."
+      }
+    },
+    {
+      "manifest": "stage3/adapt/32-indexed-reads-program/sites.json",
+      "path": "$.209",
+      "record": {
+        "file": "sys.ts",
+        "line": 484,
+        "column": 73,
+        "function": "",
+        "expression": "pollingChunkSize[PollingInterval.Low]",
+        "occurrence": 1,
+        "total": 1,
+        "action": "decline",
+        "class": "U-table",
+        "invariant": "The mapped polling-interval table declares every PollingInterval key as required; this read already has a required number type."
+      }
+    },
+    {
+      "manifest": "stage3/adapt/32-indexed-reads-program/sites.json",
+      "path": "$.210",
+      "record": {
+        "file": "sys.ts",
+        "line": 712,
+        "column": 81,
+        "function": "",
+        "expression": "dirPath[rootDirName.length]",
+        "occurrence": 1,
+        "total": 1,
+        "action": "decline",
+        "class": "U-position",
+        "invariant": "The equality test accepts an absent boundary character to reject an unrelated directory."
+      }
+    },
+    {
+      "manifest": "stage3/adapt/32-indexed-reads-program/sites.json",
+      "path": "$.211",
+      "record": {
+        "file": "sys.ts",
+        "line": 1566,
+        "column": 24,
+        "function": "",
+        "expression": "process.env[name]",
+        "occurrence": 1,
+        "total": 1,
+        "action": "decline",
+        "class": "U-table",
+        "invariant": "The environment entry is optional and the existing || supplies the empty string."
+      }
+    },
+    {
+      "manifest": "stage3/adapt/32-indexed-reads-program/sites.json",
+      "path": "$.212",
+      "record": {
+        "file": "sys.ts",
+        "line": 1796,
+        "column": 29,
+        "function": "",
+        "expression": "buffer[0]",
+        "occurrence": 1,
+        "total": 3,
+        "action": "decline",
+        "class": "U-typed",
+        "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists.",
+        "laterAssertion": "47-host-errors",
+        "laterInvariant": "Adaptation 47 proves this dense Node Buffer read under its len >= 2 or len >= 3 guard; 32 inserts nothing and accepts only the existing 47 assertion."
+      }
+    },
+    {
+      "manifest": "stage3/adapt/32-indexed-reads-program/sites.json",
+      "path": "$.213",
+      "record": {
+        "file": "sys.ts",
+        "line": 1796,
+        "column": 51,
+        "function": "",
+        "expression": "buffer[1]",
+        "occurrence": 1,
+        "total": 3,
+        "action": "decline",
+        "class": "U-typed",
+        "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists.",
+        "laterAssertion": "47-host-errors",
+        "laterInvariant": "Adaptation 47 proves this dense Node Buffer read under its len >= 2 or len >= 3 guard; 32 inserts nothing and accepts only the existing 47 assertion."
+      }
+    },
+    {
+      "manifest": "stage3/adapt/32-indexed-reads-program/sites.json",
+      "path": "$.214",
+      "record": {
+        "file": "sys.ts",
+        "line": 1801,
+        "column": 34,
+        "function": "",
+        "expression": "buffer[i]",
+        "occurrence": 1,
+        "total": 2,
+        "action": "assert",
+        "class": "U-typed",
+        "invariant": "The byte-pair loop rounds Buffer length down to an even number and advances by two, so both bytes are within the dense Buffer."
+      }
+    },
+    {
+      "manifest": "stage3/adapt/32-indexed-reads-program/sites.json",
+      "path": "$.215",
+      "record": {
+        "file": "sys.ts",
+        "line": 1802,
+        "column": 21,
+        "function": "",
+        "expression": "buffer[i]",
+        "occurrence": 2,
+        "total": 2,
+        "action": "decline",
+        "class": "U-position",
+        "invariant": "The indexed target is a pure store, not an indexed read."
+      }
+    },
+    {
+      "manifest": "stage3/adapt/32-indexed-reads-program/sites.json",
+      "path": "$.216",
+      "record": {
+        "file": "sys.ts",
+        "line": 1802,
+        "column": 33,
+        "function": "",
+        "expression": "buffer[i + 1]",
+        "occurrence": 1,
+        "total": 2,
+        "action": "assert",
+        "class": "U-typed",
+        "invariant": "The byte-pair loop rounds Buffer length down to an even number and advances by two, so both bytes are within the dense Buffer."
+      }
+    },
+    {
+      "manifest": "stage3/adapt/32-indexed-reads-program/sites.json",
+      "path": "$.217",
+      "record": {
+        "file": "sys.ts",
+        "line": 1803,
+        "column": 21,
+        "function": "",
+        "expression": "buffer[i + 1]",
+        "occurrence": 2,
+        "total": 2,
+        "action": "decline",
+        "class": "U-position",
+        "invariant": "The indexed target is a pure store, not an indexed read."
+      }
+    },
+    {
+      "manifest": "stage3/adapt/32-indexed-reads-program/sites.json",
+      "path": "$.218",
+      "record": {
+        "file": "sys.ts",
+        "line": 1807,
+        "column": 29,
+        "function": "",
+        "expression": "buffer[0]",
+        "occurrence": 2,
+        "total": 3,
+        "action": "decline",
+        "class": "U-typed",
+        "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists.",
+        "laterAssertion": "47-host-errors",
+        "laterInvariant": "Adaptation 47 proves this dense Node Buffer read under its len >= 2 or len >= 3 guard; 32 inserts nothing and accepts only the existing 47 assertion."
+      }
+    },
+    {
+      "manifest": "stage3/adapt/32-indexed-reads-program/sites.json",
+      "path": "$.219",
+      "record": {
+        "file": "sys.ts",
+        "line": 1807,
+        "column": 51,
+        "function": "",
+        "expression": "buffer[1]",
+        "occurrence": 2,
+        "total": 3,
+        "action": "decline",
+        "class": "U-typed",
+        "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists.",
+        "laterAssertion": "47-host-errors",
+        "laterInvariant": "Adaptation 47 proves this dense Node Buffer read under its len >= 2 or len >= 3 guard; 32 inserts nothing and accepts only the existing 47 assertion."
+      }
+    },
+    {
+      "manifest": "stage3/adapt/32-indexed-reads-program/sites.json",
+      "path": "$.220",
+      "record": {
+        "file": "sys.ts",
+        "line": 1811,
+        "column": 29,
+        "function": "",
+        "expression": "buffer[0]",
+        "occurrence": 3,
+        "total": 3,
+        "action": "decline",
+        "class": "U-typed",
+        "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists.",
+        "laterAssertion": "47-host-errors",
+        "laterInvariant": "Adaptation 47 proves this dense Node Buffer read under its len >= 2 or len >= 3 guard; 32 inserts nothing and accepts only the existing 47 assertion."
+      }
+    },
+    {
+      "manifest": "stage3/adapt/32-indexed-reads-program/sites.json",
+      "path": "$.221",
+      "record": {
+        "file": "sys.ts",
+        "line": 1811,
+        "column": 51,
+        "function": "",
+        "expression": "buffer[1]",
+        "occurrence": 3,
+        "total": 3,
+        "action": "decline",
+        "class": "U-typed",
+        "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists.",
+        "laterAssertion": "47-host-errors",
+        "laterInvariant": "Adaptation 47 proves this dense Node Buffer read under its len >= 2 or len >= 3 guard; 32 inserts nothing and accepts only the existing 47 assertion."
+      }
+    },
+    {
+      "manifest": "stage3/adapt/32-indexed-reads-program/sites.json",
+      "path": "$.222",
+      "record": {
+        "file": "sys.ts",
+        "line": 1811,
+        "column": 73,
+        "function": "",
+        "expression": "buffer[2]",
+        "occurrence": 1,
+        "total": 1,
+        "action": "decline",
+        "class": "U-typed",
+        "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists.",
+        "laterAssertion": "47-host-errors",
+        "laterInvariant": "Adaptation 47 proves this dense Node Buffer read under its len >= 2 or len >= 3 guard; 32 inserts nothing and accepts only the existing 47 assertion."
+      }
+    },
+    {
+      "manifest": "stage3/adapt/32-indexed-reads-program/public-host-guards.json",
+      "path": "$.3",
+      "record": {
+        "file": "sys.ts",
+        "function": "readFile",
+        "runtimeSha256": "74610c782c9105755eb526be86299e107f4350014cc77bbd648d4cf2e09f9b93"
+      }
+    },
+    {
+      "manifest": "stage3/adapt/41-explicit-any-remaining/rules.json",
+      "path": "$.10",
+      "record": {
+        "id": 13,
+        "kind": "timers",
+        "file": "src/compiler/sys.ts",
+        "before": "declare function setTimeout(handler: (...args: any[]) => void, timeout: number): any;",
+        "after": "declare function setTimeout(handler: () => void, timeout: number): NodeJS.Timeout;",
+        "reason": "Only getNodeSystem captures this ambient Node global. The callback parameters are not inspected by this owner. Node returns its Timeout object."
+      }
+    },
+    {
+      "manifest": "stage3/adapt/41-explicit-any-remaining/rules.json",
+      "path": "$.11",
+      "record": {
+        "id": 14,
+        "kind": "timers",
+        "file": "src/compiler/sys.ts",
+        "before": "declare function clearTimeout(handle: any): void;",
+        "after": "declare function clearTimeout(handle: NodeJS.Timeout | undefined): void;",
+        "reason": "Only getNodeSystem captures this ambient Node global, paired with its setTimeout. An absent timer is accepted by Node cancellation."
+      }
+    },
+    {
+      "manifest": "stage3/adapt/92-tty-host-results/proofs/targets.json",
+      "path": "$.0",
+      "record": {
+        "file": "src/compiler/sys.ts",
+        "owners": [
+          {
+            "name": "getWidthOfTerminal",
+            "scope": "getNodeSystem",
+            "beforeSha256": "6340f96401eae07bf3cd21a0ccdf8cb1dde0a3b9800bc2984a7639308bc7e2b4",
+            "afterSha256": "3053bf92ea7c9b89e6e20c381e125fe86e6cb8ceea06d76285516e5c9c0d7ced"
+          },
+          {
+            "name": "writeOutputIsTTY",
+            "scope": "getNodeSystem",
+            "beforeSha256": "83510066845b01d5059fff377643a31f91f22a92967cdb54786db329d6c11523",
+            "afterSha256": "2f533d7ad041776de8261edb954e64ec0500e960e29ff1d231e2bf2f09b82dc3"
+          }
+        ]
+      }
+    },
+    {
+      "manifest": "stage3/adapt/93-builtin-imports/proofs/targets.json",
+      "path": "$.0",
+      "record": {
+        "file": "src/compiler/sys.ts",
+        "owner": "getNodeSystem",
+        "ownerBeforeSha256": "7972e490bba24e7c05fa84c6129730a8bfe54d7b8e54bbb3e1830b7810c43205",
+        "ownerAfterSha256": "da17b1a63d7fb8dd98aac5c1431129553cd0f5791b299b5e56e92ca554bb4471",
+        "importsBeforeSha256": "c7be03b0af04cfe53c1e1d1542744b4cae2707ecabc294701ec64c804a6e4178",
+        "importsAfterSha256": "459cad8f65d434eb3e27c5bb196450c7e1a6c0f9a1e8df3a725a69e705ffbf49",
+        "importsScope": "hostErrors insertion anchor plus node: import statements, getText joined by LF"
+      }
+    },
+    {
+      "manifest": "stage3/adapt/99-correctness-core-multimap/owners.json",
+      "path": "$.1",
+      "record": {
+        "file": "src/compiler/sys.ts",
+        "kind": "owner",
+        "path": [
+          "createUseFsEventsOnParentDirectoryWatchFile",
+          "nonPollingWatchFile"
+        ],
+        "before": "function nonPollingWatchFile(fileName: string, callback: FileWatcherCallback, _pollingInterval: PollingInterval, fallbackOptions: WatchOptions | undefined): FileWatcher {\n        const filePath = toCanonicalName(fileName);\n        if (fileWatcherCallbacks.add(filePath, callback).length === 1 && fileTimestamps) {\n            fileTimestamps.set(filePath, getModifiedTime(fileName) || missingFileModifiedTime);\n        }\n        const dirPath = getDirectoryPath(filePath) || \".\";\n        const watcher = dirWatchers.get(dirPath) ||\n            createDirectoryWatcher(getDirectoryPath(fileName) || \".\", dirPath, fallbackOptions);\n        watcher.referenceCount++;\n        return {\n            close: () => {\n                if (watcher.referenceCount === 1) {\n                    watcher.close();\n                    dirWatchers.delete(dirPath);\n                }\n                else {\n                    watcher.referenceCount--;\n                }\n                fileWatcherCallbacks.remove(filePath, callback);\n            },\n        };\n    }",
+        "after": "function nonPollingWatchFile(fileName: string, callback: FileWatcherCallback, _pollingInterval: PollingInterval, fallbackOptions: WatchOptions | undefined): FileWatcher {\n        const filePath = toCanonicalName(fileName);\n        if (multiMapAddValue(fileWatcherCallbacks, filePath, callback).length === 1 && fileTimestamps) {\n            fileTimestamps.set(filePath, getModifiedTime(fileName) || missingFileModifiedTime);\n        }\n        const dirPath = getDirectoryPath(filePath) || \".\";\n        const watcher = dirWatchers.get(dirPath) ||\n            createDirectoryWatcher(getDirectoryPath(fileName) || \".\", dirPath, fallbackOptions);\n        watcher.referenceCount++;\n        return {\n            close: () => {\n                if (watcher.referenceCount === 1) {\n                    watcher.close();\n                    dirWatchers.delete(dirPath);\n                }\n                else {\n                    watcher.referenceCount--;\n                }\n                multiMapRemoveValue(fileWatcherCallbacks, filePath, callback);\n            },\n        };\n    }",
+        "beforeSha256": "a860c71c8147705517b000b8b407bc6c9f088e3a74942f46a5cbbc0e35725e79",
+        "afterSha256": "f331e6ba7e3de294c3668c4ca6fa52fa9f647228c69be557387ae97e4d41ecbb"
+      }
+    },
+    {
+      "manifest": "stage3/adapt/99-correctness-core-multimap/owners.json",
+      "path": "$.2",
+      "record": {
+        "file": "src/compiler/sys.ts",
+        "kind": "owner",
+        "path": [
+          "createDirectoryWatcherSupportingRecursive",
+          "createDirectoryWatcher"
+        ],
+        "before": "function createDirectoryWatcher(\n        dirName: string,\n        options: WatchOptions | undefined,\n        callback?: DirectoryWatcherCallback,\n        link?: string,\n    ): ChildDirectoryWatcher {\n        const dirPath = toCanonicalFilePath(dirName);\n        let directoryWatcher = cache.get(dirPath);\n        if (directoryWatcher) {\n            directoryWatcher.refCount++;\n        }\n        else {\n            directoryWatcher = {\n                watcher: watchDirectory(\n                    dirName,\n                    fileName => {\n                        if (isIgnoredPath(fileName, options)) return;\n\n                        if (options?.synchronousWatchDirectory) {\n                            // Call the actual callback\n                            if (!cache.get(dirPath)?.targetWatcher) invokeCallbacks(dirName, dirPath, fileName);\n\n                            // Iterate through existing children and update the watches if needed\n                            updateChildWatches(dirName, dirPath, options);\n                        }\n                        else {\n                            nonSyncUpdateChildWatches(dirName, dirPath, fileName, options);\n                        }\n                    },\n                    /*recursive*/ false,\n                    options,\n                ),\n                refCount: 1,\n                childWatches: emptyArray,\n                targetWatcher: undefined,\n                links: undefined,\n            };\n            cache.set(dirPath, directoryWatcher);\n            updateChildWatches(dirName, dirPath, options);\n        }\n\n        if (link) (directoryWatcher.links ??= new Set()).add(link);\n\n        const callbackToAdd = callback && { dirName, callback };\n        if (callbackToAdd) {\n            callbackCache.add(dirPath, callbackToAdd);\n        }\n\n        return {\n            dirName,\n            close: () => {\n                const directoryWatcher = Debug.checkDefined(cache.get(dirPath));\n                if (callbackToAdd) callbackCache.remove(dirPath, callbackToAdd);\n                if (link) directoryWatcher.links?.delete(link);\n                directoryWatcher.refCount--;\n\n                if (directoryWatcher.refCount) return;\n\n                cache.delete(dirPath);\n                directoryWatcher.links = undefined;\n                closeFileWatcherOf(directoryWatcher);\n                closeTargetWatcher(directoryWatcher);\n                directoryWatcher.childWatches.forEach(closeFileWatcher);\n            },\n        };\n    }",
+        "after": "function createDirectoryWatcher(\n        dirName: string,\n        options: WatchOptions | undefined,\n        callback?: DirectoryWatcherCallback,\n        link?: string,\n    ): ChildDirectoryWatcher {\n        const dirPath = toCanonicalFilePath(dirName);\n        let directoryWatcher = cache.get(dirPath);\n        if (directoryWatcher) {\n            directoryWatcher.refCount++;\n        }\n        else {\n            directoryWatcher = {\n                watcher: watchDirectory(\n                    dirName,\n                    fileName => {\n                        if (isIgnoredPath(fileName, options)) return;\n\n                        if (options?.synchronousWatchDirectory) {\n                            // Call the actual callback\n                            if (!cache.get(dirPath)?.targetWatcher) invokeCallbacks(dirName, dirPath, fileName);\n\n                            // Iterate through existing children and update the watches if needed\n                            updateChildWatches(dirName, dirPath, options);\n                        }\n                        else {\n                            nonSyncUpdateChildWatches(dirName, dirPath, fileName, options);\n                        }\n                    },\n                    /*recursive*/ false,\n                    options,\n                ),\n                refCount: 1,\n                childWatches: emptyArray,\n                targetWatcher: undefined,\n                links: undefined,\n            };\n            cache.set(dirPath, directoryWatcher);\n            updateChildWatches(dirName, dirPath, options);\n        }\n\n        if (link) (directoryWatcher.links ??= new Set()).add(link);\n\n        const callbackToAdd = callback && { dirName, callback };\n        if (callbackToAdd) {\n            multiMapAddValue(callbackCache, dirPath, callbackToAdd);\n        }\n\n        return {\n            dirName,\n            close: () => {\n                const directoryWatcher = Debug.checkDefined(cache.get(dirPath));\n                if (callbackToAdd) multiMapRemoveValue(callbackCache, dirPath, callbackToAdd);\n                if (link) directoryWatcher.links?.delete(link);\n                directoryWatcher.refCount--;\n\n                if (directoryWatcher.refCount) return;\n\n                cache.delete(dirPath);\n                directoryWatcher.links = undefined;\n                closeFileWatcherOf(directoryWatcher);\n                closeTargetWatcher(directoryWatcher);\n                directoryWatcher.childWatches.forEach(closeFileWatcher);\n            },\n        };\n    }",
+        "beforeSha256": "3b34923193d651d512b63e8852495b8343d103b693515d943085db433eaa8261",
+        "afterSha256": "239af573480e7607fcfdd54f3771546ee64e99b9564649d103a017bc1b0af4d6"
+      }
+    },
+    {
+      "manifest": "stage3/adapt/99-correctness-core-multimap/owners.json",
+      "path": "$.3",
+      "record": {
+        "file": "src/compiler/sys.ts",
+        "kind": "import",
+        "module": "./_namespaces/ts.js",
+        "before": "import {\n    AssertionLevel,\n    closeFileWatcher,\n    closeFileWatcherOf,\n    combinePaths,\n    Comparison,\n    contains,\n    containsPath,\n    createGetCanonicalFileName,\n    createMultiMap,\n    Debug,\n    directorySeparator,\n    emptyArray,\n    emptyFileSystemEntries,\n    endsWith,\n    enumerateInsertsAndDeletes,\n    type FileSystemEntries,\n    getDirectoryPath,\n    getFallbackOptions,\n    getNormalizedAbsolutePath,\n    getRelativePathFromDirectory,\n    getRelativePathToDirectoryOrUrl,\n    getRootLength,\n    getStringComparer,\n    isArray,\n    isNodeLikeSystem,\n    isString,\n    mapDefined,\n    matchesExclude,\n    matchFiles,\n    memoize,\n    type ModuleImportResult,\n    noop,\n    normalizePath,\n    normalizeSlashes,\n    orderedRemoveItem,\n    type Path,\n    PollingWatchKind,\n    resolveJSModule,\n    some,\n    startsWith,\n    timestamp,\n    unorderedRemoveItem,\n    WatchDirectoryKind,\n    WatchFileKind,\n    type WatchOptions,\n    writeFileEnsuringDirectories,\n} from \"./_namespaces/ts.js\";",
+        "after": "import {\n    multiMapAddValue,\n    multiMapRemoveValue,\n    AssertionLevel,\n    closeFileWatcher,\n    closeFileWatcherOf,\n    combinePaths,\n    Comparison,\n    contains,\n    containsPath,\n    createGetCanonicalFileName,\n    createMultiMap,\n    Debug,\n    directorySeparator,\n    emptyArray,\n    emptyFileSystemEntries,\n    endsWith,\n    enumerateInsertsAndDeletes,\n    type FileSystemEntries,\n    getDirectoryPath,\n    getFallbackOptions,\n    getNormalizedAbsolutePath,\n    getRelativePathFromDirectory,\n    getRelativePathToDirectoryOrUrl,\n    getRootLength,\n    getStringComparer,\n    isArray,\n    isNodeLikeSystem,\n    isString,\n    mapDefined,\n    matchesExclude,\n    matchFiles,\n    memoize,\n    type ModuleImportResult,\n    noop,\n    normalizePath,\n    normalizeSlashes,\n    orderedRemoveItem,\n    type Path,\n    PollingWatchKind,\n    resolveJSModule,\n    some,\n    startsWith,\n    timestamp,\n    unorderedRemoveItem,\n    WatchDirectoryKind,\n    WatchFileKind,\n    type WatchOptions,\n    writeFileEnsuringDirectories,\n} from \"./_namespaces/ts.js\";",
+        "beforeSha256": "501d703a56cf4b1b56e967e112002d9031791ecd32a0d8cb5cc474d3381c04c2",
+        "afterSha256": "215657cca51604ac58245dd00098b0569c17a0a325e856210128c62fcd7d9cf4"
+      }
+    },
+    {
+      "manifest": "stage3/adapt/99-wasm-crypto-import/proofs/targets.json",
+      "path": "$.0",
+      "record": {
+        "file": "src/compiler/sys.ts",
+        "ownerBeforeSha256": "bff1f70709db25f1264628951403bdd1d063f12206419443d200bcbb7280253a",
+        "ownerAfterSha256": "9d0f66d64f8d6c9a713b73b514429f485254c918e26791dae9540331a4aa357d",
+        "importsBeforeSha256": "3488104a4b05d29696a672f8055c093c823eb4d0b2ef5e17d4d9cb0bbaecd7a7",
+        "importsAfterSha256": "c24afbb7654f6cd3057985c10558464846d134085b4867626146a199a505c62f"
+      }
+    }
+  ],
+  "directStorageOrOwnerPins": [],
+  "limitations": "Static source/manifest inspection, not an adaptation replay. Guarded owners elsewhere in sys.ts do not pin these two local annotations."
+}

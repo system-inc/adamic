@@ -1,0 +1,36 @@
+{
+  "version": "6.0.3",
+  "adamicRoots": 79,
+  "options": {
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "erasableSyntaxOnly": false,
+    "verbatimModuleSyntax": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "module": 99,
+    "moduleDetection": 3,
+    "moduleResolution": 100,
+    "target": 11,
+    "lib": [
+      "lib.es2024.d.ts"
+    ],
+    "types": [],
+    "typeRoots": [
+      "/workspace/adamic/internal/load/node_types/node_modules/@types"
+    ]
+  },
+  "adamic": [],
+  "solution": [],
+  "solutionExit": 0,
+  "requireWitness": [
+    {
+      "expression": "module: require(modulePath)",
+      "line": 1613,
+      "column": 38,
+      "valueType": "any",
+      "contextualType": "{}"
+    }
+  ]
+}

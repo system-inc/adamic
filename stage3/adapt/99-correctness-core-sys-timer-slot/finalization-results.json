@@ -1,0 +1,64 @@
+{
+  "head2-declaration-spans": {
+    "name": "head2-declaration-spans",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-core-sys-timer-slot/declaration-spans.cjs",
+      "/workspace/scratch/sys-timer-stack/head1",
+      "/workspace/scratch/sys-timer-stack/head2"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 2.0061398729994835,
+    "stoppingReason": null
+  },
+  "head2-collect-head2": {
+    "name": "head2-collect-head2",
+    "command": [
+      "python3",
+      "-B",
+      "/workspace/scratch/sys-timer-stack/collect-head2.py"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 6.0300296080004046,
+    "stoppingReason": null
+  },
+  "head2-write-proof-head2": {
+    "name": "head2-write-proof-head2",
+    "command": [
+      "python3",
+      "-B",
+      "/workspace/scratch/sys-timer-stack/write-proof-head2.py"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.5021861090008315,
+    "stoppingReason": null
+  },
+  "head2-audit-head2": {
+    "name": "head2-audit-head2",
+    "command": [
+      "python3",
+      "-B",
+      "/workspace/scratch/sys-timer-stack/audit-head2.py"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 1.0047801900000195,
+    "stoppingReason": null
+  },
+  "head2-diff-check": {
+    "name": "head2-diff-check",
+    "command": [
+      "git",
+      "diff",
+      "--check",
+      "HEAD"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 1.0046306619988172,
+    "stoppingReason": null
+  }
+}

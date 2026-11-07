@@ -1,0 +1,807 @@
+[
+  {
+    "where": "src/compiler/core.ts:2332:13",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/core.ts:2332:13",
+    "kind": "NotYet",
+    "reason": "function identity comparison in a program with specialized generic function values",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/core.ts:2365:60",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/core.ts:2365:60",
+    "kind": "NotYet",
+    "reason": "function identity comparison in a program with specialized generic function values",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/debug.ts:227:5",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/debug.ts:227:5",
+    "kind": "NotYet",
+    "reason": "a checked predicate target whose check would read past the depth bound (HostDirectoryWatcher)",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/debug.ts:252:33",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/debug.ts:252:33",
+    "kind": "NotYet",
+    "reason": "a value of type never",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1007:5",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1005:5",
+    "kind": "Refused",
+    "reason": "a method in object destructuring",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1030:54",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1028:54",
+    "kind": "NotYet",
+    "reason": "a boolean | undefined variable a function value captures",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1052:140",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1050:140",
+    "kind": "NotYet",
+    "reason": "a boolean | undefined variable a function value captures",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1061:84",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1059:84",
+    "kind": "NotYet",
+    "reason": "reading getModifiedTime",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1065:90",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1063:90",
+    "kind": "NotYet",
+    "reason": "reading getModifiedTime",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1100:40",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1098:40",
+    "kind": "NotYet",
+    "reason": "optional record property access",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1103:30",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1101:30",
+    "kind": "NotYet",
+    "reason": "reading defaultFallbackPolling",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1125:17",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1123:17",
+    "kind": "NotYet",
+    "reason": "reading fileSystemEntryExists",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1186:48",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1184:48",
+    "kind": "NotYet",
+    "reason": "optional record property access",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1198:13",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1196:13",
+    "kind": "Refused",
+    "reason": "a value of type Map<string, SingleFileWatcher<FileWatcherCallback>> seen as Map<string, SingleFileWatcher<FileWatcherCallback | FsWatchCallback>>, which can write SingleFileWatcher<FileWatcherCallback | FsWatchCallback> where SingleFileWatcher<FileWatcherCallback> is read",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1214:25",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1212:25",
+    "kind": "Refused",
+    "reason": "a value of type Map<string, SingleFileWatcher<FsWatchCallback>> seen as Map<string, SingleFileWatcher<FileWatcherCallback | FsWatchCallback>>, which can write SingleFileWatcher<FileWatcherCallback | FsWatchCallback> where SingleFileWatcher<FsWatchCallback> is read",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1253:77",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1251:77",
+    "kind": "NotYet",
+    "reason": "function identity comparison in a program with specialized generic function values",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1269:89",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1267:89",
+    "kind": "NotYet",
+    "reason": "a boolean | undefined variable a function value captures",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1277:17",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1275:17",
+    "kind": "NotYet",
+    "reason": "reading presentWatcher",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1281:24",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1279:24",
+    "kind": "NotYet",
+    "reason": "reading presentWatcher",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:129:9",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:127:9",
+    "kind": "NotYet",
+    "reason": "a computed field name",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1387:31",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1385:31",
+    "kind": "Refused",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1388:5",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1386:5",
+    "kind": "NotYet",
+    "reason": "replacing a represented method at runtime",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1388:5",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1386:5",
+    "kind": "Refused",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:141:10",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:139:10",
+    "kind": "NotYet",
+    "reason": "a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:144:81",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:142:81",
+    "kind": "Refused",
+    "reason": "a value of type typeof PollingInterval seen as Levels, whose readonly field Low becomes writable: a readonly field may hold something narrower than PollingInterval.Low, which a write of number would replace",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1494:121",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1492:121",
+    "kind": "NotYet",
+    "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1494:35",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1492:35",
+    "kind": "NotYet",
+    "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1494:35",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1492:35",
+    "kind": "NotYet",
+    "reason": "reading __filename",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1494:92",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1492:92",
+    "kind": "NotYet",
+    "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1501:13",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1499:13",
+    "kind": "NotYet",
+    "reason": "reading setTimeout",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1519:15",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1517:15",
+    "kind": "NotYet",
+    "reason": "a function value that captures the variable its own initializer declares",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1534:13",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1532:13",
+    "kind": "Refused",
+    "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1535:13",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1533:13",
+    "kind": "Refused",
+    "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1578:21",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1576:21",
+    "kind": "NotYet",
+    "reason": "node:fs.StatsBase.isFile through an optional call",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1588:42",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1586:42",
+    "kind": "NotYet",
+    "reason": "a union of differently held members variable a function value captures",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1590:191",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1588:191",
+    "kind": "NotYet",
+    "reason": "process.recordreplay as a value (use its supported process operation directly)",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1590:192",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1588:192",
+    "kind": "NotYet",
+    "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1605:32",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1603:32",
+    "kind": "Refused",
+    "reason": "a cast the runtime can't check",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1605:33",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1603:33",
+    "kind": "NotYet",
+    "reason": "node:process.Process.stdout used as a value",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1612:22",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1610:22",
+    "kind": "Refused",
+    "reason": "a value of type (baseDir: string, moduleName: string) => { module: any; modulePath: string; error: undefined; } | { module: undefined; modulePath: undefined; error: unknown; } seen as (baseDir: string, moduleName: string) => ModuleImportResult, which can write string | undefined where string is read",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1614:77",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1612:77",
+    "kind": "Refused",
+    "reason": "a value of type System seen as ModuleResolutionHost, which can write boolean | (() => boolean) | undefined where boolean is read",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:162:17",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:160:17",
+    "kind": "NotYet",
+    "reason": "assigning an element of a value",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:162:35",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:160:35",
+    "kind": "Refused",
+    "reason": "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1642:17",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1640:17",
+    "kind": "NotYet",
+    "reason": "a union of differently held members variable a function value captures",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1646:59",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1644:59",
+    "kind": "NotYet",
+    "reason": "a value of type any",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1647:18",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1645:18",
+    "kind": "NotYet",
+    "reason": "reading inspector",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1647:32",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1645:32",
+    "kind": "NotYet",
+    "reason": "node:inspector.Session",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1647:42",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1645:42",
+    "kind": "NotYet",
+    "reason": "node:inspector.Session",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1651:29",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1649:29",
+    "kind": "NotYet",
+    "reason": "new a PropertyAccessExpression",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1651:29",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1649:29",
+    "kind": "NotYet",
+    "reason": "node:inspector.Session",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1651:33",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1649:33",
+    "kind": "NotYet",
+    "reason": "node:inspector.Session",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1651:43",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1649:43",
+    "kind": "NotYet",
+    "reason": "node:inspector.Session",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1652:13",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1650:13",
+    "kind": "NotYet",
+    "reason": "a method of a class stage 0 doesn't have",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1652:13",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1650:13",
+    "kind": "NotYet",
+    "reason": "node:inspector.Session.connect",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1652:21",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1650:21",
+    "kind": "NotYet",
+    "reason": "node:inspector.Session.connect",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1654:13",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1652:13",
+    "kind": "NotYet",
+    "reason": "node:inspector.Session.post",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1654:13",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1652:13",
+    "kind": "NotYet",
+    "reason": "reading session",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1654:13",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1652:13",
+    "kind": "Refused",
+    "reason": "a checked view with a callable contract",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1654:21",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1652:21",
+    "kind": "NotYet",
+    "reason": "node:inspector.Session.post",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1655:17",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1653:17",
+    "kind": "NotYet",
+    "reason": "node:inspector.Session.post",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1655:25",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1653:25",
+    "kind": "NotYet",
+    "reason": "node:inspector.Session.post",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1690:17",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1688:17",
+    "kind": "NotYet",
+    "reason": "a union of differently held members variable a function value captures",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1692:17",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1690:17",
+    "kind": "NotYet",
+    "reason": "node:inspector.Session.post",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1692:31",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1690:31",
+    "kind": "NotYet",
+    "reason": "node:inspector.Session.post",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1694:29",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1692:29",
+    "kind": "NotYet",
+    "reason": "node:fs.StatsBase.isDirectory through an optional call",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1703:25",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1701:25",
+    "kind": "NotYet",
+    "reason": "node:fs.writeFileSync: JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1706:21",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1704:21",
+    "kind": "NotYet",
+    "reason": "a method of a class stage 0 doesn't have",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1706:21",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1704:21",
+    "kind": "NotYet",
+    "reason": "node:inspector.Session.disconnect",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1706:23",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1704:23",
+    "kind": "NotYet",
+    "reason": "node:inspector.Session.disconnect",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1724:41",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1722:41",
+    "kind": "NotYet",
+    "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:1724:41",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1722:41",
+    "kind": "NotYet",
+    "reason": "reading __filename",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:178:13",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:176:13",
+    "kind": "NotYet",
+    "reason": "assigning an element of a value",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1818:24",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1816:24",
+    "kind": "NotYet",
+    "reason": "reading byteOrderMarkIndicator",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:185:81",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:183:81",
+    "kind": "Refused",
+    "reason": "a spread after the first field",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1869:17",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1867:17",
+    "kind": "Refused",
+    "reason": "sort without a comparator",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1870:17",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1868:17",
+    "kind": "Refused",
+    "reason": "sort without a comparator",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1967:12",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1965:12",
+    "kind": "NotYet",
+    "reason": "a literal method through a view that erases its receiver",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:1967:12",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1965:12",
+    "kind": "Refused",
+    "reason": "a method read as a value (getEnvironmentVariable would lose its object, and this with it)",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:201:79",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:199:79",
+    "kind": "NotYet",
+    "reason": "a PostfixUnaryExpression",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:207:32",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:205:32",
+    "kind": "Refused",
+    "reason": "a value of type undefined seen as T, a type parameter whose constraint WatchedFileWithIsClosed can be written, so it can write what undefined can't hold",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:216:32",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:214:32",
+    "kind": "Refused",
+    "reason": "a value of type undefined seen as T, a type parameter whose constraint WatchedFileWithIsClosed can be written, so it can write what undefined can't hold",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:226:36",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:224:36",
+    "kind": "Refused",
+    "reason": "a value of type undefined seen as T, a type parameter whose constraint WatchedFileWithIsClosed can be written, so it can write what undefined can't hold",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:240:17",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:238:17",
+    "kind": "NotYet",
+    "reason": "assigning a field of a value",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:263:11",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:261:11",
+    "kind": "NotYet",
+    "reason": "a value of type PollingIntervalQueue",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:288:14",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:286:14",
+    "kind": "NotYet",
+    "reason": "a function returning PollingIntervalQueue",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:289:23",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:287:23",
+    "kind": "Refused",
+    "reason": "a cast the runtime can't check",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:296:61",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:294:61",
+    "kind": "NotYet",
+    "reason": "a value of type PollingIntervalQueue",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:308:64",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:306:64",
+    "kind": "NotYet",
+    "reason": "a value of type PollingIntervalQueue",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:310:19",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:308:19",
+    "kind": "Refused",
+    "reason": "a value of type WatchedFileWithUnchangedPolls[] seen as (WatchedFileWithUnchangedPolls | undefined)[], which can write WatchedFileWithUnchangedPolls | undefined where WatchedFileWithUnchangedPolls is read",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:324:13",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:322:13",
+    "kind": "Refused",
+    "reason": "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:356:14",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:354:14",
+    "kind": "NotYet",
+    "reason": "a function returning PollingIntervalQueue",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:368:9",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:366:9",
+    "kind": "Refused",
+    "reason": "inherited library member push read as an own field",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:436:25",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:434:25",
+    "kind": "NotYet",
+    "reason": "a value of type any",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:441:29",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:439:29",
+    "kind": "NotYet",
+    "reason": "assigning to an Identifier",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:442:33",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:440:33",
+    "kind": "NotYet",
+    "reason": "reading currentModifiedTime",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:444:25",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:442:25",
+    "kind": "NotYet",
+    "reason": "a value of type any",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:445:54",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:443:54",
+    "kind": "NotYet",
+    "reason": "reading currentModifiedTime",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:447:34",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:445:34",
+    "kind": "NotYet",
+    "reason": "reading currentModifiedTime",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:450:59",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:448:59",
+    "kind": "NotYet",
+    "reason": "reading currentModifiedTime",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:521:17",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:519:17",
+    "kind": "Refused",
+    "reason": "a cast the runtime can't check",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:521:17",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:519:17",
+    "kind": "Refused",
+    "reason": "a cast the runtime can't check",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:603:5",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:601:5",
+    "kind": "Refused",
+    "reason": "a method in object destructuring",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:627:33",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:625:33",
+    "kind": "Refused",
+    "reason": "a cast the runtime can't check",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:655:29",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:653:29",
+    "kind": "NotYet",
+    "reason": "optional record property access",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:690:27",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:688:27",
+    "kind": "NotYet",
+    "reason": "a call through ?. (an optional call)",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:739:9",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:737:9",
+    "kind": "NotYet",
+    "reason": "a call through ?. (an optional call)",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:773:13",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:771:13",
+    "kind": "NotYet",
+    "reason": "reading timerToUpdateChildWatches",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:777:9",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:775:9",
+    "kind": "NotYet",
+    "reason": "assigning to an Identifier",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:781:9",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:779:9",
+    "kind": "NotYet",
+    "reason": "assigning to an Identifier",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:786:17",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:784:17",
+    "kind": "NotYet",
+    "reason": "reading timerToUpdateChildWatches",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:794:87",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:792:87",
+    "kind": "Refused",
+    "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:813:117",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:811:117",
+    "kind": "NotYet",
+    "reason": "reading timerToUpdateChildWatches",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:838:13",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:836:13",
+    "kind": "NotYet",
+    "reason": "a value of type any",
+    "phase": "lowering"
+  },
+  {
+    "where": "src/compiler/sys.ts:881:34",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:879:34",
+    "kind": "Refused",
+    "reason": "a value of type never[] seen as ChildDirectoryWatcher[], which can write ChildDirectoryWatcher where never is read",
+    "phase": "refusal_scan"
+  },
+  {
+    "where": "src/compiler/sys.ts:941:13",
+    "rawWhere": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:939:13",
+    "kind": "NotYet",
+    "reason": "optional record property access",
+    "phase": "lowering"
+  }
+]

@@ -1,0 +1,137 @@
+{
+  "typescript": "6.0.3",
+  "files": [
+    {
+      "relative": "built/local/typescript.d.ts",
+      "before": [
+        {
+          "path": [
+            "System",
+            "setTimeout"
+          ],
+          "line": 8545,
+          "column": 9,
+          "text": "setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;"
+        },
+        {
+          "path": [
+            "System",
+            "clearTimeout"
+          ],
+          "line": 8546,
+          "column": 9,
+          "text": "clearTimeout?(timeoutId: any): void;"
+        }
+      ],
+      "after": [
+        {
+          "path": [
+            "System",
+            "setTimeout"
+          ],
+          "line": 8545,
+          "column": 9,
+          "text": "setTimeout?<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A): unknown;"
+        },
+        {
+          "path": [
+            "System",
+            "clearTimeout"
+          ],
+          "line": 8546,
+          "column": 9,
+          "text": "clearTimeout?(timeoutId: unknown): void;"
+        }
+      ],
+      "referenceUnchanged": false
+    },
+    {
+      "relative": "built/local/typescript.internal.d.ts",
+      "before": [
+        {
+          "path": [
+            "System",
+            "setTimeout"
+          ],
+          "line": 16663,
+          "column": 9,
+          "text": "setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;"
+        },
+        {
+          "path": [
+            "System",
+            "clearTimeout"
+          ],
+          "line": 16664,
+          "column": 9,
+          "text": "clearTimeout?(timeoutId: any): void;"
+        }
+      ],
+      "after": [
+        {
+          "path": [
+            "System",
+            "setTimeout"
+          ],
+          "line": 16663,
+          "column": 9,
+          "text": "setTimeout?<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A): unknown;"
+        },
+        {
+          "path": [
+            "System",
+            "clearTimeout"
+          ],
+          "line": 16664,
+          "column": 9,
+          "text": "clearTimeout?(timeoutId: unknown): void;"
+        }
+      ],
+      "referenceUnchanged": false
+    },
+    {
+      "relative": "tests/baselines/reference/api/typescript.d.ts",
+      "before": [
+        {
+          "path": [
+            "System",
+            "setTimeout"
+          ],
+          "line": 8491,
+          "column": 9,
+          "text": "setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;"
+        },
+        {
+          "path": [
+            "System",
+            "clearTimeout"
+          ],
+          "line": 8492,
+          "column": 9,
+          "text": "clearTimeout?(timeoutId: any): void;"
+        }
+      ],
+      "after": [
+        {
+          "path": [
+            "System",
+            "setTimeout"
+          ],
+          "line": 8491,
+          "column": 9,
+          "text": "setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;"
+        },
+        {
+          "path": [
+            "System",
+            "clearTimeout"
+          ],
+          "line": 8492,
+          "column": 9,
+          "text": "clearTimeout?(timeoutId: any): void;"
+        }
+      ],
+      "referenceUnchanged": true
+    }
+  ]
+}

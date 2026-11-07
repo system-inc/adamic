@@ -1,0 +1,41 @@
+{
+  "head1-candidate": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/sys-timer-stack/head1-candidate/src/compiler/sys.ts:1976:1",
+      "phase": "refusal_scan",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/sys-timer-stack/head1-candidate/src/compiler/sys.ts:382:79",
+      "reason": "a member typed any ((0)) related to string at the argument site",
+      "text": "/workspace/scratch/sys-timer-stack/head1-candidate/src/compiler/sys.ts:382:79: stage 0 can't lower a member typed any ((0)) related to string at the argument site yet"
+    }
+  ],
+  "head2-candidate": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1976:1",
+      "phase": "refusal_scan",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1517:36",
+      "reason": "a member typed any (require()module) related to {} at the initializer site",
+      "text": "/workspace/scratch/sys-timer-stack/head2-candidate/src/compiler/sys.ts:1517:36: stage 0 can't lower a member typed any (require()module) related to {} at the initializer site yet"
+    }
+  ],
+  "head2-mutant": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/sys-timer-stack/head2-mutant/src/compiler/sys.ts:1976:1",
+      "phase": "refusal_scan",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/sys-timer-stack/head2-mutant/src/compiler/sys.ts:382:79",
+      "reason": "a member typed any ((0)) related to string at the argument site",
+      "text": "/workspace/scratch/sys-timer-stack/head2-mutant/src/compiler/sys.ts:382:79: stage 0 can't lower a member typed any ((0)) related to string at the argument site yet"
+    }
+  ]
+}

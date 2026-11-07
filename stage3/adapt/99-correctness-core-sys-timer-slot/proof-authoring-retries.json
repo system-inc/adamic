@@ -1,0 +1,16 @@
+[
+  {
+    "phase": "owner contract authoring",
+    "initialChildExit": 1,
+    "cause": "The supposed owner-drift mutant appended whitespace outside the pinned owner, which the adapter correctly permits.",
+    "correction": "Insert a comment inside the pinned owner instead. No adapter change.",
+    "finalChildExit": 0
+  },
+  {
+    "phase": "shard declaration generation",
+    "initialChildExit": 1,
+    "cause": "The first invocation had not sourced the Go toolchain PATH.",
+    "correction": "Source /workspace/adamic-tools/env.sh and rerun the unchanged generator.",
+    "finalChildExit": 0
+  }
+]

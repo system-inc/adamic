@@ -1,0 +1,24 @@
+[
+  {
+    "path": [
+      "System",
+      "setTimeout"
+    ],
+    "kind": "MethodSignature",
+    "replace": "member",
+    "before": "setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;",
+    "after": "setTimeout?<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A): unknown;",
+    "why": "Adamic ruling, task b5w3ycg, Nov 7 21:47:55Z, C-noinfer-b: the adapted typescript.d.ts now needs TypeScript 5.4 or later to read because of NoInfer."
+  },
+  {
+    "path": [
+      "System",
+      "clearTimeout"
+    ],
+    "kind": "MethodSignature",
+    "replace": "member",
+    "before": "clearTimeout?(timeoutId: any): void;",
+    "after": "clearTimeout?(timeoutId: unknown): void;",
+    "why": "Adamic ruling, task b5w3ycg, Nov 7 21:47:55Z, C-noinfer-b: the adapted typescript.d.ts now needs TypeScript 5.4 or later to read because of NoInfer."
+  }
+]

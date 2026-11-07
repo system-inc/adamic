@@ -1,0 +1,13 @@
+--- head1/typescript.d.ts
++++ head2/typescript.d.ts
+@@ -8542,8 +8542,8 @@
+         getMemoryUsage?(): number;
+         exit(exitCode?: number): number | undefined;
+         realpath?(path: string): string;
+-        setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;
+-        clearTimeout?(timeoutId: any): void;
++        setTimeout?<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A): unknown;
++        clearTimeout?(timeoutId: unknown): void;
+         clearScreen?(): void;
+         base64decode?(input: string): string;
+         base64encode?(input: string): string;

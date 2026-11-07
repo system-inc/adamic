@@ -1,0 +1,17 @@
+{
+  "gitShowChildExit": 0,
+  "newMembers": [
+    {
+      "declaration": "member:[\"ts\",\"System\",\"clearTimeout\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"clearTimeout\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"timeoutId\"],[\"AnyKeyword\"]],[\"VoidKeyword\"]]",
+      "after": "[\"MethodSignature\",[\"Identifier\",\"clearTimeout\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"timeoutId\"],[\"UnknownKeyword\"]],[\"VoidKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"System\",\"setTimeout\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"setTimeout\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"callback\"],[\"FunctionType\",[\"Parameter\",[\"DotDotDotToken\"],[\"Identifier\",\"args\"],[\"ArrayType\",[\"AnyKeyword\"]]],[\"VoidKeyword\"]]],[\"Parameter\",[\"Identifier\",\"ms\"],[\"NumberKeyword\"]],[\"Parameter\",[\"DotDotDotToken\"],[\"Identifier\",\"args\"],[\"ArrayType\",[\"AnyKeyword\"]]],[\"AnyKeyword\"]]",
+      "after": "[\"MethodSignature\",[\"Identifier\",\"setTimeout\"],[\"QuestionToken\"],[\"TypeParameter\",[\"Identifier\",\"A\"],[\"ArrayType\",[\"UnknownKeyword\"]]],[\"Parameter\",[\"Identifier\",\"callback\"],[\"FunctionType\",[\"Parameter\",[\"DotDotDotToken\"],[\"Identifier\",\"args\"],[\"TypeReference\",[\"Identifier\",\"NoInfer\"],[\"TypeReference\",[\"Identifier\",\"A\"]]]],[\"VoidKeyword\"]]],[\"Parameter\",[\"Identifier\",\"ms\"],[\"NumberKeyword\"]],[\"Parameter\",[\"DotDotDotToken\"],[\"Identifier\",\"args\"],[\"TypeReference\",[\"Identifier\",\"A\"]]],[\"UnknownKeyword\"]]"
+    }
+  ],
+  "changedOrRemovedExistingMembers": [],
+  "generatorOutputFormat": "Unmodified generator stdout; runtime-bound before lane proof."
+}
