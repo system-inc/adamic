@@ -82,7 +82,7 @@ func ownershipProduct(t *testing.T, tsan bool) string {
 		t.Fatal(err)
 	}
 	inputs.Flags = append(inputs.Flags, request.Portable...)
-	inputs.Toolchain = []string{buildcache.Tool(request.Compiler, "--version"), buildcache.Tool(request.Archiver, "--version"), buildcache.Tool("node", "--version")}
+	inputs.Toolchain = []string{buildcache.Tool(request.Compiler, "--target="+request.Options.Target, "--version"), buildcache.Tool(request.Archiver, "--version"), buildcache.Tool("node", "--version")}
 	return buildcache.Product(t, inputs, func(directory string) error {
 		for i, path := range ownershipProvenPaths {
 			code, truth := ownershipProgram(t, path)

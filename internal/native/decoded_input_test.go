@@ -50,7 +50,7 @@ func decodedReadProduct(t *testing.T) string {
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs := buildcache.Inputs{Name: "decoded-input-read", Files: []string{"internal/native/runtime", "internal/native/decoded_input_test.go", "internal/native/native.go", "internal/native/library.go", "internal/native/build_runtime.go", "internal/native/target.go"}, Flags: portableKeyParts(files, flags, compiler, headers), Toolchain: []string{buildcache.Tool(compiler, "--version"), buildcache.Tool(archiverName(compiler), "--version"), buildcache.Tool("node", "--version")}}
+	inputs := buildcache.Inputs{Name: "decoded-input-read", Files: []string{"internal/native/runtime", "internal/native/decoded_input_test.go", "internal/native/native.go", "internal/native/library.go", "internal/native/build_runtime.go", "internal/native/target.go"}, Flags: portableKeyParts(files, flags, compiler, headers), Toolchain: []string{buildcache.CompilerReport(compiler), buildcache.Tool(archiverName(compiler), "--version"), buildcache.Tool("node", "--version")}}
 	return buildcache.Product(t, inputs, func(directory string) error {
 		cache, err := cacheDirectory("decoded-input-read")
 		if err != nil {
@@ -74,7 +74,7 @@ func decodedBackendProduct(t *testing.T) string {
 	}
 	inputs.Name = "decoded-input-backends"
 	inputs.Files = append(inputs.Files, "internal/native/decoded_input_test.go", "internal/native/testdata/decoded_input.a")
-	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"), buildcache.Tool("node", "--version"))
+	inputs.Toolchain = append(inputs.Toolchain, buildcache.CompilerReport("clang"), buildcache.Tool("node", "--version"))
 	return buildcache.Product(t, inputs, func(directory string) error {
 		entry, err := filepath.Abs("testdata/decoded_input.a")
 		if err != nil {

@@ -115,7 +115,7 @@ func regexpWitnessClosureInventory(t testing.TB) string {
 		Name:      "regexp-witness-closure-inventory",
 		Files:     []string{"internal/native/regexp_witness_closure_test.go", "internal/native/regexp_test.go", "internal/native/library.go", "internal/native/jobserver.go", "internal/native/native.go", "internal/native/target.go", "internal/native/runtime"},
 		Flags:     slices.Clone(request.Portable),
-		Toolchain: []string{buildcache.Tool(compiler, "--version"), buildcache.Tool(request.Archiver, "--version"), buildcache.Tool("nm", "--version")},
+		Toolchain: []string{buildcache.CompilerReport(compiler), buildcache.Tool(request.Archiver, "--version"), buildcache.Tool("nm", "--version")},
 	}
 	for _, path := range libraries {
 		data, err := os.ReadFile(path)

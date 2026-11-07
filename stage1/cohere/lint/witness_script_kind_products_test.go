@@ -73,7 +73,7 @@ func witnessScriptKindNativeProduct(t *testing.T) string {
 	options := native.Options{Sanitize: true, Split: true}
 	inputs.Name = "witness-script-kind-native-no-debugger-v1"
 	inputs.Flags = append(native.Flags(options), "Split=true")
-	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
+	inputs.Toolchain = append(inputs.Toolchain, buildcache.CompilerReport("clang"))
 	return buildcache.Product(t, inputs, func(out string) error {
 		data, err := os.ReadFile(filepath.Join(lowered, "main.c"))
 		if err != nil {

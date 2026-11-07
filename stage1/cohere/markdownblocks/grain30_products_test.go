@@ -67,7 +67,7 @@ func grainProduct(t *testing.T, name, target string) grainProducts {
 	main := filepath.Join(root, "stage1/cohere/markdownblocks/testdata", recipe.probe)
 	p := grainProducts{main: main}
 	goTools := []string{buildcache.Tool("go", "version")}
-	nativeTools := []string{runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version")}
+	nativeTools := []string{runtime.GOOS, runtime.GOARCH, buildcache.CompilerReport("clang")}
 	// GoBuild cannot key a newly synthesized overlay target yet: GoInputs stats that
 	// nonexistent target. Rule 7 permits this Go build as a Product, with all inputs
 	// and reproducible flags declared. Generator/formatter products use GoBuild below.

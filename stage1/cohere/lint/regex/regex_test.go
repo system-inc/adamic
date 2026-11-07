@@ -103,7 +103,7 @@ func buildRunnerProduct(t *testing.T, mutant bool) string {
 	if e != nil {
 		t.Fatal(e)
 	}
-	inputs := buildcache.Inputs{Name: "regex-runner", Files: slices.Concat([]string{"stage1/cohere/lint/regex/patterns.a", "stage1/cohere/lint/regex/testdata/runner.a", "stage1/cohere/lint/regex/testdata/corpus.a"}, compiler.Files), Flags: slices.Concat(compiler.Flags, native.Flags(native.Options{Sanitize: true}), []string{"ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}), Toolchain: slices.Concat(compiler.Toolchain, []string{buildcache.Tool("clang", "--version")})}
+	inputs := buildcache.Inputs{Name: "regex-runner", Files: slices.Concat([]string{"stage1/cohere/lint/regex/patterns.a", "stage1/cohere/lint/regex/testdata/runner.a", "stage1/cohere/lint/regex/testdata/corpus.a"}, compiler.Files), Flags: slices.Concat(compiler.Flags, native.Flags(native.Options{Sanitize: true}), []string{"ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}), Toolchain: slices.Concat(compiler.Toolchain, []string{buildcache.CompilerReport("clang")})}
 	if mutant {
 		inputs.Name = "regex-runner-mutant"
 		inputs.Flags = append(inputs.Flags, "mutant "+strconv.Quote(translationMutant[0])+" "+strconv.Quote(translationMutant[1]))

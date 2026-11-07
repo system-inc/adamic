@@ -75,7 +75,7 @@ func mutantPortProduct(t *testing.T, mutation printerMutation, options native.Op
 	inputs.Files = append(inputs.Files, "stage1/cohere/json/native_products_test.go")
 	inputs.Flags = append(inputs.Flags, fmt.Sprintf("mutation=%s:%q=>%q", mutation.file, mutation.from, mutation.to))
 	inputs.Flags = append(inputs.Flags, nativeBuildFlags(options)...)
-	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
+	inputs.Toolchain = append(inputs.Toolchain, buildcache.CompilerReport("clang"))
 	return buildcache.Product(t, inputs, func(directory string) error {
 		source := filepath.Join(directory, "source")
 		if err := os.Mkdir(source, 0755); err != nil {
@@ -100,7 +100,7 @@ func gapPortProduct(t *testing.T, file string, options native.Options) string {
 		Name:      fmt.Sprintf("json gap %s native %s", file, nativeBuildName(options)),
 		Files:     append(compilerinputs.Lowering(), "stage1/cohere/json/gaps/"+file, "stage1/cohere/json/native_products_test.go"),
 		Flags:     append([]string{"load.Load", "lower.Lower", "native.C"}, nativeBuildFlags(options)...),
-		Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")},
+		Toolchain: []string{runtime.Version(), buildcache.CompilerReport("clang")},
 	}
 	return buildcache.Product(t, inputs, func(directory string) error {
 		path, err := filepath.Abs(filepath.Join("gaps", file))

@@ -164,7 +164,7 @@ func deepMutantsNative(t *testing.T, mutation deepMutantsMutation) string {
 	}
 	inputs.Flags = append(inputs.Flags, native.Flags(estreeFamilyNativeOptions())...)
 	inputs.Flags = append(inputs.Flags, fmt.Sprintf("C=%x", sha256.Sum256(data)))
-	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
+	inputs.Toolchain = append(inputs.Toolchain, buildcache.CompilerReport("clang"))
 	product := buildcache.Product(t, inputs, func(dir string) error {
 		return native.Build(string(data), filepath.Join(dir, "port"), estreeFamilyNativeOptions())
 	})

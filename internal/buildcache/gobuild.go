@@ -682,8 +682,12 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 		inputs.Flags = append(inputs.Flags, outsideHeaders+string(encoded))
 	}
 	inputs.Flags = append(inputs.Flags, settings...)
+	// cgo's compiler is read as go runs it, by every word of CC: Env's default names the build's triple
+	// (toolchain.Compilers, toolchain.Triple of toolchain.Platform of the build's environment), and clang picks its config
+	// files by target, so its report is the build's triple's (Node's must on #5xsd2ha). A caller's own CC is read as
+	// they spelled it, the compiler cgo runs.
 	if compiler := strings.Fields(values["CC"]); len(compiler) > 0 {
-		inputs.Toolchain = append(inputs.Toolchain, Tool(compiler[0], "--version"))
+		inputs.Toolchain = append(inputs.Toolchain, Tool(compiler[0], append(compiler[1:], "--version")...))
 	}
 	for name := range files {
 		inputs.Files = append(inputs.Files, name)

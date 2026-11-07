@@ -62,7 +62,7 @@ func driverBinary(t *testing.T, root string) string {
 	source := driverSource(t, root)
 	inputs := driverInputs(t, root+"-native")
 	inputs.Flags = append(inputs.Flags, source)
-	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
+	inputs.Toolchain = append(inputs.Toolchain, buildcache.CompilerReport("clang"))
 	directory := buildcache.Product(t, inputs, func(directory string) error {
 		return native.Build(source, filepath.Join(directory, "driver"), native.Options{Sanitize: true, Split: true})
 	})
