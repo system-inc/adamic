@@ -11,9 +11,10 @@
 #include <string.h>
 #include <unistd.h>
 
-/* What no program can reach yet: a rename, and the error path, which Node takes only when libuv
- * fails reading its descriptor. The error modes put a pipe whose writer is gone where the watcher's
- * inotify descriptor was, so the next wait records POLLHUP on its source. */
+/* What no program can reach yet: a rename, the error path, which Node takes only when libuv fails
+ * reading its descriptor, and the keys of the error a watch that can't start throws. The error modes
+ * put a pipe whose writer is gone where the watcher's inotify descriptor was, so the next wait records
+ * POLLHUP on its source. */
 static const char *mode;
 static char directory[4096];
 static adamic_object *watcher;
@@ -47,6 +48,39 @@ static void touch(const char *name) {
     FILE *made = fopen(file, "w");
     assert(made != NULL && fclose(made) == 0);
 }
+/* The add-error mode watches a relative path that isn't there, from inside the fresh directory. No
+ * program can read errno, syscall, path or filename off what it throws yet, so this reads them as a
+ * compiled field read does, by name through adamic_object_field, each key with its own cache. It
+ * prints the shape's keys in its order, then each of Node's keys in Node's order with its value, every
+ * line flushed, since a missing key stops the run where it's read. */
+static int add_error(void) {
+    static const char *const keys[] = {"name", "message", "errno", "syscall", "code", "path", "filename"};
+    static adamic_slot_cache caches[sizeof keys / sizeof *keys];
+    assert(chdir(directory) == 0);
+    static const char missing[] = "adamic-fswatch-missing";
+    adamic_string *watched = adamic_decode_utf8((const unsigned char *)missing, sizeof missing - 1);
+    adamic_closure *listener = adamic_closure_new(changed, 0);
+    adamic_object *started = adamic_fs_file_host_watch(watched, true, false, listener);
+    adamic_release(watched); adamic_release(listener);
+    assert(started == NULL && adamic_thrown != NULL);
+    adamic_object *error = adamic_thrown;
+    adamic_thrown = NULL;
+    fputs("keys", stdout);
+    for (size_t index = 0; index < error->shape->count; index++) printf(" %s", error->shape->names[index]);
+    putchar('\n');
+    fflush(stdout);
+    for (size_t index = 0; index < sizeof keys / sizeof *keys; index++) {
+        adamic_value *slot = adamic_object_field(error, keys[index], &caches[index]);
+        printf("%s ", keys[index]);
+        if (strcmp(keys[index], "errno") == 0) printf("%.17g", slot->number);
+        else print(slot->reference);
+        putchar('\n');
+        fflush(stdout);
+    }
+    adamic_release(error);
+    assert(chdir("/") == 0 && rmdir(directory) == 0);
+    return 0;
+}
 int main(int argc, char **argv) {
     adamic_start(argc, argv);
     if (argc != 2) return 2;
@@ -54,6 +88,7 @@ int main(int argc, char **argv) {
     const char *temporary = getenv("TMPDIR");
     assert((size_t)snprintf(directory, sizeof directory, "%s/adamic-fswatch-XXXXXX", temporary != NULL && *temporary != 0 ? temporary : "/tmp") < sizeof directory);
     assert(mkdtemp(directory) != NULL);
+    if (strcmp(mode, "add-error") == 0) return add_error();
     if (strcmp(mode, "rename") == 0) touch("b.txt");
     adamic_string *watched = adamic_decode_utf8((const unsigned char *)directory, strlen(directory));
     adamic_closure *listener = adamic_closure_new(changed, 0), *error = adamic_closure_new(failed, 0);

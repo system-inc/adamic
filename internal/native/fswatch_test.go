@@ -131,9 +131,64 @@ func TestFSWatchMutantErrorKeepsSource(t *testing.T) {
 	t.Log("TestFSWatchErrorClosesTheWatcher goes red with the error path leaving its watcher open")
 }
 
+// fs.watch('adamic-fswatch-missing', {persistent: true}, ...) on Node v24.14.1 on Linux throws an Error
+// whose own keys after message are errno, syscall, code, path and filename, in that order, with these
+// values. The first line is the shape's keys in its order, name and message first as every native
+// error's; the rest are each key read by name.
+const fsWatchAddErrorKeys = "keys name message errno syscall code path filename\n" +
+	"name Error\n" +
+	"message ENOENT: no such file or directory, watch 'adamic-fswatch-missing'\n" +
+	"errno -2\n" +
+	"syscall watch\n" +
+	"code ENOENT\n" +
+	"path adamic-fswatch-missing\n" +
+	"filename adamic-fswatch-missing\n"
+
+// A watch that can't start throws Node's keys in Node's order, each read by its name.
+func TestFSWatchAddErrorCarriesNodeKeys(t *testing.T) {
+	t.Parallel()
+	for _, variant := range fsWatchVariants {
+		got, expired := fsWatchRun(t, variant.env, fsWatchProduct(t, variant.name, variant.options), "add-error")
+		if expired || got.ExitCode != 0 || string(got.Stdout) != fsWatchAddErrorKeys {
+			t.Fatalf("%s: expired %t, %+v", variant.name, expired, got)
+		}
+		if variant.name == "sanitized" {
+			if report := leakcheck.Unbalanced(got); report != "" {
+				t.Fatal(report)
+			}
+		}
+	}
+}
+
+// The shape with syscall dropped: the keys line loses it, and its read by name stops the run as a
+// field the checker proved is there and isn't.
+func TestFSWatchMutantAddErrorDropsSyscall(t *testing.T) {
+	t.Parallel()
+	got, expired := fsWatchRun(t, nil, fsWatchProduct(t, "mutant-add-error-drops-syscall", native.Options{Release: true}), "add-error")
+	const stdout = "keys name message errno code path filename\n" +
+		"name Error\n" +
+		"message ENOENT: no such file or directory, watch 'adamic-fswatch-missing'\n" +
+		"errno -2\n"
+	const stderr = "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+	if expired || got.ExitCode != 70 || string(got.Stdout) != stdout || string(got.Stderr) != stderr {
+		t.Fatalf("the mutant's error must lack syscall: expired %t, %+v", expired, got)
+	}
+	t.Log("TestFSWatchAddErrorCarriesNodeKeys goes red with syscall dropped from the add-time error's shape")
+}
+
 const (
 	fsWatchErrorClose  = "    adamic_object *object = adamic_retain(watcher->object);\n    fs_watcher_close(watcher);\n"
 	fsWatchErrorMutant = "    adamic_object *object = adamic_retain(watcher->object);\n    /* mutant: the watcher stays open */\n"
+	// watch_error_shape's four tables, then the same with syscall's name, reference and kind dropped and
+	// the count one less, so the mutant compiles.
+	fsWatchAddErrorShape = "    static const char *const watch_error_names[] = {\"name\", \"message\", \"errno\", \"syscall\", \"code\", \"path\", \"filename\"};\n" +
+		"    static const bool watch_error_references[] = {true, true, false, true, true, true, true};\n" +
+		"    static const adamic_field_kind watch_error_kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_number, adamic_field_reference, adamic_field_reference, adamic_field_reference, adamic_field_reference};\n" +
+		"    static const adamic_shape watch_error_shape = {7, watch_error_names, watch_error_references, &adamic_error_methods, watch_error_kinds};\n"
+	fsWatchAddErrorMutant = "    static const char *const watch_error_names[] = {\"name\", \"message\", \"errno\", \"code\", \"path\", \"filename\"};\n" +
+		"    static const bool watch_error_references[] = {true, true, false, true, true, true};\n" +
+		"    static const adamic_field_kind watch_error_kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_number, adamic_field_reference, adamic_field_reference, adamic_field_reference};\n" +
+		"    static const adamic_shape watch_error_shape = {6, watch_error_names, watch_error_references, &adamic_error_methods, watch_error_kinds};\n"
 )
 
 // Products hold compiled probes only; every run and comparison happens in the tests above. A
@@ -162,6 +217,13 @@ func fsWatchProduct(t *testing.T, variant string, options native.Options) string
 				return err
 			}
 			return native.BuildWithRuntime(code, output, options, library)
+		case "mutant-add-error-drops-syscall":
+			changed := timerMutant(t, "node_fs_watch_impl.h", fsWatchAddErrorShape, fsWatchAddErrorMutant)
+			library, err := native.RuntimeLibraryForSource(changed.directory, code, options)
+			if err != nil {
+				return err
+			}
+			return native.BuildWithRuntime(code, output, options, library)
 		}
 		return fmt.Errorf("unknown fs.watch product %s", variant)
 	})
@@ -180,6 +242,10 @@ func TestProduct_FSWatchHarnessSanitized(t *testing.T) {
 func TestProduct_FSWatchHarnessMutantErrorKeepsSource(t *testing.T) {
 	t.Parallel()
 	fsWatchProduct(t, "mutant-error-keeps-source", native.Options{Release: true})
+}
+func TestProduct_FSWatchHarnessMutantAddErrorDropsSyscall(t *testing.T) {
+	t.Parallel()
+	fsWatchProduct(t, "mutant-add-error-drops-syscall", native.Options{Release: true})
 }
 
 // The tree builds each product above ahead by its row in cloud/fast-gate/product-order.json, which
