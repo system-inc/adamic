@@ -98,7 +98,7 @@ func syntaxMutantNativeProduct(t *testing.T, item syntaxMutant) string {
 	inputs := syntaxMutantProductInputs(t, item)
 	inputs.Name = "estree-syntax-mutant-native-" + item.name
 	inputs.Flags = append(inputs.Flags, native.Flags(estreeFamilyNativeOptions())...)
-	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
+	inputs.Toolchain = append(inputs.Toolchain, buildcache.CompilerReport("clang"))
 	return buildcache.Product(t, inputs, func(dir string) error {
 		data, err := os.ReadFile(filepath.Join(lowered, "port.c"))
 		if err != nil {
@@ -128,7 +128,7 @@ var syntaxMutantsPrepared []syntaxMutantPrepared
 const syntaxMutantsPreparedEnv = "ADAMIC_SYNTAX_MUTANTS_PREPARED"
 
 func syntaxMutantSetupInputs(t *testing.T) buildcache.Inputs {
-	inputs := buildcache.Inputs{Name: "syntax-mutants-setup-v1", Files: estreeFamilyDependencyFiles(t), Flags: []string{"root=" + root(t), "sanitize=true", "split=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "GOFLAGS=" + os.Getenv("GOFLAGS")}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
+	inputs := buildcache.Inputs{Name: "syntax-mutants-setup-v1", Files: estreeFamilyDependencyFiles(t), Flags: []string{"root=" + root(t), "sanitize=true", "split=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "GOFLAGS=" + os.Getenv("GOFLAGS")}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("go", "version"), buildcache.CompilerReport("clang")}}
 	inputs.Flags = append(inputs.Flags, estreeFamilyDependencyFlags(t)...)
 	return inputs
 }

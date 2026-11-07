@@ -93,8 +93,10 @@ func markdownGoCompilers() markdownCompilers {
 		}
 	}
 	compilers.report = "no C compiler"
+	// By every word of CC, as cgo runs it: Env's default names the build's triple, which picks clang's config files
+	// (#5xsd2ha).
 	if fields := strings.Fields(compilers.c); len(fields) > 0 {
-		compilers.report = buildcache.Tool(fields[0], "--version")
+		compilers.report = buildcache.Tool(fields[0], append(fields[1:], "--version")...)
 	}
 	return compilers
 }
@@ -340,7 +342,7 @@ func textBuildProducts(t *testing.T, root string) textProducts {
 func textBuildProduct(t *testing.T, root, target string) textProducts {
 	t.Helper()
 	started := time.Now()
-	tools := []string{buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}
+	tools := []string{buildcache.Tool("go", "version"), buildcache.CompilerReport("clang")}
 	// The lowered port is keyed by what lowering reads (whitespaceLayoutBuildFiles, which
 	// TestLoweringInputsCoverCompilerDependencies keeps complete); the native builds by its C.
 	files := whitespaceLayoutBuildFiles()

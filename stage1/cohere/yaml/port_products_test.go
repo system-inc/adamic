@@ -103,7 +103,7 @@ func (build yamlBuild) native(t *testing.T) string {
 		inputs.Flags = append(inputs.Flags, recipe)
 		inputs.Flags = append(inputs.Flags, flags...)
 		inputs.Flags = append(inputs.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-		inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
+		inputs.Toolchain = append(inputs.Toolchain, buildcache.CompilerReport("clang"))
 		return buildcache.Product(t, inputs, func(directory string) error {
 			for _, entry := range build.entries {
 				source, err := os.ReadFile(filepath.Join(lowered, yamlStem(entry)+".c"))
@@ -237,7 +237,7 @@ func (mutants yamlMutants) product(t *testing.T, index int) string {
 		inputs.Flags = append(inputs.Flags, native.Flags(options)...)
 		inputs.Flags = append(inputs.Flags, fmt.Sprintf("options=%+v", options))
 		inputs.Flags = append(inputs.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-		inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
+		inputs.Toolchain = append(inputs.Toolchain, buildcache.CompilerReport("clang"))
 		return buildcache.Product(t, inputs, func(directory string) error {
 			sources := filepath.Join(directory, "sources")
 			if err := os.Mkdir(sources, 0755); err != nil {

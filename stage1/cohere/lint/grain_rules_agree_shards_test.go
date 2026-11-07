@@ -211,7 +211,7 @@ func rulesAgreeNative(t *testing.T) string {
 		inputs.Flags = append(native.Flags(native.Options{Sanitize: true, Split: true, Jobs: 4}),
 			"Split=true", "Jobs=4",
 			"ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-		inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
+		inputs.Toolchain = append(inputs.Toolchain, buildcache.CompilerReport("clang"))
 		rulesAgreeBinaryDirectory = buildcache.Product(t, inputs, func(output string) error {
 			source, err := os.ReadFile(filepath.Join(lowered, "lint.c"))
 			if err != nil {

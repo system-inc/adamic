@@ -20,7 +20,7 @@ import (
 func stableSplitProduct(t *testing.T, name string) string {
 	t.Helper()
 	path := "internal/oracle/testdata/" + name + ".a"
-	inputs := buildcache.Inputs{Name: "stable identity split " + name, Files: append(compilerinputs.Lowering(), "internal/native/names_split_test.go", "oracle/node.mjs", path), Flags: native.Flags(native.Options{Split: true, Sanitize: true, Count: true, Jobs: 2}), Toolchain: []string{buildcache.Tool("clang", "--version")}}
+	inputs := buildcache.Inputs{Name: "stable identity split " + name, Files: append(compilerinputs.Lowering(), "internal/native/names_split_test.go", "oracle/node.mjs", path), Flags: native.Flags(native.Options{Split: true, Sanitize: true, Count: true, Jobs: 2}), Toolchain: []string{buildcache.CompilerReport("clang")}}
 	return buildcache.Product(t, inputs, func(directory string) error {
 		absolute, err := filepath.Abs(filepath.Join("../..", path))
 		if err != nil {

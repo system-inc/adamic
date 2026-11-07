@@ -66,7 +66,7 @@ var columnsMutants = []columnsMutant{
 // plain destinations use the emitted fixture, not this runtime host-loop probe.
 func stdoutColumnsProducts(t *testing.T) string {
 	t.Helper()
-	inputs := buildcache.Inputs{Name: "stdout-columns-probes", Files: append(compilerinputs.Lowering(), "internal/oracle/library_node_stdout_columns_test.go", "internal/oracle/testdata/stdout_columns"), Flags: []string{"ADAMIC_PROGRAM_REGION=" + os.Getenv("ADAMIC_PROGRAM_REGION"), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}, Toolchain: []string{buildcache.Tool("clang", "--version")}}
+	inputs := buildcache.Inputs{Name: "stdout-columns-probes", Files: append(compilerinputs.Lowering(), "internal/oracle/library_node_stdout_columns_test.go", "internal/oracle/testdata/stdout_columns"), Flags: []string{"ADAMIC_PROGRAM_REGION=" + os.Getenv("ADAMIC_PROGRAM_REGION"), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}, Toolchain: []string{buildcache.CompilerReport("clang")}}
 	return buildcache.Product(t, inputs, func(directory string) error {
 		read := func(path string) (string, error) {
 			b, e := os.ReadFile(filepath.Join(repository, path))

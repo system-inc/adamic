@@ -41,7 +41,7 @@ func recordUnionSlotsProduct(t *testing.T) string {
 			t.Fatal(err)
 		}
 		inputs.Flags = append(inputs.Flags, request.Portable...)
-		inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool(request.Compiler, "--version"), buildcache.Tool(request.Archiver, "--version"))
+		inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool(request.Compiler, "--target="+request.Options.Target, "--version"), buildcache.Tool(request.Archiver, "--version"))
 	}
 	return buildcache.Product(t, inputs, func(directory string) error {
 		for _, name := range []string{"null", "presence"} {

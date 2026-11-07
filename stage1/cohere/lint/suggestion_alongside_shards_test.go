@@ -113,7 +113,7 @@ func suggestionAlongsidePrepare(t *testing.T) {
 	inputs.Name = "suggestion-alongside-native-v2"
 	inputs.Flags = append(inputs.Flags, "split=true", "jobs=4")
 	inputs.Flags = append(inputs.Flags, native.Flags(native.Options{Sanitize: true, Split: true, Jobs: 4})...)
-	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
+	inputs.Toolchain = append(inputs.Toolchain, buildcache.CompilerReport("clang"))
 	built := buildcache.Product(t, inputs, func(out string) error {
 		source, err := os.ReadFile(filepath.Join(lowered, "lint.c"))
 		if err != nil {

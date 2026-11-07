@@ -168,7 +168,7 @@ func inlineLoweredInputs(index int) buildcache.Inputs {
 	if index < 0 {
 		name = "markdowninline lowered program"
 	}
-	in := buildcache.Inputs{Name: name, Files: compilerinputs.Lowering(), Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
+	in := buildcache.Inputs{Name: name, Files: compilerinputs.Lowering(), Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), buildcache.CompilerReport("clang")}}
 	for _, file := range []string{"main.ts", "inline.ts", "classes.ts", "inline_products_shards_test.go", "inline_build_products_test.go"} {
 		in.Files = append(in.Files, "stage1/cohere/markdowninline/"+file)
 	}
@@ -193,7 +193,7 @@ func inlineProductSources(t *testing.T, in buildcache.Inputs, source string, nam
 // A native product keys the compiler that builds it (compilerinputs.Lowering, which holds internal/native), the recipe
 // here, and its C by content.
 func inlineNativeInputs(t *testing.T, name, source string, sanitize bool) buildcache.Inputs {
-	in := buildcache.Inputs{Name: name, Files: append(compilerinputs.Lowering(), "stage1/cohere/markdowninline/inline_products_shards_test.go"), Flags: native.Flags(native.Options{Sanitize: sanitize}), Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.GOOS, runtime.GOARCH}}
+	in := buildcache.Inputs{Name: name, Files: append(compilerinputs.Lowering(), "stage1/cohere/markdowninline/inline_products_shards_test.go"), Flags: native.Flags(native.Options{Sanitize: sanitize}), Toolchain: []string{buildcache.CompilerReport("clang"), runtime.GOOS, runtime.GOARCH}}
 	in.Flags = append(in.Flags, inlineEnvironment("LIBRARY_PATH", "CPATH", "C_INCLUDE_PATH", "SOURCE_DATE_EPOCH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET", "LD_LIBRARY_PATH", "DYLD_LIBRARY_PATH", "ADAMIC_NATIVE_SPLIT")...)
 	return inlineProductSources(t, in, source, "program.c")
 }

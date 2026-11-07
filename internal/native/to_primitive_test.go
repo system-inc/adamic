@@ -123,7 +123,7 @@ func primitiveMutants(t *testing.T) string {
 		Name:      "primitive-mutants",
 		Files:     []string{"internal/native/runtime", "internal/native/testdata/to-primitive/runtime.c", "internal/native/to_primitive_test.go", "internal/native/split_units_test.go", "internal/native/runtime_mutants_test.go", "internal/native/native.go", "internal/native/library.go"},
 		Flags:     slices.Clone(flags),
-		Toolchain: []string{buildcache.Tool("clang", "--version")},
+		Toolchain: []string{buildcache.CompilerReport("clang")},
 	}
 	for _, mutation := range primitiveMutations {
 		inputs.Flags = append(inputs.Flags, fmt.Sprintf("mutant %s exceptions.c %x %x", mutation.name, sha256.Sum256([]byte(mutation.before)), sha256.Sum256([]byte(mutation.after))))

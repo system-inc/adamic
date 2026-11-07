@@ -36,7 +36,7 @@ func mutantNativeProduct(t *testing.T, index int) string {
 			Name:      fmt.Sprintf("TS printer mutant %03d sanitized native", index),
 			Files:     inputs,
 			Flags:     append(native.Flags(options), "split=true", "jobs=4", fmt.Sprintf("mutation=%+v", oracles.Mutations[index])),
-			Toolchain: runtime.Version() + "\n" + buildcache.Tool("clang", "--version"),
+			Toolchain: runtime.Version() + "\n" + buildcache.CompilerReport("clang"),
 		}, func(directory string) error {
 			path := mutatedPort(t, oracles.Mutations[index])
 			started := time.Now()

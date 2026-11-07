@@ -166,7 +166,7 @@ func completeSuggestionLoweredProduct(ctx context.Context, t *testing.T, directo
 	return buildcache.Product(t, buildcache.Inputs{
 		Name: fmt.Sprintf("complete-suggestion-lowered-%t", mutant), Files: completeSuggestionProductFiles(t),
 		Flags:     []string{packageDirectory, "serialization-only-no-debugger-v1", "second-edit-end+3=" + fmt.Sprint(mutant)},
-		Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")},
+		Toolchain: []string{runtime.Version(), buildcache.CompilerReport("clang")},
 	}, func(out string) error {
 		prepareRegistry(t, directory)
 		program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
@@ -189,7 +189,7 @@ func completeSuggestionNativeProduct(ctx context.Context, t *testing.T, director
 	return buildcache.Product(t, buildcache.Inputs{
 		Name: "complete-suggestion-native", Files: completeSuggestionProductFiles(t),
 		Flags:     []string{packageDirectory, "serialization-only-no-debugger-v1", "sanitize=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")},
-		Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")},
+		Toolchain: []string{runtime.Version(), buildcache.CompilerReport("clang")},
 	}, func(out string) error {
 		product := completeSuggestionLoweredProduct(ctx, t, directory, false)
 		data, err := os.ReadFile(filepath.Join(product, "lint.c"))
