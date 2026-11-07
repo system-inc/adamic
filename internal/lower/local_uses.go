@@ -76,6 +76,7 @@ var localFields = map[string]localField{
 	"ArraySort.CallbackType":          {why: "the checker's id of a callback's type"},
 	"ArrayVisit.CallbackType":         {why: "the checker's id of a callback's type"},
 	"MapForEach.CallbackType":         {why: "the checker's id of a callback's type"},
+	"NodeFSFile.CallbackType":         {why: "the checker's id of a callback's type"},
 	"CallClosure.FunctionType":        {why: "the checker's id of a function value's type"},
 	"Property.ViewTypeID":             {why: "the checker's id of a view's field type"},
 	"Property.ViewReceiverTypeID":     {why: "the checker's id of a view's receiver type"},
