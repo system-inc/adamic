@@ -77,7 +77,7 @@ helpers; both arities restore the exact binder refusal on both backends.
 No production compiler change or exemption was introduced.
 
 The separate Node site witnesses supply the same actual predicate callbacks
-and same node objects to the original and new constructors. All fourteen
+and same node objects to the original and new constructors. All twelve
 comparisons return equal booleans, with identical predicate call counts. The
 first-true cases prove that neither the second nor the third predicate is
 called after the first returns true.
@@ -124,7 +124,10 @@ its remaining body lowers. Exact sources, errors and exit codes are retained.
   with zero writes. Fourteen pre-existing replay refusals remain identical.
 - The before/after full checker censuses are running at this checkpoint. Each
   has a 90-minute wall cap and the common 30-minute child-output idle limit.
-  Their final reports will be appended.
+  Their final reports will be appended. The baseline attempt has since received
+  SIGKILL after 48.8 minutes while the 16 GiB cgroup recorded an OOM kill; its
+  last completed unit is checker.ts:30917:5. The candidate attempt continues.
+  See CHECKER-CENSUS.md for the current record.
 
 Base: origin/main 3214dd465e1155d7bf4d41653e95b29a3f1060a6. TypeScript source:
 050880ce59e30b356b686bd3144efe24f875ebc8. d15620712's parameter rule stays.
@@ -135,3 +138,6 @@ The original baseline evidence archive remains intact. The new proof archive
 will retain both backend blockers and excluded startup probes, including the
 preview accidentally applied to baseline. That baseline was restored and all
 746 source hashes verified before its accepted checker-census attempt began.
+
+BACKEND-BLOCKER.md is the focused compiler handoff. The complete attempted
+witnesses remain failures; the successful stock checks do not waive them.

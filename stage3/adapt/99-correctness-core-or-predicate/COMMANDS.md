@@ -86,7 +86,7 @@ The independent Node site witness evaluates the actual copied constructors,
 uses stock 6.0.3's isImportEqualsDeclaration/isExportDeclaration and
 isImportDeclaration/isJSDocImportTag/isExportDeclaration callbacks, and checks
 identical results and call traces on identical real node objects. It proves
-short-circuiting in fourteen cases. This is a witness, not a new lane count.
+short-circuiting in twelve cases. This is a witness, not a new lane count.
 
 replay.py runs every adapter from the corresponding repository on isolated
 copies of the completed baseline/candidate trees. replay-review.py checks all
