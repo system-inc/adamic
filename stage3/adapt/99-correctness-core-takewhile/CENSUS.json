@@ -1,0 +1,150 @@
+{
+  "scope": "complete core.ts, exact LATENT_FULL/LATENT_ONLY_FILE/LATENT_ASSERT_NO_OUTPUT protocol",
+  "measurements": {
+    "before": {
+      "checker_rejected": false,
+      "diagnostic_sites": [],
+      "diagnostics": [],
+      "latent_mode": "full",
+      "measurement": "measured on a checker-rejected program",
+      "status": "measurement"
+    },
+    "after": {
+      "checker_rejected": false,
+      "diagnostic_sites": [],
+      "diagnostics": [],
+      "latent_mode": "full",
+      "measurement": "measured on a checker-rejected program",
+      "status": "measurement"
+    },
+    "mutant": {
+      "checker_rejected": false,
+      "diagnostic_sites": [],
+      "diagnostics": [],
+      "latent_mode": "full",
+      "measurement": "measured on a checker-rejected program",
+      "status": "measurement"
+    }
+  },
+  "uniqueSites": {
+    "before": 59,
+    "after": 58,
+    "mutant": 59
+  },
+  "removedSites": [
+    [
+      "core.ts:2595:16",
+      "Refused",
+      "a cast the runtime can't check",
+      "refusal_scan"
+    ]
+  ],
+  "newSites": [],
+  "lineDelta": 4,
+  "takeWhileUnits": {
+    "before": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/takewhile/before/src/compiler/core.ts:2585:1",
+        "kind": "KindFunctionDeclaration",
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "takeWhile",
+        "top": "/workspace/scratch/takewhile/before/src/compiler/core.ts:2585:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/takewhile/before/src/compiler/core.ts:2587:1",
+        "kind": "KindFunctionDeclaration",
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "takeWhile",
+        "top": "/workspace/scratch/takewhile/before/src/compiler/core.ts:2587:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/takewhile/before/src/compiler/core.ts:2588:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 92431,
+        "body_end": 92672,
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "takeWhile",
+        "top": "/workspace/scratch/takewhile/before/src/compiler/core.ts:2588:1"
+      }
+    ],
+    "after": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/takewhile/after/src/compiler/core.ts:2585:1",
+        "kind": "KindFunctionDeclaration",
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "takeWhile",
+        "top": "/workspace/scratch/takewhile/after/src/compiler/core.ts:2585:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/takewhile/after/src/compiler/core.ts:2587:1",
+        "kind": "KindFunctionDeclaration",
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "takeWhile",
+        "top": "/workspace/scratch/takewhile/after/src/compiler/core.ts:2587:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/takewhile/after/src/compiler/core.ts:2588:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 92431,
+        "body_end": 92779,
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "takeWhile",
+        "top": "/workspace/scratch/takewhile/after/src/compiler/core.ts:2588:1"
+      }
+    ],
+    "mutant": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/takewhile/mutant/src/compiler/core.ts:2585:1",
+        "kind": "KindFunctionDeclaration",
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "takeWhile",
+        "top": "/workspace/scratch/takewhile/mutant/src/compiler/core.ts:2585:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/takewhile/mutant/src/compiler/core.ts:2587:1",
+        "kind": "KindFunctionDeclaration",
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "takeWhile",
+        "top": "/workspace/scratch/takewhile/mutant/src/compiler/core.ts:2587:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/takewhile/mutant/src/compiler/core.ts:2588:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 92431,
+        "body_end": 92672,
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "takeWhile",
+        "top": "/workspace/scratch/takewhile/mutant/src/compiler/core.ts:2588:1"
+      }
+    ]
+  },
+  "mutantRestoresOriginalFullSiteSet": true,
+  "genericBodyLoweringClaim": false
+}

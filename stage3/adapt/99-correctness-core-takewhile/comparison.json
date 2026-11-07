@@ -1,0 +1,93 @@
+{
+  "sourceFiles": 746,
+  "changed": [
+    "compiler/core.ts"
+  ],
+  "onlyPinnedOwnerChanged": true,
+  "coreJavascript": [
+    {
+      "removeComments": false,
+      "onlyTakeWhile": true,
+      "before": "8ba3fab82a752cb45bfcf6949c69cdee1e32f3e5805e66e991621f13d85581c4",
+      "after": "48830498072b061f756d8e099476b3ae5c6e5ac6540314d935a2cbcce845f9c5"
+    },
+    {
+      "removeComments": true,
+      "onlyTakeWhile": true,
+      "before": "fe031f7c04b8f6e0f9dcc79b9e0d110af3649eedecbdac84fc76fd74d6e623bb",
+      "after": "9bc4fc818d33fd59420510e1209a876c330469db7bb945730c63ac30f88b0309"
+    }
+  ],
+  "declarations": [
+    {
+      "name": "typescript.d.ts",
+      "identical": true,
+      "sha256": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b",
+      "bytes": 593502
+    },
+    {
+      "name": "tsserverlibrary.d.ts",
+      "identical": true,
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd",
+      "bytes": 866
+    }
+  ],
+  "emitted": [
+    {
+      "name": "_tsc.js",
+      "identical": false,
+      "onlyTakeWhile": true,
+      "before": "dd4689cd47e51b786305fdf69e158185463f7ca1161861f9f66cc3c31ecd2b39",
+      "after": "c0796255d3f1358618d0a0fff5e34ab1a93db4891ac080ed91dde81d46dface5"
+    },
+    {
+      "name": "_tsserver.js",
+      "identical": true,
+      "before": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+      "after": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b"
+    },
+    {
+      "name": "_typingsInstaller.js",
+      "identical": true,
+      "before": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+      "after": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1"
+    },
+    {
+      "name": "tsc.js",
+      "identical": true,
+      "before": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+      "after": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983"
+    },
+    {
+      "name": "tsserver.js",
+      "identical": true,
+      "before": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+      "after": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb"
+    },
+    {
+      "name": "tsserverlibrary.js",
+      "identical": true,
+      "before": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+      "after": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf"
+    },
+    {
+      "name": "typescript.js",
+      "identical": false,
+      "onlyTakeWhile": true,
+      "before": "a189114ced5661c9af66edb805ddf11f56b20555cdeb9d9086aad69e99843d16",
+      "after": "b38470c810d075ab8409b92ce501312f479e7aafdd9a330d7dde0c76438e907f"
+    },
+    {
+      "name": "typingsInstaller.js",
+      "identical": true,
+      "before": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+      "after": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213"
+    },
+    {
+      "name": "watchGuard.js",
+      "identical": true,
+      "before": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+      "after": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88"
+    }
+  ]
+}
