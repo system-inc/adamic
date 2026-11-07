@@ -129,14 +129,20 @@ func neverRestStops(t *testing.T, source, want string) {
 
 // Pins 1, 1b and 10: tsc's shape, the mark handed through two levels of `mark || f` into fail's
 // never-rest parameter, lowers and agrees on both backends, the hole's failure caught with the mark
-// present; in .a without asserts signatures too; and through Error.captureStackTrace(e, mark || fail),
-// tsc's own fail, which evaluates its arguments and nothing else.
+// present; in .ts and .a without asserts signatures; and through Error.captureStackTrace(e, mark ||
+// fail), tsc's own fail, which evaluates its arguments and nothing else. With tsc's asserts signatures,
+// the marker takes the value and lowering goes on to the overload's own predicate, which R-T80 judges and
+// stops at its declaration: the next stop is the predicate rule's, past the value (Home, 8a93675).
 func TestNeverRestMarkerLowersTscShape(t *testing.T) {
 	t.Parallel()
 	const want = "ok\na hole (marked)\nafter\n"
 	t.Run("ts", func(t *testing.T) {
 		t.Parallel()
-		neverRestAgrees(t, neverRestTsc+neverRestTscRun, ".ts", want)
+		neverRestAgrees(t, neverRestTscA+neverRestTscRun, ".ts", want)
+	})
+	t.Run("ts asserts", func(t *testing.T) {
+		t.Parallel()
+		neverRestStops(t, neverRestTsc+neverRestTscRun, "main.ts:11:1: stage 0 can't lower checked predicate overload target Node yet")
 	})
 	t.Run("a", func(t *testing.T) {
 		t.Parallel()
