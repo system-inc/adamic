@@ -61,7 +61,8 @@
         "loom/rules.json",
         "cloud/admission-corpus/*.json",
         "internal/load/host_{axioms,bindings}.json",
-        "internal/load/node_types_manifest.json"
+        "internal/load/node_types_manifest.json",
+        "docs/0.1.md"
     ],
     "overrides": [
         {
