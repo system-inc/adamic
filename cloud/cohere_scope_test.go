@@ -14,8 +14,9 @@ import (
 // generated file, the last naming its generator in the row.
 var scopeKinds = map[string]bool{"input": true, "record": true, "generated": true}
 
-// scopeRow is one row of docs/cohere-scope.md's table: `| `glob` | kind | why | read by |`.
-var scopeRow = regexp.MustCompile("^\\| `([^`]+)` \\| ([a-z]+) \\| ([^|]+) \\| ([^|]+) \\|$")
+// scopeRow is one row of docs/cohere-scope.md's table: `| `glob` | kind | why | read by |`, with the padding cohere's
+// format adds to align the columns.
+var scopeRow = regexp.MustCompile("^\\| `([^`]+)` +\\| ([a-z]+) +\\| ([^|]+) \\| ([^|]+) \\|$")
 
 // checkCohereScope holds CohereSettings.json's ignorePatterns and docs/cohere-scope.md's table to one another, so no
 // glob leaves cohere's judgment without a written reason (Adamic's ruling on #h2c34ad): every glob is in both, once,
@@ -98,6 +99,11 @@ func TestCohereScopeRefusesAnUnpairedIgnore(t *testing.T) {
 	good := `{"ignorePatterns": ["**/testdata/**"]}`
 	if err := checkCohereScope([]byte(good), row); err != nil {
 		t.Fatalf("a good pair was refused: %v", err)
+	}
+	// The same row aligned the way cohere's format pads a table is the same row.
+	padded := "| `**/testdata/**`   | input     | Test inputs.   | Their tests.   |\n"
+	if err := checkCohereScope([]byte(good), padded); err != nil {
+		t.Fatalf("a padded row was refused: %v", err)
 	}
 	// A later section's table is not read as ignores, so its three-column rows neither fail nor count.
 	later := row + "\n## Out of tsconfig\n\n| `internal/oracle/testdata` | Why. | Its test. |\n"

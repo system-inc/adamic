@@ -1,7 +1,5 @@
 {
-    "extends": [
-        "cohere:typescript"
-    ],
+    "extends": ["cohere:typescript"],
     "ignorePatterns": [
         "**/testdata/**",
         "**/fixtures/**",
@@ -65,9 +63,7 @@
     ],
     "overrides": [
         {
-            "files": [
-                "internal/load/prelude.d.ts"
-            ],
+            "files": ["internal/load/prelude.d.ts"],
             "rules": {
                 "@typescript-eslint/method-signature-style": "off",
                 "@typescript-eslint/no-redeclare": "off",
@@ -78,28 +74,21 @@
             "reason": "A declaration file the checker reads as lib: its members' syntax is part of what programs admit, it mirrors lib.d.ts's conventions, and most of it merges into lib's own global interfaces, so a member keeps lib's declaration form (Lower, with Language)."
         },
         {
-            "files": [
-                "internal/load/prelude.d.ts"
-            ],
+            "files": ["internal/load/prelude.d.ts"],
             "rules": {
                 "adamic/no-type-predicate": "off"
             },
             "reason": "isArray's predicate is axiom C1 in docs/axioms/library-any.md, audited to narrow to a readonly view of an array and never to its elements, on both backends. A trusted predicate in the trusted surface is the axiom audit's to hold (Language)."
         },
         {
-            "files": [
-                "bench/nbody.ts",
-                "bench/spectral_norm.ts"
-            ],
+            "files": ["bench/nbody.ts", "bench/spectral_norm.ts"],
             "rules": {
                 "nexus/correctness-no-caller-data-mutation": "off"
             },
             "reason": "Benchmark programs: updating the bodies and the vectors in place is the workload timed against Node and Bun, and internal/native's loop-borrow tests compile nbody.ts to check exactly those loops."
         },
         {
-            "files": [
-                "bench/devirtualize.a"
-            ],
+            "files": ["bench/devirtualize.a"],
             "rules": {
                 "max-classes-per-file": "off"
             },
