@@ -2,12 +2,15 @@ package lower
 
 import (
 	"context"
+	"maps"
 	"os"
 	"path/filepath"
 	"slices"
+	"strings"
 	"testing"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/load"
 )
 
@@ -35,9 +38,9 @@ func programRegionNameText(name *ast.Node) string {
 	return "computed"
 }
 
-// programRegionRoots lowers source with Program discovery and names the functions a begin goes in,
-// under rule (1) and under rule (2).
-func programRegionRoots(t *testing.T, source string) ([]string, []string) {
+// programRegionDiscovered lowers source with Program discovery, and returns the discovery lowering
+// and its modules. The checker is released when the test ends.
+func programRegionDiscovered(t *testing.T, source string) (*lowering, []*ast.SourceFile) {
 	t.Helper()
 	path := filepath.Join(t.TempDir(), "main.a")
 	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
@@ -49,7 +52,7 @@ func programRegionRoots(t *testing.T, source string) ([]string, []string) {
 	}
 	entry := loaded.Files()[0]
 	typeChecker, release := loaded.Checker(context.Background(), entry)
-	defer release()
+	t.Cleanup(release)
 	discovered, err := lowerChecked(loaded, typeChecker, entry, nil, true, false)
 	if err != nil {
 		t.Fatal(err)
@@ -58,9 +61,11 @@ func programRegionRoots(t *testing.T, source string) ([]string, []string) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(discovered.programPlan.tops) == 0 {
-		t.Fatal("no top component")
-	}
+	return discovered, modules
+}
+
+// programRegionBeginNames names the functions a begin goes in, under rule (1) and under rule (2).
+func programRegionBeginNames(discovered *lowering, modules []*ast.SourceFile) ([]string, []string) {
 	allocating, returning := []string{}, []string{}
 	for _, begin := range discovered.programRegionBegins(modules, discovered.programPlan.tops) {
 		allocating = append(allocating, programRegionBeginName(begin.function))
@@ -71,6 +76,17 @@ func programRegionRoots(t *testing.T, source string) ([]string, []string) {
 	slices.Sort(allocating)
 	slices.Sort(returning)
 	return allocating, returning
+}
+
+// programRegionRoots lowers source with Program discovery and names the functions a begin goes in,
+// under rule (1) and under rule (2).
+func programRegionRoots(t *testing.T, source string) ([]string, []string) {
+	t.Helper()
+	discovered, modules := programRegionDiscovered(t, source)
+	if len(discovered.programPlan.tops) == 0 {
+		t.Fatal("no top component")
+	}
+	return programRegionBeginNames(discovered, modules)
 }
 
 func programRegionRootsWant(t *testing.T, rule string, got, want []string) {
@@ -163,4 +179,183 @@ func TestProgramRegionComponents(t *testing.T) {
 	if selected := ProgramRegionSCC(edges, owning); len(selected) != 4 || selected[5] || selected[6] {
 		t.Fatalf("selection %v", selected)
 	}
+}
+
+// programRegionRebuilt rebuilds a discovery lowering's finder, seeded as findCycles and
+// selectProgramMembership seed it, so a test can read the owning components the plan was chosen
+// from. Its tops must equal the plan's, or the copy has drifted from the seeding it mirrors.
+func programRegionRebuilt(t *testing.T, discovered *lowering, modules []*ast.SourceFile) (*cycleFinder, programRegionOwning) {
+	t.Helper()
+	finder := &cycleFinder{l: discovered, where: map[*checker.Type]*ast.Node{}}
+	for _, module := range modules {
+		var visit ast.Visitor
+		visit = func(node *ast.Node) bool {
+			if ast.IsPartOfTypeNode(node) {
+				return false
+			}
+			finder.libraryIteratorMade(node)
+			switch {
+			case node.Kind == ast.KindObjectLiteralExpression:
+				finder.shape(discovered.checker.GetTypeAtLocation(node), node)
+			case node.Kind == ast.KindArrayLiteralExpression || node.Kind == ast.KindCallExpression || node.Kind == ast.KindNewExpression:
+				finder.made(discovered.checker.GetTypeAtLocation(node), node)
+			case ast.IsIdentifier(node) || node.Kind == ast.KindThisKeyword || node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression:
+				if ast.IsIdentifier(node) && !ast.IsDeclarationName(node) && !ast.IsExpressionNode(node) {
+					break
+				}
+				finder.use(discovered.checker.GetTypeAtLocation(node), node)
+			}
+			if ast.IsExpressionNode(node) {
+				finder.use(discovered.checker.GetTypeAtLocation(node), node)
+				if contextual := discovered.slotType(node); contextual != nil {
+					finder.use(contextual, node)
+				}
+			}
+			return node.ForEachChild(visit)
+		}
+		module.AsNode().ForEachChild(visit)
+	}
+	for _, proven := range discovered.instantiated {
+		finder.use(proven, discovered.classNodeFor(proven))
+	}
+	if err := finder.graphTypes(modules); err != nil {
+		t.Fatal(err)
+	}
+	for _, closure := range discovered.closureRecords {
+		finder.use(closure.proven, closure.node)
+	}
+	for proven, node := range discovered.programCandidates {
+		finder.use(proven, node)
+	}
+	for _, local := range slices.Sorted(maps.Keys(discovered.localTypes)) {
+		if proven := discovered.localTypes[local]; proven != nil {
+			finder.use(proven, discovered.localNodes[local])
+		}
+	}
+	_, owning := finder.programRegionOwningMode(true)
+	if tops := finder.programRegionTops(owning, discovered.programPlan.types); !maps.Equal(tops, discovered.programPlan.tops) {
+		t.Fatalf("rebuilt tops %v differ from the plan's %v", tops, discovered.programPlan.tops)
+	}
+	return finder, owning
+}
+
+// tsc's shape, where every interface is methods only: the checker is an object of arrow
+// properties capturing its host, and the Program an object of arrow properties whose getChecker
+// builds the checker lazily, from the Program itself, and keeps it in a captured let. deriveFields
+// drops method signatures, so whether the interfaces or only the literals' own types are members,
+// and where the root falls, is what this pins.
+const programRegionMethodOnlySource = `interface SourceFile { fileName: string; text: string; }
+interface Host {
+ getSourceFile(fileName: string): SourceFile | undefined;
+ getFileNames(): string[];
+}
+interface Checker {
+ getFileCount(): number;
+ getHost(): Host;
+}
+interface Program extends Host {
+ getChecker(): Checker;
+}
+function createChecker(host: Host): Checker {
+ const checker: Checker = {
+  getFileCount: () => host.getFileNames().length,
+  getHost: () => host,
+ };
+ return checker;
+}
+function createProgram(names: string[]): Program {
+ const files: SourceFile[] = [];
+ for (const name of names) {
+  files.push({ fileName: name, text: 'text of ' + name });
+ }
+ let checker: Checker | undefined = undefined;
+ const program: Program = {
+  getSourceFile: (fileName: string) => files.find((file) => file.fileName === fileName),
+  getFileNames: () => files.map((file) => file.fileName),
+  getChecker: () => {
+   if (checker === undefined) {
+    checker = createChecker(program);
+   }
+   return checker;
+  },
+ };
+ return program;
+}
+const first = createProgram(['a.ts', 'b.ts']);
+console.log(first.getChecker().getFileCount().toString());
+const second = createProgram(['c.ts']);
+console.log(second.getChecker().getHost().getFileNames().join(','));
+const found = first.getSourceFile('a.ts');
+console.log(found === undefined ? 'missing' : found.text);
+`
+
+func TestProgramRegionRootsMethodOnly(t *testing.T) {
+	t.Parallel()
+	discovered, modules := programRegionDiscovered(t, programRegionMethodOnlySource)
+	_, owning := programRegionRebuilt(t, discovered, modules)
+	format := func(proven *checker.Type) string {
+		return discovered.checker.TypeToStringEx(proven, nil, checker.TypeFormatFlagsNoTruncation, nil)
+	}
+	component := map[*checker.Type]int{}
+	for index, nodes := range owning.components {
+		labels, top := []string{}, false
+		for node := range nodes {
+			if node.proven == nil {
+				labels = append(labels, "cell "+discovered.result.Locals[node.cell-1].Name)
+				continue
+			}
+			component[node.proven] = index
+			label := format(node.proven)
+			if discovered.programPlan.types[int(node.proven.Id())] {
+				label += " (member)"
+			}
+			if discovered.programPlan.tops[int(node.proven.Id())] {
+				label += " (top)"
+				top = true
+			}
+			labels = append(labels, label)
+		}
+		slices.Sort(labels)
+		t.Logf("component %d top=%t: %s", index, top, strings.Join(labels, "; "))
+	}
+	members := []string{}
+	for id := range discovered.programPlan.types {
+		for proven := range component {
+			if int(proven.Id()) == id {
+				members = append(members, format(proven))
+			}
+		}
+	}
+	slices.Sort(members)
+	t.Logf("member types (%d, %d outside any component): %s", len(discovered.programPlan.types), len(discovered.programPlan.types)-len(members), strings.Join(members, "; "))
+	for local, member := range discovered.programPlan.cells {
+		if member {
+			t.Logf("member cell %s", discovered.result.Locals[local].Name)
+		}
+	}
+	// The object literal each of createProgram and createChecker keeps, by its own type and its slot's.
+	literals := map[string][]*checker.Type{}
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if node.Kind == ast.KindObjectLiteralExpression && node.Parent.Kind == ast.KindVariableDeclaration {
+			name := node.Parent.Name().Text()
+			literals[name] = append(literals[name], discovered.checker.GetTypeAtLocation(node), discovered.slotType(node))
+		}
+		return node.ForEachChild(visit)
+	}
+	for _, module := range modules {
+		module.AsNode().ForEachChild(visit)
+	}
+	for _, name := range []string{"program", "checker"} {
+		for _, proven := range literals[name] {
+			index, in := component[proven]
+			if !in {
+				index = -1
+			}
+			t.Logf("literal %s: %s in component %d, member %t, top %t", name, format(proven), index, discovered.programPlan.types[int(proven.Id())], discovered.programPlan.tops[int(proven.Id())])
+		}
+	}
+	allocating, returning := programRegionBeginNames(discovered, modules)
+	t.Logf("rule 1: %v", allocating)
+	t.Logf("rule 2: %v", returning)
 }
