@@ -278,6 +278,9 @@ func (l *lowering) censusOverloadWitness(implementation, overload *ast.Node, ord
 		if l.censusNullableOverloadResult(produced, promised) {
 			return nil // Each resolved call proves the result or checks its presence.
 		}
+		if l.censusCheckedClaimResult(overload, produced) {
+			return nil // Every call through the promised signature checks its claim (R-T80).
+		}
 		proven, failed := l.predicateOverloadResultProven(implementation, overload)
 		if proven {
 			// Every call's callback is proven where it's passed: an overload's predicate parameter whose
@@ -359,6 +362,56 @@ func (l *lowering) censusInferParameter(taken, given *checker.Type, binders map[
 		}
 	}
 	l.inferTypes(taken, given, into)
+}
+
+// censusCheckedClaimResult is whether an implementation's result serves an overload whose result is
+// a function claiming `p is R`, because the claim is checked at every call through it: in .ts, a claim
+// checkedFunctionTypeClaim makes checked is tested at each call that resolves to the signature, against
+// the target the call resolved to, so the implementation never has to prove it (Adamic's ruling on
+// #1w5bve2, R-T80's own reason). Then the result serves the promise when it relates to the promised
+// signature with its claim erased to boolean. Three things keep it narrow (Lower's design, accepted by
+// Compiler): the claim is read off the overload's own annotation, a function type, so .a, where claims
+// aren't checked, never sees one; an asserts claim isn't erased, since its result is void, which the
+// census's ordinary relation already serves from any function before this is asked (tsc relates a
+// signature returning void by its parameters alone, relater.go's compareSignaturesRelated), so the test
+// here is fail-closed defense, and its claim is checked at each call through the annotated name a call
+// to it needs (TS2775; Language's a01 on #1w5bve2); and the promised
+// type is that one call signature and nothing else, so a generic signature stays refused. The false side needs
+// nothing: a call through the value isn't a direct predicate call, so the false-direction walk
+// (predicate_false_flow.go) makes a read narrowed on false NotYet, as for every checked claim.
+func (l *lowering) censusCheckedClaimResult(overload *ast.Node, produced *checker.Type) bool {
+	annotation := overload.Type()
+	if annotation == nil || annotation.Kind != ast.KindFunctionType {
+		return false
+	}
+	claim := annotation.Type()
+	if claim == nil || claim.Kind != ast.KindTypePredicate || claim.AsTypePredicateNode().AssertsModifier != nil || !l.checkedFunctionTypeClaim(claim) {
+		return false
+	}
+	promised := l.concrete(l.checker.GetTypeFromTypeNode(annotation))
+	promisedSignatures := l.checker.GetSignaturesOfType(promised, checker.SignatureKindCall)
+	if len(promisedSignatures) != 1 || len(promisedSignatures[0].TypeParameters()) != 0 || promisedSignatures[0].HasRestParameter() ||
+		len(l.checker.GetSignaturesOfType(promised, checker.SignatureKindConstruct)) != 0 || len(l.checker.GetPropertiesOfType(promised)) != 0 || len(l.checker.GetIndexInfosOfType(promised)) != 0 {
+		return false
+	}
+	producedSignatures := l.checker.GetSignaturesOfType(l.concrete(produced), checker.SignatureKindCall)
+	if len(producedSignatures) != 1 || len(producedSignatures[0].TypeParameters()) != 0 {
+		return false
+	}
+	given, takes := promisedSignatures[0], producedSignatures[0]
+	for index := 0; index < max(len(given.Parameters()), len(takes.Parameters())); index++ {
+		if index >= len(takes.Parameters()) && !takes.HasRestParameter() {
+			break // JavaScript evaluates and ignores extra arguments.
+		}
+		argument := l.checker.GetUndefinedType()
+		if index < len(given.Parameters()) {
+			argument = l.callableParameterTypeAt(given, index)
+		}
+		if !l.censusRelated(argument, l.callableParameterTypeAt(takes, index)) {
+			return false
+		}
+	}
+	return l.censusRelated(l.checker.GetReturnTypeOfSignature(takes), l.checker.GetBooleanType())
 }
 
 func (l *lowering) censusOverloadParameter(parameters []*ast.Node, index int) (*checker.Type, *ast.Node, bool, error) {
