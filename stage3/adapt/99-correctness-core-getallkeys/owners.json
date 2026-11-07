@@ -1,0 +1,26 @@
+{
+  "core": {
+    "file": "src/compiler/core.ts",
+    "before": "/** @internal */\nexport function getAllKeys(obj: object): string[] {\n    const result: string[] = [];\n    do {\n        const names = Object.getOwnPropertyNames(obj);\n        for (const name of names) {\n            pushIfUnique(result, name);\n        }\n    }\n    while (obj = Object.getPrototypeOf(obj));\n    return result;\n}",
+    "after": ""
+  },
+  "harness": {
+    "file": "src/harness/fourslashImpl.ts",
+    "path": [
+      "TestState",
+      "constructor",
+      "memoWrap"
+    ],
+    "before": "const keys = ts.getAllKeys(ls);",
+    "after": "const keys = getAllKeys(ls);"
+  },
+  "local": {
+    "before": "",
+    "after": "function getAllKeys(obj: object): string[] {\n    const result: string[] = [];\n    do {\n        const names = Object.getOwnPropertyNames(obj);\n        for (const name of names) {\n            pushIfUnique(result, name);\n        }\n    }\n    while (obj = Object.getPrototypeOf(obj));\n    return result;\n}"
+  },
+  "import": {
+    "before": "",
+    "after": "import { pushIfUnique } from \"./_namespaces/ts.js\";"
+  },
+  "namespace": "import * as ts from \"./_namespaces/ts.js\";"
+}
