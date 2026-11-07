@@ -169,7 +169,7 @@ A wasm32-wasi panic leaves through the same `_exit(70)` (`internal/native/runtim
 | `PATH` | where `clang`, `llvm-ar` and `ar` are found | | `internal/toolchain/toolchain.go:Path` |
 | `ADAMIC_TOOLS` | `<ADAMIC_TOOLS>/bin` then `<ADAMIC_TOOLS>/go/bin` are searched before `PATH`, and put first on the tools' `PATH` | unset | `internal/toolchain/toolchain.go:directories,Path,searchPath` |
 | `ADAMIC_SANDBOX=1` | no fallback to `PATH`: a tool outside `ADAMIC_TOOLS` is an error naming where it looked, and the cache must be named by `ADAMIC_BUILD_CACHE_DIR` | off | `internal/toolchain/toolchain.go:Sandboxed,Path`, `internal/buildcache/location/location.go:BuildCache` |
-| `GOOS`, `GOARCH` | the platform a native build is for: its triple (`--target`) is the table's row for them, and a platform with no row exits 1 naming it. A darwin platform other than the host's exits 1 with `a darwin cross build has no pinned SDK`, and a linux one with `a linux cross build needs its pinned sysroot` | this process's own, `runtime.GOOS` and `runtime.GOARCH`: a person's road, never Loom's, whose units set both | `internal/native/target.go:buildPlatform,ResolveTarget,nativeTargetRefusal`, `internal/toolchain/triple.go:Triple` |
+| `GOOS`, `GOARCH` | the platform a native build is for: its triple (`--target`) is the table's row for them, and a platform with no row exits 1 naming it. A darwin platform other than the host's exits 1 with `a darwin cross build has no pinned SDK`, and a linux one with `a linux cross build needs its pinned sysroot` | this process's own, `runtime.GOOS` and `runtime.GOARCH`: a person's road, never Loom's, whose units set both | `internal/native/target.go:buildPlatform,ResolveTarget,nativeTargetRefusal`, `internal/toolchain/triple.go:Platform,Triple` |
 | `WASI_SYSROOT` | required for `--target wasm32-wasi`, and must be a directory; the SDK's clang is taken from beside it, and must be wasi-sdk 27's | none | `internal/native/target.go:ValidateOptions,WASIClang` |
 | `ADAMIC_BUILD_CACHE_DIR` | where the compiled runtime archive is cached | `os.UserCacheDir()/adamic-build` | `internal/buildcache/location/location.go:BuildCache` |
 | `ADAMIC_BUILD_OUTPUT_DIR` | a separate directory to write cache entries to | unset | `internal/buildcache/location/location.go:OutputDirectoryVariable` |
@@ -185,7 +185,7 @@ A wasm32-wasi panic leaves through the same `_exit(70)` (`internal/native/runtim
 clang and ar run under a fixed environment, not the caller's: only the variables in
 `internal/toolchain/toolchain.go:Env,GoSettings,goLocations,carried,gocacheSettings,fixed` pass through, `GOENV=off ZERO_AR_DATE=1` is always set, and
 `CC=clang CXX=clang++`, each with `--target=<triple>` for the build's `GOOS` and `GOARCH`, are set when unset
-(`internal/toolchain/triple.go:Compilers`). So `CPATH`, `SDKROOT` and `DYLD_*` never reach clang, and
+(`internal/toolchain/triple.go:Compilers,Platform`). So `CPATH`, `SDKROOT` and `DYLD_*` never reach clang, and
 setting `CC` doesn't change which compiler a native build runs: that is always `clang` resolved as
 above (`internal/native/target.go:compilerName`).
 
