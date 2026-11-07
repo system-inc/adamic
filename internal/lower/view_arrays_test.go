@@ -458,8 +458,10 @@ console.log('before');
 	unionPrelude = strings.Replace(unionPrelude, "readonly _children: readonly Node[];", "readonly _children: readonly Node[] | readonly Other[];", 1)
 	// A wider element union whose Map arm has no contract makes the annotation fail softly.
 	widenedPrelude := prelude + "const values: readonly (Node | Map<string, number>)[] = view._children;\n"
+	entriesPrelude := strings.Replace(prelude, "const view = base as SyntaxList;", "const checked = base as SyntaxList;\nconst view: { readonly _children: readonly (Node | Map<string, number>)[] } = checked;", 1)
 	for _, row := range []struct{ road, line, where string }{
 		{"index", "const item = view._children[0];\n", "main.ts:9:14"},
+		{"entries", "for (const [i, child] of view._children.entries()) { console.log(String(i)); }\n", "main.ts:9:1"},
 		{"at", "const item = values.at(0);\n", "main.ts:9:14"},
 		{"for-of", "for (const item of values) { console.log(String(item !== undefined)); }\n", "main.ts:9:1"},
 		{"map", "const copy = values.map(item => 1);\n", "main.ts:9:14"},
@@ -486,6 +488,8 @@ console.log('before');
 			switch row.road {
 			case "index":
 				source = unionPrelude
+			case "entries":
+				source = entriesPrelude
 			case "at", "for-of", "map", "forEach", "reduce", "some", "every", "filter", "find", "findIndex", "findLast", "findLastIndex":
 				source = widenedPrelude
 			}
