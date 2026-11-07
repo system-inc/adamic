@@ -28,8 +28,9 @@ func gccRuntimeProduct(t *testing.T, name, mutant string) string {
 	if err != nil {
 		t.Fatal(err)
 	}
+	// --target= is clang's, and gcc refuses it: a gcc portability build is the host's, so it names no triple.
 	flags = slices.DeleteFunc(flags, func(s string) bool {
-		return s == "-Wcast-function-type-strict" || s == "-Wno-self-assign" || s == "-Werror" || strings.HasPrefix(s, "-Werror=")
+		return s == "-Wcast-function-type-strict" || s == "-Wno-self-assign" || s == "-Werror" || strings.HasPrefix(s, "-Werror=") || strings.HasPrefix(s, "--target=")
 	})
 	flags = append(flags, "-Werror=array-bounds", "-Werror=maybe-uninitialized", "-Werror=stringop-overflow", "-Werror=infinite-recursion")
 	headers, err := headersRead(files, flags, compiler)
