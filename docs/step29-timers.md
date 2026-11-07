@@ -167,6 +167,20 @@ tears down registrations before abandoning pending subscriptions; library must
 not add a second event loop. Host-only embedding hooks remain unchanged when no
 timers are registered.
 
+## Source binding (#995spev)
+
+A direct `setTimeout(callback, delay, ...args)` and `clearTimeout(value)` now
+lower on both backends (internal/lower/library_node_timers.go). Natively the
+call is `adamic_node_set_timeout`, which starts a timeout on this provider and
+hands back its Timeout: an object of a host shape, `timeout_shape` in
+timers_impl.h, whose one slot is the registration's identity and whose address
+is the provider's brand. The emitter supplies a thunk per call site that packs
+the extra arguments by the program's own layout for the callback's function type
+and lets go of its result. `adamic_node_clear_timeout` takes any value, as Node's
+does: a Timeout, known by its shape's address, is cancelled, and anything else
+is a no-op. The JavaScript backend calls Node's own setTimeout and clearTimeout.
+The fixtures are internal/oracle/testdata/timers_source.
+
 ## Evidence
 
 TestTimersAgainstNode covers promise ordering, three interval fires, cancellation
