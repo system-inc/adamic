@@ -1,3 +1,7 @@
+# Generic clear amendment
+
+Task sdhn5pe amends 99s's whole-owner pin to `export function clear<T>(array: T[]): void { array.splice(0); }`. Each caller infers its concrete mutable element type, retaining storage information for Lower. The splice body and every caller are unchanged. This amendment is type-only and adds no ledger line. Fully adapted previous 99s states migrate as a whole; mixed or changed owners are still refused before any write. See CLEAR-GENERIC-PROOF.md for current evidence.
+
 # 99s: boxed queue amendment, wave row 8
 
 Task b5w3ycg. Finished. This amends 99s because its pin covers the entire createQueue owner; no new adaptation directory is created.
