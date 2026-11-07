@@ -1,0 +1,13 @@
+[
+  {
+    "file": "core.ts",
+    "owner": "groupBy",
+    "beforeDeclarations": 3,
+    "afterDeclarations": 3,
+    "before": "export function groupBy<T, U extends T>(values: readonly T[] | undefined, keySelector: (value: T) => value is U): { true?: U[]; false?: Exclude<T, U>[]; };\n/** @internal */\nexport function groupBy<T, K extends string | number | boolean | null | undefined>(values: readonly T[] | undefined, keySelector: (value: T) => K): { [P in K as `${P}`]?: T[]; }; // eslint-disable-line no-restricted-syntax\nexport function groupBy<T, K extends string | number | boolean | null | undefined>(values: readonly T[] | undefined, keySelector: (value: T) => K): { [P in K as `${P}`]?: T[]; } { // eslint-disable-line no-restricted-syntax\n    const result: Record<string, T[]> = {};\n    if (values !== undefined) {\n        for (let i = 0; i < values.length; i++) {\n            const value = values[i]!;\n            const key = `${keySelector(value)}`;\n            const array = result[key] ??= [];\n            array.push(value);\n        }\n    }\n    return result as { [P in K as `${P}`]?: T[]; };\n}",
+    "after": "export function groupBy<T, U extends T>(values: readonly T[] | undefined, keySelector: (value: T) => value is U): { true?: U[]; false?: Exclude<T, U>[]; };\n/** @internal */\nexport function groupBy<T, K extends string | number | boolean | null | undefined>(values: readonly T[] | undefined, keySelector: (value: T) => K): { [P in K as `${P}`]?: T[]; }; // eslint-disable-line no-restricted-syntax\nexport function groupBy<T, K extends string | number | boolean | null | undefined>(values: readonly T[] | undefined, keySelector: (value: T) => K): Record<string, T[]> { // eslint-disable-line no-restricted-syntax\n    const result: Record<string, T[]> = {};\n    if (values !== undefined) {\n        for (let i = 0; i < values.length; i++) {\n            const value = values[i]!;\n            const key = `${keySelector(value)}`;\n            const array = result[key] ??= [];\n            array.push(value);\n        }\n    }\n    return result;\n}",
+    "ownerBeforeSha256": "2a3ba4e5be42df7e6ad2087a17cdfd9a96dfba3d9f7b47dbe3af64ed1fdd2095",
+    "ownerAfterSha256": "35a8a51be62e293f459a6d99ff237b330bf97163fc37b1a1b2e9984fbc0a066c",
+    "siteEdits": 2
+  }
+]
