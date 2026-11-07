@@ -12,19 +12,17 @@ import (
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
-// buildPlatform is the goos and goarch a build is for: the environment's `GOOS` and `GOARCH`, as go reads them, so a
-// build cross-compiled for arm64 on an amd64 box names, keys and links arm64 (#5xsd2ha). Either one unset is this
-// process's own, runtime.GOOS or runtime.GOARCH, which is what go itself builds for then. That fallback is a person's
-// road, running adamic or go test by hand, never Loom's: every unit environment Loom builds carries both.
+// buildEnvironment is the list of settings buildPlatform reads, this process's environment; a test hands it a list the
+// process can't hold, two settings of one name, which Go's own environment keeps one of.
+var buildEnvironment = os.Environ
+
+// buildPlatform is the goos and goarch a build is for: the environment's `GOOS` and `GOARCH`, read by toolchain.Platform,
+// the one reader cgo's compilers read too, so a build cross-compiled for arm64 on an amd64 box names, keys and links
+// arm64 (#5xsd2ha). Either one unset or empty is this process's own, runtime.GOOS or runtime.GOARCH, which is what go
+// itself builds for then. That fallback is a person's road, running adamic or go test by hand, never Loom's: every
+// unit environment Loom builds carries both.
 func buildPlatform() (goos string, goarch string) {
-	goos, goarch = os.Getenv("GOOS"), os.Getenv("GOARCH")
-	if goos == "" {
-		goos = goruntime.GOOS
-	}
-	if goarch == "" {
-		goarch = goruntime.GOARCH
-	}
-	return goos, goarch
+	return toolchain.Platform(buildEnvironment())
 }
 
 // darwinBuild says whether the build is for macOS (buildPlatform): its link is ld64's, which loads an archive whole with
