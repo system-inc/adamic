@@ -316,7 +316,7 @@ func caseMappingHarness(t *testing.T) (binary, oracle string) {
 		Name:      "case-mapping-probe",
 		Files:     []string{"internal/native"},
 		Flags:     append(Flags(options), fmt.Sprintf("source=%x", sha256.Sum256([]byte(source))), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
-		Toolchain: []string{buildcache.Tool("clang", "--version")},
+		Toolchain: []string{buildcache.CompilerReport("clang")},
 	}, func(directory string) error {
 		return Build(source, filepath.Join(directory, "harness"), options)
 	})

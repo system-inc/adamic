@@ -72,7 +72,7 @@ func printerGateNative(t *testing.T, family string, sanitize bool) string {
 		}
 		return buildcache.Product(t, buildcache.Inputs{
 			Name: "tsprinter-" + name + "-v2", Files: []string{"internal/native", "stage1/cohere/tsprinter/printer_gate_products_test.go"}, Flags: flags,
-			Toolchain: []string{buildcache.Tool("clang", "--version"), buildcache.Tool("ar", "--version"), buildcache.Tool("ld", "--version"), runtime.Version(), runtime.GOOS, runtime.GOARCH},
+			Toolchain: []string{buildcache.CompilerReport("clang"), buildcache.Tool("ar", "--version"), buildcache.Tool("ld", "--version"), runtime.Version(), runtime.GOOS, runtime.GOARCH},
 		}, func(dir string) error { return native.Build(string(source), dir+"/port", options) })
 	})
 }

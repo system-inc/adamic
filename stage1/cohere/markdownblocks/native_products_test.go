@@ -178,7 +178,7 @@ func loweredNativeInputs(name string, options native.Options, sources ...string)
 		Name:      name,
 		Files:     append(files, "stage1/cohere/markdownblocks/native_products_test.go"),
 		Flags:     flags,
-		Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")},
+		Toolchain: []string{runtime.Version(), buildcache.CompilerReport("clang")},
 	}
 }
 

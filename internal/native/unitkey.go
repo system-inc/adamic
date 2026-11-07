@@ -162,7 +162,14 @@ func readUnitClang(compiler string, flags []string, environment []string) ([]str
 		}
 		return output, nil
 	}
-	version, err := run("--version")
+	// Its version under the target the flags name, which picks clang's config files (#5xsd2ha), as the compile reads them.
+	versionArguments := []string{"--version"}
+	for _, flag := range flags {
+		if strings.HasPrefix(flag, "--target=") {
+			versionArguments = []string{flag, "--version"}
+		}
+	}
+	version, err := run(versionArguments...)
 	if err != nil {
 		return nil, nil, err
 	}

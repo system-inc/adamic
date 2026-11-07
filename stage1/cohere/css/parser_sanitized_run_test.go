@@ -26,7 +26,7 @@ func cssParserReleaseMutant(t *testing.T) string {
 	t.Helper()
 	program := cssParserPreparedProgram(t, -1)
 	options := native.Options{Sanitize: true}
-	dir := oracles.ParserProduct(t, oracles.ParserProductInputs{Name: "parser release mutant sanitized", Files: []string{program.c, repository + "/internal/native", repository + "/go.mod"}, Flags: append(native.Flags(options), "mutation=adamic_release dropped"), Toolchain: buildcache.Tool("clang", "--version")}, func(dir string) error {
+	dir := oracles.ParserProduct(t, oracles.ParserProductInputs{Name: "parser release mutant sanitized", Files: []string{program.c, repository + "/internal/native", repository + "/go.mod"}, Flags: append(native.Flags(options), "mutation=adamic_release dropped"), Toolchain: buildcache.CompilerReport("clang")}, func(dir string) error {
 		source, err := os.ReadFile(program.c)
 		if err != nil {
 			return err

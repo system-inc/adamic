@@ -41,7 +41,7 @@ func leafCompositionShard(key string) int {
 
 func leafCompositionNative(t *testing.T, source string, sanitize bool) string {
 	sum := sha256.Sum256([]byte(source))
-	directory := buildcache.Product(t, buildcache.Inputs{Name: fmt.Sprintf("markdown-leaf-native-%t", sanitize), Files: []string{"internal/native"}, Flags: []string{fmt.Sprintf("source=%x sanitize=%t split=%s", sum, sanitize, os.Getenv("ADAMIC_NATIVE_SPLIT"))}, Toolchain: []string{runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version")}}, func(directory string) error {
+	directory := buildcache.Product(t, buildcache.Inputs{Name: fmt.Sprintf("markdown-leaf-native-%t", sanitize), Files: []string{"internal/native"}, Flags: []string{fmt.Sprintf("source=%x sanitize=%t split=%s", sum, sanitize, os.Getenv("ADAMIC_NATIVE_SPLIT"))}, Toolchain: []string{runtime.GOOS, runtime.GOARCH, buildcache.CompilerReport("clang")}}, func(directory string) error {
 		return native.Build(source, filepath.Join(directory, "port"), native.Options{Sanitize: sanitize})
 	})
 	return filepath.Join(directory, "port")

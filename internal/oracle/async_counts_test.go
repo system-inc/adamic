@@ -124,7 +124,7 @@ func asyncCountProgramProduct(t *testing.T, name string, original bool) string {
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs := buildcache.Inputs{Name: fmt.Sprintf("async-count-%t-%s", original, name), Files: append(compilerinputs.Lowering(), key, "internal/oracle/async_counts_test.go"), Flags: request.Portable, Toolchain: []string{buildcache.Tool(request.Compiler, "--version"), buildcache.Tool(request.Archiver, "--version"), buildcache.Tool("node", "--version")}}
+	inputs := buildcache.Inputs{Name: fmt.Sprintf("async-count-%t-%s", original, name), Files: append(compilerinputs.Lowering(), key, "internal/oracle/async_counts_test.go"), Flags: request.Portable, Toolchain: []string{buildcache.Tool(request.Compiler, "--target="+request.Options.Target, "--version"), buildcache.Tool(request.Archiver, "--version"), buildcache.Tool("node", "--version")}}
 	return buildcache.Product(t, inputs, func(directory string) error {
 		if original {
 			return native.Build(code, filepath.Join(directory, "counted"), native.Options{Count: true})

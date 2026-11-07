@@ -57,7 +57,7 @@ func dotARenameInputs(t *testing.T, name string, flags []string) buildcache.Inpu
 		}
 	}
 	return buildcache.Inputs{Name: "dot-a-rename-" + name, Files: files, Flags: flags,
-		Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version"), buildcache.Tool("go", "env", "GOOS", "GOARCH", "CGO_ENABLED", "GOEXPERIMENT", "CC", "CXX", "CGO_CFLAGS", "CGO_LDFLAGS"), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}}
+		Toolchain: []string{runtime.Version(), buildcache.CompilerReport("clang"), buildcache.Tool("go", "env", "GOOS", "GOARCH", "CGO_ENABLED", "GOEXPERIMENT", "CC", "CXX", "CGO_CFLAGS", "CGO_LDFLAGS"), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}}
 }
 
 // Each declaration and filtered shard uses the same once-per-process recipe.
