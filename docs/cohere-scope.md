@@ -29,3 +29,14 @@ scoped to its directory or its file, never a bare extension.
 | `stage3/lane/shards.json` | generated | The lane's unit manifest. | Written by stage3/lane/generate_shards.py, and checked by its `--check`. |
 | `stage3/lane/shard-plan.json` | generated | The lane's shard plan. | Written by stage3/lane/shard_plan.py, and read by generate_shards.py. |
 | `stage3/patch-set.md` | generated | The adaptations' patch table. | Written by `stage3/apply.sh <out> --write-table`, and read by stage3/adapt/75-optional-widening/coverage/run.py. |
+
+## Out of tsconfig.json's plain type check
+
+Three trees are left out of the root tsconfig, because the plain checker can't judge them honestly. Each is still
+checked by the test that reads it.
+
+| Tree | Why | Checked by |
+| --- | --- | --- |
+| `internal/oracle/testdata` | Adamic programs against the host adamic's loader serves: the prelude plus `internal/load/node_types` (@types/node 25.3.3, with `host_axioms.json`'s corrections). The plain checker sees neither, so its 458 diagnostics were configuration, not code. | internal/oracle's load-and-check test, until cohere can judge a tree by types alone (#cxeq6jw) |
+| `internal/load/testdata/node_activation` | Fixtures that prove the loader switches on the bundled Node types for a builtin `require` or an import type. The plain checker doesn't. | internal/load's node activation tests |
+| `stage1/**/gaps` | stage1's gap cases, each written to be wrong in exactly one way: CRLF, a line separator, empty JSX type arguments. | stage1's parity tests |

@@ -29,6 +29,11 @@ func checkCohereScope(settings []byte, document string) error {
 	}
 	documented := map[string]bool{}
 	for _, line := range strings.Split(document, "\n") {
+		// The ignore table comes first. A `##` section after it, such as the trees out of tsconfig's plain check,
+		// holds tables of its own that aren't ignores.
+		if strings.HasPrefix(line, "## ") {
+			break
+		}
 		if !strings.HasPrefix(line, "| `") {
 			continue
 		}
@@ -93,6 +98,11 @@ func TestCohereScopeRefusesAnUnpairedIgnore(t *testing.T) {
 	good := `{"ignorePatterns": ["**/testdata/**"]}`
 	if err := checkCohereScope([]byte(good), row); err != nil {
 		t.Fatalf("a good pair was refused: %v", err)
+	}
+	// A later section's table is not read as ignores, so its three-column rows neither fail nor count.
+	later := row + "\n## Out of tsconfig\n\n| `internal/oracle/testdata` | Why. | Its test. |\n"
+	if err := checkCohereScope([]byte(good), later); err != nil {
+		t.Fatalf("a later section's table was read as ignores: %v", err)
 	}
 	for name, planted := range map[string][2]string{
 		"no reason":        {`{"ignorePatterns": ["**/testdata/**", "stage3/x.json"]}`, row},

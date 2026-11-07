@@ -16,5 +16,6 @@
 	},
 	"sourceExtensions": [".a"],
 	"files": ["internal/load/prelude.d.ts"],
-	"include": ["dedication", "internal/load/testdata", "stage1", "bench"]
+	"include": ["dedication", "internal/load/testdata", "stage1", "bench"],
+	"exclude": ["internal/load/testdata/node_activation", "stage1/**/gaps"]
 }
