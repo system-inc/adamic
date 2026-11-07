@@ -1,0 +1,47 @@
+{
+  "identical": true,
+  "fullTreeIdentical": true,
+  "fullTreeRows": [
+    {
+      "side": "before",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "declined site changed: core.ts:992:21\n",
+      "sourceUnchanged": true
+    },
+    {
+      "side": "candidate",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "declined site changed: core.ts:992:21\n",
+      "sourceUnchanged": true
+    }
+  ],
+  "fullTreeRefusalSite": {
+    "file": "core.ts",
+    "siteLabel": "992:21",
+    "owner": "addRange",
+    "expression": "from[i]",
+    "action": "decline",
+    "causedByCandidate": false
+  },
+  "checkpointRef": "refs/stage3/30-indexed-reads-after",
+  "checkpointTree": "dfa7d84c50a8181e24d3b06c60bf45a2ef7e28af",
+  "checkpointIdentical": true,
+  "checkpointRows": [
+    {
+      "side": "before",
+      "exit": 0,
+      "stdout": "[\n  {\n    \"file\": \"core.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 15,\n    \"closures\": 0\n  },\n  {\n    \"file\": \"utilities.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 23,\n    \"closures\": 0\n  },\n  {\n    \"file\": \"utilitiesPublic.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 6,\n    \"closures\": 0\n  },\n  {\n    \"file\": \"parser.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 13,\n    \"closures\": 0\n  },\n  {\n    \"file\": \"scanner.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 6,\n    \"closures\": 0\n  },\n  {\n    \"file\": \"factory/baseNodeFactory.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 0,\n    \"closures\": 0\n  },\n  {\n    \"file\": \"factory/emitHelpers.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 0,\n    \"closures\": 0\n  },\n  {\n    \"file\": \"factory/emitNode.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 2,\n    \"closures\": 0\n  },\n  {\n    \"file\": \"factory/nodeChildren.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 0,\n    \"closures\": 0\n  },\n  {\n    \"file\": \"factory/nodeConverters.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 0,\n    \"closures\": 0\n  },\n  {\n    \"file\": \"factory/nodeFactory.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 4,\n    \"closures\": 0\n  },\n  {\n    \"file\": \"factory/nodeTests.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 0,\n    \"closures\": 0\n  },\n  {\n    \"file\": \"factory/parenthesizerRules.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 0,\n    \"closures\": 0\n  },\n  {\n    \"file\": \"factory/utilities.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 10,\n    \"closures\": 0\n  },\n  {\n    \"file\": \"factory/utilitiesPublic.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 0,\n    \"closures\": 0\n  },\n  {\n    \"file\": \"debug.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 5,\n    \"closures\": 0\n  },\n  {\n    \"file\": \"path.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 4,\n    \"closures\": 0\n  }\n]\n",
+      "stderr": "",
+      "sourceUnchanged": true
+    },
+    {
+      "side": "candidate",
+      "exit": 0,
+      "stdout": "[\n  {\n    \"file\": \"core.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 15,\n    \"closures\": 0\n  },\n  {\n    \"file\": \"utilities.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 23,\n    \"closures\": 0\n  },\n  {\n    \"file\": \"utilitiesPublic.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 6,\n    \"closures\": 0\n  },\n  {\n    \"file\": \"parser.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 13,\n    \"closures\": 0\n  },\n  {\n    \"file\": \"scanner.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 6,\n    \"closures\": 0\n  },\n  {\n    \"file\": \"factory/baseNodeFactory.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 0,\n    \"closures\": 0\n  },\n  {\n    \"file\": \"factory/emitHelpers.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 0,\n    \"closures\": 0\n  },\n  {\n    \"file\": \"factory/emitNode.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 2,\n    \"closures\": 0\n  },\n  {\n    \"file\": \"factory/nodeChildren.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 0,\n    \"closures\": 0\n  },\n  {\n    \"file\": \"factory/nodeConverters.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 0,\n    \"closures\": 0\n  },\n  {\n    \"file\": \"factory/nodeFactory.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 4,\n    \"closures\": 0\n  },\n  {\n    \"file\": \"factory/nodeTests.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 0,\n    \"closures\": 0\n  },\n  {\n    \"file\": \"factory/parenthesizerRules.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 0,\n    \"closures\": 0\n  },\n  {\n    \"file\": \"factory/utilities.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 10,\n    \"closures\": 0\n  },\n  {\n    \"file\": \"factory/utilitiesPublic.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 0,\n    \"closures\": 0\n  },\n  {\n    \"file\": \"debug.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 5,\n    \"closures\": 0\n  },\n  {\n    \"file\": \"path.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 4,\n    \"closures\": 0\n  }\n]\n",
+      "stderr": "",
+      "sourceUnchanged": true
+    }
+  ]
+}

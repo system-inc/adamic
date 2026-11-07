@@ -1,0 +1,14 @@
+{
+  "base": "f0271c6a7b2e92900eb7046d8246cfb89f52cfb6",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "ordinaryAdamicSha256": "92f08ce6ffb488c64813a1489a502d97ce57bcb67adb50f98beeff500543c03d",
+  "compilerOptionsSourceSha256": "0685807b05041e1d67e91c960c0ebc062b49d69504fe9d8a69a0d5465b9815f9",
+  "sourceFiles": 746,
+  "changedSources": [
+    "compiler/core.ts"
+  ],
+  "candidateDelta": "exactly two new Array<number>(s2.length + 1).fill(0) initializers",
+  "implementationBuilt": false,
+  "wholeLaneCallCount": null,
+  "reason": "candidate rejected by fixed noUncheckedIndexedAccess checker configuration before adapter construction"
+}

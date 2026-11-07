@@ -1,0 +1,22 @@
+{
+  "before": {
+    "exit": 0,
+    "roots": 79,
+    "seconds": 5.811516193999978,
+    "diagnostics": []
+  },
+  "candidate": {
+    "exit": 1,
+    "roots": 79,
+    "seconds": 4.2440912509998725,
+    "diagnostics": [
+      "/workspace/scratch/levenshtein/candidate/src/compiler/core.ts:2246:20: error TS2532: Object is possibly 'undefined'.",
+      "/workspace/scratch/levenshtein/candidate/src/compiler/core.ts:2247:20: error TS2532: Object is possibly 'undefined'.",
+      "/workspace/scratch/levenshtein/candidate/src/compiler/core.ts:2250:39: error TS2532: Object is possibly 'undefined'.",
+      "/workspace/scratch/levenshtein/candidate/src/compiler/core.ts:2250:67: error TS2532: Object is possibly 'undefined'.",
+      "/workspace/scratch/levenshtein/candidate/src/compiler/core.ts:2251:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.",
+      "/workspace/scratch/levenshtein/candidate/src/compiler/core.ts:2252:39: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.",
+      "/workspace/scratch/levenshtein/candidate/src/compiler/core.ts:2268:12: error TS18048: 'res' is possibly 'undefined'."
+    ]
+  }
+}
