@@ -228,6 +228,30 @@
       "ruling_task": "#0sps03r",
       "lifting_task": "#zhrjf2t",
       "stderr": "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading 'refresh')\n"
+    },
+    "de356517d4276677054e8f8df6299afc77e016f63dd38d23746f3ee697487ebc": {
+      "path": "internal/oracle/testdata/timers_source/stop_foreign_handle.a",
+      "ruling_task": "#995spev",
+      "lifting_task": "#6a8w6bn",
+      "stderr": "adamic: panic: clearTimeout of an object that isn't a timer but holds _onTimeout isn't built yet\n"
+    },
+    "622dc56e366ab8cf590e6ab9c53ca91210a06c6173f80af0d70d4d9dc47a92ef": {
+      "path": "internal/oracle/testdata/timers_source/stop_foreign_intersection.a",
+      "ruling_task": "#995spev",
+      "lifting_task": "#6a8w6bn",
+      "stderr": "adamic: panic: clearTimeout of an object that isn't a timer but holds _onTimeout isn't built yet\n"
+    },
+    "2a7e37ae763d339ed31623ac5d4b3f9a548094abdf8a5b6c20c02edc6ce9bcab": {
+      "path": "internal/oracle/testdata/timers_source/stop_foreign_record.a",
+      "ruling_task": "#995spev",
+      "lifting_task": "#6a8w6bn",
+      "stderr": "adamic: panic: clearTimeout of an object that isn't a timer but holds _onTimeout isn't built yet\n"
+    },
+    "875c4005b481833d8d9e59bbf5a06933f36d799e1b18661d43c52e997cd8ec6c": {
+      "path": "internal/oracle/testdata/timers_source/stop_foreign_generic.a",
+      "ruling_task": "#995spev",
+      "lifting_task": "#6a8w6bn",
+      "stderr": "adamic: panic: clearTimeout of an object that isn't a timer but holds _onTimeout isn't built yet\n"
     }
   }
 }

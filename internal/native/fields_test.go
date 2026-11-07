@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"slices"
 	"strconv"
 	"strings"
 	"testing"
@@ -114,7 +115,11 @@ console.log((missing?.steady ?? -3).toString());
 	}
 }
 
-// A new runtime-created shape must not silently bypass the whole-program layout proof.
+// A new runtime-created shape must not silently bypass the whole-program layout proof. Every .c file is
+// read, and every header that declares a shape: an _impl.h is part of the translation unit that
+// includes it (async_host_impl.h, node_fs_watch_impl.h and timers_impl.h, whose shapes this once
+// missed). Mutant: a field of an _impl.h shape renamed to one the proof holds at another slot
+// (timers_impl.h's "#identity" as "message") turns this red.
 func TestRuntimeFieldLayoutsAreIncluded(t *testing.T) {
 	t.Parallel()
 	namesPattern := regexp.MustCompile(`static const char \*const (\w+)\[\] = \{([^}]*)\};`)
@@ -126,8 +131,9 @@ func TestRuntimeFieldLayoutsAreIncluded(t *testing.T) {
 		t.Fatal(err)
 	}
 	checked := 0
+	headers := []string{}
 	for _, file := range files {
-		if !strings.HasSuffix(file.Name(), ".c") {
+		if !strings.HasSuffix(file.Name(), ".c") && !strings.HasSuffix(file.Name(), ".h") {
 			continue
 		}
 		contents, err := runtime.ReadFile("runtime/" + file.Name())
@@ -135,6 +141,12 @@ func TestRuntimeFieldLayoutsAreIncluded(t *testing.T) {
 			t.Fatal(err)
 		}
 		source := string(contents)
+		if strings.HasSuffix(file.Name(), ".h") {
+			if !strings.Contains(source, "static const adamic_shape ") {
+				continue
+			}
+			headers = append(headers, file.Name())
+		}
 		names := map[string][]string{}
 		for _, array := range namesPattern.FindAllStringSubmatch(source, -1) {
 			for _, field := range fieldPattern.FindAllStringSubmatch(array[2], -1) {
@@ -175,7 +187,12 @@ func TestRuntimeFieldLayoutsAreIncluded(t *testing.T) {
 	if checked == 0 {
 		t.Fatal("no runtime shapes checked")
 	}
-	t.Logf("%d runtime layouts included", checked)
+	for _, header := range []string{"async_host_impl.h", "node_fs_watch_impl.h", "timers_impl.h"} {
+		if !slices.Contains(headers, header) {
+			t.Errorf("%s declares a runtime shape, but its layout wasn't checked", header)
+		}
+	}
+	t.Logf("%d runtime layouts included, headers among them: %s", checked, strings.Join(headers, ", "))
 }
 
 func TestRegexProgramsKeepCheckedFieldReads(t *testing.T) {
