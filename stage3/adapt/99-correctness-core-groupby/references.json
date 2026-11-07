@@ -1,0 +1,1104 @@
+{
+  "tree": "/workspace/core-before",
+  "roots": 711,
+  "functions": {
+    "groupBy": [
+      {
+        "file": "src/compiler/core.ts",
+        "line": 1471,
+        "column": 17,
+        "kind": "FunctionDeclaration",
+        "target": true,
+        "use": "declaration"
+      },
+      {
+        "file": "src/compiler/core.ts",
+        "line": 1473,
+        "column": 17,
+        "kind": "FunctionDeclaration",
+        "target": true,
+        "use": "declaration"
+      },
+      {
+        "file": "src/compiler/core.ts",
+        "line": 1474,
+        "column": 17,
+        "kind": "FunctionDeclaration",
+        "target": true,
+        "use": "declaration"
+      },
+      {
+        "file": "src/compiler/transformers/legacyDecorators.ts",
+        "line": 31,
+        "column": 5,
+        "kind": "ImportSpecifier",
+        "target": true,
+        "use": "import"
+      },
+      {
+        "file": "src/compiler/transformers/legacyDecorators.ts",
+        "line": 538,
+        "column": 55,
+        "kind": "CallExpression",
+        "target": true,
+        "use": "call",
+        "overload": "export function groupBy<T, K extends string | number | boolean | null | undefined>(values: readonly T[] | undefined, keySelector: (value: T) => K): { [P in K as `${P}`]?: T[]; };",
+        "returnType": "{ false?: Decorator[] | undefined; true?: Decorator[] | undefined; }"
+      },
+      {
+        "file": "src/services/organizeImports.ts",
+        "line": 25,
+        "column": 5,
+        "kind": "ImportSpecifier",
+        "target": true,
+        "use": "import"
+      },
+      {
+        "file": "src/services/organizeImports.ts",
+        "line": 427,
+        "column": 38,
+        "kind": "CallExpression",
+        "target": true,
+        "use": "call",
+        "overload": "export function groupBy<T, K extends string | number | boolean | null | undefined>(values: readonly T[] | undefined, keySelector: (value: T) => K): { [P in K as `${P}`]?: T[]; };",
+        "returnType": "{ [x: string]: ImportDeclaration[] | undefined; }"
+      }
+    ],
+    "clone": [
+      {
+        "file": "src/compiler/core.ts",
+        "line": 1488,
+        "column": 17,
+        "kind": "FunctionDeclaration",
+        "target": true,
+        "use": "declaration"
+      },
+      {
+        "file": "src/services/utilities.ts",
+        "line": 21,
+        "column": 5,
+        "kind": "ImportSpecifier",
+        "target": true,
+        "use": "import"
+      },
+      {
+        "file": "src/services/utilities.ts",
+        "line": 2245,
+        "column": 20,
+        "kind": "CallExpression",
+        "target": true,
+        "use": "call",
+        "overload": "export function clone<T>(object: T): T {\r\n    const result: any = {};\r\n    for (const id in object) {\r\n        if (hasOwnProperty.call(object, id)) {\r\n            result[id] = (object as any)[id];\r\n        }\r\n    }\r\n    return result;\r\n}",
+        "returnType": "CompilerOptions"
+      },
+      {
+        "file": "src/harness/fourslashImpl.ts",
+        "line": 2914,
+        "column": 19,
+        "kind": "PropertyAccessExpression",
+        "target": true,
+        "use": "call",
+        "overload": "export function clone<T>(object: T): T {\r\n    const result: any = {};\r\n    for (const id in object) {\r\n        if (hasOwnProperty.call(object, id)) {\r\n            result[id] = (object as any)[id];\r\n        }\r\n    }\r\n    return result;\r\n}",
+        "returnType": "FormatCodeSettings"
+      },
+      {
+        "file": "src/harness/fourslashImpl.ts",
+        "line": 3022,
+        "column": 34,
+        "kind": "PropertyAccessExpression",
+        "target": true,
+        "use": "call",
+        "overload": "export function clone<T>(object: T): T {\r\n    const result: any = {};\r\n    for (const id in object) {\r\n        if (hasOwnProperty.call(object, id)) {\r\n            result[id] = (object as any)[id];\r\n        }\r\n    }\r\n    return result;\r\n}",
+        "returnType": "FormatCodeSettings"
+      },
+      {
+        "file": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+        "line": 20,
+        "column": 5,
+        "kind": "ImportSpecifier",
+        "target": true,
+        "use": "import"
+      },
+      {
+        "file": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+        "line": 383,
+        "column": 24,
+        "kind": "CallExpression",
+        "target": true,
+        "use": "call",
+        "overload": "export function clone<T>(object: T): T {\r\n    const result: any = {};\r\n    for (const id in object) {\r\n        if (hasOwnProperty.call(object, id)) {\r\n            result[id] = (object as any)[id];\r\n        }\r\n    }\r\n    return result;\r\n}",
+        "returnType": "FSEntry"
+      },
+      {
+        "file": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+        "line": 386,
+        "column": 49,
+        "kind": "CallExpression",
+        "target": true,
+        "use": "callback argument"
+      }
+    ]
+  },
+  "allMatchingIdentifiers": [
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1471,
+      "column": 17,
+      "kind": "FunctionDeclaration",
+      "target": true,
+      "name": "groupBy"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1473,
+      "column": 17,
+      "kind": "FunctionDeclaration",
+      "target": true,
+      "name": "groupBy"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1474,
+      "column": 17,
+      "kind": "FunctionDeclaration",
+      "target": true,
+      "name": "groupBy"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1488,
+      "column": 17,
+      "kind": "FunctionDeclaration",
+      "target": true,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 12321,
+      "column": 11,
+      "kind": "VariableDeclaration",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 12322,
+      "column": 9,
+      "kind": "BinaryExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 12322,
+      "column": 67,
+      "kind": "CallExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 12323,
+      "column": 31,
+      "kind": "CallExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 12332,
+      "column": 9,
+      "kind": "VariableDeclaration",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 12333,
+      "column": 9,
+      "kind": "IfStatement",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 12334,
+      "column": 25,
+      "kind": "CallExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 12337,
+      "column": 9,
+      "kind": "BinaryExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 12340,
+      "column": 9,
+      "kind": "BinaryExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 12340,
+      "column": 67,
+      "kind": "CallExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 12341,
+      "column": 12,
+      "kind": "AsExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 12355,
+      "column": 15,
+      "kind": "VariableDeclaration",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 12358,
+      "column": 29,
+      "kind": "CallExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6327,
+      "column": 15,
+      "kind": "VariableDeclaration",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6328,
+      "column": 9,
+      "kind": "PropertyAccessExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6329,
+      "column": 9,
+      "kind": "PropertyAccessExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6330,
+      "column": 21,
+      "kind": "CallExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6331,
+      "column": 35,
+      "kind": "CallExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6332,
+      "column": 16,
+      "kind": "ReturnStatement",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6336,
+      "column": 15,
+      "kind": "VariableDeclaration",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6337,
+      "column": 9,
+      "kind": "PropertyAccessExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6338,
+      "column": 9,
+      "kind": "PropertyAccessExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6339,
+      "column": 9,
+      "kind": "PropertyAccessExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6340,
+      "column": 9,
+      "kind": "PropertyAccessExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6341,
+      "column": 9,
+      "kind": "PropertyAccessExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6342,
+      "column": 21,
+      "kind": "CallExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6346,
+      "column": 55,
+      "kind": "CallExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6347,
+      "column": 16,
+      "kind": "ReturnStatement",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6351,
+      "column": 15,
+      "kind": "VariableDeclaration",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6352,
+      "column": 9,
+      "kind": "PropertyAccessExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6353,
+      "column": 9,
+      "kind": "PropertyAccessExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6354,
+      "column": 21,
+      "kind": "CallExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6355,
+      "column": 35,
+      "kind": "CallExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6356,
+      "column": 16,
+      "kind": "ReturnStatement",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6360,
+      "column": 15,
+      "kind": "VariableDeclaration",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6361,
+      "column": 9,
+      "kind": "PropertyAccessExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6362,
+      "column": 9,
+      "kind": "PropertyAccessExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6363,
+      "column": 21,
+      "kind": "CallExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6364,
+      "column": 16,
+      "kind": "ReturnStatement",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6392,
+      "column": 15,
+      "kind": "VariableDeclaration",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6395,
+      "column": 10,
+      "kind": "AsExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6396,
+      "column": 10,
+      "kind": "AsExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6397,
+      "column": 21,
+      "kind": "CallExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6400,
+      "column": 29,
+      "kind": "CallExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6404,
+      "column": 13,
+      "kind": "ElementAccessExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6407,
+      "column": 16,
+      "kind": "ReturnStatement",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 9338,
+      "column": 23,
+      "kind": "VariableDeclaration",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 9339,
+      "column": 21,
+      "kind": "IfStatement",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 9340,
+      "column": 57,
+      "kind": "ArrayLiteralExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 14557,
+      "column": 31,
+      "kind": "VariableDeclaration",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 14558,
+      "column": 25,
+      "kind": "PropertyAccessExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 14559,
+      "column": 32,
+      "kind": "ReturnStatement",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 15674,
+      "column": 23,
+      "kind": "VariableDeclaration",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 15675,
+      "column": 17,
+      "kind": "PropertyAccessExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 15676,
+      "column": 17,
+      "kind": "PropertyAccessExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 15677,
+      "column": 17,
+      "kind": "PropertyAccessExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 15678,
+      "column": 17,
+      "kind": "PropertyAccessExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 15679,
+      "column": 24,
+      "kind": "ReturnStatement",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 1326,
+      "column": 15,
+      "kind": "VariableDeclaration",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 1328,
+      "column": 32,
+      "kind": "CallExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 1331,
+      "column": 38,
+      "kind": "PropertyAssignment",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 1334,
+      "column": 79,
+      "kind": "CallExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 3305,
+      "column": 31,
+      "kind": "VariableDeclaration",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 3306,
+      "column": 43,
+      "kind": "CallExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 3307,
+      "column": 41,
+      "kind": "CallExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 3308,
+      "column": 32,
+      "kind": "ReturnStatement",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/transformers/legacyDecorators.ts",
+      "line": 31,
+      "column": 5,
+      "kind": "ImportSpecifier",
+      "target": true,
+      "name": "groupBy"
+    },
+    {
+      "file": "src/compiler/transformers/legacyDecorators.ts",
+      "line": 538,
+      "column": 55,
+      "kind": "CallExpression",
+      "target": true,
+      "name": "groupBy"
+    },
+    {
+      "file": "src/compiler/transformers/legacyDecorators.ts",
+      "line": 835,
+      "column": 31,
+      "kind": "VariableDeclaration",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/transformers/legacyDecorators.ts",
+      "line": 836,
+      "column": 43,
+      "kind": "CallExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/transformers/legacyDecorators.ts",
+      "line": 837,
+      "column": 41,
+      "kind": "CallExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/transformers/legacyDecorators.ts",
+      "line": 838,
+      "column": 32,
+      "kind": "ReturnStatement",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/transformers/es2015.ts",
+      "line": 3474,
+      "column": 23,
+      "kind": "VariableDeclaration",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/transformers/es2015.ts",
+      "line": 3475,
+      "column": 54,
+      "kind": "CallExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/transformers/es2015.ts",
+      "line": 3479,
+      "column": 19,
+      "kind": "VariableDeclaration",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/transformers/es2015.ts",
+      "line": 3480,
+      "column": 50,
+      "kind": "CallExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/transformers/generators.ts",
+      "line": 2076,
+      "column": 31,
+      "kind": "VariableDeclaration",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/transformers/generators.ts",
+      "line": 2077,
+      "column": 43,
+      "kind": "CallExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/transformers/generators.ts",
+      "line": 2078,
+      "column": 41,
+      "kind": "CallExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/transformers/generators.ts",
+      "line": 2079,
+      "column": 32,
+      "kind": "ReturnStatement",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "line": 532,
+      "column": 23,
+      "kind": "VariableDeclaration",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "line": 533,
+      "column": 44,
+      "kind": "CallExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "line": 534,
+      "column": 30,
+      "kind": "CallExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "line": 535,
+      "column": 24,
+      "kind": "ReturnStatement",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "line": 538,
+      "column": 23,
+      "kind": "VariableDeclaration",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "line": 539,
+      "column": 18,
+      "kind": "AsExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "line": 539,
+      "column": 42,
+      "kind": "TypeQuery",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "line": 540,
+      "column": 24,
+      "kind": "ReturnStatement",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/services/utilities.ts",
+      "line": 21,
+      "column": 5,
+      "kind": "ImportSpecifier",
+      "target": true,
+      "name": "clone"
+    },
+    {
+      "file": "src/services/utilities.ts",
+      "line": 2245,
+      "column": 20,
+      "kind": "CallExpression",
+      "target": true,
+      "name": "clone"
+    },
+    {
+      "file": "src/services/refactors/extractSymbol.ts",
+      "line": 1353,
+      "column": 15,
+      "kind": "VariableDeclaration",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/services/refactors/extractSymbol.ts",
+      "line": 1354,
+      "column": 29,
+      "kind": "VariableDeclaration",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/services/refactors/extractSymbol.ts",
+      "line": 1359,
+      "column": 15,
+      "kind": "ConditionalExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/services/refactors/extractSymbol.ts",
+      "line": 1360,
+      "column": 44,
+      "kind": "ArrayLiteralExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/services/organizeImports.ts",
+      "line": 25,
+      "column": 5,
+      "kind": "ImportSpecifier",
+      "target": true,
+      "name": "groupBy"
+    },
+    {
+      "file": "src/services/organizeImports.ts",
+      "line": 427,
+      "column": 38,
+      "kind": "CallExpression",
+      "target": true,
+      "name": "groupBy"
+    },
+    {
+      "file": "src/harness/fourslashImpl.ts",
+      "line": 2914,
+      "column": 19,
+      "kind": "PropertyAccessExpression",
+      "target": true,
+      "name": "clone"
+    },
+    {
+      "file": "src/harness/fourslashImpl.ts",
+      "line": 3022,
+      "column": 34,
+      "kind": "PropertyAccessExpression",
+      "target": true,
+      "name": "clone"
+    },
+    {
+      "file": "src/lib/dom.generated.d.ts",
+      "line": 4111,
+      "column": 5,
+      "kind": "MethodSignature",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/lib/dom.generated.d.ts",
+      "line": 24601,
+      "column": 5,
+      "kind": "MethodSignature",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/lib/dom.generated.d.ts",
+      "line": 24754,
+      "column": 5,
+      "kind": "MethodSignature",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/lib/dom.generated.d.ts",
+      "line": 30572,
+      "column": 5,
+      "kind": "MethodSignature",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/lib/dom.generated.d.ts",
+      "line": 30732,
+      "column": 5,
+      "kind": "MethodSignature",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/lib/dom.generated.d.ts",
+      "line": 38027,
+      "column": 5,
+      "kind": "MethodSignature",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/lib/es2024.collection.d.ts",
+      "line": 7,
+      "column": 5,
+      "kind": "MethodSignature",
+      "target": false,
+      "name": "groupBy"
+    },
+    {
+      "file": "src/lib/es2024.object.d.ts",
+      "line": 7,
+      "column": 5,
+      "kind": "MethodSignature",
+      "target": false,
+      "name": "groupBy"
+    },
+    {
+      "file": "src/lib/webworker.generated.d.ts",
+      "line": 1679,
+      "column": 5,
+      "kind": "MethodSignature",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/lib/webworker.generated.d.ts",
+      "line": 9445,
+      "column": 5,
+      "kind": "MethodSignature",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/lib/webworker.generated.d.ts",
+      "line": 9506,
+      "column": 5,
+      "kind": "MethodSignature",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/lib/webworker.generated.d.ts",
+      "line": 10971,
+      "column": 5,
+      "kind": "MethodSignature",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/testRunner/parallel/worker.ts",
+      "line": 80,
+      "column": 65,
+      "kind": "MethodSignature",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/testRunner/parallel/worker.ts",
+      "line": 81,
+      "column": 22,
+      "kind": "MethodDeclaration",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/testRunner/parallel/worker.ts",
+      "line": 82,
+      "column": 38,
+      "kind": "PropertyAccessExpression",
+      "target": false,
+      "name": "clone"
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+      "line": 20,
+      "column": 5,
+      "kind": "ImportSpecifier",
+      "target": true,
+      "name": "clone"
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+      "line": 383,
+      "column": 24,
+      "kind": "CallExpression",
+      "target": true,
+      "name": "clone"
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+      "line": 386,
+      "column": 49,
+      "kind": "CallExpression",
+      "target": true,
+      "name": "clone"
+    }
+  ]
+}

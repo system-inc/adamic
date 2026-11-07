@@ -1,0 +1,50 @@
+{
+  "scope": "isolated strict TypeScript trials; selected complete owners are separately checked by Adamic over all 79 roots",
+  "results": [
+    {
+      "name": "groupby-result-as-return-type",
+      "source": "function g<T,K extends string|number|boolean|null|undefined>(values:readonly T[]|undefined,keySelector:(v:T)=>K):{[P in K as `${P}`]?:T[]} {const result:{[P in K as `${P}`]?:T[]}={};if(values!==undefined){for(let i=0;i<values.length;i++){const value=values[i]!;const key=`${keySelector(value)}`;const array=result[key]??=[];array.push(value);}}return result;}",
+      "diagnostics": [
+        {
+          "code": 7053,
+          "message": "Element implicitly has an 'any' type because expression of type 'string' can't be used to index type '{ [P in K as `${P}`]?: T[] | undefined; }'.   No index signature with a parameter of type 'string' was found on type '{ [P in K as `${P}`]?: T[] | undefined; }'."
+        }
+      ]
+    },
+    {
+      "name": "groupby-record-result-mapped-return",
+      "source": "function g<T,K extends string|number|boolean|null|undefined>(values:readonly T[]|undefined,keySelector:(v:T)=>K):{[P in K as `${P}`]?:T[]} {const result:Record<string,T[]>={};if(values!==undefined){for(let i=0;i<values.length;i++){const value=values[i]!;const key=`${keySelector(value)}`;const array=result[key]??=[];array.push(value);}}return result;}",
+      "diagnostics": [
+        {
+          "code": 2322,
+          "message": "Type 'Record<string, T[]>' is not assignable to type '{ [P in K as `${P}`]?: T[] | undefined; }'."
+        }
+      ]
+    },
+    {
+      "name": "groupby-record-intersection",
+      "source": "function g<T,K extends string|number|boolean|null|undefined>(values:readonly T[]|undefined,keySelector:(v:T)=>K):{[P in K as `${P}`]?:T[]} {const result:Record<string,T[]> & {[P in K as `${P}`]?:T[]}={};if(values!==undefined){for(let i=0;i<values.length;i++){const value=values[i]!;const key=`${keySelector(value)}`;const array=result[key]??=[];array.push(value);}}return result;}",
+      "diagnostics": [
+        {
+          "code": 2862,
+          "message": "Type 'Record<string, T[]> & { [P in K as `${P}`]?: T[] | undefined; }' is generic and can only be indexed for reading."
+        }
+      ]
+    },
+    {
+      "name": "groupby-record-implementation",
+      "source": "function g<T,K extends string|number|boolean|null|undefined>(values:readonly T[]|undefined,keySelector:(v:T)=>K):Record<string,T[]> {const result:Record<string,T[]>={};if(values!==undefined){for(let i=0;i<values.length;i++){const value=values[i]!;const key=`${keySelector(value)}`;const array=result[key]??=[];array.push(value);}}return result;}",
+      "diagnostics": []
+    },
+    {
+      "name": "clone-direct-read",
+      "source": "function clone<T>(object:T):T {const result:any={};for(const id in object)if(Object.prototype.hasOwnProperty.call(object,id))result[id]=object[id];return result;}",
+      "diagnostics": []
+    },
+    {
+      "name": "clone-record-constraint",
+      "source": "function clone<T extends Record<string,unknown>>(object:T):T {const result:any={};for(const id in object)if(Object.prototype.hasOwnProperty.call(object,id))result[id]=object[id];return result;}",
+      "diagnostics": []
+    }
+  ]
+}
