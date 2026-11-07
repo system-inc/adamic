@@ -16,7 +16,8 @@ for (const [file, locations] of Object.entries(request.files)) {
     const offset = starts[line - 1] + column - 1;
     if (offset >= (starts[line] ?? text.length + 1)) throw Error(`invalid column: ${where}`);
     // Descend to the smallest node containing this position, then retain the
-    // outermost access ancestor. Do not merge separate accesses on one line.
+    // outermost access ancestor within this chain. Element arguments are
+    // evaluated separately from their receiver and start their own chains.
     let node = source;
     function descend(n) {
       ts.forEachChild(n, child => {
@@ -28,7 +29,10 @@ for (const [file, locations] of Object.entries(request.files)) {
     descend(source);
     let normalized = offset;
     let chain = access(node) ? node : null;
-    for (let n = node.parent; n && access(n); n = n.parent) chain = n;
+    for (let child = node, n = child.parent; n && access(n); child = n, n = n.parent) {
+      if (ts.isElementAccessExpression(n) && n.argumentExpression === child) break;
+      chain = n;
+    }
     if (chain) normalized = chain.getStart(source);
     const byteOffset = n => Buffer.byteLength(text.slice(0, n), 'utf8');
     result[where] = {file, sha256: sha, byte_offset: byteOffset(offset), read_offset: byteOffset(normalized)};
