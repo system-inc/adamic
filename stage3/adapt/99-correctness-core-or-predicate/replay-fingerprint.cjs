@@ -1,0 +1,8 @@
+'use strict';
+const fs=require('node:fs'),ts=require('typescript'),crypto=require('node:crypto'),assert=require('node:assert/strict');
+const [before,after,out]=process.argv.slice(2),spec=fs.readFileSync('/workspace/adamic/stage3/adapt/71-writable-views/type-plans.cjs','utf8'),source=ts.createSourceFile('type-plans.cjs',spec,99,true),definition=source.statements.find(n=>ts.isFunctionDeclaration(n)&&n.name?.text==='fingerprint');assert(definition);
+const fingerprint=new Function('ts','crypto',definition.getText(source)+';return fingerprint;')(ts,crypto);
+function body(tree){const sf=ts.createSourceFile('checker.ts',fs.readFileSync(tree+'/src/compiler/checker.ts','utf8'),99,true);return sf.statements.find(n=>ts.isFunctionDeclaration(n)&&n.name?.text==='createTypeChecker').body;}
+const a=body(before),b=body(after);let count=0;
+const transform=ts.transform(b,[context=>{const visit=n=>{if(ts.isCallExpression(n)&&ts.isIdentifier(n.expression)&&/^orPredicate[23]$/.test(n.expression.text)){count++;return ts.factory.updateCallExpression(n,ts.factory.createIdentifier('or'),n.typeArguments,ts.visitNodes(n.arguments,visit));}return ts.visitEachChild(n,visit,context);};return n=>ts.visitNode(n,visit);}]);
+const old=fingerprint(a),current=fingerprint(b),reverted=fingerprint(transform.transformed[0]);transform.dispose();assert.equal(count,7);assert.equal(reverted,old);fs.writeFileSync(out,JSON.stringify({file:'src/compiler/checker.ts',function:'createTypeChecker',before:old,after:current,reverted,rewrittenCalls:count,onlySevenOwnedCallsChangeFingerprint:true,algorithmCopiedVerbatimFrom:'71-writable-views/type-plans.cjs:fingerprint'},null,2)+'\n');console.log(JSON.stringify({rewrittenCalls:count,before:old,after:current,reverted}));

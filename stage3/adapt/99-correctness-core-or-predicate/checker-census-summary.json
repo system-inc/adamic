@@ -1,0 +1,169 @@
+{
+  "before": {
+    "process": {
+      "exit_code": -9,
+      "seconds": 2928.8674330711365,
+      "limit_seconds": 5400,
+      "stop_reason": null,
+      "last_completed_unit": {
+        "file": "/workspace/or-predicate-before/src/compiler/checker.ts",
+        "where": "/workspace/or-predicate-before/src/compiler/checker.ts:30917:5",
+        "wall_seconds": 7.50020862,
+        "cpu_seconds": 6.100983999999698
+      },
+      "raw_bytes": 165
+    },
+    "complete": false,
+    "checkerDiagnostics": [],
+    "owners": [
+      {
+        "path": [
+          "createTypeChecker",
+          "resolveExternalModule"
+        ],
+        "name": "createTypeChecker/resolveExternalModule",
+        "startLine": 4731,
+        "endLine": 4963,
+        "findingsAvailable": false
+      },
+      {
+        "path": [
+          "createTypeChecker",
+          "createNodeBuilder",
+          "symbolTableToDeclarationStatements",
+          "makeSerializePropertySymbol",
+          "serializePropertySymbol"
+        ],
+        "name": "createTypeChecker/createNodeBuilder/symbolTableToDeclarationStatements/makeSerializePropertySymbol/serializePropertySymbol",
+        "startLine": 10821,
+        "endLine": 10955,
+        "findingsAvailable": false
+      },
+      {
+        "path": [
+          "createTypeChecker",
+          "checkAliasSymbol"
+        ],
+        "name": "createTypeChecker/checkAliasSymbol",
+        "startLine": 48396,
+        "endLine": 48561,
+        "findingsAvailable": false
+      },
+      {
+        "path": [
+          "createTypeChecker",
+          "getSymbolOfNameOrPropertyAccessExpression"
+        ],
+        "name": "createTypeChecker/getSymbolOfNameOrPropertyAccessExpression",
+        "startLine": 49990,
+        "endLine": 50133,
+        "findingsAvailable": false
+      }
+    ],
+    "resourceObservation": {
+      "memoryLimitBytes": 17179869184,
+      "observedMemoryEvents": {
+        "low": 0,
+        "high": 0,
+        "max": 639675,
+        "oom": 1,
+        "oom_kill": 1,
+        "oom_group_kill": 0
+      },
+      "baselineChildExit": -9,
+      "baselineLastCompletedUnit": "src/compiler/checker.ts:30917:5",
+      "lastCompletedFunction": "markDecoratorMedataDataTypeNodeAsReferenced",
+      "nextSourceFunction": "getNarrowedTypeOfSymbol",
+      "interpretation": "The baseline census received SIGKILL while the shared cgroup recorded an OOM kill. No complete baseline checker finding stream was emitted."
+    },
+    "lastCompletedUnit": {
+      "file": "/workspace/or-predicate-before/src/compiler/checker.ts",
+      "where": "/workspace/or-predicate-before/src/compiler/checker.ts:30917:5",
+      "wall_seconds": 7.50020862,
+      "cpu_seconds": 6.100983999999698
+    }
+  },
+  "after": {
+    "process": {
+      "exit_code": -9,
+      "seconds": 3722.1480515003204,
+      "limit_seconds": 5400,
+      "stop_reason": null,
+      "last_completed_unit": {
+        "file": "/workspace/or-predicate-after/src/compiler/checker.ts",
+        "where": "/workspace/or-predicate-after/src/compiler/checker.ts:36018:5",
+        "wall_seconds": 0.780015312,
+        "cpu_seconds": 0.7844769999992423
+      },
+      "raw_bytes": 165
+    },
+    "complete": false,
+    "checkerDiagnostics": [],
+    "owners": [
+      {
+        "path": [
+          "createTypeChecker",
+          "resolveExternalModule"
+        ],
+        "name": "createTypeChecker/resolveExternalModule",
+        "startLine": 4733,
+        "endLine": 4965,
+        "findingsAvailable": false
+      },
+      {
+        "path": [
+          "createTypeChecker",
+          "createNodeBuilder",
+          "symbolTableToDeclarationStatements",
+          "makeSerializePropertySymbol",
+          "serializePropertySymbol"
+        ],
+        "name": "createTypeChecker/createNodeBuilder/symbolTableToDeclarationStatements/makeSerializePropertySymbol/serializePropertySymbol",
+        "startLine": 10823,
+        "endLine": 10957,
+        "findingsAvailable": false
+      },
+      {
+        "path": [
+          "createTypeChecker",
+          "checkAliasSymbol"
+        ],
+        "name": "createTypeChecker/checkAliasSymbol",
+        "startLine": 48398,
+        "endLine": 48563,
+        "findingsAvailable": false
+      },
+      {
+        "path": [
+          "createTypeChecker",
+          "getSymbolOfNameOrPropertyAccessExpression"
+        ],
+        "name": "createTypeChecker/getSymbolOfNameOrPropertyAccessExpression",
+        "startLine": 49992,
+        "endLine": 50135,
+        "findingsAvailable": false
+      }
+    ],
+    "resourceObservation": {
+      "memoryLimitBytes": 17179869184,
+      "observedMemoryEvents": {
+        "low": 0,
+        "high": 0,
+        "max": 1368019,
+        "oom": 2,
+        "oom_kill": 2,
+        "oom_group_kill": 0
+      },
+      "candidateChildExit": -9,
+      "candidateLastCompletedUnit": "/workspace/or-predicate-after/src/compiler/checker.ts:36018:5",
+      "candidateSeconds": 3722.1480515003204,
+      "interpretation": "The candidate census received SIGKILL while running alone, and the shared cgroup recorded its second OOM kill. No complete candidate checker finding stream was emitted."
+    },
+    "lastCompletedUnit": {
+      "file": "/workspace/or-predicate-after/src/compiler/checker.ts",
+      "where": "/workspace/or-predicate-after/src/compiler/checker.ts:36018:5",
+      "wall_seconds": 0.780015312,
+      "cpu_seconds": 0.7844769999992423
+    }
+  }
+}

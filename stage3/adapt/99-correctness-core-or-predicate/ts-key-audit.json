@@ -1,0 +1,52 @@
+{
+  "root": "/workspace/or-predicate-after",
+  "trackedFiles": 81503,
+  "javascriptAndTypescriptFilesScanned": 39470,
+  "tsObjectKeyEnumerations": 0,
+  "rows": [],
+  "nestedNamespaceOrValueReads": [
+    {
+      "file": "src/harness/harnessLanguageService.ts",
+      "line": 761,
+      "kind": "spread",
+      "expression": "...ts.server.nullTypingsInstaller",
+      "reads": "ts.server.nullTypingsInstaller"
+    },
+    {
+      "file": "src/testRunner/unittests/config/commandLineParsing.ts",
+      "line": 117,
+      "kind": "spread",
+      "expression": "...ts.compilerOptionsDidYouMeanDiagnostics.optionDeclarations",
+      "reads": "ts.compilerOptionsDidYouMeanDiagnostics.optionDeclarations"
+    },
+    {
+      "file": "src/testRunner/unittests/config/commandLineParsing.ts",
+      "line": 128,
+      "kind": "spread",
+      "expression": "...ts.compilerOptionsDidYouMeanDiagnostics",
+      "reads": "ts.compilerOptionsDidYouMeanDiagnostics"
+    },
+    {
+      "file": "src/testRunner/unittests/services/textChanges.ts",
+      "line": 25,
+      "kind": "spread",
+      "expression": "...ts.testFormatSettings",
+      "reads": "ts.testFormatSettings"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/session.ts",
+      "line": 215,
+      "kind": "Object.values",
+      "expression": "Object.values((ts.server.protocol as any).CommandTypes)",
+      "reads": "(ts.server.protocol as any).CommandTypes"
+    },
+    {
+      "file": "src/tsserver/common.ts",
+      "line": 7,
+      "kind": "for-in",
+      "expression": "for (const name in ts.server.LogLevel) {\r\n            if (isNaN(+name) && l === name.toLowerCase()) {\r\n                return ts.server.LogLevel[name] as any as ts.server.LogLevel;\r\n            }\r\n        }",
+      "reads": "ts.server.LogLevel"
+    }
+  ],
+  "scope": "Tracked TypeScript checkout plus every generated source file, including harness, test runners, test cases and baselines; generated build machinery is reported separately."
+}

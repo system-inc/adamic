@@ -1,0 +1,67 @@
+{
+  "checkerDiagnostics": [],
+  "mode": "full",
+  "coreUnits": 270,
+  "coreFindingsIncludingBoundaries": 34,
+  "orRange": [
+    2464,
+    2484
+  ],
+  "orUnits": [
+    {
+      "measurement": "measured on a checker-rejected program",
+      "where": "/workspace/or-predicate-before/src/compiler/core.ts:2464:1",
+      "kind": "KindFunctionDeclaration",
+      "instantiated": false,
+      "status": "deferred_generic_instantiation",
+      "checker_diagnostics": [],
+      "name": "or",
+      "top": "/workspace/or-predicate-before/src/compiler/core.ts:2464:1"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "where": "/workspace/or-predicate-before/src/compiler/core.ts:2466:1",
+      "kind": "KindFunctionDeclaration",
+      "instantiated": false,
+      "status": "deferred_generic_instantiation",
+      "checker_diagnostics": [],
+      "name": "or",
+      "top": "/workspace/or-predicate-before/src/compiler/core.ts:2466:1"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "where": "/workspace/or-predicate-before/src/compiler/core.ts:2469:1",
+      "kind": "KindFunctionDeclaration",
+      "instantiated": false,
+      "status": "deferred_generic_instantiation",
+      "checker_diagnostics": [],
+      "name": "or",
+      "top": "/workspace/or-predicate-before/src/compiler/core.ts:2469:1"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "where": "/workspace/or-predicate-before/src/compiler/core.ts:2471:1",
+      "kind": "KindFunctionDeclaration",
+      "instantiated": false,
+      "status": "deferred_generic_instantiation",
+      "checker_diagnostics": [],
+      "name": "or",
+      "top": "/workspace/or-predicate-before/src/compiler/core.ts:2471:1"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "where": "/workspace/or-predicate-before/src/compiler/core.ts:2473:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 88773,
+      "body_end": 89043,
+      "instantiated": false,
+      "status": "deferred_generic_instantiation",
+      "checker_diagnostics": [],
+      "name": "or",
+      "top": "/workspace/or-predicate-before/src/compiler/core.ts:2473:1"
+    }
+  ],
+  "orFindings": [],
+  "orOverloadStopsAnywhereInCore": [],
+  "scopeNote": "Core-only scan defers the generic or declarations; caller witnesses are the acceptance instrument."
+}
