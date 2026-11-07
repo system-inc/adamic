@@ -193,6 +193,9 @@ adamic_value adamic_bound_closure_call(adamic_closure *self, adamic_value *argum
 #ifdef ADAMIC_CLOSURE_CONVENTION
   return adamic_method_call(self->bound_method, self->cells[1]->value.reference, arguments, argument_count);
 #else
+  if (self->bound_method_storage.counted) {
+   return ((adamic_counted_method)self->bound_method_storage.code)(self->cells[1]->value.reference, arguments, argument_count);
+  }
   return ((adamic_method)self->bound_method_storage.code)(self->cells[1]->value.reference, arguments);
 #endif
  }
