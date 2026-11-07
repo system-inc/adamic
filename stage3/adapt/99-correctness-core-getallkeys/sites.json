@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "beforeSites": 24,
+  "afterSites": 23,
+  "mutantSites": 24,
+  "beforeUnits": 271,
+  "afterUnits": 270,
+  "removed": [
+    {
+      "owner": "getAllKeys",
+      "kind": "Refused",
+      "reason": "Object.getPrototypeOf",
+      "phase": "lowering",
+      "snippet": "Object.getPrototypeOf",
+      "occurrence": 0,
+      "where": "/workspace/getallkeys-before/src/compiler/core.ts:1317:18"
+    }
+  ],
+  "added": [],
+  "mutantRestored": [
+    {
+      "owner": "getAllKeys",
+      "kind": "Refused",
+      "reason": "Object.getPrototypeOf",
+      "phase": "lowering",
+      "snippet": "Object.getPrototypeOf",
+      "occurrence": 0,
+      "where": "/workspace/scratch/getallkeys-proof/mutant/src/compiler/core.ts:1317:18"
+    }
+  ],
+  "checkerDiagnostics": 0,
+  "referenceSite": "F10, core-sites-af42d3dc/REPORT.md"
+}

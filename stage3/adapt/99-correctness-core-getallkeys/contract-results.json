@@ -1,0 +1,109 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "check": "apply and no-write replay \"\\n\"",
+      "pass": true
+    },
+    {
+      "check": "core only moved \"\\n\"",
+      "pass": true
+    },
+    {
+      "check": "harness only moved \"\\n\"",
+      "pass": true
+    },
+    {
+      "check": "whole statement drift before \"\\n\"",
+      "pass": true
+    },
+    {
+      "check": "whole statement drift after \"\\n\"",
+      "pass": true
+    },
+    {
+      "check": "whole core body drift \"\\n\"",
+      "pass": true
+    },
+    {
+      "check": "whole local body drift \"\\n\"",
+      "pass": true
+    },
+    {
+      "check": "core doc drift \"\\n\"",
+      "pass": true
+    },
+    {
+      "check": "call only \"\\n\"",
+      "pass": true
+    },
+    {
+      "check": "import only \"\\n\"",
+      "pass": true
+    },
+    {
+      "check": "orphaned core comment \"\\n\"",
+      "pass": true
+    },
+    {
+      "check": "duplicate local \"\\n\"",
+      "pass": true
+    },
+    {
+      "check": "foreign edit preserved \"\\n\"",
+      "pass": true
+    },
+    {
+      "check": "apply and no-write replay \"\\r\\n\"",
+      "pass": true
+    },
+    {
+      "check": "core only moved \"\\r\\n\"",
+      "pass": true
+    },
+    {
+      "check": "harness only moved \"\\r\\n\"",
+      "pass": true
+    },
+    {
+      "check": "whole statement drift before \"\\r\\n\"",
+      "pass": true
+    },
+    {
+      "check": "whole statement drift after \"\\r\\n\"",
+      "pass": true
+    },
+    {
+      "check": "whole core body drift \"\\r\\n\"",
+      "pass": true
+    },
+    {
+      "check": "whole local body drift \"\\r\\n\"",
+      "pass": true
+    },
+    {
+      "check": "core doc drift \"\\r\\n\"",
+      "pass": true
+    },
+    {
+      "check": "call only \"\\r\\n\"",
+      "pass": true
+    },
+    {
+      "check": "import only \"\\r\\n\"",
+      "pass": true
+    },
+    {
+      "check": "orphaned core comment \"\\r\\n\"",
+      "pass": true
+    },
+    {
+      "check": "duplicate local \"\\r\\n\"",
+      "pass": true
+    },
+    {
+      "check": "foreign edit preserved \"\\r\\n\"",
+      "pass": true
+    }
+  ]
+}
