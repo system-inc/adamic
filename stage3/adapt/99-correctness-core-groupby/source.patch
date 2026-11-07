@@ -1,0 +1,8 @@
+--- main/src/compiler/core.ts
++++ adapted/src/compiler/core.ts
+@@ -1474 +1474 @@
+-export function groupBy<T, K extends string | number | boolean | null | undefined>(values: readonly T[] | undefined, keySelector: (value: T) => K): { [P in K as `${P}`]?: T[]; } { // eslint-disable-line no-restricted-syntax
++export function groupBy<T, K extends string | number | boolean | null | undefined>(values: readonly T[] | undefined, keySelector: (value: T) => K): Record<string, T[]> { // eslint-disable-line no-restricted-syntax
+@@ -1484 +1484 @@
+-    return result as { [P in K as `${P}`]?: T[]; };
++    return result;

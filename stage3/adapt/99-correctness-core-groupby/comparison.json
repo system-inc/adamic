@@ -1,0 +1,94 @@
+{
+  "sourceFiles": 746,
+  "changedSources": [
+    "compiler/core.ts"
+  ],
+  "onlyPinnedOwnersChanged": true,
+  "censusSnapshotSourceBytesIdentical": true,
+  "syntaxBefore": {
+    "casts": 25,
+    "any": 12
+  },
+  "syntaxAfter": {
+    "casts": 24,
+    "any": 12
+  },
+  "coreJavascript": [
+    {
+      "removeComments": false,
+      "byteIdentical": true,
+      "sha256": "8ba3fab82a752cb45bfcf6949c69cdee1e32f3e5805e66e991621f13d85581c4",
+      "bytes": 64998
+    },
+    {
+      "removeComments": true,
+      "byteIdentical": true,
+      "sha256": "fe031f7c04b8f6e0f9dcc79b9e0d110af3649eedecbdac84fc76fd74d6e623bb",
+      "bytes": 45885
+    }
+  ],
+  "emittedJavascriptFiles": 9,
+  "emittedJavascriptByteIdentical": true,
+  "emitted": [
+    {
+      "name": "_tsc.js",
+      "bytes": 6247856,
+      "sha256": "dd4689cd47e51b786305fdf69e158185463f7ca1161861f9f66cc3c31ecd2b39"
+    },
+    {
+      "name": "_tsserver.js",
+      "bytes": 27889,
+      "sha256": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b"
+    },
+    {
+      "name": "_typingsInstaller.js",
+      "bytes": 10364,
+      "sha256": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1"
+    },
+    {
+      "name": "tsc.js",
+      "bytes": 267,
+      "sha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983"
+    },
+    {
+      "name": "tsserver.js",
+      "bytes": 272,
+      "sha256": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb"
+    },
+    {
+      "name": "tsserverlibrary.js",
+      "bytes": 1013,
+      "sha256": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf"
+    },
+    {
+      "name": "typescript.js",
+      "bytes": 9155424,
+      "sha256": "a189114ced5661c9af66edb805ddf11f56b20555cdeb9d9086aad69e99843d16"
+    },
+    {
+      "name": "typingsInstaller.js",
+      "bytes": 280,
+      "sha256": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213"
+    },
+    {
+      "name": "watchGuard.js",
+      "bytes": 2314,
+      "sha256": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88"
+    }
+  ],
+  "declarations": [
+    {
+      "name": "typescript.d.ts",
+      "byteIdentical": true,
+      "bytes": 593502,
+      "sha256": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b"
+    },
+    {
+      "name": "tsserverlibrary.d.ts",
+      "byteIdentical": true,
+      "bytes": 866,
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd"
+    }
+  ],
+  "oracle": "reported separately in count-summary.json"
+}
