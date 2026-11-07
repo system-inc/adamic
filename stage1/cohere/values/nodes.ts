@@ -1,27 +1,29 @@
-// A port of cohere's internal/format/css/values/nodes.go to Adamic 0.1: postcss-values-parser 2.0.1,
-// lib/node.js, lib/container.js and the node classes (root.js, value.js, atword.js, colon.js, comma.js,
-// comment.js, function.js, number.js, operator.js, paren.js, string.js, unicode-range.js, word.js).
-//
-// The Go builds an *estree.Node, a bag of the own fields each class leaves on the JavaScript object.
-// The port has one class with every field any of them has, and a shape saying which constructor made
-// the node, which decides which of the fields it has (keysOf). That is the library's own rule: a node's
-// fields are its class's. The Go side of the test checks every Go node has exactly the keys its shape
-// gives, so the class can't be leaving one out.
-//
-// The shape carries presence because stage 0 doesn't lower a boolean | undefined field yet (gap 2 in
-// GAPS.md), which is how the flags (inline, isHex, isColor, quoted) present on some nodes and absent on
-// others would otherwise be written. The other optional fields are plain values the shape ignores
-// where it leaves them out.
-//
-// A container's children are not a field of its node while the parse runs. The parser appends to them
-// long after it made the node (a func's arguments, a value's words), and a mutable list of nodes that
-// a node keeps could be made to hold that node itself, a cycle stage 0 refuses (adamic/cycle-capable;
-// mediaquery's GAPS.md, gaps 4 and 5). So a container has an id, the parser keeps each container's
-// children by it, and when the parse is done it builds the tree the library returns, a ValueTree, whose
-// lists are readonly.
-//
-// Not ported, as in the Go: parent, and everything functional (toString, clone, walk and the rest),
-// which the parser never calls.
+/*
+ * A port of cohere's internal/format/css/values/nodes.go to Adamic 0.1: postcss-values-parser 2.0.1,
+ * lib/node.js, lib/container.js and the node classes (root.js, value.js, atword.js, colon.js, comma.js,
+ * comment.js, function.js, number.js, operator.js, paren.js, string.js, unicode-range.js, word.js).
+ *
+ * The Go builds an *estree.Node, a bag of the own fields each class leaves on the JavaScript object.
+ * The port has one class with every field any of them has, and a shape saying which constructor made
+ * the node, which decides which of the fields it has (keysOf). That is the library's own rule: a node's
+ * fields are its class's. The Go side of the test checks every Go node has exactly the keys its shape
+ * gives, so the class can't be leaving one out.
+ *
+ * The shape carries presence because stage 0 doesn't lower a boolean | undefined field yet (gap 2 in
+ * GAPS.md), which is how the flags (inline, isHex, isColor, quoted) present on some nodes and absent on
+ * others would otherwise be written. The other optional fields are plain values the shape ignores
+ * where it leaves them out.
+ *
+ * A container's children are not a field of its node while the parse runs. The parser appends to them
+ * long after it made the node (a func's arguments, a value's words), and a mutable list of nodes that
+ * a node keeps could be made to hold that node itself, a cycle stage 0 refuses (adamic/cycle-capable;
+ * mediaquery's GAPS.md, gaps 4 and 5). So a container has an id, the parser keeps each container's
+ * children by it, and when the parse is done it builds the tree the library returns, a ValueTree, whose
+ * lists are readonly.
+ *
+ * Not ported, as in the Go: parent, and everything functional (toString, clone, walk and the rest),
+ * which the parser never calls.
+ */
 
 // Which constructor made a node. 'leaf' is colon, comma, operator, unicode-range, and the word parenOpen
 // builds for a url's argument; 'word' is the word splitWord builds, with isHex and isColor.
