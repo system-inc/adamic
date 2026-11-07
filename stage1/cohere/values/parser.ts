@@ -1,19 +1,21 @@
-// A port of cohere's internal/format/css/values/parser.go to Adamic 0.1: postcss-values-parser 2.0.1,
-// lib/parser.js, with lib/errors/ParserError.js. Each piece names the Go it reads as.
-//
-// Where the port differs from the Go, and why:
-//
-//   - Throws. Upstream throws; the Go panics with an *Error and Parse recovers it. 0.1 has no
-//     exceptions, so a throw here records upstream's String(error) in #thrown and returns at once, and
-//     every caller that can see one returns too, so nothing upstream wouldn't run after a throw runs
-//     here. The loop stops at the first. The TypeErrors upstream hits reading a property of undefined
-//     are thrown where its expression reads them, in its order of evaluation.
-//   - Offsets. The Go converts every sourceIndex to a byte offset; the port keeps upstream's UTF-16
-//     index. The test converts the Go's back with cohere's own utf16IndexOf, as cohere's oracle test
-//     does before comparing with the library.
-//   - The methods come callee first, not in the Go's order: stage 0 takes a call to a method declared
-//     further down for a void one (gitignore's GAPS.md, gap 3).
-//   - The Go's unexported fields and methods are #private members (gap 4 in GAPS.md is closed).
+/*
+ * A port of cohere's internal/format/css/values/parser.go to Adamic 0.1: postcss-values-parser 2.0.1,
+ * lib/parser.js, with lib/errors/ParserError.js. Each piece names the Go it reads as.
+ *
+ * Where the port differs from the Go, and why:
+ *
+ *   - Throws. Upstream throws; the Go panics with an *Error and Parse recovers it. 0.1 has no
+ *     exceptions, so a throw here records upstream's String(error) in #thrown and returns at once, and
+ *     every caller that can see one returns too, so nothing upstream wouldn't run after a throw runs
+ *     here. The loop stops at the first. The TypeErrors upstream hits reading a property of undefined
+ *     are thrown where its expression reads them, in its order of evaluation.
+ *   - Offsets. The Go converts every sourceIndex to a byte offset; the port keeps upstream's UTF-16
+ *     index. The test converts the Go's back with cohere's own utf16IndexOf, as cohere's oracle test
+ *     does before comparing with the library.
+ *   - The methods come callee first, not in the Go's order: stage 0 takes a call to a method declared
+ *     further down for a void one (gitignore's GAPS.md, gap 3).
+ *   - The Go's unexported fields and methods are #private members (gap 4 in GAPS.md is closed).
+ */
 
 import { panic } from 'adamic';
 import { alphaNum, type Token } from './tokenize.ts';
@@ -71,7 +73,7 @@ function rNumber(text: string): number {
     if(text.startsWith('+') || text.startsWith('-')) {
         index++;
     }
-    const digits = (from: number): number => {
+    const digits = function(from: number): number {
         let end = from;
         while(isDigit(text, end)) {
             end++;
