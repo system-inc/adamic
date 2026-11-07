@@ -1,11 +1,13 @@
-// A port of cohere's internal/format/css/mediaquery/whitespace.go to Adamic 0.1. The Go is beside it in
-// the cohere submodule; each piece here names the Go it reads as.
-//
-// The library's whitespace is JavaScript's: the regular expression class \s, and String.prototype.trim,
-// which strip the same set (ECMAScript WhiteSpace and LineTerminator). It is not Go's unicode.IsSpace,
-// which takes U+0085 and leaves out U+FEFF. Every member is in the Basic Multilingual Plane, so one
-// UTF-16 unit is one character here, and testing units answers as the library does. The Go tests runes
-// for the same reason; the port tests units, because its strings are the library's, UTF-16.
+/*
+ * A port of cohere's internal/format/css/mediaquery/whitespace.go to Adamic 0.1. The Go is beside it in
+ * the cohere submodule; each piece here names the Go it reads as.
+ *
+ * The library's whitespace is JavaScript's: the regular expression class \s, and String.prototype.trim,
+ * which strip the same set (ECMAScript WhiteSpace and LineTerminator). It is not Go's unicode.IsSpace,
+ * which takes `U+0085` and leaves out `U+FEFF`. Every member is in the Basic Multilingual Plane, so one
+ * UTF-16 unit is one character here, and testing units answers as the library does. The Go tests runes
+ * for the same reason; the port tests units, because its strings are the library's, UTF-16.
+ */
 
 // whitespace.go: isWhitespace, `character.search(/\s/) !== -1` for one character, here one UTF-16 unit.
 export function isWhitespace(unit: number): boolean {

@@ -30,7 +30,7 @@ export class StrictOptions {
             const name = this.shapes.node(this.shapes.field(shape, 'name')).text;
             const definition = this.definitions < 0 ? -1 : this.shapes.field(this.definitions, name);
             if(definition < 0) {
-                this.unsupported = 'missing definition ' + name;
+                this.unsupported = `missing definition ${name}`;
                 return false;
             }
             return this.matches(definition, values, index);

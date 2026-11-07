@@ -1,33 +1,35 @@
-// A port of cohere's internal/format/graphql/parser.go to Adamic 0.1: graphql-js 17.0.2,
-// language/parser.js, parse and the Parser class it drives, with parseComments from Prettier's
-// src/language-graphql/parser-graphql.js.
-//
-// As in the Go: Prettier's options (experimentalFragmentArguments true, noLocation false, maxTokens
-// unset), and parse alone of graphql-js's entries, so no schema coordinates.
-//
-// Where the port's shape differs from the Go's, and why:
-//
-//   - Nodes. The Go's are estree.Nodes, bags of properties in graphql-js's creation order. Here a node
-//     is a GraphNode: its kind, its location, and its fields as a list in that order, so that a field
-//     graphql-js writes as undefined is in the list holding Undefined, and one it never writes (a
-//     FragmentSpread's arguments, when none are written) is not in it. A node's children are its
-//     indexes in the document's table of nodes, not the nodes themselves: a node holding a list of
-//     nodes it was built from is what 0.1's cycle rule refuses (mediaquery's GAPS.md, gaps 4 and 5),
-//     and a document's lists can be long, which rules out copying each list to grow it, as the
-//     mediaquery port does (the values port keeps a table too).
-//   - The list helpers. graphql-js's any, many, optionalMany and delimitedMany take the item's parse
-//     function as a value. A function value that can throw doesn't lower yet (GAPS.md, gap 1), and
-//     neither does a call to a method declared later (gitignore's GAPS.md, gap 3), which a dispatching
-//     method in the helpers' place would be. So each list is its helper's
-//     loop, written where the helper is called, and marked with the helper's name.
-//   - The two cycles. parseValueLiteral, parseList, parseObject and parseObjectField call each other,
-//     and so do parseSelectionSet, parseSelection, parseField and parseFragment; with gap 3 no order
-//     of methods lowers either, so each cycle is one method, parseValueLiteral and parseSelectionSet,
-//     with the others written inside it where they're called, and marked.
-//   - Methods are in callee-first order (gap 3), not the Go's.
-//   - Optional lists. graphql-js returns a list or undefined; here such a method returns the field's
-//     Value, a List or Undefined, since returning undefined from a function that returns an array or
-//     undefined lowers to C that clang refuses (suppression's GAPS.md, gap 2).
+/*
+ * A port of cohere's internal/format/graphql/parser.go to Adamic 0.1: graphql-js 17.0.2,
+ * language/parser.js, parse and the Parser class it drives, with parseComments from Prettier's
+ * src/language-graphql/parser-graphql.js.
+ *
+ * As in the Go: Prettier's options (experimentalFragmentArguments true, noLocation false, maxTokens
+ * unset), and parse alone of graphql-js's entries, so no schema coordinates.
+ *
+ * Where the port's shape differs from the Go's, and why:
+ *
+ *   - Nodes. The Go's are estree.Nodes, bags of properties in graphql-js's creation order. Here a node
+ *     is a GraphNode: its kind, its location, and its fields as a list in that order, so that a field
+ *     graphql-js writes as undefined is in the list holding Undefined, and one it never writes (a
+ *     FragmentSpread's arguments, when none are written) is not in it. A node's children are its
+ *     indexes in the document's table of nodes, not the nodes themselves: a node holding a list of
+ *     nodes it was built from is what 0.1's cycle rule refuses (mediaquery's `GAPS.md`, gaps 4 and 5),
+ *     and a document's lists can be long, which rules out copying each list to grow it, as the
+ *     mediaquery port does (the values port keeps a table too).
+ *   - The list helpers. graphql-js's any, many, optionalMany and delimitedMany take the item's parse
+ *     function as a value. A function value that can throw doesn't lower yet (`GAPS.md`, gap 1), and
+ *     neither does a call to a method declared later (gitignore's `GAPS.md`, gap 3), which a dispatching
+ *     method in the helpers' place would be. So each list is its helper's
+ *     loop, written where the helper is called, and marked with the helper's name.
+ *   - The two cycles. parseValueLiteral, parseList, parseObject and parseObjectField call each other,
+ *     and so do parseSelectionSet, parseSelection, parseField and parseFragment; with gap 3 no order
+ *     of methods lowers either, so each cycle is one method, parseValueLiteral and parseSelectionSet,
+ *     with the others written inside it where they're called, and marked.
+ *   - Methods are in callee-first order (gap 3), not the Go's.
+ *   - Optional lists. graphql-js returns a list or undefined; here such a method returns the field's
+ *     Value, a List or Undefined, since returning undefined from a function that returns an array or
+ *     undefined lowers to C that clang refuses (suppression's `GAPS.md`, gap 2).
+ */
 
 import { panic } from 'adamic';
 import { isPunctuatorTokenKind, Lexer, syntaxError } from './lexer.ts';
@@ -229,7 +231,7 @@ class Parser {
     }
 
     // unexpected is a helper function for creating an error when an unexpected lexed token is
-    // encountered: its message, which the caller throws (GAPS.md, gap 2).
+    // encountered: its message, which the caller throws (`GAPS.md`, gap 2).
     unexpected(atToken: Token | undefined): string {
         const token = atToken ?? this.lexer.token;
         return syntaxError(this.lexer.body, token.start, `Unexpected ${getTokenDesc(token)}.`);
@@ -249,12 +251,14 @@ class Parser {
         return this.node(start, 'NamedType', [child('name', this.parseName())]);
     }
 
-    // parseTypeReference parses
-    //
-    //	Type :
-    //	  - NamedType
-    //	  - ListType
-    //	  - NonNullType
+    /*
+     * parseTypeReference parses
+     *
+     * 	Type :
+     * 	  - NamedType
+     * 	  - ListType
+     * 	  - NonNullType
+     */
     parseTypeReference(): number {
         const start = this.lexer.token;
         let typeReference: number;
@@ -292,35 +296,39 @@ class Parser {
         return this.node(start, 'Variable', [child('name', this.parseName())]);
     }
 
-    // parseValueLiteral parses
-    //
-    //	Value[Const] :
-    //	  - [~Const] Variable
-    //	  - IntValue
-    //	  - FloatValue
-    //	  - StringValue
-    //	  - BooleanValue
-    //	  - NullValue
-    //	  - EnumValue
-    //	  - ListValue[?Const]
-    //	  - ObjectValue[?Const]
-    //
-    //	BooleanValue : one of `true` `false`
-    //
-    //	NullValue : `null`
-    //
-    //	EnumValue : Name but not `true`, `false` or `null`
-    //
-    // with parseList, parseObject and parseObjectField written in it, where it calls them (gap 3).
+    /*
+     * parseValueLiteral parses
+     *
+     * 	Value[Const] :
+     * 	  - [~Const] Variable
+     * 	  - IntValue
+     * 	  - FloatValue
+     * 	  - StringValue
+     * 	  - BooleanValue
+     * 	  - NullValue
+     * 	  - EnumValue
+     * 	  - ListValue[?Const]
+     * 	  - ObjectValue[?Const]
+     *
+     * 	BooleanValue : one of `true` `false`
+     *
+     * 	NullValue : `null`
+     *
+     * 	EnumValue : Name but not `true`, `false` or `null`
+     *
+     * with parseList, parseObject and parseObjectField written in it, where it calls them (gap 3).
+     */
     parseValueLiteral(isConst: boolean): number {
         const token = this.lexer.token;
         switch(token.kind) {
             case '[': {
-                // parseList parses
-                //
-                //	ListValue[Const] :
-                //	  - [ ]
-                //	  - [ Value[?Const]+ ]
+                /*
+                 * parseList parses
+                 *
+                 * 	ListValue[Const] :
+                 * 	  - [ ]
+                 * 	  - [ Value[?Const]+ ]
+                 */
                 const start = this.lexer.token;
                 // any('[', parseValueLiteral(isConst), ']')
                 this.expectToken('[');
@@ -331,11 +339,13 @@ class Parser {
                 return this.node(start, 'ListValue', [list('values', values)]);
             }
             case '{': {
-                // parseObject parses
-                //
-                //	ObjectValue[Const] :
-                //	  - { }
-                //	  - { ObjectField[?Const]+ }
+                /*
+                 * parseObject parses
+                 *
+                 * 	ObjectValue[Const] :
+                 * 	  - { }
+                 * 	  - { ObjectField[?Const]+ }
+                 */
                 const start = this.lexer.token;
                 // any('{', parseObjectField(isConst), '}')
                 this.expectToken('{');
@@ -474,29 +484,35 @@ class Parser {
         return { kind: 'List', nodes };
     }
 
-    // parseSelectionSet parses
-    //
-    //	SelectionSet : { Selection+ }
-    //
-    // with parseSelection, parseField and parseFragment written in it, where it calls them (gap 3).
+    /*
+     * parseSelectionSet parses
+     *
+     * 	SelectionSet : { Selection+ }
+     *
+     * with parseSelection, parseField and parseFragment written in it, where it calls them (gap 3).
+     */
     parseSelectionSet(): number {
         const start = this.lexer.token;
         // many('{', parseSelection, '}')
         this.expectToken('{');
         const selections: number[] = [];
         do {
-            // parseSelection parses
-            //
-            //	Selection :
-            //	  - Field
-            //	  - FragmentSpread
-            //	  - InlineFragment
+            /*
+             * parseSelection parses
+             *
+             * 	Selection :
+             * 	  - Field
+             * 	  - FragmentSpread
+             * 	  - InlineFragment
+             */
             if(this.peek('...')) {
-                // parseFragment corresponds to both FragmentSpread and InlineFragment in the spec.
-                //
-                //	FragmentSpread : ... FragmentName Arguments? Directives?
-                //
-                //	InlineFragment : ... TypeCondition? Directives? SelectionSet
+                /*
+                 * parseFragment corresponds to both FragmentSpread and InlineFragment in the spec.
+                 *
+                 * 	FragmentSpread : ... FragmentName Arguments? Directives?
+                 *
+                 * 	InlineFragment : ... TypeCondition? Directives? SelectionSet
+                 */
                 const fragmentStart = this.lexer.token;
                 this.expectToken('...');
 
@@ -536,15 +552,17 @@ class Parser {
                 }
             }
             else {
-                // parseField parses
-                //
-                //	Field : Alias? Name Arguments? Directives? SelectionSet?
-                //
-                //	Alias : Name :
+                /*
+                 * parseField parses
+                 *
+                 * 	Field : Alias? Name Arguments? Directives? SelectionSet?
+                 *
+                 * 	Alias : Name :
+                 */
                 const fieldStart = this.lexer.token;
 
                 const nameOrAlias = this.parseName();
-                let alias: number | undefined = undefined;
+                let alias: number | undefined;
                 let name: number;
                 if(this.expectOptionalToken(':')) {
                     alias = nameOrAlias;
@@ -630,11 +648,13 @@ class Parser {
         throw new Error(this.unexpected(operationToken));
     }
 
-    // parseOperationDefinition parses
-    //
-    //	OperationDefinition :
-    //	 - SelectionSet
-    //	 - OperationType Name? VariableDefinitions? Directives? SelectionSet
+    /*
+     * parseOperationDefinition parses
+     *
+     * 	OperationDefinition :
+     * 	 - SelectionSet
+     * 	 - OperationType Name? VariableDefinitions? Directives? SelectionSet
+     */
     parseOperationDefinition(): number {
         const start = this.lexer.token;
         if(this.peek('{')) {
@@ -660,14 +680,16 @@ class Parser {
         ]);
     }
 
-    // parseFragmentDefinition parses
-    //
-    //	FragmentDefinition :
-    //	  - fragment FragmentName VariableDefinitions? on TypeCondition Directives? SelectionSet
-    //
-    //	TypeCondition : NamedType
-    //
-    // in the shape Prettier's experimentalFragmentArguments gives it.
+    /*
+     * parseFragmentDefinition parses
+     *
+     * 	FragmentDefinition :
+     * 	  - fragment FragmentName VariableDefinitions? on TypeCondition Directives? SelectionSet
+     *
+     * 	TypeCondition : NamedType
+     *
+     * in the shape Prettier's experimentalFragmentArguments gives it.
+     */
     parseFragmentDefinition(): number {
         const start = this.lexer.token;
         const description = this.parseDescription();
@@ -758,11 +780,13 @@ class Parser {
         return { kind: 'List', nodes };
     }
 
-    // parseImplementsInterfaces parses
-    //
-    //	ImplementsInterfaces :
-    //	  - implements `&`? NamedType
-    //	  - ImplementsInterfaces & NamedType
+    /*
+     * parseImplementsInterfaces parses
+     *
+     * 	ImplementsInterfaces :
+     * 	  - implements `&`? NamedType
+     * 	  - ImplementsInterfaces & NamedType
+     */
     parseImplementsInterfaces(): Value {
         if(this.expectOptionalKeyword('implements')) {
             return this.delimitedNamedTypes('&');
@@ -841,11 +865,13 @@ class Parser {
         return { kind: 'List', nodes };
     }
 
-    // parseObjectTypeDefinition parses
-    //
-    //	ObjectTypeDefinition :
-    //	  Description?
-    //	  type Name ImplementsInterfaces? Directives[Const]? FieldsDefinition?
+    /*
+     * parseObjectTypeDefinition parses
+     *
+     * 	ObjectTypeDefinition :
+     * 	  Description?
+     * 	  type Name ImplementsInterfaces? Directives[Const]? FieldsDefinition?
+     */
     parseObjectTypeDefinition(): number {
         const start = this.lexer.token;
         const description = this.parseDescription();
@@ -884,11 +910,13 @@ class Parser {
         ]);
     }
 
-    // parseUnionMemberTypes parses
-    //
-    //	UnionMemberTypes :
-    //	  - = `|`? NamedType
-    //	  - UnionMemberTypes | NamedType
+    /*
+     * parseUnionMemberTypes parses
+     *
+     * 	UnionMemberTypes :
+     * 	  - = `|`? NamedType
+     * 	  - UnionMemberTypes | NamedType
+     */
     parseUnionMemberTypes(): Value {
         if(this.expectOptionalToken('=')) {
             return this.delimitedNamedTypes('|');
@@ -998,14 +1026,16 @@ class Parser {
         ]);
     }
 
-    // parseDirectiveLocation parses
-    //
-    //	DirectiveLocation :
-    //	  - ExecutableDirectiveLocation
-    //	  - TypeSystemDirectiveLocation
-    //
-    // one of language/directiveLocation.js's names (isDirectiveLocation). The Go reads the Name node's
-    // value; the token it was made from is start.
+    /*
+     * parseDirectiveLocation parses
+     *
+     * 	DirectiveLocation :
+     * 	  - ExecutableDirectiveLocation
+     * 	  - TypeSystemDirectiveLocation
+     *
+     * one of language/directiveLocation.js's names (isDirectiveLocation). The Go reads the Name node's
+     * value; the token it was made from is start.
+     */
     parseDirectiveLocation(): number {
         const start = this.lexer.token;
         const name = this.parseName();
@@ -1015,12 +1045,14 @@ class Parser {
         throw new Error(this.unexpected(start));
     }
 
-    // parseDirectiveDefinition parses
-    //
-    //	DirectiveDefinition :
-    //	  - Description? directive @ Name ArgumentsDefinition? Directives[Const]? `repeatable`? on DirectiveLocations
-    //
-    // with parseDirectiveLocations, delimitedMany('|', parseDirectiveLocation), written in it.
+    /*
+     * parseDirectiveDefinition parses
+     *
+     * 	DirectiveDefinition :
+     * 	  - Description? directive @ Name ArgumentsDefinition? Directives[Const]? `repeatable`? on DirectiveLocations
+     *
+     * with parseDirectiveLocations, delimitedMany('|', parseDirectiveLocation), written in it.
+     */
     parseDirectiveDefinition(): number {
         const start = this.lexer.token;
         const description = this.parseDescription();
@@ -1046,11 +1078,13 @@ class Parser {
         ]);
     }
 
-    // parseSchemaExtension parses
-    //
-    //	SchemaExtension :
-    //	  - extend schema Directives[Const]? { OperationTypeDefinition+ }
-    //	  - extend schema Directives[Const]
+    /*
+     * parseSchemaExtension parses
+     *
+     * 	SchemaExtension :
+     * 	  - extend schema Directives[Const]? { OperationTypeDefinition+ }
+     * 	  - extend schema Directives[Const]
+     */
     parseSchemaExtension(): number {
         const start = this.lexer.token;
         this.expectKeyword('extend');
@@ -1082,12 +1116,14 @@ class Parser {
         return this.node(start, 'ScalarTypeExtension', [child('name', name), field('directives', directives)]);
     }
 
-    // parseObjectTypeExtension parses
-    //
-    //	ObjectTypeExtension :
-    //	 - extend type Name ImplementsInterfaces? Directives[Const]? FieldsDefinition
-    //	 - extend type Name ImplementsInterfaces? Directives[Const]
-    //	 - extend type Name ImplementsInterfaces
+    /*
+     * parseObjectTypeExtension parses
+     *
+     * 	ObjectTypeExtension :
+     * 	 - extend type Name ImplementsInterfaces? Directives[Const]? FieldsDefinition
+     * 	 - extend type Name ImplementsInterfaces? Directives[Const]
+     * 	 - extend type Name ImplementsInterfaces
+     */
     parseObjectTypeExtension(): number {
         const start = this.lexer.token;
         this.expectKeyword('extend');
@@ -1107,12 +1143,14 @@ class Parser {
         ]);
     }
 
-    // parseInterfaceTypeExtension parses
-    //
-    //	InterfaceTypeExtension :
-    //	 - extend interface Name ImplementsInterfaces? Directives[Const]? FieldsDefinition
-    //	 - extend interface Name ImplementsInterfaces? Directives[Const]
-    //	 - extend interface Name ImplementsInterfaces
+    /*
+     * parseInterfaceTypeExtension parses
+     *
+     * 	InterfaceTypeExtension :
+     * 	 - extend interface Name ImplementsInterfaces? Directives[Const]? FieldsDefinition
+     * 	 - extend interface Name ImplementsInterfaces? Directives[Const]
+     * 	 - extend interface Name ImplementsInterfaces
+     */
     parseInterfaceTypeExtension(): number {
         const start = this.lexer.token;
         this.expectKeyword('extend');
@@ -1132,11 +1170,13 @@ class Parser {
         ]);
     }
 
-    // parseUnionTypeExtension parses
-    //
-    //	UnionTypeExtension :
-    //	  - extend union Name Directives[Const]? UnionMemberTypes
-    //	  - extend union Name Directives[Const]
+    /*
+     * parseUnionTypeExtension parses
+     *
+     * 	UnionTypeExtension :
+     * 	  - extend union Name Directives[Const]? UnionMemberTypes
+     * 	  - extend union Name Directives[Const]
+     */
     parseUnionTypeExtension(): number {
         const start = this.lexer.token;
         this.expectKeyword('extend');
@@ -1154,11 +1194,13 @@ class Parser {
         ]);
     }
 
-    // parseEnumTypeExtension parses
-    //
-    //	EnumTypeExtension :
-    //	  - extend enum Name Directives[Const]? EnumValuesDefinition
-    //	  - extend enum Name Directives[Const]
+    /*
+     * parseEnumTypeExtension parses
+     *
+     * 	EnumTypeExtension :
+     * 	  - extend enum Name Directives[Const]? EnumValuesDefinition
+     * 	  - extend enum Name Directives[Const]
+     */
     parseEnumTypeExtension(): number {
         const start = this.lexer.token;
         this.expectKeyword('extend');
@@ -1176,11 +1218,13 @@ class Parser {
         ]);
     }
 
-    // parseInputObjectTypeExtension parses
-    //
-    //	InputObjectTypeExtension :
-    //	  - extend input Name Directives[Const]? InputFieldsDefinition
-    //	  - extend input Name Directives[Const]
+    /*
+     * parseInputObjectTypeExtension parses
+     *
+     * 	InputObjectTypeExtension :
+     * 	  - extend input Name Directives[Const]? InputFieldsDefinition
+     * 	  - extend input Name Directives[Const]
+     */
     parseInputObjectTypeExtension(): number {
         const start = this.lexer.token;
         this.expectKeyword('extend');
@@ -1211,20 +1255,22 @@ class Parser {
         return this.node(start, 'DirectiveExtension', [child('name', name), field('directives', directives)]);
     }
 
-    // parseTypeSystemExtension parses
-    //
-    //	TypeSystemExtension :
-    //	  - SchemaExtension
-    //	  - TypeExtension
-    //	  - DirectiveExtension
-    //
-    //	TypeExtension :
-    //	  - ScalarTypeExtension
-    //	  - ObjectTypeExtension
-    //	  - InterfaceTypeExtension
-    //	  - UnionTypeExtension
-    //	  - EnumTypeExtension
-    //	  - InputObjectTypeDefinition
+    /*
+     * parseTypeSystemExtension parses
+     *
+     * 	TypeSystemExtension :
+     * 	  - SchemaExtension
+     * 	  - TypeExtension
+     * 	  - DirectiveExtension
+     *
+     * 	TypeExtension :
+     * 	  - ScalarTypeExtension
+     * 	  - ObjectTypeExtension
+     * 	  - InterfaceTypeExtension
+     * 	  - UnionTypeExtension
+     * 	  - EnumTypeExtension
+     * 	  - InputObjectTypeDefinition
+     */
     parseTypeSystemExtension(): number {
         const keywordToken = this.lexer.lookahead();
 
@@ -1252,29 +1298,31 @@ class Parser {
         throw new Error(this.unexpected(keywordToken));
     }
 
-    // parseDefinition parses
-    //
-    //	Definition :
-    //	  - ExecutableDefinition
-    //	  - TypeSystemDefinition
-    //	  - TypeSystemExtension
-    //
-    //	ExecutableDefinition :
-    //	  - OperationDefinition
-    //	  - FragmentDefinition
-    //
-    //	TypeSystemDefinition :
-    //	  - SchemaDefinition
-    //	  - TypeDefinition
-    //	  - DirectiveDefinition
-    //
-    //	TypeDefinition :
-    //	  - ScalarTypeDefinition
-    //	  - ObjectTypeDefinition
-    //	  - InterfaceTypeDefinition
-    //	  - UnionTypeDefinition
-    //	  - EnumTypeDefinition
-    //	  - InputObjectTypeDefinition
+    /*
+     * parseDefinition parses
+     *
+     * 	Definition :
+     * 	  - ExecutableDefinition
+     * 	  - TypeSystemDefinition
+     * 	  - TypeSystemExtension
+     *
+     * 	ExecutableDefinition :
+     * 	  - OperationDefinition
+     * 	  - FragmentDefinition
+     *
+     * 	TypeSystemDefinition :
+     * 	  - SchemaDefinition
+     * 	  - TypeDefinition
+     * 	  - DirectiveDefinition
+     *
+     * 	TypeDefinition :
+     * 	  - ScalarTypeDefinition
+     * 	  - ObjectTypeDefinition
+     * 	  - InterfaceTypeDefinition
+     * 	  - UnionTypeDefinition
+     * 	  - EnumTypeDefinition
+     * 	  - InputObjectTypeDefinition
+     */
     parseDefinition(): number {
         if(this.peek('{')) {
             return this.parseOperationDefinition();
@@ -1346,7 +1394,7 @@ class Parser {
     // parseDocument parses Document : Definition+
     parseDocument(): number {
         const start = this.lexer.token;
-        // many('<SOF>', parseDefinition, '<EOF>')
+        // `many('<SOF>', parseDefinition, '<EOF>')`
         this.expectToken('<SOF>');
         const definitions: number[] = [];
         do {
@@ -1357,7 +1405,7 @@ class Parser {
 }
 
 // parseComments is parser-graphql.js's: the Comment tokens between the document's startToken and
-// endToken (the <SOF> and the <EOF>), which lookahead read into the token list as it skipped them.
+// endToken (the `<SOF>` and the `<EOF>`), which lookahead read into the token list as it skipped them.
 function parseComments(lexer: Lexer, startIndex: number, endIndex: number): Comment[] {
     const comments: Comment[] = [];
     for(let index = startIndex; index < endIndex; index++) {

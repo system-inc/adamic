@@ -1,18 +1,20 @@
-// The file system as the formatfiles Go sees it through os.Lstat, os.Stat and os.ReadFile, read with
-// 'adamic''s fileStatus, readDirectory and readTextFile; and a gitignore WorkingTree read from disk, which
-// the gitignore slice's GAPS.md waited for ("a WorkingTree read from disk can take the in-memory one's
-// place, and nothing else changes").
-//
-// Two things the Go has that 'adamic' doesn't, and how they are stood in for:
-//
-//   - os.Lstat sees a symbolic link that can't be followed, to nothing or round a loop; fileStatus
-//     follows links and calls the first no such file and the second failed (gap 1 in GAPS.md). A name
-//     its directory lists that fileStatus can't follow is such a link, which is what Lstat would have
-//     said.
-//   - os.Readlink. The gitignore port follows a link by its target, within its tree; there is no target
-//     to read, so a link's entry names a stand-in sibling, and that sibling's entry is what fileStatus and
-//     readTextFile find through the link, which is what os.Stat and os.ReadFile find. A link to nothing
-//     names a stand-in with no entry.
+/*
+ * The file system as the formatfiles Go sees it through os.Lstat, os.Stat and os.ReadFile, read with
+ * 'adamic''s fileStatus, readDirectory and readTextFile; and a gitignore WorkingTree read from disk, which
+ * the gitignore slice's `GAPS.md` waited for ("a WorkingTree read from disk can take the in-memory one's
+ * place, and nothing else changes").
+ *
+ * Two things the Go has that 'adamic' doesn't, and how they are stood in for:
+ *
+ *   - os.Lstat sees a symbolic link that can't be followed, to nothing or round a loop; fileStatus
+ *     follows links and calls the first no such file and the second failed (gap 1 in `GAPS.md`). A name
+ *     its directory lists that fileStatus can't follow is such a link, which is what Lstat would have
+ *     said.
+ *   - os.Readlink. The gitignore port follows a link by its target, within its tree; there is no target
+ *     to read, so a link's entry names a stand-in sibling, and that sibling's entry is what fileStatus and
+ *     readTextFile find through the link, which is what os.Stat and os.ReadFile find. A link to nothing
+ *     names a stand-in with no entry.
+ */
 
 import { fileStatus, readDirectory, readTextFile } from 'adamic';
 import type { Entry, WorkingTree } from '../gitignore/gitignore.ts';
@@ -37,7 +39,7 @@ export function lstat(path: string): LinkStatus {
         };
     }
     // Listed, but nothing there to follow to: a symbolic link to nothing, or round a loop of links
-    // (fileStatus says no such file for the first and failed for the second, ELOOP). A permission error
+    // (fileStatus says no such file for the first and failed for the second, `ELOOP`). A permission error
     // is the directory refusing a look at all, which refuses os.Lstat too.
     if(!status.message.endsWith(': permission denied')) {
         const listing = readDirectory(dir(path));
@@ -75,7 +77,7 @@ function followedEntry(path: string): Entry | undefined {
             const read = readTextFile(path);
             if(read.kind === 'Error') {
                 // An ignore file that can't be read: the Go's os.ReadFile error, which no case here reaches
-                // (GAPS.md, "Not covered").
+                // (`GAPS.md`, "Not covered").
                 return { kind: 'Other' };
             }
             return { kind: 'File', contents: read.text };

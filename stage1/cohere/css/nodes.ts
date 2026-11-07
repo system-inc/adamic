@@ -47,7 +47,7 @@ export class CssNode {
         return this.rawStrings.get(key) ?? '';
     }
 }
-function positionJSON(position: Position, input: Input): string {
+function positionJSON(position: Position): string {
     return `{"column":${position.column},"line":${position.line},"offset":${position.offset}}`;
 }
 function objectJSON(fields: Map<string, string>): string {
@@ -94,7 +94,7 @@ export function render(nodes: readonly CssNode[], index: number, input: Input): 
             const start = node.start ?? panic('missing source start');
             fields.set(
                 key,
-                `{${node.end === undefined ? '' : `"end":${positionJSON(node.end, input)},`}"start":${positionJSON(start, input)}}`,
+                `{${node.end === undefined ? '' : `"end":${positionJSON(node.end)},`}"start":${positionJSON(start)}}`,
             );
         }
         else if(node.strings.has(key)) {

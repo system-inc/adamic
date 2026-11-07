@@ -1,17 +1,19 @@
-// A port of cohere's internal/format/css/values/tokenize.go to Adamic 0.1: postcss-values-parser
-// 2.0.1, lib/tokenize.js. Each piece names the Go it reads as.
-//
-// The Go walks UTF-16 code units held in a []uint16, as upstream's charCodeAt and slice do. The port's
-// strings are UTF-16 already, so it walks them as upstream does, and the Go's stand-ins for JavaScript
-// go back to being JavaScript:
-//
-//   - The Go's undefinedNext (math.MinInt, with an endColumnIsNaN flag) is upstream's `next` before
-//     anything assigns it. Here `next` starts as NaN, which is what `undefined - offset` is, so a
-//     bracket or paren token's end column comes out NaN, or stale, as upstream's does.
-//   - The Go's charCodeAt returns -1 past either end, standing in for NaN; here it is NaN.
-//   - A throw is a Result, since 0.1 has no exceptions. Its message is upstream's String(error).
-//   - indexOf from a position is written with slice, since stage 0 doesn't lower indexOf's second
-//     argument yet (gap 1 in GAPS.md).
+/*
+ * A port of cohere's internal/format/css/values/tokenize.go to Adamic 0.1: postcss-values-parser
+ * 2.0.1, lib/tokenize.js. Each piece names the Go it reads as.
+ *
+ * The Go walks UTF-16 code units held in a []uint16, as upstream's charCodeAt and slice do. The port's
+ * strings are UTF-16 already, so it walks them as upstream does, and the Go's stand-ins for JavaScript
+ * go back to being JavaScript:
+ *
+ *   - The Go's undefinedNext (math.MinInt, with an endColumnIsNaN flag) is upstream's `next` before
+ *     anything assigns it. Here `next` starts as NaN, which is what `undefined - offset` is, so a
+ *     bracket or paren token's end column comes out NaN, or stale, as upstream's does.
+ *   - The Go's charCodeAt returns -1 past either end, standing in for NaN; here it is NaN.
+ *   - A throw is a Result, since 0.1 has no exceptions. Its message is upstream's String(error).
+ *   - indexOf from a position is written with slice, since stage 0 doesn't lower indexOf's second
+ *     argument yet (gap 1 in `GAPS.md`).
+ */
 
 // The token kinds are upstream's token[0].
 export type TokenKind =
@@ -46,17 +48,10 @@ export interface Token {
 export type Tokenized =
     { readonly kind: 'Ok'; readonly tokens: Token[] } | { readonly kind: 'Error'; readonly message: string };
 
-const openBracket = 0x7b; // {
-const closeBracket = 0x7d; // }
-const openParen = 0x28; // (
-const closeParen = 0x29; // )
 const singleQuote = 0x27; // '
-const doubleQuote = 0x22; // "
 const backslash = 0x5c; // \
 const slash = 0x2f; // /
 const period = 0x2e; // .
-const comma = 0x2c; // ,
-const colon = 0x3a; // :
 const asterisk = 0x2a; // *
 const minus = 0x2d; // -
 const plus = 0x2b; // +
@@ -66,7 +61,6 @@ const space = 0x20;
 const feed = 0x0c;
 const tab = 0x09;
 const cr = 0x0d;
-const at = 0x40; // @
 const lowerE = 0x65; // e
 const upperE = 0x45; // E
 const digit0 = 0x30;
@@ -193,7 +187,7 @@ function regexLastIndex(css: string, from: number, matches: (css: string, index:
 }
 
 // tokenize.go: indexOfUnits, css.indexOf(search, from), for a search that isn't empty. Written with
-// slice, since stage 0 doesn't lower indexOf's second argument yet (gap 1 in GAPS.md).
+// slice, since stage 0 doesn't lower indexOf's second argument yet (gap 1 in `GAPS.md`).
 function indexOfFrom(css: string, search: string, from: number): number {
     const start = Math.max(from, 0);
     const found = css.slice(start).indexOf(search);
@@ -218,7 +212,7 @@ export function tokenize(input: string, loose: boolean): Tokenized {
     let escaped = false;
     let escapePos = 0;
 
-    const push = (
+    const push = function(
         kind: TokenKind,
         value: string,
         startLine: number,
@@ -226,7 +220,7 @@ export function tokenize(input: string, loose: boolean): Tokenized {
         endLine: number,
         endColumn: number,
         index: number,
-    ): void => {
+    ): void {
         tokens.push({ kind, value, startLine, startColumn, endLine, endColumn, index });
     };
 
@@ -244,7 +238,7 @@ export function tokenize(input: string, loose: boolean): Tokenized {
         }
 
         // Each case is written as its code, with the constant's name beside it: stage 0 doesn't lower a case
-        // that names a constant yet (gap 3 in GAPS.md).
+        // that names a constant yet (gap 3 in `GAPS.md`).
         switch(code) {
             case 0x0a: // newline
             case 0x20: // space
@@ -304,7 +298,7 @@ export function tokenize(input: string, loose: boolean): Tokenized {
 
             case 0x29: // closeParen
                 parentCount--;
-                isURLArg = isURLArg && parentCount > 0;
+                isURLArg &&= parentCount > 0;
                 push(')', ')', line, pos - offset, line, next - offset, pos);
                 break;
 

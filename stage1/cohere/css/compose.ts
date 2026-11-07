@@ -122,7 +122,7 @@ function nestedCSS(tree: Tree, index: number, text: string, scss: boolean): void
     const prop = node.string('prop');
     const originalValue = node.string('value');
     if(node.type() === 'css-decl' && prop.startsWith('--') && originalValue.startsWith('{')) {
-        let rules: number[] | undefined = undefined;
+        let rules: number[] | undefined;
         if(originalValue.trimEnd().endsWith('}')) {
             const source = tree.at(node.object('source'));
             const start = tree.at(source.object('start')).number('offset');

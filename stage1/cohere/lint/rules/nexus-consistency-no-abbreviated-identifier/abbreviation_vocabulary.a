@@ -115,7 +115,7 @@ export function abbreviation(text: string): Abbreviation | undefined {
             if(text.includes('Ms') && millisecondWord.test(text)) {
                 return new Abbreviation('suffix', word, 'millisecondSuffix', [
                     'name', text, 'suggestion',
-                    text.replace(millisecondWord, '$1' + (entry[8] ?? '') + '$2'),
+                    text.replace(millisecondWord, `$1${entry[8] ?? ''}$2`),
                 ]);
             }
         }

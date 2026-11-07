@@ -1,21 +1,23 @@
-// A port of cohere's internal/format/formatfiles/enumerate.go to Adamic 0.1: which files a tree offers
-// the formatter, the walk, its ignore layers, and an account of every file it did not offer. Each piece
-// names the Go it reads as.
-//
-// Where the port differs from the Go, and why:
-//
-//   - The format options. The Go's Enumerate starts by calling formatoptions.Resolve(root), which walks
-//     up from the root reading settings files as JSON, and 0.1 has no JSON. The port takes Resolve's
-//     answer as given (Resolution): the house ignore list and whether one was declared. The test's Go
-//     side calls Resolve on each tree and writes its answer into the cases, so the port is held to the
-//     Go's walk with the Go's own resolution. The ignorePatterns layer matches lint's globs
-//     (internal/lint/configuration), which this slice doesn't carry: a resolution whose settings name
-//     none is ported whole (the layer is there, and covers nothing), and one that names any is a panic,
-//     said out loud.
-//   - Git's ignore rules are the gitignore slice's port, reading a WorkingTree from disk (disk.ts).
-//   - Go's filepath.Walk and filepath.WalkDir are written out here, as Go defines them, over fileStatus
-//     and readDirectory (walkTree and walkDirectories). Their callbacks' errors are the WalkStep union.
-//   - Go's maps (IgnoredByLayer, DeclinedExtensions) are Maps; their printing order is the driver's.
+/*
+ * A port of cohere's internal/format/formatfiles/enumerate.go to Adamic 0.1: which files a tree offers
+ * the formatter, the walk, its ignore layers, and an account of every file it did not offer. Each piece
+ * names the Go it reads as.
+ *
+ * Where the port differs from the Go, and why:
+ *
+ *   - The format options. The Go's Enumerate starts by calling formatoptions.Resolve(root), which walks
+ *     up from the root reading settings files as JSON, and 0.1 has no JSON. The port takes Resolve's
+ *     answer as given (Resolution): the house ignore list and whether one was declared. The test's Go
+ *     side calls Resolve on each tree and writes its answer into the cases, so the port is held to the
+ *     Go's walk with the Go's own resolution. The ignorePatterns layer matches lint's globs
+ *     (internal/lint/configuration), which this slice doesn't carry: a resolution whose settings name
+ *     none is ported whole (the layer is there, and covers nothing), and one that names any is a panic,
+ *     said out loud.
+ *   - Git's ignore rules are the gitignore slice's port, reading a WorkingTree from disk (disk.ts).
+ *   - Go's filepath.Walk and filepath.WalkDir are written out here, as Go defines them, over fileStatus
+ *     and readDirectory (walkTree and walkDirectories). Their callbacks' errors are the WalkStep union.
+ *   - Go's maps (IgnoredByLayer, DeclinedExtensions) are Maps; their printing order is the driver's.
+ */
 
 import { panic, readDirectory } from 'adamic';
 import {
@@ -237,7 +239,7 @@ export function nestedRepositoriesBelow(
     }
     const scopes = new Map<string, Matcher>([['', matcher.value]]);
     const nested: string[] = [];
-    const visit = (path: string, status: LinkStatus, failed: boolean): WalkStep => {
+    const visit = function(path: string, status: LinkStatus, failed: boolean): WalkStep {
         if(failed || !status.directory) {
             return proceed;
         }
@@ -319,14 +321,14 @@ export function enumerate(root: string, resolution: Resolution, handles: (fileNa
     for(const layer of layers) {
         enumeration.ignoredByLayer.set(layer.name, 0);
     }
-    const count = (layer: string): void => {
+    const count = function(layer: string): void {
         enumeration.ignoredByLayer.set(layer, (enumeration.ignoredByLayer.get(layer) ?? 0) + 1);
     };
 
     // The matcher for each directory entered, by its path relative to root.
     const scopes = new Map<string, Matcher>([['', matcher.value]]);
 
-    const visit = (path: string, status: LinkStatus, failed: boolean): WalkStep => {
+    const visit = function(path: string, status: LinkStatus, failed: boolean): WalkStep {
         if(failed) {
             return proceed;
         }

@@ -1,22 +1,24 @@
-// A port of cohere's internal/format/graphql/lexer.go to Adamic 0.1: graphql-js 17.0.2,
-// language/lexer.js, with error/syntaxError.js and language/location.js's getLocation, which give a
-// lexing or parsing failure its message and position.
-//
-// The Go walks UTF-8 bytes where graphql-js walks UTF-16 code units; this port walks code units with
-// charCodeAt, as graphql-js does, so its surrogate pair branches are live here where the Go's are not.
-// NaN past the end of the text fails every test the lexer makes, as in graphql-js.
-//
-// graphql-js throws a GraphQLError where lexing or parsing fails, and the Go panics with a
-// *SyntaxError that Parse recovers. Here each failure is `throw new Error(syntaxError(...))`, caught in
-// parser.ts's parse: syntaxError gives the message, since stage 0 throws only an Error made where it is
-// thrown (GAPS.md, gap 2). The message is Prettier's, GraphQLError's message and then its first
-// location, " (line:column)".
-//
-// Every string the lexer gives, a token's value or a message, is written in the test's output form,
-// `escaped` below, rather than as the text itself: a String token's \u escapes can't be cooked into
-// characters without String.fromCodePoint (gitignore's GAPS.md, gap 1; GAPS.md here, "Cooking a string
-// without String.fromCodePoint"), and every other string is written the same way so that the output
-// is one form.
+/*
+ * A port of cohere's internal/format/graphql/lexer.go to Adamic 0.1: graphql-js 17.0.2,
+ * language/lexer.js, with error/syntaxError.js and language/location.js's getLocation, which give a
+ * lexing or parsing failure its message and position.
+ *
+ * The Go walks UTF-8 bytes where graphql-js walks UTF-16 code units; this port walks code units with
+ * charCodeAt, as graphql-js does, so its surrogate pair branches are live here where the Go's are not.
+ * NaN past the end of the text fails every test the lexer makes, as in graphql-js.
+ *
+ * graphql-js throws a GraphQLError where lexing or parsing fails, and the Go panics with a
+ * *SyntaxError that Parse recovers. Here each failure is `throw new Error(syntaxError(...))`, caught in
+ * parser.ts's parse: syntaxError gives the message, since stage 0 throws only an Error made where it is
+ * thrown (`GAPS.md`, gap 2). The message is Prettier's, GraphQLError's message and then its first
+ * location, " (line:column)".
+ *
+ * Every string the lexer gives, a token's value or a message, is written in the test's output form,
+ * `escaped` below, rather than as the text itself: a String token's \u escapes can't be cooked into
+ * characters without String.fromCodePoint (gitignore's `GAPS.md`, gap 1; `GAPS.md` here, "Cooking a string
+ * without String.fromCodePoint"), and every other string is written the same way so that the output
+ * is one form.
+ */
 
 import { panic } from 'adamic';
 import { dedentBlockStringLines } from './blockString.ts';
@@ -116,11 +118,13 @@ export function isPunctuatorTokenKind(kind: TokenKind): boolean {
     );
 }
 
-// isUnicodeScalarValue: a Unicode scalar value is any Unicode code point except surrogate code points.
-// In other words, the inclusive ranges of values 0x0000 to 0xD7FF and 0xE000 to 0x10FFFF.
-//
-// SourceCharacter ::
-//   - "Any Unicode scalar value"
+/*
+ * isUnicodeScalarValue: a Unicode scalar value is any Unicode code point except surrogate code points.
+ * In other words, the inclusive ranges of values 0x0000 to 0xD7FF and 0xE000 to 0x10FFFF.
+ *
+ * SourceCharacter ::
+ *   - "Any Unicode scalar value"
+ */
 function isUnicodeScalarValue(code: number): boolean {
     return (code >= 0x0000 && code <= 0xd7ff) || (code >= 0xe000 && code <= 0x10ffff);
 }
@@ -133,20 +137,24 @@ function isTrailingSurrogate(code: number): boolean {
     return code >= 0xdc00 && code <= 0xdfff;
 }
 
-// isSupplementaryCodePoint: the GraphQL specification defines source text as a sequence of unicode
-// scalar values (which Unicode defines to exclude surrogate code points). However JavaScript defines
-// strings as a sequence of UTF-16 code units which may include surrogates. A surrogate pair is a valid
-// source character as it encodes a supplementary code point (above U+FFFF), but unpaired surrogate code
-// points are not valid source characters.
+/*
+ * isSupplementaryCodePoint: the GraphQL specification defines source text as a sequence of unicode
+ * scalar values (which Unicode defines to exclude surrogate code points). However JavaScript defines
+ * strings as a sequence of UTF-16 code units which may include surrogates. A surrogate pair is a valid
+ * source character as it encodes a supplementary code point (above U+FFFF), but unpaired surrogate code
+ * points are not valid source characters.
+ */
 function isSupplementaryCodePoint(body: string, location: number): boolean {
     return isLeadingSurrogate(body.charCodeAt(location)) && isTrailingSurrogate(body.charCodeAt(location + 1));
 }
 
-// printCodePointAt prints the code point (or end of file reference) at a given location in a source for
-// use in error messages.
-//
-// Printable ASCII is printed quoted, while other points are printed in Unicode code point form (ie.
-// U+1234).
+/*
+ * printCodePointAt prints the code point (or end of file reference) at a given location in a source for
+ * use in error messages.
+ *
+ * Printable ASCII is printed quoted, while other points are printed in Unicode code point form (ie.
+ * U+1234).
+ */
 function printCodePointAt(lexer: Lexer, location: number): string {
     const code = lexer.body.codePointAt(location);
     if(code === undefined) {
@@ -156,21 +164,23 @@ function printCodePointAt(lexer: Lexer, location: number): string {
         const character = written(code);
         return character === '"' ? `'"'` : `"${character}"`;
     }
-    return 'U+' + code.toString(16).toUpperCase().padStart(4, '0');
+    return `U+${code.toString(16).toUpperCase().padStart(4, '0')}`;
 }
 
-// readHexDigit reads a hexadecimal character and returns its positive integer value (0-15).
-//
-// '0' becomes 0, '9' becomes 9
-// 'A' becomes 10, 'F' becomes 15
-// 'a' becomes 10, 'f' becomes 15
-//
-// Returns -1 if the provided character code was not a valid hexadecimal digit.
-//
-// HexDigit :: one of
-//   - `0` `1` `2` `3` `4` `5` `6` `7` `8` `9`
-//   - `A` `B` `C` `D` `E` `F`
-//   - `a` `b` `c` `d` `e` `f`
+/*
+ * readHexDigit reads a hexadecimal character and returns its positive integer value (0-15).
+ *
+ * '0' becomes 0, '9' becomes 9
+ * 'A' becomes 10, 'F' becomes 15
+ * 'a' becomes 10, 'f' becomes 15
+ *
+ * Returns -1 if the provided character code was not a valid hexadecimal digit.
+ *
+ * HexDigit :: one of
+ *   - `0` `1` `2` `3` `4` `5` `6` `7` `8` `9`
+ *   - `A` `B` `C` `D` `E` `F`
+ *   - `a` `b` `c` `d` `e` `f`
+ */
 function readHexDigit(code: number): number {
     return code >= 0x0030 && code <= 0x0039
         ? code - 0x0030 // 0-9
@@ -181,12 +191,14 @@ function readHexDigit(code: number): number {
             : -1;
 }
 
-// read16BitHexCode reads four hexadecimal characters and returns the positive integer that 16bit
-// hexadecimal string represents. For example, "000f" will return 15, and "dead" will return 57005.
-//
-// Returns a negative number if any char was not a valid hexadecimal digit. graphql-js ORs the digits
-// shifted into place, where a -1 makes the whole negative; without the bitwise operators (gitignore's
-// GAPS.md, gap 2) that is a test for a -1, then arithmetic.
+/*
+ * read16BitHexCode reads four hexadecimal characters and returns the positive integer that 16bit
+ * hexadecimal string represents. For example, "000f" will return 15, and "dead" will return 57005.
+ *
+ * Returns a negative number if any char was not a valid hexadecimal digit. graphql-js ORs the digits
+ * shifted into place, where a -1 makes the whole negative; without the bitwise operators (gitignore's
+ * `GAPS.md`, gap 2) that is a test for a -1, then arithmetic.
+ */
 function read16BitHexCode(body: string, position: number): number {
     const first = readHexDigit(body.charCodeAt(position));
     const second = readHexDigit(body.charCodeAt(position + 1));
@@ -273,18 +285,20 @@ function readEscapedUnicodeFixedWidth(lexer: Lexer, position: number): EscapeSeq
     );
 }
 
-// readEscapedCharacter:
-//
-// | Escaped Character | Code Point | Character Name               |
-// | ----------------- | ---------- | ---------------------------- |
-// | `"`               | U+0022     | double quote                 |
-// | `\`               | U+005C     | reverse solidus (back slash) |
-// | `/`               | U+002F     | solidus (forward slash)      |
-// | `b`               | U+0008     | backspace                    |
-// | `f`               | U+000C     | form feed                    |
-// | `n`               | U+000A     | line feed (new line)         |
-// | `r`               | U+000D     | carriage return              |
-// | `t`               | U+0009     | horizontal tab               |
+/*
+ * readEscapedCharacter:
+ *
+ * | Escaped Character | Code Point | Character Name               |
+ * | ----------------- | ---------- | ---------------------------- |
+ * | `"`               | U+0022     | double quote                 |
+ * | `\`               | U+005C     | reverse solidus (back slash) |
+ * | `/`               | U+002F     | solidus (forward slash)      |
+ * | `b`               | U+0008     | backspace                    |
+ * | `f`               | U+000C     | form feed                    |
+ * | `n`               | U+000A     | line feed (new line)         |
+ * | `r`               | U+000D     | carriage return              |
+ * | `t`               | U+0009     | horizontal tab               |
+ */
 function readEscapedCharacter(lexer: Lexer, position: number): EscapeSequence {
     const body = lexer.body;
     const code = body.charCodeAt(position + 1);
@@ -322,11 +336,13 @@ function createToken(lexer: Lexer, kind: TokenKind, start: number, end: number, 
     return new Token(kind, start, end, line, column, value);
 }
 
-// readComment reads a comment token from the source file.
-//
-//	Comment :: # CommentChar* [lookahead != CommentChar]
-//
-//	CommentChar :: SourceCharacter but not LineTerminator
+/*
+ * readComment reads a comment token from the source file.
+ *
+ * 	Comment :: # CommentChar* [lookahead != CommentChar]
+ *
+ * 	CommentChar :: SourceCharacter but not LineTerminator
+ */
 function readComment(lexer: Lexer, start: number): Token {
     const body = lexer.body;
     const bodyLength = body.length;
@@ -373,31 +389,33 @@ function readDigits(lexer: Lexer, start: number, firstCode: number): number {
     return position;
 }
 
-// readNumber reads a number token from the source file, either a FloatValue or an IntValue depending on
-// whether a FractionalPart or ExponentPart is encountered.
-//
-//	IntValue :: IntegerPart [lookahead != {Digit, `.`, NameStart}]
-//
-//	IntegerPart ::
-//	  - NegativeSign? 0
-//	  - NegativeSign? NonZeroDigit Digit*
-//
-//	NegativeSign :: -
-//
-//	NonZeroDigit :: Digit but not `0`
-//
-//	FloatValue ::
-//	  - IntegerPart FractionalPart ExponentPart [lookahead != {Digit, `.`, NameStart}]
-//	  - IntegerPart FractionalPart [lookahead != {Digit, `.`, NameStart}]
-//	  - IntegerPart ExponentPart [lookahead != {Digit, `.`, NameStart}]
-//
-//	FractionalPart :: . Digit+
-//
-//	ExponentPart :: ExponentIndicator Sign? Digit+
-//
-//	ExponentIndicator :: one of `e` `E`
-//
-//	Sign :: one of + -
+/*
+ * readNumber reads a number token from the source file, either a FloatValue or an IntValue depending on
+ * whether a FractionalPart or ExponentPart is encountered.
+ *
+ * 	IntValue :: IntegerPart [lookahead != {Digit, `.`, NameStart}]
+ *
+ * 	IntegerPart ::
+ * 	  - NegativeSign? 0
+ * 	  - NegativeSign? NonZeroDigit Digit*
+ *
+ * 	NegativeSign :: -
+ *
+ * 	NonZeroDigit :: Digit but not `0`
+ *
+ * 	FloatValue ::
+ * 	  - IntegerPart FractionalPart ExponentPart [lookahead != {Digit, `.`, NameStart}]
+ * 	  - IntegerPart FractionalPart [lookahead != {Digit, `.`, NameStart}]
+ * 	  - IntegerPart ExponentPart [lookahead != {Digit, `.`, NameStart}]
+ *
+ * 	FractionalPart :: . Digit+
+ *
+ * 	ExponentPart :: ExponentIndicator Sign? Digit+
+ *
+ * 	ExponentIndicator :: one of `e` `E`
+ *
+ * 	Sign :: one of + -
+ */
 function readNumber(lexer: Lexer, start: number, firstCode: number): Token {
     const body = lexer.body;
     let position = start;
@@ -468,22 +486,24 @@ function readNumber(lexer: Lexer, start: number, firstCode: number): Token {
     return createToken(lexer, isFloat ? 'Float' : 'Int', start, position, body.slice(start, position));
 }
 
-// readString reads a single-quote string token from the source file.
-//
-//	StringValue ::
-//	  - `""` [lookahead != `"`]
-//	  - `"` StringCharacter+ `"`
-//
-//	StringCharacter ::
-//	  - SourceCharacter but not `"` or `\` or LineTerminator
-//	  - `\u` EscapedUnicode
-//	  - `\` EscapedCharacter
-//
-//	EscapedUnicode ::
-//	  - `{` HexDigit+ `}`
-//	  - HexDigit HexDigit HexDigit HexDigit
-//
-//	EscapedCharacter :: one of `"` `\` `/` `b` `f` `n` `r` `t`
+/*
+ * readString reads a single-quote string token from the source file.
+ *
+ * 	StringValue ::
+ * 	  - `""` [lookahead != `"`]
+ * 	  - `"` StringCharacter+ `"`
+ *
+ * 	StringCharacter ::
+ * 	  - SourceCharacter but not `"` or `\` or LineTerminator
+ * 	  - `\u` EscapedUnicode
+ * 	  - `\` EscapedCharacter
+ *
+ * 	EscapedUnicode ::
+ * 	  - `{` HexDigit+ `}`
+ * 	  - HexDigit HexDigit HexDigit HexDigit
+ *
+ * 	EscapedCharacter :: one of `"` `\` `/` `b` `f` `n` `r` `t`
+ */
 function readString(lexer: Lexer, start: number): Token {
     const body = lexer.body;
     const bodyLength = body.length;
@@ -537,14 +557,16 @@ function readString(lexer: Lexer, start: number): Token {
     throw new Error(syntaxError(body, position, 'Unterminated string.'));
 }
 
-// readBlockString reads a block string token from the source file.
-//
-//	StringValue ::
-//	  - `"""` BlockStringCharacter* `"""`
-//
-//	BlockStringCharacter ::
-//	  - SourceCharacter but not `"""` or `\"""`
-//	  - `\"""`
+/*
+ * readBlockString reads a block string token from the source file.
+ *
+ * 	StringValue ::
+ * 	  - `"""` BlockStringCharacter* `"""`
+ *
+ * 	BlockStringCharacter ::
+ * 	  - SourceCharacter but not `"""` or `\"""`
+ * 	  - `\"""`
+ */
 function readBlockString(lexer: Lexer, start: number): Token {
     const body = lexer.body;
     const bodyLength = body.length;
@@ -661,20 +683,22 @@ function readNextToken(lexer: Lexer, start: number): Token {
 
         // SourceCharacter
         switch(code) {
-            // Ignored ::
-            //   - UnicodeBOM
-            //   - WhiteSpace
-            //   - LineTerminator
-            //   - Comment
-            //   - Comma
-            //
-            // UnicodeBOM :: "Byte Order Mark (U+FEFF)"
-            //
-            // WhiteSpace ::
-            //   - "Horizontal Tab (U+0009)"
-            //   - "Space (U+0020)"
-            //
-            // Comma :: ,
+            /*
+             * Ignored ::
+             *   - UnicodeBOM
+             *   - WhiteSpace
+             *   - LineTerminator
+             *   - Comment
+             *   - Comma
+             *
+             * UnicodeBOM :: "Byte Order Mark (U+FEFF)"
+             *
+             * WhiteSpace ::
+             *   - "Horizontal Tab (U+0009)"
+             *   - "Space (U+0020)"
+             *
+             * Comma :: ,
+             */
             case 0xfeff: // <BOM>
             case 0x0009: // \t
             case 0x0020: // <space>
@@ -703,14 +727,16 @@ function readNextToken(lexer: Lexer, start: number): Token {
             // Comment
             case 0x0023: // #
                 return readComment(lexer, position);
-            // Token ::
-            //   - Punctuator
-            //   - Name
-            //   - IntValue
-            //   - FloatValue
-            //   - StringValue
-            //
-            // Punctuator :: one of ! $ & ( ) ... : = @ [ ] { | }
+            /*
+             * Token ::
+             *   - Punctuator
+             *   - Name
+             *   - IntValue
+             *   - FloatValue
+             *   - StringValue
+             *
+             * Punctuator :: one of ! $ & ( ) ... : = @ [ ] { | }
+             */
             case 0x0021: // !
                 return createToken(lexer, '!', position, position + 1, undefined);
             case 0x0024: // $
@@ -812,7 +838,7 @@ export class Lexer {
     // Character offset where the current line starts.
     lineStart = 0;
 
-    // Every token read, ignored ones included, in order: graphql-js's linked list of tokens, from <SOF>
+    // Every token read, ignored ones included, in order: graphql-js's linked list of tokens, from `<SOF>`
     // (token.ts says why it is an array), with the places in it of token and lastToken.
     readonly tokens: Token[] = [];
     tokenIndex = 0;

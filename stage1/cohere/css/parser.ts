@@ -4,7 +4,7 @@ import { Input } from './input.ts';
 import { CssNode, RawValue } from './nodes.ts';
 import { Token, Tokenizer } from './tokenize.ts';
 
-function tokenString(tokens: readonly Token[], from: number = 0, to: number = tokens.length): string {
+function tokenString(tokens: readonly Token[], from = 0, to: number = tokens.length): string {
     const parts: string[] = [];
     for(let index = from; index < to; index++) {
         parts.push((tokens[index] ?? panic('missing token')).value);
@@ -20,7 +20,7 @@ function lastPosition(tokens: readonly Token[]): number {
     }
     return -1;
 }
-function spacesEnd(tokens: Token[], comments: boolean = true): string {
+function spacesEnd(tokens: Token[], comments = true): string {
     let result = '';
     while(tokens.length > 0) {
         const last = tokens[tokens.length - 1] ?? panic('missing token');
@@ -52,7 +52,7 @@ export class Parser {
     current = 0;
     spaces = '';
     semicolon = false;
-    constructor(input: Input, scss: boolean = false) {
+    constructor(input: Input, scss = false) {
         this.scss = scss;
         this.input = input;
         this.tokenizer = new Tokenizer(input, scss);
@@ -79,7 +79,7 @@ export class Parser {
         }
         return index;
     }
-    finish(node: CssNode, offset: number, increment: number = 1): void {
+    finish(node: CssNode, offset: number, increment = 1): void {
         node.end = this.input.position(offset);
         node.end.offset += increment;
     }
@@ -87,7 +87,7 @@ export class Parser {
         const first = tokens[0] ?? panic('missing unknown token');
         throw new Error(this.input.error(`Unknown word ${first.value}`, first.start, first.start + first.value.length));
     }
-    raw(node: CssNode, prop: string, tokens: readonly Token[], customProperty: boolean = false): void {
+    raw(node: CssNode, prop: string, tokens: readonly Token[], customProperty = false): void {
         let value = '';
         let clean = true;
         for(let index = 0; index < tokens.length; index++) {
@@ -136,7 +136,7 @@ export class Parser {
     }
     colon(tokens: readonly Token[]): number {
         let brackets = 0;
-        let previous: Token | undefined = undefined;
+        let previous: Token | undefined;
         for(let index = 0; index < tokens.length; index++) {
             const token = tokens[index] ?? panic('missing colon token');
             if(token.kind === '(') {
@@ -564,7 +564,7 @@ export class Parser {
     other(start: Token): void {
         let end = false;
         let colon = false;
-        let bracket: Token | undefined = undefined;
+        let bracket: Token | undefined;
         const brackets: string[] = [];
         const custom = start.value.startsWith('--');
         const tokens: Token[] = [];
@@ -700,7 +700,7 @@ export class Refused {
         this.message = message;
     }
 }
-export function parse(text: string, scss: boolean = false): Parsed | Refused {
+export function parse(text: string, scss = false): Parsed | Refused {
     try {
         const parser = new Parser(new Input(text), scss);
         parser.parse();

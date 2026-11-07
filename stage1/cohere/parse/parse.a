@@ -4,7 +4,6 @@ import { Parser } from '../../typescript/parser/parser.ts';
 import { Scanner } from '../../typescript/scanner/scanner.ts';
 import { ParseNode, written, printTree } from '../../typescript/parser/nodes.ts';
 import { Context } from './context.a';
-import { visit } from './registry.a';
 function collect(source: string, path: string, selected: string, spans: string): Context {
     const parser = new Parser(source, path);
     const scanner = new Scanner(source);

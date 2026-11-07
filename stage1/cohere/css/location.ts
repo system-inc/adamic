@@ -247,13 +247,7 @@ function emptyChildLocs(tree: Tree, index: number): void {
         }
     }
 }
-export function calculateLoc(
-    tree: Tree,
-    index: number,
-    text: string,
-    rootOffset: number = 0,
-    isRoot: boolean = false,
-): void {
+export function calculateLoc(tree: Tree, index: number, text: string, rootOffset = 0, isRoot = false): void {
     const node = tree.at(index);
     let object = source(tree, index);
     if(isRoot && node.type() !== '') {

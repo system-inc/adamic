@@ -1,5 +1,5 @@
 import { panic, utf8Length } from 'adamic';
-import { Tree } from './tree.ts';
+import type { Tree } from './tree.ts';
 import { ByteView } from './byte_view.ts';
 import type { Input, Position } from './input.ts';
 import type { CssNode } from './nodes.ts';
@@ -7,7 +7,7 @@ import type { SelectorNode } from '../selector/nodes.ts';
 import type { MediaNode } from '../mediaquery/nodes.ts';
 import { keysOf, hasNodes, type ValueTree } from '../values/nodes.ts';
 
-function position(tree: Tree, pos: Position, input: Input): number {
+function position(tree: Tree, pos: Position): number {
     const result = tree.make();
     const node = tree.at(result);
     node.setNumber('column', pos.column);
@@ -49,9 +49,9 @@ export function fromCSS(tree: Tree, nodes: readonly CssNode[], index: number, in
         else if(key === 'source') {
             const sourceIndex = tree.make();
             const source = tree.at(sourceIndex);
-            source.setObject('start', position(tree, original.start ?? panic('missing CSS source'), input));
+            source.setObject('start', position(tree, original.start ?? panic('missing CSS source')));
             if(original.end !== undefined) {
-                source.setObject('end', position(tree, original.end, input));
+                source.setObject('end', position(tree, original.end));
             }
             node.setObject(key, sourceIndex);
         }

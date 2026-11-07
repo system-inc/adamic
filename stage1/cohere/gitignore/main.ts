@@ -1,10 +1,12 @@
-// The port's driver: it reads the cases file named by its one argument (case.ts says the format), decides
-// every query of every tree and every pattern list in it, and matches every glob, in the words git
-// check-ignore --verbose --non-matching uses, so its output can be held byte for byte to Go cohere's and
-// to git's. Each answer line is `<ignored> <file>:<line>:<pattern><TAB><path>`, with `::` for a path no
-// rule decided, and `<ignored>` 1 or 0.
-//
-//	node oracle/node.mjs stage1/cohere/gitignore/main.ts stage1/cohere/gitignore/sample-cases.txt
+/*
+ * The port's driver: it reads the cases file named by its one argument (case.ts says the format), decides
+ * every query of every tree and every pattern list in it, and matches every glob, in the words git
+ * check-ignore --verbose --non-matching uses, so its output can be held byte for byte to Go cohere's and
+ * to git's. Each answer line is `<ignored> <file>:<line>:<pattern><TAB><path>`, with `::` for a path no
+ * rule decided, and `<ignored>` 1 or 0.
+ *
+ * 	node oracle/node.mjs stage1/cohere/gitignore/main.ts stage1/cohere/gitignore/sample-cases.txt
+ */
 
 import { panic, programArguments, readTextFile } from 'adamic';
 import { parseCases } from './case.ts';

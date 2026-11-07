@@ -1,28 +1,30 @@
-// The port's driver: it reads the cases file named by its one argument, builds the suppression index
-// of every source in it, asks it every question the file asks, in order, and prints what it found and
-// answered, so its output can be held byte for byte to Go cohere's (suppression_test.go, whose Go side
-// prints the Go's the same way).
-//
-// A cases file is lines of fields separated by tabs, the first naming the record:
-//
-//	subject <rule>            a rule that reports on directives (directives.RegisterSubject)
-//	source  <text>            a source to build an index of; the records after it ask about it
-//	query   <rule> <offset>   whether a finding for the rule at the offset is suppressed (Suppresses)
-//	lineof  <offset>          the line an offset falls on (LineOf)
-//
-// A field writes a backslash, a tab, a newline and a carriage return as \\, \t, \n and \r. Offsets are
-// UTF-16 indexes.
-//
-// The output, for each source, is `case <number>`; then each comment the scanner found, `comment <pos>
-// <end> <scope word>`, with `-` for a comment that is no directive (directives.Recognize); each
-// directive, `directive <index> <kind> rules=<names> reason=<reason> line=<line> start=<start line>
-// end=<end line> pos=<pos> end=<end>`; each rule reference, `reference <name> <pos> <end>`; each answer,
-// `query <rule> <offset> <1 or 0>` and `lineof <offset> <line>`, in the order asked; then `applied`
-// with each directive's count, `total`, and the indexes of the `unused` directives and of those
-// `without-reason`. Names and reasons are quoted with \\, \", \n, \r, \t, and \u00XX for any other
-// control character.
-//
-//	node oracle/node.mjs stage1/cohere/suppression/main.ts stage1/cohere/suppression/sample-cases.txt
+/*
+ * The port's driver: it reads the cases file named by its one argument, builds the suppression index
+ * of every source in it, asks it every question the file asks, in order, and prints what it found and
+ * answered, so its output can be held byte for byte to Go cohere's (suppression_test.go, whose Go side
+ * prints the Go's the same way).
+ *
+ * A cases file is lines of fields separated by tabs, the first naming the record:
+ *
+ * 	subject <rule>            a rule that reports on directives (directives.RegisterSubject)
+ * 	source  <text>            a source to build an index of; the records after it ask about it
+ * 	query   <rule> <offset>   whether a finding for the rule at the offset is suppressed (Suppresses)
+ * 	lineof  <offset>          the line an offset falls on (LineOf)
+ *
+ * A field writes a backslash, a tab, a newline and a carriage return as \\, \t, \n and \r. Offsets are
+ * UTF-16 indexes.
+ *
+ * The output, for each source, is `case <number>`; then each comment the scanner found, `comment <pos>
+ * <end> <scope word>`, with `-` for a comment that is no directive (directives.Recognize); each
+ * directive, `directive <index> <kind> rules=<names> reason=<reason> line=<line> start=<start line>
+ * end=<end line> pos=<pos> end=<end>`; each rule reference, `reference <name> <pos> <end>`; each answer,
+ * `query <rule> <offset> <1 or 0>` and `lineof <offset> <line>`, in the order asked; then `applied`
+ * with each directive's count, `total`, and the indexes of the `unused` directives and of those
+ * `without-reason`. Names and reasons are quoted with \\, \", \n, \r, \t, and \u00XX for any other
+ * control character.
+ *
+ * 	node oracle/node.mjs stage1/cohere/suppression/main.ts stage1/cohere/suppression/sample-cases.txt
+ */
 
 import { panic, programArguments, readTextFile } from 'adamic';
 import { recognize, registerSubject } from './directives.ts';
@@ -33,7 +35,7 @@ const hexDigits = '0123456789abcdef';
 
 // escapeOf is how quote writes a character, or '' for a character written as itself. It would say
 // undefined for that, but stage 0 writes `return undefined` from a function returning string | undefined
-// as C that clang refuses (mediaquery's GAPS.md, gap 2).
+// as C that clang refuses (mediaquery's `GAPS.md`, gap 2).
 function escapeOf(character: string): string {
     switch(character) {
         case '\\':
@@ -82,7 +84,7 @@ function unescapeOf(letter: string, field: string): string {
         case 'r':
             return '\r';
     }
-    // return panic(...), but stage 0 doesn't lower that yet (gitignore's GAPS.md, gap 9).
+    // return panic(...), but stage 0 doesn't lower that yet (gitignore's `GAPS.md`, gap 9).
     panic(`an unknown escape \\${letter} in ${field}`);
 }
 
@@ -148,7 +150,7 @@ if(read.kind === 'Error') {
     panic(read.message);
 }
 
-let current: Index | undefined = undefined;
+let current: Index | undefined;
 let caseNumber = 0;
 for(const line of read.text.split('\n')) {
     if(line === '') {

@@ -1,22 +1,24 @@
-// The port's driver: it reads the cases file named by its first argument, parses every case's value
-// with { loose: true } (Prettier's options) and then { loose: false } (the library's default), and
-// prints each tree, so its output can be held byte for byte to Go cohere's (values_test.go, whose Go
-// side prints the Go's trees the same way) and to the library's own (testdata/library.cjs).
-//
-// A cases file has one case per line: the value, with a backslash, a tab, a newline and a carriage
-// return written \\, \t, \n and \r.
-//
-// The output, for each case and each mode, is `case <number> loose` (or `strict`), then the tree one
-// node per line, indented two spaces a level: the node's type, then each of its own fields but type,
-// parent and nodes, sorted, as `key=value`, then ` nodes=<count>` for a container. A string is quoted
-// with \\, \", \n, \r, \t, and \u00XX for any other control character; a number is written as
-// JavaScript writes it (NaN included); and raws and source are written as {key:value,...}, keys sorted.
-// Where the library throws, it is `error <String(error)>`.
-//
-// With a second argument, `count`, it prints only how many parses succeeded and how many nodes the
-// values hold, which is the parse alone, to time against Go cohere's Parse over the same cases.
-//
-//	node oracle/node.mjs stage1/cohere/values/main.ts stage1/cohere/values/sample-cases.txt
+/*
+ * The port's driver: it reads the cases file named by its first argument, parses every case's value
+ * with { loose: true } (Prettier's options) and then { loose: false } (the library's default), and
+ * prints each tree, so its output can be held byte for byte to Go cohere's (values_test.go, whose Go
+ * side prints the Go's trees the same way) and to the library's own (testdata/library.cjs).
+ *
+ * A cases file has one case per line: the value, with a backslash, a tab, a newline and a carriage
+ * return written \\, \t, \n and \r.
+ *
+ * The output, for each case and each mode, is `case <number> loose` (or `strict`), then the tree one
+ * node per line, indented two spaces a level: the node's type, then each of its own fields but type,
+ * parent and nodes, sorted, as `key=value`, then ` nodes=<count>` for a container. A string is quoted
+ * with \\, \", \n, \r, \t, and \u00XX for any other control character; a number is written as
+ * JavaScript writes it (NaN included); and raws and source are written as {key:value,...}, keys sorted.
+ * Where the library throws, it is `error <String(error)>`.
+ *
+ * With a second argument, `count`, it prints only how many parses succeeded and how many nodes the
+ * values hold, which is the parse alone, to time against Go cohere's Parse over the same cases.
+ *
+ * 	node oracle/node.mjs stage1/cohere/values/main.ts stage1/cohere/values/sample-cases.txt
+ */
 
 import { panic, programArguments, readTextFile } from 'adamic';
 import { parse } from './values.ts';
@@ -26,7 +28,7 @@ const hexDigits = '0123456789abcdef';
 
 // escapeOf is how quote writes a character, or '' for a character written as itself. It would say
 // undefined for that, but stage 0 writes `return undefined` from a function returning string | undefined
-// as C that clang refuses (mediaquery's GAPS.md, gap 2).
+// as C that clang refuses (mediaquery's `GAPS.md`, gap 2).
 function escapeOf(character: string): string {
     switch(character) {
         case '\\':
@@ -101,7 +103,7 @@ function field(node: ValueNode, key: string): string {
         case 'value':
             return quote(node.value);
     }
-    // return panic(...), but stage 0 doesn't lower that yet (gitignore's GAPS.md, gap 9).
+    // return panic(...), but stage 0 doesn't lower that yet (gitignore's `GAPS.md`, gap 9).
     panic(`no field ${key}`);
 }
 

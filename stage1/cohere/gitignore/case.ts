@@ -1,19 +1,21 @@
-// What main.ts is asked: working trees with the paths to decide in each, pattern lists with theirs, and
-// globs with the text to match; and how they are read from a cases file. The test (gitignore_test.go)
-// writes one from cohere's tests and git's, and sample-cases.txt is a small one to run by hand.
-//
-// A cases file is lines of fields separated by tabs, the first field naming the record:
-//
-//	tree     <name> <root>             a working tree, which the records after it fill in
-//	entry    <path> File <contents>    one of its entries: a file and what it holds,
-//	entry    <path> SymbolicLink <target>
-//	entry    <path> Directory          or a directory, or something else (Other)
-//	patterns <name>                    a pattern list, which the records after it fill in
-//	line     <text>                    one of its lines
-//	query    <path> <0 or 1>           a path to decide in the tree or list above, 1 for a directory
-//	glob     <pattern> <text> <0 or 1> a glob to match against text, 1 to match it as a path
-//
-// A field writes a backslash, a tab, a newline and a carriage return as \\, \t, \n and \r.
+/*
+ * What main.ts is asked: working trees with the paths to decide in each, pattern lists with theirs, and
+ * globs with the text to match; and how they are read from a cases file. The test (gitignore_test.go)
+ * writes one from cohere's tests and git's, and sample-cases.txt is a small one to run by hand.
+ *
+ * A cases file is lines of fields separated by tabs, the first field naming the record:
+ *
+ * 	tree     <name> <root>             a working tree, which the records after it fill in
+ * 	entry    <path> File <contents>    one of its entries: a file and what it holds,
+ * 	entry    <path> SymbolicLink <target>
+ * 	entry    <path> Directory          or a directory, or something else (Other)
+ * 	patterns <name>                    a pattern list, which the records after it fill in
+ * 	line     <text>                    one of its lines
+ * 	query    <path> <0 or 1>           a path to decide in the tree or list above, 1 for a directory
+ * 	glob     <pattern> <text> <0 or 1> a glob to match against text, 1 to match it as a path
+ *
+ * A field writes a backslash, a tab, a newline and a carriage return as \\, \t, \n and \r.
+ */
 
 import { panic } from 'adamic';
 import type { Entry } from './gitignore.ts';
