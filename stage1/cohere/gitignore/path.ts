@@ -48,7 +48,7 @@ function isClean(path: string): boolean {
  * Go writes Clean as one pass over the bytes into a buffer that copies nothing until the output first
  * differs from the input. Written that way here, unit by unit with charCodeAt, it was the slower of the
  * two in stage 0 today: every charCodeAt is a call that, on a short string holding anything but ASCII,
- * walks its UTF-8 from the start, and the format walk took 4.7 s where this takes 2.7 s or less (GAPS.md,
+ * walks its UTF-8 from the start, and the format walk took 4.7 s where this takes 2.7 s or less (`GAPS.md`,
  * "Path cleaning").
  */
 export function clean(path: string): string {
