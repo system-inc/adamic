@@ -1,0 +1,47 @@
+{
+  "wholeLane": {
+    "operations": {
+      "init": 5925,
+      "enqueue": 10041,
+      "dequeue": 10123,
+      "isEmpty": 13660,
+      "postOperationIsEmpty": 20164
+    },
+    "initialClasses": {
+      "undefined": 5888,
+      "empty": 0,
+      "dense": 37,
+      "sparse": 0
+    },
+    "ownIteratorInputs": 0,
+    "dequeueValues": {
+      "string": 2871,
+      "object": 7252
+    },
+    "counterexamples": 0
+  },
+  "boundedLane": {
+    "operations": {
+      "init": 5925,
+      "enqueue": 10041,
+      "dequeue": 10123,
+      "isEmpty": 13660,
+      "postOperationIsEmpty": 20164
+    },
+    "initialClasses": {
+      "undefined": 5888,
+      "empty": 0,
+      "dense": 37,
+      "sparse": 0
+    },
+    "ownIteratorInputs": 0,
+    "dequeueValues": {
+      "object": 7252,
+      "string": 2871
+    },
+    "counterexamples": 0
+  },
+  "boundedUnits": 398,
+  "allOperationCountsIdentical": true,
+  "seedCountsExcluded": true
+}
