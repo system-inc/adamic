@@ -22,7 +22,8 @@ records, and build logs. A stale temporary build directory from the prior setup
 was recreated before the successful build; the initial failure is retained.
 The target's full apply passes. The full debug.ts census and the emitter replay
 have completed and are packed in 02-latent-units.tar.gz. The ordinary 79-root
-comparison and source-emitter trace confirmations are still running.
+comparison is still running. Source-emitter trace confirmations are complete
+and are packed in 03-emitter-traces.tar.gz.
 
 ## Nineteen-site comparison
 
@@ -108,3 +109,14 @@ the complete per-root comparison will follow.
 All raw records are packed in numbered tar.gz archives. SHA256SUMS hashes the
 archives, and every archive has an inner raw-file SHA256SUMS. Runs are bounded
 below 25 minutes and pieces are committed and plainly pushed as completed.
+
+## Source-emitter confirmation
+
+A scratch-only logger in notYet records runtime.Caller's Go file, line and
+function while returning the original NotYet unchanged. The existing no-output
+replay worker reproduces the getEnumMembers and emitter stops with exit 0.
+The helper's six findings and emitter's ten findings are byte-for-byte identical
+as parsed records to their corresponding untraced lowering findings. The trace
+confirms K1, K2, K3, U2 and U3 at the listed emitters. The logger's Go source is
+stored as .go.txt inside the archive; no production file is edited. U1 and O1
+are direct Refused constructors at the listed unique source emitters.
