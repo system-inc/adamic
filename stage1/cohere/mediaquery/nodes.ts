@@ -1,17 +1,19 @@
-// A port of cohere's internal/format/css/mediaquery/nodes.go to Adamic 0.1: postcss-media-query-parser
-// 0.2.3, dist/nodes/Node.js and dist/nodes/Container.js.
-//
-// The Go builds an *estree.Node, a bag of properties in the constructors' assignment order, because
-// Prettier's printer reads it by name. The port has a class with exactly the fields the library's nodes
-// carry, since 0.1 has no property bags (index signatures are refused; a Map can't hold a string, a
-// number and a list together without a union for every read). Every node has after, before, value and
-// sourceIndex, and a container has nodes too, which is the same set the Go's carry; the test's Go side
-// checks that every Go node has exactly these keys, so the class can't be leaving one out.
-//
-// type is '' where the library leaves it undefined, as the Go's is: a node whose type the post-pass in
-// parseMediaQuery could not decide (Prettier's addMissingType fills it).
-//
-// Not ported, as in the Go: parent, and Container's walk and each, which Prettier never calls.
+/*
+ * A port of cohere's internal/format/css/mediaquery/nodes.go to Adamic 0.1: postcss-media-query-parser
+ * 0.2.3, dist/nodes/Node.js and dist/nodes/Container.js.
+ *
+ * The Go builds an *estree.Node, a bag of properties in the constructors' assignment order, because
+ * Prettier's printer reads it by name. The port has a class with exactly the fields the library's nodes
+ * carry, since 0.1 has no property bags (index signatures are refused; a Map can't hold a string, a
+ * number and a list together without a union for every read). Every node has after, before, value and
+ * sourceIndex, and a container has nodes too, which is the same set the Go's carry; the test's Go side
+ * checks that every Go node has exactly these keys, so the class can't be leaving one out.
+ *
+ * type is '' where the library leaves it undefined, as the Go's is: a node whose type the post-pass in
+ * parseMediaQuery could not decide (Prettier's addMissingType fills it).
+ *
+ * Not ported, as in the Go: parent, and Container's walk and each, which Prettier never calls.
+ */
 
 export class MediaNode {
     type: string;
