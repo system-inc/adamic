@@ -1,0 +1,386 @@
+{
+  "passed": true,
+  "acceptedCommands": {
+    "apply-before": {
+      "command": [
+        "bash",
+        "stage3/apply.sh",
+        "--build-product",
+        "/workspace/getallkeys-before"
+      ],
+      "cwd": "/workspace/getallkeys-main",
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 293.12741455,
+      "process_group_cleaned": true
+    },
+    "apply-after": {
+      "command": [
+        "bash",
+        "stage3/apply.sh",
+        "--build-product",
+        "/workspace/getallkeys-after"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 283.1205080279999,
+      "process_group_cleaned": true
+    },
+    "types-before": {
+      "command": [
+        "/workspace/scratch/getallkeys-proof/adamic",
+        "types",
+        "/workspace/getallkeys-before/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+        "/workspace/getallkeys-before/src/compiler/_namespaces/ts.performance.ts",
+        "/workspace/getallkeys-before/src/compiler/_namespaces/ts.ts",
+        "/workspace/getallkeys-before/src/compiler/binder.ts",
+        "/workspace/getallkeys-before/src/compiler/builder.ts",
+        "/workspace/getallkeys-before/src/compiler/builderPublic.ts",
+        "/workspace/getallkeys-before/src/compiler/builderState.ts",
+        "/workspace/getallkeys-before/src/compiler/builderStatePublic.ts",
+        "/workspace/getallkeys-before/src/compiler/checker.ts",
+        "/workspace/getallkeys-before/src/compiler/commandLineParser.ts",
+        "/workspace/getallkeys-before/src/compiler/core.ts",
+        "/workspace/getallkeys-before/src/compiler/corePublic.ts",
+        "/workspace/getallkeys-before/src/compiler/debug.ts",
+        "/workspace/getallkeys-before/src/compiler/diagnosticInformationMap.generated.ts",
+        "/workspace/getallkeys-before/src/compiler/emitter.ts",
+        "/workspace/getallkeys-before/src/compiler/executeCommandLine.ts",
+        "/workspace/getallkeys-before/src/compiler/expressionToTypeNode.ts",
+        "/workspace/getallkeys-before/src/compiler/factory/baseNodeFactory.ts",
+        "/workspace/getallkeys-before/src/compiler/factory/emitHelpers.ts",
+        "/workspace/getallkeys-before/src/compiler/factory/emitNode.ts",
+        "/workspace/getallkeys-before/src/compiler/factory/nodeChildren.ts",
+        "/workspace/getallkeys-before/src/compiler/factory/nodeConverters.ts",
+        "/workspace/getallkeys-before/src/compiler/factory/nodeFactory.ts",
+        "/workspace/getallkeys-before/src/compiler/factory/nodeTests.ts",
+        "/workspace/getallkeys-before/src/compiler/factory/parenthesizerRules.ts",
+        "/workspace/getallkeys-before/src/compiler/factory/utilities.ts",
+        "/workspace/getallkeys-before/src/compiler/factory/utilitiesPublic.ts",
+        "/workspace/getallkeys-before/src/compiler/hostErrors.ts",
+        "/workspace/getallkeys-before/src/compiler/moduleNameResolver.ts",
+        "/workspace/getallkeys-before/src/compiler/moduleSpecifiers.ts",
+        "/workspace/getallkeys-before/src/compiler/parser.ts",
+        "/workspace/getallkeys-before/src/compiler/path.ts",
+        "/workspace/getallkeys-before/src/compiler/performance.ts",
+        "/workspace/getallkeys-before/src/compiler/performanceCore.ts",
+        "/workspace/getallkeys-before/src/compiler/program.ts",
+        "/workspace/getallkeys-before/src/compiler/programDiagnostics.ts",
+        "/workspace/getallkeys-before/src/compiler/resolutionCache.ts",
+        "/workspace/getallkeys-before/src/compiler/scanner.ts",
+        "/workspace/getallkeys-before/src/compiler/semver.ts",
+        "/workspace/getallkeys-before/src/compiler/sourcemap.ts",
+        "/workspace/getallkeys-before/src/compiler/symbolWalker.ts",
+        "/workspace/getallkeys-before/src/compiler/sys.ts",
+        "/workspace/getallkeys-before/src/compiler/tracing.ts",
+        "/workspace/getallkeys-before/src/compiler/transformer.ts",
+        "/workspace/getallkeys-before/src/compiler/transformers/classFields.ts",
+        "/workspace/getallkeys-before/src/compiler/transformers/classThis.ts",
+        "/workspace/getallkeys-before/src/compiler/transformers/declarations.ts",
+        "/workspace/getallkeys-before/src/compiler/transformers/declarations/diagnostics.ts",
+        "/workspace/getallkeys-before/src/compiler/transformers/destructuring.ts",
+        "/workspace/getallkeys-before/src/compiler/transformers/es2015.ts",
+        "/workspace/getallkeys-before/src/compiler/transformers/es2016.ts",
+        "/workspace/getallkeys-before/src/compiler/transformers/es2017.ts",
+        "/workspace/getallkeys-before/src/compiler/transformers/es2018.ts",
+        "/workspace/getallkeys-before/src/compiler/transformers/es2019.ts",
+        "/workspace/getallkeys-before/src/compiler/transformers/es2020.ts",
+        "/workspace/getallkeys-before/src/compiler/transformers/es2021.ts",
+        "/workspace/getallkeys-before/src/compiler/transformers/esDecorators.ts",
+        "/workspace/getallkeys-before/src/compiler/transformers/esnext.ts",
+        "/workspace/getallkeys-before/src/compiler/transformers/generators.ts",
+        "/workspace/getallkeys-before/src/compiler/transformers/jsx.ts",
+        "/workspace/getallkeys-before/src/compiler/transformers/legacyDecorators.ts",
+        "/workspace/getallkeys-before/src/compiler/transformers/module/esnextAnd2015.ts",
+        "/workspace/getallkeys-before/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "/workspace/getallkeys-before/src/compiler/transformers/module/module.ts",
+        "/workspace/getallkeys-before/src/compiler/transformers/module/system.ts",
+        "/workspace/getallkeys-before/src/compiler/transformers/namedEvaluation.ts",
+        "/workspace/getallkeys-before/src/compiler/transformers/taggedTemplate.ts",
+        "/workspace/getallkeys-before/src/compiler/transformers/ts.ts",
+        "/workspace/getallkeys-before/src/compiler/transformers/typeSerializer.ts",
+        "/workspace/getallkeys-before/src/compiler/transformers/utilities.ts",
+        "/workspace/getallkeys-before/src/compiler/tsbuild.ts",
+        "/workspace/getallkeys-before/src/compiler/tsbuildPublic.ts",
+        "/workspace/getallkeys-before/src/compiler/types.ts",
+        "/workspace/getallkeys-before/src/compiler/utilities.ts",
+        "/workspace/getallkeys-before/src/compiler/utilitiesPublic.ts",
+        "/workspace/getallkeys-before/src/compiler/visitorPublic.ts",
+        "/workspace/getallkeys-before/src/compiler/watch.ts",
+        "/workspace/getallkeys-before/src/compiler/watchPublic.ts",
+        "/workspace/getallkeys-before/src/compiler/watchUtilities.ts"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 4.001369044999819,
+      "process_group_cleaned": true
+    },
+    "types-after": {
+      "command": [
+        "/workspace/scratch/getallkeys-proof/adamic",
+        "types",
+        "/workspace/getallkeys-after/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+        "/workspace/getallkeys-after/src/compiler/_namespaces/ts.performance.ts",
+        "/workspace/getallkeys-after/src/compiler/_namespaces/ts.ts",
+        "/workspace/getallkeys-after/src/compiler/binder.ts",
+        "/workspace/getallkeys-after/src/compiler/builder.ts",
+        "/workspace/getallkeys-after/src/compiler/builderPublic.ts",
+        "/workspace/getallkeys-after/src/compiler/builderState.ts",
+        "/workspace/getallkeys-after/src/compiler/builderStatePublic.ts",
+        "/workspace/getallkeys-after/src/compiler/checker.ts",
+        "/workspace/getallkeys-after/src/compiler/commandLineParser.ts",
+        "/workspace/getallkeys-after/src/compiler/core.ts",
+        "/workspace/getallkeys-after/src/compiler/corePublic.ts",
+        "/workspace/getallkeys-after/src/compiler/debug.ts",
+        "/workspace/getallkeys-after/src/compiler/diagnosticInformationMap.generated.ts",
+        "/workspace/getallkeys-after/src/compiler/emitter.ts",
+        "/workspace/getallkeys-after/src/compiler/executeCommandLine.ts",
+        "/workspace/getallkeys-after/src/compiler/expressionToTypeNode.ts",
+        "/workspace/getallkeys-after/src/compiler/factory/baseNodeFactory.ts",
+        "/workspace/getallkeys-after/src/compiler/factory/emitHelpers.ts",
+        "/workspace/getallkeys-after/src/compiler/factory/emitNode.ts",
+        "/workspace/getallkeys-after/src/compiler/factory/nodeChildren.ts",
+        "/workspace/getallkeys-after/src/compiler/factory/nodeConverters.ts",
+        "/workspace/getallkeys-after/src/compiler/factory/nodeFactory.ts",
+        "/workspace/getallkeys-after/src/compiler/factory/nodeTests.ts",
+        "/workspace/getallkeys-after/src/compiler/factory/parenthesizerRules.ts",
+        "/workspace/getallkeys-after/src/compiler/factory/utilities.ts",
+        "/workspace/getallkeys-after/src/compiler/factory/utilitiesPublic.ts",
+        "/workspace/getallkeys-after/src/compiler/hostErrors.ts",
+        "/workspace/getallkeys-after/src/compiler/moduleNameResolver.ts",
+        "/workspace/getallkeys-after/src/compiler/moduleSpecifiers.ts",
+        "/workspace/getallkeys-after/src/compiler/parser.ts",
+        "/workspace/getallkeys-after/src/compiler/path.ts",
+        "/workspace/getallkeys-after/src/compiler/performance.ts",
+        "/workspace/getallkeys-after/src/compiler/performanceCore.ts",
+        "/workspace/getallkeys-after/src/compiler/program.ts",
+        "/workspace/getallkeys-after/src/compiler/programDiagnostics.ts",
+        "/workspace/getallkeys-after/src/compiler/resolutionCache.ts",
+        "/workspace/getallkeys-after/src/compiler/scanner.ts",
+        "/workspace/getallkeys-after/src/compiler/semver.ts",
+        "/workspace/getallkeys-after/src/compiler/sourcemap.ts",
+        "/workspace/getallkeys-after/src/compiler/symbolWalker.ts",
+        "/workspace/getallkeys-after/src/compiler/sys.ts",
+        "/workspace/getallkeys-after/src/compiler/tracing.ts",
+        "/workspace/getallkeys-after/src/compiler/transformer.ts",
+        "/workspace/getallkeys-after/src/compiler/transformers/classFields.ts",
+        "/workspace/getallkeys-after/src/compiler/transformers/classThis.ts",
+        "/workspace/getallkeys-after/src/compiler/transformers/declarations.ts",
+        "/workspace/getallkeys-after/src/compiler/transformers/declarations/diagnostics.ts",
+        "/workspace/getallkeys-after/src/compiler/transformers/destructuring.ts",
+        "/workspace/getallkeys-after/src/compiler/transformers/es2015.ts",
+        "/workspace/getallkeys-after/src/compiler/transformers/es2016.ts",
+        "/workspace/getallkeys-after/src/compiler/transformers/es2017.ts",
+        "/workspace/getallkeys-after/src/compiler/transformers/es2018.ts",
+        "/workspace/getallkeys-after/src/compiler/transformers/es2019.ts",
+        "/workspace/getallkeys-after/src/compiler/transformers/es2020.ts",
+        "/workspace/getallkeys-after/src/compiler/transformers/es2021.ts",
+        "/workspace/getallkeys-after/src/compiler/transformers/esDecorators.ts",
+        "/workspace/getallkeys-after/src/compiler/transformers/esnext.ts",
+        "/workspace/getallkeys-after/src/compiler/transformers/generators.ts",
+        "/workspace/getallkeys-after/src/compiler/transformers/jsx.ts",
+        "/workspace/getallkeys-after/src/compiler/transformers/legacyDecorators.ts",
+        "/workspace/getallkeys-after/src/compiler/transformers/module/esnextAnd2015.ts",
+        "/workspace/getallkeys-after/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "/workspace/getallkeys-after/src/compiler/transformers/module/module.ts",
+        "/workspace/getallkeys-after/src/compiler/transformers/module/system.ts",
+        "/workspace/getallkeys-after/src/compiler/transformers/namedEvaluation.ts",
+        "/workspace/getallkeys-after/src/compiler/transformers/taggedTemplate.ts",
+        "/workspace/getallkeys-after/src/compiler/transformers/ts.ts",
+        "/workspace/getallkeys-after/src/compiler/transformers/typeSerializer.ts",
+        "/workspace/getallkeys-after/src/compiler/transformers/utilities.ts",
+        "/workspace/getallkeys-after/src/compiler/tsbuild.ts",
+        "/workspace/getallkeys-after/src/compiler/tsbuildPublic.ts",
+        "/workspace/getallkeys-after/src/compiler/types.ts",
+        "/workspace/getallkeys-after/src/compiler/utilities.ts",
+        "/workspace/getallkeys-after/src/compiler/utilitiesPublic.ts",
+        "/workspace/getallkeys-after/src/compiler/visitorPublic.ts",
+        "/workspace/getallkeys-after/src/compiler/watch.ts",
+        "/workspace/getallkeys-after/src/compiler/watchPublic.ts",
+        "/workspace/getallkeys-after/src/compiler/watchUtilities.ts"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 3.0009985869999127,
+      "process_group_cleaned": true
+    },
+    "build-before": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "cwd": "/workspace/getallkeys-before",
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 23.01577011900008,
+      "process_group_cleaned": true
+    },
+    "build-after": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "cwd": "/workspace/getallkeys-after",
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 23.025013829000045,
+      "process_group_cleaned": true
+    },
+    "site-before": {
+      "command": [
+        "/workspace/scratch/getallkeys-proof/latent",
+        "/workspace/getallkeys-before/src/compiler",
+        "/workspace/scratch/getallkeys-proof/site-before.jsonl"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 18.016006666000067,
+      "process_group_cleaned": true
+    },
+    "site-after": {
+      "command": [
+        "/workspace/scratch/getallkeys-proof/latent",
+        "/workspace/getallkeys-after/src/compiler",
+        "/workspace/scratch/getallkeys-proof/site-after.jsonl"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 18.012570288999996,
+      "process_group_cleaned": true
+    },
+    "site-mutant": {
+      "command": [
+        "/workspace/scratch/getallkeys-proof/latent",
+        "/workspace/scratch/getallkeys-proof/mutant/src/compiler",
+        "/workspace/scratch/getallkeys-proof/site-mutant.jsonl"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 18.01763705899998,
+      "process_group_cleaned": true
+    },
+    "site-compare": {
+      "command": [
+        "node",
+        "/workspace/adamic/stage3/adapt/99-correctness-core-getallkeys/site-compare.cjs",
+        "/workspace/getallkeys-before",
+        "/workspace/getallkeys-after",
+        "/workspace/scratch/getallkeys-proof/mutant",
+        "/workspace/scratch/getallkeys-proof",
+        "/workspace/adamic/stage3/adapt/99-correctness-core-getallkeys/sites.json"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 1.0009291599999415,
+      "process_group_cleaned": true
+    },
+    "final-javascript-scope": {
+      "command": [
+        "env",
+        "NODE_PATH=/workspace/adamic/stage3/api/node_modules",
+        "node",
+        "stage3/adapt/99-correctness-core-getallkeys/compare.cjs",
+        "/workspace/getallkeys-before",
+        "/workspace/getallkeys-after",
+        "/workspace/scratch/getallkeys-proof/compare-source",
+        "stage3/adapt/99-correctness-core-getallkeys/comparison.json"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 23.009481208999887,
+      "process_group_cleaned": true
+    },
+    "paired-replay": {
+      "command": [
+        "python3",
+        "stage3/adapt/99-correctness-core-getallkeys/replay.py"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 468.14790391400015,
+      "process_group_cleaned": true
+    },
+    "lane-pieces": {
+      "command": [
+        "python3",
+        "stage3/adapt/99-correctness-core-getallkeys/lane-pieces.py"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit_code": 0,
+      "stopping_reason": null,
+      "seconds": 650.5952929689997,
+      "process_group_cleaned": true
+    }
+  },
+  "sourceFilesCompared": 746,
+  "changedSources": [
+    "src/compiler/core.ts",
+    "src/harness/fourslashImpl.ts"
+  ],
+  "publicDeclarationsIdentical": true,
+  "internalDeclarationOnlyGetAllKeysRemoved": true,
+  "javascriptFiles": 10,
+  "changedJavaScript": [
+    "run.js",
+    "typescript.js"
+  ],
+  "emittedBodyByteIdentical": true,
+  "javascriptHunks": [
+    {
+      "file": "run.js",
+      "hunks": 6
+    },
+    {
+      "file": "typescript.js",
+      "hunks": 4
+    }
+  ],
+  "replayExitCounts": {
+    "before": {
+      "0": 80,
+      "1": 14
+    },
+    "after": {
+      "0": 81,
+      "1": 14
+    }
+  },
+  "pairedReplaySharedAdapters": 94,
+  "lane": {
+    "passed": true,
+    "units": 398,
+    "pieces": 10,
+    "counts": {
+      "pass": 106366,
+      "fail": 1,
+      "skip": 0
+    },
+    "allUnitIdentityAndBaselineGuardsPassed": true,
+    "inputsUnchanged": true
+  },
+  "coreSites": {
+    "before": 24,
+    "after": 23,
+    "mutant": 24,
+    "removed": "F10",
+    "new": 0
+  },
+  "contracts": 26,
+  "excludedAttempts": [
+    "First apply: packaging overlap, child exit 1; fresh full applies passed.",
+    "First census comparison: incorrectly filtered phase instead of Boundary kind; original raw census streams unchanged.",
+    "First JavaScript comparison: raw scanner lacked template context; parser-token proof plus exact idempotent initializer guard passed."
+  ],
+  "noCompilerSourceChanges": true
+}

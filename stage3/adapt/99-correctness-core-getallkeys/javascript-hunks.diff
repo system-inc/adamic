@@ -1,0 +1,111 @@
+--- before/run.js
++++ after/run.js
+@@ -787,16 +787,6 @@
+     }
+   }
+   return keys;
+-}
+-function getAllKeys(obj) {
+-  const result = [];
+-  do {
+-    const names = Object.getOwnPropertyNames(obj);
+-    for (const name of names) {
+-      pushIfUnique(result, name);
+-    }
+-  } while (obj = Object.getPrototypeOf(obj));
+-  return result;
+ }
+ function getOwnValues(collection) {
+   const values = [];
+@@ -197689,7 +197679,6 @@
+   getAllDecoratorsOfClassElement: () => getAllDecoratorsOfClassElement,
+   getAllJSDocTags: () => getAllJSDocTags,
+   getAllJSDocTagsOfKind: () => getAllJSDocTagsOfKind,
+-  getAllKeys: () => getAllKeys,
+   getAllProjectOutputs: () => getAllProjectOutputs,
+   getAllSuperTypeNodes: () => getAllSuperTypeNodes,
+   getAllowImportingTsExtensions: () => getAllowImportingTsExtensions,
+@@ -201003,7 +200992,6 @@
+   getAllDecoratorsOfClassElement: () => getAllDecoratorsOfClassElement,
+   getAllJSDocTags: () => getAllJSDocTags,
+   getAllJSDocTagsOfKind: () => getAllJSDocTagsOfKind,
+-  getAllKeys: () => getAllKeys,
+   getAllProjectOutputs: () => getAllProjectOutputs,
+   getAllSuperTypeNodes: () => getAllSuperTypeNodes,
+   getAllowImportingTsExtensions: () => getAllowImportingTsExtensions,
+@@ -210168,7 +210156,6 @@
+   getAllDecoratorsOfClassElement: () => getAllDecoratorsOfClassElement,
+   getAllJSDocTags: () => getAllJSDocTags,
+   getAllJSDocTagsOfKind: () => getAllJSDocTagsOfKind,
+-  getAllKeys: () => getAllKeys,
+   getAllProjectOutputs: () => getAllProjectOutputs,
+   getAllSuperTypeNodes: () => getAllSuperTypeNodes,
+   getAllowImportingTsExtensions: () => getAllowImportingTsExtensions,
+@@ -214827,6 +214814,16 @@
+     }
+   }
+ }
++function getAllKeys(obj) {
++  const result = [];
++  do {
++    const names = Object.getOwnPropertyNames(obj);
++    for (const name of names) {
++      pushIfUnique(result, name);
++    }
++  } while (obj = Object.getPrototypeOf(obj));
++  return result;
++}
+ var import_source_map_support, FourSlashTestType, MetadataOptionNames, fileMetadataNames, _TestCancellationToken, TestCancellationToken, CallHierarchyItemDirection, _TestState, TestState, State;
+ var init_fourslashImpl = __esm({
+   "src/harness/fourslashImpl.ts"() {
+@@ -214835,6 +214832,7 @@
+     init_fakes();
+     init_FourSlashInterface();
+     init_Harness();
++    init_ts8();
+     init_ts8();
+     init_Utils();
+     init_vfs();
+--- before/typescript.js
++++ after/typescript.js
+@@ -652,7 +652,6 @@
+   getAllDecoratorsOfClassElement: () => getAllDecoratorsOfClassElement,
+   getAllJSDocTags: () => getAllJSDocTags,
+   getAllJSDocTagsOfKind: () => getAllJSDocTagsOfKind,
+-  getAllKeys: () => getAllKeys,
+   getAllProjectOutputs: () => getAllProjectOutputs,
+   getAllSuperTypeNodes: () => getAllSuperTypeNodes,
+   getAllowImportingTsExtensions: () => getAllowImportingTsExtensions,
+@@ -3051,16 +3050,6 @@
+     }
+   }
+   return keys;
+-}
+-function getAllKeys(obj) {
+-  const result = [];
+-  do {
+-    const names = Object.getOwnPropertyNames(obj);
+-    for (const name of names) {
+-      pushIfUnique(result, name);
+-    }
+-  } while (obj = Object.getPrototypeOf(obj));
+-  return result;
+ }
+ function getOwnValues(collection) {
+   const values = [];
+@@ -184758,7 +184747,6 @@
+   getAllDecoratorsOfClassElement: () => getAllDecoratorsOfClassElement,
+   getAllJSDocTags: () => getAllJSDocTags,
+   getAllJSDocTagsOfKind: () => getAllJSDocTagsOfKind,
+-  getAllKeys: () => getAllKeys,
+   getAllProjectOutputs: () => getAllProjectOutputs,
+   getAllSuperTypeNodes: () => getAllSuperTypeNodes,
+   getAllowImportingTsExtensions: () => getAllowImportingTsExtensions,
+@@ -199581,7 +199569,6 @@
+   getAllDecoratorsOfClassElement,
+   getAllJSDocTags,
+   getAllJSDocTagsOfKind,
+-  getAllKeys,
+   getAllProjectOutputs,
+   getAllSuperTypeNodes,
+   getAllowImportingTsExtensions,
